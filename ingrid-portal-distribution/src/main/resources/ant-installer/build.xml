@@ -41,8 +41,11 @@
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
     <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
+    
+    <property name="prop-root"                     value="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/classes/bootstrap.override.properties"/>
 
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
+    <property name="prop-quartz-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/quartz.properties"/>
     <property name="xml-hibernate-portal-apps"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml"/>
     <property name="xml-hibernate-portal-mdek"     value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/classes/hibernate.cfg.xml"/>
     
@@ -50,7 +53,7 @@
     <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.override.properties"/>
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
     
-    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
+    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.override.properties"/>
 
     <!-- THESE PROPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF,apache-tomcat-6.0.35/webapps/ROOT/META-INF" />
@@ -143,6 +146,7 @@
         <property name="usedDialect" value="${mySqlDialect}" />
         <property name="usedDialectPortal" value="${mySqlDialectPortal}" />
         <property name="usedValidationQuery" value="${mySqlValidationQuery}" />
+        <property name="usedQuartzDriverDelegate" value="${mySqlQuartzDriverDelegate}" />
         <!-- check current database status 
         <runtarget target="mysql.CheckDbs"/>-->
     </target>
@@ -153,6 +157,7 @@
         <property name="usedDialect" value="${oracleDialect}" />
         <property name="usedDialectPortal" value="${oracleDialectPortal}" />
         <property name="usedValidationQuery" value="${oracleValidationQuery}" />
+        <property name="usedQuartzDriverDelegate" value="${oracleQuartzDriverDelegate}" />
         <!-- check current database status
         <runtarget target="oracle.CheckDbs"/>-->
     </target>
@@ -163,6 +168,7 @@
         <property name="usedDialect" value="${postgresDialect}" />
         <property name="usedDialectPortal" value="${postgresDialectPortal}" />
         <property name="usedValidationQuery" value="${postgresValidationQuery}" />
+        <property name="usedQuartzDriverDelegate" value="${postgresQuartzDriverDelegate}" />
         <!-- check current database status 
         <runtarget target="postgres.CheckDbs"/>-->
     </target>
@@ -262,12 +268,12 @@
                 <runtarget target="ExtractIge"/>
                 <runtarget target="configurePortal"/>
                 <runtarget target="configureIge"/>
-                <runtarget target="updatePortalDb"/>
-                <runtarget target="updateIgeDb"/>
                 <!-- make sure that the metadata menu is visible -->
-                <runtarget target="mysql.showMetadataMenu"/>
-                <runtarget target="oracle.showMetadataMenu"/>
-                <runtarget target="postgres.showMetadataMenu"/>
+                <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
+                <touch file="${prop-root}"/>
+                <propertyfile file="${prop-root}">
+                    <entry key="portal.showMetadataMenu" value="true" />
+                </propertyfile>
             </then>
             <elseif>
                 <equals arg1="${installType}" arg2="portalOnly" />
@@ -275,7 +281,6 @@
                     <echo message="Portal Only" />
                     <runtarget target="ExtractPortal"/>
                     <runtarget target="configurePortal"/>
-                    <runtarget target="updatePortalDb"/>
                     <runtarget target="configurePortalOnly"/>
                  </then>
             </elseif>
@@ -286,7 +291,6 @@
                     <runtarget target="ExtractIge"/>
                     <runtarget target="configureIge"/>
                     <runtarget target="configureIgeOnly"/>
-                    <runtarget target="updateIgeDb"/>
                  </then>
             </elseif>
             <elseif>
@@ -297,8 +301,6 @@
                     <runtarget target="ExtractPortalForUpdate" />
                     <runtarget target="ExtractIgeForUpdate" />
                     <runtarget target="RemoveIgeForUpdate" />
-                    <runtarget target="updatePortalDb"/>
-                    <runtarget target="updateIgeDb"/>
                  </then>
             </elseif>
         </if>
@@ -343,6 +345,7 @@
             <patternset>
                 <exclude name="WEB-INF/classes/communication.xml" />
                 <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
+                <exclude name="WEB-INF/classes/quartz.properties" />
             </patternset>
         </unwar>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek">
@@ -350,6 +353,12 @@
                 <exclude name="WEB-INF/classes/hibernate.cfg.xml" />
             </patternset>
         </unwar>
+        <if>
+            <equals arg1="${executeMapClientUpdate}" arg2="true" />
+            <then>
+                <runtarget target="writeMapClientProps"/>
+            </then>
+        </if>
     </target>
     
     <target name="ExtractIge">
@@ -385,12 +394,24 @@
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
+        <!-- also profiles directory to have plain profiles from update! -->
+        <echo>Alte Portal Profile löschen</echo>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
+        <!-- Delete old WebmapClient data folders -->
+        <if>
+            <equals arg1="${executeMapClientUpdate}" arg2="true" />
+            <then>
+                <runtarget target="cleanMapClientProps"/>
+            </then>
+        </if>
+        <!-- Delete old WebmapClient installation ! -->
+        <runtarget target="cleanMapClientInstallation"/>
         <!-- remove tomcat working dir to force compilation of JSPs -->
         <delete dir="${installDir}/${tomcat-artifact}/work"/>
     </target>
     
     <target name="MoveFiles" depends="RemoveOldLibs">
-    	<move toDir="${installDir}/${tomcat-artifact}">
+        <move toDir="${installDir}/${tomcat-artifact}">
             <fileset dir="${basedir}/distribution/${tomcat-artifact}"/>
         </move>
         <copy toDir="${installDir}/sql">
@@ -435,13 +456,15 @@
         <replace      file="${installedTomcatContextDir}/ingrid-portal-apps.xml" token='validationQuery="${cipXML.Context.Resource(validationQuery)}"'                 value='validationQuery="${usedValidationQuery}"'/>
 
         <replaceregexp file="${xml-hibernate-portal-apps}" match='"dialect">org.hibernate.*&lt;/property>' replace='"dialect">${usedDialectPortal}&lt;/property>' byline="true"/>
-        
+        <replaceregexp file="${prop-quartz-portal-apps}" match='driverDelegateClass = org.quartz.impl.jdbcjobstore.*' replace='driverDelegateClass = ${usedQuartzDriverDelegate}' byline="true"/>
     </target>
 
     <target name="configurePortalOnly">
-    	<runtarget target="mysql.hideMetadataMenu"/>
-    	<runtarget target="oracle.hideMetadataMenu"/>
-    	<runtarget target="postgres.hideMetadataMenu"/>
+        <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
+        <touch file="${prop-root}"/>
+        <propertyfile file="${prop-root}">
+            <entry key="portal.showMetadataMenu" value="false" />
+        </propertyfile>
         
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war" />
     </target>
@@ -529,179 +552,115 @@
         <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
     </target>
 
-    <target name="updatePortalDb" if="portal.installed">
-        <echo>Konfiguration des Portals
-        </echo>
-    	
-    	<!-- First create database if needed ! NOTICE: Only on MySQL and PostgreSQL ! Oracle has to be created manually. -->
-    	<!-- MySQL/Oracle/PostgreSQL targets set ${portal.version} correctly so database update below works. -->
-        <if>
-            <equals arg1="${portal.db.not.exists}" arg2="true" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFromInitial"/> 
-                <runtarget target="postgres.PortalDbUpdateFromInitial"/> 
-                <runtarget target="oracle.UpdateDbManually"/>
-            </then>
-        </if>
-
-    	<!-- Then update database ! ${portal.version} read from existing database or set when database was created ! -->
-        <if>
-            <equals arg1="${portal.version}" arg2=",1" />
-            <then>
-                <!-- import was executed but no patches installed yet -->
-                <runtarget target="mysql.PortalDbUpdateFromInitial"/>
-                <runtarget target="oracle.PortalDbUpdateFromInitial"/>
-                <runtarget target="postgres.PortalDbUpdateFromInitial"/> 
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.0.0" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom300"/>
-                <runtarget target="oracle.PortalDbUpdateFrom300"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.0.1" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom301"/>
-                <runtarget target="oracle.PortalDbUpdateFrom301"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.1.0" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom310"/>
-                <runtarget target="oracle.PortalDbUpdateFrom310"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.2.0d" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom320d"/>
-                <runtarget target="oracle.PortalDbUpdateFrom320d"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.3.1" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom331"/>
-                <runtarget target="oracle.PortalDbUpdateFrom331"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.4.1" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom341"/>
-                <runtarget target="oracle.PortalDbUpdateFrom341"/>
-                <runtarget target="copyMigrationTools35ManualMigration"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.5.0" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom350"/>
-                <runtarget target="oracle.PortalDbUpdateFrom350"/>
-            </then>
-        </elseif>
-		<elseif>
-            <!-- If database was setup with 3.5 dump then version is 3.5 without third 0 digit ! -->
-            <equals arg1="${portal.version}" arg2=",3.5" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom350"/>
-                <runtarget target="oracle.PortalDbUpdateFrom350"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.6.1" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom361"/>
-                <runtarget target="oracle.PortalDbUpdateFrom361"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",3.6.2" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom362"/>
-                <runtarget target="oracle.PortalDbUpdateFrom362"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",4.0.0" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom400"/>
-                <runtarget target="oracle.PortalDbUpdateFrom400"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",4.0.1" />
-            <then>
-                <runtarget target="mysql.PortalDbUpdateFrom401"/>
-                <runtarget target="oracle.PortalDbUpdateFrom401"/>
-                <runtarget target="postgres.PortalDbUpdateFrom401"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${portal.version}" arg2=",4.0.2" />
-            <then>
-                <echo>Ihre Datenbank ist aktuell!</echo>
-            </then>
-        </elseif>
-        <else>
-            <echo>Bitte aktualisieren Sie die Portaldatenbank manuell!
-            </echo>
-        </else>
-        </if>
-    </target>
-
-    <target name="updateIgeDb" if="ige.installed">
-        <if>
-            <equals arg1="${useOracle}" arg2="true" />
-            <then>
-                <runtarget target="oracle.mdekDbNotExists"/>
-                <runtarget target="oracle.mdekDbExists"/>
-            </then>
-        <elseif>
-            <equals arg1="${usePostgres}" arg2="true" />
-            <then>
-                <runtarget target="postgres.mdekDbNotExists"/>
-                <runtarget target="postgres.mdekDbExists"/>
-            </then>
-        </elseif>
-        <elseif>
-            <equals arg1="${useMysql}" arg2="true" />
-            <then>
-                <runtarget target="mysql.mdekDbNotExists"/>
-                <runtarget target="mysql.mdekDbExists"/>
-            </then>
-        </elseif>
-        <else>
-            <echo>Probleme bei der Ermittlung der Datenbank.</echo>
-        </else>
-        </if>
-    </target>
-
-
     <!-- =============================================
          = MAPCLIENT                                 =
          ============================================= -->
-		 
+
     <target name="writeMapClientProps" description="">
-        <echo>Schreibe Webmap-Client Konfigration
-            </echo>
+        <echo>Schreibe Webmap-Client Konfiguration</echo>
+        <touch file="${i-prop-ingrid-webmap-client}"/>
         <!-- write the application.properties file-->
-        <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.opensearch.searchurl}"  value="${openSearchUrl}?q={query}+t011_obj_serv_op_connpoint.connect_point:http*+cache:off+datatype:metadata+ranking:score&amp;ingrid=1&amp;h=100"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.host}"  value="${feedbackHost}"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.from}"  value="${feedbackEmail}"/>
-    	<replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.to}"  value="${feedbackEmail}"/>
-    	<!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
-		<replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
+        <propertyfile file="${i-prop-ingrid-webmap-client}">
+            <entry key="config.dir"  value="${WebmapDataDir}/WebmapClientData/"/>
+            <entry key="kml.directory"  value="${WebmapDataDir}/WebmapClientData/kml"/>
+            <entry key="feedback.host" value="${feedbackHost}" />
+            <entry key="feedback.port" value="${feedbackPort}" />
+            <entry key="feedback.user" value="${feedbackUser}" />
+            <entry key="feedback.password" value="${feedbackPassword}" />
+            <entry key="feedback.from" value="${feedbackEmail}" />
+            <entry key="feedback.to" value="${feedbackEmail}" />
+        </propertyfile>
+        <!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
+        <replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
+        <!-- Delete old WebmapClient data folders -->
+        <runtarget target="cleanMapClientProps"/>
+        <!-- Add new WebmapClient data folders -->
+        <runtarget target="createMapClientProps"/>
+    </target>
+
+    <target name="createMapClientProps" description="">
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData"/>
+            <then>
+                <echo>WebmapClient Daten-Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient Daten-Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData"/>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/data"/>
+            <then>
+                <echo>WebmapClient 'data' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'data' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/data"/>
+                <copy todir="${WebmapDataDir}/WebmapClientData/data" >
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/data">
+                        <include name="**/*.json"/>
+                    </fileset>
+                </copy>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/config"/>
+            <then>
+                <echo>WebmapClient 'config' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'config' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/config"/>
+                <copy todir="${WebmapDataDir}/WebmapClientData/config" >
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config">
+                        <include name="**/*.profile.js"/>
+                    </fileset>
+                </copy>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/kml"/>
+            <then>
+                <echo>WebmapClient 'kml' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'kml' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/kml"/>
+            </else>
+        </if>
+    </target>
+
+    <target name="cleanMapClientProps" description="">
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/ingrid_webmap_client_config.xml"/>
+            <then>
+                <echo>Alte WebmapClient-Konfiguration löschen</echo>
+                <delete dir="${WebmapDataDir}/WebmapClientData"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="cleanMapClientInstallation" description="">
+        <if>
+            <equals arg1="${executeMapClientUpdate}" arg2="true" />
+            <then>
+                <if>
+                    <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config"/>
+                    <then>
+                        <echo>Kopieren von vorhandenen WebmapClient-Konfigurationen.</echo>
+                        <runtarget target="createMapClientProps"/>
+                    </then>
+                </if>
+            </then>
+        </if>
+        <if>
+            <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/admin"/>
+            <then>
+                <echo>Alte WebmapClient-Installation löschen</echo>
+                <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/"/>
+            </then>
+        </if>
     </target>
 
     <target name="cleanuptarget">

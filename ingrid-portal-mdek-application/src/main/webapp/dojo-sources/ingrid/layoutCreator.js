@@ -234,6 +234,15 @@ define([
              */
             createFilteringSelect: function(id, node, storeProps, initDataCallback, url) {
                 var selectProperties = UtilDOM.getHTMLAttributes(id);
+                if (selectProperties.autoComplete === "false") {
+                	selectProperties.autoComplete = false;
+                }
+                
+                if (!selectProperties.queryExpr) {
+                	// search 'contains' by default
+                	selectProperties.queryExpr = "*${0}*";
+                }
+
                 var def2 = new Deferred();
                 this.getFileStoreInit("combo", storeProps, initDataCallback, url)
                 .then(function(store) {
@@ -532,7 +541,7 @@ define([
                 });
             },
 
-            createDomCheckbox: function(additionalField, section) {
+            createDomCheckbox: function(additionalField) {
                 var inputWidget = new dijit.form.CheckBox({
                     id: this.additionalFieldPrefix + additionalField.id,
                     name: additionalField.name

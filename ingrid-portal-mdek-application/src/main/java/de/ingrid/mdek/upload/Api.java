@@ -1,3 +1,25 @@
+/*-
+ * **************************************************-
+ * InGrid Portal MDEK Application
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ *
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ *
+ * http://ec.europa.eu/idabc/eupl5
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
 package de.ingrid.mdek.upload;
 
 import java.io.IOException;
@@ -49,12 +71,13 @@ public class Api {
     /**
      * Get HEAD request and return the Content-Length Header.
      *
-     * @param path The path and filename of the document
+     * @param path The path to the document
+     * @param file The filename of the document
      * @return Response
      * @throws Exception
      */
     @HEAD
-    @Path("{path : [^/]+}/{file : .+}")
+    @Path("{path : .+}/{file : [^/]+}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response head(
             @PathParam("path") String path,
@@ -79,16 +102,17 @@ public class Api {
     /**
      * Download a document
      *
-     * @param path The path and filename of the document
+     * @param path The path to the document
+     * @param file The filename of the document
      * @return Response
      * @throws Exception
      */
     @GET
-    @Path("{path : [^/]+}/{file : .+}")
+    @Path("{path : .+}/{file : [^/]+}")
     @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON})
     public Response download(
-            @PathParam("path") String path,
-            @PathParam("file") String file) throws Exception {
+          @PathParam("path") String path,
+          @PathParam("file") String file) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.READ.name())) {
             throw new NotAuthorizedException("You are not authorized to read the document.");
@@ -157,6 +181,11 @@ public class Api {
             throw new NotAuthorizedException("You are not authorized to upload the document.");
         }
 
+        // check filename
+        if (!this.storage.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
+
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
             StorageItem item = this.storage.getInfo(path, file);
@@ -205,6 +234,11 @@ public class Api {
             throw new NotAuthorizedException("You are not authorized to upload the document.");
         }
 
+        // check filename
+        if (!this.storage.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
+
         // store files
         StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, false);
         return this.createUploadResponse(files);
@@ -213,12 +247,13 @@ public class Api {
     /**
      * Delete a document
      *
-     * @param path The path and filename of the document
+     * @param path The path to the document
+     * @param file The filename of the document
      * @return Response
      * @throws Exception
      */
     @DELETE
-    @Path("{path : [^/]+}/{file : .+}")
+    @Path("{path : .+}/{file : [^/]+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(
             @PathParam("path") String path,

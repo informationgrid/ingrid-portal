@@ -134,8 +134,95 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  -->
  
 <facets>
+    <!-- Bundesländer -->
+    <facet sort="SORT_BY_NAME" show-on-more-than="1">
+        <name>searchResult.facete.title.states</name>
+        <id>state</id>
+        <facets>
+            <facet>
+                <id>bw</id>
+                <name>Baden-Württemberg</name>
+                <query>partner:bw</query>
+            </facet>
+            <facet>
+                <id>by</id>
+                <name>Bayern</name>
+                <query>partner:by</query>
+            </facet>
+            <facet>
+                <id>be</id>
+                <name>Berlin</name>
+                <query>partner:be</query>
+            </facet>
+            <facet>
+                <id>bb</id>
+                <name>Brandenburg</name>
+                <query>partner:bb</query>
+            </facet>
+            <facet>
+                <id>hb</id>
+                <name>Bremen</name>
+                <query>partner:hb</query>
+            </facet>
+            <facet>
+                <id>hh</id>
+                <name>Hamburg</name>
+                <query>partner:hh</query>
+            </facet>
+            <facet>
+                <id>he</id>
+                <name>Hessen</name>
+                <query>partner:he</query>
+            </facet>
+            <facet>
+                <id>mv</id>
+                <name>Mecklenburg-Vorpommern</name>
+                <query>partner:mv</query>
+            </facet>
+            <facet>
+                <id>ni</id>
+                <name>Niedersachsen</name>
+                <query>partner:ni</query>
+            </facet>
+            <facet>
+                <id>nw</id>
+                <name>Nordrhein-Westfalen</name>
+                <query>partner:nw</query>
+            </facet>
+            <facet>
+                <id>rp</id>
+                <name>Rheinland-Pfalz</name>
+                <query>partner:rp</query>
+            </facet>
+            <facet>
+                <id>sl</id>
+                <name>Saarland</name>
+                <query>partner:sl</query>
+            </facet>
+            <facet>
+                <id>sn</id>
+                <name>Sachsen</name>
+                <query>partner:sn</query>
+            </facet>
+            <facet>
+                <id>st</id>
+                <name>Sachsen-Anhalt</name>
+                <query>partner:st</query>
+            </facet>
+            <facet>
+                <id>sh</id>
+                <name>Schleswig-Holstein</name>
+                <query>partner:sh</query>
+            </facet>
+            <facet>
+                <id>th</id>
+                <name>Thüringen</name>
+                <query>partner:th</query>
+            </facet>
+        </facets>
+    </facet>
     <!-- Kategorien -->
-    <facet>
+    <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.types</name>
         <id>type</id>
         <facets>
@@ -144,154 +231,172 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>
                 <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
+                <display>true</display>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
                 <name>Steine und Erden\, Glas\, Keramik\, Baustoffe</name>
                 <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
+                <display>true</display>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
                 <name>Stahl\, Eisen und sonstige Metalle einschließlich Verarbeitung</name>
                 <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
+                <display>true</display>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
                 <name>Chemische Erzeugnisse\, Arzneimittel\, Mineralölraffination und Weiterverarbeitung</name>
                 <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
+                <display>true</display>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
-                <name>Oberflächenbehandlung von Kunststoffen</name>
+                <name>Oberflächenbehand&amp;shy;lung von Kunststoffen</name>
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
+                <display>true</display>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
                 <name>Holz\, Zellstoff</name>
                 <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
+                <display>true</display>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
                 <name>Nahrungs-\, Genuss- und Futtermittel\, landwirtschaftliche Erzeugnisse</name>
                 <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
+                <display>true</display>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
                 <name>Verwertung und Beseitigung von Abfällen und sonstigen Stoffen</name>
                 <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
+                <display>true</display>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
                 <name>Lagerung von Stoffen und Gemischen</name>
                 <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
+                <display>true</display>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
                 <name>Sonstige Industrieanlagen</name>
                 <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
+                <display>true</display>
             </facet>
         <!-- Kernenergie -->
             <facet>
                 <name>Kernenergie</name>
                 <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
+                <display>true</display>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
                 <name>Abfalldeponien</name>
                 <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
+                <display>true</display>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
                 <name>Wasserwirtschaftliche Vorhaben </name>
-                <query>uvp_category:"UVPG-3"</query>
+                <query>uvp_category:"UVPG-13"</query>
                 <id>wasservorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
                 <name>Verkehrsvorhaben</name>
                 <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
                 <name>Bergbau- und Abbauvorhaben, dauerhafte Speicherung von Kohlendioxid</name>
                 <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
+                <display>true</display>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
                 <name>Flurbereinigung</name>
                 <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
+                <display>true</display>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
                 <name>Forstliche und landwirtschaftliche Vorhaben</name>
                 <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
                 <name>Bauvorhaben, Fremdenverkehr, Freizeit, ohne Bebauungsplan</name>
                 <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
+                <display>true</display>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
                 <name>Leitungsanlagen und vergleichbare Anlagen</name>
                 <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
-    <!-- Status -->
+    <!-- Verfahrenstypen -->
     <facet>
-        <name>Verfahrens-Typ</name>
+        <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
         <facets>
-        <!-- UVP Verfahren -->
+        <!-- Zulassungsverfahren -->
             <facet>
-                <name>UVP Verfahren</name>
+                <name>Zulassungsverfahren</name>
                 <query>t01_object.obj_class:10</query>
                 <id>procedure_10</id>
-            </facet>
-        <!-- Vorprüfungen mit negativem Ergebnis -->
-            <facet>
-                <name>Vorprüfungen mit negativem Ergebnis</name>
-                <query>t01_object.obj_class:12</query>
-                <id>procedure_12</id>
-            </facet>
-        <!-- Ausländisches Verfahren -->
-            <facet>
-                <name>Ausländisches Verfahren</name>
-                <query>t01_object.obj_class:11</query>
-                <id>procedure_11</id>
+                <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
             <facet>
                 <name>Raumordnungsverfahren</name>
                 <query>t01_object.obj_class:13</query>
                 <id>procedure_13</id>
+                <display>true</display>
             </facet>
-            <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
+        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
             <facet>
                 <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
                 <query>t01_object.obj_class:14</query>
                 <id>procedure_14</id>
             </facet>
+        <!-- Ausländische Vorhaben -->
+            <facet>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <id>procedure_11</id>
+                <display>true</display>
+            </facet>
         </facets>
     </facet>
+
+    <!-- Aktualität -->
     <facet>
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
@@ -357,6 +462,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>energie</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-1</icon>
+                <display>true</display>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
             <facet>
@@ -365,6 +471,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>baustoffe</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-2</icon>
+                <display>true</display>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
             <facet>
@@ -373,6 +480,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>verarbeitung</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-3</icon>
+                <display>true</display>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
             <facet>
@@ -381,14 +489,16 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>chemie</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-4</icon>
+                <display>true</display>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
             <facet>
-                <name>Oberflächenbehandlung von Kunststoffen</name>
+                <name>Oberflächenbehand&amp;shy;lung von Kunststoffen</name>
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-5</icon>
+                <display>true</display>
             </facet>
         <!-- Holz, Zellstoff -->
             <facet>
@@ -397,6 +507,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>holzzellstoff</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-6</icon>
+                <display>true</display>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
             <facet>
@@ -405,6 +516,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>erzeugnisse</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-7</icon>
+                <display>true</display>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
             <facet>
@@ -413,6 +525,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>verwertungbeseitigungabfaellen</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-8</icon>
+                <display>true</display>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
             <facet>
@@ -421,6 +534,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>lagerungstoffengemischen</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-9</icon>
+                <display>true</display>
             </facet>
         <!-- Sonstige Industrieanlagen -->
             <facet>
@@ -429,6 +543,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>industrieanlagen</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-10</icon>
+                <display>true</display>
             </facet>
         <!-- Kernenergie -->
             <facet>
@@ -437,6 +552,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>kernenergie</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-11</icon>
+                <display>true</display>
             </facet>
         <!-- Abfalldeponien -->
             <facet>
@@ -445,6 +561,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>abfalldeponien</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-12</icon>
+                <display>true</display>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
             <facet>
@@ -453,6 +570,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>wasservorhaben</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-13</icon>
+                <display>true</display>
             </facet>
         <!-- Verkehrsvorhaben -->
             <facet>
@@ -461,6 +579,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>verkehrsvorhaben</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-14</icon>
+                <display>true</display>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
             <facet>
@@ -469,6 +588,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>bergbaukohlendioxid</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-15</icon>
+                <display>true</display>
             </facet>
         <!-- Flurbereinigung -->
             <facet>
@@ -477,6 +597,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>flurbereinigung</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-16</icon>
+                <display>true</display>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
             <facet>
@@ -485,6 +606,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>forstlandvorhaben</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-17</icon>
+                <display>true</display>
             </facet>
         <!-- Bauvorhaben -->
             <facet>
@@ -493,6 +615,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>bauvorhaben</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-18</icon>
+                <display>true</display>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
             <facet>
@@ -501,6 +624,50 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>anlagen</id>
                 <parentId>type</parentId>
                 <icon>icon-UVPG-19</icon>
+                <display>true</display>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>searchResult.facete.title.procedures</name>
+        <id>category_procedure</id>
+        <categoryOnly>true</categoryOnly>
+        <facets>
+        <!-- Zulassungsverfahren -->
+            <facet>
+                <name>Zulassungs&amp;shy;verfahren</name>
+                <query>t01_object.obj_class:10</query>
+                <parentId>procedure</parentId>
+                <id>procedure_10</id>
+                <shortcut>Z</shortcut>
+                <display>true</display>
+            </facet>
+        <!-- Raumordnungsverfahren -->
+            <facet>
+                <name>Raumordnungs&amp;shy;verfahren</name>
+                <query>t01_object.obj_class:13</query>
+                <parentId>procedure</parentId>
+                <id>procedure_13</id>
+                <shortcut>R</shortcut>
+                <display>true</display>
+            </facet>
+        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
+            <facet>
+                <name>Linienbestimmung nach Bundesfernstraßen&amp;shy;gesetz oder Landesstraßenrecht</name>
+                <query>t01_object.obj_class:14</query>
+                <parentId>procedure</parentId>
+                <id>procedure_14</id>
+                <shortcut>L</shortcut>
+                <display>true</display>
+            </facet>
+        <!-- Ausländische Vorhaben -->
+            <facet>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <parentId>procedure</parentId>
+                <id>procedure_11</id>
+                <shortcut>A</shortcut>
+                <display>true</display>
             </facet>
         </facets>
     </facet>

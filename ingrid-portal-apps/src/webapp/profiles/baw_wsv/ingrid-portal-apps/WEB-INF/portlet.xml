@@ -589,7 +589,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>2</value>
+                <value>3</value>
             </preference>
             <preference>
                 <name>titleKey</name>
@@ -625,7 +625,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>1</value>
+                <value>2</value>
             </preference>
              <preference>
                 <name>titleKey</name>
@@ -669,7 +669,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>3</value>
+                <value>4</value>
             </preference>
             <preference>
                 <name>titleKey</name>
@@ -898,6 +898,7 @@
             <portlet-mode>VIEW</portlet-mode>
         </supports>
         <portlet-preferences>
+            <!--
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -906,6 +907,7 @@
                 <name>default-vertical-position</name>
                 <value>5</value>
             </preference>
+             -->
             <preference>
                 <name>infoTemplate</name>
                 <value>/WEB-INF/templates/info_teaser.vm</value>
@@ -986,14 +988,6 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>portlet-type</name>
-                <value>ingrid-home-marginal</value>
-            </preference>
-            <preference>
-                <name>default-vertical-position</name>
-                <value>1</value>
-            </preference>
-            <preference>
                 <name>titleKey</name>
                 <value>teaser.shortcut.title</value>
             </preference>
@@ -1052,6 +1046,34 @@
         </init-param>
         <portlet-name>MyPortalLoginPortlet</portlet-name>
         <display-name>MyPortalLoginPortlet</display-name>
+        <description>This portlet displayes the login dialog.</description>
+        <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalLoginPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
+<!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
+        <supported-locale>de</supported-locale>
+        <supported-locale>en</supported-locale>
+        <portlet-preferences>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+        
+    </portlet>
+
+    <portlet id="MyPortalLoginPortletMain">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/myportal/login_main.vm</value>
+        </init-param>
+        <portlet-name>MyPortalLoginPortletMain</portlet-name>
+        <display-name>MyPortalLoginPortletMain</display-name>
         <description>This portlet displayes the login dialog.</description>
         <portlet-class>de.ingrid.portal.portlets.myportal.MyPortalLoginPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>

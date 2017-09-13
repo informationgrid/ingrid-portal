@@ -175,30 +175,30 @@
             </svg>
             <span class="header__widget__text mq-hide-xxl">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
-        <div class="metamenu metamenu--wide">
         #if($jetspeed.getLoggedOn())
-            <!-- State logged in -->
-            #set($userAttributes = $jetspeed.getUserProperties())
-            #set($userNameGiven = $userAttributes.get("user.name.given"))
-            #set($userNameFamily = $userAttributes.get("user.name.family"))
-            
-            #if($userNameGiven)
-                #set ($salutation = " $userNameGiven")
-            #end
-            #if($userNameFamily)
-                #set ($salutation = "$!{salutation} $userNameFamily")
-            #end        
-            <div class="metamenu__box ob-container">
-                <p>$MESSAGES.getString('ingrid.page.login.as'):<br><strong>$salutation</strong></p>
-                <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a></p>
-            </div>
-            <div class="metamenu__box ob-container">
-                <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">$MESSAGES.getString('ingrid.page.login.to.myportal')</a></p>
+            <div class="metamenu metamenu--wide">
+                <!-- State logged in -->
+                #set($userAttributes = $jetspeed.getUserProperties())
+                #set($userNameGiven = $userAttributes.get("user.name.given"))
+                #set($userNameFamily = $userAttributes.get("user.name.family"))
+                
+                #if($userNameGiven)
+                    #set ($salutation = " $userNameGiven")
+                #end
+                #if($userNameFamily)
+                    #set ($salutation = "$!{salutation} $userNameFamily")
+                #end        
+                <div class="metamenu__box ob-container">
+                    <p>$MESSAGES.getString('ingrid.page.login.as'):<br><strong>$salutation</strong></p>
+                    <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a></p>
+                </div>
+                <div class="metamenu__box ob-container">
+                    <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">$MESSAGES.getString('ingrid.page.login.to.myportal')</a></p>
+                </div>
             </div>
         #else
             $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
-        </div>
     </div>
   #elseif($el == "/administration")
     <div class="header__widget">

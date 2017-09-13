@@ -1,3 +1,25 @@
+/*-
+ * **************************************************-
+ * InGrid Portal MDEK Application
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
 define([
     'dojo/_base/declare',
     'dojo/_base/lang',
@@ -7,6 +29,7 @@ define([
     'dojo/json',
     'dojo/string',
     'dojo/on',
+    'dojo/parser',
     'dojo/aspect',
     'dojo/query',
     'dojo/dom',
@@ -14,6 +37,7 @@ define([
     'dojo/dom-style',
     'dojo/dom-class',
     'dijit/_WidgetBase',
+    'dijit/registry',
     'dijit/ConfirmDialog',
     'dijit/form/Button',
     'ingrid/dialog',
@@ -29,6 +53,7 @@ define([
     json,
     string,
     on,
+    parser,
     aspect,
     query,
     dom,
@@ -36,6 +61,7 @@ define([
     domStyle,
     domClass,
     _WidgetBase,
+    registry,
     Dialog,
     Button,
     IngridDialog,
@@ -53,6 +79,8 @@ define([
 
         styleEl: null,
         templateEl: null,
+        tabContainer: null,
+        uploadLink: null,
         btnHandles: [],
         uploadBtns: {
             retry: {},
@@ -74,12 +102,35 @@ define([
         open: function(path, existingFiles) {
             this.deferred = new Deferred();
 
+            // initialize data
+            this.resultParts = {};
+            this.uploads = [];
+
             // build ui
             this.dialog = this.createDialog(existingFiles);
             this.uploader = this.createUploader(this.dialog.containerNode, path);
 
             // show uploader
             this.dialog.show();
+
+            // create widgets inside template
+            var containerNode = dom.byId("uploadTabContainer").parentNode;
+            parser.parse(containerNode);
+            this.tabContainer = registry.byId("uploadTabContainer");
+            this.uploadLink = registry.byId("uploadLink");
+            this.tabContainer.resize();
+
+            var self = this;
+            on(this.uploadLink, "keyup, paste", function() {
+                // delay check a bit, since after a paste the input is still empty
+                setTimeout(function() {
+                    if (self.uploadLink.get("value").trim().length > 0) {
+                        self.setOkButtonState( true );
+                    } else {
+                        self.setOkButtonState( false );
+                    }
+                });
+            });
 
             return this.deferred;
         },
@@ -88,8 +139,8 @@ define([
          * Called, when the uploader window is closed
          */
         close: function() {
-            this.destroyDialog();
             this.destroyUploader();
+            this.destroyDialog();
         },
 
         /**
@@ -104,7 +155,15 @@ define([
                 execute: lang.hitch(this, function(cancelEvent) {
                     // resolve the deferred created in open method
                     // with the uploaded documents
-                    var uploads = this.removeDuplicates(this.uploads);
+                    var uploads = [];
+                    var tabId = this.tabContainer.selectedChildWidget.id;
+                    if (tabId === "uploadFilePane") {
+                        uploads = this.removeDuplicates(this.uploads);
+                    } else if (tabId === "uploadLinkPane") {
+                        uploads = [{
+                            uri: this.uploadLink.get("value")
+                        }]
+                    }
                     this.deferred.resolve(uploads);
                 }),
                 onHide: lang.hitch(this, function(cancelEvent) {
@@ -139,8 +198,7 @@ define([
                         caption: "Nein",
                         action: IngridDialog.CLOSE_ACTION
                     }]);
-                }
-                else {
+                } else {
                     dialog.origHide();
                 }
             });
@@ -257,7 +315,7 @@ define([
                     onComplete: lang.hitch(this, function(id, name, responseJSON, xhrOrXdr) {
                         if (responseJSON.success) {
                             // hide buttons
-                            for (type in this.uploadBtns) {
+                            for (var type in this.uploadBtns) {
                                 this.setButtonVisibility(this.uploadBtns[type][id], false);
                             }
                             // collect files from response by id
@@ -267,6 +325,7 @@ define([
                             // set error message according to response status
                             var status = xhrOrXdr ? xhrOrXdr.status : "default";
                             var messages = {
+                                400: "Der Dateiname ist ungültig. Siehe auch <a href='https://de.wikipedia.org/wiki/Dateiname#Problematische_und_unzul.C3.A4ssige_Zeichen_oder_Namen' target='_blank'>unzulässige Zeichen in Dateinamen [Wikipedia]</a>.",
                                 401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
                                 409: "Die Datei existiert bereits.",
                                 "default": "Beim Upload ist ein Fehler aufgetreten." 
@@ -315,7 +374,7 @@ define([
                             } 
                         };
                         var buttonState = buttonStates[status] ? buttonStates[status] : buttonStates["default"];
-                        for (button in buttonState) {
+                        for (var button in buttonState) {
                             this.setButtonVisibility(this.uploadBtns[button][id], buttonState[button]);
                         }
                     })
@@ -332,6 +391,9 @@ define([
          */
         destroyUploader: function() {
             // cleanup all resources that were created in the open method
+            if (this.tabContainer) {
+                this.tabContainer.destroyRecursive();
+            }
             if (this.styleEl) {
                 domConstruct.destroy(this.styleEl);
             }

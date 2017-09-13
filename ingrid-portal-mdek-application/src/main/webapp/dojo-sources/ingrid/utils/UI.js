@@ -181,7 +181,7 @@ define([
         updateBlockerDivInfo: function(id) {
             var waitInfo = dom.byId( "waitInfo" );
 
-            if (!id || !waitInfo.data[id])
+            if (!id || !waitInfo || !waitInfo.data || !waitInfo.data[id])
                 return;
             waitInfo.data[id].current++;
             dom.byId( "waitInfo_" + id ).innerHTML = string.substitute( waitInfo.data[id].text,
@@ -191,7 +191,7 @@ define([
             // if maximum is reached, remove html div and data element
             if (waitInfo.data[id].current == waitInfo.data[id].max) {
                 construct.destroy( "waitInfo_" + id );
-                delete waitInfo.data[id];
+                if (waitInfo.data) delete waitInfo.data[id];
             }
 
             // if no elements are present, hide info
@@ -211,7 +211,7 @@ define([
         	var waitInfo = dom.byId( "waitInfo" );
         	if (waitInfo) {
 	        	construct.destroy( "waitInfo_" + id );
-	            delete waitInfo.data[id];
+	            if (waitInfo.data) delete waitInfo.data[id];
         	}
         },
 
@@ -401,16 +401,31 @@ define([
 
         showToolTip: function(gridId, msg) {
             var grid = dom.byId(gridId);
+            var timeout = 5000;
+
+            // check if tooltip is already shown and merge the messages
+            var tooltipContainer = query(".dijitTooltipContainer");
+            if (tooltipContainer.length === 1) {
+                var widget = registry.getEnclosingWidget(tooltipContainer[0]);
+                if (widget.aroundNode && widget.aroundNode.id === gridId && widget.containerNode.innerText !== "") {
+                    msg = tooltipContainer[0].innerHTML + "<br>" + msg;
+                    // increase timeout a bit to have more time to read
+                    timeout = 7000;
+                }
+            }
             
-            setTimeout(function() { Tooltip.show(msg, grid, ["below"], false) }, 0 );
+            Tooltip.show(msg, grid, ["below"], false);
             setTimeout(function() {
                 var eventWndScroll;
+
+                // hide tooltip automatically after 5s
                 var defaultHide = setTimeout(function() {
                     Tooltip.hide(grid);
                     eventWndScroll.remove();
                     eventWndClick.remove();
-                }, 5000);
+                }, timeout);
                 
+                // hide tooltip if clicked or scrolled on background
                 var eventWndClick = on(dom.byId("contentContainer"), "click", function() {
                     Tooltip.hide(grid);
                     eventWndClick.remove();

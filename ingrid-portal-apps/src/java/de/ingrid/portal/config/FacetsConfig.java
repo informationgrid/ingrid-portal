@@ -101,11 +101,16 @@ public class FacetsConfig {
                     }
                 }
 
-                if (facetNode.getChildren( "[@sort]" ).size() > 0) {
-                    Node subNode = (Node) facetNode.getChildren( "[@sort]" ).get( 0 );
+                if (facetNode.getAttributes( "sort" ).size() > 0) {
+                    Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
                 }
-
+                
+                if (facetNode.getAttributes( "show-on-more-than" ).size() > 0) {
+                    Node subNode = (Node) facetNode.getAttributes( "show-on-more-than" ).get( 0 );
+                    ingridFacet.setShowOnMoreThan( new Integer(subNode.getValue().toString()) );
+                }
+                
                 if (facetNode.getChildren( "query" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "query" ).get( 0 );
                     if (node != null) {
@@ -237,11 +242,40 @@ public class FacetsConfig {
                         ingridFacet.setIcon( node.getValue().toString() );
                     }
                 }
+                
+                if (facetNode.getChildren( "shortcut" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "shortcut" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setShortcut( node.getValue().toString() );
+                    }
+                }
+                
+                if (facetNode.getChildren( "url" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "url" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setUrl( node.getValue().toString() );
+                    }
+                }
+                
+                if (facetNode.getChildren( "wildcard" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "wildcard" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setWildcard( node.getValue().toString() );
+                    }
+                }
+                
+                if (facetNode.getChildren( "colNum" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "colNum" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setColNum( Integer.parseInt(node.getValue().toString()) );
+                    }
+                }
+                
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {
-                        if (node.getChildren( "[@queryType]" ).size() > 0) {
-                            Node subNode = (Node) node.getChildren( "[@queryType]" ).get( 0 );
+                        if (node.getAttributes( "@queryType" ).size() > 0) {
+                            Node subNode = (Node) node.getAttributes( "@queryType" ).get( 0 );
                             ingridFacet.setQueryType( subNode.getValue().toString() );
                         }
 

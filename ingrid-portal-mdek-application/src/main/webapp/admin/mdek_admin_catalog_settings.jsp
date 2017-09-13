@@ -101,16 +101,18 @@
                     // set all checkboxes active that are activated
                     array.forEach(data, function(item) {
                         var check = registry.byId("behaviour_" + item.id);
-                        check.set( "checked", item.active );
-                        // add a marker for display difference to default state
-                        var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
-                        domClass.add(check.domNode.parentNode, "modified");
-                        check.domNode.parentNode.appendChild(tag);
+                        if (check) {
+                            check.set( "checked", item.active );
+                            // add a marker for display difference to default state
+                            var tag = domConstruct.toDom("<span title='<fmt:message key='dialog.admin.catalog.general.modifiedBehaviour' />'> (Info)</span>");
+                            domClass.add(check.domNode.parentNode, "modified");
+                            check.domNode.parentNode.appendChild(tag);
 
-                        if (item.params) {
-                            array.forEach(item.params, function(param) {
-                                query("input[data-field='" + param.id + "']")[0].value = param.value;
-                            });
+                            if (item.params) {
+                                array.forEach(item.params, function(param) {
+                                    query("input[data-field='" + param.id + "']")[0].value = param.value;
+                                });
+                            }
                         }
                     });
                 });
@@ -118,9 +120,16 @@
             
             function removeBehaviours() {
                 for (var behave in behaviour) {
-                    if (!behaviour[behave].title) continue;
+                    var entry = behaviour[behave];
+                    if (!entry.title) continue;
                     var check = registry.byId("behaviour_" + behave);
                     if (check) check.destroy();
+                    if (entry.children) {
+                        for (var child in entry.children) {
+                            var checkChild = registry.byId("behaviour_" + child);
+                            if (checkChild) checkChild.destroy();
+                        }
+                    }
                 }
                 domConstruct.empty("behaviourContent");
             }
@@ -239,8 +248,9 @@
                 for (var behave in behaviour) {
                     var box = registry.byId("behaviour_" + behave);
                     if (box) {
+                        var entry = behaviour[behave];
                         var currentState = box.checked;
-                        if (behaviour[behave].defaultActive !== currentState || behaviour[behave].params) {
+                        if (entry.defaultActive !== currentState || entry.params) {
                             var beh = {
                                 id: behave,
                                 active: currentState
@@ -267,6 +277,24 @@
                                 }
                             }
                             modifiedBehaviours.push(beh);
+                        }
+                    } else {
+                        var children = behaviour[behave].children;
+                        if (children) {
+                            for (var child in children) {
+                                var boxChild = registry.byId("behaviour_" + child);
+                                if (boxChild) {
+                                    var childEntry = children[child];
+                                    var currentStateChild = boxChild.checked;
+                                    if (childEntry.defaultActive !== currentStateChild) {
+                                        modifiedBehaviours.push({
+                                            id: child,
+                                            parent: behave,
+                                            active: currentStateChild
+                                        })
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -315,7 +343,8 @@
             function renderSystemBehaviours() {
                 var behavioursByCategory = {};
                 for (var behave in behaviour) {
-                    if (!behaviour[behave].title) continue;
+                    var entry = behaviour[behave];
+                    if (!entry.title) continue;
                     
                     // TODO: group by categories
                     var cat = behaviour[behave].category;
@@ -343,11 +372,15 @@
                 domConstruct.place( domConstruct.toDom("<div>" + category + "</div>"), "behaviourContent" );
             }
 
-            function renderRow(data, id) {
-                var row = domConstruct.toDom("<span class='input'></span>");
+            function renderRow(data, id, padding) {
+                var pad = padding ? " intend" : "";
+                var row = domConstruct.toDom("<span class='input" + pad + "'></span>");
                 var label = domConstruct.toDom("<label class='inActive' title='" + data.description + "'></label>");
-                var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
-                label.appendChild(cb.domNode);
+                // only render checkbox if it's a real behaviour and not a category
+                if (data.run) {
+                    var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
+                    label.appendChild(cb.domNode);
+                }
                 label.appendChild(domConstruct.toDom(data.title));
                 
                 row.appendChild(label);

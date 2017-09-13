@@ -64,11 +64,26 @@ and import project into eclipse. There are several sub projects:
 - ingrid-portal-mdek: Portal integration of the InGrid Editor
 - ingrid-portal-distribution: The assembly project to gather the pieces and build an installer
 
+### Development
 
+For development of the InGrid-Editor, go to the directory ingrid-portal-mdek-application and execute the following command:
+
+```
+run.sh [<profile>]
+```
+
+The optional _profile_ parameter adds the sources from the profile directory (ingrid-portal-apps/src/webapp/profiles/<profile>) for the startup. A jetty server is started and the sources can be edited directly. When editing Java classes, the server is automatically restarted. If you change resource files like messages.properties, then the server also needs to be restarted.
+
+There's also a corresponding windows batch file _start.bat_, which works the same.
 
 ### Debug under eclipse
 
-TDB
+When the jetty server is started then the InGrid-Editor can also be debugged via remote debugging. The settings are:
+```
+Connection Type: Standard (Socket Attach)
+Host: 127.0.0.1
+Port: 8000
+```
 
 Support
 -------

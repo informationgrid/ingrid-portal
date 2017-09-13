@@ -1,20 +1,45 @@
+/*-
+ * **************************************************-
+ * InGrid Portal MDEK Application
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ *
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ *
+ * http://ec.europa.eu/idabc/eupl5
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
 package de.ingrid.mdek.upload.storage.impl;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
+import java.io.UncheckedIOException;
 import java.nio.file.CopyOption;
-import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Vector;
+import java.util.regex.Pattern;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -25,6 +50,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.upload.ConflictException;
+import de.ingrid.mdek.upload.IllegalFileException;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.StorageItem;
 
@@ -33,40 +59,88 @@ import de.ingrid.mdek.upload.storage.StorageItem;
  */
 public class FileSystemStorage implements Storage {
 
-    private final static Logger log = Logger.getLogger(FileSystemStorage.class);
+    private static final String ARCHIVE_PATH = "_archive_";
+    private static final String TRASH_PATH = "_trash_";
+
+    private static final int MAX_FILE_LENGTH = 255;
+    private static final Pattern ILLEGAL_FILE_CHARS = Pattern.compile("[/<>?\":|\\*]");
+    private static final Pattern ILLEGAL_PATH_CHARS = Pattern.compile("[<>?\":|\\*]");
+    private static final Pattern ILLEGAL_FILE_NAME = Pattern.compile(".*"+ILLEGAL_FILE_CHARS.pattern()+".*");
+
+    private static final Logger log = Logger.getLogger(FileSystemStorage.class);
 
     private String docsDir = null;
     private String partsDir = null;
 
+   /**
+    * Set the document directory
+    *
+    * @param docsDir
+    */
+    public void setDocsDir(String docsDir) {
+        this.docsDir = docsDir;
+    }
+
     /**
-     * Constructor
+     * Set the partial upload directory
      *
-     * @param docsDir
      * @param partsDir
      */
-    public FileSystemStorage(String docsDir, String partsDir) {
-        this.docsDir = docsDir;
+    public void setPartsDir(String partsDir) {
         this.partsDir = partsDir;
     }
 
     @Override
-    public String[] list(String path) throws IOException {
-        Path realPath = this.getRealPath(path, this.docsDir);
-        List<String> files = new ArrayList<String>();
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(realPath)) {
-            for (Path entry : stream) {
-                if (Files.isRegularFile(entry)) {
-                    files.add(this.stripPath(entry.toString()));
+    public StorageItem[] list() throws IOException {
+        List<StorageItem> files = this.list(this.getRealPath("", this.docsDir));
+        return files.toArray(new StorageItem[files.size()]);
+    }
+
+    @Override
+    public StorageItem[] list(String path) throws IOException {
+        List<StorageItem> files = this.list(this.getRealPath(path, this.docsDir));
+        return files.toArray(new StorageItem[files.size()]);
+    }
+
+    /**
+     * List the files in the given path recursively
+     *
+     * @param path
+     * @return List<StorageItem>
+     * @throws IOException
+     */
+    protected List<StorageItem> list(Path path) throws IOException {
+        List<StorageItem> files = new ArrayList<StorageItem>();
+        if (Files.exists(path)) {
+            Files.walk(path)
+            .filter(p -> !p.getParent().toString().endsWith(TRASH_PATH) && Files.isRegularFile(p))
+            .forEach(p -> {
+                try {
+                    files.add(this.getFileInfo(p.toString()));
                 }
-            }
+                catch (IOException e) {
+                    throw new UncheckedIOException(e);
+                }
+            });
         }
-        return files.toArray(new String[files.size()]);
+        return files;
     }
 
     @Override
     public boolean exists(String path, String file) {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        return Files.exists(realPath);
+        try {
+            FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
+            return Files.exists(fileInfo.getRealPath());
+        }
+        catch (Exception ex) {}
+        return false;
+    }
+
+    @Override
+    public boolean isValidName(String path, String file) {
+        // we only reject invalid filenames, because the path will be sanitized
+        return this.isValid(file, ILLEGAL_FILE_NAME);
     }
 
     @Override
@@ -78,12 +152,16 @@ public class FileSystemStorage implements Storage {
     @Override
     public InputStream read(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        return Files.newInputStream(realPath);
+        FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
+        return Files.newInputStream(fileInfo.getRealPath());
     }
 
     @Override
     public FileSystemItem[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract)
             throws IOException {
+        if (!this.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
 
@@ -150,6 +228,9 @@ public class FileSystemStorage implements Storage {
     @Override
     public FileSystemItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
             throws IOException {
+        if (!this.isValidName(path, file)) {
+            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+        }
         // combine parts into stream
         Vector<InputStream> streams = new Vector<InputStream>();
         Path[] parts = new Path[totalParts];
@@ -174,7 +255,28 @@ public class FileSystemStorage implements Storage {
     @Override
     public void delete(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
-        Files.delete(realPath);
+        Path trashPath = this.getTrashPath(path, file, this.docsDir);
+        // ensure directory
+        this.getTrashPath(path, "", this.docsDir).toFile().mkdirs();
+        // get the real location of the file
+        FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
+        Files.move(fileInfo.getRealPath(), trashPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @Override
+    public void archive(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
+        Path archivePath = this.getArchivePath(path, file, this.docsDir);
+        // ensure directory
+        this.getArchivePath(path, "", this.docsDir).toFile().mkdirs();
+        Files.move(realPath, archivePath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @Override
+    public void restore(String path, String file) throws IOException {
+        Path realPath = this.getRealPath(path, file, this.docsDir);
+        Path archivePath = this.getArchivePath(path, file, this.docsDir);
+        Files.move(archivePath, realPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
     }
 
     /**
@@ -203,7 +305,7 @@ public class FileSystemStorage implements Storage {
                 ArchiveEntry entry = ais.getNextEntry();
                 Path parent = path.getParent();
                 while (entry != null) {
-                    Path file = Paths.get(parent.toString(), this.sanitize(entry.getName()));
+                    Path file = Paths.get(parent.toString(), this.sanitize(entry.getName(), ILLEGAL_PATH_CHARS));
                     if (entry.isDirectory()) {
                         // handle directory
                         Files.createDirectories(file);
@@ -234,14 +336,32 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
+     * Check if a path is valid
+     *
+     * @param path
+     * @param illegalChars
+     * @return String
+     */
+    private boolean isValid(String path, Pattern illegalChars) {
+        // check against rules provided in https://en.m.wikipedia.org/wiki/Filename
+        if (path == null || path.length() == 0 || path.length() > MAX_FILE_LENGTH) {
+            return false;
+        }
+        if (illegalChars.matcher(path).matches()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Replace forbidden characters from a path
      *
      * @param path
+     * @param illegalChars
      * @return String
      */
-    private String sanitize(String path) {
-        // TODO which characters are forbidden?
-        return path;
+    private String sanitize(String path, Pattern illegalChars) {
+        return illegalChars.matcher(path).replaceAll("_");
     }
 
     /**
@@ -253,7 +373,8 @@ public class FileSystemStorage implements Storage {
      * @return Path
      */
     private Path getRealPath(String path, String file, String basePath) {
-        return FileSystems.getDefault().getPath(basePath, this.sanitize(path), this.sanitize(file));
+        return FileSystems.getDefault().getPath(basePath,
+            this.sanitize(path, ILLEGAL_PATH_CHARS), this.sanitize(file, ILLEGAL_FILE_CHARS));
     }
 
     /**
@@ -264,7 +385,53 @@ public class FileSystemStorage implements Storage {
      * @return Path
      */
     private Path getRealPath(String file, String basePath) {
-        return FileSystems.getDefault().getPath(basePath, this.sanitize(file));
+        return FileSystems.getDefault().getPath(basePath, this.sanitize(file, ILLEGAL_PATH_CHARS));
+    }
+
+    /**
+     * Get the trash path of a requested path
+     *
+     * @param path
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getTrashPath(String path, String file, String basePath) {
+        return FileSystems.getDefault().getPath(basePath,
+            this.sanitize(path, ILLEGAL_PATH_CHARS), TRASH_PATH, this.sanitize(file, ILLEGAL_FILE_CHARS));
+    }
+
+    /**
+     * Get the archive path of a requested path
+     *
+     * @param path
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getArchivePath(String path, String file, String basePath) {
+        return FileSystems.getDefault().getPath(basePath,
+            this.sanitize(path, ILLEGAL_PATH_CHARS), ARCHIVE_PATH, this.sanitize(file, ILLEGAL_FILE_CHARS));
+    }
+
+    /**
+     * Get the archive path of a requested path
+     *
+     * @param file
+     * @param basePath
+     * @return Path
+     */
+    private Path getArchivePath(String file, String basePath) {
+        Path strippedPath = Paths.get(this.stripPath(this.sanitize(file, ILLEGAL_PATH_CHARS)));
+        if (strippedPath.getNameCount() < 2) {
+            throw new IllegalArgumentException("Illegal path: "+file);
+        }
+        int nameCount = strippedPath.getNameCount();
+        boolean isArchivePath = ARCHIVE_PATH.equals(strippedPath.getName(nameCount-2).toString());
+        return FileSystems.getDefault().getPath(basePath,
+                strippedPath.subpath(0, nameCount-1).toString(),
+                !isArchivePath ? ARCHIVE_PATH : "",
+                strippedPath.subpath(nameCount-1, nameCount).toString());
     }
 
     /**
@@ -279,7 +446,7 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
-     * Get informations about a file
+     * Get information about a file
      *
      * @param file
      * @return Item
@@ -287,11 +454,26 @@ public class FileSystemStorage implements Storage {
      */
     private FileSystemItem getFileInfo(String file) throws IOException {
         Path filePath = Paths.get(file);
+        Path archivePath = this.getArchivePath(file, this.docsDir);
+        if (!Files.exists(filePath) && Files.exists(archivePath)) {
+            // fall back to archive, if file does not exist
+            file = archivePath.toString();
+            filePath = archivePath;
+        }
+
+        Path strippedPath = Paths.get(this.stripPath(file));
+        boolean isArchived = filePath.equals(archivePath);
+
+        String itemPath = strippedPath.subpath(0, strippedPath.getNameCount()-(isArchived ? 2 : 1)).toString();
+        String itemFile = strippedPath.getName(strippedPath.getNameCount()-1).toString();
+
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
-        Path strippedPath = Paths.get(this.stripPath(file));
-        return new FileSystemItem(this, strippedPath.getParent().toString(),
-                strippedPath.getFileName().toString(), fileType, fileSize);
+        // get last modified date of file and take care of timezone correctly, since LocalDateTime does not store time zone information (#745)
+        LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), TimeZone.getDefault().toZoneId());
+
+        return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, lastModifiedTime,
+                isArchived, filePath);
     }
 }

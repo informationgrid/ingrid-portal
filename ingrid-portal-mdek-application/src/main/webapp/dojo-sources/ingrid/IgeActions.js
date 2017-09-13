@@ -477,15 +477,15 @@ define([
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
-                        msg.resultHandler.resolve(res);
                         console.debug("set data");
                         self._setData(res)
-                        .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
+                            .then(lang.partial(msg.resultHandler.resolve, res))
+                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
                     },
-                    //				timeout:10000,
+                    // timeout:10000,
                     errorHandler: function(message) {
                         UtilUI.exitLoadingState();
-                        //					msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
+                        // msg.resultHandler.reject("Error in js/js: Error while creating a new node.");
                         console.error("Error in js/js: Error while creating a new node.");
                         msg.resultHandler.reject(message);
                     }
@@ -532,8 +532,8 @@ define([
                             res.nodeDocType = "Class1000_B";
                         }
 
-                        msg.resultHandler.resolve(res);
                         self._setData(res)
+                            .then(lang.partial(msg.resultHandler.resolve, res))
                             .then(lang.hitch(dirty, dirty.resetDirtyFlag));
                     },
                     //				timeout:10000,
@@ -1619,6 +1619,7 @@ define([
 
             // ------------------ Address and Function ------------------
             registry.byId("addressStreet").attr("value", nodeData.street, true);
+            registry.byId("addressAdministrativeArea").attr("value", nodeData.administrativeArea, true);
             registry.byId("addressCountry").attr("value", nodeData.countryCode == -1 ? null : nodeData.countryCode, true);
             registry.byId("addressZipCode").attr("value", nodeData.postalCode, true);
             registry.byId("addressCity").attr("value", nodeData.city, true);
@@ -1782,6 +1783,7 @@ define([
             UtilAddress.addAddressTitles(addressTable);
             UtilList.addAddressLinkLabels(addressTable);
             UtilStore.updateWriteStore("generalAddress", addressTable);
+            registry.byId("isAdvCompatible").attr("value", nodeData.advCompatible, true);
 
             // Comments
             var commentData = UtilList.addDisplayDates(nodeData.commentTable);
@@ -1842,7 +1844,8 @@ define([
 
             // -- Extra Info --
             registry.byId("extraInfoLangMetaData").attr("value", nodeData.extraInfoLangMetaDataCode, true);
-            registry.byId("extraInfoLangData").attr("value", nodeData.extraInfoLangDataCode, true);
+            UtilStore.updateWriteStore("extraInfoLangData", UtilList.listToTableData(nodeData.extraInfoLangDataTable));
+            
             registry.byId("extraInfoPublishArea").attr("value", nodeData.extraInfoPublishArea, true);
             registry.byId("extraInfoCharSetData").attr("value", nodeData.extraInfoCharSetDataCode, false);
             UtilStore.updateWriteStore("extraInfoConformityTable", nodeData.extraInfoConformityTable);
@@ -1865,9 +1868,12 @@ define([
 
             UtilStore.updateWriteStore("thesaurusTerms", nodeData.thesaurusTermsTable);
             UtilStore.updateWriteStore("thesaurusTopics", UtilList.listToTableData(nodeData.thesaurusTopicsList));
+            UtilStore.updateWriteStore("advProductGroup", UtilList.listToTableData(nodeData.advProductGroupList));
             UtilStore.updateWriteStore("thesaurusInspire", UtilList.listToTableData(nodeData.thesaurusInspireTermsList));
             UtilStore.updateWriteStore("thesaurusEnvTopics", UtilList.listToTableData(nodeData.thesaurusEnvTopicsList));
             registry.byId("thesaurusEnvExtRes").attr("value", nodeData.thesaurusEnvExtRes, true);
+            // reset field for entering free keywords
+            registry.byId("thesaurusFreeTerms").set("value", "");
 
 
             // -- Links --
@@ -2054,6 +2060,7 @@ define([
 
         _setObjectDataClass1: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, false);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             registry.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
@@ -2112,6 +2119,7 @@ define([
 
         _setObjectDataClass3: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             //registry.byId("ref3ServiceType")._lastValueReported = nodeData.ref3ServiceType + "";
@@ -2170,6 +2178,7 @@ define([
 
         _setObjectDataClass6: function(nodeData) {
             registry.byId("isInspireRelevant").attr("value", nodeData.inspireRelevant, true);
+            if (nodeData.inspireRelevant) registry.byId(nodeData.inspireConform ? "isInspireConform" : "notInspireConform").attr("value", true, true);
             registry.byId("isOpenData").attr("value", nodeData.openData, true);
             UtilStore.updateWriteStore("categoriesOpenData", UtilList.listToTableData(nodeData.openDataCategories));
             registry.byId("ref6ServiceType").attr("value", nodeData.ref6ServiceType, true);
@@ -2229,6 +2238,7 @@ define([
 
             // ------------------ Address and Function ------------------
             nodeData.street = registry.byId("addressStreet").get("value");
+            nodeData.administrativeArea = registry.byId("addressAdministrativeArea").get("value");
             nodeData.countryCode = registry.byId("addressCountry").get("value");
             nodeData.countryName = registry.byId("addressCountry").get("displayedValue");
             //UtilList.getSelectDisplayValue(registry.byId("addressCountry"), registry.byId("addressCountry").get('value'));//registry.byId("addressCountry").getDisplayValue();
@@ -2335,6 +2345,8 @@ define([
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
+            nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
+            
             // Comments
             nodeData.commentTable = currentUdk.commentStore;
 
@@ -2388,7 +2400,7 @@ define([
 
             // -- Extra Info --
             nodeData.extraInfoLangMetaDataCode = registry.byId("extraInfoLangMetaData").get("value");
-            nodeData.extraInfoLangDataCode = registry.byId("extraInfoLangData").get("value");
+            nodeData.extraInfoLangDataTable = UtilList.tableDataToList(this._getTableData("extraInfoLangData"));
             nodeData.extraInfoPublishArea = registry.byId("extraInfoPublishArea").get("value");
             nodeData.extraInfoCharSetDataCode = registry.byId("extraInfoCharSetData").get("value");
             nodeData.extraInfoConformityTable = this._getTableData("extraInfoConformityTable");
@@ -2411,6 +2423,7 @@ define([
             // -- Thesaurus --
             nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
             nodeData.thesaurusTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusTopics"));
+            nodeData.advProductGroupList = UtilList.tableDataToList(this._getTableData("advProductGroup"));
             nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(this._getTableData("thesaurusInspire"));
             nodeData.thesaurusEnvTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusEnvTopics"));
             nodeData.thesaurusEnvExtRes = registry.byId("thesaurusEnvExtRes").checked;
@@ -2612,6 +2625,7 @@ define([
 
         _getObjectDataClass1: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").get("value");
@@ -2673,6 +2687,7 @@ define([
 
         _getObjectDataClass3: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false; // in case value is NULL!
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref3ServiceType = registry.byId("ref3ServiceType").get("value");
@@ -2729,6 +2744,7 @@ define([
 
         _getObjectDataClass6: function(nodeData) {
             nodeData.inspireRelevant = registry.byId("isInspireRelevant").checked ? true : false;
+            if (nodeData.inspireRelevant) nodeData.inspireConform = registry.byId("isInspireConform").checked ? true : false;
             nodeData.openData = registry.byId("isOpenData").checked ? true : false; // in case value is NULL!
             nodeData.openDataCategories = UtilList.tableDataToList(this._getTableData("categoriesOpenData"));
             nodeData.ref6ServiceType = registry.byId("ref6ServiceType").get("value");
@@ -2852,11 +2868,11 @@ define([
             // if it's a slickgrid
             if (!widget) {
                 // request UNFILTERED data ! Get full data store !
-                return gridManager[tableName].getData(true);
+                return gridManager[tableName].getUnfilteredData();
             } else {
                 //var store = widget.store;
                 //return UtilStore.convertItemsToJS(store, store._arrayOfTopLevelItems);
-                return widget.getData(true);
+                return widget.getUnfilteredData();
             }
             //return registry.byId(tableName).store._arrayOfTopLevelItems;
         }

@@ -1,0 +1,493 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+a {
+  color: #2C5C91;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #2C5C91;
+}
+
+.field--success {
+  border: 2px solid #2C5C91 !important;
+}
+
+.field-toggle__label--highlight .icon {
+  fill: #2C5C91;
+}
+
+input:checked + .field-toggle__label--highlight .field-toggle__icon {
+  border-color: #2C5C91;
+  box-shadow: 0 0 0 1px #2C5C91;
+}
+
+thead {
+  border-bottom: 2px solid #2C5C91;
+}
+
+.table__sort-toggle .icon {
+  fill: #2C5C91;
+}
+
+.btn--primary {
+  background: #2C5C91;
+}
+
+.btn--secondary {
+  color: #2C5C91 !important;
+}
+
+.btn {
+  border: 1px solid #2C5C91;
+}
+
+.btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
+  background: #E2E2E2;
+  border-color: #E2E2E2;
+  color: #2C5C91 !important;
+}
+
+#btn_search {
+  background: #2C5C91;
+  border-color: #2C5C91;
+}
+#btn_search:not([disabled]):hover, #btn_search:not([disabled]):focus, #btn_search:not([disabled]):active {
+  color: #fff !important;
+}
+
+.btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  background: #2C5C91;
+}
+
+.icon-active {
+  fill: #2C5C91;
+}
+
+.link--alt:hover {
+  color: #2C5C91;
+}
+
+.category-list a:hover {
+  color: #2C5C91;
+}
+
+.list--checked .icon {
+  fill: #2C5C91;
+}
+
+.nav__container {
+  border-bottom: 1px solid #E2E2E2;
+}
+
+.nav__container__content:active {
+  color: #2C5C91;
+}
+
+.nav__containter__content-item a:active {
+  color: #2C5C91;
+}
+
+.nav__foot a:hover {
+  background: #E2E2E2;
+  color: #666;
+}
+
+.nav-desktop {
+  background: #2C5C91;
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  color: #2C5C91;
+  background: #E2E2E2;
+}
+.nav-desktop__title:hover .icon, .nav-desktop__title.is-selected .icon, .nav-desktop__title.is-active .icon {
+  fill: #2C5C91;
+}
+
+.nav-desktop__dropdown {
+  border-top: 4px solid #E2E2E2;
+}
+
+.nav-desktop__dropdown a:hover, .nav-desktop__dropdown a:active {
+  color: #2C5C91 !important;
+}
+
+.nav__dropdown-item a:active {
+  color: #2C5C91 !important;
+}
+
+.dropmenu .is-active {
+  color: #2C5C91;
+}
+
+.metamenu__link.is-active {
+  color: #2C5C91;
+}
+
+.nav-overlay {
+  background: #2C5C91;
+}
+
+.nav-overlay__item--level1 {
+  border-bottom: 1px solid #E2E2E2;
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+  background: #E2E2E2;
+  color: #666;
+}
+
+.no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
+.nav-overlay__item--level3:hover,
+.nav-overlay__item--level3.is-active {
+  color: #FFFFFF;
+}
+
+.search-form input {
+  border-color: #2C5C91;
+}
+
+.pagination__list a[href] .icon {
+  fill: #2C5C91;
+}
+.pagination__list a[href]:hover .icon {
+  fill: #E2E2E2;
+}
+
+.tab__toggles {
+  color: #2C5C91;
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+  color: #2C5C91;
+}
+
+.tab__select {
+  background: #2C5C91;
+}
+.tab__select:hover, .tab__select.is-active {
+  background: #E2E2E2;
+}
+
+.tab__toggle.is-active a {
+  color: #2C5C91;
+}
+
+.message--success {
+  color: #2C5C91;
+}
+
+.message-fill--success .icon {
+  fill: #2C5C91;
+}
+
+.no-touchevents .tooltip:hover {
+  border-color: #2C5C91;
+}
+.no-touchevents .tooltip:hover .tooltip__icon {
+  fill: #2C5C91;
+}
+
+.popup__header {
+  border-bottom: 2px solid #2C5C91;
+}
+
+.teaser__box {
+  border-top: 4px solid #2C5C91;
+}
+
+.no-touchevents .filter__title:hover {
+  color: #2C5C91;
+}
+
+.no-touchevents .sidebar-filter-subheader:hover {
+  color: #2C5C91;
+}
+
+.no-touchevents .sidebar-filter-content ul a:hover {
+  color: #2C5C91;
+}
+
+.no-touchevents .tree__toggle:hover {
+  border-color: #2C5C91;
+  box-shadow: 0 1px 0 #2C5C91;
+}
+
+.nav-toggle {
+  color: #E2E2E2 !important;
+}
+.nav-toggle:after {
+  border-color: transparent transparent #2C5C91 transparent;
+}
+
+.ob-box-padded-more {
+  min-height: 60px;
+}
+
+.nav-toggle .icon {
+  fill: #000;
+}
+
+.ob-border-brand {
+  border: 1px solid #2C5C91 !important;
+}
+.tx-highlight {
+  color: #2C5C91 !important;
+}
+
+.header__logo {
+  width: auto;
+}
+
+.header__widget__icon.is-active {
+  fill: #E0003C;
+}
+
+@media screen and (min-width: 640px) {
+  .pagination__number:hover, .pagination__number.is-active {
+    color: #2C5C91;
+    box-shadow: inset 0 -4px 0 0 #2C5C91;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: inset 0 -2px 0 0 #2C5C91, 0 4px 0 0 #2C5C91;
+  }
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #2C5C91;
+  }
+}
+
+@media screen and (min-width: 940px) {
+  .no-touchevents .header__widget > a:hover {
+    color: #2C5C91;
+  }
+
+  .header__widget__icon.is-active {
+    fill: #E0003C;
+  }
+}
+
+.desktop-logo {
+    max-width: 60%;
+}
+
+.desktop__title p {
+    margin: 0 0 15px;
+    color: #2C5C91;
+}
+
+.desktop__title p.main__title {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.desktop__title p.sub__title {
+    font-size: 16px;
+}
+
+.mobile__title {
+    font-size: 27px;
+    color: #FFFFFF;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.mobile__logo {
+    height: 2.5rem;
+}
+
+.footer__logo {
+    display: inline-block;
+    margin-right: 1.5rem;
+    vertical-align: middle;
+}
+
+.footer__logo {
+    width: 2.5rem;
+}
+
+.map_popup_cat {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
+
+.map_popup_proc {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
+
+/*
+    Leaflet
+*/
+
+.leaflet-control-layers-overlays label {
+    padding: 5px 0;
+    font-weight: normal;
+}
+
+.leaflet-control-layers-overlays label div span{
+    padding: 0px 5px;
+}
+
+.leaflet-control-layers-overlays label div input[type="checkbox"] {
+    -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
+}
+
+.icon-UVPG-1:before {
+  content: "\e084";
+}
+.icon-UVPG-2:before {
+  content: "\e48f";
+}
+.icon-UVPG-3:before {
+  content: "\e088";
+}
+.icon-UVPG-4:before {
+  content: "\e0aa";
+}
+.icon-UVPG-5:before {
+  content: "\e472";
+}
+.icon-UVPG-6:before {
+  content: "\e3c8";
+}
+.icon-UVPG-7:before {
+  content: "\e52c";
+}
+.icon-UVPG-8:before {
+  content: "\e2ce";
+}
+.icon-UVPG-9:before {
+  content: "\e4ad";
+}
+.icon-UVPG-10:before {
+  content: "\e3b8";
+}
+.icon-UVPG-11:before {
+  content: "\e336";
+}
+.icon-UVPG-12:before {
+  content: "\e190";
+}
+.icon-UVPG-13:before {
+  content: "\e3ad";
+}
+.icon-UVPG-14:before {
+  content: "\e5b2";
+}
+.icon-UVPG-15:before {
+  content: "\e49c";
+}
+.icon-UVPG-16:before {
+  content: "\e2f8";
+}
+.icon-UVPG-17:before {
+  content: "\e5bc";
+}
+.icon-UVPG-18:before {
+  content: "\e3b1";
+}
+.icon-UVPG-19:before {
+  content: "\e42c";
+}
+
+.marker-cluster-10 {
+  background-color: rgba(56, 170, 220, 0.6) !important;
+}
+
+.marker-cluster-10 div{
+  background-color: rgba(56, 170, 220, 1.0) !important;
+}
+
+.marker-cluster-11 {
+  background-color: rgba(48, 48, 48, 0.6) !important;
+}
+
+.marker-cluster-11 div{
+  background-color: rgba(48, 48, 48, 1.0) !important;
+}
+
+.marker-cluster-1314 {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
+.marker-cluster-1314 div {
+  background-color: rgba(200, 60, 40, 1.0) !important;
+}
+
+.marker-cluster-dev-plan {
+  background-color: rgba(110, 170, 40, 0.6) !important;
+}
+
+.marker-cluster-dev-plan div {
+  background-color: rgba(110, 170, 40, 1.0) !important;
+}
+
+.marker-cluster span {
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+}
+
+.nav-overlay__item--level2:hover {
+  color:#FFF;
+  background: #2C5C91;
+}
+
+.circle {
+  border: 3px solid #2C5C91;
+}

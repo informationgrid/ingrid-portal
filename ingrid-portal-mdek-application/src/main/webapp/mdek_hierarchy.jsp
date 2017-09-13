@@ -330,9 +330,22 @@
                                     </div>
                                 </div></div>
                             </span>
-                            <span id="uiElement6000" class="outer">
-                                <div class="input checkboxContainer">
+                            <span id="uiElement6000" class="outer checkboxContainer">
+                                <div class="input checkboxContainer input-inline">
                                     <input type="checkbox" id="isInspireRelevant" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
+                                </div>
+                                <span id="uiElement6001" class="hidden">
+                                    <div class="input checkboxContainer input-inline">
+                                        <input type="radio" id="isInspireConform"/><label for="isInspireConform" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6001)"><fmt:message key="ui.obj.general.inspireConform" /></label>
+                                    </div>
+                                    <div class="input checkboxContainer input-inline">
+                                        <input type="radio" id="notInspireConform" /><label for="notInspireConform" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6002)"><fmt:message key="ui.obj.general.notInspireConform" /></label>
+                                    </div>
+                                </span>
+                            </span>
+                            <span id="uiElement6005" class="outer hidden">
+                                <div class="input checkboxContainer">
+                                    <input type="checkbox" id="isAdvCompatible" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6005)"><fmt:message key="ui.obj.general.advCompatible" /></label>
                                 </div>
                             </span>
                             <span id="uiElement6010" class="outer halfWidth">
@@ -370,6 +383,21 @@
                             </div>
                         </div>
                         <div id="thesaurusContent" class="content">
+                            <div class="inputContainer">
+                                <span id="uiElement5170" class="outer optional hidden">
+                                    <div>
+                                        <span id="advProductGroupLabel" class="label">
+                                            <label for="advProductGroup" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5170);" >
+                                                <fmt:message key="ui.obj.thesaurus.advProductGroup" />
+                                            </label>
+                                        </span>
+                                        <div class="input tableContainer">
+                                            <div id="advProductGroup" autoHeight="4" interactive="true" class="hideTableHeader">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
                             <div class="inputContainer">
                                 <span id="uiElement5064" class="outer">
                                     <div>
@@ -1868,7 +1896,8 @@
                         </div>
                         <div id="extraInfoContent" class="content">
                             <div class="inputContainer">
-                                    <span id="uiElement5041" class="outer halfWidth">
+                                <span class="outer halfWidth">
+                                    <span id="uiElement5041" class="outer fullWidth">
                                     	<div><span id="extraInfoLangMetaDataLabel" class="label">
                                             <label for="extraInfoLangMetaData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5041)">
                                                 <fmt:message key="ui.obj.additionalInfo.language.metadata" />
@@ -1876,17 +1905,7 @@
                                         </span><span class="input"><input autoComplete="false" style="width:100%;" listId="99999999" id="extraInfoLangMetaData" /></span>
 										</div>
 									</span>
-                                    <span id="uiElement5042" class="outer halfWidth">
-                                    	<div><span id="extraInfoLangDataLabel" class="label">
-                                            <label for="extraInfoLangData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5042)">
-                                                <fmt:message key="ui.obj.additionalInfo.language.data" />
-                                            </label>
-                                        </span><span class="input"><input autoComplete="false" style="width:100%;" listId="99999999" id="extraInfoLangData" /></span>
-										</div>
-									</span>
-                            </div>
-                            <div class="inputContainer">
-                                    <span id="uiElement3571" class="outer halfWidth">
+                                    <span id="uiElement3571" class="outer fullWidth">
                                     	<div><span class="label">
                                             <label id="extraInfoPublishAreaLabel" for="extraInfoPublishArea" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3571)">
                                                 <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
@@ -1894,6 +1913,21 @@
                                         </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishArea" /></span>
 										</div>
 									</span>
+                               </span>
+                                    <span id="uiElement5042" class="outer halfWidth">
+                                    	<div><span id="extraInfoLangDataLabel" class="label">
+                                            <label for="extraInfoLangData" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5042)">
+                                                <fmt:message key="ui.obj.additionalInfo.language.data" />
+                                            </label>
+                                        </span>
+		                                <div class="input tableContainer">
+		                                    <div id="extraInfoLangData" autoHeight="3" interactive="true" class="hideTableHeader">
+		                                    </div>
+		                                </div>
+										</div>
+									</span>
+                            </div>
+                            <div class="inputContainer">
                                     <span id="uiElement5043" class="outer halfWidth">
                                         <div>
                                         <span id="extraInfoCharSetDataLabel" class="label">
@@ -2486,7 +2520,19 @@
                                             </span>
                                         </div>
                                     </span>
-                                    <span id="uiElement4405" class="outer" style="width:100%;">
+                                    <span id="uiElement6006" class="outer halfWidth">
+                                        <div>
+                                            <span id="addressAdministrativeAreaLabel" class="label">
+                                                <label for="addressAdministrativeArea" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6006)">
+                                                    <fmt:message key="ui.adr.details.administrativeArea" />
+                                                </label>
+                                            </span>
+                                            <span class="input">
+                                                <input autoComplete="false" style="width:100%;" listId="6200" maxHeight="200" id="addressAdministrativeArea" />
+                                            </span>
+                                        </div>
+                                    </span>
+                                    <span id="uiElement4405" class="outer halfWidth">
                                         <div>
                                             <span id="addressCountryLabel" class="label">
                                                 <label for="addressCountry" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4405)">

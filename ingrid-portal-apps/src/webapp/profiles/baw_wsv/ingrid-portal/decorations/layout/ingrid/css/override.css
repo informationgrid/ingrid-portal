@@ -84,6 +84,16 @@
   left: 90px;
 }
 
+@media screen and (max-width: 479px) {
+  .nav-toggle:after {
+    border-width: 0 0 75px 20px;
+  }
+
+  .header__logo:after {
+    border-width: 0 0 75px 20px;
+  }
+}
+
 .header__widget__icon {
   fill: #FFF;
 }
@@ -93,7 +103,7 @@
 }
 
 .service_in_main {
-  padding: 15px 10px;
+  padding: 18px 10px 0; 
 }
 
 .service_in_main .header__widget__text {
@@ -117,5 +127,9 @@
   right: 0;
   width: 0;
   top: 0;
-  left: 68px;
+  left: 67px;
+}
+
+.metamenu {
+  right: 0px;
 }

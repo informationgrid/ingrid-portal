@@ -1,3 +1,25 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
 a {
   color: #2C5C91;
 }
@@ -90,6 +112,7 @@ thead {
 
 .nav__foot a:hover {
   background: #E2E2E2;
+  color: #666;
 }
 
 .nav-desktop {
@@ -134,12 +157,13 @@ thead {
 
 .no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
   background: #E2E2E2;
+  color: #666;
 }
 
 .no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
 .nav-overlay__item--level3:hover,
 .nav-overlay__item--level3.is-active {
-  color: #2C5C91;
+  color: #FFFFFF;
 }
 
 .search-form input {
@@ -217,13 +241,10 @@ thead {
 }
 .nav-toggle:after {
   border-color: transparent transparent #2C5C91 transparent;
-  border-width: 0 0 70px 20px;
 }
 
-@media screen and (max-width: 768px) {
-  .nav-toggle:after {
-    border-width: 0 0 58px 20px;
-  }
+.ob-box-padded-more {
+  min-height: 60px;
 }
 
 .nav-toggle .icon {
@@ -280,10 +301,11 @@ thead {
 
 .desktop__title p {
     margin: 0 0 15px;
+    color: #2C5C91;
 }
 
 .desktop__title p.main__title {
-    font-size: 27px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -292,6 +314,7 @@ thead {
 }
 
 .mobile__title {
+    font-size: 27px;
     color: #FFFFFF;
 }
 
@@ -342,6 +365,7 @@ thead {
 
 .leaflet-control-layers-overlays label div input[type="checkbox"] {
     -webkit-appearance: checkbox;
+    -moz-appearance: checkbox;
 }
 
 .icon-UVPG-1:before {
@@ -400,4 +424,57 @@ thead {
 }
 .icon-UVPG-19:before {
   content: "\e42c";
+}
+
+.marker-cluster-10 {
+  background-color: rgba(56, 170, 220, 0.6) !important;
+}
+
+.marker-cluster-10 div{
+  background-color: rgba(56, 170, 220, 1.0) !important;
+}
+
+.marker-cluster-11 {
+  background-color: rgba(48, 48, 48, 0.6) !important;
+}
+
+.marker-cluster-11 div{
+  background-color: rgba(48, 48, 48, 1.0) !important;
+}
+
+.marker-cluster-1314 {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
+.marker-cluster-1314 div {
+  background-color: rgba(200, 60, 40, 1.0) !important;
+}
+
+.marker-cluster span {
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+}
+
+.nav-overlay__item--level2:hover {
+  color:#FFF;
+  background: #2C5C91;
+}
+
+.circle {
+  border: 3px solid #2C5C91;
 }

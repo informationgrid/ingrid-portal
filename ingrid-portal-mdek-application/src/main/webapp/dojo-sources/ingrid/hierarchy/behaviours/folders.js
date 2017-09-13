@@ -32,7 +32,8 @@ define(["dojo/_base/declare",
   "dijit/registry",
   "ingrid/message",
   "ingrid/utils/Syslist",
-  "ingrid/utils/Tree"
+  "ingrid/utils/Tree",
+  "dojo/NodeList-traverse"
 ], function(declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils) {
 
   return declare(null, {
@@ -79,20 +80,10 @@ define(["dojo/_base/declare",
         }
       });
 
-      // add button to create document wizard dialog
-      /*topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
-        var pos = data.types.indexOf(message.get("tree.folder"));
-        if (pos !== -1) data.types.splice(pos, 1);
-
-        data.buttons.push({
-          label: message.get("tree.folder.create"),
-          callback: function(closeDialog) {
-            registry.byId("objectClass").set("value", "Class1000");
-            registry.byId("objectName").set("value", message.get("tree.folder.new"));
-            closeDialog();
-          }
-        });
-      });*/
+      topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
+        // remove folder type since this one is created differently (toolbar, context menu)
+        data.types = array.filter(data.types, function(t) { return t[1] !== "1000"; });
+      });
 
       // handle toolbar when folder is selected
       // -> only disable toolbar buttons that are not needed (be careful with IgeToolbar-Class-behaviour)
@@ -121,7 +112,8 @@ define(["dojo/_base/declare",
               registry.byId("menuItemPreview").set("disabled", true);
 
             } else {
-              registry.byId("menuItemNewFolder").set("disabled", false);
+              // disallow folder creation underneath non folders
+              registry.byId("menuItemNewFolder").set("disabled", true);
             }
           });
 
@@ -161,10 +153,14 @@ define(["dojo/_base/declare",
     isFolderDisabledForNode: function(node) {
       var excludedId = "addressFreeRoot";
 
+      // root nodes should be enabled to create folders
+      if (node.id === "objectRoot" || node.id === "addressRoot") return false;
+
       // check if we have write permission and node is not excluded
-      if (!node.userWriteTreePermission || node.id === excludedId) return true;
+      if (!node.userWriteTreePermission || node.id === excludedId || node.objectClass !== 1000) return true;
 
       // check all parents
+      // if we find an excluded node then disallow folder creation
       var parentId = node.parent;
       while (parentId && parentId !== excludedId) {
             var parentNode = TreeUtils.getNodeById("dataTree", parentId);

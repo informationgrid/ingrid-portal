@@ -23,15 +23,6 @@
     </fragment>
     <fragment id="home-1" type="portlet" name="ingrid-portal-apps::IngridInformPortlet">
       <property layout="OneColumn" name="row" value="1" />
-      <preference name="infoTemplate" readOnly="false">
-        <value>/WEB-INF/templates/ingrid_inform_teaser.vm</value>
-      </preference>
-      <preference name="cmsKey" readOnly="false">
-        <value>portalu.teaser.inform</value>
-      </preference>
-      <preference name="helpKey" readOnly="false">
-        <value>ingrid-inform-1</value>
-      </preference>
     </fragment>
     <fragment id="home-2" type="portlet" name="ingrid-portal-apps::CategoryTeaser">
       <property layout="OneColumn" name="row" value="2" />

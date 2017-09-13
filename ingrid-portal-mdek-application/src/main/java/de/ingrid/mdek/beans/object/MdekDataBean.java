@@ -75,6 +75,7 @@ public class MdekDataBean {
 	private List<MdekAddressBean> generalAddressTable;
 	private List<CommentBean> commentTable;
 	private Boolean openData;
+	private Boolean advCompatible;
 	private List<String> openDataCategories;
 
 	// Spatial
@@ -101,7 +102,7 @@ public class MdekDataBean {
 
 	// ExtraInfo
 	private Integer extraInfoLangMetaDataCode;
-	private Integer extraInfoLangDataCode;
+    private List<Integer> extraInfoLangDataTable;
 	private Integer extraInfoPublishArea;
 	private Integer extraInfoCharSetDataCode;
 	private List<ConformityBean> extraInfoConformityTable;
@@ -122,6 +123,8 @@ public class MdekDataBean {
 	
 	// Thesaurus
 	private Boolean inspireRelevant;
+	private Boolean inspireConform;
+	private List<Integer> advProductGroupList;
 	private List<Integer> thesaurusInspireTermsList;
 	private List<SNSTopic> thesaurusTermsTable;
 	private List<Integer> thesaurusTopicsList;
@@ -226,6 +229,7 @@ public class MdekDataBean {
 		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
 		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
+        this.setExtraInfoLangDataTable(new ArrayList<Integer>());
 		this.setExtraInfoConformityTable(new ArrayList<ConformityBean>());
 		this.setExtraInfoXMLExportTable(new ArrayList<String>());
 		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
@@ -929,15 +933,13 @@ public class MdekDataBean {
 
 
 
-	public Integer getExtraInfoLangDataCode() {
-		return extraInfoLangDataCode;
-	}
-
-
-
-	public void setExtraInfoLangDataCode(Integer extraInfoLangData) {
-		this.extraInfoLangDataCode = extraInfoLangData;
-	}
+    public List<Integer> getExtraInfoLangDataTable() {
+        return extraInfoLangDataTable;
+    }
+    public void setExtraInfoLangDataTable(
+            List<Integer> extraInfoLangDataTable) {
+        this.extraInfoLangDataTable = extraInfoLangDataTable;
+    }
 
 
 	public Integer getExtraInfoPublishArea() {
@@ -2035,8 +2037,34 @@ public class MdekDataBean {
         return ref1GridPosAccuracy;
     }
 
-
     public void setRef1GridPosAccuracy(Double ref1GridPosAccuracy) {
         this.ref1GridPosAccuracy = ref1GridPosAccuracy;
+    }
+
+    public Boolean getAdvCompatible() {
+        return advCompatible  == null ? false : advCompatible;
+    }
+    
+    public void setAdvCompatible(Boolean advCompatible) {
+        this.advCompatible = advCompatible;
+    }
+
+
+    public Boolean getInspireConform() {
+        return inspireConform;
+    }
+
+    public void setInspireConform(Boolean inspireConform) {
+        this.inspireConform = inspireConform;
+    }
+
+
+    public List<Integer> getAdvProductGroupList() {
+        return advProductGroupList;
+    }
+
+
+    public void setAdvProductGroupList(List<Integer> advProductGroupList) {
+        this.advProductGroupList = advProductGroupList;
     }
 }

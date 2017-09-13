@@ -126,6 +126,7 @@ define({
     "tree.nodePaste": "Einfügen",
     "tree.saveNewNodeHint": "Bitte speichern Sie 'Neues Objekt' vor dem Kopiervorgang!",
     "tree.nodePasteInvalidHint": "Ein Knoten kann nicht unter sich selbst ausgeschnitten und hinzugefügt werden!",
+    "tree.nodePasteInvalidHint.folderUnderObject": "Ein Ordner kann nicht unter einem Dokument angelegt werden.",
     "tree.nodeMarkDeleted": "Als gelöscht markieren",
     "tree.nodeDelete": "Löschen",
     "tree.confirmMarkDeleted": "Wollen Sie den Knoten '${0}' wirklich als gelöscht markieren?",
@@ -971,7 +972,7 @@ define({
     "ui.sysList.5130": "Objektklasse 3 - Name der Operation - WCTS",
     "ui.sysList.5151": "Objektklasse 3 - Version des Dienstes - CSW",
     "ui.sysList.5152": "Objektklasse 3 - Version des Dienstes - WMS",
-    "ui.sysList.5153": "Objektklasse 3 - Version des Dienstes - WFS",
+    "ui.sysList.5153": "Objektklasse 3 - Version des Dienstes - Downloaddienst",
     "ui.sysList.5154": "Objektklasse 3 - Version des Dienstes - WCTS",
     "ui.sysList.5180": "Objektklasse 3 - Operation - Unterstützte Platformen",
     "ui.sysList.5200": "Objektklasse 3 - Klassifikation des Dienstes",
@@ -982,6 +983,7 @@ define({
     "ui.sysList.6020": "Verfügbarkeit - Anwendungseinschr&auml;nkungen",
     "ui.sysList.6100": "INSPIRE-Themen",
     "ui.sysList.6200": "ISO Liste der Länder",
+	"ui.sysList.6250":"Verwaltungsgebiete",
     "ui.sysList.6300": "INSPIRE-Datenformat",
     "ui.sysList.6400": "Kategorien (Open Data)",
     "ui.sysList.6500": "Lizenzen",
@@ -1059,6 +1061,18 @@ define({
     "validation.error.spatial.no.expired": "Der Raumbezug darf nicht abgelaufen sein.",
     "validation.error.missing.download.link": "Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
 
+    "validation.levelOfSpecification.notConform":"Bei nicht konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'nicht evaluiert' oder 'nicht konform' sein.",
+    "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",
+    "validation.digitalRepresentation.conform":"Für konforme INSPIRE-Datensätze sind nur die Werte <ul><li>Grid</li><li>Vector</li><li>Text, Table</li><li>TIN</li></ul> erlaubt.",
+    "validation.specification.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'nicht evaluiert' oder 'nicht konform' gesetzt sein.",
+    "validation.specification.missing.service": "Die Spezifikation <ul><li>${0}</li></ul> muss für Geodatendienste vorhanden sein.",
+    "validation.specification.conform.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'konform' gesetzt sein.",
+    "validation.specification.deleted": "Die Spezifikation <ul><li>${0}</li></ul> darf bei INSPIRE-relevanten Datensätzen nicht gelöscht werden.",
+    "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
+    "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
+    "validation.encoding.added": "Das Kodierungsschema '${0}' wurde ebenfalls geändert.",
+    "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
+
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 
     "hint.noCapabilityUrlFound": "Es konnte keine GetCapabilities-Url gefunden werden, um den Datensatz zu aktualisieren.",
@@ -1067,10 +1081,17 @@ define({
     "hint.addressFromParentAdded": "Adressdaten von übergeordneter Adresse übernommen!",
     "hint.selectOpenData": "Wird diese Auswahl gewählt, so werden alle Zugriffsbeschränkungen entfernt und durch 'keine' ersetzt. Möchten Sie fortfahren?",
 
-    "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Land</li></ul>",
+    "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
     "warning.address.inherit.to.children": "Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",
     "warning.update.capabilities": "Achtung: mit dem Aktualisieren werden folgende Felder mit den Werten aus dem aktuellen Capabilities-Dokument überschrieben: <ul><li>Kurzbezeichnung</li><li>Beschreibung</li><li>Art des Dienstes</li><li>Klassifikation des Dienstes</li><li>Erläuterungen</li><li>Version des Dienstes</li><li>Operationen</li><li>Optionale Schlagworte</li></ul>Fortfahren?",
 
+    "widget.spatialSearch": "Suche nach einer Adresse/Raumbezug",
+    "widget.spatialSearch.helpMessage": "Durch Eingabe einer Adresse, einer bekannten Ortsbezeichnung oder auch von Koordinaten springen die Markierungen der Raumbezugskarte in den Umkreis dieses Bereiches. Mit dem Mauszeiger können die Eckpunkte des Ausschnitts sowie die Positionierung auf der Karte durch Verschieben verändert werden. Mit der Schaltfläche „Übernehme Ausschnitt“ wird der Raumbezug übernommen.",
+    "widget.spatial": "Raumbezug",
+    "widget.spatial.helpMessage": "Nach dem Übernehmen des Ausschnitts (Button 'Übernehme Ausschnitt') erscheinen im Feld Raumbezug die entsprechenden Koordinaten und der ausgewählte Ausschnitt ist hellrot hinterlegt. Der gewählte Raumbezug kann nachträglich geändert werden.",
+    "widget.showSpatial": "Anzeigen / Ändern",
+    "widget.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
+    
     "info.address.inherit.to.children": "Es wurden ${0} Adressen verändert!",
     "ui.listentry.noFilter": "Kein Filter"
 });

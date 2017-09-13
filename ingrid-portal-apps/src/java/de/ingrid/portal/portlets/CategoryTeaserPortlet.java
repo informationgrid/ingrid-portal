@@ -104,6 +104,7 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         context.put( "enableFacete", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false ) );
         context.put( "languageCode", request.getLocale().getLanguage() );
         context.put( "enableRss", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_RSS, false ) );
+        context.put( "maxColumn", PortalConfig.getInstance().getInt( PortalConfig.CATEGORY_TEASER_SEARCH_COLUMN_MAX, 6 ) );
         super.doView( request, response );
     }
 

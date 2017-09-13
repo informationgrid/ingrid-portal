@@ -71,10 +71,10 @@
             var singleHandled = handleSingleOption(params);
             if (singleHandled) return;
 
-            addRadioBoxes(types, "wizardObjTypes");
+            addRadioBoxes(params.types, "wizardObjTypes");
 
-            if (assistants.length > 0) {
-                addRadioBoxes(assistants, "wizardAssistantTypes");
+            if (params.assistants.length > 0) {
+                addRadioBoxes(params.assistants, "wizardAssistantTypes");
             } else {
                 query("#wizardAssistantTypesContainer").addClass("hide");
                 query("#wizardAssistantTypesContainer + div").addClass("hide");

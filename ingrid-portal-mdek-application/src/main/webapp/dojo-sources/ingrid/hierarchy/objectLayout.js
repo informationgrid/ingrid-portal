@@ -41,6 +41,7 @@ define([
     "dijit/form/ValidationTextBox",
     "dijit/form/SimpleTextarea",
     "dijit/form/CheckBox",
+    "dijit/form/RadioButton",
     "dijit/form/NumberTextBox",
     "dijit/form/DateTextBox",
     "dijit/layout/TabContainer",
@@ -62,7 +63,7 @@ define([
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate, Standby,
-            registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, NumberTextBox, DateTextBox,
+            registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
@@ -159,7 +160,7 @@ define([
                     console.debug("toggle");
                     // show only required fields initially
                     igeEvents.toggleFields(undefined, "showRequired");
-                    UtilUI.removeBlockerDivInfo("createObjects");
+                    UtilUI.updateBlockerDivInfo("createObjects");
 
                     // tell the calling function that we are finished and can proceed
                     self.deferredCreation.resolve();
@@ -306,7 +307,19 @@ define([
                 layoutCreator.createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
 
                 new CheckBox({}, "isInspireRelevant");
+                new RadioButton({
+                    checked: true,
+                    value: "true",
+                    name: "isInspireConform"
+                }, "isInspireConform").startup();
+                new RadioButton({
+                    checked: false,
+                    value: "false",
+                    name: "isInspireConform"
+                }, "notInspireConform").startup();
+                
                 new CheckBox({}, "isOpenData");
+                new CheckBox({}, "isAdvCompatible");
 
                 var categoriesStructure = [{
                     field: 'title',
@@ -1790,9 +1803,18 @@ define([
                     return UtilSyslist.getSyslistEntry(99999999);
                 });
 
-                layoutCreator.createSelectBox("extraInfoLangData", null, storeProps, function() {
-                    return UtilSyslist.getSyslistEntry(99999999);
-                });
+                var extraInfoLangDataStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '348px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 99999999,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 99999999)
+                }];
+                layoutCreator.createDataGrid("extraInfoLangData", null, extraInfoLangDataStructure, null);
 
                 layoutCreator.createSelectBox("extraInfoPublishArea", null, storeProps, function() {
                     return UtilSyslist.getSyslistEntry(3571);
@@ -1961,6 +1983,19 @@ define([
 
 
             createThesaurus: function() {
+                var advProductGroupStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '708px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 8010,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 8010)
+                }];
+                layoutCreator.createDataGrid("advProductGroup", null, advProductGroupStructure, null);
+
                 var thesaurusTopicsStructure = [{
                     field: 'title',
                     name: 'title',

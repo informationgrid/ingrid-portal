@@ -17,6 +17,14 @@
   var buffer = 0; //scroll bar buffer
   var iframe = document.getElementById('iframe_measure');
   var urlParams = location.hash;
+  // define the URL for the elastic search requests
+  // var elasticSearchUrl = "https://dev.informationgrid.eu/elastic-admin-se/";
+
+  // exclude networks which shall not be shown
+  // var excludeNetworks = ['luen_new'];
+  
+  // define initial network on init
+  // var initialNetworks = ['odl'];
 
   // Add iFrame 'src'
   iframe.src = '/ingrid-portal-apps/measures/index.html' + urlParams;
@@ -25,4 +33,5 @@
   function onParamChange(params) {
     window.history.pushState('', '', '#' + params );
   }
+  
 </script>

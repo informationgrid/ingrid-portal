@@ -509,6 +509,7 @@ require([
             renderTextWithTitle(previewImageUrl.description, "<fmt:message key='ui.obj.general.previewImageDescription' />");
 
             renderTextWithTitle(nodeData.inspireRelevant ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.inspireRelevant' />");
+            renderTextWithTitle(nodeData.advCompatible ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.advCompatible' />");
             renderTextWithTitle(nodeData.openData ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.general.openData' />");
             renderList(nodeData.openDataCategories, "<fmt:message key='ui.obj.general.categoriesOpenData' />");
 
@@ -734,7 +735,9 @@ require([
                 // additional information
                 renderSectionTitel("<fmt:message key='ui.obj.additionalInfo.title' />");
                 renderTextWithTitle(UtilSyslist.getSyslistEntryName(99999999, nodeData.extraInfoLangMetaDataCode), "<fmt:message key='ui.obj.additionalInfo.language.metadata' />");
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(99999999, nodeData.extraInfoLangDataCode), "<fmt:message key='ui.obj.additionalInfo.language.data' />");
+                renderList(nodeData.extraInfoLangDataTable, "<fmt:message key='ui.obj.additionalInfo.language.data' />", null, function(val) {
+                    return UtilSyslist.getSyslistEntryName(99999999, val);
+                });
                 renderTextWithTitle(UtilSyslist.getSyslistEntryName(3571, nodeData.extraInfoPublishArea), "<fmt:message key='ui.obj.additionalInfo.publicationCondition' />");
                 //!!!renderTextWithTitle(registry.byId("extraInfoCharSetData").get("displayedValue"), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
                 // Table is only displayed for object classes 1 and 3
@@ -857,8 +860,20 @@ require([
             array.forEach(addDomWidgets, function(domWidget) {
                 var widgetId = domWidget.getAttribute("widgetId");
                 if (!widgetId) widgetId = domWidget.id;
-                var label = searchLabelFrom(domWidget);
-                var data = getValueFromAdditional(widgetId, nodeData);
+                var widget = registry.byId(widgetId);
+                var label = "";
+                if (widget && widget.getDisplayedLabel !==undefined) {
+                    label = widget.getDisplayedLabel();
+                } else {
+                    label = searchLabelFrom(domWidget);
+                }
+
+                var data = null;
+                if (widget && widget.getDisplayedValue !== undefined) {
+                    data = widget.getDisplayedValue();
+                } else {
+                    data = getValueFromAdditional(widgetId, nodeData);
+                }
                 if (data) {
                     // if it is a table
                     if (typeof(data) == "object") {
@@ -927,7 +942,11 @@ require([
                 if (row.length === 0) return; // empty table
                 var item = {};
                 array.forEach(row, function(rowItem) {
-                    item[rowItem.identifier] = rowItem.value ? rowItem.value : ""; // TODO: listIds? mapping?
+                    if (!rowItem.value && rowItem.listId && rowItem.listId.length > 0) {
+                        item[rowItem.identifier] = rowItem.listId;
+                    } else {
+                        item[rowItem.identifier] = rowItem.value ? rowItem.value : ""; // TODO: listIds? mapping?
+                    }
                 });
                 tableList.push(item);
             });

@@ -16,7 +16,7 @@ limitations under the License.
 
 <!--
 Context param sessionCookiePath="/" shares ID of session with other
-sessions where same parameter is set in context !
+contexts where also sessionCookiePath="/" is set !
 see https://tomcat.apache.org/tomcat-7.0-doc/config/context.html#Common_Attributes
 We do this to share session id between contexts
 /ingrid-portal-mdek and /ingrid-portal-mdek-application for setting

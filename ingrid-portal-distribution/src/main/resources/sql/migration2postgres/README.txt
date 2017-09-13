@@ -27,7 +27,7 @@ Vorgehen Migration auf Windows nach PostgreSQL 9.5.5
 - der Installationsprozess via StackBuilder ist hier beschrieben:
   https://www.enterprisedb.com/docs/en/9.5/migrate/EDB_Postgres_Migration_Guide.1.12.html
 - das Migrationstool ist in Java realisiert, für den Zugriff auf die Datenbanken müssen die entsprechenden Datenbanktreiber in Java bekannt sein.
-  Dazu aus dem installierten IGE iPlug aus dem lib Verzeichnis die Dateien:
+  Dazu aus dem installierten Portal aus dem Verzeichnis apache-tomcat/shared/lib die Dateien:
     - postgresql-*.jar
     - ojdbc-*.jar
     - mysql-connector-java-*.jar
@@ -98,7 +98,7 @@ Die MySQL Migration der PORTAL Datenbank ist aufwendiger, da zuerst das Schema s
 
     .\runMTK.bat -sourcedbtype oracle -targetdbtype postgresql -targetSchema public INGRID_PORTAL
     
-- das Schema INGRID_PORTAL der Quelldatenbank wird in der Postgres Datenbank ins Schema public migriert, dies ist das default Schema und wird im IGE iPlug per default so erwartet.
+- das Schema INGRID_PORTAL der Quelldatenbank wird in der Postgres Datenbank ins Schema public migriert, dies ist das default Schema und wird im Portal per default so erwartet.
 
 4.2. ORACLE MDEK Datenbank:
 ---------------------------
@@ -122,7 +122,7 @@ Dafür wie folgt vorgehen:
 
     Alle " mit Leerzeichen ersetzen
 
-- Einspielen der Datei mtk_public_ddl.sql in der Zieldatenbank unter dem Schema public, dies ist das default Schema und wird im IGE iPlug per default so erwartet.
+- Einspielen der Datei mtk_public_ddl.sql in der Zieldatenbank unter dem Schema public, dies ist das default Schema und wird im Portal per default so erwartet.
 
 - Ausführen der batch Datei runMTK.bat zum Einspielen der Daten aus der MySQL Datenbank nach Postgres:
 
@@ -164,34 +164,37 @@ Dafür wie folgt vorgehen:
 
 7. Postgres Datenbankeinstellungen im Portal
 --------------------------------------------
-Die Einstellungen für die Postgres Datenbank erfolgen im Portal in folgenden Dateien:
+Zur Information: Die Einstellungen für die Postgres Datenbank erfolgen im Portal in folgenden Dateien:
 
 - PORTAL/apache-tomcat/conf/Catalina/localhost
 
 	ingrid-portal-apps.xml,
 	ROOT.xml:
-
 		url="jdbc:postgresql://localhost:5432/ingrid_portal"
 		driverClassName="org.postgresql.Driver"
 		username="postgres" password="..."
 		validationQuery="SELECT 1"
 		
 	ingrid-portal-mdek.xml:
-
 		url="jdbc:postgresql://localhost:5432/mdek"
 		... (s.o.)
 
 - PORTAL/apache-tomcat/webapps/ingrid-portal-apps/WEB-INF/classes/
+
+	hibernate.cfg.xml:
+		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        
+	quartz.properties:
+        org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+
 - PORTAL/apache-tomcat/webapps/ingrid-portal-mdek/WEB-INF/classes/
 
 	hibernate.cfg.xml:
-
 		<property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 		
 - PORTAL/apache-tomcat/webapps/ingrid-portal-mdek-application/WEB-INF/classes/
 
 	default-datasource.properties:
-
 		hibernate.driverClass=org.postgresql.Driver
 		hibernate.user=postgres
 		hibernate.password=...

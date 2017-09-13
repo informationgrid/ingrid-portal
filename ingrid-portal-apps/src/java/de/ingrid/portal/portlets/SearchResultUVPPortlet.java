@@ -23,6 +23,10 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import javax.portlet.PortletException;
@@ -30,6 +34,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -171,7 +176,30 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                 }
                 response.getWriter().write( "]" );
             }
-
+            if(resourceID.equals( "devPlanMarker" )){
+                String mapclientUVPDevPlanURL = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL, "");
+                if(mapclientUVPDevPlanURL != null && mapclientUVPDevPlanURL.length() > 0){
+                    URL url = new URL(mapclientUVPDevPlanURL);
+                    URLConnection urlCon = url.openConnection();
+                    urlCon.setConnectTimeout(10000);
+                    urlCon.setReadTimeout(10000);
+                    String conContentType = urlCon.getContentType();
+                    InputStream is = urlCon.getInputStream();
+                    String jsonString = "[]";
+                    if(is != null){
+                        if(conContentType != null){
+                            if(conContentType.equals("application/json")){
+                                StringWriter writer = new StringWriter();
+                                IOUtils.copy(is, writer, "UTF-8");
+                                jsonString = writer.toString();
+                                response.setContentType( "application/javascript" );
+                                response.getWriter().write( "var markersDevPlan = "+ jsonString + ";");
+                            }
+                        }
+                    }
+                    response.getWriter().write( "var markersDevPlan = "+ jsonString + ";");
+                }
+            }
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
@@ -186,6 +214,12 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
+        String mapclientUVPDevPlanURL = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL, "");
+        if(mapclientUVPDevPlanURL != null && mapclientUVPDevPlanURL.length() > 0){
+            restUrl.setResourceID( "devPlanMarker" );
+            request.setAttribute( "restUrlUVPDevPlan", restUrl.toString() );
+        }
+        
         super.doView(request, response);
     }
 

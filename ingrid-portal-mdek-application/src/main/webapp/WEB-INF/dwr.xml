@@ -125,7 +125,6 @@
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ScaleBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.TimeReferenceBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.UrlBean"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.object.UsageLimitationBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.VectorFormatDetailsBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ApplicationUrlBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.AddressBean"/>

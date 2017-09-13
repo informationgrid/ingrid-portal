@@ -278,19 +278,28 @@
     </page>
     
     <page
-            ifTarget    ="InstallPortal"
-            ifProperty  ="(${dbChoice}!=copyOracleDump)"
-            overflow    ="true"
-            type        ="input"
-            name        ="webmapOptions"
-            displayText ="Einstellungen für den Kartenclient">
+        ifTarget    ="InstallPortal"
+        ifProperty  ="(${dbChoice}!=copyOracleDump)"
+        overflow    ="true"
+        type        ="input"
+        name        ="webmapOptions"
+        displayText ="Einstellungen für den Kartenclient">
 
-        <comment displayText="" explanatoryText="Geben Sie die Url der Opensearchschnittstelle an. Es reicht die Basis-Url wie im default angegeben, der Rest der Anfrage wird dynamisch hinzugefügt."/>
-        <text property="openSearchUrl" displayText="Opensearch Url:" defaultValue="https://dev.informationgrid.eu/opensearch/query"/>
-        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an."/>
+        <comment displayText="" explanatoryText="Geben Sie ein Verzeichnis zum Speichern der WebmapClient-Daten an."/>
+        <directory
+            property        ="WebmapDataDir"
+            defaultValue    ="/opt/ingrid"
+            defaultValueWin ="${env.ProgramFiles}"
+            displayText     ="WebmapClient-Datenverzeichnis"
+            create          ="true"
+            checkExists     ="true"/>
+        <comment displayText="" explanatoryText="Hinweis: In Ihrem ausgewählten Verzeichnis wird das WebmapClient-Datenverzeichnis 'WebmapClientData' angelegt bzw. aktualisiert (falls vorhanden)."/>
+        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an:"/>
         <text property="feedbackHost" displayText="SMTP-Server (Host):" defaultValue="localhost"/>
+        <text property="feedbackPort" displayText="SMTP-Port:" defaultValue=""/>
+        <text property="feedbackUser" displayText="SMTP-Benutzer:" defaultValue=""/>
+        <text property="feedbackPassword" displayText="SMTP-Passwort:" defaultValue=""/>
         <text property="feedbackEmail" displayText="Sender E-Mail-Adresse:" defaultValue="info@informationgrid.eu"/>
-        
     </page>
     
     <page
@@ -331,7 +340,45 @@
                 displayText     ="Installationsverzeichnis"
                 create          ="true"/>
     </page>
-    
+
+    <page
+        ifTarget    ="setUpdateProperty"
+        type        ="input"
+        overflow    = "true"
+        name        ="mapClientUpdate"
+        displayText ="Aktualisierung WebmapClient">
+        <comment displayText="" explanatoryText="Aktivieren Sie bitte die WebmapClient-Aktualisierung, falls Ihre aktuelle Portal-Version kleiner oder gleich 4.0.2 ist."/>
+        <checkbox
+            property     ="executeMapClientUpdate"
+            displayText  ="Aktualisierung durchführen"
+            defaultValue ="false">
+        </checkbox>
+        <comment displayText="" explanatoryText="Hinweis: Falls Sie sich unsicher sind, ob Sie diese Aktualisierung schon durchgeführt haben, dann führen Sie dieses Update einfach aus. Ihre WebmapClient-Daten bleiben erhalten."/>
+    </page>
+
+    <page
+        ifTarget    ="setUpdateProperty"
+        ifProperty  ="(${executeMapClientUpdate}==true)"
+        type        ="input"
+        overflow    = "true"
+        name        ="mapClientUpdateProperties"
+        displayText ="Aktualisierung WebmapClient-Konfiguration">
+        <comment displayText="" explanatoryText="Hinweis: Wählen Sie das Datenverzeichnis aus, in dem Ihr 'WebmapClientData'-Verzeichnis liegt."/>
+        <directory
+            property        ="WebmapDataDir"
+            defaultValue    ="/opt/ingrid"
+            defaultValueWin ="${env.ProgramFiles}"
+            displayText     ="WebmapClient-Datenverzeichnis"
+            create          ="true"
+            checkExists     ="true"/>
+        <comment displayText="" explanatoryText="Geben Sie folgende Eigenschaften für den SMTP-Server an:"/>
+        <text property="feedbackHost" displayText="SMTP-Server (Host):" defaultValue="localhost"/>
+        <text property="feedbackPort" displayText="SMTP-Port:" defaultValue=""/>
+        <text property="feedbackUser" displayText="SMTP-Benutzer:" defaultValue=""/>
+        <text property="feedbackPassword" displayText="SMTP-Passwort:" defaultValue=""/>
+        <text property="feedbackEmail" displayText="Sender E-Mail-Adresse:" defaultValue="info@informationgrid.eu"/>
+    </page>
+
     <page
         ifTarget          ="setUpdateProperty"
         type              ="input"

@@ -258,7 +258,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 if(initalQuery.length() > 0){
                     setUpQuery(request, initalQuery, true);
                 }
-            } else if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("q") == null){
+            } else if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && (request.getParameter("q") == null || request.getParameter("q").trim().length() == 0)){
                 String initalQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EMPTY_QUERY, "" ).trim();
                 if(initalQuery.length() > 0){
                     setUpQuery(request, initalQuery, true);

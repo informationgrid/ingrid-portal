@@ -9,7 +9,6 @@
         <hr class="bx-top-0 bx-bot-0">
         #if($snsAnniversary.years && $snsAnniversary.title)
             <div class="teaser__content ob-container">
-                $snsAnniversary.years $snsAnniversary.title
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('action','doTeaser')
                 $action.setParameter('isChronicle', 'true')

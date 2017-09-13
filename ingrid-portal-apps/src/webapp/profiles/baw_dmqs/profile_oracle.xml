@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>ingrid</name>
+    <description>Portal-Profile für BAW DMQS</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-chronicle.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+      </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/</src>
+        </file>
+    </files>
+    <sql>
+        <execute>
+            <![CDATA[CREATE TABLE tmp_table (item_key VARCHAR2(255 CHAR) DEFAULT NULL\, item_value VARCHAR2(255 CHAR) DEFAULT NULL\, item_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL)]]>
+        </execute>
+        <execute>
+            <![CDATA[DROP TABLE tmp_table]]>
+        </execute>
+        <!-- Disable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link']]>
+        </execute>
+    </sql>
+</profile>

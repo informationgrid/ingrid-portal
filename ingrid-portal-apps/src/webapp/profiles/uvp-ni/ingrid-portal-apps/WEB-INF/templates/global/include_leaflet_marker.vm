@@ -1,0 +1,289 @@
+<style>
+.leaflet-interactive-disable {
+    cursor: grab !important;
+}
+
+.leaflet-hyphens {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
+</style>
+
+<script>
+    function showMarker(m) {
+        if(m.target.uuid){
+            jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {
+                var d = JSON.parse(data);
+                // create an orange rectangle
+                m.target.bbox=L.rectangle(d, {color: "blue", weight: 3, fill: false});
+                if(map){
+                    map.addLayer(m.target.bbox);
+                }
+            });
+        }
+    }
+    
+    function hideMarker(m) {
+        if(m.target.bbox){
+            if(map){
+                map.removeLayer(m.target.bbox);
+            }
+        }
+    }
+
+    var mapSizeX;
+    var popupMarkerSize;
+    var popupMarkerOptions = {};
+    
+    if(map){
+        if(map._size){
+            mapSizeX = map._size.x;
+        }
+    }
+    
+    if(mapSizeX){
+        if(mapSizeX < 310){
+            popupMarkerOptions = {
+                maxWidth: 180
+            };
+        }
+    }
+
+    // All markers
+    var mapMarkers = L.markerClusterGroup();
+    // "Zulassungsverfahren" markers
+    var mapMarkers10 = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    // "Ausländische Verfahren" markers
+    var mapMarkers11 = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    // "Vorgelagerte Verfahren" markers
+    var mapMarkers1314 = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    // "Bebauungsplänen" markers
+    var mapMarkersDevPlan = L.markerClusterGroup({
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-dev-plan' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
+    if(markers){
+        for (var i = 0; i < markers.length; i++) {
+            var a = markers[i];
+            var title = a[2];
+            var categories = a[6];
+            var procedureId = a[4];
+            var procedure = a[5];
+            var steps = a[7];
+            var popUpHtml = '';
+            popUpHtml += '<a href="/trefferanzeige?docuuid='+a[3]+'" target="_blank">' + title + '</a>';
+            
+            if(procedure && procedure.length > 0){
+                popUpHtml += '<div class="map_popup_proc">' + procedure + '</div>';
+            }
+            
+            if(categories && categories.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Kategorie:</b><br>';
+                var categoryList = [];
+                for (category in categories){
+                    var value = categories[category].name;
+                    if(categoryList.indexOf(value) == -1){
+                        popUpHtml += value + '<br>';
+                        categoryList.push(value);
+                    }
+                }
+                popUpHtml += '</div>';
+            }
+            if(steps && steps.length > 0){
+                popUpHtml += '<div class="map_popup_cat">';
+                popUpHtml += '<b>Letzter Verfahrensschritt:</b><br>';
+                popUpHtml += steps[steps.length - 1] + '<br>';
+                popUpHtml += '</div>';
+            }
+            
+            var iconColor;
+            if(procedureId == '10'){
+                iconColor = 'blue';
+            } else if(procedureId == '11'){
+                iconColor = 'black';
+            } else {
+                iconColor = 'red';
+            }
+            
+            var icon = L.AwesomeMarkers.icon({
+                markerColor: iconColor,
+                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                prefix: 'icon'//,
+                //icon: categories && categories.length > 0 ? categories[0].id : ''
+            });
+            
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
+            marker.uuid = a[3];
+            marker.bbox = null;
+            if(enablePopUp){
+                marker.bindPopup(popUpHtml, popupMarkerOptions);
+                marker.on('popupopen', showMarker);
+                marker.on('popupclose', hideMarker);
+            }
+            mapMarkers.addLayer(marker);
+            if(procedureId == '10'){
+                mapMarkers10.addLayer(marker);
+            } else if(procedureId == '11'){
+                mapMarkers11.addLayer(marker);
+            } else {
+                mapMarkers1314.addLayer(marker);
+            }
+        }
+    
+        if(markers.length > 0){
+            if(map){
+                map.addLayer(mapMarkers10);
+                map.addLayer(mapMarkers11);
+                map.addLayer(mapMarkers1314);
+            }
+        }
+    }
+    
+    if(markersDevPlan){
+        for (var i = 0; i < markersDevPlan.length; i++) {
+            var a = markersDevPlan[i];
+            var id = a.id;
+            var name = a.name;
+            var descr = a.descr;
+            var latlon = a.latlon;
+            var polygon = a.polygon;
+            var bpinfos = a.bpinfos;
+            
+            var popUpHtml = '';
+            popUpHtml += '<h4>' + name + '</h4>';
+            
+            if(descr && descr .length > 0){
+                popUpHtml += '<b>Mitgliedsgemeinden:</b><br>';
+                popUpHtml += '<span class="leaflet-hyphens">' + descr + '</span>';
+                popUpHtml += '<br><br>';
+            }
+            
+            if(bpinfos && bpinfos.length > 0){
+                popUpHtml += '<span>Nutzen Sie die folgenden Links um zu den Bauleitplanungs-Seiten zu gelangen:</span>';
+                popUpHtml += '<ul>';
+                for (var j = 0; j < bpinfos.length; j++) {
+                    var bpinfo = bpinfos[j];
+                    if(bpinfo.url){
+                        var url = bpinfo.url;
+                        if(url.indexOf("http") == -1){
+                            url = "http://" + url;
+                        }
+                        if(bpinfo.tags){
+                            var tags = bpinfo.tags;
+                            for (var k = 0; k < tags.length; k++) {
+                                var tag = tags[k];
+                                if(tag){
+                                    var title;
+                                    if(tag === "v"){
+                                        title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
+                                    }else if(tag === "p"){
+                                        title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
+                                    }
+                                    if(title){
+                                        popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" viewBox="0 0 32 32" style="font-size: 11px;"><polygon points="26,28.063 2,28.063 2,4 14,4 14,2 0,2 0,30.063 28,30.063 28,16 26,16"></polygon><polygon points="21,0 21,2 28.604,2 13.8,16.961 15.223,18.367 30,3.432 30,11 32,11 32,0" ></polygon></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                popUpHtml += '</ul>';
+                popUpHtml += '<br>';
+            }
+            
+            var iconColor = 'green';
+            
+            var icon = L.AwesomeMarkers.icon({
+                markerColor: iconColor,
+                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                prefix: 'icon'
+            });
+            
+            var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon });
+            marker.bbox = null;
+            if(enablePopUp){
+                marker.bindPopup(popUpHtml, popupMarkerOptions);
+                marker.on('popupopen', showMarker);
+                marker.on('popupclose', hideMarker);
+            }
+            mapMarkers.addLayer(marker);
+            mapMarkersDevPlan.addLayer(marker);
+        }
+    
+        if(markersDevPlan.length > 0){
+            if(map){
+                map.addLayer(mapMarkersDevPlan);
+            }
+        }
+    }
+    
+    var overlayers = {};
+    if(mapMarkers10.getLayers().length > 0){
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
+    }
+    if(mapMarkers11.getLayers().length > 0){
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
+    }
+    
+    if(mapMarkers1314.getLayers().length > 0){
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
+    }
+    if(mapMarkersDevPlan.getLayers().length > 0){
+        overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
+    }
+    L.control.layers({}, overlayers, {position: 'topright', collapsed:false }).addTo(map);
+    
+</script>

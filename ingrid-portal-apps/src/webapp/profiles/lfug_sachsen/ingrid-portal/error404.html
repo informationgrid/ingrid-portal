@@ -28,7 +28,8 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
-        <!--<meta name="description" content="" />-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="SachsenPortalU, das Umweltportal Sachsen, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
         <meta name="keywords" lang="de" content="SachsenPortalU, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
@@ -74,6 +75,9 @@
                 <li>
                     <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
                 </li>
+                <li>
+                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
+                </li>
             </ul>
         </div>
         <div class="page">
@@ -91,12 +95,13 @@
                     </div>
                     <div class="header__widgets__section">
                         <span class="header__widget header__logo"></span>
-                        <a title="Startseite von SachsenPortalU aufrufen " href="http://localhost:8080/startseite" class="header__widget">
-                            <img src="/decorations/layout/ingrid/images/title.gif " class="mq-hide-xxl desktop-logo">
-                            <img src="/decorations/layout/ingrid/images/logo_alt.gif " class="mq-show-xxl mobile__logo">
+                        <a title="Startseite von SachsenPortalU aufrufen " href="/startseite" class="header__widget">
+                            <img src="/decorations/layout/ingrid/images/template/title.png" class="mq-hide-xxl desktop-logo">
+                            <img src="/decorations/layout/ingrid/images/template/logo_mobile.png" class="mq-show-xxl mobile__logo">
                         </a>
-                        <a title="Startseite von SachsenPortalU aufrufen " href="http://localhost:8080/startseite" class="header__widget">
-                            <img src="/decorations/layout/ingrid/images/logo.gif " class="mq-hide-xxl desktop-logo-2">
+                        <a class="mq-show-xxl mobile__title" href="/startseite" title="$MESSAGES.getString('ingrid.page.home.tooltip')">SachsenPortalU</a>
+                        <a title="Startseite von SachsenPortalU aufrufen " href="/startseite" class="header__widget">
+                            <img src="/decorations/layout/ingrid/images/template/logo.png" class="mq-hide-xxl desktop-logo-2">
                         </a>
                     </div>
                 </div> 
@@ -198,7 +203,8 @@
                                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an SachsenPortalU">Kontakt</a>
                                     <a href="/inhaltsverzeichnis" title="Alle Inhalte von SachsenPortalU auf einen Blick">Inhalt</a>
                                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
-                                   </nav>
+                                    <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen">Datenschutz</a>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -221,15 +227,6 @@
         
         <!-- Popup -->
         <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-        
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/de.js"></script>
-        <script>
-           $('.datepicker').pickadate()
-            
-        </script>
         
         <!-- Accordion -->
         <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>

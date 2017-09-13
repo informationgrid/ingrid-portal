@@ -64,10 +64,15 @@
             <unpack>false</unpack>
             <scope>runtime</scope>
             <includes>
-                <include>log4j:log4j</include>
+                <include>org.apache.logging.log4j:log4j-1.2-api</include>
+                <include>org.apache.logging.log4j:log4j-api</include>
+                <include>org.apache.logging.log4j:log4j-core</include>
+                <include>org.apache.logging.log4j:log4j-jcl</include>
 		<!-- commons-logging-api NEEDED otherwise we have class loader problems in webapps (ehcache...) ! -->
 		<!-- local log4j.properties in webapps are taken into account IF log4j.jar AND commons-logging.jar IS ALSO IN WEBAPP !!! -->
                 <include>commons-logging:commons-logging-api</include>
+                <include>org.slf4j:slf4j-api</include>
+                <include>org.slf4j:slf4j-log4j12</include>
             </includes>
         </dependencySet>
         <dependencySet>
