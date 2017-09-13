@@ -10,13 +10,13 @@ UPDATE ingrid_lookup SET item_value = '4.0.1', item_date = SYSDATE WHERE ingrid_
 -- !!! JDBC VERSION (installer):
 -- !!! All in one line and DOUBLE SEMICOLON at end !!! Or causes problems when executing via JDBC in installer (ORA-06550) !
 
-BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;;
+--BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;;
 
--- !!! SCRIPT VERSION (SQL Developer, SQL Plus):
+-- !!! SCRIPT VERSION (SQL Developer, SQL Plus, Flyway !):
 -- !!! SINGLE SEMICOLON AND "/" in separate line !
 
--- BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;
--- /
+BEGIN execute immediate 'DROP TABLE ingrid_temp'; exception when others then null; END;
+/
 
 -- !!!!!!!! -------------------------------------------------
 

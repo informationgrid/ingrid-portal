@@ -34,6 +34,9 @@
           <action type="update" dev="wemove" issue="565">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
           </action>
+          <action type="fix" dev="wemove" issue="850">
+            PORTAL: Fix update of portal database on oracle (flyway).
+          </action>
           <action type="fix" dev="wemove" issue="788">
             PORTAL: Fix installer by edit mapclient settings.
           </action>
