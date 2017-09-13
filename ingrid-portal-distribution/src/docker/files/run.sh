@@ -21,6 +21,7 @@ if [ "$PORTAL_PROFILE" ]; then
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
+    cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-webmap-client/* webapps/ingrid-portal-webmap-client
 
     echo "Copy repeatable SQL file for profile ..."
     cp $PROFILES_DIR/$PORTAL_PROFILE/profile_mysql.sql webapps/ROOT/WEB-INF/classes/db/migration/mysql/afterMigrate.sql
