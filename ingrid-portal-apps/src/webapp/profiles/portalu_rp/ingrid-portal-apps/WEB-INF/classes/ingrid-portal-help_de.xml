@@ -143,10 +143,6 @@
                     verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
                     <li>
-                        <a href="?hkey=search-results-3">Ähnliche Begriffe zur 
-                        Suche hinzufügen</a>
-                    </li>
-                    <li>
                         <a href="?hkey=search-expert-1">Experteneingabe</a>
                     </li>
                     </ul>
@@ -172,7 +168,7 @@
                     Operatoren verknüpft werden. Es stehen folgende Operatoren
                     zur Verfügung:</p>
                 <p>
-                    <b>AND (UND-Verknüpfung)</b>: Alle Worte müssen in dem
+                    <b>AND (UND-Verknüpfung)</b>: Alle Wörter müssen in dem
                     Dokument vorhanden sein. Sie ist Standard, wenn kein Operator
                     angegeben wird. (Hinweis: Anstatt AND kann auch das Symbol
                     &amp;&amp; verwendet werden)<br></br>Beispiel:
@@ -180,7 +176,7 @@
                      ‚Wasser AND Fisch’ bzw.
                     ‚Wasser &amp;&amp; Fisch’</p>
                 <p>
-                    <b>OR (ODER-Verknüpfung)</b>: Eines der Worte muss im
+                    <b>OR (ODER-Verknüpfung)</b>: Eines der Wörter muss im
                     Dokument vorhanden sein. (Hinweis: Anstatt von OR kann auch
                     das Symbol || verwendet werden)<br></br> Beispiel:
                     ‚Wasser OR Fisch’ entspricht
@@ -219,7 +215,7 @@
             <header>Platzhalter</header>
             <content>
                 <p>Innerhalb eines Suchbegriffs ist es möglich, Platzhalter für
-                    einen (?) oder mehrere (*) beliebige Zeichen einzugeben. Es
+                    ein (?) beliebiges oder mehrere (*) beliebige Zeichen einzugeben. Es
                     werden dann alle Begriffe gefunden, die mit dem Rest des
                     Suchbegriffs übereinstimmen, wobei für den Platzhalter ein
                     bzw. mehrere Zeichen auftreten können.</p>
@@ -244,12 +240,12 @@
                     bedeuten, dass der untere und der obere Wert des Bereichs
                     nicht in die Suche einbezogen werden.</p>
                 <p>Beispiel: ‚[Aller TO Elbe]’ (Es wird nach Dokumenten gesucht, die
-                    Worte enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Worte 
+                    Wörter enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Wörter 
                     ‚Aller’ und ‚Elbe’ sind dabei im Suchbereich enthalten.</p>
                 <p>Beispiel: ‚{Aller TO Elbe}’ (Es wird nach Dokumenten gesucht, die
-                    Worte enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Worte 
+                    Wörter enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Wörter 
                     ‚Aller’ und ‚Elbe’ sind dabei im Suchbereich nicht enthalten.)</p>
-                <p>Der Suchbereich kann aber auch innerhalb eines Suchwortes angegeben werden.</p>
+                <p>Der Suchbereich kann auch innerhalb eines Suchwortes angegeben werden.</p>
                 <p>Beispiel: ‚te[i TO x]t’ (Es wird nach Dokumenten gesucht, die
                     z.B. die Worte ‚teilt’, ‚test’ oder ‚text’ enthalten.)</p>
                 <p> Alternativ zu dem Operator TO kann auch ein Bindestrich - verwendet werden </p>
@@ -392,48 +388,10 @@
                 <br></br>
             </content>
         </section>
-        <section help-key="search-expert-10">
-            <header>Suche nach einem speziellen Umweltthema</header>
-            <content>
-                <p>Die Suche kann nach den Seiten eingegrenzt werden, die einem oder mehreren Umwelthemen 
-                zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
-                <p>Beispiel: ‚datatype:topics topic:Abfall’ (Es wird nach
-                    Dokumenten gesucht, die unter dem Umweltthema 'Abfall' eingeordnet wurden.)</p>
-                <p> Folgende Werte sind möglich:</p>
-                <p> Abfall, Altlasten, Bauen, Boden, Chemikalien, Energie, Forstwirtschaft, Gentechnik, 
-                    Geologie, Gesundheit, LaermErschuetterung, Landwirtschaft, LuftKlima, 
-                    NachhaltigeEntwicklung, NaturLandschaft, Strahlung, Tierschutz, Umweltinformation,
-                    Umweltwirtschaft, Verkehr, Wasser </p>
-            </content>
-        </section>
-        <section help-key="search-expert-11">
-            <header>Suche nach speziellen Messwertseiten</header>
-            <content>
-                <p>Die Suche kann nach den Seiten eingegrenzt werden, die Messungen in speziellen
-                Umweltbereichen zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
-                <p>Beispiel: ‚datatype:measure topic:air’ (Es wird nach
-                    Dokumenten gesucht, die Messungen zum Thema 'Luft' zum Inhalt haben.)</p>
-                <p> Folgende Werte sind möglich:</p>
-                <p> <b>radiation</b> für Strahlung, <b>air</b> für Luft, 
-                    <b>water</b> für Wasser
-                    und <b>misc</b> für weitere Messwerte. </p>
-            </content>
-        </section>
-        <section help-key="search-expert-12">
-            <header>Suche nach einem speziellen Service</header>
-            <content>
-                <p>Die Suche kann nach den Seiten eingegrenzt werden, die einem Service 
-                zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
-                <p>Beispiel: ‚datatype:service topic:press’ (Es wird nach
-                    Dokumenten gesucht, die Pressemitteilungen enthalten.)</p>
-                <p> Folgende Werte sind möglich:</p>
-                <p> press, publication, event </p>
-            </content>
-        </section>
         <section help-key="search-expert-13">
             <header>Suche nach einer speziellen Metadatenklasse</header>
             <content>
-                <p>Bei der Suche nach einer spezielen Metadatenklasse wird die 
+                <p>Bei der Suche nach einer speziellen Metadatenklasse wird die 
                 Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:metadata metaclass:map’ (Es wird nach
                     Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
@@ -449,15 +407,15 @@
                     </tr>
                     <tr>
                     <td>job </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Organisationseinheit/Fachaufgabe' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Fachaufgabe' gesucht</td>
                     </tr>
                     <tr>
                     <td>map  </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Geo-Information/Karte' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Geodatensatz' gesucht</td>
                     </tr>
                     <tr>
                     <td>document </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Dokument/Bericht/Literatur' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Literatur' gesucht</td>
                     </tr>
                     
                     <tr>
@@ -467,17 +425,17 @@
                     
                      <tr>
                     <td>project </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Vorhaben/Projekt/Programm' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Projekt' gesucht</td>
                     </tr>
                                         
                         <tr>
                     <td>database  </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Datensammlung/Datenbank' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Datensammlung' gesucht</td>
                     </tr>
 
                     <tr>
                     <td>service </td>  
-                    <td> Es wird nach Metadaten der Klasse 'Dienst/Anwendung/Informationssystem' gesucht</td>
+                    <td> Es wird nach Metadaten der Klasse 'Informationssystem' gesucht</td>
                     </tr>
                 </table>
                 <br></br>
@@ -490,7 +448,7 @@
                 werden.
                 Der Raumbezug kann über Koordinaten oder über den räumlichen Schlüssel der Verwaltungseinheit 
                 angegeben werden.</p>
-                <p>Beispiel: ‚areaid: areaid:11000000’ (Die Suche wird auf Berlin als 
+                <p>Beispiel: ‚areaid: areaid:07315000’ (Die Suche wird auf Mainz als 
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
@@ -717,7 +675,7 @@
         <section help-key="maps-1">
             <header display="false">Karten</header>
              <content>
-                <p>Die Kartenanwendung des PortalU ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmäßigen Web-Browsers.</p>
+                <p>Die Kartenanwendung von PortalU ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmäßigen Web-Browsers.</p>
                 <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgröße sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
                 <p>Die Anwendung gestattet nicht nur die Bildschirmanzeige, sondern auch einen qualitativ guten Papierausdruck. Sie ermöglicht je nach Einstellung den Zugriff auf Zusatzinformationen, die mit den geografischen Objekten verknüpft sind.</p>
                 <p>Seine Funktionalität umfasst u.a.:</p>
@@ -783,7 +741,7 @@
                 </content>
             </section>
             <section help-key="maps-3-5">
-                <header>Suchen eines Orts, PLZ oder Gewässers</header>
+                <header>Suchen eines Orts, einer PLZ oder eines Gewässers</header>
                 <content>
                     <p>Das Suchfeld im oberen Teil der Karte ermöglicht den sofortigen Zugriff auf Städte- und Ortsnamen, Postleitzahlen, 
                        Geographische Bezeichnungen oder Gewässer oder Straßen.</p>
@@ -794,7 +752,7 @@
                 <header>Zurück in die Startansicht</header>
                 <content>
                     <p>Um wieder die initiale Kartenansicht herzustellen klicken Sie bitte auf die Schaltfläche mit dem Pfeilkreuz auf der rechten Seite.
-                       Die Ansicht wechselt zu ganz Rheinland-Pfalz.</p>
+                       Die Ansicht wechselt zu Rheinland-Pfalz.</p>
                 </content>
             </section>
             <section help-key="maps-3-7">
@@ -867,7 +825,7 @@
                 <content>
                     <p>Sofern vorhanden, können Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden.
                         Die Informationen werden in  einem eigenen Fenster "Objekt-Information" angezeigt.
-                        Bei mehreren übereinanderligenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
+                        Bei mehreren übereinanderliegenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
                 </content>
             </section>
             <section help-key="maps-4-9">

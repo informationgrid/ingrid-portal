@@ -202,6 +202,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_SEARCH_FACETE_MAP_CENTER = "portal.search.facete.map.center";
     
+    public static final String PORTAL_SEARCH_FACETE_MAP_LAYER = "portal.search.facete.map.layer";
+    
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
     public static final String PORTAL_SEARCH_HIT_PARTNER_LOGO = "portal.search.hit.partner.logo";
