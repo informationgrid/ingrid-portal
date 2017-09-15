@@ -7,6 +7,9 @@
 
     <body>
         <release version="4.0.4-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.4">
+          <action type="add" dev="wemove" issue="852">
+            PORTAL: Add property to disable function new user.
+          </action>
           <action type="add" dev="wemove" issue="199">
             IGE/PORTAL: Added multiple languages for data source in IGE and detail view in portal.
           </action>
