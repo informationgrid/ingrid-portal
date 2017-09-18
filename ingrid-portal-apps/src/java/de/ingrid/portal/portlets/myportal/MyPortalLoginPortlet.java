@@ -55,6 +55,7 @@ import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.LoginForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
@@ -136,7 +137,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         }
         context.put("actionForm", frm);
         context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
-
+        context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
+        context.put("enableNewUser", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_NEW_USER, true ));
         super.doView(request, response);
     }
 

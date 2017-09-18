@@ -7,6 +7,9 @@
 
     <body>
         <release version="4.0.4-SNAPSHOT" date="2017-xx-xx" description="Release 4.0.4">
+          <action type="add" dev="wemove" issue="852">
+            PORTAL: Add property to disable function new user.
+          </action>
           <action type="add" dev="wemove" issue="199">
             IGE/PORTAL: Added multiple languages for data source in IGE and detail view in portal.
           </action>
@@ -33,6 +36,9 @@
           </action>
           <action type="update" dev="wemove" issue="565">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+          <action type="fix" dev="wemove" issue="850">
+            PORTAL: Fix update of portal database on oracle (flyway).
           </action>
           <action type="fix" dev="wemove" issue="788">
             PORTAL: Fix installer by edit mapclient settings.

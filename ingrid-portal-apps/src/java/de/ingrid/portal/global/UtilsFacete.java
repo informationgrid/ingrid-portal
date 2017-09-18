@@ -252,6 +252,15 @@ public class UtilsFacete {
         }
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
         context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
+        String [] facetMapLayer = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_LAYER);
+        String facetMapLayerUrl = facetMapLayer[0];
+        if(facetMapLayerUrl.length() > 0 && facetMapLayer.length > 1){
+            context.put( "facetMapLayerUrl", facetMapLayerUrl);
+            context.put( "facetMapLayerName", facetMapLayer[1]);
+        }else{
+            context.put( "facetMapLayerUrl", facetMapLayerUrl);
+            context.put( "facetMapLayerName", "");
+        }
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
     }

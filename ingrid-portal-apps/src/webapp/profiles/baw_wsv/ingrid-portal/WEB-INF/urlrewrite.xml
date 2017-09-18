@@ -363,4 +363,9 @@
         <from>/portal/cms/cms-2.psml</from>
         <to>/cms2</to>
     </outbound-rule>
+    
+    <rule>
+        <from>/portal/myportal-create-account.psml</from>
+        <to type="redirect">/startseite</to>
+    </rule>
 </urlrewrite>

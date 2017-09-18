@@ -58,6 +58,8 @@ function onParamChange(params){
     key.forEach(function (s, i, o) {
         if(s == 'lang'){
             newParams = newParams + '' + s + '=' + '$lang';
+        }else if(s == 'layers'){
+            newParams = newParams + '' + s + '=' + encodeURIComponent(params[s]);
         }else{
             newParams = newParams + '' + s + '=' + params[s];
         }

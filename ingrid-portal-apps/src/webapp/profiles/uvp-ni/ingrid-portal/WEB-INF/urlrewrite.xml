@@ -296,6 +296,13 @@
         <to>/hilfe</to>
     </outbound-rule>
 
+
+    <rule>
+        <from>/portal/myportal-create-account.psml</from>
+        <to type="redirect">/startseite</to>
+    </rule>
+
+
     <!-- bw -->
     <rule>
         <from>/bw$</from>
