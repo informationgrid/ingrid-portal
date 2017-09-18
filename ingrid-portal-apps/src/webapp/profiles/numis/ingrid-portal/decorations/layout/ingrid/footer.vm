@@ -9,7 +9,7 @@
                 </div>
             </div>
             <hr class="bx-top-0 bx-bot-0">
-            <div class="grid">
+            <div class="grid" style="background:#eee;">
                 <div class="column column--3-4-xl">
                     <div class="ob-box-padded ob-box-center ob-clear">
                         <div class="footer__section">

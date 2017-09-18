@@ -4,7 +4,7 @@ $action.setParameter('action','doSearch')
 #if($page && $page.endsWith("default-page.psml"))
     #set($isDefault = true)
 #end
-<img class="search-form__logo--lg mq-hide-l" src="/decorations/layout/ingrid/images/template/search.png" alt="">
+<img class="search-form__logo-md mq-hide-l" src="/decorations/layout/ingrid/images/template/numis-tagline3.png" alt="">
 <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
 #if($isDefault)
         <div class="ob-container">
