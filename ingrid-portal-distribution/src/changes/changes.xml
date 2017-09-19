@@ -16,6 +16,12 @@
           <action type="add" dev="wemove" issue="701">
             UVP-NI: Integration of "Bauleitplanung".
           </action>
+          <action type="add" dev="wemove" issue="703">
+            UVP-NI: Hide login on service menu .
+          </action>
+          <action type="add" dev="wemove" issue="825">
+            UVP-NI: Add object class on search result hit.
+          </action>
           <action type="add" dev="wemove" issue="787">
             UVP-NI: Add search result hit tag "Bauleitplanung".
           </action>
@@ -36,6 +42,15 @@
           </action>
           <action type="update" dev="wemove" issue="565">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+          <action type="update" dev="wemove" issue="685">
+            PORTAL: Update NUMIS layout.
+          </action>
+          <action type="update" dev="wemove" issue="568">
+            PORTAL: Update PortalU RLP layout.
+          </action>
+          <action type="fix" dev="wemove" issue="853">
+            PORTAL: Fix map detail view on UVP.
           </action>
           <action type="fix" dev="wemove" issue="850">
             PORTAL: Fix update of portal database on oracle (flyway).
