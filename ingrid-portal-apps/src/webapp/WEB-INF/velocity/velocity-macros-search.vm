@@ -12,6 +12,7 @@
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam($term)
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.withsearchvalue')
     #else
         $MESSAGES.resetMsgParams()
@@ -19,6 +20,7 @@
         $MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam($catalogueName)
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
     #end
 #end
@@ -27,6 +29,7 @@
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
 $MESSAGES.setMsgParam($catalogueName)
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
 $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.grouped')
 #end
 
@@ -36,6 +39,7 @@ $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
 $MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
 $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
 $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
