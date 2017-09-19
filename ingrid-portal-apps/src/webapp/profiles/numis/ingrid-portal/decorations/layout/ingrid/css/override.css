@@ -773,3 +773,11 @@ thead {
     transition: box-shadow 0.3s;
     border-radius: 50%;
 }
+
+.footer {
+    background: transparent;
+}
+
+.nav-overlay {
+    margin-top: 4.75rem;
+}
