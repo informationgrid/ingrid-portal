@@ -40,9 +40,17 @@
                 margin: rem(0 16px 16px 0)
             )
         );
+        
+        a {
+            color: color(dim-grey);
+        }
     }
     
     a {
         display: block;
+    }
+    
+    .icon {
+        fill: currentColor;
     }
 }

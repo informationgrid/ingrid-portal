@@ -118,6 +118,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_HIERARCHY_CATALOGNAME_HIDDEN = "portal.hierarchy.catalogname.hidden";
     
+    public static final String PORTAL_HIERARCHY_CATALOG_ADDRESS_CLOSE = "portal.hierarchy.catalog.address.close";
+    
     public static final String PORTAL_LOGGER_RESOURCE = "portal.logger.resource";
 
     public static final String PORTAL_ENABLE_MEASURE = "portal.enable.measure";

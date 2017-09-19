@@ -8,10 +8,19 @@ input[type="text"],
 input[type="password"],
 input[type="date"],
 select,
-textarea,
-.field-toggle__label--boxed {
+textarea {
     border: 1px solid color(paris-m);
-    color: color(black);
+    color: color(dim-grey);
+    font-size: rem(14px);
+    padding: rem(8px);
+    &::-webkit-input-placeholder {color:#333;}
+    &:-moz-placeholder           {color:#333;}
+    &::-moz-placeholder          {color:#333;}
+    &:-ms-input-placeholder      {color:#333;}
+}
+
+.field-toggle__label--boxed {
+    color: color(dim-grey);
     font-size: rem(14px);
     padding: rem(8px);
     &::-webkit-input-placeholder {color:#333;}
@@ -201,7 +210,7 @@ label {
 input:checked {
     + .field-toggle__label--boxed,
     + .field-toggle__label--highlight {
-        color: color(black);
+        color: color(dim-grey);
 
         .icon {
             opacity: 1;
@@ -209,8 +218,8 @@ input:checked {
     }
 
     + .field-toggle__label--boxed {
-        background: color(light-grey);
-        border-color: color(paris-m);
+        background: color(faded);
+        border: 0px solid;
 
         .field-toggle__icon {
             border-color: color(dim-grey);

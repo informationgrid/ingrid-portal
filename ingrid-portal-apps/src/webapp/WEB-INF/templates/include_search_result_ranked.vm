@@ -5,14 +5,16 @@
         #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
     #end
 #end
-    
-## set flag indicating how to render stuff (e.g. in includes)
-<h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
-<hr class="hr-small-full">
+
 #if($enableFacetSelection > 0 || $isSelection)
-    #renderSearchResultFacetSelection($facetConfig $MESSAGES)
-<hr class="hr-small-full" style="margin-top:0.175rem;">
+    <ul class="tag-group tag-group bx-top-m bx-bot-l">
+        #renderSearchResultFacetSelection($facetConfig $MESSAGES)
+    </ul>
 #end
+
+## set flag indicating how to render stuff (e.g. in includes)
+#parse ('/WEB-INF/templates/include_search_result_counter.vm')
+<hr class="hr-small-full">
 ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
     #foreach($rs in $rankedResultList.getWrapperHits())

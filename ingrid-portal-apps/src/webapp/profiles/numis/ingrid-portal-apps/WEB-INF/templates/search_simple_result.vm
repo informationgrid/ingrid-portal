@@ -1,0 +1,18 @@
+<section class="block block--lighter block--padded">
+  <div class="ob-box-wide ob-box-padded ob-box-center">
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearch')
+#if($page && $page.endsWith("default-page.psml"))
+  #set($isDefault = true)
+#end
+  <img class="search-form__logo-md mq-hide-l" src="/decorations/layout/ingrid/images/template/numis-tagline3.png" alt="">
+  <form action="$action" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
+    <div class="search-form ob-clear ob-flex">
+        <input class="field field--large" type="text" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if($actionForm.getInputHTMLEscaped('q') != $actionForm.getINITIAL_QUERY())#getHTMLEscapedFieldValue('q')#end">
+        <button id="btn_search" class="btn--primary">
+            <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+        </button>
+    </div>
+    #addErrorFormMessageBox('q')
+  </form>
