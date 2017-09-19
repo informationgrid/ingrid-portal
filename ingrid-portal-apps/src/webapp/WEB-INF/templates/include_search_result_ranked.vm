@@ -13,7 +13,7 @@
 #end
 
 ## set flag indicating how to render stuff (e.g. in includes)
-<h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+#parse ('/WEB-INF/templates/include_search_result_counter.vm')
 <hr class="hr-small-full">
 ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")

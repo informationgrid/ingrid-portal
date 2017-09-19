@@ -1,6 +1,6 @@
 <hr>
 <div id="chronicleResult">
-    <h3>#renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')" )</h3>
+    #renderResultCounterCatalogue($rankedPageSelector "$MESSAGES.getString('chronicle.result.navigationTitle')" )
     <div class="pagination bx-top-m">
         #renderRankedPageNavigation($rankedPageSelector)
     </div>

@@ -50,10 +50,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam("$term")
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.withsearchvalue')
     #else
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #end
 #end

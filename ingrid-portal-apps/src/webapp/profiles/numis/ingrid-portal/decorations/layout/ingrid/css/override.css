@@ -775,7 +775,7 @@ thead {
 }
 
 .footer {
-    background: transparent;
+    background: #FAFAFA url("../images/template/footer-triangles.svg") no-repeat right 0;
 }
 
 .nav-overlay {
