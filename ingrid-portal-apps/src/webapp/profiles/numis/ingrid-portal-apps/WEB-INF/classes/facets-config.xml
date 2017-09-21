@@ -373,7 +373,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>category.news.title</name>
                 <id>rss</id>
-                <icon>/decorations/layout/ingrid/images/template/aktuelles.svg</icon>
+                <icon>/decorations/layout/ingrid/images/template/Knopf-Aktuelles.png</icon>
                 <url>/neuigkeiten</url>
                 <display>true</display>
             </facet>
@@ -391,7 +391,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:metadata</query>
                 <id>metadata</id>
                 <parentId>type</parentId>
-                <icon>/decorations/layout/ingrid/images/template/kataloge.svg</icon>
+                <icon>/decorations/layout/ingrid/images/template/Knopf-Kataloge.png</icon>
             </facet>
         <!-- INSPIRE-relevant -->
             <facet>
@@ -399,7 +399,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>inspireidentifiziert</query>
                 <id>inspire</id>
                 <parentId>type</parentId>
-                <icon>/decorations/layout/ingrid/images/template/inspire.svg</icon>
+                <icon>/decorations/layout/ingrid/images/template/Knopf-INSPIRE.png</icon>
             </facet>
         <!-- Opendata -->
            <facet>
@@ -407,61 +407,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>(opendata OR opendataident) datatype:metadata</query>
                 <id>opendata</id>
                 <parentId>type</parentId>
-                <icon>/decorations/layout/ingrid/images/template/opendata.svg</icon>
-            </facet>
-        <!-- Karten -->
-            <facet>
-                <name>searchResult.facete.datatype.map</name>
-                <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
-                <id>map</id>
-                <parentId>type</parentId>
-                <icon>/decorations/layout/ingrid/images/template/karten.svg</icon>
-            </facet>
-            <!-- RSS -->
-            <facet>
-                <name>category.news.title</name>
-                <id>rss-1</id>
-                <icon>/decorations/layout/ingrid/images/template/Knopf-Aktuelles.png</icon>
-                <url>/neuigkeiten</url>
-                <display>true</display>
-            </facet>
-            <!-- Webseiten -->
-            <facet>
-                <name>searchResult.facete.datatype.www</name>
-                <query>datatype:www</query>
-                <id>www-1</id>
-                <parentId>type</parentId>
-                <icon>icon-log-out-1</icon>
-            </facet>
-            <!-- Metadaten -->
-            <facet>
-                <name>searchResult.facete.title.metaclass</name>
-                <query>datatype:metadata</query>
-                <id>metadata-1</id>
-                <parentId>type</parentId>
-                <icon>/decorations/layout/ingrid/images/template/Knopf-Kataloge.png</icon>
-            </facet>
-        <!-- INSPIRE-relevant -->
-            <facet>
-                <name>INSPIRE</name>
-                <query>inspireidentifiziert</query>
-                <id>inspire-1</id>
-                <parentId>type</parentId>
-                <icon>/decorations/layout/ingrid/images/template/Knopf-INSPIRE.png</icon>
-            </facet>
-        <!-- Opendata -->
-           <facet>
-                <name>Opendata</name>
-                <query>(opendata OR opendataident) datatype:metadata</query>
-                <id>opendata-1</id>
-                <parentId>type</parentId>
                 <icon>/decorations/layout/ingrid/images/template/Knopf-Opendata.png</icon>
             </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
                 <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
-                <id>map-1</id>
+                <id>map</id>
                 <parentId>type</parentId>
                 <icon>/decorations/layout/ingrid/images/template/Knopf-Karten.png</icon>
             </facet>

@@ -11,10 +11,10 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
                 <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
@@ -29,10 +29,10 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
                 <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
@@ -47,10 +47,10 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
                 <portlet col="0" row="2">
-                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
                 </portlet>
                 <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>

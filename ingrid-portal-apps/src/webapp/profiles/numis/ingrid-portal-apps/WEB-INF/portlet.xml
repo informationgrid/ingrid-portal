@@ -600,7 +600,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>block--padded block--light</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -688,7 +688,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded block--light</value>
+                <value>block--padded</value>
             </preference>
         </portlet-preferences>
     </portlet>
