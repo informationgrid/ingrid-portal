@@ -318,7 +318,7 @@ thead {
 }
 
 .mobile__logo {
-    height: auto;
+    height: 3.31rem;
     float: left;
 }
 
@@ -359,7 +359,7 @@ thead {
 
 @media screen and (min-width: 768px) and (max-width: 939px) {
   .header__widgets__section {
-      padding: 1.025rem 0 0;
+      padding: 0.525rem 0;
   }
 }
 
@@ -436,12 +436,6 @@ thead {
     margin-right: 0.625rem;
 }
 
-@media screen and (max-width: 939px) {
-    .service-header {
-        margin-top: 0.625rem;
-    }
-}
-
 #wrapper .service-header .header__widget .header__widget__text {
     font-size: 0.775rem;
 }
@@ -473,6 +467,18 @@ thead {
     }
 }
 
+@media screen and (max-width: 939px) and (min-width: 768px) {
+    .header__widget__icon {
+        top: 0px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .header__widget__icon {
+     font-size: 1.5rem;
+    }
+}
+
 .ingrid #wrapper * {
     font-family: "BundesSansWeb", sans-serif;
 }
@@ -490,13 +496,12 @@ thead {
 #wrapper .search-form__logo--lg {
     margin-left: auto;
     margin-right: auto;
-    width: 23.75rem;
     margin-bottom: 3.125rem;
 }
 
-@media screen and (min-width: 940px) {
+@media screen and (max-width: 940px) {
     #wrapper .search-form__logo--lg {
-        width: 27.5rem;
+        width: 37.5rem;
         margin-bottom: 3.75rem;
     }
 }
@@ -550,10 +555,6 @@ thead {
 
 #wrapper * p, #wrapper * strong, #wrapper * ul, #wrapper * h6, #wrapper * table tr {
     font-size: 1rem;
-}
-
-#wrapper .search-form__logo-md {
-    display: inline;
 }
 
 #wrapper .search-form__logo-md {
@@ -633,13 +634,13 @@ thead {
 
 @media screen and (max-width: 939px) and (min-width: 768px){
     .nav-toggle:after {
-        border-width: 0 0 71px 20px;
+        border-width: 0 0 69px 20px;
     }
 }
 
 @media screen and (max-width: 768px){
     .nav-toggle:after {
-        border-width: 0 0 71px 20px;
+        border-width: 0 0 70px 20px;
     }
 }
 
@@ -753,4 +754,18 @@ thead {
 
 .nav-overlay {
     margin-top: 4.75rem;
+}
+
+.category_label {
+    font-size: 1.125rem;
+    color: #858585;
+}
+
+.category_count {
+    color: #2c2c2c !important;
+    font-weight: 700;
+}
+
+.tabs {
+    margin: 2.5rem 0 0;
 }

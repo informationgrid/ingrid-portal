@@ -688,7 +688,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>block--padded block--lighter</value>
             </preference>
         </portlet-preferences>
     </portlet>

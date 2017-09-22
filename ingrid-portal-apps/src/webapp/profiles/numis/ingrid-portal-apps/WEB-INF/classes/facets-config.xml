@@ -383,7 +383,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>datatype:www</query>
                 <id>www</id>
                 <parentId>type</parentId>
-                <icon>icon-log-out-1</icon>
+                <icon>/decorations/layout/ingrid/images/template/Knopf-Webseiten.png</icon>
             </facet>
             <!-- Metadaten -->
             <facet>
