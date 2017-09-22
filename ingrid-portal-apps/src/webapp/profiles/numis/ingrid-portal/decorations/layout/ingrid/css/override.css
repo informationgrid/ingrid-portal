@@ -634,7 +634,7 @@ thead {
 
 @media screen and (max-width: 939px) and (min-width: 768px){
     .nav-toggle:after {
-        border-width: 0 0 69px 20px;
+        border-width: 0 0 70px 20px;
     }
 }
 
