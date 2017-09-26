@@ -61,7 +61,7 @@
 #end
 
 #macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
-    <div class="tab__content #if(!$isActive)is-hidden#end" id="$parentFacet" data-tabid="$parentFacet">
+    <div class="tab__content box #if(!$isActive)is-hidden#end" id="$parentFacet" data-tabid="$parentFacet">
         <section class="block">
             <article class="content ob-container">
                 <div class="tag-group">

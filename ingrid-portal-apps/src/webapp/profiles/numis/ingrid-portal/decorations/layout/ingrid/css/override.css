@@ -718,6 +718,11 @@ thead {
     background: transparent;
 }
 
+#category.box {
+    background: transparent;
+    margin: 0;
+}
+
 #category .mq-hide-l a:hover .icon-metadata {
     box-shadow: 0 0 0 0.625rem #DDD;
     transition: box-shadow 0.3s;
