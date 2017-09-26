@@ -652,6 +652,13 @@ thead {
     margin-bottom: 1rem;
 }
 
+#wrapper .sidebar__widget__content .field-toggle__label {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}
+
 #wrapper .field-toggle--number {
     color: #858585;
     position: absolute;
@@ -768,4 +775,8 @@ thead {
 
 .tabs {
     margin: 2.5rem 0 0;
+}
+
+.footer__top-link {
+    background: #2C5C91;
 }

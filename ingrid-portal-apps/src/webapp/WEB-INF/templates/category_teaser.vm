@@ -97,9 +97,6 @@
     #set ($count = 0)
     #set ($pf = $parentFacet)
     #set ($facetListSize = $facetList.size())
-    #if($enableRss)
-        #set ($facetListSize = $facetListSize + 1)
-    #end
     #set($list = [])
     #foreach ($facet in $facetList)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") == 0)))
