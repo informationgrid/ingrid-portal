@@ -367,6 +367,12 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private LocationBean getBoundingBoxFromLayer(Node layerNode) {
     	LocationBean box = null;
     	
+    	// check for existing node, since it is not required
+    	// see: https://dev.informationgrid.eu/redmine/issues/867
+    	if (!xPathUtils.nodeExists( layerNode, "wms:EX_GeographicBoundingBox" )) {
+    	   return box;
+    	}
+    	
     	Double west = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:westBoundLongitude");
     	Double east = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:eastBoundLongitude");
     	Double south = xPathUtils.getDouble(layerNode, "wms:EX_GeographicBoundingBox/wms:southBoundLatitude");

@@ -49,6 +49,9 @@
           <action type="update" dev="wemove" issue="568">
             PORTAL: Update PortalU RLP layout.
           </action>
+          <action type="fix" dev="wemove" issue="867">
+            IGE: Fix problem with capabilities assistant and capabilities layers without BBOX.
+          </action>
           <action type="fix" dev="wemove" issue="853">
             PORTAL: Fix map detail view on UVP.
           </action>
