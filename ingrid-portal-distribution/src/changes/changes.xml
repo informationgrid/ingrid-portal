@@ -85,6 +85,9 @@
           <action type="fix" dev="wemove" issue="768">
             IGE: Fixed hidden fields checked during publication.
           </action>
+          <action type="fix" dev="wemove" issue="869">
+            IGE-HH: Fixed required field "UseAccessConstraints".
+          </action>
         </release>
         
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
