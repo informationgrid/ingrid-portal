@@ -6,7 +6,7 @@
         <version>4.2.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ingrid-portal-mdek-application</artifactId>&#xD;
+    <artifactId>ingrid-portal-mdek-application</artifactId>
     <version>4.1.0</version>
     <packaging>war</packaging>
     <name>InGrid Portal MDEK Application</name>
