@@ -467,6 +467,7 @@ public class FileSystemStorage implements Storage {
         String itemPath = strippedPath.subpath(0, strippedPath.getNameCount()-(isArchived ? 2 : 1)).toString();
         String itemFile = strippedPath.getName(strippedPath.getNameCount()-1).toString();
 
+        // FIXME: Under windows the call of "Files.probeContentType()" will leave a file lock on that file!?
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
