@@ -320,6 +320,18 @@ function getOSMLayer(attribution){
     return osm;
 }
 
+function getWMSLayer(layerUrl, layerName, attribution){
+    var osmAttrib='';
+    if(attribution){
+        osmAttrib += attribution;
+    }
+    var osm = new L.tileLayer.wms(layerUrl, {
+        layers: layerName
+    });
+    
+    return osm;
+}
+
 function addLeafletMap(baselayers, bounds, latlng){
     var map = new L.Map('map', {
        layers: baselayers

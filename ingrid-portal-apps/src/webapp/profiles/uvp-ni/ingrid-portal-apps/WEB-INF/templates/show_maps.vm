@@ -14,20 +14,24 @@ html, body {
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script src="$restUrlMarker"></script>
+#if($restUrlUVPDevPlan)
+<script src="$restUrlUVPDevPlan"></script>
+#end
 <script language="JavaScript" type="text/javascript">
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm], null, new L.LatLng(51.3, 10));
+    var enablePopUp = true;
 </script>
 
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
 <script>
     var homeCtlBounds;
-    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
+    if(mapMarkers && mapMarkers.getBounds()){
         if(map){
-            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+            map.fitBounds(mapMarkers.getBounds());
         }
-        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
+        homeCtlBounds = mapMarkers.getBounds();
     }
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
     window.onresize = resizeIframe;

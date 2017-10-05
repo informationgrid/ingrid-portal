@@ -51,8 +51,8 @@ define([
                 if (isChecked) {
 
                     // automatically replace access constraint with "keine"
-                    var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
-                    UtilGrid.setTableData('availabilityAccessConstraints', data);
+                    var access = registry.byId("bkg_accessConstraints");
+                    access.selectInput.set("value", "1");
 
                 }
 

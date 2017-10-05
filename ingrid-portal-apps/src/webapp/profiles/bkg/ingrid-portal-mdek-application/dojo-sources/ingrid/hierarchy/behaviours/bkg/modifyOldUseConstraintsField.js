@@ -21,26 +21,51 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/on",
     "dojo/dom-class",
     "dojo/query",
     "dijit/registry",
     "ingrid/grid/CustomGridEditors",
-    "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, domClass, query, registry, GridEditors, MultiInputInfoField) {
+    "ingrid/widgets/MultiInputInfoField",
+    "ingrid/utils/Syslist"
+], function(array, declare, on, domClass, query, registry, GridEditors, MultiInputInfoField, UtilSyslist) {
 
     // issue: 556
     return declare(null, {
-        title: "Nutzungsbedingungen (INSPIRE-Liste)",
+        title: "Nutzungsbedingungen (InGrid-Hauptprofil)",
         description: "Modifiziert die bestehende Tabelle 'Nutzungsbedingungen' und erlaubt keine freien Einträge mehr.",
         defaultActive: true,
         category: "BKG",
         run: function() {
             // domClass.remove( "uiElementN025", "required" );
             // domClass.add( "uiElementN025", "show" );
-            query("label[for=availabilityUseAccessConstraints]").addContent("Nutzungsbedingungen (INSPIRE-Liste)", "only");
+            query("label[for=availabilityUseAccessConstraints]").addContent("Nutzungsbedingungen (InGrid-Hauptprofil)", "only");
             registry.byId("availabilityUseAccessConstraints").columns[0].editor = GridEditors.SelectboxEditor;
+
+            // since the editor became a Selectbox, we need to map the output from the field to the previous format
+            // that is used by a Combobox
+            // Combobox => displayed value
+            // Selectbox => id
+            require("dojo/aspect").after(registry.byId("availabilityUseAccessConstraints"), "getUnfilteredData", function(items) {
+                var mapped = [];
+                array.forEach(items, function(item) {
+                    mapped.push( { 
+                        title: UtilSyslist.getSyslistEntryName(6500, item.title) 
+                    });
+                });
+                return mapped;
+            });
+            require("dojo/aspect").before(registry.byId("availabilityUseAccessConstraints"), "setData", function(newData, scrollToTop, noRender) {
+                var mapped = [];
+                array.forEach(newData, function(item) {
+                    mapped.push( { 
+                        title: UtilSyslist.getSyslistEntryKey(6500, item.title) 
+                    });
+                });
+                return [mapped, scrollToTop, noRender];
+            });
         }
     })();
 });

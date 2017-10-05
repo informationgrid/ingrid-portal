@@ -1065,11 +1065,13 @@ define({
     "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",
     "validation.digitalRepresentation.conform":"Für konforme INSPIRE-Datensätze sind nur die Werte <ul><li>Grid</li><li>Vector</li><li>Text, Table</li><li>TIN</li></ul> erlaubt.",
     "validation.specification.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'nicht evaluiert' oder 'nicht konform' gesetzt sein.",
+    "validation.specification.missing.service": "Die Spezifikation <ul><li>${0}</li></ul> muss für Geodatendienste vorhanden sein.",
     "validation.specification.conform.missing": "Die Spezifikation <ul><li>${0}</li></ul> muss mit 'konform' gesetzt sein.",
     "validation.specification.deleted": "Die Spezifikation <ul><li>${0}</li></ul> darf bei INSPIRE-relevanten Datensätzen nicht gelöscht werden.",
     "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
-    "validation.encoding.added": "Das Encoding Schema '${0}' wurde ebenfalls geändert.",
+    "validation.encoding.added": "Das Kodierungsschema '${0}' wurde ebenfalls geändert.",
+    "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 

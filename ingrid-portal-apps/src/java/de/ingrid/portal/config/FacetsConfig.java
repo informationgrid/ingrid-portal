@@ -264,6 +264,13 @@ public class FacetsConfig {
                     }
                 }
                 
+                if (facetNode.getChildren( "colNum" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "colNum" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setColNum( Integer.parseInt(node.getValue().toString()) );
+                    }
+                }
+                
                 if (facetNode.getChildren( "facets" ).size() > 0) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
                     if (node != null) {

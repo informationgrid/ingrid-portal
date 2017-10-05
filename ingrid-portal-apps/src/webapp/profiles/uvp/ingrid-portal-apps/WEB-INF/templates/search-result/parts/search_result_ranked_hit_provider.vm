@@ -1,11 +1,12 @@
 #set ($showProvider = true)
+#set ($uvp_address = "")
 #if($grouping && $grouping == 'provider')
     #set ($showProvider = false)
 #end
 #if($showProvider)
     #if($rs.get("detail"))
-        #set($uvp_address = $rs.get('detail').get('uvp_address'))
-        #if($uvp_address)
+        #set ($uvp_address = $rs.get('detail').get('uvp_address'))
+        #if($uvp_address && $uvp_address != "")
             <small>
                 <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
                 #foreach($address in $uvp_address)

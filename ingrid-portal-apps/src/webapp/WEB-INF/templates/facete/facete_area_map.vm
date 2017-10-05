@@ -36,19 +36,31 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');
-    var osm = getOSMLayer();
-    osm.options.minZoom = 5;
-    osm.options.maxZoom = 20;
+    var lat = $facetMapCenter.get(0);
+    var lng = $facetMapCenter.get(1);
+    var zoom = $facetMapCenter.get(2);
+    var layerUrl = '$facetMapLayerUrl';
+    var layerName = '$facetMapLayerName';
+    var layer;
     
+    if(layerUrl.length > 0 && layerName.length > 0){
+        layer = getWMSLayer(layerUrl, layerName); 
+    } else {
+        var osm = getOSMLayer();
+        osm.options.minZoom = 5;
+        osm.options.maxZoom = 20;
+        layer = osm; 
+    }
+
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     // start the map in South-East England
-    map.setView(new L.LatLng(51.3, 10),5);
+    map.setView(new L.LatLng(lat, lng),zoom);
     
     if(selectedMap.indexOf("y1") > -1){
         map.fitBounds([[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]]);
     }
-    map.addLayer(osm);
+    map.addLayer(layer);
     
     window.onresize = function(event) {
         resizeMap();

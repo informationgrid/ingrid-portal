@@ -10,32 +10,6 @@
         $MESSAGES.getString("sitemap.area.main.search")</a>
         <p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
     </li>
-    #if ($enableSearchCatalog)
-    <li>
-        #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-        <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
-            <svg class="icon">
-                <use xlink:href="#internal-link">
-            </svg>
-            $MESSAGES.getString("sitemap.area.main.search.catalogs")
-        </a>
-        <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
-        <div class="search-result--nested">
-            <ul>
-                <li>
-                    #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
-                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.tooltip")">
-                        <svg class="icon">
-                            <use xlink:href="#internal-link">
-                        </svg>
-                        $MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy")
-                    </a>
-                    <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.hierarchy.description")</p>
-                </li>
-            </ul>
-        </div>
-    </li>
-    #end
     #if($enableMeasure)
         <li>
             #set ($link = $renderResponse.encodeURL("/portal/main-measures.psml"))
@@ -47,6 +21,18 @@
             </a>
             <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
         </li>
+    #end
+    #if ($enableSearchCatalog)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.main.search.catalogs")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
+    </li>
     #end
     #if($enableMaps)
         <li>
@@ -363,6 +349,7 @@
         $MESSAGES.getString("sitemap.area.service.sitemap")</a>
         <p>$MESSAGES.getString("sitemap.area.service.sitemap.description")</p>
     </li>
+    #if($enableDisclaimer)
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/disclaimer.psml"))
         <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.disclaimer.tooltip")">
@@ -373,6 +360,8 @@
         </a>
         <p>$MESSAGES.getString("sitemap.area.footer.disclaimer.description")</p>
     </li>
+    #end
+    #if($enablePrivacy)
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/privacy.psml"))
         <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.privacy.tooltip")">
@@ -383,4 +372,5 @@
         </a>
         <p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
     </li>
+    #end
 </ul>

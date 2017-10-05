@@ -168,36 +168,4 @@
             </transaction>
         </sql>
     </target>
-    
-    <target name="hideMetadataMenu" if="useMysql">
-        <echo>Schreibe Ingrid-Editor Konfiguration - Disabling Metadata Menu
-        </echo>
-        <!-- hide the "Metadata"-tab in menu -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${dbUrl}"
-                userid    ="${dbUser}"
-                password  ="${dbPassword}"
-                >
-            <transaction>
-                UPDATE page SET IS_HIDDEN = '1' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
-            </transaction>
-        </sql>
-    </target>
-    
-    <target name="showMetadataMenu" if="useMysql">
-        <echo>Schreibe Ingrid-Editor Konfiguration - Enabling Metadata Menu
-        </echo>
-        <!-- hide the "Metadata"-tab in menu -->
-        <sql    driver    ="${mySqlDriverClass}"
-                classpath ="${mySqlDbDriver}"
-                url       ="${dbUrl}"
-                userid    ="${dbUser}"
-                password  ="${dbPassword}"
-                >
-            <transaction>
-                UPDATE page SET IS_HIDDEN = '0' WHERE PATH ='/mdek/mdek_portal_admin.psml' OR PATH ='/mdek/mdek_entry.psml'
-            </transaction>
-        </sql>
-    </target>
 </project>

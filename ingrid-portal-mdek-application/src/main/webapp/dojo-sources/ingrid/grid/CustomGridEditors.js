@@ -196,6 +196,10 @@ define([
                 if (args.column.listId) {
                     data = lang.clone(sysLists[args.column.listId]);
 
+                    if (args.column.sortFunc) {
+                        args.column.sortFunc(data);
+                    }
+
                     // if no codelist was found try to get it from the backend
                     if (!data) {
                         data = [];

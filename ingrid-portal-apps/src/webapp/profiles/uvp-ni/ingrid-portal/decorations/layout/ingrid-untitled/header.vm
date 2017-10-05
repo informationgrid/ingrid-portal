@@ -88,7 +88,7 @@
                 </div>
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png">
                         <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
                     </a>
                 </div>
@@ -97,7 +97,7 @@
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                         <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><span class="mq-show-s">UVP</span><span class="mq-hide-s">Umweltvertr&auml;glichkeitspr&uuml;fungen</span></a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><span class="mq-show-m">UVP</span><span class="mq-hide-m">Umweltvertr&auml;glichkeitspr&uuml;fungen</span></a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)
@@ -107,21 +107,3 @@
           #includeMainNavigation($mainMenu)
         #end
         </header>
-        #if($currentPage != "/main-maps.psml")
-            <section class="breadcrumb ob-box-padded-more mq-hide-l">
-                <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
-                <nav class="breadcrumb__list">
-                    <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                #if($currentPage)
-                    #if($currentPage == "/search-detail.psml")
-                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
-                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                    #end
-                    #if($currentPage != "/default-page.psml")
-                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
-                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
-                    #end
-                #end
-                </nav>
-            </section>
-        #end

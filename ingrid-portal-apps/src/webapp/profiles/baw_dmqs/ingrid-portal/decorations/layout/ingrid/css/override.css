@@ -1,0 +1,356 @@
+/*
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+body {
+    color: rgb(79, 79, 78);
+}
+
+small {
+    color: rgb(79, 79, 78) !important;
+}
+
+a {
+  color: rgb(44, 99, 177);
+}
+
+a:hover {
+  color: rgb(79, 79, 78);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(79, 79, 78);
+}
+
+label {
+    color: rgb(44, 99, 177);
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid rgb(44, 99, 177);
+}
+
+#btn_search {
+  background: rgb(44, 99, 177);
+  border-color: rgb(44, 99, 177);
+}
+
+#btn_search:hover {
+  background: rgb(44, 99, 177);
+}
+
+.nav-desktop {
+  background: rgb(243, 243, 243);
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  color: #FFFFFF;
+  background: rgb(44, 99, 177);
+}
+
+.nav-desktop__title {
+    color: rgb(44, 99, 177);
+}
+
+.box--fill {
+    background: rgb(243, 243, 243);
+}
+
+.block--light {
+    background: rgb(243, 243, 243);
+}
+
+.search-form input {
+  border-color: rgb(44, 99, 177);
+}
+
+.popup__header {
+  border-bottom: 2px solid rgb(44, 99, 177);
+}
+
+.teaser__box {
+  border-top: 4px solid rgb(44, 99, 177);
+}
+
+
+.sidebar__widget__title {
+    border-bottom: 1px solid #ddd;
+    color: rgb(79, 79, 78);
+}
+
+.no-touchevents .filter__title:hover {
+    color: rgb(44, 99, 177)
+}
+
+.sidebar-filter-subheader {
+    color: rgb(44, 99, 177);
+}
+
+.sidebar-filter-subheader:hover {
+    color: rgb(79, 79, 78);
+}
+
+input:checked + .field-toggle__label--boxed, input:checked + .field-toggle__label--highlight {
+    color: rgb(44, 99, 177);
+}
+
+.dropmenu a {
+    color: rgb(44, 99, 177);
+}
+
+.nav-desktop__title .icon {
+    fill: rgb(44, 99, 177);
+}
+
+.nav-desktop__dropdown li {
+    background: rgb(44, 99, 177);
+    border-top: 0px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-desktop__dropdown li:hover {
+    background: rgb(44, 99, 177);
+}
+
+.nav-desktop__dropdown li a {
+    color: #FFFFFF;
+}
+
+.nav-desktop__dropdown li a:hover {
+    color: #FFFFFF !important;
+}
+
+.nav-desktop__title:hover .icon, .nav-desktop__title.is-selected .icon, .nav-desktop__title.is-active .icon {
+    fill: #FFFFFF;
+}
+
+.header {
+    background: #FFFFFF;
+}
+
+.nav-desktop__dropdown {
+    border-top: 4px solid rgb(44, 99, 177);
+}
+
+.nav-toggle {
+    color: rgb(44, 99, 177) !important;
+}
+
+.nav-toggle::after {
+    border-color: transparent transparent #FFFFFF;
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    border-bottom: 4px solid rgb(44, 99, 177);
+  }
+}
+
+.js-nav-mobile-toggle {
+    
+}
+.nav-overlay {
+    background: rgb(243, 243, 243);
+}
+
+.nav__foot a {
+    color: rgb(44, 99, 177);
+}
+
+.nav__foot a:hover {
+    color: #ffffff;
+    background: rgb(44, 99, 177);
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+    background: rgb(44, 99, 177);
+}
+
+.nav-overlay__item--level1 {
+    border-bottom: 1px solid rgb(44, 99, 177);
+    color: rgb(44, 99, 177);
+}
+
+.nav-overlay__item--level1:hover {
+    background: rgb(44, 99, 177);
+    color: #FFFFFF;
+}
+
+.nav-overlay__item--level2, .nav-overlay__item--level3 {
+    color: #FFFFFF;
+}
+
+.nav-overlay__level2__content {
+    background: rgb(44, 99, 177);
+}
+
+.nav-overlay__item--level2:hover, .nav-overlay__item--level3:hover {
+    background: rgb(44, 99, 177);
+    color: #FFFFFF;
+}
+
+.btn {
+    border: 1px solid rgb(44, 99, 177);
+}
+
+.btn--primary {
+    background: rgb(44, 99, 177);
+}
+
+.btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
+  background: rgb(44, 99, 177);
+  border-color: rgb(44, 99, 177);
+}
+
+.btn--secondary {
+    color: rgb(44, 99, 177) !important;
+}
+
+.btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  background: rgb(44, 99, 177);
+  color: #FFFFFF !important;
+}
+
+.link-list a:hover {
+    color: rgb(44, 99, 177);
+}
+
+.tx-light {
+    color: rgb(79, 79, 78) !important;
+}
+
+.header__widget__icon.is-active {
+    fill: rgb(248, 170, 0);
+}
+
+@media screen and (min-width: 940px) {
+  .header__logo {
+    width: 20.875rem;
+    margin-left: 0;
+  }
+}
+
+.tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: 0 -2px 0 0 rgb(44, 99, 177) inset, 0 4px 0 0 rgb(44, 99, 177);
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+  color: rgb(44, 99, 177);
+}
+
+.tab__toggle.is-active a {
+    color: rgb(44, 99, 177);
+}
+
+thead {
+    background: rgb(44, 99, 177) none repeat scroll 0 0;
+    border-bottom: 2px solid rgb(248, 170, 0);
+    color: #FFFFFF;
+}
+
+.tab__select {
+    background: rgb(44, 99, 177);
+}
+
+.tab__select:hover, .tab__select.is-active {
+    background: rgb(44, 99, 177);
+}
+
+.header__widget > a {
+    color: rgb(44, 99, 177);
+}
+
+.no-touchevents .header__widget > a:hover {
+  color: rgb(248, 170, 0);
+}
+
+.footer {
+    background: rgb(243, 243, 243) url("../images/template/footer-triangles.svg") no-repeat scroll right 0 / 50% 100%;
+    color: rgb(44, 99, 177);
+}
+
+.footer__top-link {
+    background: rgb(44, 99, 177);
+}
+
+.pagination__list a[href]:hover .icon, .pagination__list a[href] .icon {
+    fill: rgb(44, 99, 177);
+}
+
+.pagination__number:hover, .pagination__number.is-active {
+    box-shadow: 0 -4px 0 0 rgb(44, 99, 177) inset;
+    color: rgb(44, 99, 177);
+}
+
+.contentColumnHead {
+    color: #FFFFFF !important;
+}
+
+.table__sort-toggle:hover, .table__sort-toggle.is-active {
+    background: rgb(44, 99, 177);
+}
+
+.tag {
+    background: rgb(243, 243, 243);
+}
+
+.icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
+    width: 7em;
+}
+
+@media screen and (max-width: 767px) {
+    .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
+      width: 1.5em;
+      margin: -5px 10px !important;
+      float: left;
+    }
+}
+
+.no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents .nav-overlay__item--level3:hover, .nav-overlay__item--level3.is-active {
+    color: rgb(44, 99, 177);
+}
+.nav-overlay__item--level2:hover, .nav-overlay__item--level3:hover {
+    background: #FFFFFF;
+}
+
+.no-touchevents .tree__toggle:hover {
+    border-color: rgb(44, 99, 177);
+    box-shadow: 0 1px 0 rgb(44, 99, 177);
+}
+
+.map_popup_cat {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
+
+.map_popup_proc {
+    font-size: 0.9em;
+    color: grey;
+    margin-top: 0.5em;
+}
+
+.no-touchevents .sidebar-filter-subheader:hover {
+    color: rgb(79, 79, 78);
+}

@@ -34,8 +34,7 @@
 
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
-<nav class="nav-desktop mq-hide-xxl">
-  <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
+<div class="header__widgets__section sub-header mq-hide-xxl">
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #set($elemSelected = false)
@@ -69,24 +68,22 @@
         
         #if ($element.url.startsWith('/main-about'))
             #set($subMenu = $site.getMenu("sub-menu-about"))
-            <li class="nav-desktop__item dropmenu__box">
-                <a class="nav-desktop__title js-nav-desktop-toggle #if($elemSelected)is-selected#end" href="#" title="$tabTitle">
+            <div class="header__widget nav-desktop__item dropmenu__box">
+                <a class="nav-desktop__title header__widget__toggle js-header-toggle #if($elemSelected)is-selected#end" href="#" title="$tabTitle">
                     $tabName
-                    <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
                 </a>
                 #if($subMenu && !$subMenu.empty)
                     #includeSubNavigation($subMenu true)
                 #end
-            </li>
+            </div>
         #else
-            <li class="nav-desktop__item">
-                <a class="nav-desktop__title #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">$tabName</a>
-            </li>
+            <div class="header__widget">
+                <a class="header__widget__toggle tx-upper #if($elemSelected)is-active#end" href="$tabUrl" title="$tabTitle">$tabName</a>
+            </div>
         #end
       #end
     #end
-    </ul>
-</nav>
+</div>
 #end
 
 #* include sub navigation component *#
@@ -169,9 +166,9 @@
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end
         #end
-        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
+        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="#if($jetspeed.getLoggedOn())$salutation#else$!linkTitle#end">
             <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
-                <use xlink:href="#user">
+                <use xlink:href="#user"></use>
             </svg>
             <span class="header__widget__text mq-hide-xxl">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
         </a>
@@ -204,7 +201,7 @@
     <div class="header__widget">
         <a class="header__widget__toggle js-header-toggle" href="$linkUrl" title="$!linkTitle">
             <svg class="header__widget__icon icon">
-                <use xlink:href="#gear">
+                <use xlink:href="#gear"></use>
             </svg>
             <span class="header__widget__text mq-hide-xxl">${linkName}</span>
         </a>
@@ -247,10 +244,8 @@
   #elseif($el == "/default-page.psml")
     <div class="header__widget">
         <a href="$linkUrl" title="$!linkTitle">
-            <svg class="header__widget__icon icon">
-                <use xlink:href="#overview">
-            </svg>
-            <span class="header__widget__text mq-hide-l">${linkName}</span>
+            <i class="header__widget__icon icon icon-house-2" style=""></i>
+            <span class="header__widget__text mq-hide-xxl">${linkName}</span>
         </a>
     </div>
   #end
@@ -258,7 +253,7 @@
 
 ## include service navigation component
 #macro (includeServiceNavigation $_menu)
-<div class="header__widgets__section sub-header">
+<div class="header__widgets__section service-header">
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")

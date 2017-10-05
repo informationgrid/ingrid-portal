@@ -158,8 +158,8 @@
                         #renderTextList("R&auml;umliche Darstellungsart" $tmp)
                         #set($tmp = "")
                         ## Sprache des Datensatzes
-                        #set($tmp = $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")))
-                        #renderTextLabelAbove($MESSAGES.getString("t01_object.data_language") $tmp)
+                        #set($tmp = $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue",".")))
+                        #renderTextList($MESSAGES.getString("t01_object.data_language") $tmp)
                         #set($tmp = "")
                         ## Zeichensatz
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue", "510"))

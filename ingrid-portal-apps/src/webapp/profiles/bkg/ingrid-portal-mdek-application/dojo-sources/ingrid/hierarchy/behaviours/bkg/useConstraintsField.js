@@ -23,10 +23,12 @@
 define([
     "dojo/_base/declare",
     "dojo/on",
+    "dojo/dom",
     "dojo/dom-class",
+    "dojo/dom-construct",
     "dijit/registry",
     "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, domClass, registry, MultiInputInfoField) {
+], function(declare, on, dom, domClass, construct, registry, MultiInputInfoField) {
 
     // issue: 556
     return declare(null, {
@@ -37,12 +39,23 @@ define([
         run: function() {
             var rubric = "availabilityContent";
 
+            var targetNode = dom.byId("uiElementN027");
+
+            // make old use constraints full width
+            domClass.remove(targetNode, "halfWidth");
+            registry.byId("availabilityUseAccessConstraints").reinitLastColumn(true);
+
+            // create div element to insert new field at correct place
+            var insertNode = construct.create("div");
+            targetNode.parentNode.insertBefore(insertNode, targetNode);
+
             var multiInputInfoFieldWidget = new MultiInputInfoField({
                 id: "bkg_useConstraints",
                 label: "Nutzungsbedingungen",
+                selectRequired: true,
                 codelist: 10003,
                 codelistForText: 10004
-            }).placeAt(rubric, "first");
+            }).placeAt(insertNode);
 
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
             additionalFields.push(multiInputInfoFieldWidget);

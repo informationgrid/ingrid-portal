@@ -188,3 +188,20 @@ CREATE INDEX ix_to_principal_assoc_lookup ON security_principal_assoc (assoc_nam
 
 ALTER TABLE sso_site ADD CONSTRAINT fk_security_domain_2 FOREIGN KEY (domain_id) REFERENCES security_domain (domain_id) ON DELETE CASCADE;
 CREATE INDEX ix_security_domain_2 ON sso_site (domain_id);
+
+
+-- ADDED AFTER 4.0.3 RELEASE to be always executed when migrating
+-- fix from update_4.0.2.1_postgres.sql
+-- fix qrtz boolean columns on postgres, needs boolean instead of character !
+-- e.g. see https://issues.liferay.com/browse/LEP-6855
+
+ALTER TABLE qrtz_fired_triggers ALTER is_volatile TYPE boolean USING CASE is_volatile WHEN '1' THEN TRUE ELSE FALSE END;
+ALTER TABLE qrtz_fired_triggers ALTER is_stateful TYPE boolean USING CASE is_stateful WHEN '1' THEN TRUE ELSE FALSE END;
+ALTER TABLE qrtz_fired_triggers ALTER requests_recovery TYPE boolean USING CASE requests_recovery WHEN '1' THEN TRUE ELSE FALSE END;
+
+ALTER TABLE qrtz_job_details ALTER is_durable TYPE boolean USING CASE is_durable WHEN '1' THEN TRUE ELSE FALSE END;
+ALTER TABLE qrtz_job_details ALTER is_volatile TYPE boolean USING CASE is_volatile WHEN '1' THEN TRUE ELSE FALSE END;
+ALTER TABLE qrtz_job_details ALTER is_stateful TYPE boolean USING CASE is_stateful WHEN '1' THEN TRUE ELSE FALSE END;
+ALTER TABLE qrtz_job_details ALTER requests_recovery TYPE boolean USING CASE requests_recovery WHEN '1' THEN TRUE ELSE FALSE END;
+
+ALTER TABLE qrtz_triggers ALTER is_volatile TYPE boolean USING CASE is_volatile WHEN '1' THEN TRUE ELSE FALSE END;

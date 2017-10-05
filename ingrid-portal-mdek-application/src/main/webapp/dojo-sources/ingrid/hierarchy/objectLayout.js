@@ -1803,9 +1803,18 @@ define([
                     return UtilSyslist.getSyslistEntry(99999999);
                 });
 
-                layoutCreator.createSelectBox("extraInfoLangData", null, storeProps, function() {
-                    return UtilSyslist.getSyslistEntry(99999999);
-                });
+                var extraInfoLangDataStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '348px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 99999999,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 99999999)
+                }];
+                layoutCreator.createDataGrid("extraInfoLangData", null, extraInfoLangDataStructure, null);
 
                 layoutCreator.createSelectBox("extraInfoPublishArea", null, storeProps, function() {
                     return UtilSyslist.getSyslistEntry(3571);

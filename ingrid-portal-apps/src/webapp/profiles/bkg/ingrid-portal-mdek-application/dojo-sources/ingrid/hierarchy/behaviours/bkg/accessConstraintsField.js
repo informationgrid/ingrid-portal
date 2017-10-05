@@ -37,6 +37,10 @@ define([
         run: function() {
             var rubric = "availabilityContent";
 
+            // make old access constraints full width
+            domClass.remove("uiElementN025", "halfWidth");
+            registry.byId("availabilityAccessConstraints").reinitLastColumn(true);
+
             var multiInputInfoFieldWidget = new MultiInputInfoField({
                 id: "bkg_accessConstraints",
                 label: "Zugriffsbeschränkungen",

@@ -118,6 +118,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_HIERARCHY_CATALOGNAME_HIDDEN = "portal.hierarchy.catalogname.hidden";
     
+    public static final String PORTAL_HIERARCHY_CATALOG_ADDRESS_CLOSE = "portal.hierarchy.catalog.address.close";
+    
     public static final String PORTAL_LOGGER_RESOURCE = "portal.logger.resource";
 
     public static final String PORTAL_ENABLE_MEASURE = "portal.enable.measure";
@@ -134,11 +136,17 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_MAPS = "portal.enable.maps";
     
+    public static final String PORTAL_ENABLE_DISCLAIMER = "portal.enable.disclaimer";
+    
+    public static final String PORTAL_ENABLE_PRIVACY = "portal.enable.privacy";
+    
     public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
     
     public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
     
     public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
+    
+    public static final String PORTAL_ENABLE_NEW_USER = "portal.enable.new.user";
     
     public static final String COMPONENT_MONITOR_ALERT_EMAIL_SUBJECT = "component.monitor.alert.email.subject";
         
@@ -180,7 +188,10 @@ public class PortalConfig extends PropertiesConfiguration {
     
     // User admin: show max row of users in a table
     public static final String USER_ADMIN_MAX_ROW = "admin.user.max.row";
-
+    
+    // User admin: sort column by default
+    public static final String USER_ADMIN_SORT_COLUMN = "admin.user.sort.column";
+    
     public static final String PORTAL_SEARCH_LANGUAGE_INDEPENDENT = "portal.search.language.independent";
 
     public static final String PORTAL_ENABLE_APPLICATION= "portal.enable.application";
@@ -192,6 +203,10 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_ENABLE_SEARCH_FACETE = "portal.search.facete.enable";
     
     public static final String PORTAL_SEARCH_FACETE_SUB_COUNT = "portal.search.facete.sub.count";
+    
+    public static final String PORTAL_SEARCH_FACETE_MAP_CENTER = "portal.search.facete.map.center";
+    
+    public static final String PORTAL_SEARCH_FACETE_MAP_LAYER = "portal.search.facete.map.layer";
     
     public static final String PORTAL_SEARCH_HIDDEN_DATATYPES = "portal.search.hidden.datatype";
     
@@ -224,6 +239,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
+    
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL = "portal.mapclient.uvp.category.dev-plan.url";
     
     public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
 

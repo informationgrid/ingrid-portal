@@ -21,14 +21,16 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/on",
     "dojo/dom-class",
     "dojo/query",
     "dijit/registry",
     "ingrid/grid/CustomGridEditors",
-    "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, domClass, query, registry, GridEditors, MultiInputInfoField) {
+    "ingrid/widgets/MultiInputInfoField",
+    "ingrid/utils/Syslist"
+], function(array, declare, on, domClass, query, registry, GridEditors, MultiInputInfoField, UtilSyslist) {
 
     // issue: 556
     return declare(null, {
@@ -41,6 +43,30 @@ define([
             domClass.add( "uiElementN025", "show" );
             query("label[for=availabilityAccessConstraints]").addContent("Zugriffsbeschränkungen (INSPIRE-Liste)<span class='requiredSign'>*</span>", "only");
             registry.byId("availabilityAccessConstraints").columns[0].editor = GridEditors.SelectboxEditor;
+
+            // since the editor became a Selectbox, we need to map the output from the field to the previous format
+            // that is used by a Combobox
+            // Combobox => displayed value
+            // Selectbox => id
+            require("dojo/aspect").after(registry.byId("availabilityAccessConstraints"), "getUnfilteredData", function(items) {
+                var mapped = [];
+                array.forEach(items, function(item) {
+                    mapped.push( { 
+                        title: UtilSyslist.getSyslistEntryName(6010, item.title) 
+                    });
+                });
+                return mapped;
+            });
+            require("dojo/aspect").before(registry.byId("availabilityAccessConstraints"), "setData", function(newData, scrollToTop, noRender) {
+                var mapped = [];
+                array.forEach(newData, function(item) {
+                    mapped.push( { 
+                        title: UtilSyslist.getSyslistEntryKey(6010, item.title) 
+                    });
+                });
+                return [mapped, scrollToTop, noRender];
+            });
+
 
             on(registry.byId("isInspireRelevant") , "change", function(isChecked) {
                 if (isChecked) {

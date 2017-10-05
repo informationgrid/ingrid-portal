@@ -293,12 +293,6 @@ define([
                 });
             } else {
                 return "???";
-                array.some(selectbox.store._arrayOfTopLevelItems, function(item) {
-                    if (item[1] == strValue) {
-                        dispValue = item[0];
-                        return true;
-                    }
-                });
             }
             return dispValue;
         },

@@ -181,12 +181,10 @@ public class UtilsFacete {
             addDefaultIngridFacets(request, config);
             setAttributeToSession(request, FACET_CONFIG, config);
         }else{
-            if(portalTerm != null && facetTerm != null){
-                if(!portalTerm.equals(facetTerm)){
-                    //Reset config facet values
-                    resetFacetConfigValues(config, null);
-                    setAttributeToSession(request, FACET_CONFIG, config);
-                }
+            if(facetTerm != portalTerm){
+                //Reset config facet values
+                resetFacetConfigValues(config, null);
+                setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
         
@@ -253,6 +251,16 @@ public class UtilsFacete {
             context.put("isSelection", isAnyFacetConfigSelect(config, (Boolean) getAttributeFromSession(request, "isSelection")));
         }
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
+        context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
+        String [] facetMapLayer = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_LAYER);
+        String facetMapLayerUrl = facetMapLayer[0];
+        if(facetMapLayerUrl.length() > 0 && facetMapLayer.length > 1){
+            context.put( "facetMapLayerUrl", facetMapLayerUrl);
+            context.put( "facetMapLayerName", facetMapLayer[1]);
+        }else{
+            context.put( "facetMapLayerUrl", facetMapLayerUrl);
+            context.put( "facetMapLayerName", "");
+        }
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
     }
@@ -382,10 +390,16 @@ public class UtilsFacete {
                     if(!isOldIPlug){
                         getDependencyFacetById(config, facetDepList, value);
                         for(IngridFacet facetDep : facetDepList){
-                            if(facetIsSelect){
-                                facetDep.setDependencySelect(true);
+                            IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                            if(dependencyValue.isSelect()){
+                                facetDep.setDependencySelect(dependencyValue.isSelect());
                             }else{
-                                facetDep.setDependencySelect(false);
+                                if(facetDep.getFacets() != null){
+                                    for(IngridFacet facetChild : facetDep.getFacets()){
+                                        facetChild.setSelect(dependencyValue.isSelect());
+                                    }
+                                }
+                                facetDep.setDependencySelect(dependencyValue.isSelect());
                             }
                         }
                     }
@@ -479,7 +493,7 @@ public class UtilsFacete {
                                             if(facet != null){
                                                 if(queryType == null){
                                                     facet.setFacetValue(value.toString());
-                                                }else if(queryType.equals("OR") || queryType.equals("OR_DIALOG")){
+                                                }else if(queryType.equals("OR")){
                                                     if(facet.getFacetValue() == null){
                                                         facet.setFacetValue(value.toString());
                                                     }
@@ -493,7 +507,7 @@ public class UtilsFacete {
                         setAttributeToSession(request, FACET_CONFIG, config);
                     }
                 }
-            }        
+            }
             
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
@@ -1694,6 +1708,24 @@ public class UtilsFacete {
                             //Set facet isSelect
                             IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
                             tmpFacetValue.setSelect(true);
+                            //Check dependency
+                            if(tmpFacetValue.getId() != null){
+                                ArrayList<IngridFacet> facetDepList = new ArrayList<IngridFacet>();
+                                getDependencyFacetById(config, facetDepList, tmpFacetValue.getId());
+                                for(IngridFacet facetDep : facetDepList){
+                                    IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                                    if(dependencyValue.isSelect()){
+                                        facetDep.setDependencySelect(dependencyValue.isSelect());
+                                    }else{
+                                        if(facetDep.getFacets() != null){
+                                            for(IngridFacet facetChild : facetDep.getFacets()){
+                                                facetChild.setSelect(dependencyValue.isSelect());
+                                            }
+                                        }
+                                        facetDep.setDependencySelect(dependencyValue.isSelect());
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -2061,7 +2093,7 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 if(facet.getId().equals("topic")){
                     ArrayList<IngridFacet> list = facet.getFacets();
-                    facet.setQueryType("OR_DIALOG");
+                    facet.setQueryType("OR");
                     facet.setSort("SORT_BY_VALUE_DESC");
                     CodeListService codelistService = CodeListServiceFactory.instance();
                     ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
@@ -2091,15 +2123,8 @@ public class UtilsFacete {
                             // Partner restriction (set tmpFacet.setParentHidden(true)) 
                             for(IngridPartner partner : partners){
                                 if(partner.getIdent().equals(restrictPartner)){
-                                    IngridFacet tmpFacet = new IngridFacet();
-                                    tmpFacet.setId(partner.getIdent());
-                                    tmpFacet.setQueryType("OR_DIALOG");
-                                    tmpFacet.setQuery("partner:"+ partner.getIdent());
-                                    tmpFacet.setName(partner.getName());
-                                    tmpFacet.setSort("SORT_BY_VALUE_DESC");
-                                    tmpFacet.setParent(facet);
-                                    // Partner restriction is define.
-                                    tmpFacet.setParentHidden(true);
+                                    facet.setQueryType("OR");
+                                    facet.setSort("SORT_BY_VALUE_DESC");
                                     List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                     ArrayList<IngridFacet> listProviders = null;
                                     for(IngridProvider provider : providers){
@@ -2107,19 +2132,13 @@ public class UtilsFacete {
                                         tmpProvidersFacet.setId(provider.getIdent());
                                         tmpProvidersFacet.setQuery("provider:"+ provider.getIdent());
                                         tmpProvidersFacet.setName(provider.getName());
-                                        tmpProvidersFacet.setParent(tmpFacet);
+                                        tmpProvidersFacet.setParent(facet);
                                         if(listProviders == null){
                                             listProviders = new ArrayList<IngridFacet>();
                                         }
                                         listProviders.add(tmpProvidersFacet);
                                     }
-                                    if(listProviders != null){
-                                        tmpFacet.setFacets(listProviders);
-                                    }
-                                    if(list == null){
-                                        list = new ArrayList<IngridFacet>();
-                                    }
-                                    list.add(tmpFacet);
+                                    list = listProviders;
                                     break;
                                 }
                             }
@@ -2127,7 +2146,6 @@ public class UtilsFacete {
                             for(IngridPartner partner : partners){
                                 IngridFacet tmpFacet = new IngridFacet();
                                 tmpFacet.setId(partner.getIdent());
-                                tmpFacet.setQueryType("OR_DIALOG");
                                 tmpFacet.setQuery("partner:"+ partner.getIdent());
                                 tmpFacet.setName(partner.getName());
                                 tmpFacet.setSort("SORT_BY_VALUE_DESC");
@@ -2342,7 +2360,7 @@ public class UtilsFacete {
         if(facets != null){
             if(type != null){
                 // OR
-                if(type.equals("OR") || type.equals("OR_DIALOG")){
+                if(type.equals("OR")){
                     String orQuery = "()";
                     for(IngridFacet ingridFacet : facets){
                         if(ingridFacet.isSelect() || ingridFacet.isParentHidden()){
@@ -2495,7 +2513,7 @@ public class UtilsFacete {
                 if(key != null){
                     if(facet.getId().equals(key)){
                         if(facet.getQueryType() != null){
-                            if(facet.getQueryType().equals("OR") || facet.getQueryType().equals("OR_DIALOG")){
+                            if(facet.getQueryType().equals("OR")){
                                 isOrSelect = true;
                             }
                         }

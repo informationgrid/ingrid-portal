@@ -10,7 +10,7 @@
         #renderSearchResultFacetFilter( "is-active" )
     #end
     <article class="content ob-container">
-        <h3>#parse ('/WEB-INF/templates/include_search_result_counter.vm')</h3>
+        #parse ('/WEB-INF/templates/include_search_result_counter.vm')
         <hr class="hr-small-full">
         #if($enableFacetSelection > 0 || $isSelection)
             #renderSearchResultFacetSelection($facetConfig $MESSAGES)

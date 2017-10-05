@@ -34,7 +34,7 @@ define([
     
     return declare(null, {
         title: "Inspire / Conformity - Connection",
-        description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Konformität hinzugefügt.",
+        description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Konformität hinzugefügt, sofern es sich um ein Geodatensatz handelt, welches INSPIRE relevant (konform) ist.",
         defaultActive: true,
         category: "INSPIRE relevant",
         run: function() {
@@ -49,11 +49,14 @@ define([
                 UtilUI.updateEntryToConformityTable(mapping[inspireId], deleteEntry);
             };
 
+            var isInspireRelevantWidget = registry.byId("isInspireRelevant");
+            var isConformWidget = registry.byId("isInspireConform");
+
             // react when inspire topics has been added
             on(UtilGrid.getTable("thesaurusInspire"), "CellChange", function(msg) {
                 var objClass = registry.byId("objectClass").get("value");
                 // only react if class == 1
-                if (objClass == "Class1") {
+                if (objClass == "Class1" && isInspireRelevantWidget.get("checked") && isConformWidget.get("checked")) {
                     // remove old dependent values
                     if (msg.oldItem) {
                         applySpecification(msg.oldItem.title, true);
@@ -69,7 +72,7 @@ define([
             on(UtilGrid.getTable("thesaurusInspire"), "DeleteItems", function(msg) {
                 var objClass = registry.byId("objectClass").get("value");
                 // only react if class == 1
-                if (objClass == "Class1") {
+                if (objClass == "Class1" && isInspireRelevantWidget.get("checked") && isConformWidget.get("checked")) {
                     var names = [];
                     array.forEach(msg.items, function(item) {
                         applySpecification(item.title, true);

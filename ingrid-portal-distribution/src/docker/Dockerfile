@@ -14,6 +14,8 @@ RUN unzip ingrid-portal*-installer.jar -d /tmp \
     && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
     && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
+    && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
+    && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
     && sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/mysql\/ingrid_portal/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-apps.xml \
     && sed -i 's/password=""/password="${DB_PASSWORD}"/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-apps.xml \
     && sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/mysql/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-mdek.xml \

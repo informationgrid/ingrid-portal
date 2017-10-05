@@ -41,6 +41,8 @@
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
     <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
+    
+    <property name="prop-root"                     value="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/classes/bootstrap.override.properties"/>
 
     <property name="prop-ingrid-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties"/>
     <property name="prop-quartz-portal-apps"       value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/classes/quartz.properties"/>
@@ -51,7 +53,7 @@
     <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.override.properties"/>
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
     
-    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.properties"/>
+    <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.override.properties"/>
 
     <!-- THESE PROPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="${tomcat-artifact}/webapps/ROOT/META-INF,apache-tomcat-6.0.35/webapps/ROOT/META-INF" />
@@ -267,9 +269,11 @@
                 <runtarget target="configurePortal"/>
                 <runtarget target="configureIge"/>
                 <!-- make sure that the metadata menu is visible -->
-                <runtarget target="mysql.showMetadataMenu"/>
-                <runtarget target="oracle.showMetadataMenu"/>
-                <runtarget target="postgres.showMetadataMenu"/>
+                <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
+                <touch file="${prop-root}"/>
+                <propertyfile file="${prop-root}">
+                    <entry key="portal.showMetadataMenu" value="true" />
+                </propertyfile>
             </then>
             <elseif>
                 <equals arg1="${installType}" arg2="portalOnly" />
@@ -456,9 +460,11 @@
     </target>
 
     <target name="configurePortalOnly">
-    	<runtarget target="mysql.hideMetadataMenu"/>
-    	<runtarget target="oracle.hideMetadataMenu"/>
-    	<runtarget target="postgres.hideMetadataMenu"/>
+        <echo>Schreibe Konfiguration zur Anzeige des Metadatenmenüs</echo>
+        <touch file="${prop-root}"/>
+        <propertyfile file="${prop-root}">
+            <entry key="portal.showMetadataMenu" value="false" />
+        </propertyfile>
         
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war" />
     </target>
@@ -551,62 +557,19 @@
          ============================================= -->
 
     <target name="writeMapClientProps" description="">
-        <echo>Schreibe Webmap-Client Konfigration</echo>
+        <echo>Schreibe Webmap-Client Konfiguration</echo>
+        <touch file="${i-prop-ingrid-webmap-client}"/>
         <!-- write the application.properties file-->
-        <property file="${i-prop-ingrid-webmap-client}" prefix="webmapPROP"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.config.dir}"  value="${WebmapDataDir}/WebmapClientData/"/>
-        <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.kml.directory}"  value="${WebmapDataDir}/WebmapClientData/kml"/>
-        <if>
-            <equals arg1="${feedbackHost}" arg2=""/>
-            <then>
-                <echo>Keine Einstellung für 'SMTP-Server (Host)' gesetzt.</echo>
-            </then>
-            <else>
-                <echo>Einstellung 'SMTP-Server (Host)' geändert.</echo>
-                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.host}"  value="${feedbackHost}"/>
-            </else>
-        </if>
-        <if>
-            <equals arg1="${feedbackPort}" arg2=""/>
-            <then>
-                <echo>Keine Einstellung für 'SMTP-Port' gesetzt.</echo>
-            </then>
-            <else>
-                <echo>Einstellung 'SMTP-Port' geändert.</echo>
-                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.port}"  value="${feedbackPort}"/>
-            </else>
-        </if>
-        <if>
-            <equals arg1="${feedbackUser}" arg2=""/>
-            <then>
-                <echo>Keine Einstellung für 'SMTP-Benutzer' gesetzt.</echo>
-            </then>
-            <else>
-                <echo>Einstellung 'SMTP-Benutzer' geändert.</echo>
-                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.user}"  value="${feedbackUser}"/>
-            </else>
-        </if>
-        <if>
-            <equals arg1="${feedbackPassword}" arg2=""/>
-            <then>
-                <echo>Keine Einstellung für 'SMTP-Passwort' gesetzt.</echo>
-            </then>
-            <else>
-                <echo>Einstellung 'SMTP-Passwort' geändert.</echo>
-                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.password}"  value="${feedbackPassword}"/>
-            </else>
-        </if>
-        <if>
-            <equals arg1="${feedbackEmail}" arg2=""/>
-            <then>
-                <echo>Keine Einstellung für 'Sender E-Mail-Adresse' gesetzt.</echo>
-            </then>
-            <else>
-                <echo>Einstellung 'Sender E-Mail-Adresse' geändert.</echo>
-                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.from}"  value="${feedbackEmail}"/>
-                <replace  file="${i-prop-ingrid-webmap-client}" token="${webmapPROP.feedback.to}"  value="${feedbackEmail}"/>
-            </else>
-        </if>
+        <propertyfile file="${i-prop-ingrid-webmap-client}">
+            <entry key="config.dir"  value="${WebmapDataDir}/WebmapClientData/"/>
+            <entry key="kml.directory"  value="${WebmapDataDir}/WebmapClientData/kml"/>
+            <entry key="feedback.host" value="${feedbackHost}" />
+            <entry key="feedback.port" value="${feedbackPort}" />
+            <entry key="feedback.user" value="${feedbackUser}" />
+            <entry key="feedback.password" value="${feedbackPassword}" />
+            <entry key="feedback.from" value="${feedbackEmail}" />
+            <entry key="feedback.to" value="${feedbackEmail}" />
+        </propertyfile>
         <!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
         <replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
         <!-- Delete old WebmapClient data folders -->

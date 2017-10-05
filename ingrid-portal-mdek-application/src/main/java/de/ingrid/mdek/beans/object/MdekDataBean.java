@@ -102,7 +102,7 @@ public class MdekDataBean {
 
 	// ExtraInfo
 	private Integer extraInfoLangMetaDataCode;
-	private Integer extraInfoLangDataCode;
+    private List<Integer> extraInfoLangDataTable;
 	private Integer extraInfoPublishArea;
 	private Integer extraInfoCharSetDataCode;
 	private List<ConformityBean> extraInfoConformityTable;
@@ -229,6 +229,7 @@ public class MdekDataBean {
 		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
 		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
 		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
+        this.setExtraInfoLangDataTable(new ArrayList<Integer>());
 		this.setExtraInfoConformityTable(new ArrayList<ConformityBean>());
 		this.setExtraInfoXMLExportTable(new ArrayList<String>());
 		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
@@ -932,15 +933,13 @@ public class MdekDataBean {
 
 
 
-	public Integer getExtraInfoLangDataCode() {
-		return extraInfoLangDataCode;
-	}
-
-
-
-	public void setExtraInfoLangDataCode(Integer extraInfoLangData) {
-		this.extraInfoLangDataCode = extraInfoLangData;
-	}
+    public List<Integer> getExtraInfoLangDataTable() {
+        return extraInfoLangDataTable;
+    }
+    public void setExtraInfoLangDataTable(
+            List<Integer> extraInfoLangDataTable) {
+        this.extraInfoLangDataTable = extraInfoLangDataTable;
+    }
 
 
 	public Integer getExtraInfoPublishArea() {

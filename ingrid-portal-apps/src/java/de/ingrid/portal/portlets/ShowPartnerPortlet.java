@@ -27,6 +27,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -58,7 +62,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(ShowPartnerPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value", "children.address_node.addr_type", "t02_address.parents.title" };
+    private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value", "children.address_node.addr_type", "t02_address.parents.title", "partner", "provider" };
     
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
@@ -83,106 +87,118 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                
         String partnerQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_PARTNER_LIST_QUERY );
         if(partnerQuery != null && partnerQuery.length() > 0){
-            ArrayList<HashMap<String, String>> addresses = new ArrayList<HashMap<String, String>>();
             try {
-                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance()
-                        .getIBus() );
+                IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance().getIBus() );
                 ArrayList<String> addedInstitution = new ArrayList<String>();
+                TreeMap<String, HashMap<String, Object>> partnersMap = new TreeMap<String, HashMap<String, Object>>();
+                
                 while (it.hasNext()) {
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
 
-                    HashMap<String, String> address = new HashMap<String, String>();
-                    String institution = null;
-                    /*
-                    if(detail.get("t02_address.address_value") != null){
-                        address.put( "address_value", ((String[])detail.get("t02_address.address_value"))[0]);
-                    }
-                    if(detail.get("t02_address.title") != null){
-                        address.put( "title", ((String[])detail.get("t02_address.title"))[0]);
-                    }
-                    if(detail.get("t02_address.firstname") != null){
-                        address.put( "firstname", ((String[])detail.get("t02_address.firstname"))[0]);
-                    }
-                    if(detail.get("t02_address.lastname") != null){
-                        address.put( "lastname", ((String[])detail.get("t02_address.lastname"))[0]);
-                    }
-                    */
-                    if(detail.get("title") != null){
-                        institution = (String) ((ArrayList)detail.get("title")).get(0);
-                        if(institution != null){
-                            if(detail.get("t02_address.parents.title") != null)
-                                if(detail.get("t02_address.parents.title") instanceof String[]){
-                                    institution = ((String[])detail.get("t02_address.parents.title"))[0] + "\n" + institution.trim();
-                                } else {
-                                    ArrayList<String> parentsTitle = (ArrayList<String>) detail.get("t02_address.parents.title");
-                                    if(parentsTitle != null){
-                                        for(String title : parentsTitle){
-                                            institution = title + "\n" + institution.trim();
-                                        }
-                                    }
-                                }
-                            
+                    String[] partnersOfHit = (String[]) detail.get("partner");
+                    for (String partnerOfHit : partnersOfHit) {
+                        HashMap<String, Object> partnerProvider = partnersMap.get( partnerOfHit );
+                        if(partnerProvider == null){
+                            HashMap<String, Object> partner = new HashMap<String, Object>();
+                            partner.put( "ident", partnerOfHit );
+                            partner.put( "name", UtilsDB.getPartnerFromKey( partnerOfHit ) );
+                            partnerProvider = new HashMap<String, Object>();
+                            partnerProvider.put( "partner", partner );
+                            partnerProvider.put( "providers", new ArrayList<HashMap<String, HashMap<String, String>>>() );
+                            partnersMap.put( partnerOfHit, partnerProvider );
                         }
-                        address.put( "institution", institution.trim());
-                    }
-                    
-                    if(institution != null){
-                        if(detail.get("t021_communication.commtype_key") != null 
-                                && detail.get("t021_communication.commtype_value") != null
-                                && detail.get("t021_communication.comm_value") != null){
-                            
-                            ArrayList<String> typeKeys = null;
-                            ArrayList<String> typeValues = null;
-                            ArrayList<String> values = null;
-                            
-                            typeKeys = getIndexValue(detail.get("t021_communication.commtype_key"));
-                            typeValues = getIndexValue(detail.get("t021_communication.commtype_value"));
-                            values = getIndexValue(detail.get("t021_communication.comm_value"));
-                            
-                            for (int i = 0; i < typeKeys.size(); i++) {
-                                String typeKey = (String) typeKeys.get(i);
-                                String typeValue = null;
-                                String value = null;
-                                if(typeValues.size() > i){
-                                    typeValue = ((String)typeValues.get(i)).toLowerCase();
-                                    if(typeKey.equals("4") && typeValue.indexOf( "url" ) > -1){
-                                        if(values.size() > i){
-                                            value = (String) values.get(i);
+                        
+                        ArrayList<HashMap<String, HashMap<String, String>>> providers = (ArrayList<HashMap<String, HashMap<String, String>>>) partnerProvider.get( "providers" );
+                        HashMap<String, String> provider = new HashMap<String, String>();
+                        String name = null;
+                        if(detail.get("title") != null){
+                            name = (String) ((ArrayList)detail.get("title")).get(0);
+                            if(name != null){
+                                if(detail.get("t02_address.parents.title") != null)
+                                    if(detail.get("t02_address.parents.title") instanceof String[]){
+                                        name = ((String[])detail.get("t02_address.parents.title"))[0] + "<br>" + name.trim();
+                                    } else {
+                                        ArrayList<String> parentsTitle = (ArrayList<String>) detail.get("t02_address.parents.title");
+                                        if(parentsTitle != null){
+                                            for(String title : parentsTitle){
+                                                name = title + "<br>" + name.trim();
+                                            }
                                         }
                                     }
-                                }
-                                if(value != null){
-                                    address.put( "url", value );
+                                
+                            }
+                            provider.put( "name", name.trim());
+                        }
+                        
+                        if(name != null && name.length() > 0){
+                            if(detail.get("t021_communication.commtype_key") != null 
+                                    && detail.get("t021_communication.commtype_value") != null
+                                    && detail.get("t021_communication.comm_value") != null){
+                                
+                                ArrayList<String> typeKeys = null;
+                                ArrayList<String> typeValues = null;
+                                ArrayList<String> values = null;
+                                
+                                typeKeys = getIndexValue(detail.get("t021_communication.commtype_key"));
+                                typeValues = getIndexValue(detail.get("t021_communication.commtype_value"));
+                                values = getIndexValue(detail.get("t021_communication.comm_value"));
+                                
+                                for (int i = 0; i < typeKeys.size(); i++) {
+                                    String typeKey = (String) typeKeys.get(i);
+                                    String typeValue = null;
+                                    String value = null;
+                                    if(typeValues.size() > i){
+                                        typeValue = ((String)typeValues.get(i)).toLowerCase();
+                                        if(typeKey.equals("4") && typeValue.indexOf( "url" ) > -1){
+                                            if(values.size() > i){
+                                                value = (String) values.get(i);
+                                            }
+                                        }
+                                    }
+                                    if(value != null){
+                                        value = value.trim();
+                                        if(!value.startsWith( "http" )){
+                                            value = "http://" + value;
+                                        }
+                                        provider.put( "url", value );
+                                    }
                                 }
                             }
-                        }
-                        if(address != null && address.size() > 0){
-                            if(addedInstitution.indexOf( institution.toLowerCase().trim() ) == -1){
-                                addresses.add( address );
-                                addedInstitution.add( institution.toLowerCase().trim() );
+                            if(provider != null && provider.size() > 0){
+                                if(addedInstitution.indexOf( (detail.getPlugId() + "_" + detail.getId()).toLowerCase().trim() ) == -1){
+                                    HashMap<String, HashMap<String, String>> providerMap = new HashMap<String, HashMap<String, String>>();
+                                    providerMap.put( "provider", provider );
+                                    providers.add( providerMap );
+                                    addedInstitution.add( (detail.getPlugId() + "_" + detail.getId()).toLowerCase().trim() );
+                                }
                             }
                         }
                     }
                 }
+                Iterator<Map.Entry<String, HashMap<String, Object>>> itPartnerMap = partnersMap.entrySet().iterator();
+                if(itPartnerMap != null){
+                    while (itPartnerMap.hasNext()) {
+                        Map.Entry<String, HashMap<String, Object>>  partner = itPartnerMap.next();
+                        if(partner.getValue() != null){
+                            ArrayList<HashMap<String, HashMap<String, String>>> providers = (ArrayList<HashMap<String, HashMap<String, String>>>) partner.getValue().get( "providers" );
+                            if(providers.size() > 0){
+                                Collections.sort(providers, new Comparator<HashMap>(){
+                                    public int compare(HashMap left, HashMap right){
+                                        String leftKey = (String) ((HashMap<String, String>) left.get("provider")).get("name");
+                                        String rightKey = (String) ((HashMap<String, String>) right.get("provider")).get("name");
+                                        return leftKey.toLowerCase().compareTo(rightKey.toLowerCase());
+                                    }
+                                });
+                            }else{
+                                itPartnerMap.remove();
+                            }
+                        }
+                    }
+                }
+                context.put( "partners", partnersMap );
             } catch (ParseException e) {
                 log.error( "Error by executing search with query: " + partnerQuery);
-            }
-            if(addresses.size() > 0){
-                Collections.sort(addresses, new Comparator<HashMap>(){
-                    public int compare(HashMap left, HashMap right){
-                        String leftKey = (String) left.get("lastname");
-                        if(leftKey == null || leftKey.length() == 0){
-                            leftKey = (String) left.get("institution");
-                        }
-                        String rightKey = (String) right.get( "lastname" );
-                        if(rightKey == null || rightKey.length() == 0){
-                            rightKey = (String) right.get("institution");
-                        }
-                        return leftKey.toLowerCase().compareTo(rightKey.toLowerCase());
-                    }
-                });
-                context.put( "addresses", addresses );
             }
         } else {
             try {

@@ -80,6 +80,11 @@ define(["dojo/_base/declare",
         }
       });
 
+      topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
+        // remove folder type since this one is created differently (toolbar, context menu)
+        data.types = array.filter(data.types, function(t) { return t[1] !== "1000"; });
+      });
+
       // handle toolbar when folder is selected
       // -> only disable toolbar buttons that are not needed (be careful with IgeToolbar-Class-behaviour)
       var self = this;

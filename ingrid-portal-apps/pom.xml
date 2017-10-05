@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>4.0.3</version>
+    <version>4.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -16,7 +16,7 @@
     <tag>HEAD</tag>
   </scm>
   <properties>
-    <measurement.client.version>1.0.1</measurement.client.version>
+    <measurement.client.version>1.0.2</measurement.client.version>
   </properties>
   <build>
     <finalName>ingrid-portal-apps</finalName>
@@ -105,6 +105,64 @@
         </configuration>
       </plugin>
 
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+            <execution>
+                <phase>compile</phase>
+                <configuration>
+                    <tasks>
+                        <echo>INGRID-PORTAL-APPS: Copy default WEB-INF folder to profile 'ingrid'</echo>
+                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF">
+                            <fileset dir="${project.basedir}/src/webapp/WEB-INF/">
+                                 <include name="**/*.vm" />
+                                 <include name="**/portlet.xml" />
+                            </fileset>
+                        </copy>
+                        <echo>INGRID-PORTAL-APPS: Copy default properties to profile 'ingrid'</echo>
+                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF/classes">
+                            <fileset dir="${project.basedir}/src/java/">
+                                <include name="*.xml" />
+                                <include name="**/wms*.properties" />
+                            </fileset>
+                        </copy>
+                        <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
+                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
+                            <fileset dir="${project.basedir}/src/webapp/dwd_warnmodul/">
+                                <include name="*.cfg" />
+                            </fileset>
+                        </copy>
+                        <echo>INGRID-PORTAL: Copy portal-base layout ingrid properties to profile 'ingrid'</echo>
+                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
+                            <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">
+                                <include name="**/decorations/**/*.vm" />
+                                <include name="**/images/**/*.svg" />
+                                <include name="**/images/*.ico" />
+                                <include name="**/error*.html" />
+                                <include name="**/urlrewrite.xml" />
+                            </fileset>
+                        </copy>
+                        <echo>INGRID-PORTAL: Copy portal-base localisation ingrid properties to profile 'ingrid'</echo>
+                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/WEB-INF/classes">
+                            <fileset dir="${project.basedir}/../ingrid-portal-base/src/java/">
+                                <include name="**/PortalLayout*.properties" />
+                            </fileset>
+                        </copy>
+                        <echo>INGRID-PORTAL-MDEK-APPLICATION: Copy portal-base localisation ingrid properties to profile 'ingrid'</echo>
+                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-mdek-application/WEB-INF/classes">
+                            <fileset dir="${project.basedir}/../ingrid-portal-mdek-application/src/main/resources">
+                                <include name="**/*help*.xml" />
+                                <include name="**/messages*.properties" />
+                            </fileset>
+                        </copy>
+                    </tasks>
+                </configuration>
+                <goals>
+                    <goal>run</goal>
+                </goals>
+            </execution>
+        </executions>
+      </plugin>
     </plugins>
     <resources>
       <resource>
@@ -133,6 +191,12 @@
       <groupId>com.tngtech.java</groupId>
       <artifactId>config-builder</artifactId>
       <version>1.3</version>
+      <exclusions>
+      	<exclusion>
+      		<groupId>org.slf4j</groupId>
+      		<artifactId>slf4j-api</artifactId>
+      	</exclusion>
+      </exclusions>
     </dependency>
 
 <!-- Jetspeed / Apache Portals -->
@@ -156,6 +220,10 @@
           <groupId>org.codehaus.castor</groupId>
           <artifactId>castor</artifactId>
         </exclusion>
+        <exclusion>
+        	<groupId>org.slf4j</groupId>
+        	<artifactId>slf4j-api</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <!-- Portals Bridges Common provides the GenericServletPortlet -->
@@ -173,10 +241,22 @@
         <groupId>org.apache.portals.applications</groupId>
         <artifactId>apa-webcontent-jar</artifactId>
         <version>1.3</version>
+        <exclusions>
+        	<exclusion>
+        		<groupId>org.slf4j</groupId>
+        		<artifactId>slf4j-api</artifactId>
+        	</exclusion>
+        </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache-core</artifactId>
+      <exclusions>
+      	<exclusion>
+      		<groupId>org.slf4j</groupId>
+      		<artifactId>slf4j-api</artifactId>
+      	</exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.velocity</groupId>
@@ -244,6 +324,10 @@
         <exclusion>
           <groupId>org.springframework.ldap</groupId>
           <artifactId>spring-ldap</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>org.slf4j</groupId>
+        	<artifactId>slf4j-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -330,33 +414,105 @@
           <groupId>org.slf4j</groupId>
           <artifactId>slf4j-log4j12</artifactId>
         </exclusion>
+        <exclusion>
+        	<groupId>de.ingrid</groupId>
+        	<artifactId>ingrid-iplug</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>de.ingrid</groupId>
+        	<artifactId>ingrid-utils</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>commons-httpclient</groupId>
+        	<artifactId>commons-httpclient</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>junit</groupId>
+        	<artifactId>junit</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>hsqldb</groupId>
+        	<artifactId>hsqldb</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-se</artifactId>
-      <version>3.3.0.1</version>
+      <artifactId>ingrid-iplug-se-iplug</artifactId>
+      <version>4.0.2</version>
       <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-base-webapp</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step1-se</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>axis</groupId>
-          <artifactId>axis-wsdl4j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.mail</groupId>
-          <artifactId>mail</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-search-utils</artifactId>
-        </exclusion>
+      	<exclusion>
+      		<groupId>de.ingrid</groupId>
+      		<artifactId>ingrid-utils</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.javassist</groupId>
+      		<artifactId>javassist</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.reflections</groupId>
+      		<artifactId>reflections</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>de.ingrid</groupId>
+      		<artifactId>ingrid-base-webapp</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>com.google.code.gson</groupId>
+      		<artifactId>gson</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>commons-lang</groupId>
+      		<artifactId>commons-lang</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>commons-io</groupId>
+      		<artifactId>commons-io</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.flywaydb</groupId>
+      		<artifactId>flyway-core</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>com.fasterxml.jackson.core</groupId>
+      		<artifactId>jackson-databind</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>com.fasterxml.jackson.core</groupId>
+      		<artifactId>jackson-core</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.apache.commons</groupId>
+      		<artifactId>commons-exec</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>mysql</groupId>
+      		<artifactId>mysql-connector-java</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>commons-fileupload</groupId>
+      		<artifactId>commons-fileupload</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.slf4j</groupId>
+      		<artifactId>slf4j-api</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.slf4j</groupId>
+      		<artifactId>slf4j-log4j12</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>com.h2database</groupId>
+      		<artifactId>h2</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>org.eclipse.persistence</groupId>
+      		<artifactId>eclipselink</artifactId>
+      	</exclusion>
+      	<exclusion>
+      		<groupId>ojdbc</groupId>
+      		<artifactId>ojdbc</artifactId>
+      	</exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -379,6 +535,14 @@
         <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>org.apache.jena</groupId>
+        	<artifactId>jena-arq</artifactId>
+        </exclusion>
+        <exclusion>
+        	<groupId>de.ingrid</groupId>
+        	<artifactId>ingrid-iplug</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -546,6 +710,12 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-core</artifactId>
       <version>2.8.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.5.6</version>
+        <scope>provided</scope>
     </dependency>
   </dependencies>
   <repositories>

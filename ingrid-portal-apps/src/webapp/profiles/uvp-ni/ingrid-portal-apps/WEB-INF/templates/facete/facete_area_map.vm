@@ -34,6 +34,9 @@
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script src="$restUrlMarker"></script>
+#if($restUrlUVPDevPlan)
+<script src="$restUrlUVPDevPlan"></script>
+#end
 <script language="JavaScript" type="text/javascript">
     var bounds;
     var selectedMap = '$selectedMap.webmapclientCoords';
@@ -43,6 +46,7 @@
     
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
+    var enablePopUp = false;
     
     if(!bounds){
         $( document ).ready(function() {
@@ -77,14 +81,14 @@
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
     var homeCtlBounds;
-    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
+    if(mapMarkers && mapMarkers.getBounds()){
         if(!bounds){
-            bounds = mapMarkers.getBounds().pad(0.5);
+            bounds = mapMarkers.getBounds();
         }
         if(map){
             map.fitBounds(bounds);
         }
-        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
+        homeCtlBounds = mapMarkers.getBounds();
     }
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
 </script>

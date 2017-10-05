@@ -310,7 +310,9 @@ require([
             // additional information
             renderSectionTitel("<fmt:message key='ui.obj.additionalInfo.title' />");
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(99999999, nodeDataOld.extraInfoLangMetaDataCode), UtilSyslist.getSyslistEntryName(99999999, nodeDataNew.extraInfoLangMetaDataCode), "<fmt:message key='ui.obj.additionalInfo.language.metadata' />");
-            renderTextWithTitle(UtilSyslist.getSyslistEntryName(99999999, nodeDataOld.extraInfoLangDataCode), UtilSyslist.getSyslistEntryName(99999999, nodeDataNew.extraInfoLangDataCode), "<fmt:message key='ui.obj.additionalInfo.language.data' />");
+            renderList(nodeDataOld.extraInfoLangDataTable, nodeDataNew.extraInfoLangDataTable, "<fmt:message key='ui.obj.additionalInfo.language.data' />", null, function(val) {
+                return UtilSyslist.getSyslistEntryName(99999999, val);
+            });
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(3571, nodeDataOld.extraInfoPublishArea), UtilSyslist.getSyslistEntryName(3571, nodeDataNew.extraInfoPublishArea), "<fmt:message key='ui.obj.additionalInfo.publicationCondition' />");
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(510, nodeDataOld.extraInfoCharSetDataCode), UtilSyslist.getSyslistEntryName(510, nodeDataNew.extraInfoCharSetDataCode), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
             // Table is only displayed for object classes 1 and 3
@@ -400,13 +402,18 @@ require([
                 var label = searchLabelFrom(domWidget);
                 var dataOld = getValueFromAdditional(widgetId, nodeDataOld);
                 var dataNew = getValueFromAdditional(widgetId, nodeDataNew);
-                // if it is a table
+                // if it is a table (or special widget)
                 if ((dataOld && typeof(dataOld) == "object") || (dataNew && typeof(dataNew) == "object")) {
                     console.debug("widget id: " + widgetId);
-                    var columnFields = getColumnFields(widgetId);
-                    var columnNames = getColumnNames(widgetId);
-                    var formatters = getColumnFormatters(widgetId);
-                    renderTable(dataOld, dataNew, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
+                    // if it's not a table but a special widget
+                    if (registry.byId(widgetId).reinitLastColumn) {
+                        var columnFields = getColumnFields(widgetId);
+                        var columnNames = getColumnNames(widgetId);
+                        var formatters = getColumnFormatters(widgetId);
+                        renderTable(dataOld, dataNew, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
+                    } else {
+                        renderTextWithTitle(JSON.stringify(dataOld), JSON.stringify(dataNew), label);
+                    }
                 } else {
                     renderTextWithTitle(dataOld, dataNew, label);
                 }
@@ -479,6 +486,10 @@ require([
         }
 
         function searchLabelFrom(element) {
+            var widget = registry.byId(element.id);
+            if (widget && widget.label) {
+                return widget.label;
+            }
             while (!domClass.contains(element, "input") && !domClass.contains(element, "dijitCheckBox")) {
                 element = element.parentNode;
             }

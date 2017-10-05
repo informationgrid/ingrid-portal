@@ -12,6 +12,7 @@
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam($term)
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.withsearchvalue')
     #else
         $MESSAGES.resetMsgParams()
@@ -19,6 +20,7 @@
         $MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam($catalogueName)
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
     #end
 #end
@@ -27,6 +29,7 @@
 $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
 $MESSAGES.setMsgParam($catalogueName)
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
 $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.grouped')
 #end
 
@@ -36,6 +39,7 @@ $MESSAGES.resetMsgParams()
 $MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
 $MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
 $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
 $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
@@ -50,10 +54,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam("$term")
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.withsearchvalue')
     #else
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
         $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
     #end
 #end
@@ -473,6 +479,22 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     $action.setParameter("doClearSearchWildcard", "$entry.getId()")
                     #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $wildcard_item_term")
                 #end
+            #elseif($entry.getWildcard())
+                #set($wildcard_item = false)
+                #set($wildcard_item_term = false)
+                
+                #if($wildcardMap)
+                    #set($wildcard_item = $wildcardMap.get("$entry.getId()"))
+                    #if($wildcard_item)
+                        #set($wildcard_item_term = $wildcard_item.get("term"))
+                    #end
+                #end
+                #if($wildcard_item_term)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("wildcard_id", "$entry.getId()")
+                    $action.setParameter("doClearSearchWildcard", "$entry.getId()")
+                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $wildcard_item_term")
+                #end
             #end
         #else
             #if($entry.isSelect())
@@ -489,15 +511,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderSearchResultFacetSelectionItem $entry $action $title)
-    <div class="field-toggle field-toggle--check bx-bot-xs">
-        <input id="chk_fs_$entry.getId()" name="event" type="checkbox" onclick="location.href='$action'" checked>
-        <label class="field-toggle__label field-toggle__label--boxed" for="chk_fs_$entry.getId()">
-            <div class="field-toggle__icon field-toggle__icon-alt">
-                <svg class="icon">
-                    <use xlink:href="#tick">
-                </svg>
-            </div>
+    <li class="tag tag--small">
+        <a id="chk_fs_$entry.getId()" href="$action">
+            <svg class="icon icon-xs icon-marr-xs"> 
+                <use href="#cross"></use>
+            </svg>
             $title
-        </label>
-    </div>
+        </a>
+    </li>
 #end

@@ -111,7 +111,7 @@ thead {
 }
 
 .nav__foot a:hover {
-  background: transparent;
+  background: #E2E2E2;
   color: #666;
 }
 
@@ -163,7 +163,7 @@ thead {
 .no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
 .nav-overlay__item--level3:hover,
 .nav-overlay__item--level3.is-active {
-  color: #2C5C91;
+  color: #FFFFFF;
 }
 
 .search-form input {
@@ -328,6 +328,11 @@ thead {
 *, *::before, *::after {
     box-sizing: border-box;
 }
+
+.mobile__logo {
+    height: 2.5rem;
+}
+
 .footer__logo {
     display: inline-block;
     margin-right: 1.5rem;
@@ -448,6 +453,14 @@ thead {
 
 .marker-cluster-1314 div {
   background-color: rgba(200, 60, 40, 1.0) !important;
+}
+
+.marker-cluster-dev-plan {
+  background-color: rgba(110, 170, 40, 0.6) !important;
+}
+
+.marker-cluster-dev-plan div {
+  background-color: rgba(110, 170, 40, 1.0) !important;
 }
 
 .marker-cluster span {

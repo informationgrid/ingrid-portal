@@ -80,27 +80,36 @@
                                                         #set($spatial = $spatialValueSplit.get(1))
                                                         #set($spatialEntries = $spatial.split(","))
                                                         #if($spatialEntries.size() == 4)
-                                                            #renderSectionTitle("Raumbezug")
-                                                            <p>$MESSAGES.getString('search.detail.spatial.map.info')</p>
-                                                            #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-                                                            <div id="map" style="height: 400px; width:100%;"></div>
-                                                            <script language="JavaScript" type="text/javascript">
-                                                                var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
-                                                                northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
-                                                                bounds = L.latLngBounds(southWest, northEast);
-                                                                
-                                                                var osm = getOSMLayer();
-                                                                var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
-                                                                var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
-                                                                    var popLocation= e.latlng;
-                                                                    var popup = L.popup()
-                                                                    .setLatLng(popLocation)
-                                                                    .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
-                                                                    .openOn(map);
-                                                                }).addTo(map);
-                                                                
-                                                                addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds, new L.LatLng(51.3, 10))
-                                                            </script>
+                                                            #set($west = "$spatialEntries.get(0).trim()")
+                                                            #set($south = "$spatialEntries.get(1).trim()")
+                                                            #set($east = "$spatialEntries.get(2).trim()")
+                                                            #set($north = "$spatialEntries.get(3).trim()")
+                                                            #if($west.toLowerCase() != "nan" && $west.length() > 0
+                                                                && $north.toLowerCase() != "nan" && $north.length() > 0
+                                                                && $south.toLowerCase() != "nan" && $south.length() > 0
+                                                                && $east.toLowerCase() != "nan" && $east.length() > 0)
+                                                                #renderSectionTitle("Raumbezug")
+                                                                <p>$MESSAGES.getString('search.detail.spatial.map.info')</p>
+                                                                #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                                                                <div id="map" style="height: 400px; width:100%;"></div>
+                                                                <script language="JavaScript" type="text/javascript">
+                                                                    var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
+                                                                    northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
+                                                                    bounds = L.latLngBounds(southWest, northEast);
+                                                                    
+                                                                    var osm = getOSMLayer();
+                                                                    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
+                                                                    var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
+                                                                        var popLocation= e.latlng;
+                                                                        var popup = L.popup()
+                                                                        .setLatLng(popLocation)
+                                                                        .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                                                                        .openOn(map);
+                                                                    }).addTo(map);
+                                                                    
+                                                                    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds, new L.LatLng(51.3, 10))
+                                                                </script>
+                                                            #end
                                                         #end
                                                     #end
                                                 #end
@@ -354,7 +363,7 @@
                     <span class="tx-light">
                     (
                     #if($entryLink)
-                        #set ($entryLinkSplit = $entryLink.split("/"))
+                        #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
                         #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
                         $entryLinkSplit.get($entryLinkSplitSize)
                     #end

@@ -1,27 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  **************************************************-
-  Ingrid Portal Apps
-  ==================================================
-  Copyright (C) 2014 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  -->
-
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
@@ -36,29 +13,29 @@
                     <li>
                         <a href="?hkey=search-1">Suche</a>
                     </li>
-                    <!-- 
-                    <li>
-                        <a href="?hkey=search-topics-1">Themen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-service-1">Service</a>
-                    </li>
                     <li>
                         <a href="?hkey=search-measure-1">Messwerte</a>
                     </li>
-                    -->
                     <li>
-                        <a href="?hkey=search-chronicle-1">Chronik</a>
+                        <a href="?hkey=search-catalog-1">Kataloge</a>
                     </li>
                     <li>
                         <a href="?hkey=maps-1">Karten</a>
                     </li>
-                    <!-- 
                     <li>
-                        <a href="?hkey=rss-news-1">Aktuelles</a>
+                        <a href="?hkey=search-chronicle-1">Chronik</a>
                     </li>
+                    <!--
                     <li>
                         <a href="?hkey=ingrid-inform-1">PortalU informiert</a>
+                    </li>
+                    -->
+                    <li>
+                        <a href="?hkey=search-category-1">Kategorien</a>
+                    </li>
+                    <!--
+                    <li>
+                        <a href="?hkey=rss-news-1">Aktuelles</a>
                     </li>
                     -->
                     <li>
@@ -73,917 +50,111 @@
         <section help-key="about-1">
             <header>Konzept und Aufgabe von PortalU</header>
             <content>
-                <p>PortalU RLP, das Umweltportal Rheinland-Pfalz, bietet einen zentralen Zugriff auf eine Vielzahl 
-                   umweltrelevanter Webseiten sowie Metainformationen zu Umweltdaten und Zuständigkeiten der 
-                   Behörden oder Institutionen des Landes. Mit einem Mix aus aktuellen Nachrichten, 
-                   Umweltmesswerten , historischen Ereignissen und Darstellung raumbezogener Daten in Karten richtet 
-                   sich PortalU RLP sowohl an interessierte Laien als auch an ein versiertes Fachpublikum.</p>
-                <p>Als rechtliche Grundlage spielen auf europäischer Ebene die europäische 
-                   Umweltinformationsrichtlinie (2003/4/EG) und die europäische INSPIRE-Richtlinie (2007/2/EG) für 
-                   PortalU RLP eine zentrale Rolle. Diese Richtlinien setzen Maßstäbe für die öffentliche Verbreitung 
-                   behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen 
-                   informationstechnischen Infrastrukturen. Hiernach sind Behörden und Organisationen dazu 
-                   verpflichtet, umweltrelevante Daten und Informationen in einer klar verständlichen und einfach 
-                   zugänglichen Form bereitzustellen.<br/>
-                   In Rheinland-Pfalz sichern das Landesumweltinformations-gesetz sowie das 
-                   Landesinformationsfreiheitsgesetz den Anspruch auf Zugang zu umweltbezogenen und sonstigen 
-                   amtlichen Informationen.</p>
-                <p>PortalU und die eigens zum Aufbau des Portals entwickelte Software InGrid wurden speziell als 
-                   Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
+                <p>PortalU RLP, das Umweltportal Rheinland-Pfalz, bietet einen zentralen Zugriff auf eine Vielzahl umweltrelevanter Webseiten sowie Metainformationen zu Umweltdaten und Zuständigkeiten der Behörden oder Institutionen des Landes. Mit weiteren Informationen wie Umweltmesswerten, historischen Ereignissen und Darstellung raumbezogener Daten in Karten richtet sich PortalU RLP sowohl an interessierte Laien als auch an ein versiertes Fachpublikum.</p>
+                <p>Als rechtliche Grundlage spielen auf europäischer Ebene die europäische Umweltinformationsrichtlinie (2003/4/EG) und die europäische INSPIRE-Richtlinie (2007/2/EG) für PortalU RLP eine zentrale Rolle. Diese Richtlinien setzen Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen. Hiernach sind Behörden und Organisationen dazu verpflichtet, umweltrelevante Daten und Informationen in einer klar verständlichen und einfach zugänglichen Form bereitzustellen.<br/>In Rheinland-Pfalz sichern das Landestransparenzgesetz sowie das Landesinformationsfreiheitsgesetz den Anspruch auf Zugang zu umweltbezogenen und sonstigen amtlichen Informationen.</p>
+                <p>PortalU und die eigens zum Aufbau des Portals entwickelte Software InGrid wurden speziell als Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
             </content>
         </section>
         <!--
         <section help-key="about-2">
             <header>Die Betreiber von PortalU</header>
             <content>
-                <p> Als Nachfolgeprojekt des Umweltdatenkatalogs (UDK) und des German 
-                    Environmental Information Network (gein) wurde PortalU  
-                    im Rahmen der Bund-Länder Verwaltungsvereinbarung UDK/GEIN
-                    entwickelt. An dieser Verwaltungsvereinbarung sind
-                    unter anderem das Umweltbundesministerium und die
-                    Umweltministerien aller 16 Länder beteiligt. PortalU wird
-                    technisch und inhaltlich von der Koordinierungsstelle
-                    PortalU im Niedersächsischen Ministerium für Umwelt, Energie und 
-                    Klimaschutz in Hannover betreut.</p>
+                <p>Das NUMIS-Portal wird vom Niedersächsischen Ministerium für Umwelt, Energie und Klimaschutz betrieben. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu verbessern. Bei Fragen und Verbesserungsvorschlägen nutzen Sie bitte unser <a href="/kontakt">Kontaktformular</a>.</p>
             </content>
         </section>
         -->
         <section help-key="about-3">
             <header>Funktionsüberblick</header>
             <content>
-                <p>
-                    <b>Suche:</b> Zentrale Funktion des Portals mit 
-                    (<a href="?hkey=search-1">einfachen</a>) und 
-                    (<a href="?hkey=ext-search-1">erweiterten</a>) Suchfunktionen.
-                </p>
-                <!-- 
-                <p>
-                    <b>Themen:</b> Schneller Einstieg in einzelne Umweltthemen von
-                    A wie Abfall bis W wie Wasser.</p>  
-                <p>
-                    <b>Messwerte</b>: PortalU informiert Sie rund um die Uhr
-                    über den aktuellen Zustand Ihrer Umwelt.</p>                                         <p>
-                    <b>Service</b>: Nachrichten und Informationen über 
-                    Veranstaltungen und aktuelle Publikationen im Umweltbereich.</p>
-                 -->  
-                <p>                   
-                    <b>Kataloge</b>: Recherchieren Sie in den Umwelt- und  
-                    Geodatenkatalogen von Informationsanbietern aus Rheinland-Pfalz.</p>                    
-                <p>
-                    <b>Karten:</b> Aufruf von digitalen Umweltkarten und 
-                    Angabe und Raumbezüge bei der Suche.</p>
-                <p>
-                    <b>Chronik</b>: Wann trat das Kyoto-Protokoll in Kraft? Eine Antwort auf diese und viele andere Fragen zu 
-                    historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
+                <p><b>Suche:</b> Zentrale Funktion des Portals mit (<a href="?hkey=search-1">einfachen</a>) und (<a href="?hkey=ext-search-1">erweiterten</a>) Suchfunktionen.</p>
+                <p><b>Messwerte</b>: Abruf verschiedener Messwerte anhand einer Karte.</p>
+                <p><b>Kataloge</b>: Recherchieren Sie im Umweltdatenkatalog der Informationsanbieter aus Rheinland-Pfalz.</p>
+                <p><b>Karten:</b> Aufruf von digitalen Umweltkarten und Angabe und Raumbezüge bei der Suche.</p>
+                <p><b>Chronik</b>: Wann trat das Kyoto-Protokoll in Kraft? Eine Antwort auf diese und viele andere Fragen zu historischen Umweltereignissen finden Sie in der Umweltchronik.</p>
             </content>
         </section>
         <!-- 
         <section help-key="about-4">
             <header>Informationsquellen in PortalU</header>
             <content>
-                <p>PortalU ist ein komfortables und benutzerfreundliches Tor zu
-                    Umweltinformationen im Internet. Im Gegensatz zu den meisten
-                    Portalen und Suchmaschinen erfasst PortalU nicht nur
-                    Webseiten, Textdokumente und andere Internetformate, sondern
-                    kann auch auf Datenbanken und Fachinformationssysteme
-                    zugreifen, selbst wenn diese nicht online sind. 
-                </p>
+                <p>NUMIS ist ein komfortables und benutzerfreundliches Tor zu Umweltinformationen im Internet. Im Gegensatz zu den meisten Portalen und Suchmaschinen erfasst NUMIS nicht nur Webseiten, Textdokumente und andere Internetformate, sondern greift auch auf Datenbanken und Fachinformationssysteme zu.</p>
             </content>
         </section>
          -->
         <section help-key="about-5">
             <header>Wie werde ich Informationsanbieter in PortalU?</header>
             <content>
-                <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden.  
-                </p>
-                <!-- 
-                <ul>
-                    <li>Umweltressorts von Bund und Ländern</li>
-                    <li>andere Ressorts von Bund und Ländern</li>
-                    <li>auskunftspflichtige Unternehmen im Sinne des   
-                        Umweltinformationsgesetzes</li>
-                    <li>kommunale Umweltinformationen</li>
-                    <li>Forschungseinrichtungen</li>
-                </ul>
-                 -->
-                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche Informationen im Internet an, die
-                   noch nicht in PortalU zu finden sind? Dann sprechen Sie uns an: Verantwortliche PortalU  
-                   <a href="mailto:portalu@mulewf.rlp.de" title="Schreiben Sie uns - Email Programm startet automatisch">portalu@mulewf.rlp.de</a></p>
+                <p>In PortalU können alle behördlichen Umweltinformationen aufgenommen werden. </p>
+                <p>Bietet ihre Behörde oder Institution umweltrelevante behördliche Informationen im Internet an, die noch nicht in PortalU zu finden sind? Dann sprechen Sie uns an: Verantwortliche PortalU <a href="mailto:portalu@mueef.rlp.de" title="Schreiben Sie uns - Email Programm startet automatisch">portalu@mueef.rlp.de</a></p>
             </content>
         </section>
         <section help-key="about-6">
             <header>InGrid – Die Software hinter PortalU</header>
             <content>
-                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid entwickelt. InGrid setzt auf eine 
-                    modulare und flexible Systemarchitektur auf der Basis lizenzfreier OpenSource Produkte. 
-                    Dadurch ist es möglich, die technische Struktur des Umweltinformationsnetzes an sich 
-                    wandelnde organisatorische Vorgaben anzupassen. So können mit InGrid bei Bedarf regionale 
-                    Umweltportale, z.B. für einzelne Kommunen, mit geringem technischem Aufwand erstellt werden. 
-                    Dank OpenSource ist die Nachnutzung der Software lizenzfrei und kostenlos.</p>
+                <p>Zur Umsetzung von PortalU wurde das Softwarepaket InGrid entwickelt. InGrid setzt auf eine modulare und flexible Systemarchitektur auf der Basis lizenzfreier OpenSource Produkte. Dadurch ist es möglich, die technische Struktur des Umweltinformationsnetzes an sich wandelnde organisatorische Vorgaben anzupassen. So können mit InGrid bei Bedarf regionale Umweltportale, z.B. für einzelne Kommunen, mit geringem technischem Aufwand erstellt werden. Dank OpenSource ist die Nachnutzung der Software lizenzfrei und kostenlos.</p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Suche</header>
         <section help-key="search-1">
-            <header>Einfache Suche</header>
+            <header>Sucheingabe</header>
             <content>
-                <p>Suchen ist ganz einfach. Geben Sie in das Suchfeld einen oder mehrere Begriffe ein und 
-                   klicken Sie anschließend auf die Schaltfläche <b>PortalU Suche</b>. PortalU durchsucht alle 
-                   eingebundenen Umweltinformationen. Die Ergebnisse Ihrer Suchanfrage werden in einer 
-                   <a href="?hkey=search-results-1">Suchergebnisseite</a> 
-                   wiedergegeben. </p>
+                <p>Über die Suche können Sie einen oder mehrere Suchbegriffe eingeben. Gefunden werden diejenigen Seiten, die alle Suchbegriffe enthalten.</p>
+                <p>Mit Hilfe der Facetten "Ergebnistypen" und "Anbieter" können Sie Ihre Suchanfrage weiter spezifizieren. Hinter den Ergebnistypen und Anbietern sehen Sie in Klammern direkt die Anzahl der jeweiligen Treffer zu Ihrer Suchanfrage. Bei Klick auf einen Ergebnistyp oder Anbieter wird die Suchergebnisliste auf die jeweilige Auswahl eingeschränkt. Um die Einschränkung aufzuheben, klicken Sie auf "Alle Einschränkungen löschen" oder auf den gewünschten Eintrag in der Liste der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste. Sie können beliebig viele Einschränkungen aus- und wieder abwählen.</p>
+                <p>Mit den Funktionalitäten "Nach Ort suchen" und "Auf Karte festlegen" können Sie Ihre Suchanfrage räumlich einschränken. Um die Einschränkungen anzuwenden, klicken Sie auf "Auswahl anwenden". Die gewählten Einschränkungen erscheinen ebenfalls in der Liste der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste.</p>
+                <p>Auf den Suchergebnisseiten haben Sie unterhalb des Suchfeldes die Möglichkeit, Ihre Suchanfrage um ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen eingegebene Suchausdruck durch den Semantic Network Service (SNS) <a title="SNS" target="_new" href="http://www.semantic-network.de"><img width="30" height="23" style="display:inline;" title="SNS" alt="SNS Logo" src="/ingrid-portal-apps/images/sns_small.gif"></img></a> des Umweltbundesamtes analysiert. Die ähnlichen Begriffe werden angezeigt und können der Suchanfrage zur Verfeinerung hinzu gefügt werden.</p>
             </content>
         </section>
-        <!-- 
         <section help-key="search-2">
-            <header>Suchräume</header>
+            <header>Suche via Kategorien</header>
             <content>
-                <p>Oberhalb des Suchfeldes können Sie über entsprechende 
-                   Schalflächen zwischen folgenden Suchräumen wählen. </p>
-                <ul>
-                    <li><b>Umweltinformationen</b>: behördliche Informationen 
-                        zur Umwelt</li>
-                    <li><b>Rechtsvorschriften</b>: Informationen zu 
-                        rechtsrelevanten Themen</li>
-                    <li><b>Forschungsprojekte</b>: Projekte zur Umweltforschung</li>
-                    <li><b>Adressen</b>: Zuständigkeiten</li>
-                </ul>
-                <p>In der Grundeinstellung erfolgt die Suche im Suchraum 
-                   <b>Umweltinformationen</b>.</p>
+                <p>Alternativ können Sie mit den Kategorien auf der linken Seite suchen.
+                   Beim Betreten der <b>Suche</b> werden schon automatisch alle Ergebnisse kategorisiert.
+                   Diese können Sie dann per Klick auf die Kategorien sich anzeigen lassen und weiter verfeinern.</p>
             </content>
         </section>
-		 -->
         <section help-key="search-3">
+            <header>Nach Ort suchen</header>
+            <content>
+                <p>Sie können Ihre Suchanfrage ortsbezogen über die Eingabe eines geografischen Namens ausführen.
+                   Dabei werden Ihnen passende Einträge aus dem Geo-Thesaurus-Umwelt angeboten.
+                   Nach Auswahl eines Raumbezugs wird die Suche mit der eindeutigen Kennung dieses Raumbezuges ausgeführt (z.B. administrative Einheit).</p>
+                <p>Anders als bei vielen anderen Suchmaschinen, erfolgt die räumliche
+                   Einschränkung also nicht über eine einfache Volltextsuche, sondern
+                   über die gezielte Suche nach Raumbezügen, die den Suchergebnissen zugeordnet wurden.</p>
+            </content>
+        </section>
+        <section help-key="search-4">
+            <header>Auf Karte festlegen</header>
+            <content>
+                <p>Die räumliche Einschränkung der PortalU-Suche ist auch über die Auswahl eines Kartenausschnitts 
+                   möglich.</p>
+                <p>Wählen Sie ein Gebiet aus, indem Sie mit Shift + gedrückter 
+                   linker Maustaste ein Rechteck auf der Karte aufziehen.
+                   Mit Klick auf die Schaltfläche <b>Auswahl anwenden</b>
+                   werden die Koordinaten der Suche hinzugefügt.</p>
+            </content>
+        </section>                
+        <section help-key="search-5">
             <header>Suche verfeinern</header>
             <content>
                 <p>Neben der einfachen Suche können Sie Ihre Suche weiter
-                   verfeinern. Lesen Sie hierzu folgende Themen:</p>
+                    verfeinern. Lesen Sie hierzu folgende Themen:</p>
                 <ul>
-                    <li>
-                        <a href="?hkey=search-results-1">Ähnliche Begriffe zur 
-                        Suche hinzufügen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-1">Erweiterte Suche
-                            nach Umweltinformationen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-law-1">Erweiterte
-                            Suche nach Rechtsvorschriften</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-research-1">Erweiterte
-                            Suche nach Forschungsprojekten</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-address-1">Erweiterte
-                            Suche nach Adressen</a>
-                    </li>
                     <li>
                         <a href="?hkey=search-expert-1">Experteneingabe</a>
                     </li>
                     </ul>
-            </content>
-        </section>                    
-        <section help-key="search-4">
-            <header>Weitere Themen</header>
-            <content>                    
-                <p>Weitere Themen, die für die Suche von Bedeutung sind:</p>         
-                  <ul>
-                    <li>
-                        <a href="?hkey=search-history-1">Suchhistorie</a>
-                    </li>
-                    <li>
-                        individuelle Anpassung der Suchergebnisseite unter 
-                        <a href="?hkey=search-settings-1">Einstellungen</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-tipps-1">Tipps zur Suche</a> 
-                    </li>
-                    <li>
-                        <a href="?hkey=search-save-1">Speicherung von Suchanfragen</a>
-                    </li>
-                </ul>
-                <!-- 
-                <p>Einen kurzen Überblick über die Freitextsuche finden 
-                   Sie <a href="/funktionen?action=doSearch/" target="_new">HIER</a>. </p>
-                 -->
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Umweltinformationen</header>
-        <section help-key="ext-search-1">
-            <header>Erweiterte Suche nach Umweltinformationen</header>
-            <content>
-                <p>Sie können Ihre Suche nach Umweltinformationen über die
-                    <b>Erweiterte Suche</b> verfeinern.</p>
-                <p>Prinzipiell setzt sich ein Suchausdruck aus einzelnen
-                    Suchbegriffen zusammen, die  mit Operatoren (UND, ODER,
-                    NICHT) verbunden werden. Wie Sie diese Operatoren von Hand
-                    eingeben können, lesen Sie in dem Kapitel <a href="?hkey=search-expert-1">Experteneingabe</a>.</p>
-                <p>Die <b>Erweiterte Suche</b> bietet Ihnen die
-                    Möglichkeit, Ihren Suchausdruck per Assistenten aufzubauen.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-2">
-            <header>Bereiche zur Spezifizierung der Suche</header>
-            <content>
-                <p>Der Suchraum umfasst alle
-                    Webseiten, Dokumente etc., die von einer Suchanfrage erfasst
-                    werden. Folgende Bereiche zur Erweiterung oder Einschränkung
-                    des Suchraumes stehen Ihnen zur Verfügung:</p>
-                <ul>
-                    <li>
-                        <a href="?hkey=ext-search-subject-1">Thema</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-spacial-1">Raum</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ext-search-time-1">Zeit</a>
-                    </li>
-                    <!-- 
-                    <li>
-                        <a href="?hkey=ext-search-area-1">Suchbereich</a>
-                    </li>
-                     -->
-                </ul>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Thema</header>
-        <section help-key="ext-search-subject-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem Sie sie
-                    mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND):</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER):</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-subject-2">
-            <header>Fachwörterbuch</header>
-            <content>
-                <p>Wenn Sie bei Ihrer Suchanfrage Fachbegriffe verwenden 
-                   möchten, können Sie den Umweltthesaurus UMTHES zur Hilfe 
-                   nehmen. Sie geben hierfür einen Begriff ein und klicken auf 
-                   die Schaltfläche <b>In Thesaurus suchen</b>. Sie erhalten 
-                   dann eine Reihe von <b>ähnlichen Begriffen</b> angezeigt. 
-                   Diese Schlagworte können Sie zu Ihrer Suchanfrage hinzufügen. 
-                   Wählen Sie 
-                   hierfür ein Schlagwort aus und klicken sie dann auf die 
-                   Schaltfläche <b>Zur Suchanfrage hinzufügen</b>. </p>
-                <p>Wenn die aufgelisteten Schlagworte nicht richtig passen, 
-                   können Sie im UMTHES nach weiteren Schlagworten suchen, die 
-                   mit einem der gelisteten Schlagworte in Beziehung stehen. 
-                   Klicken Sie hierfür auf ein Schlagwort. Angezeigt werden 
-                   alle Ober- und Unterbegriffen, verwandte Begriffe und 
-                   Synonyme, die im UMTHES verzeichnet sind. Über die 
-                   Schaltfläche <b>Zur Suchanfrage hinzufügen</b> können Sie 
-                   passende Schlagworte in Ihre Suche mit einbeziehen.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-subject-3">
-            <header>Der UMTHES</header>
-                <content>
-                    <p>In PortalU kommt der Umweltthesaurus UMTHES des 
-                       Umweltbundesamtes zum Einsatz. Ein Thesaurus ist eine 
-                       Sammlung von Schlagworten, die miteinander in Beziehung 
-                       gesetzt werden. Zu jedem Schlagwort werden somit 
-                       Informationen vorgehalten, ob und wie es sich 
-                       verallgemeinern, spezialisieren oder anders ausdrücken 
-                       lässt. Hierbei wird zwischen Oberbegriffen, 
-                       Unterbegriffen, verwandten Begriffen und Synonymen 
-                       unterschieden. Das kontrollierte Thesaurusvokabular 
-                       kann zur Verschlagwortung von Dokumenten genutzt, damit 
-                       diese besser auffindbar sind. </p>
-                    <p>Im UMTHES werden über 30.000 umweltrelevante Schlagworte 
-                       vorgehalten. Einem Schlagwort können hierbei mehrere 
-                       Oberbegriffe, Unterbegriffe, verwandte Begriffe und 
-                       Synonyme zugeordnet sein. Ein verwandter Begriff  ist ein 
-                       Thesaurus-Begriff, der in einer Beziehung zu einem 
-                       anderen Thesaurus-Schlagwort steht, aber weder ein Ober- 
-                       noch ein Unterbegriff ist. Ein Synonym ist ein 
-                       alternativer, sinngleicher Ausdruck für ein Schlagwort. 
-                       Wenn sich ein Synonym aus zwei oder mehreren 
-                       Thesaurus-Begriffen zusammensetzt, ist dieses nicht als 
-                       alternativer Ausdruck für einen einzelnen 
-                       Thesaurus-Begriff zu verstehen, sondern als Synonym für 
-                       einen zusammengesetzten Begriff.</p>
-                    <p>Der UMTHES ist eine Komponente des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des                
-                       Umweltbundesamtes.</p>
-                 </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Raum</header>
-        <section help-key="ext-search-spacial-1">
-            <header>Raum</header>
-            <content>
-                <p>Sie können Ihre Suchanfrage über einen geografischen Namen 
-                   oder individuell in einer Karte räumlich einschränken. Anders 
-                   als bei vielen anderen Suchmaschinen, erfolgt die räumliche 
-                   Einschränkung nicht über eine einfache Volltextsuche, sondern
-                   innovativ über die Berücksichtigung der entsprechenden 
-                   Koordinaten. </p>
-            </content>
-        </section>
-        <section help-key="ext-search-spacial-2">
-            <header>Nach Ort suchen</header>
-            <content>
-                <p>Um Ihre Suchanfrage über einen Ortsnamen oder eine andere
-                   geografischen Bezeichnung 
-                   einzuschränken, geben Sie einen geografischen Namen (z.B. 
-                   Mainz) in das Suchfeld ein, klicken Sie auf die 
-                   Schaltfläche <b>Geografische Namen suchen</b>. Dadurch wird 
-                   eine Suchanfrage an den <a href="#ext-search-spacial-3">
-                   Geo-Thesaurus-Umwelt</a> gestartet. Machen Sie ein Häkchen 
-                   vor dem passenden Geografischen Namen in der Auswahlliste und
-                   klicken Sie auf die Schaltfläche <b>Zur Suchanfrage 
-                   hinzufügen</b>.</p>                
-                <p>Tipp: Zu den geografischen Namen in der Auswahlliste lassen 
-                   sich weitere Namen aufrufen, die zu den Namen eine 
-                   Lagebeziehung aufweisen. Klicken Sie hierfür auf den 
-                   jeweiligen geografischen Namen (z.B. Mainz, Region/Landkreis).</p>
-            </content>
-        </section>
-        <section help-key="ext-search-spacial-3">
-                <header>Der Geo-Thesaurus-Umwelt</header>
-                <content>
-                    <p>Der Geo-Thesaurus-Umwelt ist eine Komponenten des 
-                       <a href="http://www.semantic-network.de/" target="_new">
-                       Semantic Network Service</a> (SNS) des
-                        Umweltbundesamtes. SNS stellt eine gemeinsame 
-                        Terminologie für den Bereich Umwelt auf deutsch und 
-                        englisch zur Verfügung. Der Geo-Thesaurus-Umwelt umfasst
-                        rund 50.000 geografische Namen und beschränkt sich aus 
-                        praktischen Gründen auf Orte, die üblicherweise auf 
-                        Karten ab dem Maßstab 1:250.000 verzeichnet sind.</p> 
-                    <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt
-                        der Geo-Thesaurus die Namen von Gemeinden,
-                        Flüssen, Bergen, Landschaften und anderen geografischen
-                        Objekten in Deutschland. Dabei gibt der Thesaurus neben
-                        der genauen Schreibweise auch die Koordinaten eines Orts
-                        und dessen Lagebeziehung zu anderen Orten an.</p>
-                 </content>
-            </section>
-        <section help-key="ext-search-spacial-6">
-            <header>Auf Karte festlegen</header>
-            <content>
-                <p>Die räumliche Einschränkung der PortalU-Suche ist sowohl über 
-                   Ortsnamen als auch die Auswahl eines Kartenausschnitts 
-                   möglich. Wenn Sie über ein Suchrechteck einen entsprechenden 
-                   Kartenausschnitt definiert haben, wird in dem über PortalU 
-                   verfügbaren Informationsangebot gezielt nach räumlichen 
-                   Begriffen (wie z.B. Städten oder Gebirgen) gesucht. </p>
-                </content>
-            </section>                
-            <section help-key="ext-search-spacial-7">
-                <header>Festlegung eines Suchrechtecks</header>
-                <content>
-                    <p>Wenn Sie im Bereich der <b>Erweiterten räumlichen Suche</b> 
-                       auf die Schaltfläche <b>Auf Karte festlegen</b> klicken, 
-                       wird Ihnen eine Rheinland-Pfalz-Karte in einem Kartenfenster 
-                       angezeigt. Die Schaltfläche <b>Gebiet auswählen</b> 
-                       <img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> ist hierbei bereits aktiviert. 
-                       Sie wählen ein Gebiet aus, indem Sie mit gedrückter 
-                       linker Maustaste ein Rechteck auf der Deutschlandkarte 
-                       aufziehen. Die Koordinaten des Rechtecks werden rechts 
-                       unterhalb des Kartenfensters angezeigt und können durch 
-                       einen Klick auf die Schaltfläche <b>Zur Suchanfrage 
-                       hinzufügen</b> für die Suche genutzt werden.</p>
-                 </content>
-            </section>
-            <section help-key="ext-search-spacial-8">
-                <header>Administrative Einheit auswählen</header>
-                <content>                   
-                    <p>
-                <ul>
-                    <li>Klicken Sie auf die Schaltfläche 
-                        <b>ID einer administrativen Einheit auswählen</b> 
-                        <img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img>.  
-                    </li>
-                    <li>Klicken Sie dann auf einen Standort in der Karte.
-                    </li>
-                    <li>Aktiveren Sie nun im Dialogfeld <b>Administrative Auswahl</b> 
-                        die administrative Einheit und klicken Sie anschließend 
-                        auf <b>Hinzufügen</b>. 
-                    </li>
-                    <li>Die ausgewählte Raumbezugs-ID wird rechts unterhalb des 
-                        Kartenfensters angezeigt und kann durch einen Klick auf 
-                        die Schaltfläche <b>Zur Suchanfrage hinzufügen</b> für 
-                        die Suche genutzt werden.
-                    </li>
-                </ul></p>
-                </content>
-            </section>
-
-            <section help-key="ext-search-spacial-9">
-                <header>Art der Einschränkung</header>
-                <content>
-                    <p>Wenn Sie einen Kartenausschnitt gewählt haben, können Sie 
-                       wählen, in welcher Form die räumliche Einschränkung für 
-                       die PortalU-Suche verwendet werden soll. Folgende 
-                       Optionen stehen rechts unterhalb des Kartenfensters zur
-                       Verfügung:</p>
-                    <ul>
-                        <li>1.  Der Raumbezug der Suchergebnisse liegt innerhalb des 
-                        Kartenausschnittes.</li>
-                        <li>2.  Der Raumbezug der Suchergebnisse schneidet den 
-                        Kartenausschnitt.</li>
-                        <li>3.  Der Raumbezug der Suchergebnisse umschließt den 
-                        Kartenausschnitt.</li>
-                    </ul>
-                    <p> <img border="0" width="455" height="252" src="../decorations/layout/ingrid-help/images/image208.jpg" alt="*"></img></p>
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-10">
-                <header>Schaltflächen oberhalb des Kartenfensters</header>
-                <content>
-                   <p><img border="0" width="20" height="21" src="../decorations/layout/ingrid-help/images/image201.jpg" alt="*"></img> 
-                      <b>Gebiet auswählen</b>: Suchrechteck (Bounding Box) 
-                      kann mit der Maus auf der Karte aufgezogen werden.
-                    </p>
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> 
-                      <b>ID einer administrativen Einheit auswählen</b>: 
-                      Gebietsbezeichnung (Area-ID) kann mit der Maus auf der 
-                      Karte bestimmt werden.
-                    </p>
-                   <p><img border="0" width="21" height="20" src="../decorations/layout/ingrid-help/images/image203.jpg" alt="*"></img> 
-                      <b>Karte verschieben</b>: Zum Verschieben: Klicken Sie mit 
-                      der linken Maustaste auf einen Punkt in der Karte, halten 
-                      Sie die Taste und ziehen Sie die Maus über die Karte. 
-                    </p>
-                    <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> 
-                      <b>Drucken</b>: Erstellung einer pdf-Datei für einen 
-                      Kartenausschnitt. 
-                    </p>                  
-                </content>
-            </section>
-            <section help-key="ext-search-spacial-11">
-                <header>Funktionen innerhalb des Kartenfensters</header>
-                <content>                   
-                    <p>
-                <ul>
-                    <li>In der linken oberen Ecke: Leiste zur <b>Navigation</b> 
-                        im Kartenausschnitt (reinzoomen, rauszoomen, 
-                        verschieben).  
-                    </li>
-                    <li>In der linken unteren Ecke: <b>Maßstabsleiste</b> und 
-                        <b>Koordinaten</b>. Die Koordinaten beziehen sich auf 
-                        die aktuelle Position der Maus auf dem Kartenausschnitt.
-                    </li>
-                    <li>In der rechten unteren Ecke: Wenn Sie den Pfeil 
-                        anklicken, wird eine Übersichtskarte eingeblendet. 
-                    </li>
-                </ul></p>
-                </content>
-            </section>
-
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Zeit</header>
-        <section help-key="ext-search-time-1">
-            <header>Zeit</header>
-            <content>
-                <p>PortalU ist in der Lage, nach den Zeitbezügen der
-                    angeschlossenen Systeme zu suchen. Hierzu werden einerseits
-                    die Daten genutzt, die der <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                    Umweltbundesamtes aus den Webseiten als Zeitbezüge
-                    analysiert hat. Andererseits wird auf die Zeitbezüge in den
-                    Datenbanken zugegriffen.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-time-2">
-            <header>Zeitbezug</header>
-            <content>
-                <p>Sie können als Zeitbezug entweder einen Zeitraum (von/bis)
-                    oder einen Zeitpunkt (am) angeben. In beiden Fällen ist das
-                    Format für die Datumsangabe TT.MM.JJJJ, also zwei Ziffern
-                    für den <b>T</b>ag, zwei für den <b>M</b>onat und vier für
-                    das <b>J</b>ahr.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-time-3">
-            <header>Erweiterung des Zeitbezuges</header>
-            <content>
-                <p>Grundsätzlich werden immer alle Informationen gefunden, deren
-                    Zeitbezug innerhalb des von Ihnen eingegebenen
-                    Suchintervalls liegt. Durch Ankreuzen können Sie zusätzlich
-                    auch Informationen finden, für die folgendes gilt:</p>
-                <ul>
-                    <li>Der Zeitbezug der Ergebnisse schneidet das eingegebene Suchintervall.</li>
-                    <li>Der Zeitbezug der Ergebnisse umschließt das eingegebene Suchintervall.</li>
-                </ul>
-            </content>
-        </section>
-        <section help-key="ext-search-time-4">
-            <header>Suche nach Zeitbezügen</header>
-            <content>
-                <p>Wenn Sie nach einem Datum suchen, das mit einem
-                    umweltrelevanten Ereignis verbunden ist (z.B. die
-                    Klimaschutzkonferenz in Kyoto), können Sie über die Angabe
-                    eines Suchbegriffes nach dem Ereignis in der Chronik
-                    suchen. Sie bekommen alle Ereignisse angezeigt, die über die
-                    Suche gefunden wurden. Über die Kopier- und Einfüge-Funktion
-                    des Browsers können Sie die angegebenen Daten direkt in das
-                    von Ihnen gewünschte Feld des Zeitbezugs einfügen.</p>
-            </content>
-            <section help-key="ext-search-time-5">
-                <header>Die Umweltchronik</header>
-                <content>
-                    <p>Die Umweltchronik ist eine Komponenten des <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                        Umweltbundesamtes.SNS stellt eine gemeinsame 
-                        Terminologie für den Bereich Umwelt auf deutsch und 
-                        englisch zur Verfügung. Die Umweltchronik umfasst über 
-                        2.000 aktuelle und historische Ereignisse, die unsere 
-                        Umwelt wesentlich beeinflusst haben. </p>
-                </content>
-            </section>
-            <section help-key="ext-search-time-6">
-                <header>Umweltereignisse</header>
-                <content>
-                    <p>Es werden alle Umweltereignisse, die über die Suche in
-                        der Chronik gefunden wurden, mit Titel und Datum
-                        angezeigt. Durch einen Klick auf das Ereignis oder das
-                        davor stehende Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> wird die Beschreibung des Ereignisses
-                        eingeblendet, durch einen Klick auf das Minuszeichen
-                            <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image019.jpg" alt="*"></img> wieder ausgeblendet.</p>
-                </content>
-            </section>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche: Suchbereich</header>
-        <section help-key="ext-search-area-1">
-            <!-- 
-        	<header>Inhalte</header>
-            <content>
-                <p>An dieser Stelle können Sie festlegen, ob Sie alle
-                    Umweltinformationen (auch Themen und Service)
-                    durchsuchen wollen oder ob Sie nur in den Themen oder
-                    nur in den Service-Seiten (Pressemitteilungen, Publikationen
-                    und Veranstaltungen) suchen möchten.</p>
-            </content>
-        	-->
-        </section>
-        <section help-key="ext-search-area-2">
-            <header>Datenquellen</header>
-            <content>
-                <p>An PortalU sind neben Web-Servern auch Metadaten- und
-                    Fachdatensysteme angeschlossen. Sie können wählen, ob Sie in
-                    all diesen Systemen suchen wollen (Standard) oder ob Sie
-                    ihre Suche gezielt auf eine oder mehrere Arten von
-                    Datenquellen einschränken möchten.</p>
-                <p>Wenn Sie die Suche auf Metadaten beschränken, haben Sie
-                    zusätzlich die Möglichkeit,  die Klassen der Metadaten
-                    auszuwählen, die Sie durchsuchen möchten. Es stehen Ihnen
-                    folgende Klassen zur Verfügung:</p>
-                <ul>
-                        
-                        <li>Fachaufgabe</li>
-                        <li>Geodatensatz</li>
-                        <li>Literatur</li>
-                        <li>Geodatendienst</li>
-                        <li>Projekt</li>
-                        <li>Datensammlung</li>
-                        <li>Informationssystem</li>
-                                                     
-
-                </ul>
-            </content>
-        </section>
-        <section help-key="ext-search-area-3">
-            <header>Anbieter</header>
-            <content>
-                <p>Die Datenangebote in PortalU stammen von Behörden und
-                    behördennahen Organisationen aus Rheinland-Pfalz. Sie können für Ihre Suche das
-                    Angebot auf einzelne Anbieter einschränken. Eine
-                    Mehrfachauswahl ist möglich.</p>
-                <!-- 
-                <p>Der Bund und auch die meisten Länder haben mehrere
-                    Datenanbieter. Diese werden angezeigt, wenn Sie auf das
-                    Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="*"></img> klicken. Anstatt des Bundes oder eines Landes
-                    können auch einzelne Anbieter ausgewählt werden. Auch in
-                    diesem Fall ist eine Mehrfachauswahl möglich.</p>
-                 -->
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Suchhistorie</header>
-        <section help-key="search-history-1">
-            <header>Suchhistorie</header>
-            <content>
-                <p>PortalU speichert eine Historie Ihrer Suchanfragen. Neben
-                    dieser Historie, die automatisch für eine Sitzung 
-                    vorübergehend gespeichert
-                    wird, können Sie als eingeloggter Nutzer 
-                    (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>) auch
-                    Suchanfragen permanent speichern 
-                    (<a href="?hkey=search-save-1">Suche Speichern</a>).</p>
-                <p>Sowohl die vorübergehenden als auch die permanent gespeicherten Suchanfragen können über den Reiter 
-                   <b>Suchhistorie</b> aufgerufen werden.</p>
-            </content>
-        </section>
-        <section help-key="search-history-2">
-            <header>Ihre zuletzt abgesendeten Suchanfragen</header>
-            <content>
-                <p>In diesem Bereich werden ihre zuletzt abgesendeten
-                    Suchanfragen aufgelistet. Durch das Anklicken einer
-                    Suchanfrage wird diese in das Suchfenster geladen und die
-                    Suche ausgeführt.</p>
-            </content>
-        </section>
-        <section help-key="search-history-3">
-            <header>Ihre gespeicherten Suchanfragen</header>
-            <content>
-                <p>In diesem Bereich werden Ihre dauerhaft gespeicherten
-                    Suchanfragen aufgelistet. Durch das Anklicken einer
-                    Suchanfrage wird diese in das Suchfenster geladen und die
-                    Suche ausgeführt. Gespeicherte Suchanfragen können durch
-                    Ankreuzen und den <b>Löschen</b>-Button
-                    entfernt werden.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Einstellungen</header>
-        <section help-key="search-settings-1">
-            <header>Einstellungen</header>
-            <content>
-                <p>Unter der Rubrik <b>Einstellungen</b> können
-                    Sie die Darstellung der Suchergebnisse steuern.</p>
-            </content>
-        </section>
-        <section help-key="search-settings-2">
-            <header>Sortierung und Gruppierung der Suchergebnisse</header>
-            <content>
-                <p>Sie können sich Ihre Suchergebnisse entweder nach Ranking
-                    (Relevanz der gefundenen Seite in Bezug auf Ihren
-                    Suchausdruck) oder nach Aktualität (die neusten Seiten
-                    stehen vorne) sortiert anzeigen lassen.</p>
-                <p><b>Gruppierung</b> bedeutet, dass die
-                    Suchergebnisse nach Informationsanbietern
-                    oder Domänen zusammengefasst angezeigt werden.</p>
-            </content>
-        </section>
-        <section help-key="search-settings-3">
-            <header>Ähnliche Begriffe in die Suche einbeziehen</header>
-            <content>
-                <p>PortalU führt nicht nur die bei Suchmaschinen übliche
-                    Indexierung der Seiten durch, sondern lässt den Seiteninhalt
-                    auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                    Umweltbundesamtes analysieren. Als Ergebnis dieser Analyse
-                    werden den Webseiten Fachbegriffe aus dem  <a href="?hkey=ext-search-subject-3">Umweltthesaurus UMTHES</a> zugeordnet.</p>
-                <p>Wenn Sie durch Ankreuzen die Einstellung <b>Ähnliche
-                    Begriffe in die Suche einbeziehen</b> wählen werden
-                    die zugeordneten ähnlichen Begriffe in der Suche
-                    mitberücksichtigt. (Hinweis: In den meisten Fällen wird
-                    durch die Wahl dieser Einstellung die Treffermenge erhöht.)</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Tipps zur Suche</header>
-        <section help-key="search-tipps-1">
-            <header>Ähnliche Begriffe in die Suche einbeziehen</header>
-            <content>
-                <p>Sie haben drei Möglichkeiten, ähnliche Begriffe in die Suche einzubeziehen:</p>
-                <ul>
-                    <li>Automatisiert: Kreuzen Sie hierzu im Formular
-                        <b>Einstellungen für die Suche</b> (<a href="?hkey=search-settings-1">Suche/Einstellungen</a>)
-                        die Option <b>Ähnliche Begriffe in die Suche
-                        einbeziehen</b> an. Sie können diese
-                        Einstellungen auch dauerhaft vornehmen (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</li>
-                    <li>Vor einer Suche erweitern Sie Ihren Suchausdruck um
-                        ähnliche Begriffe, indem Sie die Funktionalität
-                        <a href="?hkey=ext-search-subject-2">Thema/Fachwörterbuch</a>
-                        der <a href="?hkey=ext-search-1">Erweiterten
-                        Suche</a> nutzen.</li>
-                    <li>Nach einer Suchanfrage wird über der Suchergebnisliste 
-                        der Link <b>Ähnliche Begriffe: Suchen Sie nach...</b>
-                        eingeblendet. Wenn Sie auf diese Schaltfläche klicken 
-                        oder das Pluszeichen betätigen, werden Ihnen ähnliche 
-                        Begriffe vorgeschlagen, die für Ihre Suchanfrage ggf. 
-                        interessant sein könnten.</li>
-                </ul>
-            </content>
-        </section>
-        <section help-key="search-tipps-2">
-            <header>Suche auf Informationen zum Wohnort begrenzen</header>
-            <content>
-                <p>Nutzen Sie hierzu die <a href="?hkey=ext-search-spacial-1">Räumliche
-                    Suche</a>. Sie können entweder ein Suchrechteck über dem
-                    gewünschten Suchbereich aufziehen (<a href="?hkey=ext-search-spacial-6">Raumeinschränkung Karte</a>)
-                    oder Ihre Stadt oder Ihren Kreis als Begriff eingeben (<a href="?hkey=ext-search-spacial-2">Raumeinschränkung begrifflich</a>).</p>
-            </content>
-        </section>
-        <section help-key="search-tipps-3">
-            <!-- 
-            <header>Suche auf ein Bundesland begrenzen</header>
-            <content>
-                <p>Über den <a href="?hkey=ext-search-area-1">Suchbereich</a> der
-                    Suche können Sie ihr Land auswählen. Bedenken Sie, dass auch
-                    Informationen auf Bundesebene für Sie interessant sein
-                    könnten. Sie können im Suchbereich neben einem Land auch die
-                    Bundesinformationen einstellen.</p>
-                <p>Sie können diese Einstellungen auch dauerhaft vornehmen
-                    (siehe <a href="?hkey=myingrid-1">Mein PortalU</a>).</p>
-            </content>
-             -->
-        </section>
-        <section help-key="search-tipps-4">
-            <header>Spezielle Suchanfrage, die man nicht über die
-                erweiterte Suche formulieren kann</header>
-            <content>
-                <p>PortalU erlaubt komplexe Suchanfragen  durchzuführen, die
-                    über die Möglichkeiten der erweiterten Suche hinausgehen
-                    (z.B. Gruppierung über Klammerung oder Ähnlichkeitssuchen
-                    usw.). Lesen Sie hierzu in der Hilfe zu PortalU den
-                    Abschnitt <a href="?hkey=search-expert-1">Expertensuche</a>
-                    und geben Sie Ihren Suchausdruck in das Suchfeld ein.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Adressen</header>
-        <section help-key="ext-search-address-1">
-            <header>Thema</header>
-            <section help-key="ext-search-address-2">
-                <header>Suchbegriffe</header>
-                <content>
-                    <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                        Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem
-                        Sie sie mit einer der folgenden Optionen verknüpfen:</p>
-                    <p>
-                        <b>all diese Begriffe (UND):</b> eine Information wird
-                        gefunden, wenn sie <b>alle</b> eingegebenen Begriffe
-                        enthält (Standard).</p>
-                    <p>
-                        <b>einen dieser Begriffe (ODER):</b> eine Information
-                        wird gefunden, wenn sie <b>mindestens einen</b> der
-                        eingegebenen Begriffe enthält.</p>
-                    <p>
-                        <b>genau diese Wortgruppe:</b> eine Information wird
-                        gefunden, wenn sie <b>genau</b> die eingegebene
-                        Wortgruppe enthält (in der gleichen Reihenfolge, mit
-                        Leerzeichen etc.).</p>
-                    <p>
-                        <b>keinen dieser Begriffe:</b> eine Information wird nur
-                        dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                        Begriffe enthält.</p>
-                </content>
-            </section>
-            <section help-key="ext-search-address-3">
-                <header>Suchmodus</header>
-                <content>
-                    <p>In diesem Bereich können Sie bestimmen, ob Ihre
-                        Suchbegriffe nur dann gefunden werden, wenn Sie mit
-                        einem ganzen Wort in der durchsuchten Adresse
-                        übereinstimmen oder ob es reicht, wenn nur ein Teil
-                        eines ganzen Wortes (Teilzeichenkette) in der Adresse
-                        mit dem jeweiligen Suchbegriff übereinstimmt.</p>
-                    <p>Weiterhin können Sie bestimmen, ob die Suche in allen
-                        Feldern der Adresse durchgeführt werden soll (z.B. also
-                        auch in dem Feld <b>Strasse</b>) oder
-                        aber nur in den vorgegebenen Feldern
-                        <b>Institution</b>,
-                        <b>Person</b>,
-                        <b>Beschreibung</b> und <b>Schlagworte</b>.</p>
-                </content>
-            </section>
-        </section>
-        <section help-key="ext-search-address-4">
-            <header>Raum</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach einer Adresse auf
-                    eine Strasse, eine Postleitzahl oder einen Ort einschränken.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Forschungsprojekten</header>
-        <section help-key="ext-search-research-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND):</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER):</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-research-2">
-            <header>Attribute</header>
-            <content>
-                <p>In diesem Bereich können Sie die Suche nach
-                    Forschungsprojekten auf den Projektnamen, die beteiligten
-                    Institutionen, den Projektleiter, weitere Beteiligte, den
-                    Projektträger und die Laufzeit einschränken.</p>
-                <p>Bitte beachten Sie, dass sich die Suche bei der Nutzung
-                    dieser Filtermöglichkeiten ausschließlich auf Datenbanken
-                    beschränkt, die eine Suche in dem jeweiligen Attribut
-                    unterstützen. Sie schränken den Suchraum dadurch ggf.
-                    erheblich ein.</p>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
-        <header>Erweiterte Suche nach Rechtsvorschriften</header>
-        <section help-key="ext-search-law-1">
-            <header>Suchbegriffe</header>
-            <content>
-                <p>In diesem Bereich können Sie gezielt einen oder mehrere
-                    Suchbegriffe zu Ihrem Suchausdruck hinzufügen, indem Sie
-                    sie mit einer der folgenden Optionen verknüpfen:</p>
-                <p>
-                    <b>all diese Begriffe (UND):</b> eine Information wird
-                    gefunden, wenn sie <b>alle</b> eingegebenen Begriffe enthält (Standard).</p>
-                <p>
-                    <b>einen dieser Begriffe (ODER):</b> eine Information wird
-                    gefunden, wenn sie <b>mindestens einen</b> der eingegebenen
-                    Begriffe enthält.</p>
-                <p>
-                    <b>genau diese Wortgruppe:</b> eine Information wird
-                    gefunden, wenn sie <b>genau</b> die eingegebene Wortgruppe
-                    enthält (in der gleichen Reihenfolge, mit Leerzeichen etc.).</p>
-                <p>
-                    <b>keinen dieser Begriffe:</b> eine Information wird nur
-                    dann gefunden, wenn sie <b>keinen</b> der eingegebenen
-                    Begriffe enthält.</p>
-            </content>
-        </section>
-        <section help-key="ext-search-law-2">
-            <header>Fachwörterbuch</header>
-            <content>
-                  <p>Über das Fachwörterbuch können Sie Ihrem Suchausdruck
-                    Fachbegriffe hinzufügen. Dazu geben Sie einen beliebigen
-                    Begriff in das Eingabefeld ein und senden eine Anfrage an
-                    den <a href="?hkey=ext-search-subject-3">Umweltthesaurus UMTHES</a> ab.</p>
-                <p>Sie erhalten dann eine Reihe ähnlicher Begriffe, die
-                    Sie dem Suchausdruck hinzufügen können oder über deren
-                    Verlinkungen Sie ihren Suchbegriff weiter spezifizieren können.</p>
-            </content>
-        </section>
-      <section help-key="ext-search-law-3">
-        </section>
-        
-    
-    </chapter>
-    <chapter>
-    
-    
-        <header>Suche Speichern</header>
-        <section help-key="search-save-1">
-            <header>Suche Speichern</header>
-            <content>
-                <p>Nach dem Ausführen einer Suchanfrage haben die eingeloggten
-                    Nutzer (siehe <a href="?hkey=myingrid-1">Mein
-                    PortalU</a>) die Möglichkeit, den verwendeten Suchausdruck
-                    dauerhaft zu speichern. Dies geschieht über die Funktion
-                    <b>Suche speichern</b>.</p>
-                <p>Hinweis: Die zuletzt verwendeten Suchanfragen sind auch ohne
-                    Speicherung für die laufende Sitzung über die <a href="?hkey=search-history-1">Suchhistorie</a> zugänglich.</p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Experteneingabe</header>
         <section help-key="search-expert-1">
-            <header>Experteneingabe</header>
+            <header display="false">Experteneingabe</header>
             <content>
-                <p>Alle Einstellungen der Erweiterten Suche und noch einige
+                <p>Alle Einstellungen der Such-Oberfläche und  
                     spezielle Einstellungen darüber hinaus lassen sich auch
                     direkt über den Suchausdruck in die Suche eingeben. Da die
                     Syntax durch die große Anzahl der Suchmethoden recht
@@ -997,7 +168,7 @@
                     Operatoren verknüpft werden. Es stehen folgende Operatoren
                     zur Verfügung:</p>
                 <p>
-                    <b>AND (UND-Verknüpfung)</b>: Alle Worte müssen in dem
+                    <b>AND (UND-Verknüpfung)</b>: Alle Wörter müssen in dem
                     Dokument vorhanden sein. Sie ist Standard, wenn kein Operator
                     angegeben wird. (Hinweis: Anstatt AND kann auch das Symbol
                     &amp;&amp; verwendet werden)<br></br>Beispiel:
@@ -1005,7 +176,7 @@
                      ‚Wasser AND Fisch’ bzw.
                     ‚Wasser &amp;&amp; Fisch’</p>
                 <p>
-                    <b>OR (ODER-Verknüpfung)</b>: Eines der Worte muss im
+                    <b>OR (ODER-Verknüpfung)</b>: Eines der Wörter muss im
                     Dokument vorhanden sein. (Hinweis: Anstatt von OR kann auch
                     das Symbol || verwendet werden)<br></br> Beispiel:
                     ‚Wasser OR Fisch’ entspricht
@@ -1044,10 +215,11 @@
             <header>Platzhalter</header>
             <content>
                 <p>Innerhalb eines Suchbegriffs ist es möglich, Platzhalter für
-                    einen (?) oder mehrere (*) beliebige Zeichen einzugeben. Es
+                    ein (?) beliebiges oder mehrere (*) beliebige Zeichen einzugeben. Es
                     werden dann alle Begriffe gefunden, die mit dem Rest des
                     Suchbegriffs übereinstimmen, wobei für den Platzhalter ein
                     bzw. mehrere Zeichen auftreten können.</p>
+                <p><b>ACHTUNG</b>: Platzhalter dürfen NICHT am Anfang des Suchwortes stehen.</p>
                 <p>Beispiel: ‚Te?t’ (Es werden sowohl
                     Dokumente mit dem Begriff ‚Text’ als
                     auch Dokumente mit dem Begriff  ‚Test’ gefunden)</p>
@@ -1068,12 +240,12 @@
                     bedeuten, dass der untere und der obere Wert des Bereichs
                     nicht in die Suche einbezogen werden.</p>
                 <p>Beispiel: ‚[Aller TO Elbe]’ (Es wird nach Dokumenten gesucht, die
-                    Worte enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Worte 
+                    Wörter enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Wörter 
                     ‚Aller’ und ‚Elbe’ sind dabei im Suchbereich enthalten.</p>
                 <p>Beispiel: ‚{Aller TO Elbe}’ (Es wird nach Dokumenten gesucht, die
-                    Worte enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Worte 
+                    Wörter enthalten, die im Alphabet bei Aller beginnen und bei Elbe enden. Die Wörter 
                     ‚Aller’ und ‚Elbe’ sind dabei im Suchbereich nicht enthalten.)</p>
-                <p>Der Suchbereich kann aber auch innerhalb eines Suchwortes angegeben werden.</p>
+                <p>Der Suchbereich kann auch innerhalb eines Suchwortes angegeben werden.</p>
                 <p>Beispiel: ‚te[i TO x]t’ (Es wird nach Dokumenten gesucht, die
                     z.B. die Worte ‚teilt’, ‚test’ oder ‚text’ enthalten.)</p>
                 <p> Alternativ zu dem Operator TO kann auch ein Bindestrich - verwendet werden </p>
@@ -1143,10 +315,10 @@
                     <td> Es wird nur nach MS PowerPoint - Dokumenten gesucht</td>
                     </tr>
                 </table>
-                <br></br>  
             </content>
         </section>
         <section help-key="search-expert-9">
+        <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
                 <p>Der PortalU-Volltextindex gliedert sich in verschiedene
@@ -1168,41 +340,41 @@
                     </tr>
                     <tr>
                     <td>www</td>  
-                    <td> Es wird nur nach Webseiten gesucht</td>
+                    <td> Es wird nur nach Webseiten gesucht.</td>
                     </tr>
                     
                     <tr>
                     <td>default</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Umweltinformationen' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Umweltinformationen' gesucht.</td>
                     </tr>
                     
                     <tr>
                     <td>law</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Rechtsvorschriften' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Rechtsvorschriften' gesucht.</td>
                     </tr>
                                                                     
                     
                      <tr>
                     <td>research</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Forschungsprojekte' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Forschungsprojekte' gesucht.</td>
                     </tr>
          
                     <tr>
                     <td>address</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Adressen' gesucht.</td>
                     </tr>
                    
                     <tr>
                     <td>topics</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Themen' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Themen' gesucht.</td>
                     </tr>
                      <tr>
                     <td>service</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Service' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Service' gesucht.</td>
                     </tr>
                     <tr>
                     <td>measure</td>  
-                    <td> Es wird nach Dokumenten aus dem Bereich 'Messwerte' gesucht</td>
+                    <td> Es wird nach Dokumenten aus dem Bereich 'Messwerte' gesucht.</td>
                     </tr>
                     <tr>
                     <td>metadata</td>  
@@ -1210,59 +382,19 @@
                     </tr>
                     <tr>
                     <td>fis</td>  
-                    <td> Es wird nach Informationen aus Fachdatenbanken gesucht</td>
+                    <td> Es wird nach Informationen aus Fachdatenbanken gesucht.</td>
                     </tr>
                 </table>
                 <br></br>
             </content>
         </section>
-        <section help-key="search-expert-10">
-            <header>Suche nach einem speziellen Umweltthema</header>
-            <content>
-                <p>Die Suche kann nach den Seiten eingegrenzt werden, die einem oder mehreren Umwelthemen 
-                zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
-                <p>Beispiel: ‚datatype:topics topic:Abfall’ (Es wird nach
-                    Dokumenten gesucht, die unter dem Umweltthema 'Abfall' eingeordnet wurden.)</p>
-                <p> Folgende Werte sind möglich:</p>
-                <p> Abfall, Altlasten, Bauen, Boden, Chemikalien, Energie, Forstwirtschaft, Gentechnik, 
-                    Geologie, Gesundheit, LaermErschuetterung, Landwirtschaft, LuftKlima, 
-                    NachhaltigeEntwicklung, NaturLandschaft, Strahlung, Tierschutz, Umweltinformation,
-                    Umweltwirtschaft, Verkehr, Wasser </p>
-            </content>
-        </section>
-        <!-- 
-        <section help-key="search-expert-11">
-            <header>Suche nach speziellen Messwertseiten</header>
-            <content>
-                <p>Die Suche kann nach den Seiten eingegrenzt werden, die Messungen in speziellen
-                Umweltbereichen zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
-                <p>Beispiel: ‚datatype:measure topic:air’ (Es wird nach
-                    Dokumenten gesucht, die Messungen zum Thema 'Luft' zum Inhalt haben.)</p>
-                <p> Folgende Werte sind möglich:</p>
-                <p> <b>radiation</b> für Strahlung, <b>air</b> für Luft, 
-                    <b>water</b> für Wasser
-                    und <b>misc</b> für weitere Messwerte. </p>
-            </content>
-        </section>
-        <section help-key="search-expert-12">
-            <header>Suche nach einem speziellen Service</header>
-            <content>
-                <p>Die Suche kann nach den Seiten eingegrenzt werden, die einem Service 
-                zugeordnet sind. Dazu wird die Syntax ‚topic:Wert’ verwandt.</p>
-                <p>Beispiel: ‚datatype:service topic:press’ (Es wird nach
-                    Dokumenten gesucht, die Pressemitteilungen enthalten.)</p>
-                <p> Folgende Werte sind möglich:</p>
-                <p> press, publication, event </p>
-            </content>
-        </section>
-         -->
         <section help-key="search-expert-13">
             <header>Suche nach einer speziellen Metadatenklasse</header>
             <content>
                 <p>Bei der Suche nach einer speziellen Metadatenklasse wird die 
                 Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:metadata metaclass:map’ (Es wird nach
-                    Metadaten der Klasse Geodatensatz gesucht.)</p>
+                    Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
                 <p>Folgende Werte stehen für das Feld 'metaclass' in PortalU zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
@@ -1316,7 +448,7 @@
                 werden.
                 Der Raumbezug kann über Koordinaten oder über den räumlichen Schlüssel der Verwaltungseinheit 
                 angegeben werden.</p>
-                <p>Beispiel: ‚areaid: areaid:11000000’ (Die Suche wird auf Berlin als 
+                <p>Beispiel: ‚areaid: areaid:07315000’ (Die Suche wird auf Mainz als 
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
@@ -1390,126 +522,57 @@
                eingegeben werden. </p>
             </content>
         </section>
-<!--                    
--->
     </chapter>
     <chapter>
-        <header>Suchergebnisseite</header>
+        <header>Suchergebnisliste</header>
         <section help-key="search-results-1">
-            <header>Ergebnisseite</header>
+            <header display="false">Suchergebnisliste</header>
             <content>
-                <p>Nach dem Absenden einer Suchanfrage werden die Suchergebnisse
-                   angezeigt. Die Suchergebnisseite ist in drei Bereiche 
-                   gegliedert. In der Mitte finden Sie die Hauptergebnisliste, 
-                   in der linken Spalte nach 
-                   <a href="?hkey=search-results-2">Kategorien</a> sortierte 
-                   Ergebnisse und in der rechten Spalte Ergebnisse aus 
-                   <a href="?hkey=search-results-3">weiteren Datenquellen</a>. 
-                   In der Hauptergebnisliste und in den Kategorien sind 
-                   Webseiten, Metadaten und/oder Fachinformationen enthalten, 
-                   die nach Relevanz gewichtet und sortiert sind. Der oberste 
-                   Eintrag weist hierbei die höchste Relevanz für die 
-                   Suchanfrage auf. Bei den weiteren Datenquellen findet eine 
-                   solche Vorsortierung hingegen nicht statt. </p>
-                <p>Ein Suchergebnis besteht aus einem Titel, der auf die 
-                   Webseite bzw. den Katalog- oder Datenbankeintrag verlinkt, 
-                   eine Kurzbeschreibung, Angaben zum Anbieter und der 
-                   Datenquelle sowie bei Webseiten die entsprechende URL. Wenn 
-                   bei einigem Katalogeintrag eine digitale Karte hinterlegt 
-                   ist, können Sie sich über den Link <b>Zeige Karte</b> die 
-                   Karte direkt im <a href="?hkey=maps-1">PortalU-Kartenviewer
-                   </a> ansehen.
-                </p>
+                <p>Nach dem Absenden einer Suchanfrage erhalten Sie die
+                    Ergebnisliste. Sie gliedert sich in die Hauptergebnisliste
+                    (linke Spalte) und die Liste mit Ergebnissen aus weiteren
+                    Datenquellen (rechte Spalte). Weiterhin wird Ihnen die
+                    Möglichkeit gegeben, über das <a href="?hkey=search-1">Suchformular</a> ihre
+                    Suchanfrage zu verfeinern und erneut zu suchen. Hierzu
+                    können Sie auch die Ihnen angebotenen ähnlichen Begriffe nutzen.</p>
             </content>
         </section>
         <section help-key="search-results-2">
-            <header>Kategorien</header>
+            <header>Hauptergebnisliste</header>
             <content>
-                <p>In der linken Spalte der Ergebnisseite werden die 
-                   Suchergebnisse nach Kategorien sortiert. In Klammern wird 
-                   hierbei angegeben, wie viele Ergebnisse pro Kategorie 
-                   gefunden wurden. </p>
-                <p>Durch einen Klick auf eine Kategorie wird das Suchergebnis 
-                   in der Hauptergebnisliste entsprechend eingepasst. Erscheinen 
-                   Checkboxen bei der Auswahl einer Kategorie, so werden die 
-                   Ergebnisse aller angeklickten Unterkategorien in der 
-                   Hauptergebnisliste wiedergegeben. Über die Schaltfläche 
-                   <b>Mehr</b> können Sie sich weitere Unterkategorien anzeigen 
-                   lassen. </p>
-                <p>Wenn Sie Ihre Suchanfrage präzisieren möchten, können Sie 
-                   auch mehrere Kategorien auswählen.</p>
-                <p>Um die vorgenommenen Einschränkung wieder aufzugeben, 
-                   klicken Sie auf die Schaltfläche <b>löschen</b> bzw. auf die 
-                   Schalfläche <b>x</b>. </p>
-                   
-                <p><b>Ergebnistypen</b> </p>
-                
-                <p>Webseiten: Suchergebnis aus umweltrelevanten Webauftritten</p>
-                <p>Metadaten: Suchergebnis in den angeschlossenen 
-                   Umweltdatenkatalogen </p>
-                <p>Rechtsvorschriften: Suchergebnis aus Informationsangeboten zu 
-                   rechtsrelevanten Themen</p>                   
-                <p>Forschungsprojekte: Suchergebnis aus Informationsangeboten zu 
-                   Projekten in der Umweltforschung</p> 
-                <!-- 
-                <p>Themen: Suchergebnis der PortalU-Rubrik 
-                   <a href="?hkey=search-topics-1">Themen</a> </p>
-                               
-                <p>Messwerte: Suchergebnis der PortalU-Rubrik 
-                   <a href="?hkey=search-measure-1">Messwerte</a></p>             
-                <p>Service: Suchergebnis der PortalU-Rubrik 
-                   <a href="?hkey=search-service-1">Service</a></p>
-                -->   
-                <p><b>Aktualität</b> </p>
-                
-                <p>Wenn Sie den Ergebnistyp <b>Metadaten</b> aufgewählt haben, 
-                   wird die Kategorie <b>Aktualität</b> angezeigt, in der die 
-                   Suchergebnisse 
-                   nach ihrem Zeitbezug sortiert werden. Die Aktualität bezieht 
-                   sich hierbei auf das Erstellungs- bzw. lezte Änderungsdatum 
-                   des jeweiligen Datensatzes (z.B. im letzten Monat, im letzten 
-                   5 Jahre oder älter als 5 Jahre).</p>
-                                      
-                <p><b>Anbieter</b> </p>
-                
-                <p>In der Kategorie <b>Anbieter</b> können Sie Ihr
-                   Suchergebnis auf einen oder mehrere
-                   Informationsanbieter einschränken.</p>                                         
-                                      
-                <p><b>Raumbezug</b> </p>
-                
-                <p>In der Kategorie <b>Raumbezug</b> können Sie Ihr Suchergebnis 
-                   räumlich einschränken, indem Sie entweder den Raum durch ein 
-                   Suchrechteck in einer Karte oder durch die Angabe eines 
-                   Ortsnamen einschränken. </p>
-                <p>Wenn Sie auf die Schaltfläche <b>Auf Karte festlegen</b> 
-                   klicken, können Sie ein Suchrechteck auf einer 
-                   Rheinland-Pfalz-Karte aufziehen. Klicken Sie auf die Schaltfläche 
-                   <b>Auswahl anwenden</b>, um die räumliche Einschränkung für 
-                   die Suchergebnisse zu übernehmen. 
-                   <!--  <a href="?hkey=ext-search-spatial-6">Mehr dazu</a>--> 
-               </p>                      
-                   
-                <p>Sie können Ihr Suchergebnis aber auch über Ortsnamen und 
-                   anderen geographischen Bezeichnungen einschränken. Klicken Sie 
-                   hierfür auf die Schaltfläche <b>Nach Ort suchen</b>, geben 
-                   Sie eine geographische Bezeichnung ein und klicken Sie 
-                   anschließend auf <b>suchen</b>. Aktivieren Sie nun die 
-                   passende Checkbox und klicken Sie auf <b>Auswahl anwenden</b> 
-                   um die räumliche Einschränkung für die Suchergebnisse zu übernehmen.</p>    
+                <p>In der Hauptergebnisliste werden Ihnen die Ergebnisse aus der
+                    Suche in den Webseiten der angeschlossenen Server sowie in
+                    den Meta- und Fachinformationssystemen in einer nach
+                    Relevanz gewichteten Liste angezeigt.</p>
+                <p>Anstatt der einfachen gewichteten Liste können Sie sich die
+                    Ergebnisse auch nach Anbietern <a href="?hkey=search-settings-2">gruppiert</a>
+                    anzeigen lassen oder sie nach Aktualität <a href="?hkey=search-settings-2">sortieren</a>.</p>
+                <p>Ist die Fundstelle eine Webseite, erhalten Sie neben einer
+                    Reihe von Informationen (z.B. Titel, Beschreibung und
+                    Anbieter) einen Link, über den Sie direkt auf die
+                    Originalseite geführt werden.</p>
+                <p>Ist die Fundstelle eine Meta- oder Fachinformation, werden Sie
+                    über den Link auf die Detaildarstellung der Fachinformation
+                    geführt. In den Fällen, in denen ein direkter Link zu einer
+                    Webseite in den Meta- oder Fachinformationen vorhanden ist,
+                    bekommen Sie diesen angeboten und werden über ihn auf die
+                    Originalseite geführt. In den Fällen, in denen eine Karte
+                    hinterlegt ist, bekommen Sie einen Link „Zeige
+                    Karte“ angeboten, über den Sie die Karte in der
+                    Kartenansicht von PortalU öffnen können.</p>
             </content>
         </section>
         <section help-key="search-results-3">
             <header>Weitere Datenquellen</header>
             <content>
-                <p>Auf der Ergebnisseite werden in der rechten Spalte weitere 
-                   <b>Datenquellen</b> angezeigt. Hier werden Suchergebnisse 
-                   gelistet, die aus Informationsquellen stammen, die in 
-                   PortalU nicht nach Relevanz gewichtet und sortiert werden 
-                   können. Die Suchergebnisse dieser Datenquellen werden daher 
-                   in einer getrennten Liste nach Datenquellen geordnet 
-                   angezeigt. Die Datenquellen werden dabei in der Reihenfolge 
-                   der erfolgten Rückmeldungen aufgeführt.</p>
+                <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
+                    Fachinformationssystemen werden auch weitere
+                    Umweltinformationssysteme über PortalU abgefragt. Die
+                    Schnittstellen dieser Systeme erlauben keine Einbindung der
+                    Suchergebnisse in die gewichtete Hauptergebnisliste. Die
+                    Suchergebnisse werden daher in einer getrennten Liste nach
+                    Datenquellen geordnet angezeigt. Die Datenquellen werden
+                    dabei in der Reihenfolge der erfolgten Rückmeldungen aufgeführt.</p>
                 <p>Über die angebotenen Links werden Sie je nach Datenquelle
                     entweder direkt zu den einzelnen Suchergebnissen oder zu
                     einer Suchergebnisliste im Quellsystem weitergeleitet.</p>
@@ -1520,16 +583,16 @@
             <content>
                 <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
-                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
+                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
                     Verfügung gestellt.</p>
-                <p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> klicken,
+                <p>Wenn Sie auf das Pluszeichen "+" klicken,
                     erhalten Sie zu jedem eingegebenen Suchbegriff die ähnlichen
                     Begriffe angeboten. Diese können Sie sich wiederum über das
-                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"></img> Symbol
+                    "+" Symbol
                     anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
-                    und Klick auf den Button <b>Zur Suche
-                    hinzufügen</b> werden die ähnlichen Begriffe jeweils
+                    und Klick auf den Button „Zur Suche
+                    hinzufügen“ werden die ähnlichen Begriffe jeweils
                     dem zugeordneten Suchbegriff hinzugefügt und zwar so, dass
                     ein Dokument gefunden wird, wenn entweder der Suchbegriff
                     oder der ähnliche Begriff enthalten ist (ODER-Verknüpfung).</p>
@@ -1539,565 +602,398 @@
     <chapter>
         <header>Kataloge</header>
         <section help-key="search-catalog-1">
-            <header>Umweltmetadaten</header>
+            <header display="false">Kataloge</header>
             <content>
-                <p>Recherchieren Sie im Umweltdatenkatalog von 
-                   Rheinland-Pfalz. Der Katalog ist hierarchisch aufgebaut 
-                   und kann mit einem Klick auf das Ordnersymbol aufgeklappt 
-                   werden. Die Umweltinformationen werden in den Katalogen als 
-                   <b>Objekte</b> bezeichnet. Als zusätzliche Information sind 
-                   im Bereich <b>Adressen</b> die jeweiligen behördlichen 
-                   Ansprechpartner aufgeführt. Durch einen Klick auf ein Objekt
-                   oder eine Adresse werden detaillierte Informationen 
-                   angezeigt. </p>
-                <!-- 
-                <p> Einen anschaulichen Überblick über Recherchemöglichkeiten 
-                    in den Umweltdatenkatalogen finden Sie <a href="/funktionen?action=doCatalog" target="_new">HIER</a>.
-                </p>
-                 -->
-            </content>
-        </section>
-        <section help-key="search-catalog-2">
-            <header>Schlagwortverzeichnis</header>
-            <content>
-                <p>Der Umweltthesaurus UMTHES ist eine Komponenten des 
-                   <a href="http://www.semantic-network.de/" target="_new">
-                   Semantic Network Service</a> des Umweltbundesamtes. SNS 
-                   stellt eine gemeinsame Terminologie für den Bereich Umwelt 
-                   auf deutsch und englisch zur Verfügung. Der UMTHES ist ein
-                   etabliertes Schlagwortverzeichnis für umweltrelevante 
-                   Themenfelder, das seit vielen Jahren vom Umweltbundesamt
-                   bereitgestellt und laufend aktualisiert wird.
-                </p>
-                <p>Sie können das Wortgut des Thesaurus nutzen, um sich für ihre
-                 Fragestellung passende Schlagworte herauszusuchen. Die 
-                 Darstellung des Wortgutes erfolgt in einer Baumstruktur. Wenn 
-                 Sie auf ein Schlagwort klicken, werden in der rechten Spalte 
-                 alle Metadatensätze der zur Verfügung stehenden Kataloge 
-                 angezeigt, die mit dem ausgewählten Begriff verschlagwortet 
-                 sind. Die Metadatensätze sind hierbei nach Katalogen gruppiert.
-                 Durch einen Klick auf einen Metadatensatz erhalten Sie
-                 Detailinformationen. 
-                </p>
-            </content>
-        </section>
-    </chapter>
-    <!-- 
-    <chapter>
-        <header>Themen</header>
-        <section help-key="search-topics-1">
-            <header>Umweltthemen</header>
-            <content>
-                <p>Wenn Sie einen schnellen Überblick über ein Umweltthema 
-                   gewinnen möchten, recherchieren Sie am besten im Bereich 
-                   <b>Themen</b>. Hier finden Sie ausgewählte 
-                   Umweltinformationen, die Ihnen einen schnellen Einstieg in 
-                   21 Umweltthemen bieten. Zudem können Sie Ihre Suche auf den 
-                   Bund oder ein einzelnen Bundesland beschränken. </p>
-                <p>Wenn Sie mehrere Themen oder Bundesländer gleichzeitig 
-                   auswählen möchten, halten Sie die Strg- bzw. Ctrl-Taste 
-                   gedrückt und klicken nacheinander auf die gewünschten Themen 
-                   oder Bundesländer. Die Suchergebnisse können gruppiert 
-                   anzeigen: entweder nach Bundesebene und Bundesländern oder 
-                   nach den einzelnen Informationsanbietern.</p>
-                <p>Tipp: Wenn Sie auf der PortalU-Startseite auf ein Umweltthema 
-                   klicken (z.B. Wasser), wird Ihnen die entsprechende 
-                   Ergebnisliste direkt angezeigt.</p>              
-				
-                <p> Einen anschaulichen Überblick über die Umweltthemen 
-                    finden Sie <a href="/funktionen?action=doEnvironment" target="_new">HIER</a>. </p>
-                  </content>
-        </section>
-    </chapter>
-    -->
-    <!-- 
-    <chapter>
-        <header>Service</header>
-        <section help-key="search-service-1">
-            <header>Pressemitteilungen, Publikationen und Veranstaltungen</header>
-            <content>
-                <p>Im Bereich <b>Service</b> können Sie nach Pressemitteilungen,
-                  Publikationen und Veranstaltungen des Bundes und der Länder zum
-                  Thema Umwelt recherchieren. Die einzelnen Rubriken können 
-                  hierbei gemeinsam oder einzelnen durchsucht werden. Zudem können
-                  Sie Ihre Suche auf einzelne Informationsanbieter 
-                  beschränken. Wenn Sie mehrere Informationsanbieter 
-                  gleichzeitig auswählen möchten, halten Sie die Strg- bzw. 
-                  Ctrl-Taste gedrückt und klicken Sie dann nacheinander die 
-                  gewünschten Anbieter an. DDie Suchergebnisse 
-                  können gruppiert nach den einzelnen 
-                  Informationsanbietern angezeigt werden.
-                </p>
-                <p> Einen anschaulichen Überblick über die in PortalU 
-                    recherchierbaren Serviceangebote finden Sie <a href="/funktionen?action=doService" target="_new">HIER</a>. </p>
+                <p>Die angeschlossenen Kataloge und deren Inhalte werden in einem Hierarchie-Baum dargestellt. In jedem Katalog kann durch Klick auf "+" durch Objekte und Adressen navigiert werden. Die Detaildarstellung eines Eintrags erfolgt auf Anfrage, d.h. bei Klick auf dessen Titel, analog zur Funktion der <a href="?hkey=search-results-2">Hauptergebnisliste</a> bei der Suche.</p> 
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Messwerte</header>
         <section help-key="search-measure-1">
-            <header>Umweltmesswerte</header>
+            <header display="false">Messwerte</header>
             <content>
-                <p>Im Bereich <b>Messwerte</b> können Sie nach Umweltmesswerten 
-                   suchen. Der Themenschwerpunkt liegt 
-                   hierbei auf den Bereichen Strahlung, Luft und Wasser. Wenn 
-                   Sie mehrere Informationsanbieter gleichzeitig auswählen möchten, 
-                   halten Sie die Strg- bzw. Ctrl-Taste gedrückt und klicken Sie 
-                   dann nacheinander die gewünschten Anbieter an. Die Suchergebnisse 
-                   können gruppiert nach den einzelnen Informationsanbietern 
-                   angezeigt werden.</p>
-                <p>Einen anschaulichen Überblick über Umweltmesswerte in PortalU 
-                   finden Sie <a href="/funktionen?action=doMeasures" target="_new">HIER</a>.</p>
+                <p>In der Karte werden alle Stationen aus einem gewählten Messnetz angezeigt. Die Messnetzauswahl findet sich unter dem Weltkugel-Symbol im Seitenmenübereich. Vorgehalten werden immer die Messwerte der letzten sechs Monate.</p>
+            </content>
+        </section>
+        <section help-key="search-measure-2">
+            <header>Filter</header>
+            <content>
+                <p>In den Filtereinstellungen (Trichter-Symbol) lassen sich die Stationen auf diverse Eigenschaften hin einschränken. Dabei werden die Filter "Parameter", "Stationen" und "Zeit" mit einem logischen UND verknüpft, wo hingegen die ausgewählten Eigenschaften innerhalb einer Rubrik mit ODER verknüpft werden.</p>
+                <p>Jede Station besitzt ein oder mehrere Messwertparameter, die sich separat mit auswählen lassen. Zusätzlich lassen sich die Parameter in ihren Werten einschränken, um bspw. nur die Stationen anzeigen zu lassen, bei denen ein bestimmter Messwert aufgetreten ist. Um auf diese Funktion Zugriff zu erhalten, muss der ausgewählte Parameter "ausgeklappt" werden. Ist ein Parameter grau dargestellt, so bedeutet dies, dass die derzeit ausgewählten Parameter an dieser Station nicht vorliegen.</p>
+                <p>Sollen nur bestimmte Stationen in Betracht gezogen werden, so können diese unter dem "Stationen"-Bereich hinzugefügt werden. Ist eine Station in der Auswahl grau dargestellt, so bedeutet dies, dass die derzeit ausgewählten Parameter nicht an dieser Station vorliegen.</p>
+                <p>Als weitere wichtige Eingrenzung lässt sich die Zeit definieren, in der ein gesuchter Messwert aufgetreten ist. Hiermit ist es bspw. möglich zu klären, an welcher Station der Feinstaubgehalt heute am höchsten war. Ohne zeitliche Einschränkung wird über den gesamten aufgezeichneten Zeitraum gesucht.</p>
+                <p>Bei Klick auf eine Messstation in der Karte öffnet sich ein Popup mit Informationen zu dieser Station und einer, ggf. auszufaltenden, Liste der aktuell an dieser Station gemessenen Parameter. Um zur Zeitreihendarstellung der gewählten Station zu gelangen, klicken Sie auf "Zu den Messwerten".</p>
+                <p>In der Zeitreihendarstellung können Sie in den Auswahllisten die gewünschte Station und den gewünschten Parameter zur Anzeige auswählen. Außerdem können Sie zwei Parameter oder zwei Stationen vergleichen (Klick auf "Stationen/Parameter vergleichen", Parmeter- und Stationsauswahl in den jeweiligen Auswahllisten), den Zeitraum der Darstellung frei wählen (Schieberegler unterhalb des Diagramms oder "Gesamt", "Monat", "Woche", "Tag") und die ausgewählten Zeitreihen als CSV-Dateien herunter laden ("Download"), um sie z.B. in einer Tabellenkalkulation weiter zu verarbeiten.</p>
             </content>
         </section>
     </chapter>
-     -->
     <chapter>
         <header>Chronik</header>
         <section help-key="search-chronicle-1">
-            <header>Umweltchronik</header>
+            <header display="false">Chronik</header>
             <content>
-                <p>Die <b>Umweltchronik</b> ist eine Sammlung aktueller und 
-                   historischer Ereignisse, die unsere Umweltsituation 
-                   wesentlich beeinflusst haben. Neben den Eckdaten liefert 
-                   die Chronik eine kurze Beschreibung der Ereignisse. Die 
-                   Umweltchronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
+                <p>Die <b>Chronik</b> ist eine Sammlung aktueller und
+                    historischer Ereignisse, die unsere Umweltsituation
+                    wesentlich beeinflusst haben. Neben den Eckdaten liefert die
+                    Chronik eine kurze Beschreibung der Ereignisse.</p>
+                <p>Die Chronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes zur Verfügung gestellt.</p>
-                <p>Die Recherche in der Chronik ist ganz einfach. Wählen Sie 
-                   einen oder mehrere Ereignistypen aus, geben einen Suchbegriff 
-                   ein und klicken dann auf die Schaltfläche <b>Anzeigen</b>. 
-                   Bei Bedarf können Sie zudem einen Zeitraum oder ein Datum 
-                   eingeben, um die Suche weiter einzuschränken. </p>
-                <!-- 
-                <p>Einen anschaulichen Überblick der Recherchemöglichkeiten in
-                   der Umweltchronik finden Sie <a href="/funktionen?action=doChronicle" target="_new">HIER</a>.</p>
-                 -->
+                <p>Sie können gezielt nach Ereignissen suchen, indem Sie eine
+                    Suche in der Chronik über Suchbegriff, Zeitbezug und
+                    Ereignistyp über den Button „Anzeigen“ absenden.</p>
+            </content>
+        </section>
+        <section help-key="search-chronicle-4">
+            <header>Suchbegriff</header>
+            <content>
+                <p>In diesem Bereich können Sie einen Suchbegriff eingeben. Es
+                    wird nach Ereignissen gesucht, die den Suchbegriff im Titel
+                    oder in der Beschreibung enthalten.</p>
+            </content>
+        </section>
+        <section help-key="search-chronicle-2">
+            <header>Ereignistypen</header>
+            <content>
+                <p>Die Chronik verzeichnet verschiedene Ereignistypen. Sie
+                    können in diesem Bereich wählen, nach welchen Ereignistypen
+                    Sie suchen möchten.</p>
+            </content>
+        </section>
+        <section help-key="search-chronicle-3">
+            <header>Zeitbezug</header>
+            <content>
+                <p>Die Chronik verzeichnet zu jedem Ereignis das Datum, an
+                    dem es sich ereignet hat. In diesem Bereich Sie können den
+                    Zeitpunkt oder den Zeitraum angeben, in dem Sie nach
+                    umweltrelevanten Ereignissen suchen.</p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>Karten</header>
         <section help-key="maps-1">
-            <header>Karten</header>
+            <header display="false">Karten</header>
              <content>
-                <p>Mit dem PortalU-Kartenviewer können Sie sich eine Vielzahl 
-                   umweltrelevanter Karten ansehen. Auf der linken Seite des 
-                   Kartenviewers können <b>Dienste</b> hinzugeladen und die 
-                   <b>Legende</b> zu den aktivierten Kartenebenen eingesehen 
-                   werden. Dieser Bereich lässt sich bei Bedarf durch die 
-                   Schaltfläche <b>zuklappen</b> <img border="0" width="15" height="16" src="../decorations/layout/ingrid-help/images/image205.jpg" alt="*"></img>    
-                   (oben rechts) schließen und durch die Schaltfläche 
-                   <b>aufklappen</b> <img border="0" width="20" height="20" src="../decorations/layout/ingrid-help/images/image206.jpg" alt="*"></img>  
-                   wieder öffnen.
-                </p> 
-                
-            </content>
-        </section>
-
-        <section help-key="maps-2">
-          <header>Hinzufügen von Kartendiensten</header>
-            <content>
-             
-                <p>Die Karten gehen auf Kartendienste (Web Map Services) 
-                   unterschiedlicher Anbieter zurück.
-                   Alle in PortalU eingebundenen Kartendienste sind 
-                   in der linken Spalte des Kartenviewers unter dem Reiter 
-                   <b>Dienste</b> zu finden. Die Dienste sind zum einen nach 
-                   <b>Anbietern</b> und zum anderen nach <b>Themen</b> 
-                   sortiert und müssen zunächst in den Bereich 
-                   <b>Aktive Dienste</b> geladen werden. </p>
-                <p>Es gibt mehrere Möglichkeiten einen Kartendienst in den 
-                   Kartenviewer zu laden: </p>
+                <p>Die Kartenanwendung von PortalU ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmäßigen Web-Browsers.</p>
+                <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgröße sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
+                <p>Die Anwendung gestattet nicht nur die Bildschirmanzeige, sondern auch einen qualitativ guten Papierausdruck. Sie ermöglicht je nach Einstellung den Zugriff auf Zusatzinformationen, die mit den geografischen Objekten verknüpft sind.</p>
+                <p>Seine Funktionalität umfasst u.a.:</p>
                 <ul>
                     <li>
-                        aus der Rubrik Anbieter
+                        - layerzentrierte Darstellung von Karten mit direkter Vorschau
                     </li>
                     <li>
-                        aus der Rubrik Themen
+                        - strukturiertes Angebot an Karten und Hinzufügen externer Karten 
                     </li>
                     <li>
-                        aus einer Suchergebnisliste
+                        - Suche nach Karten. Gefunden werden die unter Themen aufgelisteten sowie die unter Kataloge aufgeführten Karten
                     </li>
                     <li>
-                        aus den Metadatensätzen angeschlossener Kataloge
+                        - Zeichnen und Messen auf der Karte
                     </li>                    
                     <li>
-                        durch die Eingabe eines externen Dienstes
-                    </li>
-                </ul>                       
-
-                <p> <b>Die Rubrik Anbieter</b></p>
-
-                <p>In der Rubrik Anbieter, die sich im unteren Bereich 
-                       der linken Spalte befindet, sind alle in PortalU 
-                       eingebundenen Kartendienste zu 
-                       finden. Um die Kartendienste in den 
-                       PortalU-Kartenviewer zu laden, gehen Sie bitte wie folgt 
-                       vor:</p>
-                <ul>
+                        - Vergleichsfunktionalität zwischen Layern (Slider blendet ein/aus)
+                    </li>                    
                     <li>
-                        Klicken Sie auf die Schaltfläche <b>Anbieter</b> (unten links)
+                        - Abspeichern und Teilen von Karten u.a. via QR Code 
                     </li>
                     <li>
-                        Klicken Sie auf das Dreieck vor Rheinland-Pfalz
+                        - umfassende Druck Funktionalität 
                     </li>
-                    <li>
-                        Klicken Sie nun auf einen Kartendienst
-                    </li>
-                </ul>                                        
-                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
-                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
-                   (Layer) des Kartendienstes aktivieren. </p>                  
-
-                <p> <b>Die Rubrik Themen</b></p>
-
-                    <p>In der Rubrik Themen, die sich im unteren Bereich der 
-                       linken Spalte befindet,  sind die in PortalU 
-                       eingebundenen Kartendienste nach Umweltthemen sortiert. 
-                       Um einen Kartendienst aus der Rubrik Themen in den 
-                       Kartenviewer zu laden, gehen Sie bitte wie folgt vor: </p>
-                <ul>
-                    <li>
-                        Klicken Sie auf die Schaltfläche <b>Themen</b> (unten links)
-                    </li>
-                    <li>
-                        Klicken Sie auf das Dreieck vor einem Thema (z.B. Topographie)
-                    </li>
-                    <li>
-                        Klicken Sie nun auf einen Kartendienst
-                    </li>
-                </ul>                                        
-                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
-                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
-                   (Layer) des Kartendienstes aktivieren. </p>  
-
-                <p> <b>Die Suche</b></p>
-
-                    <p>Sie können auch direkt über eine Suchanfrage nach 
-                       Kartendiensten recherchieren. Bei der <b>Suche</b> wird 
-                       sowohl nach Kartendiensten in den Rubriken <b>Themen</b> 
-                       und <b>Anbieter</b> 
-                       als auch nach Kartendiensten in den angeschlossenen 
-                       Katalogen gesucht. </p>
-                       
-                    <p>Gehen Sie hierbei wie folgt vor:</p>
-                <ul>
-                    <li>
-                        Klicken Sie auf die Schaltfläche <b>Suche</b> (unten links)
-                    </li>
-                    <li>
-                        Geben Sie einen Suchbegriff ein und klicken Sie dann 
-                        auf <b>suchen</b>
-                    </li>
-                    <li>
-                        Klicken Sie nun auf eine Karte aus der Suchergebnisliste
-                    </li>
-                </ul>                                        
-                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
-                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
-                   (Layer) des Kartendienstes aktivieren. </p>  
-
-                <p><b>Kartendienste aus angeschlossenen Katalogen</b></p>
-
-                <p>Zu den in PortalU recherchierbaren Katalogen 
-                   gehört unter anderen auch der Umweltdatenkatalog RP (UDK RP).
-                   Darin kann für Metadaten in der Objektklasse <b>Geodatensatz</b> 
-                   ein Link auf einen Kartendienst 
-                   gesetzt werden, der dann durch einen Klick auf die 
-                   Schaltfläche <b>Zeige in Karte</b> im Kartenviewer 
-                   hinzugefügt werden kann.</p>
- 
-               <p><b>Externen Dienst hinzufügen</b></p>
-        
-               <p>Als externe Dienste werden Kartendienste bezeichnet, die 
-                  derzeit nicht in PortalU eingebunden sind. Wenn Sie einen 
-                  solchen Dienst in den PortalU-Kartenviewer laden möchten 
-                  gehen Sie bitte wie folgt vor:</p>
-                <ul>
-                    <li>Klicken Sie auf die Schaltfläche <b>Externer Dienst</b> 
-                        (unten links). 
-                    </li>
-                    <li>Geben Sie nun die GetCapabilities-URL ein
-                    </li>
-                    <li>Bedienen Sie anschließend die Schaltfläche  
-                        <b>Dienst hinzufügen</b>
-                    </li>
-                </ul>                                        
-                <p>Unter <b>Aktive Dienste</b> können Sie nun durch das 
-                   Anklicken der Checkboxen die einzelnen thematischen Ebenen 
-                   (Layer) des Kartendienstes aktivieren. </p> 
-          </content>
+                </ul>                                       
+            </content>
+        </section>
+        <section help-key="maps-2">
+            <header>Koordinatenanzeige</header>
+            <content>
+                <p>Die Koordinaten des Cursors im gewählten Koordinatensystem werden direkt unter der Hauptkarte angezeigt.</p>
+                <p>Mittels rechtem Mausklick auf einen Punkt in der Karte werden weitere Information in einem Zusatzfenster angezeigt.</p>
+            </content>
+        </section>
+        <section help-key="maps-3">
+            <header>Navigation und Orientierung</header>
+            <content>
+            </content>
+            <section help-key="maps-3-1">
+                <header>Ändern des Kartenmaßstabs</header>
+                <content>
+                    <p>Mit jedem Klick auf das "+" oder "-" wird der angezeigte Maßstab vergrößert oder verkleinert.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-2">
+                <header>Zoom auf Ausschnitt</header>
+                <content>
+                    <p>Zoom auf Rechteck / Ausschnitt wird über SHIFT Taste und gleichzeitiges Aufziehen eines Rechteckes mit gedrückter linker Maustaste aktiviert.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-3">
+                <header>Verschiebewerkzeug (Panning)</header>
+                <content>
+                    <p>Das Verschiebewerkzeug (Panning) kann wie folgt benutzt werden: Linke Maustaste drücken und gedrückt halten, um die Karte zu verschieben.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-4">
+                <header>Zentrieren auf Koordinaten</header>
+                <content>
+                    <p>Um die Karte auf einen Punkt zu zentrieren, müssen lediglich die Koordinaten des Punktes in das Suchfeld im oberen Teil der Karte eingegeben und Return gedrückt werden.</p>
+                    <p>Im Defaultkoordinatensystem z.B. "6445781.72, 919002.39"</p>
+                </content>
+            </section>
+            <section help-key="maps-3-5">
+                <header>Suchen eines Orts, einer PLZ oder eines Gewässers</header>
+                <content>
+                    <p>Das Suchfeld im oberen Teil der Karte ermöglicht den sofortigen Zugriff auf Städte- und Ortsnamen, Postleitzahlen, 
+                       Geographische Bezeichnungen oder Gewässer oder Straßen.</p>
+                    <p>Einfach den Namen eingeben und aus der Auswahlliste auswählen, um die Karte entsprechend zu zentrieren.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-6">
+                <header>Zurück in die Startansicht</header>
+                <content>
+                    <p>Um wieder die initiale Kartenansicht herzustellen klicken Sie bitte auf die Schaltfläche mit dem Pfeilkreuz auf der rechten Seite.
+                       Die Ansicht wechselt zu Rheinland-Pfalz.</p>
+                </content>
+            </section>
+            <section help-key="maps-3-7">
+                <header>Geolokalisierung</header>
+                <content>
+                    <p>Die Schaltfläche mit dem Punkt auf der rechten Seite erlaubt es, Ihre Position mittels GPS zu bestimmen.
+                        Mit einem ersten Klick, wird diese rot angezeigt und Ihre Position erscheint als roter Punkt auf der Karte.</p>
+                    <p>Der Pfeil oberhalb des roten Punktes zeigt die Richtung an, in welche Sie schauen.
+                        Wenn Sie Ihr Gerät bewegen, dreht sich der Pfeil.</p>
+                    <p>Klicken Sie erneut auf die Schaltfläche "Geolokalisierung" wird die Karte entsprechend der Richtung des Gerätes orientiert.
+                        Nordrichtung wird durch das Symbol in der oberen rechten Bildschirmecke angezeigt.
+                        Um den "Geolokalisierung" Modus zu verlassen klicken Sie erneut auf die Schaltfläche.</p>
+                </content>
+            </section>
         </section>
         <section help-key="maps-4">
-          <header>Funktionen</header>
-          <content>
-              <p><b>Schaltflächen im Bereich Aktive Dienste</b></p>
-              <p><img border="0" src="../decorations/layout/ingrid-help/images/image115.png" alt="*"></img>
-                 <b>Menü</b>: Fährt man mit der Maus über einen Dienst oder Layer, so erscheint an linken Seite
-                 des Eintrages eine <b>Menü</b>. Bei Betätigung dieses Menüs erscheinen weitere Optionen, die auf ein 
-                 Dienst oder Layer durchgeführt werden kann.
-              </p>
-              <p><img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img>
-                 <b>Löschen</b>: Kartendienst wird aus dem Bereich <b>Aktive Dienste</b> 
-                      und im Kartenfenster gelöscht.<br/>
-                 <b>Hinweis</b>: Der Basisdienst kann nicht gelöscht werden. 
-              </p>
-              <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img>
-                 <b>Transparenz</b>: Anpassung der Transparenz einer im Kartenfenster 
-                      dargestellten Kartenebene. 
-              </p>
-              <p><img border="0" width="22" height="21" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"></img>
-                 <b>Information</b>: Aufruf von Hintergrundinformationen zu einem Kartendienst 
-                      oder einer Kartenebene. .
-              </p>
-              <p><img border="0" src="../decorations/layout/ingrid-help/images/image116.png" alt="*"></img> 
-                 <b>Zoome auf Service oder Layer</b>: Zoomt auf den sichtbaren Bereich eines Kartendienstes oder 
-                      einer Ebene.
-              </p>       
-              <!-- 
-               <p><b>Schaltflächen im Bereich Dienste</b></p>
-                   <p><img border="0" width="21" height="23" src="../decorations/layout/ingrid-help/images/image207.jpg" alt="*"></img> <b>Dienst hinzufügen</b>: in 
-                      den Bereichen <b>Anbieter</b>, 
-                      <b>Themen</b> und <b>Suchergebnisse</b> wird über die 
-                      Schaltfläche ein markierter Kartendienst in den Bereich 
-                      <b>Aktive Dienste</b> hinzugeladen. Im Bereich 
-                      <b>Aktive Dienste</b> wird ein Dialogfeld geöffnet, 
-                      damit ein externer Dienst hinzugeladen werden kann. 
-                    </p>
-                   <p><img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> <b>Dienst entfernen</b>: 
-                      Kartendienst wird aus dem Bereich <b>Aktive Dienste</b> 
-                      gelöscht. Um einen Dienst zu löschen, muss dieser vorher 
-                      durch einen Klick markiert werden. 
-                    </p>
-                    
-                   <p><img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img> <b>Layer-Transparenz</b>: 
-                      Anpassung der Transparenz einer im Kartenfenster 
-                      dargestellten Kartenebene. Um die Transparenz einer 
-                      Kartenebene zu ändern, muss die Kartenebene vorher durch 
-                      einen Klick markiert werden. 
-                    </p>                    
-                    
-                   <p><img border="0" width="22" height="21" src="../decorations/layout/ingrid-help/images/image102.jpg" alt="*"></img> <b>Metadaten</b>: 
-                      Aufruf von Hintergrundinformationen zu einem Kartendienst 
-                      oder einer Kartenebene. 
-                    </p>                    
-
-                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image112.jpg" alt="*"></img> <b>Alle auf/zu klappen</b>: 
-                      Alle Ebenen werden auf- bzw. zugeklappt. 
-                    </p> 
-                   <p><img border="0" width="24" height="22" src="../decorations/layout/ingrid-help/images/image113.jpg" alt="*"></img> <b>Zoome auf Service oder Layer</b>: 
-                      Zoomt auf den sichtbaren Bereich eines Kartendienstes oder 
-                      einer Ebene. 
-                    </p>                                         
-
-                   <p><img border="0" width="26" height="23" src="../decorations/layout/ingrid-help/images/image104.jpg" alt="*"></img> <b>Suchergebnisse löschen</b>: 
-                      Alle Suchergebnisse werden aus der Ergebnisliste gelöscht. 
-                    </p>
- 				-->
-               <p><b>Schaltflächen im Kartenfenster</b></p>
-               <p>Im Kartenfenster finden Sie folgende Funktionen:</p>
-                <ul>
-                    <li>In der linken oberen Ecke: Leiste zum <b>Navigation</b> 
-                        im Kartenausschnitt (reinzoomen, rauszoomen, verschieben).  
-                    </li>
-                    <li>In der linken unteren Ecke: <b>Maßstabsleiste</b> und 
-                        <b>Koordinaten</b>. Die Koordinaten beziehen sich auf 
-                        die aktuelle Position der Maus auf dem Kartenausschnitt.
-                    </li>
-                    <li>In der rechten oberen Ecke: Wenn Sie den Pfeil neben der 
-                        Schaltfläche <b>Einstellungen</b> anklicken, 
-                        werden Ihnen Informationen z.B. zum Raumbezug oder 
-                        Maßstab angezeigt.
-                    </li>
-                    <li>In der rechten unteren Ecke: Wenn Sie den Pfeil 
-                        anklicken, wird eine Übersichtskarte eingeblendet.
-                    </li>
-                </ul>                                        
-
-               <p><b>Schaltflächen oberhalb des Kartenfensters</b></p>
-                <p>Oberhalb des Kartenfensters stehen weitere Funktionen zur 
-                   Verfügung, die im Folgenden von links nach rechts beschrieben 
-                   werden:</p> 
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image202.jpg" alt="*"></img> <b>Objektinformationen</b>: 
-                      Abfrage von Sachdaten in der Karte. Über einen Klick in 
-                      die Karte erhalten Sie standortspezifische Informationen 
-                      der dargestellten Layer. Nicht alle Objektinformationen 
-                      werden von den Anbietern für die Öffentlichkeit 
-                      bereitgestellt. In diesem Fall bleibt das Ergebnisfenster 
-                      leer.  
-                    </p>
-                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image105.jpg" alt="*"></img> <b>Zurück</b>: 
-                      Der Kartenausschnitt, der vor der letzten Aktion angezeigt 
-                      wurde, wird wieder hergestellt. 
-                    </p>
-                   <p><img border="0" width="25" height="23" src="../decorations/layout/ingrid-help/images/image106.jpg" alt="*"></img> <b>Vor</b>: 
-                      Wurde über die Schaltfläche <b>Zurück</b> zu einem 
-                      Kartenausschnitt zurück gesprungen, kann über die 
-                      Schaltfläche <b>Vor</b> wieder zu den danach ausgeführten 
-                      Aktionen vorgeblättert werden. 
-                    </p>
-                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image107.jpg" alt="*"></img> 
-                      <b>Auf initiale Kartenausdehnung zoomen</b>:
-                      Zoombereich der Ausgangskarte wird wieder hergestellt. 
-                    </p>
-                   <p><img border="0" width="35" height="21" src="../decorations/layout/ingrid-help/images/image108.jpg" alt="*"></img> <b>Messen</b>:
-                      Ausmessen von Strecken oder Flächen in der Karte. Zum 
-                      Messen aktivieren Sie die entsprechende Checkbox, klicken 
-                      auf einen Punkt in der Karte und anschließend auf weitere 
-                      Punkte, um den Streckenverlauf bzw. die Fläche zu 
-                      definieren. Mit einem Doppelklick auf einen Punkt ist die 
-                      Messung abgeschlossen. 
-                    </p>
-                   <p><img border="0" width="25" height="25" src="../decorations/layout/ingrid-help/images/image204.jpg" alt="*"></img> <b>Drucken</b>:
-                      Erstellung einer pdf-Datei für einen Kartenausschnitt. 
-                   </p>
-                   <p><img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> <b>Laden</b>:
-                      Zuvor gespeicherte Karten werden geladen. Schaltfläche ist 
-                      nur dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt 
-                      sind (www.portalu.de/personalisierungsoptionen) und 
-                      bereits eine Karte gespeichert haben. Näheres 
-                      siehe unter <a href="?hkey=maps-7">Karte speichern</a>. 
-                   </p>
-                   <p><img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> <b>Speichern</b>:
-                      Kartenausschnitt wird gespeichert. Schaltfläche ist nur 
-                      dann aktiv, wenn Sie als PortalU-Nutzer eingeloggt sind 
-                      (www.portalu.de/personalisierungsoptionen). Näheres siehe 
-                      unter <a href="?hkey=maps-7">Karte speichern</a>. 
-                   </p>
-                   <p><img border="0" width="24" height="26" src="../decorations/layout/ingrid-help/images/image111.jpg" alt="*"></img> <b>Karte als WMC speichern</b>:
-                      Kartenausschnitt wird im WMC gespeichert. WMC steht für 
-                      Web Map Context und ist ein standardisiertes auf XML 
-                      basierendes Speicherformat für Kartenansichten. 
-                   </p>
-
-          </content>
+            <header>Auswahl und Anzeigen von Karten</header>
+            <content>
+            </content>
+            <section help-key="maps-4-1">
+                <header>Suche nach Karten (Volltextsuche)</header>
+                <content>
+                    <p>Mit der "Suche" im oberen Teil der Karte können Sie Suchbegriffe eingeben (z.B. "Moor", "Straße", "Erdbeben" usw.) und nach Beschreibungen aller eingebundenen elektronischen Geodaten suchen.
+                        Wenn Sie ein Resultat auswählen, wird es direkt im Kartenviewer dargestellt.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-2">
+                <header>Suche nach Karten (Verzeichnisstruktur)</header>
+                <content>
+                    <p>Unter "Rubrik wechseln" können Sie zwischen Gliederung nach "Themen" oder "Anbietern" der eingebundenen Geodaten wählen.
+                        Wenn Sie Karten auswählen, werden sie im Kartenviewer angezeigt und wandern in die Sektion "Dargestellte Karten".
+                        Im Auswahlbereich ("Themen" oder "Anbieter") wird die ausgewählte Karte dann rot hervorgehoben, um zu zeigen, dass die Karte bereits dargestellt wird.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-3">
+                <header>Ändern des Kartenhintergrundes</header>
+                <content>
+                    <p>Mit Klick auf "Hintergrund" rechts unten in der Karte können Sie zwischen verschiedenen Optionen wählen, z.B. gibt es die Hintergrundkarte in Farbe, Grau oder ganz ohne Hintergrund.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-4">
+                <header>Ändern der Transparenz einer Karte</header>
+                <content>
+                    <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
+                        Die Transparenz der ausgewählten Karte kann durch das Verschieben des horizontalen Reglers individuell angepasst werden.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-5">
+                <header>Ändern der Reihenfolge der Karten</header>
+                <content>
+                    <p>Klicken Sie auf das Zahnrad Symbol der Karte im Bereich "Dargestellte Karten".
+                        Die Position der ausgewählten Karte kann durch Klicken auf die Pfeile verändert werden.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-6">
+                <header>Entfernen einer Karte</header>
+                <content>
+                    <p>Eine Karte im Bereich "Dargestellte Karten" kann durch Klick auf die "x" Schaltfläche ganz links aus der Liste und Kartenansicht entfernt werden.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-7">
+                <header>Anzeigen von Legende und Zusatzinformationen</header>
+                <content>
+                    <p>Klicken Sie auf das Informations-Symbol der Karte im Bereich "Dargestellte Karten".
+                        Es wird die Legende und weitere Informationen zur Karte in einem eigenen Fenster angezeigt.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-8">
+                <header>Detailinformationen von Kartenelement</header>
+                <content>
+                    <p>Sofern vorhanden, können Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden.
+                        Die Informationen werden in  einem eigenen Fenster "Objekt-Information" angezeigt.
+                        Bei mehreren übereinanderliegenden Karten werden alle unter der Maus liegenden Kartenelemente im Fenster angezeigt.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-9">
+                <header>Datenbezug</header>
+                <content>
+                    <p>Die Detailinformationen zu Karten können direkt beim Anbieter bezogen werden, vorausgesetzt der Anbieter sieht dies vor.</p>
+                    <p>Klicken Sie auf das Informations-Symbol der Karte im Bereich "Dargestellte Karten". Der Link Quelle führt zur jeweiligen Bezugsstelle.</p>
+                </content>
+            </section>
+            <section help-key="maps-4-10">
+                <header>Drucken</header>
+                <content>
+                    <p>Die Kartenansicht und die für deren Verständnis nötigen Elemente (Maßstab etc.) kann als pdf-Datei ausgegeben werden.
+                        Diese Datei kann dann gespeichert oder ausgedruckt werden.</p>
+                    <p>Die Funktion "Drucken" lässt ein Dialogfenster erscheinen, wo die Parameter für die Erzeugung der pdf-Datei gewählt werden können.
+                        Diese Parameter sind der Kartenmaßstab und A4/A3 Orientierung.
+                        Der Druckbereich der Karte wird hervorgehoben und kann mit der Maus verschoben werden.
+                        Die Legende kann über Aktivierung der Checkbox mit ausgegeben werden.</p>
+                </content>
+            </section>
+        </section>
+        <section help-key="maps-5">
+            <header>Verlinken und Einbinden</header>
+            <content>
+            </content>
+            <section help-key="maps-5-1">
+                <header>Kartendarstellung abspeichern/versenden/iFrame</header>
+                <content>
+                    <p>Über die Funktion "Link teilen" im Bereich "Teilen" kann die aktuelle Darstellung (Karten, Ort, Zoomstufe) als Link (URL) kopiert, abgespeichert und als E-Mail oder andere Soziale Medien weiterversendet werden.</p>
+                    <p>Unter "Einbetten" wird der HTML code für die Integration in ihre Website als iFrame automatisch generiert.
+                        Die "Vorschau" zeigt Ihnen die Darstellung, hier kann auch die Größe des Kartenfensters angepasst werden.
+                        Es genügt, den generierten Code in den Source Code ihrer Website zu kopieren.</p>
+                </content>
+            </section>
         </section>
         <section help-key="maps-6">
-          <header>Legende</header>
-          <content>
-                   <p>Unter dem Reiter <b>Legende</b> (oben links) werden alle 
-                      verfügbaren Legenden der Kartenebenen (Layer) dargestellt, 
-                      die unter <b>Aktive Dienste</b> aktiviert sind und als Karten 
-                      im Viewer dargestellt werden. Die Legendenbeschreibung 
-                      gibt darüber Aufschluss, mit welchen Symbolen und/oder 
-                      Farben die unterschiedlichen Informationen in der Karte 
-                      dargestellt werden. 
-                   </p>
-          </content>
+            <header>Zeichnen und Messen</header>
+            <content>
+            </content>
+            <section help-key="maps-6-1">
+                <header>Hinzufügen eines Symbols</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Symbol" aus.
+                        Ein Mausklick auf die gewünschte Position in der Karte setzt das Symbol an den gewünschten Ort.</p>
+                    <p>Einmal platziert kann das Symbol geändert werden (Größe und Symbol-Typ) und eine Beschreibung im Fenster unten links hinzugefügt werden (HTML oder Text).
+                        Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf das Symbol sichtbar gemacht.</p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                        Gelöscht wird über die Option „Mehr“.
+                        Sie können mehrere Symbole löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-2">
+                <header>Hinzufügen von Text</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Text" aus.
+                        Ein Mausklick auf die gewünschte Position in der Karte setzt den Text an den gewünschten Ort.</p>
+                    <p>Einmal platziert, können Text und Farbe via Fenster unten links geändert werden.</p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                        Gelöscht wird über die Option „Mehr“.
+                        Sie können mehrere Texte löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-3">
+                <header>Hinzufügen einer Linie / Polygon</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Linie" aus.
+                        Um zu beginnen mit der linken Maustaste einmal klicken, um einen Richtungswechsel der Linie vorzunehmen wieder klicken.
+                        Mit einem Doppelklick kann die Linienzeichnung beendet werden.
+                        Liegt der Endpunkt auf dem Anfangspunkt so zeichnen Sie ein Polygon.</p>
+                    <p>Neue Punkte können zur Linie/Fläche hinzugefügt werden:
+                        Klicken Sie auf ein Segment, positionieren Sie den neuen Punkt mit Mausklick und verschieben Sie ihn.</p>
+                    <p>Das untere linke Fenster ermöglicht:
+                        <ul>
+                            <li>- Linie/Fläche: Farbe Linie/Polygon ändern und eine Beschreibung (Text oder HTML) hinzuzufügen.
+                                    Diese Beschreibung wird für die Nutzer der Zeichnung per Klick auf die Linie/Fläche sichtbar gemacht.</li>
+                            <li>- Distanz /Fläche : Angaben zu Distanz, Fläche, Azimut</li>
+                        </ul>
+                    </p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                        Durch Klick auf einen Punkt löschen Sie diesen.
+                        Löschen der gesamten Linie/Fläche wird über die Option „Mehr“ gehandhabt.
+                        Sie können mehrere Linien/Flächen löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-4">
+                <header>Messen</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" wählen Sie "Messen" aus.
+                        Ein erster Mausklick in die Karte definiert den Ausgangspunkt der Messung, weiter Klicks fügen Segmente hinzu oder definieren eine Fläche.
+                        Ein Doppelklick beendet die Messung oder klicken Sie auf den Ausgangspunkt, um die Fläche zu schließen.</p>
+                    <p>Die Messergebnisse Distanz /Fläche werden automatisch angezeigt.</p>
+                    <p>Sie können jedes Element durch Mausklick ändern.
+                        Gelöscht wird über die Option „Mehr“.
+                        Sie können mehrere Elemente löschen, indem Sie sie vorher mit Mausklick und gleichzeitigem drücken der SHIFT-Taste auswählen.</p>
+                </content>
+            </section>
+            <section help-key="maps-6-5">
+                <header>Teilen einer Zeichnung /KML</header>
+                <content>
+                    <p>Im Menüpunkt "Zeichnen/Messen auf der Karte" können die Zeichnungen (Symbole, Texte, Linien) geteilt werden.</p>
+                    <p>Unter "Link um ihre Zeichnung zu teilen" wird eine URL zur Verfügung gestellt, die Sie mit weiteren Nutzern teilen können.
+                        Unter dieser URL können Sie später die Zeichnung auch weiter editieren.
+                        Sie sollten diesen Link abspeichern für den Fall, dass sie später die Zeichnung ändern/löschen wollen.</p>
+                    <p>Unter "Mehr ..." können Sie Ihre Zeichnung auch als KML Datensatz herunter laden.</p>
+                </content>
+            </section>
         </section>
-
-
         <section help-key="maps-7">
-          <header>Karte speichern</header>
-          <content>
-               <p>Wenn Sie sich eine im Kartenfenster individuell 
-                  zusammengestellte Karte speichern möchten, gehen Sie bitte 
-                  wie folgt vor:</p>
-                <ul>
-                    <li>Melden Sie mit Ihrer Benutzerkennung unter 
-                        <b>Mein PortalU</b> (oben rechts in der Kopfleiste). 
-                        Wenn Sie noch keinen Zugang haben, klicken Sie unter 
-                        <b>Mein PortalU</b> auf <b>Neuer Benutzer</b> und legen 
-                        Sie ein neues Profil an.  
-                    </li>
-                    <li>Wechseln Sie dann wieder in den Bereich <b>Karten</b>.
-                    </li>
-                    <li>Klicken Sie nun auf die Schalfläche <b>Speichern</b>
-                        <img border="0" width="24" height="24" src="../decorations/layout/ingrid-help/images/image110.jpg" alt="*"></img> (oberhalb des Kartenfensters, rechts)
-                    </li>
-                    <li>Über die Schaltfläche <b>Löschen</b>
-                        <img border="0" width="22" height="19" src="../decorations/layout/ingrid-help/images/image209.jpg" alt="*"></img> können gespeicherte Karten wieder gelöscht 
-                        werden.
-                    </li>
-                </ul>                                        
-                <p>Wenn Sie nun auf die Schaltfläche <b>Laden</b>
-                   <img border="0" width="23" height="23" src="../decorations/layout/ingrid-help/images/image109.jpg" alt="*"></img> 
-                   klicken, werden Ihnen alle gespeicherten Karten angezeigt. 
-                   Wählen Sie mit einem Klick eine Karte aus und klicken Sie 
-                   dann auf die Schaltfläche <b>Laden</b>, um eine gespeicherte 
-                   Karte zu den aktiven Diensten hinzuzufügen. </p> 
-          </content>
-        </section>
-        <section help-key="maps-8">
-          <header>Tipps zum Kartenviewer</header>
-          <content>
-               <p><b>Warum wird eine Kartenebene, die ich aktiviert habe nicht 
-                  angezeigt?</b></p>
-               <p>Einige Kartenebenen werden nur in einem bestimmten 
-                  Maßstabsbereich dargestellt. Maßstabsabhängige Layer sind 
-                  ausgegraut, wenn sich die aktuelle Kartenansicht außerhalb des 
-                  festgelegten Maßstabs befindet. Zoomen Sie in mehreren Stufen 
-                  in den Kartenausschnitt hinein oder geben Sie unter 
-                  <b>Einstellungen</b> (Dialogfeld im Kartenfenster 
-                  oben rechts) einen Maßstab vor.</p> 
-               <p><b>Kartenausschnitt individuell verschieben</b></p>
-               <p>Wenn Sie den Kartenausschnitt individuell verschieben möchten, 
-                  <b>strg-Taste</b> und <b>linke Maustaste</b> gedrückt halten und 
-                  gleichzeitig die Maus im Kartenfenster in die gewünschte 
-                  Richtung bewegen. Alternativ können Sie auf der Übersichtkarte, 
-                  die sich über den Pfeil unten rechts im Kartenfenster 
-                  aufklappen lässt, den Ausschnitt verschieben. Verschieben Sie 
-                  hierfür mit gedrückter linker Maustaste auf das rote 
-                  Fadenkreuz in der Übersichtskarte. 
-               </p>
-               <p><b>In Kartenausschnitt hineinzoomen</b></p>
-               <p>Alternativ zu dem stufenweisen Hineinzoomen in die Karte, 
-                  können Sie mithilfe der <b>Shift-Taste</b> und gedrückter 
-                  <b>linker Maustaste</b> ein Zoom-Rechteck aufziehen. 
-               </p>
-
-               <p><b>Kann ich einen Maßstab für den Kartenausschnitt auswählen?</b></p>
-               <p>Ja. Wenn Sie das Dialogfeld Einstellungen (oben 
-                  rechts im Kartenfenster) aufklappen, können Sie verschiedene 
-                  Maßstäbe auswählen. 
-               </p>
-               <p><b>Was kann ich machen, wenn eine Kartenebene andere 
-                  Kartenebenen verdeckt?</b></p>
-               <p>Wenn Sie mehrere Kartendienste aktiviert haben, kann es 
-                  insbesondere bei Flächeninformationen vorkommen, dass 
-                  einzelne Kartenebenen verdeckt werden. Setzen Sie die 
-                  überdeckende Kartenebene transparent, um die verdeckten Ebenen 
-                  sichtbar zu machen. Fahren Sie hierbei mit der Maus über den Layer
-                  unter dem Akkordeon Aktive Dienste. Auf der linken Seite des Layers erscheint eine Menü
-                  <img border="0" src="../decorations/layout/ingrid-help/images/image115.png" alt="*"></img>.
-                  Bei Betätigung dieses Menüs werden Ihnen weitere Aktionen auf dem Layer angezeigt.  
-                  Auf der nun eingeblendeten Skala können Sie die Transparenz <img border="0" width="26" height="19" src="../decorations/layout/ingrid-help/images/image101.jpg" alt="*"></img>
-                  individuell einstellen.  
-               </p>
-
-          </content>
+            <header>Erweiterte Werkzeuge</header>
+            <content>
+            </content>
+            <section help-key="maps-7-1">
+                <header>WMS Import</header>
+                <content>
+                    <p>Es können nur WMS Dienste dargestellt werden, die das Projektionssystem unterstützen und dem WMS OGC Standard entsprechen.</p>
+                    <p>Die WMS Datensätze sind meistens erst ab einem bestimmtem Maßstab sichtbar, deswegen muss in den entsprechenden Kartenausschnitt zentriert und ein entsprechender Maßstab ausgewählt werden.</p>
+                    <p>Die Geschwindigkeit der Darstellung des WMS Datensatzes, ebenso wie dessen Verfügbarkeit ist von der Infrastruktur des zuständigen Betreibers abhängig.
+                        Bitte beachten sie auch die Datennutzungsbedingungen der einzelnen WMS Anbieter.</p>
+                    <p>Die WMS Datensätze können über die Druckfunktionen als PDF gespeichert werden.</p>
+                    <p>Aktivierung des Dialogs durch Klick auf "WMS Import".</p>
+                </content>
+            </section>
+            <section help-key="maps-7-2">
+                <header>KML Import</header>
+                <content>
+                    <p>Es können online oder lokal (Ausnahme: bei der Nutzung von InternetExplorer) gespeicherte KML files dargestellt werden.
+                        Es können nur KML Dateien fehlerfrei dargestellt werden, die dem KML OGC Standard entsprechen.</p>
+                    <p>Die geladene KML Datei wird unter "Dargestellte Karten" angezeigt und kann dort normal bearbeitet werden.</p>
+                    <p>Aktivierung des Dialogs durch Klick auf "KML Import".</p>
+                </content>
+            </section>
+            <section help-key="maps-7-3">
+                <header>Vergleichen</header>
+                <content>
+                    <p>Es ist möglich eine Karte dynamisch ein-/auszublenden und so mit den restlichen Karten zu verglichen.
+                        Wählt man unter Werkzeuge „Vergleichen“ dann erscheint eine rote Linie mit einem Cursor in der Mitte der Karte, der beliebig verschoben werden kann.</p>
+                    <p>Die erste selektierte Karte (von oben) kann nun mit Hilfe der roten Linie ein-/ausgeblendet werden.
+                        Mit Festhalten der linken Maustaste kann die rote Linie beliebig nach rechts oder links verschoben werden und die Karte "weggewischt" werden.</p>
+                </content>
+            </section>
         </section>
     </chapter>
-    <!-- 
+    <chapter>
+        <header>Kategorien</header>
+        <section help-key="search-category-1">
+            <header>Durchstöbern Sie das Portal nach Kategorien</header>
+            <content>
+                <p>Durch die Auswahl einer Kategorie, werden Ihnen alle vorhandenen Treffer zur ausgewählten Kategorie im Portal angezeigt.</p>
+            </content>
+        </section>
+    </chapter>
+    <!--
     <chapter>
         <header>Aktuelles</header>
         <section help-key="rss-news-1">
-            <header>Aktuelles</header>
+            <header display="false">Aktuelles</header>
             <content>
-                <p>Unter <b>Aktuelles</b> werden aktuelle
-                    Meldungen zum Thema <b>Umwelt</b> aus Rheinland-Pfalz
-                    gelistet. Die aktuellste Meldung steht
-                    dabei immer oben. Es wird jeweils nur der Titel und eine
-                    Kurzbeschreibung der Meldung angezeigt. Durch einen Klick
-                    auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
-                <p>Ältere Meldungen, die nicht mehr auf der Startseite angezeigt
-                    werden, werden in dem Meldungsarchiv abgelegt. Sie können
-                    diese Meldungen einsehen, indem Sie auf den Link
-                    <b>Weitere Meldungen</b> klicken.</p>
-                <p>(Hinweis: Ggf. können Sie Meldungen, die so alt sind, dass
-                    sie auch im Meldungsarchiv nicht mehr auffindbar sind, noch
-                    auf den Original-Servern der jeweiligen Behörde oder Institution
-                    finden. Klicken Sie hierzu auf <a href="?hkey=search-service-1">Service / Pressemitteilungen</a>.)</p>
+                <p>Unter „Aktuelles“ werden aktuelle Meldungen zum Thema „Umwelt“ von Bundesbehörden und niedersächsischen Landesbehörden angezeigt. Die aktuellste Meldung steht dabei immer oben. Es wird jeweils nur der Titel und eine Kurzbeschreibung der Meldung dargestellt. Durch einen Klick auf die Meldung werden Sie zu der Originalmeldung weitergeleitet.</p>
             </content>
         </section>
     </chapter>
     <chapter>
         <header>PortalU informiert</header>
         <section help-key="ingrid-inform-1">
-            <header>PortalU informiert</header>
+            <header display="false">PortalU informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    Betreiber von PortalU, die <a href="http://www.kst.portalu.de/" target="_new">Koordinierungsstelle PortalU</a>,
+                    <a href="/impressum">Betreiber von PortalU</a> 
                     bereitgestellt werden.</p>
             </content>
         </section>
@@ -2106,72 +1002,36 @@
     <chapter>
         <header>Mein PortalU</header>
         <section help-key="myingrid-1">
-            <header>Mein PortalU</header>
-            <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, eigene Einstellungen
-                    dauerhaft vorzunehmen. Sie können darüber:</p>
-                <ul>
-                    <li>die Startseite an Ihre Bedürfnisse anpassen</li>
-                    <li>die Suche personalisieren</li>
-                </ul>
-                <p>Sie müssen sich hierzu registrieren und erhalten einen
-                    Benutzernamen und ein Passwort. Die Registrierung ist
-                    kostenlos. Ihre Angaben werden nicht weitergegeben und nur
-                    anonymisiert für statistische Zwecke genutzt.</p>
-            </content>
-        </section>
-        <section help-key="myingrid-2">
             <header>Anmeldung</header>
             <content>
-                <p>Haben Sie bereits einen Benutzernamen und ein Kennwort, so
-                    geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
+                <p>Über die Anmeldung erhalten Sie die Möglichkeit, verschiedene Einstellungen des Portals auf Ihre Bedürfnisse hin zu personalisieren. Je nach Berechtigung erhalten Katalogbetreiber und -autoren Zugang zu den jeweiligen Administrationskomponenten des Portals bzw. der angeschlossenen Datenkataloge.</p>
+                <p>Haben Sie bereits einen Benutzernamen und ein Passwort, so geben Sie beides hier ein und klicken auf <b>Anmelden</b>.</p>
             </content>
-            <section help-key="myingrid-3">
+            <section help-key="myingrid-2">
                 <header>Neuer Benutzer</header>
                 <content>
-                    <p>Haben Sie noch keinen Benutzernamen und Kennwort, so
-                        klicken Sie auf den Link <b>Neuer
+                    <p>Haben Sie noch keinen Benutzernamen und Passwort, so
+                        klicken Sie auf <b>Neuer
                         Benutzer</b>. Damit werden Sie zu dem Formular
                         <b>Anmeldung</b> durchgeschaltet.</p>
                     <p>Bitte füllen Sie das Formular aus. Die Angaben mit
                         Sternchen * sind Pflichtangaben, die ausgefüllt werden
                         müssen. Alle anderen Angaben sind freiwillig.</p>
-                    <p>Alle Angaben werden strikt vertraulich behandelt und
-                        dienen nur der anonymisierten statistischen Auswertung.</p>
                 </content>
             </section>
-            <section help-key="myingrid-4">
-                <header>Kennwort vergessen?</header>
+            <section help-key="myingrid-3">
+                <header>Passwort vergessen?</header>
                 <content>
-                    <p>Wenn Sie Ihr Kennwort vergessen haben, klicken Sie auf
-                        den Link <b>Kennwort vergessen</b>. Sie
+                    <p>Wenn Sie Ihr Passwort vergessen haben, klicken Sie auf
+                        den Link <b>"Passwort vergessen?"</b>. Sie
                         werden dann zu dem entsprechenden Formular geführt, in
                         dem Sie Ihre E-Mail-Adresse eingeben können. Nach dem
                         Absenden bekommen Sie umgehend Ihren Benutzernamen und
-                        Ihr Kennwort zugesandt.</p>
-                </content>
-            </section>
-            <section help-key="myingrid-5">
-                <header>Automatisches Login</header>
-                <content>
-                    <p>Wenn Sie Ihre persönlichen Einstellungen immer nutzen
-                        möchten, können Sie die Option <b>Automatisches
-                        Login</b> wählen. Sie müssen in diesem Fall sich
-                        nicht jedes Mal über Benutzernamen und Kennwort
-                        aufschalten. (Hinweis: Diese Funktion funktioniert nur,
-                        wenn Sie Ihrem Internet-Browser die Erlaubnis zur
-                        Nutzung von Cookies gegeben haben.)</p>
+                        Ihr Passwort zugesandt.</p>
                 </content>
             </section>
         </section>
-        <section help-key="myingrid-6">
-            <header>Ihre persönliche Startseite</header>
-            <content>
-                <p>Dieser Link führt Sie zu Ihrer persönlichen Startseite, so
-                    wie Sie sie in der Personalisierung eingestellt haben.</p>
-            </content>
-        </section>
-        <section help-key="myingrid-7">
+        <section help-key="myingrid-4">
             <header>Nutzerprofil bearbeiten</header>
             <content>
                 <p>Dieser Link führt Sie zu dem Formular mit Ihren bisherigen
@@ -2179,109 +1039,9 @@
                     Änderungen jetzt nachtragen.</p>
                 <p>Die Angaben mit Sternchen * sind Pflichtangaben, die
                     ausgefüllt werden müssen. Alle anderen Angaben sind freiwillig.</p>
-                <p>Alle Angaben werden strikt vertraulich behandelt und dienen
-                    nur der anonymisierten statistischen Auswertung.</p>
             </content>
         </section>
-        <section help-key="myingrid-8">
-            <header>Personalisierung</header>
-            <content>
-                <p>Die folgenden Einstellungen können Sie Ihren eigenen
-                    Vorstellungen entsprechend einstellen.</p>
-            </content>
-            <section help-key="myingrid-9">
-                <header>Inhalt der Startseite ändern</header>
-                <content>
-                    <p>In diesem Bereich können Sie einstellen, welche Inhalte
-                        in welcher Reihenfolge auf Ihrer persönlichen Startseite
-                        angezeigt werden sollen. Legen Sie dazu die Inhalte der
-                        Zeilen in der Hauptspalte (links) der Startseite
-                        über die Auswahlliste fest. Wenn Sie einen Inhalt gar
-                        nicht einstellen (leerer Eintrag in der Auswahlliste),
-                        wird dieser auch nicht angezeigt.</p>
-                    <p>In gleicher Weise können sie für die Marginal-Spalte
-                        (schmalere Spalte auf der rechten Seite) der Startseite vorgehen.</p>
-                        
-                 <p>Die Einstellungen werden nicht permanent als Voreinstellung gespeichert. 
-                 Nach dem Klick auf LOGOUT kommen Sie zurück auf die Startseite von PortalU 
-                 mit seinen Standard-Voreinstellungen. </p>
-                        
-                </content>
-            </section>
-            <section help-key="myingrid-10">
-                <header>Filterung nach Informationsanbieter</header>
-                <content>
-                    <p>In diesem Bereich können Sie einstellen, ob sich die für
-                        Sie angezeigten Informationen nur auf 
-                        einzelne Informationsanbieter (z.B. MULEWF) einschränken sollen.</p>
-                    <p>Die Einstellungen beziehen sich auf die Suche, sowie auf
-                        die Bereiche Themenseiten, Messwerte und Service.</p>
-                    <p>Die Einstellungen werden permanent als Voreinstellungen
-                        gespeichert. Sie können sie aber über die
-                        Einstellungsmöglichkeiten in den oben genannten
-                        Bereichen temporär (also z.B. für einzelne Suchen)
-                        wieder überschreiben</p>
-                </content>
-            </section>
-            <section help-key="myingrid-11">
-                <header>Filterung nach Typen und Datenquellen</header>
-                <content>
-                    <p>An PortalU sind neben den üblichen Web-Servern auch
-                        Metadaten- und Fachdatensysteme angeschlossen. Sie
-                        können nun wählen, ob Sie in allen Datenquellen suchen
-                        wollen (Standard) oder ob Sie ihre Suche gezielt auf
-                        eine oder mehrere Arten von Datenquellen einschränken möchten.</p>
-                    <p>Wenn Sie sich auf Metadaten beschränken, haben Sie
-                        weiterhin die Möglichkeit, die Klassen der Metadaten
-                        auszuwählen, die Sie durchsuchen möchten. Es stehen
-                        Ihnen folgende Klassen zur Verfügung:</p>
-                    <ul>
-
-                        <li>Fachaufgabe</li>
-                        <li>Geodatensatz</li>
-                        <li>Literatur</li>
-                        <li>Geodatendienst</li>
-                        <li>Projekt</li>
-                        <li>Datensammlung</li>
-                        <li>Informationssystem</li>
-                    </ul>
-                    <p>Die gemachten Einstellungen wirken sich dauerhaft als
-                        Voreinstellung aus. Sie können Sie aber über temporäre
-                        Einstellungen für einzelne Suchen überschreiben.</p>
-                </content>
-            </section>
-            <section help-key="myingrid-12">
-                <header>Sortierung und Gruppierung der Suchergebnisse</header>
-                <content>
-                    <p>Sie können sich Ihr Suchergebnisse entweder nach Ranking
-                        (Relevanz der gefundenen Seite in Bezug auf Ihren
-                        Suchausdruck) oder nach Aktualität (die neusten Seiten
-                        stehen vorne) sortiert anzeigen lassen.</p>
-                    <p>Gruppierung bedeutet, dass alle Suchergebnisse
-                        einer Seite zu Gruppen zusammengefasst werden.</p>
-                    <p>
-                        <b>Ähnliche Begriffe in die Suche einbeziehen</b>
-                    </p>
-                    <p>PortalU führt nicht nur die bei Suchmaschinen übliche
-                        Indizierung  der Seiten durch, sondern lässt den
-                        Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service</a> (SNS) des
-                        Umweltbundesamtes analysieren. Als Ergebnis dieser
-                        Analyse werden geeignete Fachbegriffe aus dem <a href="?hkey=ext-search-subject-3">Umweltthesaurus UMTHES</a>
-                        den Webseiten zugeordnet.</p>
-                    <p>Wenn Sie durch Ankreuzen die Einstellung
-                       <b>Ähnliche Begriffe in die Suche einbeziehen</b> 
-                        auswählen, werden diese
-                        Schlagworte in der Suche mitberücksichtigt. (Hinweis: Es
-                        ist davon auszugehen, dass die Wahl dieser Einstellung
-                        die Treffermenge erhöht.)</p>
-                    <p>Die Einstellungen wirken sich dauerhaft als
-                        Voreinstellung auf die Darstellung der Suchergebnisliste
-                        aus, können aber für einzelne Suchen wieder über die
-                        Einstellungen in der Suche überschrieben werden.</p>
-                </content>
-            </section>
-        </section>
-        <section help-key="myingrid-13">
+        <section help-key="myingrid-5">
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich

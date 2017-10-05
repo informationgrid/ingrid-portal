@@ -544,7 +544,10 @@
                 <name>disableTitle</name>
                 <value>1</value>
             </preference>
-            
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded block--lighter</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -597,7 +600,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top</value>
+                <value>block--padded block--light</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -685,7 +688,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
+                <value>block--padded block--lighter</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -877,7 +880,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
+                <value>block--padded block--light</value>
             </preference>
         </portlet-preferences>
     </portlet>

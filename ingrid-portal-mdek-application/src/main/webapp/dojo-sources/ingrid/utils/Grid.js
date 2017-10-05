@@ -24,8 +24,9 @@ define([
     "dojo/_base/declare",
     "dojo/_base/array",
     "dojo/aspect",
+    "dijit/registry",
     "ingrid/message"
-], function(declare, array, aspect, message) {
+], function(declare, array, aspect, registry, message) {
 
     // make var global for backward compatibility
     UtilGrid = declare(null, {
@@ -44,7 +45,7 @@ define([
         // ALWAYS filters if not true argument passed (and if rowFilter is set on table) !
         // So visible data is returned and frontend works the usual way with row indexes !
         getTableData: function(grid, doNOTFilter) {
-            return gridManager[grid].getData(doNOTFilter);
+            return registry.byId(grid).getData(doNOTFilter);
         },
 
         setTableData: function(gridId, data) {
@@ -240,6 +241,8 @@ define([
                 array.forEach(sortedIndexes, function(rowNr) {
                     deletedData.push(data.splice(rowNr - (decr++), 1)[0]);
                 });
+                // data might not be referenced if it was altered by aspect.after
+                this.setTableData(grid, data);
                 if (refresh) this.getTableData(grid).refresh();
             }
 

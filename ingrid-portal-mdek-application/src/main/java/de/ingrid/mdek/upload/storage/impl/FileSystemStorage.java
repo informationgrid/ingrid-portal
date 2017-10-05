@@ -35,9 +35,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
 
@@ -467,10 +467,12 @@ public class FileSystemStorage implements Storage {
         String itemPath = strippedPath.subpath(0, strippedPath.getNameCount()-(isArchived ? 2 : 1)).toString();
         String itemFile = strippedPath.getName(strippedPath.getNameCount()-1).toString();
 
+        // FIXME: Under windows the call of "Files.probeContentType()" will leave a file lock on that file!?
         String fileType = Files.probeContentType(filePath);
         long fileSize = Files.size(filePath);
 
-        LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), ZoneOffset.UTC);
+        // get last modified date of file and take care of timezone correctly, since LocalDateTime does not store time zone information (#745)
+        LocalDateTime lastModifiedTime = LocalDateTime.ofInstant(Files.getLastModifiedTime(filePath).toInstant(), TimeZone.getDefault().toZoneId());
 
         return new FileSystemItem(this, itemPath, itemFile, fileType, fileSize, lastModifiedTime,
                 isArchived, filePath);

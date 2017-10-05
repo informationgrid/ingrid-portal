@@ -4,7 +4,92 @@
         <title>Changes InGrid Portal</title>
         <author email="joachim@wemove.com">Joachim Müller</author>
     </properties>
+
     <body>
+        <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
+          <action type="add" dev="wemove" issue="852">
+            PORTAL: Add property to disable function new user.
+          </action>
+          <action type="add" dev="wemove" issue="199">
+            IGE/PORTAL: Added multiple languages for data source in IGE and detail view in portal.
+          </action>
+          <action type="add" dev="wemove" issue="701">
+            UVP-NI: Integration of "Bauleitplanung".
+          </action>
+          <action type="add" dev="wemove" issue="703">
+            UVP-NI: Hide login on service menu .
+          </action>
+          <action type="add" dev="wemove" issue="825">
+            UVP-NI: Add object class on search result hit.
+          </action>
+          <action type="add" dev="wemove" issue="787">
+            UVP-NI: Add search result hit tag "Bauleitplanung".
+          </action>
+          <action type="add" dev="wemove" issue="798">
+            MAPCLIENT: Add override mechanism for mapclient.
+          </action>
+          <action type="update" dev="wemove" issue="563">
+            Updated context help of field accessConstraints (Zugriffsbeschränkungen) due to changed syslist 6010.
+          </action>
+          <action type="update" dev="wemove" issue="600">
+            UVP: Better sorting of UVP-numbers.
+          </action>
+          <action type="update" dev="wemove" issue="367">
+            Updated codelist entries to show which CRS is INSPIRE.
+          </action>
+          <action type="update" dev="wemove" issue="730">
+            UVP: Updated portal partner/provider list of addresses by query.
+          </action>
+          <action type="update" dev="wemove" issue="565">
+            MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+          <action type="update" dev="wemove" issue="685">
+            PORTAL: Update NUMIS layout.
+          </action>
+          <action type="update" dev="wemove" issue="568">
+            PORTAL: Update PortalU RLP layout.
+          </action>
+          <action type="fix" dev="wemove" issue="867">
+            IGE: Fix problem with capabilities assistant and capabilities layers without BBOX.
+          </action>
+          <action type="fix" dev="wemove" issue="853">
+            PORTAL: Fix map detail view on UVP.
+          </action>
+          <action type="fix" dev="wemove" issue="850">
+            PORTAL: Fix update of portal database on oracle (flyway).
+          </action>
+          <action type="fix" dev="wemove" issue="788">
+            PORTAL: Fix installer by edit mapclient settings.
+          </action>
+          <action type="fix" dev="wemove" issue="786">
+            UVP-NI: Remove breadcrumb.
+          </action>
+          <action type="fix" dev="wemove" issue="731">
+            UVP-NI: Fix copyright.
+          </action>
+          <action type="fix" dev="wemove" issue="740">
+            UVP-NI: Fix mobile footer navigation style.
+          </action>
+          <action type="fix" dev="wemove" issue="775">
+            UVP: Fix URL decode on detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="741">
+            MAPCLIENT: Fix generate QR code with too long URL. Use short URL to generate QR code.
+          </action>
+          <action type="fix" dev="wemove" issue="745">
+            IGE (UVP): UploalCleanupJob deletes files too early. 
+          </action>
+          <action type="fix" dev="wemove" issue="792">
+            IGE (UVP): Changed link style for uploaded documents and prevent overlapping in firefox.
+          </action>
+          <action type="fix" dev="wemove" issue="768">
+            IGE: Fixed hidden fields checked during publication.
+          </action>
+          <action type="fix" dev="wemove" issue="869">
+            IGE-HH: Fixed required field "UseAccessConstraints".
+          </action>
+        </release>
+        
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
           <action type="add" dev="wemove" issue="REDMINE-393,-556">
             BKG IGE: Added special version for input of access- and useConstraints to BKG profile.
