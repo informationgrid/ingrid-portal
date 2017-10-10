@@ -691,29 +691,29 @@
                                         
                                         <span id="uiElement5306" class="outer">
                                             <div class="input checkboxContainer input-inline">
-                                                <input type="radio" id="isGeoRectified"/><label for="isGeoRectified" class="inActive"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
+                                                <input type="radio" id="isGeoRectified"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5306)" for="isGeoRectified"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
                                             </div>
                                             <div class="input checkboxContainer input-inline">
-                                                <input type="radio" id="isGeoReferenced" /><label for="isGeoReferenced" class="inActive"><fmt:message key="ui.obj.type1.gridFormat.geoReferenced" /></label>
+                                                <input type="radio" id="isGeoReferenced" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5307)" for="isGeoReferenced"><fmt:message key="ui.obj.type1.gridFormat.geoReferenced" /></label>
                                             </div>
                                         </span>
                                         
                                         <div id="geoRectifiedWrapper">
-                                            <span id="uiElement5307" class="outer halfWidth">
+                                            <span id="uiElement5308" class="outer halfWidth">
                                                 <div>
                                                     <span class="label"></span>
                                                     <span class="input checkboxContainer input-inline">
                                                         <input style="width:100%;" id="ref1GridFormatRectCheckpoint" />
-                                                        <label for="ref1GridFormatRectCheckpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5307)">
+                                                        <label for="ref1GridFormatRectCheckpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5308)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.rectified.checkpoint" />
                                                         </label>
                                                     </span>
                                                 </div>
                                             </span>
-                                            <span id="uiElement5308" class="outer halfWidth">
+                                            <span id="uiElement5309" class="outer halfWidth">
                                                 <div>
                                                     <span class="label">
-                                                        <label for="ref1GridFormatRectDescription" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5308)">
+                                                        <label for="ref1GridFormatRectDescription" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5309)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.rectified.description" />
                                                         </label>
                                                     </span>
@@ -722,10 +722,10 @@
                                                     </span>
                                                 </div>
                                             </span>
-                                            <span id="uiElement5309" class="outer halfWidth">
+                                            <span id="uiElement5310" class="outer halfWidth">
                                                 <div>
                                                     <span class="label">
-                                                        <label for="ref1GridFormatRectCornerPoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5309)">
+                                                        <label for="ref1GridFormatRectCornerPoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5310)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.rectified.cornerPoint" />
                                                         </label>
                                                     </span>
@@ -734,10 +734,10 @@
                                                     </span>
                                                 </div>
                                             </span>
-                                            <span id="uiElement5310" class="outer halfWidth">
+                                            <span id="uiElement5311" class="outer halfWidth">
                                                 <div>
                                                     <span class="label">
-                                                        <label for="ref1GridFormatRectPointInPixel" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5310)">
+                                                        <label for="ref1GridFormatRectPointInPixel" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5311)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.rectified.pointInPixel" />
                                                         </label>
                                                     </span>
@@ -749,17 +749,6 @@
                                         </div>
                                         
                                         <div id="geoReferencedWrapper" class="hide">
-                                            <span id="uiElement5311" class="outer halfWidth">
-                                                <div>
-                                                    <!-- <span class="label"></span> -->
-                                                    <span class="input checkboxContainer input-inline">
-                                                        <input style="width:100%;" id="ref1GridFormatRefControlpoint" />
-                                                        <label for="ref1GridFormatRefControlpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5311)">
-                                                            <fmt:message key="ui.obj.type1.gridFormat.referenced.controlPoint" />
-                                                        </label>
-                                                    </span>
-                                                </div>
-                                            </span>
                                             <span id="uiElement5312" class="outer halfWidth">
                                                 <div>
                                                     <!-- <span class="label"></span> -->
@@ -771,10 +760,21 @@
                                                     </span>
                                                 </div>
                                             </span>
-                                            <span id="uiElement5313" class="outer">
+                                            <span id="uiElement5313" class="outer halfWidth">
+                                                <div>
+                                                    <!-- <span class="label"></span> -->
+                                                    <span class="input checkboxContainer input-inline">
+                                                        <input style="width:100%;" id="ref1GridFormatRefControlpoint" />
+                                                        <label for="ref1GridFormatRefControlpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5313)">
+                                                            <fmt:message key="ui.obj.type1.gridFormat.referenced.controlPoint" />
+                                                        </label>
+                                                    </span>
+                                                </div>
+                                            </span>
+                                            <span id="uiElement5314" class="outer">
                                                 <div>
                                                     <span class="label">
-                                                        <label for="ref1GridFormatRefGeoreferencedParam" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5313)">
+                                                        <label for="ref1GridFormatRefGeoreferencedParam" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5314)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.referenced.georeferencedParam" />
                                                         </label>
                                                     </span>

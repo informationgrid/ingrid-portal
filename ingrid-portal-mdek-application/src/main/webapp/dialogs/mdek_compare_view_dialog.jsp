@@ -132,6 +132,43 @@ require([
                     },
                     null
                 ]);
+
+                // GRID FORMAT
+                renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.title' />");
+                renderTextWithTitle(
+                    nodeDataOld.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />",
+                    nodeDataNew.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />",
+                    "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
+                renderTextWithTitle(nodeDataOld.ref1GridFormatNumDimensions, nodeDataNew.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
+                renderTextWithTitle(nodeDataOld.ref1GridFormatAxisDimName, nodeDataNew.ref1GridFormatAxisDimName, "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
+                renderTextWithTitle(nodeDataOld.ref1GridFormatAxisDimSize, nodeDataNew.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
+                renderTextWithTitle(nodeDataOld.ref1GridFormatCellGeometry, nodeDataNew.ref1GridFormatCellGeometry, "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
+                
+                if (nodeDataNew.ref1GridFormatGeoRectified) {
+                    renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
+                    renderTextWithTitle(
+                        nodeDataOld.ref1GridFormatRectCheckpoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
+                        nodeDataNew.ref1GridFormatRectCheckpoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
+                        "<fmt:message key='ui.obj.type1.gridFormat.rectified.checkpoint' />");
+                    renderTextWithTitle(nodeDataOld.ref1GridFormatRectDescription, nodeDataNew.ref1GridFormatRectDescription, "<fmt:message key='ui.obj.type1.gridFormat.rectified.description' />");
+                    renderTextWithTitle(nodeDataOld.ref1GridFormatRectCornerPoint, nodeDataNew.ref1GridFormatRectCornerPoint, "<fmt:message key='ui.obj.type1.gridFormat.rectified.cornerPoint' />");
+                    renderTextWithTitle(
+                        UtilSyslist.getSyslistEntryName(2100, nodeDataOld.ref1GridFormatRectPointInPixel),
+                        UtilSyslist.getSyslistEntryName(2100, nodeDataNew.ref1GridFormatRectPointInPixel),
+                        "<fmt:message key='ui.obj.type1.gridFormat.rectified.pointInPixel' />");
+                } else {
+                    renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoReferenced' />");
+                    renderTextWithTitle(
+                        nodeDataOld.ref1GridFormatRefOrientationParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
+                        nodeDataNew.ref1GridFormatRefOrientationParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
+                        "<fmt:message key='ui.obj.type1.gridFormat.referenced.orientationParam' />");
+                    renderTextWithTitle(
+                        nodeDataOld.ref1GridFormatRefControlPoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
+                        nodeDataNew.ref1GridFormatRefControlPoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
+                        "<fmt:message key='ui.obj.type1.gridFormat.referenced.controlPoint' />");
+                    renderTextWithTitle(nodeDataOld.ref1GridFormatRefGeoreferencedParam, nodeDataNew.ref1GridFormatRefGeoreferencedParam, "<fmt:message key='ui.obj.type1.gridFormat.referenced.georeferencedParam' />");
+                }
+
                 // moved to general "Raumbezug" section, class independent !
                 //renderTextWithTitle(nodeDataOld.ref1SpatialSystem, nodeDataNew.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
                 renderTable(nodeDataOld.ref1Scale, nodeDataNew.ref1Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type1.scaleTable.title' />");
