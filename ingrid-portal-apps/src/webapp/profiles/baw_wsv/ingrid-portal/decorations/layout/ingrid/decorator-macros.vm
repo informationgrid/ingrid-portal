@@ -229,11 +229,7 @@
                 </div>
             </div>
         #else
-            #if($inMain)
-                $jetspeed.renderPortletWindow("MyPortalLoginPortletMain", "ingrid-portal-apps::MyPortalLoginPortletMain")
-            #else
-                $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
-            #end
+            $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
     </div>
   #elseif($el == "/administration")

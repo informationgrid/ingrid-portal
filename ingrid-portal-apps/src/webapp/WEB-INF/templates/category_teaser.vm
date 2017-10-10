@@ -61,7 +61,7 @@
 #end
 
 #macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
-    <div class="tab__content box #if(!$isActive)is-hidden#end" data-tabid="$parentFacet">
+    <div class="tab__content box #if(!$isActive)is-hidden#end" id="$parentFacet" data-tabid="$parentFacet">
         <section class="block">
             <article class="content ob-container">
                 <div class="tag-group">
@@ -97,9 +97,6 @@
     #set ($count = 0)
     #set ($pf = $parentFacet)
     #set ($facetListSize = $facetList.size())
-    #if($enableRss)
-        #set ($facetListSize = $facetListSize + 1)
-    #end
     #set($list = [])
     #foreach ($facet in $facetList)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") == 0)))
@@ -207,10 +204,10 @@
 
 #macro (getIcon $facet)
 <span class="mq-hide-l">
-    #getIconImage($facet "flex-icon")
+    #getIconImage($facet "icon flex-icon")
 </span>
 <span class="mq-show-l">
-    #getIconImage($facet)
+    #getIconImage($facet "icon")
 </span>
 #end
 
@@ -218,14 +215,14 @@
     #if($facet.getIcon())
         #set($icon = $facet.getIcon())
         #if($icon.startsWith("#"))
-            <svg class="icon bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
+            <svg class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
         #elseif($icon.startsWith("/"))
-            <img style="margin: auto;" class="bx-top-s icon-$facet.getId()" src="$icon"></img>
+            <img style="margin: auto;" class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" src="$icon"></img>
         #else
-            <i class="icon bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end $icon" style="#if($facetStyle)$facetStyle#end"></i>
+            <i class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end $icon" style="#if($facetStyle)$facetStyle#end"></i>
         #end
     #else
-       <i class="icon bx-top-s icon-question-mark #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"></i>
+       <i class="bx-top-s icon-question-mark #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"></i>
     #end
 #end
 

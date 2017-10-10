@@ -33,10 +33,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -273,7 +273,7 @@ public class UploadCleanupJobTest {
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
-        this.job.executeInternal(this.context);
+        this.job.executeInternal(this.context); 
 
         // test
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
@@ -805,7 +805,7 @@ public class UploadCleanupJobTest {
      */
     private void setFileAge(Path path, long ageInSeconds) throws IOException {
         LocalDateTime fileTime = LocalDateTime.from(JOB_REFERENCE_TIME).minusSeconds(ageInSeconds);
-        Files.setLastModifiedTime(path, FileTime.from(fileTime.toInstant(ZoneOffset.UTC)));
+        Files.setLastModifiedTime(path, FileTime.from(fileTime.atZone( TimeZone.getDefault().toZoneId() ).toInstant()));
     }
 
     /**

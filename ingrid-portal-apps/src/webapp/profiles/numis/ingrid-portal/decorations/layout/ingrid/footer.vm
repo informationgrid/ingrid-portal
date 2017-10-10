@@ -1,6 +1,6 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
         <footer class="footer">
-            <div class="ob-box-padded ob-box-center ob-clear">
+            <div class="ob-box-padded ob-box-center ob-clear" style="background:#FAFAFA;">
                 <div class="footer__top">
                     <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
                         <img class="footer__logo" src="#GetPageResource("images/template/mobile-logo.png")"></img>
@@ -9,7 +9,7 @@
                 </div>
             </div>
             <hr class="bx-top-0 bx-bot-0">
-            <div class="grid">
+            <div class="grid" style="background:#eee;">
                 <div class="column column--3-4-xl">
                     <div class="ob-box-padded ob-box-center ob-clear">
                         <div class="footer__section">

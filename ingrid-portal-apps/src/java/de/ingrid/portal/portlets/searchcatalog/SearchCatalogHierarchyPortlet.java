@@ -225,9 +225,13 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
                     break;
                 }
                 DisplayTreeNode subNode = (DisplayTreeNode) list.get(i);
+                boolean closeAddress = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_HIERARCHY_CATALOG_ADDRESS_CLOSE, false);
                 if ((Boolean) subNode.get("expandable")) {
-                    openNode(rootNode, subNode.getId());
-                    openNodesUntilHierarchyLevel(subNode, rootNode);
+                    String plugType = (String) subNode.get("plugType");
+                    if(plugType == null || !(closeAddress && plugType != null && plugType.equals( "dsc_ecs_address" ))){
+                        openNode(rootNode, subNode.getId());
+                        openNodesUntilHierarchyLevel(subNode, rootNode);
+                    }
                 }
             }
     }

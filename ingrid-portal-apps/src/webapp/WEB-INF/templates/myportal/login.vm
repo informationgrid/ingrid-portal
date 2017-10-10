@@ -22,9 +22,11 @@
     #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
     <br>
     #end
+    #if($enableNewUser)
     <div class="metamenu__box ob-container">
         #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
     </div>
+    #end
 </div>
 #if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
 <script>

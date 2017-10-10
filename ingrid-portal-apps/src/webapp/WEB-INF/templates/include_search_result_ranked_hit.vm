@@ -80,7 +80,11 @@
         #end
         #if($!rs.additional_html_1)
         <div class="media__obj media__obj--right">
-            $!rs.additional_html_1
+            #if($!rs.additional_html_1.indexOf(",") > -1)
+                $!rs.additional_html_1.split(",").get(0)
+            #else
+                $!rs.additional_html_1
+            #end
         </div>
         #end
         <p>

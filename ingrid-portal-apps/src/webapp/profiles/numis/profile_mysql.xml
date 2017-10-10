@@ -3,6 +3,60 @@
     <name>numis</name>
     <description>Portal-Profile für NUMIS</description>
     <pages>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+            </portlets>
+        </page>
     </pages>
     <files>
         <file>
@@ -27,6 +81,10 @@
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/language.link';]]>
+        </execute>
+        <!-- Show home link -->
+        <execute>
+            <![CDATA[UPDATE link SET IS_HIDDEN='0' WHERE PATH='/home.link';]]>
         </execute>
     </sql>
 </profile>
