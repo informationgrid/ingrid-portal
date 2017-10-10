@@ -49,9 +49,11 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireConformityConnection",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
-        "ingrid/hierarchy/behaviours/advProductGroup"
+        "ingrid/hierarchy/behaviours/advProductGroup",
+        "ingrid/hierarchy/behaviours/spatialRepresentationInfo"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
-            openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup) {
+            openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
+            spatialRepresentationInfo) {
 
     return declare(null, {
         
@@ -70,6 +72,8 @@ define(["dojo/_base/declare",
         inspireEncodingConnection: inspireEncodingConnection,
 
         inspireConformityConnection: inspireConformityConnection,
+
+        spatialRepresentationInfo: spatialRepresentationInfo,
         
         coupledResourceDownloadDataCheck: {
             title: "Gekoppelte Daten - Überprüfung auf Download-Daten",

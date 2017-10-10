@@ -442,6 +442,49 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1SpatialSystem", null, ref1SpatialSystemStructure, null);
 
+                
+                /* Add spatialRepresentationInfo (REDMINE-381) */
+                new CheckBox({}, "ref1TransfParamAvail");
+                new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
+                new ValidationTextBox({style: "width:100%;"}, "ref1AxisDimName");
+                new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
+                new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
+                
+                var geoRectified = new RadioButton({
+                    checked: true,
+                    value: "true",
+                    name: "isGeoRectified",
+                }, "isGeoRectified");
+                geoRectified.startup();
+                var geoReferenced = new RadioButton({
+                    checked: false,
+                    value: "false",
+                    name: "isGeoRectified",
+                }, "isGeoReferenced");
+                geoReferenced.startup();
+                
+                new CheckBox({}, "ref1GridFormatRectCheckpoint");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectDescription");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectCornerPoint");
+
+                layoutCreator.createSelectBox("ref1GridFormatRectPointInPixel", null, storeProps, function() {
+                    return UtilSyslist.getSyslistEntry(2100);
+                });
+                
+                new CheckBox({}, "ref1GridFormatRefControlpoint");
+                new CheckBox({}, "ref1GridFormatRefOrientationParam");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRefGeoreferencedParam");
+
+                on(geoRectified, "change", function(checked) {
+                    if (checked) {
+                        domClass.remove("geoRectifiedWrapper", "hide");
+                        domClass.add("geoReferencedWrapper", "hide");
+                    } else {
+                        domClass.add("geoRectifiedWrapper", "hide");
+                        domClass.remove("geoReferencedWrapper", "hide");
+                    }
+                });
+                
                 var ref1ScaleStructure = [{
                     field: 'scale',
                     name: message.get("ui.obj.type1.scaleTable.header.scale"),

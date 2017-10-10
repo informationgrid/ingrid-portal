@@ -276,6 +276,21 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1ObjectIdentifier((String) td1Map.get(MdekKeys.DATASOURCE_UUID));
             mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
             mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
+            
+            mdekObj.setRef1GridFormatTransfParam("Y".equals(td1Map.get( MdekKeys.TRANSFORMATION_PARAMETER )) ? true : false);
+            mdekObj.setRef1GridFormatNumDimensions((Integer) td1Map.get( MdekKeys.NUM_DIMENSIONS ));
+            mdekObj.setRef1GridFormatAxisDimName((String) td1Map.get( MdekKeys.AXIS_DIM_NAME ));
+            mdekObj.setRef1GridFormatAxisDimSize((Integer) td1Map.get( MdekKeys.AXIS_DIM_SIZE ));
+            mdekObj.setRef1GridFormatCellGeometry((String) td1Map.get( MdekKeys.CELL_GEOMETRY ));
+            mdekObj.setRef1GridFormatGeoRectified("Y".equals(td1Map.get( MdekKeys.GEO_RECTIFIED )) ? true : false);
+            mdekObj.setRef1GridFormatRectCheckpoint("Y".equals(td1Map.get( MdekKeys.GEO_RECT_CHECKPOINT )) ? true : false);
+            mdekObj.setRef1GridFormatRectDescription((String) td1Map.get( MdekKeys.GEO_RECT_DESCRIPTION ));
+            mdekObj.setRef1GridFormatRectCornerPoint((String) td1Map.get( MdekKeys.GEO_RECT_CORNER_POINT ));
+            mdekObj.setRef1GridFormatRectPointInPixel((String) td1Map.get( MdekKeys.GEO_RECT_POINT_IN_PIXEL ));
+            mdekObj.setRef1GridFormatRefControlPoint("Y".equals(td1Map.get( MdekKeys.GEO_REF_CONTROL_POINT )) ? true : false);
+            mdekObj.setRef1GridFormatRefOrientationParam("Y".equals(td1Map.get( MdekKeys.GEO_REF_ORIENTATION_PARAM )) ? true : false);
+            mdekObj.setRef1GridFormatRefGeoreferencedParam((String) td1Map.get( MdekKeys.GEO_REF_PARAMETER ));
+            
             mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
             mdekObj.setRef1AltAccuracy((Double) td1Map.get(MdekKeys.POS_ACCURACY_VERTICAL));
             mdekObj.setRef1GridPosAccuracy((Double) td1Map.get(MdekKeys.GRID_POS_ACCURACY));
@@ -897,6 +912,21 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
+            
+            td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() ? "Y" : "N");
+            td1Map.put( MdekKeys.NUM_DIMENSIONS, data.getRef1GridFormatNumDimensions());
+            td1Map.put( MdekKeys.AXIS_DIM_NAME, data.getRef1GridFormatAxisDimName() );
+            td1Map.put( MdekKeys.AXIS_DIM_SIZE, data.getRef1GridFormatAxisDimSize() );
+            td1Map.put( MdekKeys.CELL_GEOMETRY, data.getRef1GridFormatCellGeometry() );
+            td1Map.put( MdekKeys.GEO_RECTIFIED, data.getRef1GridFormatGeoRectified() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECT_CHECKPOINT, data.getRef1GridFormatRectCheckpoint() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECT_DESCRIPTION, data.getRef1GridFormatRectDescription());
+            td1Map.put( MdekKeys.GEO_RECT_CORNER_POINT, data.getRef1GridFormatRectCornerPoint());
+            td1Map.put( MdekKeys.GEO_RECT_POINT_IN_PIXEL, data.getRef1GridFormatRectPointInPixel());
+            td1Map.put( MdekKeys.GEO_REF_CONTROL_POINT, data.getRef1GridFormatRefControlPoint() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_REF_ORIENTATION_PARAM, data.getRef1GridFormatRefOrientationParam() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_REF_PARAMETER, data.getRef1GridFormatRefGeoreferencedParam());
+            
             td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
             td1Map.put(MdekKeys.POS_ACCURACY_VERTICAL, data.getRef1AltAccuracy());
             td1Map.put(MdekKeys.GRID_POS_ACCURACY, data.getRef1GridPosAccuracy());
