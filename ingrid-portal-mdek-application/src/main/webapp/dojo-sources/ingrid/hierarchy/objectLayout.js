@@ -453,13 +453,13 @@ define([
                 var geoRectified = new RadioButton({
                     checked: true,
                     value: "true",
-                    name: "isGeoRectified",
+                    name: "isGeoRectified"
                 }, "isGeoRectified");
                 geoRectified.startup();
                 var geoReferenced = new RadioButton({
                     checked: false,
                     value: "false",
-                    name: "isGeoRectified",
+                    name: "isGeoRectified"
                 }, "isGeoReferenced");
                 geoReferenced.startup();
                 
