@@ -6,6 +6,16 @@
     </properties>
 
     <body>
+
+        <release version="4.2.0-SNAPSHOT" date="2017-xx-xx" description="Release 4.2.0">
+          <action type="fix" dev="wemove" issue="">
+            IGE: Fixed getCapabilities assistant when creating coupled resources.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            IGE: Fixed Nullpointer Exception during mapping.
+          </action>
+        </release>
+
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
           <action type="add" dev="wemove" issue="852">
             PORTAL: Add property to disable function new user.
