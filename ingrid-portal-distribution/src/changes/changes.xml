@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="4.1.1-SNAPSHOT" date="2017-xx-xx" description="Release 4.1.1">
+          <action type="fix" dev="wemove" issue="812">
+            IGE: Do not allow selection of a folder when assigning an address.
+          </action>
+        </release>
+        
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
           <action type="add" dev="wemove" issue="852">
             PORTAL: Add property to disable function new user.
