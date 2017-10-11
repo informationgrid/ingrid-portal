@@ -13,6 +13,9 @@
           <action type="fix" dev="wemove" issue="809">
             IGE: Fixed state of toolbar button for folder create.
           </action>
+          <action type="fix" dev="wemove" issue="810">
+            IGE: Fixed object class can be changed.
+          </action>
         </release>
         
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
