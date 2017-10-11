@@ -769,7 +769,7 @@ public class MdekMapper implements DataMapperInterface {
         IngridDocument responsibleUser = new IngridDocument();
         responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
         udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
-        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() ? "Y" : "N");
+        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() != null && data.getAdvCompatible() == true ? "Y" : "N");
         
         // extrahieren des int Wertes für die Objekt-Klasse
         udkObj.put(MdekKeys.CLASS, data.getObjectClass());
