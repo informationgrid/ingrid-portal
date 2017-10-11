@@ -37,6 +37,7 @@
             "dojo/_base/array",
             "dojo/_base/lang",
             "dojo/dom",
+            "dojo/dom-class",
             "dojo/dom-style",
             "dojo/on",
             "dojo/aspect",
@@ -51,12 +52,12 @@
             "ingrid/utils/Grid",
             "ingrid/utils/List",
             "ingrid/utils/Events"
-        ], function(array, lang, dom, style, on, aspect, keys, registry,
+        ], function(array, lang, dom, domClass, style, on, aspect, keys, registry,
                 navigate, layoutCreator, dialog,
                 MetadataTree,
                 UtilTree, UtilAddress, UtilGrid, UtilList, UtilEvents) {
 
-            var grid, customParams;
+            var grid, customParams, btnAssign;
 
             var adrPageNav = new navigate.PageNavigation({
                 resultsPerPage: 10,
@@ -79,6 +80,8 @@
 
             on(_container_, "Load", function() {
                 customParams = this.customParams;
+                btnAssign = registry.byId("btn_assign");
+                btnAssign.set("disabled", true);
 
                 aspect.after(adrPageNav, "onPageSelected", browseSearchResults);
 
@@ -99,8 +102,21 @@
                 }
             });
 
+            var tree = new MetadataTree({
+                showRoot: false, 
+                treeType: "Addresses",
+                excludeFunction: function(item) {
+                    return item.objectClass === 1000 ;
+                }
+            }, "treeAdr");
 
-            new MetadataTree({showRoot: false, treeType: "Addresses"}, "treeAdr");
+            on(tree, "Click", function(node, data) {
+                if (domClass.contains(data.labelNode, "TreeNodeNotSelectable")) {
+                    btnAssign.set("disabled", true);
+                } else {
+                    btnAssign.set("disabled", false);
+                }
+            });
 
             prepareDataGrid();
 
@@ -411,7 +427,7 @@
                     <div class="inputContainerFooter" style="width:100%;">
                         <span class="button" style="float:right;">
                             <span style="float:right;">
-                                <button data-dojo-type="dijit/form/Button" onclick="pageAddressDlg.addSelectedAddressFromTree">
+                                <button data-dojo-type="dijit/form/Button" id="btn_assign" onclick="pageAddressDlg.addSelectedAddressFromTree">
                                     <fmt:message key="dialog.searchAddress.selectAddress" />
                                 </button>
                             </span>

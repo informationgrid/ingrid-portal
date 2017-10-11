@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="">
             IGE: Fixed Nullpointer Exception during mapping.
           </action>
+          <action type="fix" dev="wemove" issue="812">
+            IGE: Do not allow selection of a folder when assigning an address.
+          </action>
         </release>
 
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
