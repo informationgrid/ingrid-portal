@@ -522,7 +522,7 @@ define([
         },
 
         _toggleHeaderAccessibility: function( /*boolean*/ disable) {
-            var widgets = ["objectName", "objectClass", "objectOwner", /*"addressTitle","addressType",*/ "addressOwner"];
+            var widgets = ["objectName", "objectOwner", /*"addressTitle","addressType",*/ "addressOwner"];
 
             array.forEach(widgets, function(w) {
                 var wid = registry.byId(w);
