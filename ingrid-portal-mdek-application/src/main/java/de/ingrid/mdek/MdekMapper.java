@@ -784,7 +784,7 @@ public class MdekMapper implements DataMapperInterface {
         IngridDocument responsibleUser = new IngridDocument();
         responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
         udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
-        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() ? "Y" : "N");
+        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() != null && data.getAdvCompatible() == true ? "Y" : "N");
         
         // extrahieren des int Wertes für die Objekt-Klasse
         udkObj.put(MdekKeys.CLASS, data.getObjectClass());
@@ -913,18 +913,18 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
             
-            td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() ? "Y" : "N");
+            td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() != null && data.getRef1GridFormatTransfParam() == true ? "Y" : "N");
             td1Map.put( MdekKeys.NUM_DIMENSIONS, data.getRef1GridFormatNumDimensions());
             td1Map.put( MdekKeys.AXIS_DIM_NAME, data.getRef1GridFormatAxisDimName() );
             td1Map.put( MdekKeys.AXIS_DIM_SIZE, data.getRef1GridFormatAxisDimSize() );
             td1Map.put( MdekKeys.CELL_GEOMETRY, data.getRef1GridFormatCellGeometry() );
-            td1Map.put( MdekKeys.GEO_RECTIFIED, data.getRef1GridFormatGeoRectified() ? "Y" : "N");
-            td1Map.put( MdekKeys.GEO_RECT_CHECKPOINT, data.getRef1GridFormatRectCheckpoint() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECTIFIED, data.getRef1GridFormatGeoRectified() != null && data.getRef1GridFormatGeoRectified() == true ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECT_CHECKPOINT, data.getRef1GridFormatRectCheckpoint() != null && data.getRef1GridFormatRectCheckpoint() == true ? "Y" : "N");
             td1Map.put( MdekKeys.GEO_RECT_DESCRIPTION, data.getRef1GridFormatRectDescription());
             td1Map.put( MdekKeys.GEO_RECT_CORNER_POINT, data.getRef1GridFormatRectCornerPoint());
             td1Map.put( MdekKeys.GEO_RECT_POINT_IN_PIXEL, data.getRef1GridFormatRectPointInPixel());
-            td1Map.put( MdekKeys.GEO_REF_CONTROL_POINT, data.getRef1GridFormatRefControlPoint() ? "Y" : "N");
-            td1Map.put( MdekKeys.GEO_REF_ORIENTATION_PARAM, data.getRef1GridFormatRefOrientationParam() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_REF_CONTROL_POINT, data.getRef1GridFormatRefControlPoint() != null && data.getRef1GridFormatRefControlPoint() == true ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_REF_ORIENTATION_PARAM, data.getRef1GridFormatRefOrientationParam() != null && data.getRef1GridFormatRefOrientationParam() == true ? "Y" : "N");
             td1Map.put( MdekKeys.GEO_REF_PARAMETER, data.getRef1GridFormatRefGeoreferencedParam());
             
             td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
