@@ -476,7 +476,8 @@ require([
         if (!UtilEvents.publishAndContinue("/onBeforeDialogAccept/WizardResults")) return;
 
         // close dialog in the beginning before other popups prevent this!
-        closeThisDialog();
+        // just hide dialog to prevent destorying the data from the tables
+        dialogWizardResults.thisDialog.domNode.style.visibility = "hidden";
 
         // If selected, add description
         var desc = "";
@@ -871,11 +872,23 @@ require([
                 // add references to datasets/layers or create new objects
                 var datasets = UtilGrid.getTableData( "assistantDatasetsTable" );
                 var coupledResources = [];
-                var createDatasetsDeferreds = [];
+                var promise = new Deferred().resolve();
+                var resolveArray = [];
+
+                // calc correct length
+                var length = 0;
+                array.forEach( datasets, function( dataset ) { if ((applyAll || dataset.selection == 1) && dataset.actionId == "CREATE") length++; } );
+                UtilUI.initBlockerDivInfo( "layers", length, message.get("general.add.layers"));
+
                 array.forEach( datasets, function( dataset ) {
                     if (applyAll || dataset.selection == 1) {
                         if (dataset.actionId == "CREATE") {
-                            createDatasetsDeferreds.push( dialogWizardResults.createDataset( dataset, addressesToAdd ) );
+                            promise = promise.then( function(result) {
+                                if (result) {
+                                    resolveArray.push( result );
+                                }
+                                return dialogWizardResults.createDataset( dataset, addressesToAdd );
+                            } );
                             
                         } else {
                             coupledResources.push( dataset );
@@ -901,34 +914,24 @@ require([
                     return resources;
                 };
         
-                if ( createDatasetsDeferreds.length === 0 ) {
-                    if (coupledResources.length > 0) {
-                        console.log( "Adding all coupled resources as links: ", coupledResources );
-                        addCoupledResourcesInfo( coupledResources );
-                        UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-                        setTimeout(igeEvents.refreshTabContainers, 500);
-                    }
-                    
-                } else {
+                promise.then( function() {
                     UtilUI.enterLoadingState();
-                    UtilUI.initBlockerDivInfo( "layers", createDatasetsDeferreds.length, message.get("general.add.layers"));
-                    
-                    new DeferredList( createDatasetsDeferreds )
-                    .then( function(resourcesDefs) {
-                        console.log("all layers created!");
-                        addCoupledResourcesInfo( coupledResources );
-                        array.forEach( resourcesDefs, function(res) {
-                            // add additional information to show reference in table
-                            var cr = addCoupledResourceInfo( res[1] );
-                            coupledResources.push( cr );
-                        } );
-                        console.log( "Adding coupled resources: ", coupledResources );
-                        UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
-                        igeEvents.refreshTabContainers();
-
-                        UtilUI.exitLoadingState();
+                    console.log("all layers created!");
+                    addCoupledResourcesInfo( coupledResources );
+                    array.forEach( resolveArray, function(res) {
+                        // add additional information to show reference in table
+                        var cr = addCoupledResourceInfo( res );
+                        coupledResources.push( cr );
                     } );
-                }
+                    console.log( "Adding coupled resources: ", coupledResources );
+                    UtilStore.updateWriteStore( "ref3BaseDataLink", coupledResources );
+                    igeEvents.refreshTabContainers();
+
+                    UtilUI.exitLoadingState();
+
+                    closeThisDialog();
+                } );
+
             });
         });
     }
@@ -983,7 +986,12 @@ require([
                             UtilUI.updateBlockerDivInfo( "layers" );
                             def.resolve( bean );
                         },
-                        errorHandler:function(message) { console.log("errorHandler::"+message); UtilUI.removeBlockerDivInfo( "layers" ); UtilUI.exitLoadingState(); displayErrorMessage(message);},
+                        errorHandler:function(message) { 
+                            console.log("errorHandler::"+message); 
+                            UtilUI.removeBlockerDivInfo( "layers" ); 
+                            UtilUI.exitLoadingState(); 
+                            displayErrorMessage(message);
+                        },
                         exceptionHandler:function(errorString) {
                             // try to create the dataset a second later if backend was busy
                             if (errorString.indexOf( "[USER_HAS_RUNNING_JOBS]" ) != -1) {
