@@ -33,15 +33,10 @@
     font-weight: normal;
 }
 
-/*.dijitTreeRowHover, .dijitTreeRowHover .dijitTreeContent {
-    cursor: pointer;
-}*/
- 
 /* the node is not selectable */
-.TreeNodeNotSelectable {
+.TreeNodeNotSelectable, .TreeNodeNotWritable {
     border: none;
     color: #666666;
-/*     margin-left:0; */
 }
 
 .TreeContent .RichTextEditable, .TreeContent .RichTextEditable iframe {

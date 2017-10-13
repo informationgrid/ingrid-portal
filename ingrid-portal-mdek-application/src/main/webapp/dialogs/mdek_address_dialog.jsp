@@ -111,7 +111,7 @@
             }, "treeAdr");
 
             on(tree, "Click", function(node, data) {
-                if (domClass.contains(data.labelNode, "TreeNodeNotSelectable")) {
+                if (node.id === "addressRoot" || node.id === "addressFreeRoot" || domClass.contains(data.labelNode, "TreeNodeNotSelectable")) {
                     btnAssign.set("disabled", true);
                 } else {
                     btnAssign.set("disabled", false);

@@ -110,8 +110,12 @@ define("ingrid/tree/MetadataTree", [
             if (item.labelClass)
                 myClass = item.labelClass;
             // check explicitly if set to false ! (can also be null in top nodes ...)
-            if ((item.userWritePermission === false) || this.itemNotAllowed(item))
+            if (item.userWritePermission === false) {
+                myClass += " TreeNodeNotWritable";
+            }
+            if (this.itemNotAllowed(item)) {
                 myClass += " TreeNodeNotSelectable";
+            }
             return myClass;
         },
 
