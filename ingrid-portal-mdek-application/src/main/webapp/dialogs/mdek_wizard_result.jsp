@@ -914,7 +914,11 @@ require([
                     return resources;
                 };
         
-                promise.then( function() {
+                promise.then( function(lastResult) {
+                    if (lastResult) {
+                        resolveArray.push( lastResult );
+                    }
+
                     UtilUI.enterLoadingState();
                     console.log("all layers created!");
                     addCoupledResourcesInfo( coupledResources );
