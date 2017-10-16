@@ -294,12 +294,19 @@ define([
                 caption: message.get("general.yes"),
                 action: function() {
                     var def = new Deferred();
+                    var previousSelectedNodeId = registry.byId("dataTree").selectedNode.item.id;
                     def.then(function() {
+                        // reset selected node
+                        UtilTree.selectNode("dataTree", previousSelectedNodeId);
                         deferred.resolve("SAVE");
                     }, function(errMsg) {
                         deferred.reject(errMsg);
                     });
 
+                    // set selected node to the one who is going to be saved
+                    UtilTree.selectNode("dataTree", self.global.currentUdk.uuid);
+
+                    // initiate save
                     topic.publish("/saveRequest", {
                         resultHandler: def
                     });
