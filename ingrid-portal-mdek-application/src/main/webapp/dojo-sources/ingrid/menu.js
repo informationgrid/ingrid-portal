@@ -642,62 +642,70 @@ define([
 
         // Selects and loads a node in the tree. The path to the node is expanded step by step.
         handleSelectNodeInTree: function(nodeId, nodeAppType/*, formIdJump*/) {
+            var self = this;
             var defNodeLoaded = new Deferred();
+
             require("ingrid/menu").selectChild("pageHierarchy");
+            
+            require("ingrid/IgeActions").checkForUnsavedChanges().then(function() {
 
-            if (!UtilUI.isContainerNodeId(nodeId) && !UtilUI.isNewNodeId(nodeId)) {
-                var self = this;
-                // Get the path to the node depending on its type
-                var getPathDef = new Deferred();
-                var rootNodes = ["ObjectsAndAddressesRoot"];
-                if (nodeAppType == "O") {
-                    topic.publish("/getObjectPathRequest", {
-                        id: nodeId,
-                        resultHandler: getPathDef
-                    });
-                    rootNodes.push("objectRoot");
-
-                } else if (nodeAppType == "A") {
-                    topic.publish("/getAddressPathRequest", {
-                        id: nodeId,
-                        resultHandler: getPathDef
-                    });
-                    rootNodes.push("addressRoot");
-                }
-
-                // Expand the nodes along the path.
-                //getPathDef.then(dojo.lang.curry(menuEventHandler, menuEventHandler._expandPath, nodeAppType));
-                //getPathDef.then(dojo.partial(menuEventHandler._expandPath, nodeAppType));
-                getPathDef.then(function(path) {
-                    // wait for the page loaded
-                    var def = new Deferred();
-                    // first let the hierarchy-page load 
-                    registry.byId("pageHierarchy").onLoadDeferred.promise.then(
-                        function() {
-                            // and then wait for the tree loaded
-                            registry.byId("pageHierarchy").dataTreePromise.then(function() {
-                                def.resolve(path);
-                            });
+                if (!UtilUI.isContainerNodeId(nodeId) && !UtilUI.isNewNodeId(nodeId)) {
+                    // Get the path to the node depending on its type
+                    var getPathDef = new Deferred();
+                    var rootNodes = ["ObjectsAndAddressesRoot"];
+                    if (nodeAppType == "O") {
+                        topic.publish("/getObjectPathRequest", {
+                            id: nodeId,
+                            resultHandler: getPathDef
                         });
-                    return def.promise;
-                })
-                    .then(function(path) {
-                        registry.byId("dataTree").set("paths", [rootNodes.concat(path)])
-                            .then(function() {
-                                self._loadNode(nodeId)
-                                .then(defNodeLoaded.resolve);
-                            }, function() {
-                                // try free addresses!
-                                registry.byId("dataTree").set("paths", [rootNodes.concat(["addressFreeRoot"].concat(path))])
-                                    .then(function() {
-                                        self._loadNode(nodeId)
-                                        .then(defNodeLoaded.resolve);
-                                    });
+                        rootNodes.push("objectRoot");
+    
+                    } else if (nodeAppType == "A") {
+                        topic.publish("/getAddressPathRequest", {
+                            id: nodeId,
+                            resultHandler: getPathDef
+                        });
+                        rootNodes.push("addressRoot");
+                    }
+    
+                    // Expand the nodes along the path.
+                    //getPathDef.then(dojo.lang.curry(menuEventHandler, menuEventHandler._expandPath, nodeAppType));
+                    //getPathDef.then(dojo.partial(menuEventHandler._expandPath, nodeAppType));
+                    getPathDef.then(function(path) {
+                        // wait for the page loaded
+                        var def = new Deferred();
+                        // first let the hierarchy-page load 
+                        registry.byId("pageHierarchy").onLoadDeferred.promise.then(
+                            function() {
+                                // and then wait for the tree loaded
+                                registry.byId("pageHierarchy").dataTreePromise.then(function() {
+                                    def.resolve(path);
+                                });
                             });
+                        return def.promise;
+                    })
+                        .then(function(path) {
+                            registry.byId("dataTree").set("paths", [rootNodes.concat(path)])
+                                .then(function() {
+                                    self._loadNode(nodeId)
+                                    .then(defNodeLoaded.resolve);
+                                }, function() {
+                                    // try free addresses!
+                                    registry.byId("dataTree").set("paths", [rootNodes.concat(["addressFreeRoot"].concat(path))])
+                                        .then(function() {
+                                            self._loadNode(nodeId)
+                                            .then(defNodeLoaded.resolve);
+                                        });
+                                });
+    
+                        });
+    
+                }
+            
+            }, function() {
+                console.log("abort");
+            });
 
-                    });
-
-            }
             return defNodeLoaded;
         },
 
