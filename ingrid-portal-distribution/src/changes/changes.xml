@@ -16,6 +16,9 @@
           <action type="fix" dev="wemove" issue="810">
             IGE: Fixed object class can be changed.
           </action>
+          <action type="fix" dev="wemove" issue="884">
+            IGE: Fixed missing confirmation when document has been changed.
+          </action>
         </release>
         
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">

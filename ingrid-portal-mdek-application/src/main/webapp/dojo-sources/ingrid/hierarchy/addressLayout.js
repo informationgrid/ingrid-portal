@@ -55,16 +55,6 @@ define([
         
         deferredCreation: null,
         
-        // Address Type is not included since the field is filled automatically
-        adrUiInputElements: [/*"addressType",*/ "addressOwner", "addressStreet", "addressCountry", "addressZipCode", "addressCity", "addressPOBox",
-            "addressZipPOBox", /*"addressNotes",*/ "addressCom", "addressTasks", "thesaurusTermsAddress"],
-        adrClass0UiInputElements: ["headerAddressType0Unit"],
-        adrClass1UiInputElements: ["headerAddressType1Unit"],
-        adrClass2UiInputElements: ["headerAddressType2Lastname", "headerAddressType2Firstname", "headerAddressType2Style",
-            "headerAddressType2Title"],
-        adrClass3UiInputElements: ["headerAddressType3Lastname", "headerAddressType3Firstname", "headerAddressType3Style",
-            "headerAddressType3Title", "headerAddressType3Institution"],
-        
         create: function(){
             this.deferredCreation = new Deferred();
             if (this.addressTemplateCreated) {
@@ -355,20 +345,23 @@ define([
         
         connectDirtyFlagsEvents: function() {
             // Connect the widgets onChange methods to the setDirtyFlag Method
-            // These elements are defined in rules_checker.js!
+
+            var excludeFields = ["thesaurusFreeTermInputAddress"];
             
-//            array.forEach(this.adrUiInputElements, dirty._connectWidgetWithDirtyFlag);
-//            array.forEach(this.adrClass0UiInputElements, dirty._connectWidgetWithDirtyFlag);
-//            array.forEach(this.adrClass1UiInputElements, dirty._connectWidgetWithDirtyFlag);
-//            array.forEach(this.adrClass2UiInputElements, dirty._connectWidgetWithDirtyFlag);
-//            array.forEach(this.adrClass3UiInputElements, dirty._connectWidgetWithDirtyFlag);
-            
-            // merge all input fields
-            var filteredFields = this.adrUiInputElements
-                .concat(this.adrClass0UiInputElements
-                        .concat(this.adrClass1UiInputElements
-                                .concat(this.adrClass2UiInputElements
-                                        .concat(this.adrClass3UiInputElements))));
+            var allFields = query(".dijitTextBox, .dijitSelect", "sectionTopAddress").map(function(item) {
+                return item.getAttribute("widgetid");
+            });
+            allFields = allFields.concat(query(".ui-widget, .input .dijitCheckBoxInput", "contentFrameBodyAddress").map(function(item) {
+                return item.getAttribute("id");
+            }));
+            allFields = allFields.concat(query("span .input .dijitTextBox, span .input .dijitSelect, .dijitTabPane.dijitTextBox", "contentFrameBodyAddress").map(function(item) {
+                return item.getAttribute("widgetid");
+            }));
+
+            // exclude fields that aren't saved
+            var filteredFields = array.filter(allFields, function(field) {
+                return array.indexOf(excludeFields, field) == -1;
+            });
             array.forEach(filteredFields, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         }
     })();
