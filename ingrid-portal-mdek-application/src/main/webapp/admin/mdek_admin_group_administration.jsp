@@ -344,6 +344,8 @@
                     var objs = UtilGrid.getTableData("groupDataRightsObjectsList");
                     var objPermissionList = [];
 
+                    pageGroupAdmin.showPermissionLists();
+
                     console.debug("map permissions object");
                     group.objectPermissions = pageGroupAdmin.mapPermissions(objs, grid); //objPermissionList;
 
@@ -629,9 +631,12 @@
                 dom.byId('permissionCheckboxContainer').style.display = "block";
                 dom.byId('permissionListObjects').style.display = "block";
                 dom.byId('permissionListAddresses').style.display = "block";
+                dom.byId('groupDataObjects').style.height = "250px";
+                dom.byId('groupDataAddresses').style.height = "250px";
 
                 registry.byId("groupDataObjects").resize();
                 registry.byId("groupDataAddresses").resize();
+                registry.byId("groupAdministrationTab").resize();
             };
 
             pageGroupAdmin.getGroupDetails = function(groupName) {
