@@ -22,6 +22,9 @@
           <action type="fix" dev="wemove" issue="885">
             IGE: Fixed missing tab in group administration after page changed.
           </action>
+          <action type="fix" dev="wemove" issue="882">
+            IGE: Fixed missing translation for field toggle for additional rubrics.
+          </action>
         </release>
         
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
