@@ -35,6 +35,7 @@ define([
     "dojo/query",
     "ingrid/grid/CustomGrid",
     "ingrid/menu",
+    "ingrid/message",
     "dijit/registry",
     "dijit/form/ValidationTextBox",
     "dijit/form/ComboBox",
@@ -49,7 +50,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/utils/Store",
     "dojo/store/Memory"
-], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, registry,
+], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, message, registry,
         ValidationTextBox, ComboBox, Selectbox, DateTextBox, NumberSpinner, SimpleTextarea, FilteringSelect,
         ItemFileWriteStore, ItemFileReadStore, UtilDOM, UtilSyslist, UtilStore, Memory){
 
@@ -372,7 +373,7 @@ define([
 
             createRubricIcon: function(rubric) {
                 var link = document.createElement("a");
-                link.setAttribute("title", "ui.general.openAllFieldsTooltip");
+                link.setAttribute("title", message.get("ui.toolbar.openRequiredFieldsTooltip"));
                 link.setAttribute("onclick", "require('ingrid/IgeEvents').toggleFields('" + rubric.id + "')");
                 var image = document.createElement("div");
                 domClass.add(image, "image18px titleIcon");
