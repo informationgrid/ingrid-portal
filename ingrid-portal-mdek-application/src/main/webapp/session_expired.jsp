@@ -1,6 +1,6 @@
 <%--
   **************************************************-
-  Ingrid Portal MDEK Application
+  Ingrid Portal Base
   ==================================================
   Copyright (C) 2014 - 2017 wemove digital solutions GmbH
   ==================================================
@@ -20,99 +20,132 @@
   limitations under the Licence.
   **************************************************#
   --%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+  
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 <fmt:setBundle basename="messages" scope="session"/>
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title><fmt:message key="ui.entry.session.expired" /></title>
-<link rel="shortcut icon" href="/decorations/layout/ingrid-popup/images/favicon.ico" />
-  <style type="text/css">
-	
-	body {
-        font-family: Verdana, Helvetica, Arial, sans-serif;
-        voice-family: "\"}\"";
-        voice-family: inherit;
-        padding: 1em;
-        background: #fff;
-        color: #000;
-        white-space: normal;
-    	margin: 0;
-    	padding: 0;
-	}
-	
-	td,
-    th {
-		white-space: normal;
-    }
-    
-    th {
-		font-size: 12pt;
-    }
-    
-    a:link, a:visited {
-        color: blue;
-    }
-    
-    a:hover {
-        color: #f30 !important;
-    }
+    <head>
+        <title>InGrid-Portal</title>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-style-type" content="text/css" />
+        <meta http-equiv="content-language" content="de" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="author" content="wemove digital solutions" />
+        <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="copyright" content="wemove digital solutions GmbH" />
+        <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"></link>
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
+        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <div class="nav-overlay">
+            <a title="Login" class="nav-overlay__item nav-overlay__item--level1" href="/personalisierungsoptionen">Login</a>
+            <ul class="nav__mobile nav__foot">
+                <li>
+                    <a title="Erläuterungen zur Nutzung von InGrid-Portal" href="/hilfe">Hilfe</a>
+                </li>
+                <li>
+                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal" href="/kontakt">Kontakt</a>
+                </li>
+                <li>
+                    <a title="Alle Inhalte von InGrid-Portal auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
+                </li>
+                <li>
+                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
+                </li>
+                <li>
+                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
+                </li>
+            </ul>
+        </div>
 
-  </style>
-  <link href="/decorations/layout/ingrid-popup/css/styles.css" media="screen, projection" type="text/css" rel="stylesheet">
-  
-  <script src='dwr/interface/SecurityService.js'></script>
-  <script src='dwr/engine.js'></script>
-
-  <script>
-      SecurityService.isPortalConnected(function(response) {
-          if (response == false)
-              document.location.href = "login.jsp";
-      });
-  </script>
-</head>
-<body>
-<div class="layout-tigris">
-<div id="identity" class="motiv_suche">
-  <!-- LOGO -->
-  <div id="logo">
-    <a href="/portal/default-page.psml"><img src="/decorations/layout/ingrid/images/ingrid_logo_icn.png" alt="Logo InGrid-Portal" /></a>
-  </div>
-</div>
-
-<!-- CONTENT BLOCK -->
-<div id="container">
-	<h1><fmt:message key="ui.entry.session.expired" /></h1>
-	<p><fmt:message key="ui.entry.session.expired.text" /></p>
-</div>
-<div class="clearer"></div>
-<div id="footermarginalcontainer">
-  <div id="footermarginal">
-    <!-- portlets go here -->
-  &nbsp;
-  </div>
-</div>
-<div class="clearer"></div>
-
-<!-- footer block -->
-<div id="footercontainer">
-  <div id="footercontent">
-    <!-- portlets go here -->
-	<a href="/portal/disclaimer.psml" title="<fmt:message key="general.imprint" />"><fmt:message key="general.imprint" /></a>
-	<a href="/portal/privacy.psml" title="<fmt:message key="general.privacy.policy" />"><fmt:message key="general.privacy.policy" /></a>
-	<a href="mailto:info@informationgrid.eu" title="<fmt:message key="general.webmaster" />"><fmt:message key="general.webmaster" /></a>
-	<br />
-    Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50<br />
-
-    Alle Rechte vorbehalten<br /><br />
-  </div>
-</div>
-
-</div>
-</body>
+        <div class="page">
+            <header class="header">
+                <div class="ob-box-padded-more ob-box-center">
+                    <div class="header__widgets__section">
+                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                            <svg class="icon">
+                                <use xlink:href="#burger"></use>
+                            </svg>
+                            <svg class="icon ob-fade">
+                                <use xlink:href="#cross"></use>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="header__widgets__section">
+                        <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                        </a>
+                    </div>
+                </div> 
+                <nav class="nav-desktop mq-hide-xxl">
+                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/personalisierungsoptionen" title="Login">Login</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <!-- CONTENT BLOCK -->
+            <section class="block block--padded">
+                <div class="ob-box-wide ob-box-padded ob-box-center">
+                    <article class="content ob-container">
+                        <h1><fmt:message key="ui.entry.session.expired" /></h1>
+                        <p><fmt:message key="ui.entry.session.expired.text" /></p>
+                        <br />
+                    </article>
+                </div>
+            </section>
+            <footer class="footer">
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__top">
+                        <a href="/startseite">
+                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
+                        </a>
+                        <p class="copyright">Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50</p>
+                    </div>
+                </div>
+                <hr class="bx-top-0 bx-bot-0"></hr>
+                <div class="grid">
+                    <div class="column column--3-4-xl">
+                        <div class="ob-box-padded ob-box-center ob-clear">
+                            <div class="footer__section">
+                                <nav class="footer__middle mq-hide-l">
+                                    <a title="Erläuterungen zur Nutzung von InGrid-Portal" href="/hilfe">Hilfe</a>
+                                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal" href="/kontakt">Kontakt</a>
+                                    <a title="Alle Inhalte von InGrid-Portal auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
+                                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
+                                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
+                                   </nav>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column column--1-4-xl">
+                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
+                        <div class="ob-box-padded ob-box-center ob-clear">
+                            <div class="footer__section">
+                                <div class="footer__bottom"> </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- Global scripts -->
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+        
+    </body>
 </html>
