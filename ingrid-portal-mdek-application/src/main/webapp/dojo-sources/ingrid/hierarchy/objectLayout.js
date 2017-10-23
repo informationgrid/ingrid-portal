@@ -2396,11 +2396,15 @@ define([
                                     || behaviour[behave].override === true
                                 )) {
                             console.debug("execute behaviour: " + behave);
-                            behaviour[behave].run();
+                            try {
+                                behaviour[behave].run();
+                            } catch (error) {
+                                console.error("Could not execute behaviour: " + behave, error);
+                            }
                         }
                     }
                 }, function(error) {
-                    console.error("Error executing behvaiour:", error);
+                    console.error("Error getting override behaviours:", error);
                 });
             }
         })();
