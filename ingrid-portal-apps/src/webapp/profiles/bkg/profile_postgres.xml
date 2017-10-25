@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>BKG</name>
+    <description>Portal-ProfileBKG</description>
+    <pages>
+    </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
+        </file>
+    </files>
+</profile>
