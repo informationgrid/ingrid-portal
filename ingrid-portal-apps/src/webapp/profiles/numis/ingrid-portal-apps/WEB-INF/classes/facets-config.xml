@@ -424,7 +424,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         <!-- Umweltverträglichkeitsprüfungen -->
             <facet>
-                <name>Umweltverträglichkeitsprüfungen</name>
+                <name>Umweltverträglich-keitsprüfungen</name>
+                <shortName>UVP</shortName>
                 <query>uvp_category:UVPG-*</query>
                 <id>uvp</id>
                 <parentId>type</parentId>

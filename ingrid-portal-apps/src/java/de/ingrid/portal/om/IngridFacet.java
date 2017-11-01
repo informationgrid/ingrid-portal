@@ -29,6 +29,7 @@ public class IngridFacet {
     private String id;
     private String parentId;
     private String name;
+    private String shortName;
     private String query;
     private String queryType;
     private String codelistId;
@@ -222,5 +223,11 @@ public class IngridFacet {
     }
     public void setColNum(int colNum) {
         this.colNum = colNum;
+    }
+    public String getShortName() {
+        return shortName;
+    }
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 }

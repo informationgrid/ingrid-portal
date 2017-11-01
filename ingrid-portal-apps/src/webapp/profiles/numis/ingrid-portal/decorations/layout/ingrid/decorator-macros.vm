@@ -125,7 +125,7 @@
 
 #* include service navigation component *#
 #macro (includeFooterNavigation $_menu)
-<nav class="footer__middle mq-hide-l">
+<nav class="footer__nav">
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))

@@ -101,6 +101,13 @@ public class FacetsConfig {
                     }
                 }
 
+                if (facetNode.getChildren( "shortName" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "shortName" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setShortName( (String) node.getValue() );
+                    }
+                }
+
                 if (facetNode.getAttributes( "sort" ).size() > 0) {
                     Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
