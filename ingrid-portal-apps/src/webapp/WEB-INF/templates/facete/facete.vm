@@ -76,7 +76,7 @@
                         #if($facet.isOldIPlug())
                             #set ($action = $renderResponse.createActionURL())
                             $action.setParameter("$parentId", "$facet.getId()")
-              #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                            #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
                         #else
                             #renderCheckboxTree ($facet $parentId)
                         #end
@@ -89,7 +89,7 @@
                     #if($facet.isOldIPlug())
                         #set ($action = $renderResponse.createActionURL())
                         $action.setParameter("$parentId", "$facet.getId()")
-            #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                        #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
                     #else
                         #renderTree ($facet $parentId)
                     #end
@@ -358,29 +358,28 @@
 
 #macro (renderFaceteSelectedAttributeNumber $doAction $facet $tooltip $number $isDelete)
     <div class="js-accordion">
-            <div class="js-accordion-toggle sidebar-filter-subheader #if($isDelete)is-active#end" onclick="location.href='$doAction'">
-                <svg class="sidebar-subheader-icon icon">
-                    <use xlink:href="#select-arrow">
-                </svg>
-                #set ($hasShortName = false)
-                #if($facet.getShortName())
-                  #set ($hasShortName = true)
-                #end
-                #set ($hasMobileName = false)
-                #if($facet.getMobileName())
-                  #set ($hasMobileName = true)
-                #end
-                <span #if($hasMobileName)class="mq-hide-l"#end>$MESSAGES.getString("$facet.getName()")</span>
-                #if($hasMobileName)
-                  <span class="mq-show-l">$MESSAGES.getString("$facet.getMobileName()")</span>
-                #end
-                #if($number)
-                    <strong>($number)</strong>
-                #else
-                    <strong>(0)</strong>
-                #end
-            </div>
-        
+        <div class="js-accordion-toggle sidebar-filter-subheader #if($isDelete)is-active#end" onclick="location.href='$doAction'">
+            <svg class="sidebar-subheader-icon icon">
+                <use xlink:href="#select-arrow">
+            </svg>
+            #set ($hasShortName = false)
+            #if($facet.getShortName())
+              #set ($hasShortName = true)
+            #end
+            #set ($hasMobileName = false)
+            #if($facet.getMobileName())
+              #set ($hasMobileName = true)
+            #end
+            <span #if($hasMobileName)class="mq-hide-l"#end>$MESSAGES.getString("$facet.getName()")</span>
+            #if($hasMobileName)
+              <span class="mq-show-l">$MESSAGES.getString("$facet.getMobileName()")</span>
+            #end
+            #if($number)
+                <strong>($number)</strong>
+            #else
+                <strong>(0)</strong>
+            #end
+        </div>
     </div>
     
 #end
