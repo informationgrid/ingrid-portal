@@ -76,7 +76,7 @@
             #if($facet.isOldIPlug())
               #set ($action = $renderResponse.createActionURL())
               $action.setParameter("$parentId", "$facet.getId()")
-              #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+              #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
             #else
               #renderCheckboxTree ($facet $parentId)
             #end
@@ -89,7 +89,7 @@
           #if($facet.isOldIPlug())
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("$parentId", "$facet.getId()")
-            #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+            #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
           #else
             #renderTree ($facet $parentId)
           #end
@@ -102,14 +102,14 @@
           ## Set single facets
           #set ($action = $renderResponse.createActionURL())
           $action.setParameter("$parentId", "$facet.getId()")
-          #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+          #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
         #end
       #end
     #else
       ## Set single facets
       #set ($action = $renderResponse.createActionURL())
       $action.setParameter("$parentId", "$facet.getId()")
-      #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+      #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
     #end
   #end
 #end
@@ -350,7 +350,7 @@
   <input type="submit" class="$buttonclass" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" />
 #end
 
-#macro (renderFaceteSelectedAttributeNumber $doAction $title $tooltip $number $isDelete)
+#macro (renderFaceteSelectedAttributeNumber $doAction $facet $tooltip $number $isDelete)
   <a href="$doAction" class="field field-toggle field-toggle--check"> 
     <label class="field-toggle__label field-toggle__label--highlight tx-sm bx-padr-5"> 
       <div class="field-toggle__icon field-toggle__icon">
@@ -360,7 +360,18 @@
         </svg>
       #end
       </div>
-      $title
+      #set ($hasShortName = false)
+      #if($facet.getShortName())
+        #set ($hasShortName = true)
+      #end
+      #set ($hasMobileName = false)
+      #if($facet.getMobileName())
+        #set ($hasMobileName = true)
+      #end
+      <span #if($hasMobileName)class="mq-hide-l"#end>$MESSAGES.getString("$facet.getName()")</span>
+      #if($hasMobileName)
+        <span class="mq-show-l">$MESSAGES.getString("$facet.getMobileName()")</span>
+      #end
       <span class="field-toggle--number">#if($number)($number)#else(0)#end</span>
     </label>
   </a>

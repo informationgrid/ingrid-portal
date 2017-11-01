@@ -108,6 +108,13 @@ public class FacetsConfig {
                     }
                 }
 
+                if (facetNode.getChildren( "mobileName" ).size() > 0) {
+                    Node node = (Node) facetNode.getChildren( "mobileName" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setMobileName( (String) node.getValue() );
+                    }
+                }
+
                 if (facetNode.getAttributes( "sort" ).size() > 0) {
                     Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );

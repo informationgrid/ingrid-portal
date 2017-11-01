@@ -30,6 +30,7 @@ public class IngridFacet {
     private String parentId;
     private String name;
     private String shortName;
+    private String mobileName;
     private String query;
     private String queryType;
     private String codelistId;
@@ -229,5 +230,11 @@ public class IngridFacet {
     }
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+    public String getMobileName() {
+        return mobileName;
+    }
+    public void setMobileName(String mobileName) {
+        this.mobileName = mobileName;
     }
 }

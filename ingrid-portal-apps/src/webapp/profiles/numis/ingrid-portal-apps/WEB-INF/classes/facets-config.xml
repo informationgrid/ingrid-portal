@@ -161,7 +161,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         <!-- Umweltverträglichkeitsprüfungen -->
             <facet>
-                <name>Umweltverträglichkeitsprüfungen</name>
+                <name>Umweltverträglichkeits-prüfungen</name>
+                <mobileName>Umweltverträglichkeitsprüfungen</mobileName>
                 <query>uvp_category:UVPG-*</query>
                 <id>uvp</id>
                 <display>true</display>
@@ -426,6 +427,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Umweltverträglich-keitsprüfungen</name>
                 <shortName>UVP</shortName>
+                <mobileName>Umweltverträglichkeitsprüfungen</mobileName>
                 <query>uvp_category:UVPG-*</query>
                 <id>uvp</id>
                 <parentId>type</parentId>

@@ -145,6 +145,10 @@
                     #if($facet.getShortName())
                         #set ($hasShortName = true)
                     #end
+                    #set ($hasMobileName = false)
+                    #if($facet.getMobileName())
+                        #set ($hasMobileName = true)
+                    #end
                         <div class="tx-center category_label #if($hasShortName)mq-hide-xxl#end">
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
@@ -181,7 +185,9 @@
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                             #else
-                                #if($hasShortName)
+                                #if($hasMobileName)
+                                    $MESSAGES.getString($facet.getMobileName())
+                                #elseif($hasShortName)
                                     $MESSAGES.getString($facet.getShortName())
                                 #else
                                     $MESSAGES.getString($facet.getName())

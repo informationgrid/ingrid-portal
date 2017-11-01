@@ -150,13 +150,26 @@
                             <div class="circle">$facet.getShortcut()</div>
                         </div>
                     #end
-                        <div class="tx-center category_label">
+                    #set ($hasShortName = false)
+                    #if($facet.getShortName())
+                        #set ($hasShortName = true)
+                    #end
+                    #set ($hasMobileName = false)
+                    #if($facet.getMobileName())
+                        #set ($hasMobileName = true)
+                    #end
+                        <div class="tx-center category_label #if($hasShortName)mq-hide-xxl#end">
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                             #else
                                 $MESSAGES.getString($facet.getName())
                             #end
                         </div>
+                    #if($hasShortName)
+                        <div class="tx-center category_label mq-show-xxl">
+                            $MESSAGES.getString($facet.getShortName())
+                        </div>
+                    #end
                         <div class="tx-center category_count">
                         #if($facet.getQuery())
                             #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
@@ -181,7 +194,13 @@
                             #if($facet.getCodelistId())
                                 $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                             #else
-                                $MESSAGES.getString($facet.getName())
+                                #if($hasMobileName)
+                                    $MESSAGES.getString($facet.getMobileName())
+                                #elseif($hasShortName)
+                                    $MESSAGES.getString($facet.getShortName())
+                                #else
+                                    $MESSAGES.getString($facet.getName())
+                                #end
                             #end
                         </strong>
                         #if($facet.getQuery())
