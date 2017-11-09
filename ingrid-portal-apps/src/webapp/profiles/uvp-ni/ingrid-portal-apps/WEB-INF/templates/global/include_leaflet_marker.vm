@@ -158,13 +158,22 @@
                 iconColor = 'red';
             }
             
-            var icon = L.AwesomeMarkers.icon({
-                markerColor: iconColor,
-                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
-                prefix: 'icon'//,
-                //icon: categories && categories.length > 0 ? categories[0].id : ''
-            });
+            var icon;
             
+            if(smallIcons){
+                icon = L.icon({
+                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_' + iconColor + '.png',
+                    iconSize: [18, 24], 
+                    iconAnchor: [9, 24]
+                });
+            } else {
+                 icon = L.AwesomeMarkers.icon({
+                    markerColor: iconColor,
+                    className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                    prefix: 'icon'//,
+                    //icon: categories && categories.length > 0 ? categories[0].id : ''
+                });
+            }
             var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
             marker.uuid = a[3];
             marker.bbox = null;
@@ -246,11 +255,20 @@
             
             var iconColor = 'green';
             
-            var icon = L.AwesomeMarkers.icon({
-                markerColor: iconColor,
-                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
-                prefix: 'icon'
-            });
+            var icon; 
+            if(smallIcons){
+                icon = L.icon({
+                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_' + iconColor + '.png',
+                    iconSize: [18, 24], 
+                    iconAnchor: [9, 24]
+                });
+            } else {
+                icon = L.AwesomeMarkers.icon({
+                    markerColor: iconColor,
+                    className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                    prefix: 'icon'
+                });
+            }
             
             var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon });
             marker.bbox = null;

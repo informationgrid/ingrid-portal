@@ -22,6 +22,8 @@ html, body {
     var map = addLeafletMap([osm], null, new L.LatLng(51.3, 10));
     var enablePopUp = true;
     var enableLegend = true;
+    var smallIcons = false;
+    
 </script>
 
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
