@@ -296,16 +296,21 @@ thead {
 }
 
 .desktop-logo {
-    max-width: 60%;
+    max-width: 85%;
+}
+
+.desktop-logo {
+    width: 56px;
+    padding: 5px 0 0 0;
 }
 
 .desktop__title p {
-    margin: 0 0 15px;
+    margin: 0 0 10px 0px;
     color: #2C5C91;
 }
 
 .desktop__title p.main__title {
-    font-size: 30px;
+    font-size: 27px;
     font-weight: bold;
 }
 
