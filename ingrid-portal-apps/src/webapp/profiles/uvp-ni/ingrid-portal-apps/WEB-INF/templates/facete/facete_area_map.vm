@@ -47,6 +47,7 @@
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
     var enablePopUp = false;
+    var enableLegend = false;
     
     if(!bounds){
         $( document ).ready(function() {

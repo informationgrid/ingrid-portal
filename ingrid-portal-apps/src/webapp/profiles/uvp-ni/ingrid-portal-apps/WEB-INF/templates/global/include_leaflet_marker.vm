@@ -284,6 +284,8 @@
     if(mapMarkersDevPlan.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
     }
-    L.control.layers({}, overlayers, {position: 'topright', collapsed:false }).addTo(map);
+    if(enableLegend){
+        L.control.layers({}, overlayers, {position: 'topright', collapsed:false }).addTo(map);
+    }
     
 </script>
