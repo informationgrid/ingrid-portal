@@ -10,7 +10,7 @@
           <action type="fix" dev="wemove" issue="918">
             IGE: Change context sensitive uvp help messages because of updated UVPG law text.
           </action>
-          <action type="fix" dev="wemove" issue="">
+          <action type="fix" dev="wemove" issue="892">
             Portal: Activate BKG Portal Profile in Portal Administration.
           </action>
         </release>
