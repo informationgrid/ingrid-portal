@@ -6,8 +6,10 @@
     </properties>
 
     <body>
-
         <release version="4.2.0-SNAPSHOT" date="2017-xx-xx" description="Release 4.2.0">
+          <action type="fix" dev="wemove" issue="918">
+            IGE: Change context sensitive uvp help messages because of updated UVPG law text.
+          </action>
           <action type="fix" dev="wemove" issue="">
             IGE: Fixed getCapabilities assistant when creating coupled resources.
           </action>
