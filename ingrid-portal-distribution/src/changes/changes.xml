@@ -6,9 +6,12 @@
     </properties>
 
     <body>
-        <release version="4.1.x-SNAPSHOT" date="2017-xx-xx" description="Release 4.1.2">
+        <release version="4.1.2-SNAPSHOT" date="2017-11-16" description="Release 4.1.2">
           <action type="fix" dev="wemove" issue="918">
             IGE: Change context sensitive uvp help messages because of updated UVPG law text.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Portal: Activate BKG Portal Profile in Portal Administration.
           </action>
         </release>
         <release version="4.1.1" date="2017-10-23" description="Release 4.1.1">
