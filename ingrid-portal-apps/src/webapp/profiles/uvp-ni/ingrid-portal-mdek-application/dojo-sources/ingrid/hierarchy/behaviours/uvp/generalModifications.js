@@ -101,7 +101,8 @@ define(["dojo/_base/declare",
                 // construct.toDom('<link rel="stylesheet" type="text/css" href="lightbox_stylesheet.css">')
                 construct.toDom(
                     '<style type="text/css">' +
-                    '#objSearch .expandContent, #adrSearch .expandContent {display: none;}' +
+                    '#objSearch .expandContent, #adrSearch .expandContent {display: none;} ' +
+                    '#menuItemSeparatorPublicationCondition,#menuItemPublicationCondition1,#menuItemPublicationCondition2,#menuItemPublicationCondition3 { display: none; }' +
                     '</style>')
             );
         },

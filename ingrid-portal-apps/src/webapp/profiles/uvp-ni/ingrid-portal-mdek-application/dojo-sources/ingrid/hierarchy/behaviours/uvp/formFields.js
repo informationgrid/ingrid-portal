@@ -140,6 +140,84 @@ define(["dojo/_base/declare",
             return codeListParam.value ? +codeListParam.value : +codeListParam["default"];
         },
 
+        _sortUvpNumbers: function(data) {
+
+            // get the string from a text without the number part (e.g. (6,'6a') => 'a')
+            var getStringFromNumText = function(number, text) {
+                var str = text;
+                if (number && number !== -1) {
+                    var len = (number+"").length;
+                    if (len !== text.length) {
+                        str = text.substr(len);
+                    }
+                }
+                return str;
+            };
+
+            // the amazing sort function
+            data.sort( function(a, b) {
+                var partA = a[0].split("-");
+                var partB = b[0].split("-");
+
+                // check first alphanumeric part
+                if (partA[0] === partB[0]) {
+                    var partANumber = partA[1].split(".");
+                    var partBNumber = partB[1].split(".");
+
+                    // check second numeric part
+                    for (var i=0; i<partANumber.length; i++) {
+                        if (partANumber[i] !== partBNumber[i]) {
+                            var intANumber = -1;
+                            var intBNumber = -1;
+                            // check if we can parse the string to a number (e.g. '6a', '4', but not 'a')
+                            if (isNaN(partANumber[i])) {
+                                intANumber = parseInt(partANumber[i]);
+                            } else {
+                                intANumber = +partANumber[i];
+                            }
+                            if (isNaN(partBNumber[i])) {
+                                intBNumber = parseInt(partBNumber[i]);
+                            } else {
+                                intBNumber = +partBNumber[i];
+                            }
+                            
+                            // if it's still is not a number then compare as string (e.g. 'aa')
+                            if (isNaN(intANumber) && isNaN(intBNumber)) {
+                                return partANumber[i] < partBNumber[i] ? -1 : 1;
+                            } else if (isNaN(intANumber)) {
+                                return 1;
+                            } else if (isNaN(intBNumber)) {
+                                return -1;
+                            }
+
+                            // if a number is same then we expect a string inside at least one number
+                            // otherwise the condition above would have taken care already
+                            if (intANumber === intBNumber && intANumber !== -1) {
+                                var s1 = getStringFromNumText(intANumber, partANumber[i]);
+                                var s2 = getStringFromNumText(intBNumber, partBNumber[i]);
+
+                                // sort strings
+                                if (s1 === s2) return 0;
+                                else {
+                                    return s1 < s2 ? -1 : 1;
+                                }
+                                
+                            } else {
+                                return intANumber < intBNumber ? -1 : 1;
+                            }
+                        } else if (i === partANumber.length-1) {
+                            if (partANumber.length < partBNumber.length) {
+                                return -1;
+                            }
+                        }
+
+                    }
+                } else {
+                    return partA[0] < partB[0] ? -1 : 1;
+                }
+            });
+        },
+
         createFields: function() {
             var rubric = "general";
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
@@ -162,6 +240,7 @@ define(["dojo/_base/declare",
                     type: Editors.SelectboxEditor,
                     editable: true,
                     listId: codelist,
+                    sortFunc: this._sortUvpNumbers,
                     formatter: lang.partial(Formatters.SyslistCellFormatter, codelist),
                     partialSearch: true
                 }
