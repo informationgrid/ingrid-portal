@@ -6,6 +6,11 @@
     </properties>
 
     <body>
+        <release version="4.1.x-SNAPSHOT" date="2017-xx-xx" description="Release 4.1.2">
+          <action type="fix" dev="wemove" issue="918">
+            IGE: Change context sensitive uvp help messages because of updated UVPG law text.
+          </action>
+        </release>
         <release version="4.1.1" date="2017-10-23" description="Release 4.1.1">
           <action type="fix" dev="wemove" issue="812">
             IGE: Do not allow selection of a folder when assigning an address.
