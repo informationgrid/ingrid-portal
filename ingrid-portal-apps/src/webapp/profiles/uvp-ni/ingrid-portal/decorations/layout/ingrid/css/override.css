@@ -20,6 +20,11 @@
  * limitations under the Licence.
  * **************************************************#
  */
+ 
+body {
+  min-width: 310px;
+}
+
 a {
   color: #2C5C91;
 }
