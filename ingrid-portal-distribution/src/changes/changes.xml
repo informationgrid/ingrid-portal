@@ -6,6 +6,14 @@
     </properties>
 
     <body>
+        <release version="4.1.3" date="2017-11-21" description="Release 4.1.3">
+          <action type="update" dev="wemove" issue="898">
+            PORTAL: Update UVP-NI header layout.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            Portal: Change UVP-NI facet map layout.
+          </action>
+        </release>
         <release version="4.1.2" date="2017-11-16" description="Release 4.1.2">
           <action type="fix" dev="wemove" issue="918">
             IGE: Change context sensitive uvp help messages because of updated UVPG law text.
