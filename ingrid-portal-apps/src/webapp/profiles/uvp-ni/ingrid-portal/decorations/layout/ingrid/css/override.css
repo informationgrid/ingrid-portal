@@ -449,12 +449,28 @@ thead {
   background-color: rgba(56, 170, 220, 1.0) !important;
 }
 
+.marker-cluster-10.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-10.light div{
+  background-color: rgba(56, 170, 220, 0.6) !important;
+}
+
 .marker-cluster-11 {
   background-color: rgba(48, 48, 48, 0.6) !important;
 }
 
 .marker-cluster-11 div{
   background-color: rgba(48, 48, 48, 1.0) !important;
+}
+
+.marker-cluster-11.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-11.light div{
+  background-color: rgba(48, 48, 48, 0.6) !important;
 }
 
 .marker-cluster-1314 {
@@ -465,12 +481,28 @@ thead {
   background-color: rgba(200, 60, 40, 1.0) !important;
 }
 
+.marker-cluster-1314.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-1314.light div {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
 .marker-cluster-dev-plan {
   background-color: rgba(110, 170, 40, 0.6) !important;
 }
 
 .marker-cluster-dev-plan div {
   background-color: rgba(110, 170, 40, 1.0) !important;
+}
+
+.marker-cluster-dev-plan.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-dev-plan.light div {
+  background-color: rgba(110, 170, 40, 0.6) !important;
 }
 
 .marker-cluster span {

@@ -66,6 +66,9 @@
             } else {
                 c += 'large';
             }
+            if(smallIcons){
+             c += ' light';
+            }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
         }
     });
@@ -80,6 +83,9 @@
                 c += 'medium';
             } else {
                 c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
             }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
         }
@@ -96,6 +102,9 @@
             } else {
                 c += 'large';
             }
+            if(smallIcons){
+             c += ' light';
+            }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
         }
     });
@@ -110,6 +119,9 @@
                 c += 'medium';
             } else {
                 c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
             }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-dev-plan' + c, iconSize: new L.Point(40, 40) });
         }
@@ -159,12 +171,11 @@
             }
             
             var icon;
-            
             if(smallIcons){
                 icon = L.icon({
-                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_' + iconColor + '.png',
-                    iconSize: [18, 24], 
-                    iconAnchor: [9, 24]
+                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_small_' + iconColor + '.png',
+                    iconSize: [6, 6], 
+                    iconAnchor: [3, 3]
                 });
             } else {
                  icon = L.AwesomeMarkers.icon({
@@ -174,7 +185,7 @@
                     //icon: categories && categories.length > 0 ? categories[0].id : ''
                 });
             }
-            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
             marker.uuid = a[3];
             marker.bbox = null;
             if(enablePopUp){
@@ -258,9 +269,9 @@
             var icon; 
             if(smallIcons){
                 icon = L.icon({
-                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_' + iconColor + '.png',
-                    iconSize: [18, 24], 
-                    iconAnchor: [9, 24]
+                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_small_' + iconColor + '.png',
+                    iconSize: [6, 6], 
+                    iconAnchor: [3, 3]
                 });
             } else {
                 icon = L.AwesomeMarkers.icon({
@@ -270,7 +281,7 @@
                 });
             }
             
-            var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon });
+            var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon, interactive: !smallIcons });
             marker.bbox = null;
             if(enablePopUp){
                 marker.bindPopup(popUpHtml, popupMarkerOptions);
