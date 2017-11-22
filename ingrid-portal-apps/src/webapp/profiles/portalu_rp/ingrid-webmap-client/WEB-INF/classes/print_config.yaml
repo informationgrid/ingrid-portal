@@ -1,0 +1,1316 @@
+# allowed DPIs
+dpis: [75, 150, 300]
+
+#
+# the list of allowed hosts
+#
+hosts:
+  # allow all hosts
+  - !ipMatch
+    host:0.0.0.0
+    mask:0.0.0.0
+
+#
+# allowed scales
+#
+scales:
+  - 500
+  - 1000
+  - 2000
+  - 2500
+  - 5000
+  - 10000
+  - 15000
+  - 20000
+  - 25000
+  - 50000
+  - 100000
+  - 200000
+  - 500000
+  - 1000000
+  - 2000000
+  - 4000000
+
+globalParallelFetches: 32
+perHostParallelFetches: 32
+connectionTimeout: 30000
+socketTimeout: 60000
+
+ignoreCapabilities: true
+maxPrintTimeBeforeWarningInSeconds: 120
+printTimeoutMinutes: 5
+
+#---------------------------------------
+# A4 portrait:
+#---------------------------------------
+layouts:
+  1 A4 Hochformat:
+    mainPage:
+      pageSize: A4
+      rotation: true
+
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 22
+          absoluteY: 800
+          width: 550
+          height: 760
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 20
+          absoluteY: 38
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 35
+                   url: "${logo}"
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteY: 790
+          absoluteX: 420
+          width: 150
+          items:
+            - !image
+              rotation: '${rotation}'
+              align: right
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+#---------------------------------------
+# QRCode
+#---------------------------------------
+        - !columns
+          absoluteY: 100
+          absoluteX: 509
+          width: 64
+          items:
+            - !image
+              align: right
+              maxWidth: 64
+              maxHeight: 64
+              url: "${qrcodeurl}"
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteY: 65
+          absoluteX: 30
+          width: 300
+          items:
+            - !text
+              fontSize: 7
+              align: left
+              text: |
+                ${dataOwner}
+
+#---------------------------------------
+# Third party data copyright
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 55
+          absoluteX: 30
+          width: 300
+          items:
+            - !text
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                ${thirdPartyDataOwner}
+
+#---------------------------------------
+# Third party data warning
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 28
+          absoluteX: 153
+          width: 405
+          items:
+            - !text
+              condition: langde
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langfr
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Attention: Mise en garde données tierces. La disponibilité des données est assurée par des tiers. Les conditions d’utilisation du propriétaire respectif des données doivent être respectées.
+            - !text
+              condition: langen
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Warning: Third party data shown. Availability is ensured by third party data provider. The terms and conditions of the third party data owner do apply and have to be respected.
+            - !text
+              condition: langrm
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langit
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
+
+#---------------------------------------
+# Description
+#---------------------------------------
+        - !columns
+          absoluteX: 42
+          absoluteY: 780
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
+          items:
+            - !text
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
+              align: left
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Timestamp
+#---------------------------------------
+        - !columns
+          absoluteY: 61
+          absoluteX: 232
+          width: 140
+          nbColumns: 1
+          items:
+            - !text
+              condition: timestamp
+              fontSize: 14 
+              fontColor: black
+              backgroundColor: white
+              align: center
+              text: |
+                ${timestamp}
+            - !text
+              condition: timestamp
+              fontSize: 2 
+              fontColor: white
+              backgroundColor: white
+              align: center
+              text: |
+                empty text
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteY: 87
+          absoluteX: 378
+          width: 128
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 43
+                text: ' '
+                backgroundColor: white
+        - !columns
+          absoluteY: 82
+          absoluteX: 381
+          width: 124
+          nbColumns: 1
+          items:
+            - !scalebar
+                type: line
+                units: m
+                color: black
+                align: center
+                fontSize: 8
+                maxSize: 128
+            - !text
+              condition: langde
+              fontSize: 7
+              align: center
+              text: |
+                Massstab 1: ${format %,d scale}
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langfr
+              fontSize: 7
+              align: center
+              text: |
+                Echelle 1: ${format %,d scale}
+                Imprimé le ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langen
+              fontSize: 7
+              align: center
+              text: |
+                Scale 1: ${format %,d scale}
+                Printed on ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langrm
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampà il(s) ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langit
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampato il ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+    lastPage:
+      landscape: false
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 820
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##---------------------------------------
+## Legend
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 800
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxWidth: 0
+              maxHeight: 420
+              iconMaxWidth: 250
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 9
+              columnMargin: 5
+              backgroundColor: white
+              inline: false
+
+#---------------------------------------
+# A4 landscape:
+#---------------------------------------
+  2 A4 Querformat:
+    mainPage:
+      rotation: true
+      pageSize: A4
+      landscape: true
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 22
+          absoluteY: 555
+          width: 802
+          height: 520
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 20
+          absoluteY: 35
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 35
+                   url: "${logo}"
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteY: 545
+          absoluteX: 660
+          width: 150
+          items:
+            - !image
+              rotation: '${rotation}'
+              align: right
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+#---------------------------------------
+# QRCode
+#---------------------------------------
+        - !columns
+          absoluteY: 98
+          absoluteX: 761
+          width: 64
+          items:
+            - !image
+              align: right
+              maxWidth: 64
+              maxHeight: 64
+              url: "${qrcodeurl}"
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteY: 60
+          absoluteX: 25
+          width: 300
+          items:
+            - !text
+              fontSize: 7
+              align: left
+              text: |
+                ${dataOwner}
+
+#---------------------------------------
+# Third party data copyright
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 50
+          absoluteX: 25
+          width: 300
+          items:
+            - !text
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                ${thirdPartyDataOwner}
+
+#---------------------------------------
+# Third party data warning
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 23
+          absoluteX: 153
+          width: 675
+          items:
+            - !text
+              condition: langde
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langfr
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Attention: Mise en garde données tierces. La disponibilité des données est assurée par des tiers. Les conditions d’utilisation du propriétaire respectif des données doivent être respectées.
+            - !text
+              condition: langen
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Warning: Third party data shown. Availability is ensured by third party data provider. The terms and conditions of the third party data owner do apply and have to be respected.
+            - !text
+              condition: langrm
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langit
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
+
+#---------------------------------------
+# Description
+#---------------------------------------
+        - !columns
+          absoluteX: 42
+          absoluteY: 535
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
+          items:
+            - !text
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
+              align: left
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Timestamp
+#---------------------------------------
+        - !columns
+          absoluteY: 59
+          absoluteX: 480 
+          width: 140
+          nbColumns: 1
+          items:
+            - !text
+              condition: timestamp
+              fontSize: 14 
+              fontColor: black
+              backgroundColor: white
+              align: center
+              text: |
+                ${timestamp}
+            - !text
+              condition: timestamp
+              fontSize: 2 
+              fontColor: white
+              backgroundColor: white
+              align: center
+              text: |
+                empty text
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteY: 83
+          absoluteX: 626
+          width: 128
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 43
+                text: ' '
+                backgroundColor: white
+        - !columns
+          absoluteY: 78
+          absoluteX: 629
+          width: 124
+          nbColumns: 1
+          items:
+            - !scalebar
+                type: line
+                units: m
+                color: black
+                align: center
+                vertAlign: top
+                fontSize: 8
+                maxSize: 128
+            - !text
+              condition: langde
+              fontSize: 7
+              align: center
+              text: |
+                Massstab 1: ${format %,d scale}
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langfr
+              fontSize: 7
+              align: center
+              text: |
+                Echelle 1: ${format %,d scale}
+                Imprimé le ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langen
+              fontSize: 7
+              align: center
+              text: |
+                Scale 1: ${format %,d scale}
+                Printed on ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langrm
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampà il(s) ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langit
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampato il ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+    lastPage:
+      landscape: true
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 575
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##--------------------------------------
+## Legend
+##--------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 555
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxHeight: 420
+              maxWidth: 0
+              iconMaxWidth: 200
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 9
+              inline: false
+              columnMargin: 5
+              backgroundColor: white
+
+#---------------------------------------
+# A3 portrait:
+#---------------------------------------
+  3 A3 Hochformat:
+    mainPage:
+      pageSize: A3
+      rotation: true
+
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteY: 1150
+          absoluteX: 22
+          width: 802
+          height: 1108
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 20
+          absoluteY: 38
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 35
+                   url: "${logo}"
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteY: 1120
+          absoluteX: 660
+          width: 150
+          items:
+            - !image
+              rotation: '${rotation}'
+              align: right
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+#---------------------------------------
+# QRCode
+#---------------------------------------
+        - !columns
+          absoluteY: 105
+          absoluteX: 760
+          width: 64
+          items:
+            - !image
+              align: right
+              maxWidth: 64
+              maxHeight: 64
+              url: "${qrcodeurl}"
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteY: 65
+          absoluteX: 30
+          width: 405
+          items:
+            - !text
+              fontSize: 6
+              align: left
+              text: |
+                ${dataOwner}
+
+#---------------------------------------
+# Third party data copyright
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 55
+          absoluteX: 30
+          width: 405
+          items:
+            - !text
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                ${thirdPartyDataOwner}
+
+#---------------------------------------
+# Third party data warning
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 40
+          absoluteX: 153
+          width: 675
+          items:
+            - !text
+              condition: langde
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langfr
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Attention: Mise en garde données tierces. La disponibilité des données est assurée par des tiers. Les conditions d’utilisation du propriétaire respectif des données doivent être respectées.
+            - !text
+              condition: langen
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Warning: Third party data shown. Availability is ensured by third party data provider. The terms and conditions of the third party data owner do apply and have to be respected.
+            - !text
+              condition: langrm
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langit
+              fontColor: red
+              fontSize: 6
+              align: left
+              text: |
+                Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
+
+#---------------------------------------
+# Description
+#---------------------------------------
+        - !columns
+          absoluteX: 42
+          absoluteY: 1120
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
+          items:
+            - !text
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
+              align: left
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Timestamp
+#---------------------------------------
+        - !columns
+          absoluteY: 61
+          absoluteX: 480
+          width: 140
+          nbColumns: 1
+          items:
+            - !text
+              condition: timestamp
+              fontSize: 14
+              fontColor: black
+              backgroundColor: white
+              align: center
+              text: |
+                ${timestamp}
+            - !text
+              condition: timestamp
+              fontSize: 2
+              fontColor: white
+              backgroundColor: white
+              align: center
+              text: |
+                empty text
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteY: 87
+          absoluteX: 626
+          width: 128
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 43
+                text: ' '
+                backgroundColor: white
+        - !columns
+          absoluteY: 82
+          absoluteX: 629
+          width: 124
+          nbColumns: 1
+          items:
+            - !scalebar
+                type: line
+                units: m
+                color: black
+                align: center
+                fontSize: 8
+                maxSize: 128
+            - !text
+              condition: langde
+              fontSize: 7
+              align: center
+              text: |
+                Massstab 1: ${format %,d scale}
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langfr
+              fontSize: 7
+              align: center
+              text: |
+                Echelle 1: ${format %,d scale}
+                Imprimé le ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langen
+              fontSize: 7
+              align: center
+              text: |
+                Scale 1: ${format %,d scale}
+                Printed on ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langrm
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampà il(s) ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langit
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampato il ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+    lastPage:
+      landscape: false
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 820
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##---------------------------------------
+## Legend
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 800
+          width: 551
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxHeight: 420
+              maxWidth: 0
+              iconMaxWidth: 250
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 9
+              columnMargin: 5
+              backgroundColor: white
+              inline: false
+
+#---------------------------------------
+# A3 landscape:
+#---------------------------------------
+  4 A3 Querformat:
+    mainPage:
+      rotation: true
+      pageSize: A3
+      landscape: true
+      items:
+
+#---------------------------------------
+# Title
+#---------------------------------------
+        - !columns
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${title}
+
+#---------------------------------------
+# Map
+#---------------------------------------
+        - !map
+          absoluteX: 20
+          absoluteY: 800
+          width: 1150
+          height: 767
+
+#---------------------------------------
+# Logo
+#---------------------------------------
+        - !columns
+          absoluteX: 20
+          absoluteY: 35
+          width: 123
+          items:
+              - !image
+                   align: left
+                   maxWidth: 123
+                   maxHeight: 35
+                   url: "${logo}"
+
+#---------------------------------------
+# North arrow
+#---------------------------------------
+        - !columns
+          absoluteY: 763
+          absoluteX: 1008
+          width: 150
+          items:
+            - !image
+              rotation: '${rotation}'
+              align: right
+              maxWidth: 30
+              maxHeight: 30
+              url: "${northArrow}"
+
+#---------------------------------------
+# QRCode
+#---------------------------------------
+        - !columns
+          absoluteY: 96
+          absoluteX: 1107
+          width: 64
+          items:
+            - !image
+              align: right
+              maxWidth: 64
+              maxHeight: 64
+              url: "${qrcodeurl}"
+
+#---------------------------------------
+# Copyright
+#---------------------------------------
+        - !columns
+          absoluteY: 60
+          absoluteX: 25
+          width: 300
+          items:
+            - !text
+              fontSize: 7
+              align: left
+              text: |
+                ${dataOwner}
+
+#---------------------------------------
+# Third party data copyright
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 50
+          absoluteX: 25
+          width: 300
+          items:
+            - !text
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                ${thirdPartyDataOwner}
+
+#---------------------------------------
+# Third party data warning
+#---------------------------------------
+        - !columns
+          condition: thirdPartyDataOwner
+          absoluteY: 24
+          absoluteX: 153
+          width: 1023
+          items:
+            - !text
+              condition: langde
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langfr
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Attention: Mise en garde données tierces. La disponibilité des données est assurée par des tiers. Les conditions d’utilisation du propriétaire respectif des données doivent être respectées.
+            - !text
+              condition: langen
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Warning: Third party data shown. Availability is ensured by third party data provider. The terms and conditions of the third party data owner do apply and have to be respected.
+            - !text
+              condition: langrm
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Warnung: diese Daten kommen von einem Drittanbieter. Verfügbarkeit wird durch Drittanbieter gewährleistet. Es gelten zusätzlich die Bedingungen der entsprechenden Datenherren.
+            - !text
+              condition: langit
+              fontColor: red
+              fontSize: 7
+              align: left
+              text: |
+                Attenzione: questi dati provengono da terze parti. La loro disponibilità è soggetta al provider esterno. I termini e le condizioni dei rispettivi proprietari dei dati devono essere rispettate.
+
+#---------------------------------------
+# Description
+#---------------------------------------
+        - !columns
+          absoluteX: 42
+          absoluteY: 763
+          width: 150
+          condition: comment
+          nbColumns: 1
+          config:
+            borderWidth: 0.5
+            borderColor: black
+            cells:
+              - padding: 5
+              - backgroundColor: white
+          items:
+            - !text
+              condition: langde
+              fontSize: 10
+              align: left
+              text: |
+                Kommentar:
+            - !text
+              condition: langen
+              fontSize: 10
+              align: left
+              text: |
+                Comment:
+            - !text
+              fontSize: 10
+              align: left
+              text: |
+                ${comment}
+
+#---------------------------------------
+# Timestamp
+#---------------------------------------
+        - !columns
+          absoluteY: 77
+          absoluteX: 828 
+          width: 140
+          nbColumns: 1
+          items:
+            - !text
+              condition: timestamp
+              fontSize: 14 
+              fontColor: black
+              backgroundColor: white
+              align: center
+              text: |
+                ${timestamp}
+            - !text
+              condition: timestamp
+              fontSize: 2 
+              fontColor: white
+              backgroundColor: white
+              align: center
+              text: |
+                empty text
+
+#-------------------------------------
+# Scalesbar
+#-------------------------------------
+        - !columns
+          absoluteY: 83
+          absoluteX: 974
+          width: 128
+          config:
+            borderWidth: 0.5
+          items:
+              - !text
+                fontSize: 43
+                text: ' '
+                backgroundColor: white
+        - !columns
+          absoluteY: 78
+          absoluteX: 977
+          width: 124
+          nbColumns: 1
+          items:
+            - !scalebar
+                type: line
+                units: m
+                color: black
+                align: center
+                vertAlign: top
+                fontSize: 8
+                maxSize: 128
+            - !text
+              condition: langde
+              fontSize: 7
+              align: center
+              text: |
+                Massstab 1: ${format %,d scale}
+                Gedruckt am ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langfr
+              fontSize: 7
+              align: center
+              text: |
+                Echelle 1: ${format %,d scale}
+                Imprimé le ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langen
+              fontSize: 7
+              align: center
+              text: |
+                Scale 1: ${format %,d scale}
+                Printed on ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langrm
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampà il(s) ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+            - !text
+              condition: langit
+              fontSize: 7
+              align: center
+              text: |
+                Scala 1: ${format %,d scale}
+                Stampato il ${now dd.MM.yyyy HH:mm}
+                ${shortLink}
+    lastPage:
+      landscape: true
+      items:
+
+##---------------------------------------
+## Legend title
+##---------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 575
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !text
+              fontSize: 12
+              align: center
+              text: |
+                ${legendTitle}
+
+##--------------------------------------
+## Legend
+##--------------------------------------
+        - !columns
+          absoluteX: 22
+          absoluteY: 555
+          width: 798
+          condition: "enableLegends"
+          items:
+            - !legends
+              horizontalAlignment: left
+              maxHeight: 420
+              maxWidth: 0
+              iconMaxWidth: 200
+              iconMaxHeight: 420
+              defaultScale: 0.75
+              classIndentation: 3
+              layerSpace: 5
+              classSpace: 5
+              layerFontSize: 6
+              columnMargin: 5
+              backgroundColor: white
+              inline: false
