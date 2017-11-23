@@ -73,7 +73,7 @@
                 #if($facet.isOldIPlug())
                     #set ($action = $renderResponse.createActionURL())
                     $action.setParameter("$parentId", "$facet.getId()")
-                    #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                    #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
                 #else
                     #renderTree ($facet $parentId)
                 #end
@@ -81,7 +81,7 @@
                 ## Set single facets
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter("$parentId", "$facet.getId()")
-                #renderFaceteSelectedAttributeNumber($action $MESSAGES.getString("$facet.getName()") $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
             #end
         #else
             ## Set single facets
