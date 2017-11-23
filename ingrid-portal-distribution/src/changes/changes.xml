@@ -6,6 +6,11 @@
     </properties>
 
     <body>
+        <release version="4.1.4" date="2017-xx-xx" description="Release 4.1.4">
+          <action type="update" dev="wemove" issue="924">
+            PORTAL: Update NI copyright.
+          </action>
+        </release>
         <release version="4.1.3" date="2017-11-21" description="Release 4.1.3">
           <action type="update" dev="wemove" issue="898">
             PORTAL: Update UVP-NI header layout.
