@@ -13,6 +13,15 @@
           <action type="fix" dev="wemove" issue="892">
             Portal: Activate BKG Portal Profile in Portal Administration.
           </action>
+          <action type="update" dev="wemove" issue="924">
+            PORTAL: Update NI copyright.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            PORTAL: Update UVP-NI header layout.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            Portal: Change UVP-NI facet map layout.
+          </action>
           <action type="fix" dev="wemove" issue="">
             IGE: Fixed getCapabilities assistant when creating coupled resources.
           </action>
