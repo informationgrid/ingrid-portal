@@ -47,14 +47,6 @@ Weitere Facetten-Tags/Eigenschaften:
 <hidden>"ID"</hidden>:
  - Dieser Facetten-Tag dient dazu eine Facette verschwinden zu lassen, sobald die existierende definierte Facetten-ID ausgewählt wird. (siehe Facette "Raumbezug")  
 
-<facets queryType="">:
- - UND Abfrage: (Einfachauswahl)
-         Standardmäßig sind alle definierten Query-Abfragen eine UND-Abfrage.
- - ODER Abfrage: (Mehrfachauswahl) 
-        Bei der ODER-Abfrage bestehen zwei Möglichkeiten Unterfacetten (<facet>) einer Facette (<facets>) darzustellen:
-        1. ODER-Abfrage mit reinen Checkboxen - "OR"
-        2. ODER-Abfrage mit Erweiterung in einem Dialog-Fenster, d.h. standardmäßig erscheinen drei der definierten Facetten (<facet>) 
-
 <facet sort="">:
 Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeiten:
  - Absteigend nach Facettenwert - "SORT_BY_VALUE_DESC"
@@ -263,7 +255,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.datatype.measure</name>
                 <query>datatype:measure</query>
                 <id>measure</id>
-                <facets queryType="OR">
+                <facets>
                     <facet>
                         <name>searchResult.facete.measures.radiation</name>
                         <query>topic:radiation</query>
@@ -291,7 +283,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.title.service</name>
                 <query>datatype:service</query>
                 <id>service</id>
-                <facets queryType="OR">
+                <facets>
                     <facet>
                         <name>searchResult.facete.service.press</name>
                         <query>topic:press</query>
