@@ -6,10 +6,10 @@
             </a>
             <hr class="bx-top-xs bx-bot-xs">
             <div class="grid grid--gutter">
-                <div class="column column--1-2-xl">
+                <div class="column column--3-5-xl">
                     <p class="copyright">$MESSAGES.getString("ingrid.page.copyright")</p>
                 </div>
-                <div class="column column--1-2-xl">
+                <div class="column column--2-5-xl">
                     #set($footerMenu = $site.getMenu("footer-menu"))
                     #if(!$footerMenu.empty)
                       #includeFooterNavigation($footerMenu)
