@@ -22,6 +22,12 @@
           <action type="update" dev="wemove" issue="898">
             Portal: Change UVP-NI facet map layout.
           </action>
+          <action type="update" dev="wemove" issue="568">
+            PORTAL: Update RLP profil.
+          </action>
+          <action type="update" dev="wemove" issue="926">
+            PORTAL: Fixes and clean up on facets.
+          </action>
           <action type="fix" dev="wemove" issue="">
             IGE: Fixed getCapabilities assistant when creating coupled resources.
           </action>
