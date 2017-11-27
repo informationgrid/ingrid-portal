@@ -344,12 +344,6 @@ thead {
 }
 
 .footer__logo {
-    display: inline-block;
-    margin-right: 1.5rem;
-    vertical-align: middle;
-}
-
-.footer__logo {
     width: 3.125rem;
 }
 
