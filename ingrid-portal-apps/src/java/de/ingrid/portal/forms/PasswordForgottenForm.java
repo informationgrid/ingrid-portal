@@ -40,6 +40,8 @@ public class PasswordForgottenForm extends ActionForm {
 
     public static final String FIELD_EMAIL = "email";
 
+    public static final String FIELD_LOGIN = "login";
+
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -54,6 +56,7 @@ public class PasswordForgottenForm extends ActionForm {
         clearInput();
         
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
+        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN));
     }
 
     /**
