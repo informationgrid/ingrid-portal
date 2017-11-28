@@ -7,6 +7,9 @@
 
     <body>
         <release version="4.1.4" date="2017-11-24" description="Release 4.1.4">
+          <action type="fix" dev="wemove" issue="929">
+            Portal: Fix webmap client path by installation on windows.
+          </action>
           <action type="fix" dev="wemove" issue="927">
             Portal: Fix forgotten password function for different users with same e-mail address.
           </action>
