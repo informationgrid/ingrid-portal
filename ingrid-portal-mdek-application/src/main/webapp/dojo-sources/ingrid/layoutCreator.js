@@ -522,23 +522,16 @@ define([
             },
 
             createDomDataGrid: function(additionalField, structure, section) {
-                //var gridWidget = createDataGridWidget(additionalField.id, structure, {interactive:"true", autoHeight:4});
                 var div = document.createElement("div");
                 div.setAttribute("id", additionalField.id);
                 var surrDiv = this.addSurroundingContainer(div, additionalField, true);
                 this.addToSection(section, surrDiv);
                 
-//                var syslistFunc = null;
-//                if (additionalField.useSyslist) {
-//                    syslistFunc = function() {
-//                        return UtilSyslist.readSysListData(additionalField.useSyslist);
-//                    };
-//                }
-                
                 var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
                     interactive: "true",
                     autoHeight: additionalField.rows,
-                    forceGridHeight: additionalField.forceGridHeight
+                    forceGridHeight: additionalField.forceGridHeight,
+                    contextMenu: additionalField.contextMenu
                 });
             },
 
