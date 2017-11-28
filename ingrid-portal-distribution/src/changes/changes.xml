@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="918">
             IGE: Change context sensitive uvp help messages because of updated UVPG law text.
           </action>
+          <action type="fix" dev="wemove" issue="929">
+            Portal: Fix webmap client path by installation on windows.
+          </action>
           <action type="fix" dev="wemove" issue="927">
             Portal: Fix forgotten password function for different users with same e-mail address.
           </action>
