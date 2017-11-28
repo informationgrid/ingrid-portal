@@ -177,6 +177,10 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                                 break;
                             }
                         }
+                        if (user == null) {
+                            f.setError(PasswordForgottenForm.FIELD_LOGIN, "password.forgotten.error.loginNotExists");
+                            return;
+                        }
                     } else {
                         f.setError(PasswordForgottenForm.FIELD_LOGIN, "password.forgotten.error.loginMiss");
                         return;
