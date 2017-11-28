@@ -172,6 +172,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                     if(login != null && !login.isEmpty()){
                         for (User tmpUser : users) {
                             String tmpUserLogin = tmpUser.getName();
+                            login = login.trim();
                             if(tmpUserLogin.equals( login )){
                                 user = tmpUser;
                                 break;
