@@ -553,6 +553,8 @@ define([
                     style: "width: 100%; color: black; font-family: Verdana, Helvetica, Arial, sans-serif;"
                 }).placeAt(args.container);
                 calendar.set("value", new Date());
+                if (args.column.minDate) calendar.constraints.min = args.column.minDate;
+                if (args.column.maxDate) calendar.constraints.max = args.column.maxDate;
                 calendar.focus();
             };
 

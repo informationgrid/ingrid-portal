@@ -513,7 +513,7 @@ define([
                     { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '260px', editable: false, formatter: Formatters.LinkCellFormatter },
                     // { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true }, // do not display type (#1081)
                     // { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },
-                    { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                    { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, minDate: new Date(), editable: true, formatter: Formatters.DateCellFormatter }
                 ];
             },
 
