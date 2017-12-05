@@ -253,8 +253,14 @@ public class GeneralCapabilitiesParser {
             
             if (entryId != null) {
                 value = syslistCache.getValueFromListId( listId, entryId, true );
+                if (value == null) {
+                    log.warn( "Version could not be mapped!" );
+                }
             }
-            mappedVersionList.add( value );
+            
+            if (value != null) {
+                mappedVersionList.add( value );
+            }
         }
         return mappedVersionList;
     }
@@ -403,6 +409,7 @@ public class GeneralCapabilitiesParser {
         IngridDocument response = connectionFacade.getMdekCallerQuery().queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, "");
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         if (result != null) {
+            @SuppressWarnings("unchecked")
             List<IngridDocument> addresses = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
             
             // add the found uuid to the address object which marks it as found
@@ -431,6 +438,7 @@ public class GeneralCapabilitiesParser {
         IngridDocument response = connectionFacade.getMdekCallerQuery().queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, "");
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         if (result != null) {
+            @SuppressWarnings("unchecked")
             List<IngridDocument> objects = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
             if (objects != null && objects.size() > 0) {
                 resultBean.setRef1ObjectIdentifier( id );
