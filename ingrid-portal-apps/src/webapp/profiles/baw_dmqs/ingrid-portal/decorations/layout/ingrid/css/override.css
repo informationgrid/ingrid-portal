@@ -317,6 +317,8 @@ thead {
 
 .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
     width: 7em;
+	height: unset;
+	display: block;
 }
 
 @media screen and (max-width: 767px) {
