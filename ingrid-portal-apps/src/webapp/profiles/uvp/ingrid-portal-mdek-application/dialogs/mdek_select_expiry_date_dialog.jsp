@@ -17,6 +17,8 @@
             on(_container_, "Load", function() {
                 dialog = _container_;
                 params = this.customParams;
+                var date = registry.byId("expiryDate");
+                date.constraints.min = new Date();
             });
 
             new Button({
