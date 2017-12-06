@@ -39,6 +39,15 @@ if [ "$PORTAL_PROFILE" ]; then
         exit 1
     fi
 
+    # UVP-NI extends UVP
+    if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
+        echo "Copying profile files from parent (uvp) into portal directories ..."
+        cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+        cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
+        cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
+    fi
+
     echo "Copying profile files into portal directories ..."
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
