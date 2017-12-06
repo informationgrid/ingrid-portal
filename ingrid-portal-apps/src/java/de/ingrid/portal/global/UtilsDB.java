@@ -663,4 +663,9 @@ public class UtilsDB {
     public static boolean isOracle() {
 		return HibernateUtil.isOracle();
 	}
+
+    /** Do we use a Postgres database ? */
+    public static boolean isPostgres() {
+        return HibernateUtil.isPostgres();
+    }
 }

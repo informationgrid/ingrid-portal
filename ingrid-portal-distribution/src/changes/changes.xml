@@ -13,6 +13,9 @@
           <action type="fix" dev="wemove" issue="918">
             IGE: Change context sensitive uvp help messages because of updated UVPG law text.
           </action>
+          <action type="fix" dev="wemove" issue="891">
+            Portal: Support Postgres when switching profile.
+          </action>
           <action type="fix" dev="wemove" issue="929">
             Portal: Fix webmap client path by installation on windows.
           </action>

@@ -133,6 +133,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
             String databasePostfix = "_mysql";
             if (UtilsDB.isOracle()) {
                 databasePostfix = "_oracle";
+            } else if (UtilsDB.isPostgres()) {
+                databasePostfix = "_postgres";
             }
             String profileDescriptor = getPortletConfig().getPortletContext().getRealPath(
                     "/profiles/" + profileName + "/profile" + databasePostfix + ".xml");

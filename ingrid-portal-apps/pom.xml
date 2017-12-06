@@ -124,6 +124,7 @@
                             <fileset dir="${project.basedir}/src/java/">
                                 <include name="*.xml" />
                                 <include name="**/wms*.properties" />
+								<exclude name="hibernate.cfg.xml"/>
                             </fileset>
                         </copy>
                         <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
