@@ -10,6 +10,9 @@
           <action type="add" dev="wemove" issue="932">
             UVP: Adapt Vorschaltseite Schleswig-Holstein
           </action>
+          <action type="fix" dev="wemove" issue="931">
+            Portal: Fix search result preview images.
+          </action>
         </release>
         <release version="4.1.4" date="2017-11-24" description="Release 4.1.4">
           <action type="fix" dev="wemove" issue="929">
