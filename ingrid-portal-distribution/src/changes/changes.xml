@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="4.1.5-SNAPSHOT" date="2017-XX-XX" description="Release 4.1.5">
+        <release version="4.1.5" date="2017-12-08" description="Release 4.1.5">
           <action type="add" dev="wemove" issue="932">
             UVP: Adapt Vorschaltseite Schleswig-Holstein
           </action>
