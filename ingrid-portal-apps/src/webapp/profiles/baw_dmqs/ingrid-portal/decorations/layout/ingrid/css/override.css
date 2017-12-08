@@ -294,6 +294,10 @@ thead {
     background: rgb(44, 99, 177);
 }
 
+.footer__logo {
+	width: 8rem;
+}
+
 .pagination__list a[href]:hover .icon, .pagination__list a[href] .icon {
     fill: rgb(44, 99, 177);
 }
