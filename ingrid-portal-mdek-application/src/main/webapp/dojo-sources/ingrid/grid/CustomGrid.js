@@ -841,7 +841,14 @@ define([
              }*/
 
                 //cellCss = "slick-cell c" + i + (m.cssClass ? " " + m.cssClass : "");
-                cellCss = "slick-cell c" + i + " lr l" + i + " r" + Math.min(columnsLength - 1, i + colspan - 1) + (m.cssClass ? " " + m.cssClass : "");
+                cellCss = "slick-cell c" + i + " lr l" + i + " r" + Math.min(columnsLength - 1, i + colspan - 1);
+
+                var numDataRows = this.getDataLength();
+                // add column specific css unless it's the row move handler, which shall not be shown on virtual rows
+                if (m.cssClass && !(this.options.enableMoveRows && row >= numDataRows)) {
+                    cellCss += " " + m.cssClass;
+                }
+
                 if (row === this.activeRow && i === this.activeCell) {
                     cellCss += (" active");
                 }

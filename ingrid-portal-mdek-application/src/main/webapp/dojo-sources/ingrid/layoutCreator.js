@@ -531,7 +531,8 @@ define([
                     interactive: "true",
                     autoHeight: additionalField.rows,
                     forceGridHeight: additionalField.forceGridHeight,
-                    contextMenu: additionalField.contextMenu
+                    contextMenu: additionalField.contextMenu,
+                    moveRows: additionalField.moveRows ? "true" : "false"
                 });
             },
 

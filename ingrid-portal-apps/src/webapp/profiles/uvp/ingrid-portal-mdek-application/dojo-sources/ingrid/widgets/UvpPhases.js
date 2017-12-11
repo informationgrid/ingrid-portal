@@ -150,7 +150,7 @@ define([
             prepareContextMenu: function() {
                 var menu = require("ingrid/menu");
 
-                var contextMenu = menu.initContextMenu( { contextMenu: "EXPIRED_GRID" } );
+                var contextMenu = menu.initContextMenu( { contextMenu: "EXPIRED_GRID", moveRows: true } );
                 contextMenu.addChild(new require("dijit/MenuSeparator")());
                 var expireMenu = new require("dijit/MenuItem")({
                     id: "menuExpireDateClicked_EXPIRED_GRID",
@@ -320,7 +320,7 @@ define([
 
                 var id = "technicalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: message.get("uvp.form.phase1.technicalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: message.get("uvp.form.phase1.technicalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
@@ -332,7 +332,7 @@ define([
                  */
                 id = "applicationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: message.get("uvp.form.phase1.applicationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: message.get("uvp.form.phase1.applicationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "applicationDocs", field: registry.byId(id), isDocTable: true });
@@ -344,7 +344,7 @@ define([
                  */
                 id = "reportsRecommendationsDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: message.get("uvp.form.phase1.reportsRecommendationsDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: message.get("uvp.form.phase1.reportsRecommendationsDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id), isDocTable: true });
@@ -354,7 +354,7 @@ define([
                  */
                 id = "moreDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: message.get("uvp.form.phase1.moreDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: message.get("uvp.form.phase1.moreDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id), isDocTable: true });
@@ -419,7 +419,7 @@ define([
                  */
                 var id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: message.get("uvp.form.phase2.considerationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: message.get("uvp.form.phase2.considerationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id), isDocTable: true });
@@ -473,7 +473,7 @@ define([
                  */
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: message.get("uvp.form.phase3.approvalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: message.get("uvp.form.phase3.approvalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id), isDocTable: true });
@@ -483,7 +483,7 @@ define([
                  */
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: message.get("uvp.form.phase3.designDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: message.get("uvp.form.phase3.designDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id), isDocTable: true });
@@ -509,7 +509,7 @@ define([
 
             getDocTableStructure: function() {
                 return [
-                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '350px', editable: true },
+                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '310px', editable: true },
                     { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '260px', editable: false, formatter: Formatters.LinkCellFormatter },
                     // { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true }, // do not display type (#1081)
                     // { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },

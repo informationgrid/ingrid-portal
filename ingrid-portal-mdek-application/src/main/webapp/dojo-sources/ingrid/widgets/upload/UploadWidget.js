@@ -159,6 +159,7 @@ define([
                     var tabId = this.tabContainer.selectedChildWidget.id;
                     if (tabId === "uploadFilePane") {
                         uploads = this.removeDuplicates(this.uploads);
+                        this.sortUploads(uploads);
                     } else if (tabId === "uploadLinkPane") {
                         uploads = [{
                             uri: this.uploadLink.get("value")
@@ -510,6 +511,13 @@ define([
                 }
                 return false;
             });
+        },
+
+        /**
+         * Sort uploads alphabetically by the file name
+         */
+        sortUploads: function(uploads) {
+            uploads.sort(function(a,b) { return a.file.localeCompare(b.file) });
         }
     });
 });
