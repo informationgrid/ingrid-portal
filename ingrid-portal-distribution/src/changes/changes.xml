@@ -43,6 +43,12 @@
           <action type="update" dev="wemove" issue="926">
             PORTAL: Fixes and clean up on facets.
           </action>
+          <action type="add" dev="wemove" issue="895">
+            IGE-UVP: Set expiry date to all selected rows of a document table.
+          </action>
+          <action type="add" dev="wemove" issue="900">
+            IGE-UVP: Add uploaded documents sorted and added possibility to move rows.
+          </action>
           <action type="fix" dev="wemove" issue="918">
             IGE: Change context sensitive uvp help messages because of updated UVPG law text.
           </action>
