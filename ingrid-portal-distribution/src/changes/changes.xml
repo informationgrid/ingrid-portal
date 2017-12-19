@@ -7,6 +7,9 @@
 
     <body>
         <release version="4.2.0-SNAPSHOT" date="2017-xx-xx" description="Release 4.2.0">
+          <action type="add" dev="wemove" issue="939">
+            UVP: Add BLP Link to Vorschaltseite of Berlin
+          </action>
           <action type="add" dev="wemove" issue="932">
             UVP: Adapt Vorschaltseite Schleswig-Holstein
           </action>
