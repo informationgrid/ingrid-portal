@@ -11,10 +11,17 @@
 #macro (renderDBBrowserRow $rowId $rowValues)
     <tr>
         <td>
-            <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
-			<label for="chk_$velocityCount" class="field-toggle__label field-toggle__label--highlight">
-			$rowId
-			</label>
+            <div class="field-toggle field-toggle--check">
+                <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+                <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
+                    <div class="field-toggle__icon field-toggle__icon-alt">
+                        <svg class="icon">
+                            <use xlink:href="#tick">
+                        </svg>
+                    </div>
+                    $rowId
+                </label>
+            </div>
         </td>
         #foreach ($rowValue in $rowValues)
             <td>$rowValue</td>
