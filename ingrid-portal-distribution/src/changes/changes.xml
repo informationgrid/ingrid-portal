@@ -7,6 +7,9 @@
 
     <body>
         <release version="4.1.6-SNAPSHOT" date="2017-xx-xx" description="Release 4.1.6">
+          <action type="add" dev="wemove" issue="939">
+            UVP: Add BLP Link to Vorschaltseite of Berlin
+          </action>
         </release>
         <release version="4.1.5" date="2017-12-08" description="Release 4.1.5">
           <action type="add" dev="wemove" issue="932">
