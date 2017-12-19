@@ -1,5 +1,5 @@
 -- DB Version
-UPDATE ingrid_lookup SET item_value = '4.2.0', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
+UPDATE ingrid_lookup SET item_value = '4.1.6', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
 
 -- FIX character set in all tables
 CREATE TABLE IF NOT EXISTS ingrid_portal.admin_activity(ID int(11) unsigned NOT NULL);
