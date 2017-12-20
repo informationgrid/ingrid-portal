@@ -13,6 +13,9 @@
           <action type="fix" dev="wemove" issue="931">
             PORTAL: Fix ClassCastException on search result list.
           </action>
+          <action type="fix" dev="wemove" issue="938">
+            PORTAL: Fix missing checkboxes on mdek page.
+          </action>
         </release>
         <release version="4.1.5" date="2017-12-08" description="Release 4.1.5">
           <action type="add" dev="wemove" issue="932">
