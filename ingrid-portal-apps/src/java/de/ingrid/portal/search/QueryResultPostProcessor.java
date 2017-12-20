@@ -170,7 +170,7 @@ public class QueryResultPostProcessor {
             String firstResourceId = null;
             
             // Service Links
-            String[] tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_SERVICE_UUID);
+            String[] tmpArray = getStringArrayFromKey(detail, Settings.RESULT_KEY_SERVICE_UUID);
             if (tmpArray != null && tmpArray.length > 0) {
                 // make valid wms urls from capabilities url 
                 String[] tmpArray2 = new String[tmpArray.length];
@@ -206,7 +206,7 @@ public class QueryResultPostProcessor {
             }
             
             // Capabilities Url
-            tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
+            tmpArray = getStringArrayFromKey( detail, Settings.RESULT_KEY_CAPABILITIES_URL );
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
                 // check for protected access setting
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
