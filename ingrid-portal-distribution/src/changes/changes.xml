@@ -10,6 +10,9 @@
           <action type="add" dev="wemove" issue="939">
             UVP: Add BLP Link to Vorschaltseite of Berlin
           </action>
+          <action type="fix" dev="wemove" issue="931">
+            PORTAL: Fix ClassCastException on search result list.
+          </action>
         </release>
         <release version="4.1.5" date="2017-12-08" description="Release 4.1.5">
           <action type="add" dev="wemove" issue="932">
