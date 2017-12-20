@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="4.1.6-SNAPSHOT" date="2017-xx-xx" description="Release 4.1.6">
+        <release version="4.1.6" date="2017-12-20" description="Release 4.1.6">
           <action type="add" dev="wemove" issue="939">
             UVP: Add BLP Link to Vorschaltseite of Berlin
           </action>
