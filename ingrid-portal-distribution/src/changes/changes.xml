@@ -14,13 +14,13 @@
             UVP: Adapt Vorschaltseite Schleswig-Holstein
           </action>
           <action type="fix" dev="wemove" issue="931">
-            PORTAL: Fix ClassCastException on search result list.
+            PORTAL: Fix preview images and ClassCastException on search result list.
+          </action>
+          <action type="fix" dev="wemove" issue="938">
+            PORTAL: Fix missing checkboxes on mdek page.
           </action>
           <action type="fix" dev="wemove" issue="937">
             PORTAL: Fix user list when connected catalogs not yet added to portal.
-          </action>
-          <action type="fix" dev="wemove" issue="931">
-            PORTAL: Fix search result preview images.
           </action>
           <action type="fix" dev="wemove" issue="891">
             PORTAL: Support Postgres when switching profile.
