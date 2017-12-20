@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="932">
             UVP: Adapt Vorschaltseite Schleswig-Holstein
           </action>
+          <action type="fix" dev="wemove" issue="931">
+            PORTAL: Fix ClassCastException on search result list.
+          </action>
           <action type="fix" dev="wemove" issue="937">
             PORTAL: Fix user list when connected catalogs not yet added to portal.
           </action>
