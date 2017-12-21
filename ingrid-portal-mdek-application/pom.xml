@@ -754,19 +754,24 @@
                                     <target>
                                         <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
                                         <condition property="foundRepeatable">
-                                            <resourcecount count="0" when="greater">
-                                                <fileset dir="src/main/resources/db/migration">
-                                                    <include name="**/R*.sql" />
-                                                </fileset>
-                                            </resourcecount>
+                                            <and>
+                                                <resourcecount count="0" when="greater">
+                                                    <fileset dir="src/main/resources/db/migration">
+                                                        <include name="**/R*.sql" />
+                                                    </fileset>
+                                                </resourcecount>
+                                                <not>
+                                                    <contains string="${project.version}" substring="-SNAPSHOT"></contains>
+                                                </not>
+                                            </and>
                                         </condition>
                                         <if>
-                                            <equals arg1="${foundRepeatable}" arg2="true" />
+                                            <equals arg1="${foundRepeatable}" arg2="true"/>
                                             <then>
-                                                <fail message="Flyway: You must not have repeatable SQL files!" />
+                                                <fail message="Flyway: You must not have repeatable SQL files during a release!"/>
                                             </then>
                                             <else>
-                                                <echo message="Flyway: No repeatable SQL found. OK!" />
+                                                <echo message="Flyway: No release version or no repeatable SQL found. OK!"/>
                                             </else>
                                         </if>
                                     </target>
