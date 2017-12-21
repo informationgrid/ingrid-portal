@@ -40,10 +40,11 @@ define(["dojo/_base/declare",
 ], function(declare, array, Deferred, lang, topic, on, aspect, dom, domClass, registry, cookie, message, dialog, behaviours, UtilGrid, UtilSyslist, Editors) {
 return lang.mixin(behaviours, {
 
-openData : {
+openDataLGV : {
     title : "LGV: Open Data",
     description : "Neue Anforderungen seitens des Hamburger Transparenzportals, aber auch der Geodateninfrastruktur Hamburg, machen es erforderlich, dass die Funktionalitäten der beiden Checkboxen 'Open Data' und 'Veröffentlichung gemäß HmbTG' angepasst werden müssen.",
-    defaultActive: true,
+    category: "LGV",
+    defaultActive: false,
     run : function() {
         // disable free text in categories by choosing a selectbox editor
         var categories = registry.byId("categoriesOpenData");
@@ -419,12 +420,12 @@ openData : {
                 domClass.add("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
                 
             } else {
-            	
-            	// => LGV SPECIFIC CODE
-            	// unregister from check for download link
-            	if (this.openDataLinkCheck) {
+                
+                // => LGV SPECIFIC CODE
+                // unregister from check for download link
+                if (this.openDataLinkCheck) {
                     this.openDataLinkCheck.remove();
-            	}
+                }
                 
                 if (openDataAddressCheck) {
                     openDataAddressCheck.remove();
@@ -608,13 +609,14 @@ openData : {
 
 },
 
-requireUseConstraints: {
+requireUseConstraintsLGV: {
     title: "LGV: Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
     title_en: "Use Constraints - Required on INSPIRE / Open Data",
     description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"Veröffentlichung gemäß HmbTG\", \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
     description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
     issue: "https://dev.informationgrid.eu/redmine/issues/223",
-    defaultActive: true,
+    category: "LGV",
+    defaultActive: false,
     run: function () {
         // define our useConstraints handler
         var updateUseConstraintsBehaviour = function (isChecked) {
