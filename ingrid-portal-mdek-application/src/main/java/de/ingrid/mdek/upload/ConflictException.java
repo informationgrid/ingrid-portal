@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -30,6 +30,11 @@ import javax.ws.rs.core.Response;
 
 import de.ingrid.mdek.upload.storage.StorageItem;
 
+/**
+ * An exception signaling a conflict between a new item and existing items.
+ * The data contain the existing item(s) (multiple, if the item is an archive)
+ * and an alternative name that may be used to resolve the conflict.
+ */
 public class ConflictException extends WebApplicationException implements UploadException {
 
     private static final long serialVersionUID = 1L;
@@ -39,12 +44,13 @@ public class ConflictException extends WebApplicationException implements Upload
     /**
      * Constructor
      * @param message
-     * @param file
+     * @param files
+     * @param altName
      */
-    public ConflictException(String message, StorageItem file) {
+    public ConflictException(String message, StorageItem[] files, String altName) {
         super(message, Response.Status.CONFLICT.getStatusCode());
-        this.data.put("file", file);
-        this.data.put("alt", file.getNextName());
+        this.data.put("files", files);
+        this.data.put("alt", altName);
     }
 
     @Override
