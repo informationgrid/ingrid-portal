@@ -369,20 +369,6 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
-     * Get the path where files from the given archive should be extracted to
-     * @param path
-     * @return Path
-     */
-    private Path getExtractPath(Path path) {
-        String filename = path.getName(path.getNameCount()-1).toString();
-        if (filename.indexOf(".") > 0) {
-            filename = filename.substring(0, filename.lastIndexOf("."));
-        }
-        Path directory = Paths.get(path.getParent().toString(), this.sanitize(filename, ILLEGAL_PATH_CHARS));
-        return directory;
-    }
-
-    /**
      * Check if a path is valid
      *
      * @param path
