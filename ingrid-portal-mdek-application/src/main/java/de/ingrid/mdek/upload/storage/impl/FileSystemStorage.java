@@ -176,28 +176,31 @@ public class FileSystemStorage implements Storage {
             Files.copy(data, realPath, copyOptions);
         }
         catch (FileAlreadyExistsException faex) {
-            throw new ConflictException(faex.getMessage(), this.getFileInfo(faex.getFile()));
+        	StorageItem[] items = { this.getFileInfo(faex.getFile()) };
+            throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
         if (Files.size(realPath) != size) {
             throw new IOException("The file size is different to the expected size");
         }
         String[] files = new String[] { realPath.toString() };
 
-        if (extract) {
-            // extract archives
+        if (extract && this.isArchive(realPath)) {
+            // extract archive
             try {
-                String contentType = Files.probeContentType(realPath);
-                if (contentType.contains("zip") || contentType.contains("compressed")) {
-                    files = this.uncompress(realPath, copyOptions);
-                    // delete archive
-                    Files.delete(realPath);
-                }
+                files = this.extract(realPath, copyOptions);
             }
             catch (FileAlreadyExistsException faex) {
-                throw new ConflictException(faex.getMessage(), this.getFileInfo(faex.getFile()));
+                // get files from existing archive
+                List<StorageItem> items = this.list(this.getExtractPath(realPath));
+                throw new ConflictException(faex.getMessage(),
+                        items.toArray(new StorageItem[items.size()]), this.getFileInfo(realPath.toString()).getNextName());
             }
             catch (Exception ex) {
                 throw new IOException(ex);
+            }
+            finally {
+                // delete archive
+                Files.delete(realPath);
             }
         }
 
@@ -218,7 +221,8 @@ public class FileSystemStorage implements Storage {
             Files.copy(data, realPath, StandardCopyOption.REPLACE_EXISTING);
         }
         catch (FileAlreadyExistsException faex) {
-            throw new ConflictException(faex.getMessage(), this.getFileInfo(faex.getFile()));
+            StorageItem[] items = { this.getFileInfo(faex.getFile()) };
+            throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
         if (Files.size(realPath) != size) {
             throw new IOException("The file size is different to the expected size");
@@ -280,14 +284,26 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
-     * Uncompress the file denoted by path
+     * Check if the file denoted by path is an archive
+     *
+     * @param path
+     * @return
+     * @throws IOException
+     */
+    private boolean isArchive(Path path) throws IOException {
+        String contentType = Files.probeContentType(path);
+        return contentType.contains("zip") || contentType.contains("compressed");
+    }
+
+    /**
+     * Extract the archive file denoted by path into a directory with the same name
      *
      * @param path
      * @param copyOptions
      * @return String[]
      * @throws Exception
      */
-    private String[] uncompress(Path path, CopyOption... copyOptions) throws Exception {
+    private String[] extract(Path path, CopyOption... copyOptions) throws Exception {
         List<Path> result = new ArrayList<Path>();
         try (InputStream fis = FileUtils.openInputStream(path.toFile());
                 InputStream bis = new BufferedInputStream(fis)) {
@@ -303,9 +319,12 @@ public class FileSystemStorage implements Storage {
             InputStream is = bcis != null ? bcis : bis;
             try (ArchiveInputStream ais = new ArchiveStreamFactory().createArchiveInputStream(is)) {
                 ArchiveEntry entry = ais.getNextEntry();
-                Path parent = path.getParent();
+
+                // get the directory name from the archive name
+                Path directory = this.getExtractPath(path);
+
                 while (entry != null) {
-                    Path file = Paths.get(parent.toString(), this.sanitize(entry.getName(), ILLEGAL_PATH_CHARS));
+                    Path file = Paths.get(directory.toString(), this.sanitize(entry.getName(), ILLEGAL_PATH_CHARS));
                     if (entry.isDirectory()) {
                         // handle directory
                         Files.createDirectories(file);
@@ -319,20 +338,34 @@ public class FileSystemStorage implements Storage {
                 }
             }
             catch (Exception ex) {
-                log.error("Failed to uncompress '" + path + "'. Cleaning up...");
+                log.error("Failed to extract archive '" + path + "'. Cleaning up...");
                 // delete all extracted files, if one file fails
                 for (Path file : result) {
                     try {
                         Files.delete(file);
                     }
                     catch (Exception ex1) {
-                        log.error("Could not delete '" + file + "' while cleaning up from failed uncompressing.");
+                        log.error("Could not delete '" + file + "' while cleaning up from failed extraction.");
                     }
                 }
                 throw ex;
             }
         }
         return result.stream().map(p -> p.toString()).toArray(size -> new String[size]);
+    }
+
+    /**
+     * Get the path where files from the given archive should be extracted to
+     * @param path
+     * @return Path
+     */
+    private Path getExtractPath(Path path) {
+        String filename = path.getName(path.getNameCount()-1).toString();
+        if (filename.indexOf(".") > 0) {
+            filename = filename.substring(0, filename.lastIndexOf("."));
+        }
+        Path directory = Paths.get(path.getParent().toString(), this.sanitize(filename, ILLEGAL_PATH_CHARS));
+        return directory;
     }
 
     /**

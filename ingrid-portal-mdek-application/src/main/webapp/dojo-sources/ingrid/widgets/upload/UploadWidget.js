@@ -88,6 +88,10 @@ define([
             rename: {},
             keep: {}
         },
+        defaultUploadParams: {
+            replace: false
+        },
+        uploadParams: {},
         uploadErrors: {},
 
         resultParts: {},
@@ -103,6 +107,8 @@ define([
             this.deferred = new Deferred();
 
             // initialize data
+            this.uploadParams = {};
+            this.uploadErrors = {};
             this.resultParts = {};
             this.uploads = [];
 
@@ -259,7 +265,9 @@ define([
                     inputName: "file",
                     uuidName: "id",
                     totalFileSizeName: "size",
-                    params: this.getUploadParams(path, false)
+                    params: this.getUploadParams(null, {
+                        path: path
+                    })
                 },
                 retry: {
                     enableAuto: false,
@@ -289,7 +297,9 @@ define([
                         this.initializeButton(id, 'replace', function(id, e) {
                             // retry with replace parameter set to true
                             uploader.setName(id, name);
-                            uploader.setParams(this.getUploadParams(path, true), id);
+                            uploader.setParams(this.getUploadParams(id, {
+                                replace: true
+                            }), id);
                             uploader.retry(id);
                         });
                         this.initializeButton(id, 'rename', function(id, e) {
@@ -297,19 +307,25 @@ define([
                             if (data.alt) {
                                 // retry with new name replace parameter set to false
                                 uploader.setName(id, data.alt);
-                                uploader.setParams(this.getUploadParams(path, false), id);
+                                uploader.setParams(this.getUploadParams(id, {
+                                    replace: false
+                                }), id);
                                 uploader.retry(id);
                             }
                         });
                         this.initializeButton(id, 'keep', function(id, e) {
                             var data = this.uploadErrors[id] || {};
-                            if (data.file) {
+                            if (data.files) {
                                 // finish the upload
-                                this.finishUpload(id, data.file);
+                                this.finishUpload(id, data.files);
                             }
                         });
                     }),
                     onUpload: lang.hitch(this, function(id, name) {
+                        // set extract flag
+                        uploader.setParams(this.getUploadParams(id, {
+                            extract: this.shouldExtractArchives()
+                        }), id);
                         this.setOkButtonState(false);
                     }),
                     onComplete: lang.hitch(this, function(id, name, responseJSON, xhrOrXdr) {
@@ -448,6 +464,7 @@ define([
         /**
          * Get the container DOM element for a file upload
          * @param uploadId
+         * @return DOM element
          */
         getFileEl: function(uploadId) {
             var elements = query(".qq-file-id-"+uploadId);
@@ -458,22 +475,43 @@ define([
         },
 
         /**
-         * Get parameters for uploader
-         * @param path The path for uploads
-         * @param replace Boolean whether to replace existing files or not
+         * Get value of the extract archives checkbox
+         * @return boolean
+         */
+        shouldExtractArchives: function() {
+            var elements = query("input[name='extract']");
+            if (elements.length > 0) {
+                return elements[0].checked;
+            }
+            return false;
+        },
+
+        /**
+         * Get upload parameters for the given item. The method stores parameters from previous calls
+         * and returns them, if not specified in the current call.
+         * @param id The id of the item, null for default parameters
+         * @param params Object with parameters
          * @return Object
          */
-        getUploadParams: function(path, replace) {
-            return {
-                path: path,
-                replace: replace
-            };
+        getUploadParams: function(id, params) {
+            var result = {};
+            if (id == null) {
+                lang.mixin(this.defaultUploadParams, params);
+                result = this.defaultUploadParams;
+            }
+            else {
+                var existingParams = this.uploadParams.hasOwnProperty(id) ? this.uploadParams[id] : lang.clone(this.defaultUploadParams);
+                lang.mixin(existingParams, params);
+                this.uploadParams[id] = existingParams
+                result = this.uploadParams[id];
+            }
+            return result;
         },
 
         /**
          * Finish the given upload adding the data to the successful uploads
          * @param id The id of the upload
-         * @param data The file data, object with properties size, type, uri
+         * @param data Array of file data (object with properties size, type, uri)
          */
         finishUpload: function(id, data) {
             var fileEl = this.getFileEl(id);
@@ -492,7 +530,9 @@ define([
                     node.innerHTML = node.innerHTML.replace(/.* ([^ ]+)/, "$1");
                 });
             }
-            this.uploads.push(data);
+            for (var i=0, count=data.length; i<count; i++) {
+                this.uploads.push(data[i]);
+            }
             this.setOkButtonState(true);
         },
 

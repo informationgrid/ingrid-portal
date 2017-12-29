@@ -618,13 +618,16 @@ define([
             addUploadLink: function(tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
+                    // upload base path
+                    var basePath = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
+
                     // create uploader instance
                     var uploader = new UploadWidget({
                         uploadUrl: this.uploadUrl
                     });
 
                     // upload handler
-                    var handleUploads = lang.hitch(this, function(uploads) {
+                    var handleUploads = lang.hitch(this, function(uploads, basePath) {
                         // get existing table data
                         var rows = table.data;
 
@@ -638,7 +641,7 @@ define([
                             var uri = row.link;
                             if (uri && uploadMap[uri]) {
                                 var upload = uploadMap[uri];
-                                row = getRowData(row, upload);
+                                row = getRowData(row, upload, basePath);
                                 delete uploadMap[uri];
                             }
                         });
@@ -654,14 +657,14 @@ define([
                             if (!uri) {
                                 var upload = uploads.shift();
                                 if (upload) {
-                                    row = getRowData(row, upload);
+                                    row = getRowData(row, upload, basePath);
                                 }
                             }
                         });
 
                         // add remaining uploads
                         array.forEach(uploads, function(upload) {
-                            rows.push(getRowData({}, upload));
+                            rows.push(getRowData({}, upload, basePath));
                         });
 
                         // store changes
@@ -699,11 +702,12 @@ define([
                         return files;
                     };
 
-                    var getRowData = function(row, data) {
+                    var getRowData = function(row, data, basePath) {
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
-                            var lastDotPos = file.lastIndexOf(".");
-                            var name = file.substring(file.lastIndexOf('/')+1,
+                            var fileRel = file.substring(basePath.length, file.length);
+                            var lastDotPos = fileRel.lastIndexOf(".");
+                            var name = fileRel.substring(0,
                                     lastDotPos === -1 ? file.length : lastDotPos);
                             row.label = decodeURI(name);
                         }
@@ -739,10 +743,9 @@ define([
                             cursor: "pointer"
                         },
                         onclick: lang.hitch(this, function() {
-                            var path = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
                             var files = getFiles(this.phases, true);
-                            uploader.open(path, files).then(lang.hitch(this, function(uploads) {
-                                handleUploads(uploads);
+                            uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
+                                handleUploads(uploads, basePath);
                             }));
                         })
                     }, linkContainer);
