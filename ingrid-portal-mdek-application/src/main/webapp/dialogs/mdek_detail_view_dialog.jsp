@@ -897,14 +897,22 @@ require([
                     data = getValueFromAdditional(widgetId, nodeData);
                 }
                 if (data) {
-                    // if it is a table
-                    if (typeof(data) == "object") {
+                    // if it's a date object
+                    if (data instanceof Date) {
+                        var date = dojo.date.locale.format(data, {
+                            selector: "date",
+                            datePattern: "dd.MM.yyyy"
+                        });
+                        renderTextWithTitle(date, label);
+
+                    } else if (typeof(data) == "object") { // if it is a table
                         if (data.length > 0) {
                             var columnFields = getColumnFields(widgetId);
                             var columnNames = getColumnNames(widgetId);
                             var formatters = getColumnFormatters(widgetId);
                             renderTable(data, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
                         }
+
                     } else {
                         renderTextWithTitle(data, label);
                     }
@@ -922,7 +930,11 @@ require([
                         result = prepareAdditionalTable(field.tableRows);
                         return true;
                     } else if (field.value !== null) {
-                        result = field.value + getUnitFromField(id);
+                        if (field.value instanceof Date) {
+                            result = field.value;
+                        } else {
+                            result = field.value + getUnitFromField(id);
+                        }
                         return true;
                     }
                 }

@@ -88,6 +88,9 @@
           <action type="fix" dev="wemove" issue="882">
             IGE: Fixed missing translation for field toggle for additional rubrics.
           </action>
+          <action type="fix" dev="wemove" issue="936">
+            IGE: Fixed wrong date format in detail view (UVP).
+          </action>
           <action type="fix" dev="wemove" issue="886">
             MAPCLIENT: Fixed add WMS services and encode label of layers.
           </action>
