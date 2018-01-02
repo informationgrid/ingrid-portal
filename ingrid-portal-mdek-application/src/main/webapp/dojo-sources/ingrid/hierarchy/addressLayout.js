@@ -128,7 +128,7 @@ define([
         
         createInfoHeader: function () {
             //new dijit.layout.ContentPane({id:"headerFrameAddress"}, "sectionTopAddress");
-            new ValidationTextBox({style: "width:100%;", disabled: 'disabled'}, "addressTitle");
+            new ValidationTextBox({maxLength: 255, style: "width:100%;", disabled: 'disabled'}, "addressTitle");
             var addrClassText = new ValidationTextBox({style: "width:100%;", disabled: 'disabled'}, "addressType");
             //on(addrClassText, "onChange", igeEvents.selectUDKAddressType);
             addrClassText.onChange = lang.hitch(igeEvents, igeEvents.selectUDKAddressType);

@@ -176,6 +176,7 @@ define([
 
             createInfoHeader: function() {
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
 
@@ -230,6 +231,7 @@ define([
 
             createGeneralInfo: function() {
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "generalShortDesc");
 
@@ -269,10 +271,12 @@ define([
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
                 var previewImage = new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "generalPreviewImage");
                 
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "previewImageDescription");
 
@@ -369,6 +373,7 @@ define([
                 tabRef1.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref1BasisTab2"));
 
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref1ObjectIdentifier");
 
@@ -965,31 +970,40 @@ define([
             createFachBezugClass2: function() {
 
                 new SimpleTextarea({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref2Author");
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref2Publisher");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishedIn");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishLocation");
 
                 new ValidationTextBox({
+                    maxLength: 40,
                     style: "width:100%;"
                 }, "ref2PublishedInIssue");
                 new ValidationTextBox({
+                    maxLength: 20,
                     style: "width:100%;"
                 }, "ref2PublishedInPages");
                 new ValidationTextBox({
+                    maxLength: 20,
                     style: "width:100%;"
                 }, "ref2PublishedInYear");
                 new ValidationTextBox({
+                    maxLength: 40,
                     style: "width:100%;"
                 }, "ref2PublishedISBN");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishedPublisher");
 
@@ -999,6 +1013,7 @@ define([
                 }, "ref2LocationTabContainer");
 
                 var ref2LocationTab1 = new SimpleTextarea({
+                    maxLength: 80,
                     title: message.get("ui.obj.type2.locationTable.tab.text"),
                     "class": "textAreaFull"
                 }, "ref2LocationText");
@@ -1068,6 +1083,7 @@ define([
                 ref2BaseDataTabContainer.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref2BaseDataTab2"));
 
                 new SimpleTextarea({
+                    maxLength: 255,
                     "class": "textAreaFull"
                 }, "ref2BibData");
                 new SimpleTextarea({

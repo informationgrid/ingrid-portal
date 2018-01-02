@@ -218,7 +218,7 @@
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <div type="text" maxLength="255" id="objectName" required="true" name="objectName" style="width: 100%;font-size:11px !important"/>
+                                    <input type="text" id="objectName" required="true" name="objectName" style="width: 100%;font-size:11px !important"/>
                                 </td>
                             </tr>
                             <tr>

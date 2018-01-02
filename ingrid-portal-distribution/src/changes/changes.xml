@@ -91,6 +91,9 @@
           <action type="fix" dev="wemove" issue="936">
             IGE: Fixed wrong date format in detail view (UVP).
           </action>
+          <action type="fix" dev="wemove" issue="941">
+            IGE: Do not allow more than 255 characters in object title and other fields.
+          </action>
           <action type="fix" dev="wemove" issue="886">
             MAPCLIENT: Fixed add WMS services and encode label of layers.
           </action>
