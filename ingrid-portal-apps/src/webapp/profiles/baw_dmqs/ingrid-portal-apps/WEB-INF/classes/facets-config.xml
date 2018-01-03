@@ -128,7 +128,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>Auftrag/Auftragname</name>
         <id>wildcard_number</id>
-        <wildcard>number</wildcard>
+        <wildcard>bawauftragsnummer</wildcard>
     </facet>
     <facet>
         <name>Bundeswasserstraße</name>
