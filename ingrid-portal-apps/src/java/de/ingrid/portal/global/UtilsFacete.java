@@ -595,26 +595,33 @@ public class UtilsFacete {
     }
 
     private static void addToQueryWildcard(PortletRequest request, IngridQuery query) {
-        ArrayList<String> wildcardIds = (ArrayList<String>) getAttributeFromSession( request, WILDCARD_IDS );
-        if(wildcardIds != null){
-            for (String wildcardId : wildcardIds) {
-                if(wildcardId != null){
-                    boolean required = true;
-                    boolean prohibited = false;
-                    String fieldName = null;
-                    String wildCardValue = null;
-                    
-                    HashMap<String, String> wildcard = (HashMap<String, String>) getAttributeFromSession(request, wildcardId);
-                    if(wildcard != null){
-                        fieldName = wildcard.get( "wildcard" );
-                        wildCardValue = wildcard.get( "term" );
-                        if(wildCardValue != null && wildCardValue.length() > 0 && wildCardValue.indexOf("*") == -1){
-                            wildCardValue = wildCardValue + "*";
-                        }
-                        query.addWildCardFieldQuery( new WildCardFieldQuery( required, prohibited, fieldName, wildCardValue ) );
-                    }
-                }
+        List<String> wildcardIds = (List<String>) getAttributeFromSession(request, WILDCARD_IDS);
+        if (wildcardIds == null) return;
+
+        wildcardIds.removeAll(Collections.singleton(null));
+        for(String wildcardId: wildcardIds) {
+            Map<String, String> wildcard = (Map<String, String>) getAttributeFromSession(request, wildcardId);
+            if (wildcard == null) continue;
+
+            boolean required = true;
+            boolean prohibited = false;
+            String fieldName = wildcard.get("wildcard");
+            String wildCardValue = wildcard.get("term");
+
+            if(wildCardValue != null
+                    && !wildCardValue.isEmpty()
+                    && !wildCardValue.contains("*")) {
+                wildCardValue = wildCardValue + '*';
             }
+            if (wildCardValue != null) {
+                wildCardValue = wildCardValue.toLowerCase();
+            }
+
+            query.addWildCardFieldQuery(new WildCardFieldQuery(
+                    required,
+                    prohibited,
+                    fieldName,
+                    wildCardValue));
         }
     }
     
