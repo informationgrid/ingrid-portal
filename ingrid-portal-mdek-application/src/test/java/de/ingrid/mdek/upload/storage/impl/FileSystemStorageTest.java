@@ -22,15 +22,23 @@
  */
 package de.ingrid.mdek.upload.storage.impl;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
@@ -82,6 +90,58 @@ public class FileSystemStorageTest {
 
     /**
      * Test:
+     * - Write a zip file
+     * @throws Exception
+     */
+    @Test
+    public void testWriteZip() throws Exception {
+        String path = PLUG_ID+"/"+OBJ_UUID;
+        String file = "test.zip";
+
+        // create zip file
+        File zipFile = this.createZipFile(file);
+        InputStream data = new FileInputStream(zipFile);
+
+        FileSystemItem[] results = this.storage.write(path, file, data, (int)zipFile.length(), true, false);
+
+        // test
+        assertEquals(results.length, 1);
+        assertEquals(results[0].getFile(), "test.zip");
+        assertEquals(results[0].getPath(), path);
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test.zip")));
+        assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
+        assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
+    }
+
+    /**
+     * Test:
+     * - Write and extract a zip file
+     * @throws Exception
+     */
+    @Test
+    public void testWriteAndExtractZip() throws Exception {
+        String path = PLUG_ID+"/"+OBJ_UUID;
+        String file = "test.zip";
+
+        // create zip file
+        File zipFile = this.createZipFile(file);
+        InputStream data = new FileInputStream(zipFile);
+
+        FileSystemItem[] results = this.storage.write(path, file, data, (int)zipFile.length(), true, true);
+
+        // test
+        assertEquals(results.length, 2);
+        assertEquals(results[0].getFile(), "file1");
+        assertEquals(results[0].getPath(), path+"/test");
+        assertEquals(results[1].getFile(), "file2");
+        assertEquals(results[1].getPath(), path+"/test/dir1");
+        assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test.zip")));
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
+    }
+
+    /**
+     * Test:
      * - Archive a file
      * @throws Exception
      */
@@ -94,7 +154,7 @@ public class FileSystemStorageTest {
 
         // test
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
-        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, file)));
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH, path, file)));
     }
 
     /**
@@ -129,7 +189,7 @@ public class FileSystemStorageTest {
 
         // test
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
-        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH, file)));
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), TRASH_PATH, path, file)));
     }
 
     /**
@@ -161,5 +221,31 @@ public class FileSystemStorageTest {
         FileSystemItem result = this.storage.write(path, file, data, content.length(), true, false)[0];
         assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));
         return result;
+    }
+
+    /**
+     * Create a zip file with the following structure:
+     * name
+     * +- file1
+     * +- dir1
+     *    +- file2
+     * @param file
+     * @throws IOException
+     * @return File
+     */
+    private File createZipFile(String file) throws IOException {
+        File zipFile = Paths.get(DOCS_PATH.toString(), file).toFile();
+        FileOutputStream fos = new FileOutputStream(zipFile);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        ZipOutputStream zos = new ZipOutputStream(bos);
+        try {
+            zos.putNextEntry(new ZipEntry("file1"));
+            zos.putNextEntry(new ZipEntry("dir1/file2"));
+            zos.closeEntry();
+        }
+        finally {
+            zos.close();
+        }
+        return zipFile;
     }
 }

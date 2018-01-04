@@ -28,6 +28,7 @@ import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.CopyOption;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -56,6 +57,19 @@ import de.ingrid.mdek.upload.storage.StorageItem;
 
 /**
  * FileSystemStorage manages files in the server file system
+ *
+ * The storage has a common archive and trash directory in
+ * the document root (docsDir):
+ *
+ * -- <docsDir>
+ *   +-- _archive_
+ *   +-- _trash_
+ *   +-- dirA
+ *       +-- dirAA
+ *           +-- ...
+ *       +-- fileA.1
+ *       +-- ...
+ *   +-- ...
  */
 public class FileSystemStorage implements Storage {
 
@@ -103,13 +117,33 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
+     * List the documents for the given path
+     *
+     * @param path
+     * @return List<StorageItem>
+     * @throws IOException
+     */
+    private List<StorageItem> list(Path path) throws IOException {
+        List<StorageItem> files = new ArrayList<StorageItem>();
+
+        // add files from documents
+        files.addAll(this.listFiles(path));
+
+        // add files from archive
+        Path archivePath = this.getArchivePath(this.stripPath(path.toString()), "", this.docsDir);
+        files.addAll(this.listFiles(archivePath));
+
+        return files;
+    }
+
+    /**
      * List the files in the given path recursively
      *
      * @param path
      * @return List<StorageItem>
      * @throws IOException
      */
-    protected List<StorageItem> list(Path path) throws IOException {
+    private List<StorageItem> listFiles(Path path) throws IOException {
         List<StorageItem> files = new ArrayList<StorageItem>();
         if (Files.exists(path)) {
             Files.walk(path)
@@ -280,7 +314,26 @@ public class FileSystemStorage implements Storage {
     public void restore(String path, String file) throws IOException {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Path archivePath = this.getArchivePath(path, file, this.docsDir);
+        // ensure directory
+        this.getRealPath(path, "", this.docsDir).toFile().mkdirs();
         Files.move(archivePath, realPath, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
+    }
+
+    @Override
+    public void cleanup() throws IOException {
+        // delete empty directories
+        Files.walk(Paths.get(this.docsDir))
+        .filter(p -> Files.isDirectory(p))
+        .forEach(p -> {
+            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(p)) {
+                if (!dirStream.iterator().hasNext()) {
+                    Files.delete(p);
+                }
+            }
+            catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+        });
     }
 
     /**
@@ -322,6 +375,7 @@ public class FileSystemStorage implements Storage {
 
                 // get the directory name from the archive name
                 Path directory = this.getExtractPath(path);
+                Files.createDirectories(directory);
 
                 while (entry != null) {
                     Path file = Paths.get(directory.toString(), this.sanitize(entry.getName(), ILLEGAL_PATH_CHARS));
@@ -331,6 +385,7 @@ public class FileSystemStorage implements Storage {
                     }
                     else {
                         // handle file
+                        Files.createDirectories(file.getParent());
                         Files.copy(ais, file, copyOptions);
                         result.add(file);
                     }
@@ -430,8 +485,8 @@ public class FileSystemStorage implements Storage {
      * @return Path
      */
     private Path getTrashPath(String path, String file, String basePath) {
-        return FileSystems.getDefault().getPath(basePath,
-            this.sanitize(path, ILLEGAL_PATH_CHARS), TRASH_PATH, this.sanitize(file, ILLEGAL_FILE_CHARS));
+        return FileSystems.getDefault().getPath(basePath, TRASH_PATH,
+            this.sanitize(path, ILLEGAL_PATH_CHARS), this.sanitize(file, ILLEGAL_FILE_CHARS));
     }
 
     /**
@@ -443,8 +498,8 @@ public class FileSystemStorage implements Storage {
      * @return Path
      */
     private Path getArchivePath(String path, String file, String basePath) {
-        return FileSystems.getDefault().getPath(basePath,
-            this.sanitize(path, ILLEGAL_PATH_CHARS), ARCHIVE_PATH, this.sanitize(file, ILLEGAL_FILE_CHARS));
+        return FileSystems.getDefault().getPath(basePath, ARCHIVE_PATH,
+            this.sanitize(path, ILLEGAL_PATH_CHARS), this.sanitize(file, ILLEGAL_FILE_CHARS));
     }
 
     /**
@@ -460,11 +515,10 @@ public class FileSystemStorage implements Storage {
             throw new IllegalArgumentException("Illegal path: "+file);
         }
         int nameCount = strippedPath.getNameCount();
-        boolean isArchivePath = ARCHIVE_PATH.equals(strippedPath.getName(nameCount-2).toString());
+        boolean isArchivePath = ARCHIVE_PATH.equals(strippedPath.getName(0).toString());
         return FileSystems.getDefault().getPath(basePath,
-                strippedPath.subpath(0, nameCount-1).toString(),
                 !isArchivePath ? ARCHIVE_PATH : "",
-                strippedPath.subpath(nameCount-1, nameCount).toString());
+                strippedPath.subpath(0, nameCount).toString());
     }
 
     /**
@@ -497,8 +551,9 @@ public class FileSystemStorage implements Storage {
         Path strippedPath = Paths.get(this.stripPath(file));
         boolean isArchived = filePath.equals(archivePath);
 
-        String itemPath = strippedPath.subpath(0, strippedPath.getNameCount()-(isArchived ? 2 : 1)).toString();
-        String itemFile = strippedPath.getName(strippedPath.getNameCount()-1).toString();
+        int nameCount = strippedPath.getNameCount();
+        String itemPath = strippedPath.subpath((isArchived ? 1 : 0), nameCount-1).toString();
+        String itemFile = strippedPath.getName(nameCount-1).toString();
 
         // FIXME: Under windows the call of "Files.probeContentType()" will leave a file lock on that file!?
         String fileType = Files.probeContentType(filePath);
