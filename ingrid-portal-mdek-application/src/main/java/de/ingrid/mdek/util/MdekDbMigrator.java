@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -50,16 +50,27 @@ public class MdekDbMigrator {
             flyway.setDataSource( dataSource );
             flyway.migrate();
         } catch (FlywayException e) {
-            // the database probably isn't setup for flyway
-            // find out which version we have to set for a baseline
-            String version = getVersionFromDB( dataSource );
-
-            if (version != null) {
-                flyway.setBaselineVersionAsString( version );
-                flyway.baseline();
-                flyway.migrate();
+            String errorMsg = e.getMessage();
+            
+            if (errorMsg != null && errorMsg.contains( "without metadata table" )) {
+                log.warn( "DB migration failed for 'mdek'" );
+                
+                // the database probably isn't setup for flyway
+                // find out which version we have to set for a baseline
+                String version = getVersionFromDB( dataSource );
+                
+                if (version == null) {
+                    log.warn( "Could not determine version of portal database for flyway baseline. Will clean database and migrate from initial version." );
+                    flyway.clean();
+                    flyway.migrate();
+                } else {
+                    flyway.setBaselineVersionAsString( version );
+                    flyway.baseline();
+                    flyway.migrate();
+               }
             } else {
-                log.error( "Could not determine version of portal database for flyway baseline" );
+                log.error( "Could not migrate database 'mdek'", e );
+                throw new RuntimeException( "Could not migrate database 'mdek'", e );
             }
         }
     }

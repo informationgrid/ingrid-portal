@@ -8,6 +8,7 @@
     </div>
     <div id="facet_area_map_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content" >
         <div id="map" style="height:320px;"></div>
+        <div><p><small><span class="tx-light">$MESSAGES.getString("common.map.info")</span></small></p></div>
         <form action="$action" method="post" name="facete_map_form">
             <input id="x1" name="x1" type="hidden" />
             <input id="x2" name="x2" type="hidden" />
@@ -44,9 +45,11 @@
         bounds = [[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]];
     }
     
-    var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
+    var osm = getOSMLayer('');
     var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
     var enablePopUp = false;
+    var enableLegend = false;
+    var smallIcons = true;
     
     if(!bounds){
         $( document ).ready(function() {

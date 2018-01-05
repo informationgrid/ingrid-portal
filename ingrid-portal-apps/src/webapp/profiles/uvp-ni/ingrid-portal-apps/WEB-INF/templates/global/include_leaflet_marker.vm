@@ -66,6 +66,9 @@
             } else {
                 c += 'large';
             }
+            if(smallIcons){
+             c += ' light';
+            }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-10' + c, iconSize: new L.Point(40, 40) });
         }
     });
@@ -80,6 +83,9 @@
                 c += 'medium';
             } else {
                 c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
             }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-11' + c, iconSize: new L.Point(40, 40) });
         }
@@ -96,6 +102,9 @@
             } else {
                 c += 'large';
             }
+            if(smallIcons){
+             c += ' light';
+            }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
         }
     });
@@ -110,6 +119,9 @@
                 c += 'medium';
             } else {
                 c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
             }
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-dev-plan' + c, iconSize: new L.Point(40, 40) });
         }
@@ -158,14 +170,22 @@
                 iconColor = 'red';
             }
             
-            var icon = L.AwesomeMarkers.icon({
-                markerColor: iconColor,
-                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
-                prefix: 'icon'//,
-                //icon: categories && categories.length > 0 ? categories[0].id : ''
-            });
-            
-            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon });
+            var icon;
+            if(smallIcons){
+                icon = L.icon({
+                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_small_' + iconColor + '.png',
+                    iconSize: [6, 6], 
+                    iconAnchor: [3, 3]
+                });
+            } else {
+                 icon = L.AwesomeMarkers.icon({
+                    markerColor: iconColor,
+                    className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                    prefix: 'icon'//,
+                    //icon: categories && categories.length > 0 ? categories[0].id : ''
+                });
+            }
+            var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
             marker.uuid = a[3];
             marker.bbox = null;
             if(enablePopUp){
@@ -246,13 +266,22 @@
             
             var iconColor = 'green';
             
-            var icon = L.AwesomeMarkers.icon({
-                markerColor: iconColor,
-                className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
-                prefix: 'icon'
-            });
+            var icon; 
+            if(smallIcons){
+                icon = L.icon({
+                    iconUrl: '/decorations/layout/ingrid/images/pins/icon_pin_small_' + iconColor + '.png',
+                    iconSize: [6, 6], 
+                    iconAnchor: [3, 3]
+                });
+            } else {
+                icon = L.AwesomeMarkers.icon({
+                    markerColor: iconColor,
+                    className: enablePopUp ? 'awesome-marker' : 'awesome-marker leaflet-interactive-disable',
+                    prefix: 'icon'
+                });
+            }
             
-            var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon });
+            var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon, interactive: !smallIcons });
             marker.bbox = null;
             if(enablePopUp){
                 marker.bindPopup(popUpHtml, popupMarkerOptions);
@@ -284,6 +313,8 @@
     if(mapMarkersDevPlan.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
     }
-    L.control.layers({}, overlayers, {position: 'topright', collapsed:false }).addTo(map);
+    if(enableLegend){
+        L.control.layers({}, overlayers, {position: 'topright', collapsed:false }).addTo(map);
+    }
     
 </script>

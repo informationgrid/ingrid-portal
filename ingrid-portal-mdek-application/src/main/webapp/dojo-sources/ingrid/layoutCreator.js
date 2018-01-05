@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -35,6 +35,7 @@ define([
     "dojo/query",
     "ingrid/grid/CustomGrid",
     "ingrid/menu",
+    "ingrid/message",
     "dijit/registry",
     "dijit/form/ValidationTextBox",
     "dijit/form/ComboBox",
@@ -49,7 +50,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/utils/Store",
     "dojo/store/Memory"
-], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, registry,
+], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, message, registry,
         ValidationTextBox, ComboBox, Selectbox, DateTextBox, NumberSpinner, SimpleTextarea, FilteringSelect,
         ItemFileWriteStore, ItemFileReadStore, UtilDOM, UtilSyslist, UtilStore, Memory){
 
@@ -372,7 +373,7 @@ define([
 
             createRubricIcon: function(rubric) {
                 var link = document.createElement("a");
-                link.setAttribute("title", "ui.general.openAllFieldsTooltip");
+                link.setAttribute("title", message.get("ui.toolbar.openRequiredFieldsTooltip"));
                 link.setAttribute("onclick", "require('ingrid/IgeEvents').toggleFields('" + rubric.id + "')");
                 var image = document.createElement("div");
                 domClass.add(image, "image18px titleIcon");
@@ -521,23 +522,17 @@ define([
             },
 
             createDomDataGrid: function(additionalField, structure, section) {
-                //var gridWidget = createDataGridWidget(additionalField.id, structure, {interactive:"true", autoHeight:4});
                 var div = document.createElement("div");
                 div.setAttribute("id", additionalField.id);
                 var surrDiv = this.addSurroundingContainer(div, additionalField, true);
                 this.addToSection(section, surrDiv);
                 
-//                var syslistFunc = null;
-//                if (additionalField.useSyslist) {
-//                    syslistFunc = function() {
-//                        return UtilSyslist.readSysListData(additionalField.useSyslist);
-//                    };
-//                }
-                
                 var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
                     interactive: "true",
                     autoHeight: additionalField.rows,
-                    forceGridHeight: additionalField.forceGridHeight
+                    forceGridHeight: additionalField.forceGridHeight,
+                    contextMenu: additionalField.contextMenu,
+                    moveRows: additionalField.moveRows ? "true" : "false"
                 });
             },
 

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -40,10 +40,11 @@ define(["dojo/_base/declare",
 ], function(declare, array, Deferred, lang, topic, on, aspect, dom, domClass, registry, cookie, message, dialog, behaviours, UtilGrid, UtilSyslist, Editors) {
 return lang.mixin(behaviours, {
 
-openData : {
+openDataLGV : {
     title : "LGV: Open Data",
     description : "Neue Anforderungen seitens des Hamburger Transparenzportals, aber auch der Geodateninfrastruktur Hamburg, machen es erforderlich, dass die Funktionalitäten der beiden Checkboxen 'Open Data' und 'Veröffentlichung gemäß HmbTG' angepasst werden müssen.",
-    defaultActive: true,
+    category: "LGV",
+    defaultActive: false,
     run : function() {
         // disable free text in categories by choosing a selectbox editor
         var categories = registry.byId("categoriesOpenData");
@@ -348,6 +349,11 @@ openData : {
                 // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                 var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
                 UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense}]);
+                
+                // automatically replace access constraint with "keine"
+                var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
+                UtilGrid.setTableData('availabilityAccessConstraints', data);
+                
             } else {
                 // remove "keine" from access constraints
                 var data = UtilGrid.getTableData('availabilityAccessConstraints');
@@ -364,6 +370,9 @@ openData : {
 
                 // remove license set when open data was clicked
                 UtilGrid.setTableData("availabilityUseAccessConstraints", []);
+                
+             // remove all categories
+                UtilGrid.setTableData("categoriesOpenData", []);
             }
         });
         
@@ -378,6 +387,26 @@ openData : {
                 // download link check already done in system behaviours
                 //openDataDownloadCheck = that.addDownloadLinkCheck();
                 
+                // show categories
+                domClass.remove("uiElement6020", "hide");
+
+                // make field mandatory
+                domClass.add("uiElement6020", "required");
+
+                // add check for url reference of type download when publishing
+                // we check name and not id cause is combo box ! id not adapted yet if not saved !
+                this.openDataLinkCheck = topic.subscribe("/onBeforeObjectPublish", function ( /*Array*/ notPublishableIDs) {
+                  // get name of codelist entry for entry-id "9990" = "Download of data"/"Datendownload"
+                  var entryNameDownload = UtilSyslist.getSyslistEntryName(2000, 9990);
+                  var data = UtilGrid.getTableData("linksTo");
+                  var containsDownloadLink = array.some(data, function (item) {
+                    if (item.relationTypeName == entryNameDownload) return true;
+                  });
+                  if (!containsDownloadLink)
+                    notPublishableIDs.push(["linksTo", message.get("validation.error.missing.download.link")]);
+                });
+                
+                // => LGV SPECIFIC CODE
                 // SHOW mandatory fields ONLY IF EXPANDED !
                 domClass.add("uiElement5064", "showOnlyExpanded"); // INSPIRE-Themen
                 domClass.add("uiElement3520", "showOnlyExpanded"); // Fachliche Grundlage
@@ -391,6 +420,12 @@ openData : {
                 domClass.add("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
                 
             } else {
+                
+                // => LGV SPECIFIC CODE
+                // unregister from check for download link
+                if (this.openDataLinkCheck) {
+                    this.openDataLinkCheck.remove();
+                }
                 
                 if (openDataAddressCheck) {
                     openDataAddressCheck.remove();
@@ -574,13 +609,14 @@ openData : {
 
 },
 
-requireUseConstraints: {
+requireUseConstraintsLGV: {
     title: "LGV: Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
     title_en: "Use Constraints - Required on INSPIRE / Open Data",
     description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"Veröffentlichung gemäß HmbTG\", \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
     description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
     issue: "https://dev.informationgrid.eu/redmine/issues/223",
-    defaultActive: true,
+    category: "LGV",
+    defaultActive: false,
     run: function () {
         // define our useConstraints handler
         var updateUseConstraintsBehaviour = function (isChecked) {

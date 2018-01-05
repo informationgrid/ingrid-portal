@@ -570,8 +570,6 @@
             <entry key="feedback.from" value="${feedbackEmail}" />
             <entry key="feedback.to" value="${feedbackEmail}" />
         </propertyfile>
-        <!-- replace occurences of backslash since tomcat doesnt understand it and escapes the tokens -->
-        <replace file="${i-prop-ingrid-webmap-client}" token="\" value="/"/>
         <!-- Delete old WebmapClient data folders -->
         <runtarget target="cleanMapClientProps"/>
         <!-- Add new WebmapClient data folders -->

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -133,6 +133,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
             String databasePostfix = "_mysql";
             if (UtilsDB.isOracle()) {
                 databasePostfix = "_oracle";
+            } else if (UtilsDB.isPostgres()) {
+                databasePostfix = "_postgres";
             }
             String profileDescriptor = getPortletConfig().getPortletContext().getRealPath(
                     "/profiles/" + profileName + "/profile" + databasePostfix + ".xml");

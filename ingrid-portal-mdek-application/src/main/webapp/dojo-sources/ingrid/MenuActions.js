@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -94,29 +94,32 @@ define([
                         return;
                     }
 
-                    // Determine the class of the newly created Address.
-                    // If the selected node if is 'addressFreeRoot' we can directly create the address without presenting the dialog
-                    if (uuid == "addressFreeRoot") {
-                        this._createNewAddress(3, selectedNode);
-                    } else if (uuid == "addressRoot") {
-                        this._createNewAddress(0, selectedNode);
-                    } else {
-                        var selectClassDef = new Deferred();
-                        var dlg = null;
-                        selectClassDef.then(function(addressClass) {
-                            // hide dialog to show error dialogs correctly
-                        	// Is this still needed? Leads to an error when creating a person!
-                            // dlg.destroyRecursive();
-                            self._createNewAddress(addressClass, selectedNode);
-                        }, function() { /* CANCELED */});
+                    IgeActions.checkForUnsavedChanges().then( function() {
+                        dirty.resetDirtyFlag();
+                        // Determine the class of the newly created Address.
+                        // If the selected node if is 'addressFreeRoot' we can directly create the address without presenting the dialog
+                        if (uuid == "addressFreeRoot") {
+                            self._createNewAddress(3, selectedNode);
+                        } else if (uuid == "addressRoot") {
+                            self._createNewAddress(0, selectedNode);
+                        } else {
+                            var selectClassDef = new Deferred();
+                            selectClassDef.then(function(addressClass) {
+                                // hide dialog to show error dialogs correctly
+                                // Is this still needed? Leads to an error when creating a person!
+                                // dlg.destroyRecursive();
+                                self._createNewAddress(addressClass, selectedNode);
+                            }, function() { /* CANCELED */});
+    
+                            var params = {
+                                parentId: uuid,
+                                parentClass: selectedNode.item.objectClass,
+                                resultHandler: selectClassDef
+                            };
+                            dialog.showPage(message.get("dialog.createAddressTitle"), "dialogs/mdek_address_select_class_dialog.jsp?c=" + userLocale, 350, 160, false, params);
+                        }
+                    });
 
-                        var params = {
-                            parentId: uuid,
-                            parentClass: selectedNode.item.objectClass,
-                            resultHandler: selectClassDef
-                        };
-                        dlg = dialog.showPage(message.get("dialog.createAddressTitle"), "dialogs/mdek_address_select_class_dialog.jsp?c=" + userLocale, 350, 160, false, params);
-                    }
                 }
             }
         },

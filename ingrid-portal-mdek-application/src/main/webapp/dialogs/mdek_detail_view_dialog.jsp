@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -581,6 +581,28 @@ require([
                         },
                         null
                     ]);
+
+                    // GRID FORMAT
+                    renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.title' />");
+                    renderTextWithTitle(nodeData.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
+                    renderTextWithTitle(nodeData.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
+                    renderTextWithTitle(nodeData.ref1GridFormatAxisDimName, "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
+                    renderTextWithTitle(nodeData.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
+                    renderTextWithTitle(nodeData.ref1GridFormatCellGeometry, "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
+                    
+                    if (nodeData.ref1GridFormatGeoRectified) {
+                        renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
+                        renderTextWithTitle(nodeData.ref1GridFormatRectCheckpoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.rectified.checkpoint' />");
+                        renderTextWithTitle(nodeData.ref1GridFormatRectDescription, "<fmt:message key='ui.obj.type1.gridFormat.rectified.description' />");
+                        renderTextWithTitle(nodeData.ref1GridFormatRectCornerPoint, "<fmt:message key='ui.obj.type1.gridFormat.rectified.cornerPoint' />");
+                        renderTextWithTitle(UtilSyslist.getSyslistEntryName(2100, nodeData.ref1GridFormatRectPointInPixel), "<fmt:message key='ui.obj.type1.gridFormat.rectified.pointInPixel' />");
+                    } else {
+                        renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoReferenced' />");
+                        renderTextWithTitle(nodeData.ref1GridFormatRefOrientationParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.referenced.orientationParam' />");
+                        renderTextWithTitle(nodeData.ref1GridFormatRefControlPoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.referenced.controlPoint' />");
+                        renderTextWithTitle(nodeData.ref1GridFormatRefGeoreferencedParam, "<fmt:message key='ui.obj.type1.gridFormat.referenced.georeferencedParam' />");
+                    }
+
                     // NOTICE: moved to general section "Raumbezug"
                     //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
                     renderTable(nodeData.ref1Scale, ["scale", "groundResolution", "scanResolution"], ["<fmt:message key='ui.obj.type1.scaleTable.header.scale' />", "<fmt:message key='ui.obj.type1.scaleTable.header.groundResolution' />", "<fmt:message key='ui.obj.type1.scaleTable.header.scanResolution' />"], "<fmt:message key='ui.obj.type1.scaleTable.title' />");
@@ -875,14 +897,22 @@ require([
                     data = getValueFromAdditional(widgetId, nodeData);
                 }
                 if (data) {
-                    // if it is a table
-                    if (typeof(data) == "object") {
+                    // if it's a date object
+                    if (data instanceof Date) {
+                        var date = dojo.date.locale.format(data, {
+                            selector: "date",
+                            datePattern: "dd.MM.yyyy"
+                        });
+                        renderTextWithTitle(date, label);
+
+                    } else if (typeof(data) == "object") { // if it is a table
                         if (data.length > 0) {
                             var columnFields = getColumnFields(widgetId);
                             var columnNames = getColumnNames(widgetId);
                             var formatters = getColumnFormatters(widgetId);
                             renderTable(data, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
                         }
+
                     } else {
                         renderTextWithTitle(data, label);
                     }
@@ -900,7 +930,11 @@ require([
                         result = prepareAdditionalTable(field.tableRows);
                         return true;
                     } else if (field.value !== null) {
-                        result = field.value + getUnitFromField(id);
+                        if (field.value instanceof Date) {
+                            result = field.value;
+                        } else {
+                            result = field.value + getUnitFromField(id);
+                        }
                         return true;
                     }
                 }

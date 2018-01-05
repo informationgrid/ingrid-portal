@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>ingrid</name>
+    <description>Portal-Profile für InGrid-Portal</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-chronicle.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-content-rss.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>administration/admin-homepage.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>mdek/mdek_portal_admin.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about-partner.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-about.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>help.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>privacy.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>disclaimer.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::CMSPortlet</name>
+                    <preference name="infoTemplate">
+                        <value>/WEB-INF/templates/default_cms.vm</value>
+                    </preference>
+                    <preference name="titleKey">
+                        <value>disclaimer.title</value>
+                    </preference>
+                    <preference name="cmsKey">
+                        <value>ingrid.disclaimer</value>
+                    </preference>
+                    <preference name="sectionStyle">
+                        <value>block--padded</value>
+                    </preference>
+                    <preference name="articleStyle">
+                        <value>content ob-container ob-box-narrow ob-box-center</value>
+                    </preference>
+                    <preference name="titleTag">
+                        <value>h1</value>
+                    </preference>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>cms/cms-1.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>cms/cms-2.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>application/main-application.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="4">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="5">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="4">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="5">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::CategoryTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
+                    <name>ingrid-portal-apps::RssNewsTeaser</name>
+                </portlet>
+                <portlet col="0" row="4">
+                    <name>ingrid-portal-apps::EnvironmentTeaser</name>
+                </portlet>
+                <portlet col="0" row="5">
+                    <name>ingrid-portal-apps::InfoDefaultPageTeaser</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>service-contact.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
+            <name>main-search.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimpleResult</name>
+                </portlet>
+                <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::SearchSimilar</name>
+                </portlet>
+                <portlet col="0" row="2">
+                    <name>ingrid-portal-apps::SearchResult</name>
+                </portlet>
+            </portlets>
+        </page>
+      </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend/src</src>
+            <dst>ingrid-webmap-client/frontend/prd</dst>
+        </file>
+    </files>
+    <sql>
+        <execute>
+            <![CDATA[CREATE TABLE IF NOT EXISTS tmp_table (item_key varchar(255) NOT NULL\, item_value integer);]]>
+        </execute>
+        <!-- Remember id of sub fragment -->
+        <execute>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('tmp_layout_fragment_id'\, 0);]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE tmp_table SET item_value = (SELECT fragment_id FROM fragment WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_id') AND name = 'jetspeed-layouts::IngridTwoColumns') WHERE item_key='tmp_layout_fragment_id';]]>
+        </execute>
+        <!-- Replace SearchNominatim portlet (BAW) with info portlet. Preferences still there (infoTemplate, titleKey). -->
+        <execute>
+            <![CDATA[UPDATE fragment SET name = 'ingrid-portal-apps::InfoPortlet' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::SearchNominatim';]]>
+        </execute>
+        <!-- then decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator = 'ingrid-marginal-header' WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_layout_fragment_id') AND name = 'ingrid-portal-apps::InfoPortlet';]]>
+        </execute>
+        <!-- REMOVE SearchBWaStr portlet. NOTICE: We keep orphaned fragment preferences, should not matter. -->
+        <execute>
+            <![CDATA[DELETE FROM fragment WHERE NAME = 'ingrid-portal-apps::SearchBWaStr' AND PARENT_ID = (SELECT item_value FROM tmp_table WHERE item_key = 'tmp_layout_fragment_id');]]>
+        </execute>
+        <!-- Revert of replacing main-menu option "main-search" with "default-page" (BAW)-->
+        <execute>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) values ('main-menu_id'\,  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); ]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');]]>
+        </execute>
+        <!-- Set folder "/cms" from display to hidden (only use on profile baw_wsv) -->
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/cms';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder SET is_hidden = 1 WHERE path = '/application';]]>
+        </execute>
+        <!-- DONE with tmp_table -->
+        <execute>
+            <![CDATA[DROP TABLE tmp_table;]]>
+        </execute>
+        <!-- Change 'ingrid-portal-apps::SearchSimilar' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimilar';]]>
+        </execute>
+        <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimpleResult';]]>
+        </execute>
+        <!-- Enable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET is_hidden = 0 WHERE path = '/language.link';]]>
+        </execute>
+        <!-- Hide home link -->
+        <execute>
+            <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/home.link';]]>
+        </execute>
+    </sql>
+</profile>

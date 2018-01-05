@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -158,13 +158,19 @@ public class QueryResultPostProcessor {
             // read for all dsc iplugs
 
             Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
-            hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+            if (additionalHtml instanceof ArrayList){
+                hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((ArrayList) additionalHtml).get( 0 ));
+            } else if (additionalHtml instanceof String[]){
+                hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((String[]) additionalHtml)[0]);
+            } else {
+                hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+            }
             
             boolean doNotShowMaps = false;
             String firstResourceId = null;
             
             // Service Links
-            String[] tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_SERVICE_UUID);
+            String[] tmpArray = getStringArrayFromKey(detail, Settings.RESULT_KEY_SERVICE_UUID);
             if (tmpArray != null && tmpArray.length > 0) {
                 // make valid wms urls from capabilities url 
                 String[] tmpArray2 = new String[tmpArray.length];
@@ -200,7 +206,7 @@ public class QueryResultPostProcessor {
             }
             
             // Capabilities Url
-            tmpArray = (String[]) detail.getArray(Settings.RESULT_KEY_CAPABILITIES_URL);
+            tmpArray = getStringArrayFromKey( detail, Settings.RESULT_KEY_CAPABILITIES_URL );
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
                 // check for protected access setting
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,

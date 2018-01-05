@@ -3,11 +3,10 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.1.0</version>
+        <version>4.2.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>ingrid-portal-mdek-application</artifactId>&#xD;
-    <version>4.1.0</version>
+    <artifactId>ingrid-portal-mdek-application</artifactId>
     <packaging>war</packaging>
     <name>InGrid Portal MDEK Application</name>
     <scm>
@@ -619,12 +618,12 @@
                 <dependency>
                     <groupId>org.apache.portals.jetspeed-2</groupId>
                     <artifactId>jetspeed-api</artifactId>
-                    <version>2.3.0</version>
+                    <version>${org.apache.portals.jetspeed.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.portals.jetspeed-2</groupId>
                     <artifactId>jetspeed-commons</artifactId>
-                    <version>2.3.0</version>
+                    <version>${org.apache.portals.jetspeed.version}</version>
                 </dependency>
             </dependencies>
             <build>
@@ -698,6 +697,30 @@
             </build>
         </profile>
         <profile>
+            <id>profile-lgv</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>lgv</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <webApp>
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/lgv_hamburg/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>linux-optimization</id>
             <activation>
                 <os>
@@ -754,19 +777,24 @@
                                     <target>
                                         <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
                                         <condition property="foundRepeatable">
-                                            <resourcecount count="0" when="greater">
-                                                <fileset dir="src/main/resources/db/migration">
-                                                    <include name="**/R*.sql" />
-                                                </fileset>
-                                            </resourcecount>
+                                            <and>
+                                                <resourcecount count="0" when="greater">
+                                                    <fileset dir="src/main/resources/db/migration">
+                                                        <include name="**/R*.sql" />
+                                                    </fileset>
+                                                </resourcecount>
+                                                <not>
+                                                    <contains string="${project.version}" substring="-SNAPSHOT" />
+                                                </not>
+                                            </and>
                                         </condition>
                                         <if>
                                             <equals arg1="${foundRepeatable}" arg2="true" />
                                             <then>
-                                                <fail message="Flyway: You must not have repeatable SQL files!" />
+                                                <fail message="Flyway: You must not have repeatable SQL files during a release!" />
                                             </then>
                                             <else>
-                                                <echo message="Flyway: No repeatable SQL found. OK!" />
+                                                <echo message="Flyway: No release version or no repeatable SQL found. OK!" />
                                             </else>
                                         </if>
                                     </target>

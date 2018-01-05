@@ -82,6 +82,23 @@
         </page>
       </pages>
     <files>
+        <!-- COPY GENERAL UVP FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-mdek-application/</src>
+            <dst>ingrid-portal-mdek-application/</dst>
+        </file>
+        <!-- COPY NI-SPECIFIC FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal/</src>

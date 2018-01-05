@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -27,8 +27,9 @@ define([
     "dojo/on",
     "dojo/dom-construct",
     "dojo/dom-geometry",
-    "dojo/dom-style"
-], function(declare, array, Deferred, on, construct, geometry, style) {
+    "dojo/dom-style",
+    "dojo/dom-class"
+], function(declare, array, Deferred, on, construct, geometry, style, domClass) {
     return declare(null, {
         x: 1,
         _dragging: false,
@@ -58,8 +59,17 @@ define([
             if (this._grid.getEditorLock().isActive() || !/move|selectAndMove/.test(this._grid.getColumns()[cell.cell].behavior)) {
                 return false;
             }
+
+            // if we click on a virtual row, then do not allow to be dragged
+            if (cell.row >= this._grid.getDataLength()) {
+                return false;
+            }
     
             this._dragging = true;
+
+            // add class "noselect" to grid, so that we don't select text during dragging
+            domClass.add(this._grid.domNode, "noselect");
+
             //e.stopImmediatePropagation();
     
             /*var selectedRows = this._grid.getSelectedRows();
@@ -121,6 +131,10 @@ define([
                 return;
             }
             this._dragging = false;
+
+            // remove class "noselect" from grid, so that we can select text again
+            domClass.remove(this._grid.domNode, "noselect");
+
             //e.stopImmediatePropagation();
     
             construct.destroy(this._guide);

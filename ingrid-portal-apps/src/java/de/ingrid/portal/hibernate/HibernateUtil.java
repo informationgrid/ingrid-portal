@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -28,6 +28,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.Oracle9Dialect;
+import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.engine.SessionFactoryImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,4 +78,14 @@ public class HibernateUtil {
 
         return false;
 	}
+
+    public static boolean isPostgres() {
+        Dialect dialect = ((SessionFactoryImplementor) sessionFactory).getDialect();
+        
+        if (PostgreSQLDialect.class.isAssignableFrom(dialect.getClass())) {
+            return true;
+        }
+
+        return false;
+    }
 }

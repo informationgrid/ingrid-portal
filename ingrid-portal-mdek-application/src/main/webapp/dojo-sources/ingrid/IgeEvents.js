@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -522,7 +522,7 @@ define([
         },
 
         _toggleHeaderAccessibility: function( /*boolean*/ disable) {
-            var widgets = ["objectName", "objectClass", "objectOwner", /*"addressTitle","addressType",*/ "addressOwner"];
+            var widgets = ["objectName", "objectOwner", /*"addressTitle","addressType",*/ "addressOwner"];
 
             array.forEach(widgets, function(w) {
                 var wid = registry.byId(w);

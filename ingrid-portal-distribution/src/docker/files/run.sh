@@ -2,7 +2,7 @@
 # **************************************************-
 # InGrid Portal Distribution
 # ==================================================
-# Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+# Copyright (C) 2014 - 2018 wemove digital solutions GmbH
 # ==================================================
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
@@ -39,6 +39,15 @@ if [ "$PORTAL_PROFILE" ]; then
         exit 1
     fi
 
+    # UVP-NI extends UVP
+    if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
+        echo "Copying profile files from parent (uvp) into portal directories ..."
+        cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+        cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
+        cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
+    fi
+
     echo "Copying profile files into portal directories ..."
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
     cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
@@ -59,6 +68,17 @@ if [ "$PORTAL_PROFILE" ]; then
         # increase session timeout to 120 minutes
         sed -i 's/<session-timeout>30<\/session-timeout>/<session-timeout>120<\/session-timeout>/' conf/web.xml
     fi
+
+    # specific options for UVP-NI
+    if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
+        # deactivate behaviours
+        find $HIERARCHY_DIR -not -path 'webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy/behaviours/uvp/*' -type f -name '*.js' -not -name 'folder*' -exec sed -i 's/defaultActive \?: \?true/defaultActive: false/' {} \;
+        find $HIERARCHY_DIR -not -path 'webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy/behaviours/uvp/*' -type f -name '*.js' -not -name 'folder*' -exec sed -i 's/defaultActive \?: \?!0/defaultActive:0/' {} \;
+
+        # increase session timeout to 120 minutes
+        sed -i 's/<session-timeout>30<\/session-timeout>/<session-timeout>120<\/session-timeout>/' conf/web.xml
+    fi
+
 
 else
     echo "No specific portal profile used."

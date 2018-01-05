@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -176,6 +176,7 @@ define([
 
             createInfoHeader: function() {
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
 
@@ -230,6 +231,7 @@ define([
 
             createGeneralInfo: function() {
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "generalShortDesc");
 
@@ -269,10 +271,12 @@ define([
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
                 var previewImage = new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "generalPreviewImage");
                 
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "previewImageDescription");
 
@@ -369,6 +373,7 @@ define([
                 tabRef1.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref1BasisTab2"));
 
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref1ObjectIdentifier");
 
@@ -442,6 +447,49 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1SpatialSystem", null, ref1SpatialSystemStructure, null);
 
+                
+                /* Add spatialRepresentationInfo (REDMINE-381) */
+                new CheckBox({}, "ref1TransfParamAvail");
+                new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
+                new ValidationTextBox({style: "width:100%;"}, "ref1AxisDimName");
+                new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
+                new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
+                
+                var geoRectified = new RadioButton({
+                    checked: true,
+                    value: "true",
+                    name: "isGeoRectified"
+                }, "isGeoRectified");
+                geoRectified.startup();
+                var geoReferenced = new RadioButton({
+                    checked: false,
+                    value: "false",
+                    name: "isGeoRectified"
+                }, "isGeoReferenced");
+                geoReferenced.startup();
+                
+                new CheckBox({}, "ref1GridFormatRectCheckpoint");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectDescription");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectCornerPoint");
+
+                layoutCreator.createSelectBox("ref1GridFormatRectPointInPixel", null, storeProps, function() {
+                    return UtilSyslist.getSyslistEntry(2100);
+                });
+                
+                new CheckBox({}, "ref1GridFormatRefControlpoint");
+                new CheckBox({}, "ref1GridFormatRefOrientationParam");
+                new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRefGeoreferencedParam");
+
+                on(geoRectified, "change", function(checked) {
+                    if (checked) {
+                        domClass.remove("geoRectifiedWrapper", "hide");
+                        domClass.add("geoReferencedWrapper", "hide");
+                    } else {
+                        domClass.add("geoRectifiedWrapper", "hide");
+                        domClass.remove("geoReferencedWrapper", "hide");
+                    }
+                });
+                
                 var ref1ScaleStructure = [{
                     field: 'scale',
                     name: message.get("ui.obj.type1.scaleTable.header.scale"),
@@ -922,31 +970,40 @@ define([
             createFachBezugClass2: function() {
 
                 new SimpleTextarea({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref2Author");
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref2Publisher");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishedIn");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishLocation");
 
                 new ValidationTextBox({
+                    maxLength: 40,
                     style: "width:100%;"
                 }, "ref2PublishedInIssue");
                 new ValidationTextBox({
+                    maxLength: 20,
                     style: "width:100%;"
                 }, "ref2PublishedInPages");
                 new ValidationTextBox({
+                    maxLength: 20,
                     style: "width:100%;"
                 }, "ref2PublishedInYear");
                 new ValidationTextBox({
+                    maxLength: 40,
                     style: "width:100%;"
                 }, "ref2PublishedISBN");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishedPublisher");
 
@@ -956,6 +1013,7 @@ define([
                 }, "ref2LocationTabContainer");
 
                 var ref2LocationTab1 = new SimpleTextarea({
+                    maxLength: 80,
                     title: message.get("ui.obj.type2.locationTable.tab.text"),
                     "class": "textAreaFull"
                 }, "ref2LocationText");
@@ -1025,6 +1083,7 @@ define([
                 ref2BaseDataTabContainer.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref2BaseDataTab2"));
 
                 new SimpleTextarea({
+                    maxLength: 255,
                     "class": "textAreaFull"
                 }, "ref2BibData");
                 new SimpleTextarea({
@@ -2353,11 +2412,15 @@ define([
                                     || behaviour[behave].override === true
                                 )) {
                             console.debug("execute behaviour: " + behave);
-                            behaviour[behave].run();
+                            try {
+                                behaviour[behave].run();
+                            } catch (error) {
+                                console.error("Could not execute behaviour: " + behave, error);
+                            }
                         }
                     }
                 }, function(error) {
-                    console.error("Error executing behvaiour:", error);
+                    console.error("Error getting override behaviours:", error);
                 });
             }
         })();

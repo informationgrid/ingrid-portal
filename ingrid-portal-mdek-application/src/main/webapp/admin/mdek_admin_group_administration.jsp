@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -344,6 +344,8 @@
                     var objs = UtilGrid.getTableData("groupDataRightsObjectsList");
                     var objPermissionList = [];
 
+                    pageGroupAdmin.showPermissionLists();
+
                     console.debug("map permissions object");
                     group.objectPermissions = pageGroupAdmin.mapPermissions(objs, grid); //objPermissionList;
 
@@ -629,9 +631,12 @@
                 dom.byId('permissionCheckboxContainer').style.display = "block";
                 dom.byId('permissionListObjects').style.display = "block";
                 dom.byId('permissionListAddresses').style.display = "block";
+                dom.byId('groupDataObjects').style.height = "250px";
+                dom.byId('groupDataAddresses').style.height = "250px";
 
                 registry.byId("groupDataObjects").resize();
                 registry.byId("groupDataAddresses").resize();
+                registry.byId("groupAdministrationTab").resize();
             };
 
             pageGroupAdmin.getGroupDetails = function(groupName) {

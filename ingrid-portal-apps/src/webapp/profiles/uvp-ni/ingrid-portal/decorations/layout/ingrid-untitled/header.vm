@@ -88,16 +88,16 @@
                 </div>
                 <div class="header__widgets__section">
                     <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png">
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
                         <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
                     </a>
                 </div>
-                <div class="header__widgets__section" style="max-width:50px;">
+                <div class="header__widgets__section">
                     <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
                         <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
                         <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
                     </a>
-                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><span class="mq-show-m">UVP</span><span class="mq-hide-m">Umweltvertr&auml;glichkeitspr&uuml;fungen</span></a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')"><span class="mq-show-m">Nds. UVP-Portal</span><span class="mq-hide-m">$MESSAGES.getString('ingrid.header.title.main')</span></a>
                 </div>
                 #if($serviceMenu && !$serviceMenu.empty)
                     #includeServiceNavigation($serviceMenu)

@@ -600,7 +600,11 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded block--light</value>
+                <value>block--padded block--light category--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h4</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -688,7 +692,11 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded block--lighter</value>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -880,7 +888,11 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded block--light</value>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
             </preference>
         </portlet-preferences>
     </portlet>

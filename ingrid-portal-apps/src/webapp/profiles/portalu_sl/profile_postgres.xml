@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+    <name>portalu_sl</name>
+    <description>Portal-Profile für PortalU Saarland</description>
+    <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>true</hidden>
+        </page>
+      </pages>
+    <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-webmap-client/frontend/src</src>
+            <dst>ingrid-webmap-client/frontend/prd</dst>
+        </file>
+    </files>
+    <sql>
+        <!-- Disable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
+        </execute>
+    </sql>
+</profile>

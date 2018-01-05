@@ -6,6 +6,99 @@
     </properties>
 
     <body>
+        <release version="4.2.0" date="2018-01-05" description="Release 4.2.0">
+          <action type="update" dev="wemove" issue="934">
+            RLP: Update Help of RLP Portal.
+          </action>
+          <action type="add" dev="wemove" issue="939">
+            UVP: Add BLP Link to Vorschaltseite of Berlin
+          </action>
+          <action type="add" dev="wemove" issue="932">
+            UVP: Adapt Vorschaltseite Schleswig-Holstein
+          </action>
+          <action type="fix" dev="wemove" issue="931">
+            PORTAL: Fix preview images and ClassCastException on search result list.
+          </action>
+          <action type="fix" dev="wemove" issue="938">
+            PORTAL: Fix missing checkboxes on mdek page.
+          </action>
+          <action type="fix" dev="wemove" issue="937">
+            PORTAL: Fix user list when connected catalogs not yet added to portal.
+          </action>
+          <action type="fix" dev="wemove" issue="891">
+            PORTAL: Support Postgres when switching profile.
+          </action>
+          <action type="fix" dev="wemove" issue="929">
+            PORTAL: Fix webmap client path by installation on windows.
+          </action>
+          <action type="fix" dev="wemove" issue="927">
+            PORTAL: Fix forgotten password function for different users with same e-mail address.
+          </action>
+          <action type="fix" dev="wemove" issue="892">
+            PORTAL: Activate BKG Portal Profile in Portal Administration.
+          </action>
+          <action type="update" dev="wemove" issue="301">
+            PORTAL: Update Jetspeed to 2.3.1.
+          </action>
+          <action type="update" dev="wemove" issue="924">
+            PORTAL: Update NI copyright.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            PORTAL: Update UVP-NI header layout.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            Portal: Change UVP-NI facet map layout.
+          </action>
+          <action type="update" dev="wemove" issue="568">
+            PORTAL: Update RLP profil.
+          </action>
+          <action type="update" dev="wemove" issue="926">
+            PORTAL: Fixes and clean up on facets.
+          </action>
+          <action type="add" dev="wemove" issue="895">
+            IGE-UVP: Set expiry date to all selected rows of a document table.
+          </action>
+          <action type="add" dev="wemove" issue="900">
+            IGE-UVP: Add uploaded documents sorted and added possibility to move rows.
+          </action>
+          <action type="fix" dev="wemove" issue="918">
+            IGE: Change context sensitive uvp help messages because of updated UVPG law text.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            IGE: Fixed getCapabilities assistant when creating coupled resources.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            IGE: Fixed Nullpointer Exception during mapping.
+          </action>
+          <action type="fix" dev="wemove" issue="812">
+            IGE: Do not allow selection of a folder when assigning an address.
+          </action>
+          <action type="fix" dev="wemove" issue="809">
+            IGE: Fixed state of toolbar button for folder create.
+          </action>
+          <action type="fix" dev="wemove" issue="810">
+            IGE: Fixed object class can be changed.
+          </action>
+          <action type="fix" dev="wemove" issue="884">
+            IGE: Fixed missing confirmation when document has been changed.
+          </action>
+          <action type="fix" dev="wemove" issue="885">
+            IGE: Fixed missing tab in group administration after page changed.
+          </action>
+          <action type="fix" dev="wemove" issue="882">
+            IGE: Fixed missing translation for field toggle for additional rubrics.
+          </action>
+          <action type="fix" dev="wemove" issue="936">
+            IGE: Fixed wrong date format in detail view (UVP).
+          </action>
+          <action type="fix" dev="wemove" issue="941">
+            IGE: Do not allow more than 255 characters in object title and other fields.
+          </action>
+          <action type="fix" dev="wemove" issue="886">
+            MAPCLIENT: Fixed add WMS services and encode label of layers.
+          </action>
+        </release>
+
         <release version="4.1.0" date="2017-10-05" description="Release 4.1.0">
           <action type="add" dev="wemove" issue="852">
             PORTAL: Add property to disable function new user.

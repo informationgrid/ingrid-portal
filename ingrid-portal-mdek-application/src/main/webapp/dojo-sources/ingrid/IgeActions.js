@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -294,12 +294,19 @@ define([
                 caption: message.get("general.yes"),
                 action: function() {
                     var def = new Deferred();
+                    var previousSelectedNodeId = registry.byId("dataTree").selectedNode.item.id;
                     def.then(function() {
+                        // reset selected node
+                        UtilTree.selectNode("dataTree", previousSelectedNodeId);
                         deferred.resolve("SAVE");
                     }, function(errMsg) {
                         deferred.reject(errMsg);
                     });
 
+                    // set selected node to the one who is going to be saved
+                    UtilTree.selectNode("dataTree", self.global.currentUdk.uuid);
+
+                    // initiate save
                     topic.publish("/saveRequest", {
                         resultHandler: def
                     });
@@ -2083,6 +2090,23 @@ define([
 
             UtilStore.updateWriteStore("ref1Data", UtilList.listToTableData(nodeData.ref1Data));
             UtilStore.updateWriteStore("ref1VFormatDetails", nodeData.ref1VFormatDetails);
+
+            // Grid-format
+            registry.byId("ref1TransfParamAvail").attr("value", nodeData.ref1GridFormatTransfParam);
+            registry.byId("ref1NumDimensions").attr("value", nodeData.ref1GridFormatNumDimensions);
+            registry.byId("ref1AxisDimName").attr("value", nodeData.ref1GridFormatAxisDimName);
+            registry.byId("ref1AxisDimSize").attr("value", nodeData.ref1GridFormatAxisDimSize);
+            registry.byId("ref1CellGeometry").attr("value", nodeData.ref1GridFormatCellGeometry);
+            registry.byId("isGeoRectified").attr("value", nodeData.ref1GridFormatGeoRectified);
+            registry.byId("isGeoReferenced").attr("value", !nodeData.ref1GridFormatGeoRectified);
+            registry.byId("ref1GridFormatRectCheckpoint").attr("value", nodeData.ref1GridFormatRectCheckpoint);
+            registry.byId("ref1GridFormatRectDescription").attr("value", nodeData.ref1GridFormatRectDescription);
+            registry.byId("ref1GridFormatRectCornerPoint").attr("value", nodeData.ref1GridFormatRectCornerPoint);
+            registry.byId("ref1GridFormatRectPointInPixel").attr("value", nodeData.ref1GridFormatRectPointInPixel);
+            registry.byId("ref1GridFormatRefControlpoint").attr("value", nodeData.ref1GridFormatRefControlPoint);
+            registry.byId("ref1GridFormatRefOrientationParam").attr("value", nodeData.ref1GridFormatRefOrientationParam);
+            registry.byId("ref1GridFormatRefGeoreferencedParam").attr("value", nodeData.ref1GridFormatRefGeoreferencedParam);
+
             UtilStore.updateWriteStore("ref1Scale", nodeData.ref1Scale);
             UtilStore.updateWriteStore("ref1SymbolsText", nodeData.ref1SymbolsText);
             UtilStore.updateWriteStore("ref1KeysText", nodeData.ref1KeysText);
@@ -2645,6 +2669,24 @@ define([
             nodeData.ref1Data = UtilList.tableDataToList(this._getTableData("ref1Data"));
 
             nodeData.ref1VFormatDetails = this._getTableData("ref1VFormatDetails");
+
+            // Grid-format
+            nodeData.ref1GridFormatTransfParam = registry.byId("ref1TransfParamAvail").checked ? true : false;
+            var numDimensions = registry.byId("ref1NumDimensions").get("value");
+            var axisDimSize = registry.byId("ref1AxisDimSize").get("value");
+            nodeData.ref1GridFormatNumDimensions = isNaN(numDimensions) ? null : numDimensions;
+            nodeData.ref1GridFormatAxisDimName = registry.byId("ref1AxisDimName").get("value");
+            nodeData.ref1GridFormatAxisDimSize = isNaN(axisDimSize) ? null : axisDimSize;
+            nodeData.ref1GridFormatCellGeometry = registry.byId("ref1CellGeometry").get("value");
+            nodeData.ref1GridFormatGeoRectified = registry.byId("isGeoRectified").checked ? true : false;
+            nodeData.ref1GridFormatRectCheckpoint = registry.byId("ref1GridFormatRectCheckpoint").checked ? true : false;
+            nodeData.ref1GridFormatRectDescription = registry.byId("ref1GridFormatRectDescription").get("value");
+            nodeData.ref1GridFormatRectCornerPoint = registry.byId("ref1GridFormatRectCornerPoint").get("value");
+            nodeData.ref1GridFormatRectPointInPixel = registry.byId("ref1GridFormatRectPointInPixel").get("value");
+            nodeData.ref1GridFormatRefControlPoint = registry.byId("ref1GridFormatRefControlpoint").checked ? true : false;
+            nodeData.ref1GridFormatRefOrientationParam = registry.byId("ref1GridFormatRefOrientationParam").checked ? true : false;
+            nodeData.ref1GridFormatRefGeoreferencedParam = registry.byId("ref1GridFormatRefGeoreferencedParam").get("value");
+
             nodeData.ref1Scale = this._getTableData("ref1Scale");
             nodeData.ref1SymbolsText = this._getTableData("ref1SymbolsText");
             nodeData.ref1KeysText = this._getTableData("ref1KeysText");

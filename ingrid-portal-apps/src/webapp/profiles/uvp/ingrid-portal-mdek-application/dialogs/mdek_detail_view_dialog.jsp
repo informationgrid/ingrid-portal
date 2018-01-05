@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -80,7 +80,7 @@ require([
             if (pageDetailViewObjects.customParams.searchResult) {
                 pageDetailViewObjects.resultView = true;
                 // registry.byId("showSubTree").set("checked", true);
-                registry.byId("showDetailedView").set("checked", false);
+                // registry.byId("showDetailedView").set("checked", false);
                 refreshView();
 
             } else { // print hierarchy tree
@@ -108,7 +108,7 @@ require([
             }
 
             // on(registry.byId("showSubTree"), "click", refreshView);
-            on(registry.byId("showDetailedView"), "click", refreshView);
+            // on(registry.byId("showDetailedView"), "click", refreshView);
             on(registry.byId("showSubordinateObjects"), "click", refreshView);
 
             console.log("Publishing event: '/afterInitDialog/ObjectDetail'");
@@ -122,7 +122,7 @@ require([
             setLoadingZone(true);
 
             var showSubTree = null; // registry.byId("showSubTree").checked;
-            var showDetails = registry.byId("showDetailedView").checked;
+            // var showDetails = registry.byId("showDetailedView").checked;
 
             // empty preview div
             pageDetailViewObjects.detailDiv.innerHTML = "";
@@ -145,13 +145,13 @@ require([
                     })
                     .then(hideProcessingDialog);
                 } else {
-                    if (showDetails) {
+                    // if (showDetails) {
                         def = loadAndRenderTreeNode(pageDetailViewObjects.selectedNode.item.id);
-                    } else {
+                    /* } else {
                         renderSimpleTreeNode(pageDetailViewObjects.nodeTreeItem);
                         def = new Deferred();
                         def.resolve();
-                    }
+                    } */
                     def.then(function() {
                         pageDetailViewObjects.detailDiv.innerHTML = pageDetailViewObjects.detailDivContent;
                     })
@@ -183,20 +183,20 @@ require([
         function renderSearchResults() {
             var result = pageDetailViewObjects.customParams.searchResult;
             pageDetailViewObjects.subNodesCount = result.numHits;
-            var showDetails = registry.byId("showDetailedView").checked;
+            // var showDetails = registry.byId("showDetailedView").checked;
 
             // show a warning dialog if it would take a long time to prepare the print preview
             var def = showTooManyNodesDialogIfNecessary()
             .then(showProcessingDialog);
             
             array.forEach(result.resultList, function(entry) {
-                if (showDetails) {
+                // if (showDetails) {
                     def = def.then(lang.hitch(pageDetailViewObjects, lang.partial(loadAndRenderTreeNode, entry.uuid, entry.nodeAppType)));
-                } else {
+                /* } else {
                     def = def.then(lang.hitch(pageDetailViewObjects, function() {
                         renderSimpleTreeNode(entry);
                     }));
-                }
+                } */
             }, this);
             def.then(function() {
                 pageDetailViewObjects.detailDiv.innerHTML = pageDetailViewObjects.detailDivContent;
@@ -252,12 +252,12 @@ require([
             if (activate) {
                 style.set("detailLoadingZone", "visibility", "visible");
                 // UtilUI.disableElement("showSubTree");
-                UtilUI.disableElement("showDetailedView");
+                // UtilUI.disableElement("showDetailedView");
                 UtilUI.disableElement("printDetailObject");
             } else {
                 style.set("detailLoadingZone", "visibility", "hidden");
                 // UtilUI.enableElement("showSubTree");
-                UtilUI.enableElement("showDetailedView");
+                // UtilUI.enableElement("showDetailedView");
                 UtilUI.enableElement("printDetailObject");
                 updateCheckboxesFunctionality();
             }
@@ -266,7 +266,7 @@ require([
         function renderSubTreeNodeData() {
             console.debug("renderTreeNodeData");
             var showSubTree = null; // registry.byId("showSubTree").checked;
-            var renderDetailView = registry.byId("showDetailedView").checked;
+            // var renderDetailView = registry.byId("showDetailedView").checked;
             // show a warning dialog if it would take a long time to prepare the print preview
             var def = showTooManyNodesDialogIfNecessary();
 
@@ -283,7 +283,7 @@ require([
 
         function showTooManyNodesDialogIfNecessary() {
             var def = new Deferred();
-            var renderDetailView = registry.byId("showDetailedView").checked;
+            // var renderDetailView = registry.byId("showDetailedView").checked;
 
             // count all subnodes first!
             if (renderDetailView && pageDetailViewObjects.subNodesCount > 100) {
@@ -348,12 +348,12 @@ require([
 
             // each node in the tree will be loaded and rendered
             array.forEach(nodeDataList, function(nodeData) {
-                if (registry.byId("showDetailedView").checked) {
+                //if (registry.byId("showDetailedView").checked) {
                     // get the returned promise to chain it to the next call
                     defSubs = defSubs.then(lang.hitch(this, lang.partial(loadAndRenderTreeNode, nodeData.id)));
-                } else {
+                /* } else {
                     renderSimpleTreeNode(nodeData);
-                }
+                } */
 
                 // if node has children then recursively render these AFTER the current node has
                 // been rendered
@@ -865,14 +865,22 @@ require([
                 }
                 var data = getValueFromAdditional(addWidgetId, nodeData); // isDynamic?
                 if (data) {
-                    // if it is a table
-                    if (typeof(data) == "object") {
+                    // if it's a date object
+                    if (data instanceof Date) {
+                        var date = dojo.date.locale.format(data, {
+                            selector: "date",
+                            datePattern: "dd.MM.yyyy"
+                        });
+                        renderTextWithTitle(date, label);
+
+                    } else if (typeof(data) == "object") { // if it is a table
                         if (data.length > 0) {
                             var columnFields = getColumnFields(widgetId);
                             var columnNames = getColumnNames(widgetId);
                             var formatters = getColumnFormatters(widgetId);
                             renderTable(data, columnFields, columnNames, label, formatters, true, UtilGrid.getTable(widgetId).getColumns());
                         }
+
                     } else {
                         renderTextWithTitle(data, label);
                     }
@@ -890,7 +898,11 @@ require([
                         result = prepareAdditionalTable(field.tableRows);
                         return true;
                     } else if (field.value !== null) {
-                        result = field.value + getUnitFromField(id);
+                        if (field.value instanceof Date) {
+                            result = field.value;
+                        } else {
+                            result = field.value + getUnitFromField(id);
+                        }
                         return true;
                     }
                 }
@@ -1267,10 +1279,10 @@ require([
 <body>
     <div data-dojo-type="dijit.layout.BorderContainer" gutters="true" liveSplitters="false" style="height:500px;">
         <div data-dojo-type="dijit/layout/ContentPane" splitter="false" region="top" id="printDialogSettings">
-            <input type="checkbox" id="showDetailedView" data-dojo-type="dijit/form/CheckBox" checked=true />
+            <!-- <input type="checkbox" id="showDetailedView" data-dojo-type="dijit/form/CheckBox" checked=true />
             <label for="showDetailedView" class="inActive" style="margin-right: 15px;">
                 <fmt:message key="dialog.detail.print.showDetailedView" />
-            </label>
+            </label> -->
             <!--<input type="checkbox" id="showSubTree" data-dojo-type="dijit/form/CheckBox" />
             <label for="showSubTree" class="inActive">
                 <fmt:message key="dialog.detail.print.showSubTree" />

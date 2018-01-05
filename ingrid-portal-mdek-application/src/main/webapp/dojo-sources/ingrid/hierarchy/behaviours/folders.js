@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -33,8 +33,9 @@ define(["dojo/_base/declare",
   "ingrid/message",
   "ingrid/utils/Syslist",
   "ingrid/utils/Tree",
+  "ingrid/utils/Security",
   "dojo/NodeList-traverse"
-], function(declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils) {
+], function(declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils, UtilSecurity) {
 
   return declare(null, {
     title: "Ordnerstruktur in Hierarchiebaum",
@@ -100,10 +101,15 @@ define(["dojo/_base/declare",
           // handle actions on root node and folders directly beneath it
           on(HierarchyTreeActions.menu, "open", function() {
             var node = registry.byId("dataTree").selectedNode;
+            var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
             
             if (node.item.id === "objectRoot" || node.item.id === "addressRoot") {
               domClass.remove("menuItemNewFolder", "hidden");
-              registry.byId("menuItemNewFolder").set("disabled", false);
+              if (canCreateRootNodes) {
+                registry.byId("menuItemNewFolder").set("disabled", false);
+              } else {
+                registry.byId("menuItemNewFolder").set("disabled", true);
+              }
 
             } else if (node.item.id === "addressFreeRoot") {
               registry.byId("menuItemNewFolder").set("disabled", true);
@@ -153,11 +159,12 @@ define(["dojo/_base/declare",
     isFolderDisabledForNode: function(node) {
       var excludedId = "addressFreeRoot";
 
-      // root nodes should be enabled to create folders
-      if (node.id === "objectRoot" || node.id === "addressRoot") return false;
+      // root nodes should be enabled to create folders if user has permission
+      var canCreateRootNodes = UtilSecurity.canCreateRootNodes();
+      if ((node.id === "objectRoot" || node.id === "addressRoot") && canCreateRootNodes) return false;
 
       // check if we have write permission and node is not excluded
-      if (!node.userWriteTreePermission || node.id === excludedId || node.objectClass !== 1000) return true;
+      if (!(node.userWritePermission || node.userWriteSubNodePermission) || node.id === excludedId || node.objectClass !== 1000) return true;
 
       // check all parents
       // if we find an excluded node then disallow folder creation

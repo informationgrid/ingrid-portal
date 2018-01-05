@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,6 +24,7 @@ package de.ingrid.portal.portlets.myportal;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -52,6 +53,8 @@ import de.ingrid.portal.forms.PasswordForgottenForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 
+import org.apache.jetspeed.security.SecurityException;
+
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -72,6 +75,8 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
     private static final String STATE_PASSWORD_NOT_SENT = "not_sent";
 
     private static final String TEMPLATE_PASSWORD_DONE = "/WEB-INF/templates/myportal/myportal_password_forgotten_done.vm";
+
+    private static final String USER_NOT_FOUND_FROM_EMAIL = "User not found for Email address: ";
 
     private PortalAdministration admin;
 
@@ -149,68 +154,103 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
         // search user with email
         String email = f.getInput(PasswordForgottenForm.FIELD_EMAIL);
-        User user;
+        String login = f.getInput(PasswordForgottenForm.FIELD_LOGIN);
+        User user = null;
         try {
-            user = admin.lookupUserFromEmail(email);
+            Collection<User> users;
+            try {
+                users = userManager.lookupUsers("user.business-info.online.email", email);
+            } catch (SecurityException e) {
+                throw new AdministrationEmailException(e);
+            }
+            if (users.isEmpty()) {
+                throw new AdministrationEmailException(USER_NOT_FOUND_FROM_EMAIL + email);
+            } else {
+                if(users.size() == 1){
+                    user = users.iterator().next();
+                } else {
+                    if(login != null && !login.isEmpty()){
+                        for (User tmpUser : users) {
+                            String tmpUserLogin = tmpUser.getName();
+                            login = login.trim();
+                            if(tmpUserLogin.equals( login )){
+                                user = tmpUser;
+                                break;
+                            }
+                        }
+                        if (user == null) {
+                            f.setError(PasswordForgottenForm.FIELD_LOGIN, "password.forgotten.error.loginNotExists");
+                            return;
+                        }
+                    } else {
+                        f.setError(PasswordForgottenForm.FIELD_LOGIN, "password.forgotten.error.loginMiss");
+                        return;
+                    }
+                }
+            }
         } catch (AdministrationEmailException e1) {
             f.setError(PasswordForgottenForm.FIELD_EMAIL, "password.forgotten.error.emailNotExists");
             return;
         }
-
-        try {
-            String userName = user.getName();
-            String newPassword = admin.generatePassword();
-
-            PasswordCredential credential = userManager.getPasswordCredential(user);
-    		credential.setPassword(null, newPassword);
-    		userManager.storePasswordCredential(credential);
-
-    		Map<String, String> userAttributes = new HashMap<String, String>();
-    		userAttributes.putAll(user.getInfoMap());
-            // special attributes
-            userAttributes.put(CTX_NEW_PASSWORD, newPassword);
-            userAttributes.put(CTX_USER_NAME, userName);
-            // map coded stuff
-            Locale locale = request.getLocale();
-            IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
-            String salutationFull = messages.getString("account.edit.salutation.option", (String) userAttributes
-                    .get("user.name.prefix"));
-            userAttributes.put("user.custom.ingrid.user.salutation.full", salutationFull);
-
-            String language = locale.getLanguage();
-            String localizedTemplatePath = this.emailTemplate;
-            int period = localizedTemplatePath.lastIndexOf(".");
-            if (period > 0) {
-                String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
-                        + localizedTemplatePath.substring(period + 1);
-                if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
-                    this.emailTemplate = fixedTempl;
-                    localizedTemplatePath = fixedTempl;
+        
+        if(user == null) {
+            f.setError(PasswordForgottenForm.FIELD_EMAIL, "password.forgotten.error.emailNotExists");
+            return;
+        } else {
+            try {
+                String userName = user.getName();
+                String newPassword = admin.generatePassword();
+        
+                PasswordCredential credential = userManager.getPasswordCredential(user);
+        		credential.setPassword(null, newPassword);
+        		userManager.storePasswordCredential(credential);
+        
+        		Map<String, String> userAttributes = new HashMap<String, String>();
+        		userAttributes.putAll(user.getInfoMap());
+                // special attributes
+                userAttributes.put(CTX_NEW_PASSWORD, newPassword);
+                userAttributes.put(CTX_USER_NAME, userName);
+                // map coded stuff
+                Locale locale = request.getLocale();
+                IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
+                String salutationFull = messages.getString("account.edit.salutation.option", (String) userAttributes
+                        .get("user.name.prefix"));
+                userAttributes.put("user.custom.ingrid.user.salutation.full", salutationFull);
+        
+                String language = locale.getLanguage();
+                String localizedTemplatePath = this.emailTemplate;
+                int period = localizedTemplatePath.lastIndexOf(".");
+                if (period > 0) {
+                    String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
+                            + localizedTemplatePath.substring(period + 1);
+                    if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
+                        this.emailTemplate = fixedTempl;
+                        localizedTemplatePath = fixedTempl;
+                    }
                 }
-            }
-
-            if (localizedTemplatePath == null) {
-                log.error("email template not available");
+        
+                if (localizedTemplatePath == null) {
+                    log.error("email template not available");
+                    actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
+                    return;
+                }
+        
+                String emailSubject = messages.getString("password.forgotten.email.subject");
+        
+                String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
+                        "foo@bar.com");
+                String to = (String) userAttributes.get("user.business-info.online.email");
+                String text = Utils.mergeTemplate(getPortletConfig(), userAttributes, "map", localizedTemplatePath);
+                if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
+                    actionResponse.setRenderParameter("cmd", STATE_PASSWORD_SENT);
+                } else {
+                    actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
+                }
+        
+            } catch (Exception e) {
+                log.error("error sending new password.", e);
                 actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
-                return;
             }
-
-            String emailSubject = messages.getString("password.forgotten.email.subject");
-
-            String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
-                    "foo@bar.com");
-            String to = (String) userAttributes.get("user.business-info.online.email");
-            String text = Utils.mergeTemplate(getPortletConfig(), userAttributes, "map", localizedTemplatePath);
-            if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-                actionResponse.setRenderParameter("cmd", STATE_PASSWORD_SENT);
-            } else {
-                actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
-            }
-
-        } catch (Exception e) {
-            log.error("error sending new password.", e);
-            actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
         }
-
     }
 }
