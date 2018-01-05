@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.io.UncheckedIOException;
 import java.nio.file.CopyOption;
-import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -37,10 +36,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.compress.archivers.ArchiveEntry;
 import org.apache.commons.compress.archivers.ArchiveInputStream;
@@ -147,7 +148,7 @@ public class FileSystemStorage implements Storage {
         List<StorageItem> files = new ArrayList<StorageItem>();
         if (Files.exists(path)) {
             Files.walk(path)
-            .filter(p -> !p.getParent().toString().endsWith(TRASH_PATH) && Files.isRegularFile(p))
+            .filter(p -> !p.getParent().endsWith(TRASH_PATH) && Files.isRegularFile(p))
             .forEach(p -> {
                 try {
                     files.add(this.getFileInfo(p.toString()));
@@ -173,6 +174,15 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public boolean isValidName(String path, String file) {
+        // check if names conflict with special directories
+        Path filePath = Paths.get(path, file);
+        Iterator<Path> it = filePath.iterator();
+        while(it.hasNext()) {
+            String pathPart = it.next().toString();
+            if (TRASH_PATH.equals(pathPart) || ARCHIVE_PATH.equals(pathPart)) {
+                return false;
+            }
+        }
         // we only reject invalid filenames, because the path will be sanitized
         return this.isValid(file, ILLEGAL_FILE_NAME);
     }
@@ -194,7 +204,7 @@ public class FileSystemStorage implements Storage {
     public FileSystemItem[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract)
             throws IOException {
         if (!this.isValidName(path, file)) {
-            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+            throw new IllegalFileException("The file name is invalid.", path+"/"+file);
         }
         Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
@@ -210,7 +220,7 @@ public class FileSystemStorage implements Storage {
             Files.copy(data, realPath, copyOptions);
         }
         catch (FileAlreadyExistsException faex) {
-        	StorageItem[] items = { this.getFileInfo(faex.getFile()) };
+            StorageItem[] items = { this.getFileInfo(faex.getFile()) };
             throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
         if (Files.size(realPath) != size) {
@@ -267,7 +277,7 @@ public class FileSystemStorage implements Storage {
     public FileSystemItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
             throws IOException {
         if (!this.isValidName(path, file)) {
-            throw new IllegalFileException("The file is invalid.", path+"/"+file);
+            throw new IllegalFileException("The file name is invalid.", path+"/"+file);
         }
         // combine parts into stream
         Vector<InputStream> streams = new Vector<InputStream>();
@@ -322,18 +332,35 @@ public class FileSystemStorage implements Storage {
     @Override
     public void cleanup() throws IOException {
         // delete empty directories
-        Files.walk(Paths.get(this.docsDir))
-        .filter(p -> Files.isDirectory(p))
-        .forEach(p -> {
-            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(p)) {
-                if (!dirStream.iterator().hasNext()) {
-                    Files.delete(p);
+        Path trashPath = Paths.get(this.docsDir, TRASH_PATH);
+        Path archivePath = Paths.get(this.docsDir, ARCHIVE_PATH);
+
+        // run as long as there are empty directories
+        boolean hasEmptyDirs = true;
+        while (hasEmptyDirs) {
+            // collect empty directories
+            List<Path> emptyDirs = Files.walk(Paths.get(this.docsDir))
+            .filter(p -> {
+                boolean isEmptyDir = false;
+                try {
+                    isEmptyDir = Files.isDirectory(p) &&
+                            !Files.newDirectoryStream(p).iterator().hasNext() &&
+                            !(p.equals(trashPath) || p.equals(archivePath));
                 }
+                catch (IOException ex) {
+                    throw new UncheckedIOException(ex);
+                }
+                return isEmptyDir;
+            })
+            .collect(Collectors.toList());
+
+            // delete directories
+            for (Path emptyDir : emptyDirs) {
+                Files.delete(emptyDir);
             }
-            catch (IOException e) {
-                throw new UncheckedIOException(e);
-            }
-        });
+
+            hasEmptyDirs = emptyDirs.size() > 0;
+        }
     }
 
     /**

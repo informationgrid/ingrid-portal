@@ -730,6 +730,10 @@ public class UploadCleanupJobTest {
         String referencedDir = Paths.get(this.getFilePath(PLUG_ID), "ReferencedDir").toString();
         this.createFile(referencedDir, referencedFile, DEFAULT_FILE_AGE);
 
+        // create special directories
+        Files.createDirectories(Paths.get(DOCS_PATH.toString(), TRASH_PATH));
+        Files.createDirectories(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH));
+
         // setup file references
         List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
@@ -746,6 +750,8 @@ public class UploadCleanupJobTest {
         assertTrue(this.dirExists(referencedDir));
         assertFalse(this.fileExists(unreferencedDir, unreferencedFile));
         assertFalse(this.dirExists(unreferencedDir));
+        assertTrue(this.dirExists(TRASH_PATH));
+        assertTrue(this.dirExists(ARCHIVE_PATH));
         assertFalse(this.testAppender.hasIssues());
     }
 

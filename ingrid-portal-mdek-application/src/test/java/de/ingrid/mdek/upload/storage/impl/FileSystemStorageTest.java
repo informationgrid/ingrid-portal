@@ -25,6 +25,7 @@ package de.ingrid.mdek.upload.storage.impl;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
@@ -45,6 +46,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
+
+import de.ingrid.mdek.upload.IllegalFileException;
 
 public class FileSystemStorageTest {
 
@@ -205,6 +208,34 @@ public class FileSystemStorageTest {
 
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), "illegal-plug-id__5_/", OBJ_UUID, file)));
+    }
+
+    /**
+     * Test:
+     * - Write a file with a name conflicting with one of the special directories
+     * @throws Exception
+     */
+    @Test
+    public void testFilenameConflictWithSpecialDirs() throws Exception {
+        String path = PLUG_ID+"/"+OBJ_UUID;
+
+        try {
+            String file = "_trash_";
+            this.storageWriteTestFile(path, file);
+            fail("Expected an IllegalFileException to be thrown");
+        }
+        catch (IllegalFileException ex) {
+            assertEquals(ex.getMessage(), "The file name is invalid.");
+        }
+
+        try {
+            String file = "_archive_";
+            this.storageWriteTestFile(path, file);
+            fail("Expected an IllegalFileException to be thrown");
+        }
+        catch (IllegalFileException ex) {
+            assertEquals(ex.getMessage(), "The file name is invalid.");
+        }
     }
 
     /**
