@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="4.2.0-SNAPSHOT" date="2017-xx-xx" description="Release 4.2.0">
+        <release version="4.2.0" date="2018-01-05" description="Release 4.2.0">
           <action type="update" dev="wemove" issue="934">
             RLP: Update Help of RLP Portal.
           </action>
