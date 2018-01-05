@@ -341,7 +341,7 @@
                           </fileset>
                         </resourcecount>
                         <not>
-                          <contains string="${project.version}" substring="-SNAPSHOT"></contains>
+                          <contains string="${project.version}" substring="-SNAPSHOT" />
                         </not>
                       </and>
                     </condition>
