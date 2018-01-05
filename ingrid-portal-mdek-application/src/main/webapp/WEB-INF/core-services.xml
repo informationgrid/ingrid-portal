@@ -38,6 +38,6 @@
     </bean>
   
     <bean class="de.ingrid.mdek.util.FileSystemStorageMigrator" id="fileSystemStorageMigrator">
-        <property name="docsDir" value="${upload.docsdir}" />
+        <constructor-arg name="docsDir" value="${upload.docsdir}" />
     </bean>
 </beans>
