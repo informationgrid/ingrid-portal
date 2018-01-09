@@ -7,6 +7,11 @@
 
     <body>
         <release version="4.1.7-SNAPSHOT" date="????-??-??" description="??">
+          <action type="fix" dev="wemove" issue="781">
+            IGE: Fix import of getCapabilities - online resources.
+          </action>
+        </release>
+
           <action type="update" dev="wemove" issue="934">
             RLP: Update Help of RLP Portal.
           </action>
