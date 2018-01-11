@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
           </action>
+          <action type="fix" dev="wemove" issue="946">
+            IGE/Portal: Fixed location search by adapting to new WFS service.
+          </action>
         </release>
 
         <release version="4.2.0" date="2018-01-05" description="Release 4.2.0">
