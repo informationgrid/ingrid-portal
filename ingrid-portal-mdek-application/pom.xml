@@ -3,11 +3,11 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.1.7-SNAPSHOT</version>
+        <version>4.1.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ingrid-portal-mdek-application</artifactId>&#xD;
-    <version>4.1.7-SNAPSHOT</version>
+    <version>4.1.7</version>
     <packaging>war</packaging>
     <name>InGrid Portal MDEK Application</name>
     <scm>
