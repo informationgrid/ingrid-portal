@@ -130,10 +130,107 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>wildcard_number</id>
         <wildcard>bawauftragsnummer</wildcard>
     </facet>
-    <facet>
-        <name>Bundeswasserstraße</name>
-        <id>wildcard_location</id>
-        <wildcard>location</wildcard>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Datenart</name>
+        <id>bawdatentyp</id>
+        <facets>
+            <facet>
+                <name>Auftrag</name>
+                <id>datentypauftrag</id>
+                <query>bawhierarchylevelname:auftrag</query>
+            </facet>
+            <facet>
+                <name>Variante</name>
+                <id>datentyp_variante</id>
+                <query>bawhierarchylevelname:variante</query>
+            </facet>
+            <facet>
+                <name>Szenario</name>
+                <id>datentyp_szenario</id>
+                <query>bawhierarchylevelname:szenario</query>
+            </facet>
+            <facet>
+                <name>Simulationslauf</name>
+                <id>datentyp_simulationslauf</id>
+                <query>bawhierarchylevelname:simulationslauf</query>
+            </facet>
+            <facet>
+                <name>Luftbild</name>
+                <id>datentyp_luftbild</id>
+                <query>bawhierarchylevelname:luftbilder</query>
+            </facet>
+            <facet>
+                <name>Historische Daten</name>
+                <id>datentyp_historisch</id>
+                <query>bawhierarchylevelname:historische daten</query>
+            </facet>
+            <facet>
+                <name>Fotos</name>
+                <id>datentyp_fotos</id>
+                <query>bawhierarchylevelname:fotos</query>
+            </facet>
+            <facet>
+                <name>Messdaten</name>
+                <id>datentyp_messdaten</id>
+                <query>bawhierarchylevelname:messdaten</query>
+            </facet>
+            <facet>
+                <name>Simulationsdaten</name>
+                <id>datentyp_simulationsdaten</id>
+                <query>bawhierarchylevelname:simulationsdaten</query>
+            </facet>
+            <facet>
+                <name>Preprocessing Ausgangsdaten</name>
+                <id>datentyp_preprocessing</id>
+                <query>bawhierarchylevelname:preprocessing</query>
+            </facet>
+            <facet>
+                <name>Postprocessing Ergebnisse</name>
+                <id>datentyp_postprocessing</id>
+                <query>bawhierarchylevelname:postprocessing</query>
+            </facet>
+            <facet>
+                <name>Visualisierung</name>
+                <id>datentyp_visualisierung</id>
+                <query>bawhierarchylevelname:visualisierung</query>
+            </facet>
+            <facet>
+                <name>Dienst</name>
+                <id>datentyp_dienst</id>
+                <query>bawhierarchylevelname:dienst</query>
+            </facet>
+            <facet>
+                <name>Sonstiges</name>
+                <id>datentyp_sonstiges</id>
+                <query>bawhierarchylevelname:sonstiges</query>
+            </facet>
+        </facets>
+    </facet>
+    <facet sort="SORT_BY_VALUE_DESC">
+        <name>Wasserstraße</name>
+        <id>wasserstrasse</id>
+        <facets>
+            <facet>
+                <name>Donau</name>
+                <id>bwastrdonau</id>
+                <query>bwstr-bwastr_name:donau</query>
+            </facet>
+            <facet>
+                <name>Elbe</name>
+                <id>bwastrelbe</id>
+                <query>bwstr-bwastr_name:elbe</query>
+            </facet>
+            <facet>
+                <name>Rhein</name>
+                <id>bwastrrhein</id>
+                <query>bwstr-bwastr_name:rhein</query>
+            </facet>
+            <facet>
+                <name>Andere Wasserstraße</name>
+                <id>wildcard_wasserstrasse</id>
+                <wildcard>location|bwstr-bwastr_name</wildcard>
+            </facet>
+        </facets>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
         <name>Verfahren</name>
@@ -257,23 +354,83 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet sort="SORT_BY_VALUE_DESC">
-        <name>Modelldaten</name>
+        <name>Modellart</name>
         <id>simmodeltype</id>
         <facets>
             <facet>
-                <name>Basisdaten</name>
-                <query>simparamtype:Randbedingung OR simparamtype:Anfangsbedingung OR simparamtype:Peilung OR simparamtype:Bathymetrie OR simparamtype:Kennwort</query>
-                <id>Basisdaten</id>
+                <name>Fahrdynamisch</name>
+                <id>simmodeltypefahrdynamisch</id>
+                <query>simmodeltype:fahrdynamisch</query>
             </facet>
             <facet>
-                <name>Modellergebnisse</name>
-                <query>simparamtype:Ergebnis</query>
-                <id>Modellergebnisse</id>
+                <name>Feststofftransportmodell</name>
+                <id>simmodeltypefeststofftransportmodell</id>
+                <query>simmodeltype:feststofftransportmodell</query>
             </facet>
             <facet>
-                <name>Fachliche Abbildungen/Grafiken</name>
-                <query>simparamtype:Grafik</query>
-                <id>FachlicheAbbildungenGrafiken</id>
+                <name>Numerisch-hydraulisch</name>
+                <id>simmodeltypenumerischhydraulisch</id>
+                <query>simmodeltype:numerisch-hydraulisch</query>
+            </facet>
+            <facet>
+                <name>Gegenständlich-hydraulisch</name>
+                <id>simmodeltypegegenstaendlichhydraulisch</id>
+                <query>simmodeltype:gegenständlich-hydraulisch</query>
+            </facet>
+            <facet>
+                <name>Hydrodynamisch</name>
+                <id>simmodeltypehydrodynamisch</id>
+                <query>simmodeltype:hydrodynamisch</query>
+            </facet>
+            <facet>
+                <name>Hydrologisch</name>
+                <id>simmodeltypehydrologisch</id>
+                <query>simmodeltype:hydrologisch</query>
+            </facet>
+            <facet>
+                <name>Mehrphasenmodell</name>
+                <id>simmodeltypemehrphasenmodell</id>
+                <query>simmodeltype:mehrphasenmodell</query>
+            </facet>
+            <facet>
+                <name>Naturversuch</name>
+                <id>simmodeltypenaturversuch</id>
+                <query>simmodeltype:naturversuch</query>
+            </facet>
+            <facet>
+                <name>Numerisch</name>
+                <id>simmodeltypenumerisch</id>
+                <query>simmodeltype:Numerisch</query>
+            </facet>
+            <facet>
+                <name>Gegenständlich</name>
+                <id>simmodeltypegegenstaendlich</id>
+                <query>simmodeltype:gegeständlich</query>
+            </facet>
+            <facet>
+                <name>Advektion</name>
+                <id>simmodeltypeadvektion</id>
+                <query>simmodeltype:advektion</query>
+            </facet>
+            <facet>
+                <name>Diffusion</name>
+                <id>simmodeltypediffusion</id>
+                <query>simmodeltype:diffusion</query>
+            </facet>
+            <facet>
+                <name>Turbulenz</name>
+                <id>simmodeltypeturbulenz</id>
+                <query>simmodeltype:turbulenz</query>
+            </facet>
+            <facet>
+                <name>Seegang</name>
+                <id>simmodeltypeseegang</id>
+                <query>simmodeltype:seegang</query>
+            </facet>
+            <facet>
+                <name>Morphodynamik</name>
+                <id>simmodeltypemorphodynamik</id>
+                <query>simmodeltype:morphodynamik</query>
             </facet>
         </facets>
     </facet>
@@ -397,3 +554,4 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
 </facets>
+
