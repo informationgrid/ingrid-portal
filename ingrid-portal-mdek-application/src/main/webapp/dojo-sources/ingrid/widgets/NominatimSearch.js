@@ -88,8 +88,9 @@ define([
             this.map = L.map(this.mapId, {
                 scrollWheelZoom: this.scrollWheelZoom
             }).setView([51.505, 8.89], 13);
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            // add URL for tiles (by removing the protocol, the protocol will be chosen automatically)
+            L.tileLayer('//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
             }).addTo(this.map);
             
             this.areaSelect = L.areaSelect({width:100, height:100});
