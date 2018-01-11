@@ -519,7 +519,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-iplug-sns</artifactId>
-      <version>4.3.0-SNAPSHOT</version>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <groupId>de.ingrid</groupId>
