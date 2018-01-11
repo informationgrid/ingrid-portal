@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="4.1.7-SNAPSHOT" date="????-??-??" description="??">
+        <release version="4.1.7" date="2018-01-11" description="Release 4.1.7">
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
           </action>
@@ -16,12 +16,11 @@
           <action type="fix" dev="wemove" issue="949">
             IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
           </action>
-        </release>
-
           <action type="update" dev="wemove" issue="934">
             RLP: Update Help of RLP Portal.
           </action>
         </release>
+        
         <release version="4.1.6" date="2017-12-20" description="Release 4.1.6">
           <action type="add" dev="wemove" issue="939">
             UVP: Add BLP Link to Vorschaltseite of Berlin
