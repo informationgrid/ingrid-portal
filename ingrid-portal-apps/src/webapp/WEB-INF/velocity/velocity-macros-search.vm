@@ -479,22 +479,26 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     $action.setParameter("doClearSearchWildcard", "$entry.getId()")
                     #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $wildcard_item_term")
                 #end
-            #elseif($entry.getWildcard())
-                #set($wildcard_item = false)
-                #set($wildcard_item_term = false)
-                
-                #if($wildcardMap)
-                    #set($wildcard_item = $wildcardMap.get("$entry.getId()"))
-                    #if($wildcard_item)
-                        #set($wildcard_item_term = $wildcard_item.get("term"))
-                    #end
-                #end
-                #if($wildcard_item_term)
-                    #set ($action = $renderResponse.createActionURL())
-                    $action.setParameter("wildcard_id", "$entry.getId()")
-                    $action.setParameter("doClearSearchWildcard", "$entry.getId()")
-                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $wildcard_item_term")
-                #end
+            #elseif($entry.isOpen())
+            	#foreach($facet in $entry.getFacets())
+	                #if($facet.getWildcard())
+		                #set($wildcard_item = false)
+		                #set($wildcard_item_term = false)
+		                
+		                #if($wildcardMap)
+		                    #set($wildcard_item = $wildcardMap.get("$facet.getId()"))
+		                    #if($wildcard_item)
+		                        #set($wildcard_item_term = $wildcard_item.get("term"))
+		                    #end
+		                #end
+		                #if($wildcard_item_term)
+		                    #set ($action = $renderResponse.createActionURL())
+		                    $action.setParameter("wildcard_id", "$facet.getId()")
+		                    $action.setParameter("doClearSearchWildcard", "$facet.getId()")
+		                    #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($facet.getName()): $wildcard_item_term")
+		                #end
+	                #end
+	            #end
             #end
         #else
             #if($entry.isSelect())

@@ -617,11 +617,21 @@ public class UtilsFacete {
                 wildCardValue = wildCardValue.toLowerCase();
             }
 
-            query.addWildCardFieldQuery(new WildCardFieldQuery(
-                    required,
-                    prohibited,
-                    fieldName,
-                    wildCardValue));
+            if (fieldName.contains("|")) {
+                for(String s: fieldName.split("\\|")) {
+                    query.addWildCardFieldQuery(new WildCardFieldQuery(
+                            !required,
+                            prohibited,
+                            s,
+                            wildCardValue));
+                }
+            } else {
+                query.addWildCardFieldQuery(new WildCardFieldQuery(
+                        required,
+                        prohibited,
+                        fieldName,
+                        wildCardValue));
+            }
         }
     }
     
@@ -1707,29 +1717,40 @@ public class UtilsFacete {
                 resetFacetConfigSelect(config);
                 for(String paramsSplit : paramsSplits){
                     String[] split = paramsSplit.split(":");
-                    IngridFacet tmpFacetKey = getFacetById(config, split[0]);
-                    if(tmpFacetKey != null){
-                        //Set facet parent isSelect
-                        //tmpFacetKey.setSelect(true);
-                        if(tmpFacetKey.getFacets() != null){
-                            //Set facet isSelect
-                            IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
-                            tmpFacetValue.setSelect(true);
-                            //Check dependency
-                            if(tmpFacetValue.getId() != null){
-                                ArrayList<IngridFacet> facetDepList = new ArrayList<IngridFacet>();
-                                getDependencyFacetById(config, facetDepList, tmpFacetValue.getId());
-                                for(IngridFacet facetDep : facetDepList){
-                                    IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
-                                    if(dependencyValue.isSelect()){
-                                        facetDep.setDependencySelect(dependencyValue.isSelect());
-                                    }else{
-                                        if(facetDep.getFacets() != null){
-                                            for(IngridFacet facetChild : facetDep.getFacets()){
-                                                facetChild.setSelect(dependencyValue.isSelect());
+                    String split0 = split[0];
+                    IngridFacet tmpFacetKey;
+                    if(split0.equals("wildcard")) {
+                        if(split.length > 1) {
+                            tmpFacetKey = getFacetById(config, split[1].split(",")[0]);
+                            if(tmpFacetKey != null && tmpFacetKey.getParent() != null) {
+                                tmpFacetKey.getParent().setOpen(true);
+                            }
+                        }
+                    } else {
+                        tmpFacetKey = getFacetById(config, split[0]);
+                        if(tmpFacetKey != null){
+                            //Set facet parent isSelect
+                            //tmpFacetKey.setSelect(true);
+                            if(tmpFacetKey.getFacets() != null){
+                                //Set facet isSelect
+                                IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
+                                tmpFacetValue.setSelect(true);
+                                //Check dependency
+                                if(tmpFacetValue.getId() != null){
+                                    ArrayList<IngridFacet> facetDepList = new ArrayList<IngridFacet>();
+                                    getDependencyFacetById(config, facetDepList, tmpFacetValue.getId());
+                                    for(IngridFacet facetDep : facetDepList){
+                                        IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                                        if(dependencyValue.isSelect()){
+                                            facetDep.setDependencySelect(dependencyValue.isSelect());
+                                        }else{
+                                            if(facetDep.getFacets() != null){
+                                                for(IngridFacet facetChild : facetDep.getFacets()){
+                                                    facetChild.setSelect(dependencyValue.isSelect());
+                                                }
                                             }
+                                            facetDep.setDependencySelect(dependencyValue.isSelect());
                                         }
-                                        facetDep.setDependencySelect(dependencyValue.isSelect());
                                     }
                                 }
                             }
