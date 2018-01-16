@@ -8,6 +8,9 @@
     <body>
         
         <release version="4.3.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.0">
+          <action type="fix" dev="wemove" issue="945">
+            IGE: Fix missing fields of index in plug description leading to wrong search results.
+          </action>
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
           </action>
@@ -245,7 +248,7 @@
           <action type="fix" dev="wemove" issue="REDMINE-648">
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
-          <action type="Fix" dev="wemove" issue="REDMINE-655">
+          <action type="fix" dev="wemove" issue="REDMINE-655">
             PORTAL: Fixed chronicle teaser on default-page.psml. 
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-721">
