@@ -154,28 +154,11 @@
   <repositories>
     <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
     <repository>
-      <snapshots />
-      <id>de.ingrid.all</id>
-      <name>Maven Repo InGrid</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
+      <id>nexus</id>
+      <name>Nexus Repo</name>
+      <url>https://nexus.informationgrid.eu/repository/maven-public</url>
     </repository>
-<!-- Remove Apache SNAPSHOT Repo ! Jetspeed 2.3.0 released ! -->
-<!--
-	<repository>
-      <id>apache.snapshots</id>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
-    </repository>
--->
   </repositories>
-  <pluginRepositories>
-<!-- Remove Apache SNAPSHOT Repo ! Jetspeed 2.3.0 released ! -->
-<!--
-    <pluginRepository>
-      <id>apache.snapshots</id>
-      <url>https://repository.apache.org/content/repositories/snapshots</url>
-    </pluginRepository>
--->
-  </pluginRepositories>
 
   <profiles>
     <profile>
