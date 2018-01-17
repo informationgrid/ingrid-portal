@@ -11,9 +11,6 @@
           <action type="add" dev="wemove" issue="915">
             Portal: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
           </action>
-          <action type="fix" dev="wemove" issue="945">
-            IGE: Fix missing fields of index in plug description leading to wrong search results.
-          </action>
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
           </action>
