@@ -24,7 +24,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -58,14 +58,6 @@ public class CreateAccountForm extends ActionForm {
     public static final String FIELD_POSTALCODE = "postalcode";
 
     public static final String FIELD_CITY = "city";
-    
-    public static final String FIELD_ATTENTION = "attention";
-
-    public static final String FIELD_AGE = "age";
-    
-    public static final String FIELD_INTEREST = "interest";
-
-    public static final String FIELD_PROFESSION = "profession";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -80,20 +72,16 @@ public class CreateAccountForm extends ActionForm {
     public void populate(PortletRequest request) {
         clearInput();
         
-        setInput(FIELD_SALUTATION, request.getParameter(FIELD_SALUTATION));
-        setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME));
-        setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME));
-        setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
-        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN));
-        setInput(FIELD_PASSWORD, request.getParameter(FIELD_PASSWORD));
-        setInput(FIELD_PASSWORD_CONFIRM, request.getParameter(FIELD_PASSWORD_CONFIRM));
-        setInput(FIELD_STREET, request.getParameter(FIELD_STREET));
-        setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE));
-        setInput(FIELD_CITY, request.getParameter(FIELD_CITY));
-        setInput(FIELD_ATTENTION, request.getParameter(FIELD_ATTENTION));
-        setInput(FIELD_AGE, request.getParameter(FIELD_AGE));
-        setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
-        setInput(FIELD_PROFESSION, request.getParameter(FIELD_PROFESSION));
+        setInput(FIELD_SALUTATION, request.getParameter(FIELD_SALUTATION).trim());
+        setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME).trim());
+        setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME).trim());
+        setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL).trim());
+        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN).trim());
+        setInput(FIELD_PASSWORD, request.getParameter(FIELD_PASSWORD).trim());
+        setInput(FIELD_PASSWORD_CONFIRM, request.getParameter(FIELD_PASSWORD_CONFIRM).trim());
+        setInput(FIELD_STREET, request.getParameter(FIELD_STREET).trim());
+        setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE).trim());
+        setInput(FIELD_CITY, request.getParameter(FIELD_CITY).trim());
     }
 
     /**
@@ -119,7 +107,7 @@ public class CreateAccountForm extends ActionForm {
             setError(FIELD_LOGIN, "account.create.error.noLogin");
             allOk = false;
         } 
-        if (hasInput(FIELD_LOGIN) && getInput(FIELD_LOGIN).matches(Settings.FORBIDDEN_LOGINS_REGEXP_STR)) {
+        if (hasInput(FIELD_LOGIN) && getInput(FIELD_LOGIN).matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, "")) == false) {
             setError(FIELD_LOGIN, "account.create.error.invalidLogin");
             allOk = false;
         }

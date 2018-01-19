@@ -24,7 +24,7 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -60,14 +60,6 @@ public class AdminUserForm extends ActionForm {
     public static final String FIELD_POSTALCODE = "postalcode";
 
     public static final String FIELD_CITY = "city";
-
-    public static final String FIELD_ATTENTION = "attention";
-
-    public static final String FIELD_AGE = "age";
-
-    public static final String FIELD_INTEREST = "interest";
-
-    public static final String FIELD_PROFESSION = "profession";
 
     public static final String FIELD_MODE = "mode";
 
@@ -107,23 +99,21 @@ public class AdminUserForm extends ActionForm {
 
         // if tab 1 was selected onle populate fields from tab1
         if (this.getInput(FIELD_TAB).equals("1") || this.getInput(FIELD_MODE).equals("new")) {
-            setInput(FIELD_SALUTATION, request.getParameter(FIELD_SALUTATION));
-            setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME));
-            setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME));
-            setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
+            setInput(FIELD_SALUTATION, request.getParameter(FIELD_SALUTATION).trim());
+            setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME).trim());
+            setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME).trim());
+            setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL).trim());
             if (this.getInput(FIELD_MODE).equals("new")) {
-                setInput(FIELD_ID, request.getParameter(FIELD_ID));
+                setInput(FIELD_ID, request.getParameter(FIELD_ID).trim());
             }
-            setInput(FIELD_PASSWORD_OLD, request.getParameter(FIELD_PASSWORD_OLD));
-            setInput(FIELD_PASSWORD_NEW, request.getParameter(FIELD_PASSWORD_NEW));
-            setInput(FIELD_PASSWORD_NEW_CONFIRM, request.getParameter(FIELD_PASSWORD_NEW_CONFIRM));
-            setInput(FIELD_STREET, request.getParameter(FIELD_STREET));
-            setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE));
-            setInput(FIELD_CITY, request.getParameter(FIELD_CITY));
-            setInput(FIELD_ATTENTION, request.getParameter(FIELD_ATTENTION));
-            setInput(FIELD_AGE, request.getParameter(FIELD_AGE));
-            setInput(FIELD_INTEREST, request.getParameter(FIELD_INTEREST));
-            setInput(FIELD_PROFESSION, request.getParameter(FIELD_PROFESSION));
+            if(request.getParameter(FIELD_PASSWORD_OLD) != null) {
+                setInput(FIELD_PASSWORD_OLD, request.getParameter(FIELD_PASSWORD_OLD).trim());
+            }
+            setInput(FIELD_PASSWORD_NEW, request.getParameter(FIELD_PASSWORD_NEW).trim());
+            setInput(FIELD_PASSWORD_NEW_CONFIRM, request.getParameter(FIELD_PASSWORD_NEW_CONFIRM).trim());
+            setInput(FIELD_STREET, request.getParameter(FIELD_STREET).trim());
+            setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE).trim());
+            setInput(FIELD_CITY, request.getParameter(FIELD_CITY).trim());
             // if tab 2 was selected onle populate fields from tab2
         } else if (this.getInput(FIELD_TAB).equals("2")) {
             setInput(FIELD_CHK_ADMIN_PORTAL, request.getParameter(FIELD_CHK_ADMIN_PORTAL));
@@ -167,7 +157,7 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_TAB, "1");
             allOk = false;
         }
-        if (hasInput(FIELD_ID) && getInput(FIELD_ID).matches(Settings.FORBIDDEN_LOGINS_REGEXP_STR)) {
+        if (hasInput(FIELD_ID) && getInput(FIELD_ID).matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, "")) == false) {
             setError(FIELD_ID, "account.create.error.invalidLogin");
             setInput(FIELD_TAB, "1");
             allOk = false;

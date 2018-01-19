@@ -220,6 +220,10 @@ public class Utils {
 			if (!hasNameAndDomain) {
 				result = false;
 			}
+
+			if (result) {
+				result = aEmailAddress.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_MAIL, ""));
+			}
 		} catch (AddressException ex) {
 			if (log.isDebugEnabled()) {
 				log.debug("checking email '" + aEmailAddress + "' caused AddressException", ex);
