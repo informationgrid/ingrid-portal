@@ -106,10 +106,12 @@ public class CreateAccountForm extends ActionForm {
         if (!hasInput(FIELD_LOGIN)) {
             setError(FIELD_LOGIN, "account.create.error.noLogin");
             allOk = false;
-        } 
-        if (hasInput(FIELD_LOGIN) && getInput(FIELD_LOGIN).matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, "")) == false) {
-            setError(FIELD_LOGIN, "account.create.error.invalidLogin");
-            allOk = false;
+        } else {
+            String login = getInput(FIELD_LOGIN);
+            if (!Utils.isValidLogin(login)) {
+                setError(FIELD_LOGIN, "account.create.error.invalidLogin");
+                allOk = false;
+            }
         }
         if (!hasInput(FIELD_PASSWORD)) {
             setError(FIELD_PASSWORD, "account.create.error.noPassword");

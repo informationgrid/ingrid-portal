@@ -888,7 +888,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         context.put("actionForm", f);
-
+        context.put("loginLength", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4));
         setDefaultViewPage(viewNew);
         return true;
     }

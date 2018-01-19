@@ -246,6 +246,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_FORM_REGEX_CHECK_MAIL = "portal.form.regex.check.mail";
 
+    public static final String PORTAL_FORM_LENGTH_CHECK_LOGIN = "portal.form.length.check.login";
+
     // private stuff
     private static PortalConfig instance = null;
 

@@ -213,6 +213,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         }
         
         context.put("actionForm", f);
+        context.put("loginLength", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4));
         super.doView(request, response);
     }
 

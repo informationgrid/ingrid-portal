@@ -80,7 +80,7 @@
         </div>
         <div class="media__body">
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
-            #addErrorFormMessage('login')
+            #addErrorFormMessage('login', $loginLength)
         </div>
     </div>
     <hr />

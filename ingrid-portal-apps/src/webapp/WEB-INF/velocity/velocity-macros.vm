@@ -18,8 +18,17 @@ $actionForm.getInputHTMLEscaped($field)#end
 #if ($actionForm.hasErrorInField($field))field--error#end
 #end
 
-#macro (addErrorFormMessage $field)
-#if ($actionForm.hasErrorInField($field))<small class="bx-top-xs">$MESSAGES.getString($actionForm.getErrorInField($field))</small>#end
+#macro (addErrorFormMessage $field, $param)
+#if($param)
+  #if ($actionForm.hasErrorInField($field))
+    <small class="bx-top-xs">
+      $MESSAGES.setMsgParam("$param")
+      $MESSAGES.getStringWithMsgParams($actionForm.getErrorInField($field))
+    </small>
+  #end
+#else
+  #if ($actionForm.hasErrorInField($field))<small class="bx-top-xs">$MESSAGES.getString($actionForm.getErrorInField($field))</small>#end
+#end
 #end
 
 #macro (addErrorFormMessageBox $field)

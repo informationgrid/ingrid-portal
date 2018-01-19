@@ -59,7 +59,7 @@
                 </div>
                 <div class="media__body">
                     <input type="text" id="id" name="id" value="#getFieldValue('id')" #addErrorFormClass('id')/>
-                    #addErrorFormMessage('id')
+                    #addErrorFormMessage('id', $loginLength)
                 </div>
             </div>
             <hr />

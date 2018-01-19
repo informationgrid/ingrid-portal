@@ -156,11 +156,13 @@ public class AdminUserForm extends ActionForm {
             setError(FIELD_ID, "account.create.error.noLogin");
             setInput(FIELD_TAB, "1");
             allOk = false;
-        }
-        if (hasInput(FIELD_ID) && getInput(FIELD_ID).matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, "")) == false) {
-            setError(FIELD_ID, "account.create.error.invalidLogin");
-            setInput(FIELD_TAB, "1");
-            allOk = false;
+        } else {
+            String login = getInput(FIELD_ID);
+            if (!Utils.isValidLogin(login)) {
+                setError(FIELD_ID, "account.create.error.invalidLogin");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            }
         }
         if (this.getInput(FIELD_MODE).equals("new")) {
             if (!hasInput(FIELD_PASSWORD_NEW)) {
