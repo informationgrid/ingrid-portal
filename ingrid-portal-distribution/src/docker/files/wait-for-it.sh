@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 ###
 # **************************************************-
 # InGrid Portal Distribution
@@ -20,7 +22,6 @@
 # limitations under the Licence.
 # **************************************************#
 ###
-#!/usr/bin/env bash
 #   Use this script to test if a given TCP host/port are available
 
 cmdname=$(basename $0)

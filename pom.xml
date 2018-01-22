@@ -139,6 +139,21 @@
           </excludes>
         </configuration>
       </plugin>
+      
+      <!-- Only extract installer in parent module -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <inherited>false</inherited>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <!-- the inherited plugin extracts the installer which must not be done by sub-modules -->
+        <inherited>false</inherited>
+      </plugin>
+
+
       <plugin>
         <groupId>external.atlassian.jgitflow</groupId>
         <artifactId>jgitflow-maven-plugin</artifactId>
