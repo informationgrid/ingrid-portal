@@ -89,7 +89,9 @@
             <label for="password">$MESSAGES.getString('account.create.label.password')*:</label>
         </div>
         <div class="media__body">
-            <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password')/>
+            <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password') onchange="checkPassword(document.getElementById('password').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
+            <small class="media__obj--right" id="password-strength-text"></small>
+            <meter max="4" id="password-strength-meter"></meter>
             #addErrorFormMessage('password')
         </div>
     </div>
@@ -130,3 +132,5 @@
     </div>
 </div>
 <hr />
+
+#parse ('/WEB-INF/templates/global/include_passwort_meter.vm')

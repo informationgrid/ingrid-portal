@@ -424,3 +424,17 @@ function convertFileSize(bytes, si) {
     }
     return bytes.toFixed(1) + ' ' + units[u];
 }
+
+function checkPassword(pwd, idMeter, idText) {
+    var meter = document.getElementById(idMeter);
+    var text = document.getElementById(idText);
+
+    if (pwd != '') {
+        var result = zxcvbn(pwd);
+        meter.value = result.score;
+        text.innerHTML = meterStrength[result.score];
+    } else {
+        text.innerHTML  = ' ';
+        meter.value = 0;
+    }
+}
