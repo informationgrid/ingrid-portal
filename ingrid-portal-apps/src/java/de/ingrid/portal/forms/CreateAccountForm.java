@@ -24,7 +24,6 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -116,7 +115,13 @@ public class CreateAccountForm extends ActionForm {
         if (!hasInput(FIELD_PASSWORD)) {
             setError(FIELD_PASSWORD, "account.create.error.noPassword");
             allOk = false;
-        } 
+        } else {
+            String password = getInput(FIELD_PASSWORD);
+             if (!Utils.isStrengthPassword(password)) {
+                setError(FIELD_PASSWORD, "account.create.error.worstPassword");
+                allOk = false;
+            }
+        }
         if (!getInput(FIELD_PASSWORD_CONFIRM).equals(getInput(FIELD_PASSWORD))) {
             setError(FIELD_PASSWORD_CONFIRM, "account.edit.error.noPasswordConfirm");
             allOk = false;

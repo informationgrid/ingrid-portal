@@ -67,6 +67,9 @@ import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nulabinc.zxcvbn.Strength;
+import com.nulabinc.zxcvbn.Zxcvbn;
+
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
@@ -243,6 +246,21 @@ public class Utils {
         }
         if (result) {
             result = login.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, ""));
+        }
+        return result;
+    }
+
+    public static boolean isStrengthPassword(String password) {
+        if (password == null)
+            return false;
+
+        boolean result = true;
+        Zxcvbn zxcvbn = new Zxcvbn();
+        Strength strength = zxcvbn.measure(password);
+        if(strength != null) {
+            if(strength.getScore() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_STRENGTH_CHECK_PASSWORD, 3)) {
+                result = false;
+            }
         }
         return result;
     }
@@ -732,6 +750,7 @@ public class Utils {
 		
 		return url + serviceParam;
 	}
+
 }
 
 class MailAuthenticator extends Authenticator {

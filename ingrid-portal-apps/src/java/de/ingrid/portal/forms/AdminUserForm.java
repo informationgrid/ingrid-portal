@@ -24,7 +24,6 @@ package de.ingrid.portal.forms;
 
 import javax.portlet.PortletRequest;
 
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
 
 /**
@@ -169,7 +168,13 @@ public class AdminUserForm extends ActionForm {
                 setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
-            }
+            } else {
+                String password = getInput(FIELD_PASSWORD_NEW);
+                if (!Utils.isStrengthPassword(password)) {
+                   setError(FIELD_PASSWORD_NEW, "account.create.error.worstPassword");
+                   allOk = false;
+               }
+           }
             if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
                 setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
                 setInput(FIELD_TAB, "1");
@@ -187,6 +192,14 @@ public class AdminUserForm extends ActionForm {
                 setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
+            }
+
+            if (hasInput(FIELD_PASSWORD_NEW)) {
+                String password = getInput(FIELD_PASSWORD_NEW);
+                if (!Utils.isStrengthPassword(password)) {
+                   setError(FIELD_PASSWORD_NEW, "account.create.error.worstPassword");
+                   allOk = false;
+               }
             }
             if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
                 setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
