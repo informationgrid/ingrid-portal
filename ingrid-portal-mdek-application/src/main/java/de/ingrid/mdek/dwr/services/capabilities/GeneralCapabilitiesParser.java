@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -272,7 +272,11 @@ public class GeneralCapabilitiesParser {
             for (int i = 0; i < orNodes.getLength(); i++) {
                 UrlBean url = new UrlBean();
                 String link = xPathUtils.getString(orNodes.item(i), "@xlink:href");
-                if (link != null) url.setUrl(link);
+                
+                // do not add link if there's none (#781)
+                if (link == null || link.trim().equals( "" )) continue;
+                
+                url.setUrl(link);
                 String type = xPathUtils.getString(orNodes.item(i), "@xlink:type");
                 if (type != null) url.setDatatype(type);
                 

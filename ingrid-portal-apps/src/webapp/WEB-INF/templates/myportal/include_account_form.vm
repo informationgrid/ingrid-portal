@@ -80,7 +80,7 @@
         </div>
         <div class="media__body">
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
-            #addErrorFormMessage('login')
+            #addErrorFormMessage('login', $loginLength)
         </div>
     </div>
     <hr />
@@ -89,7 +89,9 @@
             <label for="password">$MESSAGES.getString('account.create.label.password')*:</label>
         </div>
         <div class="media__body">
-            <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password')/>
+            <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password') onchange="checkPassword(document.getElementById('password').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
+            <small class="media__obj--right" id="password-strength-text"></small>
+            <meter max="4" id="password-strength-meter"></meter>
             #addErrorFormMessage('password')
         </div>
     </div>
@@ -129,64 +131,6 @@
         <input type="text" id="city" name="city" value="#getFieldValue('city')" />
     </div>
 </div>
-#if($enableAccountQuestion)
-    <hr />
-    <!--
-    <div class="media">
-        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="attention">#displayFieldLabel('attention' $MESSAGES.getString('account.edit.label.attention')):</label>
-        </div>
-        <div class="media__body">
-            <input type="text" id="attention" name="attention" value="#getFieldValue('attention')" />
-        </div>
-    </div>
-    -->
-    <div class="media">
-        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="age">#displayFieldLabel('age' $MESSAGES.getString('account.edit.label.age')):</label>
-        </div>
-        <div class="media__body">
-            <select name="age" size="1" id="age">
-                <option value="0" #getSelectedFlag('age' '0')>---</option>
-                <option value="1" #getSelectedFlag('age' '1')>&lt; 20</option>
-                <option value="2" #getSelectedFlag('age' '2')>20 - 30</option>
-                <option value="3" #getSelectedFlag('age' '3')>30 - 40</option>
-                <option value="4" #getSelectedFlag('age' '4')>40 - 50</option>
-                <option value="7" #getSelectedFlag('age' '7')>50 - 60</option>
-                <option value="5" #getSelectedFlag('age' '5')>60 - 70</option>
-                <option value="6" #getSelectedFlag('age' '6')>&gt; 70</option>
-            </select>
-        </div>
-    </div>
-    <div class="media">
-        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="interest">#displayFieldLabel('interest' $MESSAGES.getString('account.edit.label.interest')):</label>
-        </div>
-        <div class="media__body">
-            <select name="interest" id="interest" size="1">
-                <option value="0" #getSelectedFlag('interest' '0')>---</option>
-                <option value="1" #getSelectedFlag('interest' '1')>$MESSAGES.getString('account.edit.interest.option1')</option>
-                <option value="2" #getSelectedFlag('interest' '2')>$MESSAGES.getString('account.edit.interest.option2')</option>
-            </select>
-        </div>
-    </div>
-    <div class="media">
-        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="profession">#displayFieldLabel('profession' $MESSAGES.getString('account.edit.label.profession'))</label>
-        </div>
-        <div class="media__body">
-            <select size="1" id="profession" name="profession">
-                <option value="0" #getSelectedFlag('profession' '0')>---</option>
-                <option value="1" #getSelectedFlag('profession' '1')>$MESSAGES.getString('account.edit.profession.option1')</option>
-                <option value="2" #getSelectedFlag('profession' '2')>$MESSAGES.getString('account.edit.profession.option2')</option>
-                <option value="3" #getSelectedFlag('profession' '3')>$MESSAGES.getString('account.edit.profession.option3')</option>
-                <option value="4" #getSelectedFlag('profession' '4')>$MESSAGES.getString('account.edit.profession.option4')</option>
-                <option value="5" #getSelectedFlag('profession' '5')>$MESSAGES.getString('account.edit.profession.option5')</option>
-                <option value="6" #getSelectedFlag('profession' '6')>$MESSAGES.getString('account.edit.profession.option6')</option>
-                <option value="7" #getSelectedFlag('profession' '7')>$MESSAGES.getString('account.edit.profession.option7')</option>
-                <option value="8" #getSelectedFlag('profession' '8')>$MESSAGES.getString('account.edit.profession.option8')</option>
-            </select>
-        </div>  
-    </div>
-#end
 <hr />
+
+#parse ('/WEB-INF/templates/global/include_passwort_meter.vm')

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -420,9 +420,6 @@ public class Settings {
     
     public static final String SESSION_LOGIN_STARTED = "session_started";
 
-    // reg exp to check for forbidden login patterns
-    public static final String FORBIDDEN_LOGINS_REGEXP_STR = ".*/.*";
-    
     // can contain external user authentication info even if user does not exist in portal
     public static final String USER_AUTH_INFO = "de.ingrid.user.auth.info";
     public static final String USER_AUTH_INFO_IS_ADMIN = "de.ingrid.user.auth.isAdminPartner";

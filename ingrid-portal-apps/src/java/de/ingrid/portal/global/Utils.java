@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -220,6 +220,10 @@ public class Utils {
 			if (!hasNameAndDomain) {
 				result = false;
 			}
+
+			if (result) {
+				result = aEmailAddress.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_MAIL, ""));
+			}
 		} catch (AddressException ex) {
 			if (log.isDebugEnabled()) {
 				log.debug("checking email '" + aEmailAddress + "' caused AddressException", ex);
@@ -228,6 +232,20 @@ public class Utils {
 		}
 		return result;
 	}
+
+    public static boolean isValidLogin(String login) {
+        if (login == null)
+            return false;
+
+        boolean result = true;
+        if (login.length() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4)) {
+            return false;
+        }
+        if (result) {
+            result = login.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, ""));
+        }
+        return result;
+    }
 
 	public static String[] getShortStrings(String[] myStrings, int maxLength) {
 		if (myStrings == null) {

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -142,8 +142,6 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
     
-    public static final String PORTAL_ENABLE_ACCOUNT_QUESTION = "enable.account.registration.question";
-    
     public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
     
     public static final String PORTAL_ENABLE_NEW_USER = "portal.enable.new.user";
@@ -243,6 +241,12 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL = "portal.mapclient.uvp.category.dev-plan.url";
     
     public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
+
+    public static final String PORTAL_FORM_REGEX_CHECK_LOGIN = "portal.form.regex.check.login";
+
+    public static final String PORTAL_FORM_REGEX_CHECK_MAIL = "portal.form.regex.check.mail";
+
+    public static final String PORTAL_FORM_LENGTH_CHECK_LOGIN = "portal.form.length.check.login";
 
     // private stuff
     private static PortalConfig instance = null;

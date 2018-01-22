@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -423,4 +423,18 @@ function convertFileSize(bytes, si) {
         return (val / 1009).toFixed(1) + ' ' + units[1];
     }
     return bytes.toFixed(1) + ' ' + units[u];
+}
+
+function checkPassword(pwd, idMeter, idText) {
+    var meter = document.getElementById(idMeter);
+    var text = document.getElementById(idText);
+
+    if (pwd != '') {
+        var result = zxcvbn(pwd);
+        meter.value = result.score;
+        text.innerHTML = meterStrength[result.score];
+    } else {
+        text.innerHTML  = ' ';
+        meter.value = 0;
+    }
 }
