@@ -157,7 +157,7 @@ public class AdminUserForm extends ActionForm {
             allOk = false;
         } else {
             String login = getInput(FIELD_ID);
-            if (!Utils.isValidLogin(login)) {
+            if (!Utils.isValidLogin(login) && this.getInput(FIELD_MODE).equals("new")) {
                 setError(FIELD_ID, "account.create.error.invalidLogin");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
