@@ -12,8 +12,11 @@
     <scm>
         <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</connection>
         <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
+    <properties>
+        <sonar.exclusions>src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*</sonar.exclusions>
+    </properties>
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
         <resources>
