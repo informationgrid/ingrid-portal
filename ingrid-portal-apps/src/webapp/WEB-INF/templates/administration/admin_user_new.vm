@@ -69,7 +69,7 @@
                 </div>
                 <div class="media__body">
                     <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
-                    <small class="media__obj--right" id="password-strength-text"></small>
+                    <b><small class="media__obj--right" id="password-strength-text"></small></b>
                     <meter max="4" id="password-strength-meter"></meter>
                     #addErrorFormMessage('password_new')
                 </div>

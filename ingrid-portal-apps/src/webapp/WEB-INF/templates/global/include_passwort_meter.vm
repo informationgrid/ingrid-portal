@@ -25,6 +25,7 @@ meter {
   margin: 0 auto 1em;
   width: 100%;
   height: 0.5em;
+  display: none;
 
   /* Applicable only to Firefox */
   background: none;
@@ -41,10 +42,12 @@ meter[value="1"]::-webkit-meter-optimum-value { background: red; }
 meter[value="2"]::-webkit-meter-optimum-value { background: yellow; }
 meter[value="3"]::-webkit-meter-optimum-value { background: orange; }
 meter[value="4"]::-webkit-meter-optimum-value { background: green; }
+meter[value="5"]::-webkit-meter-optimum-value { background: green; }
 
 /* Gecko based browsers */
 meter[value="1"]::-moz-meter-bar { background: red; }
 meter[value="2"]::-moz-meter-bar { background: yellow; }
 meter[value="3"]::-moz-meter-bar { background: orange; }
 meter[value="4"]::-moz-meter-bar { background: green; }
+meter[value="5"]::-moz-meter-bar { background: green; }
 </style>

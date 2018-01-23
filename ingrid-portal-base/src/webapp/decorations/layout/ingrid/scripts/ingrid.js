@@ -431,10 +431,12 @@ function checkPassword(pwd, idMeter, idText) {
 
     if (pwd != '') {
         var result = zxcvbn(pwd);
-        meter.value = result.score;
+        meter.value = result.score + 1;
+        meter.style.display = 'block';
         text.innerHTML = meterStrength[result.score];
     } else {
         text.innerHTML  = ' ';
         meter.value = 0;
+        meter.style.display = 'none';
     }
 }
