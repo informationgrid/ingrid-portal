@@ -431,7 +431,7 @@ function checkPassword(pwd, idMeter, idText) {
 
     if (pwd != '') {
         var result = zxcvbn(pwd);
-        meter.value = result.score + 1;
+        meter.value = result.score;
         meter.style.display = 'block';
         text.innerHTML = meterStrength[result.score];
     } else {
