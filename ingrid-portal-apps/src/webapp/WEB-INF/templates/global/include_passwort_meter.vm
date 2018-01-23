@@ -7,18 +7,6 @@ var meterStrength = {
   4: "$MESSAGES.getString('common.password.strength.strong')"
 };
 
-// Check all inputs from type 'password'
-var nodes = document.querySelectorAll("input[type=password]");
-for (var i=0; i<nodes.length; i++){
-  var node = nodes[i];
-  if(node.id){
-    $('#' +  node.id).focus(function(){
-      this.type = "text";
-    }).blur(function(){
-      this.type = "password";
-    });
-  }
-}
 </script>
 <style>
 meter {
