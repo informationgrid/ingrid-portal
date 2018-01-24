@@ -225,7 +225,8 @@
                                 </div>
                                 #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
                                 #if($nodelist.getLength() > 0)
-                                    #foreach($number in [1..$nodelist.getLength()])
+                                    #set($nodelistLength = $nodelist.getLength())
+                                    #foreach($number in [1..$nodelistLength])
                                         #set($step = $TOOL.getValueFromXPath("./steps/step[$number]/@type"))
                                         #if($step == "phase1")
                                             #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase1')")
@@ -238,7 +239,7 @@
                                             <div class="sidebar__widget__title filter__title js-accordion-toggle">
                                                 #renderAccordionTitle($step_title)
                                             </div>
-                                            <div class="sidebar__widget__content js-accordion-content is-hidden">
+                                            <div class="sidebar__widget__content js-accordion-content #if($number != $nodelistLength)is-hidden#end">
                                                 <div class="js-accordion">
                                                     <div class="search-result--nested">
                                                     ## Zeitraum der Auslegung
