@@ -426,3 +426,15 @@ INPUT.qq-edit-filename.qq-editing {
 .qq-upload-status-text:empty {
   padding: 0;
 }
+
+label.qq-uploader-checkbox {
+  display: block;
+  cursor: auto;
+  padding: 5px 0;
+}
+
+label.qq-uploader-checkbox input[type=checkbox] {
+  position: relative;
+  vertical-align: middle;
+  bottom: 1px;
+}

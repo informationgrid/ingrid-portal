@@ -151,4 +151,12 @@ public interface Storage {
      * @throws IOException
      */
     void restore(String path, String file) throws IOException;
+
+    /**
+     * Execute cleanup tasks, that are necessary to maintain this storage
+     * NOTE: This method does not delete any files that might still be referenced
+     *
+     * @throws IOException
+     */
+    void cleanup() throws IOException;
 }
