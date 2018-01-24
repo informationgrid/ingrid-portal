@@ -20,6 +20,9 @@
           <action type="fix" dev="wemove" issue="733">
             Portal: Clean spaces on login name by create new portal user.
           </action>
+          <action type="update" dev="wemove" issue="954">
+            Portal: Update detail view for UVP.
+          </action>
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
           </action>
