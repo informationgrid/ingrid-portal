@@ -23,10 +23,12 @@
 package de.ingrid.mdek.upload.storage.impl;
 
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
 import java.io.UncheckedIOException;
+import java.nio.charset.Charset;
 import java.nio.file.CopyOption;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
@@ -42,13 +44,9 @@ import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
-import org.apache.commons.compress.archivers.ArchiveEntry;
-import org.apache.commons.compress.archivers.ArchiveInputStream;
-import org.apache.commons.compress.archivers.ArchiveStreamFactory;
-import org.apache.commons.compress.compressors.CompressorException;
-import org.apache.commons.compress.compressors.CompressorStreamFactory;
-import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import de.ingrid.mdek.upload.ConflictException;
@@ -385,53 +383,48 @@ public class FileSystemStorage implements Storage {
      */
     private String[] extract(Path path, CopyOption... copyOptions) throws Exception {
         List<Path> result = new ArrayList<Path>();
-        try (InputStream fis = FileUtils.openInputStream(path.toFile());
-                InputStream bis = new BufferedInputStream(fis)) {
-            InputStream bcis = null;
-            try {
-                bcis = new BufferedInputStream(new CompressorStreamFactory().createCompressorInputStream(bis));
+
+        // get the directory name from the archive name
+        Path dir = this.getExtractPath(path);
+        Files.createDirectories(dir);
+
+        int bufferSize = 1024;
+        // NOTE: UTF8 encoded ZIP file entries can be interpreted when the constructor is provided
+        // with a non-UTF-8 encoding.
+        try (ZipInputStream zis = new ZipInputStream(
+                new BufferedInputStream(new FileInputStream(path.toString()), bufferSize),
+                Charset.forName("Cp437")
+            )) {
+            ZipEntry zipEntry = zis.getNextEntry();
+            while(zipEntry != null){
+                Path file = Paths.get(dir.toString(), this.sanitize(zipEntry.getName(), ILLEGAL_PATH_CHARS));
+                if (zipEntry.isDirectory()) {
+                    // handle directory
+                    Files.createDirectories(file);
+                }
+                else {
+                    // handle file
+                    Files.createDirectories(file.getParent());
+                    Files.copy(zis, file, copyOptions);
+                    result.add(file);
+                }
+                zipEntry = zis.getNextEntry();
             }
-            catch (CompressorException e) {
-                // a compressor was not recognized in the stream, in this case
-                // we leave the inputStream as-is
-            }
-
-            InputStream is = bcis != null ? bcis : bis;
-            try (ArchiveInputStream ais = new ArchiveStreamFactory().createArchiveInputStream(is)) {
-                ArchiveEntry entry = ais.getNextEntry();
-
-                // get the directory name from the archive name
-                Path directory = this.getExtractPath(path);
-                Files.createDirectories(directory);
-
-                while (entry != null) {
-                    Path file = Paths.get(directory.toString(), this.sanitize(entry.getName(), ILLEGAL_PATH_CHARS));
-                    if (entry.isDirectory()) {
-                        // handle directory
-                        Files.createDirectories(file);
-                    }
-                    else {
-                        // handle file
-                        Files.createDirectories(file.getParent());
-                        Files.copy(ais, file, copyOptions);
-                        result.add(file);
-                    }
-                    entry = ais.getNextEntry();
+            zis.closeEntry();
+            zis.close();
+        }
+        catch (Exception ex) {
+            log.error("Failed to extract archive '" + path + "'. Cleaning up...");
+            // delete all extracted files, if one file fails
+            for (Path file : result) {
+                try {
+                    Files.delete(file);
+                }
+                catch (Exception ex1) {
+                    log.error("Could not delete '" + file + "' while cleaning up from failed extraction.");
                 }
             }
-            catch (Exception ex) {
-                log.error("Failed to extract archive '" + path + "'. Cleaning up...");
-                // delete all extracted files, if one file fails
-                for (Path file : result) {
-                    try {
-                        Files.delete(file);
-                    }
-                    catch (Exception ex1) {
-                        log.error("Could not delete '" + file + "' while cleaning up from failed extraction.");
-                    }
-                }
-                throw ex;
-            }
+            throw ex;
         }
         return result.stream().map(p -> p.toString()).toArray(size -> new String[size]);
     }
