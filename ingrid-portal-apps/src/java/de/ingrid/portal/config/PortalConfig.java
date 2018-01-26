@@ -250,6 +250,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_FORM_STRENGTH_CHECK_PASSWORD = "portal.form.strength.check.passsword";
 
+    public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
+
     // private stuff
     private static PortalConfig instance = null;
 

@@ -281,9 +281,13 @@
                                                         #end
                                                     ## Informationen zum Erörterungstermin
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Informationen zum Er&ouml;rterungstermin" $entryLength $xpathExpression $entryNumber "considerationDocs")
+                                                        #set($list = [])
+                                                        #set($bar = $list.add('link'))
+                                                        #set($bar = $list.add('type'))
+                                                        #set($bar = $list.add('label'))
+                                                        #set($bar = $list.add('size'))
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
         
                                                     ## Datum der Entscheidung
                                                         #if($step == "phase3")
@@ -331,6 +335,61 @@
         #end
         #if($dateTo)
             - $dateTo
+        #end
+    #end
+#end
+
+#macro (renderTableToTree $title $list $tableId)
+    #renderGroupTitle($title)
+    #if($list.get("children"))
+        #foreach($entry in $list.get("children"))
+            <ul class="js-accordion-multi">
+                <li class="folder__item is-active">
+                <svg class="tree__toggle__icon icon">
+                    <use xlink:href="#folder">
+                </svg>
+                #renderTreeFolder($entry)
+                </li>
+            </ul>
+        #end
+    #end
+#end
+
+#macro (renderTreeFolder $entry)
+    #if($entry.get('label'))
+        #set($entryLink = "")
+        #if($entry.get('link'))
+            #set($entryLink = "$entry.get('link')")
+        #end
+        #if($entryLink && $entryLink.length() > 0)
+            <svg class="tree__toggle__icon icon">
+                <use xlink:href="#book">
+            </svg>
+            <a target="_new" class="download" href="$entry.get('link')" title="$entry.get('label')">$entry.get('label')</a>
+            <span class="tx-light">
+            (
+            #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
+            #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
+            $entryLinkSplit.get($entryLinkSplitSize)
+            <span class="downloadText"></span>
+            )
+            </span>
+        #else
+            <svg class="tree__toggle__icon icon">
+                <use xlink:href="#folder">
+            </svg>
+            <span>$entry.get('label')</span>
+        #end
+    #end
+    #if($entry.get('children'))
+        #foreach($subEntry in $entry.get('children'))
+        <li class="tree__content js-accordion-content">
+            <ul class="js-accordion-multi">
+                <li class="folder__item">
+                    #renderTreeFolder($subEntry)
+                </li>
+            </ul>
+        </li>
         #end
     #end
 #end

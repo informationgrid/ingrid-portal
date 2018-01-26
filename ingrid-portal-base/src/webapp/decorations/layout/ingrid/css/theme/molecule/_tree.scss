@@ -45,6 +45,13 @@
     */
 }
 
+.folder__item{
+    color: color(black);
+    font: 400 rem(16px) $font-brand;
+    padding: rem(10px 0px 10px 24px);
+    position: relative;
+}
+
 .tree__item--large {
     font-size: rem(20px);
 
