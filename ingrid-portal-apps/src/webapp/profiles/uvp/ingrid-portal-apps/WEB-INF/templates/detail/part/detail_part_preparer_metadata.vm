@@ -1,4 +1,9 @@
 #set ($lang = $TOOL.getLanguage())
+#set($list = [])
+#set($bar = $list.add('link'))
+#set($bar = $list.add('type'))
+#set($bar = $list.add('label'))
+#set($bar = $list.add('size'))
 
 #if($TOOL.getValueFromXPath("./name"))
     <section class="block block--light block--pad-top">
@@ -250,29 +255,24 @@
                                                         #end
                                                     ## Auslegungsinformationen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Auslegungsinformationen" $entryLength $xpathExpression $entryNumber "technicalDocs")
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("Auslegungsinformationen" $nodelist "technicalDocs")
                                                     ## UVP-Bericht, ggf. Antragsunterlagen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("UVP-Bericht, ggf. Antragsunterlagen" $entryLength $xpathExpression $entryNumber "applicationDocs")
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("UVP-Bericht, ggf. Antragsunterlagen" $nodelist "applicationDocs")
                                                     ## Berichte und Empfehlungen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Berichte und Empfehlungen" $entryLength $xpathExpression $entryNumber "reportsRecommendationsDocs")
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("Berichte und Empfehlungen" $nodelist "reportsRecommendationsDocs")
                                                     ## Weitere Unterlagen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Weitere Unterlagen" $entryLength $xpathExpression $entryNumber "moreDocs")
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("Weitere Unterlagen" $nodelist "moreDocs")
                                                     ## Bekanntmachung
                                                         ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
                                                         ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        ##set($entryLength = $nodelist.getLength())
-                                                        ##renderTableToList("Bekanntmachung" $entryLength $xpathExpression $entryNumber "publicationDocs")
+                                                        ##renderTableToList("Bekanntmachung" $nodelist "publicationDocs")
                                                     ## Zeitraum der Erörterung
                                                         #if($step == "phase2")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
@@ -281,14 +281,8 @@
                                                         #end
                                                     ## Informationen zum Erörterungstermin
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
-                                                        #set($list = [])
-                                                        #set($bar = $list.add('link'))
-                                                        #set($bar = $list.add('type'))
-                                                        #set($bar = $list.add('label'))
-                                                        #set($bar = $list.add('size'))
                                                         #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
                                                         #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
-        
                                                     ## Datum der Entscheidung
                                                         #if($step == "phase3")
                                                             #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
@@ -296,14 +290,12 @@
                                                         #end
                                                     ## Auslegungsinformationen
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Auslegungsinformationen" $entryLength $xpathExpression $entryNumber "approvalDocs")
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("Auslegungsinformationen" $nodelist "approvalDocs")
                                                     ## Entscheidung
                                                         #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
-                                                        #set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                                                        #set($entryLength = $nodelist.getLength())
-                                                        #renderTableToList("Entscheidung" $entryLength $xpathExpression $entryNumber "designDocs")
+                                                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                                        #renderTableToTree("Entscheidung" $nodelist "designDocs")
                                                     </div>
                                                 </div>
                                             </div>
@@ -339,10 +331,10 @@
     #end
 #end
 
-#macro (renderTableToTree $title $list $tableId)
-    #renderGroupTitle($title)
-    #if($list.get("children"))
-        #foreach($entry in $list.get("children"))
+#macro (renderTableToTree $title $entries $tableId)
+    #if($entries.get("children"))
+        #renderGroupTitle($title)
+        #foreach($entry in $entries.get("children"))
             <ul class="js-accordion-multi">
                 <li class="folder__item is-active">
                 <svg class="tree__toggle__icon icon">
