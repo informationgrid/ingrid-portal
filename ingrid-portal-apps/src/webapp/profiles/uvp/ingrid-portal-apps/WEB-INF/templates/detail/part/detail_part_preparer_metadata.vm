@@ -356,7 +356,11 @@
 #end
 
 #macro (renderTreeFolder $entry)
+    #set($entryLabel = "")
     #if($entry.get('label'))
+        #set($entryLabel = "$TOOL.getDecodeValue($entry.get('label'))")
+    #end
+    #if($entryLabel && $entryLabel.length() > 0)
         #set($entryLink = "")
         #if($entry.get('link'))
             #set($entryLink = "$entry.get('link')")
@@ -365,7 +369,7 @@
             <svg class="tree__toggle__icon icon">
                 <use xlink:href="#book">
             </svg>
-            <a target="_new" class="download" href="$entry.get('link')" title="$entry.get('label')">$entry.get('label')</a>
+            <a target="_new" class="download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
             <span class="tx-light">
             (
             #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
@@ -378,7 +382,7 @@
             <svg class="tree__toggle__icon icon">
                 <use xlink:href="#folder">
             </svg>
-            <span>$entry.get('label')</span>
+            <span>$entryLabel</span>
         #end
     #end
     #if($entry.get('children'))
