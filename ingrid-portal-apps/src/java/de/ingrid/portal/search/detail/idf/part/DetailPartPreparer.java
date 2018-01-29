@@ -367,6 +367,16 @@ public class DetailPartPreparer {
                                 HashMap folder = root;
                                 while (counter != paths.length) {
                                     String path = paths[counter];
+                                    if(leaf != null) {
+                                        if(leaf.get("label") != null) {
+                                            String label = (String) leaf.get("label");
+                                            if(label != null) {
+                                                label.replace(path + "/", "");
+                                            }
+                                            leaf.put("label", label);
+                                        }
+                                    }
+                                        
                                     counter++;
                                     if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
                                         if(path.length() != 0) {
