@@ -103,7 +103,8 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME).trim());
             setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL).trim());
             if (this.getInput(FIELD_MODE).equals("new")) {
-                setInput(FIELD_ID, request.getParameter(FIELD_ID).trim());
+                // Show error message if spaces exist on login input
+                setInput(FIELD_ID, request.getParameter(FIELD_ID));
             }
             if(request.getParameter(FIELD_PASSWORD_OLD) != null) {
                 setInput(FIELD_PASSWORD_OLD, request.getParameter(FIELD_PASSWORD_OLD).trim());

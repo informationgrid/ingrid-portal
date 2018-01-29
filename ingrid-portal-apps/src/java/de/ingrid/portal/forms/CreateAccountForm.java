@@ -75,7 +75,8 @@ public class CreateAccountForm extends ActionForm {
         setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME).trim());
         setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME).trim());
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL).trim());
-        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN).trim());
+        // Show error message if spaces exist on login input
+        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN));
         setInput(FIELD_PASSWORD, request.getParameter(FIELD_PASSWORD).trim());
         setInput(FIELD_PASSWORD_CONFIRM, request.getParameter(FIELD_PASSWORD_CONFIRM).trim());
         setInput(FIELD_STREET, request.getParameter(FIELD_STREET).trim());
