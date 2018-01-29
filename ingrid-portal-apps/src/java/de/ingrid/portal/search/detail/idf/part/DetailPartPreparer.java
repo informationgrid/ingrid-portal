@@ -367,6 +367,7 @@ public class DetailPartPreparer {
                             if(paths != null) {
                                 int counter = 0;
                                 HashMap folder = root;
+                                HashMap parentFolder = null;
                                 while (counter != paths.length) {
                                     String path = paths[counter];
                                     // Remove directory path in label
@@ -396,12 +397,19 @@ public class DetailPartPreparer {
                                                     break;
                                                 }
                                             }
-                                            if(pathsOld.length > 1 && !paths[paths.length - 2].equals(pathsOld[pathsOld.length - 2])) {
-                                              if(subMap != null) {
-                                                createNewFolder = true;
-                                              }
-                                            }
                                             if(counter != paths.length) {
+                                                if(subMap != null) {
+                                                    if(counter < pathsOld.length && !path.equals(pathsOld[counter-1])) {
+                                                        if(parentFolder != null) {
+                                                            if(parentFolder.get("children") != null) {
+                                                                children = (ArrayList) parentFolder.get("children");
+                                                                createNewFolder = true;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        parentFolder = subMap;
+                                                    }
+                                                }
                                                 if(subMap == null || createNewFolder) {
                                                     subMap = new HashMap();
                                                     subMap.put("type", "folder");
