@@ -370,13 +370,12 @@ public class DetailPartPreparer {
                                     if(leaf != null) {
                                         if(leaf.get("label") != null) {
                                             String label = (String) leaf.get("label");
-                                            if(label != null) {
-                                                label.replace(path + "/", "");
+                                            if(label != null && label.indexOf("/") > -1 && path.length() > 0) {
+                                                label = label.replaceFirst(getDecodeValue(path) + "/", "");
                                             }
                                             leaf.put("label", label);
                                         }
                                     }
-                                        
                                     counter++;
                                     if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
                                         if(path.length() != 0) {
