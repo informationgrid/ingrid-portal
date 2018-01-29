@@ -336,6 +336,7 @@ public class DetailPartPreparer {
         root.put("type", "root");
         NodeList tmpNodelist =  XPathUtils.getNodeList(node, xpathExpression);
         boolean createNewFolder = false;
+        String xpathOldSubEntryValue = "";
         if(tmpNodelist != null) {
             for (int i=0; i<tmpNodelist.getLength();i++){
                 Node tmpNode = tmpNodelist.item(i);
@@ -362,11 +363,13 @@ public class DetailPartPreparer {
                            createNewFolder = true;
                         } else {
                             String[] paths = xpathSubEntryValue.split("/");
+                            String[] pathsOld = xpathOldSubEntryValue.split("/");
                             if(paths != null) {
                                 int counter = 0;
                                 HashMap folder = root;
                                 while (counter != paths.length) {
                                     String path = paths[counter];
+                                    // Remove directory path in label
                                     if(leaf != null) {
                                         if(leaf.get("label") != null) {
                                             String label = (String) leaf.get("label");
@@ -393,6 +396,11 @@ public class DetailPartPreparer {
                                                     break;
                                                 }
                                             }
+                                            if(pathsOld.length > 1 && !paths[paths.length - 2].equals(pathsOld[pathsOld.length - 2])) {
+                                              if(subMap != null) {
+                                                createNewFolder = true;
+                                              }
+                                            }
                                             if(counter != paths.length) {
                                                 if(subMap == null || createNewFolder) {
                                                     subMap = new HashMap();
@@ -403,6 +411,7 @@ public class DetailPartPreparer {
                                                     createNewFolder = false;
                                                 }
                                             } else {
+                                                // Add leaf to folder
                                                 subMap = leaf;
                                                 children.add(subMap);
                                                 folder.put("children", children);
@@ -414,6 +423,7 @@ public class DetailPartPreparer {
                             }
                         }
                     }
+                    xpathOldSubEntryValue = xpathSubEntryValue;
                 }
             }
         }
