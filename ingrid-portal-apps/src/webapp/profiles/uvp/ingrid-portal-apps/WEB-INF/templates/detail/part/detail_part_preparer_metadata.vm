@@ -337,10 +337,7 @@
         #foreach($entry in $entries.get("children"))
             <ul class="js-accordion-multi">
                 <li class="folder__item is-active">
-                <svg class="tree__toggle__icon icon">
-                    <use xlink:href="#folder">
-                </svg>
-                #renderTreeFolder($entry)
+                    #renderTreeFolder($entry)
                 </li>
             </ul>
         #end
@@ -358,10 +355,7 @@
             #set($entryLink = "$entry.get('link')")
         #end
         #if($entryLink && $entryLink.length() > 0)
-            <svg class="tree__toggle__icon icon">
-                <use xlink:href="#book">
-            </svg>
-            <a target="_new" class="download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
+            <a target="_new" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
             <span class="tx-light">
             (
             #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
@@ -371,15 +365,12 @@
             )
             </span>
         #else
-            <svg class="tree__toggle__icon icon">
-                <use xlink:href="#folder">
-            </svg>
             <span>$entryLabel</span>
         #end
     #end
     #if($entry.get('children'))
         #foreach($subEntry in $entry.get('children'))
-        <li class="tree__content js-accordion-content">
+        <li class="folder__content js-accordion-content">
             <ul class="js-accordion-multi">
                 <li class="folder__item">
                     #renderTreeFolder($subEntry)
