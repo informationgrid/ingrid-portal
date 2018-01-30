@@ -23,6 +23,9 @@
           <action type="update" dev="wemove" issue="954">
             Portal: Update detail view for UVP.
           </action>
+		  <action type="add" dev="wemove" issue="890">
+            IGE/Portal(UVP): Add ZIP upload and update portal detail view.
+          </action>
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
           </action>
