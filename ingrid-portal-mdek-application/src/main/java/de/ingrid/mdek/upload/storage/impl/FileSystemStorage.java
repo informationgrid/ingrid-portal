@@ -374,11 +374,11 @@ public class FileSystemStorage implements Storage {
     }
 
     /**
-     * Extract the archive file denoted by path into a directory with the same name
+     * Extract the archive file denoted by path into a directory with the same name.
      *
      * @param path
      * @param copyOptions
-     * @return String[]
+     * @return String[] Entries of extracted ZIP file, sorted alphabetically by resulting path.
      * @throws Exception
      */
     private String[] extract(Path path, CopyOption... copyOptions) throws Exception {
@@ -426,7 +426,7 @@ public class FileSystemStorage implements Storage {
             }
             throw ex;
         }
-        return result.stream().map(p -> p.toString()).toArray(size -> new String[size]);
+        return result.stream().sorted().map(p -> p.toString()).toArray(size -> new String[size]);
     }
 
     /**
