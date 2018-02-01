@@ -282,13 +282,16 @@ public class DetailPartPreparer {
             // transform with code list ?
             if(codeListId != null){
                 String tmpValue = getValueFromCodeList(codeListId, value);
-                if (tmpValue.length() > 0) {
+                if (tmpValue.length() == 0) {
+                    tmpValue = getValueFromCodeList(codeListId, value, true);
+                }
+                if(tmpValue.length() > 0) {
                     value = tmpValue;
                 }
             }
             if (!list.contains( value )) {
-                list.add(value);                        
-            }            
+                list.add(value);
+            }
         }
         sortList(list);
         return list;
@@ -543,12 +546,16 @@ public class DetailPartPreparer {
     }
     
     public String getValueFromCodeList(String codelist, String value){
+        return getValueFromCodeList(codelist, value, false);
+    }
+
+    public String getValueFromCodeList(String codelist, String value, boolean checkDataId){
         if(value != null){
-            value = sysCodeList.getNameByCodeListValue(codelist, value);
+            value = sysCodeList.getNameByCodeListValue(codelist, value, checkDataId);
         }
         return value;
     }
-    
+
     public String getNameFromCodeList(String codelist, String value){
         if(value != null){
             value = sysCodeList.getName(codelist, value);
