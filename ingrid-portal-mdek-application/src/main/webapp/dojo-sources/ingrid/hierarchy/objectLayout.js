@@ -175,10 +175,16 @@ define([
             },
 
             createInfoHeader: function() {
-                new ValidationTextBox({
+                var objectName = new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
+                on( objectName, "keyup", function() {
+                    if (this.displayedValue.length === 255) {
+                        console.warn("It's not possible to add more than 255 characters for object name.");
+                        Tooltip.show(message.get("general.field.too.long.255"), this.domNode, ["below"]);
+                    }
+                });
 
                 var storeProps = {
                     data: {
