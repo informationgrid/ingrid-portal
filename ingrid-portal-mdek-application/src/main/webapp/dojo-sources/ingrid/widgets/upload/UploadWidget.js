@@ -554,10 +554,17 @@ define([
         },
 
         /**
-         * Sort uploads alphabetically by the file name
+         * Sort uploads alphabetically by the path and within same paths by path + file name
          */
         sortUploads: function(uploads) {
-            uploads.sort(function(a,b) { return a.file.localeCompare(b.file) });
+            uploads.sort(function(a,b) {
+            	var c = a.path.localeCompare(b.path);
+            	if (c != 0) {
+            		return c;
+            	} else {
+                	return (a.path+a.file).localeCompare(b.path+b.file);
+            	}
+            });
         }
     });
 });

@@ -54,7 +54,7 @@ public class FileSystemStorageMigrator {
         // check document directory
         this.docsDir = docsDir;
         if (!Files.isDirectory(Paths.get(this.docsDir))) {
-            log.warn("Document directory configured in 'docsDir' does not exist or is no directory. Skipping migrations...");
+            log.info("Document directory configured in 'docsDir' does not exist or is no directory. Skipping migrations...");
             return;
         }
 
@@ -76,17 +76,17 @@ public class FileSystemStorageMigrator {
      */
 
     /**
-     * Migration step from <4.2.0 to 4.2.0
+     * Migration step from <4.3.0 to 4.3.0
      *
      * In former versions FileSystemStorage used to have maintenance directories (_archive_, _trash_)
-     * in each directory. Since version 4.2.0 they only exist once in the root directory.
+     * in each directory. Since version 4.3.0 they only exist once in the root directory.
      * This migration step moves all existing maintenance directories to the root directory and
      * adapts the paths inside accordingly.
      *
      * Since documents are not stored in the root directory (but in sub directories containing the
-     * iplug and document ids in the path), there was no trash directory in the root directory in
+     * iplug and document ids in the path), there was no trash nor archive directory in the root directory in
      * older versions. So it's possible to tell if the migration was already applied by checking
-     * the existence of a trash directory in the root directory.
+     * the existence of the trash and archive directory in the root directory.
      *
      * Error handling: Files are moved to temporary directories first and the these will be moved
      * to the final locations only after no exception occurred. All exceptions will only be logged,
@@ -102,7 +102,7 @@ public class FileSystemStorageMigrator {
         log.info("Applying step 'moveSpecialDirectoriesToRoot'...");
 
         // check if there is already a trash directory in the root directory
-        if (!Files.isDirectory(Paths.get(this.docsDir, TRASH_PATH))) {
+        if (!Files.isDirectory(Paths.get(this.docsDir, TRASH_PATH)) && !Files.isDirectory(Paths.get(this.docsDir, ARCHIVE_PATH))) {
             // define paths
             Path tmpTrashPath = Paths.get(this.docsDir, TRASH_PATH + TEMP_PATH_SUFFIX);
             Path tmpArchivePath = Paths.get(this.docsDir, ARCHIVE_PATH + TEMP_PATH_SUFFIX);
@@ -147,10 +147,8 @@ public class FileSystemStorageMigrator {
             });
 
             // move temporary directories to the final locations (archive first)
-            Files.createDirectories(finalArchivePath);
             Files.move(tmpArchivePath, finalArchivePath, StandardCopyOption.ATOMIC_MOVE);
 
-            Files.createDirectories(finalTrashPath);
             Files.move(tmpTrashPath, finalTrashPath, StandardCopyOption.ATOMIC_MOVE);
             return true;
         }

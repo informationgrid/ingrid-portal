@@ -134,12 +134,12 @@ public class FileSystemStorageTest {
 
         // test
         assertEquals(results.length, 3);
-        assertEquals(results[0].getFile(), "file2");
-        assertEquals(results[0].getPath(), path+"/test/dir1");
+        assertEquals(results[2].getFile(), "file2");
+        assertEquals(results[2].getPath(), path+"/test/dir1");
         assertEquals(results[1].getFile(), "file0");
         assertEquals(results[1].getPath(), path+"/test/dir2");
-        assertEquals(results[2].getFile(), "file1");
-        assertEquals(results[2].getPath(), path+"/test");
+        assertEquals(results[0].getFile(), "file1");
+        assertEquals(results[0].getPath(), path+"/test");
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test.zip")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
