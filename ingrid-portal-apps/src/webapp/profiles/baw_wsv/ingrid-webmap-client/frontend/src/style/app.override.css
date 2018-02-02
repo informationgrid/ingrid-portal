@@ -1,10 +1,20 @@
 [ga-topic] .ga-topics-sprite-themen {
-  background: url("../img/themen.png");
+  background: url("../img/theme_themen.png");
   width: 140px;
 }
 
 [ga-topic] .ga-topics-sprite-anbieter {
-  background: url("../img/anbieter.png");
+  background: url("../img/theme_anbieter.png");
+  width: 140px;
+}
+
+[ga-topic] .ga-topics-sprite-favoriten {
+  background: url("../img/theme_wsvfavoriten.png");
+  width: 140px;
+}
+
+[ga-topic] .ga-topics-sprite-inspire {
+  background: url("../img/theme_inspire.png");
   width: 140px;
 }
 
