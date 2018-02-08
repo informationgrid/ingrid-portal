@@ -231,7 +231,7 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>wagon-maven-plugin</artifactId>
             <configuration>
-              <skip>true</skip>
+              <skip>false</skip>
             </configuration>
           </plugin>
           <plugin>
