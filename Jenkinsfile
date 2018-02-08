@@ -4,6 +4,10 @@ pipeline {
     environment {
         VERSION = readMavenPom().getVersion()
     }
+    
+    options {
+      buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
+    }
 
     stages {
         // normal build if it's not the master branch and not the support branch, except if it's a SNAPSHOT-version
