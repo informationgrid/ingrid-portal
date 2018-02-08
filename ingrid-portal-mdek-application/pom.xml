@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.3.0-SNAPSHOT</version>
+        <version>4.2.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -241,7 +241,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
-            <version>4.2.1-SNAPSHOT</version>
+            <version>4.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
