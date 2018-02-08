@@ -6,16 +6,18 @@
     </properties>
 
     <body>
-        
-        <release version="4.3.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.0">
+        <release version="4.2.1" date="2018-02-08" description="Release 4.2.1">
           <action type="add" dev="wemove" issue="915">
-            Portal: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
+            Portal: UVP: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
           </action>
           <action type="add" dev="wemove" issue="829">
             Portal: Add password policy for create new portal user.
           </action>
           <action type="add" dev="wemove" issue="60">
             Portal: Check login name on create new portal user.
+          </action>
+          <action type="fix" dev="wemove" issue="965">
+            IGE: Fix problems digesting XML answers from WFS used for spatial search. The problem only occurs on java8 162 and relates to unmarshalling of XML WFS response.
           </action>
           <action type="fix" dev="wemove" issue="733">
             Portal: Clean spaces on login name by create new portal user.
@@ -24,10 +26,10 @@
             Portal: Fix detail view for license "official-work".
           </action>
           <action type="update" dev="wemove" issue="954">
-            Portal: Update detail view for UVP.
+            Portal: UVP: Update detail view for UVP.
           </action>
-		  <action type="add" dev="wemove" issue="890">
-            IGE/Portal(UVP): Add ZIP upload and update portal detail view.
+          <action type="add" dev="wemove" issue="890">
+            IGE/Portal: UVP: Add ZIP upload and update portal detail view.
           </action>
           <action type="fix" dev="wemove" issue="781">
             IGE: Fix import of getCapabilities - online resources.
@@ -36,9 +38,9 @@
             IGE/Portal: Fixed location search by adapting to new WFS service.
           </action>
           <action type="fix" dev="wemove" issue="949">
-            IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
+            IGE: UVP: Fixed leaflet URL for tiles, which lead to an error on IE.
           </action>
-		  <action type="update" dev="wemove" issue="961">
+          <action type="update" dev="wemove" issue="961">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
           </action>
         </release>
