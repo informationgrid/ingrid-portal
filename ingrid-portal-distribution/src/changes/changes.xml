@@ -6,6 +6,11 @@
     </properties>
 
     <body>
+        <release version="4.2.2-SNAPSHOT" date="2018-xx-xx" description="Release 4.2.2">
+          <action type="fix" dev="wemove" issue="">
+            UVP NI: Re-add facet config. Fixes not showing BLP data in facets.
+          </action>
+        </release>
         <release version="4.2.1" date="2018-02-08" description="Release 4.2.1">
           <action type="add" dev="wemove" issue="915">
             Portal: UVP: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
