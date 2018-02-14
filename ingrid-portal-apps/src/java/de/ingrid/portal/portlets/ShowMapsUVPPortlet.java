@@ -190,8 +190,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         StringBuilder s = new StringBuilder();
                         IngridHit hit = it.next();
                         IngridHitDetail detail = hit.getHitDetail();
-                        String lat_center = UtilsSearch.getDetailValue( detail, "y1" );
-                        String lon_center = UtilsSearch.getDetailValue( detail, "x1" );
+                        String lat_center = UtilsSearch.getDetailValue( detail, "y1", 1 );
+                        String lon_center = UtilsSearch.getDetailValue( detail, "x1", 1 );
                         String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
                         String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
                         String urlFinished = UtilsSearch.getDetailValue( detail, "blp_url_finished" );
