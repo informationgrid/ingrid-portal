@@ -7,8 +7,8 @@
 
     <body>
         <release version="4.2.2-SNAPSHOT" date="2018-xx-xx" description="Release 4.2.2">
-          <action type="fix" dev="wemove" issue="">
-            UVP NI: Re-add facet config. Fixes not showing BLP data in facets.
+          <action type="fix" dev="wemove" issue="969">
+            UVP NI: Re-add facet config and localization. Fixes not showing BLP data in facets and search results type.
           </action>
         </release>
         <release version="4.2.1" date="2018-02-08" description="Release 4.2.1">
