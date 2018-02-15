@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -218,7 +218,7 @@
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <div type="text" maxLength="255" id="objectName" required="true" name="objectName" style="width: 100%;font-size:11px !important"/>
+                                    <input type="text" id="objectName" required="true" name="objectName" style="width: 100%;font-size:11px !important"/>
                                 </td>
                             </tr>
                             <tr>

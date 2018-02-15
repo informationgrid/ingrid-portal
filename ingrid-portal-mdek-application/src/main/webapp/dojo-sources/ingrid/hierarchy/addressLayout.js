@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -128,7 +128,7 @@ define([
         
         createInfoHeader: function () {
             //new dijit.layout.ContentPane({id:"headerFrameAddress"}, "sectionTopAddress");
-            new ValidationTextBox({style: "width:100%;", disabled: 'disabled'}, "addressTitle");
+            new ValidationTextBox({maxLength: 255, style: "width:100%;", disabled: 'disabled'}, "addressTitle");
             var addrClassText = new ValidationTextBox({style: "width:100%;", disabled: 'disabled'}, "addressType");
             //on(addrClassText, "onChange", igeEvents.selectUDKAddressType);
             addrClassText.onChange = lang.hitch(igeEvents, igeEvents.selectUDKAddressType);

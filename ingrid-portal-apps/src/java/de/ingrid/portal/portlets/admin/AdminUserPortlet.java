@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -554,12 +554,6 @@ public class AdminUserPortlet extends ContentPortlet {
             userAttributes.put("user.business-info.postal.postalcode", f.getInput(AdminUserForm.FIELD_POSTALCODE));
             userAttributes.put("user.business-info.postal.city", f.getInput(AdminUserForm.FIELD_CITY));
 
-            // theses are not PLT.D values but ingrid specifics
-            userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(AdminUserForm.FIELD_AGE));
-            userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(AdminUserForm.FIELD_ATTENTION));
-            userAttributes.put("user.custom.ingrid.user.interest", f.getInput(AdminUserForm.FIELD_INTEREST));
-            userAttributes.put("user.custom.ingrid.user.profession", f.getInput(AdminUserForm.FIELD_PROFESSION));
-
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
                     Long.toString(System.currentTimeMillis())));
@@ -685,12 +679,6 @@ public class AdminUserPortlet extends ContentPortlet {
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
-
-                // theses are not PLT.D values but ingrid specifics
-                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.age.group", true).setStringValue(f.getInput(AdminUserForm.FIELD_AGE));
-                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.attention.from", true).setStringValue(f.getInput(AdminUserForm.FIELD_ATTENTION));
-                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.interest", true).setStringValue(f.getInput(AdminUserForm.FIELD_INTEREST));
-                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.profession", true).setStringValue(f.getInput(AdminUserForm.FIELD_PROFESSION));
 
                 userManager.updateUser(user);
 
@@ -900,7 +888,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         context.put("actionForm", f);
-
+        context.put("loginLength", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4));
         setDefaultViewPage(viewNew);
         return true;
     }
@@ -978,11 +966,6 @@ public class AdminUserPortlet extends ContentPortlet {
             f.setInput(AdminUserForm.FIELD_STREET, replaceNull(userAttributes.get("user.business-info.postal.street")));
             f.setInput(AdminUserForm.FIELD_POSTALCODE, replaceNull(userAttributes.get("user.business-info.postal.postalcode")));
             f.setInput(AdminUserForm.FIELD_CITY, replaceNull(userAttributes.get("user.business-info.postal.city")));
-
-            f.setInput(AdminUserForm.FIELD_AGE, replaceNull(userAttributes.get("user.custom.ingrid.user.age.group")));
-            f.setInput(AdminUserForm.FIELD_ATTENTION, replaceNull(userAttributes.get("user.custom.ingrid.user.attention.from")));
-            f.setInput(AdminUserForm.FIELD_INTEREST, replaceNull(userAttributes.get("user.custom.ingrid.user.interest")));
-            f.setInput(AdminUserForm.FIELD_PROFESSION, replaceNull(userAttributes.get("user.custom.ingrid.user.profession")));
 
             // set admin-portal role
             Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());

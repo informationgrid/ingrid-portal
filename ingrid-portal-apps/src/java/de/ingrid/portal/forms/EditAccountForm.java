@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -121,7 +121,14 @@ public class EditAccountForm extends ActionForm {
         if (hasInput(FIELD_PASSWORD_OLD) && !hasInput(FIELD_PASSWORD_NEW)) {
             setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
             allOk = false;
-        } 
+        }
+        if (hasInput(FIELD_PASSWORD_NEW)) {
+            String password = getInput(FIELD_PASSWORD_NEW);
+            if (!Utils.isStrengthPassword(password)) {
+               setError(FIELD_PASSWORD_NEW, "account.create.error.worstPassword");
+               allOk = false;
+           }
+        }
         if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
             setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
             allOk = false;

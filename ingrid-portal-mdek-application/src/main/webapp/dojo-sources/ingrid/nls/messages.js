@@ -43,6 +43,7 @@ define({
         "general.image.not.found": "Image not found",
         "general.add.keywords": "Prepare keywords: ${0} of ${1}",
         "general.add.layers": "Adding coupled resource: ${0} of ${1}",
+        "general.field.too.long.255": "This field must not be longer than 255 characters. Please check the value.",
 
         "general.page": "Page",
 

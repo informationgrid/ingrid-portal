@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -213,6 +213,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         }
         
         context.put("actionForm", f);
+        context.put("loginLength", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4));
         super.doView(request, response);
     }
 
@@ -260,12 +261,6 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             userAttributes.put("user.business-info.postal.street", f.getInput(CreateAccountForm.FIELD_STREET));
             userAttributes.put("user.business-info.postal.postalcode", f.getInput(CreateAccountForm.FIELD_POSTALCODE));
             userAttributes.put("user.business-info.postal.city", f.getInput(CreateAccountForm.FIELD_CITY));
-
-            // theses are not PLT.D values but ingrid specifics
-            userAttributes.put("user.custom.ingrid.user.age.group", f.getInput(CreateAccountForm.FIELD_AGE));
-            userAttributes.put("user.custom.ingrid.user.attention.from", f.getInput(CreateAccountForm.FIELD_ATTENTION));
-            userAttributes.put("user.custom.ingrid.user.interest", f.getInput(CreateAccountForm.FIELD_INTEREST));
-            userAttributes.put("user.custom.ingrid.user.profession", f.getInput(CreateAccountForm.FIELD_PROFESSION));
 
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(

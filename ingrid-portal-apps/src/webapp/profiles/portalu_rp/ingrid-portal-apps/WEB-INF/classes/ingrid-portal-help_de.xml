@@ -117,12 +117,19 @@
         <section help-key="search-3">
             <header>Nach Ort suchen</header>
             <content>
-                <p>Sie können Ihre Suchanfrage ortsbezogen über die Eingabe eines geografischen Namens ausführen.
-                   Dabei werden Ihnen passende Einträge aus dem Geo-Thesaurus-Umwelt angeboten.
-                   Nach Auswahl eines Raumbezugs wird die Suche mit der eindeutigen Kennung dieses Raumbezuges ausgeführt (z.B. administrative Einheit).</p>
+                <p>Sie können Ihre Suchanfrage auch ortsbezogen durchführen. Dazu geben Sie einen geografischen Namen, 
+                   z. B. eine Stadt, eine Gemeinde, einen Landkreis ein.
+                   Es werden dann dazu passende Einträge aus einem hinterlegten Katalog, dem Geo-Thesaurus-Umwelt angeboten.
+                   Nachdem Sie mindestens einen Eintrag ausgewählt haben, wird die entsprechende Suche ausgeführt.</p>
+                <p>Als Suchergebnis erhalten Sie nur Treffer aus dem Ergebnistyp "Metadaten", 
+                   d. h. aus dem Umweltdatenkatalog RP (UDK RP). Es werden nur die Daten gefunden, 
+                   bei denen der gesuchte Raumbezug exakt angegeben ist.</p>
                 <p>Anders als bei vielen anderen Suchmaschinen, erfolgt die räumliche
                    Einschränkung also nicht über eine einfache Volltextsuche, sondern
                    über die gezielte Suche nach Raumbezügen, die den Suchergebnissen zugeordnet wurden.</p>
+                <p>Ein Beispiel: Sie suchen unter "Nach Ort suchen" nach "Mainz-Bingen". Gefunden werden alle Daten 
+                   des UDK RP in denen als Raumbezug "Mainz-Bingen" eingetragen ist. Daten bei denen der 
+                   Raumbezug "Rheinland-Pfalz" eingetragen ist, werden nicht gefunden.</p>
             </content>
         </section>
         <section help-key="search-4">

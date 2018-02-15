@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -175,9 +175,16 @@ define([
             },
 
             createInfoHeader: function() {
-                new ValidationTextBox({
+                var objectName = new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
+                on( objectName, "keyup", function() {
+                    if (this.displayedValue.length === 255) {
+                        console.warn("It's not possible to add more than 255 characters for object name.");
+                        Tooltip.show(message.get("general.field.too.long.255"), this.domNode, ["below"]);
+                    }
+                });
 
                 var storeProps = {
                     data: {
@@ -230,6 +237,7 @@ define([
 
             createGeneralInfo: function() {
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "generalShortDesc");
 
@@ -269,10 +277,12 @@ define([
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
                 var previewImage = new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "generalPreviewImage");
                 
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "previewImageDescription");
 
@@ -369,6 +379,7 @@ define([
                 tabRef1.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref1BasisTab2"));
 
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref1ObjectIdentifier");
 
@@ -965,31 +976,40 @@ define([
             createFachBezugClass2: function() {
 
                 new SimpleTextarea({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref2Author");
                 new ValidationTextBox({
+                    maxLength: 255,
                     style: "width:100%;"
                 }, "ref2Publisher");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishedIn");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishLocation");
 
                 new ValidationTextBox({
+                    maxLength: 40,
                     style: "width:100%;"
                 }, "ref2PublishedInIssue");
                 new ValidationTextBox({
+                    maxLength: 20,
                     style: "width:100%;"
                 }, "ref2PublishedInPages");
                 new ValidationTextBox({
+                    maxLength: 20,
                     style: "width:100%;"
                 }, "ref2PublishedInYear");
                 new ValidationTextBox({
+                    maxLength: 40,
                     style: "width:100%;"
                 }, "ref2PublishedISBN");
                 new ValidationTextBox({
+                    maxLength: 80,
                     style: "width:100%;"
                 }, "ref2PublishedPublisher");
 
@@ -999,6 +1019,7 @@ define([
                 }, "ref2LocationTabContainer");
 
                 var ref2LocationTab1 = new SimpleTextarea({
+                    maxLength: 80,
                     title: message.get("ui.obj.type2.locationTable.tab.text"),
                     "class": "textAreaFull"
                 }, "ref2LocationText");
@@ -1068,6 +1089,7 @@ define([
                 ref2BaseDataTabContainer.watch("selectedChildWidget", lang.partial(UtilUI.toggleFunctionalLink, "ref2BaseDataTab2"));
 
                 new SimpleTextarea({
+                    maxLength: 255,
                     "class": "textAreaFull"
                 }, "ref2BibData");
                 new SimpleTextarea({

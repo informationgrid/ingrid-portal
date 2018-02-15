@@ -1,4 +1,4 @@
-FROM ingrid-java:jdk-8
+FROM docker-registry.wemove.com/ingrid-java:jdk-8
 ENV INGRID_USER=root
 
 ADD ingrid-portal*-installer.jar /

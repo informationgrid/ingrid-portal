@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -345,7 +345,7 @@ public class UtilsSearch {
 
     /**
      * Returns all values stored with the passed key and returns them as one
-     * String (concatenated with ", "). If no values are stored an emty string
+     * String (concatenated with ", "). If no values are stored an empty string
      * is returned !). NOTICE: Also returns Single Values CORRECTLY ! FURTHER
      * MAPS idValues to correct "names", e.g. partnerId to partnerName.
      * 
@@ -355,6 +355,21 @@ public class UtilsSearch {
      */
     public static String getDetailValue(IngridHit detail, String key) {
         return getDetailValue(detail, key, null);
+    }
+
+    /**
+     * Returns values stored with the passed key and returns them as one
+     * String (concatenated with ", "). If no values are stored an empty string
+     * is returned !). NOTICE: Also returns Single Values CORRECTLY ! FURTHER
+     * MAPS idValues to correct "names", e.g. partnerId to partnerName.
+     * 
+     * @param detail
+     * @param key
+     * @param noOfElements If the result is an array, return only the first number of elements, concated by ', ' . If 0 all elements will be returned.
+     * @return
+     */
+    public static String getDetailValue(IngridHit detail, String key, int noOfElements) {
+        return getDetailValue(detail, key, null, false, noOfElements);
     }
 
     /**
@@ -368,7 +383,7 @@ public class UtilsSearch {
      * @return
      */
     public static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources) {
-        return getDetailValue(detail, key, resources, false);
+        return getDetailValue(detail, key, resources, false, 0);
     }
 
     /**
@@ -380,7 +395,7 @@ public class UtilsSearch {
      * @return
      */
     public static String getRawDetailValue(IngridHit detail, String key) {
-        return getDetailValue(detail, key, null, true);
+        return getDetailValue(detail, key, null, true, 0);
     }
 
     /**
@@ -390,9 +405,11 @@ public class UtilsSearch {
      * @param key
      * @param resources
      * @param raw
+     * @param noOfElements If the result is an array, return only the first number of elements, concated by ', ' . If 0 all elements will be returned.
+     * 
      * @return
      */
-    private static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources, boolean raw) {
+    private static String getDetailValue(IngridHit detail, String key, IngridResourceBundle resources, boolean raw, int noOfElements) {
         Object obj = detail.get(key);
         // since elastic search index keys are lowercase, make sure to also look for those
         if (obj == null) obj = detail.get(key.toLowerCase());
@@ -403,7 +420,7 @@ public class UtilsSearch {
         StringBuffer values = new StringBuffer();
         if (obj instanceof String[]) {
             String[] valueArray = (String[]) obj;
-            for (int i = 0; i < valueArray.length; i++) {
+            for (int i = 0; i < (noOfElements == 0 ? valueArray.length : Math.min( valueArray.length, noOfElements )); i++) {
             	String value = null;
                 
                 if (raw) {
@@ -427,7 +444,7 @@ public class UtilsSearch {
             }
         } else if (obj instanceof ArrayList) {
             ArrayList valueList = (ArrayList) obj;
-            for (int i = 0; i < valueList.size(); i++) {
+            for (int i = 0; i < (noOfElements == 0 ? valueList.size() : Math.min( valueList.size(), noOfElements )); i++) {
                 if (i != 0) {
                     values.append(DETAIL_VALUES_SEPARATOR);
                 }

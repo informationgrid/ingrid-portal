@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,6 +25,8 @@ package de.ingrid.portal.global;
 import java.util.Locale;
 import java.util.Map;
 
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +81,10 @@ public class IngridSysCodeList {
     }
     
     public String getNameByCodeListValue(String codeListId, String domainValue) {
+        return getNameByCodeListValue(codeListId, domainValue, false);
+    }
+
+    public String getNameByCodeListValue(String codeListId, String domainValue, boolean checkDataId) {
         CodeListService clService = CodeListServiceFactory.instance();
         
         CodeList cl = clService.getCodeList(codeListId);
@@ -89,14 +95,33 @@ public class IngridSysCodeList {
                     if (locals.get(key).equalsIgnoreCase(domainValue)) {
                         return getName(codeListId, entry.getId()); 
                     }
+                    if(checkDataId) {
+                        String data = entry.getData();
+                        if(data != null) {
+                            if(data.startsWith("{") && data.endsWith("}")) {
+                                try {
+                                    JSONObject json = new JSONObject(data);
+                                    if(json != null) {
+                                        String jsonId = json.getString("id");
+                                        if(jsonId.equals(domainValue)) {
+                                            return getName(codeListId, entry.getId());
+                                        }
+                                    }
+                                } catch (JSONException e) {
+                                    continue;
+                                }
+                                
+                            }
+                        }
+                    }
                 }
             }
         }else{
-        	log.debug("Codelist does not exist for codeListId: " + codeListId);
+            log.debug("Codelist does not exist for codeListId: " + codeListId);
         }
-    	return "";
+        return "";
     }
-    
+
     public String getDataByCodeListValue(String codeListId, String entryId) {
         CodeListService clService = CodeListServiceFactory.instance();
         
@@ -112,4 +137,5 @@ public class IngridSysCodeList {
         }
         return "";
     }
+    
 }

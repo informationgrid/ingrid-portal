@@ -6,8 +6,110 @@
     </properties>
 
     <body>
+        
+        <release version="4.3.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.0">
+          <action type="add" dev="wemove" issue="915">
+            Portal: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
+          </action>
+          <action type="add" dev="wemove" issue="829">
+            Portal: Add password policy for create new portal user.
+          </action>
+          <action type="add" dev="wemove" issue="60">
+            Portal: Check login name on create new portal user.
+          </action>
+          <action type="add" dev="wemove" issue="915">
+            Portal: UVP: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
+          </action>
+          <action type="fix" dev="wemove" issue="969">
+            UVP NI: Re-add facet config and localization. Fixes not showing BLP data in facets and search results type.
+          </action>
+          <action type="fix" dev="wemove" issue="965">
+            IGE: Fix problems digesting XML answers from WFS used for spatial search. The problem only occurs on java8 162 and relates to unmarshalling of XML WFS response.
+          </action>
+          <action type="fix" dev="wemove" issue="733">
+            Portal: Clean spaces on login name by create new portal user.
+          </action>
+          <action type="fix" dev="wemove" issue="862">
+            Portal: Fix detail view for license "official-work".
+          </action>
+          <action type="update" dev="wemove" issue="954">
+            Portal: Update detail view for UVP.
+          </action>
+		      <action type="add" dev="wemove" issue="890">
+            IGE/Portal(UVP): Add ZIP upload and update portal detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="781">
+            IGE: Fix import of getCapabilities - online resources.
+          </action>
+          <action type="fix" dev="wemove" issue="946">
+            IGE/Portal: Fixed location search by adapting to new WFS service.
+          </action>
+          <action type="fix" dev="wemove" issue="949">
+            IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
+          </action>
+		      <action type="update" dev="wemove" issue="961">
+            MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+        </release>
 
-        <release version="4.2.0-SNAPSHOT" date="2017-xx-xx" description="Release 4.2.0">
+        <release version="4.2.0" date="2018-01-05" description="Release 4.2.0">
+          <action type="update" dev="wemove" issue="934">
+            RLP: Update Help of RLP Portal.
+          </action>
+          <action type="add" dev="wemove" issue="939">
+            UVP: Add BLP Link to Vorschaltseite of Berlin
+          </action>
+          <action type="add" dev="wemove" issue="932">
+            UVP: Adapt Vorschaltseite Schleswig-Holstein
+          </action>
+          <action type="fix" dev="wemove" issue="931">
+            PORTAL: Fix preview images and ClassCastException on search result list.
+          </action>
+          <action type="fix" dev="wemove" issue="938">
+            PORTAL: Fix missing checkboxes on mdek page.
+          </action>
+          <action type="fix" dev="wemove" issue="937">
+            PORTAL: Fix user list when connected catalogs not yet added to portal.
+          </action>
+          <action type="fix" dev="wemove" issue="891">
+            PORTAL: Support Postgres when switching profile.
+          </action>
+          <action type="fix" dev="wemove" issue="929">
+            PORTAL: Fix webmap client path by installation on windows.
+          </action>
+          <action type="fix" dev="wemove" issue="927">
+            PORTAL: Fix forgotten password function for different users with same e-mail address.
+          </action>
+          <action type="fix" dev="wemove" issue="892">
+            PORTAL: Activate BKG Portal Profile in Portal Administration.
+          </action>
+          <action type="update" dev="wemove" issue="301">
+            PORTAL: Update Jetspeed to 2.3.1.
+          </action>
+          <action type="update" dev="wemove" issue="924">
+            PORTAL: Update NI copyright.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            PORTAL: Update UVP-NI header layout.
+          </action>
+          <action type="update" dev="wemove" issue="898">
+            Portal: Change UVP-NI facet map layout.
+          </action>
+          <action type="update" dev="wemove" issue="568">
+            PORTAL: Update RLP profil.
+          </action>
+          <action type="update" dev="wemove" issue="926">
+            PORTAL: Fixes and clean up on facets.
+          </action>
+          <action type="add" dev="wemove" issue="895">
+            IGE-UVP: Set expiry date to all selected rows of a document table.
+          </action>
+          <action type="add" dev="wemove" issue="900">
+            IGE-UVP: Add uploaded documents sorted and added possibility to move rows.
+          </action>
+          <action type="fix" dev="wemove" issue="918">
+            IGE: Change context sensitive uvp help messages because of updated UVPG law text.
+          </action>
           <action type="fix" dev="wemove" issue="">
             IGE: Fixed getCapabilities assistant when creating coupled resources.
           </action>
@@ -31,6 +133,12 @@
           </action>
           <action type="fix" dev="wemove" issue="882">
             IGE: Fixed missing translation for field toggle for additional rubrics.
+          </action>
+          <action type="fix" dev="wemove" issue="936">
+            IGE: Fixed wrong date format in detail view (UVP).
+          </action>
+          <action type="fix" dev="wemove" issue="941">
+            IGE: Do not allow more than 255 characters in object title and other fields.
           </action>
           <action type="fix" dev="wemove" issue="886">
             MAPCLIENT: Fixed add WMS services and encode label of layers.
@@ -170,7 +278,7 @@
           <action type="fix" dev="wemove" issue="REDMINE-648">
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
-          <action type="Fix" dev="wemove" issue="REDMINE-655">
+          <action type="fix" dev="wemove" issue="REDMINE-655">
             PORTAL: Fixed chronicle teaser on default-page.psml. 
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-721">

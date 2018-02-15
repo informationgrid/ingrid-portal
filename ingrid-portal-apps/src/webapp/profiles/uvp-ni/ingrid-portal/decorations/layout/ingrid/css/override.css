@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -20,6 +20,11 @@
  * limitations under the Licence.
  * **************************************************#
  */
+ 
+body {
+  min-width: 310px;
+}
+
 a {
   color: #2C5C91;
 }
@@ -339,13 +344,7 @@ thead {
 }
 
 .footer__logo {
-    display: inline-block;
-    margin-right: 1.5rem;
-    vertical-align: middle;
-}
-
-.footer__logo {
-    width: 2.5rem;
+    width: 3.125rem;
 }
 
 .map_popup_cat {
@@ -444,12 +443,28 @@ thead {
   background-color: rgba(56, 170, 220, 1.0) !important;
 }
 
+.marker-cluster-10.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-10.light div{
+  background-color: rgba(56, 170, 220, 0.6) !important;
+}
+
 .marker-cluster-11 {
   background-color: rgba(48, 48, 48, 0.6) !important;
 }
 
 .marker-cluster-11 div{
   background-color: rgba(48, 48, 48, 1.0) !important;
+}
+
+.marker-cluster-11.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-11.light div{
+  background-color: rgba(48, 48, 48, 0.6) !important;
 }
 
 .marker-cluster-1314 {
@@ -460,12 +475,28 @@ thead {
   background-color: rgba(200, 60, 40, 1.0) !important;
 }
 
+.marker-cluster-1314.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-1314.light div {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
 .marker-cluster-dev-plan {
   background-color: rgba(110, 170, 40, 0.6) !important;
 }
 
 .marker-cluster-dev-plan div {
   background-color: rgba(110, 170, 40, 1.0) !important;
+}
+
+.marker-cluster-dev-plan.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-dev-plan.light div {
+  background-color: rgba(110, 170, 40, 0.6) !important;
 }
 
 .marker-cluster span {

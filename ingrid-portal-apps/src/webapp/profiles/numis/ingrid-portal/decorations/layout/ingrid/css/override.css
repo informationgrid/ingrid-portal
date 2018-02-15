@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -846,4 +846,23 @@ thead {
 
 #wrapper .category--padded {
     padding: 3.75rem 0;
+}
+
+@media screen and (min-width: 940px) {
+  .column--1-5-xl {
+    width: 20%;
+  }
+  
+  .column--2-5-xl {
+    width: 40%;
+  }
+
+  .column--3-5-xl {
+    width: 60%;
+  }
+
+  .column--4-5-xl {
+    width: 80%;
+  }
+
 }

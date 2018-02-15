@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -40,6 +40,8 @@ public class PasswordForgottenForm extends ActionForm {
 
     public static final String FIELD_EMAIL = "email";
 
+    public static final String FIELD_LOGIN = "login";
+
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -54,6 +56,7 @@ public class PasswordForgottenForm extends ActionForm {
         clearInput();
         
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
+        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN));
     }
 
     /**

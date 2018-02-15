@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -425,4 +425,16 @@ INPUT.qq-edit-filename.qq-editing {
 
 .qq-upload-status-text:empty {
   padding: 0;
+}
+
+label.qq-uploader-checkbox {
+  display: block;
+  cursor: auto;
+  padding: 5px 0;
+}
+
+label.qq-uploader-checkbox input[type=checkbox] {
+  position: relative;
+  vertical-align: middle;
+  bottom: 1px;
 }

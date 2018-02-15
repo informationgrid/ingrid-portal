@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -273,7 +273,7 @@ public class UploadCleanupJobTest {
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
         // run job
-        this.job.executeInternal(this.context); 
+        this.job.executeInternal(this.context);
 
         // test
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
@@ -716,6 +716,46 @@ public class UploadCleanupJobTest {
     }
 
     /**
+     * Test:
+     * - Delete empty directories
+     * @throws Exception
+     */
+    @Test
+    public void testDeleteEmptyDirectory() throws Exception {
+        // set up files
+        String unreferencedFile = "UnreferencedFile";
+        String unreferencedDir = Paths.get(this.getFilePath(PLUG_ID), "UnreferencedDir").toString();
+        this.createFile(unreferencedDir, unreferencedFile, DEFAULT_FILE_AGE);
+        String referencedFile = "ReferencedFile";
+        String referencedDir = Paths.get(this.getFilePath(PLUG_ID), "ReferencedDir").toString();
+        this.createFile(referencedDir, referencedFile, DEFAULT_FILE_AGE);
+
+        // create special directories
+        Files.createDirectories(Paths.get(DOCS_PATH.toString(), TRASH_PATH));
+        Files.createDirectories(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH));
+
+        // setup file references
+        List<FileReference> publishedRefs = new ArrayList<FileReference>();
+        publishedRefs.add(this.job.new FileReference(
+                referencedDir+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+        ));
+        List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
+        this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertTrue(this.fileExists(referencedDir, referencedFile));
+        assertTrue(this.dirExists(referencedDir));
+        assertFalse(this.fileExists(unreferencedDir, unreferencedFile));
+        assertFalse(this.dirExists(unreferencedDir));
+        assertTrue(this.dirExists(TRASH_PATH));
+        assertTrue(this.dirExists(ARCHIVE_PATH));
+        assertFalse(this.testAppender.hasIssues());
+    }
+
+    /**
      * Helper methods
      */
 
@@ -825,9 +865,8 @@ public class UploadCleanupJobTest {
      * @throws IOException
      */
     private void createFile(String path, String name, long ageInSeconds) throws IOException {
-        Files.createDirectories(Paths.get(DOCS_PATH.toString(), path));
-        Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, name));
-        this.setFileAge(createdPath, ageInSeconds);
+        Path basePath = Paths.get(DOCS_PATH.toString(), path);
+        this.createFileImpl(basePath, name, ageInSeconds);
         assertTrue(this.fileExists(path, name));
     }
 
@@ -839,24 +878,44 @@ public class UploadCleanupJobTest {
      * @throws IOException
      */
     private void createArchivedFile(String path, String name, long ageInSeconds) throws IOException {
-        Files.createDirectories(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH));
-        Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, name));
-        this.setFileAge(createdPath, ageInSeconds);
+        Path basePath = Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH, path);
+        this.createFileImpl(basePath, name, ageInSeconds);
         assertTrue(this.archivedFileExists(path, name));
     }
 
     /**
-     * Create an deleted test file
+     * Create a deleted test file
      * @param path
      * @param name
      * @param ageInSeconds
      * @throws IOException
      */
     private void createDeletedFile(String path, String name, long ageInSeconds) throws IOException {
-        Files.createDirectories(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH));
-        Path createdPath = Files.createFile(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH, name));
-        this.setFileAge(createdPath, ageInSeconds);
+        Path basePath = Paths.get(DOCS_PATH.toString(), TRASH_PATH, path);
+        this.createFileImpl(basePath, name, ageInSeconds);
         assertTrue(this.deletedFileExists(path, name));
+    }
+
+    /**
+     * Actually create a file
+     * @param path
+     * @param name
+     * @param ageInSeconds
+     * @throws IOException
+     */
+    private void createFileImpl(Path path, String name, long ageInSeconds) throws IOException {
+        Files.createDirectories(path);
+        Path createdPath = Files.createFile(Paths.get(path.toString(), name));
+        this.setFileAge(createdPath, ageInSeconds);
+    }
+
+    /**
+     * Check existence of a test directory
+     * @param path
+     * @throws IOException
+     */
+    private boolean dirExists(String path) throws IOException {
+        return Files.exists(Paths.get(DOCS_PATH.toString(), path));
     }
 
     /**
@@ -876,7 +935,7 @@ public class UploadCleanupJobTest {
      * @throws IOException
      */
     private boolean archivedFileExists(String path, String name) throws IOException {
-        return Files.exists(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, name));
+        return Files.exists(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH, path, name));
     }
 
     /**
@@ -886,6 +945,6 @@ public class UploadCleanupJobTest {
      * @throws IOException
      */
     private boolean deletedFileExists(String path, String name) throws IOException {
-        return Files.exists(Paths.get(DOCS_PATH.toString(), path, TRASH_PATH, name));
+        return Files.exists(Paths.get(DOCS_PATH.toString(), TRASH_PATH, path, name));
     }
 }

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -841,7 +841,14 @@ define([
              }*/
 
                 //cellCss = "slick-cell c" + i + (m.cssClass ? " " + m.cssClass : "");
-                cellCss = "slick-cell c" + i + " lr l" + i + " r" + Math.min(columnsLength - 1, i + colspan - 1) + (m.cssClass ? " " + m.cssClass : "");
+                cellCss = "slick-cell c" + i + " lr l" + i + " r" + Math.min(columnsLength - 1, i + colspan - 1);
+
+                var numDataRows = this.getDataLength();
+                // add column specific css unless it's the row move handler, which shall not be shown on virtual rows
+                if (m.cssClass && !(this.options.enableMoveRows && row >= numDataRows)) {
+                    cellCss += " " + m.cssClass;
+                }
+
                 if (row === this.activeRow && i === this.activeCell) {
                     cellCss += (" active");
                 }

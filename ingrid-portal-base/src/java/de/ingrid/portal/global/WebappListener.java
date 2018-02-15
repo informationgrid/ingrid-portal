@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -69,21 +69,32 @@ public class WebappListener implements ServletContextListener {
             flyway.setDataSource( ds );
             flyway.migrate();
         } catch (FlywayException e) {
-            // the database probably isn't setup for flyway
-            // find out which version we have to set for a baseline
-            String version = getVersionFromDB( ds );
-
-            if (version != null) {
-                flyway.setBaselineVersionAsString( version );
-                flyway.baseline();
-                flyway.migrate();
+            
+            String errorMsg = e.getMessage();
+            
+            if (errorMsg != null && errorMsg.contains( "without metadata table" )) {
+                log.warn( "DB migration failed for 'ingrid_portal'" );
+            
+                // the database probably isn't setup for flyway
+                // find out which version we have to set for a baseline
+                String version = getVersionFromDB( ds );
+    
+                if (version != null) {
+                    flyway.setBaselineVersionAsString( version );
+                    flyway.baseline();
+                    flyway.migrate();
+                } else {
+                    log.error( "Could not determine version of portal database for flyway baseline" );
+                    //flyway.clean();
+                    //flyway.migrate();
+                }
             } else {
-                log.error( "Could not determine version of portal database for flyway baseline" );
+                log.error( "Could not migrate database 'ingrid_portal'", e );
+                throw new RuntimeException( "Could not migrate database 'ingrid_portal'", e );
             }
 
         } catch (NamingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error( "Error migrating the database", e );
         }
     }
 

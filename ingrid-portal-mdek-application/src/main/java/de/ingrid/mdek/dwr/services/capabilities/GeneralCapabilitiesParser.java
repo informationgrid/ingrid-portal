@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -253,8 +253,14 @@ public class GeneralCapabilitiesParser {
             
             if (entryId != null) {
                 value = syslistCache.getValueFromListId( listId, entryId, true );
+                if (value == null) {
+                    log.warn( "Version could not be mapped!" );
+                }
             }
-            mappedVersionList.add( value );
+            
+            if (value != null) {
+                mappedVersionList.add( value );
+            }
         }
         return mappedVersionList;
     }
@@ -266,7 +272,11 @@ public class GeneralCapabilitiesParser {
             for (int i = 0; i < orNodes.getLength(); i++) {
                 UrlBean url = new UrlBean();
                 String link = xPathUtils.getString(orNodes.item(i), "@xlink:href");
-                if (link != null) url.setUrl(link);
+                
+                // do not add link if there's none (#781)
+                if (link == null || link.trim().equals( "" )) continue;
+                
+                url.setUrl(link);
                 String type = xPathUtils.getString(orNodes.item(i), "@xlink:type");
                 if (type != null) url.setDatatype(type);
                 
@@ -403,6 +413,7 @@ public class GeneralCapabilitiesParser {
         IngridDocument response = connectionFacade.getMdekCallerQuery().queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, "");
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         if (result != null) {
+            @SuppressWarnings("unchecked")
             List<IngridDocument> addresses = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
             
             // add the found uuid to the address object which marks it as found
@@ -431,6 +442,7 @@ public class GeneralCapabilitiesParser {
         IngridDocument response = connectionFacade.getMdekCallerQuery().queryHQLToMap(connectionFacade.getCurrentPlugId(), qString, null, "");
         IngridDocument result = MdekUtils.getResultFromResponse(response);
         if (result != null) {
+            @SuppressWarnings("unchecked")
             List<IngridDocument> objects = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
             if (objects != null && objects.size() > 0) {
                 resultBean.setRef1ObjectIdentifier( id );

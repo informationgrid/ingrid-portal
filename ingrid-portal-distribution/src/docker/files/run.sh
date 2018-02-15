@@ -2,7 +2,7 @@
 # **************************************************-
 # InGrid Portal Distribution
 # ==================================================
-# Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+# Copyright (C) 2014 - 2018 wemove digital solutions GmbH
 # ==================================================
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
@@ -37,6 +37,15 @@ if [ "$PORTAL_PROFILE" ]; then
     if [ ! -d "$PROFILES_DIR/$PORTAL_PROFILE" ]; then
         echo >&2 "PROFILE DIRECTORY NOT FOUND: '$PROFILES_DIR/$PORTAL_PROFILE'"
         exit 1
+    fi
+
+    # UVP-NI extends UVP
+    if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
+        echo "Copying profile files from parent (uvp) into portal directories ..."
+        cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+        cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
+        cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
     fi
 
     echo "Copying profile files into portal directories ..."

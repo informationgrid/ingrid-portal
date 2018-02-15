@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -79,6 +79,8 @@ define([
                 var self = this;
                 this.domNode = construct.create("div");
 
+                this.prepareContextMenu();
+
                 var addWidgets = require("ingrid/IgeActions");
                 addWidgets.additionalFieldWidgets.push(this);
 
@@ -140,6 +142,51 @@ define([
                 this.handleToggledState();
 
                 construct.place(clearFixDiv, "contentFrameBodyObject", "after");
+            },
+
+            /**
+             * Add a new context menu type for the document grid. This adds a new entry to set the expire date for the selected rows.
+             */
+            prepareContextMenu: function() {
+                var menu = require("ingrid/menu");
+
+                var contextMenu = menu.initContextMenu( { contextMenu: "EXPIRED_GRID", moveRows: true } );
+                contextMenu.addChild(new require("dijit/MenuSeparator")());
+                var expireMenu = new require("dijit/MenuItem")({
+                    id: "menuExpireDateClicked_EXPIRED_GRID",
+                    label: message.get('contextmenu.table.expireClicked'),
+                    onClick: function() {
+                        dialog.showPage('Datum wählen', 'dialogs/mdek_select_expiry_date_dialog.jsp', 500, 240, false, {
+                            selectedRows: clickedSlickGrid.getSelectedRows(),
+                            gridId: clickedSlickGrid.id
+                        });
+                    }
+                });
+                contextMenu.addChild(expireMenu);
+
+                aspect.after(contextMenu, "_openMyself", function(result, args) {
+                    var e = args[0];
+                    var findGrid = function(element) {
+                        while (element) {
+                            if (domClass.contains(element, "ui-widget")) {
+                                return element.id;
+                            }
+                            element = element.parentNode;
+                        }
+                    };
+
+                    // all items have to be disabled if user has no permission if hierarchy page is used!
+                    var isHierarchyPage = registry.byId("stackContainer").selectedChildWidget.id == "pageHierarchy";
+
+                    if (!isHierarchyPage || currentUdk.writePermission) {
+                        var gridId = findGrid(e.target);
+                        var nothingIsSelected = UtilGrid.getSelectedRowIndexes(gridId).length === 0;
+
+                         if (nothingIsSelected) {
+                            expireMenu.set("disabled", true);
+                         }
+                    }
+                });
             },
 
             attr: function(type, value) {
@@ -273,7 +320,7 @@ define([
 
                 var id = "technicalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: message.get("uvp.form.phase1.technicalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.technicalDocs"), help: message.get("uvp.form.phase1.technicalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
@@ -285,7 +332,7 @@ define([
                  */
                 id = "applicationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: message.get("uvp.form.phase1.applicationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.applicationDocs"), help: message.get("uvp.form.phase1.applicationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "applicationDocs", field: registry.byId(id), isDocTable: true });
@@ -297,7 +344,7 @@ define([
                  */
                 id = "reportsRecommendationsDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: message.get("uvp.form.phase1.reportsRecommendationsDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.reportsRecommendationsDocs"), help: message.get("uvp.form.phase1.reportsRecommendationsDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id), isDocTable: true });
@@ -307,7 +354,7 @@ define([
                  */
                 id = "moreDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: message.get("uvp.form.phase1.moreDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase1.moreDocs"), help: message.get("uvp.form.phase1.moreDocs.helpMessage"), isMandatory: false, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id), isDocTable: true });
@@ -372,7 +419,7 @@ define([
                  */
                 var id = "considerationDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: message.get("uvp.form.phase2.considerationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase2.considerationDocs"), help: message.get("uvp.form.phase2.considerationDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "considerationDocs", field: registry.byId(id), isDocTable: true });
@@ -426,7 +473,7 @@ define([
                  */
                 id = "approvalDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: message.get("uvp.form.phase3.approvalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.approvalDocs"), help: message.get("uvp.form.phase3.approvalDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "approvalDocs", field: registry.byId(id), isDocTable: true });
@@ -436,7 +483,7 @@ define([
                  */
                 id = "designDocs_" + counter;
                 newFieldsToDirtyCheck.push(id);
-                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: message.get("uvp.form.phase3.designDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%" },
+                creator.createDomDataGrid({ id: id, name: message.get("uvp.form.phase3.designDocs"), help: message.get("uvp.form.phase3.designDocs.helpMessage"), visible: "required showOnlyExpanded", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "designDocs", field: registry.byId(id), isDocTable: true });
@@ -462,11 +509,11 @@ define([
 
             getDocTableStructure: function() {
                 return [
-                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '350px', editable: true },
+                    { field: 'label', name: message.get("uvp.form.table.docs.title") + "*", width: '310px', editable: true },
                     { field: 'link', name: message.get("uvp.form.table.docs.link") + "*", width: '260px', editable: false, formatter: Formatters.LinkCellFormatter },
                     // { field: 'type', name: message.get("uvp.form.table.docs.type"), width: '50px', editable: true }, // do not display type (#1081)
                     // { field: 'size', name: message.get("uvp.form.table.docs.size") + "*", width: '60px', editable: true, formatter: Formatters.MegaBytesCellFormatter },
-                    { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, editable: true, formatter: Formatters.DateCellFormatter }
+                    { field: 'expires', name: message.get("uvp.form.table.docs.expires"), width: '78px', type: Editors.DateCellEditorToString, minDate: new Date(), editable: true, formatter: Formatters.DateCellFormatter }
                 ];
             },
 
@@ -618,13 +665,16 @@ define([
             addUploadLink: function(tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
+                    // upload base path
+                    var basePath = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
+
                     // create uploader instance
                     var uploader = new UploadWidget({
                         uploadUrl: this.uploadUrl
                     });
 
                     // upload handler
-                    var handleUploads = lang.hitch(this, function(uploads) {
+                    var handleUploads = lang.hitch(this, function(uploads, basePath) {
                         // get existing table data
                         var rows = table.data;
 
@@ -638,7 +688,7 @@ define([
                             var uri = row.link;
                             if (uri && uploadMap[uri]) {
                                 var upload = uploadMap[uri];
-                                row = getRowData(row, upload);
+                                row = getRowData(row, upload, basePath);
                                 delete uploadMap[uri];
                             }
                         });
@@ -654,14 +704,14 @@ define([
                             if (!uri) {
                                 var upload = uploads.shift();
                                 if (upload) {
-                                    row = getRowData(row, upload);
+                                    row = getRowData(row, upload, basePath);
                                 }
                             }
                         });
 
                         // add remaining uploads
                         array.forEach(uploads, function(upload) {
-                            rows.push(getRowData({}, upload));
+                            rows.push(getRowData({}, upload, basePath));
                         });
 
                         // store changes
@@ -699,11 +749,12 @@ define([
                         return files;
                     };
 
-                    var getRowData = function(row, data) {
+                    var getRowData = function(row, data, basePath) {
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
-                            var lastDotPos = file.lastIndexOf(".");
-                            var name = file.substring(file.lastIndexOf('/')+1,
+                            var fileRel = file.substring(basePath.length, file.length);
+                            var lastDotPos = fileRel.lastIndexOf(".");
+                            var name = fileRel.substring(0,
                                     lastDotPos === -1 ? file.length : lastDotPos);
                             row.label = decodeURI(name);
                         }
@@ -739,10 +790,9 @@ define([
                             cursor: "pointer"
                         },
                         onclick: lang.hitch(this, function() {
-                            var path = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
                             var files = getFiles(this.phases, true);
-                            uploader.open(path, files).then(lang.hitch(this, function(uploads) {
-                                handleUploads(uploads);
+                            uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
+                                handleUploads(uploads, basePath);
                             }));
                         })
                     }, linkContainer);

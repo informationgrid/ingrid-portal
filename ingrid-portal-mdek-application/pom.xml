@@ -7,14 +7,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ingrid-portal-mdek-application</artifactId>
-    <version>5.0.0-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>InGrid Portal MDEK Application</name>
     <scm>
         <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</connection>
         <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
+    <properties>
+        <sonar.exclusions>src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*</sonar.exclusions>
+    </properties>
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
         <resources>
@@ -239,7 +241,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
-            <version>3.6.1</version>
+            <version>4.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
@@ -619,12 +621,12 @@
                 <dependency>
                     <groupId>org.apache.portals.jetspeed-2</groupId>
                     <artifactId>jetspeed-api</artifactId>
-                    <version>2.3.0</version>
+                    <version>${org.apache.portals.jetspeed.version}</version>
                 </dependency>
                 <dependency>
                     <groupId>org.apache.portals.jetspeed-2</groupId>
                     <artifactId>jetspeed-commons</artifactId>
-                    <version>2.3.0</version>
+                    <version>${org.apache.portals.jetspeed.version}</version>
                 </dependency>
             </dependencies>
             <build>
@@ -698,6 +700,30 @@
             </build>
         </profile>
         <profile>
+            <id>profile-lgv</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>lgv</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <webApp>
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/lgv_hamburg/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
             <id>linux-optimization</id>
             <activation>
                 <os>
@@ -754,19 +780,24 @@
                                     <target>
                                         <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
                                         <condition property="foundRepeatable">
-                                            <resourcecount count="0" when="greater">
-                                                <fileset dir="src/main/resources/db/migration">
-                                                    <include name="**/R*.sql" />
-                                                </fileset>
-                                            </resourcecount>
+                                            <and>
+                                                <resourcecount count="0" when="greater">
+                                                    <fileset dir="src/main/resources/db/migration">
+                                                        <include name="**/R*.sql" />
+                                                    </fileset>
+                                                </resourcecount>
+                                                <not>
+                                                    <contains string="${project.version}" substring="-SNAPSHOT" />
+                                                </not>
+                                            </and>
                                         </condition>
                                         <if>
                                             <equals arg1="${foundRepeatable}" arg2="true" />
                                             <then>
-                                                <fail message="Flyway: You must not have repeatable SQL files!" />
+                                                <fail message="Flyway: You must not have repeatable SQL files during a release!" />
                                             </then>
                                             <else>
-                                                <echo message="Flyway: No repeatable SQL found. OK!" />
+                                                <echo message="Flyway: No release version or no repeatable SQL found. OK!" />
                                             </else>
                                         </if>
                                     </target>

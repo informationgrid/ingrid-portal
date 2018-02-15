@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -153,6 +153,7 @@ public class Api {
      * @param size The size of the document in bytes
      * @param replace Boolean whether to replace an existing document or not (if false, an error will be returned, if
      *            the document exists)
+     * @param extrat Boolean whether to extract archives or not
      * @param fileInputStream The file data
      * @param partsTotal The number of parts of the document (only for partial upload)
      * @param partsIndex The index of the current part of the document (only for partial upload)
@@ -170,6 +171,7 @@ public class Api {
             @FormDataParam("id") String id,
             @FormDataParam("size") Integer size,
             @FormDataParam("replace") boolean replace,
+            @FormDataParam("extract") boolean extract,
             @FormDataParam("file") InputStream fileInputStream,
             @FormDataParam("parts_total") Integer partsTotal,
             @FormDataParam("parts_index") Integer partsIndex,
@@ -188,8 +190,8 @@ public class Api {
 
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
-            StorageItem item = this.storage.getInfo(path, file);
-            throw new ConflictException("The file already exists.", item);
+            StorageItem[] items = { this.storage.getInfo(path, file) };
+            throw new ConflictException("The file already exists.", items, items[0].getNextName());
         }
 
         StorageItem[] files = new StorageItem[0];
@@ -200,7 +202,7 @@ public class Api {
         }
         else {
             // store file
-            files = this.storage.write(path, file, fileInputStream, size, replace, false);
+            files = this.storage.write(path, file, fileInputStream, size, replace, extract);
         }
         return this.createUploadResponse(files);
     }
@@ -214,6 +216,7 @@ public class Api {
      * @param size The size of the document in bytes
      * @param replace Boolean whether to replace an existing document or not (if false, an error will be returned, if
      *            the document exists)
+     * @param extrat Boolean whether to extract archives or not
      * @param partsTotal The number of parts of the document
      * @return Response
      * @throws Exception
@@ -227,6 +230,7 @@ public class Api {
             @FormParam("id") String id,
             @FormParam("size") Integer size,
             @FormParam("replace") boolean replace,
+            @FormParam("extract") boolean extract,
             @FormParam("parts_total") Integer partsTotal
             ) throws Exception {
         // check permission
@@ -240,7 +244,7 @@ public class Api {
         }
 
         // store files
-        StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, false);
+        StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, extract);
         return this.createUploadResponse(files);
     }
 

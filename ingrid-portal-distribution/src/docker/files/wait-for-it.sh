@@ -1,8 +1,10 @@
+#!/usr/bin/env bash
+
 ###
 # **************************************************-
 # InGrid Portal Distribution
 # ==================================================
-# Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+# Copyright (C) 2014 - 2018 wemove digital solutions GmbH
 # ==================================================
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
@@ -20,7 +22,6 @@
 # limitations under the Licence.
 # **************************************************#
 ###
-#!/usr/bin/env bash
 #   Use this script to test if a given TCP host/port are available
 
 cmdname=$(basename $0)

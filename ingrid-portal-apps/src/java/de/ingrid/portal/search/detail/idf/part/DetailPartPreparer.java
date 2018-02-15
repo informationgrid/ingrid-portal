@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -42,6 +42,7 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
@@ -281,13 +282,16 @@ public class DetailPartPreparer {
             // transform with code list ?
             if(codeListId != null){
                 String tmpValue = getValueFromCodeList(codeListId, value);
-                if (tmpValue.length() > 0) {
+                if (tmpValue.length() == 0) {
+                    tmpValue = getValueFromCodeList(codeListId, value, true);
+                }
+                if(tmpValue.length() > 0) {
                     value = tmpValue;
                 }
             }
             if (!list.contains( value )) {
-                list.add(value);                        
-            }            
+                list.add(value);
+            }
         }
         sortList(list);
         return list;
@@ -326,6 +330,117 @@ public class DetailPartPreparer {
         return XPathUtils.getNodeList(node, xpathExpression);
     }
     
+    public HashMap getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, ArrayList<String> xpathSubEntryList){
+        return getTreeFromXPathBy(xpathExpression, xpathSubEntry, xpathSubEntryList, this.rootNode);
+    }
+    
+    public HashMap getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, ArrayList<String> xpathSubEntryList, Node node){
+        HashMap root = new HashMap();
+        root.put("type", "root");
+        NodeList tmpNodelist =  XPathUtils.getNodeList(node, xpathExpression);
+        boolean createNewFolder = false;
+        String xpathOldSubEntryValue = "";
+        if(tmpNodelist != null) {
+            for (int i=0; i<tmpNodelist.getLength();i++){
+                Node tmpNode = tmpNodelist.item(i);
+                if(tmpNode != null) {
+                    HashMap leaf = new HashMap();
+                    leaf.put("type", "leaf");
+                    for (String entry : xpathSubEntryList) {
+                        String value = getValueFromXPath(entry, null, tmpNode);
+                        if(value != null) {
+                            leaf.put(entry, value);
+                        }
+                    }
+                     // Create tree structure
+                    String xpathSubEntryValue = getValueFromXPath(xpathSubEntry, null, tmpNode);
+                    if(xpathSubEntryValue != null) {
+                        if(xpathSubEntryValue.startsWith("http")) {
+                            ArrayList rootChildren = null;
+                            if(root.get("children") != null) {
+                                rootChildren = (ArrayList) root.get("children");
+                            } else {
+                                rootChildren = new ArrayList<HashMap>();
+                            }
+                           rootChildren.add(leaf);
+                           createNewFolder = true;
+                        } else {
+                            String[] paths = xpathSubEntryValue.split("/");
+                            String[] pathsOld = xpathOldSubEntryValue.split("/");
+                            if(paths != null) {
+                                int counter = 0;
+                                HashMap folder = root;
+                                HashMap parentFolder = null;
+                                while (counter != paths.length) {
+                                    String path = paths[counter];
+                                    // Remove directory path in label
+                                    if(leaf != null) {
+                                        if(leaf.get("label") != null) {
+                                            String label = (String) leaf.get("label");
+                                            if(label != null && label.indexOf("/") > -1 && path.length() > 0) {
+                                                label = label.replaceFirst(getDecodeValue(path) + "/", "");
+                                            }
+                                            leaf.put("label", label);
+                                        }
+                                    }
+                                    counter++;
+                                    if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
+                                        if(path.length() != 0) {
+                                            ArrayList<HashMap> children = null;
+                                            if(folder.get("children") != null) {
+                                                children = (ArrayList) folder.get("children");
+                                            } else {
+                                                children = new ArrayList<HashMap>();
+                                            }
+                                            HashMap subMap = null;
+                                            for (int j=children.size()-1; j>=0;j--){
+                                                HashMap tmpMap = children.get(j);
+                                                if(tmpMap.get("type").equals("folder") && tmpMap.get("label").equals(path)) {
+                                                    subMap = tmpMap;
+                                                    break;
+                                                }
+                                            }
+                                            if(counter != paths.length) {
+                                                if(subMap != null) {
+                                                    if(counter < pathsOld.length && !path.equals(pathsOld[counter-1])) {
+                                                        if(parentFolder != null) {
+                                                            if(parentFolder.get("children") != null) {
+                                                                children = (ArrayList) parentFolder.get("children");
+                                                                createNewFolder = true;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        parentFolder = subMap;
+                                                    }
+                                                }
+                                                if(subMap == null || createNewFolder) {
+                                                    subMap = new HashMap();
+                                                    subMap.put("type", "folder");
+                                                    subMap.put("label", path);
+                                                    children.add(subMap);
+                                                    folder.put("children", children);
+                                                    createNewFolder = false;
+                                                }
+                                            } else {
+                                                // Add leaf to folder
+                                                subMap = leaf;
+                                                children.add(subMap);
+                                                folder.put("children", children);
+                                            }
+                                            folder = subMap;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    xpathOldSubEntryValue = xpathSubEntryValue;
+                }
+            }
+        }
+        return root;
+    }
+
     public String getValueFromNodeListDependOnValue(NodeList nodeList, String xpathExpression, String xpathExpressionDependOn, String dependOn){
         String value = "";
         if(nodeList != null){
@@ -431,12 +546,16 @@ public class DetailPartPreparer {
     }
     
     public String getValueFromCodeList(String codelist, String value){
+        return getValueFromCodeList(codelist, value, false);
+    }
+
+    public String getValueFromCodeList(String codelist, String value, boolean checkDataId){
         if(value != null){
-            value = sysCodeList.getNameByCodeListValue(codelist, value);
+            value = sysCodeList.getNameByCodeListValue(codelist, value, checkDataId);
         }
         return value;
     }
-    
+
     public String getNameFromCodeList(String codelist, String value){
         if(value != null){
             value = sysCodeList.getName(codelist, value);

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -2093,7 +2093,6 @@ public class UtilsFacete {
             for(IngridFacet facet : config){
                 if(facet.getId().equals("topic")){
                     ArrayList<IngridFacet> list = facet.getFacets();
-                    facet.setQueryType("OR");
                     facet.setSort("SORT_BY_VALUE_DESC");
                     CodeListService codelistService = CodeListServiceFactory.instance();
                     ResourceBundle bundle = ResourceBundle.getBundle("de.ingrid.portal.resources.EnvironmentSearchResources", Locale.GERMAN);
@@ -2123,7 +2122,6 @@ public class UtilsFacete {
                             // Partner restriction (set tmpFacet.setParentHidden(true)) 
                             for(IngridPartner partner : partners){
                                 if(partner.getIdent().equals(restrictPartner)){
-                                    facet.setQueryType("OR");
                                     facet.setSort("SORT_BY_VALUE_DESC");
                                     List<IngridProvider> providers = UtilsDB.getProvidersFromPartnerKey(partner.getIdent());
                                     ArrayList<IngridFacet> listProviders = null;

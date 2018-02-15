@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Mdek
  * ==================================================
- * Copyright (C) 2014 - 2017 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -234,38 +234,41 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 	 *       the users for the first catalog, the second list the users for the second catalog, ...
 	 */
     private Map<String, List> buildConnectedCatalogList() {
-    	Map<String,List> dataContainer = new HashMap<String,List>();
-    	List<Map<String, String>> catalogList = new ArrayList<Map<String,String>>();
-    	List<List> userLists = new ArrayList<List>();
-    	
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
 
-    	// query all connected iPlugs/catalogs
-    	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
-        	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
-        	List<String> userList = new ArrayList<String>();
-        	
-        	// get users that belong to the iPlug (are mdek user)
-        	for (UserData userData : userDataList) {
-				userList.add('"' + userData.getPortalLogin() + '"');
-			}
-        	
-        	if (log.isDebugEnabled()) {
-        		log.debug("Total users found: " + userList.size() + " ("+plugId+")");
-        	}
-        	
-        	// sort users
-        	Collections.sort(userList, String.CASE_INSENSITIVE_ORDER);
-        	userLists.add(userList);        	
-        	
-        	if (userDataList != null && userDataList.size() != 0) {
-        		HashMap<String, String> catalogData = new HashMap<String, String>();
-        		
-        		UserData userData = userDataList.get(0);
-        		
-        		IMdekCallerCatalog mdekCallerCatalog = MdekCallerCatalog.getInstance();
+    	// query all connected iPlugs and return catalog info with users of catalog (only if catalog is already mapped in portal) ! 
 
+    	// all catalogs mapped
+        List<Map<String, String>> catalogList = new ArrayList<Map<String,String>>();
+        // all users of according catalog
+        List<List> userLists = new ArrayList<List>();
+
+        // query all connected iPlugs
+    	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
+    	    // fetch mdek users of this iplug
+        	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
+        	
+            // only process iPlug if we have mapped portal users (mdek database)
+        	if (userDataList != null && userDataList.size() != 0) {
+
+                // get users that belong to the iPlug (are mdek user)
+                List<String> userList = new ArrayList<String>();
+                for (UserData userData : userDataList) {
+                    userList.add('"' + userData.getPortalLogin() + '"');
+                }
+                
+                if (log.isDebugEnabled()) {
+                    log.debug("Total users found: " + userList.size() + " ("+plugId+")");
+                }
+                
+                // sort users and add to user list
+                Collections.sort(userList, String.CASE_INSENSITIVE_ORDER);
+                userLists.add(userList);            
+
+                // then get catalog info
+        		UserData userData = userDataList.get(0);       		
+        		IMdekCallerCatalog mdekCallerCatalog = MdekCallerCatalog.getInstance();
         		IngridDocument cat = mdekCallerCatalog.fetchCatalog(plugId, userData.getAddressUuid());
 
         		String catName = "";
@@ -277,7 +280,8 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
             		catName = "ERROR, see log !";
         		}
 
-    			// Display the catalogData
+    			// and add to mapped catalogs
+                HashMap<String, String> catalogData = new HashMap<String, String>();
         		catalogData.put("plugId", plugId);
         		catalogData.put("catName", catName);
         		catalogList.add(catalogData);
@@ -288,6 +292,8 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	HibernateUtil.closeSession();
     	
     	// put all necessary data in another hashmap
+    	// NOTICE: Number of entries in lists have to be the same !
+        Map<String,List> dataContainer = new HashMap<String,List>();
     	dataContainer.put(USER_OF_CATALOG, userLists);
     	dataContainer.put(CATALOG, catalogList);
     	return dataContainer;
