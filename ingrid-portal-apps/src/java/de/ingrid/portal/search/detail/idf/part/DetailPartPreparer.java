@@ -356,12 +356,10 @@ public class DetailPartPreparer {
                     String xpathSubEntryValue = getValueFromXPath(xpathSubEntry, null, tmpNode);
                     if(xpathSubEntryValue != null) {
                         if(xpathSubEntryValue.startsWith("http")) {
-                            ArrayList rootChildren = null;
-                            if(root.get("children") != null) {
-                                rootChildren = (ArrayList) root.get("children");
-                            } else {
-                                rootChildren = new ArrayList<HashMap>();
-                            }
+                           if (root.get("children") == null) {
+                               root.put( "children", new ArrayList<HashMap>() );
+                           }
+                           ArrayList rootChildren = (ArrayList) root.get("children");
                            rootChildren.add(leaf);
                            createNewFolder = true;
                         } else {
@@ -386,12 +384,11 @@ public class DetailPartPreparer {
                                     counter++;
                                     if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
                                         if(path.length() != 0) {
-                                            ArrayList<HashMap> children = null;
-                                            if(folder.get("children") != null) {
-                                                children = (ArrayList) folder.get("children");
-                                            } else {
-                                                children = new ArrayList<HashMap>();
+                                            if(folder.get("children") == null) {
+                                                folder.put( "children", new ArrayList<HashMap>() );
                                             }
+                                            ArrayList<HashMap> children = (ArrayList) folder.get("children");
+                                            
                                             HashMap subMap = null;
                                             for (int j=children.size()-1; j>=0;j--){
                                                 HashMap tmpMap = children.get(j);
