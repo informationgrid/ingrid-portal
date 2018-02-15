@@ -39,18 +39,4 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <repository>
-      <id>de.ingrid.all</id>
-      <name>InGrid Repo Maven</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
-    </repository>
-<!--
-    <repository>
-      <id>maven.repo</id>
-      <name>Maven Repo Default</name>
-      <url>http://maven.jahia.org/maven2</url>
-    </repository>
--->
-  </repositories>
 </project>

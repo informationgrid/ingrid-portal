@@ -179,15 +179,6 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
-    <repository>
-      <snapshots />
-      <id>de.ingrid.all</id>
-      <name>Maven Repo InGrid</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
-    </repository>
-  </repositories>
   <profiles>
     <profile>
       <id>docker</id>
