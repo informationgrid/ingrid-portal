@@ -95,6 +95,7 @@ public class MdekMapper implements DataMapperInterface {
         boolean isOpenData = "Y".equals(obj.get(MdekKeys.IS_OPEN_DATA)) ? true : false;
 
         // General
+        mdekObj.setPublicationDate(convertTimestampToDate((String) obj.get(MdekKeys.PUBLICATION_DATE)));
         mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
         mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
         mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
@@ -774,6 +775,7 @@ public class MdekMapper implements DataMapperInterface {
 
         // General
         udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
+        udkObj.put(MdekKeys.PUBLICATION_DATE, data.getPublicationDate());
         udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
         udkObj.put(MdekKeys.UUID, data.getUuid());
         udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());

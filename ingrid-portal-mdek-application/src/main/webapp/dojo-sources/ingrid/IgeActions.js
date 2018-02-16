@@ -687,6 +687,10 @@ define([
             // Construct an MdekDataBean from the available data
             var nodeData = this._getData();
 
+            if (msg.publicationDate) {
+                nodeData.publicationDate = msg.publicationDate;
+            }
+
             var forcePubCond = false;
             if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
                 forcePubCond = msg.forcePublicationCondition;
@@ -1739,6 +1743,12 @@ define([
             registry.byId("objectClass").attr("value", "Class" + nodeData.objectClass, true);
 
             var workStateStr = message.get("general.workState." + nodeData.workState);
+
+            // TODO: check if publication date is in the future
+            if (nodeData.publicationDate) {
+                workStateStr = "Will be published";
+            }
+
             dom.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr + "<br>(" + message.get("general.state.markedDeleted") + ")" : workStateStr);
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
