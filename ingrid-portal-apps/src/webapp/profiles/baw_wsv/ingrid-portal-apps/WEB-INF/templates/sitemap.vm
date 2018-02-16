@@ -1,0 +1,376 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+<h4>$MESSAGES.getString("sitemap.area.main")</h4>
+<ul class="link-list">
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/main-search.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.tooltip")">
+        <svg class="icon">
+            <use xlink:href="#internal-link">
+        </svg>
+        $MESSAGES.getString("sitemap.area.main.search")</a>
+        <p>$MESSAGES.getString("sitemap.area.main.search.description")</p>
+    </li>
+    #if($enableMeasure)
+        <li>
+            #set ($link = $renderResponse.encodeURL("/portal/main-measures.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.measures.tooltip")">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+                $MESSAGES.getString("sitemap.area.main.measures")
+            </a>
+            <p>$MESSAGES.getString("sitemap.area.main.measures.description")</p>
+        </li>
+    #end
+    #if ($enableSearchCatalog)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/search-catalog/search-catalog-hierarchy.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.main.search.catalogs.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.main.search.catalogs")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.main.search.catalogs.description")</p>
+    </li>
+    #end
+    #if($enableMaps)
+        <li>
+        #set ($link = $renderResponse.encodeURL("/portal/main-maps.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.maps.tooltip")">
+                <svg class="icon"><use xlink:href="#internal-link"></svg>
+                $MESSAGES.getString("sitemap.area.main.maps")
+            </a>
+            <p>$MESSAGES.getString("sitemap.area.main.maps.description")</p>
+        </li>
+    #end
+    #if($enableChronicle)
+        <li>
+            #set ($link = $renderResponse.encodeURL("/portal/main-chronicle.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.chronicle.tooltip")">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+                $MESSAGES.getString("sitemap.area.main.chronicle")
+            </a>
+            $MESSAGES.resetMsgParams()
+            $MESSAGES.setMsgParam($MESSAGES.getString('common.tooltip.link.extern'))
+            <p>$MESSAGES.getStringWithMsgParams("sitemap.area.main.chronicle.description")</p>
+        </li>
+    #end
+    #if ($enableApplication)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.application.main.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.application.main")
+        </a>
+        <p>$MESSAGES.getString("sitemap.application.main.description")</p>
+        <div class="search-result--nested">
+<!--
+            <ul>
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/main-maps.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.extern1.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern1")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern1.description")</p>
+                </li>
+                <li>
+                    #set ($link = "/terraCatalog/Start.do")
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.extern2.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern2")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern2.description")</p>
+                </li>
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/application/main-application-0.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.extern3.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern3")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern3.description")</p>
+                </li>
+                <li>
+                    #set ($link = "https://atlas.wsv.res.bund.de/visualist/")
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.0.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.0")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.0.description")</p>
+                </li>
+                <li>
+                    #set ($link = "https://atlas.wsv.res.bund.de/bwastr-locator-qs/client/")
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.1.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.1")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.1.description")</p>
+                </li>
+                <li>
+                    #set ($link = "https://atlas.wsv.res.bund.de/wadaba/map/")
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.2.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.2")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.2.description")</p>
+                </li>
+                <li>
+                    #set ($link = "https://atlas.wsv.res.bund.de/wms2go/map/")
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.extern4.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern4")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern4.description")</p>
+                </li>
+                <li>
+                    #set ($link = "https://atlas.wsv.bund.de/clients/desktop")
+                    <a target="_blank" href="$link" title="WSV WMS Client")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        WSV WMS Client
+                    </a>
+                    <p>Die Webanwendung visualisiert eine Auswahl der Geodatendienste der WSV im Internet.</p>
+                </li>
+                <li>
+                    #set ($link = "http://routing.wsv.bund.de/")
+                    <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern6.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern6")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern6.description")</p>
+                </li>
+            </ul>
+-->
+            <ul>
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.main2.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.main2")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.main2.description")</p>
+                </li>
+            </ul>
+        </div>
+    </li>
+<!--
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/application/main-application.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.application.main2.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.application.main2")
+        </a>
+        <p>$MESSAGES.getString("sitemap.application.main2.description")</p>
+        <div class="search-result--nested">
+            <ul>
+                <li>
+                    #set ($link = "/ingrid-portal-apps/cms/media/pdf/KartenLinkGenerator2.0.xls")
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.extern7.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern7")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern7.description")</p>
+                </li>
+                <li>
+                    #set ($link = "http://wsvmapserv.wsv.bvbs.bund.de/ol_bwastr/index.html?x=3832460,12&y=5668140,45&epsg=31467&zoom=16")
+                    <a target="_blank" href="$link" title="$MESSAGES.getString("sitemap.application.extern8.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern8")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern8.description")</p>
+                </li>
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/ingrid-portal-apps/cms/media/pdf/Online-Excel-BWaStr-Locator.xls"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.application.extern9.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.application.extern9")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.application.extern9.description")</p>
+                </li>
+            </ul>
+        </div>
+    </li>
+-->
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/cms/cms-1.psml"))
+        <a href="$link" title="$MESSAGES.getString("Zu den Anleitungen und Tutorials im GeoPortal.WSV")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.default.page.manual")
+        </a>
+        <p>$MESSAGES.getString("Anleitungen und Tutorials im GeoPortal.WSV")</p>
+    </li>
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/cms/cms-2.psml"))
+        <a href="$link" title="$MESSAGES.getString("Informationsveranstaltungen zum GeoPortal.WSV")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("Veranstaltungen")
+        </a>
+        <p>$MESSAGES.getString("Informationsveranstaltungen zum GeoPortal.WSV")</p>
+    </li>
+    #end
+    #if($enableAbout)
+        <li>
+            #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.about.tooltip")">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+                $MESSAGES.getString("sitemap.area.main.about")
+            </a>
+            <p>$MESSAGES.getString("sitemap.area.main.about.description")</p>
+            <div class="search-result--nested">
+            <ul>
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/main-about.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.portrait.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.area.main.portrait")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.area.main.portrait.description")</p>
+                </li>
+                #if($enablePartner)
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.provider.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.area.main.provider")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
+                </li>
+                #end
+                #if($enableSources)
+                <li>
+                    #set ($link = $renderResponse.encodeURL("/portal/main-about-data-source.psml"))
+                    <a href="$link" title="$MESSAGES.getString("sitemap.area.main.datasource.tooltip")">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        $MESSAGES.getString("sitemap.area.main.datasource")
+                    </a>
+                    <p>$MESSAGES.getString("sitemap.area.main.datasource.description")</p>
+                </li>
+                #end
+            </ul>
+            </div>
+        </li>
+    #end
+    #if(!$enableAbout && $enablePartner)
+        <li>
+            #set ($link = $renderResponse.encodeURL("/portal/main-about-partner.psml"))
+            <a href="$link" title="$MESSAGES.getString("sitemap.area.main.provider.tooltip")">
+                <svg class="icon">
+                    <use xlink:href="#internal-link">
+                </svg>
+                $MESSAGES.getString("sitemap.area.main.provider")
+            </a>
+            <p>$MESSAGES.getString("sitemap.area.main.provider.description")</p>
+        </li>
+     #end
+</ul>
+<h4>$MESSAGES.getString("sitemap.area.service")</h4>
+<ul class="link-list">
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/service-myportal.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.service.myportal.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.service.myportal")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.service.myportal.description")</p>
+    </li>
+</ul>
+<h4>$MESSAGES.getString("sitemap.area.footer")</h4>
+<ul class="link-list">
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/help.psml"))
+        <a href="$link" target="_blank" title="$MESSAGES.getString("sitemap.area.service.help.tooltip")">
+            <svg class="icon"><use xlink:href="#internal-link"></svg>
+            $MESSAGES.getString("sitemap.area.service.help")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.service.help.description")</p>
+    </li>
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/service-contact.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.service.contact.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.service.contact")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.service.contact.description")</p>
+    </li>
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/service-sitemap.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.service.sitemap.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+        $MESSAGES.getString("sitemap.area.service.sitemap")</a>
+        <p>$MESSAGES.getString("sitemap.area.service.sitemap.description")</p>
+    </li>
+    #if($enableDisclaimer)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/disclaimer.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.disclaimer.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.footer.disclaimer")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.footer.disclaimer.description")</p>
+    </li>
+    #end
+    #if($enablePrivacy)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/privacy.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.privacy.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.footer.privacy")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
+    </li>
+    #end
+</ul>
