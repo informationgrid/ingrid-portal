@@ -123,6 +123,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "dojo/date",
     "dojo/Deferred",
     "dojo/DeferredList",
     "dojo/ready",
@@ -157,7 +158,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -1743,13 +1744,23 @@ define([
             registry.byId("objectClass").attr("value", "Class" + nodeData.objectClass, true);
 
             var workStateStr = message.get("general.workState." + nodeData.workState);
+            var workStateTitle = "";
 
-            // TODO: check if publication date is in the future
             if (nodeData.publicationDate) {
-                workStateStr = "Will be published";
+                var dateFormatted = UtilString.getDateString(nodeData.publicationDate, "dd.MM.yyyy");
+                // check if publication date is in the future
+                var isActive = date.compare(new Date(), nodeData.publicationDate, "date") >= 0
+
+                if (isActive) {
+                    workStateStr = message.get("general.workState.V");
+                } else {
+                    workStateStr = message.get("general.workState.timedPublish");
+                }
+                workStateTitle = string.substitute(message.get("general.workStateTitle.timedPublish"), [dateFormatted]);
             }
 
             dom.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr + "<br>(" + message.get("general.state.markedDeleted") + ")" : workStateStr);
+            dom.byId("workState").title = workStateTitle;
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
             dom.byId("uuid").innerHTML = nodeData.uuid;

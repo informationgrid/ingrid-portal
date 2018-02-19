@@ -24,6 +24,8 @@ define({
     "general.workState.B": "In Bearbeitung",
     "general.workState.Q": "&Uuml;berwiesen an Qualit&auml;tssicherung",
     "general.workState.R": "Von Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen",
+    "general.workState.timedPublish": "Wird ver&ouml;ffentlicht",
+    "general.workStateTitle.timedPublish": "am ${0}",
     "general.userOperation.NEW": "neu angelegt",
     "general.userOperation.EDITED": "&uuml;berarbeitet",
     "general.userOperation.DELETED": "als gel&ouml;scht markiert",
