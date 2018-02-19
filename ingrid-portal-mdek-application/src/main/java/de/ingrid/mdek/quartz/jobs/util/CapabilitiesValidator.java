@@ -50,11 +50,11 @@ public class CapabilitiesValidator extends URLValidator {
     		
     		// is Element "Capabilities" present for all types?
     		if ((!responseString.contains("<csw:Capabilities")) &&
-    		   (!responseString.contains("<WMT_MS_Capabilities")) &&
-    		   (!responseString.contains("<WMS_Capabilities")) &&
-    		   (!responseString.contains("<WCS_Capabilities")) &&
+    		   (!responseString.contains("WMT_MS_Capabilities")) &&
+    		   (!responseString.contains("WMS_Capabilities")) &&
+    		   (!responseString.contains("WCS_Capabilities")) &&
     		   (!responseString.contains("<Capabilities")) &&
-    		   (!responseString.contains("<WFS_Capabilities"))) {
+    		   (!responseString.contains("WFS_Capabilities"))) {
     		    state.setState(State.INVALID_CAPABILITIES);
     		}
     		
