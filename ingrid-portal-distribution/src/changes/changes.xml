@@ -8,6 +8,9 @@
     <body>
         
         <release version="4.3.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.0">
+		  <action type="fix" dev="wemove" issue="982">
+            Portal: Fix uncaught errors in QueryPreProcesssor.
+          </action> 
           <action type="fix" dev="wemove" issue="974">
             IGE: Fix Problem of URL validator and validation of capabilities urls.
           </action>  
