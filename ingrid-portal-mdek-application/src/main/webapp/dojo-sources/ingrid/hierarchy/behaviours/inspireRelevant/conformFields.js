@@ -56,7 +56,7 @@ define([
 
             this.specificationName = UtilSyslist.getSyslistEntryName(6005, 12);
             this.specificationNameInspireRichtlinie = UtilSyslist.getSyslistEntryName(6005, 13);
-            
+
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1") {
@@ -129,7 +129,7 @@ define([
                     if (inspireRelevantWidget.checked && isChecked) {
                         // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
                         // with not evaluated level
-                        utils.addConformity(self.specificationName, "3");
+                        utils.addConformity(false, self.specificationName, "3");
 
                         // remove INSPIRE Richtlinie
                         utils.removeConformity(self.specificationNameInspireRichtlinie);
@@ -155,7 +155,7 @@ define([
         handleClickConform: function() {
             // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
             // with conform level
-            utils.addConformity(this.specificationName, "1");
+            utils.addConformity(true, this.specificationName, "1");
 
             // remove INSPIRE Richtlinie
             utils.removeConformity(this.specificationNameInspireRichtlinie);
