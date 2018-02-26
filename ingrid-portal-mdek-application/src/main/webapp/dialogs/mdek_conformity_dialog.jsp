@@ -34,6 +34,7 @@
         require([
             "dijit/form/DateTextBox",
             "dijit/registry",
+            "dojo/dom-class",
             "dojo/on",
             "dojo/query",
             "ingrid/dialog",
@@ -41,7 +42,7 @@
             "ingrid/layoutCreator",
             "ingrid/utils/Store",
             "ingrid/utils/Syslist"
-        ], function(DateTextBox, registry, on, query, dialog, checks, layoutCreator, UtilStore, UtilSyslist) {
+        ], function(DateTextBox, registry, domClass, on, query, dialog, checks, layoutCreator, UtilStore, UtilSyslist) {
                 var inspireDateTextBox = null;
                 var freeDateTextBox = null;
                 createDOMElements();
@@ -134,6 +135,8 @@
 
                 // marks fields if wrong input
                 function validateInputElements() {
+                resetRequiredInputElements();
+
                     var valid = true;
 
                     var visibleRequiredElements = query(".dijitTabContainerTopChildWrapper.dijitVisible .required .dijitSelect, .dijitTabContainerTopChildWrapper.dijitVisible .required .dijitTextBox", "pageDialog").map(function(item) {return item.getAttribute("widgetid");});
@@ -147,6 +150,13 @@
                     });
 
                     return valid;
+                }
+
+                // resets marked fields with wrong input
+                function resetRequiredInputElements() {
+                    query(".important").forEach(function(item) {
+                        domClass.remove(item, "important");
+                    });
                 }
 
               /**
