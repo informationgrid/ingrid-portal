@@ -23,21 +23,26 @@
 define([
     "dojo/_base/array",
     "dojo/_base/declare",
-    "ingrid/utils/Grid"
-], function(array, declare, UtilGrid) {
+    "ingrid/utils/Grid",
+    "ingrid/utils/Syslist"
+], function(array, declare, UtilGrid, UtilSyslist) {
 
     return declare(null, {
 
-        addConformity: function(name, level) {
+        addConformity: function(isFromInspireList, name, level) {
             console.log("Add conformity");
+            var listId = 6005;
             var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
+            var publicationDate = UtilSyslist.getSyslistEntryData(listId, name);
 
             conformityData = conformityData.filter(function(item) {
                 return item.specification !== name;
             });
             conformityData.push({
+                isInspire: true,
                 specification: name,
-                level: level
+                level: level,
+                publicationDate: new Date(publicationDate)
             });
             UtilGrid.setTableData("extraInfoConformityTable", conformityData);
         },

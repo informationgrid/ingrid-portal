@@ -188,6 +188,10 @@
                                 break;
                             case "availabilityUseConstraints":
                                 localizedTitle = "<fmt:message key='dialog.useConstraints.title' />";
+                                break;
+                            case "conformity":
+                                localizedTitle = "<fmt:message key='dialog.conformity.title' />";
+                                break;
                         }
                         return localizedTitle;
                     }
@@ -2127,17 +2131,20 @@
                                     </span>
                             </div>
                             <!-- displaytype="exclude", the inputContainer is excluded from the standard show/hide mechanism since the container has to be displayed depending on the selected object class -->
-                            <span id="uiElementN024" class="outer exclude">
-                            	<div><span id="extraInfoConformityTableLabel" class="label">
-                                    <label for="extraInfoConformityTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10024)">
-                                        <fmt:message key="ui.obj.additionalInfo.conformityTable.title" />
-                                    </label>
-                                </span>
-                                <div class="input tableContainer">
-                                    <div id="extraInfoConformityTable" autoHeight="4" interactive="true">
+                            <span id="uiElementN024" class="outer">
+                                <div><span id="extraInfoConformityTableLabel" class="label left">
+                                        <label for="extraInfoConformityTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10024)">
+                                            <fmt:message key="ui.obj.additionalInfo.conformityTable.title" />
+                                        </label>
+                                    </span>
+                                    <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
+                                        <a id="generalAddressTableLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('conformity'), 'dialogs/mdek_conformity_dialog.jsp?c='+userLocale, 755, 485, true, {grid: 'generalAddress'});" title="<fmt:message key="dialog.popup.conformityTable.link" /> [Popup]"><fmt:message key="ui.obj.additionalInfo.conformityTable.link" /></a> <!--TODO what is "grid: generalAddress?" -->
+                                    </span>
+                                    <div class="input tableContainer clear">
+                                        <div id="extraInfoConformityTable" autoHeight="4" interactive="true">
+                                        </div>
                                     </div>
                                 </div>
-								</div>
                             </span>
                             <div class="inputContainer">
                                     <span id="uiElementN012" class="outer" style="width:33%;">
