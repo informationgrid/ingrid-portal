@@ -171,12 +171,9 @@
 </head>
 <body>
     <div data-dojo-type="dijit/layout/ContentPane">
-    	<div>
-            	<a href="javascript:void(0);" onclick="window.open('mdek_help.jsp?lang='+userLocale+'&hkey=maintanance-of-objects-2#maintanance-of-objects-2', 'Hilfe', 'width=750,height=550,resizable=yes,scrollbars=yes,locationbar=no')" title="<fmt:message key="general.help" />">[?]</a>
-        </div>
        <div class="content">
             <!-- LEFT HAND SIDE CONTENT START -->
-            <div id="dialogConformityTab" data-dojo-type="dijit/layout/TabContainer" style="height:510px; overflow:visible;">
+            <div id="dialogConformityTab" data-dojo-type="dijit/layout/TabContainer" style="height:350px; overflow:visible;">
                 <!-- TAB 1 START -->
                 <div id="dialogConformityInspireTab" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder grey" title="<fmt:message key="dialog.conformity.tab.inspire" />">
                     <div class="inputContainer field grey">
@@ -219,8 +216,8 @@
                     </div>
                 </div><!-- TAB 1 END -->
                 <!-- TAB 2 START -->
-				<div data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder" style="width: 100%;" title="<fmt:message key="dialog.conformity.tab.freetext" />">
-                    <div data-dojo-type="dijit/layout/ContentPane" class="inputContainer grey" style="height: 450px; padding:0px !important;" >
+				<div data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder grey" style="width: 100%;" title="<fmt:message key="dialog.conformity.tab.freetext" />">
+                    <div class="inputContainer field grey">
                         <span class="outer required">
                             <div>
                                 <span class="label">
@@ -260,9 +257,11 @@
                     </div>
                 </div><!-- TAB 2 END -->
             </div><!-- LEFT HAND SIDE CONTENT END -->
-            <div class="dijitDialogPaneActionBar">
-                <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){dialogConformity.submit();}" id="ok"><fmt:message key="general.ok" /></button>
-                <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){dialogConformity.cancel();}" id="cancel"><fmt:message key="general.cancel" /></button>
+            <div style="margin: 0px; padding-right: 10px; padding-bottom: 10px;">
+                <div class="dijitDialogPaneActionBar">
+                    <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){dialogConformity.submit();}" id="ok"><fmt:message key="general.ok" /></button>
+                    <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){dialogConformity.cancel();}" id="cancel"><fmt:message key="general.cancel" /></button>
+                </div>
             </div>
         </div>
     </div>
