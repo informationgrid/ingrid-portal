@@ -100,20 +100,20 @@
                     var isInspire = registry.byId("dialogConformityTab").selectedChildWidget === registry.byId("dialogConformityInspireTab");
                     var publicationDate, level, specification;
 
-                    if (isInspire) {
-                        specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
-                        level = registry.byId("conformityLevelInspireFieldName").get("value");
-                        publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
-                    } else {
-                        specification = registry.byId("conformitySpecificationFreeFieldName").get("item")[0];
-                        level = registry.byId("conformityLevelFreeFieldName").get("value");
-                        publicationDate = registry.byId("conformityDateFreeFieldName").get("value");
-                    }
-
                     // add data to conformity table
                     if (!validateInputElements()) {
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
                     } else {
+                        if (isInspire) {
+                            specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
+                            level = registry.byId("conformityLevelInspireFieldName").get("value");
+                            publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
+                        } else {
+                            specification = registry.byId("conformitySpecificationFreeFieldName").get("item")[0];
+                            level = registry.byId("conformityLevelFreeFieldName").get("value");
+                            publicationDate = registry.byId("conformityDateFreeFieldName").get("value");
+                        }
+
                         var conformityTable = registry.byId("extraInfoConformityTable");
                         var conformityData = conformityTable.data;
 
