@@ -1350,8 +1350,10 @@ public class MdekMapper implements DataMapperInterface {
             if (con.getLevel() != null) {
                 result.put(MdekKeys.CONFORMITY_DEGREE_KEY, con.getLevel());
             }
-            result.put(MdekKeys.CONFORMITY_IS_INSPIRE, con.getIsInspire() ? "Y" : "N");
-            int listId = con.getIsInspire() ? 6005 : 6006; // TODO: hard coded value. Change de.ingrid.mdek.SysListCache to automatically detect list ids?
+            // Assume INSPIRE if we encounter null. Is this right?
+            boolean isInspire = con.getIsInspire() == null && con.getIsInspire();
+            result.put(MdekKeys.CONFORMITY_IS_INSPIRE, isInspire ? "Y" : "N");
+            int listId = isInspire ? 6005 : 6006; // TODO: hard coded value. Change de.ingrid.mdek.SysListCache to automatically detect list ids?
             Integer key = sysListMapper.getKeyFromListId(listId, con.getSpecification());
             key = key == null ? -1 : key;
             result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, key);
