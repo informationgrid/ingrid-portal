@@ -1896,15 +1896,9 @@ define([
                 //new ValidationTextBox({}, "extraInfoConformitySpecificationEditor");
 
                 var extraInfoConformityTableStructure = [{
-                    field: 'isInspire',
-                    name: message.get("ui.obj.additionalInfo.conformityTable.header.isInspire"),
-                    width: '62px',
-                    editable: false,
-                    formatter: gridFormatters.BoolCellFormatter
-                }, {
                     field: 'specification',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),
-                    width: '346px',
+                    width: '395px',
                     editable: false,
                     formatter: gridFormatters.ConformityCellFormatter
                 }, {
@@ -1919,6 +1913,12 @@ define([
                     width: '150px',
                     editable: false,
                     formatter: gridFormatters.DateCellFormatter
+                }, {
+                    field: 'isInspire',
+                    width: '0px',
+                    hidden: true,
+                    editable: false,
+                    formatter: gridFormatters.BoolCellFormatter
                 }];
                 layoutCreator.createDataGrid("extraInfoConformityTable", null, extraInfoConformityTableStructure, null);
 
