@@ -764,15 +764,8 @@ require([
                 //!!!renderTextWithTitle(registry.byId("extraInfoCharSetData").get("displayedValue"), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
                 // Table is only displayed for object classes 1 and 3
                 if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
-                    renderTable(nodeData.extraInfoConformityTable, ["isInspire", "specification", "level", "publicationDate"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.isInspire' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.publicationDate' />"],
+                    renderTable(nodeData.extraInfoConformityTable, ["specification", "level", "publicationDate"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.publicationDate' />"],
                         "<fmt:message key='ui.obj.additionalInfo.conformityTable.title' />", [
-                            function(val) {
-                                if (val) {
-                                    return "&check;";
-                                } else {
-                                    return "";
-                                }
-                            },
                             function(val) {
                                 return UtilSyslist.getSyslistEntryName(6005, val);
                             },
