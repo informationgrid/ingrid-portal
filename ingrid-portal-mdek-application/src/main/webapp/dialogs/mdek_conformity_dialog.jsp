@@ -114,15 +114,27 @@
                     if (!validateInputElements()) {
                         dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
                     } else {
-                        var row = {
-                            isInspire: isInspire,
-                            specification: specification,
-                            level: level,
-                            publicationDate: publicationDate
-                        };
                         var conformityTable = registry.byId("extraInfoConformityTable");
                         var conformityData = conformityTable.data;
-                        conformityData.push(row);
+
+                        // if conformity already exists, update it. otherwise add new row
+                        var shouldAppend = true;
+                        for (var i=0; i<conformityData.length && shouldAppend; i++) {
+                            var existingRow = conformityData[i];
+                            if (specification && specification === existingRow["specification"]) {
+                                existingRow["level"] = level;
+                                shouldAppend = false;
+                            }
+                        }
+                        if (shouldAppend) {
+                            var newRow = {
+                                isInspire: isInspire,
+                                specification: specification,
+                                level: level,
+                                publicationDate: publicationDate
+                            };
+                            conformityData.push(newRow);
+                        }
                         UtilStore.updateWriteStore("extraInfoConformityTable", conformityData);
 
                         _container_.hide();
