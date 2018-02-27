@@ -767,10 +767,24 @@ require([
                     renderTable(nodeData.extraInfoConformityTable, ["isInspire", "specification", "level", "publicationDate"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.isInspire' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.publicationDate' />"],
                         "<fmt:message key='ui.obj.additionalInfo.conformityTable.title' />", [
                             function(val) {
+                                if (val) {
+                                    return "&check;";
+                                } else {
+                                    return "";
+                                }
+                            },
+                            function(val) {
                                 return UtilSyslist.getSyslistEntryName(6005, val);
                             },
                             function(val) {
                                 return UtilSyslist.getSyslistEntryName(6000, val);
+                            },
+                            function(val) {
+                                if (val) {
+                                    return UtilString.getDateString(val, "dd.MM.yyyy");
+                                } else {
+                                    return "";
+                                }
                             }
                         ]);
                 }
