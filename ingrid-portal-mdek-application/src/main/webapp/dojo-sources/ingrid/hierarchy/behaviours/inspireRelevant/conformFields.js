@@ -86,6 +86,9 @@ define([
                     if (isChecked) {
                         domClass.remove("uiElement6001", "hidden");
 
+                        // Also make conformity a required field
+                        domClass.add("uiElementN024", "required");
+
                         // add events implicitly
                         var isConform = registry.byId("isInspireConform").checked;
                         if (isConform) {
@@ -96,6 +99,9 @@ define([
                         }
                     } else {
                         domClass.add("uiElement6001", "hidden");
+
+                        // Conformity is optional for non-INSPIRE fields
+                        domClass.remove("uiElementN024", "required");
 
                         // make digital representation optional
                         domClass.remove( "uiElement5062", "required" );
