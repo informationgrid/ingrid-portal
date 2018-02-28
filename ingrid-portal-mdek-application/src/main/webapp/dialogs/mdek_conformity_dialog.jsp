@@ -108,6 +108,11 @@
                             specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
                             level = registry.byId("conformityLevelInspireFieldName").get("value");
                             publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
+
+                            if (isInspireConformityInconsistent(specification, level)) {
+                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", dialog.WARNING);
+                                return;
+                            }
                         } else {
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("item")[0];
                             level = registry.byId("conformityLevelFreeFieldName").get("value");
@@ -162,6 +167,22 @@
                     });
 
                     return valid;
+                }
+
+                function isInspireConformityInconsistent(specification, level) {
+                    // Validation has been peformed before this method is called, so don't check nulls
+                    var isInspireRelevant = registry.byId("isInspireRelevant").get("value");
+                    if (isInspireRelevant !== "on") return false;
+
+                    // Only test Verordnung (EG) No. 1089/2010 INSPIRE ...
+                    var specificationKey = UtilSyslist.getSyslistEntryKey(6005, specification);
+                    if (specificationKey != 12) return false;
+
+                    var isInspireConform = registry.byId("isInspireConform").get("value");
+                    if (isInspireConform && level != 1) return true;
+                    if (!isInspireConform && level != 3) return true;
+
+                    return false;
                 }
 
                 // resets marked fields with wrong input
