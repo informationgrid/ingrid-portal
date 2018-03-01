@@ -13,3 +13,12 @@ WHERE gui_id = 10024 AND language = 'de';
 UPDATE help_messages
 SET help_text = 'Specify the conformity-specification for the dataset/service along with the degree of conformance. This is an obligatory field for INSPIRE-relevant metadata.<br /><br />The first column shows if the conformity specification is defined by INSPIRE (checkbox active) or is a freely defined specification (checkbox not active). The second column shows the conformity-specification (checklists 6005 and 6006), the third column the degree of conformity (checklist 6000) and the last column the date of publication of the conformity thesaurus.<br/><br/>When inserting an entry in "INSPIRE-Topics" (Geodatensatz) or a "Type of Service" (Geodatendienst), the specification will be filled in automatically.<br /><br /> New entries to this table can be added using the link above the table to the right.'
 WHERE gui_id = 10024 AND language = 'en';
+
+UPDATE help_messages
+SET help_text = '<p>Dieses Feld definiert, wenn aktiviert, dass ein Metadatensatz für das INSPIRE-Monitoring vorgesehen ist.</p><p>Folgende Eigenschaften ändern sich bei Aktivierung:</p><ul><li>Hinzufügen des Schlagwortes "inspireidentifiziert" bei ISO XML Generierung</li><li>verpflichtende Angabe eines INSPIRE Themas bei Klasse "Informationssystem" (6)</li><li>WebServices wird als Defaultwert für die unterstützte Plattform bei einer neuen Operation verwendet</li><li>"Konformität" wird zu einem Pflichteingabe gemacht. "Konformität"-Tabelle wird sichtbar gemacht und ein Standardeintrag wird in diese Tabelle hinzugefügt.</li></ul>'
+WHERE gui_id = 6000 AND language = 'de';
+
+UPDATE help_messages
+SET help_text = '<p>If clicked, this record is relevant for INSPIRE-Monitoring.</p><p>The following properties change, when activated:</p><ul><li>The keyword "inspireidentifiziert" is added to when generating the ISO XML view.</li><li>INSPIRE topic becomes a mandatory field for the class "information system" (6)</li><li>WebServices becomes the default value for the supported platform when adding a new operation</li><li>"Conformity" becomes a required field. The "Conformity" table is made visible and a standard confomity-entry is added to this table.</li></ul>'
+WHERE gui_id = 6000 AND language = 'en';
+
