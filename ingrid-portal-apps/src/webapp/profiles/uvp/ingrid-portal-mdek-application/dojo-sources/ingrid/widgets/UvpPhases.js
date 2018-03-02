@@ -665,8 +665,8 @@ define([
             addUploadLink: function(tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
-                    // upload base path
-                    var basePath = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
+                    // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
+                    var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_")+"/"+currentUdk.uuid;
 
                     // create uploader instance
                     var uploader = new UploadWidget({
@@ -752,7 +752,22 @@ define([
                     var getRowData = function(row, data, basePath) {
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
-                            var fileRel = file.substring(basePath.length, file.length);
+                            
+                            // generate basepath ready for comparison with 
+                            var basePathWithoutLeadingSlash = basePath;
+                            // strip leading slash because the file name comes in without trainling slash
+                            if (basePath.startsWith("/")) {
+                            	basePathWithoutLeadingSlash = basePath.substring(1, basePath.length);
+                            }
+                            var fileRel;
+                            if (file.startsWith(basePathWithoutLeadingSlash)) {
+                                // uploaded file, cut base path of uploaded file, keep hierarchy structure from extracted ZIPs
+                            	// strip slash following base path 
+                            	fileRel = file.substring(basePathWithoutLeadingSlash.length + 1, file.length);
+                            } else {
+                                // link, get the last path of the link
+                            	fileRel = file.substring(file.lastIndexOf('/')+1, file.length);
+                            }
                             var lastDotPos = fileRel.lastIndexOf(".");
                             var name = fileRel.substring(0,
                                     lastDotPos === -1 ? file.length : lastDotPos);
