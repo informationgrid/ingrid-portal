@@ -59,8 +59,11 @@
           <action type="fix" dev="wemove" issue="949">
             IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
           </action>
-		      <action type="update" dev="wemove" issue="961">
+		  <action type="update" dev="wemove" issue="961">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+		  <action type="fix" dev="wemove" issue="987">
+            MAPCLIENT: Fix mapclient offline mode message.
           </action>
         </release>
 
