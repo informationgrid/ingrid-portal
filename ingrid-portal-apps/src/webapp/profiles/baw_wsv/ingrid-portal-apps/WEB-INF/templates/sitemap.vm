@@ -222,7 +222,6 @@
             </ul>
         </div>
     </li>
--->
     <li>
         #set ($link = $renderResponse.encodeURL("/portal/cms/cms-1.psml"))
         <a href="$link" title="$MESSAGES.getString("Zu den Anleitungen und Tutorials im GeoPortal.WSV")">
@@ -243,6 +242,7 @@
         </a>
         <p>$MESSAGES.getString("Informationsveranstaltungen zum GeoPortal.WSV")</p>
     </li>
+-->
     #end
     #if($enableAbout)
         <li>
