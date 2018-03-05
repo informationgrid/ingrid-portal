@@ -86,6 +86,11 @@ define([
                     if (isChecked) {
                         domClass.remove("uiElement6001", "hidden");
 
+                        // Make inspire themes required
+                        domClass.add("uiElement5064", "required");
+                        domClass.remove("uiElement5064", "optional");
+                        registry.byId("thesaurusInspire").reinitLastColumn();
+
                         // Also make conformity a required field
                         domClass.add("uiElementN024", "required");
 
@@ -99,6 +104,11 @@ define([
                         }
                     } else {
                         domClass.add("uiElement6001", "hidden");
+
+                        // Make inspire themes optional
+                        domClass.remove("uiElement5064", "required");
+                        domClass.add("uiElement5064", "optional");
+                        domClass.remove("uiElement5064", "show");
 
                         // Conformity is optional for non-INSPIRE fields
                         domClass.remove("uiElementN024", "required");
