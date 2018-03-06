@@ -114,7 +114,7 @@
   [ga-background-selector].ga-open .ga-wmts_topplus_web_grau {
     -webkit-transform: translate3d(-439px, 0, 0);
             transform: translate3d(-439px, 0, 0);
-    -ms-transform: translateX(-328px);
+    -ms-transform: translateX(-439px);
     /* IE 9*/
   }
   [ga-background-selector].ga-open .ga-wmts_osm {
