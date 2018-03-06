@@ -264,10 +264,22 @@ public class DetailPartPreparer {
             // <<< End of temporary solution <<<
 
             if (constraints == null || constraints.trim().isEmpty()) {
-                result.add(restrictionCode);
+                if (!result.contains(restrictionCode )) {
+                    result.add(restrictionCode);
+                }
+                continue;
+            }
+            String codeListValue = getValueFromCodeList(licenceList, constraints);
+            if (codeListValue == null || codeListValue.trim().isEmpty()) {
+                String value = String.format("%s: %s", restrictionCode, constraints);
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
             } else {
-                constraints = getValueFromCodeList(licenceList, constraints);
-                result.add(String.format("%s: %s", restrictionCode, constraints));
+                String value = String.format("%s: %s", restrictionCode, codeListValue);
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
             }
         }
 
