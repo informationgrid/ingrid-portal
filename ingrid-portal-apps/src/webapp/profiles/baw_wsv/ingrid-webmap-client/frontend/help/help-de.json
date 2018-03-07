@@ -54,15 +54,15 @@
        "text": "Das Verschiebewerkzeug kann auf zwei Arten benutzt werden : Panning: klicken und gedrückt halten, um die Karte zu verschieben.",
        "image":""
     },
-    "31": {
-        "title": "2. Zentrieren auf Koordinaten",
-        "text": "<p><strong><u>Punkt:</u></strong></p><p> auf Koordinaten</p><p>Dies ist für folgende Bezugssysteme möglich:</p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/4326\"rel=\"nofollow\">WGS 84</a> (Breite Länge):</li></ul><p style=\"margin-left: 60.0px;\"><strong>50.68666 10.94317</strong></p><p style=\"margin-left: 60.0px;\"><strong>53.56,10.02</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25832\"rel=\"nofollow\">UTM 32N</a> (Zonenzahl Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>32U 513256.37 5403135.68</strong></p><p style=\"margin-left: 60.0px;\"><strong>32U,513256.37,5403135.68</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25833\"rel=\"nofollow\">UTM 33N</a> (Zonenzahl Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>33U 139214.21 5818627.04</strong></p><p style=\"margin-left: 60.0px;\"><strong>33U,139214.21,5818627.04</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"http://what3words.com/\"rel=\"nofollow\">what3words</a> (3-Wort-Adresse punktgetrennt):</li></ul><p style=\"margin-left: 60.0px;\"><strong>lachen.referate.anlegern</strong></p><p><strong><u>Bereich:</u></strong></p><p>Das Kartenfenster kann auch über ein Rechteck positioniert werden, dazu müssen zwei diagonal liegende Koordinaten des Rechtecks ins Suchfeld eingegeben werden. Die Koordinatenwerte werden durch Leerzeichen oder Komma getrennt, Dezimaltrennzeichen ist ein Punkt.</p><p>Dies ist für folgende Bezugssysteme möglich:</p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/4326\"rel=\"nofollow\">WGS 84</a> (Breite Länge Breite Länge):</li></ul><p style=\"margin-left: 60.0px;\"><strong>48.11 11.54 48.17 11.63</strong></p><p style=\"margin-left: 60.0px;\"><strong>48.11,11.54 48.17,11.63</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25832\"rel=\"nofollow\">UTM 32N</a> (Zonenzahl Easting Northing Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>32U 509677.37 5401694.70 517880.76 5408251.24</strong></p><p style=\"margin-left: 60.0px;\"><strong>32U,509677.37,5401694.70,517880.76,5408251.24</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25833\"rel=\"nofollow\">UTM 33N</a> (Zonenzahl Easting Northing Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>33U 130838.89 5808952.83 151854.58 5822565.52</strong></p><p style=\"margin-left: 60.0px;\"><strong>33U,130838.89,5808952.83,151854.58,5822565.52</strong></p><p style=\"margin-left: 60.0px;\"><strong>33U,130838.89,5808952.83,151854.58,5822565.52</strong></p>",
-        "image": ""
+    "24": {
+        "title": "1. Treffer-Rubriken und ihre Bedeutung",
+        "text": "<p>Die Möglichkeiten des Suchfeldes sind vielseitig. Je nach Eingabe (Geben sie bspw. <em>Wasser</em> ein.) ergibt sich eine <b>Trefferliste mit verschiedenen Rubriken</b> oder (bei Koordinateneingaben) die Karte wird sofort entsprechend neu zentriert.</p><p>Die Bedeutung der Rubriken und die jeweiligen Möglichkeiten sind in auf den Haupt-Hilfe-Seiten des GeoViewers näher beschrieben.</p><h2>2. Zentrieren auf Koordinaten</h2><p><strong><u>Punkt:</u></strong></p><p> auf Koordinaten</p><p>Dies ist für folgende Bezugssysteme möglich:</p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/4326\"rel=\"nofollow\">WGS 84</a> (Breite Länge):</li></ul><p style=\"margin-left: 60.0px;\"><strong>50.68666 10.94317</strong></p><p style=\"margin-left: 60.0px;\"><strong>53.56,10.02</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25832\"rel=\"nofollow\">UTM 32N</a> (Zonenzahl Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>32U 513256.37 5403135.68</strong></p><p style=\"margin-left: 60.0px;\"><strong>32U,513256.37,5403135.68</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25833\"rel=\"nofollow\">UTM 33N</a> (Zonenzahl Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>33U 139214.21 5818627.04</strong></p><p style=\"margin-left: 60.0px;\"><strong>33U,139214.21,5818627.04</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"http://what3words.com/\"rel=\"nofollow\">what3words</a> (3-Wort-Adresse punktgetrennt):</li></ul><p style=\"margin-left: 60.0px;\"><strong>lachen.referate.anlegern</strong></p><p><strong><u>Bereich:</u></strong></p><p>Das Kartenfenster kann auch über ein Rechteck positioniert werden, dazu müssen zwei diagonal liegende Koordinaten des Rechtecks ins Suchfeld eingegeben werden. Die Koordinatenwerte werden durch Leerzeichen oder Komma getrennt, Dezimaltrennzeichen ist ein Punkt.</p><p>Dies ist für folgende Bezugssysteme möglich:</p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/4326\"rel=\"nofollow\">WGS 84</a> (Breite Länge Breite Länge):</li></ul><p style=\"margin-left: 60.0px;\"><strong>48.11 11.54 48.17 11.63</strong></p><p style=\"margin-left: 60.0px;\"><strong>48.11,11.54 48.17,11.63</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25832\"rel=\"nofollow\">UTM 32N</a> (Zonenzahl Easting Northing Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>32U 509677.37 5401694.70 517880.76 5408251.24</strong></p><p style=\"margin-left: 60.0px;\"><strong>32U,509677.37,5401694.70,517880.76,5408251.24</strong></p><ul><li><a class=\"external-link\"target=\"_new\" href=\"https://epsg.io/25833\"rel=\"nofollow\">UTM 33N</a> (Zonenzahl Easting Northing Easting Northing):</li></ul><p style=\"margin-left: 60.0px;\"><strong>33U 130838.89 5808952.83 151854.58 5822565.52</strong></p><p style=\"margin-left: 60.0px;\"><strong>33U,130838.89,5808952.83,151854.58,5822565.52</strong></p><p style=\"margin-left: 60.0px;\"><strong>33U,130838.89,5808952.83,151854.58,5822565.52</strong></p><h2>3. Suchen nach Orten, PLZ, Adressen, geograf. Namen, BWaStr</h2><p>Das Suchfeld ermöglicht den sofortigen Zugriff auf deutsche Städte- und Ortsnamen, Postleitzahlen, Adressen, geographische Namen oder Bundeswasserstraßen (BWaStr).</p><p>Das Suchfeld ermöglicht den sofortigen Zugriff auf deutsche Städte- und Ortsnamen, Postleitzahlen, Adressen, geographische Namen oder Bundeswasserstraßen (BWaStr).</p><br /><h2>4. Suchen nach Bundeswasserstraßen</h2><p>Suche, z.B. nach 'Elbe' (<span style=\"color: rgb(255,0,0);\"><strong>1</strong></span>), oder 'Jochenstein' oder '0426'.</p><p>In der Trefferliste des Suchfensters sind die Treffer zu BWaStr in der Rubrik \"BWaStr-Locator\" (<span style=\"color: rgb(255,0,0);\"><strong>2</strong></span>) zu finden und können nach Klick auf eine der gefundenen Streckenbezeichnungen durch Angabe eines Von-Kilometers (ggf. Bis-Kilometer und Abstand zur Achse ergänzen) + Klick auf den \"(>)\"-Pfeil (<span style=\"color: rgb(255,0,0);\"><strong>3</strong></span>) in der Karte eingestellt werden.</p><p>Die dabei entstandenen Geometrien (BWaStr-Achse + Abschnittsmarkierung) können über den Bereich \"Dargestellte Karten\" ausgeblendet oder entfernt werden (<span style=\"color: rgb(255,0,0);\"><strong>4</strong></span>).</p>",
+        "image": "../help/img/help25.png"
     },
     "25": {
-        "title": "3. Suchen nach Orten, PLZ, Adressen, geograf. Namen, BWaStr",
-        "text": "<p>Das Suchfeld ermöglicht den sofortigen Zugriff auf deutsche Städte- und Ortsnamen, Postleitzahlen, Adressen, geographische Namen oder Bundeswasserstraßen (BWaStr).</p><p>Das Suchfeld ermöglicht den sofortigen Zugriff auf deutsche Städte- und Ortsnamen, Postleitzahlen, Adressen, geographische Namen oder Bundeswasserstraßen (BWaStr).</p><br /><h2>4. Suchen nach Bundeswasserstraßen</h2><p>Suche, z.B. nach 'Elbe' (<span style=\"color: rgb(255,0,0);\"><strong>1</strong></span>), oder 'Jochenstein' oder '0426'.</p><p>In der Trefferliste des Suchfensters sind die Treffer zu BWaStr in der Rubrik \"BWaStr-Locator\" (<span style=\"color: rgb(255,0,0);\"><strong>2</strong></span>) zu finden und können nach Klick auf eine der gefundenen Streckenbezeichnungen durch Angabe eines Von-Kilometers (ggf. Bis-Kilometer und Abstand zur Achse ergänzen) + Klick auf den \"(>)\"-Pfeil (<span style=\"color: rgb(255,0,0);\"><strong>3</strong></span>) in der Karte eingestellt werden.</p><p>Die dabei entstandenen Geometrien (BWaStr-Achse + Abschnittsmarkierung) können über den Bereich \"Dargestellte Karten\" ausgeblendet oder entfernt werden (<span style=\"color: rgb(255,0,0);\"><strong>4</strong></span>).</p>",
-        "image": "../help/img/help31.png"
+        "title": "",
+        "text": "",
+        "image": ""
     },
     "26": {
        "title": "Zurück in die Startansicht - Reset",
@@ -84,49 +84,49 @@
        "text": "#",
        "image":""
     },
-    "24": {
-        "title": "1. Treffer-Rubriken und ihre Bedeutung",
-        "text": "Die Möglichkeiten des Suchfeldes sind vielseitig. Je nach Eingabe (Geben sie bspw. <em>Wasser</em> ein.) ergibt sich eine <b>Trefferliste mit verschiedenen Rubriken</b> oder (bei Koordinateneingaben) die Karte wird sofort entsprechend neu zentriert.",
+    "31": {
+        "title": "",
+        "text": "",
         "image": ""
     },
     "32": {
         "title": "Suche nach Daten (Verzeichnisstruktur)",
-        "text": "Unter \"Thema wechseln\" finden Sie ein Verzeichnis thematischer Zusammenstellungen von Karten. Wenn Sie eine der Zusammenstellungen auswählen, wird diese anstelle der \"Favoriten\" angezeigt und Sie können daraus wählen. Standard-Zusammenstellung ist \"Favoriten\".",
-        "image": "../help/img/help32.png"
+        "text": "<p>Unter \"Thema wechseln\" finden Sie ein Verzeichnis thematischer Zusammenstellungen von Karten. Wenn Sie eine der Zusammenstellungen auswählen, wird diese anstelle der \"Favoriten\" angezeigt und Sie können daraus wählen. Standard-Zusammenstellung ist \"Favoriten\".</p>\n<img src=\"../help/img/help32.png\"><h2>Datenbezug</h2><p>Die Daten, die im Kartenfenster angezeigt werden, können, falls vom entsprechenden Anbieter vorgesehen, direkt im GeoViewer betrachtet werden. Über den Info-Knopf wird das Info-Fenster zu einem ausgewähltem Datensatz geöffnet.</p><h2>Anzeigen von Zusatzinformationen</h2><p>Folgende Zusatzinformationen können über Auswahl und Info-Knopf zu einem Datensatz abgerufen werden: Metadaten der Karte / des Kartenlayers und Zugehörigkeit des Kartenlayers zu einem Kartendienst</p>\n<img src=\"../help/img/help39.png\">",
+        "image": ""
     },
     "33": {
        "title": "Ändern des Kartenhintergrundes",
        "text": "Für den Kartenhintergrund gibt es die Landeskarte in Farbe, Schwarz-Weiss, Luftbild oder ohne Hintergrund.",
        "image":""
     },
-    "35": {
-        "title": "Ändern der Transparenz der Datensätze",
-        "text": "Klicken Sie auf das Zahnrad-Symbol. Die Transparenz der ausgewählten Datensätze kann durch das verschieben des Horizontalen Transparenz-Reglers individuell angepasst werden.",
-        "image": "../help/img/help35.png"
-    },
     "34": {
         "title": "Ändern der Reihenfolge der Datensätze",
-        "text": "Klicken Sie auf Zahnrad-Symbol. Die Reihenfolge der ausgewählten Datensätze kann durch Klicken der Pfeile angepasst werden.",
-        "image": "../help/img/help34.png"
+        "text": "<p>Klicken Sie auf Zahnrad-Symbol. Die Reihenfolge der ausgewählten Datensätze kann durch Klicken der Pfeile angepasst werden.</p>\n<img src=\"../help/img/help34.png\"><h2>Ändern der Transparenz der Datensätze</h2><p>Klicken Sie auf das Zahnrad-Symbol. Die Transparenz der ausgewählten Datensätze kann durch das verschieben des Horizontalen Transparenz-Reglers individuell angepasst werden.</p>\n<img src=\"../help/img/help35.png\"><h2>Entfernen der Datensätze</h2><p>Die ausgewählten Datensätze können über die Funktion (x) aus der Liste \"Dargestellte Karten\" und der Kartenansicht entfernt werden.</p>\n<img src=\"../help/img/help36.png\">",
+        "image": ""
+    },
+    "35": {
+        "title": "",
+        "text": "",
+        "image": ""
     },
     "36": {
-        "title": "Entfernen der Datensätze",
-        "text": "Die ausgewählten Datensätze können über die Funktion (x) aus der Liste \"Dargestellte Karten\" und der Kartenansicht entfernt werden.",
-        "image": "../help/img/help36.png"
+        "title": "",
+        "text": "",
+        "image": ""
     },
-    "39": {
-        "title": "Anzeigen von Zusatzinformationen",
-        "text": "Folgende Zusatzinformationen können über Auswahl und Info-Knopf zu einem Datensatz abgerufen werden: Metadaten der Karte / des Kartenlayers und Zugehörigkeit des Kartenlayers zu einem Kartendienst",
-        "image": "../help/img/help39.png"
+    "37": {
+        "title": "",
+        "text": "",
+        "image": ""
     },
     "38": {
        "title": "Detailinformationen von Kartenelement",
        "text": "Sofern vorhanden, können bei Vektordatensätze (Punkt, Linien, Polygon) die Attribute der einzelnen Kartenelemente durch einen einfachen Mausklick abgerufen werden. Bei mehreren übereinanderligenden Datensätzen werden alle unter der Maus liegenden Elemente angezeigt und hervorgehoben.",
        "image":""
     },
-    "37": {
-        "title": "Datenbezug",
-        "text": "Die Daten, die im Kartenfenster angezeigt werden, können, falls vom entsprechenden Anbieter vorgesehen, direkt im GeoViewer betrachtet werden. Über den Info-Knopf wird das Info-Fenster zu einem ausgewähltem Datensatz geöffnet.",
+    "39": {
+        "title": "",
+        "text": "",
         "image": ""
     },
     "40": {
