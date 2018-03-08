@@ -205,9 +205,23 @@ define([
                     var rule1 = msg.oldItem && msg.oldItem.specification === self.specificationName && msg.item.specification !== self.specificationName;
                     var rule2 = msg.item.specification === self.specificationName && msg.item.level !== "1";
                     if (rule1 || rule2) {
+                        var isInspire = false;
+                        var publicationDate = null;
+                        var entryData = UtilSyslist.getSyslistEntryData(6005, self.specificationName);
+                        if (entryData == null) { // No entry in list 6005
+                            entryData = UtilSyslist.getSyslistEntryData(6006, self.specificationName);
+                        } else {
+                            isInspire = true;
+                        }
+                        if (entryData != null) { // Found an entry in list 6005 or 6006
+                            publicationDate = new Date(entryData);
+                        }
+                        // TODO is this the right approach?
                         UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, {
+                            isInspire: isInspire,
                             specification: self.specificationName,
-                            level: "1"
+                            level: "1",
+                            publicationDate: publicationDate
                         });
                         UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.conform") );
                     }
@@ -277,9 +291,23 @@ define([
                     var rule1 = msg.oldItem && msg.oldItem.specification === self.specificationName && msg.item.specification !== self.specificationName;
                     var rule2 = msg.item.specification === self.specificationName && msg.item.level === "1";
                     if (rule1 || rule2) {
+                        var isInspire = false;
+                        var publicationDate = null;
+                        var entryData = UtilSyslist.getSyslistEntryData(6005, self.specificationName);
+                        if (entryData == null) { // No entry in list 6005
+                            entryData = UtilSyslist.getSyslistEntryData(6006, self.specificationName);
+                        } else {
+                            isInspire = true;
+                        }
+                        if (entryData != null) { // Found an entry in list 6005 or 6006
+                            publicationDate = new Date(entryData);
+                        }
+                        // TODO is this the right approach?
                         UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, {
+                            isInspire: isInspire,
                             specification: self.specificationName,
-                            level: "3"
+                            level: "3",
+                            publicationDate: publicationDate
                         });
                         UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.notConform") );
                     }
