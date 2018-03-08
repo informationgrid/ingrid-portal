@@ -312,7 +312,7 @@ define([
             } else {
                 // get name of codelist entry for entry-id "2"
                 entry = UtilSyslist.getSyslistEntryName( 6005, entryId );
-                var entryData = UtilSyslist.getSyslistEntryData(6005, entryId);
+                var entryData = UtilSyslist.getSyslistEntryData(6005, entry);
                 publicationDate = new Date(entryData);
 
                 // check if entry already exists in table
