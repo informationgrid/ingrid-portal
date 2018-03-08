@@ -45,6 +45,7 @@
         ], function(DateTextBox, registry, domClass, on, query, dialog, checks, layoutCreator, UtilStore, UtilSyslist) {
                 var inspireDateTextBox = null;
                 var freeDateTextBox = null;
+                var isNewEntry = false;
                 createDOMElements();
 
                 function createDOMElements() {
@@ -71,7 +72,7 @@
 
 
 
-                    layoutCreator.createFilteringSelect("conformitySpecificationFreeFieldName", null, storeProps, function() {
+                    layoutCreator.createComboBox("conformitySpecificationFreeFieldName", null, storeProps, function() {
                         return UtilSyslist.getSyslistEntry(6006);
                     });
                     on(registry.byId("conformitySpecificationFreeFieldName"), "Change", handleFreeConformitySpecificationChange);
@@ -92,7 +93,12 @@
                 function handleFreeConformitySpecificationChange(conformityId) {
                     var typeName = UtilSyslist.getSyslistEntryName(6006, conformityId);
                     var typeData = UtilSyslist.getSyslistEntryData(6006, typeName);
-                    freeDateTextBox.set('value', typeData);
+                    if (typeData == null) {
+                        isNewEntry = true
+                    } else {
+                        isNewEntry = false;
+                        freeDateTextBox.set('value', typeData);
+                    }
                 }
 
                 function submit() {
@@ -113,6 +119,10 @@
                                 dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", dialog.WARNING);
                                 return;
                             }
+                        } else if (isNewEntry) {
+                            specification = registry.byId("conformitySpecificationFreeFieldName").get("value");
+                            level = registry.byId("conformityLevelFreeFieldName").get("value");
+                            publicationDate = registry.byId("conformityDateFreeFieldName").get("value");
                         } else {
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("item")[0];
                             level = registry.byId("conformityLevelFreeFieldName").get("value");
