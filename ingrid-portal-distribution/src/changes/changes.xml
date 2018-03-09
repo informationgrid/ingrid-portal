@@ -6,19 +6,22 @@
     </properties>
 
     <body>
-        <release version="4.2.2-SNAPSHOT" date="2018-xx-xx" description="Release 4.2.2">
+        <release version="4.2.2" date="2018-03-09" description="Release 4.2.2">
+          <action type="fix" dev="wemove" issue="984">
+            UVP: Update Logo on hessian pre page.
+          </action> 
           <action type="fix" dev="wemove" issue="978">
             UVP: Dokumentname bei externem Dateiupload wird falsch extrahiert.
           </action> 
-          <action type="fix" dev="wemove" issue="974">
-            IGE: Fix Problem of URL validator and validation of capabilities urls.
-          </action>  
           <action type="fix" dev="wemove" issue="">
             UVP: Fix problem with uninitialized data structure, not displaying entries of document table.
           </action>  
           <action type="fix" dev="wemove" issue="969">
             UVP NI: Re-add facet config and localization. Fixes not showing BLP data in facets and search results type.
           </action>
+          <action type="fix" dev="wemove" issue="974">
+            IGE: Fix Problem of URL validator and validation of capabilities urls.
+          </action>  
         </release>
         <release version="4.2.1" date="2018-02-08" description="Release 4.2.1">
           <action type="add" dev="wemove" issue="915">
