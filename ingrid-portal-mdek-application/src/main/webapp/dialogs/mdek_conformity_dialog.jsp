@@ -34,6 +34,7 @@
         require([
             "dijit/form/DateTextBox",
             "dijit/registry",
+            "dojo/_base/array",
             "dojo/dom-class",
             "dojo/on",
             "dojo/query",
@@ -42,11 +43,24 @@
             "ingrid/layoutCreator",
             "ingrid/utils/Store",
             "ingrid/utils/Syslist"
-        ], function(DateTextBox, registry, domClass, on, query, dialog, checks, layoutCreator, UtilStore, UtilSyslist) {
+        ], function(DateTextBox, registry, array, domClass, on, query, warnDialog, checks, layoutCreator, UtilStore, UtilSyslist) {
                 var inspireDateTextBox = null;
                 var freeDateTextBox = null;
-                var isNewEntry = false;
-                createDOMElements();
+                var isNotInCodelist = false;   // Free conformity entreis
+                var isRowBeingEdited = false;  // Row already exists and is being edited
+
+                // data passed by caller of this dialog
+                var caller = {};
+
+                var dialog = null;
+                on(_container_, "Load", function() {
+                    dialog = this;
+                    if (this.customParams) {
+                        caller = this.customParams;
+                    }
+                    createDOMElements()
+                    .then(init);
+                });
 
                 function createDOMElements() {
 
@@ -56,7 +70,7 @@
                             label: '0'
                         }
                     };
-                    layoutCreator.createFilteringSelect("conformitySpecificationInspireFieldName", null, storeProps, function() {
+                    var deferred = layoutCreator.createFilteringSelect("conformitySpecificationInspireFieldName", null, storeProps, function() {
                         return UtilSyslist.getSyslistEntry(6005);
                     });
                     on(registry.byId("conformitySpecificationInspireFieldName"), "Change", handleInspireConformitySpecificationChange);
@@ -83,6 +97,63 @@
                     freeDateTextBox = new DateTextBox({
                         style: "width: 100%;"
                     }, "conformityDateFreeFieldName");
+
+                    return deferred;
+                }
+
+                function init() {
+                    if (caller && caller.selectedRow) {
+                        isRowBeingEdited = true;
+
+                        // Read values from existing row
+                        var row = caller.selectedRow;
+                        var isInspire = row["isInspire"];
+                        var level = row["level"];
+                        var publicationDate = row["publicationDate"];
+                        var specification = row["specification"];
+
+                        var tabContainer = registry.byId("dialogConformityTab");
+                        if (isInspire) {
+                            // Switch tab
+                            tabContainer.selectChild(registry.byId("dialogConformityInspireTab"));
+
+                            // Look for the appropriate codelist entry and set it in the field
+                            var storeData = registry.byId("conformitySpecificationInspireFieldName")["store"]["data"];
+                            array.some(storeData, function(item) {
+                                if (item[0] == specification) {
+                                    registry.byId("conformitySpecificationInspireFieldName").set('item', item);
+                                }
+                            });
+
+                            // Set the level
+                            registry.byId("conformityLevelInspireFieldName").set('value', level);
+                            // Date is handled automatically for INSPIRE items because no custom entries are allowed
+                        } else {
+                            // Switch tab
+                            tabContainer.selectChild(registry.byId("dialogConformityFreeTab"));
+
+                            // Try setting the entry from the codelist
+                            var storeData = registry.byId("conformitySpecificationFreeFieldName")["store"]["data"];
+                            var found = false;
+                            array.some(storeData, function(item) {
+                                if (item[0] == specification) {
+                                    found = true;
+                                    registry.byId("conformitySpecificationFreeFieldName").set('item', item);
+                                }
+                            });
+
+                            // If no entry found in the codelist, then copy the data from the caller's row
+                            if (!found) {
+                                registry.byId("conformitySpecificationFreeFieldName").set('value', specification);
+                            }
+
+                            // Set the level
+                            registry.byId("conformityLevelFreeFieldName").set('value', level);
+
+                            // Set the date as well, so that it doesn't get lost for custom entries
+                            freeDateTextBox.set('value', publicationDate);
+                        }
+                    }
                 }
 
                 function handleInspireConformitySpecificationChange(conformityId) {
@@ -94,9 +165,9 @@
                     var typeName = UtilSyslist.getSyslistEntryName(6006, conformityId);
                     var typeData = UtilSyslist.getSyslistEntryData(6006, typeName);
                     if (typeData == null) {
-                        isNewEntry = true
+                        isNotInCodelist = true
                     } else {
-                        isNewEntry = false;
+                        isNotInCodelist = false;
                         freeDateTextBox.set('value', typeData);
                     }
                 }
@@ -108,7 +179,7 @@
 
                     // add data to conformity table
                     if (!validateInputElements()) {
-                        dialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", dialog.WARNING);
+                        warnDialog.show("<fmt:message key='general.error' />", "<fmt:message key='links.fillRequiredFieldsHint' />", warnDialog.WARNING);
                     } else {
                         if (isInspire) {
                             specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
@@ -116,10 +187,10 @@
                             publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
 
                             if (isInspireConformityInconsistent(specification, level)) {
-                                dialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", dialog.WARNING);
+                                warnDialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", warnDialog.WARNING);
                                 return;
                             }
-                        } else if (isNewEntry) {
+                        } else if (isNotInCodelist) {
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("value");
                             level = registry.byId("conformityLevelFreeFieldName").get("value");
                             publicationDate = registry.byId("conformityDateFreeFieldName").get("value");
@@ -132,23 +203,30 @@
                         var conformityTable = registry.byId("extraInfoConformityTable");
                         var conformityData = conformityTable.data;
 
-                        // if conformity already exists, update it. otherwise add new row
-                        var shouldAppend = true;
-                        for (var i=0; i<conformityData.length && shouldAppend; i++) {
-                            var existingRow = conformityData[i];
-                            if (specification && specification === existingRow["specification"]) {
-                                existingRow["level"] = level;
-                                shouldAppend = false;
+                        if (isRowBeingEdited) {
+                            var row = caller.selectedRow;
+                            row["specification"] = specification;
+                            row["level"] = level;
+                            row["publicationDate"] = publicationDate;
+                        } else {
+                            // if conformity already exists, update it. otherwise add new row
+                            var shouldAppend = true;
+                            for (var i=0; i<conformityData.length && shouldAppend; i++) {
+                                var existingRow = conformityData[i];
+                                if (specification && specification === existingRow["specification"]) {
+                                    existingRow["level"] = level;
+                                    shouldAppend = false;
+                                }
                             }
-                        }
-                        if (shouldAppend) {
-                            var newRow = {
-                                isInspire: isInspire,
-                                specification: specification,
-                                level: level,
-                                publicationDate: publicationDate
-                            };
-                            conformityData.push(newRow);
+                            if (shouldAppend) {
+                                var newRow = {
+                                    isInspire: isInspire,
+                                    specification: specification,
+                                    level: level,
+                                    publicationDate: publicationDate
+                                };
+                                conformityData.push(newRow);
+                            }
                         }
                         UtilStore.updateWriteStore("extraInfoConformityTable", conformityData);
 
@@ -259,7 +337,7 @@
                     </div>
                 </div><!-- TAB 1 END -->
                 <!-- TAB 2 START -->
-				<div data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder grey" style="width: 100%;" title="<fmt:message key="dialog.conformity.tab.freetext" />">
+				<div id="dialogConformityFreeTab" data-dojo-type="dijit/layout/ContentPane" class="blueTopBorder grey" style="width: 100%;" title="<fmt:message key="dialog.conformity.tab.freetext" />">
                     <div class="inputContainer field grey">
                         <span class="outer required">
                             <div>
@@ -310,3 +388,4 @@
     </div>
 </body>
 </html>
+

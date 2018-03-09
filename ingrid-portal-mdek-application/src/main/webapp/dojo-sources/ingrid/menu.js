@@ -567,6 +567,22 @@ define([
                 }));
             }
 
+            if (type == "EDIT_CONFORMITY") {
+                menu.addChild(new MenuSeparator());
+                menu.addChild(new MenuItem({
+                    id: "menuEditClicked_" + type,
+                    label: message.get('contextmenu.table.editClicked'),
+                    onClick: function() {
+                        var rowData = clickedSlickGrid.getData()[clickedRow];
+                        var dialogData = {
+                            gridId: clickedSlickGridProperties.id,
+                            selectedRow: rowData
+                        };
+                        dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_conformity_dialog.jsp?c=' + userLocale, 755, 485, true, dialogData);
+                    }
+                }));
+            }
+
             if (type == "EDIT_OPERATION") {
                 menu.addChild(new MenuSeparator());
                 menu.addChild(new MenuItem({

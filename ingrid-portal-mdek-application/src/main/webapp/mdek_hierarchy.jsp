@@ -2138,10 +2138,10 @@
                                         </label>
                                     </span>
                                     <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
-                                        <a id="extraInfoConformityTableLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('conformity'), 'dialogs/mdek_conformity_dialog.jsp?c='+userLocale, 755, 485, true, {grid: 'generalAddress'});" title="<fmt:message key="dialog.popup.conformityTable.link" /> [Popup]"><fmt:message key="ui.obj.additionalInfo.conformityTable.link" /></a> <!--TODO what is "grid: generalAddress?" -->
+                                        <a id="extraInfoConformityTableLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('conformity'), 'dialogs/mdek_conformity_dialog.jsp?c='+userLocale, 755, 485, true, {});" title="<fmt:message key="dialog.popup.conformityTable.link" /> [Popup]"><fmt:message key="ui.obj.additionalInfo.conformityTable.link" /></a>
                                     </span>
                                     <div class="input tableContainer clear">
-                                        <div id="extraInfoConformityTable" autoHeight="4" interactive="true">
+                                        <div id="extraInfoConformityTable" autoHeight="4" interactive="true" contextMenu="EDIT_CONFORMITY">
                                         </div>
                                     </div>
                                 </div>
