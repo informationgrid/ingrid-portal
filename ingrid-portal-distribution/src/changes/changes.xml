@@ -98,6 +98,9 @@
           <action type="fix" dev="wemove" issue="892">
             PORTAL: Activate BKG Portal Profile in Portal Administration.
           </action>
+		  <action type="fix" dev="wemove" issue="981">
+            PORTAL: UVP fix expand icon.
+          </action>
           <action type="update" dev="wemove" issue="301">
             PORTAL: Update Jetspeed to 2.3.1.
           </action>
