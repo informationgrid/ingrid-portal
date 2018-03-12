@@ -11,7 +11,7 @@
           <action type="fix" dev="wemove" issue="978">
             UVP: Dokumentname bei externem Dateiupload wird falsch extrahiert.
           </action> 
-		      <action type="fix" dev="wemove" issue="982">
+          <action type="fix" dev="wemove" issue="982">
             Portal: Fix uncaught errors in QueryPreProcesssor.
           </action> 
           <action type="fix" dev="wemove" issue="974">
@@ -36,7 +36,7 @@
             IGE: Fix problems digesting XML answers from WFS used for spatial search. The problem only occurs on java8 162 and relates to unmarshalling of XML WFS response.
           </action>
           <action type="update" dev="wemove" issue="859">
-              IGE: Update workflow for adding INSPIRE or custom conformities to the "Conformity" table. In this table, also display the conformity-date.
+            IGE: Update workflow for adding INSPIRE or custom conformities to the "Conformity" table. In this table, also display the conformity-date.
           </action>
           <action type="fix" dev="wemove" issue="733">
             Portal: Clean spaces on login name by create new portal user.
@@ -44,10 +44,16 @@
           <action type="fix" dev="wemove" issue="862">
             Portal: Fix detail view for license "official-work".
           </action>
+          <action type="fix" dev="wemove" issue="981">
+            PORTAL: UVP fix expand icon.
+          </action>
+          <action type="fix" dev="wemove" issue="992">
+            Portal: UVP fix mobile category teaser view.
+          </action> 
           <action type="update" dev="wemove" issue="954">
             Portal: Update detail view for UVP.
           </action>
-		      <action type="add" dev="wemove" issue="890">
+          <action type="add" dev="wemove" issue="890">
             IGE/Portal(UVP): Add ZIP upload and update portal detail view.
           </action>
           <action type="fix" dev="wemove" issue="781">
@@ -59,10 +65,10 @@
           <action type="fix" dev="wemove" issue="949">
             IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
           </action>
-		  <action type="update" dev="wemove" issue="961">
+          <action type="update" dev="wemove" issue="961">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
           </action>
-		  <action type="fix" dev="wemove" issue="987">
+          <action type="fix" dev="wemove" issue="987">
             MAPCLIENT: Fix mapclient offline mode message.
           </action>
         </release>
@@ -97,9 +103,6 @@
           </action>
           <action type="fix" dev="wemove" issue="892">
             PORTAL: Activate BKG Portal Profile in Portal Administration.
-          </action>
-		  <action type="fix" dev="wemove" issue="981">
-            PORTAL: UVP fix expand icon.
           </action>
           <action type="update" dev="wemove" issue="301">
             PORTAL: Update Jetspeed to 2.3.1.
