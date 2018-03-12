@@ -241,7 +241,7 @@
                                             #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase3')")
                                         #end
                                         <div class="sidebar__widget js-accordion-multi">
-                                            <div class="sidebar__widget__title filter__title js-accordion-toggle">
+                                            <div class="sidebar__widget__title filter__title js-accordion-toggle #if($number == $nodelistLength)is-active#end">
                                                 #renderAccordionTitle($step_title)
                                             </div>
                                             <div class="sidebar__widget__content js-accordion-content #if($number != $nodelistLength)is-hidden#end">
