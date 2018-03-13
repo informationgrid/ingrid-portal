@@ -44,28 +44,24 @@
                 height: auto;
             }
             
-            #errorImage { float: left; }
-            #errorContent { padding-left: 170px; color: #5E5E5F; font-size: 13px; font-weight: bold;}
+            #errorContent { padding-left: 10px; color: #5E5E5F; font-size: 13px; font-weight: bold;}
             #errorText ul { list-style-type: disc; }
             #errorText ul li { padding-bottom: 20px; }
             #errorTitle { font-size: 20px; }
             #horizontalMenu { margin:0; }
             #horizontalMenu li { float:left; margin-right: 15px; list-style: none; }
-            #errorFooter { padding-top: 20px; }
+            #errorFooter { padding-top: 10px; }
             #errorFooter p { font-size:14px;  }
             #errorBody a, #errorBody a:link { }
+            #footercontainer { padding-left: 10px; }
             
             div#identity {
                 padding: 0px;
                 margin: 0px;
-                height: 97px;
+                height: 60px;
                 width: 59.5em;
-                background-color: #68A5D2;
+                background-color: #4EAD46;
                 overflow: visible;
-            }
-            div.motiv_start {
-                background-image: url(/decorations/layout/ingrid/images/01_motiv_start.gif);
-                background-repeat: no-repeat;
             }
             
         </style>
@@ -88,45 +84,28 @@
         <!--  BEGIN: layout/html/ingrid/decorator.vm -->
         <div class="layout-tigris">
             <!-- Identity Area inkl. service menu -->
-            <div id="identity" class="motiv_start">
+            <div id="identity">
                 <!-- LOGO -->
                 <div id="logo">
-                <a href="/startseite" title="Startseite von GeoPortal.WSV aufrufen "><img src="/decorations/layout/ingrid/images/logo.gif" alt="Logo GeoPortal.WSV" /></a>
+                <a href="/startseite" title="Startseite von GeoPortal.WSV"><img src="/decorations/layout/ingrid/images/logo-desktop.png" alt="Logo GeoPortal.WSV" /></a>
        			</div>
        			<!-- SERVICE-NAVIGATION -->
             
             <!-- logged on message -->
         </div>
-        <!-- MAIN-NAVIGATION -->
-        <div id="mainnav">
-            <h2 class="hide">Hauptmenu</h2>
-            <br class="clearer" />
-        </div>
-        <!-- sub navigation -->
-        <div id="subnavBack">
-            <a name="subnav"></a>
-            <div class="subnav_corner">
-                <div class="subnav_corner_img">
-                </div>
-            </div>
-        </div>
         <!-- CONTENT BLOCK -->
         <div id="errorBody">
             <div id="container">
-                <div id="errorImage">
-                    <img src="/decorations/layout/ingrid/images/fail.png" />
-                </div>
                 <div id="errorContent">
                     <h1 id="errorTitle">FEHLER 503: Wartung</h1>
                     <div id="errorText">
                         <p>
-                            Leider k&ouml;nnen Sie GeoPortal.WSV vor&uuml;bergehend nicht aufrufen, da wir gerade die Inhalte aktualisieren und optimieren. GeoPortal.WSV wird in K&uuml;rze wieder verf&uuml;gbar sein. Bitte schauen Sie im Laufe des Tages noch einmal in unser beh&ouml;rdliches Umweltportal hinein! 
+                            Leider k&ouml;nnen Sie GeoPortal.WSV vor&uuml;bergehend nicht aufrufen, da wir gerade die Inhalte aktualisieren und optimieren.<br/>
+                            GeoPortal.WSV wird in K&uuml;rze wieder verf&uuml;gbar sein. 
                         </p>
                         <p>
                             Bei Fragen sind wir gerne f&uuml;r Sie da: <a href="mailto:gdi-wsv.support@ba-dlz-it.bund.de">gdi-wsv.support@ba-dlz-it.bund.de</a>
                         </p>
-                    </div>
-                    <div style="clear:both; padding-bottom:100px;">
                     </div>
                     <div id="errorFooter">
                         <p>
@@ -153,10 +132,6 @@
             	<div id="footercontent">
             		<div id="footerimage"></div>
             		<div id="footertext">
-		                   <!-- portlets go here --><a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
-		                   | <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen">Datenschutzbestimmung</a>
-		                   | <a href="mailto:gdi-wsv.support@ba-dlz-it.bund.de" title="Ansprechpartner bei fehlerhafter Darstellung der Webseite - E-Mail Programm startet automatisch">Webmaster</a>
-		                   <br/>
 		                   Copyright &copy; Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)
 		                   <br/>
 		                   <i>Alle Rechte vorbehalten</i>
