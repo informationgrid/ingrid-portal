@@ -63,7 +63,7 @@ define([
             this.events.push(
                 on(inspireRelevantWidget, "Click", function(isChecked) {
                     if (this.checked) {
-                        utils.addConformity(self.specificationName, "3");
+                        utils.addConformity(true, self.specificationName, "3");
                     }
                 }),
 
