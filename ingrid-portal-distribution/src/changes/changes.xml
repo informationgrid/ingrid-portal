@@ -50,6 +50,9 @@
           <action type="fix" dev="wemove" issue="992">
             Portal: UVP fix mobile category teaser view.
           </action> 
+          <action type="fix" dev="wemove" issue="995">
+            Portal: UVP fix menu tooltips.
+          </action> 
           <action type="update" dev="wemove" issue="954">
             Portal: Update detail view for UVP.
           </action>
