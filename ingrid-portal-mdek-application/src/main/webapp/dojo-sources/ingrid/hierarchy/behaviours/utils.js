@@ -56,15 +56,6 @@ define([
             UtilGrid.setTableData("extraInfoConformityTable", conformityData);
         },
 
-        updateConformityLevel: function(level) {
-            var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
-            for(var i=0; i<conformityData.length; i++) {
-                var row = conformityData[i];
-                row["level"] = level;
-                UtilGrid.updateTableDataRow("extraInfoConformityTable", i, row);
-            }
-        },
-
         removeEvents: function(events) {
             array.forEach(events, function(event) {
                 if (event !== null) {
