@@ -137,6 +137,9 @@ define([
                 registry.byId("isInspireConform").on("click", function(isChecked) {
                     if (inspireRelevantWidget.checked && isChecked) {
                         self.handleClickConform();
+
+                        // update conformity level in conformity table
+                        utils.updateConformityLevel(1);
                     }
                 }),
 
@@ -149,6 +152,9 @@ define([
 
                         // remove INSPIRE Richtlinie
                         utils.removeConformity(self.specificationNameInspireRichtlinie);
+
+                        // update conformity level in conformity table
+                        utils.updateConformityLevel(3);
                     }
                 }),
 
