@@ -12,7 +12,10 @@
           </action> 
           <action type="fix" dev="wemove" issue="992">
             Portal: UVP fix mobile category teaser view.
-          </action> 
+          </action>
+          <action type="fix" dev="wemove" issue="995">
+            Portal: UVP fix menu tooltips.
+          </action>
         </release>
         <release version="4.2.2" date="2018-03-09" description="Release 4.2.2">
           <action type="fix" dev="wemove" issue="984">
