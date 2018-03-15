@@ -32,115 +32,115 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="GeoPortal.WSV bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
-        <meta name="keywords" lang="de" content="GeoPortal.WSV Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="keywords" lang="de" content="GeoPortal.WSV, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css"></link>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css"></link>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
-        <link rel="search" type="application/opensearchdescription+xml" href="/os-plugin/geoportalwsv_os_browser-plugin.xml" title="GeoPortal.WSV Suche"/>
-        <!--<link rel="stylesheet" media="screen, projection" type="text/css" href="styles/portal_u.css" />-->
-        <style>
-            html, body {
-                width: auto;
-                height: auto;
-            }
-            
-            #errorContent { padding-left: 10px; color: #5E5E5F; font-size: 13px; font-weight: bold;}
-            #errorText ul { list-style-type: disc; }
-            #errorText ul li { padding-bottom: 20px; }
-            #errorTitle { font-size: 20px; }
-            #horizontalMenu { margin:0; }
-            #horizontalMenu li { float:left; margin-right: 15px; list-style: none; }
-            #errorFooter { padding-top: 10px; }
-            #errorFooter p { font-size:14px;  }
-            #errorBody a, #errorBody a:link { }
-            #footercontainer { padding-left: 10px; }
-            
-            div#identity {
-                padding: 0px;
-                margin: 0px;
-                height: 60px;
-                width: 59.5em;
-                background-color: #4EAD46;
-                overflow: visible;
-            }
-            
-        </style>
-        <script type="text/javascript">
-            <!--
-            function openWindow(pipeline){
-                var vWinUsers = window.open(pipeline, 'PortletSelector', 'status=no,resizable=yes,width=500,height=600,scrollbars=yes');
-                vWinUsers.opener = self;
-                vWinUsers.focus();
-            }
-            
-            //-->
-        </script>
-       <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/styles.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/portlet/ingrid-teaser/css/styles.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/portlet/ingrid-marginal-teaser/css/styles.css" />
-        
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
+        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
     </head>
-    <body class="layout-tigris">
-        <!--  BEGIN: layout/html/ingrid/decorator.vm -->
-        <div class="layout-tigris">
-            <!-- Identity Area inkl. service menu -->
-            <div id="identity">
-                <!-- LOGO -->
-                <div id="logo">
-                <a href="/startseite" title="Startseite von GeoPortal.WSV"><img src="/decorations/layout/ingrid/images/logo-desktop.png" alt="Logo GeoPortal.WSV" /></a>
-       			</div>
-       			<!-- SERVICE-NAVIGATION -->
-            
-            <!-- logged on message -->
+    <body>
+        <div class="nav-overlay is-fixed">
         </div>
-        <!-- CONTENT BLOCK -->
-        <div id="errorBody">
-            <div id="container">
-                <div id="errorContent">
-                    <h1 id="errorTitle">FEHLER 503: Wartung</h1>
-                    <div id="errorText">
+        <div class="page">
+            <header class="header">
+                <div class="ob-box-padded-more ob-box-center mq-show-xxl">
+                    <div class="header__widgets__section">
+                        <div class="header__widget nav-toggle js-nav-mobile-toggle">
+                            <svg class="icon">
+                                <use xlink:href="#burger"></use>
+                            </svg>
+                            <svg class="icon ob-fade">
+                                <use xlink:href="#cross"></use>
+                            </svg>
+                        </div>
+                        <a class="header__widget header__logo" href="/startseite" title="Startseite von GeoPortal.WSV">
+                            <img class="mobile__logo" src="/decorations/layout/ingrid/images/logo-mobile.png ">
+                        </a>
+                        <a class="mobile__title mq-hide-s" href="/startseite" title="Startseite von GeoPortal.WSV">GeoPortal.WSV</a>
+                    </div>
+                </div> 
+                <nav class="nav-desktop mq-hide-xxl">
+                    <ul class="nav-desktop__list ob-box-center">
+                        <li class="nav-desktop__item " style="max-width: 100px; display: inline-block;">
+                            <a class="desktop__header__logo" href="/startseite" title="Startseite von GeoPortal.WSV">
+                                <img class="desktop__logo" style="height: 57px;" src="/decorations/layout/ingrid/images/logo-desktop.png">
+                            </a>
+                        </li>
+                        <li class="nav-desktop__item mq-hide-xb" style="max-width: 200px; ">
+                            <div class="desktop__title">GeoPortal.WSV</div>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <!-- CONTENT BLOCK -->
+            <section class="block block--padded">
+                <div class="ob-box-wide ob-box-padded ob-box-center">
+                    <article class="content ob-container">
+                        <h1 id="errorTitle">FEHLER 503: WARTUNG</h1>
                         <p>
                             Leider k&ouml;nnen Sie GeoPortal.WSV vor&uuml;bergehend nicht aufrufen, da wir gerade die Inhalte aktualisieren und optimieren.<br/>
-                            GeoPortal.WSV wird in K&uuml;rze wieder verf&uuml;gbar sein. 
+                            GeoPortal.WSV wird in K&uuml;rze wieder verf&uuml;gbar sein.
                         </p>
                         <p>
                             Bei Fragen sind wir gerne f&uuml;r Sie da: <a href="mailto:gdi-wsv.support@ba-dlz-it.bund.de">gdi-wsv.support@ba-dlz-it.bund.de</a>
                         </p>
-                    </div>
-                    <div id="errorFooter">
                         <p>
                             Danke f&uuml;r Ihr Verst&auml;ndnis.
                         </p>
+                    </article>
+                </div>
+            </section>
+            <footer class="footer">
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__top">
+                        <a href="/startseite">
+                            <img class="footer__logo" src="/decorations/layout/ingrid/images/logo_footer_1.png"></img>
+                        </a>
+                        <p class="copyright">© Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)</p>
                     </div>
                 </div>
-            </div>
-            </div>
-            <div class="clearer">
-            </div>
-            <div id="footermarginalcontainer">
-                <div id="footermarginal">
-                    <!-- portlets go here -->
-                    <div id="footerSeparator">
-                    </div>
-                    &nbsp;
-                </div>
-            </div>
-            <div class="clearer">
-            </div>
-            <!-- footer block -->
-            <div id="footercontainer">
-            	<div id="footercontent">
-            		<div id="footerimage"></div>
-            		<div id="footertext">
-		                   Copyright &copy; Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)
-		                   <br/>
-		                   <i>Alle Rechte vorbehalten</i>
-                    </div>
-                    <br/>
-					<br/>
-                    <div id="footerimage2"></div>
-                </div>
-            </div>
+            </footer>
         </div>
+        <!-- Global scripts -->
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+        
+        <!-- Popup -->
+        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+        
+        <!-- Accordion -->
+        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
+        <script>
+          $('.js-accordion').accordion();
+        
+          $('.js-accordion-multi').accordion({
+              multi: true
+          });
+        </script>
+        
+        <!-- Tabs -->
+        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
+        <script>
+          $('.js-tabs').tabs();
+        </script>
+        
+        <!-- Selection -->
+        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
+        <script>
+          $('.js-selection').selection();
+        </script>
+        
+        <!-- Table Sort -->
+        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
+        <script>
+          $('.js-table-sortable').sortable();
+        </script>
     </body>
 </html>
