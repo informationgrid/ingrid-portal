@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="4.2.3-SNAPSHOT" date="2018-xx-xx" description="Release 4.2.3">
+        <release version="4.2.3" date="2018-03-17" description="Release 4.2.3">
           <action type="fix" dev="wemove" issue="981">
             Portal: UVP fix expand icon on detail view.
           </action> 
