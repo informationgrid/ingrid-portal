@@ -583,6 +583,7 @@ define({
         "ui.obj.additionalInfo.conformityTable.title": "Conformity",
         "ui.obj.additionalInfo.conformityTable.header.level": "Degree of Conformity*",
         "ui.obj.additionalInfo.conformityTable.header.specification": "Specification of Conformity*",
+    "ui.obj.additionalInfo.conformityTable.header.publicationDate": "Date*",
         "ui.obj.additionalInfo.xmlExportCriteria": "XML-Export-Criteria",
         "ui.obj.additionalInfo.legalBasis": "Legal Basis",
         "ui.obj.additionalInfo.purpose": "Purpose",
