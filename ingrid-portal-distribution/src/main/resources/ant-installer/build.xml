@@ -651,7 +651,7 @@
                 <echo>WebmapClient 'css' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/css"/>
                 <copy todir="${WebmapDataDir}/WebmapClientData/css" >
-                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/src/style">
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/css">
                         <include name="**/*.override.css"/>
                     </fileset>
                 </copy>
