@@ -38,7 +38,13 @@ define(["dojo/_base/declare",
             },
 
             ConformityCellFormatter: function(row, cell, value, columnDef, dataContext) {
-                var syslist = dataContext["isInspire"] ? 6005 : 6006;
+                //var syslist = dataContext["isInspire"] ? 6005 : 6006;
+                var syslist;
+                if (dataContext) {
+                    syslist = dataContext["isInspire"] ? 6005 : 6006;
+                } else {
+                    syslist = 6005;
+                }
                 var result = Syslist.getSyslistEntryName(syslist, value);
                 return result ? result : value;
             },

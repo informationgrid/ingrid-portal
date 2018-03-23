@@ -8,12 +8,18 @@
     <body>
         
         <release version="4.3.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.0">
+          <action type="fix" dev="wemove" issue="1001">
+            Portal: UVP: Upload does not work with IE 11.
+          </action>
           <action type="fix" dev="wemove" issue="978">
             UVP: Dokumentname bei externem Dateiupload wird falsch extrahiert.
           </action> 
           <action type="fix" dev="wemove" issue="982">
             Portal: Fix uncaught errors in QueryPreProcesssor.
           </action> 
+          <action type="fix" dev="wemove" issue="993">
+            IGE/Portal: Fix language of Geothesaurus result (WFS), now always german if multiple languages.
+          </action>  
           <action type="fix" dev="wemove" issue="974">
             IGE: Fix Problem of URL validator and validation of capabilities urls.
           </action>  
@@ -49,6 +55,9 @@
           </action>
           <action type="fix" dev="wemove" issue="992">
             Portal: UVP fix mobile category teaser view.
+          </action> 
+          <action type="fix" dev="wemove" issue="995">
+            Portal: UVP fix menu tooltips.
           </action> 
           <action type="update" dev="wemove" issue="954">
             Portal: Update detail view for UVP.

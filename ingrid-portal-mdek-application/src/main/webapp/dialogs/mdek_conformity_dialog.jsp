@@ -268,7 +268,7 @@
 
                     var isInspireConform = registry.byId("isInspireConform").get("value");
                     if (isInspireConform && level != 1) return true;
-                    if (!isInspireConform && level != 3) return true;
+                    if (!isInspireConform && level == 1) return true;
 
                     return false;
                 }

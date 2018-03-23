@@ -756,11 +756,11 @@ define([
                             // generate basepath ready for comparison with 
                             var basePathWithoutLeadingSlash = basePath;
                             // strip leading slash because the file name comes in without trainling slash
-                            if (basePath.startsWith("/")) {
+                            if (basePath.indexOf("/") == 0) {
                             	basePathWithoutLeadingSlash = basePath.substring(1, basePath.length);
                             }
                             var fileRel;
-                            if (file.startsWith(basePathWithoutLeadingSlash)) {
+                            if (file.indexOf(basePathWithoutLeadingSlash) == 0) {
                                 // uploaded file, cut base path of uploaded file, keep hierarchy structure from extracted ZIPs
                             	// strip slash following base path 
                             	fileRel = file.substring(basePathWithoutLeadingSlash.length + 1, file.length);
