@@ -29,6 +29,11 @@
   width: 140px;
 }
 
+[ga-topic] .ga-topics-sprite-hoehen-tiefen {
+  background: url("../img/theme_hoehen_tiefen.png");
+  width: 140px;
+}
+
 @media (max-width: 768px) {
   [ga-background-selector] .ga-wmts_topplus_web_grau {
     background-image: url("../img/ga-bkggrau.png");
