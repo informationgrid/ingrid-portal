@@ -272,7 +272,11 @@ public class GeneralCapabilitiesParser {
             for (int i = 0; i < orNodes.getLength(); i++) {
                 UrlBean url = new UrlBean();
                 String link = xPathUtils.getString(orNodes.item(i), "@xlink:href");
-                if (link != null) url.setUrl(link);
+                
+                // do not add link if there's none (#781)
+                if (link == null || link.trim().equals( "" )) continue;
+                
+                url.setUrl(link);
                 String type = xPathUtils.getString(orNodes.item(i), "@xlink:type");
                 if (type != null) url.setDatatype(type);
                 

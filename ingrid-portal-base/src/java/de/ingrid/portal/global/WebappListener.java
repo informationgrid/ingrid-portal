@@ -94,8 +94,7 @@ public class WebappListener implements ServletContextListener {
             }
 
         } catch (NamingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error( "Error migrating the database", e );
         }
     }
 

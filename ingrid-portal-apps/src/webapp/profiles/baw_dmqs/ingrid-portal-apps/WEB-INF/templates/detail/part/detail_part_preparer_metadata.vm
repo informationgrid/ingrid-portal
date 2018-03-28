@@ -441,7 +441,7 @@
                             #set($tmp = "")
                             ## Nutzungsbeschr�nkungen (useConstraints)
                             #set($useConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints")
-                            #set($tmp = $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints")))
+                            #set($tmp = $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints", false, "6500")))
                             #renderTextList($MESSAGES.getString("object_access.license") $tmp)
                             #set($tmp = "")
                             ## Nutzungsbedingungen (useLimitation)

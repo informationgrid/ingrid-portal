@@ -1,0 +1,5 @@
+#if($!rs.additional_html_1)
+    <div class="media__obj #if($rs.udk_class)media__obj--right#end">
+        $!rs.additional_html_1
+    </div>
+#end

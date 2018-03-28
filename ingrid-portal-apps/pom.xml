@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>4.2.0</version>
+    <version>4.3.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -285,6 +285,29 @@
       <artifactId>saxpath</artifactId>
       <scope>runtime</scope>
     </dependency>
+    
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-security</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>jetspeed-rdbms</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.portals.jetspeed-2</groupId>
+          <artifactId>jetspeed-serializer</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.ldap</groupId>
+          <artifactId>spring-ldap</artifactId>
+        </exclusion>
+        <exclusion>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
 
 <!-- InGrid -->
     <dependency>
@@ -306,29 +329,6 @@
         <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-portal-utils</artifactId>
-      <!-- NOT provided anymore (tomcat shared/lib), we need it in our webapp because of dependency to jetspeed-security jar at runtime ! -->
-      <exclusions>
-        <exclusion>
-          <groupId>org.apache.portals.jetspeed-2</groupId>
-          <artifactId>jetspeed-rdbms</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.portals.jetspeed-2</groupId>
-          <artifactId>jetspeed-serializer</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.springframework.ldap</groupId>
-          <artifactId>spring-ldap</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>org.slf4j</groupId>
-        	<artifactId>slf4j-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -718,19 +718,10 @@
         <version>1.5.6</version>
         <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>com.nulab-inc</groupId>
+      <artifactId>zxcvbn</artifactId>
+      <version>1.2.3</version>
+    </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>de.ingrid.all</id>
-      <name>InGrid Repo Maven</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
-    </repository>
-<!--
-    <repository>
-      <id>maven.repo</id>
-      <name>Maven Repo Default</name>
-      <url>http://maven.jahia.org/maven2</url>
-    </repository>
--->
-  </repositories>
 </project>

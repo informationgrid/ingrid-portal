@@ -22,36 +22,26 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
-import de.ingrid.utils.udk.UtilsCountryCodelist;
-import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
+import de.ingrid.utils.udk.*;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DetailPartPreparer {
 
@@ -234,6 +224,102 @@ public class DetailPartPreparer {
         return list;
     }
 
+    public List<String> getUseConstraints() {
+        final String restrictionCodeList = "524";
+        final String licenceList = "6500";
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
+        final String restrictionCodeXpath = "./gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
+        final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
+        List<String> result = new ArrayList<>();
+
+        NodeList resourceConstraintsNodes = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        if (resourceConstraintsNodes == null) {
+            // Don't continue if no results found
+            return result;
+        }
+
+        for(int i=0; i<resourceConstraintsNodes.getLength(); i++) {
+            Node node = resourceConstraintsNodes.item(i);
+
+            NodeList restrictionCodeNodes = XPathUtils.getNodeList(node, restrictionCodeXpath);
+            NodeList constraintsNodes = XPathUtils.getNodeList(node, constraintsTextXpath);
+            if (restrictionCodeNodes == null || constraintsNodes == null) {
+                continue;
+            }
+            NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
+            String restrictionCode = attrs.getNamedItem("codeListValue").getTextContent();
+            log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+            if (restrictionCode == null) continue;
+            restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
+
+            String constraints = constraintsNodes.item(0).getTextContent();
+            log.debug(String.format("Discovered use constraints: %s", constraints));
+
+            // FIXME >>> Change after redmine ticket #848 is resolved >>>
+            // Temporary solution to get rid of prefix in front of the codelist value
+            int index = constraints.indexOf(':');
+            if (index >= 0) {
+                constraints = constraints.substring(index+1).trim();
+            }
+            // <<< End of temporary solution <<<
+
+            if (constraints == null || constraints.trim().isEmpty()) {
+                if (!result.contains(restrictionCode )) {
+                    result.add(restrictionCode);
+                }
+                continue;
+            }
+            String codeListValue = getValueFromCodeList(licenceList, constraints);
+            if (codeListValue == null || codeListValue.trim().isEmpty()) {
+                String value = String.format("%s: %s", restrictionCode, constraints);
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
+            } else {
+                String value = String.format("%s: %s", restrictionCode, codeListValue);
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public List<String> getUseLimitations() {
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation/gco:CharacterString";
+
+        List<String> result = new ArrayList<>();
+
+        NodeList useLimitations = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        if (useLimitations == null) {
+            // Don't continue if no results found
+            return result;
+        }
+
+        for(int i=0; i<useLimitations.getLength(); i++) {
+            Node node = useLimitations.item(i);
+
+            // FIXME >>> Change after redmine ticket #848 is resolved >>>
+            // Temporary solution to get rid of prefix in front of the codelist value
+            String constraints = node.getTextContent();
+            log.debug(String.format("Discovered use limitations: %s", constraints));
+
+            int index = constraints.indexOf(':');
+            if (index >= 0) {
+                constraints = constraints.substring(index+1).trim();
+            }
+            log.debug(String.format("Use limitations are now: %s", constraints));
+            // <<< End of temporary solution <<<
+
+            if (constraints != null && !constraints.trim().isEmpty()) {
+                result.add(constraints);
+            }
+        }
+
+        return result;
+    }
+
     public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, false);
     }
@@ -281,13 +367,16 @@ public class DetailPartPreparer {
             // transform with code list ?
             if(codeListId != null){
                 String tmpValue = getValueFromCodeList(codeListId, value);
-                if (tmpValue.length() > 0) {
+                if (tmpValue.length() == 0) {
+                    tmpValue = getValueFromCodeList(codeListId, value, true);
+                }
+                if(tmpValue.length() > 0) {
                     value = tmpValue;
                 }
             }
             if (!list.contains( value )) {
-                list.add(value);                        
-            }            
+                list.add(value);
+            }
         }
         sortList(list);
         return list;
@@ -326,6 +415,114 @@ public class DetailPartPreparer {
         return XPathUtils.getNodeList(node, xpathExpression);
     }
     
+    public HashMap getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, ArrayList<String> xpathSubEntryList){
+        return getTreeFromXPathBy(xpathExpression, xpathSubEntry, xpathSubEntryList, this.rootNode);
+    }
+    
+    public HashMap getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, ArrayList<String> xpathSubEntryList, Node node){
+        HashMap root = new HashMap();
+        root.put("type", "root");
+        NodeList tmpNodelist =  XPathUtils.getNodeList(node, xpathExpression);
+        boolean createNewFolder = false;
+        String xpathOldSubEntryValue = "";
+        if(tmpNodelist != null) {
+            for (int i=0; i<tmpNodelist.getLength();i++){
+                Node tmpNode = tmpNodelist.item(i);
+                if(tmpNode != null) {
+                    HashMap leaf = new HashMap();
+                    leaf.put("type", "leaf");
+                    for (String entry : xpathSubEntryList) {
+                        String value = getValueFromXPath(entry, null, tmpNode);
+                        if(value != null) {
+                            leaf.put(entry, value);
+                        }
+                    }
+                     // Create tree structure
+                    String xpathSubEntryValue = getValueFromXPath(xpathSubEntry, null, tmpNode);
+                    if(xpathSubEntryValue != null) {
+                        if(xpathSubEntryValue.startsWith("http")) {
+                           if (root.get("children") == null) {
+                               root.put( "children", new ArrayList<HashMap>() );
+                           }
+                           ArrayList rootChildren = (ArrayList) root.get("children");
+                           rootChildren.add(leaf);
+                           createNewFolder = true;
+                        } else {
+                            String[] paths = xpathSubEntryValue.split("/");
+                            String[] pathsOld = xpathOldSubEntryValue.split("/");
+                            if(paths != null) {
+                                int counter = 0;
+                                HashMap folder = root;
+                                HashMap parentFolder = null;
+                                while (counter != paths.length) {
+                                    String path = paths[counter];
+                                    // Remove directory path in label
+                                    if(leaf != null) {
+                                        if(leaf.get("label") != null) {
+                                            String label = (String) leaf.get("label");
+                                            if(label != null && label.indexOf("/") > -1 && path.length() > 0) {
+                                                label = label.replaceFirst(getDecodeValue(path) + "/", "");
+                                            }
+                                            leaf.put("label", label);
+                                        }
+                                    }
+                                    counter++;
+                                    if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
+                                        if(path.length() != 0) {
+                                            if(folder.get("children") == null) {
+                                                folder.put( "children", new ArrayList<HashMap>() );
+                                            }
+                                            ArrayList<HashMap> children = (ArrayList) folder.get("children");
+                                            
+                                            HashMap subMap = null;
+                                            for (int j=children.size()-1; j>=0;j--){
+                                                HashMap tmpMap = children.get(j);
+                                                if(tmpMap.get("type").equals("folder") && tmpMap.get("label").equals(path)) {
+                                                    subMap = tmpMap;
+                                                    break;
+                                                }
+                                            }
+                                            if(counter != paths.length) {
+                                                if(subMap != null) {
+                                                    if(counter < pathsOld.length && !path.equals(pathsOld[counter-1])) {
+                                                        if(parentFolder != null) {
+                                                            if(parentFolder.get("children") != null) {
+                                                                children = (ArrayList) parentFolder.get("children");
+                                                                createNewFolder = true;
+                                                            }
+                                                        }
+                                                    } else {
+                                                        parentFolder = subMap;
+                                                    }
+                                                }
+                                                if(subMap == null || createNewFolder) {
+                                                    subMap = new HashMap();
+                                                    subMap.put("type", "folder");
+                                                    subMap.put("label", path);
+                                                    children.add(subMap);
+                                                    folder.put("children", children);
+                                                    createNewFolder = false;
+                                                }
+                                            } else {
+                                                // Add leaf to folder
+                                                subMap = leaf;
+                                                children.add(subMap);
+                                                folder.put("children", children);
+                                            }
+                                            folder = subMap;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    xpathOldSubEntryValue = xpathSubEntryValue;
+                }
+            }
+        }
+        return root;
+    }
+
     public String getValueFromNodeListDependOnValue(NodeList nodeList, String xpathExpression, String xpathExpressionDependOn, String dependOn){
         String value = "";
         if(nodeList != null){
@@ -431,12 +628,16 @@ public class DetailPartPreparer {
     }
     
     public String getValueFromCodeList(String codelist, String value){
+        return getValueFromCodeList(codelist, value, false);
+    }
+
+    public String getValueFromCodeList(String codelist, String value, boolean checkDataId){
         if(value != null){
-            value = sysCodeList.getNameByCodeListValue(codelist, value);
+            value = sysCodeList.getNameByCodeListValue(codelist, value, checkDataId);
         }
         return value;
     }
-    
+
     public String getNameFromCodeList(String codelist, String value){
         if(value != null){
             value = sysCodeList.getName(codelist, value);

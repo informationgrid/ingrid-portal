@@ -45,6 +45,11 @@
     */
 }
 
+.folder__item{
+    padding: rem(4px 0px);
+    position: relative;
+}
+
 .tree__item--large {
     font-size: rem(20px);
 
@@ -78,4 +83,8 @@
 
 .tree__content {
     padding-left: rem(30px);
+}
+
+.folder__content {
+    padding-left: rem(24px);
 }

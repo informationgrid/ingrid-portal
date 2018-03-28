@@ -37,6 +37,18 @@ define(["dojo/_base/declare",
                 return result ? result : value;
             },
 
+            ConformityCellFormatter: function(row, cell, value, columnDef, dataContext) {
+                //var syslist = dataContext["isInspire"] ? 6005 : 6006;
+                var syslist;
+                if (dataContext) {
+                    syslist = dataContext["isInspire"] ? 6005 : 6006;
+                } else {
+                    syslist = 6005;
+                }
+                var result = Syslist.getSyslistEntryName(syslist, value);
+                return result ? result : value;
+            },
+
             ListCellFormatter: function(row, cell, value, columnDef, dataContext) {
                 if (value == undefined)
                     return "";
@@ -96,7 +108,7 @@ define(["dojo/_base/declare",
             },
 
             BoolCellFormatter: function(row, cell, value, columnDef, dataContext) {
-                return value ? "<img src='img/tick.png'>" : "<img src='img/checkbox.png'>";
+                return value ? "<div class='center'><img src='img/tick.png'></div>" : "<div class='center'><img src='img/checkbox.png'></div>";
             },
 
             FirstEntryFormatter: function(identifier, row, cell, value, columnDef, dataContext) {

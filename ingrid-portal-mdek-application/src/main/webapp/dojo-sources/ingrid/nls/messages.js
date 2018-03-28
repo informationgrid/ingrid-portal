@@ -43,6 +43,7 @@ define({
         "general.image.not.found": "Image not found",
         "general.add.keywords": "Prepare keywords: ${0} of ${1}",
         "general.add.layers": "Adding coupled resource: ${0} of ${1}",
+        "general.field.too.long.255": "This field must not be longer than 255 characters. Please check the value.",
 
         "general.page": "Page",
 
@@ -582,6 +583,7 @@ define({
         "ui.obj.additionalInfo.conformityTable.title": "Conformity",
         "ui.obj.additionalInfo.conformityTable.header.level": "Degree of Conformity*",
         "ui.obj.additionalInfo.conformityTable.header.specification": "Specification of Conformity*",
+    "ui.obj.additionalInfo.conformityTable.header.publicationDate": "Date*",
         "ui.obj.additionalInfo.xmlExportCriteria": "XML-Export-Criteria",
         "ui.obj.additionalInfo.legalBasis": "Legal Basis",
         "ui.obj.additionalInfo.purpose": "Purpose",
@@ -978,7 +980,8 @@ define({
         "ui.sysList.5200": "Object class 3 - Service Type",
         "ui.sysList.5300": "Object class 6 - Service Type",
         "ui.sysList.6000": "Conformity - Degree of Conformity",
-        "ui.sysList.6005": "Conformity - Specification of Conformity",
+        "ui.sysList.6005": "Conformity - Specification of Conformity (INSPIRE)",
+        "ui.sysList.6006": "Conformity - Specification of Conformity (Free entries)",
         "ui.sysList.6010": "Availability - Access Constraints",
         "ui.sysList.6020": "Availability - Usage Limitations",
         "ui.sysList.6100": "INSPIRE-Topics",

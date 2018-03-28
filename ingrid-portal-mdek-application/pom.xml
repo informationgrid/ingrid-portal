@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.2.0</version>
+        <version>4.3.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -12,8 +12,11 @@
     <scm>
         <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</connection>
         <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-mdek-application</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
+    <properties>
+        <sonar.exclusions>src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*</sonar.exclusions>
+    </properties>
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
         <resources>
@@ -238,7 +241,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
-            <version>3.6.1</version>
+            <version>4.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
@@ -280,13 +283,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- also included via transitive dependencies from ingrid-mdek-services, BUT KEEP HERE TO USE WHEN services sparated (see above) -->
-<!--
-        <dependency>
-            <groupId>de.ingrid.mdek</groupId>
-            <artifactId>ingrid-import-export</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
@@ -526,11 +522,6 @@
             <version>1.1.3</version> </dependency> -->
     </dependencies>
     <repositories>
-        <repository>
-            <id>de.ingrid.all</id>
-            <name>InGrid Repo Maven</name>
-            <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
-        </repository>
         <repository>
             <id>geotools</id>
             <url>http://download.osgeo.org/webdav/geotools/</url>

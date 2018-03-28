@@ -2,7 +2,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>4.2.0</version>
+    <version>4.3.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -179,15 +179,6 @@
       </plugin>
     </plugins>
   </build>
-  <repositories>
-    <!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
-    <repository>
-      <snapshots />
-      <id>de.ingrid.all</id>
-      <name>Maven Repo InGrid</name>
-      <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
-    </repository>
-  </repositories>
   <profiles>
     <profile>
       <id>docker</id>
@@ -231,18 +222,8 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>wagon-maven-plugin</artifactId>
             <configuration>
-              <fromDir>target</fromDir>
-              <url>file:///opt/ingrid/distributions/${project.artifactId}/${project.version}</url>
+              <skip>false</skip>
             </configuration>
-            <executions>
-              <execution>
-                <id>upload-to-distributions</id>
-                <phase>deploy</phase>
-                <goals>
-                  <goal>upload</goal>
-                </goals>
-              </execution>
-            </executions>
           </plugin>
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>

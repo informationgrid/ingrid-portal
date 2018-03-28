@@ -11,11 +11,11 @@ CREATE TABLE ingrid_temp2 (
   temp_value int
 );
 
--- Show '/cms/cms-1.psml'
-UPDATE page SET is_hidden = 0 WHERE path = '/cms/cms-1.psml';
+-- Hide '/cms/cms-1.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-1.psml';
 
--- Show '/cms/cms-2.psml'
-UPDATE page SET is_hidden = 0 WHERE path = '/cms/cms-2.psml';
+-- Hide '/cms/cms-2.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/cms/cms-2.psml';
 
 -- Show '/application/main-application.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/application/main-application.psml';

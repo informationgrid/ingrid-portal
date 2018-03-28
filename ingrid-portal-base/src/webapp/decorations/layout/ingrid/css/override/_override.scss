@@ -53,3 +53,12 @@
   margin: 0 auto;
   font-size: 40px;
 }
+
+.auto-height-m {
+  @include media(
+    $query: '< 768',
+    $css: (
+      height: auto !important
+    )
+  );
+}

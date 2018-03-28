@@ -298,6 +298,7 @@ define([
         // already there
         updateEntryToConformityTable: function(entryId, deleteEntry) {
             var entry = null;
+            var publicationDate = null;
             if (deleteEntry) {
                 // remove all automatically added entries
                 var itemIndexes = [];
@@ -311,6 +312,8 @@ define([
             } else {
                 // get name of codelist entry for entry-id "2"
                 entry = UtilSyslist.getSyslistEntryName( 6005, entryId );
+                var entryData = UtilSyslist.getSyslistEntryData(6005, entry);
+                publicationDate = new Date(entryData);
 
                 // check if entry already exists in table
                 var exists = dojo.some( UtilGrid.getTableData( "extraInfoConformityTable" ), function(row) {
@@ -320,8 +323,10 @@ define([
                 // add entry to table if it doesn't already exist
                 if (!exists)
                     UtilGrid.addTableDataRow( "extraInfoConformityTable", {
+                        isInspire: true,
                         specification: entry,
-                        level: 1 // konform
+                        level: 1, // konform
+                        publicationDate: publicationDate
                     } );
 
             }

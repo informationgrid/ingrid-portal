@@ -287,14 +287,19 @@
     </outbound-rule>
     
     <!-- Help -->
+    <rule enabled="true">
+        <condition type="parameter" name="hkey" operator="equal">(maps-1)</condition>
+        <from>/hilfe(.*)$</from>
+        <to type="permanent-redirect">https://itpedia.dlz-it.de/display/geoportalwsvhilfe/GeoViewer.WSV</to>
+    </rule>
     <rule>
         <from>/hilfe</from>
-        <to type="forward">/portal/help.psml</to>
+        <to type="permanent-redirect">https://itpedia.dlz-it.de/display/geoportalwsvhilfe</to>
     </rule>
-    <outbound-rule>
+    <rule>
         <from>/portal/help.psml</from>
-        <to>/hilfe</to>
-    </outbound-rule>
+        <to type="permanent-redirect">https://itpedia.dlz-it.de/display/geoportalwsvhilfe</to>
+    </rule>
     
     <!-- Features -->
     <rule>

@@ -165,14 +165,12 @@
             #if($userNameFamily)
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end
-        #end
-        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="#if($jetspeed.getLoggedOn())$salutation#else$!linkTitle#end">
-            <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
-                <use xlink:href="#user"></use>
-            </svg>
-            <span class="header__widget__text mq-hide-xxl">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
-        </a>
-        #if($jetspeed.getLoggedOn())
+            <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="#if($jetspeed.getLoggedOn())$salutation#else$!linkTitle#end">
+                <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
+                    <use xlink:href="#user"></use>
+                </svg>
+                <span class="header__widget__text mq-hide-xxl">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
+            </a>
             <div class="metamenu metamenu--wide">
                 <!-- State logged in -->
                 #set($userAttributes = $jetspeed.getUserProperties())
@@ -184,7 +182,7 @@
                 #end
                 #if($userNameFamily)
                     #set ($salutation = "$!{salutation} $userNameFamily")
-                #end        
+                #end
                 <div class="metamenu__box ob-container">
                     <p>$MESSAGES.getString('ingrid.page.login.as'):<br><strong>$salutation</strong></p>
                     <p><a class="btn btn--secondary btn--small btn--block" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a></p>
@@ -193,8 +191,6 @@
                     <p><a class="btn btn--primary btn--small btn--block" href="$linkUrl">$MESSAGES.getString('ingrid.page.login.to.myportal')</a></p>
                 </div>
             </div>
-        #else
-            $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
     </div>
   #elseif($el == "/administration")

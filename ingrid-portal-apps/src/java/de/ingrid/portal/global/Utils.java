@@ -67,6 +67,9 @@ import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nulabinc.zxcvbn.Strength;
+import com.nulabinc.zxcvbn.Zxcvbn;
+
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
@@ -220,6 +223,10 @@ public class Utils {
 			if (!hasNameAndDomain) {
 				result = false;
 			}
+
+			if (result) {
+				result = aEmailAddress.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_MAIL, ""));
+			}
 		} catch (AddressException ex) {
 			if (log.isDebugEnabled()) {
 				log.debug("checking email '" + aEmailAddress + "' caused AddressException", ex);
@@ -228,6 +235,35 @@ public class Utils {
 		}
 		return result;
 	}
+
+    public static boolean isValidLogin(String login) {
+        if (login == null)
+            return false;
+
+        boolean result = true;
+        if (login.length() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4)) {
+            return false;
+        }
+        if (result) {
+            result = login.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, ""));
+        }
+        return result;
+    }
+
+    public static boolean isStrengthPassword(String password) {
+        if (password == null)
+            return false;
+
+        boolean result = true;
+        Zxcvbn zxcvbn = new Zxcvbn();
+        Strength strength = zxcvbn.measure(password);
+        if(strength != null) {
+            if(strength.getScore() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_STRENGTH_CHECK_PASSWORD, 3)) {
+                result = false;
+            }
+        }
+        return result;
+    }
 
 	public static String[] getShortStrings(String[] myStrings, int maxLength) {
 		if (myStrings == null) {
@@ -714,6 +750,7 @@ public class Utils {
 		
 		return url + serviceParam;
 	}
+
 }
 
 class MailAuthenticator extends Authenticator {

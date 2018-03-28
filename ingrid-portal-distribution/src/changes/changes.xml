@@ -6,6 +6,88 @@
     </properties>
 
     <body>
+        
+        <release version="4.3.0" date="2018-03-28" description="Release 4.3.0">
+          <action type="fix" dev="wemove" issue="1001">
+            Portal: UVP: Upload does not work with IE 11.
+          </action>
+          <action type="fix" dev="wemove" issue="984">
+            UVP: Update Logo on hessian pre page.
+          </action> 
+          <action type="fix" dev="wemove" issue="978">
+            UVP: Dokumentname bei externem Dateiupload wird falsch extrahiert.
+          </action> 
+          <action type="fix" dev="wemove" issue="982">
+            Portal: Fix uncaught errors in QueryPreProcesssor.
+          </action> 
+          <action type="fix" dev="wemove" issue="993">
+            IGE/Portal: Fix language of Geothesaurus result (WFS), now always german if multiple languages.
+          </action>  
+          <action type="fix" dev="wemove" issue="974">
+            IGE: Fix Problem of URL validator and validation of capabilities urls.
+          </action>  
+          <action type="add" dev="wemove" issue="915">
+            Portal: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
+          </action>
+          <action type="add" dev="wemove" issue="829">
+            Portal: Add password policy for create new portal user.
+          </action>
+          <action type="add" dev="wemove" issue="60">
+            Portal: Check login name on create new portal user.
+          </action>
+          <action type="add" dev="wemove" issue="915">
+            Portal: UVP: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            UVP: Fix problem with uninitialized data structure, not displaying entries of document table.
+          </action>  
+          <action type="fix" dev="wemove" issue="969">
+            UVP NI: Re-add facet config and localization. Fixes not showing BLP data in facets and search results type.
+          </action>
+          <action type="fix" dev="wemove" issue="965">
+            IGE: Fix problems digesting XML answers from WFS used for spatial search. The problem only occurs on java8 162 and relates to unmarshalling of XML WFS response.
+          </action>
+          <action type="update" dev="wemove" issue="859">
+            IGE: Update workflow for adding INSPIRE or custom conformities to the "Conformity" table. In this table, also display the conformity-date.
+          </action>
+          <action type="fix" dev="wemove" issue="733">
+            Portal: Clean spaces on login name by create new portal user.
+          </action>
+          <action type="fix" dev="wemove" issue="862">
+            Portal: Fix detail view for license "official-work".
+          </action>
+          <action type="fix" dev="wemove" issue="981">
+            PORTAL: UVP fix expand icon.
+          </action>
+          <action type="fix" dev="wemove" issue="992">
+            Portal: UVP fix mobile category teaser view.
+          </action> 
+          <action type="fix" dev="wemove" issue="995">
+            Portal: UVP fix menu tooltips.
+          </action> 
+          <action type="update" dev="wemove" issue="954">
+            Portal: Update detail view for UVP.
+          </action>
+          <action type="add" dev="wemove" issue="890">
+            IGE/Portal(UVP): Add ZIP upload and update portal detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="781">
+            IGE: Fix import of getCapabilities - online resources.
+          </action>
+          <action type="fix" dev="wemove" issue="946">
+            IGE/Portal: Fixed location search by adapting to new WFS service.
+          </action>
+          <action type="fix" dev="wemove" issue="949">
+            IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
+          </action>
+          <action type="update" dev="wemove" issue="961">
+            MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+          <action type="fix" dev="wemove" issue="987">
+            MAPCLIENT: Fix mapclient offline mode message.
+          </action>
+        </release>
+
         <release version="4.2.0" date="2018-01-05" description="Release 4.2.0">
           <action type="update" dev="wemove" issue="934">
             RLP: Update Help of RLP Portal.
@@ -232,7 +314,7 @@
           <action type="fix" dev="wemove" issue="REDMINE-648">
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
-          <action type="Fix" dev="wemove" issue="REDMINE-655">
+          <action type="fix" dev="wemove" issue="REDMINE-655">
             PORTAL: Fixed chronicle teaser on default-page.psml. 
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-721">
