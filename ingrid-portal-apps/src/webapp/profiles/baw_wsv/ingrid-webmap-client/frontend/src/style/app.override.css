@@ -164,3 +164,9 @@
     /* IE 9*/
   }
 }
+
+.htmlpopup-container .htmlpopup-header {
+    background-color: #156570;
+    color: white;
+    font-size: 12pt;
+}
