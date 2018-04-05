@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.3.0-SNAPSHOT</version>
+        <version>4.4.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -241,7 +241,7 @@
         <dependency>
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
-            <version>4.2.1</version>
+            <version>4.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
@@ -283,13 +283,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- also included via transitive dependencies from ingrid-mdek-services, BUT KEEP HERE TO USE WHEN services sparated (see above) -->
-<!--
-        <dependency>
-            <groupId>de.ingrid.mdek</groupId>
-            <artifactId>ingrid-import-export</artifactId>
-        </dependency>
--->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>

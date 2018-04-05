@@ -161,16 +161,18 @@ public class FacetsConfig {
                             from = "";
                         } else {
                             TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
-                            if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
-                                cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
-                            }
-
-                            if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
-                                cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
-                            }
-
-                            if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
-                                cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                            if(pd != null) {
+                                if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
+                                    cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
+                                }
+                                
+                                if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
+                                    cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
+                                }
+                                
+                                if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
+                                    cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                                }
                             }
                             from = df.format( cal.getTime() );
                         }
@@ -185,16 +187,18 @@ public class FacetsConfig {
                             to = "";
                         } else {
                             TM_PeriodDuration pd = TM_PeriodDuration.parse( value );
-                            if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
-                                cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
-                            }
-
-                            if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
-                                cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
-                            }
-
-                            if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
-                                cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                            if(pd != null) {
+                                if (pd.getValue( Interval.DAYS ) != null && pd.getValue( Interval.DAYS ).length() > 0) {
+                                    cal.add( Calendar.DAY_OF_MONTH, Integer.parseInt( pd.getValue( Interval.DAYS ) ) * (-1) );
+                                }
+                                
+                                if (pd.getValue( Interval.MONTHS ) != null && pd.getValue( Interval.MONTHS ).length() > 0) {
+                                    cal.add( Calendar.MONTH, Integer.parseInt( pd.getValue( Interval.MONTHS ) ) * (-1) );
+                                }
+                                
+                                if (pd.getValue( Interval.YEARS ) != null && pd.getValue( Interval.YEARS ).length() > 0) {
+                                    cal.add( Calendar.YEAR, Integer.parseInt( pd.getValue( Interval.YEARS ) ) * (-1) );
+                                }
                             }
                             to = df.format( cal.getTime() );
                         }

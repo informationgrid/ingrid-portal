@@ -22,37 +22,26 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
-import de.ingrid.utils.udk.UtilsCountryCodelist;
-import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
+import de.ingrid.utils.udk.*;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DetailPartPreparer {
 
@@ -235,6 +224,102 @@ public class DetailPartPreparer {
         return list;
     }
 
+    public List<String> getUseConstraints() {
+        final String restrictionCodeList = "524";
+        final String licenceList = "6500";
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
+        final String restrictionCodeXpath = "./gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
+        final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
+        List<String> result = new ArrayList<>();
+
+        NodeList resourceConstraintsNodes = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        if (resourceConstraintsNodes == null) {
+            // Don't continue if no results found
+            return result;
+        }
+
+        for(int i=0; i<resourceConstraintsNodes.getLength(); i++) {
+            Node node = resourceConstraintsNodes.item(i);
+
+            NodeList restrictionCodeNodes = XPathUtils.getNodeList(node, restrictionCodeXpath);
+            NodeList constraintsNodes = XPathUtils.getNodeList(node, constraintsTextXpath);
+            if (restrictionCodeNodes == null || constraintsNodes == null) {
+                continue;
+            }
+            NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
+            String restrictionCode = attrs.getNamedItem("codeListValue").getTextContent();
+            log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+            if (restrictionCode == null) continue;
+            restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
+
+            String constraints = constraintsNodes.item(0).getTextContent();
+            log.debug(String.format("Discovered use constraints: %s", constraints));
+
+            // FIXME >>> Change after redmine ticket #848 is resolved >>>
+            // Temporary solution to get rid of prefix in front of the codelist value
+            int index = constraints.indexOf(':');
+            if (index >= 0) {
+                constraints = constraints.substring(index+1).trim();
+            }
+            // <<< End of temporary solution <<<
+
+            if (constraints == null || constraints.trim().isEmpty()) {
+                if (!result.contains(restrictionCode )) {
+                    result.add(restrictionCode);
+                }
+                continue;
+            }
+            String codeListValue = getValueFromCodeList(licenceList, constraints);
+            if (codeListValue == null || codeListValue.trim().isEmpty()) {
+                String value = String.format("%s: %s", restrictionCode, constraints);
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
+            } else {
+                String value = String.format("%s: %s", restrictionCode, codeListValue);
+                if (!result.contains(value)) {
+                    result.add(value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public List<String> getUseLimitations() {
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation/gco:CharacterString";
+
+        List<String> result = new ArrayList<>();
+
+        NodeList useLimitations = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        if (useLimitations == null) {
+            // Don't continue if no results found
+            return result;
+        }
+
+        for(int i=0; i<useLimitations.getLength(); i++) {
+            Node node = useLimitations.item(i);
+
+            // FIXME >>> Change after redmine ticket #848 is resolved >>>
+            // Temporary solution to get rid of prefix in front of the codelist value
+            String constraints = node.getTextContent();
+            log.debug(String.format("Discovered use limitations: %s", constraints));
+
+            int index = constraints.indexOf(':');
+            if (index >= 0) {
+                constraints = constraints.substring(index+1).trim();
+            }
+            log.debug(String.format("Use limitations are now: %s", constraints));
+            // <<< End of temporary solution <<<
+
+            if (constraints != null && !constraints.trim().isEmpty()) {
+                result.add(constraints);
+            }
+        }
+
+        return result;
+    }
+
     public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, false);
     }
@@ -356,12 +441,10 @@ public class DetailPartPreparer {
                     String xpathSubEntryValue = getValueFromXPath(xpathSubEntry, null, tmpNode);
                     if(xpathSubEntryValue != null) {
                         if(xpathSubEntryValue.startsWith("http")) {
-                            ArrayList rootChildren = null;
-                            if(root.get("children") != null) {
-                                rootChildren = (ArrayList) root.get("children");
-                            } else {
-                                rootChildren = new ArrayList<HashMap>();
-                            }
+                           if (root.get("children") == null) {
+                               root.put( "children", new ArrayList<HashMap>() );
+                           }
+                           ArrayList rootChildren = (ArrayList) root.get("children");
                            rootChildren.add(leaf);
                            createNewFolder = true;
                         } else {
@@ -386,12 +469,11 @@ public class DetailPartPreparer {
                                     counter++;
                                     if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
                                         if(path.length() != 0) {
-                                            ArrayList<HashMap> children = null;
-                                            if(folder.get("children") != null) {
-                                                children = (ArrayList) folder.get("children");
-                                            } else {
-                                                children = new ArrayList<HashMap>();
+                                            if(folder.get("children") == null) {
+                                                folder.put( "children", new ArrayList<HashMap>() );
                                             }
+                                            ArrayList<HashMap> children = (ArrayList) folder.get("children");
+                                            
                                             HashMap subMap = null;
                                             for (int j=children.size()-1; j>=0;j--){
                                                 HashMap tmpMap = children.get(j);

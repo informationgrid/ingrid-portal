@@ -90,8 +90,8 @@
                     <div class="header__widgets__section header_logo_section">
                         <a class="header__logo header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
                             <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/mu-logo.png"></img>
-                            <img class="mq-show-xxl mq-hide-s mobile__logo" src="/decorations/layout/ingrid/images/template/niedersachsen.png"></img>
-                            <img class="mq-show-s mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
+                            <img class="mq-show-xxl mq-hide-m mobile__logo" src="/decorations/layout/ingrid/images/template/niedersachsen.png"></img>
+                            <img class="mq-show-m mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
                         </a>
                     </div>
                     #if($serviceMenu && !$serviceMenu.empty)

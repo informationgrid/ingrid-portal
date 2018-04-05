@@ -1352,11 +1352,16 @@ public class MdekMapper implements DataMapperInterface {
             if (con.getLevel() != null) {
                 result.put(MdekKeys.CONFORMITY_DEGREE_KEY, con.getLevel());
             }
-            KeyValuePair kvp = mapFromKeyValue(MdekKeys.CONFORMITY_SPECIFICATION_KEY, con.getSpecification());
-            if (kvp.getValue() != null || kvp.getKey() != -1) {
-            	result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, kvp.getKey());
-            	result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, kvp.getValue());
-            }
+            // Assume INSPIRE if we encounter null. Is this right?
+            boolean isInspire = con.getIsInspire() == null || con.getIsInspire();
+            result.put(MdekKeys.CONFORMITY_IS_INSPIRE, isInspire ? "Y" : "N");
+            int listId = isInspire ? 6005 : 6006; // TODO: hard coded value. Change de.ingrid.mdek.SysListCache to automatically detect list ids?
+            Integer key = sysListMapper.getKeyFromListId(listId, con.getSpecification());
+            key = key == null ? -1 : key;
+            result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, key);
+            result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, con.getSpecification().trim());
+            result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getPublicationDate()));
+
             if (!result.isEmpty()) {
                 resultList.add(result);
             }
@@ -2035,8 +2040,17 @@ public class MdekMapper implements DataMapperInterface {
         for (IngridDocument con : conList) {
             ConformityBean c = new ConformityBean();
             c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_DEGREE_KEY));
-            KeyValuePair kvp = mapToKeyValuePair(con, MdekKeys.CONFORMITY_SPECIFICATION_KEY, MdekKeys.CONFORMITY_SPECIFICATION_VALUE, true);
-            c.setSpecification(kvp.getValue());
+
+            String isInspireString = con.getString(MdekKeys.CONFORMITY_IS_INSPIRE);
+            boolean isInspire = isInspireString != null && isInspireString.equals("Y");
+            c.setIsInspire(isInspire);
+
+            int sysList = isInspire ? 6005 : 6006;
+            String value = sysListMapper.getValueFromListId(sysList, (Integer) con.get(MdekKeys.CONFORMITY_SPECIFICATION_KEY), true);
+            value = value == null || value.trim().isEmpty() ? (String) con.get(MdekKeys.CONFORMITY_SPECIFICATION_VALUE) : value;
+            c.setSpecification(value);
+
+            c.setPublicationDate(convertTimestampToDate(con.getString(MdekKeys.CONFORMITY_PUBLICATION_DATE)));
             resultList.add(c);
         }
         return resultList;

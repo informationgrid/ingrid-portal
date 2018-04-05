@@ -2474,15 +2474,17 @@ public class UtilsFacete {
     
     private static boolean isAnyFacetConfigSelect(ArrayList<IngridFacet> config, boolean sessionSelect) {
         boolean isSelect = false;
-        for(IngridFacet facet : config){
-            if(facet.isSelect()){
-                isSelect = true;
-                break;
-            }
-            if(facet.getFacets() != null){
-                isSelect = isAnyFacetConfigSelect(facet.getFacets(), false);
-                if(isSelect){
+        if(config != null) {
+            for(IngridFacet facet : config){
+                if(facet.isSelect()){
+                    isSelect = true;
                     break;
+                }
+                if(facet.getFacets() != null){
+                    isSelect = isAnyFacetConfigSelect(facet.getFacets(), false);
+                    if(isSelect){
+                        break;
+                    }
                 }
             }
         }

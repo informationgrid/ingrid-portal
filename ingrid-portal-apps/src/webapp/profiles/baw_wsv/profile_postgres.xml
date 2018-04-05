@@ -51,11 +51,11 @@
         </page>
         <page>
             <name>cms/cms-1.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>cms/cms-2.psml</name>
-            <hidden>false</hidden>
+            <hidden>true</hidden>
         </page>
         <page>
             <name>mdek/mdek_portal_admin.psml</name>

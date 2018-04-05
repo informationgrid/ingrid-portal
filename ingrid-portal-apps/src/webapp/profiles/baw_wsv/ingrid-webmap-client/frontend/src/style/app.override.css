@@ -1,3 +1,36 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+#toptools {
+  background-color: rgba(78,173,70,0.7);
+  padding: 0.25em 0 0.25em 1.25em;color: #FFFFFF;
+  border-radius: 25px;
+}
+
+#toptools a {
+   color: #FFFFFF !important;
+   font-size: .85em;
+ }
+
 [ga-topic] .ga-topics-sprite-themen {
   background: url("../img/theme_themen.png");
   width: 140px;
@@ -15,6 +48,11 @@
 
 [ga-topic] .ga-topics-sprite-inspire {
   background: url("../img/theme_inspire.png");
+  width: 140px;
+}
+
+[ga-topic] .ga-topics-sprite-hoehen-tiefen {
+  background: url("../img/theme_hoehen_tiefen.png");
   width: 140px;
 }
 
@@ -104,7 +142,7 @@
   [ga-background-selector].ga-open .ga-wmts_topplus_web_grau {
     -webkit-transform: translate3d(-439px, 0, 0);
             transform: translate3d(-439px, 0, 0);
-    -ms-transform: translateX(-328px);
+    -ms-transform: translateX(-439px);
     /* IE 9*/
   }
   [ga-background-selector].ga-open .ga-wmts_osm {
@@ -125,4 +163,10 @@
     -ms-transform: translateX(-126px);
     /* IE 9*/
   }
+}
+
+.htmlpopup-container .htmlpopup-header {
+    background-color: #156570;
+    color: white;
+    font-size: 12pt;
 }

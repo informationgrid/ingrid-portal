@@ -146,10 +146,10 @@ public class QueryPreProcessor {
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
                 UtilsFacete.facetePrepareInGridQuery(request, query);
             }
-        } catch (ParseException ex) {
+        } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
-                        + queryString, ex);
+                        + queryString, t);
             }
         }
 

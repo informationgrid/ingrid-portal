@@ -23,6 +23,7 @@
 define([
     "dojo/_base/declare",
     "dojo/_base/array",
+    "dojo/dom-class",
     "dojo/on",
     "dojo/string",
     "dojo/topic",
@@ -31,7 +32,7 @@ define([
     "ingrid/utils/Syslist",
     "ingrid/utils/Grid",
     "ingrid/hierarchy/behaviours/utils"
-], function(declare, array, on, string, topic, registry, message, UtilSyslist, UtilGrid, utils) {
+], function(declare, array, domClass, on, string, topic, registry, message, UtilSyslist, UtilGrid, utils) {
 
     return declare(null, {
         title: "Geodatenservice",
@@ -63,7 +64,7 @@ define([
             this.events.push(
                 on(inspireRelevantWidget, "Click", function(isChecked) {
                     if (this.checked) {
-                        utils.addConformity(self.specificationName, "3");
+                        utils.addConformity(true, self.specificationName, "1");
                     }
                 }),
 
@@ -79,8 +80,10 @@ define([
                             }
 
                         });
+                        domClass.add("uiElementN024", "required");
                     } else {
                         utils.removeEvents([self.publishEvent]);
+                        domClass.remove("uiElementN024", "required");
                     }
                 })
             );
