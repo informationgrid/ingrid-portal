@@ -1771,6 +1771,17 @@ define([
             	dom.byId("orgObjId").innerHTML = "";
             	domClass.add("origIdSpan", "hide");
             }
+            var pubDate = nodeData.publicationDate;
+            if (pubDate) {
+                var isInFuture = date.compare(new Date(), nodeData.publicationDate, "date") < 0;
+                if (isInFuture) {
+                    dom.byId("publicationTime").innerHTML = UtilString.getDateString(nodeData.publicationDate, "dd.MM.yyyy");
+                    domClass.remove("publicationTimeStatus", "hide");
+                }
+            } else {
+                dom.byId("publicationTime").innerHTML = '';
+                domClass.add("publicationTimeStatus", "hide");
+            }
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
                 dom.byId("lastEditor").innerHTML = UtilAddress.createAddressTitle(nodeData.lastEditor);
@@ -2943,3 +2954,4 @@ define([
 
     })();
 });
+

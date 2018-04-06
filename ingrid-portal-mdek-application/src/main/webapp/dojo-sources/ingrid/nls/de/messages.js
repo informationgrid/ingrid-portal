@@ -530,6 +530,7 @@ define({
     "ui.obj.header.workState": "Status",
     "ui.obj.header.creationTime": "Erstellt am",
     "ui.obj.header.modificationTime": "Ge&auml;ndert am",
+    "ui.obj.header.willBePublishedOn": "Wird ver&ouml;ffentlicht am",
     "ui.obj.header.modUser": "Von",
     "ui.obj.general.title": "Allgemeines",
     "ui.obj.general.shortDescription": "Kurzbezeichnung",
@@ -1102,3 +1103,4 @@ define({
     "info.address.inherit.to.children": "Es wurden ${0} Adressen verändert!",
     "ui.listentry.noFilter": "Kein Filter"
 });
+

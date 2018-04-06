@@ -531,6 +531,7 @@ define({
         "ui.obj.header.workState": "State",
         "ui.obj.header.creationTime": "Created",
         "ui.obj.header.modificationTime": "Modified",
+        "ui.obj.header.willBePublishedOn": "Publish on",
         "ui.obj.header.modUser": "Last change",
         "ui.obj.general.title": "General",
         "ui.obj.general.shortDescription": "Short Description",
@@ -1102,3 +1103,4 @@ define({
 
     de: true
 });
+
