@@ -94,6 +94,10 @@ define(["dojo/_base/declare",
                 query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
+                this.uvpPhaseField.showAddButton();
+                domClass.remove(this.nominatimSearch.domNode, "hide");
+                domClass.add("uiElementAdduvpNegativeApprovalDate", "hide");
+                domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
 
             } else if (objClass === "Class11") { // ausländische
                 domClass.add("uiElementAdduvpgCategory", "hide");
@@ -101,8 +105,31 @@ define(["dojo/_base/declare",
                 query("#generalDescLabel label").addContent(message.get("uvp.form.foreign.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.foreign.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 3];
-
+                this.uvpPhaseField.showAddButton();
+                domClass.remove(this.nominatimSearch.domNode, "hide");
+                domClass.add("uiElementAdduvpNegativeApprovalDate", "hide");
+                domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
+                
             } else if (objClass === "Class12") { // negative (not implemented yet)
+                this.uvpPhaseField.hideAddButton();
+                query("#generalAddressTableLabel label").addContent(message.get("uvp.form.negative.address"), "only");
+                domClass.add("uiElementAdduvpNeedsExamination", "hide");
+                
+                // check global variabel set in "publishNegativeExaminations"-behaviour
+                if (uvp && uvp.publishNegativeExaminations) {
+                    query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
+                    domClass.remove("uiElement1010", "hide");
+                    domClass.remove(this.nominatimSearch.domNode, "hide");
+                    domClass.remove("uiElementAdd" + this.prefix + "spatialValue", "hide");
+                    domClass.remove("uiElementAdduvpgCategory", "hide");
+                    domClass.remove("uiElementAdduvpNegativeRelevantDocs", "hide");
+                } else {
+                    domClass.add("uiElement1010", "hide");
+                    domClass.add(this.nominatimSearch.domNode, "hide");
+                    domClass.add("uiElementAdd" + this.prefix + "spatialValue", "hide");
+                    domClass.add("uiElementAdduvpgCategory", "hide");
+                    domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
+                }
 
             } else if (objClass === "Class13" || objClass === "Class14") { // Raumordnungsverfahren or Linienbestimmungen
                 domClass.remove("uiElementAdduvpgCategory", "hide");
@@ -110,6 +137,10 @@ define(["dojo/_base/declare",
                 query("#generalDescLabel label").addContent(message.get("uvp.form.spatial.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.spatial.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
+                this.uvpPhaseField.showAddButton();
+                domClass.remove(this.nominatimSearch.domNode, "hide");
+                domClass.add("uiElementAdduvpNegativeApprovalDate", "hide");
+                domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
             }
         },
 
@@ -279,6 +310,25 @@ define(["dojo/_base/declare",
 			});
             newFieldsToDirtyCheck.push(id);
             construct.place(checkbox, rubric);
+            additionalFields.push(registry.byId(id));
+
+            /**
+             * Negative Approval Date
+             */
+            id = "uvpNegativeApprovalDate";
+            var dateboxNegativeExam = creator.createDomDatebox({ id: id, name: message.get("uvp.form.negative.approvalDate"), help: message.get("uvp.form.negative.approvalDate.helpMessage"), visible: "required", style: "width:33%" });
+            newFieldsToDirtyCheck.push(id);
+            construct.place(dateboxNegativeExam, rubric);
+            additionalFields.push(registry.byId(id));
+
+            /**
+             * Relevante Dokumente (Table)
+             */
+            id = "uvpNegativeRelevantDocs";
+            newFieldsToDirtyCheck.push(id);
+            creator.createDomDataGrid({ id: id, name: message.get("uvp.form.negative.relevantDocs"), help: message.get("uvp.form.negative.relevantDocs.helpMessage"), isMandatory: false, visible: "required", rows: "1", forceGridHeight: false, style: "width:100%", contextMenu: "EXPIRED_GRID", moveRows: true },
+                this.uvpPhaseField.getDocTableStructure(), rubric);
+            this.uvpPhaseField.addUploadLink(id);
             additionalFields.push(registry.byId(id));
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));

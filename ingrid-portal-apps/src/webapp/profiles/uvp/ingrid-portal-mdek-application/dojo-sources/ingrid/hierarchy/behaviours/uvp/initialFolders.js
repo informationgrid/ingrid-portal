@@ -37,8 +37,19 @@ define(["dojo/_base/declare",
             var self = this;
             this.getInitFlag().then(function(isInitialized) {
                 console.log("init flag: ", isInitialized);
+
+                // if database has not been initialized for UVP yet, then do it now
+                // and create root folders
                 if (!isInitialized) {
-                    self.createFolders();
+                    self.createFolders()
+                        .then( self.createNegativeUvp );
+                    self.storeInitFlag();
+
+                // if it was initialized before but an update is necessary, like support
+                // for negative UVP
+                } else if (isInitialized === "1") {
+                    console.log("UVP: add new category 'negative UVP'")
+                    self.createNegativeUvp();
                     self.storeInitFlag();
                 }
 
@@ -48,7 +59,9 @@ define(["dojo/_base/declare",
         createFolders: function() {
             var def = new Deferred();
             var def2 = new Deferred();
+            var def3 = new Deferred();
             var self = this;
+
             ObjectService.createNewNode(null, function(objNode) {
                 objNode.nodeAppType = "O";
                 objNode.objectClass = "1000";
@@ -69,27 +82,33 @@ define(["dojo/_base/declare",
                     });
                 });
             });
-            // ObjectService.createNewNode(null, function(objNode) {
-            //     objNode.nodeAppType = "O";
-            //     objNode.objectClass = "1000";
-            //     objNode.objectName = message.get("uvp.form.categories.uvpNegative");
-            //     def.then(function() {
-            //         ObjectService.saveNodeData(objNode, "true", false, {
-            //             callback: def2.resolve,
-            //             errorHandler: self.handleCreateError
-            //         });
-            //     });
-            // });
             ObjectService.createNewNode(null, function(objNode) {
                 objNode.nodeAppType = "O";
                 objNode.objectClass = "1000";
                 objNode.objectName = message.get("uvp.form.categories.uvpForeign");
                 def2.then(function() {
                     ObjectService.saveNodeData(objNode, "true", false, {
+                        callback: def3.resolve,
                         errorHandler: self.handleCreateError
                     });
                 });
             });
+
+            return def3;
+        },
+
+        createNegativeUvp: function() {
+            var def = new Deferred();
+            ObjectService.createNewNode(null, function(objNode) {
+                objNode.nodeAppType = "O";
+                objNode.objectClass = "1000";
+                objNode.objectName = message.get("uvp.form.categories.uvpNegative");
+                ObjectService.saveNodeData(objNode, "true", false, {
+                    callback: def.resolve,
+                    errorHandler: self.handleCreateError
+                });
+            });
+            return def;
         },
 
         handleCreateError: function(error) {
@@ -104,7 +123,7 @@ define(["dojo/_base/declare",
 
         storeInitFlag: function() {
             var obj = {};
-            obj[this.initFlagName] = 1;
+            obj[this.initFlagName] = 2;
             Catalog.storeGenericValuesDef(obj);
         }
 
