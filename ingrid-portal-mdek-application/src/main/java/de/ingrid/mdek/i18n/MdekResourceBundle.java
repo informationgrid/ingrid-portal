@@ -85,10 +85,11 @@ public class MdekResourceBundle extends ResourceBundle {
     protected Object handleGetObject(String key) {
         for(PropertyResourceBundle rb : bundles) {
             try {
-                Object o = rb.getString(key);
-                if (o != null) {
-                    return o;
-                }
+                /*
+                 *If no value is found, then exception is thrown. We ignore this
+                 * exception and search in the next available bundle.
+                 */
+                return rb.getString(key);
             } catch (MissingResourceException ignored) {}
         }
         LOG.warn("No localised string for key: " + key);
