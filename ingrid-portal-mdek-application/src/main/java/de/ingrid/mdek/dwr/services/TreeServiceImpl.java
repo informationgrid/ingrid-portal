@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.dwr.services;
 
+import de.ingrid.mdek.i18n.MdekResourceBundle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -124,8 +125,8 @@ public class TreeServiceImpl {
 	
 	private static List<TreeNodeBean> createTree(String language)
 	{
-		ResourceBundle res = ResourceBundle.getBundle("messages", new Locale(language));
-		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>(); 
+		ResourceBundle res = new MdekResourceBundle(new Locale(language));
+		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>();
 
 		TreeNodeBean objectRoot = new TreeNodeBean();
 		objectRoot.setIsFolder(true);
@@ -156,8 +157,8 @@ public class TreeServiceImpl {
 
 	private static TreeNodeBean createFreeAddressRoot(String language)
 	{
-		ResourceBundle res = ResourceBundle.getBundle("messages", new Locale(language));
-		TreeNodeBean freeAddressRoot = new TreeNodeBean(); 
+		ResourceBundle res = new MdekResourceBundle(new Locale(language));
+		TreeNodeBean freeAddressRoot = new TreeNodeBean();
 
 		freeAddressRoot.setIsFolder(true);
 		freeAddressRoot.setNodeDocType(ADDRESS_ROOT_DOCTYPE);

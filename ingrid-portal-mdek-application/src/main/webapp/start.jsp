@@ -34,7 +34,6 @@
 
 
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
-<fmt:setBundle basename="messages" scope="session"/>
 
 <html dir="ltr">
     
