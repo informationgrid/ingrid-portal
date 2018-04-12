@@ -41,11 +41,15 @@
 
         // initialize date text box delayed, otherwise an error will occur
         setTimeout(function() {
+            var now = new Date();
+            var tomorrow = new Date();
+            tomorrow.setTime(now.getTime() + 24*60*60*1000);
+
             datePublish.constraints = {
                 selector: 'date',
-                min: new Date()
+                min: tomorrow
             };
-            datePublish.set('value', new Date());
+            datePublish.set('value', tomorrow);
         }, 0);
 
         dialogPublish.togglePublishInput = function(isChecked) {
