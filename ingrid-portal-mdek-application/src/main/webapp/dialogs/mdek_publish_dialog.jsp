@@ -54,6 +54,7 @@
                 min: tomorrow
             };
             datePublish.set('value', tomorrow);
+            datePublish.set('intermediateChanges', true);
         }, 0);
 
         dialogPublish.togglePublishInput = function(isChecked) {
@@ -76,10 +77,11 @@
         };
 
         dialogPublish.validatePublicationDate = function(ev) {
+            console.log(ev);
             var okButton = registry.byId("ok");
             console.log(registry.byId("datePublish"));
             var isInvalid = !registry.byId("datePublish").isValid();
-            okButton.setDisabled(isInvalid);
+            okButton.set("disabled", isInvalid);
         };
 
         // TODO: show different message
@@ -106,7 +108,7 @@
         <div id="publishDateWrapper" class="hide">
             <label class="inActive" for="datePublish"><fmt:message key="dialog.publish.date" />:</label>
             <input data-dojo-id="datePublish" type="text" name="datePublish"
-                  data-dojo-type="dijit/form/DateTextBox" data-dojo-props="onKeyUp:function(ev){dialogPublish.validatePublicationDate(ev);}" id="datePublish" />
+                  data-dojo-type="dijit/form/DateTextBox" data-dojo-props="onChange:function(ev){dialogPublish.validatePublicationDate(ev);}" id="datePublish" />
         </div>
 
         <div class="dijitDialogPaneActionBar">
