@@ -51,7 +51,8 @@
 
             datePublish.constraints = {
                 selector: 'date',
-                min: tomorrow
+                min: tomorrow,
+                fullYear: true
             };
             datePublish.set('value', tomorrow);
             datePublish.set('intermediateChanges', true);
