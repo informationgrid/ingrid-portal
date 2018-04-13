@@ -31,11 +31,15 @@
     var dialogPublish = _container_;
 
     require([
+        "dijit/registry",
         "dojo/dom-class",
+        "dojo/on",
+        "dojo/query",
+        "ingrid/dialog",
         "dojo/parser",
         "dijit/form/DateTextBox",
         "dojo/domReady!"
-    ], function(domClass) {
+    ], function(registry, domClass, on, query, warnDialog) {
         var self = this;
         var usePublicationDate = false;
 
@@ -71,6 +75,13 @@
             );
         };
 
+        dialogPublish.validatePublicationDate = function(ev) {
+            var okButton = registry.byId("ok");
+            console.log(registry.byId("datePublish"));
+            var isInvalid = !registry.byId("datePublish").isValid();
+            okButton.setDisabled(isInvalid);
+        };
+
         // TODO: show different message
         // var dialogText = this.currentUdk.isMarkedDeleted ? message.get("dialog.object.markedDeleted.finalSaveMessage") : message.get("dialog.object.finalSaveMessage");
 
@@ -95,15 +106,15 @@
         <div id="publishDateWrapper" class="hide">
             <label class="inActive" for="datePublish"><fmt:message key="dialog.publish.date" />:</label>
             <input data-dojo-id="datePublish" type="text" name="datePublish"
-                data-dojo-type="dijit/form/DateTextBox" />
+                  data-dojo-type="dijit/form/DateTextBox" data-dojo-props="onKeyUp:function(ev){dialogPublish.validatePublicationDate(ev);}" id="datePublish" />
         </div>
 
         <div class="dijitDialogPaneActionBar">
             <button data-dojo-type="dijit/form/Button" type="submit" data-dojo-props="onClick:function(){dialogPublish.cancel();}">
-                Cancel
+                <fmt:message key="general.cancel" />
             </button>
-            <button data-dojo-type="dijit/form/Button" type="submit" data-dojo-props="onClick:function(){dialogPublish.publish();}">
-                OK
+            <button data-dojo-type="dijit/form/Button" type="submit" data-dojo-props="onClick:function(){dialogPublish.publish();}" id="ok">
+                <fmt:message key="general.ok" />
             </button>
         </div>
     </div>
