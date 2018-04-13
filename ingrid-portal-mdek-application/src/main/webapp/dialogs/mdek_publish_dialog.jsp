@@ -78,9 +78,7 @@
         };
 
         dialogPublish.validatePublicationDate = function(ev) {
-            console.log(ev);
             var okButton = registry.byId("ok");
-            console.log(registry.byId("datePublish"));
             var isInvalid = !registry.byId("datePublish").isValid();
             okButton.set("disabled", isInvalid);
         };
