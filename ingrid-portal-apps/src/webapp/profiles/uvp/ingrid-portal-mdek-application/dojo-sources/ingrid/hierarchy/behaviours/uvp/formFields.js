@@ -98,6 +98,7 @@ define(["dojo/_base/declare",
                 domClass.remove(this.nominatimSearch.domNode, "hide");
                 domClass.add("uiElementAdduvpNegativeApprovalDate", "hide");
                 domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
+                domClass.remove("uiElement1010", "hide");
 
             } else if (objClass === "Class11") { // ausländische
                 domClass.add("uiElementAdduvpgCategory", "hide");
@@ -109,11 +110,13 @@ define(["dojo/_base/declare",
                 domClass.remove(this.nominatimSearch.domNode, "hide");
                 domClass.add("uiElementAdduvpNegativeApprovalDate", "hide");
                 domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
+                domClass.remove("uiElement1010", "hide");
                 
-            } else if (objClass === "Class12") { // negative (not implemented yet)
+            } else if (objClass === "Class12") { // negative
                 this.uvpPhaseField.hideAddButton();
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.negative.address"), "only");
                 domClass.add("uiElementAdduvpNeedsExamination", "hide");
+                domClass.remove("uiElementAdduvpNegativeApprovalDate", "hide");
                 
                 // check global variabel set in "publishNegativeExaminations"-behaviour
                 if (uvp && uvp.publishNegativeExaminations) {
@@ -141,6 +144,7 @@ define(["dojo/_base/declare",
                 domClass.remove(this.nominatimSearch.domNode, "hide");
                 domClass.add("uiElementAdduvpNegativeApprovalDate", "hide");
                 domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
+                domClass.remove("uiElement1010", "hide");
             }
         },
 
