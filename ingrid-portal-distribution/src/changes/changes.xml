@@ -7,7 +7,10 @@
 
     <body>
         
-        <release version="4.4.0" date="2018-03-28" description="Release 4.3.0">
+        <release version="4.4.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.4.0">
+          <action type="add" dev="wemove" issue="980">
+            Portal: UVP add BLP data on map and facet.
+          </action>
           <action type="add" dev="wemove" issue="601">
             IGE: Add option to publish metadata at a later date. UVP: Add option to conditionally publish documents in Phase 1.
           </action>
