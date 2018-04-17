@@ -7,6 +7,12 @@
 
     <body>
         
+        <release version="4.3.1-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.1">
+          <action type="add" dev="wemove" issue="980">
+            Portal: UVP add BLP data on map and facet.
+          </action>
+        </release>
+
         <release version="4.3.0" date="2018-03-28" description="Release 4.3.0">
           <action type="fix" dev="wemove" issue="1001">
             Portal: UVP: Upload does not work with IE 11.
