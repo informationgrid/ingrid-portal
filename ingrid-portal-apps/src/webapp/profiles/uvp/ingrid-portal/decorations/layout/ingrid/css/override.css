@@ -478,3 +478,14 @@ thead {
 .circle {
   border: 3px solid #2C5C91;
 }
+
+#map-legend {
+  border-bottom: 1px solid #DDD;
+}
+
+#map-legend .leaflet-control-layers {
+  float: none;
+  background: transparent !important;
+  box-shadow: unset;
+  font-size: 12px;
+}
