@@ -23,10 +23,6 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 import javax.portlet.PortletException;
@@ -36,7 +32,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
-import org.apache.commons.io.IOUtils;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -201,32 +196,36 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                     int cnt = 1;
                     JSONArray jsonData = new JSONArray();
                     while (it.hasNext()) {
-                        StringBuilder s = new StringBuilder();
-                        IngridHit hit = it.next();
-                        IngridHitDetail detail = hit.getHitDetail();
-                        String lat_center = UtilsSearch.getDetailValue( detail, "y1" );
-                        String lon_center = UtilsSearch.getDetailValue( detail, "x1" );
-                        String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
-                        String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
-                        String urlFinished = UtilsSearch.getDetailValue( detail, "blp_url_finished" );
-                        String urlInProgress = UtilsSearch.getDetailValue( detail, "blp_url_in_progress" );
-                        JSONObject jsonDataEntry = new JSONObject();
-                        jsonDataEntry.put("id", cnt);
-                        jsonDataEntry.put("name", blpName);
-                        jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( lat_center.trim()) ).put(Double.parseDouble(lon_center.trim())));
-                        JSONArray bpInfos = new JSONArray();
-                        if (urlInProgress != null && !urlInProgress.isEmpty()) {
-                            bpInfos.put( new JSONObject().put( "url", urlInProgress ).put( "tags", "p" ) );
+                        try {
+                            StringBuilder s = new StringBuilder();
+                            IngridHit hit = it.next();
+                            IngridHitDetail detail = hit.getHitDetail();
+                            String lat_center = UtilsSearch.getDetailValue( detail, "y1", 1);
+                            String lon_center = UtilsSearch.getDetailValue( detail, "x1", 1);
+                            String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
+                            String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
+                            String urlFinished = UtilsSearch.getDetailValue( detail, "blp_url_finished" );
+                            String urlInProgress = UtilsSearch.getDetailValue( detail, "blp_url_in_progress" );
+                            JSONObject jsonDataEntry = new JSONObject();
+                            jsonDataEntry.put("id", cnt);
+                            jsonDataEntry.put("name", blpName);
+                            jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( lat_center.trim()) ).put(Double.parseDouble(lon_center.trim())));
+                            JSONArray bpInfos = new JSONArray();
+                            if (urlInProgress != null && !urlInProgress.isEmpty()) {
+                                bpInfos.put( new JSONObject().put( "url", urlInProgress ).put( "tags", "p" ) );
+                            }
+                            if (urlInProgress != null && !urlFinished.isEmpty()) {
+                                bpInfos.put( new JSONObject().put( "url", urlFinished ).put( "tags", "v" ) );
+                            }
+                            jsonDataEntry.put("bpinfos", bpInfos);
+                            if (blpDescription != null && !blpDescription.isEmpty()) {
+                                jsonDataEntry.put( "descr", blpDescription);
+                            }
+                            jsonData.put( jsonDataEntry );
+                            cnt++;
+                        } catch (Exception e) {
+                            log.error("Error get json object:" + e);
                         }
-                        if (urlInProgress != null && !urlFinished.isEmpty()) {
-                            bpInfos.put( new JSONObject().put( "url", urlFinished ).put( "tags", "v" ) );
-                        }
-                        jsonDataEntry.put("bpinfos", bpInfos);
-                        if (blpDescription != null && !blpDescription.isEmpty()) {
-                            jsonDataEntry.put( "descr", blpDescription);
-                        }
-                        jsonData.put( jsonDataEntry );
-                        cnt++;
                     }
                         
                     response.setContentType( "application/javascript" );
@@ -247,8 +246,8 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
-        String mapclientUVPDevPlanURL = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL, "");
-        if(mapclientUVPDevPlanURL != null && mapclientUVPDevPlanURL.length() > 0){
+        boolean mapclientUVPDevPlanURL = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, false);
+        if(mapclientUVPDevPlanURL == true){
             restUrl.setResourceID( "devPlanMarker" );
             request.setAttribute( "restUrlUVPDevPlan", restUrl.toString() );
         }
