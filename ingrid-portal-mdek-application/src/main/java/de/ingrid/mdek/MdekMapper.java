@@ -1359,7 +1359,9 @@ public class MdekMapper implements DataMapperInterface {
             Integer key = sysListMapper.getKeyFromListId(listId, con.getSpecification());
             key = key == null ? -1 : key;
             result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, key);
-            result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, con.getSpecification().trim());
+            if (con.getSpecification() != null) {
+                result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, con.getSpecification().trim());
+            }
             result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getPublicationDate()));
 
             if (!result.isEmpty()) {
