@@ -63,6 +63,9 @@ define([
             // define which phases can be created through the dialog
             availablePhases: [1, 2, 3],
 
+            // define if the add button for a phase is shown or hidden
+            _buttonAddHide: false,
+
             // toggled state of phases (needed when saving document)
             expandedPhases: [],
 
@@ -86,6 +89,7 @@ define([
                 addWidgets.additionalFieldWidgets.push(this);
 
                 // create button which creates the different phases
+                console.log("Create phase button");
                 this.addButton = this._createPhaseButton();
 
                 var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
@@ -94,7 +98,7 @@ define([
                 // show phase button depending on the selected node
                 topic.subscribe("/selectNode", function(message) {
                     var data = message.node;
-                    if (data.nodeAppType === "O" && (
+                    if (data.nodeAppType === "O" && !self._buttonAddHide && (
                         (data.id !== "objectRoot" && data.objectClass !== 1000) ||
                         data.id === "newNode")) {
                         domClass.remove(self.addButton.domNode, "hide");
@@ -856,6 +860,16 @@ define([
                         })
                     );
                 }
+            },
+
+            hideAddButton: function() {
+                this._buttonAddHide = true;
+                domClass.add(this.addButton.domNode, "hide")
+            },
+
+            showAddButton: function() {
+                this._buttonAddHide = false;
+                domClass.remove(this.addButton.domNode, "hide")
             }
         });
     });
