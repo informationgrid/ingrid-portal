@@ -688,8 +688,8 @@ define([
             // Construct an MdekDataBean from the available data
             var nodeData = this._getData();
 
-            if (msg.publicationDate) {
-                nodeData.publicationDate = msg.publicationDate;
+            if (msg.toBePublishedOn) {
+                nodeData.toBePublishedOn = msg.toBePublishedOn;
             }
 
             var forcePubCond = false;
@@ -1746,10 +1746,10 @@ define([
             var workStateStr = message.get("general.workState." + nodeData.workState);
             var workStateTitle = "";
 
-            if (nodeData.publicationDate) {
-                var dateFormatted = UtilString.getDateString(nodeData.publicationDate, "dd.MM.yyyy");
+            if (nodeData.toBePublishedOn) {
+                var dateFormatted = UtilString.getDateString(nodeData.toBePublishedOn, "dd.MM.yyyy");
                 // check if publication date is in the future
-                var isActive = date.compare(new Date(), nodeData.publicationDate, "date") >= 0
+                var isActive = date.compare(new Date(), nodeData.toBePublishedOn, "date") >= 0
 
                 if (isActive) {
                     workStateStr = message.get("general.workState.V");
@@ -1771,11 +1771,11 @@ define([
             	dom.byId("orgObjId").innerHTML = "";
             	domClass.add("origIdSpan", "hide");
             }
-            var pubDate = nodeData.publicationDate;
+            var pubDate = nodeData.toBePublishedOn;
             if (pubDate) {
-                var isInFuture = date.compare(new Date(), nodeData.publicationDate, "date") < 0;
+                var isInFuture = date.compare(new Date(), nodeData.toBePublishedOn, "date") < 0;
                 if (isInFuture) {
-                    dom.byId("publicationTime").innerHTML = UtilString.getDateString(nodeData.publicationDate, "dd.MM.yyyy");
+                    dom.byId("publicationTime").innerHTML = UtilString.getDateString(nodeData.toBePublishedOn, "dd.MM.yyyy");
                     domClass.remove("publicationTimeStatus", "hide");
                 }
             } else {
