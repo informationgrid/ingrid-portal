@@ -135,5 +135,7 @@ define({
 
     "validation.error.document.table.invalid": "Die Tabelle muss unter 'Dokument' und 'Link' einen Eintrag haben.",
 
-    "uvp.address.form.categories.address": "Adresse"
+    "uvp.address.form.categories.address": "Adresse",
+
+    "page.breadcrumb.pageUvpStatistic": "UVP Statistik"
 });

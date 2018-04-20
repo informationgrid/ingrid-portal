@@ -99,5 +99,15 @@
             <ref bean="daoFactory" />
         </property>
     </bean>
+
+    <bean id="statisticService"
+        class="de.ingrid.mdek.dwr.services.StatisticService">
+        <property name="objectRequestHandler">
+            <ref bean="objectRequestHandler" />
+        </property>
+        <property name="codelistService">
+            <ref bean="codeListService" />
+        </property>
+    </bean>
                 
 </beans>
