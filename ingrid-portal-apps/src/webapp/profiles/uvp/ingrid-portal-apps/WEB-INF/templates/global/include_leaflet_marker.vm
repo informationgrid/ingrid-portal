@@ -202,16 +202,6 @@
                 mapMarkers1314.addLayer(marker);
             }
         }
-    
-        if(markers.length > 0){
-            if(map){
-                if($checkedCategory){
-                    map.addLayer(mapMarkers10);
-                    map.addLayer(mapMarkers11);
-                    map.addLayer(mapMarkers1314);
-                }
-            }
-        }
     }
     
     if(markersDevPlan){
@@ -293,14 +283,6 @@
             mapMarkers.addLayer(marker);
             mapMarkersDevPlan.addLayer(marker);
         }
-    
-        if(markersDevPlan.length > 0){
-            if(map){
-                if($checkedCategoryDevPlan){
-                    map.addLayer(mapMarkersDevPlan);
-                }
-            }
-        }
     }
     
     var overlayers = {};
@@ -310,7 +292,6 @@
     if(mapMarkers11.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
     }
-    
     if(mapMarkers1314.getLayers().length > 0){
         overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
     }
@@ -319,4 +300,23 @@
     }
     var control = L.control.layers({}, overlayers, {position: 'topright', collapsed:false });
     control.addTo(map);
+    
+    if(map){
+        if($checkedCategoryDevPlan){
+            if(mapMarkersDevPlan) {
+                map.addLayer(mapMarkersDevPlan);
+            }
+        }
+        if($checkedCategory){
+            if(mapMarkers10) {
+                map.addLayer(mapMarkers10);
+            }
+            if(mapMarkers11) {
+                map.addLayer(mapMarkers11);
+            }
+            if(mapMarkers1314) {
+                map.addLayer(mapMarkers1314);
+            }
+        }
+    }
 </script>
