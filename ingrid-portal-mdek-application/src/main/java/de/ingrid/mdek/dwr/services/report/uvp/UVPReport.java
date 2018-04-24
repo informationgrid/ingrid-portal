@@ -228,15 +228,10 @@ public class UVPReport {
 
     private void handlePositiveCount(MdekDataBean doc, Map<String, Object> values) {
         // only count those who have checked "Vorprüfung durchgeführt"
-        AdditionalFieldBean preExaminationAccomplished = doc.getAdditionalFields().stream()
-                .filter(fields -> "".equals(fields.getIdentifier()))
+        doc.getAdditionalFields().stream()
+                .filter(field -> "uvpPreExaminationAccomplished".equals(field.getIdentifier()) && "true".equals(field.getValue()))
                 .findFirst()
-                .orElse(null);
-
-        if (preExaminationAccomplished != null && "true".equals(preExaminationAccomplished.getValue())) {
-            values.put(TOTAL_POSITIVE, (int) values.get(TOTAL_POSITIVE) + 1);
-        }
-
+                .ifPresent(item -> values.put(TOTAL_POSITIVE, (int) values.get(TOTAL_POSITIVE) + 1));
     }
 
     private void handleNegativeCount(MdekDataBean doc, Map<String, Object> values) {
