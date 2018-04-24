@@ -22,9 +22,10 @@
  */
 define(["dojo/_base/declare",
     "dojo/Deferred",
+    "ingrid/dialog",
     "ingrid/message",
     "ingrid/utils/Catalog"
-], function(declare, Deferred, message, Catalog) {
+], function(declare, Deferred, dialog, message, Catalog) {
 
     return declare(null, {
         title: "UVP: Initiale Ordner",
@@ -99,20 +100,25 @@ define(["dojo/_base/declare",
 
         createNegativeUvp: function() {
             var def = new Deferred();
-            ObjectService.createNewNode(null, function(objNode) {
-                objNode.nodeAppType = "O";
-                objNode.objectClass = "1000";
-                objNode.objectName = message.get("uvp.form.categories.uvpNegative");
-                ObjectService.saveNodeData(objNode, "true", false, {
-                    callback: def.resolve,
-                    errorHandler: self.handleCreateError
-                });
+            var self = this;
+            ObjectService.createNewNode(null, {
+                callback: function(objNode) {
+                    objNode.nodeAppType = "O";
+                    objNode.objectClass = "1000";
+                    objNode.objectName = message.get("uvp.form.categories.uvpNegative");
+                    ObjectService.saveNodeData(objNode, "true", false, {
+                        callback: def.resolve,
+                        errorHandler: self.handleCreateError
+                    });
+                },
+                errorHandler: self.handleCreateError
             });
             return def;
         },
 
         handleCreateError: function(error) {
             console.error("Error during initial folder creation for UVP:", error);
+            dialog.show(message.get("general.error"), message.get("uvp.error.init"), dialog.WARNING, null, null, null, error ? error.stack : null);
         },
 
         getInitFlag: function() {

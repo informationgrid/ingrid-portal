@@ -1993,10 +1993,14 @@ define([
                                 else
                                     currentFieldWidget.attr("value", currentField.listId, true);
                             } else if (currentFieldWidget instanceof DateTextBox) {
-                                currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {
-                                    datePattern: "dd.MM.yyyy",
-                                    selector: "date"
-                                }), true);
+                                if (currentFieldWidget.storeAsTimestamp) {
+                                    currentFieldWidget.attr("value", new Date(+currentField.value));
+                                } else {
+                                    currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {
+                                        datePattern: "dd.MM.yyyy",
+                                        selector: "date"
+                                    }), true);
+                                }
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
                             } else {
@@ -2548,8 +2552,9 @@ define([
 
                         } else if (currentField instanceof DateTextBox) {
                             value = currentField.get("value");
-                            if (value !== null)
+                            if (value !== null && !currentField.storeAsTimestamp) {
                                 value = UtilString.getDateString(currentField.get("value"), "dd.MM.yyyy");
+                            }
 
                         } else if (currentField instanceof CheckBox) {
                             var isChecked = currentField.checked;
