@@ -32,6 +32,7 @@ define(["dojo/_base/declare",
     "dojo/topic",
     "dijit/registry",
     "dijit/form/Button",
+    "dijit/form/RadioButton",
     "ingrid/message",
     "ingrid/layoutCreator",
     "ingrid/IgeEvents",
@@ -42,7 +43,7 @@ define(["dojo/_base/declare",
     "ingrid/utils/Syslist",
     "ingrid/widgets/UvpPhases",
     "ingrid/widgets/NominatimSearch"
-], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, message, creator, IgeEvents, Editors, Formatters, dirty, UtilGrid, UtilSyslist, UvpPhases, NominatimSearch) {
+], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, RadioButton, message, creator, IgeEvents, Editors, Formatters, dirty, UtilGrid, UtilSyslist, UvpPhases, NominatimSearch) {
     return declare(null, {
         title: "UVP: Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
@@ -83,6 +84,16 @@ define(["dojo/_base/declare",
             };
             topic.subscribe("/onBeforeDialogAccept/AddressesFromTree", handleAddressAdd);
             topic.subscribe("/onBeforeDialogAccept/Addresses", handleAddressAdd);
+            topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                // check if at least one radio button was chosen for "Zulassungsverfahren"
+                if (currentUdk.objectClass === 10) {
+                    var radio1 = registry.byId("uvpPreExaminationAccomplished").checked;
+                    var radio2 = registry.byId("uvpPreExaminationNotAccomplished").checked;
+                    if (!radio1 && !radio2) {
+                        notPublishableIDs.push(["uiElementAddpreExaminationAccomplished", message.get("uvp.form.preExaminationAccomplished.required")]);
+                    }
+                }
+            });
         },
 
         prepareDocument: function(classInfo) {
@@ -90,7 +101,7 @@ define(["dojo/_base/declare",
             var objClass = classInfo.objClass;
             if (objClass === "Class10") { // UVP Vorhaben
                 domClass.remove("uiElementAdduvpgCategory", "hide");
-                domClass.remove("uiElementAdduvpNeedsExamination", "hide");
+                domClass.remove("uiElementAddpreExaminationAccomplished", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
@@ -102,7 +113,7 @@ define(["dojo/_base/declare",
 
             } else if (objClass === "Class11") { // ausländische
                 domClass.add("uiElementAdduvpgCategory", "hide");
-                domClass.add("uiElementAdduvpNeedsExamination", "hide");
+                domClass.add("uiElementAddpreExaminationAccomplished", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.foreign.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.foreign.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 3];
@@ -115,7 +126,7 @@ define(["dojo/_base/declare",
             } else if (objClass === "Class12") { // negative
                 this.uvpPhaseField.hideAddButton();
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.negative.address"), "only");
-                domClass.add("uiElementAdduvpNeedsExamination", "hide");
+                domClass.add("uiElementAddpreExaminationAccomplished", "hide");
                 domClass.remove("uiElementAdduvpNegativeApprovalDate", "hide");
                 
                 // check global variabel set in "publishNegativeExaminations"-behaviour
@@ -136,7 +147,7 @@ define(["dojo/_base/declare",
 
             } else if (objClass === "Class13" || objClass === "Class14") { // Raumordnungsverfahren or Linienbestimmungen
                 domClass.remove("uiElementAdduvpgCategory", "hide");
-                domClass.add("uiElementAdduvpNeedsExamination", "hide");
+                domClass.add("uiElementAddpreExaminationAccomplished", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.spatial.generalDescription"), "only");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.spatial.address"), "only");
                 this.uvpPhaseField.availablePhases = [1, 2, 3];
@@ -301,20 +312,35 @@ define(["dojo/_base/declare",
             /**
              * Checkbox für Vorprüfung
              */
-            id = "uvpNeedsExamination";
-            var checkbox = creator.createDomCheckbox({
-				id : id,
-				name : message.get("uvp.form.checkExamination"),
-				help : message.get("uvp.form.checkExamination.helpMessage"),
-				isMandatory : true,
-				visible : "optional",
-				rows : "4",
-				forceGridHeight : false,
-				style : "width:100%"
-			});
-            newFieldsToDirtyCheck.push(id);
-            construct.place(checkbox, rubric);
-            additionalFields.push(registry.byId(id));
+            var preExamAccomplishedYes = new RadioButton({
+                id: "uvpPreExaminationAccomplished",
+                checked: false,
+                value: "true",
+                name: "isPreExaminationAccomplished"
+            });
+            var preExamAccomplishedNo = new RadioButton({
+                id: "uvpPreExaminationNotAccomplished",
+                checked: false,
+                value: "false",
+                name: "isPreExaminationAccomplished"
+            });
+
+            var label = creator.addRadioSurroundingContainer(
+                [preExamAccomplishedYes.domNode, preExamAccomplishedNo.domNode], 
+                {
+                    id: "preExaminationAccomplished",
+                    isMandatory: true, 
+                    name: [message.get("uvp.form.preExaminationAccomplished.yes"), message.get("uvp.form.preExaminationAccomplished.no")],
+                    label: message.get("uvp.form.preExaminationAccomplished.label"),
+                    help: message.get("uvp.form.preExaminationAccomplished.helpMessage")
+                }
+            );
+
+            creator.addToSection(rubric, label);
+            newFieldsToDirtyCheck.push("uvpPreExaminationAccomplished");
+            newFieldsToDirtyCheck.push("uvpPreExaminationNotAccomplished");
+            additionalFields.push(preExamAccomplishedYes);
+            additionalFields.push(preExamAccomplishedNo);
 
             /**
              * Negative Approval Date
