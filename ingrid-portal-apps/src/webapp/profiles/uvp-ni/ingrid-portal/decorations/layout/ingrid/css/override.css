@@ -437,6 +437,7 @@ thead {
 
 .marker-cluster-10 {
   background-color: rgba(56, 170, 220, 0.6) !important;
+  z-index: 0 !important;
 }
 
 .marker-cluster-10 div{
@@ -453,6 +454,7 @@ thead {
 
 .marker-cluster-11 {
   background-color: rgba(48, 48, 48, 0.6) !important;
+  z-index: -10 !important;
 }
 
 .marker-cluster-11 div{
@@ -469,6 +471,7 @@ thead {
 
 .marker-cluster-1314 {
   background-color: rgba(200, 60, 40, 0.6) !important;
+  z-index: -20 !important;
 }
 
 .marker-cluster-1314 div {
@@ -485,6 +488,7 @@ thead {
 
 .marker-cluster-dev-plan {
   background-color: rgba(110, 170, 40, 0.6) !important;
+  z-index: -30 !important;
 }
 
 .marker-cluster-dev-plan div {

@@ -970,11 +970,11 @@ define([
                     resultHandler: deferred
                 });
 
-                deferred.then(function(publicationDate) {
+                deferred.then(function(toBePublishedOn) {
                     var deferred2 = new Deferred();
                     console.debug("Publishing event: /publishObjectRequest");
                     topic.publish("/publishObjectRequest", {
-                        publicationDate: publicationDate,
+                        toBePublishedOn: toBePublishedOn,
                         resultHandler: deferred2
                     });
                     deferred2.then(null, displayErrorMessage);

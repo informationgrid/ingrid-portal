@@ -44,7 +44,7 @@ public class MdekDataBean {
 	private Integer parentPublicationCondition;
 	private Boolean isPublished;
 	private Boolean isMarkedDeleted;
-	private Date publicationDate;
+	private Date toBePublishedOn;
 
 	private String title;
 	private String nodeDocType;
@@ -2214,11 +2214,11 @@ public class MdekDataBean {
         this.ref1GridFormatRefGeoreferencedParam = ref1GridFormatRefGeoreferencedParam;
     }
 
-	public Date getPublicationDate() {
-		return publicationDate;
+	public Date getToBePublishedOn() {
+		return toBePublishedOn;
 	}
 
-	public void setPublicationDate(Date publicationDate) {
-		this.publicationDate = publicationDate;
+	public void setToBePublishedOn(Date toBePublishedOn) {
+		this.toBePublishedOn = toBePublishedOn;
 	}
 }
