@@ -54,6 +54,8 @@ define([
         // list of MenuBarItem-IDs, which are not supposed to be shown
         excludedMenuItems: [],
 
+        additionalMenuItems: [],
+
         selectChild: function(child) {
             // set label of menu item to show where we are
             dom.byId("currentPageName").innerHTML = this.getMenuString(child);
@@ -404,6 +406,14 @@ define([
                     }));
                 }
             }
+
+            array.forEach(this.additionalMenuItems, function(item) {
+                menu.addChild(new MenuBarItem({
+                    id: item.id,
+                    label: item.label,
+                    onClick: item.clickHandler
+                }));
+            });
         },
 
 

@@ -138,5 +138,9 @@ define({
 
     "validation.error.document.table.invalid": "Die Tabelle muss unter 'Dokument' und 'Link' einen Eintrag haben.",
 
-    "uvp.address.form.categories.address": "Adresse"
+    "uvp.address.form.categories.address": "Adresse",
+
+    "page.breadcrumb.pageUvpStatistic": "UVP Statistik",
+
+    "uvp.error.init": "Bei der Initialisierung von UVP ist ein Problem aufgetreten. Für die Initialisierung muss man sich als Katalogadministrator oder Metadatenadministrator anmelden."
 });
