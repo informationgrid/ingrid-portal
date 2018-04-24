@@ -105,6 +105,9 @@
         <property name="objectRequestHandler">
             <ref bean="objectRequestHandler" />
         </property>
+        <property name="catalogRequestHandler">
+            <ref bean="catalogRequestHandler" />
+        </property>
         <property name="codelistService">
             <ref bean="codeListService" />
         </property>

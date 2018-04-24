@@ -1,30 +1,46 @@
 package de.ingrid.mdek.dwr.services.report.uvp;
 
 import de.ingrid.codelists.CodeListService;
+import de.ingrid.codelists.model.CodeListEntry;
+import de.ingrid.mdek.beans.GenericValueBean;
 import de.ingrid.mdek.beans.object.AdditionalFieldBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
 import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
 import de.ingrid.mdek.dwr.services.report.Report;
 import de.ingrid.mdek.dwr.services.report.ReportType;
+import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.ingrid.mdek.MdekUtils.IdcEntityOrderBy.DATE;
-import static de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType.PORTAL_QUICKLIST_PUBLISHED;
+import static de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType.PORTAL_QUICKLIST_ALL_USERS_PUBLISHED;
 
 public class UVPReport {
-    public static final String TOTAL_GROUPED = "totalGrouped";
-    public static final String TOTAL_NEGATIVE = "totalNegative";
-    public static final String TOTAL_POSITIVE = "totalPositive";
+
+    private final static Logger log = LogManager.getLogger(UVPReport.class);
+
+    private static final String TOTAL_GROUPED = "totalGrouped";
+    private static final String TOTAL_NEGATIVE = "totalNegative";
+    private static final String TOTAL_POSITIVE = "totalPositive";
+
     private final ObjectRequestHandler objectRequestHandler;
+    private final CatalogRequestHandler catalogRequestHandler;
+
     private final long startDate;
     private final CodeListService codelistService;
 
-    public UVPReport(ObjectRequestHandler objectRequestHandler, CodeListService codelistService, Map parameter) {
+    public UVPReport(ObjectRequestHandler objectRequestHandler, CatalogRequestHandler catalogRequestHandler, CodeListService codelistService, Map parameter) {
         this.objectRequestHandler = objectRequestHandler;
+        this.catalogRequestHandler = catalogRequestHandler;
         this.codelistService = codelistService;
         this.startDate = Long.valueOf((String) parameter.get("startDate"));
     }
@@ -39,11 +55,9 @@ public class UVPReport {
         values.put(TOTAL_POSITIVE, 0);
 
 
-        ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(PORTAL_QUICKLIST_PUBLISHED, DATE, true, 0, 10);
-        Iterator<MdekDataBean> iterator = workObjects.getResultList().iterator();
+        ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(PORTAL_QUICKLIST_ALL_USERS_PUBLISHED, DATE, true, 0, 10);
 
-        while (iterator.hasNext()) {
-            MdekDataBean doc = iterator.next();
+        for (MdekDataBean doc : workObjects.getResultList()) {
             MdekDataBean docDetail = objectRequestHandler.getObjectDetail(doc.getUuid());
 
             // TODO: check if document is not older than given date
@@ -96,13 +110,73 @@ public class UVPReport {
     private void mapUvpNumbers(Map<String, Object> grouped) {
         Map<String, Object> mappedNumberResults = new HashMap<>();
         Iterator<String> iterator = grouped.keySet().iterator();
+        JSONParser jsonParser = new JSONParser();
+
+        String codelistId = getUvpCodelistId(jsonParser);
+
+        List<CodeListEntry> uvpEntries = codelistService.getCodeList(codelistId).getEntries();
+
         while (iterator.hasNext()) {
             String key = iterator.next();
-            String keyValue = codelistService.getCodeListValue("9000", key, "de");
-            mappedNumberResults.put(keyValue, grouped.get(key));
+            // get full UVP number
+            String keyValue = codelistService.getCodeListValue(codelistId, key, "de");
+
+            // get according category to UVP id
+            String data = getDataForCodelist(uvpEntries, key);
+            String uvpCategory = null;
+            if (data != null) {
+                try {
+                    uvpCategory = getUvpCategory((JSONObject) jsonParser.parse(data));
+                } catch (ParseException ex) {
+                    log.error("Could not parse json data from codelist", ex);
+                }
+            }
+
+            mappedNumberResults.put(keyValue, new Object[] { grouped.get(key), uvpCategory });
         }
         grouped.clear();
         grouped.putAll(mappedNumberResults);
+    }
+
+    @SuppressWarnings("unchecked")
+    private String getUvpCodelistId(JSONParser jsonParser) {
+
+        List<GenericValueBean> behaviours = catalogRequestHandler.getSysGenericValues(new String[] { "BEHAVIOURS" });
+        try {
+            JSONArray json = (JSONArray) jsonParser.parse(behaviours.get(0).getValue().toString());
+            // get the defined category id or return default id (9000)
+            return (String) json.stream()
+                    .filter(item -> "uvpPhaseField".equals(((JSONObject) item).get("id")))
+                    .findFirst()
+                    .map(uvpPhaseField -> {
+                        JSONArray params = (JSONArray) ((JSONObject) uvpPhaseField).get("params");
+                        return params.stream()
+                                .filter(param -> "categoryCodelist".equals(((JSONObject) param).get("id")))
+                                .findFirst().map(categoryCodelist -> ((JSONObject) categoryCodelist).get("value"))
+                                .orElse("9000");
+                    })
+                    .orElse("9000"); // default codelist for UVP
+
+        } catch (ParseException e) {
+            log.error("Error getting behaviour settings from DB", e);
+        }
+        return null;
+    }
+
+    private String getUvpCategory(JSONObject json) {
+        return (String) json.get("cat");
+    }
+
+    private String getDataForCodelist(List<CodeListEntry> uvpEntries, String codelistName) {
+        CodeListEntry uvpItem = uvpEntries.stream()
+                .filter(entry -> codelistName.equals(entry.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (uvpItem != null) {
+            return uvpItem.getData();
+        }
+        return null;
     }
 
 
@@ -123,13 +197,10 @@ public class UVPReport {
                 List<AdditionalFieldBean> uvpNumvbers = new ArrayList<>();
 
                 for (List<AdditionalFieldBean> catTable : uvpCategory.getTableRows()) {
-                    AdditionalFieldBean additionalFieldBeanStream = catTable.stream()
+                    catTable.stream()
                             .filter(cat -> "categoryId".equals(cat.getIdentifier()))
                             .findFirst()
-                            .orElse(null);
-                    if (additionalFieldBeanStream != null) {
-                        uvpNumvbers.add(additionalFieldBeanStream);
-                    }
+                            .ifPresent(uvpNumvbers::add);
                 }
 
                 for (AdditionalFieldBean uvpNumber : uvpNumvbers) {

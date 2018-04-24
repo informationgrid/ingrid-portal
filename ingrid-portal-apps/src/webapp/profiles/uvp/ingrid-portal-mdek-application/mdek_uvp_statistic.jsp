@@ -38,6 +38,19 @@
 
         });
 
+        function download(filename, text) {
+            var element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('download', filename);
+
+            element.style.display = 'none';
+            document.body.appendChild(element);
+
+            element.click();
+
+            document.body.removeChild(element);
+        }
+
         pageUvpStatistic.setDate = function(date) {
             this.dateStart = date;
             if (!date || isNaN(date)) {
@@ -48,9 +61,28 @@
         }
 
         pageUvpStatistic.createStatistic = function() {
+            var self = this;
             StatisticService.createReport("UVP", {startDate: this.dateStart}, function(report) {
                 console.log("Report created: ", report);
+                //console.log("CSW created: ", self.convertToCSV(report));
+
+                download("report.csv", self.convertToCSV(report));
             });
+        }
+
+        pageUvpStatistic.convertToCSV = function(report) {
+            console.log("Convert report to CSV");
+            var csv = "UVP Nummer, UVP-G Kategorie, Anzahl, Positive Vorprüfungen, Negative Vorprüfungen\n";
+
+            csv += ",,," + report.values.totalPositive + "," + report.values.totalNegative + "\n";
+
+            var totalGrouped = report.values.totalGrouped;
+            var groupedKeys = Object.keys(totalGrouped);
+            for (var i=0; i<groupedKeys.length; i++) {
+                csv += groupedKeys[i] + "," + totalGrouped[groupedKeys[i]][1] + "," + totalGrouped[groupedKeys[i]][0] + "\n";
+            }
+
+            return csv;
         }
     });
 
@@ -59,7 +91,7 @@
 
 <body>
 
-    <div data-dojo-type="dijit/layout/ContentPane" class="contentContainer" id="uvpStatisticsContainer">
+    <div data-dojo-type="dijit/layout/ContentPane" class="contentContainer" id="uvpStatisticsContainer" style="padding: 20px;">
         <label class="inActive" for="datePublish">
             <fmt:message key="uvp.statistic.dateFrom" />:
         </label>

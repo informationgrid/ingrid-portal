@@ -4,6 +4,7 @@ import de.ingrid.codelists.CodeListService;
 import de.ingrid.mdek.dwr.services.report.Report;
 import de.ingrid.mdek.dwr.services.report.ReportType;
 import de.ingrid.mdek.dwr.services.report.uvp.UVPReport;
+import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,13 +19,15 @@ public class StatisticService {
     // Injected by Spring
     private ObjectRequestHandler objectRequestHandler;
 
+    private CatalogRequestHandler catalogRequestHandler;
+
     private CodeListService codelistService;
 
     public Report createReport(ReportType type, Map parameter) {
 
         if (type == ReportType.UVP) {
 
-            return new UVPReport(objectRequestHandler, codelistService, parameter).create();
+            return new UVPReport(objectRequestHandler, catalogRequestHandler, codelistService, parameter).create();
 
         } else {
             log.error("No such report type: " + type);
@@ -39,5 +42,9 @@ public class StatisticService {
 
     public void setCodelistService(CodeListService codelistService) {
         this.codelistService = codelistService;
+    }
+
+    public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
+        this.catalogRequestHandler = catalogRequestHandler;
     }
 }

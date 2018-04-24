@@ -137,5 +137,7 @@ define({
 
     "uvp.address.form.categories.address": "Adresse",
 
-    "page.breadcrumb.pageUvpStatistic": "UVP Statistik"
+    "page.breadcrumb.pageUvpStatistic": "UVP Statistik",
+
+    "uvp.error.init": "Bei der Initialisierung von UVP ist ein Problem aufgetreten. Für die Initialisierung muss man sich als Katalogadministrator oder Metadatenadministrator anmelden."
 });
