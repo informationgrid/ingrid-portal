@@ -324,6 +324,7 @@ define(["dojo/_base/declare",
             newFieldsToDirtyCheck.push(id);
             construct.place(dateboxNegativeExam, rubric);
             additionalFields.push(registry.byId(id));
+            registry.byId(id).storeAsTimestamp = true;
 
             /**
              * Relevante Dokumente (Table)

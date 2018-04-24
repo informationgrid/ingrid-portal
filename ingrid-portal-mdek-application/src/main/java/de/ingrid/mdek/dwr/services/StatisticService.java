@@ -6,6 +6,7 @@ import de.ingrid.mdek.dwr.services.report.ReportType;
 import de.ingrid.mdek.dwr.services.report.uvp.UVPReport;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
+import de.ingrid.mdek.job.MdekException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,12 +26,17 @@ public class StatisticService {
 
     public Report createReport(ReportType type, Map parameter) {
 
-        if (type == ReportType.UVP) {
+        try {
+            if (type == ReportType.UVP) {
 
-            return new UVPReport(objectRequestHandler, catalogRequestHandler, codelistService, parameter).create();
+                return new UVPReport(objectRequestHandler, catalogRequestHandler, codelistService, parameter).create();
 
-        } else {
-            log.error("No such report type: " + type);
+            } else {
+                log.error("No such report type: " + type);
+            }
+        } catch(Exception e) {
+            log.error("Error occurred during report generation", e);
+            throw new MdekException(e.getMessage());
         }
 
         return null;

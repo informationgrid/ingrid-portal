@@ -60,7 +60,7 @@ public class UVPReport {
         for (MdekDataBean doc : workObjects.getResultList()) {
             MdekDataBean docDetail = objectRequestHandler.getObjectDetail(doc.getUuid());
 
-            // TODO: check if document is not older than given date
+            // check if document is not older than given date
             if (datasetIsInDateRange(docDetail)) {
                 // categorize datasets by their UVP number and count them
                 handleTotalCountGroupedByUvpNumber(docDetail, values);
@@ -83,6 +83,7 @@ public class UVPReport {
 
     private boolean datasetIsInDateRange(MdekDataBean doc) {
 
+        // collect all approval dates from repeatable phase 3 ("Entscheidung über die Zulassung")
         List<AdditionalFieldBean> approvalDates = doc.getAdditionalFields().stream()
                 .filter(field -> "UVPPhases".equals(field.getIdentifier()))
                 .flatMap(phases -> {
@@ -97,6 +98,12 @@ public class UVPReport {
                             .map(i -> i.get(0));
                 })
                 .collect(Collectors.toList());
+
+        // add approval date from negative examinations
+        doc.getAdditionalFields().stream()
+                .filter(field -> "uvpNegativeApprovalDate".equals(field.getIdentifier()))
+                .findFirst()
+                .ifPresent(approvalDates::add);
 
         // check if one of the approval dates is younger than the given date
         for (AdditionalFieldBean approvalDate : approvalDates) {
@@ -227,7 +234,7 @@ public class UVPReport {
                 .orElse(null);
 
         if (preExaminationAccomplished != null && "true".equals(preExaminationAccomplished.getValue())) {
-            values.put(TOTAL_NEGATIVE, (int) values.get(TOTAL_NEGATIVE) + 1);
+            values.put(TOTAL_POSITIVE, (int) values.get(TOTAL_POSITIVE) + 1);
         }
 
     }
@@ -235,7 +242,7 @@ public class UVPReport {
     private void handleNegativeCount(MdekDataBean doc, Map<String, Object> values) {
         // only count those of type "negative Vorprüfung"
         if (doc.getObjectClass() == 12) {
-            values.put(TOTAL_POSITIVE, (int) values.get(TOTAL_POSITIVE) + 1);
+            values.put(TOTAL_NEGATIVE, (int) values.get(TOTAL_NEGATIVE) + 1);
         }
     }
 }
