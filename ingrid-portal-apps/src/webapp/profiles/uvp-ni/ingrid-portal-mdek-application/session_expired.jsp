@@ -2,20 +2,19 @@
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
-<fmt:setBundle basename="messages" scope="session"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        <title>InGrid-Portal</title>
+        <title>UVP</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="description" content="UVP bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
-        <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="keywords" lang="de" content="UVP, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"></link>
@@ -26,16 +25,13 @@
     </head>
     <body>
         <div class="nav-overlay">
-            <a title="Login" class="nav-overlay__item nav-overlay__item--level1" href="/personalisierungsoptionen">Login</a>
+            <a title="Login" class="nav-overlay__item nav-overlay__item--level1" href="/log-in">Login</a>
             <ul class="nav__mobile nav__foot">
                 <li>
-                    <a title="Erläuterungen zur Nutzung von InGrid-Portal" href="/hilfe">Hilfe</a>
+                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an UVP" href="/kontakt">Kontakt</a>
                 </li>
                 <li>
-                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal" href="/kontakt">Kontakt</a>
-                </li>
-                <li>
-                    <a title="Alle Inhalte von InGrid-Portal auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
+                    <a title="Alle Inhalte von UVP auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
                 </li>
                 <li>
                     <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
@@ -60,16 +56,23 @@
                         </div>
                     </div>
                     <div class="header__widgets__section">
-                        <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
-                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                        <a class="header__widget header__logo" href="/startseite" title="Startseite von UVP aufrufen ">
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg ">
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png ">
                         </a>
+                    </div>
+                    <div class="header__widgets__section">
+                        <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von UVP aufrufen ">
+                            <p class="main__title">Das niedersächsische UVP-Portal</p>
+                            <p class="sub__title"></p>
+                        </a>
+                        <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von UVP aufrufen "><span class="mq-show-m">Nds. UVP-Portal</span><span class="mq-hide-m">Das niedersächsische UVP-Portal</span></a>
                     </div>
                 </div> 
                 <nav class="nav-desktop mq-hide-xxl">
                     <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
                         <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/personalisierungsoptionen" title="Login">Login</a>
+                          <a class="nav-desktop__title" href="/log-in" title="Login">Login</a>
                         </li>
                     </ul>
                 </nav>
@@ -90,7 +93,7 @@
                         <a href="/startseite">
                             <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
                         </a>
-                        <p class="copyright">Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50</p>
+                        <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
                     </div>
                 </div>
                 <hr class="bx-top-0 bx-bot-0"></hr>
@@ -99,12 +102,11 @@
                         <div class="ob-box-padded ob-box-center ob-clear">
                             <div class="footer__section">
                                 <nav class="footer__middle mq-hide-l">
-                                    <a title="Erläuterungen zur Nutzung von InGrid-Portal" href="/hilfe">Hilfe</a>
-                                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal" href="/kontakt">Kontakt</a>
-                                    <a title="Alle Inhalte von InGrid-Portal auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
+                                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an UVP" href="/kontakt">Kontakt</a>
+                                    <a title="Alle Inhalte von UVP auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
                                     <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
                                     <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                                   </nav>
+                                </nav>
                             </div>
                         </div>
                     </div>
