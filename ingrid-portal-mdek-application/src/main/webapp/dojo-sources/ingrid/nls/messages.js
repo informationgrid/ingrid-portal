@@ -25,6 +25,8 @@ define({
         "general.workState.B": "In Process",
         "general.workState.Q": "Assigned to Quality Assurance",
         "general.workState.R": "Reassigned from Quality Assurance",
+        "general.workState.timedPublish": "Will be published",
+        "general.workStateTitle.timedPublish": "on ${0}",
         "general.userOperation.NEW": "new",
         "general.userOperation.EDITED": "modified",
         "general.userOperation.DELETED": "marked for deletion",
@@ -529,6 +531,7 @@ define({
         "ui.obj.header.workState": "State",
         "ui.obj.header.creationTime": "Created",
         "ui.obj.header.modificationTime": "Modified",
+        "ui.obj.header.willBePublishedOn": "Publish on",
         "ui.obj.header.modUser": "Last change",
         "ui.obj.general.title": "General",
         "ui.obj.general.shortDescription": "Short Description",
@@ -1100,3 +1103,4 @@ define({
 
     de: true
 });
+

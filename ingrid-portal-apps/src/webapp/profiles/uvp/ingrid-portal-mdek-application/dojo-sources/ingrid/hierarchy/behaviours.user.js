@@ -28,8 +28,9 @@ define([
     "ingrid/hierarchy/behaviours/uvp/generalModifications",
     "ingrid/hierarchy/behaviours/uvp/treeNodes",
     "ingrid/hierarchy/behaviours/uvp/formFields",
-    "ingrid/hierarchy/behaviours/uvp/addressMods"
-], function(lang, behaviours, initialFolders, docTypes, generalModifications, treeNodes, formFields, addressMods) {
+    "ingrid/hierarchy/behaviours/uvp/addressMods",
+    "ingrid/hierarchy/behaviours/uvp/publishNegativeExamination"
+], function(lang, behaviours, initialFolders, docTypes, generalModifications, treeNodes, formFields, addressMods, publishNegativeExamination) {
 
     return lang.mixin(behaviours, {
 
@@ -62,7 +63,12 @@ define([
         /**
          * Modify the display of the address form fields.
          */
-        uvpAddressModifications: addressMods
+        uvpAddressModifications: addressMods,
+
+        /**
+         * Change the form fields for negative examinations.
+         */
+        uvpPublishNegativeExamination: publishNegativeExamination
 
     });
 });

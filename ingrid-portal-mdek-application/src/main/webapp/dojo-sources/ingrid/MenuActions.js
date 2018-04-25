@@ -74,10 +74,6 @@ define([
                     deferred.then(function(res) {
                         self.attachNewNode(selectedNode, res);
                         selectedNode.setSelected(false);
-                        // topic.publish("/selectNode", {
-                        //     id: "dataTree",
-                        //     node: res
-                        // });
                         self.openCreateObjectWizardDialog();
                     }, function(err) {
                         displayErrorMessage(err);
@@ -963,40 +959,28 @@ define([
         },
 
         _handleFinalSaveObject: function() {
-            /*var valid = checkValidityOfInputElements();
 
-    if (valid != "VALID"){
-        if (valid == "INVALID_INPUT_HTML_TAG_INVALID") {
-            dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
-            
-        } else {
-            dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
-        }
-        return;
-    }*/
-
-            //var nodeData = udkDataProxy._getData();
             if (checks.isObjectPublishable()) {
                 var deferred = new Deferred();
-                deferred.then(null, displayErrorMessage);
 
                 var dialogText = this.global.currentUdk.isMarkedDeleted ? message.get("dialog.object.markedDeleted.finalSaveMessage") : message.get("dialog.object.finalSaveMessage");
 
                 // Show a dialog to query the user before publishing
-                dialog.show(message.get("dialog.finalSaveTitle"), dialogText, dialog.INFO, [{
-                    caption: message.get("general.no"),
-                    action: function() {
-                        deferred.resolve();
-                    }
-                }, {
-                    caption: message.get("general.yes"),
-                    action: function() {
-                        console.debug("Publishing event: /publishObjectRequest");
-                        topic.publish("/publishObjectRequest", {
-                            resultHandler: deferred
-                        });
-                    }
-                }]);
+                dialog.showPage(message.get("dialog.finalSaveTitle"), "dialogs/mdek_publish_dialog.jsp?c=" + userLocale, 350, 155, true, {
+                    resultHandler: deferred
+                });
+
+                deferred.then(function(toBePublishedOn) {
+                    var deferred2 = new Deferred();
+                    console.debug("Publishing event: /publishObjectRequest");
+                    topic.publish("/publishObjectRequest", {
+                        toBePublishedOn: toBePublishedOn,
+                        resultHandler: deferred2
+                    });
+                    deferred2.then(null, displayErrorMessage);
+                }, function() {
+                    // user canceled
+                }).then(null, displayErrorMessage);
 
             } else {
                 dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
