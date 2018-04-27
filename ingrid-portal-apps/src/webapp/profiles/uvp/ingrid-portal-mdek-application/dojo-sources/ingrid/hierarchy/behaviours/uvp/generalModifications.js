@@ -29,8 +29,9 @@ define(["dojo/_base/declare",
     "dojox/layout/ContentPane",
     "dijit/registry",
     "ingrid/message",
-    "ingrid/utils/UDK"
-], function(declare, cookie, Deferred, construct, query, topic, XContentPane, registry, message, udk) {
+    "ingrid/utils/UDK",
+    "ingrid/utils/Security"
+], function(declare, cookie, Deferred, construct, query, topic, XContentPane, registry, message, udk, UtilSecurity) {
 
     return declare(null, {
         title: "UVP: Generelle Änderungen",
@@ -127,28 +128,31 @@ define(["dojo/_base/declare",
         },
 
         addMenuPages: function() {
-            var menu = require("ingrid/menu");
-            menu.additionalMenuItems.push({
-                id: "menuPageUvpStatistic",
-                label: "UVP Statistik",
-                clickHandler: function() {
-                    // self.selectChild("pageDashboard");
-                    console.log("UVP Statistik");
-                    menu.selectChild("pageUvpStatistic");
-                }
-            });
+            // if catalog administrator then show statistic page
+            if (UtilSecurity.currentUser.role === 1) {
+                var menu = require("ingrid/menu");
+                menu.additionalMenuItems.push({
+                    id: "menuPageUvpStatistic",
+                    label: "UVP Statistik",
+                    clickHandler: function() {
+                        // self.selectChild("pageDashboard");
+                        console.log("UVP Statistik");
+                        menu.selectChild("pageUvpStatistic");
+                    }
+                });
 
-            registry.byId("stackContainer").addChild(
-                new XContentPane({
-                    id: "pageUvpStatistic",
-                    title: "uvpStatistic",
-                    layoutAlign: "client",
-                    href: "mdek_uvp_statistic.jsp?c=" + userLocale,
-                    preload: false,
-                    scriptHasHooks: true,
-                    executeScripts: true
-                })
-            );
+                registry.byId("stackContainer").addChild(
+                    new XContentPane({
+                        id: "pageUvpStatistic",
+                        title: "uvpStatistic",
+                        layoutAlign: "client",
+                        href: "mdek_uvp_statistic.jsp?c=" + userLocale,
+                        preload: false,
+                        scriptHasHooks: true,
+                        executeScripts: true
+                    })
+                );
+            }
         }
 
     })();

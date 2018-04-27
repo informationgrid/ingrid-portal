@@ -14,6 +14,15 @@
           <action type="add" dev="wemove" issue="601">
             IGE: Add option to publish metadata at a later date. UVP: Add option to conditionally publish documents in Phase 1.
           </action>
+          <action type="add" dev="wemove" issue="905">
+            IGE-UVP: Add Statistic page for downloading a report.
+          </action>
+          <action type="add" dev="wemove" issue="478,903">
+            IGE-UVP: Add new category for negative examinations.
+          </action>
+          <action type="add" dev="wemove" issue="881">
+            IGE-UVP: Replace checkbox with new radio buttons to define if Pre-Examination was executed.
+          </action>
           <action type="fix" dev="wemove" issue="1069">
             IGE: Fix session expired page layout.
           </action>
