@@ -30,9 +30,11 @@
     var pageUvpStatistic = _container_;
     require([
         "dojo/on",
+        "dojo/dom-class",
         "dijit/registry"
-    ], function(on, registry) {
-        var dateStart = null;
+    ], function(on, domClass, registry) {
+        pageUvpStatistic.startDate = new Date();
+        pageUvpStatistic.endDate = new Date();
 
         on(_container_, "Load", function() {
 
@@ -40,7 +42,7 @@
 
         function download(filename, text) {
             var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+            element.setAttribute('href', 'data:text/plain;charset=utf8,'+ '\uFEFF' + encodeURIComponent(text));
             element.setAttribute('download', filename);
 
             element.style.display = 'none';
@@ -51,35 +53,61 @@
             document.body.removeChild(element);
         }
 
-        pageUvpStatistic.setDate = function(date) {
-            this.dateStart = date;
-            if (!date || isNaN(date)) {
+        function verifyDates(startDate, endDate) {
+            if (!startDate || isNaN(startDate) || !endDate || isNaN(endDate)) {
                 registry.byId("btnUvpStatisticCreate").set("disabled", true);
             } else {
                 registry.byId("btnUvpStatisticCreate").set("disabled", false);
             }
         }
 
+        pageUvpStatistic.setStartDate = function(date) {
+            pageUvpStatistic.startDate = date;
+            registry.byId("dateEndUvpStatistic").constraints.min = date;
+            verifyDates(pageUvpStatistic.startDate, pageUvpStatistic.endDate);
+        }
+        
+        pageUvpStatistic.setEndDate = function(date) {
+            pageUvpStatistic.endDate = date;
+            registry.byId("dateStartUvpStatistic").constraints.max = date;
+            verifyDates(pageUvpStatistic.startDate, pageUvpStatistic.endDate);
+        }
+
         pageUvpStatistic.createStatistic = function() {
             var self = this;
-            StatisticService.createReport("UVP", {startDate: this.dateStart}, function(report) {
+            setGenerationState(false);
+            StatisticService.createReport("UVP", {startDate: pageUvpStatistic.startDate, endDate: pageUvpStatistic.endDate}, function(report) {
                 console.log("Report created: ", report);
-                //console.log("CSW created: ", self.convertToCSV(report));
-
-                download("report.csv", self.convertToCSV(report));
+                // console.log("CSW created: ", self.convertToCSV(report));
+                var filename = "report-" +
+                        pageUvpStatistic.startDate.toISOString().substr(0,10) +
+                        "__" +
+                        pageUvpStatistic.endDate.toISOString().substr(0,10) +
+                        ".csv";
+                download(filename, self.convertToCSV(report));
+                setGenerationState(true);
             });
+        }
+
+        function setGenerationState(isFinished) {
+            isFinished
+                ? domClass.add("uvpStatisticProgress", "hide")
+                : domClass.remove("uvpStatisticProgress", "hide");
+
+            registry.byId("dateStartUvpStatistic").set("disabled", !isFinished);
+            registry.byId("btnUvpStatisticCreate").set("disabled", !isFinished);
         }
 
         pageUvpStatistic.convertToCSV = function(report) {
             console.log("Convert report to CSV");
-            var csv = "UVP Nummer, UVP-G Kategorie, Anzahl, Positive Vorprüfungen, Negative Vorprüfungen\n";
+            var csv = "UVP Nummer; UVP-G Kategorie; Anzahl; Positive Vorprüfungen; Negative Vorprüfungen\n";
 
-            csv += ",,," + report.values.totalPositive + "," + report.values.totalNegative + "\n";
+            csv += ";;;" + report.values.totalPositive + ";" + report.values.totalNegative + "\n";
 
             var totalGrouped = report.values.totalGrouped;
             var groupedKeys = Object.keys(totalGrouped);
             for (var i=0; i<groupedKeys.length; i++) {
-                csv += groupedKeys[i] + "," + totalGrouped[groupedKeys[i]][1] + "," + totalGrouped[groupedKeys[i]][0] + "\n";
+                csv += groupedKeys[i] + ";" + totalGrouped[groupedKeys[i]][1] + ";" + totalGrouped[groupedKeys[i]][0] + "\n";
             }
 
             return csv;
@@ -90,22 +118,39 @@
 </head>
 
 <body>
-
     <div data-dojo-type="dijit/layout/ContentPane" class="contentContainer" id="uvpStatisticsContainer" style="padding: 20px;">
-        <label class="inActive" for="datePublish">
+        <label class="inActive">
             <fmt:message key="uvp.statistic.dateFrom" />:
         </label>
-        <input data-dojo-type="dijit/form/DateTextBox" 
-               data-dojo-props="
+        <input id="dateStartUvpStatistic"
+            data-dojo-type="dijit/form/DateTextBox" 
+            data-dojo-props="
+                value: new Date(),
                 constraints: { 
                     max: new Date()
                 }, 
-                onChange:function(ev){ pageUvpStatistic.setDate(ev); }" />
+                onChange:function(ev){ pageUvpStatistic.setStartDate(ev); }" />
 
-        <button id="btnUvpStatisticCreate" data-dojo-type="dijit/form/Button" onclick="pageUvpStatistic.createStatistic()" disabled>
+        <label class="inActive">
+            <fmt:message key="uvp.statistic.dateTo" />:
+        </label>
+        <input id="dateEndUvpStatistic"
+            data-dojo-type="dijit/form/DateTextBox" 
+            data-dojo-props="
+                value: new Date(),
+                constraints: {
+                    min: new Date(),
+                    max: new Date()
+                }, 
+                onChange:function(ev){ pageUvpStatistic.setEndDate(ev); }" />
+
+        <button id="btnUvpStatisticCreate" data-dojo-type="dijit/form/Button" onclick="pageUvpStatistic.createStatistic()">
             <fmt:message key="uvp.statistic.createStatistic" />
         </button>
+        <span id="uvpStatisticProgress" class="hide">
+            <img src="img/ladekreis.gif" />
+            <fmt:message key="uvp.statistic.generation.progress" />
+        </span>
     </div>
-
 </body>
 </html>

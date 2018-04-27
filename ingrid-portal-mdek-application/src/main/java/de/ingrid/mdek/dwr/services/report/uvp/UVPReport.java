@@ -36,6 +36,7 @@ public class UVPReport {
     private final CatalogRequestHandler catalogRequestHandler;
 
     private final long startDate;
+    private final long endDate;
     private final CodeListService codelistService;
 
     public UVPReport(ObjectRequestHandler objectRequestHandler, CatalogRequestHandler catalogRequestHandler, CodeListService codelistService, Map parameter) {
@@ -43,6 +44,7 @@ public class UVPReport {
         this.catalogRequestHandler = catalogRequestHandler;
         this.codelistService = codelistService;
         this.startDate = Long.valueOf((String) parameter.get("startDate"));
+        this.endDate = Long.valueOf((String) parameter.get("endDate"));
     }
 
     public Report create() {
@@ -105,9 +107,10 @@ public class UVPReport {
                 .findFirst()
                 .ifPresent(approvalDates::add);
 
-        // check if one of the approval dates is younger than the given date
+        // check if one of the approval dates is in the given date range
         for (AdditionalFieldBean approvalDate : approvalDates) {
-            if (Long.valueOf(approvalDate.getValue()) >= startDate) {
+            Long approvalDateLong = Long.valueOf(approvalDate.getValue());
+            if (approvalDateLong >= startDate && approvalDateLong <= endDate) {
                 return true;
             }
         }

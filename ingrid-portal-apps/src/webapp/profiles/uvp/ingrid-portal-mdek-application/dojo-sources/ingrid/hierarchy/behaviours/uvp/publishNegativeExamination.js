@@ -34,21 +34,10 @@ define([
 
     return declare(null, {
         title: "UVP: 'Negative Vorprüfungen' veröffentlichen",
-        description: "Bei Auswahl, werden zusätzliche Formularfelder angezeigt, für die vollständige Erfassung einer negativen Vorprüfung.",
+        description: "Bei Auswahl, werden zusätzliche Formularfelder angezeigt, für die vollständige Erfassung einer negativen Vorprüfung. Diese werden auch nur im Portal angezeigt, wenn diese Checkbox ausgewählt ist.",
         defaultActive: false,
         category: "UVP",
         run: function() {
-            // topic.subscribe("/onObjectClassChange", function(clazz) {
-            //     if (clazz === "Class12") {
-            //         query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
-            //         domClass.remove("uiElement1010", "hide");
-            //         domClass.remove(this.nominatimSearch.domNode, "hide");
-            //         domClass.remove(this.prefix + "spatialValue", "hide");
-            //         domClass.remove("uiElementAdduvpgCategory", "hide");
-            //         domClass.remove("uiElementAdduvpNegativeApprovalDate", "hide");
-            //         domClass.remove("uiElementAdduvpNegativeRelevantDocs", "hide");
-            //     }
-            // });
             uvp.publishNegativeExaminations = true;
         }
     })();
