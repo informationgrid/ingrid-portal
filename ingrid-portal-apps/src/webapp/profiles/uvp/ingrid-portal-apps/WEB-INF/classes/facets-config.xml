@@ -392,6 +392,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_dev_plan</id>
                 <display>true</display>
             </facet>
+            <!-- Zulassungsverfahren -->
+            <facet>
+                <name>Negative Vorprüfung</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
+                <display>true</display>
+            </facet>
         </facets>
     </facet>
 
