@@ -1,0 +1,10 @@
+  <div id="footer">
+    <div class="copyright row">
+      <div class="small-12 columns">
+        <p>
+          $MESSAGES.getString('ingrid.page.copyright')
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
