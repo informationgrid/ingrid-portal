@@ -7,7 +7,7 @@
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
     <head>
         #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
         #includeHeaderResource()
@@ -62,16 +62,17 @@
             <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
         #end
         <!-- ZDM -->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/libs.css?v=7" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/small.css?v=25" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/medium.css?v=4" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/large.css?v=11" type="text/css">
-        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/css/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
-        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/css/addon_iefix.css?v=1" type="text/css" /><![endif]-->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/addon_print.css?v=3" type="text/css" media="print">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/addon_preview.css?v=1" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/medium.css?v=4" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/large.css?v=11" type="text/css">
+        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/css/gsb/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_iefix.css?v=1" type="text/css" /><![endif]-->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_print.css?v=3" type="text/css" media="print">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_preview.css?v=1" type="text/css">
+        <script type="text/javascript" src="/decorations/layout/ingrid/scripts/gsb/global.js?v=29"></script>
     </head>
-    <body>
+    <body class="gsb lang-de fixed js-on">
     
     #set($mainMenu = $site.getMenu("main-menu"))
     #set($serviceMenu = $site.getMenu("service-menu"))
@@ -96,11 +97,7 @@
                   </div>
                 </div>
                 <div id="navPrimary">
-                  <div class="small-6 columns large-2 addShrinkLogo" style="display: none;">
-                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/images/template/logo.png?__blob=normal" alt="WSVPageAltLink"></a></p>
-                  </div><div class="small-6 columns large-2 addShrinkLogo">
-                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/images/template/logo.png?__blob=normal" alt="WSVPageAltLink"></a></p>
-                  </div><h2 class="aural">Hauptmenü</h2>
+                  <h2 class="aural">Hauptmenü</h2>
                 </div>
                 <div id="wrapperBreadcrumbs">
                   <div id="navBreadcrumbsVertical">
