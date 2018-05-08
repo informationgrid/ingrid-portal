@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="980">
             Portal: UVP add BLP data on map and facet.
           </action>
+          <action type="fix" dev="wemove" issue="1074">
+            Portal: Contact form without attachment.
+          </action>
           <action type="add" dev="wemove" issue="601">
             IGE: Add option to publish metadata at a later date. UVP: Add option to conditionally publish documents in Phase 1.
           </action>
