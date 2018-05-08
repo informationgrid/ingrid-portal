@@ -285,9 +285,9 @@ public class ContactPortlet extends GenericVelocityPortlet {
                          String emailSubject = messages.getString("contact.report.email.subject");
 
                          if(PortalConfig.getInstance().getBoolean("email.contact.subject.add.topic", Boolean.FALSE)){
-                        	 if(cf.getInput(ContactForm.FIELD_ACTIVITY) != null && !cf.getInput(ContactForm.FIELD_ACTIVITY).equals("none")){
-                        		 emailSubject = emailSubject + " - " + messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY));
-                        	 }
+                        	if(cf.getInput(ContactForm.FIELD_ACTIVITY) != null && !cf.getInput(ContactForm.FIELD_ACTIVITY).equals("none")){
+                        		emailSubject = emailSubject + " - " + messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY));
+                        	}
                          }
                          
                          String from = cf.getInput(ContactForm.FIELD_EMAIL);
@@ -295,34 +295,36 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                          String text = Utils.mergeTemplate(getPortletConfig(), mailData, "map", localizedTemplatePath);
                          if(uploadEnable){
-                        	 if(uploadEnable){
-                        		 for(FileItem item : items){
-                        			 if(item.getFieldName() != null){
-                        				 if(item.getFieldName().equals("upload")){
-                        					 uploadFile = new File(sessionId + "_" + item.getName());
-                        					 // read this file into InputStream
-                        					 InputStream inputStream = item.getInputStream();
-
-                        					 // write the inputStream to a FileOutputStream
-                        					 OutputStream out = new FileOutputStream(uploadFile);
-                        					 int read = 0;
-                        					 byte[] bytes = new byte[1024];
-
-                        					 while ((read = inputStream.read(bytes)) != -1) {
-                        						 out.write(bytes, 0, read);
-                        					 }
-
-                        					 inputStream.close();
-                        					 out.flush();
-                        					 out.close();
-                        					 break;
-                        				 }
-                        			 }
-                        		 }
-                        	 }
-                        	 Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile);
+                        	if(uploadEnable){
+                        		for(FileItem item : items){
+                        			if(item.getName() != null && !item.getName().isEmpty()) {
+		                    			 if(item.getFieldName() != null){
+		                    				if(item.getFieldName().equals("upload")){
+		                    					uploadFile = new File(sessionId + "_" + item.getName());
+		                    					// read this file into InputStream
+		                    					InputStream inputStream = item.getInputStream();
+		
+		                    					// write the inputStream to a FileOutputStream
+		                    					OutputStream out = new FileOutputStream(uploadFile);
+		                    					int read = 0;
+		                    					byte[] bytes = new byte[1024];
+		
+		                    					while ((read = inputStream.read(bytes)) != -1) {
+		                    						out.write(bytes, 0, read);
+		                    					 }
+		
+		                    					inputStream.close();
+		                    					out.flush();
+		                    					out.close();
+		                    					break;
+		                    				}
+		                    			}
+                        			}
+                        		}
+                        	}
+                        	Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile);
                         }else{
-                        	 Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
+                        	Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
                         }
                      } catch (Throwable t) {
                          cf.setError("", "Error sending mail from contact form.");
