@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1096">
             Portal: Remove old data from initial mysql portal database.
           </action>
+          <action type="fix" dev="wemove" issue="1080">
+            Portal: Remove old libs folder on tomcat and mapclient.
+          </action>
           <action type="fix" dev="wemove" issue="1092">
             IGE: Fix NPE in tree when address has no title.
           </action>
