@@ -968,7 +968,7 @@ define([
                 // Show a dialog to query the user before publishing
                 dialog.showPage(message.get("dialog.finalSaveTitle"), "dialogs/mdek_publish_dialog.jsp?c=" + userLocale, 350, 155, true, {
                     resultHandler: deferred
-                });
+                }, "publishDialog");
 
                 deferred.then(function(toBePublishedOn) {
                     var deferred2 = new Deferred();
@@ -983,7 +983,7 @@ define([
                 }).then(null, displayErrorMessage);
 
             } else {
-                dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+                dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING, null, null, null, null, "publishErrorDialog");
             }
         },
 
