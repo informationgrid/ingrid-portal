@@ -223,11 +223,6 @@ define([
 
             var id = customId ? customId : "InfoDialog";
 
-            if (registry.byId(id)) {
-                registry.byId(id).hide();
-                registry.byId(id).destroyRecursive();
-            }
-
             var dialogWnd = new Dialog({
                 id: id,
                 title: caption,
@@ -305,6 +300,12 @@ define([
                     }
                 }).placeAt(dom.byId("dialogButtonBar"));
             }
+
+            var self = this;
+            on(dialogWnd, "Hide", function() {
+                self.closeDialog(id);
+            });
+
             dialogWnd.startup();
             var promise = dialogWnd.show();
             dialogWnd.promise = promise;
