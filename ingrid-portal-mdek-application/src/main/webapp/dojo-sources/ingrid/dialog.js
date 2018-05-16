@@ -56,14 +56,16 @@ define([
         closeDialog: function(dlgId) {
             console.debug("destroy dialog: " + dlgId);
             var dlgWidget = registry.byId(dlgId);
-            //dlgWidget.hide();
-            setTimeout(function() {
-                try {
-                    dlgWidget.destroyRecursive();
-                } catch(e) {
-                    console.warn("Exception during clean up of dialog.");
-                }
-            }, 300);
+            if (dlgWidget) {
+                //dlgWidget.hide();
+                setTimeout(function() {
+                    try {
+                        dlgWidget.destroyRecursive();
+                    } catch(e) {
+                        console.warn("Exception during clean up of dialog.");
+                    }
+                }, 300);
+            }
         },
 
         showPage: function(caption, url, width, height, /* boolean */ modal, /* assoziative array of optional paramters, passed as ?key=value&... */ customParams, /*string*/ customId) {
@@ -222,6 +224,11 @@ define([
             if (!height) height = 155;
 
             var id = customId ? customId : "InfoDialog";
+
+            if (registry.byId(id)) {
+                registry.byId(id).hide();
+                registry.byId(id).destroyRecursive();
+            }
 
             var dialogWnd = new Dialog({
                 id: id,
