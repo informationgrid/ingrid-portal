@@ -82,7 +82,7 @@ define([
 
             var dlgId = customId ? customId : "pageDialog";
             // create the dialog for showing pages if it wasn't already created
-            if (registry.byId("pageDialog") !== undefined)
+            if (!customId && registry.byId("pageDialog") !== undefined)
                 dlgId = "subPageDialog";
 
             dialogWnd = new Dialog({
