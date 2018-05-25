@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="980">
             Portal: UVP add BLP data on map and facet.
           </action>
+          <action type="fix" dev="wemove" issue="1092">
+            IGE: Fix NPE in tree when address has no title.
+          </action>
         </release>
 
         <release version="4.3.0" date="2018-03-28" description="Release 4.3.0">
