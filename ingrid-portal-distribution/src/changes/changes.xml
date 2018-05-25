@@ -32,6 +32,9 @@
           <action type="fix" dev="wemove" issue="1069">
             IGE: Fix session expired page layout.
           </action>
+          <action type="fix" dev="wemove" issue="1092">
+            IGE: Fix NPE in tree when address has no title.
+          </action>
           <action type="fix" dev="wemove" issue="1089">
             MapClient: Fix embed version.
           </action>
