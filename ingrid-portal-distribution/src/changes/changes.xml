@@ -7,7 +7,7 @@
 
     <body>
         
-        <release version="4.3.1-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.1">
+        <release version="4.3.1" date="2018-05-29" description="Release 4.3.1">
           <action type="fix" dev="wemove" issue="1075">
             Portal: Fix UVP(-NI) search query properties.
           </action>
