@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="980">
             Portal: UVP add BLP data on map and facet.
           </action>
+          <action type="fix" dev="wemove" issue="1075">
+            Portal: Fix UVP(-NI) search query properties.
+          </action>
           <action type="fix" dev="wemove" issue="1096">
             Portal: Remove old data from initial mysql portal database.
           </action>
