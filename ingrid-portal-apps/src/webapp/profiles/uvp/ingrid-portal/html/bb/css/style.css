@@ -131,6 +131,7 @@ a:hover {
 
 .link-img {
     border: 1px solid #c73c35;
+    box-shadow: 6px 6px 6px rgba(0,0,0,.175);
 }
 
 .link-img-text {
