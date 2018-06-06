@@ -33,7 +33,7 @@ a {
     color: #c73c35;
 }
 
-a:hover {
+section a:hover {
     color: #c73c35;
     text-decoration:underline;
 }
