@@ -20,12 +20,27 @@
  * limitations under the Licence.
  * **************************************************#
  */
+ 
+ body {
+    color: #000;
+ }
+ 
 .nav-desktop {
     background: #c73c35;
 }
 
 a {
     color: #c73c35;
+}
+
+a:hover {
+    color: #c73c35;
+    text-decoration:underline;
+}
+
+.desktop__title p.main__title {
+    font-weight: normal;
+    line-height: 1.3;
 }
 
 .desktop__title p, h2 {
@@ -74,7 +89,7 @@ a {
 .desktop-logo {
     height: 60px;
     max-width: 100%;
-    padding: 0 10px 0 0;
+    padding: 0 1.25rem 0 0;
 }
 
 .mobile__logo {
@@ -92,4 +107,47 @@ a {
     .header__logo {
         margin-left: 0;
     }
+}
+
+@media screen and (min-width: 960px) {
+    .header__logo {
+        height: 5.25rem;
+    }
+}
+
+@media screen and (min-width: 1499px) {
+ .link-img-content {
+    position: absolute;
+    margin: -1.75rem 0 0 -11rem;
+ }
+}
+
+@media screen and (max-width: 1500px) {
+ .link-img-content {
+    float: left;
+    padding: 1.325rem  1rem 0 0;
+ }
+}
+
+.link-img {
+    border: 1px solid #c73c35;
+}
+
+.link-img-text {
+    width: 100%;
+    text-align: right;
+    float: right;
+    padding: 0.5rem 0 0 0;
+    font-size: 0.625rem;
+}
+
+.link-list a:hover {
+    background: transparent;
+    box-shadow: none;
+}
+
+@media screen and (min-width: 940px) {
+  .header__widgets__section {
+      padding: 0.5rem 0;
+  }
 }
