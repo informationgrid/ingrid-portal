@@ -23,7 +23,6 @@ We do this to share session id between contexts
 session specific attribute "ige.force.userName" !
 -->
 <Context path="/ingrid-portal-mdek-application"
-         docBase="ingrid-portal-mdek-application"
          crossContext="true"
          sessionCookiePath="/">
 	
