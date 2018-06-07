@@ -89,12 +89,12 @@
         </script>
         <script type="text/javascript">
             try {
-                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
                 piwikTracker.trackPageView();
                 piwikTracker.enableLinkTracking();
             } catch( err ) {
             }
-        </script><noscript><p><img src="https://numis.niedersachsen.de/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+        </script><noscript><p><img src="https://numis.niedersachsen.de/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
         <!-- End Piwik Tag -->
     </body>
 </html>
