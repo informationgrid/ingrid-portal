@@ -50,6 +50,9 @@
           <action type="fix" dev="wemove" issue="1090">
             MapClient: Fix embed link to map.
           </action>
+          <action type="fix" dev="wemove" issue="1107">
+            MapClient: Fix clean up KML directory.
+          </action>
         </release>
 
         <release version="4.3.0" date="2018-03-28" description="Release 4.3.0">
