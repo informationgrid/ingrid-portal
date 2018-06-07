@@ -6,6 +6,11 @@
     </properties>
 
     <body>
+        <release version="4.2.5" date="2018-06-07" description="Release 4.2.5">
+          <action type="update" dev="wemove" issue="1103">
+            Portal: Update UVP BB HTML page.
+          </action>
+        </release> 
         <release version="4.2.4" date="2018-03-20" description="Release 4.2.4">
           <action type="fix" dev="wemove" issue="1001">
             Portal: UVP: Upload does not work with IE 11.
