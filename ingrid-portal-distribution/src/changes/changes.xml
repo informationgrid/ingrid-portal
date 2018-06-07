@@ -7,6 +7,9 @@
 
     <body>
         
+        <release version="4.3.3-SNAPSHOT" date="xxxx-xx-xx" description="Release 4.3.3">
+        </release>
+
         <release version="4.3.2" date="2018-06-07" description="Release 4.3.2">
           <action type="update" dev="wemove" issue="1103">
             Portal: Update UVP BB HTML page.
