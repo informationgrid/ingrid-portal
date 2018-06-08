@@ -905,3 +905,15 @@ ALTER TABLE `help_messages`
 ALTER TABLE `user_data`
   ADD PRIMARY KEY (`id`);
 COMMIT;
+
+
+CREATE TABLE repo_user (
+  username varchar(255) NOT NULL,
+  version int NOT NULL,
+  password varchar(255) DEFAULT NULL,
+  login varchar(255) DEFAULT NULL,
+  first_name varchar(255) DEFAULT NULL,
+  surname varchar(255) DEFAULT NULL,
+  email varchar(255) DEFAULT NULL,
+  PRIMARY KEY (username)
+);

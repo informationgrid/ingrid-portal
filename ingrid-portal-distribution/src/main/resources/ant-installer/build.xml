@@ -52,7 +52,8 @@
     <property name="mdek-app-class-path"           value="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/classes"/>
     <property name="prop-mdek-apps"                value="${mdek-app-class-path}/mdek.override.properties"/>
     <property name="prop-datasource-mdek-apps"     value="${mdek-app-class-path}/default-datasource.properties"/>
-    
+    <property name="i-prop-mdek-igeAdminUser"      value="${mdek-app-class-path}/igeAdminUser.properties"/>
+
     <property name="i-prop-ingrid-webmap-client"   value="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/application.override.properties"/>
 
     <!-- THESE PROPERTIES ARE NECESSARY FOR UPDATES -->
@@ -521,10 +522,13 @@
         </echo>
         <touch file="${prop-mdek-apps}"/>
         <propertyfile file="${prop-mdek-apps}">
-            <entry key="admin.password" value="${igeAdminPassword}" />
             <entry key="installation.standalone" value="true" />
         </propertyfile>
-        
+        <touch file="${i-prop-mdek-igeAdminUser}"/>
+        <propertyfile file="${i-prop-mdek-igeAdminUser}">
+            <entry key="admin.password" value="${igeAdminPassword}" />
+        </propertyfile>
+
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal.war" />
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client.war" />
         <delete file="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" />
