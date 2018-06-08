@@ -121,7 +121,7 @@
             function removeBehaviours() {
                 for (var behave in behaviour) {
                     var entry = behaviour[behave];
-                    if (!entry.title) continue;
+                    if (!entry || !entry.title) continue;
                     var check = registry.byId("behaviour_" + behave);
                     if (check) check.destroy();
                     if (entry.children) {
@@ -344,7 +344,7 @@
                 var behavioursByCategory = {};
                 for (var behave in behaviour) {
                     var entry = behaviour[behave];
-                    if (!entry.title) continue;
+                    if (!entry || !entry.title) continue;
                     
                     // TODO: group by categories
                     var cat = behaviour[behave].category;
