@@ -36,7 +36,7 @@ define(["dojo/_base/declare",
         defaultActive: true,
         type: "SYSTEM",
         category: "mcloud",
-        params: [{id: "loadCodelists", label: "Zu ladende Codelisten", "default": "8002"} ],
+        // params: [{id: "loadCodelists", label: "Zu ladende Codelisten", "default": "8002"} ],
         run: function() {
 
             this.addIconClasses();
@@ -48,19 +48,20 @@ define(["dojo/_base/declare",
                 // remove all assistants
                 data.assistants.splice(0, data.assistants.length);
 
-                uvpType = array.filter(data.types, function(t) { return t[1] === "10"; });
+                mcloudType = array.filter(data.types, function(t) { return t[1] === "20"; });
                 data.types.splice(0, data.types.length);
-                data.types.push(uvpType[0]);
+                data.types.push(mcloudType[0]);
 
             });
 
             // load custom syslists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
-                var codeListParam = array.filter(self.params, function(p) { return p.id === "loadCodelists"; })[0];
-                var values = codeListParam.value ? codeListParam.value : codeListParam["default"];
-                array.forEach(values.split(","), function(listId) {
-                    ids.push(listId);
-                });
+                ids.push(8002);
+
+                setTimeout(function() {
+                    sysLists[8002].push(["Dokument", "20", "N", ""]);
+                    sysLists[505] = sysLists[505].filter(item => item[1] === "7" || item[1] === "10");
+                }, 200);
             });
 
             // get availbale object classes from codelist 8001

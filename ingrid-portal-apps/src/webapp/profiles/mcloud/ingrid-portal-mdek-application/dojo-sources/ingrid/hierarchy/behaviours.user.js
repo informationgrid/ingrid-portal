@@ -40,7 +40,7 @@ define([
         /**
          * Hide unwanted menu items and other general changes to the IGE.
          */
-//        mcloudGeneralModifications: generalModifications,
+        mcloudGeneralModifications: generalModifications,
 
         /**
          * Define the behaviour of the root nodes and the initialized folders.
@@ -50,7 +50,23 @@ define([
         /**
          * Create fields for all the mcloud classes and show only those fields according to the class.
          */
-        mcloudFormFields: formFields
+        mcloudFormFields: formFields,
+
+        advCompatible : undefined,
+        advProductGroup : undefined,
+        administrativeArea: undefined,
+        conformityFields: undefined,
+        inspireGeoservice: undefined,
+        inspireIsoConnection: undefined,
+        inspireEncodingConnection: undefined,
+        inspireConformityConnection: undefined,
+        spatialRepresentationInfo: undefined,
+        coupledResourceDownloadDataCheck: undefined,
+        requireUseConstraints: undefined,
+        showFileDescription: undefined,
+        encodingSchemeForGeodatasets: undefined,
+        dqGriddedDataPositionalAccuracy: undefined,
+        openData: undefined
 
     });
 });
