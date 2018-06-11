@@ -36,9 +36,6 @@
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script src="$restUrlMarker"></script>
-#if($restUrlUVPDevPlan)
-<script src="$restUrlUVPDevPlan"></script>
-#end
 <script language="JavaScript" type="text/javascript">
     var bounds;
     var selectedMap = '$selectedMap.webmapclientCoords';
