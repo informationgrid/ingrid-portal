@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="sidebar__widget js-accordion-multi">
-    <div id="facet_area_map_header" class="sidebar__widget__title filter__title js-accordion-toggle is-active" onclick="resizeMap()">
+    <div id="facet_area_map_header" class="sidebar__widget__title filter__title js-accordion-toggle is-active" onclick="resizeMap(true)">
         $MESSAGES.getString("searchResult.facete.area.map.search")
         <svg class="filter__title__icon icon">
             <use xlink:href="#arrow-thick"/>
@@ -35,7 +35,6 @@
 </div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script src="$restUrlMarker"></script>
 <script language="JavaScript" type="text/javascript">
     var bounds;
     var selectedMap = '$selectedMap.webmapclientCoords';
@@ -44,7 +43,7 @@
     }
     
     var osm = getOSMLayer('');
-    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
+    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10), 5);
     var enablePopUp = false;
     var smallIcons = true;
     
@@ -72,25 +71,17 @@
         $('#y2').prop("value", map.getBounds().getNorth());
     }
 
-    function resizeMap(){
+    function resizeMap(addOverlay){
         if(map){
             map._onResize();
+        }
+        if(addOverlay){
         }
     }
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
-    var homeCtlBounds;
-    if(mapMarkers && mapMarkers.getBounds()){
-        if(!bounds){
-            bounds = mapMarkers.getBounds().pad(0.5);
-        }
-        if(map){
-            map.fitBounds(bounds);
-        }
-        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
-    }
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10), 5);
     
     var htmlObject = control.getContainer();
     // Get the desired parent node.
