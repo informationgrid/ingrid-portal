@@ -2336,25 +2336,6 @@ define([
             },
 
             applyDefaultConnections: function() {
-                // textareas do not have a validate function so we have to implement this
-                // on our own
-                var textAreas = query(".dijitTextArea", "contentFrameBodyObject");
-                array.forEach(textAreas, function(element) {
-                    var widget = registry.getEnclosingWidget(element);
-                    widget.validate = function() {
-                        return this.validator();
-                    };
-                    widget.validator = function() {
-                        if (this.required && this.get("value") == "") {
-                            domClass.add(this.domNode, "importantBackground");
-                            return false;
-                        } else {
-                            domClass.remove(this.domNode, "importantBackground");
-                            return true;
-                        }
-                    };
-                });
-
                 // onResize fix for IE9
                 if (has("ie") > 8) {
                     on(window, "resize", function() {
@@ -2438,6 +2419,25 @@ define([
                      return all(behaviourDefs);
                 }, function(error) {
                     console.error("Error getting override behaviours:", error);
+                }).then(function() {
+                    // textareas do not have a validate function so we have to implement this
+                    // on our own
+                    var textAreas = query(".dijitTextArea", "contentFrameBodyObject");
+                    array.forEach(textAreas, function(element) {
+                        var widget = registry.getEnclosingWidget(element);
+                        widget.validate = function() {
+                            return this.validator();
+                        };
+                        widget.validator = function() {
+                            if (this.required && this.get("value") == "") {
+                                domClass.add(this.domNode, "importantBackground");
+                                return false;
+                            } else {
+                                domClass.remove(this.domNode, "importantBackground");
+                                return true;
+                            }
+                        };
+                    });
                 });
             }
         })();
