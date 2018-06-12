@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <div class="sidebar__widget js-accordion-multi">
-    <div id="facet_area_map_header" class="sidebar__widget__title filter__title js-accordion-toggle is-active" onclick="resizeMap(true)">
+    <div id="facet_area_map_header" class="sidebar__widget__title filter__title js-accordion-toggle is-active" onclick="resizeMap()">
         $MESSAGES.getString("searchResult.facete.area.map.search")
         <svg class="filter__title__icon icon">
             <use xlink:href="#arrow-thick"/>
@@ -71,11 +71,9 @@
         $('#y2').prop("value", map.getBounds().getNorth());
     }
 
-    function resizeMap(addOverlay){
+    function resizeMap(){
         if(map){
             map._onResize();
-        }
-        if(addOverlay){
         }
     }
 </script>
