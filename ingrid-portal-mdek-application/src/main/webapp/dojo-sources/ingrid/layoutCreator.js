@@ -474,6 +474,8 @@ define([
 
             createDomSelectBox: function(additionalField) {
 
+                var def = null;
+
                 var storeProps = {
                     data: {
                         identifier: 'id',
@@ -482,7 +484,7 @@ define([
                 };
                 
                 if (additionalField.useSyslist) {
-                    UtilSyslist.readSysListData(additionalField.useSyslist).then(function(entry) {
+                    def = UtilSyslist.readSysListData(additionalField.useSyslist).then(function(entry) {
                         var entries = [];
                         array.forEach(entry, function(item) {
                             entries.push({
@@ -517,6 +519,9 @@ define([
                     var inputWidget = new FilteringSelect(elementProperties);
                 
                 inputWidget.startup();
+                if (def) {
+                    inputWidget.promiseInit = def;
+                }
                 
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },

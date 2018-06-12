@@ -33,6 +33,8 @@ define([
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-style",
+    "dojo/promise/all",
+    "dojo/promise/Promise",
     "dojox/validate",
     "dojox/widget/Standby",
     "dijit/registry",
@@ -62,7 +64,7 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
-], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate, Standby,
+], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
@@ -2395,7 +2397,8 @@ define([
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 
                 // activate default behaviour
-                UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                return UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                    var behaviourDefs = [];
                     // mark behaviours with override values
                     array.forEach(data, function(item) {
                         if (behaviour[item.id]) {
@@ -2423,12 +2426,16 @@ define([
                                 )) {
                             console.debug("execute behaviour: " + behave);
                             try {
-                                behaviour[behave].run();
+                                var def = behaviour[behave].run();
+                                if (def instanceof Promise) {
+                                    behaviourDefs.push( def );
+                                }
                             } catch (error) {
                                 console.error("Could not execute behaviour: " + behave, error);
                             }
                         }
                     }
+                     return all(behaviourDefs);
                 }, function(error) {
                     console.error("Error getting override behaviours:", error);
                 });
