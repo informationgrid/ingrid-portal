@@ -53,17 +53,17 @@ define(["dojo/_base/declare",
 
             // rename default fields
             query("#general .titleBar .titleCaption")
-                .addContent(message.get("mcloud.form.consideration"), "only")
+                .addContent(message.get("mcloud.form.general"), "only")
                 .style("cursor", "default")
                 .attr('onclick', undefined);
-            query("#general .titleBar").attr("title", message.get("mcloud.form.consideration.tooltip"));
+            query("#general .titleBar").attr("title", message.get("mcloud.form.general.tooltip"));
 
             // do not override my address title
             IgeEvents.setGeneralAddressLabel = function() { };
 
             this.hideDefaultFields();
 
-            this.createFields();
+            var defCreateFields = this.createFields();
 
             // TODO: additional fields according to #490 and #473
 
@@ -71,6 +71,8 @@ define(["dojo/_base/declare",
             topic.subscribe("/onObjectClassChange", function(clazz) {
                 self.prepareDocument(clazz);
             });
+
+            return defCreateFields;
 
         },
 
@@ -107,11 +109,11 @@ define(["dojo/_base/declare",
             domClass.add("uiElement1230", "hide");
 
             // links
-            domClass.add("uiElementN018", "hide");
+            // domClass.add("uiElementN018", "hide");
 
             // hide all rubrics not needed
             query(".rubric", "contentFrameBodyObject").forEach(function(item) {
-                if (item.id !== "general" && item.id !== "spatialRef" && item.id !== "timeRef" && item.id !== "links") {
+                if (item.id !== "general" && item.id !== "spatialRef" && item.id !== "timeRef") {
                     domClass.add(item, "hide");
                 }
             });
@@ -122,7 +124,7 @@ define(["dojo/_base/declare",
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
-            var rubricContainer = creator.createRubric({ id: "mcloud", label: "mcloud Felder", help: "..." });
+            var rubricContainer = creator.createRubric({ id: "mcloud", label: "mCloud Felder", help: "..." });
             construct.place(rubricContainer, "general", "after");
 
             /*
@@ -133,7 +135,8 @@ define(["dojo/_base/declare",
                 creator.createDomTextarea({ id: id, name: message.get("mcloud.form.termsOfUse"), help: message.get("mcloud.form.termsOfUse.helpMessage"), visible: "required", style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
+            var widgetTermsOfUse = registry.byId(id);
+            additionalFields.push(widgetTermsOfUse);
 
             /*
              * Data Holding Place --> in Addresses
@@ -155,7 +158,15 @@ define(["dojo/_base/declare",
             construct.place(
                 creator.createDomSelectBox({
                     id: id, name: message.get("mcloud.form.category"), help: message.get("mcloud.form.category.helpMessage"),
-                    listEntries: [{id: "b", value: "erste kategorie"}],
+                    listEntries: [
+                        {id: "railway", value: "Bahn"},
+                        {id: "data-run", value: "Data-Run"},
+                        {id: "waters", value: "Gewässer"},
+                        {id: "infrastructure", value: "Infrastruktur"},
+                        {id: "climate", value: "Klima"},
+                        {id: "aviation", value: "Luftfahrt"},
+                        {id: "roads", value: "Straßen"}
+                    ],
                     visible: "required", style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
@@ -195,8 +206,14 @@ define(["dojo/_base/declare",
                 {
                     field: 'title',
                     name: 'Titel',
-                    width: '200px',
+                    width: '150px',
                     editable: true
+                },
+                {
+                    field: 'link',
+                    name: 'Link',
+                    editable: true,
+                    width: '200px'
                 },
                 {
                     field: 'sourceType',
@@ -204,16 +221,46 @@ define(["dojo/_base/declare",
                     type: Editors.SelectboxEditor,
                     editable: true,
                     // listId: codelist,
-                    options: ["Download", "Portal", "FTP"],
-                    values: ["dl", "portal", "ftp"],
+                    options: ["API", "AtomFeed", "Download", "FTP", "Portal", "SOS", "WCS", "WFS", "WMS", "WMTS"],
+                    values:  ["api", "atomFeed", "download", "ftp", "portal", "sos", "wcs", "wfs", "wms", "wmts"],
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true,
+                    width: '70px'
+                },
+                {
+                    field: 'dataType',
+                    name: 'Datentyp',
+                    type: Editors.SelectboxEditor,
+                    editable: true,
+                    // listId: codelist,
+                    options: ["Rasterdaten", "Sensordaten", "Tabelle", "Text", "Vektordaten"],
+                    values:  ["Rasterdaten", "Sensordaten", "Tabelle", "Text", "Vektordaten"],
                     formatter: Formatters.ListCellFormatter,
                     partialSearch: true,
                     width: '80px'
                 },
                 {
-                    field: 'link',
-                    name: 'Link',
-                    editable: true
+                    field: 'availability',
+                    name: 'Verfügbarkeit',
+                    type: Editors.SelectboxEditor,
+                    editable: true,
+                    // listId: codelist,
+                    options: ["Darstellungsdienst", "Dateidownload", "Datendienst"],
+                    values:  ["Darstellungsdienst", "DateiDownload", "Datendienst"],
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true,
+                    width: '110px'
+                },
+                {
+                    field: 'dateFormat',
+                    name: 'Datenformat',
+                    type: Editors.SelectboxEditor,
+                    editable: true,
+                    // listId: codelist,
+                    options: ["ASCII","Binär","BUFR","CAP","CSV","DATEX II","ECDIS","Excel","GeoDB","GeoJSON","GeoRSS","GeoTIFF","GML","GPX","GRIB","GRIB2","GTFS","HAFAS","HTML","JPEG2000","JSON","KL","KML","KMZ","netCDF","NetCDF","OpenDrive","OVL","PNG","Shapefile","SHDL90","TCX","TIFF","TRIAS","TSV","TXT","XML","XML/JSON","ZIP","ZRXP"],
+                    values:  ["ASCII","Binär","BUFR","CAP","CSV","DATEX II","ECDIS","Excel","GeoDB","GeoJSON","GeoRSS","GeoTIFF","GML","GPX","GRIB","GRIB2","GTFS","HAFAS","HTML","JPEG2000","JSON","KL","KML","KMZ","netCDF","NetCDF","OpenDrive","OVL","PNG","Shapefile","SHDL90","TCX","TIFF","TRIAS","TSV","TXT","XML","XML/JSON","ZIP","ZRXP"],
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true
                 }
             ];
             newFieldsToDirtyCheck.push(id);
@@ -247,50 +294,53 @@ define(["dojo/_base/declare",
                 creator.createDomTextarea({ id: id, name: message.get("mcloud.form.sourceNote"), help: message.get("mcloud.form.sourceNote.helpMessage"), visible: "required", style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
+            var widgetSourceNote = registry.byId(id);
+            additionalFields.push(widgetSourceNote);
 
             /*
-             * File Type (optional)
+             * Data Type (optional)
              */
-            id = "mcloudFileType";
+            // id = "mcloudDataType";
 
             /*
              * Availability (optional)
              */
-            id = "mcloudAvailability";
+            // id = "mcloudAvailability";
 
             /*
              * File Format (optional)
              */
-            id = "mcloudFileFormat";
+            // id = "mcloudFileFormat";
 
             /*
              * PeriodOfTime, temporal(!) (DateOfRelevance) --> Zeitraum "Durch die Ressource abged..."
              */
-            id = "mcloudDateOfRelevance";
+            // id = "mcloudDateOfRelevance";
 
             /*
              * Date Updated --> Zeitbezug der Ressource
              * TODO: allow only certain types
              */
-            id = "mcloudDateUpdated";
+            // id = "mcloudDateUpdated";
 
             /*
              * Realtime Data --> Checkbox / Periodizität(!)->kontinuierlich
              */
-            id = "mcloudRealTimeData";
+            // id = "mcloudRealTimeData";
 
             /*
              * Förderkennzeichen mFund
              */
             id = "mcloudMFundFKZ";
             construct.place(
-                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.mFundFKZ"), help: message.get("mcloud.form.mFundFKZ.helpMessage"), visible: "required", style: "width:100%" }),
+                creator.createDomTextbox({ id: id, name: message.get("mcloud.form.mFundFKZ"), help: message.get("mcloud.form.mFundFKZ.helpMessage"), visible: "required"}),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
+            return registry.byId("mcloudLicense").promiseInit;
         }
 
     })();

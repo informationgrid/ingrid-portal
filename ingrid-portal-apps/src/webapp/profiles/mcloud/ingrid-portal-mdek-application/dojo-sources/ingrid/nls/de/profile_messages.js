@@ -48,5 +48,8 @@ define({
     "mcloud.form.relevance": "Aktualität / Zeitraum",
     "mcloud.form.dateUpdated": "Aktualisierungsdatum",
     "mcloud.form.realTimeData": "Echtzeitdaten",
-    "mcloud.form.mFundFKZ": "mFund Förderkennzeichen"
+    "mcloud.form.mFundFKZ": "mFund Förderkennzeichen",
+
+    "mcloud.form.general": "Allgemein",
+    "mcloud.form.general.tooltip": "..."
 });
