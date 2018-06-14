@@ -79,9 +79,22 @@ if [ "$PORTAL_PROFILE" ]; then
         sed -i 's/<session-timeout>30<\/session-timeout>/<session-timeout>120<\/session-timeout>/' conf/web.xml
     fi
 
-
 else
     echo "No specific portal profile used."
+fi
+
+# IGE standalone configuration
+if [ "$STANDALONE_IGE" == "true" ]; then
+    # remove all contexts except ingrid-portal-mdek-application
+    rm -rf webapps/ingrid-*apps*
+    rm -rf webapps/ingrid-webmap-client
+    rm -rf webapps/ingrid-portal-mdek.war
+    rm -rf webapps/ingrid-portal-mdek/
+    rm -rf webapps/ROOT
+
+    # adapt configuration use standalone version of IGE
+    echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
 fi
 
 if [ "$DEBUG" = 'true' ]; then
