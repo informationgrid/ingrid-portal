@@ -25,9 +25,8 @@ define([
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/mcloud/docTypes",
     "ingrid/hierarchy/behaviours/mcloud/generalModifications",
-    "ingrid/hierarchy/behaviours/mcloud/treeNodes",
     "ingrid/hierarchy/behaviours/mcloud/formFields"
-], function(lang, behaviours, docTypes, generalModifications, treeNodes, formFields) {
+], function(lang, behaviours, docTypes, generalModifications, formFields) {
 
     return lang.mixin(behaviours, {
 
