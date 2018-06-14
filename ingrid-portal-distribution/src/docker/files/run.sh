@@ -32,10 +32,10 @@ if [[ ! $JAVA_OPTS == *"DB_PASSWORD"* ]]; then
 fi
 
 # setting database connection
-if [ !"$DB_IP" ]; then
+if [ -z "$DB_IP" ]; then
     DB_IP="mysql"
 fi
-if [ !"$IBUS_IP" ]; then
+if [ -z "$IBUS_IP" ]; then
     IBUS_IP="ingrid-ibus-container"
 fi
 sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/'${DB_IP}'\/ingrid_portal/' conf/Catalina/localhost/ingrid-portal-apps.xml
