@@ -227,7 +227,7 @@ define(["dojo/_base/declare",
                     partialSearch: true,
                     width: '70px'
                 },
-                {
+                /*{
                     field: 'dataType',
                     name: 'Datentyp',
                     type: Editors.SelectboxEditor,
@@ -250,7 +250,7 @@ define(["dojo/_base/declare",
                     formatter: Formatters.ListCellFormatter,
                     partialSearch: true,
                     width: '110px'
-                },
+                },*/
                 {
                     field: 'dateFormat',
                     name: 'Datenformat',

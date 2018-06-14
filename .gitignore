@@ -22,3 +22,4 @@ ingrid-portal-base/work_tomcat/
 ingrid-portal-apps/src/java/ingrid-portal-apps.override.properties
 *.stackdump
 ingrid-portal-mdek-application/src/main/webapp/WEB-INF/classes/
+ingrid-portal-mdek-application/work_tomcat/
