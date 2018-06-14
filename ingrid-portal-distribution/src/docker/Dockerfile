@@ -16,16 +16,7 @@ RUN unzip ingrid-portal*-installer.jar -d /tmp \
     && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
     && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
-    && sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/mysql\/ingrid_portal/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-apps.xml \
-    && sed -i 's/password=""/password="${DB_PASSWORD}"/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-apps.xml \
-    && sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/mysql/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-mdek.xml \
-    && sed -i 's/password=""/password="${DB_PASSWORD}"/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ingrid-portal-mdek.xml \
-    && sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/mysql\/ingrid_portal/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ROOT.xml \
-    && sed -i 's/password=""/password="${DB_PASSWORD}"/' /opt/ingrid/ingrid-portal/apache-tomcat/conf/Catalina/localhost/ROOT.xml \
-    && sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/mysql/' /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties \
-    && sed -i 's/hibernate.password=/hibernate.password=${DB_PASSWORD}/' /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties \
     && sed -i 's/portal.logger.resource=.*$/portal.logger.resource=http:\/\/localhost:8080\/logger.html/' /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties \
-    && echo "communications.ibus=/ingrid-group:ibus,ingrid-ibus-container,9900" > /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/logs \
     # && chgrp -R ingrid /opt/ingrid \
     # && chown -R ingrid /opt/ingrid \

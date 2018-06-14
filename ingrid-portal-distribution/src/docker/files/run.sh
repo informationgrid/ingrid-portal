@@ -31,6 +31,24 @@ if [[ ! $JAVA_OPTS == *"DB_PASSWORD"* ]]; then
     export JAVA_OPTS="$JAVA_OPTS -DDB_PASSWORD="""
 fi
 
+# setting database connection
+if [ !"$DB_IP" ]; then
+    DB_IP="mysql"
+fi
+if [ !"$IBUS_IP" ]; then
+    IBUS_IP="ingrid-ibus-container"
+fi
+sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/${DB_IP}\/ingrid_portal/' conf/Catalina/localhost/ingrid-portal-apps.xml
+sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-apps.xml
+sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/${DB_IP}/' conf/Catalina/localhost/ingrid-portal-mdek.xml
+sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-mdek.xml
+sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/${DB_IP}\/ingrid_portal/' conf/Catalina/localhost/ROOT.xml
+sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ROOT.xml
+sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/${DB_IP}/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+sed -i 's/hibernate.password=/hibernate.password=${DB_PASSWORD}/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+echo "communications.ibus=/ingrid-group:ibus,${IBUS_IP},9900" > webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
+
+# handle portal profiles
 if [ "$PORTAL_PROFILE" ]; then
     echo "Using specific portal profile: $PORTAL_PROFILE"
 
@@ -86,11 +104,11 @@ fi
 # IGE standalone configuration
 if [ "$STANDALONE_IGE" == "true" ]; then
     # remove all contexts except ingrid-portal-mdek-application
-    rm -rf webapps/ingrid-*apps*
-    rm -rf webapps/ingrid-webmap-client
+    rm -rf webapps/ingrid-portal-apps*
+    rm -rf webapps/ingrid-webmap-client*
     rm -rf webapps/ingrid-portal-mdek.war
     rm -rf webapps/ingrid-portal-mdek/
-    rm -rf webapps/ROOT
+    rm -rf webapps/ROOT*
 
     # adapt configuration use standalone version of IGE
     echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
