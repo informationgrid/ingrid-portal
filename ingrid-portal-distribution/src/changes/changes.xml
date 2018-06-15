@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="4.2.6" date="2018-xx-xx" description="Release 4.2.6">
+          <action type="update" dev="wemove" issue="1104">
+            IGE: Extend length of URL of preview image.
+          </action>
+        </release>
+
         <release version="4.2.5" date="2018-06-07" description="Release 4.2.5">
           <action type="update" dev="wemove" issue="1103">
             Portal: Update UVP BB HTML page.
