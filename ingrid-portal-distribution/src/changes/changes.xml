@@ -23,8 +23,17 @@
           <action type="fix" dev="wemove" issue="1080">
             Portal: Remove old libs folder on tomcat and mapclient.
           </action>
+          <action type="fix" dev="wemove" issue="1109">
+            Portal: Fix UVP BB page.
+          </action>
           <action type="update" dev="wemove" issue="1103">
             Portal: Update UVP BB HTML page.
+          </action>
+          <action type="update" dev="wemove" issue="1108">
+            Portal: Optimize loading markers on UVP maps.
+          </action>
+          <action type="update" dev="wemove" issue="1100">
+            Portal: Remove contact form for RLP.
           </action>
           <action type="add" dev="wemove" issue="601">
             IGE: Add option to publish metadata at a later date. UVP: Add option to conditionally publish documents in Phase 1.

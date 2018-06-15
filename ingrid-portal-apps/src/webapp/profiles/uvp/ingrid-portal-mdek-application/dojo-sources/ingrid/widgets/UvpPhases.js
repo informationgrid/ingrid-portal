@@ -338,6 +338,10 @@ define([
                 this.addUploadLink(id);
                 phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
 
+                id = "technicalDocsPublishLater_" + counter;
+                creator.addToSection(rubric, creator.createDomCheckbox({ id: id, name: message.get("uvp.form.phase1.eachTable.publishLater"), help: message.get("uvp.form.phase1.eachTable.publishLater.helpMessage"), visible: "required showOnlyExpanded" /*, style: "margin-bottom:12px"*/ }));
+                phaseFields.push({ key: "technicalDocsPublishLater", field: registry.byId(id) });
+
                 // TODO: at least one document validation
 
                 /**

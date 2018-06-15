@@ -469,6 +469,23 @@ thead {
   background-color: rgba(48, 48, 48, 0.6) !important;
 }
 
+.marker-cluster-12 {
+  background-color: rgba(227, 144, 0, 0.6) !important;
+  z-index: -10 !important;
+}
+
+.marker-cluster-12 div{
+  background-color: rgba(227, 144, 0, 1.0) !important;
+}
+
+.marker-cluster-12.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-12.light div{
+  background-color: rgba(227, 144, 0, 0.6) !important;
+}
+
 .marker-cluster-1314 {
   background-color: rgba(200, 60, 40, 0.6) !important;
   z-index: -20 !important;

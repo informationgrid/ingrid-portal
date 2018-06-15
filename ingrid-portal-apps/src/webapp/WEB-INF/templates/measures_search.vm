@@ -18,7 +18,7 @@
   var iframe = document.getElementById('iframe_measure');
   var urlParams = location.hash;
   // define the URL for the elastic search requests
-  // var elasticSearchUrl = "https://dev.informationgrid.eu/elastic-admin-se/";
+  var elasticSearchUrl = 'https://numis.niedersachsen.de/elastic-measure/';
 
   // exclude networks which shall not be shown
   // var excludeNetworks = ['luen_new'];
