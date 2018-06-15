@@ -283,7 +283,7 @@
                                         <fmt:message key="ui.obj.general.shortDescription" />
                                     </label>
                                 </span><span class="input">
-                                    <div type="text" maxLength="255" id="generalShortDesc" name="generalShortDesc" class="fullWidth">
+                                    <div type="text" id="generalShortDesc" name="generalShortDesc" class="fullWidth">
                                     </div>
                                 </span></div>
                             </span>
@@ -293,7 +293,7 @@
                                         <fmt:message key="ui.obj.general.previewImage" />
                                     </label>
                                 </span><span class="input">
-                                    <div type="text" maxLength="255" id="generalPreviewImage" name="generalPreviewImage" class="fullWidth">
+                                    <div type="text" id="generalPreviewImage" name="generalPreviewImage" class="fullWidth">
                                     </div>
                                 </span></div>
                             </span>
@@ -303,7 +303,7 @@
                                         <fmt:message key="ui.obj.general.previewImageDescription" />
                                     </label>
                                 </span><span class="input">
-                                    <div type="text" maxLength="255" id="previewImageDescription" name="previewImageDescription" class="fullWidth">
+                                    <div type="text" id="previewImageDescription" name="previewImageDescription" class="fullWidth">
                                     </div>
                                 </span></div>
                             </span>
@@ -454,7 +454,7 @@
                                             </label>
                                         </span>
                                         <div class="input">
-                                            <input type="text" maxLength="255" id="thesaurusFreeTerms" />
+                                            <input type="text" id="thesaurusFreeTerms" />
                                             <div style="position:relative; top: 2px; float:right;">
                                                 <button id="thesaurusFreeTermsAddButton">
                                                     <fmt:message key="ui.obj.thesaurus.terms.custom.buttonAdd" />
@@ -547,7 +547,7 @@
                                     </label>
                                 </span>
 								<span class="input">
-									<input type="text" maxLength="255" id="ref1ObjectIdentifier" style="width:100%;" />
+									<input type="text" id="ref1ObjectIdentifier" style="width:100%;" />
                                     <div style="position:relative; top: 2px; float:right;">
                                         <button id="ref1ObjectIdentifierAddButton">
                                             <fmt:message key="ui.obj.type1.identifier.buttonAdd" />
@@ -1130,7 +1130,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="255" id="ref2Author" name="ref2Author" class="fullWidth" />
+                                            <input type="text" id="ref2Author" name="ref2Author" class="fullWidth" />
                                         </span>
                                     </div>
                                 </span>
@@ -1144,7 +1144,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="255" id="ref2Publisher" name="ref2Publisher" class="fullWidth" />
+                                            <input type="text" id="ref2Publisher" name="ref2Publisher" class="fullWidth" />
                                         </span>
                                     </div>
                                 </span>
@@ -1158,7 +1158,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="80" id="ref2PublishedIn" name="ref2PublishedIn" class="w320" />
+                                            <input type="text" d="ref2PublishedIn" name="ref2PublishedIn" class="w320" />
                                         </span>
                                     </div>
                                 </span>
@@ -1170,7 +1170,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="80" id="ref2PublishLocation" name="ref2PublishLocation" class="w320" />
+                                            <input type="text" d="ref2PublishLocation" name="ref2PublishLocation" class="w320" />
                                         </span>
                                     </div>
                                 </span>
@@ -1185,7 +1185,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <input type="text" maxLength="40" id="ref2PublishedInIssue" name="ref2PublishedInIssue" class="" />
+                                            <input type="text" d="ref2PublishedInIssue" name="ref2PublishedInIssue" class="" />
                                         </span>
 										</div>
                                     </span>
@@ -1197,7 +1197,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <input type="text" maxLength="20" id="ref2PublishedInPages" name="ref2PublishedInPages" class="" />
+                                            <input type="text" d="ref2PublishedInPages" name="ref2PublishedInPages" class="" />
                                         </span>
 										</div>
                                     </span>
@@ -1209,7 +1209,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <input type="text" maxLength="20" id="ref2PublishedInYear" name="ref2PublishedInYear" class="" />
+                                            <input type="text" d="ref2PublishedInYear" name="ref2PublishedInYear" class="" />
                                         </span>
 										</div>
                                     </span>
@@ -1221,7 +1221,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="40" id="ref2PublishedISBN" name="ref2PublishedISBN" class="w148" />
+                                            <input type="text" d="ref2PublishedISBN" name="ref2PublishedISBN" class="w148" />
                                         </span>
 										</div>
                                     </span>
@@ -1233,7 +1233,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" maxLength="80" id="ref2PublishedPublisher" name="ref2PublishedPublisher" class="w148" />
+                                            <input type="text" d="ref2PublishedPublisher" name="ref2PublishedPublisher" class="w148" />
                                         </span>
 										</div>
                                     </span>
@@ -1249,7 +1249,7 @@
                                     </span>
                                     <div id="ref2LocationTabContainer" class="" selectedChild="ref2LocationTab1">
                                         <div id='ref2LocationTab1' label="<fmt:message key="ui.obj.type2.locationTable.tab.text" />">
-                                                <input type="text" maxLength="80" id="ref2LocationText" name="ref2LocationText" class="" />
+                                                <input type="text" d="ref2LocationText" name="ref2LocationText" class="" />
                                         </div>
                                         <div id='ref2LocationTab2' label="<fmt:message key="ui.obj.type2.locationTable.tab.links" />">
                                             <div class="input tableContainer">
@@ -1270,7 +1270,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <div maxLength="80" style="width:100%;" id="ref2DocumentType" listId="3385">
+                                            <div tyle="width:100%;" id="ref2DocumentType" listId="3385">
                                             </div>
                                         </span>
                                     </div>
@@ -1308,7 +1308,7 @@
 	                                        </label>
 	                                    </span>
 	                                    <span class="input">
-	                                        <input type="text" maxLength="255" id="ref2BibData" name="ref2BibData" class="w320 h038" />
+	                                        <input type="text" id="ref2BibData" name="ref2BibData" class="w320 h038" />
 	                                    </span>
 	                                </div>
 	                            </span>
@@ -1368,7 +1368,7 @@
                                             </label>
                                         </span>
 										<span class="input spaceBelow">
-											<div maxLength="255" autoComplete="false" listId="5100" id="ref3ServiceType" style="width: 100%;"></div> 
+											<div autoComplete="false" listId="5100" id="ref3ServiceType" style="width: 100%;"></div>
                                         </span>
 									</div>
                                 </span>
@@ -1485,7 +1485,7 @@
                                                 </label> 
                                             </span>
                                             <span class="input">
-                                                <div maxLength="255" autoComplete="false" id="ref3CouplingType" style="width: 100%;"></div>
+                                                <div autoComplete="false" id="ref3CouplingType" style="width: 100%;"></div>
                                             </span>
                                         </div> 
                                     </span>
@@ -1528,7 +1528,7 @@
                                         </span><span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref4Participants'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {linkType: 3410, grid: 'ref4ParticipantsLink'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.type4.participantsTable.link" /></a></span>
                                         <div id="ref4ParticipantsTabContainer" selectedChild="ref4ParticipantsTab1">
                                             <div id='ref4ParticipantsTab1' label="<fmt:message key="ui.obj.type4.participantsTable.tab.text" />">
-                                                <input type="text" maxLength="255" id="ref4ParticipantsText" name="ref4ParticipantsText" />
+                                                <input type="text" id="ref4ParticipantsText" name="ref4ParticipantsText" />
                                             </div>
                                             <div id='ref4ParticipantsTab2' label="<fmt:message key="ui.obj.type4.participantsTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -1547,7 +1547,7 @@
                                         </span><span id="ref4PMTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref4PM'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {linkType: 3400, grid: 'ref4PMLink'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.type4.projectManagerTable.link" /></a></span>
                                         <div id="ref4PMTabContainer" class="h088" selectedChild="ref4PMTab1">
                                             <div id='ref4PMTab1' label="<fmt:message key="ui.obj.type4.projectManagerTable.tab.text" />">
-                                                <input type="text" maxLength="80" id="ref4PMText" name="ref4PMText" />
+                                                <input type="text" d="ref4PMText" name="ref4PMText" />
                                             </div>
                                             <div id='ref4PMTab2' label="<fmt:message key="ui.obj.type4.projectManagerTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -1632,7 +1632,7 @@
                                        </span><span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref5Method'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3100, gridId: 'ref5MethodLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.methodTable.link" /></a></span>
                                         <div id="ref5MethodTabContainer" selectedChild="ref5MethodTab1">
                                             <div id='ref5MethodTab1' label="<fmt:message key="ui.obj.type5.methodTable.tab.text" />">
-                                                <span class="input"><input type="text" maxLength="255" id="ref5MethodText" name="ref5MethodText" /></span>
+                                                <span class="input"><input type="text" id="ref5MethodText" name="ref5MethodText" /></span>
                                             </div>
                                             <div id='ref5MethodTab2' label="<fmt:message key="ui.obj.type5.methodTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -1679,7 +1679,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <div maxLength="255" autoComplete="false" style="width:100%;" listId="5300" id="ref6ServiceType">
+                                            <div autoComplete="false" style="width:100%;" listId="5300" id="ref6ServiceType">
                                             </div>
                                         </span>
                                         </div>
@@ -1871,7 +1871,7 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <!--<input maxLength="120" autoComplete="false" style="width:100%;" maxHeight="150" listId="100" id="ref1SpatialSystem" />-->
+                                        <!--<input autoComplete="false" style="width:100%;" maxHeight="150" listId="100" id="ref1SpatialSystem" />-->
                                         <div id="ref1SpatialSystem" interactive="true" autoHeight="3" class="hideTableHeader"></div>
                                     </span>
                                     </div>
@@ -2048,7 +2048,7 @@
 	                                                    Intervall Anzahl
 	                                                </label>
 	                                            </span>
-	                                            <span class="input" style="display:inline;"><input type="text" id="timeRefIntervalNum" maxLength="40" name="timeRefIntervalNum" /></span>
+	                                            <span class="input" style="display:inline;"><input type="text" id="timeRefIntervalNum" ame="timeRefIntervalNum" /></span>
 											</span>
 											<span  class="outer" style="width:70%;">
 												<span class="label hidden">
@@ -2245,7 +2245,7 @@
                                     </label>
                                 </span>
                                 <span class="input spaceBelow">
-                                    <div maxLength="255" id="availabilityDataFormatInspire" style="width:100%;" listId="6300">
+                                    <div id="availabilityDataFormatInspire" style="width:100%;" listId="6300">
                                     </div>
                                 </span>
                                 </div>
@@ -2422,7 +2422,7 @@
                                         <label for="headerAddressType0Unit" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4100)">
                                             <fmt:message key="ui.adr.general.institution" />
                                         </label>
-                                    </span><span class="input"><input type="text" maxLength="255" required="true" id="headerAddressType0Unit" /></span>
+                                    </span><span class="input"><input type="text" required="true" id="headerAddressType0Unit" /></span>
                                     </div>
                                 </span>
                             </div>
@@ -2460,7 +2460,7 @@
                                         <label for="headerAddressType1Unit" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4200)">
                                             <fmt:message key="ui.adr.general.unit" />
                                         </label>
-                                    </span><span class="input"><input type="text" maxLength="255" required="true" id="headerAddressType1Unit" /></span>
+                                    </span><span class="input"><input type="text" required="true" id="headerAddressType1Unit" /></span>
                                     </div>
                                 </span>
                             </div>
@@ -2498,7 +2498,7 @@
                                             <label for="headerAddressType2Lastname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4315)">
                                                 <fmt:message key="ui.adr.general.surName" />
                                             </label>
-                                        </span><span class="input"><input type="text" maxLength="40" id="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" /></span>
+                                        </span><span class="input"><input type="text" d="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4310" class="outer halfWidth optional show">
@@ -2506,7 +2506,7 @@
                                             <label for="headerAddressType2Firstname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4310)">
                                                 <fmt:message key="ui.adr.general.foreName" />
                                             </label>
-                                        </span><span class="input"><input type="text" maxLength="40" id="headerAddressType2Firstname" name="headerAddressType2Firstname" /></span>
+                                        </span><span class="input"><input type="text" d="headerAddressType2Firstname" name="headerAddressType2Firstname" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2516,7 +2516,7 @@
                                             <label for="headerAddressType2Style" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4300)">
                                                 <fmt:message key="ui.adr.general.form" />
                                             </label>
-                                        </span><span class="input"><input maxLength="40" style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
+                                        </span><span class="input"><input tyle="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4305" class="outer halfWidth optional show">
@@ -2524,7 +2524,7 @@
                                             <label for="headerAddressType2Title" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4305)">
                                                 <fmt:message key="ui.adr.general.title" />
                                             </label>
-                                        </span><span class="input"><input maxLength="40" style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
+                                        </span><span class="input"><input tyle="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2560,7 +2560,7 @@
                                             <label for="headerAddressType3Lastname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4000)">
                                                 <fmt:message key="ui.adr.general.surName" />
                                             </label>
-                                        </span><span class="input"><input type="text" maxLength="40" id="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" /></span>
+                                        </span><span class="input"><input type="text" d="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4005" class="outer halfWidth optional show">
@@ -2568,7 +2568,7 @@
                                             <label for="headerAddressType3Firstname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4005)">
                                                 <fmt:message key="ui.adr.general.foreName" />
                                             </label>
-                                        </span><span class="input"><input type="text" maxLength="40" id="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" /></span>
+                                        </span><span class="input"><input type="text" d="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2578,7 +2578,7 @@
                                             <label for="headerAddressType3Style" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4015)">
                                                 <fmt:message key="ui.adr.general.form" />
                                             </label>
-                                        </span><span class="input"><input maxLength="40" style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
+                                        </span><span class="input"><input tyle="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4020" class="outer halfWidth optional show">
@@ -2586,7 +2586,7 @@
                                             <label for="headerAddressType3Title" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4020)">
                                                 <fmt:message key="ui.adr.general.title" />
                                             </label>
-                                        </span><span class="input"><input maxLength="40" style="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
+                                        </span><span class="input"><input tyle="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2596,7 +2596,7 @@
                                         <label for="headerAddressType3Institution" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4010)">
                                             Institution
                                         </label>
-                                    </span><span class="input"><input type="text" maxLength="255" id="headerAddressType3Institution" class="w668 h038" /></span>
+                                    </span><span class="input"><input type="text" id="headerAddressType3Institution" class="w668 h038" /></span>
                                     </div>
                                 </span>
                             </div>
@@ -2653,7 +2653,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" id="addressStreet" maxLength="80" name="addressStreet" />
+                                                <input type="text" id="addressStreet" ame="addressStreet" />
                                             </span>
                                         </div>
                                     </span>
@@ -2665,7 +2665,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" maxLength="10" id="addressZipCode" name="addressZipCode" />
+                                                <input type="text" d="addressZipCode" name="addressZipCode" />
                                             </span>
                                         </div>
                                     </span>
@@ -2677,7 +2677,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" maxLength="80" id="addressCity" name="addressCity" />
+                                                <input type="text" d="addressCity" name="addressCity" />
                                             </span>
                                         </div>
                                     </span>
@@ -2689,7 +2689,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" id="addressPOBox" maxLength="10" name="addressPOBox" class="w148" />
+                                                <input type="text" id="addressPOBox" ame="addressPOBox" class="w148" />
                                             </span>
                                         </div>
                                     </span>
@@ -2701,7 +2701,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" id="addressZipPOBox" maxLength="10" name="addressZipPOBox" class="w061" />
+                                                <input type="text" id="addressZipPOBox" ame="addressZipPOBox" class="w061" />
                                             </span>
                                         </div>
                                     </span>
@@ -2800,7 +2800,7 @@
                                         </label>
                                         </span>
                                         <div class="input">
-                                            <input type="text" maxLength="255" id="thesaurusFreeTermInputAddress" />
+                                            <input type="text" id="thesaurusFreeTermInputAddress" />
                                             <div style="position:relative; float:right;">
                                                 <button id="thesaurusFreeTermsAddressAddButton">
                                                     <fmt:message key="ui.adr.thesaurus.terms.custom.buttonAdd" />
