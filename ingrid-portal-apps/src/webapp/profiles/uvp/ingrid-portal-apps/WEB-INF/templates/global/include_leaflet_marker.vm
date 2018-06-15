@@ -111,7 +111,7 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
         }
     });
-    // "Vorgelagerte Verfahren" markers
+    // "Negative Vorprüfung" markers
     var mapMarkers12 = L.markerClusterGroup({
         id: 'mapMarkers12',
         iconCreateFunction: function (cluster) {
@@ -127,7 +127,7 @@
             if(smallIcons){
              c += ' light';
             }
-            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-12' + c, iconSize: new L.Point(40, 40) });
         }
     });
     // "Bebauungsplänen" markers
@@ -154,7 +154,7 @@
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
-    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_orange.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Negative Vorprüfung"]  = mapMarkers12;
+    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_orange.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Negative Vorpr&#252;fung"]  = mapMarkers12;
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
 
     var control = L.control.layers({}, overlayers, {position: 'topright', collapsed:false });
