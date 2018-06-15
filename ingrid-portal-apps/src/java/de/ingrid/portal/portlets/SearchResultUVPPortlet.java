@@ -94,6 +94,15 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                 }
                 response.getWriter().write( "];" );
             }
+            if (resourceID.equals( "marker4" )) {
+                response.setContentType( "application/javascript" );
+                response.getWriter().write( "var markers = [" );
+                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
+                if(query != "") {
+                    writeResponse(request, response, query, messages, sysCodeList);
+                }
+                response.getWriter().write( "];" );
+            }
             if (resourceID.equals( "bbox" )) {
                 String uuid = request.getParameter( "uuid" );
                 response.setContentType( "application/javascript" );
@@ -288,6 +297,11 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         if(mapclientQuery3 != ""){
             restUrl.setResourceID( "marker3" );
             request.setAttribute( "restUrlMarker3", restUrl.toString() );
+        }
+        String mapclientQuery4 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
+        if(mapclientQuery4 != ""){
+            restUrl.setResourceID( "marker4" );
+            request.setAttribute( "restUrlMarker4", restUrl.toString() );
         }
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );

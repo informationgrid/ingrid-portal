@@ -111,6 +111,25 @@
             return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
         }
     });
+    // "Vorgelagerte Verfahren" markers
+    var mapMarkers12 = L.markerClusterGroup({
+        id: 'mapMarkers12',
+        iconCreateFunction: function (cluster) {
+            var childCount = cluster.getChildCount();
+            var c = ' marker-cluster-';
+            if (childCount < 10) {
+                c += 'small';
+            } else if (childCount < 100) {
+                c += 'medium';
+            } else {
+                c += 'large';
+            }
+            if(smallIcons){
+             c += ' light';
+            }
+            return new L.DivIcon({ html: '<div><span>' + childCount + '</span></div>', className: 'marker-cluster marker-cluster-1314' + c, iconSize: new L.Point(40, 40) });
+        }
+    });
     // "Bebauungsplänen" markers
     var mapMarkersDevPlan = L.markerClusterGroup({
         id: 'mapMarkersDevPlan',
@@ -135,6 +154,7 @@
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
+    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_orange.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Negative Vorprüfung"]  = mapMarkers12;
     overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
 
     var control = L.control.layers({}, overlayers, {position: 'topright', collapsed:false });
@@ -338,6 +358,46 @@
                     });
                 }
             }
+        } else if(e.layer.options.id === 'mapMarkers12') {
+            if(mapMarkers12.getLayers().length === 0) {
+                if("$restUrlMarker4") {
+                    map.spin(true);
+                    jQuery.get("$restUrlMarker4")
+                    .done(function(data, textStatus, jqxhr) {
+                        map.spin(false);
+                        if(markers){
+                            for (var i = 0; i < markers.length; i++) {
+                                var a = markers[i];
+                                var title = a[2];
+                                var categories = a[6];
+                                var uuid = a[3];
+                                var procedure = a[5];
+                                var steps = a[7];
+                                var popUpHtml = '';
+                                var iconColor = 'orange';
+                                var icon = getIcon(smallIcons, iconColor);
+                                var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
+                                marker.uuid = uuid;
+                                marker.bbox = null;
+                                if(enablePopUp){
+                                    popUpHtml = createPopUp(title, procedure, categories, steps, uuid);
+                                    marker.bindPopup(popUpHtml, popupMarkerOptions);
+                                    marker.on('popupopen', showMarker);
+                                    marker.on('popupclose', hideMarker);
+                                }
+                                mapMarkers.addLayer(marker);
+                                mapMarkers12.addLayer(marker);
+                            }
+                        }
+                        if(mapMarkers.getLayers().length > 0) {
+                            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+                        }
+                    })
+                    .error(function () {
+                      map.spin(false);
+                    });
+                }
+            }
         }
     }
 
@@ -347,15 +407,24 @@
                 map.addLayer(mapMarkersDevPlan);
             }
         }
-        if($checkedCategory){
+        if($checkedCategory10){
             if(mapMarkers10) {
                 map.addLayer(mapMarkers10);
             }
+        }
+        if($checkedCategory11){
             if(mapMarkers11) {
                 map.addLayer(mapMarkers11);
             }
+        }
+        if($checkedCategory1314){
             if(mapMarkers1314) {
                 map.addLayer(mapMarkers1314);
+            }
+        }
+        if($checkedCategory12){
+            if(mapMarkers12) {
+                map.addLayer(mapMarkers12);
             }
         }
     }
