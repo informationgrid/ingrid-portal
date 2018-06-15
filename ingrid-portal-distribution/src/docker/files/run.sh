@@ -115,6 +115,9 @@ else
         rm -rf webapps/ingrid-portal-mdek/
         rm -rf webapps/ROOT*
 
+        # remove context files
+        rm conf/Catalina/localhost/ingrid-portal-apps.xml conf/Catalina/localhost/ingrid-portal-mdek.xml conf/Catalina/localhost/ingrid-webmap-client.xml conf/Catalina/localhost/ROOT.xml
+
         # adapt configuration use standalone version of IGE
         echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
