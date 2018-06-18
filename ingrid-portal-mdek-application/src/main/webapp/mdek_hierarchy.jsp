@@ -1163,7 +1163,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" d="ref2PublishedIn" name="ref2PublishedIn" class="w320" />
+                                            <input type="text" id="ref2PublishedIn" name="ref2PublishedIn" class="w320" />
                                         </span>
                                     </div>
                                 </span>
@@ -1175,7 +1175,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" d="ref2PublishLocation" name="ref2PublishLocation" class="w320" />
+                                            <input type="text" id="ref2PublishLocation" name="ref2PublishLocation" class="w320" />
                                         </span>
                                     </div>
                                 </span>
@@ -1190,7 +1190,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <input type="text" d="ref2PublishedInIssue" name="ref2PublishedInIssue" class="" />
+                                            <input type="text" id="ref2PublishedInIssue" name="ref2PublishedInIssue" class="" />
                                         </span>
 										</div>
                                     </span>
@@ -1202,7 +1202,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <input type="text" d="ref2PublishedInPages" name="ref2PublishedInPages" class="" />
+                                            <input type="text" id="ref2PublishedInPages" name="ref2PublishedInPages" class="" />
                                         </span>
 										</div>
                                     </span>
@@ -1214,7 +1214,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <input type="text" d="ref2PublishedInYear" name="ref2PublishedInYear" class="" />
+                                            <input type="text" id="ref2PublishedInYear" name="ref2PublishedInYear" class="" />
                                         </span>
 										</div>
                                     </span>
@@ -1226,7 +1226,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" d="ref2PublishedISBN" name="ref2PublishedISBN" class="w148" />
+                                            <input type="text" id="ref2PublishedISBN" name="ref2PublishedISBN" class="w148" />
                                         </span>
 										</div>
                                     </span>
@@ -1238,7 +1238,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" d="ref2PublishedPublisher" name="ref2PublishedPublisher" class="w148" />
+                                            <input type="text" id="ref2PublishedPublisher" name="ref2PublishedPublisher" class="w148" />
                                         </span>
 										</div>
                                     </span>
@@ -1254,7 +1254,7 @@
                                     </span>
                                     <div id="ref2LocationTabContainer" class="" selectedChild="ref2LocationTab1">
                                         <div id='ref2LocationTab1' label="<fmt:message key="ui.obj.type2.locationTable.tab.text" />">
-                                                <input type="text" d="ref2LocationText" name="ref2LocationText" class="" />
+                                                <input type="text" id="ref2LocationText" name="ref2LocationText" class="" />
                                         </div>
                                         <div id='ref2LocationTab2' label="<fmt:message key="ui.obj.type2.locationTable.tab.links" />">
                                             <div class="input tableContainer">
@@ -1552,7 +1552,7 @@
                                         </span><span id="ref4PMTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref4PM'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {linkType: 3400, grid: 'ref4PMLink'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.type4.projectManagerTable.link" /></a></span>
                                         <div id="ref4PMTabContainer" class="h088" selectedChild="ref4PMTab1">
                                             <div id='ref4PMTab1' label="<fmt:message key="ui.obj.type4.projectManagerTable.tab.text" />">
-                                                <input type="text" d="ref4PMText" name="ref4PMText" />
+                                                <input type="text" id="ref4PMText" name="ref4PMText" />
                                             </div>
                                             <div id='ref4PMTab2' label="<fmt:message key="ui.obj.type4.projectManagerTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -2506,7 +2506,7 @@
                                             <label for="headerAddressType2Lastname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4315)">
                                                 <fmt:message key="ui.adr.general.surName" />
                                             </label>
-                                        </span><span class="input"><input type="text" d="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" /></span>
+                                        </span><span class="input"><input type="text" id="headerAddressType2Lastname" required="true" name="headerAddressType2Lastname" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4310" class="outer halfWidth optional show">
@@ -2514,7 +2514,7 @@
                                             <label for="headerAddressType2Firstname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4310)">
                                                 <fmt:message key="ui.adr.general.foreName" />
                                             </label>
-                                        </span><span class="input"><input type="text" d="headerAddressType2Firstname" name="headerAddressType2Firstname" /></span>
+                                        </span><span class="input"><input type="text" id="headerAddressType2Firstname" name="headerAddressType2Firstname" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2568,7 +2568,7 @@
                                             <label for="headerAddressType3Lastname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4000)">
                                                 <fmt:message key="ui.adr.general.surName" />
                                             </label>
-                                        </span><span class="input"><input type="text" d="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" /></span>
+                                        </span><span class="input"><input type="text" id="headerAddressType3Lastname" required="true" name="headerAddressType3Lastname" class="w320" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4005" class="outer halfWidth optional show">
@@ -2576,7 +2576,7 @@
                                             <label for="headerAddressType3Firstname" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4005)">
                                                 <fmt:message key="ui.adr.general.foreName" />
                                             </label>
-                                        </span><span class="input"><input type="text" d="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" /></span>
+                                        </span><span class="input"><input type="text" id="headerAddressType3Firstname" name="headerAddressType3Firstname" class="w320" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2673,7 +2673,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" d="addressZipCode" name="addressZipCode" />
+                                                <input type="text" id="addressZipCode" name="addressZipCode" />
                                             </span>
                                         </div>
                                     </span>
@@ -2685,7 +2685,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" d="addressCity" name="addressCity" />
+                                                <input type="text" id="addressCity" name="addressCity" />
                                             </span>
                                         </div>
                                     </span>
