@@ -335,4 +335,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     public boolean canDoPartialUpdates() {
         return true;
     }
+
+    @Override
+    public boolean remove(String id) {
+        return false;
+    }
 }
