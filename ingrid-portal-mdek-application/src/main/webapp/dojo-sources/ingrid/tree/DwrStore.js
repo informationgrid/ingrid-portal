@@ -99,7 +99,11 @@ define([
                                 if (child2.objectClass === null) return +1;
                                 var compareClass = child1.objectClass - child2.objectClass;
                                 if (compareClass === 0) {
-                                    return child1.title.localeCompare( child2.title);
+                                    if (!child1.title) {
+                                        return -1;
+                                    } else {
+                                        return child1.title.localeCompare( child2.title);
+                                    }
                                 } else {
                                     return compareClass;
                                 }

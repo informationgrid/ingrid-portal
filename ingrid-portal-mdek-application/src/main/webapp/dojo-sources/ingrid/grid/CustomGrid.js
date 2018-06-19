@@ -2205,6 +2205,12 @@ define([
                     w = this.columns[i].width;
 
                 rule = this.findCssRule("." + this.uid + " .c" + i);
+
+                // a rule may not exist if a column is hidden, so we have to skip it in the calculation
+                if (!rule) {
+                    continue;
+                }
+
                 var newWidth = (w - this.cellWidthDiff) < 0 ? 0 : (w - this.cellWidthDiff);
                 // if it's the last column
                 var lastVisibleColumn = this._getLastVisibleColumn();

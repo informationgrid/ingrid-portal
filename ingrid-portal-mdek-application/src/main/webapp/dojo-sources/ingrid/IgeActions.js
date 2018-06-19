@@ -2405,6 +2405,14 @@ define([
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
+
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.generalAddressTable, function(item) {
+                delete item.linkLabel;
+                delete item.icon;
+                delete item.title;
+            });
+
             nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
             
             // Comments
@@ -2412,7 +2420,16 @@ define([
 
             // -- Spatial --
             nodeData.spatialRefAdminUnitTable = this._getTableData("spatialRefAdminUnit");
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.spatialRefAdminUnitTable, function(item) {
+                delete item.label;
+            });
+
             nodeData.spatialRefLocationTable = this._getTableData("spatialRefLocation");
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.spatialRefLocationTable, function(item) {
+                delete item.label;
+            });
 
             nodeData.spatialRefAltMin = UtilGeneral.getNumberFromDijit("spatialRefAltMin");
             nodeData.spatialRefAltMax = UtilGeneral.getNumberFromDijit("spatialRefAltMax");
@@ -2482,6 +2499,12 @@ define([
 
             // -- Thesaurus --
             nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.thesaurusTermsTable, function(item) {
+                delete item.sourceString;
+                delete item.label;
+            });
+
             nodeData.thesaurusTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusTopics"));
             nodeData.advProductGroupList = UtilList.tableDataToList(this._getTableData("advProductGroup"));
             nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(this._getTableData("thesaurusInspire"));
@@ -2499,6 +2522,9 @@ define([
             var objLinks = [];
             var urlLinks = [];
             array.forEach(linksToTable, function(link) {
+                delete link.linkLabel;
+                delete link.icon;
+
                 if (link.url) {
                     urlLinks.push(link);
                 } else {

@@ -240,6 +240,10 @@ div #hierarchyContent span.outer { background:#E6F0F5; }
 div #hierarchyContent div.rubric { background:#E6F0F5; padding-bottom: 15px; }
 div #hierarchyContent div.tableContainer { background:#E6F0F5; }
 
+#contentFrameBodyObject {
+    background: #E6F0F5;
+}
+
 /* LINKS */
 div #headMenu a { color: #C2E3FC; text-decoration: none; }
 div #headMenu a:hover { color: #FFFFFF; }

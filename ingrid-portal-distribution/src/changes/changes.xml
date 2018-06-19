@@ -11,8 +11,59 @@
           <action type="add" dev="wemove" issue="980">
             Portal: UVP add BLP data on map and facet.
           </action>
+          <action type="fix" dev="wemove" issue="1075">
+            Portal: Fix UVP(-NI) search query properties.
+          </action>
+          <action type="fix" dev="wemove" issue="1096">
+            Portal: Remove old data from initial mysql portal database.
+          </action>
+          <action type="fix" dev="wemove" issue="1074">
+            Portal: Contact form without attachment.
+          </action>
+          <action type="fix" dev="wemove" issue="1080">
+            Portal: Remove old libs folder on tomcat and mapclient.
+          </action>
+          <action type="fix" dev="wemove" issue="1109">
+            Portal: Fix UVP BB page.
+          </action>
+          <action type="update" dev="wemove" issue="1103">
+            Portal: Update UVP BB HTML page.
+          </action>
+          <action type="update" dev="wemove" issue="1108">
+            Portal: Optimize loading markers on UVP maps.
+          </action>
+          <action type="update" dev="wemove" issue="1100">
+            Portal: Remove contact form for RLP.
+          </action>
           <action type="add" dev="wemove" issue="601">
             IGE: Add option to publish metadata at a later date. UVP: Add option to conditionally publish documents in Phase 1.
+          </action>
+          <action type="add" dev="wemove" issue="905">
+            IGE-UVP: Add Statistic page for downloading a report.
+          </action>
+          <action type="add" dev="wemove" issue="478,903">
+            IGE-UVP: Add new category for negative examinations.
+          </action>
+          <action type="add" dev="wemove" issue="881">
+            IGE-UVP: Replace checkbox with new radio buttons to define if Pre-Examination was executed.
+          </action>
+          <action type="fix" dev="wemove" issue="1069">
+            IGE: Fix session expired page layout.
+          </action>
+          <action type="fix" dev="wemove" issue="1092">
+            IGE: Fix NPE in tree when address has no title.
+          </action>
+          <action type="fix" dev="wemove" issue="1089">
+            MapClient: Fix embed version.
+          </action>
+          <action type="fix" dev="wemove" issue="1090">
+            MapClient: Fix embed link to map.
+          </action>
+          <action type="fix" dev="wemove" issue="1107">
+            MapClient: Fix clean up KML directory.
+          </action>
+          <action type="update" dev="wemove" issue="1104">
+            IGE: Extend length of URL of preview image.
           </action>
         </release>
 

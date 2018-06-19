@@ -63,7 +63,10 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         context.put("lang", request.getLocale().getLanguage());
         context.put("mapUrl", PortalConfig.getInstance().getString( PortalConfig.PORTAL_MAPCLIENT_URL, "/ingrid-webmap-client/frontend/prd/" ));
         context.put("checkedCategoryDevPlan", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_CHECKED, false ));
-        context.put("checkedCategory", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_CHECKED, false ));
+        context.put("checkedCategory10", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED, false ));
+        context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
+        context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
+        context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
 
         // read preferences
         PortletPreferences prefs = request.getPreferences();

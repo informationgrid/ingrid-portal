@@ -48,7 +48,7 @@
     </security-constraint>
   </security-constraints-def>
 
-  <security-constraints-def name="admin-partner">
+  <!--<security-constraints-def name="admin-partner">
     <security-constraint>
       <roles>admin-partner</roles>
       <permissions>view, edit</permissions>
@@ -60,6 +60,6 @@
       <roles>admin-provider</roles>
       <permissions>view, edit</permissions>
     </security-constraint>
-  </security-constraints-def>
+  </security-constraints-def>-->
 
 </page-security>
