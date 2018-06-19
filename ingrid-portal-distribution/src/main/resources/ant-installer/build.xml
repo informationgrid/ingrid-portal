@@ -659,6 +659,16 @@
                 </copy>
             </else>
         </if>
+		<if>
+            <available file="${WebmapDataDir}/WebmapClientData/locales"/>
+            <then>
+                <echo>WebmapClient 'locales' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'locales' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/locales"/>
+            </else>
+        </if>
     </target>
 
     <target name="cleanMapClientProps" description="">
