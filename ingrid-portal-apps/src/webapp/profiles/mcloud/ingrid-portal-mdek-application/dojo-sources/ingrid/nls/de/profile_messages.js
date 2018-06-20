@@ -21,14 +21,12 @@
  * **************************************************#
  */
 define({
-    "tree.nodeCut": "Verfahren/Adressen/Teilb&auml;ume ausschneiden",
-    "tree.nodeCopySingle": "Verfahren/Adressen kopieren",
-    "tree.newNodeName": "Neues Verfahren",
-
-    "dialog.wizard.selectTitle": "Verfahrensschritte auswählen",
+    "tree.nodeCut": "Datensätze/Adressen/Teilb&auml;ume ausschneiden",
+    "tree.nodeCopySingle": "Datensätze/Adressen kopieren",
+    "tree.newNodeName": "Neuer Datensatz",
 
     "mcloud.title": "mCloud Editor",
-    "mcloud.tree.objectNode": "Verfahren",
+    "mcloud.tree.objectNode": "Datensätze",
 
     "help.mcloud.form.title.title": "Titel",
     "help.mcloud.form.title.text": "Angabe einer kurzen, prägnanten Bezeichnung des beschriebenen Datensatzes. Der Eintrag in dieses Feld ist obligatorisch.",

@@ -39,9 +39,10 @@ define(["dojo/_base/declare",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
+    "ingrid/hierarchy/validation",
     "ingrid/utils/Grid",
     "ingrid/utils/Syslist"
-], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, RadioButton, message, creator, IgeEvents, Editors, Formatters, dirty, UtilGrid, UtilSyslist) {
+], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, RadioButton, message, creator, IgeEvents, Editors, Formatters, dirty, validation, UtilGrid, UtilSyslist) {
     return declare(null, {
         title: "Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
@@ -58,8 +59,18 @@ define(["dojo/_base/declare",
                 .attr('onclick', undefined);
             query("#general .titleBar").attr("title", message.get("mcloud.form.general.tooltip"));
 
+            // make Geothesaurus optional but visible and remove validation after initialization
+            require("ingrid/hierarchy/objectLayout").deferredCreation.then(function() {
+                domClass.replace("uiElementN006", "outer show");
+                validation.spatialRefAdminUnitPublishable = function() {};
+                spatialRefAdminUnitPublishable = function() {};
+            });
+
             // do not override my address title
             IgeEvents.setGeneralAddressLabel = function() { };
+
+            // hide preview toolbar button
+            domClass.add("toolbarBtnPrintDoc", "hide");
 
             this.hideDefaultFields();
 
@@ -132,7 +143,7 @@ define(["dojo/_base/declare",
              */
             var id = "mcloudTermsOfUse";
             construct.place(
-                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.termsOfUse"), help: message.get("mcloud.form.termsOfUse.helpMessage"), visible: "required", style: "width:100%" }),
+                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.termsOfUse"), help: message.get("mcloud.form.termsOfUse.helpMessage"), visible: "show", style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             var widgetTermsOfUse = registry.byId(id);
@@ -333,7 +344,7 @@ define(["dojo/_base/declare",
              */
             id = "mcloudMFundFKZ";
             construct.place(
-                creator.createDomTextbox({ id: id, name: message.get("mcloud.form.mFundFKZ"), help: message.get("mcloud.form.mFundFKZ.helpMessage"), visible: "required"}),
+                creator.createDomTextbox({ id: id, name: message.get("mcloud.form.mFundFKZ"), help: message.get("mcloud.form.mFundFKZ.helpMessage"), visible: "show"}),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));

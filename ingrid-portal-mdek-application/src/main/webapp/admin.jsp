@@ -428,7 +428,7 @@
 <body class="claro">
     <div id="header">
         <img src="img/logo.png" alt="InGrid Editor">
-        <h1>InGrid Editor Administration</h1>
+        <h1><fmt:message key="ui.login.title" /></h1>
         <span id="logoutContainer"><a href="logout.jsp">Logout</a></span>
     </div>
     <div id="menu">
