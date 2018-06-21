@@ -36,7 +36,7 @@
           <groupId>de.ingrid</groupId>
           <artifactId>ingrid-webmap-client</artifactId>
           <!-- Version of ingrid-webmap-client defined in top pom -->
-          <version>4.3.0.815-SNAPSHOT</version>
+          <version>4.4.0</version>
           <type>war</type>
         </dependency>
     </dependencies>
