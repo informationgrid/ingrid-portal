@@ -82,6 +82,9 @@
         <create creator="spring" javascript="UserRepoManager">
             <param name="beanName" value="userRepoManager" />
         </create>
+        <create creator="spring" javascript="StatisticService">
+            <param name="beanName" value="statisticService" />
+        </create>
         
         <convert converter="exception" match="java.lang.Exception" />
         <convert converter="bean" match="java.lang.StackTraceElement" />
@@ -161,6 +164,7 @@
         <convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLObjectReference"/>
         <convert converter="bean" match="de.ingrid.mdek.quartz.jobs.util.URLState"/>
         <convert converter="enum" match="de.ingrid.mdek.quartz.jobs.util.URLState$State"/>
+        <convert converter="bean" match="de.ingrid.mdek.dwr.services.report.Report"/>
         
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.ProfileBean" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.Rubric" javascript="*"/>
@@ -186,6 +190,7 @@
         <convert converter="enum" match="de.ingrid.mdek.MdekUtils$MdekSysList"/>
         <convert converter="enum" match="de.ingrid.mdek.MdekUtils$WorkState"/>
         <convert converter="enum" match="de.ingrid.mdek.job.protocol.ProtocolHandler$Type"/>
+        <convert converter="enum" match="de.ingrid.mdek.dwr.services.report.ReportType"/>
         
         <!-- Dependencies from mdek-service -->
         <convert converter="bean" match="de.ingrid.mdek.services.catalog.dbconsistency.ErrorReport"/>

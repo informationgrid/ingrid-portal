@@ -123,6 +123,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "dojo/date",
     "dojo/Deferred",
     "dojo/DeferredList",
     "dojo/ready",
@@ -157,7 +158,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -686,6 +687,10 @@ define([
         handlePublishObjectRequest: function(msg) {
             // Construct an MdekDataBean from the available data
             var nodeData = this._getData();
+
+            if (msg.toBePublishedOn) {
+                nodeData.toBePublishedOn = msg.toBePublishedOn;
+            }
 
             var forcePubCond = false;
             if (msg && typeof(msg.forcePublicationCondition) != "undefined") {
@@ -1739,7 +1744,23 @@ define([
             registry.byId("objectClass").attr("value", "Class" + nodeData.objectClass, true);
 
             var workStateStr = message.get("general.workState." + nodeData.workState);
+            var workStateTitle = "";
+
+            if (nodeData.toBePublishedOn) {
+                var dateFormatted = UtilString.getDateString(nodeData.toBePublishedOn, "dd.MM.yyyy");
+                // check if publication date is in the future
+                var isActive = date.compare(new Date(), nodeData.toBePublishedOn, "date") >= 0
+
+                if (isActive) {
+                    workStateStr = message.get("general.workState.V");
+                } else {
+                    workStateStr = message.get("general.workState.timedPublish");
+                }
+                workStateTitle = string.substitute(message.get("general.workStateTitle.timedPublish"), [dateFormatted]);
+            }
+
             dom.byId("workState").innerHTML = (nodeData.isMarkedDeleted ? workStateStr + "<br>(" + message.get("general.state.markedDeleted") + ")" : workStateStr);
+            dom.byId("workState").title = workStateTitle;
             dom.byId("creationTime").innerHTML = nodeData.creationTime;
             dom.byId("modificationTime").innerHTML = nodeData.modificationTime;
             dom.byId("uuid").innerHTML = nodeData.uuid;
@@ -1749,6 +1770,17 @@ define([
             } else {
             	dom.byId("orgObjId").innerHTML = "";
             	domClass.add("origIdSpan", "hide");
+            }
+            var pubDate = nodeData.toBePublishedOn;
+            if (pubDate) {
+                var isInFuture = date.compare(new Date(), nodeData.toBePublishedOn, "date") < 0;
+                if (isInFuture) {
+                    dom.byId("publicationTime").innerHTML = UtilString.getDateString(nodeData.toBePublishedOn, "dd.MM.yyyy");
+                    domClass.remove("publicationTimeStatus", "hide");
+                }
+            } else {
+                dom.byId("publicationTime").innerHTML = '';
+                domClass.add("publicationTimeStatus", "hide");
             }
 
             if (nodeData.lastEditor !== null && UtilAddress.hasValidTitle(nodeData.lastEditor)) {
@@ -1961,10 +1993,14 @@ define([
                                 else
                                     currentFieldWidget.attr("value", currentField.listId, true);
                             } else if (currentFieldWidget instanceof DateTextBox) {
-                                currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {
-                                    datePattern: "dd.MM.yyyy",
-                                    selector: "date"
-                                }), true);
+                                if (currentFieldWidget.storeAsTimestamp) {
+                                    currentFieldWidget.attr("value", new Date(+currentField.value));
+                                } else {
+                                    currentFieldWidget.attr("value", dojo.date.locale.parse(currentField.value, {
+                                        datePattern: "dd.MM.yyyy",
+                                        selector: "date"
+                                    }), true);
+                                }
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
                             } else {
@@ -2369,6 +2405,14 @@ define([
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
+
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.generalAddressTable, function(item) {
+                delete item.linkLabel;
+                delete item.icon;
+                delete item.title;
+            });
+
             nodeData.advCompatible = registry.byId("isAdvCompatible").checked ? true : false; // in case value is NULL!
             
             // Comments
@@ -2376,7 +2420,16 @@ define([
 
             // -- Spatial --
             nodeData.spatialRefAdminUnitTable = this._getTableData("spatialRefAdminUnit");
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.spatialRefAdminUnitTable, function(item) {
+                delete item.label;
+            });
+
             nodeData.spatialRefLocationTable = this._getTableData("spatialRefLocation");
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.spatialRefLocationTable, function(item) {
+                delete item.label;
+            });
 
             nodeData.spatialRefAltMin = UtilGeneral.getNumberFromDijit("spatialRefAltMin");
             nodeData.spatialRefAltMax = UtilGeneral.getNumberFromDijit("spatialRefAltMax");
@@ -2446,6 +2499,12 @@ define([
 
             // -- Thesaurus --
             nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
+            // remove additional properties we needed for visualization
+            array.forEach(nodeData.thesaurusTermsTable, function(item) {
+                delete item.sourceString;
+                delete item.label;
+            });
+
             nodeData.thesaurusTopicsList = UtilList.tableDataToList(this._getTableData("thesaurusTopics"));
             nodeData.advProductGroupList = UtilList.tableDataToList(this._getTableData("advProductGroup"));
             nodeData.thesaurusInspireTermsList = UtilList.tableDataToList(this._getTableData("thesaurusInspire"));
@@ -2463,6 +2522,9 @@ define([
             var objLinks = [];
             var urlLinks = [];
             array.forEach(linksToTable, function(link) {
+                delete link.linkLabel;
+                delete link.icon;
+
                 if (link.url) {
                     urlLinks.push(link);
                 } else {
@@ -2516,8 +2578,9 @@ define([
 
                         } else if (currentField instanceof DateTextBox) {
                             value = currentField.get("value");
-                            if (value !== null)
+                            if (value !== null && !currentField.storeAsTimestamp) {
                                 value = UtilString.getDateString(currentField.get("value"), "dd.MM.yyyy");
+                            }
 
                         } else if (currentField instanceof CheckBox) {
                             var isChecked = currentField.checked;
@@ -2922,3 +2985,4 @@ define([
 
     })();
 });
+

@@ -65,6 +65,11 @@ public class WebappListener implements ServletContextListener {
 
             flyway.setLocations( "db/migration/" + dbType, "db/optional/" + dbType );
             flyway.setPlaceholders( placeholders );
+
+            // per default do NOT check changes in older migration files (checksum)
+            boolean validateOnMigrate = PortalConfig.getInstance().getBoolean( "flyway.validateOnMigrate", false);
+            log.info( "flyway validateOnMigrate = " + validateOnMigrate );
+            flyway.setValidateOnMigrate( validateOnMigrate );
             
             flyway.setDataSource( ds );
             flyway.migrate();

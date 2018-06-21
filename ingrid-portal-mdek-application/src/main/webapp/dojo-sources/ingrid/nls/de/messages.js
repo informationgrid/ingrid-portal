@@ -24,6 +24,8 @@ define({
     "general.workState.B": "In Bearbeitung",
     "general.workState.Q": "&Uuml;berwiesen an Qualit&auml;tssicherung",
     "general.workState.R": "Von Qualit&auml;tssicherung r&uuml;ck&uuml;berwiesen",
+    "general.workState.timedPublish": "Wird ver&ouml;ffentlicht",
+    "general.workStateTitle.timedPublish": "am ${0}",
     "general.userOperation.NEW": "neu angelegt",
     "general.userOperation.EDITED": "&uuml;berarbeitet",
     "general.userOperation.DELETED": "als gel&ouml;scht markiert",
@@ -528,6 +530,7 @@ define({
     "ui.obj.header.workState": "Status",
     "ui.obj.header.creationTime": "Erstellt am",
     "ui.obj.header.modificationTime": "Ge&auml;ndert am",
+    "ui.obj.header.willBePublishedOn": "Wird ver&ouml;ffentlicht am",
     "ui.obj.header.modUser": "Von",
     "ui.obj.general.title": "Allgemeines",
     "ui.obj.general.shortDescription": "Kurzbezeichnung",
@@ -1100,3 +1103,4 @@ define({
     "info.address.inherit.to.children": "Es wurden ${0} Adressen verändert!",
     "ui.listentry.noFilter": "Kein Filter"
 });
+

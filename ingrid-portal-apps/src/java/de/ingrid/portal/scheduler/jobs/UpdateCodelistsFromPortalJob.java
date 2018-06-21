@@ -22,17 +22,23 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.ingrid.codelists.CodeListService;
+import de.ingrid.codelists.model.CodeList;
 import de.ingrid.portal.global.CodeListServiceFactory;
+import de.ingrid.portal.scheduler.jobs.utils.PartnerProviderHandler;
 
 public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
 
     private final static Logger log = Logger.getLogger(UpdateCodelistsFromPortalJob.class);
+    
+    private static boolean isInitialExecution = true;
 
     public void execute(JobExecutionContext context) throws JobExecutionException {
         JobDataMap dataMap  = context.getJobDetail().getJobDataMap();
@@ -43,7 +49,7 @@ public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
         
         log.info("Executing UpdateCodelistsFromPortalJob...");
         CodeListService codelistService = CodeListServiceFactory.instance();
-        Object modifiedCodelists = codelistService.updateFromServer(codelistService.getLastModifiedTimestamp());
+        List<CodeList> modifiedCodelists = codelistService.updateFromServer(codelistService.getLastModifiedTimestamp());
         if (modifiedCodelists != null) {
             status = STATUS_OK;
             statusCode = STATUS_CODE_NO_ERROR;
@@ -53,6 +59,14 @@ public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
         }
         
         log.info("UpdateCodelistsFromPortalJob finished! (successful = " + (modifiedCodelists == null ? false : true) + ")");
+        
+        // map partner and providers from codelists into DB on startup and if codelists have been modified from the repository
+        if (isInitialExecution) {
+            new PartnerProviderHandler().run(codelistService.getCodeLists());
+            isInitialExecution = false;
+        } else if (modifiedCodelists != null && modifiedCodelists.size() > 0) {
+            new PartnerProviderHandler().run(modifiedCodelists);
+        }
         
         computeTime(dataMap, stopTimer());
         updateJobData(context, status, statusCode);

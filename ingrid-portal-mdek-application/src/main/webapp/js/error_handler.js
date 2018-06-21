@@ -145,6 +145,9 @@ function displayErrorMessage(err) {
                 dialog.show(message.get("general.error"), message.get("operation.error.mdekdb.corrupt"), dialog.WARNING);
             } else {
                 dialog.show(message.get("general.error"), string.substitute(message.get("dialog.generalError"), [err.message]), dialog.WARNING, null, 800, 350);
+                if (typeof Raven !== 'undefined') {
+                    Raven.captureException( new Error(err.message) );
+                }
             }
         } else {
             // Show error message if we can't determine what went wrong
@@ -153,6 +156,9 @@ function displayErrorMessage(err) {
                 text = err.javaClassName + ": " + printStackTrace( err );
             }
             dialog.show(message.get("general.error"), message.get("dialog.undefinedError") + ": " + text, dialog.WARNING);
+            if (typeof Raven !== 'undefined') {
+                Raven.captureException( new Error(text) );
+            }
         }
 
     });

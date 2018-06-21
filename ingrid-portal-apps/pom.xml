@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>4.3.0</version>
+    <version>4.4.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -345,210 +345,6 @@
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug</artifactId>
-      <version>3.5.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>jetty</groupId>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-ibus</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-betwixt</groupId>
-          <artifactId>commons-betwixt</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>tomcat</groupId>
-          <artifactId>jasper-compiler</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>tomcat</groupId>
-          <artifactId>jasper-runtime</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>jetty</groupId>
-          <artifactId>org.mortbay.jetty</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-dsc</artifactId>
-      <version>3.5.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-base-webapp</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jetty</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>jsp-2.1</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-lang3</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-utils-geo</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>ojdbc</groupId>
-          <artifactId>ojdbc</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>de.ingrid</groupId>
-        	<artifactId>ingrid-iplug</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>de.ingrid</groupId>
-        	<artifactId>ingrid-utils</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>commons-httpclient</groupId>
-        	<artifactId>commons-httpclient</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>junit</groupId>
-        	<artifactId>junit</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>hsqldb</groupId>
-        	<artifactId>hsqldb</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-se-iplug</artifactId>
-      <version>4.0.2</version>
-      <exclusions>
-      	<exclusion>
-      		<groupId>de.ingrid</groupId>
-      		<artifactId>ingrid-utils</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.javassist</groupId>
-      		<artifactId>javassist</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.reflections</groupId>
-      		<artifactId>reflections</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>de.ingrid</groupId>
-      		<artifactId>ingrid-base-webapp</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>com.google.code.gson</groupId>
-      		<artifactId>gson</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>commons-lang</groupId>
-      		<artifactId>commons-lang</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>commons-io</groupId>
-      		<artifactId>commons-io</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.flywaydb</groupId>
-      		<artifactId>flyway-core</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>com.fasterxml.jackson.core</groupId>
-      		<artifactId>jackson-databind</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>com.fasterxml.jackson.core</groupId>
-      		<artifactId>jackson-core</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.apache.commons</groupId>
-      		<artifactId>commons-exec</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>mysql</groupId>
-      		<artifactId>mysql-connector-java</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>commons-fileupload</groupId>
-      		<artifactId>commons-fileupload</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.slf4j</groupId>
-      		<artifactId>slf4j-api</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.slf4j</groupId>
-      		<artifactId>slf4j-log4j12</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>com.h2database</groupId>
-      		<artifactId>h2</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>org.eclipse.persistence</groupId>
-      		<artifactId>eclipselink</artifactId>
-      	</exclusion>
-      	<exclusion>
-      		<groupId>ojdbc</groupId>
-      		<artifactId>ojdbc</artifactId>
-      	</exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
-      <artifactId>ingrid-iplug-sns</artifactId>
-      <version>3.5.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-iplug-admin-step1-sns</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-el</groupId>
-          <artifactId>commons-el</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>de.ingrid</groupId>
-          <artifactId>ingrid-external-service-wfs</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>org.apache.jena</groupId>
-        	<artifactId>jena-arq</artifactId>
-        </exclusion>
-        <exclusion>
-        	<groupId>de.ingrid</groupId>
-        	<artifactId>ingrid-iplug</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
       <version>3.5.0</version>
     </dependency>
@@ -562,6 +358,11 @@
           <artifactId>log4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>de.ingrid</groupId>
+      <artifactId>ingrid-external-service-sns</artifactId>
+      <version>3.5.0</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -596,11 +397,11 @@
 	  <artifactId>xstream</artifactId>
 	  <version>1.4.7</version>
 	</dependency>
-    <!-- <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <scope>runtime</scope>
-    </dependency> -->
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.3.1</version>
+    </dependency>
     <dependency>
       <groupId>javamail</groupId>
       <artifactId>javamail</artifactId>

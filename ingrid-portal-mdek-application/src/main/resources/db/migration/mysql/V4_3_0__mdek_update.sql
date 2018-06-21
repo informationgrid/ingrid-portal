@@ -12,7 +12,7 @@ SET help_text = '<p>Hier kann angegeben werden, zu welcher Spezifikation die bes
 WHERE gui_id = 10024 AND language = 'de';
 
 UPDATE help_messages
-SET help_text = '<p>Specify the relevant specification (obligatory for INSPIRE-relevant metadata) and whether the dataset/service is conform or not.</p><p>Use the link "add conformity" for new entries. It\'s possible to select from lists or to insert a free entry.</p><p>Specify the relevant Commission Regulation for INSPIRE-relevant metadata and whether the dataset/service is conform or not.</p><p>When inserting an entry in "INSPIRE-Topics" (dataset) or a "Type of Service" (service), the specification will be filled in automatically.</p><p>(if Checkbox "AdV-konform" is on)<br />Please only use the values "conform" and "not conform" for the "Degree of Conformity"-field, according to the recommendations of the AdV-Metadata profiles.</p>'
+SET help_text = '<p>Specify the relevant specification (obligatory for INSPIRE-relevant metadata) and whether the dataset/service is conform or not.</p><p>Use the link "add conformity" for new entries. It''s possible to select from lists or to insert a free entry.</p><p>Specify the relevant Commission Regulation for INSPIRE-relevant metadata and whether the dataset/service is conform or not.</p><p>When inserting an entry in "INSPIRE-Topics" (dataset) or a "Type of Service" (service), the specification will be filled in automatically.</p><p>(if Checkbox "AdV-konform" is on)<br />Please only use the values "conform" and "not conform" for the "Degree of Conformity"-field, according to the recommendations of the AdV-Metadata profiles.</p>'
 WHERE gui_id = 10024 AND language = 'en';
 
 UPDATE help_messages

@@ -140,23 +140,29 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 Map<String, String[]> entrySet = allEntries.get(key);
                 CodeListEntry cle = new CodeListEntry();
                 cle.setId(String.valueOf(key));
-                if (entrySet.get("de") != null)
-                    cle.setLocalisedEntry("de", entrySet.get("de")[0]);
-                if (entrySet.get("en") != null)
-                    cle.setLocalisedEntry("en", entrySet.get("en")[0]);
-                if (entrySet.get("iso") != null)
-                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_ISO_ENTRY, entrySet.get("iso")[0]);
-                if (entrySet.get("req") != null)
-                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entrySet.get("req")[0]);
-                
                 if (entrySet.get("de") != null) {
-                    if (MdekUtils.YES.equals(entrySet.get("de")[0]))
+                    cle.setLocalisedEntry("de", entrySet.get("de")[0]);
+                    cle.setData(String.valueOf(entrySet.get("de")[2]));
+                }
+                if (entrySet.get("en") != null) {
+                    cle.setLocalisedEntry("en", entrySet.get("en")[0]);
+                    cle.setData(String.valueOf(entrySet.get("en")[2]));
+                }
+                if (entrySet.get("iso") != null) {
+                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_ISO_ENTRY, entrySet.get("iso")[0]);
+                }
+                if (entrySet.get("req") != null) {
+                    cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entrySet.get("req")[0]);
+                }
+
+                if (entrySet.get("de") != null) {
+                    if (MdekUtils.YES.equals(entrySet.get("de")[1]))
                         defaultEntry = cle.getId();
                 }
                 entries.add(cle);
             }
             cl.setEntries(entries);
-            
+
             cl.setDefaultEntry(defaultEntry);
             codelists.add(cl);
         }
@@ -178,7 +184,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             for (String[] value : allLists.get(key)) {
                 if (result.get(Integer.valueOf(value[1])) == null)
                     result.put(Integer.valueOf(value[1]), new HashMap<String, String[]>());
-                result.get(Integer.valueOf(value[1])).put(key, new String[]{value[0],value[2]});
+                result.get(Integer.valueOf(value[1])).put(key, new String[]{value[0],value[2],value[3]});
             }
         }        
         
@@ -328,5 +334,10 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     @Override
     public boolean canDoPartialUpdates() {
         return true;
+    }
+
+    @Override
+    public boolean remove(String id) {
+        return false;
     }
 }

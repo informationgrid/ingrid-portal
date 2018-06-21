@@ -88,7 +88,7 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
                 Locale ingridLocale = new Locale(language, country, variant);
                 try {
                     ingridLocale.getISO3Language();
-                    log.info("INGRID language set: " + ingridLocale);
+                    log.debug("INGRID language set: " + ingridLocale);
                 }catch (java.util.MissingResourceException e) {
                     ingridLocale = null;
                     // not a valid language

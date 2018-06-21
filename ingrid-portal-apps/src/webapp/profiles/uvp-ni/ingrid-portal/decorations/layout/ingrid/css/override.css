@@ -437,6 +437,7 @@ thead {
 
 .marker-cluster-10 {
   background-color: rgba(56, 170, 220, 0.6) !important;
+  z-index: 0 !important;
 }
 
 .marker-cluster-10 div{
@@ -453,6 +454,7 @@ thead {
 
 .marker-cluster-11 {
   background-color: rgba(48, 48, 48, 0.6) !important;
+  z-index: -10 !important;
 }
 
 .marker-cluster-11 div{
@@ -467,8 +469,26 @@ thead {
   background-color: rgba(48, 48, 48, 0.6) !important;
 }
 
+.marker-cluster-12 {
+  background-color: rgba(227, 144, 0, 0.6) !important;
+  z-index: -10 !important;
+}
+
+.marker-cluster-12 div{
+  background-color: rgba(227, 144, 0, 1.0) !important;
+}
+
+.marker-cluster-12.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-12.light div{
+  background-color: rgba(227, 144, 0, 0.6) !important;
+}
+
 .marker-cluster-1314 {
   background-color: rgba(200, 60, 40, 0.6) !important;
+  z-index: -20 !important;
 }
 
 .marker-cluster-1314 div {
@@ -485,6 +505,7 @@ thead {
 
 .marker-cluster-dev-plan {
   background-color: rgba(110, 170, 40, 0.6) !important;
+  z-index: -30 !important;
 }
 
 .marker-cluster-dev-plan div {
@@ -526,4 +547,15 @@ thead {
 
 .circle {
   border: 3px solid #2C5C91;
+}
+
+#map-legend {
+  border-bottom: 1px solid #DDD;
+}
+
+#map-legend .leaflet-control-layers {
+  float: none;
+  background: transparent !important;
+  box-shadow: unset;
+  font-size: 12px;
 }

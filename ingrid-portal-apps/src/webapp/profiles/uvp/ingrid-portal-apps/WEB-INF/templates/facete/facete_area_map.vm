@@ -8,6 +8,8 @@
     </div>
     <div id="facet_area_map_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content" >
         <div id="map" style="height:320px;"></div>
+        <div id="map-legend"></div>
+        <div><p><small><span class="tx-light">$MESSAGES.getString("common.map.info")</span></small></p></div>
         <form action="$action" method="post" name="facete_map_form">
             <input id="x1" name="x1" type="hidden" />
             <input id="x2" name="x2" type="hidden" />
@@ -33,7 +35,6 @@
 </div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script src="$restUrlMarker"></script>
 <script language="JavaScript" type="text/javascript">
     var bounds;
     var selectedMap = '$selectedMap.webmapclientCoords';
@@ -41,9 +42,10 @@
         bounds = [[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]];
     }
     
-    var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
-    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
+    var osm = getOSMLayer('');
+    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10), 5);
     var enablePopUp = false;
+    var smallIcons = true;
     
     if(!bounds){
         $( document ).ready(function() {
@@ -77,15 +79,16 @@
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
-    var homeCtlBounds;
-    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
-        if(!bounds){
-            bounds = mapMarkers.getBounds().pad(0.5);
-        }
-        if(map){
-            map.fitBounds(bounds);
-        }
-        homeCtlBounds = mapMarkers.getBounds().pad(0.5);
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10), 5);
+    
+    var htmlObject = control.getContainer();
+    // Get the desired parent node.
+    var a = document.getElementById('map-legend');
+    
+    // Finally append that node to the new parent.
+    function setParent(el, newParent)
+    {
+        newParent.appendChild(el);
     }
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
+    setParent(htmlObject, a);
 </script>

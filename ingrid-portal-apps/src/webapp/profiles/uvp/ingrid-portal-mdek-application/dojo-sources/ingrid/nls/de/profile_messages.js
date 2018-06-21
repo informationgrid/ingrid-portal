@@ -46,14 +46,17 @@ define({
 
     "uvp.form.categories.uvp": "Zulassungsverfahren",
     "uvp.form.categories.uvpInFront": "Vorgelagerte Verfahren",
-    "uvp.form.categories.uvpNegative": "Negative Vorprüfungen",
+    "uvp.form.categories.uvpNegative": "Vorprüfungen, negativ",
     "uvp.form.categories.uvpForeign": "Ausländische Vorhaben",
 
     "uvp.form.categoryIds": "UVP-Nummer",
     "uvp.form.categoryIds.helpMessage": "Hier ist die UVP-Nummer einzugeben, die für das Zulassungsverfahren zutrifft (Mehrfach-Nennungen möglich).<br><br>Es werden die bundesrechtlichen und die für Ihr Land maßgeblichen UVP-Nummern angeboten. Sollte wider Erwarten eine Nummer fehlen, wenden Sie sich bitte an die in Ihrem Land für die Betreuung des UVP-Portals zuständigen Ansprechpartner.<br><br>Die UVP-Nummern dienen der Einordnung des Zulassungsverfahrens in die Kategorien, nach denen auf der Portalseite gesucht werden kann. Außerdem sind sie wichtig zur Erfüllung der Berichtspflicht nach Artikel 12 der UVP-Richtlinie 2011/92/EU, nach der alle sechs Jahre die bis dahin durchgeführten UVP-Verfahren ausgezählt und der EU-Kommission unter Zuordnung zu den Kategorien mitgeteilt werden müssen.",
-    "uvp.form.checkExamination": "Eine Änderung/Erweiterung oder ein kumulierendes Vorhaben, für das eine Vorprüfung durchgeführt wurde",
-    "uvp.form.checkExamination.helpMessage": "WICHTIG! Bitte Haken setzen, wenn es sich um ein entsprechendes Zulassungsverfahren handelt.<br><br>Bei Änderungen/Erweiterungen wie auch bei kumulierenden Vorhaben wurde häufig eine Vorprüfung zur Feststellung der UVP-Pflicht durchgeführt. Hierfür gibt es nicht immer eine genau passende UVP-Nummer (z.B. wenn es nur eine UVP-Nummer für UVP-pflichtige  Zulassungsverfahren („X“) gibt). Da wegen der Berichtspflicht nach Art. 12 UVP-Richtlinie die Vorprüfungen zu zählen sind, werden die Zulassungsverfahren, bei denen eine Vorprüfung die UVP-Pflicht ergab, durch diese Checkbox erfasst.",
-    
+    "uvp.form.preExaminationAccomplished.label": "Vorprüfung durchgeführt",
+    "uvp.form.preExaminationAccomplished.helpMessage": "WICHTIG! Bitte Haken setzen, wenn es sich um ein entsprechendes Zulassungsverfahren handelt.<br><br>Bei Änderungen/Erweiterungen wie auch bei kumulierenden Vorhaben wurde häufig eine Vorprüfung zur Feststellung der UVP-Pflicht durchgeführt. Hierfür gibt es nicht immer eine genau passende UVP-Nummer (z.B. wenn es nur eine UVP-Nummer für UVP-pflichtige  Zulassungsverfahren („X“) gibt). Da wegen der Berichtspflicht nach Art. 12 UVP-Richtlinie die Vorprüfungen zu zählen sind, werden die Zulassungsverfahren, bei denen eine Vorprüfung die UVP-Pflicht ergab, durch diese Checkbox erfasst.",
+    "uvp.form.preExaminationAccomplished.yes": "Ja",
+    "uvp.form.preExaminationAccomplished.no": "Nein",
+    "uvp.form.preExaminationAccomplished.required": "Es muss eine Auswahl getroffen werden.",
+
     "widget.spatialSearch.helpMessage": "Durch Eingabe einer Adresse, einer bekannten Ortsbezeichnung oder auch von Koordinaten springen die Markierungen der Raumbezugskarte in den Umkreis dieses Bereiches. Mit dem Mauszeiger können die Eckpunkte des Ausschnitts sowie die Positionierung auf der Karte durch Verschieben verändert werden. Auf diese Weise können auch lineare Vorhaben (z.B. Rohrfernleitungen oder Straßenbau) in der Raumbezugskarte annähernd dargestellt werden. Mit der Schaltfläche „Übernehme Ausschnitt“ wird der Raumbezug übernommen. Die Raumbezugskarte wird entsprechender Weise im UVP-Portal abgebildet. Durch die Herstellung des Raumbezugs wird auch die Lage der Markierung auf der allgemeinen Karte des UVP-Portals bestimmt.<br><br>Beispiele:<br><br>Rathausplatz 1<br><br>Alstervorland<br><br>21109",
 
     "uvp.form.addPhase": "Verfahrensschritt hinzufügen",
@@ -71,6 +74,8 @@ define({
     "uvp.form.phase1.dateFrom.helpMessage": "Eintragung des Zeitraums der Auslegung - Pflichtfeld.<br><br>Wichtig: Genau in diesem Zeitraum müssen die Unterlagen auch im UVP-Portal zu lesen sein. Die nach dem UVPG auszulegenden Unterlagen können auch danach in UVP-Portal lesbar bleiben. Die Lesbarkeit wird durch die Eingabe des Auslegungszeitraums nicht beeinflusst.<br><br>Beispiel:<br><br>Vom: TT.MM.JJJJ  bis: TT.MM.JJJJ ",
     "uvp.form.phase1.dateTo": "bis",
     "uvp.form.phase1.dateTo.helpMessage": "Eintragung des Zeitraums der Auslegung - Pflichtfeld.<br><br>Wichtig: Genau in diesem Zeitraum müssen die Unterlagen auch im UVP-Portal zu lesen sein. Die nach dem UVPG auszulegenden Unterlagen können auch danach in UVP-Portal lesbar bleiben. Die Lesbarkeit wird durch die Eingabe des Auslegungszeitraums nicht beeinflusst.<br><br>Beispiel:<br><br>Vom: TT.MM.JJJJ  bis: TT.MM.JJJJ ",
+    "uvp.form.phase1.eachTable.publishLater": "Erst mit Beginn des Auslegungszeitraumes veröffentlichen",
+    "uvp.form.phase1.eachTable.publishLater.helpMessage": "Wenn diese Checkbox aktiviert ist, werden die Dokumente in der oberen Tabelle erst bei Erreichen des Beginn des Auslegungszeitraums veröffentlicht.",
     "uvp.form.phase1.technicalDocs": "Auslegungsinformationen",
     "uvp.form.phase1.technicalDocs.helpMessage": "Auslegungsinformationen (= Bekanntmachungstext) hochladen/verlinken. Der Namen des Dokuments sollte erkennen lassen, um was es sich handelt – Pflichtfeld.<br><br>In der Spalte „Gültig bis“ kann eingegeben werden, bis zu welchem Tag (diesen eingeschlossen) das hochgeladene/verlinkte Dokument im UVP-Portal lesbar sein soll. Es bleibt auch nach Ablauf der Frist im Editor lesbar und kann ggf. auch wieder veröffentlicht werden. Für die Bekanntmachungstexte und die ausschließlich nach UVPG auszulegenden Unterlagen wird die Ausfüllung dieses Feldes erst am Ende der Darstellung des Zulassungsverfahrens im UVP-Portal in Frage kommen.<br><br>Beispiel:<br><br>170719 A26O1 Amtl Anz Auslegung",
     "uvp.form.phase1.applicationDocs": "UVP Bericht/Antragsunterlagen",
@@ -117,6 +122,11 @@ define({
     "uvp.form.spatial.generalDescription": "Allgemeine Vorhabenbeschreibung",
 
     "uvp.form.negative.checkExamination": "Eine Änderung/Erweiterung oder ein kumulierendes Vorhaben",
+    "uvp.form.negative.address": "Kontaktdaten der federführenden Dienststelle",
+    "uvp.form.negative.approvalDate": "Datum der Entscheidung",
+    "uvp.form.negative.approvalDate.helpMessage": "Eintragung des Datums der Entscheidung - Pflichtfeld.<br><br>Beispiel:<br><br>TT.MM.JJJJ",
+    "uvp.form.negative.relevantDocs": "Relevante Dokumente",
+    "uvp.form.negative.relevantDocs.helpMessage": "...",
 
     "ui.toolbar.CutCaption": "Verfahren/Adressen/Teilbaum ausschneiden",
     "ui.toolbar.CopyCaption": "Verfahren/Adressen kopieren",
@@ -128,5 +138,9 @@ define({
 
     "validation.error.document.table.invalid": "Die Tabelle muss unter 'Dokument' und 'Link' einen Eintrag haben.",
 
-    "uvp.address.form.categories.address": "Adresse"
+    "uvp.address.form.categories.address": "Adresse",
+
+    "page.breadcrumb.pageUvpStatistic": "UVP Statistik",
+
+    "uvp.error.init": "Bei der Initialisierung von UVP ist ein Problem aufgetreten. Für die Initialisierung muss man sich als Katalogadministrator oder Metadatenadministrator anmelden."
 });

@@ -237,9 +237,19 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_URL = "portal.mapclient.url";
     
     public static final String PORTAL_MAPCLIENT_QUERY = "portal.mapclient.query";
+    public static final String PORTAL_MAPCLIENT_QUERY_2 = "portal.mapclient.query.2";
+    public static final String PORTAL_MAPCLIENT_QUERY_3 = "portal.mapclient.query.3";
+    public static final String PORTAL_MAPCLIENT_QUERY_4 = "portal.mapclient.query.4";
     
-    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_URL = "portal.mapclient.uvp.category.dev-plan.url";
-    
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED = "portal.mapclient.uvp.category.10.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED = "portal.mapclient.uvp.category.11.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED = "portal.mapclient.uvp.category.12.checked";
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED = "portal.mapclient.uvp.category.1314.checked";
+
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN = "portal.mapclient.uvp.category.dev.plan";
+
+    public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_CHECKED = "portal.mapclient.uvp.category.dev.plan.checked";
+
     public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
 
     public static final String PORTAL_FORM_REGEX_CHECK_LOGIN = "portal.form.regex.check.login";
