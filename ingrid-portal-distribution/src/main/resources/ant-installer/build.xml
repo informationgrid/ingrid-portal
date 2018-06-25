@@ -633,6 +633,46 @@
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/kml"/>
             </else>
         </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/help"/>
+            <then>
+                <echo>WebmapClient 'help' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'help' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/help"/>
+                <copy todir="${WebmapDataDir}/WebmapClientData/help" >
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/help">
+                        <include name="**/*.json"/>
+                    </fileset>
+                </copy>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/css"/>
+            <then>
+                <echo>WebmapClient 'css' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'css' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/css"/>
+                <copy todir="${WebmapDataDir}/WebmapClientData/css" >
+                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/css">
+                        <include name="**/*.override.css"/>
+                    </fileset>
+                </copy>
+            </else>
+        </if>
+		<if>
+            <available file="${WebmapDataDir}/WebmapClientData/locales"/>
+            <then>
+                <echo>WebmapClient 'locales' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'locales' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/locales"/>
+            </else>
+        </if>
     </target>
 
     <target name="cleanMapClientProps" description="">

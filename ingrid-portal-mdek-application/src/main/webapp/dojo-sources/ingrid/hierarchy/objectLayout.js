@@ -279,7 +279,7 @@ define([
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
                 var previewImage = new ValidationTextBox({
-                    maxLength: 255,
+                    maxLength: 1024,
                     style: "width:100%;"
                 }, "generalPreviewImage");
                 

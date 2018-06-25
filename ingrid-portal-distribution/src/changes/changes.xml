@@ -7,7 +7,13 @@
 
     <body>
         
-        <release version="4.4.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.4.0">
+        <release version="4.5.0-SNAPPHOT" date="20xx-xx-xx" description="Release 4.5.0">
+          <action type="add" dev="wemove" issue="1112">
+            MapClient: Display layer name tag on infobox.
+          </action>
+        </release>
+
+        <release version="4.4.0" date="2018-06-21" description="Release 4.4.0">
           <action type="add" dev="wemove" issue="980">
             Portal: UVP add BLP data on map and facet.
           </action>
@@ -53,6 +59,9 @@
           <action type="fix" dev="wemove" issue="1092">
             IGE: Fix NPE in tree when address has no title.
           </action>
+          <action type="fix" dev="wemove" issue="815">
+            MapClient: Add admin gui.
+          </action>
           <action type="fix" dev="wemove" issue="1089">
             MapClient: Fix embed version.
           </action>
@@ -61,6 +70,9 @@
           </action>
           <action type="fix" dev="wemove" issue="1107">
             MapClient: Fix clean up KML directory.
+          </action>
+          <action type="update" dev="wemove" issue="1104">
+            IGE: Extend length of URL of preview image.
           </action>
         </release>
 
