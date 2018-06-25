@@ -37,19 +37,20 @@ else
     fi
 
     # setting database connection
-    if [ -z "$DB_IP" ]; then
-        DB_IP="mysql"
+    if [ -z "$DB_URL" ]; then
+        DB_URL_PORTAL="jdbc:mysql:\/\/mysql\/ingrid-portal"
+        DB_URL_MDEK="jdbc:mysql:\/\/mysql\/mdek"
     fi
     if [ -z "$IBUS_IP" ]; then
         IBUS_IP="ingrid-ibus-container"
     fi
-    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/'${DB_IP}'\/ingrid_portal/' conf/Catalina/localhost/ingrid-portal-apps.xml
+    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ingrid-portal-apps.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-apps.xml
-    sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/'${DB_IP}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
+    sed -i 's/jdbc:mysql://localhost/mdek/'${DB_URL_MDEK}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-mdek.xml
-    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/jdbc:mysql:\/\/'${DB_IP}'\/ingrid_portal/' conf/Catalina/localhost/ROOT.xml
+    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ROOT.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ROOT.xml
-    sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/'${DB_IP}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    sed -i 's/jdbc:mysql:\/\/localhost/jdbc:mysql:\/\/'${DB_URL_MDEK}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.password=/hibernate.password=${DB_PASSWORD}/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     echo "communications.ibus=/ingrid-group:ibus,"${IBUS_IP}",9900" > webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
 
