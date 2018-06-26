@@ -112,7 +112,7 @@
   <issueManagement>
     <!-- Use JIRA instead of Redmine since the url is wrong generated otherwise! -->
     <system>JIRA</system>
-    <url>https://redmine.wemove.com/issues/</url>
+    <url>https://redmine.informationgrid.eu/issues/</url>
   </issueManagement>
   <build>
     <finalName>ingrid-portal-project-${project.version}</finalName>
