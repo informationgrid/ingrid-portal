@@ -28,7 +28,8 @@
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
     <mdek.version>4.4.0</mdek.version>
-    <webmap-client.version>4.5.0-SNAPSHOT</webmap-client.version>
+    <webmap-client.version>4.4.0</webmap-client.version>
+    <ingrid-codelist-service.version>4.4.0</ingrid-codelist-service.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -57,7 +58,7 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>4.4.0</version>
+        <version>${ingrid-codelist-service.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>

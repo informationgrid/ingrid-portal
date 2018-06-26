@@ -7,10 +7,7 @@
 
     <body>
         
-        <release version="4.5.0-SNAPPHOT" date="20xx-xx-xx" description="Release 4.5.0">
-          <action type="add" dev="wemove" issue="1112">
-            MapClient: Display layer name tag on infobox.
-          </action>
+        <release version="4.4.1" date="2018-06-26" description="Release 4.4.1">
           <action type="add" dev="wemove" issue="1120">
             Portal: Backup partner and provider before they are overwritten by the ones from codelist-repository.
           </action>
