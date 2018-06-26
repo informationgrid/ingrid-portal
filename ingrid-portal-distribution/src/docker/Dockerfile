@@ -1,5 +1,12 @@
 FROM docker-registry.wemove.com/ingrid-java:jdk-8
 ENV INGRID_USER=root
+ENV IBUS_IP=ibus
+ENV DB_USER=root
+ENV DB_PASSWORD=""
+ENV DB_DRIVERCLASS=com.mysql.jdbc.Driver
+ENV DB_URL_MDEK=jdbc:mysql:\/\/mysql\/mdek
+ENV DB_URL_PORTAL=jdbc:mysql:\/\/mysql\/portal
+ENV DB_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
 
 ADD ingrid-portal*-installer.jar /
 

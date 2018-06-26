@@ -30,30 +30,14 @@ if [ -e /initialized ]
 then
     echo "Container already initialized"
 else
-
-    if [[ ! $JAVA_OPTS == *"DB_PASSWORD"* ]]; then
-        echo "Database password not set or empty. Setting it empty to make sure that it's really set."
-        export JAVA_OPTS="$JAVA_OPTS -DDB_PASSWORD="""
-    fi
-
-    # setting database connection
-    if [ -z "$DB_URL" ]; then
-        DB_URL_PORTAL="jdbc:mysql:\/\/mysql\/ingrid-portal"
-        DB_URL_MDEK="jdbc:mysql:\/\/mysql\/mdek"
-    fi
-    if [ -z "$IBUS_IP" ]; then
-        IBUS_IP="ingrid-ibus-container"
-    fi
-    if [ -z "$DB_USER" ]; then
-        DB_USER="root"
-    fi
-
     sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ingrid-portal-apps.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-apps.xml
     sed -i 's/jdbc:mysql://localhost/mdek/'${DB_URL_MDEK}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-mdek.xml
     sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ROOT.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ROOT.xml
+    sed -i 's/hibernate.driverClass=com.mysql.jdbc.Driver/hibernate.driverClass='${DB_DRIVERCLASS}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    sed -i 's/hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect/hibernate.dialect='${DB_DIALECT}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/jdbc:mysql:\/\/localhost/mdek/'${DB_URL_MDEK}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.user=root/hibernate.user='${DB_USER}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.password=/hibernate.password='${DB_PASSWORD}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
