@@ -52,6 +52,8 @@ define(["dojo/_base/declare",
 
             this.interceptHelpMessages();
 
+            this.disableRules();
+
             query("head title").addContent("mcloud Editor", "only");
 
             // rename Objekte root node
@@ -123,6 +125,31 @@ define(["dojo/_base/declare",
                     return this.loadHelpMessageOrig(guiId);
                 }
             };
+        },
+
+        disableRules: function() {
+
+            var Rules = require("ingrid/hierarchy/rules");
+
+            Rules.openDataLinkCheck = null;
+            Rules.applyRule1 = function() {};
+            Rules.applyRule2 = function() {};
+            Rules.applyRule3 = function(value) {};
+            Rules.applyRule5 = function() {};
+            Rules.applyRule6 = function() {};
+            Rules.applyRule7 = function() {};
+            Rules.applyRuleThesaurusInspire = function() {};
+            Rules.applyRuleServiceType = function() {};
+            Rules._updateAtomFieldVisibility = function(value) {};
+            Rules.applyRuleDownloadService = function() {};
+
+            applyRuleThesaurusInspire = function() {};
+            applyRule1 = function() {};
+            applyRule2 = function() {};
+            applyRule3 = function() {};
+            applyRule5 = function() {};
+            applyRule6 = function() {};
+            applyRule7 = function() {};
         }
 
     })();
