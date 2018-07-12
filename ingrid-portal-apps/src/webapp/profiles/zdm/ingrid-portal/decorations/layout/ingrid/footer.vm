@@ -1,6 +1,33 @@
                 </div>
               </div>
               <div id="footer">
+                <div id="navFunctionsWrapper" class="row">
+                  <div class="small-12 medium-2 medium-push-10 end columns">
+                    <p class="navToTop">
+                      <a href="#Start">Zum Seitenanfang</a>
+                    </p>
+                  </div>
+                  <div class="small-12 medium-10 medium-pull-2 columns">
+                    <h2>Diese Seite</h2>
+                    <ul id="navFunctions">
+                      <li id="navFunctionsPrint"><a href="#" title="Seite drucken (&ouml;ffnet Dialog)">drucken</a></li>
+                      <li id="navFunctionsFeedback">
+                        <a href="https://www.kuestendaten.de/DE/Service/Feedback/feedback-node.html?cms_docId=522850">Feed&shy;back</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div id="siteInfo" class="row">
+                  <h2 class="aural">Service Navigation</h2>
+                  <div class="siteInfo_links">
+                    <ul class="small-block-grid-2 large-block-grid-6">
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Datenschutz/datenschutz_node.html">Da&shy;ten&shy;schutz</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Impressum/impressum_node.html">Im&shy;pres&shy;s&shy;um</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Sitemap/sitemap_node.html">In&shy;halts&shy;ver&shy;zeich&shy;nis</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Haftungsausschluss/haftungsausschluss_node.html">Haf&shy;tungs&shy;aus&shy;schluss</a></li>
+                    </ul>
+                  </div>
+                </div>
                 <div class="copyright row">
                   <div class="small-12 columns">
                     <p>
