@@ -89,7 +89,7 @@
                   <div id="navServiceMeta" class="large-9 columns">
                     <h2 class="aural">Servicemen&uuml;</h2>
                     <ul>
-                      <li><a href="DE/Startseite/Startseite_Kuestendaten_node.html">K&uuml;s&shy;ten&shy;da&shy;ten</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Startseite/Startseite_Kuestendaten_node.html">K&uuml;s&shy;ten&shy;da&shy;ten</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/NSK/DE/Startseite/Startseite_Portal_Nordseekueste_node.html" title="Nordseek&uuml;ste">Nord&shy;see&shy;k&uuml;s&shy;te</a></li>
                       <li><a href="https://www.kuestendaten.de/Tideems/DE/Startseite/Startseite-Portal-Tideems-node.html">Ti&shy;de&shy;ems</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/Tideweser/DE/Startseite/Startseite-Portal-Tideweser-node.html" title="Tideweser">Ti&shy;de&shy;we&shy;ser</a></li>
