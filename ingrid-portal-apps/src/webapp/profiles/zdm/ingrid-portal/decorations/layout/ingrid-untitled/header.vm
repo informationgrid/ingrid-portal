@@ -7,7 +7,7 @@
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
     <head>
         #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
         #includeHeaderResource()
@@ -35,9 +35,6 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href="#GetPageResource('./../ingrid/css/google/robotocondensed/v13/css/fonts.css')" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
@@ -64,8 +61,18 @@
         #if($lang && $lang != "en")
             <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
         #end
+        <!-- ZDM -->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/medium.css?v=4" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/large.css?v=11" type="text/css">
+        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/css/gsb/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_iefix.css?v=1" type="text/css" /><![endif]-->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_print.css?v=3" type="text/css" media="print">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_preview.css?v=1" type="text/css">
+        <script type="text/javascript" src="/decorations/layout/ingrid/scripts/gsb/global.js?v=29"></script>
     </head>
-    <body>
+    <body class="gsb lang-de fixed js-on">
     
     #set($mainMenu = $site.getMenu("main-menu"))
     #set($serviceMenu = $site.getMenu("service-menu"))
@@ -73,48 +80,31 @@
     #if(!$mainMenu.empty)
         #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
     #end
-    <div class="page" >
-        <header class="header">
-            <div class="ob-box-padded-more ob-box-center">
-                <div class="header__widgets__section">
-                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                        <svg class="icon">
-                        <use xlink:href="#burger">
-                        </svg>
-                        <svg class="icon ob-fade">
-                        <use xlink:href="#cross">
-                        </svg>
-                    </div>
+        <div id="wrapperOuter" class="page" >
+          <div id="wrapperInner">
+            <div id="wrapperDivisions" class="" style="">
+              <div id="header" class="">
+                <div class="wrapperBranding row mod">
                 </div>
-                <div class="header__widgets__section">
-                    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
-                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg">
-                    </a>
+                <div class="row mod">
+                  <div class="large-3 small-6 logo columns">
+                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/images/template/logo.png" alt="WSVPageAltLink"></a></p>
+                  </div>
+                  <div class="right large-5 small-6 addlogo columns subheadline">
+                    <p>
+                      <span>Zentrales Datenmanagement (ZDM)<br> Küstendaten</span>
+                    </p>
+                  </div>
                 </div>
-                 #if($serviceMenu && !$serviceMenu.empty)
-                    #includeServiceNavigation($serviceMenu)
-                #end
-            </div>
-        #if(!$mainMenu.empty)
-          #includeMainNavigation($mainMenu)
-        #end
-        </header>
-        #if($currentPage != "/main-maps.psml")
-            <section class="breadcrumb ob-box-padded-more mq-hide-l">
-                <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
-                <nav class="breadcrumb__list">
-                    <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                #if($currentPage)
-                    #if($currentPage == "/search-detail.psml")
-                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
-                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                    #end
-                    #if($currentPage != "/default-page.psml")
-                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
-                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
-                    #end
-                #end
-                </nav>
-            </section>
-        #end
+                <div id="navPrimary">
+                  <h2 class="aural">Hauptmenü</h2>
+                </div>
+                <div id="wrapperBreadcrumbs">
+                  <div id="navBreadcrumbsVertical">
+                  </div>
+                </div>
+                <div id="navBreadcrumbs">
+                   &nbsp;
+                </div>
+              </div>
+              <div id="main" class="row">
