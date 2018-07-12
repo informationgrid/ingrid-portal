@@ -107,4 +107,5 @@
                    &nbsp;
                 </div>
               </div>
-              <div id="main" class="row">
+              <div id="main" class="row wide">
+                <div id="content" class="large-12 medium-12 small-12 columns">
