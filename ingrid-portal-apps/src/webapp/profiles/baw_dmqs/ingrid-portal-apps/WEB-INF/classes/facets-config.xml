@@ -373,6 +373,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>category</id>
         <categoryOnly>true</categoryOnly>
         <facets>
+            <!-- Rhein -->
+            <facet>
+                <name>Rhein</name>
+                <query>location:3901*</query>
+                <id>cat_rhein</id>
+                <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon>
+            </facet>
             <!-- Donau -->
             <facet>
                 <name>Donau</name>
@@ -386,13 +393,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>location:0701*</query>
                 <id>cat_elbe</id>
                 <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon>
-            </facet>
-            <!-- Rhein -->
-            <facet>
-                <name>Rhein</name>
-                <query>location:3901*</query>
-                <id>cat_rhein</id>
-                <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon>
             </facet>
         </facets>
     </facet>
