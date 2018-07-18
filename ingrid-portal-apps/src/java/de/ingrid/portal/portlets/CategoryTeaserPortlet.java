@@ -47,6 +47,7 @@ import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridFacet;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.query.IngridQuery;
@@ -76,8 +77,9 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         IngridHits hits = null;
         String categoryQuery = null;
         try {
-            categoryQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "datatype:www OR datatype:metadata" ).trim();
+            categoryQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "" ).trim();
             query = QueryStringParser.parse( categoryQuery );
+            UtilsSearch.processRestrictingPartners(query);
             UtilsFacete.addDefaultIngridFacets( request, config );
             if (query.get( "FACETS" ) == null) {
                 ArrayList<IngridDocument> facetQueries = new ArrayList<IngridDocument>();
@@ -88,7 +90,6 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
             }
             UtilsFacete.setFacetQuery( null, config, request, query );
 
-            query.put( IngridQuery.RANKED, "score" );
             hits = doSearch( query, 0, 0, Settings.SEARCH_RANKED_HITS_PER_PAGE, messages, request.getLocale() );
         } catch (ParseException e) {
             // TODO Auto-generated catch block
