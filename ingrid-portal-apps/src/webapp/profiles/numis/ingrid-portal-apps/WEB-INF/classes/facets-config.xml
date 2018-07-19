@@ -169,7 +169,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                  <query>inspireidentifiziert</query>
+                <query>datatype:metadata inspireidentifiziert</query>
                 <id>inspire</id>
                 <display>true</display>
             </facet>
@@ -438,7 +438,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                <query>inspireidentifiziert</query>
+                <query>datatype:metadata inspireidentifiziert</query>
                 <id>inspire</id>
                 <parentId>type</parentId>
                 <icon>/decorations/layout/ingrid/images/template/Knopf-INSPIRE.png</icon>
