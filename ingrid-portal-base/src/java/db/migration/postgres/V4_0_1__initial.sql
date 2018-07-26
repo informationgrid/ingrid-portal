@@ -42,7 +42,7 @@ CREATE TABLE admin_activity (
     category character varying(40),
     admin character varying(80),
     user_name character varying(80),
-    time_stamp timestamp(3) without time zone,
+    time_stamp timestamp(6) without time zone,
     ipaddress character varying(80),
     attr_name character varying(200),
     attr_value_before character varying(1000),
@@ -58,7 +58,7 @@ ALTER TABLE admin_activity OWNER TO postgres;
 --
 
 CREATE TABLE capability (
-    capability_id integer NOT NULL,
+    capability_id numeric NOT NULL,
     capability character varying(80) NOT NULL
 );
 
@@ -70,14 +70,14 @@ ALTER TABLE capability OWNER TO postgres;
 --
 
 CREATE TABLE client (
-    client_id integer NOT NULL,
-    eval_order integer NOT NULL,
+    client_id numeric NOT NULL,
+    eval_order numeric NOT NULL,
     name character varying(80) NOT NULL,
     user_agent_pattern character varying(128),
     manufacturer character varying(80),
     model character varying(80),
     version character varying(40),
-    preferred_mimetype_id integer NOT NULL
+    preferred_mimetype_id numeric NOT NULL
 );
 
 
@@ -88,8 +88,8 @@ ALTER TABLE client OWNER TO postgres;
 --
 
 CREATE TABLE client_to_capability (
-    client_id integer NOT NULL,
-    capability_id integer NOT NULL
+    client_id numeric NOT NULL,
+    capability_id numeric NOT NULL
 );
 
 
@@ -100,8 +100,8 @@ ALTER TABLE client_to_capability OWNER TO postgres;
 --
 
 CREATE TABLE client_to_mimetype (
-    client_id integer NOT NULL,
-    mimetype_id integer NOT NULL
+    client_id numeric NOT NULL,
+    mimetype_id numeric NOT NULL
 );
 
 
@@ -116,8 +116,8 @@ CREATE TABLE clubs (
     country character varying(40) NOT NULL,
     city character varying(40) NOT NULL,
     stadium character varying(80) NOT NULL,
-    capacity integer,
-    founded integer,
+    capacity numeric,
+    founded numeric,
     pitch character varying(40),
     nickname character varying(40)
 );
@@ -130,11 +130,11 @@ ALTER TABLE clubs OWNER TO postgres;
 --
 
 CREATE TABLE custom_portlet_mode (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     custom_name character varying(150) NOT NULL,
     mapped_name character varying(150),
-    portal_managed smallint NOT NULL
+    portal_managed numeric(3,0) NOT NULL
 );
 
 
@@ -145,8 +145,8 @@ ALTER TABLE custom_portlet_mode OWNER TO postgres;
 --
 
 CREATE TABLE custom_window_state (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     custom_name character varying(150) NOT NULL,
     mapped_name character varying(150)
 );
@@ -159,8 +159,8 @@ ALTER TABLE custom_window_state OWNER TO postgres;
 --
 
 CREATE TABLE event_alias (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     local_part character varying(80) NOT NULL,
     namespace character varying(80),
     prefix character varying(20)
@@ -174,8 +174,8 @@ ALTER TABLE event_alias OWNER TO postgres;
 --
 
 CREATE TABLE event_definition (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     local_part character varying(80) NOT NULL,
     namespace character varying(80),
     prefix character varying(20),
@@ -190,8 +190,8 @@ ALTER TABLE event_definition OWNER TO postgres;
 --
 
 CREATE TABLE filter_lifecycle (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     name character varying(150) NOT NULL
 );
 
@@ -203,8 +203,8 @@ ALTER TABLE filter_lifecycle OWNER TO postgres;
 --
 
 CREATE TABLE filter_mapping (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     filter_name character varying(150) NOT NULL
 );
 
@@ -216,8 +216,8 @@ ALTER TABLE filter_mapping OWNER TO postgres;
 --
 
 CREATE TABLE filtered_portlet (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     name character varying(150) NOT NULL
 );
 
@@ -229,13 +229,13 @@ ALTER TABLE filtered_portlet OWNER TO postgres;
 --
 
 CREATE TABLE folder (
-    folder_id integer NOT NULL,
-    parent_id integer,
+    folder_id numeric NOT NULL,
+    parent_id numeric,
     path character varying(240) NOT NULL,
     name character varying(80) NOT NULL,
     title character varying(100),
     short_title character varying(40),
-    is_hidden smallint NOT NULL,
+    is_hidden numeric(3,0) NOT NULL,
     skin character varying(80),
     default_layout_decorator character varying(80),
     default_portlet_decorator character varying(80),
@@ -259,9 +259,9 @@ ALTER TABLE folder OWNER TO postgres;
 --
 
 CREATE TABLE folder_constraint (
-    constraint_id integer NOT NULL,
-    folder_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraint_id numeric NOT NULL,
+    folder_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     user_principals_acl character varying(120),
     role_principals_acl character varying(120),
     group_principals_acl character varying(120),
@@ -276,9 +276,9 @@ ALTER TABLE folder_constraint OWNER TO postgres;
 --
 
 CREATE TABLE folder_constraints_ref (
-    constraints_ref_id integer NOT NULL,
-    folder_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraints_ref_id numeric NOT NULL,
+    folder_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     name character varying(40) NOT NULL
 );
 
@@ -290,23 +290,23 @@ ALTER TABLE folder_constraints_ref OWNER TO postgres;
 --
 
 CREATE TABLE folder_menu (
-    menu_id integer NOT NULL,
+    menu_id numeric NOT NULL,
     class_name character varying(100) NOT NULL,
-    parent_id integer,
-    folder_id integer,
-    element_order integer,
+    parent_id numeric,
+    folder_id numeric,
+    element_order numeric,
     name character varying(100),
     title character varying(100),
     short_title character varying(40),
     text character varying(100),
     options character varying(255),
-    depth integer,
-    is_paths smallint,
-    is_regexp smallint,
+    depth numeric,
+    is_paths numeric(3,0),
+    is_regexp numeric(3,0),
     profile character varying(80),
     options_order character varying(255),
     skin character varying(80),
-    is_nest smallint
+    is_nest numeric(3,0)
 );
 
 
@@ -317,8 +317,8 @@ ALTER TABLE folder_menu OWNER TO postgres;
 --
 
 CREATE TABLE folder_menu_metadata (
-    metadata_id integer NOT NULL,
-    menu_id integer NOT NULL,
+    metadata_id numeric NOT NULL,
+    menu_id numeric NOT NULL,
     name character varying(15) NOT NULL,
     locale character varying(20),
     value character varying(100) NOT NULL
@@ -332,8 +332,8 @@ ALTER TABLE folder_menu_metadata OWNER TO postgres;
 --
 
 CREATE TABLE folder_metadata (
-    metadata_id integer NOT NULL,
-    folder_id integer NOT NULL,
+    metadata_id numeric NOT NULL,
+    folder_id numeric NOT NULL,
     name character varying(15) NOT NULL,
     locale character varying(20),
     value character varying(100) NOT NULL
@@ -347,9 +347,9 @@ ALTER TABLE folder_metadata OWNER TO postgres;
 --
 
 CREATE TABLE folder_order (
-    order_id integer NOT NULL,
-    folder_id integer NOT NULL,
-    sort_order integer NOT NULL,
+    order_id numeric NOT NULL,
+    folder_id numeric NOT NULL,
+    sort_order numeric NOT NULL,
     name character varying(80) NOT NULL
 );
 
@@ -361,10 +361,10 @@ ALTER TABLE folder_order OWNER TO postgres;
 --
 
 CREATE TABLE fragment (
-    fragment_id integer NOT NULL,
+    fragment_id numeric NOT NULL,
     class_name character varying(100) NOT NULL,
-    parent_id integer,
-    page_id integer,
+    parent_id numeric,
+    page_id numeric,
     fragment_string_id character varying(80),
     fragment_string_refid character varying(80),
     name character varying(100),
@@ -375,8 +375,8 @@ CREATE TABLE fragment (
     decorator character varying(80),
     state character varying(10),
     pmode character varying(10),
-    layout_row integer,
-    layout_column integer,
+    layout_row numeric,
+    layout_column numeric,
     layout_sizes character varying(20),
     layout_x double precision,
     layout_y double precision,
@@ -394,9 +394,9 @@ ALTER TABLE fragment OWNER TO postgres;
 --
 
 CREATE TABLE fragment_constraint (
-    constraint_id integer NOT NULL,
-    fragment_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraint_id numeric NOT NULL,
+    fragment_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     user_principals_acl character varying(120),
     role_principals_acl character varying(120),
     group_principals_acl character varying(120),
@@ -411,9 +411,9 @@ ALTER TABLE fragment_constraint OWNER TO postgres;
 --
 
 CREATE TABLE fragment_constraints_ref (
-    constraints_ref_id integer NOT NULL,
-    fragment_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraints_ref_id numeric NOT NULL,
+    fragment_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     name character varying(40) NOT NULL
 );
 
@@ -425,10 +425,10 @@ ALTER TABLE fragment_constraints_ref OWNER TO postgres;
 --
 
 CREATE TABLE fragment_pref (
-    pref_id integer NOT NULL,
-    fragment_id integer NOT NULL,
+    pref_id numeric NOT NULL,
+    fragment_id numeric NOT NULL,
     name character varying(40) NOT NULL,
-    is_read_only smallint NOT NULL
+    is_read_only numeric(3,0) NOT NULL
 );
 
 
@@ -439,9 +439,9 @@ ALTER TABLE fragment_pref OWNER TO postgres;
 --
 
 CREATE TABLE fragment_pref_value (
-    pref_value_id integer NOT NULL,
-    pref_id integer NOT NULL,
-    value_order integer NOT NULL,
+    pref_value_id numeric NOT NULL,
+    pref_id numeric NOT NULL,
+    value_order numeric NOT NULL,
     value character varying(100) NOT NULL
 );
 
@@ -453,8 +453,8 @@ ALTER TABLE fragment_pref_value OWNER TO postgres;
 --
 
 CREATE TABLE fragment_prop (
-    prop_id integer NOT NULL,
-    fragment_id integer NOT NULL,
+    prop_id numeric NOT NULL,
+    fragment_id numeric NOT NULL,
     name character varying(40) NOT NULL,
     scope character varying(10),
     scope_value character varying(40),
@@ -465,24 +465,38 @@ CREATE TABLE fragment_prop (
 ALTER TABLE fragment_prop OWNER TO postgres;
 
 --
+-- Name: hibernate_sequence; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE hibernate_sequence
+    START WITH 101
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 20;
+
+
+ALTER TABLE hibernate_sequence OWNER TO postgres;
+
+--
 -- Name: ingrid_anniversary; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_anniversary (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     topic_id character varying(255) NOT NULL,
     topic_name character varying(255),
     date_from character varying(255),
-    date_from_year integer,
-    date_from_month integer,
-    date_from_day integer,
+    date_from_year numeric(12,0),
+    date_from_month numeric(12,0),
+    date_from_day numeric(12,0),
     date_to character varying(255),
-    date_to_year integer,
-    date_to_month integer,
-    date_to_day integer,
+    date_to_year numeric(12,0),
+    date_to_month numeric(12,0),
+    date_to_day numeric(12,0),
     administrative_id character varying(255),
-    fetched timestamp without time zone DEFAULT now() NOT NULL,
-    fetched_for timestamp(3) without time zone DEFAULT '0002-11-30 00:00:00'::timestamp without time zone NOT NULL,
+    fetched date DEFAULT now() NOT NULL,
+    fetched_for date DEFAULT to_date('01-JAN-70 00:00:00'::text, 'dd-MON-yy hh24:mi:ss'::text) NOT NULL,
     language character varying(5) DEFAULT 'de'::character varying
 );
 
@@ -498,27 +512,20 @@ CREATE SEQUENCE ingrid_anniversary_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_anniversary_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_anniversary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_anniversary_id_seq OWNED BY ingrid_anniversary.id;
-
 
 --
 -- Name: ingrid_chron_eventtypes; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_chron_eventtypes (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     form_value character varying(255) NOT NULL,
     query_value character varying(255) NOT NULL,
-    sortkey integer DEFAULT 0 NOT NULL
+    sortkey numeric(12,0) DEFAULT '0'::numeric NOT NULL
 );
 
 
@@ -533,27 +540,20 @@ CREATE SEQUENCE ingrid_chron_eventtypes_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_chron_eventtypes_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_chron_eventtypes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_chron_eventtypes_id_seq OWNED BY ingrid_chron_eventtypes.id;
-
 
 --
 -- Name: ingrid_cms; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_cms (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     item_key character varying(255) NOT NULL,
     item_description character varying(255),
-    item_changed timestamp without time zone DEFAULT now() NOT NULL,
+    item_changed date DEFAULT now() NOT NULL,
     item_changed_by character varying(255)
 );
 
@@ -569,29 +569,22 @@ CREATE SEQUENCE ingrid_cms_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_cms_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_cms_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_cms_id_seq OWNED BY ingrid_cms.id;
-
 
 --
 -- Name: ingrid_cms_item; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_cms_item (
-    id integer NOT NULL,
-    fk_ingrid_cms_id integer DEFAULT 0 NOT NULL,
+    id numeric(12,0) NOT NULL,
+    fk_ingrid_cms_id numeric(12,0) DEFAULT '0'::numeric NOT NULL,
     item_lang character varying(6) NOT NULL,
     item_title character varying(255),
     item_value text,
-    item_changed timestamp without time zone DEFAULT now() NOT NULL,
+    item_changed date DEFAULT now() NOT NULL,
     item_changed_by character varying(255)
 );
 
@@ -607,27 +600,20 @@ CREATE SEQUENCE ingrid_cms_item_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_cms_item_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_cms_item_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_cms_item_id_seq OWNED BY ingrid_cms_item.id;
-
 
 --
 -- Name: ingrid_env_topic; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_env_topic (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     form_value character varying(255) NOT NULL,
     query_value character varying(255) NOT NULL,
-    sortkey integer DEFAULT 0 NOT NULL
+    sortkey numeric(12,0) DEFAULT '0'::numeric NOT NULL
 );
 
 
@@ -642,27 +628,20 @@ CREATE SEQUENCE ingrid_env_topic_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_env_topic_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_env_topic_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_env_topic_id_seq OWNED BY ingrid_env_topic.id;
-
 
 --
 -- Name: ingrid_lookup; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_lookup (
-    id integer DEFAULT 0 NOT NULL,
+    id numeric(12,0) DEFAULT '0'::numeric NOT NULL,
     item_key character varying(255) NOT NULL,
     item_value character varying(255),
-    item_date timestamp without time zone DEFAULT now() NOT NULL
+    item_date date DEFAULT now() NOT NULL
 );
 
 
@@ -673,10 +652,10 @@ ALTER TABLE ingrid_lookup OWNER TO postgres;
 --
 
 CREATE TABLE ingrid_measures_rubric (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     form_value character varying(255) NOT NULL,
     query_value character varying(255) NOT NULL,
-    sortkey integer DEFAULT 0 NOT NULL
+    sortkey numeric(12,0) DEFAULT '0'::numeric NOT NULL
 );
 
 
@@ -691,28 +670,21 @@ CREATE SEQUENCE ingrid_measures_rubric_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_measures_rubric_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_measures_rubric_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_measures_rubric_id_seq OWNED BY ingrid_measures_rubric.id;
-
 
 --
 -- Name: ingrid_newsletter_data; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_newsletter_data (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     firstname character varying(255),
     lastname character varying(255),
     email character varying(255),
-    created timestamp without time zone DEFAULT now() NOT NULL
+    created date DEFAULT now() NOT NULL
 );
 
 
@@ -727,27 +699,20 @@ CREATE SEQUENCE ingrid_newsletter_data_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_newsletter_data_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_newsletter_data_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_newsletter_data_id_seq OWNED BY ingrid_newsletter_data.id;
-
 
 --
 -- Name: ingrid_partner; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_partner (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     ident character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
-    sortkey integer DEFAULT 0 NOT NULL
+    sortkey numeric(12,0) DEFAULT '0'::numeric NOT NULL
 );
 
 
@@ -762,28 +727,21 @@ CREATE SEQUENCE ingrid_partner_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_partner_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_partner_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_partner_id_seq OWNED BY ingrid_partner.id;
-
 
 --
 -- Name: ingrid_principal_pref; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_principal_pref (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     principal_name character varying(251) NOT NULL,
     pref_name character varying(251) NOT NULL,
     pref_value text,
-    modified_date timestamp without time zone DEFAULT now() NOT NULL
+    modified_date date DEFAULT now() NOT NULL
 );
 
 
@@ -798,29 +756,22 @@ CREATE SEQUENCE ingrid_principal_pref_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_principal_pref_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_principal_pref_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_principal_pref_id_seq OWNED BY ingrid_principal_pref.id;
-
 
 --
 -- Name: ingrid_provider; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_provider (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     ident character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
     url character varying(255) NOT NULL,
-    sortkey integer DEFAULT 0 NOT NULL,
-    sortkey_partner integer DEFAULT 0 NOT NULL
+    sortkey numeric(12,0) DEFAULT '0'::numeric NOT NULL,
+    sortkey_partner numeric(12,0) DEFAULT '0'::numeric NOT NULL
 );
 
 
@@ -835,32 +786,25 @@ CREATE SEQUENCE ingrid_provider_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_provider_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_provider_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_provider_id_seq OWNED BY ingrid_provider.id;
-
 
 --
 -- Name: ingrid_rss_source; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_rss_source (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     provider character varying(255) NOT NULL,
     description character varying(1023),
     url character varying(255) NOT NULL,
     lang character varying(255) NOT NULL,
     categories character varying(255),
     error character varying(255),
-    numlastcount smallint,
-    lastupdate timestamp without time zone DEFAULT now() NOT NULL
+    numlastcount numeric(5,0),
+    lastupdate date DEFAULT now()
 );
 
 
@@ -875,31 +819,24 @@ CREATE SEQUENCE ingrid_rss_source_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_rss_source_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_rss_source_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_rss_source_id_seq OWNED BY ingrid_rss_source.id;
-
 
 --
 -- Name: ingrid_rss_store; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_rss_store (
-    link character varying(255) NOT NULL,
     author character varying(1023),
     categories character varying(255),
     copyright character varying(255),
-    description text,
     language character varying(255),
-    published_date timestamp without time zone DEFAULT now() NOT NULL,
-    title character varying(1023)
+    published_date date DEFAULT now() NOT NULL,
+    title character varying(1023),
+    description character varying(4000),
+    link character varying(4000)
 );
 
 
@@ -910,10 +847,10 @@ ALTER TABLE ingrid_rss_store OWNER TO postgres;
 --
 
 CREATE TABLE ingrid_service_rubric (
-    id integer NOT NULL,
+    id numeric(12,0) NOT NULL,
     form_value character varying(255) NOT NULL,
     query_value character varying(255) NOT NULL,
-    sortkey integer DEFAULT 0 NOT NULL
+    sortkey numeric(12,0) DEFAULT '0'::numeric NOT NULL
 );
 
 
@@ -928,28 +865,21 @@ CREATE SEQUENCE ingrid_service_rubric_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_service_rubric_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_service_rubric_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_service_rubric_id_seq OWNED BY ingrid_service_rubric.id;
-
 
 --
 -- Name: ingrid_tiny_url; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE ingrid_tiny_url (
-    id integer NOT NULL,
+    id numeric(10,0) NOT NULL,
     user_ref character varying(254) NOT NULL,
     tiny_key character varying(254) NOT NULL,
     tiny_name character varying(254) NOT NULL,
-    tiny_date timestamp without time zone DEFAULT now() NOT NULL,
+    tiny_date date DEFAULT now() NOT NULL,
     tiny_config text NOT NULL
 );
 
@@ -965,25 +895,18 @@ CREATE SEQUENCE ingrid_tiny_url_id_seq
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
-    CACHE 1;
+    CACHE 20;
 
 
 ALTER TABLE ingrid_tiny_url_id_seq OWNER TO postgres;
-
---
--- Name: ingrid_tiny_url_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE ingrid_tiny_url_id_seq OWNED BY ingrid_tiny_url.id;
-
 
 --
 -- Name: jetspeed_service; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE jetspeed_service (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     name character varying(150)
 );
 
@@ -995,13 +918,13 @@ ALTER TABLE jetspeed_service OWNER TO postgres;
 --
 
 CREATE TABLE language (
-    id integer NOT NULL,
-    portlet_id integer NOT NULL,
+    id numeric NOT NULL,
+    portlet_id numeric NOT NULL,
     locale_string character varying(50) NOT NULL,
-    supported_locale smallint NOT NULL,
+    supported_locale numeric(3,0) NOT NULL,
     title character varying(100),
     short_title character varying(100),
-    keywords text
+    keywords character varying(4000)
 );
 
 
@@ -1012,14 +935,14 @@ ALTER TABLE language OWNER TO postgres;
 --
 
 CREATE TABLE link (
-    link_id integer NOT NULL,
-    parent_id integer NOT NULL,
+    link_id numeric NOT NULL,
+    parent_id numeric NOT NULL,
     path character varying(240) NOT NULL,
     name character varying(80) NOT NULL,
     version character varying(40),
     title character varying(100),
     short_title character varying(40),
-    is_hidden smallint NOT NULL,
+    is_hidden numeric(3,0) NOT NULL,
     skin character varying(80),
     target character varying(80),
     url character varying(255),
@@ -1042,9 +965,9 @@ ALTER TABLE link OWNER TO postgres;
 --
 
 CREATE TABLE link_constraint (
-    constraint_id integer NOT NULL,
-    link_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraint_id numeric NOT NULL,
+    link_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     user_principals_acl character varying(120),
     role_principals_acl character varying(120),
     group_principals_acl character varying(120),
@@ -1059,9 +982,9 @@ ALTER TABLE link_constraint OWNER TO postgres;
 --
 
 CREATE TABLE link_constraints_ref (
-    constraints_ref_id integer NOT NULL,
-    link_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraints_ref_id numeric NOT NULL,
+    link_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     name character varying(40) NOT NULL
 );
 
@@ -1073,8 +996,8 @@ ALTER TABLE link_constraints_ref OWNER TO postgres;
 --
 
 CREATE TABLE link_metadata (
-    metadata_id integer NOT NULL,
-    link_id integer NOT NULL,
+    metadata_id numeric NOT NULL,
+    link_id numeric NOT NULL,
     name character varying(15) NOT NULL,
     locale character varying(20),
     value character varying(100) NOT NULL
@@ -1088,8 +1011,8 @@ ALTER TABLE link_metadata OWNER TO postgres;
 --
 
 CREATE TABLE locale_encoding_mapping (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     locale_string character varying(50) NOT NULL,
     encoding character varying(50) NOT NULL
 );
@@ -1102,10 +1025,10 @@ ALTER TABLE locale_encoding_mapping OWNER TO postgres;
 --
 
 CREATE TABLE localized_description (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     owner_class_name character varying(255) NOT NULL,
-    description text NOT NULL,
+    description character varying(4000) NOT NULL,
     locale_string character varying(50) NOT NULL
 );
 
@@ -1117,10 +1040,10 @@ ALTER TABLE localized_description OWNER TO postgres;
 --
 
 CREATE TABLE localized_display_name (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     owner_class_name character varying(255),
-    display_name text NOT NULL,
+    display_name character varying(4000) NOT NULL,
     locale_string character varying(50) NOT NULL
 );
 
@@ -1132,11 +1055,11 @@ ALTER TABLE localized_display_name OWNER TO postgres;
 --
 
 CREATE TABLE media_type (
-    mediatype_id integer NOT NULL,
+    mediatype_id numeric NOT NULL,
     name character varying(80) NOT NULL,
     character_set character varying(40),
     title character varying(80),
-    description text
+    description character varying(4000)
 );
 
 
@@ -1147,8 +1070,8 @@ ALTER TABLE media_type OWNER TO postgres;
 --
 
 CREATE TABLE mediatype_to_capability (
-    mediatype_id integer NOT NULL,
-    capability_id integer NOT NULL
+    mediatype_id numeric NOT NULL,
+    capability_id numeric NOT NULL
 );
 
 
@@ -1159,8 +1082,8 @@ ALTER TABLE mediatype_to_capability OWNER TO postgres;
 --
 
 CREATE TABLE mediatype_to_mimetype (
-    mediatype_id integer NOT NULL,
-    mimetype_id integer NOT NULL
+    mediatype_id numeric NOT NULL,
+    mimetype_id numeric NOT NULL
 );
 
 
@@ -1171,7 +1094,7 @@ ALTER TABLE mediatype_to_mimetype OWNER TO postgres;
 --
 
 CREATE TABLE mimetype (
-    mimetype_id integer NOT NULL,
+    mimetype_id numeric NOT NULL,
     name character varying(80) NOT NULL
 );
 
@@ -1183,8 +1106,8 @@ ALTER TABLE mimetype OWNER TO postgres;
 --
 
 CREATE TABLE named_parameter (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     name character varying(150) NOT NULL
 );
 
@@ -1196,8 +1119,8 @@ ALTER TABLE named_parameter OWNER TO postgres;
 --
 
 CREATE TABLE ojb_dlist (
-    id integer NOT NULL,
-    size_ integer
+    id numeric NOT NULL,
+    size_ numeric
 );
 
 
@@ -1208,9 +1131,9 @@ ALTER TABLE ojb_dlist OWNER TO postgres;
 --
 
 CREATE TABLE ojb_dlist_entries (
-    id integer NOT NULL,
-    dlist_id integer,
-    position_ integer,
+    id numeric NOT NULL,
+    dlist_id numeric,
+    position_ numeric,
     oid_ bytea
 );
 
@@ -1222,8 +1145,8 @@ ALTER TABLE ojb_dlist_entries OWNER TO postgres;
 --
 
 CREATE TABLE ojb_dmap (
-    id integer NOT NULL,
-    size_ integer
+    id numeric NOT NULL,
+    size_ numeric
 );
 
 
@@ -1234,8 +1157,8 @@ ALTER TABLE ojb_dmap OWNER TO postgres;
 --
 
 CREATE TABLE ojb_dset (
-    id integer NOT NULL,
-    size_ integer
+    id numeric NOT NULL,
+    size_ numeric
 );
 
 
@@ -1246,9 +1169,9 @@ ALTER TABLE ojb_dset OWNER TO postgres;
 --
 
 CREATE TABLE ojb_dset_entries (
-    id integer NOT NULL,
-    dlist_id integer,
-    position_ integer,
+    id numeric NOT NULL,
+    dlist_id numeric,
+    position_ numeric,
     oid_ bytea
 );
 
@@ -1262,9 +1185,9 @@ ALTER TABLE ojb_dset_entries OWNER TO postgres;
 CREATE TABLE ojb_hl_seq (
     tablename character varying(175) NOT NULL,
     fieldname character varying(70) NOT NULL,
-    max_key integer,
-    grab_size integer,
-    version integer
+    max_key numeric,
+    grab_size numeric,
+    version numeric
 );
 
 
@@ -1277,9 +1200,9 @@ ALTER TABLE ojb_hl_seq OWNER TO postgres;
 CREATE TABLE ojb_lockentry (
     oid_ character varying(250) NOT NULL,
     tx_id character varying(50) NOT NULL,
-    timestamp_ timestamp(3) without time zone,
-    isolationlevel integer,
-    locktype integer
+    timestamp_ timestamp(6) without time zone,
+    isolationlevel numeric,
+    locktype numeric
 );
 
 
@@ -1302,9 +1225,9 @@ ALTER TABLE ojb_nrm OWNER TO postgres;
 --
 
 CREATE TABLE pa_metadata_fields (
-    id integer NOT NULL,
-    object_id integer NOT NULL,
-    column_value text NOT NULL,
+    id numeric NOT NULL,
+    object_id numeric NOT NULL,
+    column_value character varying(4000) NOT NULL,
     name character varying(100) NOT NULL,
     locale_string character varying(50) NOT NULL
 );
@@ -1317,8 +1240,8 @@ ALTER TABLE pa_metadata_fields OWNER TO postgres;
 --
 
 CREATE TABLE pa_security_constraint (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     transport character varying(40) NOT NULL
 );
 
@@ -1330,17 +1253,17 @@ ALTER TABLE pa_security_constraint OWNER TO postgres;
 --
 
 CREATE TABLE page (
-    page_id integer NOT NULL,
+    page_id numeric NOT NULL,
     class_name character varying(100) NOT NULL,
-    parent_id integer NOT NULL,
+    parent_id numeric NOT NULL,
     path character varying(240) NOT NULL,
     content_type character varying(40),
-    is_inheritable smallint,
+    is_inheritable numeric(3,0),
     name character varying(80) NOT NULL,
     version character varying(40),
     title character varying(100),
     short_title character varying(40),
-    is_hidden smallint,
+    is_hidden numeric(3,0),
     skin character varying(80),
     default_layout_decorator character varying(80),
     default_portlet_decorator character varying(80),
@@ -1363,9 +1286,9 @@ ALTER TABLE page OWNER TO postgres;
 --
 
 CREATE TABLE page_constraint (
-    constraint_id integer NOT NULL,
-    page_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraint_id numeric NOT NULL,
+    page_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     user_principals_acl character varying(120),
     role_principals_acl character varying(120),
     group_principals_acl character varying(120),
@@ -1380,9 +1303,9 @@ ALTER TABLE page_constraint OWNER TO postgres;
 --
 
 CREATE TABLE page_constraints_ref (
-    constraints_ref_id integer NOT NULL,
-    page_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraints_ref_id numeric NOT NULL,
+    page_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     name character varying(40) NOT NULL
 );
 
@@ -1394,23 +1317,23 @@ ALTER TABLE page_constraints_ref OWNER TO postgres;
 --
 
 CREATE TABLE page_menu (
-    menu_id integer NOT NULL,
+    menu_id numeric NOT NULL,
     class_name character varying(100) NOT NULL,
-    parent_id integer,
-    page_id integer,
-    element_order integer,
+    parent_id numeric,
+    page_id numeric,
+    element_order numeric,
     name character varying(100),
     title character varying(100),
     short_title character varying(40),
     text character varying(100),
     options character varying(255),
-    depth integer,
-    is_paths smallint,
-    is_regexp smallint,
+    depth numeric,
+    is_paths numeric(3,0),
+    is_regexp numeric(3,0),
     profile character varying(80),
     options_order character varying(255),
     skin character varying(80),
-    is_nest smallint
+    is_nest numeric(3,0)
 );
 
 
@@ -1421,8 +1344,8 @@ ALTER TABLE page_menu OWNER TO postgres;
 --
 
 CREATE TABLE page_menu_metadata (
-    metadata_id integer NOT NULL,
-    menu_id integer NOT NULL,
+    metadata_id numeric NOT NULL,
+    menu_id numeric NOT NULL,
     name character varying(15) NOT NULL,
     locale character varying(20),
     value character varying(100) NOT NULL
@@ -1436,8 +1359,8 @@ ALTER TABLE page_menu_metadata OWNER TO postgres;
 --
 
 CREATE TABLE page_metadata (
-    metadata_id integer NOT NULL,
-    page_id integer NOT NULL,
+    metadata_id numeric NOT NULL,
+    page_id numeric NOT NULL,
     name character varying(15) NOT NULL,
     locale character varying(20),
     value character varying(100) NOT NULL
@@ -1451,9 +1374,9 @@ ALTER TABLE page_metadata OWNER TO postgres;
 --
 
 CREATE TABLE page_sec_constraint_def (
-    constraint_def_id integer NOT NULL,
-    constraints_def_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraint_def_id numeric NOT NULL,
+    constraints_def_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     user_principals_acl character varying(120),
     role_principals_acl character varying(120),
     group_principals_acl character varying(120),
@@ -1468,8 +1391,8 @@ ALTER TABLE page_sec_constraint_def OWNER TO postgres;
 --
 
 CREATE TABLE page_sec_constraints_def (
-    constraints_def_id integer NOT NULL,
-    page_security_id integer NOT NULL,
+    constraints_def_id numeric NOT NULL,
+    page_security_id numeric NOT NULL,
     name character varying(40) NOT NULL
 );
 
@@ -1481,9 +1404,9 @@ ALTER TABLE page_sec_constraints_def OWNER TO postgres;
 --
 
 CREATE TABLE page_sec_constraints_ref (
-    constraints_ref_id integer NOT NULL,
-    page_security_id integer NOT NULL,
-    apply_order integer NOT NULL,
+    constraints_ref_id numeric NOT NULL,
+    page_security_id numeric NOT NULL,
+    apply_order numeric NOT NULL,
     name character varying(40) NOT NULL
 );
 
@@ -1495,8 +1418,8 @@ ALTER TABLE page_sec_constraints_ref OWNER TO postgres;
 --
 
 CREATE TABLE page_security (
-    page_security_id integer NOT NULL,
-    parent_id integer NOT NULL,
+    page_security_id numeric NOT NULL,
+    parent_id numeric NOT NULL,
     path character varying(240) NOT NULL,
     name character varying(80) NOT NULL,
     version character varying(40),
@@ -1520,10 +1443,10 @@ ALTER TABLE page_security OWNER TO postgres;
 CREATE TABLE page_statistics (
     ipaddress character varying(80),
     user_name character varying(80),
-    time_stamp timestamp(3) without time zone,
+    time_stamp timestamp(6) without time zone,
     page character varying(80),
-    status integer,
-    elapsed_time bigint
+    status numeric,
+    elapsed_time numeric(38,0)
 );
 
 
@@ -1534,11 +1457,11 @@ ALTER TABLE page_statistics OWNER TO postgres;
 --
 
 CREATE TABLE parameter (
-    parameter_id integer NOT NULL,
-    owner_id integer NOT NULL,
+    parameter_id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     owner_class_name character varying(255) NOT NULL,
     name character varying(80) NOT NULL,
-    parameter_value text
+    parameter_value character varying(4000)
 );
 
 
@@ -1549,8 +1472,8 @@ ALTER TABLE parameter OWNER TO postgres;
 --
 
 CREATE TABLE parameter_alias (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     local_part character varying(80) NOT NULL,
     namespace character varying(80),
     prefix character varying(20)
@@ -1564,9 +1487,9 @@ ALTER TABLE parameter_alias OWNER TO postgres;
 --
 
 CREATE TABLE pd_metadata_fields (
-    id integer NOT NULL,
-    object_id integer NOT NULL,
-    column_value text NOT NULL,
+    id numeric NOT NULL,
+    object_id numeric NOT NULL,
+    column_value character varying(4000) NOT NULL,
     name character varying(100) NOT NULL,
     locale_string character varying(50) NOT NULL
 );
@@ -1579,12 +1502,12 @@ ALTER TABLE pd_metadata_fields OWNER TO postgres;
 --
 
 CREATE TABLE portlet_application (
-    application_id integer NOT NULL,
+    application_id numeric NOT NULL,
     app_name character varying(80) NOT NULL,
     context_path character varying(255) NOT NULL,
-    revision integer NOT NULL,
+    revision numeric NOT NULL,
     version character varying(80),
-    app_type integer,
+    app_type numeric,
     checksum character varying(80),
     security_ref character varying(40),
     default_namespace character varying(120),
@@ -1599,11 +1522,11 @@ ALTER TABLE portlet_application OWNER TO postgres;
 --
 
 CREATE TABLE portlet_definition (
-    id integer NOT NULL,
+    id numeric NOT NULL,
     name character varying(80),
     class_name character varying(255),
-    application_id integer NOT NULL,
-    expiration_cache integer,
+    application_id numeric NOT NULL,
+    expiration_cache numeric,
     resource_bundle character varying(255),
     preference_validator character varying(255),
     security_ref character varying(40),
@@ -1619,8 +1542,8 @@ ALTER TABLE portlet_definition OWNER TO postgres;
 --
 
 CREATE TABLE portlet_filter (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     filter_name character varying(80) NOT NULL,
     filter_class character varying(255)
 );
@@ -1633,8 +1556,8 @@ ALTER TABLE portlet_filter OWNER TO postgres;
 --
 
 CREATE TABLE portlet_listener (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     listener_class character varying(255)
 );
 
@@ -1646,14 +1569,14 @@ ALTER TABLE portlet_listener OWNER TO postgres;
 --
 
 CREATE TABLE portlet_preference (
-    id integer NOT NULL,
+    id numeric NOT NULL,
     dtype character varying(10) NOT NULL,
     application_name character varying(80) NOT NULL,
     portlet_name character varying(80) NOT NULL,
     entity_id character varying(80),
     user_name character varying(80),
     name character varying(254) NOT NULL,
-    readonly smallint NOT NULL
+    readonly numeric(3,0) NOT NULL
 );
 
 
@@ -1664,9 +1587,9 @@ ALTER TABLE portlet_preference OWNER TO postgres;
 --
 
 CREATE TABLE portlet_preference_value (
-    id integer NOT NULL,
-    pref_id integer NOT NULL,
-    idx smallint NOT NULL,
+    id numeric NOT NULL,
+    pref_id numeric NOT NULL,
+    idx numeric(5,0) NOT NULL,
     pref_value character varying(4000)
 );
 
@@ -1680,11 +1603,11 @@ ALTER TABLE portlet_preference_value OWNER TO postgres;
 CREATE TABLE portlet_statistics (
     ipaddress character varying(80),
     user_name character varying(80),
-    time_stamp timestamp(3) without time zone,
+    time_stamp timestamp(6) without time zone,
     page character varying(80),
     portlet character varying(255),
-    status integer,
-    elapsed_time bigint
+    status numeric,
+    elapsed_time numeric(38,0)
 );
 
 
@@ -1695,8 +1618,8 @@ ALTER TABLE portlet_statistics OWNER TO postgres;
 --
 
 CREATE TABLE portlet_supports (
-    supports_id integer NOT NULL,
-    portlet_id integer NOT NULL,
+    supports_id numeric NOT NULL,
+    portlet_id numeric NOT NULL,
     mime_type character varying(30) NOT NULL,
     modes character varying(255),
     states character varying(255)
@@ -1710,8 +1633,8 @@ ALTER TABLE portlet_supports OWNER TO postgres;
 --
 
 CREATE TABLE principal_permission (
-    principal_id integer NOT NULL,
-    permission_id integer NOT NULL
+    principal_id numeric NOT NULL,
+    permission_id numeric NOT NULL
 );
 
 
@@ -1735,8 +1658,8 @@ ALTER TABLE principal_rule_assoc OWNER TO postgres;
 --
 
 CREATE TABLE processing_event (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     local_part character varying(80) NOT NULL,
     namespace character varying(80),
     prefix character varying(20)
@@ -1775,8 +1698,8 @@ ALTER TABLE profiling_rule OWNER TO postgres;
 --
 
 CREATE TABLE public_parameter (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     local_part character varying(80) NOT NULL,
     namespace character varying(80),
     prefix character varying(20),
@@ -1791,8 +1714,8 @@ ALTER TABLE public_parameter OWNER TO postgres;
 --
 
 CREATE TABLE publishing_event (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     local_part character varying(80) NOT NULL,
     namespace character varying(80),
     prefix character varying(20)
@@ -1806,8 +1729,8 @@ ALTER TABLE publishing_event OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_blob_triggers (
-    trigger_name character varying(80) NOT NULL,
-    trigger_group character varying(80) NOT NULL,
+    trigger_name character varying(200) NOT NULL,
+    trigger_group character varying(200) NOT NULL,
     blob_data bytea
 );
 
@@ -1819,7 +1742,7 @@ ALTER TABLE qrtz_blob_triggers OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_calendars (
-    calendar_name character varying(80) NOT NULL,
+    calendar_name character varying(200) NOT NULL,
     calendar bytea NOT NULL
 );
 
@@ -1831,9 +1754,9 @@ ALTER TABLE qrtz_calendars OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_cron_triggers (
-    trigger_name character varying(80) NOT NULL,
-    trigger_group character varying(80) NOT NULL,
-    cron_expression character varying(80) NOT NULL,
+    trigger_name character varying(200) NOT NULL,
+    trigger_group character varying(200) NOT NULL,
+    cron_expression character varying(120) NOT NULL,
     time_zone_id character varying(80)
 );
 
@@ -1846,17 +1769,17 @@ ALTER TABLE qrtz_cron_triggers OWNER TO postgres;
 
 CREATE TABLE qrtz_fired_triggers (
     entry_id character varying(95) NOT NULL,
-    trigger_name character varying(80) NOT NULL,
-    trigger_group character varying(80) NOT NULL,
-    is_volatile character(1) NOT NULL,
-    instance_name character varying(80) NOT NULL,
-    fired_time bigint DEFAULT '0'::bigint NOT NULL,
-    priority integer DEFAULT 0 NOT NULL,
+    trigger_name character varying(200) NOT NULL,
+    trigger_group character varying(200) NOT NULL,
+    is_volatile boolean NOT NULL,
+    instance_name character varying(200) NOT NULL,
+    fired_time numeric(13,0) NOT NULL,
+    priority numeric(13,0) NOT NULL,
     state character varying(16) NOT NULL,
-    job_name character varying(80),
-    job_group character varying(80),
-    is_stateful character(1),
-    requests_recovery character(1)
+    job_name character varying(200),
+    job_group character varying(200),
+    is_stateful boolean,
+    requests_recovery boolean
 );
 
 
@@ -1867,14 +1790,14 @@ ALTER TABLE qrtz_fired_triggers OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_job_details (
-    job_name character varying(80) NOT NULL,
-    job_group character varying(80) NOT NULL,
-    description character varying(120),
-    job_class_name character varying(128) NOT NULL,
-    is_durable character(1) NOT NULL,
-    is_volatile character(1) NOT NULL,
-    is_stateful character(1) NOT NULL,
-    requests_recovery character(1) NOT NULL,
+    job_name character varying(200) NOT NULL,
+    job_group character varying(200) NOT NULL,
+    description character varying(250),
+    job_class_name character varying(250) NOT NULL,
+    is_durable boolean NOT NULL,
+    is_volatile boolean NOT NULL,
+    is_stateful boolean NOT NULL,
+    requests_recovery boolean NOT NULL,
     job_data bytea
 );
 
@@ -1886,9 +1809,9 @@ ALTER TABLE qrtz_job_details OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_job_listeners (
-    job_name character varying(80) NOT NULL,
-    job_group character varying(80) NOT NULL,
-    job_listener character varying(80) NOT NULL
+    job_name character varying(200) NOT NULL,
+    job_group character varying(200) NOT NULL,
+    job_listener character varying(200) NOT NULL
 );
 
 
@@ -1910,7 +1833,7 @@ ALTER TABLE qrtz_locks OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_paused_trigger_grps (
-    trigger_group character varying(80) NOT NULL
+    trigger_group character varying(200) NOT NULL
 );
 
 
@@ -1921,9 +1844,9 @@ ALTER TABLE qrtz_paused_trigger_grps OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_scheduler_state (
-    instance_name character varying(80) NOT NULL,
-    last_checkin_time bigint DEFAULT '0'::bigint NOT NULL,
-    checkin_interval bigint DEFAULT '0'::bigint NOT NULL
+    instance_name character varying(200) NOT NULL,
+    last_checkin_time numeric(13,0) NOT NULL,
+    checkin_interval numeric(13,0) NOT NULL
 );
 
 
@@ -1934,11 +1857,11 @@ ALTER TABLE qrtz_scheduler_state OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_simple_triggers (
-    trigger_name character varying(80) NOT NULL,
-    trigger_group character varying(80) NOT NULL,
-    repeat_count bigint DEFAULT '0'::bigint NOT NULL,
-    repeat_interval bigint DEFAULT '0'::bigint NOT NULL,
-    times_triggered bigint DEFAULT '0'::bigint NOT NULL
+    trigger_name character varying(200) NOT NULL,
+    trigger_group character varying(200) NOT NULL,
+    repeat_count numeric(7,0) NOT NULL,
+    repeat_interval numeric(12,0) NOT NULL,
+    times_triggered numeric(10,0) NOT NULL
 );
 
 
@@ -1949,9 +1872,9 @@ ALTER TABLE qrtz_simple_triggers OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_trigger_listeners (
-    trigger_name character varying(80) NOT NULL,
-    trigger_group character varying(80) NOT NULL,
-    trigger_listener character varying(80) NOT NULL
+    trigger_name character varying(200) NOT NULL,
+    trigger_group character varying(200) NOT NULL,
+    trigger_listener character varying(200) NOT NULL
 );
 
 
@@ -1962,21 +1885,21 @@ ALTER TABLE qrtz_trigger_listeners OWNER TO postgres;
 --
 
 CREATE TABLE qrtz_triggers (
-    trigger_name character varying(80) NOT NULL,
-    trigger_group character varying(80) NOT NULL,
-    job_name character varying(80) NOT NULL,
-    job_group character varying(80) NOT NULL,
-    is_volatile character(1) NOT NULL,
-    description character varying(120),
-    next_fire_time bigint,
-    prev_fire_time bigint,
-    priority integer,
+    trigger_name character varying(200) NOT NULL,
+    trigger_group character varying(200) NOT NULL,
+    job_name character varying(200) NOT NULL,
+    job_group character varying(200) NOT NULL,
+    is_volatile boolean NOT NULL,
+    description character varying(250),
+    next_fire_time numeric(13,0),
+    prev_fire_time numeric(13,0),
+    priority numeric(13,0),
     trigger_state character varying(16) NOT NULL,
     trigger_type character varying(8) NOT NULL,
-    start_time bigint DEFAULT '0'::bigint NOT NULL,
-    end_time bigint,
-    calendar_name character varying(80),
-    misfire_instr smallint,
+    start_time numeric(13,0) NOT NULL,
+    end_time numeric(13,0),
+    calendar_name character varying(200),
+    misfire_instr numeric(2,0),
     job_data bytea
 );
 
@@ -1990,11 +1913,11 @@ ALTER TABLE qrtz_triggers OWNER TO postgres;
 CREATE TABLE rule_criterion (
     criterion_id character varying(80) NOT NULL,
     rule_id character varying(80) NOT NULL,
-    fallback_order integer NOT NULL,
+    fallback_order numeric NOT NULL,
     request_type character varying(40) NOT NULL,
     name character varying(80) NOT NULL,
     column_value character varying(128),
-    fallback_type integer DEFAULT 1
+    fallback_type numeric DEFAULT 1
 );
 
 
@@ -2005,8 +1928,8 @@ ALTER TABLE rule_criterion OWNER TO postgres;
 --
 
 CREATE TABLE runtime_option (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     owner_class_name character varying(255) NOT NULL,
     name character varying(150) NOT NULL
 );
@@ -2019,8 +1942,8 @@ ALTER TABLE runtime_option OWNER TO postgres;
 --
 
 CREATE TABLE runtime_value (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     rvalue character varying(200) NOT NULL
 );
 
@@ -2032,8 +1955,8 @@ ALTER TABLE runtime_value OWNER TO postgres;
 --
 
 CREATE TABLE secured_portlet (
-    id integer NOT NULL,
-    owner_id integer NOT NULL,
+    id numeric NOT NULL,
+    owner_id numeric NOT NULL,
     name character varying(150) NOT NULL
 );
 
@@ -2045,8 +1968,8 @@ ALTER TABLE secured_portlet OWNER TO postgres;
 --
 
 CREATE TABLE security_attribute (
-    attr_id integer NOT NULL,
-    principal_id integer NOT NULL,
+    attr_id numeric NOT NULL,
+    principal_id numeric NOT NULL,
     attr_name character varying(200) NOT NULL,
     attr_value character varying(1000)
 );
@@ -2059,21 +1982,21 @@ ALTER TABLE security_attribute OWNER TO postgres;
 --
 
 CREATE TABLE security_credential (
-    credential_id integer NOT NULL,
-    principal_id integer NOT NULL,
+    credential_id numeric NOT NULL,
+    principal_id numeric NOT NULL,
     credential_value character varying(254),
-    type smallint NOT NULL,
-    update_allowed smallint NOT NULL,
-    is_state_readonly smallint NOT NULL,
-    update_required smallint NOT NULL,
-    is_encoded smallint NOT NULL,
-    is_enabled smallint NOT NULL,
-    auth_failures smallint NOT NULL,
-    is_expired smallint NOT NULL,
-    creation_date timestamp(3) without time zone NOT NULL,
-    modified_date timestamp(3) without time zone NOT NULL,
-    prev_auth_date timestamp(3) without time zone,
-    last_auth_date timestamp(3) without time zone,
+    type numeric(5,0) NOT NULL,
+    update_allowed numeric(3,0) NOT NULL,
+    is_state_readonly numeric(3,0) NOT NULL,
+    update_required numeric(3,0) NOT NULL,
+    is_encoded numeric(3,0) NOT NULL,
+    is_enabled numeric(3,0) NOT NULL,
+    auth_failures numeric(5,0) NOT NULL,
+    is_expired numeric(3,0) NOT NULL,
+    creation_date timestamp(6) without time zone NOT NULL,
+    modified_date timestamp(6) without time zone NOT NULL,
+    prev_auth_date timestamp(6) without time zone,
+    last_auth_date timestamp(6) without time zone,
     expiration_date date
 );
 
@@ -2085,11 +2008,11 @@ ALTER TABLE security_credential OWNER TO postgres;
 --
 
 CREATE TABLE security_domain (
-    domain_id integer NOT NULL,
+    domain_id numeric NOT NULL,
     domain_name character varying(254),
-    remote smallint DEFAULT '0'::smallint,
-    enabled smallint DEFAULT '1'::smallint,
-    owner_domain_id integer
+    remote numeric(3,0) DEFAULT 0,
+    enabled numeric(3,0) DEFAULT 1,
+    owner_domain_id numeric
 );
 
 
@@ -2100,7 +2023,7 @@ ALTER TABLE security_domain OWNER TO postgres;
 --
 
 CREATE TABLE security_permission (
-    permission_id integer NOT NULL,
+    permission_id numeric NOT NULL,
     permission_type character varying(30) NOT NULL,
     name character varying(254) NOT NULL,
     actions character varying(254) NOT NULL
@@ -2114,16 +2037,16 @@ ALTER TABLE security_permission OWNER TO postgres;
 --
 
 CREATE TABLE security_principal (
-    principal_id integer NOT NULL,
+    principal_id numeric NOT NULL,
     principal_type character varying(20) NOT NULL,
     principal_name character varying(200) NOT NULL,
-    is_mapped smallint NOT NULL,
-    is_enabled smallint NOT NULL,
-    is_readonly smallint NOT NULL,
-    is_removable smallint NOT NULL,
-    creation_date timestamp(3) without time zone NOT NULL,
-    modified_date timestamp(3) without time zone NOT NULL,
-    domain_id integer NOT NULL
+    is_mapped numeric(3,0) NOT NULL,
+    is_enabled numeric(3,0) NOT NULL,
+    is_readonly numeric(3,0) NOT NULL,
+    is_removable numeric(3,0) NOT NULL,
+    creation_date timestamp(6) without time zone NOT NULL,
+    modified_date timestamp(6) without time zone NOT NULL,
+    domain_id numeric NOT NULL
 );
 
 
@@ -2135,8 +2058,8 @@ ALTER TABLE security_principal OWNER TO postgres;
 
 CREATE TABLE security_principal_assoc (
     assoc_name character varying(30) NOT NULL,
-    from_principal_id integer NOT NULL,
-    to_principal_id integer NOT NULL
+    from_principal_id numeric NOT NULL,
+    to_principal_id numeric NOT NULL
 );
 
 
@@ -2147,8 +2070,8 @@ ALTER TABLE security_principal_assoc OWNER TO postgres;
 --
 
 CREATE TABLE security_role (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     name character varying(150) NOT NULL
 );
 
@@ -2160,8 +2083,8 @@ ALTER TABLE security_role OWNER TO postgres;
 --
 
 CREATE TABLE security_role_reference (
-    id integer NOT NULL,
-    portlet_definition_id integer NOT NULL,
+    id numeric NOT NULL,
+    portlet_definition_id numeric NOT NULL,
     role_name character varying(150) NOT NULL,
     role_link character varying(150)
 );
@@ -2174,17 +2097,17 @@ ALTER TABLE security_role_reference OWNER TO postgres;
 --
 
 CREATE TABLE sso_site (
-    site_id integer NOT NULL,
+    site_id numeric NOT NULL,
     name character varying(254) NOT NULL,
     url character varying(254) NOT NULL,
-    allow_user_set smallint DEFAULT '0'::smallint,
-    requires_certificate smallint DEFAULT '0'::smallint,
-    challenge_response_auth smallint DEFAULT '0'::smallint,
-    form_auth smallint DEFAULT '0'::smallint,
+    allow_user_set numeric(3,0) DEFAULT 0,
+    requires_certificate numeric(3,0) DEFAULT 0,
+    challenge_response_auth numeric(3,0) DEFAULT 0,
+    form_auth numeric(3,0) DEFAULT 0,
     form_user_field character varying(128),
     form_pwd_field character varying(128),
     realm character varying(128),
-    domain_id integer NOT NULL
+    domain_id numeric NOT NULL
 );
 
 
@@ -2198,7 +2121,7 @@ CREATE TABLE user_activity (
     activity character varying(40),
     category character varying(40),
     user_name character varying(80),
-    time_stamp timestamp(3) without time zone,
+    time_stamp timestamp(6) without time zone,
     ipaddress character varying(80),
     attr_name character varying(200),
     attr_value_before character varying(1000),
@@ -2214,8 +2137,8 @@ ALTER TABLE user_activity OWNER TO postgres;
 --
 
 CREATE TABLE user_attribute (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     name character varying(150)
 );
 
@@ -2227,8 +2150,8 @@ ALTER TABLE user_attribute OWNER TO postgres;
 --
 
 CREATE TABLE user_attribute_ref (
-    id integer NOT NULL,
-    application_id integer NOT NULL,
+    id numeric NOT NULL,
+    application_id numeric NOT NULL,
     name character varying(150),
     name_link character varying(150)
 );
@@ -2243,104 +2166,13 @@ ALTER TABLE user_attribute_ref OWNER TO postgres;
 CREATE TABLE user_statistics (
     ipaddress character varying(80),
     user_name character varying(80),
-    time_stamp timestamp(3) without time zone,
-    status integer,
-    elapsed_time bigint
+    time_stamp timestamp(6) without time zone,
+    status numeric,
+    elapsed_time numeric(38,0)
 );
 
 
 ALTER TABLE user_statistics OWNER TO postgres;
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_anniversary ALTER COLUMN id SET DEFAULT nextval('ingrid_anniversary_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_chron_eventtypes ALTER COLUMN id SET DEFAULT nextval('ingrid_chron_eventtypes_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_cms ALTER COLUMN id SET DEFAULT nextval('ingrid_cms_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_cms_item ALTER COLUMN id SET DEFAULT nextval('ingrid_cms_item_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_env_topic ALTER COLUMN id SET DEFAULT nextval('ingrid_env_topic_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_measures_rubric ALTER COLUMN id SET DEFAULT nextval('ingrid_measures_rubric_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_newsletter_data ALTER COLUMN id SET DEFAULT nextval('ingrid_newsletter_data_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_partner ALTER COLUMN id SET DEFAULT nextval('ingrid_partner_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_principal_pref ALTER COLUMN id SET DEFAULT nextval('ingrid_principal_pref_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_provider ALTER COLUMN id SET DEFAULT nextval('ingrid_provider_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_rss_source ALTER COLUMN id SET DEFAULT nextval('ingrid_rss_source_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_service_rubric ALTER COLUMN id SET DEFAULT nextval('ingrid_service_rubric_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_tiny_url ALTER COLUMN id SET DEFAULT nextval('ingrid_tiny_url_id_seq'::regclass);
-
 
 --
 -- Data for Name: admin_activity; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -2352,46 +2184,46 @@ ALTER TABLE ONLY ingrid_tiny_url ALTER COLUMN id SET DEFAULT nextval('ingrid_tin
 -- Data for Name: capability; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO capability VALUES (1, 'HTML_3_2');
-INSERT INTO capability VALUES (2, 'HTML_4_0');
-INSERT INTO capability VALUES (3, 'HTML_ACTIVEX');
-INSERT INTO capability VALUES (4, 'HTML_CSS1');
-INSERT INTO capability VALUES (5, 'HTML_CSS2');
-INSERT INTO capability VALUES (6, 'HTML_CSSP');
-INSERT INTO capability VALUES (7, 'HTML_DOM');
+INSERT INTO capability VALUES (1, 'HTML_ACTIVEX');
+INSERT INTO capability VALUES (2, 'HTML_CSSP');
+INSERT INTO capability VALUES (3, 'HTML_CSS1');
+INSERT INTO capability VALUES (4, 'HTML_CSS2');
+INSERT INTO capability VALUES (5, 'HTML_DOM');
+INSERT INTO capability VALUES (6, 'HTML_DOM_IE');
+INSERT INTO capability VALUES (7, 'HTML_DOM_NS4');
 INSERT INTO capability VALUES (8, 'HTML_DOM_1');
 INSERT INTO capability VALUES (9, 'HTML_DOM_2');
-INSERT INTO capability VALUES (10, 'HTML_DOM_IE');
-INSERT INTO capability VALUES (11, 'HTML_DOM_NS4');
-INSERT INTO capability VALUES (12, 'HTML_FORM');
-INSERT INTO capability VALUES (13, 'HTML_FRAME');
-INSERT INTO capability VALUES (14, 'HTML_IFRAME');
-INSERT INTO capability VALUES (15, 'HTML_IMAGE');
-INSERT INTO capability VALUES (16, 'HTML_JAVA');
-INSERT INTO capability VALUES (17, 'HTML_JAVA1_0');
-INSERT INTO capability VALUES (18, 'HTML_JAVA1_1');
-INSERT INTO capability VALUES (19, 'HTML_JAVA1_2');
-INSERT INTO capability VALUES (20, 'HTML_JAVASCRIPT');
-INSERT INTO capability VALUES (21, 'HTML_JAVASCRIPT_1_0');
-INSERT INTO capability VALUES (22, 'HTML_JAVASCRIPT_1_1');
-INSERT INTO capability VALUES (23, 'HTML_JAVASCRIPT_1_2');
-INSERT INTO capability VALUES (24, 'HTML_JAVA_JRE');
-INSERT INTO capability VALUES (25, 'HTML_JSCRIPT');
-INSERT INTO capability VALUES (26, 'HTML_JSCRIPT1_0');
-INSERT INTO capability VALUES (27, 'HTML_JSCRIPT1_1');
-INSERT INTO capability VALUES (28, 'HTML_JSCRIPT1_2');
-INSERT INTO capability VALUES (29, 'HTML_LAYER');
-INSERT INTO capability VALUES (30, 'HTML_NESTED_TABLE');
-INSERT INTO capability VALUES (31, 'HTML_PLUGIN');
-INSERT INTO capability VALUES (32, 'HTML_PLUGIN_');
-INSERT INTO capability VALUES (33, 'HTML_TABLE');
-INSERT INTO capability VALUES (34, 'HTML_XML');
-INSERT INTO capability VALUES (35, 'HTML_XSL');
-INSERT INTO capability VALUES (36, 'HTTP_1_1');
-INSERT INTO capability VALUES (37, 'HTTP_COOKIE');
-INSERT INTO capability VALUES (38, 'WML_1_0');
-INSERT INTO capability VALUES (39, 'WML_1_1');
-INSERT INTO capability VALUES (40, 'WML_TABLE');
+INSERT INTO capability VALUES (10, 'HTML_FORM');
+INSERT INTO capability VALUES (11, 'HTML_FRAME');
+INSERT INTO capability VALUES (12, 'HTML_IFRAME');
+INSERT INTO capability VALUES (13, 'HTML_IMAGE');
+INSERT INTO capability VALUES (14, 'HTML_JAVA');
+INSERT INTO capability VALUES (15, 'HTML_JAVA_JRE');
+INSERT INTO capability VALUES (16, 'HTML_JAVASCRIPT');
+INSERT INTO capability VALUES (17, 'HTML_JAVASCRIPT_1_0');
+INSERT INTO capability VALUES (18, 'HTML_JAVASCRIPT_1_1');
+INSERT INTO capability VALUES (19, 'HTML_JAVASCRIPT_1_2');
+INSERT INTO capability VALUES (20, 'HTML_JAVA1_0');
+INSERT INTO capability VALUES (21, 'HTML_JAVA1_1');
+INSERT INTO capability VALUES (22, 'HTML_JAVA1_2');
+INSERT INTO capability VALUES (23, 'HTML_JSCRIPT');
+INSERT INTO capability VALUES (24, 'HTML_JSCRIPT1_0');
+INSERT INTO capability VALUES (25, 'HTML_JSCRIPT1_1');
+INSERT INTO capability VALUES (26, 'HTML_JSCRIPT1_2');
+INSERT INTO capability VALUES (27, 'HTML_LAYER');
+INSERT INTO capability VALUES (28, 'HTML_NESTED_TABLE');
+INSERT INTO capability VALUES (29, 'HTML_PLUGIN');
+INSERT INTO capability VALUES (30, 'HTML_PLUGIN_');
+INSERT INTO capability VALUES (31, 'HTML_TABLE');
+INSERT INTO capability VALUES (32, 'HTML_XML');
+INSERT INTO capability VALUES (33, 'HTML_XSL');
+INSERT INTO capability VALUES (34, 'HTML_3_2');
+INSERT INTO capability VALUES (35, 'HTML_4_0');
+INSERT INTO capability VALUES (36, 'HTTP_COOKIE');
+INSERT INTO capability VALUES (37, 'HTTP_1_1');
+INSERT INTO capability VALUES (38, 'WML_TABLE');
+INSERT INTO capability VALUES (39, 'WML_1_0');
+INSERT INTO capability VALUES (40, 'WML_1_1');
 INSERT INTO capability VALUES (41, 'XML_XINCLUDE');
 INSERT INTO capability VALUES (42, 'XML_XPATH');
 INSERT INTO capability VALUES (43, 'XML_XSLT');
@@ -2407,17 +2239,17 @@ INSERT INTO client VALUES (3, 3, 'ie6', '.*MSIE 6.*', 'Microsoft', 'None', '6.0'
 INSERT INTO client VALUES (4, 4, 'ie5', '.*MSIE 5.*', 'Microsoft', 'None', '5.5', 2);
 INSERT INTO client VALUES (5, 5, 'ns4', '.*Mozilla/4.*', 'Netscape', 'None', '4.75', 2);
 INSERT INTO client VALUES (6, 6, 'mozilla', '.*Mozilla/5.*', 'Mozilla', 'Mozilla', '1.x', 2);
-INSERT INTO client VALUES (7, 7, 'lynx', 'Lynx.*', 'GNU', 'None', '', 2);
-INSERT INTO client VALUES (8, 8, 'nokia_generic', 'Nokia.*', 'Nokia', 'Generic', '', 3);
-INSERT INTO client VALUES (9, 9, 'xhtml-basic', 'DoCoMo/2.0.*|KDDI-.*UP.Browser.*|J-PHONE/5.0.*|Vodafone/1.0/.*', 'WAP', 'Generic', '', 1);
-INSERT INTO client VALUES (10, 10, 'up', 'UP.*|.*UP.Browser.*', 'United Planet', 'Generic', '', 3);
-INSERT INTO client VALUES (11, 11, 'sonyericsson', 'Ercis.*|SonyE.*', 'SonyEricsson', 'Generic', '', 3);
-INSERT INTO client VALUES (12, 12, 'wapalizer', 'Wapalizer.*', 'Wapalizer', 'Generic', '', 3);
-INSERT INTO client VALUES (13, 13, 'klondike', 'Klondike.*', 'Klondike', 'Generic', '', 3);
-INSERT INTO client VALUES (14, 14, 'wml_generic', '.*WML.*|.*WAP.*|.*Wap.*|.*wml.*', 'Generic', 'Generic', '', 3);
-INSERT INTO client VALUES (15, 15, 'vxml_generic', '.*VoiceXML.*', 'Generic', 'Generic', '', 4);
-INSERT INTO client VALUES (16, 16, 'nuance', 'Nuance.*', 'Nuance', 'Generic', '', 4);
-INSERT INTO client VALUES (17, 17, 'agentxml', 'agentxml/1.0.*', 'Unknown', 'Generic', '', 6);
+INSERT INTO client VALUES (7, 7, 'lynx', 'Lynx.*', 'GNU', 'None', ' ', 2);
+INSERT INTO client VALUES (8, 8, 'nokia_generic', 'Nokia.*', 'Nokia', 'Generic', ' ', 3);
+INSERT INTO client VALUES (9, 9, 'xhtml-basic', 'DoCoMo/2.0.*|KDDI-.*UP.Browser.*|J-PHONE/5.0.*|Vodafone/1.0/.*', 'WAP', 'Generic', ' ', 1);
+INSERT INTO client VALUES (10, 10, 'up', 'UP.*|.*UP.Browser.*', 'United Planet', 'Generic', ' ', 3);
+INSERT INTO client VALUES (11, 11, 'sonyericsson', 'Ercis.*|SonyE.*', 'SonyEricsson', 'Generic', ' ', 3);
+INSERT INTO client VALUES (12, 12, 'wapalizer', 'Wapalizer.*', 'Wapalizer', 'Generic', ' ', 3);
+INSERT INTO client VALUES (13, 13, 'klondike', 'Klondike.*', 'Klondike', 'Generic', ' ', 3);
+INSERT INTO client VALUES (14, 14, 'wml_generic', '.*WML.*|.*WAP.*|.*Wap.*|.*wml.*', 'Generic', 'Generic', ' ', 3);
+INSERT INTO client VALUES (15, 15, 'vxml_generic', '.*VoiceXML.*', 'Generic', 'Generic', ' ', 4);
+INSERT INTO client VALUES (16, 16, 'nuance', 'Nuance.*', 'Nuance', 'Generic', ' ', 4);
+INSERT INTO client VALUES (17, 17, 'agentxml', 'agentxml/1.0.*', 'Unknown', 'Generic', ' ', 6);
 INSERT INTO client VALUES (18, 18, 'opera7', '.*Opera/7.*', 'Opera', 'Opera7', '7.x', 2);
 
 
@@ -2425,113 +2257,113 @@ INSERT INTO client VALUES (18, 18, 'opera7', '.*Opera/7.*', 'Opera', 'Opera7', '
 -- Data for Name: client_to_capability; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO client_to_capability VALUES (1, 1);
-INSERT INTO client_to_capability VALUES (1, 4);
+INSERT INTO client_to_capability VALUES (1, 3);
+INSERT INTO client_to_capability VALUES (1, 7);
+INSERT INTO client_to_capability VALUES (1, 10);
 INSERT INTO client_to_capability VALUES (1, 11);
-INSERT INTO client_to_capability VALUES (1, 12);
 INSERT INTO client_to_capability VALUES (1, 13);
-INSERT INTO client_to_capability VALUES (1, 15);
+INSERT INTO client_to_capability VALUES (1, 14);
 INSERT INTO client_to_capability VALUES (1, 16);
-INSERT INTO client_to_capability VALUES (1, 20);
+INSERT INTO client_to_capability VALUES (1, 29);
 INSERT INTO client_to_capability VALUES (1, 31);
-INSERT INTO client_to_capability VALUES (1, 33);
-INSERT INTO client_to_capability VALUES (1, 37);
+INSERT INTO client_to_capability VALUES (1, 34);
+INSERT INTO client_to_capability VALUES (1, 36);
 INSERT INTO client_to_capability VALUES (2, 1);
+INSERT INTO client_to_capability VALUES (2, 2);
 INSERT INTO client_to_capability VALUES (2, 3);
 INSERT INTO client_to_capability VALUES (2, 4);
-INSERT INTO client_to_capability VALUES (2, 5);
 INSERT INTO client_to_capability VALUES (2, 6);
 INSERT INTO client_to_capability VALUES (2, 10);
+INSERT INTO client_to_capability VALUES (2, 11);
 INSERT INTO client_to_capability VALUES (2, 12);
 INSERT INTO client_to_capability VALUES (2, 13);
 INSERT INTO client_to_capability VALUES (2, 14);
-INSERT INTO client_to_capability VALUES (2, 15);
 INSERT INTO client_to_capability VALUES (2, 16);
-INSERT INTO client_to_capability VALUES (2, 20);
-INSERT INTO client_to_capability VALUES (2, 30);
-INSERT INTO client_to_capability VALUES (2, 33);
-INSERT INTO client_to_capability VALUES (2, 37);
+INSERT INTO client_to_capability VALUES (2, 28);
+INSERT INTO client_to_capability VALUES (2, 31);
+INSERT INTO client_to_capability VALUES (2, 34);
+INSERT INTO client_to_capability VALUES (2, 36);
 INSERT INTO client_to_capability VALUES (3, 1);
+INSERT INTO client_to_capability VALUES (3, 2);
 INSERT INTO client_to_capability VALUES (3, 3);
 INSERT INTO client_to_capability VALUES (3, 4);
-INSERT INTO client_to_capability VALUES (3, 5);
 INSERT INTO client_to_capability VALUES (3, 6);
 INSERT INTO client_to_capability VALUES (3, 10);
+INSERT INTO client_to_capability VALUES (3, 11);
 INSERT INTO client_to_capability VALUES (3, 12);
 INSERT INTO client_to_capability VALUES (3, 13);
 INSERT INTO client_to_capability VALUES (3, 14);
-INSERT INTO client_to_capability VALUES (3, 15);
 INSERT INTO client_to_capability VALUES (3, 16);
-INSERT INTO client_to_capability VALUES (3, 20);
-INSERT INTO client_to_capability VALUES (3, 30);
-INSERT INTO client_to_capability VALUES (3, 33);
-INSERT INTO client_to_capability VALUES (3, 37);
+INSERT INTO client_to_capability VALUES (3, 28);
+INSERT INTO client_to_capability VALUES (3, 31);
+INSERT INTO client_to_capability VALUES (3, 34);
+INSERT INTO client_to_capability VALUES (3, 36);
 INSERT INTO client_to_capability VALUES (4, 1);
+INSERT INTO client_to_capability VALUES (4, 2);
 INSERT INTO client_to_capability VALUES (4, 3);
 INSERT INTO client_to_capability VALUES (4, 4);
-INSERT INTO client_to_capability VALUES (4, 5);
 INSERT INTO client_to_capability VALUES (4, 6);
 INSERT INTO client_to_capability VALUES (4, 10);
+INSERT INTO client_to_capability VALUES (4, 11);
 INSERT INTO client_to_capability VALUES (4, 12);
 INSERT INTO client_to_capability VALUES (4, 13);
 INSERT INTO client_to_capability VALUES (4, 14);
-INSERT INTO client_to_capability VALUES (4, 15);
 INSERT INTO client_to_capability VALUES (4, 16);
-INSERT INTO client_to_capability VALUES (4, 20);
-INSERT INTO client_to_capability VALUES (4, 30);
-INSERT INTO client_to_capability VALUES (4, 33);
-INSERT INTO client_to_capability VALUES (4, 37);
-INSERT INTO client_to_capability VALUES (5, 1);
-INSERT INTO client_to_capability VALUES (5, 4);
+INSERT INTO client_to_capability VALUES (4, 28);
+INSERT INTO client_to_capability VALUES (4, 31);
+INSERT INTO client_to_capability VALUES (4, 34);
+INSERT INTO client_to_capability VALUES (4, 36);
+INSERT INTO client_to_capability VALUES (5, 3);
+INSERT INTO client_to_capability VALUES (5, 7);
+INSERT INTO client_to_capability VALUES (5, 10);
 INSERT INTO client_to_capability VALUES (5, 11);
-INSERT INTO client_to_capability VALUES (5, 12);
 INSERT INTO client_to_capability VALUES (5, 13);
-INSERT INTO client_to_capability VALUES (5, 15);
+INSERT INTO client_to_capability VALUES (5, 14);
 INSERT INTO client_to_capability VALUES (5, 16);
-INSERT INTO client_to_capability VALUES (5, 20);
+INSERT INTO client_to_capability VALUES (5, 27);
 INSERT INTO client_to_capability VALUES (5, 29);
 INSERT INTO client_to_capability VALUES (5, 31);
-INSERT INTO client_to_capability VALUES (5, 33);
-INSERT INTO client_to_capability VALUES (5, 37);
-INSERT INTO client_to_capability VALUES (6, 1);
+INSERT INTO client_to_capability VALUES (5, 34);
+INSERT INTO client_to_capability VALUES (5, 36);
 INSERT INTO client_to_capability VALUES (6, 2);
+INSERT INTO client_to_capability VALUES (6, 3);
 INSERT INTO client_to_capability VALUES (6, 4);
-INSERT INTO client_to_capability VALUES (6, 5);
-INSERT INTO client_to_capability VALUES (6, 6);
 INSERT INTO client_to_capability VALUES (6, 8);
+INSERT INTO client_to_capability VALUES (6, 10);
+INSERT INTO client_to_capability VALUES (6, 11);
 INSERT INTO client_to_capability VALUES (6, 12);
 INSERT INTO client_to_capability VALUES (6, 13);
 INSERT INTO client_to_capability VALUES (6, 14);
 INSERT INTO client_to_capability VALUES (6, 15);
 INSERT INTO client_to_capability VALUES (6, 16);
-INSERT INTO client_to_capability VALUES (6, 20);
-INSERT INTO client_to_capability VALUES (6, 24);
-INSERT INTO client_to_capability VALUES (6, 30);
+INSERT INTO client_to_capability VALUES (6, 28);
+INSERT INTO client_to_capability VALUES (6, 29);
 INSERT INTO client_to_capability VALUES (6, 31);
-INSERT INTO client_to_capability VALUES (6, 33);
-INSERT INTO client_to_capability VALUES (6, 37);
-INSERT INTO client_to_capability VALUES (7, 12);
-INSERT INTO client_to_capability VALUES (7, 13);
-INSERT INTO client_to_capability VALUES (7, 30);
-INSERT INTO client_to_capability VALUES (7, 33);
-INSERT INTO client_to_capability VALUES (7, 37);
-INSERT INTO client_to_capability VALUES (18, 1);
+INSERT INTO client_to_capability VALUES (6, 34);
+INSERT INTO client_to_capability VALUES (6, 35);
+INSERT INTO client_to_capability VALUES (6, 36);
+INSERT INTO client_to_capability VALUES (7, 10);
+INSERT INTO client_to_capability VALUES (7, 11);
+INSERT INTO client_to_capability VALUES (7, 28);
+INSERT INTO client_to_capability VALUES (7, 31);
+INSERT INTO client_to_capability VALUES (7, 36);
 INSERT INTO client_to_capability VALUES (18, 2);
+INSERT INTO client_to_capability VALUES (18, 3);
 INSERT INTO client_to_capability VALUES (18, 4);
-INSERT INTO client_to_capability VALUES (18, 5);
-INSERT INTO client_to_capability VALUES (18, 6);
 INSERT INTO client_to_capability VALUES (18, 8);
+INSERT INTO client_to_capability VALUES (18, 10);
+INSERT INTO client_to_capability VALUES (18, 11);
 INSERT INTO client_to_capability VALUES (18, 12);
 INSERT INTO client_to_capability VALUES (18, 13);
 INSERT INTO client_to_capability VALUES (18, 14);
 INSERT INTO client_to_capability VALUES (18, 15);
 INSERT INTO client_to_capability VALUES (18, 16);
-INSERT INTO client_to_capability VALUES (18, 20);
-INSERT INTO client_to_capability VALUES (18, 24);
-INSERT INTO client_to_capability VALUES (18, 30);
+INSERT INTO client_to_capability VALUES (18, 28);
+INSERT INTO client_to_capability VALUES (18, 29);
 INSERT INTO client_to_capability VALUES (18, 31);
-INSERT INTO client_to_capability VALUES (18, 33);
-INSERT INTO client_to_capability VALUES (18, 37);
+INSERT INTO client_to_capability VALUES (18, 34);
+INSERT INTO client_to_capability VALUES (18, 35);
+INSERT INTO client_to_capability VALUES (18, 36);
 
 
 --
@@ -2715,8 +2547,8 @@ INSERT INTO folder_menu VALUES (64, 'org.apache.jetspeed.om.folder.impl.FolderMe
 -- Data for Name: folder_metadata; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO folder_metadata VALUES (1, 1, 'title', 'es,,', 'Carpeta raiz');
-INSERT INTO folder_metadata VALUES (2, 1, 'title', 'fr,,', 'Répertoire racine');
+INSERT INTO folder_metadata VALUES (1, 1, 'title', 'fr,,', 'Répertoire racine');
+INSERT INTO folder_metadata VALUES (2, 1, 'title', 'es,,', 'Carpeta raiz');
 
 
 --
@@ -2731,7 +2563,6 @@ INSERT INTO folder_metadata VALUES (2, 1, 'title', 'fr,,', 'Répertoire racine')
 
 INSERT INTO fragment VALUES (1, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 1, '1', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (2, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, '9701', NULL, 'ingrid-portal-apps::SearchSimple', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (3, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, '9702', NULL, 'ingrid-portal-apps::EnvironmentTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 4, 0, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (4, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, '9703', NULL, 'ingrid-portal-apps::RssNewsTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 3, 0, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (5, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, '9704', NULL, 'ingrid-portal-apps::IngridInformPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 1, 0, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (11, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 2, '9', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
@@ -2780,11 +2611,6 @@ INSERT INTO fragment VALUES (125, 'org.apache.jetspeed.om.page.impl.FragmentImpl
 INSERT INTO fragment VALUES (126, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 125, NULL, '9725', NULL, 'ingrid-portal-apps::MyPortalEditAccountPortlet', NULL, NULL, 'portlet', NULL, 'ingrid-teaser', NULL, NULL, 0, 0, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (140, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 31, '105', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (141, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 140, NULL, '106', NULL, 'ingrid-portal-apps::MyPortalOverviewPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (6507, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 728, '108', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (6508, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9716', NULL, 'ingrid-portal-apps::SearchSimple', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (6509, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9717', NULL, 'ingrid-portal-apps::EnvironmentTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 4, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (6510, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9718', NULL, 'ingrid-portal-apps::RssNewsTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 3, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (6511, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9719', NULL, 'ingrid-portal-apps::IngridInformPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 1, 0, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (7138, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 798, '116', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (7139, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 7138, NULL, '117', NULL, 'ingrid-portal-apps::AdminCMSPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, -1, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (7141, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 799, '1278', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
@@ -2817,13 +2643,19 @@ INSERT INTO fragment VALUES (7195, 'org.apache.jetspeed.om.page.impl.FragmentImp
 INSERT INTO fragment VALUES (7196, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 7193, NULL, '5380', NULL, 'ingrid-portal-mdek::MdekAdminLoginPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 1, -1, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (7198, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 817, '1780', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
 INSERT INTO fragment VALUES (7199, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 7198, NULL, '1781', NULL, 'ingrid-portal-apps::SearchCatalogHierarchy', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, -1, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7300, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, NULL, NULL, 'ingrid-portal-apps::CategoryTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 2, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7301, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, NULL, NULL, 'ingrid-portal-apps::InfoDefaultPageTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 5, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7302, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 14, NULL, NULL, NULL, 'ingrid-portal-apps::PrivacyPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 1, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7303, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 116, NULL, NULL, NULL, 'ingrid-portal-apps::CategoryTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 2, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7304, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 116, NULL, NULL, NULL, 'ingrid-portal-apps::InfoDefaultPageTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 5, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7305, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, NULL, NULL, 'ingrid-portal-apps::CategoryTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 2, 0, NULL, -1, -1, -1, -1, -1, NULL);
-INSERT INTO fragment VALUES (7306, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, NULL, NULL, 'ingrid-portal-apps::InfoDefaultPageTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 5, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7340, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, NULL, NULL, 'ingrid-portal-apps::CategoryTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 2, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7341, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, NULL, NULL, 'ingrid-portal-apps::InfoDefaultPageTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 5, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7343, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 116, NULL, NULL, NULL, 'ingrid-portal-apps::CategoryTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 2, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7344, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 116, NULL, NULL, NULL, 'ingrid-portal-apps::InfoDefaultPageTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 5, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7345, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, NULL, NULL, 'ingrid-portal-apps::CategoryTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 2, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7346, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, NULL, NULL, 'ingrid-portal-apps::InfoDefaultPageTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 5, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7342, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 14, NULL, NULL, NULL, 'ingrid-portal-apps::PrivacyPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 1, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (6507, 'org.apache.jetspeed.om.page.impl.FragmentImpl', NULL, 728, '108', NULL, 'jetspeed-layouts::IngridClearLayout', NULL, NULL, 'layout', NULL, NULL, NULL, NULL, -1, -1, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (6508, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9716', NULL, 'ingrid-portal-apps::SearchSimple', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 0, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (6509, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9717', NULL, 'ingrid-portal-apps::EnvironmentTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 4, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (6510, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9718', NULL, 'ingrid-portal-apps::RssNewsTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 3, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (6511, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 6507, NULL, '9719', NULL, 'ingrid-portal-apps::IngridInformPortlet', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 1, 0, NULL, -1, -1, -1, -1, -1, NULL);
+INSERT INTO fragment VALUES (7324, 'org.apache.jetspeed.om.page.impl.FragmentImpl', 1, NULL, 'P-14ac9459722-10017', NULL, 'ingrid-portal-apps::EnvironmentTeaser', NULL, NULL, 'portlet', NULL, NULL, NULL, NULL, 4, 0, NULL, -1, -1, -1, -1, -1, NULL);
 
 
 --
@@ -2831,8 +2663,8 @@ INSERT INTO fragment VALUES (7306, 'org.apache.jetspeed.om.page.impl.FragmentImp
 --
 
 INSERT INTO fragment_constraint VALUES (1, 7195, 0, NULL, 'mdek', NULL, 'view');
-INSERT INTO fragment_constraint VALUES (2, 7195, 1, 'admin', 'admin-portal', NULL, NULL);
-INSERT INTO fragment_constraint VALUES (3, 7195, 2, NULL, 'mdek', NULL, 'view');
+INSERT INTO fragment_constraint VALUES (2, 7195, 1, NULL, 'mdek', NULL, 'view');
+INSERT INTO fragment_constraint VALUES (3, 7195, 2, 'admin', 'admin-portal', NULL, NULL);
 
 
 --
@@ -2860,13 +2692,13 @@ INSERT INTO fragment_pref VALUES (25, 55, 'titleKey', 0);
 INSERT INTO fragment_pref VALUES (38, 78, 'startWithEntry', 0);
 INSERT INTO fragment_pref VALUES (59, 114, 'infoTemplate', 0);
 INSERT INTO fragment_pref VALUES (60, 114, 'titleKey', 0);
-INSERT INTO fragment_pref VALUES (7301, 15, 'sectionStyle', 0);
-INSERT INTO fragment_pref VALUES (7302, 15, 'articleStyle', 0);
-INSERT INTO fragment_pref VALUES (7303, 28, 'sectionStyle', 0);
-INSERT INTO fragment_pref VALUES (7304, 114, 'sectionStyle', 0);
-INSERT INTO fragment_pref VALUES (7305, 15, 'titleTag', 0);
-INSERT INTO fragment_pref VALUES (7306, 28, 'titleTag', 0);
-INSERT INTO fragment_pref VALUES (7307, 114, 'titleTag', 0);
+INSERT INTO fragment_pref VALUES (7321, 15, 'sectionStyle', 0);
+INSERT INTO fragment_pref VALUES (7322, 15, 'articleStyle', 0);
+INSERT INTO fragment_pref VALUES (7323, 28, 'sectionStyle', 0);
+INSERT INTO fragment_pref VALUES (7324, 114, 'sectionStyle', 0);
+INSERT INTO fragment_pref VALUES (7325, 15, 'titleTag', 0);
+INSERT INTO fragment_pref VALUES (7326, 28, 'titleTag', 0);
+INSERT INTO fragment_pref VALUES (7327, 114, 'titleTag', 0);
 
 
 --
@@ -2886,13 +2718,13 @@ INSERT INTO fragment_pref_value VALUES (25, 25, 0, 'searchSimple.title.result');
 INSERT INTO fragment_pref_value VALUES (38, 38, 0, '4');
 INSERT INTO fragment_pref_value VALUES (59, 59, 0, '/WEB-INF/templates/sitemap.vm');
 INSERT INTO fragment_pref_value VALUES (60, 60, 0, 'sitemap.title');
-INSERT INTO fragment_pref_value VALUES (7301, 7301, 0, 'block--pad-top');
-INSERT INTO fragment_pref_value VALUES (7302, 7302, 0, 'content ob-container ob-box-narrow ob-box-center');
-INSERT INTO fragment_pref_value VALUES (7303, 7303, 0, 'block--padded');
-INSERT INTO fragment_pref_value VALUES (7304, 7304, 0, 'block--padded');
-INSERT INTO fragment_pref_value VALUES (7305, 7305, 0, 'h1');
-INSERT INTO fragment_pref_value VALUES (7306, 7306, 0, 'h1');
-INSERT INTO fragment_pref_value VALUES (7307, 7307, 0, 'h1');
+INSERT INTO fragment_pref_value VALUES (7321, 7321, 0, 'block--pad-top');
+INSERT INTO fragment_pref_value VALUES (7322, 7322, 0, 'content ob-container ob-box-narrow ob-box-center');
+INSERT INTO fragment_pref_value VALUES (7323, 7323, 0, 'block--padded');
+INSERT INTO fragment_pref_value VALUES (7324, 7324, 0, 'block--padded');
+INSERT INTO fragment_pref_value VALUES (7325, 7325, 0, 'h1');
+INSERT INTO fragment_pref_value VALUES (7326, 7326, 0, 'h1');
+INSERT INTO fragment_pref_value VALUES (7327, 7327, 0, 'h1');
 
 
 --
@@ -2902,19 +2734,34 @@ INSERT INTO fragment_pref_value VALUES (7307, 7307, 0, 'h1');
 
 
 --
+-- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('hibernate_sequence', 101, false);
+
+
+--
 -- Data for Name: ingrid_anniversary; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_anniversary VALUES (18114, 'calendarEvent_180', 'Greenpeace action against French atomic tests', '1992-01-21', 1992, 1, 21, '1992-01-21', 1992, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18113, 't9c22ff_11f605c4a69_-f51', 'Cabinet decides on implementation of EU Batteries Directive', '2009-01-21', 2009, 1, 21, '2009-01-21', 2009, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18112, 't2cd728_12057cca378_1295', 'The 1968 Thule air crash', '1968-01-21', 1968, 1, 21, '1968-01-21', 1968, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18111, 't53da2896_13d1685ed61_3901', 'Permanent Secretariat of Arctic Council established in Tromsø', '2013-01-21', 2013, 1, 21, '2013-01-21', 2013, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18110, 't-6dadf813_143c097fe2a_-8ae', 'Long term exposure to air pollution linked to coronary events', '2014-01-21', 2014, 1, 21, '2014-01-21', 2014, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'en');
-INSERT INTO ingrid_anniversary VALUES (18105, 't-6dadf813_143c097fe2a_-8ae', 'Feinstaubbelastung führt zu erhöhtem Herzinfarkt-Risiko', '2014-01-21', 2014, 1, 21, '2014-01-21', 2014, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18106, 't2cd728_12057cca378_1295', 'Der Flugzeugabsturz  bei Thule 1968', '1968-01-21', 1968, 1, 21, '1968-01-21', 1968, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18107, 't9c22ff_11f605c4a69_-f51', 'Kabinett beschließt Umsetzung der EU-Batterierichtlinie', '2009-01-21', 2009, 1, 21, '2009-01-21', 2009, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18108, 't53da2896_13d1685ed61_3901', 'Ständiges Sekretariat für den Arktischen Rat in Tromsø gegründet', '2013-01-21', 2013, 1, 21, '2013-01-21', 2013, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
-INSERT INTO ingrid_anniversary VALUES (18109, 'calendarEvent_180', 'Greenpeace Aktion gegen französische Atomtests', '1992-01-21', 1992, 1, 21, '1992-01-21', 1992, 1, 21, NULL, '2015-01-21 00:00:00', '2015-01-21 00:00:00', 'de');
+INSERT INTO ingrid_anniversary VALUES (69, 't60338ac8_134f90ec66f_-233d', 'Keystone XL pipeline proposal rejected', '2012-01-19', 2012, 1, 19, '2012-01-19', 2012, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (70, 't5ad43eac_13c50bfe132_-5a92', 'Minamata Convention Agreed by Nations', '2013-01-19', 2013, 1, 19, '2013-01-19', 2013, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (71, 't2650482e_134f654baf9_-2483', 'European Parliament approves recast of WEEE Directive', '2012-01-19', 2012, 1, 19, '2012-01-19', 2012, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (72, 'calendarEvent_172', 'Greenpeace action against dragnet fishing', '1990-01-19', 1990, 1, 19, '1990-01-19', 1990, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (73, 't60338ac8_134f90ec66f_4358', 'EP plenary vote on Biocide Regulation', '2012-01-19', 2012, 1, 19, '2012-01-19', 2012, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (74, 't14aa2db_11efe95ecc1_7786', 'Zayed Future Energy Prize', '2009-01-19', 2009, 1, 19, '2009-01-19', 2009, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (61, 't14aa2db_11efe95ecc1_7786', 'Zayed Future Energy- Preis', '2009-01-19', 2009, 1, 19, '2009-01-19', 2009, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (62, 't2650482e_134f654baf9_-2483', 'EU-Parlament verabschiedet Novellierung der Richtlinie über Elektro- und Elektronikaltgeräte', '2012-01-19', 2012, 1, 19, '2012-01-19', 2012, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (63, 't5ad43eac_13c50bfe132_-5a92', 'Einigung über Minamata Konvention', '2013-01-19', 2013, 1, 19, '2013-01-19', 2013, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (64, 'calendarEvent_172', 'Greenpeace Aktion gegen Treibnetzfischerei', '1990-01-19', 1990, 1, 19, '1990-01-19', 1990, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (65, 't60338ac8_134f90ec66f_-233d', 'Bau der Keystone  XL Pipeline abgelehnt', '2012-01-19', 2012, 1, 19, '2012-01-19', 2012, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (66, 't60338ac8_134f90ec66f_4358', 'Plenarabstimmung des EU-Parlaments zur Biozid-Verordnung', '2012-01-19', 2012, 1, 19, '2012-01-19', 2012, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (67, 't7ff23a34_126f39f1672_28c4', 'Der Blaue Engel für Unterhaltungselektronik und  Küchengeräte', '2010-01-19', 2010, 1, 19, '2010-01-19', 2010, 1, 19, NULL, '2015-01-19', '2015-01-19', 'de');
+INSERT INTO ingrid_anniversary VALUES (68, 't7ff23a34_126f39f1672_28c4', 'The Blue Angel for consumer electronics and  kitchen appliances', '2010-01-19', 2010, 1, 19, '2010-01-19', 2010, 1, 19, NULL, '2015-01-19', '2015-01-19', 'en');
+INSERT INTO ingrid_anniversary VALUES (81, 'calendarEvent_503', 'Zusammenstoß im Ärmelkanal', '1997-01-20', 1997, 1, 20, '1997-01-20', 1997, 1, 20, NULL, '2015-01-20', '2015-01-20', 'de');
+INSERT INTO ingrid_anniversary VALUES (82, 't541b02_120a3cfeab4_-315a', 'Europäische GHS-VO in Kraft getreten', '2009-01-20', 2009, 1, 20, '2009-01-20', 2009, 1, 20, NULL, '2015-01-20', '2015-01-20', 'de');
+INSERT INTO ingrid_anniversary VALUES (83, 'calendarEvent_503', 'Collision in the English Channel', '1997-01-20', 1997, 1, 20, '1997-01-20', 1997, 1, 20, NULL, '2015-01-20', '2015-01-20', 'en');
+INSERT INTO ingrid_anniversary VALUES (84, 't541b02_120a3cfeab4_-315a', 'EU-GHS entered into force', '2009-01-20', 2009, 1, 20, '2009-01-20', 2009, 1, 20, NULL, '2015-01-20', '2015-01-20', 'en');
 
 
 --
@@ -2951,17 +2798,17 @@ SELECT pg_catalog.setval('ingrid_chron_eventtypes_id_seq', 1, false);
 -- Data for Name: ingrid_cms; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_cms VALUES (1, 'ingrid.teaser.inform', 'PortalU informiert Text', '2017-03-27 14:16:22', 'kst_su');
-INSERT INTO ingrid_cms VALUES (15, 'ingrid.disclaimer', 'Impressum', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms VALUES (16, 'ingrid.about', 'Über PortalU', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms VALUES (17, 'ingrid.privacy', 'Haftungsausschluss', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms VALUES (18, 'ingrid.contact.intro.postEmail', 'Adresse auf der Kontaktseite', '2017-03-27 14:16:22', 'kst_cg');
-INSERT INTO ingrid_cms VALUES (19, 'ingrid.home.welcome', 'Ingrid Willkommens Portlet', '2008-07-09 00:00:00', 'kst_cg');
-INSERT INTO ingrid_cms VALUES (20, 'portal.teaser.shortcut', 'Anwendungen', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms VALUES (21, 'portal.teaser.shortcut.query', 'Schnellsuche', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms VALUES (25, 'portal.cms.portlet.3', 'Anwendungen Übersicht', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms VALUES (23, 'portal.cms.portlet.1', 'Anleitungen', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms VALUES (24, 'portal.cms.portlet.2', 'Veranstaltungen', '2017-03-27 14:16:22', 'admin');
+INSERT INTO ingrid_cms VALUES (15, 'ingrid.disclaimer', 'Impressum', '2013-07-09', 'admin');
+INSERT INTO ingrid_cms VALUES (16, 'ingrid.about', 'Über InGrid-Portal', '2013-05-28', 'admin');
+INSERT INTO ingrid_cms VALUES (17, 'ingrid.privacy', 'Haftungsausschluss', '2012-02-24', 'admin');
+INSERT INTO ingrid_cms VALUES (20, 'portal.teaser.shortcut', 'Anwendungen', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms VALUES (21, 'portal.teaser.shortcut.query', 'Schnellsuche', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms VALUES (23, 'portal.cms.portlet.1', 'Anleitungen', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms VALUES (24, 'portal.cms.portlet.2', 'Veranstaltungen', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms VALUES (81, 'portal.cms.portlet.3', 'Anwendungen Übersicht', '2018-07-25', 'admin');
+INSERT INTO ingrid_cms VALUES (1, 'ingrid.teaser.inform', 'InGrid-Portal informiert Text', '2014-08-27', 'admin');
+INSERT INTO ingrid_cms VALUES (18, 'ingrid.contact.intro.postEmail', 'Adresse auf der Kontaktseite', '2012-02-02', 'admin');
+INSERT INTO ingrid_cms VALUES (19, 'ingrid.home.welcome', 'Ingrid Willkommens Portlet', '2008-07-09', 'admin');
 
 
 --
@@ -2975,199 +2822,28 @@ SELECT pg_catalog.setval('ingrid_cms_id_seq', 1, false);
 -- Data for Name: ingrid_cms_item; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_cms_item VALUES (1, 1, 'de', '<span style="text-transform: none;">PORTALU INFORMIERT</span>', '<p style="background:url(/webstats/portalu_macht_zu.png); background-repeat: no-repeat;">
-<span style="color:#008000;">Die VwV UDK/GEIN wurde gekündigt.</span><br>Demzufolge wird PortalU Ende 2014 den Betrieb einstellen:<br>
-<img src="http://portalu.de/cgi-bin/count_days.pl" alt="das Ende von portalu.de naht."></p>', '2014-08-27 00:00:00', 'kst_su');
-INSERT INTO ingrid_cms_item VALUES (37, 20, 'de', 'Anwendungen', '', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms_item VALUES (38, 20, 'en', 'Application', '', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms_item VALUES (39, 21, 'de', 'Schnellsuche', '', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms_item VALUES (2, 1, 'en', '<span style="text-transform: none;">PortalU informs</span>', '<p style="background:url(/webstats/portalu_macht_zu.png); background-repeat: no-repeat;">
-<span style="color:#008000;">The administrative agreement VwV UDK/GEIN is terminated.</span><br>Thus the information portal PortalU will be shut down:<br>
-<img src="http://portalu.de/cgi-bin/count_days.pl" alt="The end of portalu.de is near."></p>
-', '2014-08-27 00:00:00', 'kst_su');
-INSERT INTO ingrid_cms_item VALUES (40, 21, 'en', 'Quick Search', '', '2012-07-19 15:36:12', 'admin');
-INSERT INTO ingrid_cms_item VALUES (48, 25, 'en', 'CMSPortlet3', '', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms_item VALUES (47, 25, 'de', 'CMSPortlet3', '', '2017-03-27 14:16:22', 'admin');
-INSERT INTO ingrid_cms_item VALUES (43, 23, 'de', 'CMSPortlet1', '', '2012-07-19 15:36:24', 'admin');
-INSERT INTO ingrid_cms_item VALUES (27, 15, 'en', 'Disclaimer', '<a name="herausgeber"></a>
-<h2>Publisher</h2>
-<p>PortalU is managed by the Coordination Center PortalU at the Environmental, Energy and Climate Protection Ministry of Lower Saxony, Hannover, Germany. Development and maintenance of the portal is financed by a administrative agreement between the German Federal States (Länder) and the Federal Government. </p>
-<h3><a href="http://www.kst.portalu.de/" target="_new" title="Link öffnet in neuem Fenster">Coordination Center PortalU</a></h3>
-<p>c/o Nieders. Ministerium für Umwelt, Energie und Klimaschutz<br>Archivstrasse 2<br>D-30169 Hannover<br>
-	<a href="/ingrid-portal/portal/service-contact.psml">Contact</a>
-</p>
-<br>
-<a name="verantwortlich"></a>
-<h2>Overall Responsibility</h2>
-<p>Dr. Fred Kruse</p>
-<br>
-<a name="realisierung"></a>
-<h2>Implementation</h2>
-<h3><a href="http://www.wemove.com/" target="_new" title="Link opens new window">wemove digital solutions GmbH</a></h3>
-<h3><a href="http://www.chives.de/" target="_new" title="Link opens new window">chives - Büro für Webdesign Plus</a></h3>
-<br>
-<a name="betrieb"></a>
-<h2>Operation</h2>     
-<h3><a href="http://www.its-technidata.de/" target="_new" title="Link opens new window">TechniData IT Service GmbH</a></h3>
-<br>
-<a name="haftung"></a>
-<h2>Liability Disclaimer</h2>     
-<p>The Environment Ministry of Lower Saxony (Niedersächsisches Umweltministerium) does not take any responisbility for the content of web-sites that can be reached through PortalU. Web-sites that are included in the portal are evaluated only technically. A continuous evaluation of the content of the included web-pages in neither possible nor intended. The Environment Ministry of Lower Saxony explicitly rejects all content that potentially infringes upon German legislation or general morality.</p>
-<p> </p>
-
-<h2>Nutzungsbedingungen</h2>
-
-<p class=MsoNormal>Die im PortalU-Kartenviewer eingebundenen Karten
-(Geodatendienste) stammen von behördlichen Anbietern auf Bundes- und
-Landesebene. Die Nutzung der kostenfrei angebotenen Geodatendienste ist hierbei
-an entsprechende Bedingungen geknüpft, die zu beachten sind.</p>
-
-<p class=MsoNormal> </p>
-
-<p class=MsoNormal>Für Dienste aus Bayern sind die Nutzugsbedingungen der
-GDI-BY zu beachten:</p>
-
-<p class=MsoNormal><a
-href="http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html">http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html</a></p>
-
-<p class=MsoNormal> </p>
-', '2013-07-09 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (28, 15, 'de', 'Impressum', '<h2><a name=herausgeber></a>Herausgeber</h2>
-
-<p>PortalU wird von der Koordinierungsstelle PortalU im Niedersächsischen
-Ministerium für Umwelt, Energie und Klimaschutz auf der Grundlage der <a
-href="http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf"
-target="_new" title="Link öffnet in neuem Fenster">Bund-Länder-Verwaltungsvereinbarung
-UDK/GEIN</a> betrieben und weiterentwickelt.</p>
-
-<h3><a href="http://www.kst.portalu.de/" target="_new"
-title="Link 
-öffnet in neuem Fenster">Koordinierungsstelle PortalU</a></h3>
-
-<p>Niedersächsisches Ministerium für Umwelt, Energie und Klimaschutz<br>
-Archivstrasse 2<br>
-D-30169 Hannover<br>
-<a href="http://www.portalu.de/ingrid-portal/portal/service-contact.psml">Kontakt</a>
-</p>
-
-<p class=MsoNormal><a name=verantwortlich></a> </p>
-
-<h2>Verantwortliche Gesamtredaktion</h2>
-
-<p>Dr. Fred Kruse</p>
-
-<p class=MsoNormal><a name=realisierung></a> </p>
-
-<h2>Realisierung</h2>
-
-
-
-<h3><a href="http://www.wemove.com/" target="_new"
-title="Link öffnet in neuem Fenster">wemove digital solutions GmbH</a></h3>
-
-<h3><a href="http://www.chives.de/" target="_new"
-title="Link öffnet in 
-neuem Fenster">chives - Büro für Webdesign Plus
-Darmstadt</a></h3>
-
-<p class=MsoNormal><a name=betrieb></a> </p>
-
-<h2>Technischer Betrieb</h2>
-
-<h3><a href="http://www.its-technidata.de/" target="_new"
-title="Link 
-öffnet in neuem Fenster">TechniData IT Service GmbH</a></h3>
-
-<p class=MsoNormal><a name=haftung></a> </p>
-
-<h2>Haftungsausschluss</h2>
-
-<p>Das Niedersächsische Ministerium für Umwelt, Energie und Klimaschutz übernimmt keine
-Verantwortung für die Inhalte von Websites, die über Links erreicht werden. Die
-Links werden bei der Aufnahme nur kursorisch angesehen und bewertet. Eine
-kontinuierliche Prüfung der Inhalte ist weder beabsichtigt noch möglich. Das
-Niedersächsische Ministerium für Umwelt und Klimaschutz distanziert sich
-ausdrücklich von allen Inhalten, die möglicherweise straf- oder
-haftungsrechtlich relevant sind oder gegen die guten Sitten verstoßen.</p>
-
-<p> </p>
-
-<h2>Nutzungsbedingungen</h2>
-
-<p class=MsoNormal>Die im PortalU-Kartenviewer eingebundenen Karten
-(Geodatendienste) stammen von behördlichen Anbietern auf Bundes- und
-Landesebene. Die Nutzung der kostenfrei angebotenen Geodatendienste ist hierbei
-an entsprechende Bedingungen geknüpft, die zu beachten sind.</p>
-
-<p class=MsoNormal> </p>
-
-<p class=MsoNormal>Für Dienste aus Bayern sind die Nutzugsbedingungen der
-GDI-BY zu beachten:</p>
-
-<p class=MsoNormal><a
-href="http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html">http://www.gdi.bayern.de/Dokumente/Nutzungsbedingungen_allgemein.html</a></p>
-
-<p class=MsoNormal> </p>
-
-', '2013-07-09 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (29, 16, 'de', 'Porträt', '<p>Zur richtigen Einschätzung und Bewertung von Umweltsituationen werden umfassende Informationen über die Umwelt benötigt. In der öffentlichen Verwaltung wird eine Vielzahl von Umweltinformationen auf unterschiedlichster Ebene generiert. Diese Informationen sind aber zum Teil nur schwer auffindbar. Zur Verbesserung der Auffindbarkeit wurde deshalb das Umweltportal PortalU ins Leben gerufen. 
-</p>
-<p>PortalU bietet einen zentralen Zugriff auf umweltrelevante Webseiten, Umweltdatenkataloge und Datenbanken von über 450 
-<a href="http://www.portalu.de/informationsanbieter" target="_new" title="PortalU - Informationsanbieter - Link öffnet in neuem Fenster">öffentlichen Institutionen</a> in Deutschland. Sie können im gesamten Informationsangebot oder gezielt nach einzelnen Umweltthemen, digitalen Karten, Umweltmesswerten, Presseinformationen oder historischen Ereignissen recherchieren. 
-</p> 
-<p>Die modular aufgebaute PortalU-Software InGrid kann man sich als Informationsnetz vorstellen, das Webseiten, Daten und Metadaten unter einem Dach bündelt. Die Software besteht aus einer flexibel konfigurierbaren Portaloberfläche, einem Web-Katalog-Service, einem Karten-Viewer sowie diversen An- und Abfrageschnittstellen zur Recherche in angeschlossenen Systemen bzw. für den Transfer von Informationen. Die PortalU-Software basiert auf Open-Source-Komponenten und Eigenentwicklungen und kann somit innerhalb der öffentlichen Verwaltung lizenzkostenfrei genutzt werden.
-</p>
-<p>PortalU basiert auf einer <a href="http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf" target="_new" title="Zur Verwaltungsvereinbarung UDK/GEIN - Link öffnet in neuem Fenster">Verwaltungsvereinbarung</a> zwischen Bund und Ländern. Darin verständigen sich die Partner, dass ein gemeinsames Umweltportal zum Nachweis und zur aktiven Verbreitung von Umweltinformationen zum Einsatz kommen soll. Die Erfüllung der Anforderungen der Aarhus-Konvention und der EU-Richtlinie über den Zugang der Öffentlichkeit zu Umweltinformationen bzw. der entsprechenden Umweltinformationsgesetze von Bund und Ländern stehen hierbei im Mittelpunkt. Seit 2007 sind für die Datenkataloge zudem die Maßgaben der europäischen INSPIRE-Richtlinie ausschlaggebend. 
-</p>
-<p>Technisch und inhaltlich wird das Portal von der Koordinierungsstelle PortalU im Niedersächsischen Umweltministerium betreut. Für Fragen und Anregungen wenden Sie sich bitte an die <a href="mailto:kst@portalu.de" title="Schreiben Sie uns - Email Programm startet automatisch">Koordinierungsstelle PortalU</a>. Weitere Hintergrundinformationen finden Sie außerdem auf der <a href="http://www.kst.portalu.de/" target="_new" title="Zur Homepage der Bund-Länder-Kooperation PortalU - Link öffnet in neuem Fenster">Homepage der Bund-Länder-Kooperation PortalU</a>. </p>', '2013-05-28 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (36, 19, 'en', 'Welcome to PortalU', '<p>Welcome to PortalU, the German Environmental Information Portal! We offer a comfortable and central access to over 1.000.000 web-pages and database entries from public agencies in Germany. We also guide you directly to up-to-date environmental news, upcoming and past environmental events, environmental monitoring data, and interesting background information on many environmental topics.</p><p>Core-component of PortalU is a powerful search-engine that you can use to look up your terms of interest in web-pages and databases. In the "Extended Search" mode, you can use an environmental thesaurus and a digital mapping tool to compose complex spatio-thematic queries.</p><p>PortalU is the result of a cooperation between the German "Länder" and the German Federal Government. The project is managed by the <a href="http://www.kst.portalu.de/" target="_new" title="Link opens new window">Coordination Center PortalU</a>, a group of environmental and IT experts attached to the Environment Ministry of Lower Saxony in Hannover, Germany. We strive to continuously improve and extend the portal. Please help us in this effort and mail your suggestions or questions to <a href="mailto:kst@portalu.de">Coordination Center PortalU</a>.</p>', '2008-07-09 00:00:00', 'kst_cg');
-INSERT INTO ingrid_cms_item VALUES (44, 23, 'en', 'CMSPortlet1', '', '2012-07-19 15:36:24', 'admin');
-INSERT INTO ingrid_cms_item VALUES (45, 24, 'de', 'CMSPortlet2', '', '2012-07-19 15:36:24', 'admin');
-INSERT INTO ingrid_cms_item VALUES (46, 24, 'en', 'CMSPortlet2', '', '2012-07-19 15:36:24', 'admin');
-INSERT INTO ingrid_cms_item VALUES (30, 16, 'en', 'Portrait', '<p>Commonly, a broad range of information about the environment is needed for estimating environmental situations accurately. A multiplicity of environmental information is generated by public administration on different hierarchical levels. Unfortunately the access to this information is mostly difficult. The environmental information portal PortalU aims to overcome this obstacle.
-</p>
-<p>PortalU offers central access to environmentally relevant web pages, data catalogues and databases from over 450 <a href="http://www.portalu.de/informationsanbieter" target="_new" title="PortalU - Information providers - Link opens in new window">public organisations</a> in Germany. You can search through the whole information range or search selectivly through single environmental topics, digital maps, measured data, press information or historical events. 
-</p> 
-<p>The PortalU software InGrid consists of several modules, which can be described as information grid. The information grid ties web pages, data and metadata under a single roof. The software consists of a portal surface, which can be configured flexibly, a web catalogue service, a map viewer and several technical interfaces to connect and transfer information. InGrid is based on open source components and internal developments. Therefore it can be used without external licence costs within the public administration.
-</p>
-<p>PortalU is based on an <a href="http://www.kst.portalu.de/verwaltungskooperation/VVGEIN_endg.pdf" target="_new" title="To the administrative agreement UDK/GEIN - Link opens in new window">administrative agreement</a> between the Federal Republic of Germany and the German Federal States. The agreement partners aim at improving the active dissemination of public environmental information through a common environmental information portal. The main focus is thereby set on the conformance of requirements of the Aarhus Convention and of the EU Directive 2003/4/EC which defines the public access to environmental information, respectively the German environmental information acts (Umweltinformationsgesetze). Besides this, the requirements of the EU INSPIRE Directive 2007/2/EC are crucial for the web catalogue service of PortalU (InGridCatalog).
-</p>
-<p> The project is managed by the Coordination Center PortalU at the Ministry of Environment of Lower Saxony in Hanover, Germany. For questions and suggestions please contact the <a href="mailto:kst@portalu.de" title="Write us - Email program starts automatically">Coordination Center PortalU</a>. For further background information please visit the <a href="http://www.kst.portalu.de/" target="_new" title="homepage of the Federal-State-Cooperation PortalU - Link opens in new window ">Homepage of the Federal-State-Cooperation PortalU </a>. 
-</p>', '2013-05-28 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (31, 17, 'de', 'Datenschutz', '<p>PortalU enthält sowohl Inhalte, die als Teledienst nach § 2 Teledienstgesetz (TDG) als auch Inhalte, die als Mediendienst nach § 2 Mediendienste-Staatsvertrag (MDStV) zu bewerten sind. Hierbei werden folgende Verfahrensgrundsätze gewährleistet:<br></p>
-<ul>
-<li>Bei jedem Zugriff eines Nutzers auf eine Seite aus dem Angebot von PortalU und bei jedem Abruf einer Datei werden Daten über diesen Vorgang in einer Protokolldatei gespeichert. Diese Daten sind nicht personenbezogen. Wir können also nicht nachvollziehen, welcher Nutzer welche Daten abgerufen hat. Die Protokolldaten werden lediglich in anonymisierter Form statistisch ausgewertet und dienen damit der inhaltlichen Verbesserung unseres Angebotes.<br><br>
-<br>
-<a href="http://portalu.de/piwik-config/">Deaktivierung/Aktivierung der statistischen Erfassung</a>
-<br><br>
-</li>
-<li>Eine Ausnahme besteht innerhalb des Internetangebotes mit der Eingabe persönlicher oder geschäftlicher Daten (eMail-Adresse, Name, Anschrift) zur Anmeldung bei "Mein PortalU" oder der Bestellung des PortalU-Newsletters. Dabei erfolgt die Angabe dieser Daten durch Nutzerinnen und Nutzer ausdrücklich freiwillig. Ihre persönlichen Daten werden von uns selbstverständlich nicht an Dritte weitergegeben. Die Inanspruchnahme aller angebotenen Dienste ist, soweit dies technisch möglich und zumutbar ist, auch ohne Angabe solcher Daten beziehungsweise unter Angabe anonymisierter Daten oder eines Pseudonyms möglich.<br><br>
-</li>
-<li>Sie können alle allgemein zugänglichen PortalU-Seiten ohne den Einsatz von Cookies benutzen. Wenn Ihre Browser-Einstellungen das Setzen von Cookies zulassen, werden von PortalU sowohl Session-Cookies als auch permanente Cookies gesetzt. Diese dienen ausschließlich der Erhöhung des Bedienungskomforts.
-</li>
-</ul>', '2012-02-24 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (32, 17, 'en', 'Privacy Policy', '<p>PortalU contains content that is categorized as "Teledienst" (after § 2 Teledienstgesetz (TDG)), as well as content that is categorized as "Mediendienst" (after § 2 Mediendienste-Staatsvertrag (MDStV)). The following policies do apply:<br></p>
-<ul>
-<li>With each user-access to a content-page in PortalU, the relevant access-data are saved in a log file. This information is not personalized. Therefore it is not possible to reason which user has had access to which content page. The purpose of the log file is purely statistical. The evaluation of the log file helps to improve PortalU.<br><br>
-<a href="http://portalu.de/piwik-config/">Deactivation/activation of the statistic collection</a>
-<br><br>
-</li>
-<li>An exeption to our general privacy policy is made when personal data (e-mail, name, address) are provided to register for the PortalU newsletter. This information is provided by the user on a voluntary basis an is saved for internal purposes (mailing of newsletter). The information is not given to third-parties. The use of specific Portal functions does not, as far as technically feasible, depend on the provision of personal data.<br><br>
-</li>
-<li>You can take benefit of virtually all functions of PortalU without the use of cookies. However, if you choose to allow cookies in your browser, this will increase the useability of the application. 
-</li>
-</ul>', '2012-02-24 00:00:00', 'admin');
-INSERT INTO ingrid_cms_item VALUES (33, 18, 'de', '', '.</p><p>Unsere Postadresse:</p>
-
-<p> Koordinierungsstelle PortalU<br />
-Niedersächs. Ministerium für Umwelt, Energie und Klimaschutz<br />
-Archivstrasse 2<br />
-D-30169 Hannover<br /></p>
-
-<p>Nehmen Sie online Kontakt mit uns auf! Wir werden Ihnen schnellstmöglichst per E-Mail antworten. Die eingegebenen Informationen und Daten werden nur zur Bearbeitung Ihrer Anfrage gespeichert und genutzt. Beachten Sie bitte, dass die Datenübermittlung über das Kontaktformular unverschlüsselt erfolgt. Für vertrauliche Nachrichten nutzen Sie bitte den herkömmlichen Postweg.</p>
-', '2012-02-02 00:00:00', 'kst_cg');
-INSERT INTO ingrid_cms_item VALUES (34, 18, 'en', '', '.</p><p>Our address:</p><p>Niedersächsisches Ministerium für Umwelt und Klimaschutz<br />Koordinierungsstelle PortalU<br />Archivstrasse 2<br />D-30169 Hannover<br /></p> <p>Please contact us! We will answer your request as soon as possible. All data you entered will be saved only to process your request.</p>', '2012-02-02 00:00:00', 'kst_cg');
-INSERT INTO ingrid_cms_item VALUES (35, 19, 'de', 'Willkommen bei PortalU', '<p>Willkommen bei PortalU, dem Umweltportal Deutschland! Wir bieten Ihnen einen zentralen Zugriff auf mehrere hunderttausend Internetseiten und Datenbankeinträge von öffentlichen Institutionen und Organisationen. Zusätzlich können Sie aktuelle Nachrichten und Veranstaltungshinweise, Umweltmesswerte, Hintergrundinformationen und historische Umweltereignisse über PortalU abrufen.</p><p>Die integrierte Suchmaschine ist eine zentrale Komponente von PortalU. Mit ihrer Hilfe können Sie Webseiten und Datenbankeinträge nach Stichworten durchsuchen. Über die Option "Erweiterte Suche" können Sie zusätzlich ein differenziertes Fachvokabular und deutschlandweite Hintergrundkarten zur Zusammenstellung Ihrer Suchanfrage nutzen.</p><p>PortalU ist eine Kooperation der Umweltverwaltungen im Bund und in den Ländern. Inhaltlich und technisch wird PortalU von der <a href="http://www.kst.portalu.de/" target="_new" title="Link öffnet in neuem Fenster">Koordinierungsstelle PortalU</a> im Niedersächsischen Ministerium für Umwelt und Klimaschutz verwaltet. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu optimieren. Bei Fragen und Verbesserungsvorschlägen wenden Sie sich bitte an die <a href="mailto:kst@portalu.de">Koordinierungsstelle PortalU</a>.</p>', '2008-07-09 00:00:00', 'kst_cg');
+INSERT INTO ingrid_cms_item VALUES (46, 24, 'en', 'CMSPortlet2', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (37, 20, 'de', 'Anwendungen', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (38, 20, 'en', 'Application', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (39, 21, 'de', 'Schnellsuche', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (40, 21, 'en', 'Quick Search', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (43, 23, 'de', 'CMSPortlet1', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (27, 15, 'en', 'Disclaimer', '<p>Use the InGrid-Portal admininstration interface to maintain and display your disclaimer on the portal.</p>', '2013-07-09', 'admin');
+INSERT INTO ingrid_cms_item VALUES (28, 15, 'de', 'Impressum', '<p>Verwenden Sie die Administration des InGrid-Portals um Ihr Impressum zu pflegen und im Portal darzustellen.</p>', '2013-07-09', 'admin');
+INSERT INTO ingrid_cms_item VALUES (29, 16, 'de', 'Über InGrid-Portal', '<p>Schreiben Sie ein Porträt zu Ihrem InGrid-Portal. Verwenden Sie hierbei die Administration des InGrid-Portals um die Daten zu pflegen und darzustellen.</p>', '2013-05-28', 'admin');
+INSERT INTO ingrid_cms_item VALUES (30, 16, 'en', 'About InGrid-Portal', '<p>Write a portrait of the InGrid-Portal. To maintain and display your portrait use the InGrid-Portal admininstration interface</p>', '2013-05-28', 'admin');
+INSERT INTO ingrid_cms_item VALUES (31, 17, 'de', 'Datenschutz', '<p>Verwenden Sie die Administration des InGrid-Portals um Ihr Datenschutz zu pflegen und im Portal darzustellen.</p>', '2012-02-24', 'admin');
+INSERT INTO ingrid_cms_item VALUES (32, 17, 'en', 'Privacy Policy', '<p>Use the InGrid-Portal admininstration interface to maintain and display your privacy on the portal.</p>', '2012-02-24', 'admin');
+INSERT INTO ingrid_cms_item VALUES (44, 23, 'en', 'CMSPortlet1', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (45, 24, 'de', 'CMSPortlet2', ' ', '2012-07-19', 'admin');
+INSERT INTO ingrid_cms_item VALUES (82, 81, 'de', 'CMSPortlet3', NULL, '2018-07-25', 'admin');
+INSERT INTO ingrid_cms_item VALUES (83, 81, 'en', 'CMSPortlet3', NULL, '2018-07-25', 'admin');
+INSERT INTO ingrid_cms_item VALUES (1, 1, 'de', '<span style= ''text-transform: none;''>InGrid-Portal INFO</span>', '<p>Hier können Sie über die Administration des InGrid-Portals aktuelle Nachrichten pflegen und darstellen.</p>', '2014-08-27', 'admin');
+INSERT INTO ingrid_cms_item VALUES (2, 1, 'en', '<span style=''text-transform: none;''>InGrid-Portal INFO</span>', '<p>Here you can maintain and display the latest news by using the InGrid-Portal administration interface.</p>', '2014-08-27', 'admin');
+INSERT INTO ingrid_cms_item VALUES (33, 18, 'de', ' ', '.</p><p>Hier können Sie über die Admininstration des InGrid-Portals ihr Kontaktdaten pflegen und darstellen.</p>', '2012-02-02', 'admin');
+INSERT INTO ingrid_cms_item VALUES (34, 18, 'en', ' ', '.</p><p>Here you can maintain and display your contact details by using the InGrid-Portal admininstration interface.</p>', '2012-02-02', 'admin');
+INSERT INTO ingrid_cms_item VALUES (35, 19, 'de', 'Willkommen bei InGrid-Portal', '<p>Tragen Sie hier einen Willkommens-Gruß an die InGrid-Portal Benutzer.</p>', '2008-07-09', 'admin');
+INSERT INTO ingrid_cms_item VALUES (36, 19, 'en', 'Welcome to InGrid-Portal', '<p>Enter a welcome greeting to the InGrid-Portal users.</p>', '2008-07-09', 'admin');
 
 
 --
@@ -3215,7 +2891,7 @@ SELECT pg_catalog.setval('ingrid_env_topic_id_seq', 1, false);
 -- Data for Name: ingrid_lookup; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_lookup VALUES (1, 'ingrid_db_version', '4.0.1', '2017-03-27 14:16:22');
+INSERT INTO ingrid_lookup VALUES (1, 'ingrid_db_version', '4.0.1', '2018-07-25');
 
 
 --
@@ -3339,7 +3015,7 @@ INSERT INTO ingrid_provider VALUES (43, 'bw_lgrb', 'Regierungspräsidium Freibur
 INSERT INTO ingrid_provider VALUES (44, 'bw_lvm', 'Landesamt für Geoinformation und Landentwicklung Baden-Württemberg', 'http://www.lv-bw.de', 7, 2);
 INSERT INTO ingrid_provider VALUES (514, 'bw_vm', 'Ministerium für Verkehr und Infrastruktur Baden-Württemberg', 'http://www.mvi.baden-wuerttemberg.de/', 139, 2);
 INSERT INTO ingrid_provider VALUES (47, 'bw_stla', 'Statistisches Landesamt Baden-Württemberg', 'http://www.statistik-bw.de/', 10, 2);
-INSERT INTO ingrid_provider VALUES (560, 'bu_fnb', 'Fachnetzwerk Boden', '', 0, 1);
+INSERT INTO ingrid_provider VALUES (560, 'bu_fnb', 'Fachnetzwerk Boden', ' ', 0, 1);
 INSERT INTO ingrid_provider VALUES (49, 'by_sugv', 'Bayerisches Staatsministerium für Umwelt und Gesundheit', 'http://www.stmug.bayern.de/', 1, 3);
 INSERT INTO ingrid_provider VALUES (200, 'sn_sms', 'Sächsisches Staatsministerium für Soziales', 'http://www.sms.sachsen.de/', 25, 14);
 INSERT INTO ingrid_provider VALUES (51, 'by_lfstad', 'Bayerisches Landesamt für Statistik und Datenverarbeitung', 'http://www.statistik.bayern.de/', 3, 3);
@@ -3357,6 +3033,7 @@ INSERT INTO ingrid_provider VALUES (62, 'hh_su', 'Behörde für Stadtentwicklung
 INSERT INTO ingrid_provider VALUES (63, 'hh_wa', 'Behörde für Wirtschaft, Verkehr und Innovation', 'http://www.hamburg.de/bwvi/', 2, 7);
 INSERT INTO ingrid_provider VALUES (64, 'hh_bsg', 'Behörde für Gesundheit und Verbraucherschutz', 'http://www.hamburg.de/bgv/', 3, 7);
 INSERT INTO ingrid_provider VALUES (65, 'hh_lgv', 'Landesbetrieb Geoinformation und Vermessung Hamburg', 'http://www.hamburg.de/startseite-landesbetrieb-geoinformation-und-vermessung/', 4, 7);
+INSERT INTO ingrid_provider VALUES (266, 'ni_st_lg', 'Hansestadt Lüneburg', 'http://www.lueneburg.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (66, 'hh_npwatt', 'Nationalparkverwaltung Hamburgisches Wattenmeer', 'http://www.nationalpark-wattenmeer.de/hh', 5, 7);
 INSERT INTO ingrid_provider VALUES (67, 'hh_argeelbe', 'Flussgebietsgemeinschaft Elbe', 'http://www.fgg-elbe.de/', 6, 7);
 INSERT INTO ingrid_provider VALUES (68, 'hh_sth', 'Statistisches Amt für Hamburg und Schleswig-Holstein', 'http://www.statistik-nord.de/', 7, 7);
@@ -3434,6 +3111,88 @@ INSERT INTO ingrid_provider VALUES (156, 'st_mw', 'Ministerium für Wissenschaft
 INSERT INTO ingrid_provider VALUES (157, 'st_mlv', 'Ministerium für Landesentwicklung und Verkehr (MLV)', 'http://www.mlv.sachsen-anhalt.de', 4, 15);
 INSERT INTO ingrid_provider VALUES (158, 'st_mi', 'Ministerium des Innern Sachsen-Anhalt (MI)', 'http://www.mi.sachsen-anhalt.de', 5, 15);
 INSERT INTO ingrid_provider VALUES (159, 'st_mj', 'Ministerium der Justiz und Gleichstellung Sachsen-Anhalt (MJ)', 'http://www.mj.sachsen-anhalt.de', 6, 15);
+INSERT INTO ingrid_provider VALUES (351, 'sn_limbach-oberfrohna', 'Stadt Limbach-Oberfrohna', 'http://www.limbach-oberfrohna.de/', 39, 14);
+INSERT INTO ingrid_provider VALUES (352, 'sn_markkleeberg', 'Stadt Markkleeberg', 'http://www.markkleeberg.de', 40, 14);
+INSERT INTO ingrid_provider VALUES (353, 'sn_lk_meissen', 'Landkreis Meißen', 'http://www.kreis-meissen.org/', 41, 14);
+INSERT INTO ingrid_provider VALUES (354, 'sn_lk_vogtland', 'Landkreis Vogtland', 'http://www.vogtlandkreis.de/', 42, 14);
+INSERT INTO ingrid_provider VALUES (355, 'sn_nabu', 'Naturschutzbund Deutschlands (NABU) - Landesverband Sachsen', 'http://www.nabu-sachsen.de/', 43, 14);
+INSERT INTO ingrid_provider VALUES (356, 'sn_lsh', 'Landesverein Sächsischer Heimatschutz e.V.', 'http://www.saechsischer-heimatschutz.de/', 46, 14);
+INSERT INTO ingrid_provider VALUES (357, 'sn_sdw', 'Schutzgemeinschaft Deutscher Wald - Landesverband Sachsen', 'http://www.sdw-sachsen.de', 47, 14);
+INSERT INTO ingrid_provider VALUES (375, 'bw_cvua', 'Chemische und Veterinäruntersuchungsämter (CVUA)', 'http://www.untersuchungsaemter-bw.de', 17, 2);
+INSERT INTO ingrid_provider VALUES (360, 'sn_grimma', 'Stadt Grimma', 'http://www.grimma.de/', 52, 14);
+INSERT INTO ingrid_provider VALUES (361, 'sn_naturparke', 'Naturparke in Sachsen', 'http://www.naturparke.de', 53, 14);
+INSERT INTO ingrid_provider VALUES (362, 'sn_smk', 'Sächsisches Staatsministerium für Kultus', 'http://www.sachsen-macht-schule.de/smk/', 54, 14);
+INSERT INTO ingrid_provider VALUES (363, 'sn_saena', 'Sächsische Energieagentur - SAENA GmbH', 'http://www.saena.de/', 55, 14);
+INSERT INTO ingrid_provider VALUES (364, 'sn_lk_bautzen', 'Landkreis Bautzen', 'http://www.landkreis-bautzen.de/', 59, 14);
+INSERT INTO ingrid_provider VALUES (365, 'sn_lk_nordsachsen', 'Landkreis Nordsachsen', 'http://www.landkreis-nordsachsen.de/', 63, 14);
+INSERT INTO ingrid_provider VALUES (366, 'sn_lk_leipzig', 'Landkreis Leipzig', 'http://www.landkreisleipzig.de/', 69, 14);
+INSERT INTO ingrid_provider VALUES (367, 'sn_freiberg', 'Stadt Freiberg', 'http://www.freiberg.de', 62, 14);
+INSERT INTO ingrid_provider VALUES (368, 'sn_lk_goerlitz', 'Landkreis Görlitz', 'http://www.kreis-goerlitz.de/', 67, 14);
+INSERT INTO ingrid_provider VALUES (372, 'ni_nbue', 'Niedersächsische Bingostiftung für Umwelt und Entwicklungszusammenarbeit', 'http://www.umweltstiftung.niedersachsen.de', 0, 10);
+INSERT INTO ingrid_provider VALUES (373, 'ni_mf', 'Niedersächsisches Finanzministerium', 'http://www.mf.niedersachsen.de/', 5, 10);
+INSERT INTO ingrid_provider VALUES (374, 'rp_geoportal', 'Geoportal Rheinland-Pfalz', 'http://www.geoportal.rlp.de/', 0, 12);
+INSERT INTO ingrid_provider VALUES (492, 'bw_nvbw', 'Nahverkehrsgesellschaft Baden-Württemberg', 'http://www.nvbw.de/', 138, 2);
+INSERT INTO ingrid_provider VALUES (376, 'bw_nsz', 'Naturschutzzentren Baden-Württemberg', 'http://www.naturschutzzentren-bw.de', 18, 2);
+INSERT INTO ingrid_provider VALUES (378, 'bw_rpk', 'Regierungspräsidium Karlsruhe', 'http://www.rp-karlsruhe.de', 19, 2);
+INSERT INTO ingrid_provider VALUES (379, 'bw_rpt', 'Regierungspräsidium Tübingen', 'http://www.rp-tuebingen.de ', 20, 2);
+INSERT INTO ingrid_provider VALUES (513, 'hb_mbhv', 'Magistrat Bremerhaven', 'http://www.bremerhaven.de/stadt-und-politik/politik/magistrat/', 0, 6);
+INSERT INTO ingrid_provider VALUES (381, 'bw_mj', 'Justizministerium Baden-Württemberg', 'http://www.jum.baden-wuerttemberg.de', 22, 2);
+INSERT INTO ingrid_provider VALUES (382, 'bw_lga', 'Landesgesundheitsamt (LGA) im Regierungspräsidium Stuttgart', 'http://www.rp.baden-wuerttemberg.de', 23, 2);
+INSERT INTO ingrid_provider VALUES (383, 'bw_mas', 'Ministerium für Arbeit und Sozialordnung, Familie, Frauen und Senioren Baden-Württemberg', 'http://www.sm.baden-wuerttemberg.de/', 24, 2);
+INSERT INTO ingrid_provider VALUES (384, 'bw_unifreifor', 'Fakultät für Forst- und Umweltwissenschaften der UNI-Freiburg', 'http://www.ffu.uni-freiburg.de', 25, 2);
+INSERT INTO ingrid_provider VALUES (385, 'bw_unifreilan', 'Institut für Landespflege der Universität Freiburg', 'http://www.landespflege-freiburg.de/', 26, 2);
+INSERT INTO ingrid_provider VALUES (386, 'bw_unikarlmet', 'Institut für Meteorologie und Klimaforschung am Karlsruher Institut für Technologie (KIT)', 'http://www.imk.kit.edu/', 27, 2);
+INSERT INTO ingrid_provider VALUES (388, 'bw_stadtwald', 'Stadt Waldshut-Tiengen', 'http://www.waldshut-tiengen.de/', 113, 2);
+INSERT INTO ingrid_provider VALUES (495, 'bu_afee', 'Agentur für Erneuerbare Energien e. V.', 'http://www.unendlich-viel-energie.de', 0, 1);
+INSERT INTO ingrid_provider VALUES (389, 'bw_unistutt', 'Universität Stuttgart', 'http://www.uni-stuttgart.de', 29, 2);
+INSERT INTO ingrid_provider VALUES (390, 'bw_laal', 'Landratsamt Alb-Donau-Kreis', 'http://www.alb-donau-kreis.de', 30, 2);
+INSERT INTO ingrid_provider VALUES (391, 'bw_labi', 'Landratsamt Biberach', 'http://www.biberach.de', 31, 2);
+INSERT INTO ingrid_provider VALUES (392, 'bw_labo', 'Landratsamt Bodenseekreis', 'http://www.bodenseekreis.de', 32, 2);
+INSERT INTO ingrid_provider VALUES (393, 'bw_laboe', 'Landratsamt Böblingen', 'http://www.landkreis-boeblingen.de', 33, 2);
+INSERT INTO ingrid_provider VALUES (394, 'bw_labr', 'Landratsamt Breisgau-Hochschwarzwald', 'http://www.breisgau-hochschwarzwald.de', 34, 2);
+INSERT INTO ingrid_provider VALUES (395, 'bw_laca', 'Landratsamt Calw', 'http://www.kreis-calw.de', 35, 2);
+INSERT INTO ingrid_provider VALUES (396, 'bw_laem', 'Landratsamt Emmendingen', 'http://www.landkreis-emmendingen.de', 36, 2);
+INSERT INTO ingrid_provider VALUES (397, 'bw_laen', 'Landratsamt Enzkreis', 'http://www.enzkreis.de', 37, 2);
+INSERT INTO ingrid_provider VALUES (398, 'bw_laes', 'Landratsamt Esslingen', 'http://www.landkreis-esslingen.de', 38, 2);
+INSERT INTO ingrid_provider VALUES (399, 'bw_lafr', 'Landratsamt Freudenstadt', 'http://www.landkreis-freudenstadt.de', 39, 2);
+INSERT INTO ingrid_provider VALUES (400, 'bw_lago', 'Landratsamt Göppingen', 'http://www.landkreis-goeppingen.de', 40, 2);
+INSERT INTO ingrid_provider VALUES (401, 'bw_laheid', 'Landratsamt Heidenheim', 'http://www.landkreis-heidenheim.de', 41, 2);
+INSERT INTO ingrid_provider VALUES (402, 'bw_laheil', 'Landratsamt Heilbronn', 'http://www.landkreis-heilbronn.de', 42, 2);
+INSERT INTO ingrid_provider VALUES (403, 'bw_laho', 'Landratsamt Hohenlohekreis', 'http://www.hohenlohekreis.de/', 43, 2);
+INSERT INTO ingrid_provider VALUES (404, 'bw_laka', 'Landratsamt Karlsruhe', 'http://www.landkreis-karlsruhe.de', 44, 2);
+INSERT INTO ingrid_provider VALUES (405, 'bw_lako', 'Landratsamt Konstanz', 'http://www.landkreis-konstanz.de/', 45, 2);
+INSERT INTO ingrid_provider VALUES (406, 'bw_laloe', 'Landratsamt Lörrach', 'http://www.loerrach-landkreis.de', 46, 2);
+INSERT INTO ingrid_provider VALUES (407, 'bw_lalu', 'Landratsamt Ludwigsburg', 'http://www.landkreis-ludwigsburg.de', 47, 2);
+INSERT INTO ingrid_provider VALUES (408, 'bw_lama', 'Landratsamt Main-Tauber-Kreis', 'http://www.main-tauber-kreis.de', 48, 2);
+INSERT INTO ingrid_provider VALUES (409, 'bw_lane', 'Landratsamt Neckar-Odenwald-Kreis', 'http://www.neckar-odenwald-kreis.de', 49, 2);
+INSERT INTO ingrid_provider VALUES (410, 'bw_laor', 'Landratsamt Ortenaukreis', 'http://www.ortenaukreis.de', 50, 2);
+INSERT INTO ingrid_provider VALUES (411, 'bw_laos', 'Landratsamt Ostalbkreis', 'http://www.ostalbkreis.de', 51, 2);
+INSERT INTO ingrid_provider VALUES (412, 'bw_laras', 'Landratsamt Rastatt', 'http://www.landkreis-rastatt.de', 52, 2);
+INSERT INTO ingrid_provider VALUES (413, 'bw_larav', 'Landratsamt Ravensburg', 'http://www.landkreis-ravensburg.de', 53, 2);
+INSERT INTO ingrid_provider VALUES (414, 'bw_larem', 'Landratsamt Rems-Murr-Kreis', 'http://www.rems-murr-kreis.de', 54, 2);
+INSERT INTO ingrid_provider VALUES (415, 'bw_lareu', 'Landratsamt Reutlingen', 'http://www.kreis-reutlingen.de', 55, 2);
+INSERT INTO ingrid_provider VALUES (416, 'bw_larhe', 'Landratsamt Rhein-Neckar-Kreis', 'http://www.rhein-neckar-kreis.de', 56, 2);
+INSERT INTO ingrid_provider VALUES (417, 'bw_laro', 'Landratsamt Rottweil', 'http://www.landkreis-rottweil.de', 57, 2);
+INSERT INTO ingrid_provider VALUES (418, 'bw_laschwae', 'Landratsamt Schwäbisch Hall', 'http://www.landkreis-schwaebisch-hall.de', 58, 2);
+INSERT INTO ingrid_provider VALUES (419, 'bw_laschwa', 'Landratsamt Schwarzwald-Baar-Kreis', 'http://www.schwarzwald-baar-kreis.de', 59, 2);
+INSERT INTO ingrid_provider VALUES (420, 'bw_lasi', 'Landratsamt Sigmaringen', 'http://www.landkreis-sigmaringen.de', 60, 2);
+INSERT INTO ingrid_provider VALUES (421, 'bw_latue', 'Landratsamt Tübingen', 'http://www.kreis-tuebingen.de', 61, 2);
+INSERT INTO ingrid_provider VALUES (422, 'bw_latu', 'Landratsamt Tuttlingen', 'http://www.landkreis-tuttlingen.de', 62, 2);
+INSERT INTO ingrid_provider VALUES (423, 'bw_lawa', 'Landratsamt Waldshut', 'http://www.landkreis-waldshut.de', 63, 2);
+INSERT INTO ingrid_provider VALUES (424, 'bw_lazo', 'Landratsamt Zollernalbkreis', 'http://www.zollernalbkreis.de', 64, 2);
+INSERT INTO ingrid_provider VALUES (425, 'bw_muell', 'Müllabfuhr-Zweckverband von Gemeinden des Landkreises Konstanz', 'http://www.mzv-hegau.de', 65, 2);
+INSERT INTO ingrid_provider VALUES (426, 'bw_pro', 'Proregio Oberschwaben Gesellschaft zur Landschaftsentwicklung mbH', 'http://www.proregio-oberschwaben.de/', 66, 2);
+INSERT INTO ingrid_provider VALUES (427, 'bw_zweckab', 'Zweckverband Abfallverwertung Reutlingen/Tübingen', 'http://www.zav-rt-tue.de', 67, 2);
+INSERT INTO ingrid_provider VALUES (428, 'bw_azvb', 'Abwasserzweckverband Breisgauer Bucht', 'http://www.azv-breisgau.de/', 68, 2);
+INSERT INTO ingrid_provider VALUES (429, 'bw_azvh', 'Abwasserzweckverband Heidelberg', 'http://www.azv-heidelberg.de', 69, 2);
+INSERT INTO ingrid_provider VALUES (430, 'bw_azvo', 'Abwasserzweckverband Raum Offenburg', 'http://www.azv-offenburg.de/', 70, 2);
+INSERT INTO ingrid_provider VALUES (432, 'bw_gruen', 'Geschäftsstelle Grüne Nachbarschaft', 'http://www.gruene-nachbarschaft.de/', 72, 2);
+INSERT INTO ingrid_provider VALUES (433, 'bw_landess', 'Landeshauptstadt Stuttgart', 'http://www.stuttgart.de', 73, 2);
+INSERT INTO ingrid_provider VALUES (434, 'bw_now', 'NOW Zweckverband Wasserversorgung Nordostwürttemberg', 'http://www.now-wasser.de/', 74, 2);
+INSERT INTO ingrid_provider VALUES (435, 'bw_stadta', 'Stadt Aalen', 'http://www.sw-aalen.de/', 75, 2);
+INSERT INTO ingrid_provider VALUES (436, 'bw_stadtbb', 'Stadt Baden-Baden', 'http://www.baden-baden.de', 76, 2);
+INSERT INTO ingrid_provider VALUES (437, 'bw_stadtba', 'Stadt Balingen', 'http://www.balingen.de', 77, 2);
+INSERT INTO ingrid_provider VALUES (438, 'bw_stadtbi', 'Stadt Biberach', 'http://www.biberach-riss.de//index.phtml?object=tx|1.300.1&org_obj=nav|383.10.1', 78, 2);
 INSERT INTO ingrid_provider VALUES (160, 'st_lvermgeo', 'Landesamt für Vermessung und Geoinformationen (LVermGeo)', 'http://www.lvermgeo.sachsen-anhalt.de', 9, 15);
 INSERT INTO ingrid_provider VALUES (161, 'st_stala', 'Statistisches Landesamt Sachsen-Anhalt (StaLa)', 'http://www.stala.sachsen-anhalt.de', 10, 15);
 INSERT INTO ingrid_provider VALUES (162, 'st_lav', 'Landesamt für Verbraucherschutz Sachsen-Anhalt (LAV)', 'http://www.verbraucherschutz.sachsen-anhalt.de', 11, 15);
@@ -3526,7 +3285,6 @@ INSERT INTO ingrid_provider VALUES (562, 'ni_st_rinteln', 'Stadt Rinteln', 'http
 INSERT INTO ingrid_provider VALUES (262, 'sn_lfulg', 'Sächsisches Landesamt für Umwelt, Landwirtschaft und Geologie', 'http://www.umwelt.sachsen.de/lfulg/', 3, 14);
 INSERT INTO ingrid_provider VALUES (264, 'ni_st_bu', 'Stadt Buchholz i. d. N.', 'http://www.buchholz.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (265, 'ni_lk_ue', 'Landkreis Uelzen', 'http://www.uelzen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (266, 'ni_st_lg', 'Hansestadt Lüneburg', 'http://www.lueneburg.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (267, 'ni_sg_ldf', 'Samtgemeinde Lachendorf', 'http://www.lachendorf.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (268, 'ni_st_ce', 'Stadt Celle', 'http://www.celle.de', 0, 10);
 INSERT INTO ingrid_provider VALUES (269, 'ni_lk_ce', 'Landkreis Celle', 'http://www.landkreis-celle.de', 0, 10);
@@ -3587,7 +3345,7 @@ INSERT INTO ingrid_provider VALUES (326, 'sn_chemnitz', 'Stadt Chemnitz', 'http:
 INSERT INTO ingrid_provider VALUES (497, 'rp_jm', 'Ministerium der Justiz und für Verbraucherschutz Rheinland Pfalz', 'http://www.mjv.rlp.de/Startseite/', 0, 12);
 INSERT INTO ingrid_provider VALUES (328, 'sn_lk_mittelsachsen', 'Landkreis Mittelsachsen', 'http://www.landkreis-mittelsachsen.de/', 65, 14);
 INSERT INTO ingrid_provider VALUES (330, 'sn_lk_zwickau', 'Landkreis Zwickau', 'http://www.landkreis-zwickau.de/', 18, 14);
-INSERT INTO ingrid_provider VALUES (544, 'ni_bubmj', 'Bundesministerium der Justiz', '', 0, 10);
+INSERT INTO ingrid_provider VALUES (544, 'ni_bubmj', 'Bundesministerium der Justiz', ' ', 0, 10);
 INSERT INTO ingrid_provider VALUES (333, 'sn_smwa', 'Sächsisches Staatsministerium für Wirtschaft und Arbeit', 'http://www.smwa.sachsen.de/', 21, 14);
 INSERT INTO ingrid_provider VALUES (335, 'sn_ldc', 'Landesdirektion Chemnitz', 'http://www.ldc.sachsen.de/', 23, 14);
 INSERT INTO ingrid_provider VALUES (336, 'sn_ldl', 'Landesdirektion Leipzig', 'http://www.ldl.sachsen.de/', 24, 14);
@@ -3603,88 +3361,6 @@ INSERT INTO ingrid_provider VALUES (347, 'sn_freital', 'Stadt Freital', 'http://
 INSERT INTO ingrid_provider VALUES (348, 'sn_glauchau', 'Stadt Glauchau', 'http://www.glauchau.de/', 37, 14);
 INSERT INTO ingrid_provider VALUES (349, 'sn_goerlitz', 'Stadt Görlitz', 'http://www.goerlitz.de/', 38, 14);
 INSERT INTO ingrid_provider VALUES (350, 'sn_limbach-oberfrohna', 'Stadt Limbach-Oberfrohna', 'http://www.limbach-oberfrohna.de/', 39, 14);
-INSERT INTO ingrid_provider VALUES (351, 'sn_limbach-oberfrohna', 'Stadt Limbach-Oberfrohna', 'http://www.limbach-oberfrohna.de/', 39, 14);
-INSERT INTO ingrid_provider VALUES (352, 'sn_markkleeberg', 'Stadt Markkleeberg', 'http://www.markkleeberg.de', 40, 14);
-INSERT INTO ingrid_provider VALUES (353, 'sn_lk_meissen', 'Landkreis Meißen', 'http://www.kreis-meissen.org/', 41, 14);
-INSERT INTO ingrid_provider VALUES (354, 'sn_lk_vogtland', 'Landkreis Vogtland', 'http://www.vogtlandkreis.de/', 42, 14);
-INSERT INTO ingrid_provider VALUES (355, 'sn_nabu', 'Naturschutzbund Deutschlands (NABU) - Landesverband Sachsen', 'http://www.nabu-sachsen.de/', 43, 14);
-INSERT INTO ingrid_provider VALUES (356, 'sn_lsh', 'Landesverein Sächsischer Heimatschutz e.V.', 'http://www.saechsischer-heimatschutz.de/', 46, 14);
-INSERT INTO ingrid_provider VALUES (357, 'sn_sdw', 'Schutzgemeinschaft Deutscher Wald - Landesverband Sachsen', 'http://www.sdw-sachsen.de', 47, 14);
-INSERT INTO ingrid_provider VALUES (375, 'bw_cvua', 'Chemische und Veterinäruntersuchungsämter (CVUA)', 'http://www.untersuchungsaemter-bw.de', 17, 2);
-INSERT INTO ingrid_provider VALUES (360, 'sn_grimma', 'Stadt Grimma', 'http://www.grimma.de/', 52, 14);
-INSERT INTO ingrid_provider VALUES (361, 'sn_naturparke', 'Naturparke in Sachsen', 'http://www.naturparke.de', 53, 14);
-INSERT INTO ingrid_provider VALUES (362, 'sn_smk', 'Sächsisches Staatsministerium für Kultus', 'http://www.sachsen-macht-schule.de/smk/', 54, 14);
-INSERT INTO ingrid_provider VALUES (363, 'sn_saena', 'Sächsische Energieagentur - SAENA GmbH', 'http://www.saena.de/', 55, 14);
-INSERT INTO ingrid_provider VALUES (364, 'sn_lk_bautzen', 'Landkreis Bautzen', 'http://www.landkreis-bautzen.de/', 59, 14);
-INSERT INTO ingrid_provider VALUES (365, 'sn_lk_nordsachsen', 'Landkreis Nordsachsen', 'http://www.landkreis-nordsachsen.de/', 63, 14);
-INSERT INTO ingrid_provider VALUES (366, 'sn_lk_leipzig', 'Landkreis Leipzig', 'http://www.landkreisleipzig.de/', 69, 14);
-INSERT INTO ingrid_provider VALUES (367, 'sn_freiberg', 'Stadt Freiberg', 'http://www.freiberg.de', 62, 14);
-INSERT INTO ingrid_provider VALUES (368, 'sn_lk_goerlitz', 'Landkreis Görlitz', 'http://www.kreis-goerlitz.de/', 67, 14);
-INSERT INTO ingrid_provider VALUES (372, 'ni_nbue', 'Niedersächsische Bingostiftung für Umwelt und Entwicklungszusammenarbeit', 'http://www.umweltstiftung.niedersachsen.de', 0, 10);
-INSERT INTO ingrid_provider VALUES (373, 'ni_mf', 'Niedersächsisches Finanzministerium', 'http://www.mf.niedersachsen.de/', 5, 10);
-INSERT INTO ingrid_provider VALUES (374, 'rp_geoportal', 'Geoportal Rheinland-Pfalz', 'http://www.geoportal.rlp.de/', 0, 12);
-INSERT INTO ingrid_provider VALUES (492, 'bw_nvbw', 'Nahverkehrsgesellschaft Baden-Württemberg', 'http://www.nvbw.de/', 138, 2);
-INSERT INTO ingrid_provider VALUES (376, 'bw_nsz', 'Naturschutzzentren Baden-Württemberg', 'http://www.naturschutzzentren-bw.de', 18, 2);
-INSERT INTO ingrid_provider VALUES (378, 'bw_rpk', 'Regierungspräsidium Karlsruhe', 'http://www.rp-karlsruhe.de', 19, 2);
-INSERT INTO ingrid_provider VALUES (379, 'bw_rpt', 'Regierungspräsidium Tübingen', 'http://www.rp-tuebingen.de ', 20, 2);
-INSERT INTO ingrid_provider VALUES (513, 'hb_mbhv', 'Magistrat Bremerhaven', 'http://www.bremerhaven.de/stadt-und-politik/politik/magistrat/', 0, 6);
-INSERT INTO ingrid_provider VALUES (381, 'bw_mj', 'Justizministerium Baden-Württemberg', 'http://www.jum.baden-wuerttemberg.de', 22, 2);
-INSERT INTO ingrid_provider VALUES (382, 'bw_lga', 'Landesgesundheitsamt (LGA) im Regierungspräsidium Stuttgart', 'http://www.rp.baden-wuerttemberg.de', 23, 2);
-INSERT INTO ingrid_provider VALUES (383, 'bw_mas', 'Ministerium für Arbeit und Sozialordnung, Familie, Frauen und Senioren Baden-Württemberg', 'http://www.sm.baden-wuerttemberg.de/', 24, 2);
-INSERT INTO ingrid_provider VALUES (384, 'bw_unifreifor', 'Fakultät für Forst- und Umweltwissenschaften der UNI-Freiburg', 'http://www.ffu.uni-freiburg.de', 25, 2);
-INSERT INTO ingrid_provider VALUES (385, 'bw_unifreilan', 'Institut für Landespflege der Universität Freiburg', 'http://www.landespflege-freiburg.de/', 26, 2);
-INSERT INTO ingrid_provider VALUES (386, 'bw_unikarlmet', 'Institut für Meteorologie und Klimaforschung am Karlsruher Institut für Technologie (KIT)', 'http://www.imk.kit.edu/', 27, 2);
-INSERT INTO ingrid_provider VALUES (388, 'bw_stadtwald', 'Stadt Waldshut-Tiengen', 'http://www.waldshut-tiengen.de/', 113, 2);
-INSERT INTO ingrid_provider VALUES (495, 'bu_afee', 'Agentur für Erneuerbare Energien e. V.', 'http://www.unendlich-viel-energie.de', 0, 1);
-INSERT INTO ingrid_provider VALUES (389, 'bw_unistutt', 'Universität Stuttgart', 'http://www.uni-stuttgart.de', 29, 2);
-INSERT INTO ingrid_provider VALUES (390, 'bw_laal', 'Landratsamt Alb-Donau-Kreis', 'http://www.alb-donau-kreis.de', 30, 2);
-INSERT INTO ingrid_provider VALUES (391, 'bw_labi', 'Landratsamt Biberach', 'http://www.biberach.de', 31, 2);
-INSERT INTO ingrid_provider VALUES (392, 'bw_labo', 'Landratsamt Bodenseekreis', 'http://www.bodenseekreis.de', 32, 2);
-INSERT INTO ingrid_provider VALUES (393, 'bw_laboe', 'Landratsamt Böblingen', 'http://www.landkreis-boeblingen.de', 33, 2);
-INSERT INTO ingrid_provider VALUES (394, 'bw_labr', 'Landratsamt Breisgau-Hochschwarzwald', 'http://www.breisgau-hochschwarzwald.de', 34, 2);
-INSERT INTO ingrid_provider VALUES (395, 'bw_laca', 'Landratsamt Calw', 'http://www.kreis-calw.de', 35, 2);
-INSERT INTO ingrid_provider VALUES (396, 'bw_laem', 'Landratsamt Emmendingen', 'http://www.landkreis-emmendingen.de', 36, 2);
-INSERT INTO ingrid_provider VALUES (397, 'bw_laen', 'Landratsamt Enzkreis', 'http://www.enzkreis.de', 37, 2);
-INSERT INTO ingrid_provider VALUES (398, 'bw_laes', 'Landratsamt Esslingen', 'http://www.landkreis-esslingen.de', 38, 2);
-INSERT INTO ingrid_provider VALUES (399, 'bw_lafr', 'Landratsamt Freudenstadt', 'http://www.landkreis-freudenstadt.de', 39, 2);
-INSERT INTO ingrid_provider VALUES (400, 'bw_lago', 'Landratsamt Göppingen', 'http://www.landkreis-goeppingen.de', 40, 2);
-INSERT INTO ingrid_provider VALUES (401, 'bw_laheid', 'Landratsamt Heidenheim', 'http://www.landkreis-heidenheim.de', 41, 2);
-INSERT INTO ingrid_provider VALUES (402, 'bw_laheil', 'Landratsamt Heilbronn', 'http://www.landkreis-heilbronn.de', 42, 2);
-INSERT INTO ingrid_provider VALUES (403, 'bw_laho', 'Landratsamt Hohenlohekreis', 'http://www.hohenlohekreis.de/', 43, 2);
-INSERT INTO ingrid_provider VALUES (404, 'bw_laka', 'Landratsamt Karlsruhe', 'http://www.landkreis-karlsruhe.de', 44, 2);
-INSERT INTO ingrid_provider VALUES (405, 'bw_lako', 'Landratsamt Konstanz', 'http://www.landkreis-konstanz.de/', 45, 2);
-INSERT INTO ingrid_provider VALUES (406, 'bw_laloe', 'Landratsamt Lörrach', 'http://www.loerrach-landkreis.de', 46, 2);
-INSERT INTO ingrid_provider VALUES (407, 'bw_lalu', 'Landratsamt Ludwigsburg', 'http://www.landkreis-ludwigsburg.de', 47, 2);
-INSERT INTO ingrid_provider VALUES (408, 'bw_lama', 'Landratsamt Main-Tauber-Kreis', 'http://www.main-tauber-kreis.de', 48, 2);
-INSERT INTO ingrid_provider VALUES (409, 'bw_lane', 'Landratsamt Neckar-Odenwald-Kreis', 'http://www.neckar-odenwald-kreis.de', 49, 2);
-INSERT INTO ingrid_provider VALUES (410, 'bw_laor', 'Landratsamt Ortenaukreis', 'http://www.ortenaukreis.de', 50, 2);
-INSERT INTO ingrid_provider VALUES (411, 'bw_laos', 'Landratsamt Ostalbkreis', 'http://www.ostalbkreis.de', 51, 2);
-INSERT INTO ingrid_provider VALUES (412, 'bw_laras', 'Landratsamt Rastatt', 'http://www.landkreis-rastatt.de', 52, 2);
-INSERT INTO ingrid_provider VALUES (413, 'bw_larav', 'Landratsamt Ravensburg', 'http://www.landkreis-ravensburg.de', 53, 2);
-INSERT INTO ingrid_provider VALUES (414, 'bw_larem', 'Landratsamt Rems-Murr-Kreis', 'http://www.rems-murr-kreis.de', 54, 2);
-INSERT INTO ingrid_provider VALUES (415, 'bw_lareu', 'Landratsamt Reutlingen', 'http://www.kreis-reutlingen.de', 55, 2);
-INSERT INTO ingrid_provider VALUES (416, 'bw_larhe', 'Landratsamt Rhein-Neckar-Kreis', 'http://www.rhein-neckar-kreis.de', 56, 2);
-INSERT INTO ingrid_provider VALUES (417, 'bw_laro', 'Landratsamt Rottweil', 'http://www.landkreis-rottweil.de', 57, 2);
-INSERT INTO ingrid_provider VALUES (418, 'bw_laschwae', 'Landratsamt Schwäbisch Hall', 'http://www.landkreis-schwaebisch-hall.de', 58, 2);
-INSERT INTO ingrid_provider VALUES (419, 'bw_laschwa', 'Landratsamt Schwarzwald-Baar-Kreis', 'http://www.schwarzwald-baar-kreis.de', 59, 2);
-INSERT INTO ingrid_provider VALUES (420, 'bw_lasi', 'Landratsamt Sigmaringen', 'http://www.landkreis-sigmaringen.de', 60, 2);
-INSERT INTO ingrid_provider VALUES (421, 'bw_latue', 'Landratsamt Tübingen', 'http://www.kreis-tuebingen.de', 61, 2);
-INSERT INTO ingrid_provider VALUES (422, 'bw_latu', 'Landratsamt Tuttlingen', 'http://www.landkreis-tuttlingen.de', 62, 2);
-INSERT INTO ingrid_provider VALUES (423, 'bw_lawa', 'Landratsamt Waldshut', 'http://www.landkreis-waldshut.de', 63, 2);
-INSERT INTO ingrid_provider VALUES (424, 'bw_lazo', 'Landratsamt Zollernalbkreis', 'http://www.zollernalbkreis.de', 64, 2);
-INSERT INTO ingrid_provider VALUES (425, 'bw_muell', 'Müllabfuhr-Zweckverband von Gemeinden des Landkreises Konstanz', 'http://www.mzv-hegau.de', 65, 2);
-INSERT INTO ingrid_provider VALUES (426, 'bw_pro', 'Proregio Oberschwaben Gesellschaft zur Landschaftsentwicklung mbH', 'http://www.proregio-oberschwaben.de/', 66, 2);
-INSERT INTO ingrid_provider VALUES (427, 'bw_zweckab', 'Zweckverband Abfallverwertung Reutlingen/Tübingen', 'http://www.zav-rt-tue.de', 67, 2);
-INSERT INTO ingrid_provider VALUES (428, 'bw_azvb', 'Abwasserzweckverband Breisgauer Bucht', 'http://www.azv-breisgau.de/', 68, 2);
-INSERT INTO ingrid_provider VALUES (429, 'bw_azvh', 'Abwasserzweckverband Heidelberg', 'http://www.azv-heidelberg.de', 69, 2);
-INSERT INTO ingrid_provider VALUES (430, 'bw_azvo', 'Abwasserzweckverband Raum Offenburg', 'http://www.azv-offenburg.de/', 70, 2);
-INSERT INTO ingrid_provider VALUES (432, 'bw_gruen', 'Geschäftsstelle Grüne Nachbarschaft', 'http://www.gruene-nachbarschaft.de/', 72, 2);
-INSERT INTO ingrid_provider VALUES (433, 'bw_landess', 'Landeshauptstadt Stuttgart', 'http://www.stuttgart.de', 73, 2);
-INSERT INTO ingrid_provider VALUES (434, 'bw_now', 'NOW Zweckverband Wasserversorgung Nordostwürttemberg', 'http://www.now-wasser.de/', 74, 2);
-INSERT INTO ingrid_provider VALUES (435, 'bw_stadta', 'Stadt Aalen', 'http://www.sw-aalen.de/', 75, 2);
-INSERT INTO ingrid_provider VALUES (436, 'bw_stadtbb', 'Stadt Baden-Baden', 'http://www.baden-baden.de', 76, 2);
-INSERT INTO ingrid_provider VALUES (437, 'bw_stadtba', 'Stadt Balingen', 'http://www.balingen.de', 77, 2);
-INSERT INTO ingrid_provider VALUES (438, 'bw_stadtbi', 'Stadt Biberach', 'http://www.biberach-riss.de//index.phtml?object=tx|1.300.1&org_obj=nav|383.10.1', 78, 2);
 INSERT INTO ingrid_provider VALUES (439, 'bw_stadtboe', 'Stadt Böblingen', 'http://www.boeblingen.kdrs.de', 79, 2);
 INSERT INTO ingrid_provider VALUES (441, 'bw_stadtem', 'Stadt Emmendingen', 'http://www.emmendingen.de', 81, 2);
 INSERT INTO ingrid_provider VALUES (442, 'bw_stadtes', 'Stadt Esslingen am Neckar', 'http://www.esslingen.de', 82, 2);
@@ -3725,7 +3401,7 @@ INSERT INTO ingrid_provider VALUES (476, 'bw_zweckla', 'Zweckverband Landeswasse
 INSERT INTO ingrid_provider VALUES (552, 'ni_gd_ostercap', 'Ostercappeln, Gemeinde', 'http://www.ostercappeln.de/', 0, 10);
 INSERT INTO ingrid_provider VALUES (553, 'ni_lk_dieph', 'Diepholz, Landkreis', 'http://www.diepholz.de/', 0, 10);
 INSERT INTO ingrid_provider VALUES (479, 'bw_igkb', 'IGKB Internationale Gewässerschutzkommission Bodensee', 'http://www.igkb.org/', 120, 2);
-INSERT INTO ingrid_provider VALUES (551, 'ni_buwsv', 'Wasser- und Schifffahrtsverwaltung des Bundes', '', 0, 10);
+INSERT INTO ingrid_provider VALUES (551, 'ni_buwsv', 'Wasser- und Schifffahrtsverwaltung des Bundes', ' ', 0, 10);
 INSERT INTO ingrid_provider VALUES (481, 'bw_see', 'Internationale Bodenseekonferenz', 'http://www.bodenseekonferenz.org', 122, 2);
 INSERT INTO ingrid_provider VALUES (482, 'bw_kea', 'KEA Klimaschutz- und Energieagentur Baden-Württemberg GmbH', 'http://www.keabw.de/', 123, 2);
 INSERT INTO ingrid_provider VALUES (485, 'bw_museum', 'Staatliches Museum für Naturkunde in Stuttgart', 'http://www.wildbienen-kataster.de/', 126, 2);
@@ -3791,7 +3467,7 @@ SELECT pg_catalog.setval('ingrid_provider_id_seq', 1, false);
 -- Data for Name: ingrid_rss_source; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_rss_source VALUES (1, 'bu_uba', 'Umweltbundesamt', 'http://www.umweltbundesamt.de/rss/presse', 'de', 'all', NULL, 3, '2015-01-21 11:11:33');
+INSERT INTO ingrid_rss_source VALUES (1, 'bu_uba', 'Umweltbundesamt', 'http://www.umweltbundesamt.de/rss/presse', 'de', 'all', NULL, 3, '2015-01-20');
 
 
 --
@@ -3805,9 +3481,9 @@ SELECT pg_catalog.setval('ingrid_rss_source_id_seq', 1, false);
 -- Data for Name: ingrid_rss_store; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO ingrid_rss_store VALUES ('http://www.umweltbundesamt.de/presse/presseinformationen/kaffeemaschinen-it-geraete-sparsamer-im', 'Umweltbundesamt', NULL, NULL, 'Ab Beginn des neuen Jahres gelten in der Europ&auml;ischen Union niedrigere Verbrauchswerte f&uuml;r eine Reihe von Elektroger&auml;ten des allt&auml;glichen Bedarfs, wenn sie neu auf den Markt gebracht werden. Strengere technische Anforderungen m&uuml;ssen zum Beispiel Kaffeemaschinen und IT-Ger&auml;te wie Modems und Router erf&uuml;llen. F&uuml;r elektrische Back&ouml;fen gilt zudem, dass die Informationen &uuml;ber ihren Energieverbrauch transparenter gestaltet sein m&uuml;ssen.', 'de', '2014-12-23 12:30:00', 'Kaffeemaschinen und IT-Ger&auml;te sparsamer im Stromverbrauch');
-INSERT INTO ingrid_rss_store VALUES ('http://www.umweltbundesamt.de/presse/presseinformationen/gold-fuer-uba-neubau', 'Umweltbundesamt', NULL, NULL, 'Noch klingt der Name nach Zukunft: Das &#8222;Haus 2019&#8220; &#8211; doch schon heute erf&uuml;llt das B&uuml;rogeb&auml;ude des Umweltbundesamtes (UBA) die Anforderungen der europ&auml;ischen Geb&auml;uderichtlinie f&uuml;r das Jahr 2019. Auf der Bau 2015 in M&uuml;nchen &uuml;berreichte daher der Parlamentarische Staatssekret&auml;r im Bundesbauministerium, Florian Pronold, heute die Zertifizierungsurkunde f&uuml;r das neue B&uuml;rogeb&auml;ude des UBA in Berlin-Marienfelde. &#8222;Das &#8218;Haus 2019&#8216; ist das erste Bundesgeb&auml;ude, das mit den anspruchsvollen Vorgaben des &#8218;Bewertungssystems Nachhaltiges Bauen f&uuml;r Bundesgeb&auml;ude&#8216; (BNB) von Beginn an geplant und bewertet wurde&#8220;, so Florian Pronold bei der &Uuml;bergabe der Urkunde. &#8222;Darauf k&ouml;nnen wir zu Recht stolz sein, und ich danke allen Projektbeteiligten f&uuml;r Ihr besonderes Engagement.&#8220; Der gesamte Rohbau, einschlie&szlig;lich der Fassade, ist aus dem nachwachsenden Rohstoff Holz gefertigt. Zudem versorgt sich das Geb&auml;ude komplett selbst mit Energie. &#8222;Mit dem &#8218;Haus 2019&#8216; setzen wir nicht nur ein Zeichen f&uuml;r vorbildliches, nachhaltiges Bauen, sondern zeigen auch beispielhaft, wie Null-Energie-Geb&auml;ude k&uuml;nftig geplant und gebaut werden k&ouml;nnen&#8220;, betonte Maria Krautzberger, Pr&auml;sidentin des Umweltbundesamtes.', 'de', '2015-01-19 19:00:00', '&#8222;Gold&#8220; f&uuml;r UBA-Neubau');
-INSERT INTO ingrid_rss_store VALUES ('http://www.umweltbundesamt.de/presse/presseinformationen/stickstoffueberschuss-ein-umweltproblem-neuem', 'Umweltbundesamt', NULL, NULL, 'In der EU sind fast zwei Drittel aller nat&uuml;rlichen Lebensr&auml;ume &uuml;berd&uuml;ngt. Verantwortlich f&uuml;r den &Uuml;berschuss an N&auml;hrstoffen ist vor allem der Stickstoff aus der Landwirtschaft, der als G&uuml;lle oder Minerald&uuml;nger auf die Felder kommt. Die EU-Kommission hat wiederholt angemahnt, die Stickstoffeintr&auml;ge zu minimieren. Maria Krautzberger, Pr&auml;sidentin des Umweltbundesamtes (UBA): &#8222;Es ist wichtig, dass die EU weiter Impulse f&uuml;r eine Reduzierung der Stickstoff&uuml;bersch&uuml;sse setzt. Gleichzeitig m&uuml;ssen wir auf nationaler Ebene handeln. Dabei ist die D&uuml;ngeverordnung ein wichtiger Ansatz, um Luft, Boden und Grundwasser besser vor zu viel Stickstoff zu sch&uuml;tzen.&#8220;', 'de', '2015-01-08 15:00:00', 'Stickstoff&uuml;berschuss &#8211; ein Umweltproblem mit neuem Ausma&szlig;');
+INSERT INTO ingrid_rss_store VALUES ('Umweltbundesamt', NULL, NULL, 'de', '2015-01-19', '&#8222;Gold&#8220; f&uuml;r UBA-Neubau', 'Noch klingt der Name nach Zukunft: Das &#8222;Haus 2019&#8220; &#8211; doch schon heute erf&uuml;llt das B&uuml;rogeb&auml;ude des Umweltbundesamtes (UBA) die Anforderungen der europ&auml;ischen Geb&auml;uderichtlinie f&uuml;r das Jahr 2019. Auf der Bau 2015 in M&uuml;nchen &uuml;berreichte daher der Parlamentarische Staatssekret&auml;r im Bundesbauministerium, Florian Pronold, heute die Zertifizierungsurkunde f&uuml;r das neue B&uuml;rogeb&auml;ude des UBA in Berlin-Marienfelde. &#8222;Das &#8218;Haus 2019&#8216; ist das erste Bundesgeb&auml;ude, das mit den anspruchsvollen Vorgaben des &#8218;Bewertungssystems Nachhaltiges Bauen f&uuml;r Bundesgeb&auml;ude&#8216; (BNB) von Beginn an geplant und bewertet wurde&#8220;, so Florian Pronold bei der &Uuml;bergabe der Urkunde. &#8222;Darauf k&ouml;nnen wir zu Recht stolz sein, und ich danke allen Projektbeteiligten f&uuml;r Ihr besonderes Engagement.&#8220; Der gesamte Rohbau, einschlie&szlig;lich der Fassade, ist aus dem nachwachsenden Rohstoff Holz gefertigt. Zudem versorgt sich das Geb&auml;ude komplett selbst mit Energie. &#8222;Mit dem &#8218;Haus 2019&#8216; setzen wir nicht nur ein Zeichen f&uuml;r vorbildliches, nachhaltiges Bauen, sondern zeigen auch beispielhaft, wie Null-Energie-Geb&auml;ude k&uuml;nftig geplant und gebaut werden k&ouml;nnen&#8220;, betonte Maria Krautzberger, Pr&auml;sidentin des Umweltbundesamtes.', 'http://www.umweltbundesamt.de/presse/presseinformationen/gold-fuer-uba-neubau');
+INSERT INTO ingrid_rss_store VALUES ('Umweltbundesamt', NULL, NULL, 'de', '2015-01-08', 'Stickstoff&uuml;berschuss &#8211; ein Umweltproblem mit neuem Ausma&szlig;', 'In der EU sind fast zwei Drittel aller nat&uuml;rlichen Lebensr&auml;ume &uuml;berd&uuml;ngt. Verantwortlich f&uuml;r den &Uuml;berschuss an N&auml;hrstoffen ist vor allem der Stickstoff aus der Landwirtschaft, der als G&uuml;lle oder Minerald&uuml;nger auf die Felder kommt. Die EU-Kommission hat wiederholt angemahnt, die Stickstoffeintr&auml;ge zu minimieren. Maria Krautzberger, Pr&auml;sidentin des Umweltbundesamtes (UBA): &#8222;Es ist wichtig, dass die EU weiter Impulse f&uuml;r eine Reduzierung der Stickstoff&uuml;bersch&uuml;sse setzt. Gleichzeitig m&uuml;ssen wir auf nationaler Ebene handeln. Dabei ist die D&uuml;ngeverordnung ein wichtiger Ansatz, um Luft, Boden und Grundwasser besser vor zu viel Stickstoff zu sch&uuml;tzen.&#8220;', 'http://www.umweltbundesamt.de/presse/presseinformationen/stickstoffueberschuss-ein-umweltproblem-neuem');
+INSERT INTO ingrid_rss_store VALUES ('Umweltbundesamt', NULL, NULL, 'de', '2014-12-23', 'Kaffeemaschinen und IT-Ger&auml;te sparsamer im Stromverbrauch', 'Ab Beginn des neuen Jahres gelten in der Europ&auml;ischen Union niedrigere Verbrauchswerte f&uuml;r eine Reihe von Elektroger&auml;ten des allt&auml;glichen Bedarfs, wenn sie neu auf den Markt gebracht werden. Strengere technische Anforderungen m&uuml;ssen zum Beispiel Kaffeemaschinen und IT-Ger&auml;te wie Modems und Router erf&uuml;llen. F&uuml;r elektrische Back&ouml;fen gilt zudem, dass die Informationen &uuml;ber ihren Energieverbrauch transparenter gestaltet sein m&uuml;ssen.', 'http://www.umweltbundesamt.de/presse/presseinformationen/kaffeemaschinen-it-geraete-sparsamer-im');
 
 
 --
@@ -4041,10 +3717,24 @@ INSERT INTO link VALUES (2, 1, '/webmaster.link', 'webmaster.link', NULL, 'ingri
 
 INSERT INTO localized_description VALUES (1, 4, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'The SimpleLayoutPortlet requires a ViewPage layout template set through the portlet preferences which provides its own layout algorithm', 'en,,');
 INSERT INTO localized_description VALUES (2, 1, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'Jetspeed 2 Layout Portlets Applications', ',,');
-INSERT INTO localized_description VALUES (177, 179, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'Entry point to the mdek application', 'en,,');
-INSERT INTO localized_description VALUES (178, 180, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'Catalog administration portlet for the portal admin', 'en,,');
-INSERT INTO localized_description VALUES (179, 181, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'SuperAdmin-Login to each Catalog with each User', 'en,,');
-INSERT INTO localized_description VALUES (180, 3, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'InGrid-Portal Application', ',,');
+INSERT INTO localized_description VALUES (337, 194, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the place reference in the extended search for addresses.', 'en,,');
+INSERT INTO localized_description VALUES (338, 284, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (339, 195, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the "addresses"/"searcharea"/"partner" fragment in the extended search.', 'en,,');
+INSERT INTO localized_description VALUES (340, 285, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (341, 196, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the terms in the extended search for research.', 'en,,');
+INSERT INTO localized_description VALUES (342, 286, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (343, 197, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the attributes in the extended search for research.', 'en,,');
+INSERT INTO localized_description VALUES (344, 287, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (345, 198, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the terms in the extended search for law.', 'en,,');
+INSERT INTO localized_description VALUES (346, 288, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (347, 199, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the thesaurus terms in the extended search.', 'en,,');
+INSERT INTO localized_description VALUES (348, 289, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (349, 200, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the "law"/"searcharea"/"partner" fragment in the extended search.', 'en,,');
+INSERT INTO localized_description VALUES (350, 290, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (351, 201, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet displayes a combo box containing different languages.', 'en,,');
+INSERT INTO localized_description VALUES (352, 291, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (353, 202, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet explains all the features the portal has to offer.', 'en,,');
+INSERT INTO localized_description VALUES (354, 21, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'InGrid-Portal Application', ',,');
 INSERT INTO localized_description VALUES (181, 201, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
 INSERT INTO localized_description VALUES (182, 121, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.', 'en,,');
 INSERT INTO localized_description VALUES (183, 122, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'The Portlet is called only via javascript', 'en,,');
@@ -4151,6 +3841,10 @@ INSERT INTO localized_description VALUES (283, 167, 'org.apache.jetspeed.om.port
 INSERT INTO localized_description VALUES (284, 257, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
 INSERT INTO localized_description VALUES (285, 168, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet displays an environment search box.', 'en,,');
 INSERT INTO localized_description VALUES (286, 258, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
+INSERT INTO localized_description VALUES (177, 179, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'Entry point to the mdek application', 'en,,');
+INSERT INTO localized_description VALUES (178, 180, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'Catalog administration portlet for the portal admin', 'en,,');
+INSERT INTO localized_description VALUES (179, 181, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'SuperAdmin-Login to each Catalog with each User', 'en,,');
+INSERT INTO localized_description VALUES (180, 3, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'InGrid-Portal Application', ',,');
 INSERT INTO localized_description VALUES (287, 169, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet displays the search results of the environment topics search (environment topics catalogue).', 'en,,');
 INSERT INTO localized_description VALUES (288, 259, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
 INSERT INTO localized_description VALUES (289, 170, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet displays the search results.', 'en,,');
@@ -4201,24 +3895,6 @@ INSERT INTO localized_description VALUES (333, 192, 'org.apache.jetspeed.om.port
 INSERT INTO localized_description VALUES (334, 282, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
 INSERT INTO localized_description VALUES (335, 193, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the mode in the extended search for addresses.', 'en,,');
 INSERT INTO localized_description VALUES (336, 283, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (337, 194, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the place reference in the extended search for addresses.', 'en,,');
-INSERT INTO localized_description VALUES (338, 284, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (339, 195, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the "addresses"/"searcharea"/"partner" fragment in the extended search.', 'en,,');
-INSERT INTO localized_description VALUES (340, 285, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (341, 196, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the terms in the extended search for research.', 'en,,');
-INSERT INTO localized_description VALUES (342, 286, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (343, 197, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the attributes in the extended search for research.', 'en,,');
-INSERT INTO localized_description VALUES (344, 287, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (345, 198, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the terms in the extended search for law.', 'en,,');
-INSERT INTO localized_description VALUES (346, 288, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (347, 199, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the thesaurus terms in the extended search.', 'en,,');
-INSERT INTO localized_description VALUES (348, 289, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (349, 200, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet handles the input of the "law"/"searcharea"/"partner" fragment in the extended search.', 'en,,');
-INSERT INTO localized_description VALUES (350, 290, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (351, 201, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet displayes a combo box containing different languages.', 'en,,');
-INSERT INTO localized_description VALUES (352, 291, 'org.apache.jetspeed.om.portlet.impl.InitParamImpl', 'This parameter sets the template used in view mode.', 'en,,');
-INSERT INTO localized_description VALUES (353, 202, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'This portlet explains all the features the portal has to offer.', 'en,,');
-INSERT INTO localized_description VALUES (354, 21, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'InGrid-Portal Application', ',,');
 
 
 --
@@ -4230,61 +3906,72 @@ INSERT INTO localized_display_name VALUES (2, 2, 'org.apache.jetspeed.om.portlet
 INSERT INTO localized_display_name VALUES (3, 3, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns Layout for Ingrid Portal Using Velocity', 'en,,');
 INSERT INTO localized_display_name VALUES (4, 4, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Simple readonly fixed Layout', 'en,,');
 INSERT INTO localized_display_name VALUES (5, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'One Column', 'en,,');
-INSERT INTO localized_display_name VALUES (6, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity????? 1 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (7, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?????', 'zh,,');
-INSERT INTO localized_display_name VALUES (8, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (6, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity¿¿¿¿¿ 1 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (7, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (8, 5, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (9, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'One Column with Tables', 'en,,');
-INSERT INTO localized_display_name VALUES (10, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ?????????? 1 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (11, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???????', 'zh,,');
-INSERT INTO localized_display_name VALUES (12, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (10, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿¿¿¿¿¿ 1 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (11, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (12, 6, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (13, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns', 'en,,');
-INSERT INTO localized_display_name VALUES (14, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ????? 2 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (15, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?????', 'zh,,');
-INSERT INTO localized_display_name VALUES (16, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (14, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿ 2 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (15, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (16, 7, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (17, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns (15%/85%)', 'en,,');
-INSERT INTO localized_display_name VALUES (18, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ?????????????????????????????? 2 ?', 'ja,,');
-INSERT INTO localized_display_name VALUES (19, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???????????', 'zh,,');
-INSERT INTO localized_display_name VALUES (20, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???????????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (18, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ 2 ¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (19, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity,¿¿¿¿¿¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (20, 8, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity,¿¿¿¿¿¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (21, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Three Columns', 'en,,');
-INSERT INTO localized_display_name VALUES (22, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ????? 3 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (23, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?3???', 'zh,,');
-INSERT INTO localized_display_name VALUES (24, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?3???', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (22, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿ 3 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (23, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿3¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (24, 9, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿3¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (25, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Three Columns with Tables', 'en,,');
-INSERT INTO localized_display_name VALUES (26, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ?????????? 3 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (27, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???3???', 'zh,,');
-INSERT INTO localized_display_name VALUES (28, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???3???', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (26, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿¿¿¿¿¿ 3 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (27, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿3¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (28, 10, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿3¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (29, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'One Column - No Actions', 'en,,');
-INSERT INTO localized_display_name VALUES (30, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??????????? Velocity ????? 1 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (31, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?????', 'zh,,');
-INSERT INTO localized_display_name VALUES (32, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (30, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿¿¿ Velocity ¿¿¿¿¿ 1 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (31, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (32, 11, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (33, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns Layout - No Actions', 'en,,');
-INSERT INTO localized_display_name VALUES (34, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??????????? Velocity ????? 2 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (35, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?????', 'zh,,');
-INSERT INTO localized_display_name VALUES (36, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (34, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿¿¿ Velocity ¿¿¿¿¿ 2 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (35, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (36, 12, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (37, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Three Columns - No Actions', 'en,,');
-INSERT INTO localized_display_name VALUES (38, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??????????? Velocity ????? 3 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (39, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?3???', 'zh,,');
-INSERT INTO localized_display_name VALUES (40, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?3???', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (38, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿¿¿ Velocity ¿¿¿¿¿ 3 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (39, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿3¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (40, 13, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿3¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (41, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns (25%/75%) No Actions', 'en,,');
-INSERT INTO localized_display_name VALUES (42, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??????????? Velocity ????? 2 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (43, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?????', 'zh,,');
-INSERT INTO localized_display_name VALUES (44, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity?????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (42, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿¿¿ Velocity ¿¿¿¿¿ 2 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (43, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (44, 14, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (45, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns (25%/75%)', 'en,,');
-INSERT INTO localized_display_name VALUES (46, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ????? 25/75 ? 2 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (47, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?????', 'zh,,');
-INSERT INTO localized_display_name VALUES (48, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity?????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (46, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿ 25/75 ¿ 2 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (47, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (48, 15, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (49, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns (15%,85%) No Actions', 'en,,');
-INSERT INTO localized_display_name VALUES (50, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '???????? Velocity ?????????????????????????????? 2 ?', 'ja,,');
-INSERT INTO localized_display_name VALUES (51, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity???????????', 'zh,,');
-INSERT INTO localized_display_name VALUES (52, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '?????????Velocity???????????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (50, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿ Velocity ¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿ 2 ¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (51, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity,¿¿¿¿¿¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (52, 16, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿¿¿¿¿¿¿¿Velocity,¿¿¿¿¿¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (53, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Two Columns with Tables', 'en,,');
-INSERT INTO localized_display_name VALUES (54, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ?????????? 2 ??????', 'ja,,');
-INSERT INTO localized_display_name VALUES (55, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???????', 'zh,,');
-INSERT INTO localized_display_name VALUES (56, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???????', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (54, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Velocity ¿¿¿¿¿¿¿¿¿¿ 2 ¿¿¿¿¿¿', 'ja,,');
+INSERT INTO localized_display_name VALUES (55, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (56, 17, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿¿¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (57, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Four Columns', 'en,,');
-INSERT INTO localized_display_name VALUES (58, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???4???', 'zh,,');
-INSERT INTO localized_display_name VALUES (59, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '??Velocity???4???', 'zh,TW,');
+INSERT INTO localized_display_name VALUES (58, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿4¿¿¿', 'zh,,');
+INSERT INTO localized_display_name VALUES (59, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', '¿¿Velocity¿¿¿4¿¿¿', 'zh,TW,');
 INSERT INTO localized_display_name VALUES (60, 1, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'Jetspeed 2 Layout Portlets Application', ',,');
+INSERT INTO localized_display_name VALUES (233, 193, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrThemaSuchmodus', 'en,,');
+INSERT INTO localized_display_name VALUES (234, 194, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrRaumRaumbezug', 'en,,');
+INSERT INTO localized_display_name VALUES (235, 195, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrSuchbereichBundLaender', 'en,,');
+INSERT INTO localized_display_name VALUES (236, 196, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheForschungThemaSuchbegriffe', 'en,,');
+INSERT INTO localized_display_name VALUES (237, 197, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheForschungThemaAttribute', 'en,,');
+INSERT INTO localized_display_name VALUES (238, 198, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheRechtThemaSuchbegriffe', 'en,,');
+INSERT INTO localized_display_name VALUES (239, 199, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheRechtThemaFachwoerterbuch', 'en,,');
+INSERT INTO localized_display_name VALUES (240, 200, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheRechtSuchbereichBundLaender', 'en,,');
+INSERT INTO localized_display_name VALUES (241, 201, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Sprachauswahl', 'en,,');
+INSERT INTO localized_display_name VALUES (242, 202, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Features Information', 'en,,');
+INSERT INTO localized_display_name VALUES (243, 21, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'InGrid-Portal Application', ',,');
 INSERT INTO localized_display_name VALUES (144, 101, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Entry to Mdek App', 'en,,');
 INSERT INTO localized_display_name VALUES (145, 102, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Kataloge administrieren', 'en,,');
 INSERT INTO localized_display_name VALUES (146, 103, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'SuperAdmin-Login', 'en,,');
@@ -4361,17 +4048,6 @@ INSERT INTO localized_display_name VALUES (229, 189, 'org.apache.jetspeed.om.por
 INSERT INTO localized_display_name VALUES (230, 190, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheUmwSuchbereichDatenquellen', 'en,,');
 INSERT INTO localized_display_name VALUES (231, 191, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheUmwSuchbereichBundLaender', 'en,,');
 INSERT INTO localized_display_name VALUES (232, 192, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrThemaSuchbegriffe', 'en,,');
-INSERT INTO localized_display_name VALUES (233, 193, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrThemaSuchmodus', 'en,,');
-INSERT INTO localized_display_name VALUES (234, 194, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrRaumRaumbezug', 'en,,');
-INSERT INTO localized_display_name VALUES (235, 195, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheAdrSuchbereichBundLaender', 'en,,');
-INSERT INTO localized_display_name VALUES (236, 196, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheForschungThemaSuchbegriffe', 'en,,');
-INSERT INTO localized_display_name VALUES (237, 197, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheForschungThemaAttribute', 'en,,');
-INSERT INTO localized_display_name VALUES (238, 198, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheRechtThemaSuchbegriffe', 'en,,');
-INSERT INTO localized_display_name VALUES (239, 199, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheRechtThemaFachwoerterbuch', 'en,,');
-INSERT INTO localized_display_name VALUES (240, 200, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ErweiterteSucheRechtSuchbereichBundLaender', 'en,,');
-INSERT INTO localized_display_name VALUES (241, 201, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Sprachauswahl', 'en,,');
-INSERT INTO localized_display_name VALUES (242, 202, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'Features Information', 'en,,');
-INSERT INTO localized_display_name VALUES (243, 21, 'org.apache.jetspeed.om.portlet.impl.PortletApplicationDefinitionImpl', 'InGrid-Portal Application', ',,');
 
 
 --
@@ -4382,7 +4058,7 @@ INSERT INTO media_type VALUES (1, 'html', 'UTF-8', 'HTML', 'Rich HTML for HTML 4
 INSERT INTO media_type VALUES (2, 'vxml', 'UTF-8', 'VoiceXML', 'Format suitable for use with an audio VoiceXML server');
 INSERT INTO media_type VALUES (3, 'wml', 'UTF-8', 'WML', 'Format for mobile phones and PDAs compatible with WML 1.1');
 INSERT INTO media_type VALUES (4, 'xhtml-basic', 'UTF-8', 'XHTML', 'XHTML Basic');
-INSERT INTO media_type VALUES (5, 'xml', '', 'XML', 'XML 1.0');
+INSERT INTO media_type VALUES (5, 'xml', ' ', 'XML', 'XML 1.0');
 
 
 --
@@ -4455,45 +4131,45 @@ INSERT INTO mimetype VALUES (6, 'text/xml');
 --
 
 INSERT INTO ojb_hl_seq VALUES ('SEQ_CAPABILITY', 'deprecatedColumn', 60, 20, 3);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_CLIENT', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER', 'deprecatedColumn', 780, 20, 39);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_CONSTRAINT', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_CONSTRAINTS_REF', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_MENU', 'deprecatedColumn', 80, 20, 4);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_METADATA', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT', 'deprecatedColumn', 7320, 20, 366);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_CONSTRAINT', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_CONSTRAINTS_REF', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_PREF', 'deprecatedColumn', 7320, 20, 366);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_PREF_VALUE', 'deprecatedColumn', 7320, 20, 366);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_JETSPEED_SERVICE', 'deprecatedColumn', 60, 20, 3);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_LANGUAGE', 'deprecatedColumn', 260, 20, 13);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_LINK', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_LOCALIZED_DESCRIPTION', 'deprecatedColumn', 360, 20, 18);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_LOCALIZED_DISPLAY_NAME', 'deprecatedColumn', 260, 20, 13);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_MEDIA_TYPE', 'deprecatedColumn', 20, 20, 1);
 INSERT INTO ojb_hl_seq VALUES ('SEQ_MIMETYPE', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PA_METADATA_FIELDS', 'deprecatedColumn', 40, 20, 2);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE', 'deprecatedColumn', 840, 20, 42);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_CONSTRAINTS_REF', 'deprecatedColumn', 860, 20, 43);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_METADATA', 'deprecatedColumn', 780, 20, 39);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SEC_CONSTRAINT_DEF', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SEC_CONSTRAINTS_DEF', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SEC_CONSTRAINTS_REF', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_MEDIA_TYPE', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_CLIENT', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_DOMAIN', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_PRINCIPAL', 'deprecatedColumn', 820, 20, 41);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_CREDENTIAL', 'deprecatedColumn', 800, 20, 40);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_ATTRIBUTE', 'deprecatedColumn', 10000, 20, 500);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_PERMISSION', 'deprecatedColumn', 60, 20, 3);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_RULE_CRITERION', 'deprecatedColumn', 40, 20, 2);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER', 'deprecatedColumn', 800, 20, 40);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_METADATA', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_CONSTRAINTS_REF', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_MENU', 'deprecatedColumn', 100, 20, 5);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE', 'deprecatedColumn', 860, 20, 43);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT', 'deprecatedColumn', 7360, 20, 368);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_PREF', 'deprecatedColumn', 7340, 20, 367);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_PREF_VALUE', 'deprecatedColumn', 7340, 20, 367);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_METADATA', 'deprecatedColumn', 800, 20, 40);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_CONSTRAINTS_REF', 'deprecatedColumn', 880, 20, 44);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_LINK', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_CONSTRAINTS_REF', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FOLDER_CONSTRAINT', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_FRAGMENT_CONSTRAINT', 'deprecatedColumn', 20, 20, 1);
 INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SECURITY', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SEC_CONSTRAINTS_DEF', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SEC_CONSTRAINT_DEF', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PAGE_SEC_CONSTRAINTS_REF', 'deprecatedColumn', 20, 20, 1);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_APPLICATION', 'deprecatedColumn', 40, 20, 2);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PA_METADATA_FIELDS', 'deprecatedColumn', 40, 20, 2);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_DEFINITION', 'deprecatedColumn', 220, 20, 11);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_LOCALIZED_DISPLAY_NAME', 'deprecatedColumn', 260, 20, 13);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_LANGUAGE', 'deprecatedColumn', 260, 20, 13);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_SUPPORTS', 'deprecatedColumn', 220, 20, 11);
 INSERT INTO ojb_hl_seq VALUES ('SEQ_PARAMETER', 'deprecatedColumn', 300, 20, 15);
 INSERT INTO ojb_hl_seq VALUES ('SEQ_PD_METADATA_FIELDS', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_APPLICATION', 'deprecatedColumn', 40, 20, 2);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_DEFINITION', 'deprecatedColumn', 220, 20, 11);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_LOCALIZED_DESCRIPTION', 'deprecatedColumn', 360, 20, 18);
+INSERT INTO ojb_hl_seq VALUES ('SEQ_JETSPEED_SERVICE', 'deprecatedColumn', 60, 20, 3);
 INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_PREFERENCE', 'deprecatedColumn', 120, 20, 6);
 INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_PREFERENCE_VALUE', 'deprecatedColumn', 120, 20, 6);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_PORTLET_SUPPORTS', 'deprecatedColumn', 220, 20, 11);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_RULE_CRITERION', 'deprecatedColumn', 40, 20, 2);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_ATTRIBUTE', 'deprecatedColumn', 9960, 20, 498);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_CREDENTIAL', 'deprecatedColumn', 780, 20, 39);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_DOMAIN', 'deprecatedColumn', 20, 20, 1);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_PERMISSION', 'deprecatedColumn', 60, 20, 3);
-INSERT INTO ojb_hl_seq VALUES ('SEQ_SECURITY_PRINCIPAL', 'deprecatedColumn', 800, 20, 40);
 
 
 --
@@ -4653,69 +4329,69 @@ INSERT INTO page_constraints_ref VALUES (839, 817, 0, 'public-view');
 -- Data for Name: page_metadata; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO page_metadata VALUES (1, 1, 'meta_descr', 'de,,', 'ingrid.page.home.meta.description');
-INSERT INTO page_metadata VALUES (2, 1, 'meta_keywords', 'de,,', 'ingrid.page.home.meta.keywords');
-INSERT INTO page_metadata VALUES (3, 1, 'meta_title', 'de,,', 'ingrid.page.home.meta.title');
-INSERT INTO page_metadata VALUES (4, 3, 'meta_descr', 'de,,', 'ingrid.page.disclaimer.meta.description');
-INSERT INTO page_metadata VALUES (5, 3, 'meta_keywords', 'de,,', 'ingrid.page.disclaimer.meta.keywords');
-INSERT INTO page_metadata VALUES (6, 3, 'meta_title', 'de,,', 'ingrid.page.disclaimer.meta.title');
-INSERT INTO page_metadata VALUES (7, 4, 'meta_descr', 'de,,', 'ingrid.page.help.meta.description');
-INSERT INTO page_metadata VALUES (8, 4, 'meta_keywords', 'de,,', 'ingrid.page.help.meta.keywords');
-INSERT INTO page_metadata VALUES (9, 4, 'meta_title', 'de,,', 'ingrid.page.help.meta.title');
-INSERT INTO page_metadata VALUES (10, 5, 'meta_descr', 'de,,', 'ingrid.page.data.source.meta.description');
-INSERT INTO page_metadata VALUES (11, 5, 'meta_keywords', 'de,,', 'ingrid.page.data.source.meta.keywords');
-INSERT INTO page_metadata VALUES (12, 5, 'meta_title', 'de,,', 'ingrid.page.data.source.meta.title');
-INSERT INTO page_metadata VALUES (13, 6, 'meta_descr', 'de,,', 'ingrid.page.about.partner.meta.description');
-INSERT INTO page_metadata VALUES (14, 6, 'meta_keywords', 'de,,', 'ingrid.page.about.partner.meta.keywords');
-INSERT INTO page_metadata VALUES (15, 6, 'meta_title', 'de,,', 'ingrid.page.about.partner.meta.title');
-INSERT INTO page_metadata VALUES (16, 7, 'meta_descr', 'de,,', 'ingrid.page.about.meta.description');
-INSERT INTO page_metadata VALUES (17, 7, 'meta_keywords', 'de,,', 'ingrid.page.about.meta.keywords');
-INSERT INTO page_metadata VALUES (18, 7, 'meta_title', 'de,,', 'ingrid.page.about.meta.title');
-INSERT INTO page_metadata VALUES (19, 8, 'meta_descr', 'de,,', 'ingrid.page.chronicle.meta.description');
-INSERT INTO page_metadata VALUES (20, 8, 'meta_keywords', 'de,,', 'ingrid.page.chronicle.meta.keywords');
-INSERT INTO page_metadata VALUES (21, 8, 'meta_title', 'de,,', 'ingrid.page.chronicle.meta.title');
-INSERT INTO page_metadata VALUES (28, 11, 'meta_descr', 'de,,', 'ingrid.page.maps.meta.description');
-INSERT INTO page_metadata VALUES (29, 11, 'meta_keywords', 'de,,', 'ingrid.page.maps.meta.keywords');
-INSERT INTO page_metadata VALUES (30, 11, 'meta_title', 'de,,', 'ingrid.page.maps.meta.title');
-INSERT INTO page_metadata VALUES (31, 12, 'meta_descr', 'de,,', 'ingrid.page.measures.meta.description');
-INSERT INTO page_metadata VALUES (32, 12, 'meta_keywords', 'de,,', 'ingrid.page.measures.meta.keywords');
-INSERT INTO page_metadata VALUES (33, 12, 'meta_title', 'de,,', 'ingrid.page.measures.meta.title');
-INSERT INTO page_metadata VALUES (34, 13, 'meta_descr', 'de,,', 'ingrid.page.search.meta.description');
-INSERT INTO page_metadata VALUES (35, 13, 'meta_keywords', 'de,,', 'ingrid.page.search.meta.keywords');
-INSERT INTO page_metadata VALUES (36, 13, 'meta_title', 'de,,', 'ingrid.page.search.meta.title');
-INSERT INTO page_metadata VALUES (43, 18, 'meta_descr', 'de,,', 'ingrid.page.rss.meta.description');
-INSERT INTO page_metadata VALUES (44, 18, 'meta_keywords', 'de,,', 'ingrid.page.rss.meta.keywords');
-INSERT INTO page_metadata VALUES (45, 18, 'meta_title', 'de,,', 'ingrid.page.rss.meta.title');
-INSERT INTO page_metadata VALUES (46, 19, 'meta_descr', 'de,,', 'ingrid.page.detail.meta.description');
-INSERT INTO page_metadata VALUES (47, 19, 'meta_keywords', 'de,,', 'ingrid.page.detail.meta.keywords');
-INSERT INTO page_metadata VALUES (48, 19, 'meta_title', 'de,,', 'ingrid.page.detail.meta.title');
-INSERT INTO page_metadata VALUES (58, 25, 'meta_descr', 'de,,', 'ingrid.page.contact.meta.description');
-INSERT INTO page_metadata VALUES (59, 25, 'meta_keywords', 'de,,', 'ingrid.page.contact.meta.keywords');
-INSERT INTO page_metadata VALUES (60, 25, 'meta_title', 'de,,', 'ingrid.page.contact.meta.title');
-INSERT INTO page_metadata VALUES (61, 26, 'meta_descr', 'de,,', 'ingrid.page.myportal.meta.description');
-INSERT INTO page_metadata VALUES (62, 26, 'meta_keywords', 'de,,', 'ingrid.page.myportal.meta.keywords');
-INSERT INTO page_metadata VALUES (63, 26, 'meta_title', 'de,,', 'ingrid.page.myportal.meta.title');
-INSERT INTO page_metadata VALUES (64, 27, 'meta_descr', 'de,,', 'ingrid.page.sitemap.meta.description');
-INSERT INTO page_metadata VALUES (65, 27, 'meta_keywords', 'de,,', 'ingrid.page.sitemap.meta.keywords');
-INSERT INTO page_metadata VALUES (66, 27, 'meta_title', 'de,,', 'ingrid.page.sitemap.meta.title');
-INSERT INTO page_metadata VALUES (67, 28, 'meta_descr', 'de,,', 'ingrid.page.home.meta.description');
-INSERT INTO page_metadata VALUES (68, 28, 'meta_keywords', 'de,,', 'ingrid.page.home.meta.keywords');
-INSERT INTO page_metadata VALUES (69, 28, 'meta_title', 'de,,', 'ingrid.page.home.meta.title');
-INSERT INTO page_metadata VALUES (697, 728, 'meta_descr', 'de,,', 'ingrid.page.home.meta.description');
-INSERT INTO page_metadata VALUES (698, 728, 'meta_keywords', 'de,,', 'ingrid.page.home.meta.keywords');
-INSERT INTO page_metadata VALUES (699, 728, 'meta_title', 'de,,', 'ingrid.page.home.meta.title');
+INSERT INTO page_metadata VALUES (1, 1, 'meta_title', 'de,,', 'ingrid.page.home.meta.title');
+INSERT INTO page_metadata VALUES (2, 1, 'meta_descr', 'de,,', 'ingrid.page.home.meta.description');
+INSERT INTO page_metadata VALUES (3, 1, 'meta_keywords', 'de,,', 'ingrid.page.home.meta.keywords');
+INSERT INTO page_metadata VALUES (4, 3, 'meta_title', 'de,,', 'ingrid.page.disclaimer.meta.title');
+INSERT INTO page_metadata VALUES (5, 3, 'meta_descr', 'de,,', 'ingrid.page.disclaimer.meta.description');
+INSERT INTO page_metadata VALUES (6, 3, 'meta_keywords', 'de,,', 'ingrid.page.disclaimer.meta.keywords');
+INSERT INTO page_metadata VALUES (7, 4, 'meta_title', 'de,,', 'ingrid.page.help.meta.title');
+INSERT INTO page_metadata VALUES (8, 4, 'meta_descr', 'de,,', 'ingrid.page.help.meta.description');
+INSERT INTO page_metadata VALUES (9, 4, 'meta_keywords', 'de,,', 'ingrid.page.help.meta.keywords');
+INSERT INTO page_metadata VALUES (10, 5, 'meta_title', 'de,,', 'ingrid.page.data.source.meta.title');
+INSERT INTO page_metadata VALUES (11, 5, 'meta_descr', 'de,,', 'ingrid.page.data.source.meta.description');
+INSERT INTO page_metadata VALUES (12, 5, 'meta_keywords', 'de,,', 'ingrid.page.data.source.meta.keywords');
+INSERT INTO page_metadata VALUES (13, 6, 'meta_title', 'de,,', 'ingrid.page.about.partner.meta.title');
+INSERT INTO page_metadata VALUES (14, 6, 'meta_descr', 'de,,', 'ingrid.page.about.partner.meta.description');
+INSERT INTO page_metadata VALUES (15, 6, 'meta_keywords', 'de,,', 'ingrid.page.about.partner.meta.keywords');
+INSERT INTO page_metadata VALUES (16, 7, 'meta_title', 'de,,', 'ingrid.page.about.meta.title');
+INSERT INTO page_metadata VALUES (17, 7, 'meta_descr', 'de,,', 'ingrid.page.about.meta.description');
+INSERT INTO page_metadata VALUES (18, 7, 'meta_keywords', 'de,,', 'ingrid.page.about.meta.keywords');
+INSERT INTO page_metadata VALUES (19, 8, 'meta_title', 'de,,', 'ingrid.page.chronicle.meta.title');
+INSERT INTO page_metadata VALUES (20, 8, 'meta_descr', 'de,,', 'ingrid.page.chronicle.meta.description');
+INSERT INTO page_metadata VALUES (21, 8, 'meta_keywords', 'de,,', 'ingrid.page.chronicle.meta.keywords');
+INSERT INTO page_metadata VALUES (28, 11, 'meta_title', 'de,,', 'ingrid.page.maps.meta.title');
+INSERT INTO page_metadata VALUES (29, 11, 'meta_descr', 'de,,', 'ingrid.page.maps.meta.description');
+INSERT INTO page_metadata VALUES (30, 11, 'meta_keywords', 'de,,', 'ingrid.page.maps.meta.keywords');
+INSERT INTO page_metadata VALUES (31, 12, 'meta_title', 'de,,', 'ingrid.page.measures.meta.title');
+INSERT INTO page_metadata VALUES (32, 12, 'meta_descr', 'de,,', 'ingrid.page.measures.meta.description');
+INSERT INTO page_metadata VALUES (33, 12, 'meta_keywords', 'de,,', 'ingrid.page.measures.meta.keywords');
+INSERT INTO page_metadata VALUES (34, 13, 'meta_title', 'de,,', 'ingrid.page.search.meta.title');
+INSERT INTO page_metadata VALUES (35, 13, 'meta_descr', 'de,,', 'ingrid.page.search.meta.description');
+INSERT INTO page_metadata VALUES (36, 13, 'meta_keywords', 'de,,', 'ingrid.page.search.meta.keywords');
+INSERT INTO page_metadata VALUES (43, 18, 'meta_title', 'de,,', 'ingrid.page.rss.meta.title');
+INSERT INTO page_metadata VALUES (44, 18, 'meta_descr', 'de,,', 'ingrid.page.rss.meta.description');
+INSERT INTO page_metadata VALUES (45, 18, 'meta_keywords', 'de,,', 'ingrid.page.rss.meta.keywords');
+INSERT INTO page_metadata VALUES (46, 19, 'meta_title', 'de,,', 'ingrid.page.detail.meta.title');
+INSERT INTO page_metadata VALUES (47, 19, 'meta_descr', 'de,,', 'ingrid.page.detail.meta.description');
+INSERT INTO page_metadata VALUES (48, 19, 'meta_keywords', 'de,,', 'ingrid.page.detail.meta.keywords');
+INSERT INTO page_metadata VALUES (58, 25, 'meta_title', 'de,,', 'ingrid.page.contact.meta.title');
+INSERT INTO page_metadata VALUES (59, 25, 'meta_descr', 'de,,', 'ingrid.page.contact.meta.description');
+INSERT INTO page_metadata VALUES (60, 25, 'meta_keywords', 'de,,', 'ingrid.page.contact.meta.keywords');
+INSERT INTO page_metadata VALUES (61, 26, 'meta_title', 'de,,', 'ingrid.page.myportal.meta.title');
+INSERT INTO page_metadata VALUES (62, 26, 'meta_descr', 'de,,', 'ingrid.page.myportal.meta.description');
+INSERT INTO page_metadata VALUES (63, 26, 'meta_keywords', 'de,,', 'ingrid.page.myportal.meta.keywords');
+INSERT INTO page_metadata VALUES (64, 27, 'meta_title', 'de,,', 'ingrid.page.sitemap.meta.title');
+INSERT INTO page_metadata VALUES (65, 27, 'meta_descr', 'de,,', 'ingrid.page.sitemap.meta.description');
+INSERT INTO page_metadata VALUES (66, 27, 'meta_keywords', 'de,,', 'ingrid.page.sitemap.meta.keywords');
+INSERT INTO page_metadata VALUES (67, 28, 'meta_title', 'de,,', 'ingrid.page.home.meta.title');
+INSERT INTO page_metadata VALUES (68, 28, 'meta_descr', 'de,,', 'ingrid.page.home.meta.description');
+INSERT INTO page_metadata VALUES (69, 28, 'meta_keywords', 'de,,', 'ingrid.page.home.meta.keywords');
+INSERT INTO page_metadata VALUES (697, 728, 'meta_title', 'de,,', 'ingrid.page.home.meta.title');
+INSERT INTO page_metadata VALUES (698, 728, 'meta_descr', 'de,,', 'ingrid.page.home.meta.description');
+INSERT INTO page_metadata VALUES (699, 728, 'meta_keywords', 'de,,', 'ingrid.page.home.meta.keywords');
+INSERT INTO page_metadata VALUES (757, 812, 'meta_title', 'de,,', 'ingrid.page.application.meta.title');
 INSERT INTO page_metadata VALUES (758, 812, 'meta_descr', 'de,,', 'ingrid.page.application.meta.description');
 INSERT INTO page_metadata VALUES (759, 812, 'meta_keywords', 'de,,', 'ingrid.page.application.meta.keywords');
-INSERT INTO page_metadata VALUES (757, 812, 'meta_title', 'de,,', 'ingrid.page.application.meta.title');
+INSERT INTO page_metadata VALUES (763, 814, 'meta_title', 'de,,', 'ingrid.page.cms.1.meta.title');
 INSERT INTO page_metadata VALUES (764, 814, 'meta_descr', 'de,,', 'ingrid.page.cms.1.meta.description');
 INSERT INTO page_metadata VALUES (765, 814, 'meta_keywords', 'de,,', 'ingrid.page.cms.1.meta.keywords');
-INSERT INTO page_metadata VALUES (763, 814, 'meta_title', 'de,,', 'ingrid.page.cms.1.meta.title');
+INSERT INTO page_metadata VALUES (766, 815, 'meta_title', 'de,,', 'ingrid.page.cms.2.meta.title');
 INSERT INTO page_metadata VALUES (767, 815, 'meta_descr', 'de,,', 'ingrid.page.cms.2.meta.description');
 INSERT INTO page_metadata VALUES (768, 815, 'meta_keywords', 'de,,', 'ingrid.page.cms.2.meta.keywords');
-INSERT INTO page_metadata VALUES (766, 815, 'meta_title', 'de,,', 'ingrid.page.cms.2.meta.title');
-INSERT INTO page_metadata VALUES (769, 817, 'meta_descr', 'de,,', 'ingrid.page.hierarchy.meta.description');
-INSERT INTO page_metadata VALUES (770, 817, 'meta_keywords', 'de,,', 'ingrid.page.hierarchy.meta.keywords');
-INSERT INTO page_metadata VALUES (771, 817, 'meta_title', 'de,,', 'ingrid.page.hierarchy.meta.title');
+INSERT INTO page_metadata VALUES (769, 817, 'meta_title', 'de,,', 'ingrid.page.hierarchy.meta.title');
+INSERT INTO page_metadata VALUES (770, 817, 'meta_descr', 'de,,', 'ingrid.page.hierarchy.meta.description');
+INSERT INTO page_metadata VALUES (771, 817, 'meta_keywords', 'de,,', 'ingrid.page.hierarchy.meta.keywords');
 
 
 --
@@ -4855,6 +4531,38 @@ INSERT INTO parameter VALUES (82, 17, 'org.apache.jetspeed.om.portlet.impl.Portl
 INSERT INTO parameter VALUES (83, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', 'columns');
 INSERT INTO parameter VALUES (84, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'MaxPage', 'maximized');
 INSERT INTO parameter VALUES (85, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'columns', '4');
+INSERT INTO parameter VALUES (260, 171, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/show_maps.vm');
+INSERT INTO parameter VALUES (261, 172, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/chronicle_search.vm');
+INSERT INTO parameter VALUES (262, 173, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/empty.vm');
+INSERT INTO parameter VALUES (263, 174, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_settings.vm');
+INSERT INTO parameter VALUES (264, 175, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_save.vm');
+INSERT INTO parameter VALUES (265, 176, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_history.vm');
+INSERT INTO parameter VALUES (266, 177, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_similar.vm');
+INSERT INTO parameter VALUES (267, 178, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_result.vm');
+INSERT INTO parameter VALUES (268, 179, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_detail.vm');
+INSERT INTO parameter VALUES (269, 180, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm');
+INSERT INTO parameter VALUES (270, 181, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm');
+INSERT INTO parameter VALUES (271, 182, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_catalog/search_cat_thesaurus_result.vm');
+INSERT INTO parameter VALUES (272, 183, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_topic_terms.vm');
+INSERT INTO parameter VALUES (273, 184, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus.vm');
+INSERT INTO parameter VALUES (274, 185, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus.vm');
+INSERT INTO parameter VALUES (275, 186, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_place_map.vm');
+INSERT INTO parameter VALUES (276, 187, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_time_constraint.vm');
+INSERT INTO parameter VALUES (277, 188, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_time_chronicle.vm');
+INSERT INTO parameter VALUES (278, 189, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_area_contents.vm');
+INSERT INTO parameter VALUES (279, 190, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_area_sources.vm');
+INSERT INTO parameter VALUES (280, 191, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_area_partner.vm');
+INSERT INTO parameter VALUES (281, 192, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_topic_terms.vm');
+INSERT INTO parameter VALUES (282, 193, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_topic_mode.vm');
+INSERT INTO parameter VALUES (283, 194, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_place_reference.vm');
+INSERT INTO parameter VALUES (284, 195, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_area_partner.vm');
+INSERT INTO parameter VALUES (285, 196, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_res_topic_terms.vm');
+INSERT INTO parameter VALUES (286, 197, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_res_topic_attributes.vm');
+INSERT INTO parameter VALUES (287, 198, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_law_topic_terms.vm');
+INSERT INTO parameter VALUES (288, 199, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_law_topic_thesaurus.vm');
+INSERT INTO parameter VALUES (289, 200, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_law_area_partner.vm');
+INSERT INTO parameter VALUES (290, 201, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/language.vm');
+INSERT INTO parameter VALUES (291, 202, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/features.vm');
 INSERT INTO parameter VALUES (86, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'sizes', '20%,30%,30%,20%');
 INSERT INTO parameter VALUES (87, 18, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'layoutType', 'FourColumns');
 INSERT INTO parameter VALUES (179, 101, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/mdek/mdek_entry.vm');
@@ -4869,7 +4577,7 @@ INSERT INTO parameter VALUES (206, 127, 'org.apache.jetspeed.om.portlet.impl.Por
 INSERT INTO parameter VALUES (207, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/administration/admin_user_browser.vm');
 INSERT INTO parameter VALUES (208, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'emailTemplate', '/WEB-INF/templates/administration/userCreatedConfirmationEmail.vm');
 INSERT INTO parameter VALUES (209, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'roles', 'user');
-INSERT INTO parameter VALUES (210, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'groups', '');
+INSERT INTO parameter VALUES (210, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'groups', NULL);
 INSERT INTO parameter VALUES (211, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'rulesNames', 'user-role-fallback');
 INSERT INTO parameter VALUES (212, 128, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'rulesValues', 'page');
 INSERT INTO parameter VALUES (213, 129, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/administration/admin_iplug.vm');
@@ -4919,38 +4627,6 @@ INSERT INTO parameter VALUES (256, 167, 'org.apache.jetspeed.om.portlet.impl.Por
 INSERT INTO parameter VALUES (257, 168, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/environment_search.vm');
 INSERT INTO parameter VALUES (258, 169, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/empty.vm');
 INSERT INTO parameter VALUES (259, 170, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/save_maps.vm');
-INSERT INTO parameter VALUES (260, 171, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/show_maps.vm');
-INSERT INTO parameter VALUES (261, 172, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/chronicle_search.vm');
-INSERT INTO parameter VALUES (262, 173, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/empty.vm');
-INSERT INTO parameter VALUES (263, 174, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_settings.vm');
-INSERT INTO parameter VALUES (264, 175, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_save.vm');
-INSERT INTO parameter VALUES (265, 176, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_history.vm');
-INSERT INTO parameter VALUES (266, 177, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_similar.vm');
-INSERT INTO parameter VALUES (267, 178, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_result.vm');
-INSERT INTO parameter VALUES (268, 179, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_detail.vm');
-INSERT INTO parameter VALUES (269, 180, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm');
-INSERT INTO parameter VALUES (270, 181, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_catalog/search_cat_thesaurus.vm');
-INSERT INTO parameter VALUES (271, 182, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_catalog/search_cat_thesaurus_result.vm');
-INSERT INTO parameter VALUES (272, 183, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_topic_terms.vm');
-INSERT INTO parameter VALUES (273, 184, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_topic_thesaurus.vm');
-INSERT INTO parameter VALUES (274, 185, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_place_geothesaurus.vm');
-INSERT INTO parameter VALUES (275, 186, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_place_map.vm');
-INSERT INTO parameter VALUES (276, 187, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_time_constraint.vm');
-INSERT INTO parameter VALUES (277, 188, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_time_chronicle.vm');
-INSERT INTO parameter VALUES (278, 189, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_area_contents.vm');
-INSERT INTO parameter VALUES (279, 190, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_area_sources.vm');
-INSERT INTO parameter VALUES (280, 191, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_env_area_partner.vm');
-INSERT INTO parameter VALUES (281, 192, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_topic_terms.vm');
-INSERT INTO parameter VALUES (282, 193, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_topic_mode.vm');
-INSERT INTO parameter VALUES (283, 194, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_place_reference.vm');
-INSERT INTO parameter VALUES (284, 195, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_adr_area_partner.vm');
-INSERT INTO parameter VALUES (285, 196, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_res_topic_terms.vm');
-INSERT INTO parameter VALUES (286, 197, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_res_topic_attributes.vm');
-INSERT INTO parameter VALUES (287, 198, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_law_topic_terms.vm');
-INSERT INTO parameter VALUES (288, 199, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_law_topic_thesaurus.vm');
-INSERT INTO parameter VALUES (289, 200, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/search_extended/search_ext_law_area_partner.vm');
-INSERT INTO parameter VALUES (290, 201, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/language.vm');
-INSERT INTO parameter VALUES (291, 202, 'org.apache.jetspeed.om.portlet.impl.PortletDefinitionImpl', 'ViewPage', '/WEB-INF/templates/features.vm');
 
 
 --
@@ -4984,9 +4660,9 @@ INSERT INTO pd_metadata_fields VALUES (15, 18, '*', 'selector.conditional.role',
 -- Data for Name: portlet_application; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO portlet_application VALUES (1, 'jetspeed-layouts', '<portal>', 1, '1.0', 1, '982190297', NULL, '', NULL);
-INSERT INTO portlet_application VALUES (3, 'ingrid-portal-mdek', '/ingrid-portal-mdek', 1, '1.0', 0, '382981415', NULL, '', NULL);
-INSERT INTO portlet_application VALUES (21, 'ingrid-portal-apps', '/ingrid-portal-apps', 2, '1.0', 0, '3223520607', NULL, '', NULL);
+INSERT INTO portlet_application VALUES (1, 'jetspeed-layouts', '<portal>', 1, '1.0', 1, '982190297', NULL, NULL, NULL);
+INSERT INTO portlet_application VALUES (3, 'ingrid-portal-mdek', '/ingrid-portal-mdek', 1, '1.0', 0, '382981415', NULL, NULL, NULL);
+INSERT INTO portlet_application VALUES (21, 'ingrid-portal-apps', '/ingrid-portal-apps', 2, '1.0', 0, '3223520607', NULL, NULL, NULL);
 
 
 --
@@ -5011,9 +4687,6 @@ INSERT INTO portlet_definition VALUES (15, 'VelocityTwoColumns2575', 'org.apache
 INSERT INTO portlet_definition VALUES (16, 'VelocityTwoColumnsSmallLeftNoActions', 'org.apache.jetspeed.portlets.layout.MultiColumnPortlet', 1, 0, 'org.apache.jetspeed.portlets.layout.resources.LayoutResource', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (17, 'VelocityTwoColumnsTable', 'org.apache.jetspeed.portlets.layout.MultiColumnPortlet', 1, 0, 'org.apache.jetspeed.portlets.layout.resources.LayoutResource', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (18, 'VelocityFourColumns', 'org.apache.jetspeed.portlets.layout.MultiColumnPortlet', 1, 0, 'org.apache.jetspeed.portlets.layout.resources.LayoutResource', NULL, NULL, 'private', NULL);
-INSERT INTO portlet_definition VALUES (101, 'MdekEntryPortlet', 'de.ingrid.portal.portlets.mdek.MdekEntryPortlet', 3, 0, 'de.ingrid.portal.resources.MdekResources', NULL, NULL, 'private', NULL);
-INSERT INTO portlet_definition VALUES (102, 'MdekPortalAdminPortlet', 'de.ingrid.portal.portlets.mdek.MdekPortalAdminPortlet', 3, 0, 'de.ingrid.portal.resources.MdekResources', NULL, NULL, 'private', NULL);
-INSERT INTO portlet_definition VALUES (103, 'MdekAdminLoginPortlet', 'de.ingrid.portal.portlets.mdek.MdekAdminLoginPortlet', 3, 0, 'de.ingrid.portal.resources.MdekResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (121, 'InfoPortlet', 'de.ingrid.portal.portlets.InfoPortlet', 21, 0, 'de.ingrid.portal.resources.InfoPortletResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (122, 'DetectJavaScriptPortlet', 'de.ingrid.portal.portlets.DetectJavaScriptPortlet', 21, 0, NULL, NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (123, 'HelpPortlet', 'de.ingrid.portal.portlets.HelpPortlet', 21, 0, 'de.ingrid.portal.resources.HelpPortletResources', NULL, NULL, 'private', NULL);
@@ -5063,6 +4736,9 @@ INSERT INTO portlet_definition VALUES (166, 'MeasuresSearch', 'de.ingrid.portal.
 INSERT INTO portlet_definition VALUES (167, 'MeasuresResult', 'de.ingrid.portal.portlets.MeasuresResultPortlet', 21, 0, 'de.ingrid.portal.resources.MeasuresSearchResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (168, 'EnvironmentSearch', 'de.ingrid.portal.portlets.EnvironmentSearchPortlet', 21, 0, 'de.ingrid.portal.resources.EnvironmentSearchResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (169, 'EnvironmentResult', 'de.ingrid.portal.portlets.EnvironmentResultPortlet', 21, 0, 'de.ingrid.portal.resources.EnvironmentSearchResources', NULL, NULL, 'private', NULL);
+INSERT INTO portlet_definition VALUES (101, 'MdekEntryPortlet', 'de.ingrid.portal.portlets.mdek.MdekEntryPortlet', 3, 0, 'de.ingrid.portal.resources.MdekResources', NULL, NULL, 'private', NULL);
+INSERT INTO portlet_definition VALUES (102, 'MdekPortalAdminPortlet', 'de.ingrid.portal.portlets.mdek.MdekPortalAdminPortlet', 3, 0, 'de.ingrid.portal.resources.MdekResources', NULL, NULL, 'private', NULL);
+INSERT INTO portlet_definition VALUES (103, 'MdekAdminLoginPortlet', 'de.ingrid.portal.portlets.mdek.MdekAdminLoginPortlet', 3, 0, 'de.ingrid.portal.resources.MdekResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (170, 'SaveMapsPortlet', 'de.ingrid.portal.portlets.SaveMapsPortlet', 21, 0, 'de.ingrid.portal.resources.CommonResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (171, 'ShowMapsPortlet', 'de.ingrid.portal.portlets.ShowMapsPortlet', 21, 0, 'de.ingrid.portal.resources.CommonResources', NULL, NULL, 'private', NULL);
 INSERT INTO portlet_definition VALUES (172, 'ChronicleSearch', 'de.ingrid.portal.portlets.ChronicleSearchPortlet', 21, 0, 'de.ingrid.portal.resources.ChronicleSearchResources', NULL, NULL, 'private', NULL);
@@ -5234,141 +4910,141 @@ INSERT INTO portlet_preference_value VALUES (108, 108, 0, 'search-catalog-2');
 -- Data for Name: portlet_supports; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO portlet_supports VALUES (1, 1, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (2, 2, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (3, 3, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (4, 4, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (5, 5, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (6, 5, 'text/vnd.wap.wml', '"view"', '');
-INSERT INTO portlet_supports VALUES (7, 6, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (8, 7, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (9, 8, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (10, 9, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (11, 10, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (12, 11, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (13, 11, 'text/vnd.wap.wml', '"view"', '');
-INSERT INTO portlet_supports VALUES (14, 12, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (15, 13, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (16, 14, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (17, 15, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (18, 16, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (19, 17, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (20, 18, 'text/html', '"view","edit","help"', '');
-INSERT INTO portlet_supports VALUES (103, 101, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (104, 102, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (105, 103, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (121, 121, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (122, 122, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (123, 123, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (124, 124, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (125, 125, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (126, 126, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (127, 127, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (128, 128, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (129, 129, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (130, 130, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (131, 131, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (132, 132, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (133, 133, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (134, 134, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (135, 135, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (136, 136, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (137, 137, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (138, 138, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (139, 139, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (140, 140, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (141, 141, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (142, 142, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (143, 143, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (144, 144, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (145, 145, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (146, 146, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (147, 147, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (148, 148, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (149, 149, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (150, 150, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (151, 151, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (152, 152, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (153, 153, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (154, 154, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (155, 155, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (156, 156, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (157, 157, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (158, 158, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (159, 159, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (160, 160, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (161, 161, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (162, 162, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (163, 163, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (164, 164, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (165, 165, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (166, 166, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (167, 167, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (168, 168, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (169, 169, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (170, 170, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (171, 171, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (172, 172, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (173, 173, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (174, 174, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (175, 175, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (176, 176, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (177, 177, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (178, 178, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (179, 179, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (180, 180, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (181, 181, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (182, 182, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (183, 183, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (184, 184, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (185, 185, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (186, 186, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (187, 187, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (188, 188, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (189, 189, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (190, 190, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (191, 191, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (192, 192, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (193, 193, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (194, 194, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (195, 195, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (196, 196, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (197, 197, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (198, 198, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (199, 199, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (200, 200, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (201, 201, 'text/html', '"view"', '');
-INSERT INTO portlet_supports VALUES (202, 202, 'text/html', '"view"', '');
+INSERT INTO portlet_supports VALUES (1, 1, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (2, 2, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (3, 3, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (4, 4, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (5, 5, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (6, 5, 'text/vnd.wap.wml', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (7, 6, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (8, 7, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (9, 8, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (10, 9, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (11, 10, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (12, 11, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (13, 11, 'text/vnd.wap.wml', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (14, 12, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (15, 13, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (16, 14, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (17, 15, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (18, 16, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (19, 17, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (20, 18, 'text/html', '"view","edit","help"', NULL);
+INSERT INTO portlet_supports VALUES (103, 101, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (104, 102, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (105, 103, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (121, 121, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (122, 122, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (123, 123, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (124, 124, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (125, 125, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (126, 126, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (127, 127, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (128, 128, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (129, 129, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (130, 130, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (131, 131, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (132, 132, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (133, 133, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (134, 134, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (135, 135, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (136, 136, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (137, 137, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (138, 138, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (139, 139, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (140, 140, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (141, 141, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (142, 142, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (143, 143, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (144, 144, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (145, 145, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (146, 146, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (147, 147, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (148, 148, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (149, 149, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (150, 150, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (151, 151, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (152, 152, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (153, 153, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (154, 154, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (155, 155, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (156, 156, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (157, 157, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (158, 158, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (159, 159, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (160, 160, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (161, 161, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (162, 162, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (163, 163, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (164, 164, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (165, 165, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (166, 166, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (167, 167, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (168, 168, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (169, 169, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (170, 170, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (171, 171, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (172, 172, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (173, 173, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (174, 174, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (175, 175, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (176, 176, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (177, 177, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (178, 178, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (179, 179, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (180, 180, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (181, 181, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (182, 182, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (183, 183, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (184, 184, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (185, 185, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (186, 186, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (187, 187, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (188, 188, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (189, 189, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (190, 190, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (191, 191, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (192, 192, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (193, 193, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (194, 194, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (195, 195, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (196, 196, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (197, 197, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (198, 198, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (199, 199, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (200, 200, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (201, 201, 'text/html', '"view"', NULL);
+INSERT INTO portlet_supports VALUES (202, 202, 'text/html', '"view"', NULL);
 
 
 --
 -- Data for Name: principal_permission; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO principal_permission VALUES (8, 1);
+INSERT INTO principal_permission VALUES (7, 3);
+INSERT INTO principal_permission VALUES (7, 24);
+INSERT INTO principal_permission VALUES (8, 4);
+INSERT INTO principal_permission VALUES (9, 1);
+INSERT INTO principal_permission VALUES (9, 2);
+INSERT INTO principal_permission VALUES (9, 5);
+INSERT INTO principal_permission VALUES (9, 6);
+INSERT INTO principal_permission VALUES (9, 8);
+INSERT INTO principal_permission VALUES (9, 15);
+INSERT INTO principal_permission VALUES (9, 16);
+INSERT INTO principal_permission VALUES (9, 22);
+INSERT INTO principal_permission VALUES (9, 23);
+INSERT INTO principal_permission VALUES (9, 41);
+INSERT INTO principal_permission VALUES (10, 1);
+INSERT INTO principal_permission VALUES (10, 7);
+INSERT INTO principal_permission VALUES (10, 8);
+INSERT INTO principal_permission VALUES (10, 19);
+INSERT INTO principal_permission VALUES (10, 20);
 INSERT INTO principal_permission VALUES (11, 1);
+INSERT INTO principal_permission VALUES (11, 9);
+INSERT INTO principal_permission VALUES (11, 10);
 INSERT INTO principal_permission VALUES (12, 1);
-INSERT INTO principal_permission VALUES (13, 1);
-INSERT INTO principal_permission VALUES (13, 2);
-INSERT INTO principal_permission VALUES (13, 3);
-INSERT INTO principal_permission VALUES (13, 4);
-INSERT INTO principal_permission VALUES (8, 5);
-INSERT INTO principal_permission VALUES (8, 6);
-INSERT INTO principal_permission VALUES (13, 6);
-INSERT INTO principal_permission VALUES (13, 7);
-INSERT INTO principal_permission VALUES (13, 8);
-INSERT INTO principal_permission VALUES (11, 11);
-INSERT INTO principal_permission VALUES (12, 11);
-INSERT INTO principal_permission VALUES (11, 12);
-INSERT INTO principal_permission VALUES (12, 12);
-INSERT INTO principal_permission VALUES (4, 17);
-INSERT INTO principal_permission VALUES (9, 18);
-INSERT INTO principal_permission VALUES (8, 19);
-INSERT INTO principal_permission VALUES (8, 20);
-INSERT INTO principal_permission VALUES (13, 22);
-INSERT INTO principal_permission VALUES (4, 23);
-INSERT INTO principal_permission VALUES (13, 24);
-INSERT INTO principal_permission VALUES (13, 41);
+INSERT INTO principal_permission VALUES (12, 9);
+INSERT INTO principal_permission VALUES (12, 10);
 
 
 --
@@ -5396,17 +5072,17 @@ INSERT INTO principal_rule_assoc VALUES ('subsite2', 'page', 'subsite2-role-fall
 -- Data for Name: profiling_rule; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO profiling_rule VALUES ('group-fallback', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A role based fallback algorithm based on Jetspeed-1 group-based fallback');
 INSERT INTO profiling_rule VALUES ('j1', 'org.apache.jetspeed.profiler.rules.impl.StandardProfilingRule', 'The default profiling rule following the Jetspeed-1 hard-coded profiler fallback algorithm.');
-INSERT INTO profiling_rule VALUES ('j2', 'org.apache.jetspeed.profiler.rules.impl.StandardProfilingRule', 'The default profiling rule for users and mediatype minus language and country.');
-INSERT INTO profiling_rule VALUES ('path', 'org.apache.jetspeed.profiler.rules.impl.StandardProfilingRule', 'use a path to locate.');
 INSERT INTO profiling_rule VALUES ('role-fallback', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A role based fallback algorithm based on Jetspeed-1 role-based fallback');
+INSERT INTO profiling_rule VALUES ('path', 'org.apache.jetspeed.profiler.rules.impl.StandardProfilingRule', 'use a path to locate.');
 INSERT INTO profiling_rule VALUES ('role-group', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A role based fallback algorithm that searches all groups and roles for a user');
+INSERT INTO profiling_rule VALUES ('group-fallback', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A role based fallback algorithm based on Jetspeed-1 group-based fallback');
 INSERT INTO profiling_rule VALUES ('security', 'org.apache.jetspeed.profiler.rules.impl.StandardProfilingRule', 'The security profiling rule needed for credential change requirements.');
-INSERT INTO profiling_rule VALUES ('subsite-role-fallback-home', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A rule based on role fallback algorithm with specified subsite and home page');
-INSERT INTO profiling_rule VALUES ('subsite2-role-fallback-home', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A rule based on role fallback algorithm with specified subsite and home page');
+INSERT INTO profiling_rule VALUES ('j2', 'org.apache.jetspeed.profiler.rules.impl.StandardProfilingRule', 'The default profiling rule for users and mediatype minus language and country.');
 INSERT INTO profiling_rule VALUES ('user-role-fallback', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A role based fallback algorithm based on Jetspeed-1 role-based fallback');
 INSERT INTO profiling_rule VALUES ('user-rolecombo-fallback', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A role based fallback algorithm based on Jetspeed-1 role-based fallback');
+INSERT INTO profiling_rule VALUES ('subsite-role-fallback-home', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A rule based on role fallback algorithm with specified subsite and home page');
+INSERT INTO profiling_rule VALUES ('subsite2-role-fallback-home', 'org.apache.jetspeed.profiler.rules.impl.RoleFallbackProfilingRule', 'A rule based on role fallback algorithm with specified subsite and home page');
 
 
 --
@@ -5449,6 +5125,10 @@ INSERT INTO profiling_rule VALUES ('user-rolecombo-fallback', 'org.apache.jetspe
 -- Data for Name: qrtz_job_details; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO qrtz_job_details VALUES ('RSSFetcherJob', 'DEFAULT', 'fetching all RSS feeds in database table ingrid_rss_source. Older entries will be deleted.', 'de.ingrid.portal.scheduler.jobs.RSSFetcherJob', false, false, true, false, '\xaced0005737200156f72672e71756172747a2e4a6f62446174614d61709fb083e8bfa9b0cb020000787200266f72672e71756172747a2e7574696c732e537472696e674b65794469727479466c61674d61708208e8c3fbc55d280200015a0013616c6c6f77735472616e7369656e74446174617872001d6f72672e71756172747a2e7574696c732e4469727479466c61674d617013e62ead28760ace0200025a000564697274794c00036d617074000f4c6a6176612f7574696c2f4d61703b787001737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000006740025636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475732e636f6465740024636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6572726f722e6e6f6e6574002a636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6576656e742e6f63637572656e636573737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b02000078700000000174002c636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6c6173742e6572726f72667265652e72756e740013323031352d30312d32302031383a31353a3531740023636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e6e756d7371007e000a00000001740027636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e617665726167657372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c75657871007e000b00000000000003f1740020636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475737371007e000a000000007800');
+INSERT INTO qrtz_job_details VALUES ('AnniversaryFetcherJob', 'DEFAULT', 'job fetching all anniversaries from SNS for tomorrow and store them into DB.', 'de.ingrid.portal.scheduler.jobs.AnniversaryFetcherJob', false, false, true, false, '\xaced0005737200156f72672e71756172747a2e4a6f62446174614d61709fb083e8bfa9b0cb020000787200266f72672e71756172747a2e7574696c732e537472696e674b65794469727479466c61674d61708208e8c3fbc55d280200015a0013616c6c6f77735472616e7369656e74446174617872001d6f72672e71756172747a2e7574696c732e4469727479466c61674d617013e62ead28760ace0200025a000564697274794c00036d617074000f4c6a6176612f7574696c2f4d61703b787001737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000006740025636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475732e636f6465740024636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6572726f722e6e6f6e6574002a636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6576656e742e6f63637572656e636573737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b02000078700000000174002c636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6c6173742e6572726f72667265652e72756e740013323031352d30312d32302031383a31353a3439740023636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e6e756d7371007e000a00000001740027636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e617665726167657372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c75657871007e000b0000000000001fa4740020636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475737371007e000a000000007800');
+INSERT INTO qrtz_job_details VALUES ('UpdateCodelistsJob', 'DEFAULT', 'A job for updating the codelists from a repository via the management iPlug.', 'de.ingrid.portal.scheduler.jobs.UpdateCodelistsFromPortalJob', false, false, true, false, '\xaced0005737200156f72672e71756172747a2e4a6f62446174614d61709fb083e8bfa9b0cb020000787200266f72672e71756172747a2e7574696c732e537472696e674b65794469727479466c61674d61708208e8c3fbc55d280200015a0013616c6c6f77735472616e7369656e74446174617872001d6f72672e71756172747a2e7574696c732e4469727479466c61674d617013e62ead28760ace0200025a000564697274794c00036d617074000f4c6a6176612f7574696c2f4d61703b787001737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000006740025636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475732e636f6465740024636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6572726f722e6e6f6e6574002a636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6576656e742e6f63637572656e636573737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b02000078700000000674002c636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6c6173742e6572726f72667265652e72756e740013323031352d30312d32302031383a34303a3431740023636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e6e756d7371007e000a00000006740027636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e617665726167657372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c75657871007e000b0000000000000085740020636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475737371007e000a000000007800');
+INSERT INTO qrtz_job_details VALUES ('UpgradeClientJob', 'UPDATE', NULL, 'de.ingrid.portal.scheduler.jobs.UpgradeClientJob', false, false, true, false, '\xaced0005737200156f72672e71756172747a2e4a6f62446174614d61709fb083e8bfa9b0cb020000787200266f72672e71756172747a2e7574696c732e537472696e674b65794469727479466c61674d61708208e8c3fbc55d280200015a0013616c6c6f77735472616e7369656e74446174617872001d6f72672e71756172747a2e7574696c732e4469727479466c61674d617013e62ead28760ace0200025a000564697274794c00036d617074000f4c6a6176612f7574696c2f4d61703b787001737200116a6176612e7574696c2e486173684d61700507dac1c31660d103000246000a6c6f6164466163746f724900097468726573686f6c6478703f4000000000000c77080000001000000007740014494e5354414c4c45445f434f4d504f4e454e5453737200136a6176612e7574696c2e41727261794c6973747881d21d99c7619d03000149000473697a6578700000000077040000000078740025636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475732e636f646574002c636f6d706f6e656e742e6d6f6e69746f722e7570646174652e6572726f722e6e6f742e617661696c61626c6574002a636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e6576656e742e6f63637572656e636573737200116a6176612e6c616e672e496e746567657212e2a0a4f781873802000149000576616c7565787200106a6176612e6c616e672e4e756d62657286ac951d0b94e08b02000078700000000e740023636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e6e756d7371007e000d0000000e74000f434f4d504f4e454e545f5459504553737200116a6176612e7574696c2e48617368536574ba44859596b8b7340300007870770c000000103f4000000000000078740027636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e74696d65722e617665726167657372000e6a6176612e6c616e672e4c6f6e673b8be490cc8f23df0200014a000576616c75657871007e000e00000000000010ae740020636f6d706f6e656e742e6d6f6e69746f722e67656e6572616c2e7374617475737371007e000d000000017800');
 
 
 --
@@ -5484,6 +5164,10 @@ INSERT INTO qrtz_locks VALUES ('TRIGGER_ACCESS');
 -- Data for Name: qrtz_simple_triggers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO qrtz_simple_triggers VALUES ('UpdateCodelistsTrigger', 'DEFAULT', -1, 300000, 369212);
+INSERT INTO qrtz_simple_triggers VALUES ('AnniversaryTrigger', 'DEFAULT', -1, 3600000, 30768);
+INSERT INTO qrtz_simple_triggers VALUES ('RSSFetcherTrigger', 'DEFAULT', -1, 3600000, 30768);
+INSERT INTO qrtz_simple_triggers VALUES ('UpgradeClientJob', 'UPDATE', -1, 86400000, 1284);
 
 
 --
@@ -5496,6 +5180,10 @@ INSERT INTO qrtz_locks VALUES ('TRIGGER_ACCESS');
 -- Data for Name: qrtz_triggers; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO qrtz_triggers VALUES ('UpdateCodelistsTrigger', 'DEFAULT', 'UpdateCodelistsJob', 'DEFAULT', false, NULL, 1532537741032, 1421775641032, 5, 'WAITING', 'SIMPLE', 1421774141032, 0, NULL, 0, NULL);
+INSERT INTO qrtz_triggers VALUES ('AnniversaryTrigger', 'DEFAULT', 'AnniversaryFetcherJob', 'DEFAULT', false, NULL, 1532538941032, 1421774141032, 5, 'WAITING', 'SIMPLE', 1421774141032, 0, NULL, 0, NULL);
+INSERT INTO qrtz_triggers VALUES ('RSSFetcherTrigger', 'DEFAULT', 'RSSFetcherJob', 'DEFAULT', false, NULL, 1532538941032, 1421774141032, 5, 'WAITING', 'SIMPLE', 1421774141032, 0, NULL, 0, NULL);
+INSERT INTO qrtz_triggers VALUES ('UpgradeClientJob', 'UPDATE', 'UpgradeClientJob', 'UPDATE', false, NULL, 1532615517292, 1421677917292, 5, 'WAITING', 'SIMPLE', 1421677917292, 0, NULL, 0, NULL);
 
 
 --
@@ -5503,6 +5191,14 @@ INSERT INTO qrtz_locks VALUES ('TRIGGER_ACCESS');
 --
 
 INSERT INTO rule_criterion VALUES ('1', 'j1', 0, 'path.session', 'page', 'default-page', 0);
+INSERT INTO rule_criterion VALUES ('2', 'j1', 1, 'group.role.user', 'user', NULL, 0);
+INSERT INTO rule_criterion VALUES ('3', 'j1', 2, 'mediatype', 'mediatype', NULL, 1);
+INSERT INTO rule_criterion VALUES ('4', 'j1', 3, 'language', 'language', NULL, 1);
+INSERT INTO rule_criterion VALUES ('5', 'j1', 4, 'country', 'country', NULL, 1);
+INSERT INTO rule_criterion VALUES ('6', 'role-fallback', 0, 'role', 'role', NULL, 2);
+INSERT INTO rule_criterion VALUES ('7', 'role-fallback', 1, 'path.session', 'page', 'default-page', 0);
+INSERT INTO rule_criterion VALUES ('8', 'path', 0, 'path', 'path', '/', 0);
+INSERT INTO rule_criterion VALUES ('9', 'role-group', 0, 'role', 'role', NULL, 2);
 INSERT INTO rule_criterion VALUES ('10', 'role-group', 1, 'navigation', 'navigation', '/', 2);
 INSERT INTO rule_criterion VALUES ('11', 'role-group', 2, 'group', 'group', NULL, 2);
 INSERT INTO rule_criterion VALUES ('12', 'group-fallback', 0, 'group', 'group', NULL, 2);
@@ -5513,7 +5209,6 @@ INSERT INTO rule_criterion VALUES ('16', 'j2', 1, 'group.role.user', 'user', NUL
 INSERT INTO rule_criterion VALUES ('17', 'j2', 2, 'mediatype', 'mediatype', NULL, 1);
 INSERT INTO rule_criterion VALUES ('18', 'user-role-fallback', 0, 'user', 'user', NULL, 2);
 INSERT INTO rule_criterion VALUES ('19', 'user-role-fallback', 1, 'navigation', 'navigation', '/', 2);
-INSERT INTO rule_criterion VALUES ('2', 'j1', 1, 'group.role.user', 'user', NULL, 0);
 INSERT INTO rule_criterion VALUES ('20', 'user-role-fallback', 2, 'role', 'role', NULL, 2);
 INSERT INTO rule_criterion VALUES ('21', 'user-role-fallback', 3, 'path.session', 'page', 'default-page', 1);
 INSERT INTO rule_criterion VALUES ('22', 'user-rolecombo-fallback', 0, 'user', 'user', NULL, 2);
@@ -5524,15 +5219,8 @@ INSERT INTO rule_criterion VALUES ('26', 'subsite-role-fallback-home', 0, 'navig
 INSERT INTO rule_criterion VALUES ('27', 'subsite-role-fallback-home', 1, 'role', 'role', NULL, 2);
 INSERT INTO rule_criterion VALUES ('28', 'subsite-role-fallback-home', 2, 'path', 'path', 'subsite-default-page', 0);
 INSERT INTO rule_criterion VALUES ('29', 'subsite2-role-fallback-home', 0, 'navigation', 'navigation', 'subsite-root', 2);
-INSERT INTO rule_criterion VALUES ('3', 'j1', 2, 'mediatype', 'mediatype', NULL, 1);
 INSERT INTO rule_criterion VALUES ('30', 'subsite2-role-fallback-home', 1, 'role', 'role', NULL, 2);
 INSERT INTO rule_criterion VALUES ('31', 'subsite2-role-fallback-home', 2, 'path', 'path', 'subsite2-default-page', 0);
-INSERT INTO rule_criterion VALUES ('4', 'j1', 3, 'language', 'language', NULL, 1);
-INSERT INTO rule_criterion VALUES ('5', 'j1', 4, 'country', 'country', NULL, 1);
-INSERT INTO rule_criterion VALUES ('6', 'role-fallback', 0, 'role', 'role', NULL, 2);
-INSERT INTO rule_criterion VALUES ('7', 'role-fallback', 1, 'path.session', 'page', 'default-page', 0);
-INSERT INTO rule_criterion VALUES ('8', 'path', 0, 'path', 'path', '/', 0);
-INSERT INTO rule_criterion VALUES ('9', 'role-group', 0, 'role', 'role', NULL, 2);
 
 
 --
@@ -5557,25 +5245,25 @@ INSERT INTO rule_criterion VALUES ('9', 'role-group', 0, 'role', 'role', NULL, 2
 -- Data for Name: security_attribute; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO security_attribute VALUES (27, 16, 'user.business-info.online.email', 'yrmail@yrmail.yrmail');
-INSERT INTO security_attribute VALUES (28, 16, 'user.business-info.postal.city', '');
-INSERT INTO security_attribute VALUES (29, 16, 'user.business-info.postal.postalcode', '');
-INSERT INTO security_attribute VALUES (30, 16, 'user.business-info.postal.street', '');
-INSERT INTO security_attribute VALUES (31, 16, 'user.custom.ingrid.user.age.group', '0');
-INSERT INTO security_attribute VALUES (32, 16, 'user.custom.ingrid.user.attention.from', '');
-INSERT INTO security_attribute VALUES (33, 16, 'user.custom.ingrid.user.interest', '0');
-INSERT INTO security_attribute VALUES (34, 16, 'user.custom.ingrid.user.profession', '0');
-INSERT INTO security_attribute VALUES (35, 16, 'user.custom.ingrid.user.subscribe.newsletter', '');
-INSERT INTO security_attribute VALUES (36, 16, 'user.name.family', 'Administrator');
-INSERT INTO security_attribute VALUES (37, 16, 'user.name.given', 'System');
-INSERT INTO security_attribute VALUES (38, 16, 'user.name.prefix', '0');
+INSERT INTO security_attribute VALUES (950, 87, 'user.business-info.online.email', 'yrmail@yrmail.yrmail');
+INSERT INTO security_attribute VALUES (951, 87, 'user.business-info.postal.city', ' ');
+INSERT INTO security_attribute VALUES (952, 87, 'user.business-info.postal.postalcode', ' ');
+INSERT INTO security_attribute VALUES (953, 87, 'user.business-info.postal.street', ' ');
+INSERT INTO security_attribute VALUES (954, 87, 'user.custom.ingrid.user.age.group', '0');
+INSERT INTO security_attribute VALUES (955, 87, 'user.custom.ingrid.user.attention.from', ' ');
+INSERT INTO security_attribute VALUES (956, 87, 'user.custom.ingrid.user.interest', '0');
+INSERT INTO security_attribute VALUES (957, 87, 'user.custom.ingrid.user.profession', '0');
+INSERT INTO security_attribute VALUES (958, 87, 'user.custom.ingrid.user.subscribe.newsletter', NULL);
+INSERT INTO security_attribute VALUES (959, 87, 'user.name.family', 'Administrator');
+INSERT INTO security_attribute VALUES (960, 87, 'user.name.given', 'System');
+INSERT INTO security_attribute VALUES (961, 87, 'user.name.prefix', '0');
 
 
 --
 -- Data for Name: security_credential; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO security_credential VALUES (3, 16, 'liiHgKcA1sEBisdWUN9fLEc2gBo=', 0, 1, 0, 0, 1, 1, 0, 0, '2014-12-10 14:50:41', '2015-01-21 11:16:21', '2015-01-21 11:06:08', '2015-01-21 11:16:21', NULL);
+INSERT INTO security_credential VALUES (74, 87, 'liiHgKcA1sEBisdWUN9fLEc2gBo=', 0, 1, 0, 0, 1, 1, 0, 0, '2015-01-06 16:20:18.806', '2015-01-20 18:42:57.118', '2015-01-20 18:38:37.217', '2015-01-20 18:42:57.117', NULL);
 
 
 --
@@ -5591,60 +5279,58 @@ INSERT INTO security_domain VALUES (2, '[system]', 0, 1, NULL);
 --
 
 INSERT INTO security_permission VALUES (1, 'folder', '/', 'view');
-INSERT INTO security_permission VALUES (11, 'folder', '/__subsite-root', 'view');
-INSERT INTO security_permission VALUES (13, 'folder', '/__subsite-root/_role/subsite', 'view, edit');
-INSERT INTO security_permission VALUES (14, 'folder', '/__subsite-root/_role/subsite/-', 'view, edit');
-INSERT INTO security_permission VALUES (15, 'folder', '/__subsite-root/_role/subsite2', 'view, edit');
-INSERT INTO security_permission VALUES (16, 'folder', '/__subsite-root/_role/subsite2/-', 'view, edit');
-INSERT INTO security_permission VALUES (12, 'folder', '/__subsite-root/-', 'view');
-INSERT INTO security_permission VALUES (9, 'folder', '/_user/user', 'view, edit');
-INSERT INTO security_permission VALUES (10, 'folder', '/_user/user/-', 'view, edit');
 INSERT INTO security_permission VALUES (2, 'folder', '/*', 'view');
-INSERT INTO security_permission VALUES (3, 'folder', '/anotherdir/-', 'view');
-INSERT INTO security_permission VALUES (4, 'folder', '/non-java/-', 'view');
-INSERT INTO security_permission VALUES (5, 'folder', '/Public', 'view, edit');
-INSERT INTO security_permission VALUES (6, 'folder', '/Public/-', 'view, edit');
-INSERT INTO security_permission VALUES (7, 'folder', '/third-party/-', 'view');
-INSERT INTO security_permission VALUES (8, 'folder', '/top-links/-', 'view');
-INSERT INTO security_permission VALUES (18, 'folder', '<<ALL FILES>>', 'view');
-INSERT INTO security_permission VALUES (17, 'folder', '<<ALL FILES>>', 'view, edit');
+INSERT INTO security_permission VALUES (3, 'folder', '<<ALL FILES>>', 'view, edit');
+INSERT INTO security_permission VALUES (4, 'folder', '<<ALL FILES>>', 'view');
+INSERT INTO security_permission VALUES (5, 'folder', '/anotherdir/-', 'view');
+INSERT INTO security_permission VALUES (6, 'folder', '/non-java/-', 'view');
+INSERT INTO security_permission VALUES (7, 'folder', '/Public', 'view, edit');
+INSERT INTO security_permission VALUES (8, 'folder', '/Public/-', 'view, edit');
+INSERT INTO security_permission VALUES (9, 'folder', '/__subsite-root', 'view');
+INSERT INTO security_permission VALUES (10, 'folder', '/__subsite-root/-', 'view');
+INSERT INTO security_permission VALUES (11, 'folder', '/__subsite-root/_role/subsite', 'view, edit');
+INSERT INTO security_permission VALUES (12, 'folder', '/__subsite-root/_role/subsite/-', 'view, edit');
+INSERT INTO security_permission VALUES (13, 'folder', '/__subsite-root/_role/subsite2', 'view, edit');
+INSERT INTO security_permission VALUES (14, 'folder', '/__subsite-root/_role/subsite2/-', 'view, edit');
+INSERT INTO security_permission VALUES (15, 'folder', '/third-party/-', 'view');
+INSERT INTO security_permission VALUES (16, 'folder', '/top-links/-', 'view');
+INSERT INTO security_permission VALUES (17, 'folder', '/_user/user', 'view, edit');
+INSERT INTO security_permission VALUES (18, 'folder', '/_user/user/-', 'view, edit');
 INSERT INTO security_permission VALUES (19, 'page', '/default-page.psml', 'view');
 INSERT INTO security_permission VALUES (20, 'page', '/rss.psml', 'view');
-INSERT INTO security_permission VALUES (41, 'portlet', 'ingrid-portal-apps::*', 'view, edit');
 INSERT INTO security_permission VALUES (22, 'portlet', 'ingrid-portal-mdek::*', 'view, edit');
-INSERT INTO security_permission VALUES (23, 'portlet', 'j2-admin::*', 'view, edit');
-INSERT INTO security_permission VALUES (24, 'portlet', 'jetspeed-layouts::*', 'view, edit');
+INSERT INTO security_permission VALUES (23, 'portlet', 'jetspeed-layouts::*', 'view, edit');
+INSERT INTO security_permission VALUES (24, 'portlet', 'j2-admin::*', 'view, edit');
+INSERT INTO security_permission VALUES (41, 'portlet', 'ingrid-portal-apps::*', 'view, edit');
 
 
 --
 -- Data for Name: security_principal; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO security_principal VALUES (1, 'group', 'accounting', 1, 1, 0, 1, '2014-12-10 14:50:39', '2014-12-10 14:50:39', 1);
-INSERT INTO security_principal VALUES (2, 'group', 'engineering', 1, 1, 0, 1, '2014-12-10 14:50:39', '2014-12-10 14:50:39', 1);
-INSERT INTO security_principal VALUES (3, 'group', 'marketing', 1, 1, 0, 1, '2014-12-10 14:50:39', '2014-12-10 14:50:39', 1);
-INSERT INTO security_principal VALUES (4, 'role', 'admin', 1, 1, 0, 1, '2014-12-10 14:50:39', '2014-12-10 14:50:39', 1);
-INSERT INTO security_principal VALUES (5, 'role', 'admin-partner', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (6, 'role', 'admin-portal', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (7, 'role', 'admin-provider', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (8, 'role', 'guest', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (9, 'role', 'manager', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (10, 'role', 'mdek', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (11, 'role', 'subsite', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (12, 'role', 'subsite2', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (13, 'role', 'user', 1, 1, 0, 1, '2014-12-10 14:50:40', '2014-12-10 14:50:40', 1);
-INSERT INTO security_principal VALUES (16, 'user', 'admin', 1, 1, 0, 1, '2014-12-10 14:50:41', '2015-01-21 10:50:26', 1);
-INSERT INTO security_principal VALUES (20, 'user', 'guest', 1, 1, 0, 1, '2014-12-10 14:50:41', '2014-12-10 14:50:44', 1);
+INSERT INTO security_principal VALUES (1, 'group', 'accounting', 1, 1, 0, 1, '2015-01-06 16:20:15.026', '2015-01-06 16:20:15.026', 1);
+INSERT INTO security_principal VALUES (2, 'group', 'marketing', 1, 1, 0, 1, '2015-01-06 16:20:15.056', '2015-01-06 16:20:15.056', 1);
+INSERT INTO security_principal VALUES (3, 'group', 'engineering', 1, 1, 0, 1, '2015-01-06 16:20:15.066', '2015-01-06 16:20:15.066', 1);
+INSERT INTO security_principal VALUES (4, 'role', 'admin-portal', 1, 1, 0, 1, '2015-01-06 16:20:15.076', '2015-01-06 16:20:15.076', 1);
+INSERT INTO security_principal VALUES (7, 'role', 'admin', 1, 1, 0, 1, '2015-01-06 16:20:15.086', '2015-01-06 16:20:15.086', 1);
+INSERT INTO security_principal VALUES (8, 'role', 'manager', 1, 1, 0, 1, '2015-01-06 16:20:15.096', '2015-01-06 16:20:15.096', 1);
+INSERT INTO security_principal VALUES (9, 'role', 'user', 1, 1, 0, 1, '2015-01-06 16:20:15.096', '2015-01-06 16:20:15.096', 1);
+INSERT INTO security_principal VALUES (10, 'role', 'guest', 1, 1, 0, 1, '2015-01-06 16:20:15.106', '2015-01-06 16:20:15.106', 1);
+INSERT INTO security_principal VALUES (11, 'role', 'subsite', 1, 1, 0, 1, '2015-01-06 16:20:15.106', '2015-01-06 16:20:15.106', 1);
+INSERT INTO security_principal VALUES (12, 'role', 'subsite2', 1, 1, 0, 1, '2015-01-06 16:20:15.126', '2015-01-06 16:20:15.126', 1);
+INSERT INTO security_principal VALUES (13, 'role', 'mdek', 1, 1, 0, 1, '2015-01-06 16:20:15.126', '2015-01-06 16:20:15.126', 1);
+INSERT INTO security_principal VALUES (87, 'user', 'admin', 1, 1, 0, 1, '2015-01-06 16:20:18.806', '2015-01-19 18:23:41.683', 1);
+INSERT INTO security_principal VALUES (91, 'user', 'guest', 1, 1, 0, 1, '2015-01-06 16:20:18.906', '2015-01-06 16:20:20.716', 1);
 
 
 --
 -- Data for Name: security_principal_assoc; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO security_principal_assoc VALUES ('isMemberOf', 16, 4);
-INSERT INTO security_principal_assoc VALUES ('isMemberOf', 16, 9);
-INSERT INTO security_principal_assoc VALUES ('isMemberOf', 16, 13);
-INSERT INTO security_principal_assoc VALUES ('isMemberOf', 20, 8);
+INSERT INTO security_principal_assoc VALUES ('isMemberOf', 87, 7);
+INSERT INTO security_principal_assoc VALUES ('isMemberOf', 87, 8);
+INSERT INTO security_principal_assoc VALUES ('isMemberOf', 87, 9);
+INSERT INTO security_principal_assoc VALUES ('isMemberOf', 91, 10);
 
 
 --
@@ -5690,1171 +5376,827 @@ INSERT INTO security_principal_assoc VALUES ('isMemberOf', 20, 8);
 
 
 --
--- Name: capability_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218264; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY capability
-    ADD CONSTRAINT capability_pkey PRIMARY KEY (capability_id);
+ALTER TABLE ONLY security_principal
+    ADD CONSTRAINT sys_c00218264 PRIMARY KEY (principal_id);
 
 
 --
--- Name: client_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY client
-    ADD CONSTRAINT client_pkey PRIMARY KEY (client_id);
-
-
---
--- Name: client_to_capability_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY client_to_capability
-    ADD CONSTRAINT client_to_capability_pkey PRIMARY KEY (capability_id, client_id);
-
-
---
--- Name: client_to_mimetype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY client_to_mimetype
-    ADD CONSTRAINT client_to_mimetype_pkey PRIMARY KEY (client_id, mimetype_id);
-
-
---
--- Name: clubs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY clubs
-    ADD CONSTRAINT clubs_pkey PRIMARY KEY (name);
-
-
---
--- Name: custom_portlet_mode_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY custom_portlet_mode
-    ADD CONSTRAINT custom_portlet_mode_pkey PRIMARY KEY (id);
-
-
---
--- Name: custom_window_state_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY custom_window_state
-    ADD CONSTRAINT custom_window_state_pkey PRIMARY KEY (id);
-
-
---
--- Name: event_alias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY event_alias
-    ADD CONSTRAINT event_alias_pkey PRIMARY KEY (id);
-
-
---
--- Name: event_definition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY event_definition
-    ADD CONSTRAINT event_definition_pkey PRIMARY KEY (id);
-
-
---
--- Name: filter_lifecycle_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY filter_lifecycle
-    ADD CONSTRAINT filter_lifecycle_pkey PRIMARY KEY (id);
-
-
---
--- Name: filter_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY filter_mapping
-    ADD CONSTRAINT filter_mapping_pkey PRIMARY KEY (id);
-
-
---
--- Name: filtered_portlet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY filtered_portlet
-    ADD CONSTRAINT filtered_portlet_pkey PRIMARY KEY (id);
-
-
---
--- Name: folder_constraint_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_constraint
-    ADD CONSTRAINT folder_constraint_pkey PRIMARY KEY (constraint_id);
-
-
---
--- Name: folder_constraints_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_constraints_ref
-    ADD CONSTRAINT folder_constraints_ref_pkey PRIMARY KEY (constraints_ref_id);
-
-
---
--- Name: folder_menu_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_menu_metadata
-    ADD CONSTRAINT folder_menu_metadata_pkey PRIMARY KEY (metadata_id);
-
-
---
--- Name: folder_menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_menu
-    ADD CONSTRAINT folder_menu_pkey PRIMARY KEY (menu_id);
-
-
---
--- Name: folder_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_metadata
-    ADD CONSTRAINT folder_metadata_pkey PRIMARY KEY (metadata_id);
-
-
---
--- Name: folder_order_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_order
-    ADD CONSTRAINT folder_order_pkey PRIMARY KEY (order_id);
-
-
---
--- Name: folder_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder
-    ADD CONSTRAINT folder_pkey PRIMARY KEY (folder_id);
-
-
---
--- Name: fragment_constraint_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_constraint
-    ADD CONSTRAINT fragment_constraint_pkey PRIMARY KEY (constraint_id);
-
-
---
--- Name: fragment_constraints_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_constraints_ref
-    ADD CONSTRAINT fragment_constraints_ref_pkey PRIMARY KEY (constraints_ref_id);
-
-
---
--- Name: fragment_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment
-    ADD CONSTRAINT fragment_pkey PRIMARY KEY (fragment_id);
-
-
---
--- Name: fragment_pref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_pref
-    ADD CONSTRAINT fragment_pref_pkey PRIMARY KEY (pref_id);
-
-
---
--- Name: fragment_pref_value_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_pref_value
-    ADD CONSTRAINT fragment_pref_value_pkey PRIMARY KEY (pref_value_id);
-
-
---
--- Name: fragment_prop_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_prop
-    ADD CONSTRAINT fragment_prop_pkey PRIMARY KEY (prop_id);
-
-
---
--- Name: ingrid_anniversary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_anniversary
-    ADD CONSTRAINT ingrid_anniversary_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_chron_eventtypes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_chron_eventtypes
-    ADD CONSTRAINT ingrid_chron_eventtypes_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_cms_item_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_cms_item
-    ADD CONSTRAINT ingrid_cms_item_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_cms_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_cms
-    ADD CONSTRAINT ingrid_cms_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_env_topic_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_env_topic
-    ADD CONSTRAINT ingrid_env_topic_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_lookup_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_lookup
-    ADD CONSTRAINT ingrid_lookup_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_measures_rubric_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_measures_rubric
-    ADD CONSTRAINT ingrid_measures_rubric_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_newsletter_data_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_newsletter_data
-    ADD CONSTRAINT ingrid_newsletter_data_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_partner_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_partner
-    ADD CONSTRAINT ingrid_partner_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_principal_pref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_principal_pref
-    ADD CONSTRAINT ingrid_principal_pref_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_provider
-    ADD CONSTRAINT ingrid_provider_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_rss_source_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_rss_source
-    ADD CONSTRAINT ingrid_rss_source_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_rss_store_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_rss_store
-    ADD CONSTRAINT ingrid_rss_store_pkey PRIMARY KEY (link);
-
-
---
--- Name: ingrid_service_rubric_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_service_rubric
-    ADD CONSTRAINT ingrid_service_rubric_pkey PRIMARY KEY (id);
-
-
---
--- Name: ingrid_tiny_url_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ingrid_tiny_url
-    ADD CONSTRAINT ingrid_tiny_url_pkey PRIMARY KEY (id);
-
-
---
--- Name: jetspeed_service_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY jetspeed_service
-    ADD CONSTRAINT jetspeed_service_pkey PRIMARY KEY (id);
-
-
---
--- Name: language_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY language
-    ADD CONSTRAINT language_pkey PRIMARY KEY (id);
-
-
---
--- Name: link_constraint_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link_constraint
-    ADD CONSTRAINT link_constraint_pkey PRIMARY KEY (constraint_id);
-
-
---
--- Name: link_constraints_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link_constraints_ref
-    ADD CONSTRAINT link_constraints_ref_pkey PRIMARY KEY (constraints_ref_id);
-
-
---
--- Name: link_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link_metadata
-    ADD CONSTRAINT link_metadata_pkey PRIMARY KEY (metadata_id);
-
-
---
--- Name: link_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link
-    ADD CONSTRAINT link_pkey PRIMARY KEY (link_id);
-
-
---
--- Name: locale_encoding_mapping_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY locale_encoding_mapping
-    ADD CONSTRAINT locale_encoding_mapping_pkey PRIMARY KEY (id);
-
-
---
--- Name: localized_description_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY localized_description
-    ADD CONSTRAINT localized_description_pkey PRIMARY KEY (id);
-
-
---
--- Name: localized_display_name_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY localized_display_name
-    ADD CONSTRAINT localized_display_name_pkey PRIMARY KEY (id);
-
-
---
--- Name: media_type_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY media_type
-    ADD CONSTRAINT media_type_pkey PRIMARY KEY (mediatype_id);
-
-
---
--- Name: mediatype_to_capability_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY mediatype_to_capability
-    ADD CONSTRAINT mediatype_to_capability_pkey PRIMARY KEY (capability_id, mediatype_id);
-
-
---
--- Name: mediatype_to_mimetype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY mediatype_to_mimetype
-    ADD CONSTRAINT mediatype_to_mimetype_pkey PRIMARY KEY (mediatype_id, mimetype_id);
-
-
---
--- Name: mimetype_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY mimetype
-    ADD CONSTRAINT mimetype_pkey PRIMARY KEY (mimetype_id);
-
-
---
--- Name: named_parameter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY named_parameter
-    ADD CONSTRAINT named_parameter_pkey PRIMARY KEY (id);
-
-
---
--- Name: ojb_dlist_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_dlist_entries
-    ADD CONSTRAINT ojb_dlist_entries_pkey PRIMARY KEY (id);
-
-
---
--- Name: ojb_dlist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_dlist
-    ADD CONSTRAINT ojb_dlist_pkey PRIMARY KEY (id);
-
-
---
--- Name: ojb_dmap_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_dmap
-    ADD CONSTRAINT ojb_dmap_pkey PRIMARY KEY (id);
-
-
---
--- Name: ojb_dset_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_dset_entries
-    ADD CONSTRAINT ojb_dset_entries_pkey PRIMARY KEY (id);
-
-
---
--- Name: ojb_dset_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_dset
-    ADD CONSTRAINT ojb_dset_pkey PRIMARY KEY (id);
-
-
---
--- Name: ojb_hl_seq_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_hl_seq
-    ADD CONSTRAINT ojb_hl_seq_pkey PRIMARY KEY (fieldname, tablename);
-
-
---
--- Name: ojb_lockentry_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_lockentry
-    ADD CONSTRAINT ojb_lockentry_pkey PRIMARY KEY (oid_, tx_id);
-
-
---
--- Name: ojb_nrm_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY ojb_nrm
-    ADD CONSTRAINT ojb_nrm_pkey PRIMARY KEY (name);
-
-
---
--- Name: pa_metadata_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pa_metadata_fields
-    ADD CONSTRAINT pa_metadata_fields_pkey PRIMARY KEY (id);
-
-
---
--- Name: pa_security_constraint_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pa_security_constraint
-    ADD CONSTRAINT pa_security_constraint_pkey PRIMARY KEY (id);
-
-
---
--- Name: page_constraint_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_constraint
-    ADD CONSTRAINT page_constraint_pkey PRIMARY KEY (constraint_id);
-
-
---
--- Name: page_constraints_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_constraints_ref
-    ADD CONSTRAINT page_constraints_ref_pkey PRIMARY KEY (constraints_ref_id);
-
-
---
--- Name: page_menu_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_menu_metadata
-    ADD CONSTRAINT page_menu_metadata_pkey PRIMARY KEY (metadata_id);
-
-
---
--- Name: page_menu_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_menu
-    ADD CONSTRAINT page_menu_pkey PRIMARY KEY (menu_id);
-
-
---
--- Name: page_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_metadata
-    ADD CONSTRAINT page_metadata_pkey PRIMARY KEY (metadata_id);
-
-
---
--- Name: page_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page
-    ADD CONSTRAINT page_pkey PRIMARY KEY (page_id);
-
-
---
--- Name: page_sec_constraint_def_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_sec_constraint_def
-    ADD CONSTRAINT page_sec_constraint_def_pkey PRIMARY KEY (constraint_def_id);
-
-
---
--- Name: page_sec_constraints_def_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_sec_constraints_def
-    ADD CONSTRAINT page_sec_constraints_def_pkey PRIMARY KEY (constraints_def_id);
-
-
---
--- Name: page_sec_constraints_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_sec_constraints_ref
-    ADD CONSTRAINT page_sec_constraints_ref_pkey PRIMARY KEY (constraints_ref_id);
-
-
---
--- Name: page_security_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_security
-    ADD CONSTRAINT page_security_pkey PRIMARY KEY (page_security_id);
-
-
---
--- Name: parameter_alias_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY parameter_alias
-    ADD CONSTRAINT parameter_alias_pkey PRIMARY KEY (id);
-
-
---
--- Name: parameter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY parameter
-    ADD CONSTRAINT parameter_pkey PRIMARY KEY (parameter_id);
-
-
---
--- Name: pd_metadata_fields_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY pd_metadata_fields
-    ADD CONSTRAINT pd_metadata_fields_pkey PRIMARY KEY (id);
-
-
---
--- Name: portlet_application_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_application
-    ADD CONSTRAINT portlet_application_pkey PRIMARY KEY (application_id);
-
-
---
--- Name: portlet_definition_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_definition
-    ADD CONSTRAINT portlet_definition_pkey PRIMARY KEY (id);
-
-
---
--- Name: portlet_filter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_filter
-    ADD CONSTRAINT portlet_filter_pkey PRIMARY KEY (id);
-
-
---
--- Name: portlet_listener_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_listener
-    ADD CONSTRAINT portlet_listener_pkey PRIMARY KEY (id);
-
-
---
--- Name: portlet_preference_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_preference
-    ADD CONSTRAINT portlet_preference_pkey PRIMARY KEY (id);
-
-
---
--- Name: portlet_preference_value_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_preference_value
-    ADD CONSTRAINT portlet_preference_value_pkey PRIMARY KEY (id, idx, pref_id);
-
-
---
--- Name: portlet_supports_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_supports
-    ADD CONSTRAINT portlet_supports_pkey PRIMARY KEY (supports_id);
-
-
---
--- Name: principal_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY principal_permission
-    ADD CONSTRAINT principal_permission_pkey PRIMARY KEY (permission_id, principal_id);
-
-
---
--- Name: principal_rule_assoc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY principal_rule_assoc
-    ADD CONSTRAINT principal_rule_assoc_pkey PRIMARY KEY (locator_name, principal_name);
-
-
---
--- Name: processing_event_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY processing_event
-    ADD CONSTRAINT processing_event_pkey PRIMARY KEY (id);
-
-
---
--- Name: profile_page_assoc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY profile_page_assoc
-    ADD CONSTRAINT profile_page_assoc_pkey PRIMARY KEY (locator_hash, page_id);
-
-
---
--- Name: profiling_rule_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY profiling_rule
-    ADD CONSTRAINT profiling_rule_pkey PRIMARY KEY (rule_id);
-
-
---
--- Name: public_parameter_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public_parameter
-    ADD CONSTRAINT public_parameter_pkey PRIMARY KEY (id);
-
-
---
--- Name: publishing_event_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY publishing_event
-    ADD CONSTRAINT publishing_event_pkey PRIMARY KEY (id);
-
-
---
--- Name: qrtz_blob_triggers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_blob_triggers
-    ADD CONSTRAINT qrtz_blob_triggers_pkey PRIMARY KEY (trigger_group, trigger_name);
-
-
---
--- Name: qrtz_calendars_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_calendars
-    ADD CONSTRAINT qrtz_calendars_pkey PRIMARY KEY (calendar_name);
-
-
---
--- Name: qrtz_cron_triggers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_cron_triggers
-    ADD CONSTRAINT qrtz_cron_triggers_pkey PRIMARY KEY (trigger_group, trigger_name);
-
-
---
--- Name: qrtz_fired_triggers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_fired_triggers
-    ADD CONSTRAINT qrtz_fired_triggers_pkey PRIMARY KEY (entry_id);
-
-
---
--- Name: qrtz_job_details_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_job_details
-    ADD CONSTRAINT qrtz_job_details_pkey PRIMARY KEY (job_group, job_name);
-
-
---
--- Name: qrtz_job_listeners_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_job_listeners
-    ADD CONSTRAINT qrtz_job_listeners_pkey PRIMARY KEY (job_group, job_listener, job_name);
-
-
---
--- Name: qrtz_locks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_locks
-    ADD CONSTRAINT qrtz_locks_pkey PRIMARY KEY (lock_name);
-
-
---
--- Name: qrtz_paused_trigger_grps_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_paused_trigger_grps
-    ADD CONSTRAINT qrtz_paused_trigger_grps_pkey PRIMARY KEY (trigger_group);
-
-
---
--- Name: qrtz_scheduler_state_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_scheduler_state
-    ADD CONSTRAINT qrtz_scheduler_state_pkey PRIMARY KEY (instance_name);
-
-
---
--- Name: qrtz_simple_triggers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_simple_triggers
-    ADD CONSTRAINT qrtz_simple_triggers_pkey PRIMARY KEY (trigger_group, trigger_name);
-
-
---
--- Name: qrtz_trigger_listeners_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_trigger_listeners
-    ADD CONSTRAINT qrtz_trigger_listeners_pkey PRIMARY KEY (trigger_group, trigger_listener, trigger_name);
-
-
---
--- Name: qrtz_triggers_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_triggers
-    ADD CONSTRAINT qrtz_triggers_pkey PRIMARY KEY (trigger_group, trigger_name);
-
-
---
--- Name: rule_criterion_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY rule_criterion
-    ADD CONSTRAINT rule_criterion_pkey PRIMARY KEY (criterion_id);
-
-
---
--- Name: runtime_option_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY runtime_option
-    ADD CONSTRAINT runtime_option_pkey PRIMARY KEY (id);
-
-
---
--- Name: runtime_value_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY runtime_value
-    ADD CONSTRAINT runtime_value_pkey PRIMARY KEY (id);
-
-
---
--- Name: secured_portlet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY secured_portlet
-    ADD CONSTRAINT secured_portlet_pkey PRIMARY KEY (id);
-
-
---
--- Name: security_attribute_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218265; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY security_attribute
-    ADD CONSTRAINT security_attribute_pkey PRIMARY KEY (attr_id, attr_name, principal_id);
+    ADD CONSTRAINT sys_c00218265 PRIMARY KEY (attr_id, principal_id, attr_name);
 
 
 --
--- Name: security_credential_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_credential
-    ADD CONSTRAINT security_credential_pkey PRIMARY KEY (credential_id);
-
-
---
--- Name: security_domain_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_domain
-    ADD CONSTRAINT security_domain_pkey PRIMARY KEY (domain_id);
-
-
---
--- Name: security_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_permission
-    ADD CONSTRAINT security_permission_pkey PRIMARY KEY (permission_id);
-
-
---
--- Name: security_principal_assoc_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218266; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY security_principal_assoc
-    ADD CONSTRAINT security_principal_assoc_pkey PRIMARY KEY (assoc_name, from_principal_id, to_principal_id);
+    ADD CONSTRAINT sys_c00218266 PRIMARY KEY (assoc_name, from_principal_id, to_principal_id);
 
 
 --
--- Name: security_principal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_principal
-    ADD CONSTRAINT security_principal_pkey PRIMARY KEY (principal_id);
-
-
---
--- Name: security_role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_role
-    ADD CONSTRAINT security_role_pkey PRIMARY KEY (id);
-
-
---
--- Name: security_role_reference_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_role_reference
-    ADD CONSTRAINT security_role_reference_pkey PRIMARY KEY (id);
-
-
---
--- Name: sso_site_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY sso_site
-    ADD CONSTRAINT sso_site_pkey PRIMARY KEY (site_id);
-
-
---
--- Name: uix_domain_name; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY security_domain
-    ADD CONSTRAINT uix_domain_name UNIQUE (domain_name);
-
-
---
--- Name: uix_portlet_preference; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY portlet_preference
-    ADD CONSTRAINT uix_portlet_preference UNIQUE (dtype, application_name, portlet_name, entity_id, user_name, name);
-
-
---
--- Name: uix_security_permission; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218267; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY security_permission
-    ADD CONSTRAINT uix_security_permission UNIQUE (permission_type, name, actions);
+    ADD CONSTRAINT sys_c00218267 PRIMARY KEY (permission_id);
 
 
 --
--- Name: uix_security_principal; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218268; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY security_principal
-    ADD CONSTRAINT uix_security_principal UNIQUE (principal_type, principal_name, domain_id);
+ALTER TABLE ONLY principal_permission
+    ADD CONSTRAINT sys_c00218268 PRIMARY KEY (principal_id, permission_id);
 
 
 --
--- Name: uix_site_name; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218269; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY security_credential
+    ADD CONSTRAINT sys_c00218269 PRIMARY KEY (credential_id);
+
+
+--
+-- Name: sys_c00218270; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY sso_site
-    ADD CONSTRAINT uix_site_name UNIQUE (name);
+    ADD CONSTRAINT sys_c00218270 PRIMARY KEY (site_id);
 
 
 --
--- Name: uix_site_url; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218271; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY sso_site
-    ADD CONSTRAINT uix_site_url UNIQUE (url);
+ALTER TABLE ONLY security_domain
+    ADD CONSTRAINT sys_c00218271 PRIMARY KEY (domain_id);
 
 
 --
--- Name: uk_application; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218272; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY portlet_definition
+    ADD CONSTRAINT sys_c00218272 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218273; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY portlet_application
-    ADD CONSTRAINT uk_application UNIQUE (app_name);
+    ADD CONSTRAINT sys_c00218273 PRIMARY KEY (application_id);
 
 
 --
--- Name: uk_supports; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218274; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pa_metadata_fields
+    ADD CONSTRAINT sys_c00218274 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218275; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pd_metadata_fields
+    ADD CONSTRAINT sys_c00218275 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218276; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY language
+    ADD CONSTRAINT sys_c00218276 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218277; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY portlet_supports
-    ADD CONSTRAINT uk_supports UNIQUE (portlet_id, mime_type);
+    ADD CONSTRAINT sys_c00218277 PRIMARY KEY (supports_id);
 
 
 --
--- Name: un_folder_1; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218278; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY folder
-    ADD CONSTRAINT un_folder_1 UNIQUE (path);
-
-
---
--- Name: un_folder_constraints_ref_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_constraints_ref
-    ADD CONSTRAINT un_folder_constraints_ref_1 UNIQUE (folder_id, name);
+ALTER TABLE ONLY parameter
+    ADD CONSTRAINT sys_c00218278 PRIMARY KEY (parameter_id);
 
 
 --
--- Name: un_folder_menu_metadata_1; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218279; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY folder_menu_metadata
-    ADD CONSTRAINT un_folder_menu_metadata_1 UNIQUE (menu_id, name, locale, value);
-
-
---
--- Name: un_folder_metadata_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY folder_metadata
-    ADD CONSTRAINT un_folder_metadata_1 UNIQUE (folder_id, name, locale, value);
+ALTER TABLE ONLY security_role_reference
+    ADD CONSTRAINT sys_c00218279 PRIMARY KEY (id);
 
 
 --
--- Name: un_folder_order_1; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218280; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY folder_order
-    ADD CONSTRAINT un_folder_order_1 UNIQUE (folder_id, name);
-
-
---
--- Name: un_fragment_constraints_ref_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_constraints_ref
-    ADD CONSTRAINT un_fragment_constraints_ref_1 UNIQUE (fragment_id, name);
+ALTER TABLE ONLY security_role
+    ADD CONSTRAINT sys_c00218280 PRIMARY KEY (id);
 
 
 --
--- Name: un_fragment_pref_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_pref
-    ADD CONSTRAINT un_fragment_pref_1 UNIQUE (fragment_id, name);
-
-
---
--- Name: un_fragment_prop_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY fragment_prop
-    ADD CONSTRAINT un_fragment_prop_1 UNIQUE (fragment_id, name, scope, scope_value);
-
-
---
--- Name: un_link_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link
-    ADD CONSTRAINT un_link_1 UNIQUE (path);
-
-
---
--- Name: un_link_constraints_ref_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link_constraints_ref
-    ADD CONSTRAINT un_link_constraints_ref_1 UNIQUE (link_id, name);
-
-
---
--- Name: un_link_metadata_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY link_metadata
-    ADD CONSTRAINT un_link_metadata_1 UNIQUE (link_id, name, locale, value);
-
-
---
--- Name: un_page_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page
-    ADD CONSTRAINT un_page_1 UNIQUE (path);
-
-
---
--- Name: un_page_constraints_ref_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_constraints_ref
-    ADD CONSTRAINT un_page_constraints_ref_1 UNIQUE (page_id, name);
-
-
---
--- Name: un_page_menu_metadata_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_menu_metadata
-    ADD CONSTRAINT un_page_menu_metadata_1 UNIQUE (menu_id, name, locale, value);
-
-
---
--- Name: un_page_metadata_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_metadata
-    ADD CONSTRAINT un_page_metadata_1 UNIQUE (page_id, name, locale, value);
-
-
---
--- Name: un_page_sec_constraints_def_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_sec_constraints_def
-    ADD CONSTRAINT un_page_sec_constraints_def_1 UNIQUE (page_security_id, name);
-
-
---
--- Name: un_page_sec_constraints_ref_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_sec_constraints_ref
-    ADD CONSTRAINT un_page_sec_constraints_ref_1 UNIQUE (page_security_id, name);
-
-
---
--- Name: un_page_security_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_security
-    ADD CONSTRAINT un_page_security_1 UNIQUE (parent_id);
-
-
---
--- Name: un_page_security_2; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY page_security
-    ADD CONSTRAINT un_page_security_2 UNIQUE (path);
-
-
---
--- Name: un_qrtz_blob_triggers_1; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_blob_triggers
-    ADD CONSTRAINT un_qrtz_blob_triggers_1 UNIQUE (trigger_name, trigger_group);
-
-
---
--- Name: user_attribute_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY user_attribute
-    ADD CONSTRAINT user_attribute_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_attribute_ref_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: sys_c00218281; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY user_attribute_ref
-    ADD CONSTRAINT user_attribute_ref_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT sys_c00218281 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218282; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY user_attribute
+    ADD CONSTRAINT sys_c00218282 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218283; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY jetspeed_service
+    ADD CONSTRAINT sys_c00218283 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218284; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY localized_description
+    ADD CONSTRAINT sys_c00218284 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218285; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY localized_display_name
+    ADD CONSTRAINT sys_c00218285 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218286; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY custom_portlet_mode
+    ADD CONSTRAINT sys_c00218286 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218287; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY custom_window_state
+    ADD CONSTRAINT sys_c00218287 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218288; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY event_definition
+    ADD CONSTRAINT sys_c00218288 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218289; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY event_alias
+    ADD CONSTRAINT sys_c00218289 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218290; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY parameter_alias
+    ADD CONSTRAINT sys_c00218290 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218291; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY publishing_event
+    ADD CONSTRAINT sys_c00218291 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218292; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY processing_event
+    ADD CONSTRAINT sys_c00218292 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218293; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY named_parameter
+    ADD CONSTRAINT sys_c00218293 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218294; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY runtime_option
+    ADD CONSTRAINT sys_c00218294 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218295; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY runtime_value
+    ADD CONSTRAINT sys_c00218295 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218296; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public_parameter
+    ADD CONSTRAINT sys_c00218296 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218297; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY portlet_filter
+    ADD CONSTRAINT sys_c00218297 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218298; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY filter_lifecycle
+    ADD CONSTRAINT sys_c00218298 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218299; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY filter_mapping
+    ADD CONSTRAINT sys_c00218299 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218300; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY filtered_portlet
+    ADD CONSTRAINT sys_c00218300 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218301; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY portlet_listener
+    ADD CONSTRAINT sys_c00218301 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218302; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY pa_security_constraint
+    ADD CONSTRAINT sys_c00218302 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218303; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY secured_portlet
+    ADD CONSTRAINT sys_c00218303 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218304; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY locale_encoding_mapping
+    ADD CONSTRAINT sys_c00218304 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218305; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY portlet_preference
+    ADD CONSTRAINT sys_c00218305 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218306; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY portlet_preference_value
+    ADD CONSTRAINT sys_c00218306 PRIMARY KEY (id, pref_id, idx);
+
+
+--
+-- Name: sys_c00218307; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY media_type
+    ADD CONSTRAINT sys_c00218307 PRIMARY KEY (mediatype_id);
+
+
+--
+-- Name: sys_c00218308; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY client
+    ADD CONSTRAINT sys_c00218308 PRIMARY KEY (client_id);
+
+
+--
+-- Name: sys_c00218309; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mimetype
+    ADD CONSTRAINT sys_c00218309 PRIMARY KEY (mimetype_id);
+
+
+--
+-- Name: sys_c00218310; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY capability
+    ADD CONSTRAINT sys_c00218310 PRIMARY KEY (capability_id);
+
+
+--
+-- Name: sys_c00218311; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY client_to_capability
+    ADD CONSTRAINT sys_c00218311 PRIMARY KEY (client_id, capability_id);
+
+
+--
+-- Name: sys_c00218312; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY client_to_mimetype
+    ADD CONSTRAINT sys_c00218312 PRIMARY KEY (client_id, mimetype_id);
+
+
+--
+-- Name: sys_c00218313; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mediatype_to_capability
+    ADD CONSTRAINT sys_c00218313 PRIMARY KEY (mediatype_id, capability_id);
+
+
+--
+-- Name: sys_c00218314; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY mediatype_to_mimetype
+    ADD CONSTRAINT sys_c00218314 PRIMARY KEY (mediatype_id, mimetype_id);
+
+
+--
+-- Name: sys_c00218315; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_hl_seq
+    ADD CONSTRAINT sys_c00218315 PRIMARY KEY (tablename, fieldname);
+
+
+--
+-- Name: sys_c00218316; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_lockentry
+    ADD CONSTRAINT sys_c00218316 PRIMARY KEY (oid_, tx_id);
+
+
+--
+-- Name: sys_c00218317; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_dlist
+    ADD CONSTRAINT sys_c00218317 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218318; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_dset
+    ADD CONSTRAINT sys_c00218318 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218319; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_dmap
+    ADD CONSTRAINT sys_c00218319 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218320; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder
+    ADD CONSTRAINT sys_c00218320 PRIMARY KEY (folder_id);
+
+
+--
+-- Name: sys_c00218321; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder_metadata
+    ADD CONSTRAINT sys_c00218321 PRIMARY KEY (metadata_id);
+
+
+--
+-- Name: sys_c00218322; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder_constraint
+    ADD CONSTRAINT sys_c00218322 PRIMARY KEY (constraint_id);
+
+
+--
+-- Name: sys_c00218323; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder_constraints_ref
+    ADD CONSTRAINT sys_c00218323 PRIMARY KEY (constraints_ref_id);
+
+
+--
+-- Name: sys_c00218324; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder_order
+    ADD CONSTRAINT sys_c00218324 PRIMARY KEY (order_id);
+
+
+--
+-- Name: sys_c00218325; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder_menu
+    ADD CONSTRAINT sys_c00218325 PRIMARY KEY (menu_id);
+
+
+--
+-- Name: sys_c00218326; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY folder_menu_metadata
+    ADD CONSTRAINT sys_c00218326 PRIMARY KEY (metadata_id);
+
+
+--
+-- Name: sys_c00218327; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page
+    ADD CONSTRAINT sys_c00218327 PRIMARY KEY (page_id);
+
+
+--
+-- Name: sys_c00218328; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_metadata
+    ADD CONSTRAINT sys_c00218328 PRIMARY KEY (metadata_id);
+
+
+--
+-- Name: sys_c00218329; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_constraint
+    ADD CONSTRAINT sys_c00218329 PRIMARY KEY (constraint_id);
+
+
+--
+-- Name: sys_c00218330; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_constraints_ref
+    ADD CONSTRAINT sys_c00218330 PRIMARY KEY (constraints_ref_id);
+
+
+--
+-- Name: sys_c00218331; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_menu
+    ADD CONSTRAINT sys_c00218331 PRIMARY KEY (menu_id);
+
+
+--
+-- Name: sys_c00218332; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_menu_metadata
+    ADD CONSTRAINT sys_c00218332 PRIMARY KEY (metadata_id);
+
+
+--
+-- Name: sys_c00218333; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fragment
+    ADD CONSTRAINT sys_c00218333 PRIMARY KEY (fragment_id);
+
+
+--
+-- Name: sys_c00218334; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fragment_constraint
+    ADD CONSTRAINT sys_c00218334 PRIMARY KEY (constraint_id);
+
+
+--
+-- Name: sys_c00218335; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fragment_constraints_ref
+    ADD CONSTRAINT sys_c00218335 PRIMARY KEY (constraints_ref_id);
+
+
+--
+-- Name: sys_c00218336; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fragment_pref
+    ADD CONSTRAINT sys_c00218336 PRIMARY KEY (pref_id);
+
+
+--
+-- Name: sys_c00218337; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fragment_pref_value
+    ADD CONSTRAINT sys_c00218337 PRIMARY KEY (pref_value_id);
+
+
+--
+-- Name: sys_c00218338; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY fragment_prop
+    ADD CONSTRAINT sys_c00218338 PRIMARY KEY (prop_id);
+
+
+--
+-- Name: sys_c00218339; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY link
+    ADD CONSTRAINT sys_c00218339 PRIMARY KEY (link_id);
+
+
+--
+-- Name: sys_c00218340; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY link_metadata
+    ADD CONSTRAINT sys_c00218340 PRIMARY KEY (metadata_id);
+
+
+--
+-- Name: sys_c00218341; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY link_constraint
+    ADD CONSTRAINT sys_c00218341 PRIMARY KEY (constraint_id);
+
+
+--
+-- Name: sys_c00218342; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY link_constraints_ref
+    ADD CONSTRAINT sys_c00218342 PRIMARY KEY (constraints_ref_id);
+
+
+--
+-- Name: sys_c00218343; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_security
+    ADD CONSTRAINT sys_c00218343 PRIMARY KEY (page_security_id);
+
+
+--
+-- Name: sys_c00218344; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_sec_constraints_def
+    ADD CONSTRAINT sys_c00218344 PRIMARY KEY (constraints_def_id);
+
+
+--
+-- Name: sys_c00218345; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_sec_constraint_def
+    ADD CONSTRAINT sys_c00218345 PRIMARY KEY (constraint_def_id);
+
+
+--
+-- Name: sys_c00218346; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY page_sec_constraints_ref
+    ADD CONSTRAINT sys_c00218346 PRIMARY KEY (constraints_ref_id);
+
+
+--
+-- Name: sys_c00218347; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profiling_rule
+    ADD CONSTRAINT sys_c00218347 PRIMARY KEY (rule_id);
+
+
+--
+-- Name: sys_c00218348; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY rule_criterion
+    ADD CONSTRAINT sys_c00218348 PRIMARY KEY (criterion_id);
+
+
+--
+-- Name: sys_c00218349; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY principal_rule_assoc
+    ADD CONSTRAINT sys_c00218349 PRIMARY KEY (principal_name, locator_name);
+
+
+--
+-- Name: sys_c00218350; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY profile_page_assoc
+    ADD CONSTRAINT sys_c00218350 PRIMARY KEY (locator_hash, page_id);
+
+
+--
+-- Name: sys_c00218351; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY clubs
+    ADD CONSTRAINT sys_c00218351 PRIMARY KEY (name);
+
+
+--
+-- Name: sys_c00218352; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_cron_triggers
+    ADD CONSTRAINT sys_c00218352 PRIMARY KEY (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00218353; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_fired_triggers
+    ADD CONSTRAINT sys_c00218353 PRIMARY KEY (entry_id);
+
+
+--
+-- Name: sys_c00218354; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_job_listeners
+    ADD CONSTRAINT sys_c00218354 PRIMARY KEY (job_name, job_group, job_listener);
+
+
+--
+-- Name: sys_c00218355; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_locks
+    ADD CONSTRAINT sys_c00218355 PRIMARY KEY (lock_name);
+
+
+--
+-- Name: sys_c00218356; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_paused_trigger_grps
+    ADD CONSTRAINT sys_c00218356 PRIMARY KEY (trigger_group);
+
+
+--
+-- Name: sys_c00218357; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_scheduler_state
+    ADD CONSTRAINT sys_c00218357 PRIMARY KEY (instance_name);
+
+
+--
+-- Name: sys_c00218358; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_simple_triggers
+    ADD CONSTRAINT sys_c00218358 PRIMARY KEY (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00218359; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_trigger_listeners
+    ADD CONSTRAINT sys_c00218359 PRIMARY KEY (trigger_name, trigger_group, trigger_listener);
+
+
+--
+-- Name: sys_c00218360; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_nrm
+    ADD CONSTRAINT sys_c00218360 PRIMARY KEY (name);
+
+
+--
+-- Name: sys_c00218361; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_dlist_entries
+    ADD CONSTRAINT sys_c00218361 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218362; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY ojb_dset_entries
+    ADD CONSTRAINT sys_c00218362 PRIMARY KEY (id);
+
+
+--
+-- Name: sys_c00218363; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_blob_triggers
+    ADD CONSTRAINT sys_c00218363 PRIMARY KEY (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00218364; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_calendars
+    ADD CONSTRAINT sys_c00218364 PRIMARY KEY (calendar_name);
+
+
+--
+-- Name: sys_c00218365; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_job_details
+    ADD CONSTRAINT sys_c00218365 PRIMARY KEY (job_name, job_group);
+
+
+--
+-- Name: sys_c00218366; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_triggers
+    ADD CONSTRAINT sys_c00218366 PRIMARY KEY (trigger_name, trigger_group);
 
 
 --
@@ -6953,13 +6295,6 @@ CREATE INDEX idx_qrtz_t_state ON qrtz_triggers USING btree (trigger_state);
 --
 
 CREATE INDEX idx_qrtz_t_volatile ON qrtz_triggers USING btree (is_volatile);
-
-
---
--- Name: ix_email_1; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_email_1 ON ingrid_newsletter_data USING btree (email);
 
 
 --
@@ -7079,62 +6414,6 @@ CREATE INDEX ix_fragment_prop_1 ON fragment_prop USING btree (fragment_id);
 --
 
 CREATE INDEX ix_from_principal_assoc ON security_principal_assoc USING btree (from_principal_id);
-
-
---
--- Name: ix_ingrid_anniversary_1; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_anniversary_1 ON ingrid_anniversary USING btree (fetched_for);
-
-
---
--- Name: ix_ingrid_anniversary_2; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_anniversary_2 ON ingrid_anniversary USING btree (language);
-
-
---
--- Name: ix_ingrid_partner_1; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_partner_1 ON ingrid_partner USING btree (sortkey);
-
-
---
--- Name: ix_ingrid_provider_1; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_provider_1 ON ingrid_provider USING btree (sortkey_partner);
-
-
---
--- Name: ix_ingrid_provider_2; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_provider_2 ON ingrid_provider USING btree (sortkey);
-
-
---
--- Name: ix_ingrid_provider_3; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_provider_3 ON ingrid_provider USING btree (ident);
-
-
---
--- Name: ix_ingrid_rss_store_1; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_rss_store_1 ON ingrid_rss_store USING btree (published_date);
-
-
---
--- Name: ix_ingrid_rss_store_2; Type: INDEX; Schema: public; Owner: postgres
---
-
-CREATE INDEX ix_ingrid_rss_store_2 ON ingrid_rss_store USING btree (language);
 
 
 --
@@ -7320,10 +6599,185 @@ CREATE INDEX ix_to_principal_assoc_lookup ON security_principal_assoc USING btre
 
 
 --
+-- Name: sys_c00156936; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156936 ON qrtz_job_details USING btree (job_name, job_group);
+
+
+--
+-- Name: sys_c00156940; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156940 ON qrtz_job_listeners USING btree (job_name, job_group, job_listener);
+
+
+--
+-- Name: sys_c00156950; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156950 ON qrtz_triggers USING btree (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00156957; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156957 ON qrtz_simple_triggers USING btree (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00156962; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156962 ON qrtz_cron_triggers USING btree (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00156966; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156966 ON qrtz_blob_triggers USING btree (trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00156971; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156971 ON qrtz_trigger_listeners USING btree (trigger_name, trigger_group, trigger_listener);
+
+
+--
+-- Name: sys_c00156975; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156975 ON qrtz_calendars USING btree (calendar_name);
+
+
+--
+-- Name: sys_c00156977; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156977 ON qrtz_paused_trigger_grps USING btree (trigger_group);
+
+
+--
+-- Name: sys_c00156986; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156986 ON qrtz_fired_triggers USING btree (entry_id);
+
+
+--
+-- Name: sys_c00156990; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156990 ON qrtz_scheduler_state USING btree (instance_name);
+
+
+--
+-- Name: sys_c00156992; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX sys_c00156992 ON qrtz_locks USING btree (lock_name);
+
+
+--
+-- Name: uix_domain_name; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uix_domain_name ON security_domain USING btree (domain_name);
+
+
+--
+-- Name: uix_portlet_preference; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uix_portlet_preference ON portlet_preference USING btree (dtype, application_name, portlet_name, entity_id, user_name, name);
+
+
+--
+-- Name: uix_security_permission; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uix_security_permission ON security_permission USING btree (permission_type, name, actions);
+
+
+--
+-- Name: uix_security_principal; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uix_security_principal ON security_principal USING btree (principal_type, principal_name, domain_id);
+
+
+--
+-- Name: uix_site_name; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uix_site_name ON sso_site USING btree (name);
+
+
+--
+-- Name: uix_site_url; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uix_site_url ON sso_site USING btree (url);
+
+
+--
+-- Name: uk_application; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uk_application ON portlet_application USING btree (app_name);
+
+
+--
+-- Name: uk_supports; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX uk_supports ON portlet_supports USING btree (portlet_id, mime_type);
+
+
+--
+-- Name: un_folder_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_folder_1 ON folder USING btree (path);
+
+
+--
+-- Name: un_folder_constraints_ref_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_folder_constraints_ref_1 ON folder_constraints_ref USING btree (folder_id, name);
+
+
+--
 -- Name: un_folder_menu_1; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX un_folder_menu_1 ON folder_menu USING btree (folder_id, name);
+
+
+--
+-- Name: un_folder_menu_metadata_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_folder_menu_metadata_1 ON folder_menu_metadata USING btree (menu_id, name, locale, value);
+
+
+--
+-- Name: un_folder_metadata_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_folder_metadata_1 ON folder_metadata USING btree (folder_id, name, locale, value);
+
+
+--
+-- Name: un_folder_order_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_folder_order_1 ON folder_order USING btree (folder_id, name);
 
 
 --
@@ -7334,10 +6788,108 @@ CREATE INDEX un_fragment_1 ON fragment USING btree (page_id);
 
 
 --
+-- Name: un_fragment_constraints_ref_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_fragment_constraints_ref_1 ON fragment_constraints_ref USING btree (fragment_id, name);
+
+
+--
+-- Name: un_fragment_pref_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_fragment_pref_1 ON fragment_pref USING btree (fragment_id, name);
+
+
+--
+-- Name: un_fragment_prop_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_fragment_prop_1 ON fragment_prop USING btree (fragment_id, name, scope, scope_value);
+
+
+--
+-- Name: un_link_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_link_1 ON link USING btree (path);
+
+
+--
+-- Name: un_link_constraints_ref_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_link_constraints_ref_1 ON link_constraints_ref USING btree (link_id, name);
+
+
+--
+-- Name: un_link_metadata_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_link_metadata_1 ON link_metadata USING btree (link_id, name, locale, value);
+
+
+--
+-- Name: un_page_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_1 ON page USING btree (path);
+
+
+--
+-- Name: un_page_constraints_ref_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_constraints_ref_1 ON page_constraints_ref USING btree (page_id, name);
+
+
+--
 -- Name: un_page_menu_1; Type: INDEX; Schema: public; Owner: postgres
 --
 
 CREATE INDEX un_page_menu_1 ON page_menu USING btree (page_id, name);
+
+
+--
+-- Name: un_page_menu_metadata_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_menu_metadata_1 ON page_menu_metadata USING btree (menu_id, name, locale, value);
+
+
+--
+-- Name: un_page_metadata_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_metadata_1 ON page_metadata USING btree (page_id, name, locale, value);
+
+
+--
+-- Name: un_page_sec_constraints_def_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_sec_constraints_def_1 ON page_sec_constraints_def USING btree (page_security_id, name);
+
+
+--
+-- Name: un_page_sec_constraints_ref_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_sec_constraints_ref_1 ON page_sec_constraints_ref USING btree (page_security_id, name);
+
+
+--
+-- Name: un_page_security_1; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_security_1 ON page_security USING btree (parent_id);
+
+
+--
+-- Name: un_page_security_2; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX un_page_security_2 ON page_security USING btree (path);
 
 
 --
@@ -7621,54 +7173,6 @@ ALTER TABLE ONLY principal_permission
 
 
 --
--- Name: fk_qrtz_blob_triggers_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_blob_triggers
-    ADD CONSTRAINT fk_qrtz_blob_triggers_1 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
-
-
---
--- Name: fk_qrtz_cron_triggers_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_cron_triggers
-    ADD CONSTRAINT fk_qrtz_cron_triggers_1 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
-
-
---
--- Name: fk_qrtz_job_listeners_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_job_listeners
-    ADD CONSTRAINT fk_qrtz_job_listeners_1 FOREIGN KEY (job_name, job_group) REFERENCES qrtz_job_details(job_name, job_group);
-
-
---
--- Name: fk_qrtz_simple_triggers_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_simple_triggers
-    ADD CONSTRAINT fk_qrtz_simple_triggers_1 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
-
-
---
--- Name: fk_qrtz_trigger_listeners_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_trigger_listeners
-    ADD CONSTRAINT fk_qrtz_trigger_listeners_1 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
-
-
---
--- Name: fk_qrtz_triggers_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY qrtz_triggers
-    ADD CONSTRAINT fk_qrtz_triggers_1 FOREIGN KEY (job_name, job_group) REFERENCES qrtz_job_details(job_name, job_group);
-
-
---
 -- Name: fk_rule_criterion_1; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -7706,6 +7210,54 @@ ALTER TABLE ONLY sso_site
 
 ALTER TABLE ONLY security_principal_assoc
     ADD CONSTRAINT fk_to_principal_assoc FOREIGN KEY (to_principal_id) REFERENCES security_principal(principal_id) ON DELETE CASCADE;
+
+
+--
+-- Name: sys_c00218367; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_triggers
+    ADD CONSTRAINT sys_c00218367 FOREIGN KEY (job_name, job_group) REFERENCES qrtz_job_details(job_name, job_group);
+
+
+--
+-- Name: sys_c00218399; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_cron_triggers
+    ADD CONSTRAINT sys_c00218399 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00218400; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_job_listeners
+    ADD CONSTRAINT sys_c00218400 FOREIGN KEY (job_name, job_group) REFERENCES qrtz_job_details(job_name, job_group);
+
+
+--
+-- Name: sys_c00218401; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_simple_triggers
+    ADD CONSTRAINT sys_c00218401 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00218402; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_trigger_listeners
+    ADD CONSTRAINT sys_c00218402 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
+
+
+--
+-- Name: sys_c00218403; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY qrtz_blob_triggers
+    ADD CONSTRAINT sys_c00218403 FOREIGN KEY (trigger_name, trigger_group) REFERENCES qrtz_triggers(trigger_name, trigger_group);
 
 
 --
