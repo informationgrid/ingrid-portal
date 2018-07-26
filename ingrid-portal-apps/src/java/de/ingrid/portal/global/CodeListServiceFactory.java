@@ -48,7 +48,7 @@ public class CodeListServiceFactory {
 
     private static List<ICodeListPersistency> getPersistencies() {
         XmlCodeListPersistency persistency = new XmlCodeListPersistency();
-        persistency.setPathToXml("data/codelists.xml");
+        persistency.setPathToXml("data");
         List<ICodeListPersistency> persistencies = new ArrayList<ICodeListPersistency>();
         persistencies.add(persistency);
         return persistencies;

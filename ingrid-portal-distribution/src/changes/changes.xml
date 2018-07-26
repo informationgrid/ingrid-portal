@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="1131">
             Portal: Add ZDM profile.
           </action>
+          <action type="fix" dev="wemove" issue="1133">
+            Portal: Fix portal database when newly installed on PostgreSQL.
+          </action>
           <action type="add" dev="wemove" issue="1112">
             MapClient: Display layer name tag on infobox.
           </action>
