@@ -205,3 +205,19 @@ ALTER TABLE qrtz_job_details ALTER is_stateful TYPE boolean USING CASE is_statef
 ALTER TABLE qrtz_job_details ALTER requests_recovery TYPE boolean USING CASE requests_recovery WHEN '1' THEN TRUE ELSE FALSE END;
 
 ALTER TABLE qrtz_triggers ALTER is_volatile TYPE boolean USING CASE is_volatile WHEN '1' THEN TRUE ELSE FALSE END;
+
+-- ADDED IN 4.5.0-SNAPSHOT
+-- Problems inserting new rows into database, see https://redmine.wemove.com/issues/1680
+-- 1. Missing hibernate_sequence for determining ID. Sequence is only missing when migrated fom MySQL.
+-- 2. NOT NULL constraints cause problems when inserting
+
+CREATE SEQUENCE public.hibernate_sequence
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 6200
+  CACHE 20;
+ALTER TABLE public.hibernate_sequence
+  OWNER TO postgres;
+
+ALTER TABLE ingrid_rss_source ALTER COLUMN lastupdate DROP NOT NULL;

@@ -12,7 +12,7 @@
             Portal: Add ZDM profile.
           </action>
           <action type="fix" dev="wemove" issue="1133">
-            Portal: Fix portal database when newly installed on PostgreSQL.
+            Portal: Fix portal database when new installation on PostgreSQL or migrating from MySQL to Postgres.
           </action>
           <action type="add" dev="wemove" issue="1112">
             MapClient: Display layer name tag on infobox.
