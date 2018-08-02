@@ -61,6 +61,12 @@
         <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
         <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
         <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <!-- Pickadate -->
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
+        <!-- zxcvbn -->
+        <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
     </head>
     <body>
     
