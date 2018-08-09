@@ -62,9 +62,13 @@ define(["dojo/_base/declare",
                     // document types
                     sysLists[8002].push(["Dokument", "20", "N", ""]);
                     // address types
-                    sysLists[505] = sysLists[505].filter(item => item[1] === "7" || item[1] === "10");
+                    sysLists[505] = sysLists[505].filter(function(item) {
+                        item[1] === "7" || item[1] === "10";
+                    });
                     // time ref types
-                    sysLists[502] = sysLists[502].filter(item => item[1] !== "2");
+                    sysLists[502] = sysLists[502].filter(function(item) {
+                        item[1] !== "2";
+                    });
                 }, 200);
             });
 
