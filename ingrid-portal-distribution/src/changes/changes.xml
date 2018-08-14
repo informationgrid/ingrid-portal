@@ -17,6 +17,15 @@
           <action type="add" dev="wemove" issue="1112">
             MapClient: Display layer name tag on infobox.
           </action>
+          <action type="add" dev="wemove" issue="1138">
+            MapClient: Display saved layers with http authentification.
+          </action>
+          <action type="add" dev="wemove" issue="1139">
+            MapClient: Display layer error state on admin gui.
+          </action>
+          <action type="add" dev="wemove" issue="1141">
+            MapClient: Display saved layers with dimension time.
+          </action>
           <action type="update" dev="wemove" issue="1130">
             MapClient: Update mf-geoadmin3.
           </action>
