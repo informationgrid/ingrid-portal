@@ -135,7 +135,7 @@ define(["dojo/_base/declare",
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
-            var rubricContainer = creator.createRubric({ id: "mcloud", label: "mCloud Felder", help: "..." });
+            var rubricContainer = creator.createRubric({ id: "mcloud", label: message.get("mcloud.form.mcloudFields"), help: message.get("mcloud.form.mcloudFields.toolTip") });
             construct.place(rubricContainer, "general", "after");
 
             /*

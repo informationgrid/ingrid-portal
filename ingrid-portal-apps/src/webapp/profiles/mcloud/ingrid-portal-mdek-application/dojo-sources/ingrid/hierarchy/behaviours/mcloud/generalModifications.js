@@ -115,7 +115,16 @@ define(["dojo/_base/declare",
             var interceptedGuiIds = {
                 1000: { helpText: message.get("help.mcloud.form.addresses.text"), name: message.get("help.mcloud.form.addresses.title") },
                 1010: { helpText: message.get("help.mcloud.form.description.text"), name: message.get("help.mcloud.form.description.title") },
-                3000: { helpText: message.get("help.mcloud.form.title.text"), name: message.get("help.mcloud.form.title.title"), sample: message.get("help.mcloud.form.title.example") }
+                1240: { helpText: message.get("help.mcloud.form.periodicity.text"), name: message.get("help.mcloud.form.periodicity.title"), sample: message.get("help.mcloud.form.periodicity.example") },
+                3000: { helpText: message.get("help.mcloud.form.title.text"), name: message.get("help.mcloud.form.title.title"), sample: message.get("help.mcloud.form.title.example") },
+                3500: { helpText: message.get("help.mcloud.form.crs.text"), name: message.get("help.mcloud.form.crs.title"), sample: message.get("help.mcloud.form.crs.example") },
+                5030: { helpText: message.get("help.mcloud.form.resourceDate.text"), name: message.get("help.mcloud.form.resourceDate.title"), sample: message.get("help.mcloud.form.resourceDate.example") },
+                7001: { helpText: message.get("help.mcloud.form.crsSection.text"), name: message.get("help.mcloud.form.crsSection.title") },
+                7002: { helpText: message.get("help.mcloud.form.timeSection.text"), name: message.get("help.mcloud.form.timeSection.title") },
+                7013: { helpText: message.get("help.mcloud.form.freeCoordsTransformed.text"), name: message.get("help.mcloud.form.freeCoordsTransformed.title") },
+                10006: { helpText: message.get("help.mcloud.form.geothesaurus.text"), name: message.get("help.mcloud.form.geothesaurus.title") },
+                10008: { helpText: message.get("help.mcloud.form.freeBBox.text"), name: message.get("help.mcloud.form.freeBBox.title") },
+                10011: { helpText: message.get("help.mcloud.form.timeCoverage.text"), name: message.get("help.mcloud.form.timeCoverage.title") }
             }
             udk.loadHelpMessageOrig = udk.loadHelpMessage;
             udk.loadHelpMessage = function(guiId) {
