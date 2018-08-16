@@ -166,22 +166,33 @@ define(["dojo/_base/declare",
              * Category
              */
             id = "mcloudCategory";
-            construct.place(
-                creator.createDomSelectBox({
-                    id: id, name: message.get("mcloud.form.category"), help: message.get("mcloud.form.category.helpMessage"),
-                    listEntries: [
-                        {id: "railway", value: "Bahn"},
-                        {id: "data-run", value: "Data-Run"},
-                        {id: "waters", value: "Gewässer"},
-                        {id: "infrastructure", value: "Infrastruktur"},
-                        {id: "climate", value: "Klima"},
-                        {id: "aviation", value: "Luftfahrt"},
-                        {id: "roads", value: "Straßen"}
-                    ],
-                    visible: "required", style: "width:100%" }),
-                rubric);
             newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
+            creator.createDomDataGrid(
+                {
+                    id: id,
+                    name: message.get("mcloud.form.category"),
+                    help: message.get("mcloud.form.category.helpMessage"),
+                    isMandatory: true,
+                    visible: "optional",
+                    rows: "4",
+                    forceGridHeight: false,
+                    style: "width:100%"
+                },
+                [{
+                    field: message.get("mcloud.form.category"),
+                    name: message.get("mcloud.form.category"),
+                    width: '708px',
+                    type: Editors.SelectboxEditor,
+                    options: ["Bahn", "Data-Run", "Gewässer", "Infrastruktur", "Klima", "Luftfahrt", "Straßen"],
+                    values: ["railway", "data-run", "waters", "infrastructure", "climate", "aviation", "roads"],
+                    editable: true,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true
+                }],
+                rubric);
+            var categoryWidget = registry.byId(id);
+            domClass.add(categoryWidget.domNode, "hideTableHeader");
+            additionalFields.push(categoryWidget);
 
             /*
              * Source Type --> not needed since "Downloads" cover this
