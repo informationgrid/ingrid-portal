@@ -61,6 +61,8 @@
         #if($lang && $lang != "en")
             <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
         #end
+        <!-- zxcvbn -->
+        <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
         <!-- ZDM -->
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
