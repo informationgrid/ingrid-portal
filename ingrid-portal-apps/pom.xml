@@ -137,6 +137,7 @@
                         <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
                             <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">
                                 <include name="**/decorations/**/*.vm" />
+                                <include name="**/css/override.css" />
                                 <include name="**/images/**/*.svg" />
                                 <include name="**/images/*.ico" />
                                 <include name="**/error*.html" />
