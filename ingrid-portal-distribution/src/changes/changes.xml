@@ -14,6 +14,9 @@
           <action type="add" dev="wemove" issue="1131">
             Portal: Add ZDM profile.
           </action>
+          <action type="add" dev="wemove" issue="1143">
+            Portal: Add password policy to all portal profiles.
+          </action>
           <action type="fix" dev="wemove" issue="1133">
             Portal: Fix portal database when new installation on PostgreSQL or migrating from MySQL to Postgres.
           </action>
