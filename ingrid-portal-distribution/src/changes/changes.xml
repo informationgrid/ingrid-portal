@@ -32,6 +32,9 @@
           <action type="update" dev="wemove" issue="1130">
             MapClient: Update mf-geoadmin3.
           </action>
+		  <action type="update" dev="wemove" issue="1144">
+            MapClient: Update admin gui libs.
+          </action>
         </release>
 
         <release version="4.4.1" date="2018-06-26" description="Release 4.4.1">
