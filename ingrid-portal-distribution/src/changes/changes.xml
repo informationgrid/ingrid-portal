@@ -20,6 +20,12 @@
           <action type="add" dev="wemove" issue="1143">
             Portal: Add password policy to all portal profiles.
           </action>
+          <action type="add" dev="wemove" issue="1146">
+            Portal: Add procedure 'Negative Vorprüfungen'.
+          </action>
+          <action type="add" dev="wemove" issue="1147">
+            Portal: Change default active procedures on map.
+          </action>
           <action type="fix" dev="wemove" issue="1133">
             Portal: Fix portal database when new installation on PostgreSQL or migrating from MySQL to Postgres.
           </action>
