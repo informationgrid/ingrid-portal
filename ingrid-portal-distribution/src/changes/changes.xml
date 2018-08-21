@@ -10,6 +10,15 @@
           <action type="fix" dev="wemove" issue="1145">
             UVP: IGE: Fix problem with not showing preview data.
           </action>
+          <action type="add" dev="wemove" issue="1143">
+            Portal: Add password policy to profiles.
+          </action>
+          <action type="add" dev="wemove" issue="1146">
+            Portal: Add procedure 'Negative Vorprüfungen'.
+          </action>
+          <action type="add" dev="wemove" issue="1147">
+            Portal: Change default active procedures on map.
+          </action>
         </release>
 
         <release version="4.4.2" date="2018-08-14" description="Release 4.4.2">
