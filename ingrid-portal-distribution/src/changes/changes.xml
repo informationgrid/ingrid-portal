@@ -6,8 +6,14 @@
     </properties>
 
     <body>
+        <release version="4.4.3-SNAPSHOT" date="2018-xx-xx" description="Release 4.4.3">
+          <action type="fix" dev="wemove" issue="1145">
+            UVP: IGE: Fix problem with not showing preview data.
+          </action>
+        </release>
+
         <release version="4.4.2" date="2018-08-14" description="Release 4.4.2">
-          <action type="add" dev="wemove" issue="1142">
+          <action type="fix" dev="wemove" issue="1142">
             UVP: IGE: Fix problem with downloading uvp statistic report in IE11.
           </action>
         </release>
