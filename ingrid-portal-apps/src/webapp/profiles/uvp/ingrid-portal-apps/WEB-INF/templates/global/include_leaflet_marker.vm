@@ -231,7 +231,7 @@
                                 mapMarkersDevPlan.addLayer(marker);
                             }
                         }
-                        map.fitBounds(mapMarkers.getBounds().pad(0.5));
+                        map.fitBounds(mapMarkers.getBounds());
                     })
                     .error(function () {
                       map.spin(false);
@@ -270,7 +270,7 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+                            map.fitBounds(mapMarkers.getBounds());
                         }
                     })
                     .error(function () {
@@ -310,7 +310,7 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+                            map.fitBounds(mapMarkers.getBounds());
                         }
                     })
                     .error(function () {
@@ -350,7 +350,7 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+                            map.fitBounds(mapMarkers.getBounds());
                         }
                     })
                     .error(function () {
@@ -390,7 +390,7 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds().pad(0.5));
+                            map.fitBounds(mapMarkers.getBounds());
                         }
                     })
                     .error(function () {
