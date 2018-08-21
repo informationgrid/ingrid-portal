@@ -44,8 +44,11 @@
           <action type="update" dev="wemove" issue="1130">
             MapClient: Update mf-geoadmin3.
           </action>
-		  <action type="update" dev="wemove" issue="1144">
+          <action type="update" dev="wemove" issue="1144">
             MapClient: Update admin gui libs.
+          </action>
+          <action type="fix" dev="wemove" issue="1148">
+            MapClient: Fix IE11 params update outside iframe.
           </action>
         </release>
 
