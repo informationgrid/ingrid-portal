@@ -231,7 +231,9 @@
                                 mapMarkersDevPlan.addLayer(marker);
                             }
                         }
-                        map.fitBounds(mapMarkers.getBounds());
+                        if(mapMarkers.getBounds().isValid()) {
+                            map.fitBounds(mapMarkers.getBounds());
+                        }
                     })
                     .error(function () {
                       map.spin(false);
@@ -270,7 +272,9 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds());
+                            if(mapMarkers.getBounds().isValid()) {
+                                map.fitBounds(mapMarkers.getBounds());
+                            }
                         }
                     })
                     .error(function () {
@@ -310,7 +314,9 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds());
+                            if(mapMarkers.getBounds().isValid()) {
+                                map.fitBounds(mapMarkers.getBounds());
+                            }
                         }
                     })
                     .error(function () {
@@ -350,7 +356,9 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds());
+                            if(mapMarkers.getBounds().isValid()) {
+                                map.fitBounds(mapMarkers.getBounds());
+                            }
                         }
                     })
                     .error(function () {
@@ -390,7 +398,9 @@
                             }
                         }
                         if(mapMarkers.getLayers().length > 0) {
-                            map.fitBounds(mapMarkers.getBounds());
+                            if(mapMarkers.getBounds().isValid()) {
+                                map.fitBounds(mapMarkers.getBounds());
+                            }
                         }
                     })
                     .error(function () {
