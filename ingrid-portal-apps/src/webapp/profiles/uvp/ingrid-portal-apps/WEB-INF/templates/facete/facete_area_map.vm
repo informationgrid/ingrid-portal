@@ -65,10 +65,12 @@
     };
 
     function getMapBounds(){
-        $('#x1').prop("value", map.getBounds().getWest());
-        $('#x2').prop("value", map.getBounds().getEast());
-        $('#y1').prop("value", map.getBounds().getSouth());
-        $('#y2').prop("value", map.getBounds().getNorth());
+        if(map.getBounds().isValid()) {
+            $('#x1').prop("value", map.getBounds().getWest());
+            $('#x2').prop("value", map.getBounds().getEast());
+            $('#y1').prop("value", map.getBounds().getSouth());
+            $('#y2').prop("value", map.getBounds().getNorth());
+        }
     }
 
     function resizeMap(){
