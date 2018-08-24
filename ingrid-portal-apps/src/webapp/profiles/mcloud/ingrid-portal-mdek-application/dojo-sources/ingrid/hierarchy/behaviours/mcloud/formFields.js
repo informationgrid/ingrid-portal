@@ -73,6 +73,7 @@ define(["dojo/_base/declare",
             domClass.add("toolbarBtnPrintDoc", "hide");
 
             this.hideDefaultFields();
+            this.setDefaultFieldVisibility();
 
             var defCreateFields = this.createFields();
 
@@ -128,6 +129,13 @@ define(["dojo/_base/declare",
                     domClass.add(item, "hide");
                 }
             });
+        },
+
+        setDefaultFieldVisibility: function() {
+            // time
+            domClass.add('uiElementN011', 'show');
+            domClass.add('uiElementN011', 'show');
+            domClass.add('uiElement1240', 'show');
         },
 
         createFields: function() {
@@ -313,7 +321,7 @@ define(["dojo/_base/declare",
              */
             id = "mcloudSourceNote";
             construct.place(
-                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.sourceNote"), help: message.get("mcloud.form.sourceNote.helpMessage"), visible: "optional", style: "width:100%" }),
+                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.sourceNote"), help: message.get("mcloud.form.sourceNote.helpMessage"), visible: "show", style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             var widgetSourceNote = registry.byId(id);
