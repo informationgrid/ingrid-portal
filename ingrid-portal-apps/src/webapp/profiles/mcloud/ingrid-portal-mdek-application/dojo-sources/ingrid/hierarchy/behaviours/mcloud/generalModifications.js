@@ -143,7 +143,8 @@ define(["dojo/_base/declare",
             Rules.openDataLinkCheck = null;
             Rules.applyRule1 = function() {};
             Rules.applyRule2 = function() {};
-            Rules.applyRule3 = function(value) {};
+            // Rule 3 shows/hides "to" date field based on whether "from - to"
+            // option is selected or not. Keep it.
             Rules.applyRule5 = function() {};
             Rules.applyRule6 = function() {};
             Rules.applyRule7 = function() {};
@@ -155,7 +156,6 @@ define(["dojo/_base/declare",
             applyRuleThesaurusInspire = function() {};
             applyRule1 = function() {};
             applyRule2 = function() {};
-            applyRule3 = function() {};
             applyRule5 = function() {};
             applyRule6 = function() {};
             applyRule7 = function() {};
