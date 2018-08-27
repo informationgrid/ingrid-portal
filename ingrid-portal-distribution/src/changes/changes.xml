@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="1145">
             UVP: IGE: Fix problem with not showing preview data.
           </action>
+          <action type="add" dev="wemove" issue="1151">
+            UVP: Portal: Add setting and param extent to define map extent.
+          </action>
           <action type="add" dev="wemove" issue="1143">
             Portal: Add password policy to profiles.
           </action>
