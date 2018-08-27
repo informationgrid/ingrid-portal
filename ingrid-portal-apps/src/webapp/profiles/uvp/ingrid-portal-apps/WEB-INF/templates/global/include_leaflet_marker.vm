@@ -231,9 +231,6 @@
                                 mapMarkersDevPlan.addLayer(marker);
                             }
                         }
-                        if(mapMarkers.getBounds().isValid()) {
-                            map.fitBounds(mapMarkers.getBounds());
-                        }
                     })
                     .error(function () {
                       map.spin(false);
@@ -269,11 +266,6 @@
                                 }
                                 mapMarkers.addLayer(marker);
                                 mapMarkers10.addLayer(marker);
-                            }
-                        }
-                        if(mapMarkers.getLayers().length > 0) {
-                            if(mapMarkers.getBounds().isValid()) {
-                                map.fitBounds(mapMarkers.getBounds());
                             }
                         }
                     })
@@ -313,11 +305,6 @@
                                 mapMarkers1314.addLayer(marker);
                             }
                         }
-                        if(mapMarkers.getLayers().length > 0) {
-                            if(mapMarkers.getBounds().isValid()) {
-                                map.fitBounds(mapMarkers.getBounds());
-                            }
-                        }
                     })
                     .error(function () {
                       map.spin(false);
@@ -353,11 +340,6 @@
                                 }
                                 mapMarkers.addLayer(marker);
                                 mapMarkers11.addLayer(marker);
-                            }
-                        }
-                        if(mapMarkers.getLayers().length > 0) {
-                            if(mapMarkers.getBounds().isValid()) {
-                                map.fitBounds(mapMarkers.getBounds());
                             }
                         }
                     })
@@ -397,11 +379,6 @@
                                 mapMarkers12.addLayer(marker);
                             }
                         }
-                        if(mapMarkers.getLayers().length > 0) {
-                            if(mapMarkers.getBounds().isValid()) {
-                                map.fitBounds(mapMarkers.getBounds());
-                            }
-                        }
                     })
                     .error(function () {
                       map.spin(false);
@@ -438,7 +415,55 @@
             }
         }
     }
+
+    var mapPosition = '$mapPosition';
+    var mapExtent = '$mapExtent';
+    var mapLat;
+    var mapLng;
+    var mapZoom;
+    var mapBounds;
     
+    if(mapPosition){
+        mapLat = parseFloat('$mapPosition.get(0)');
+        mapLng = parseFloat('$mapPosition.get(1)');
+        mapZoom = parseFloat('$mapPosition.get(2)');
+    }
+    
+    if('$mapParamN' && '$mapParamE' && '$mapParamZoom') {
+        mapLat = parseFloat('$mapParamN') || mapLat;
+        mapLng = parseFloat('$mapParamE') || mapLng;
+        mapZoom = parseFloat('$mapParamZoom') || mapZoom;
+    } else if('$mapParamExtent'){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$mapParamExtent.get(0)'),
+            parseFloat('$mapParamExtent.get(1)')),
+          L.latLng(parseFloat('$mapParamExtent.get(2)'),
+          parseFloat('$mapParamExtent.get(3)'))
+        );
+    } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
+            parseFloat('$selectedMap.webmapclientCoords.x1')),
+          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y2'),
+          parseFloat('$selectedMap.webmapclientCoords.x2'))
+        );
+    } else if('$mapExtent'){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$mapExtent.get(0)'),
+            parseFloat('$mapExtent.get(1)')),
+          L.latLng(parseFloat('$mapExtent.get(2)'),
+          parseFloat('$mapExtent.get(3)'))
+        );
+    }
+    
+    if(mapBounds){
+        map.fitBounds(mapBounds);
+    } else if(mapLat && mapLng && mapZoom) {
+        map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
+        mapBounds = map.getBounds();
+    }
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapBounds);
+
     function getIcon(smallIcons, iconColor, enablePopUp) {
         var icon; 
         if(smallIcons){

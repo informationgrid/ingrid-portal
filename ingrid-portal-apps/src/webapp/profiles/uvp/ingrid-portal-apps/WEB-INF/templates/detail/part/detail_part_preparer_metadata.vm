@@ -103,7 +103,7 @@
                                                                     bounds = L.latLngBounds(southWest, northEast);
                                                                     
                                                                     var osm = getOSMLayer();
-                                                                    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10));
+                                                                    var map = addLeafletMap([osm]);
                                                                     var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
                                                                         var popLocation= e.latlng;
                                                                         var popup = L.popup()
@@ -112,7 +112,7 @@
                                                                         .openOn(map);
                                                                     }).addTo(map);
                                                                     
-                                                                    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds, new L.LatLng(51.3, 10))
+                                                                    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds)
                                                                 </script>
                                                             #end
                                                         #end
