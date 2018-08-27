@@ -294,11 +294,11 @@
     </rule>
     <rule>
         <from>/hilfe</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe</to>
+        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoPortal.WSV+Hilfe</to>
     </rule>
     <rule>
         <from>/portal/help.psml</from>
-        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe</to>
+        <to type="permanent-redirect">https://it-navigator.wsv.res.bund.de/display/geoportalwsvhilfe/GeoPortal.WSV+Hilfe</to>
     </rule>
     
     <!-- Features -->
