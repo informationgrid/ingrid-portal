@@ -332,20 +332,15 @@ function getWMSLayer(layerUrl, layerName, attribution){
     return osm;
 }
 
-function addLeafletMap(baselayers, bounds, latlng, zoom){
+function addLeafletMap(baselayers){
     var map = new L.Map('map', {
        layers: baselayers
     });
-    if(bounds){
-        map.fitBounds(bounds);
-    }else{
-        map.setView(latlng, zoom ? zoom : 6);
-    }
 
     return map; 
 }
 
-function addLeafletHomeControl(map, title, position, icon, markers, latlng, zoom){
+function addLeafletHomeControl(map, title, position, icon, bounds){
  // Controls
     var HomeControl = L.Control.extend({
         options: {
@@ -366,14 +361,8 @@ function addLeafletHomeControl(map, title, position, icon, markers, latlng, zoom
         },
         _homeClick: function(e) {
             L.DomEvent.stop(e);
-            if(markers){
-                if(markers.getLayers().length > 0){
-                    map.fitBounds(markers.getBounds().pad(0.5));
-                } else {
-                  map.setView(latlng, zoom ? zoom : 6);
-                }
-            }else{
-                map.setView(latlng, zoom ? zoom : 6);
+            if(bounds){
+                map.fitBounds(bounds);
             }
         }
     });
