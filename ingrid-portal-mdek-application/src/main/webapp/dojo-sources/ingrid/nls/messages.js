@@ -1062,6 +1062,7 @@ define({
         "validation.error.missing.address": "At least one address must be entered.",
         "validation.error.missing.address.user": "For each address type a valid reference must exist (and vice versa).",
         "validation.error.time.reference": "The time reference must be entered completely.",
+        "validation.error.data.format": "The name of the data format has to be supplied.",
         "validation.error.spatial.no.entry": "At least one spatial reference must be entered as thesaurus or free entry.",
         "validation.error.spatial.no.expired": "A spatial reference must not be expired.",
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",

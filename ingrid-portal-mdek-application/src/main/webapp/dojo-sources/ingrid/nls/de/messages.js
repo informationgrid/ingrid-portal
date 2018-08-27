@@ -1064,6 +1064,7 @@ define({
     "validation.error.missing.address": "Es muss mindestens eine Adresse angegeben werden.",
     "validation.error.missing.address.user": "Es muss eine Adresse zu jedem Adress-Typ hinzugefügt werden.",
     "validation.error.time.reference": "Die Zeitangaben müssen komplett eingetragen werden.",
+    "validation.error.data.format": "Der Name des Datenformates muss ausgefüllt werden.",
     "validation.error.conformity.table": "Es müssen alle Pflichtfelder in der Konformitätstabelle eingetragen werden.",
     "validation.error.spatial.no.entry": "Es muss mindestens ein Raumbezug als Geothesaurus oder Freier eingetragen werden.",
     "validation.error.spatial.no.expired": "Der Raumbezug darf nicht abgelaufen sein.",
