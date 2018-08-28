@@ -4,6 +4,7 @@
 "feedback_subject": "GeoViewer.WSV: Meldung eines Problems",
 "hoehen-tiefen": "Höhen & Tiefen",
 "page_title": "GeoPortal.WSV",
+"graticule": "Koordinatennetz UTM32N - ETRS89",
 "search_placeholder": "z.B. Ilmenau, Wasser ...",
 "topic_favoriten_tooltip": "GeoPortal.WSV Favoriten",
 "topic_themen_tooltip": "GeoPortal.WSV Themen",
