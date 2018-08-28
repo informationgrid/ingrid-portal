@@ -103,7 +103,7 @@
                                                                     bounds = L.latLngBounds(southWest, northEast);
                                                                     
                                                                     var osm = getOSMLayer();
-                                                                    var map = addLeafletMap([osm]);
+                                                                    var map = addLeafletMap([osm], bounds);
                                                                     var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
                                                                         var popLocation= e.latlng;
                                                                         var popup = L.popup()

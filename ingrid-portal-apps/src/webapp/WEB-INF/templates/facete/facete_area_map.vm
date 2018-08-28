@@ -54,7 +54,6 @@
 
     var selectedMap = '$selectedMap.webmapclientCoords';
     
-    // start the map in South-East England
     map.setView(new L.LatLng(lat, lng),zoom);
     
     if(selectedMap.indexOf("y1") > -1){
