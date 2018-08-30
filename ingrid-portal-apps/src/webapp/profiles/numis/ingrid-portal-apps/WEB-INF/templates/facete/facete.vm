@@ -326,7 +326,7 @@
 
 #set ($rankedHitslenght = $rankedResultList.get("length").toString())
 #if($rankedHitslenght != "0")
-  #if($enableFacetSelection > 0 || $isSelection)
+  #if($enableFacetSelection || $isSelection)
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter("doRemoveAll", "true")
     #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
@@ -342,7 +342,7 @@
     #end
   </p>
   <p class="tx-right bx-top-0 bx-bot-0">
-    #if($enableFacetSelection > 0 || $isSelection)
+    #if($enableFacetSelection || $isSelection)
       #set ($action = $renderResponse.createActionURL())
       $action.setParameter("doRemoveAll", "true")
       #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
