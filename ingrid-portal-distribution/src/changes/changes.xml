@@ -13,6 +13,27 @@
           <action type="add" dev="wemove" issue="1155">
             UVP: Portal: Change UVP map legend depend on procedure hits.
           </action>
+          <action type="add" dev="wemove" issue="1112">
+            MapClient: Display layer name tag on infobox.
+          </action>
+          <action type="add" dev="wemove" issue="1138">
+            MapClient: Display saved layers with http authentification.
+          </action>
+          <action type="add" dev="wemove" issue="1139">
+            MapClient: Display layer error state on admin gui.
+          </action>
+          <action type="add" dev="wemove" issue="1141">
+            MapClient: Display saved layers with dimension time.
+          </action>
+          <action type="update" dev="wemove" issue="1130">
+            MapClient: Update mf-geoadmin3.
+          </action>
+          <action type="update" dev="wemove" issue="1144">
+            MapClient: Update admin gui libs.
+          </action>
+          <action type="fix" dev="wemove" issue="1148">
+            MapClient: Fix IE11 params update outside iframe.
+          </action>
         </release>
 
         <release version="4.4.3" date="2018-08-28" description="Release 4.4.3">
