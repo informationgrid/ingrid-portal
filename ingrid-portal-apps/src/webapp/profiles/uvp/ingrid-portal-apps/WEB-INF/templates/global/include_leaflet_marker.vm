@@ -150,17 +150,114 @@
         }
     });
     
-    var overlayers = {};
-    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
-    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
-    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
-    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_orange.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Negative Vorpr&#252;fungen"]  = mapMarkers12;
-    overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
+    jQuery.get("$restUrlLegendCounter")
+    .done(function(data, textStatus, jqxhr) {
+        var overlayers = {};
+        if(legendCounter){
+            if(legendCounter.countMarker1){
+                overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_blue.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Zulassungsverfahren"]  = mapMarkers10;
+            }
+            if(legendCounter.countMarker3){
+                overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_black.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Ausl&#228;ndische Vorhaben"]  = mapMarkers11;
+            }
+            if(legendCounter.countMarker2){
+                overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_red.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Vorgelagerte Verfahren"]  = mapMarkers1314;
+            }
+            if(legendCounter.countMarker4){
+                overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_orange.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Negative Vorpr&#252;fungen"]  = mapMarkers12;
+            }
+            if(legendCounter.countMarkerDevPlan){
+                overlayers["<span style=\"background-image: url('/decorations/layout/ingrid/images/pins/icon_pin_green.png'); background-size: 13px 16px; padding:0 4px 0 10px; \"></span>Bauleitplanung"]  = mapMarkersDevPlan;
+            }
+        }
+        
+        if(Object.keys(overlayers).length > 0) {
+            var control = L.control.layers({}, overlayers, {position: 'topright', collapsed:false });
+            control.addTo(map);
+            map.on('overlayadd', onOverlayAdd);
+            if(map){
+                if($checkedCategoryDevPlan){
+                    if(mapMarkersDevPlan) {
+                        map.addLayer(mapMarkersDevPlan);
+                    }
+                }
+                if($checkedCategory10){
+                    if(mapMarkers10) {
+                        map.addLayer(mapMarkers10);
+                    }
+                }
+                if($checkedCategory11){
+                    if(mapMarkers11) {
+                        map.addLayer(mapMarkers11);
+                    }
+                }
+                if($checkedCategory1314){
+                    if(mapMarkers1314) {
+                        map.addLayer(mapMarkers1314);
+                    }
+                }
+                if($checkedCategory12){
+                    if(mapMarkers12) {
+                        map.addLayer(mapMarkers12);
+                    }
+                }
+            }
+            if(typeof onReplaceLegend === "function"){
+                onReplaceLegend(control);
+            }
+        }
+    })
+    .error(function () {
+    });
 
-    var control = L.control.layers({}, overlayers, {position: 'topright', collapsed:false });
-    control.addTo(map);
-    map.on('overlayadd', onOverlayAdd);
+    var mapPosition = '$mapPosition';
+    var mapExtent = '$mapExtent';
+    var mapLat;
+    var mapLng;
+    var mapZoom;
+    var mapBounds;
     
+    if(mapPosition){
+        mapLat = parseFloat('$mapPosition.get(0)');
+        mapLng = parseFloat('$mapPosition.get(1)');
+        mapZoom = parseFloat('$mapPosition.get(2)');
+    }
+    
+    if('$mapParamN' && '$mapParamE' && '$mapParamZoom') {
+        mapLat = parseFloat('$mapParamN') || mapLat;
+        mapLng = parseFloat('$mapParamE') || mapLng;
+        mapZoom = parseFloat('$mapParamZoom') || mapZoom;
+    } else if('$mapParamExtent'){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$mapParamExtent.get(0)'),
+            parseFloat('$mapParamExtent.get(1)')),
+          L.latLng(parseFloat('$mapParamExtent.get(2)'),
+          parseFloat('$mapParamExtent.get(3)'))
+        );
+    } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
+            parseFloat('$selectedMap.webmapclientCoords.x1')),
+          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y2'),
+          parseFloat('$selectedMap.webmapclientCoords.x2'))
+        );
+    } else if('$mapExtent'){
+        mapBounds = L.latLngBounds(
+          L.latLng(parseFloat('$mapExtent.get(0)'),
+            parseFloat('$mapExtent.get(1)')),
+          L.latLng(parseFloat('$mapExtent.get(2)'),
+          parseFloat('$mapExtent.get(3)'))
+        );
+    }
+    
+    if(mapBounds){
+        map.fitBounds(mapBounds);
+    } else if(mapLat && mapLng && mapZoom) {
+        map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
+        mapBounds = map.getBounds();
+    }
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapBounds);
+
     function onOverlayAdd(e){
         if(e.layer.options.id === 'mapMarkersDevPlan') {
             if("$restUrlUVPDevPlan") {
@@ -387,82 +484,6 @@
             }
         }
     }
-
-    if(map){
-        if($checkedCategoryDevPlan){
-            if(mapMarkersDevPlan) {
-                map.addLayer(mapMarkersDevPlan);
-            }
-        }
-        if($checkedCategory10){
-            if(mapMarkers10) {
-                map.addLayer(mapMarkers10);
-            }
-        }
-        if($checkedCategory11){
-            if(mapMarkers11) {
-                map.addLayer(mapMarkers11);
-            }
-        }
-        if($checkedCategory1314){
-            if(mapMarkers1314) {
-                map.addLayer(mapMarkers1314);
-            }
-        }
-        if($checkedCategory12){
-            if(mapMarkers12) {
-                map.addLayer(mapMarkers12);
-            }
-        }
-    }
-
-    var mapPosition = '$mapPosition';
-    var mapExtent = '$mapExtent';
-    var mapLat;
-    var mapLng;
-    var mapZoom;
-    var mapBounds;
-    
-    if(mapPosition){
-        mapLat = parseFloat('$mapPosition.get(0)');
-        mapLng = parseFloat('$mapPosition.get(1)');
-        mapZoom = parseFloat('$mapPosition.get(2)');
-    }
-    
-    if('$mapParamN' && '$mapParamE' && '$mapParamZoom') {
-        mapLat = parseFloat('$mapParamN') || mapLat;
-        mapLng = parseFloat('$mapParamE') || mapLng;
-        mapZoom = parseFloat('$mapParamZoom') || mapZoom;
-    } else if('$mapParamExtent'){
-        mapBounds = L.latLngBounds(
-          L.latLng(parseFloat('$mapParamExtent.get(0)'),
-            parseFloat('$mapParamExtent.get(1)')),
-          L.latLng(parseFloat('$mapParamExtent.get(2)'),
-          parseFloat('$mapParamExtent.get(3)'))
-        );
-    } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
-        mapBounds = L.latLngBounds(
-          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y1'),
-            parseFloat('$selectedMap.webmapclientCoords.x1')),
-          L.latLng(parseFloat('$selectedMap.webmapclientCoords.y2'),
-          parseFloat('$selectedMap.webmapclientCoords.x2'))
-        );
-    } else if('$mapExtent'){
-        mapBounds = L.latLngBounds(
-          L.latLng(parseFloat('$mapExtent.get(0)'),
-            parseFloat('$mapExtent.get(1)')),
-          L.latLng(parseFloat('$mapExtent.get(2)'),
-          parseFloat('$mapExtent.get(3)'))
-        );
-    }
-    
-    if(mapBounds){
-        map.fitBounds(mapBounds);
-    } else if(mapLat && mapLng && mapZoom) {
-        map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
-        mapBounds = map.getBounds();
-    }
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapBounds);
 
     function getIcon(smallIcons, iconColor, enablePopUp) {
         var icon; 

@@ -75,14 +75,16 @@
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
-    var htmlObject = control.getContainer();
-    // Get the desired parent node.
-    var a = document.getElementById('map-legend');
-    
-    // Finally append that node to the new parent.
-    function setParent(el, newParent)
-    {
-        newParent.appendChild(el);
+    function onReplaceLegend(control) {
+        var htmlObject = control.getContainer();
+        // Get the desired parent node.
+        var a = document.getElementById('map-legend');
+        
+        // Finally append that node to the new parent.
+        function setParent(el, newParent)
+        {
+            newParent.appendChild(el);
+        }
+        setParent(htmlObject, a);
     }
-    setParent(htmlObject, a);
 </script>
