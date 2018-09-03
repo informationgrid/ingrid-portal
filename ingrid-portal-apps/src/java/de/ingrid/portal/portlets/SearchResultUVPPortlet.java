@@ -46,7 +46,6 @@ import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
 import de.ingrid.utils.IngridDocument;
@@ -146,7 +145,7 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             }
             if(resourceID.equals( "devPlanMarker" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-                updateQueryString(queryString, request);
+                queryString = UtilsSearch.updateQueryString(queryString, request);
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_BLP_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 if(it != null){
@@ -191,7 +190,7 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             }
             if(resourceID.equals( "legendCounter" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_QUERY_LEGEND, "datatype:www OR datatype:metadata");
-                updateQueryString(queryString, request);
+                queryString = UtilsSearch.updateQueryString(queryString, request);
                 IngridQuery query = QueryStringParser.parse( queryString );
                 query.put( IngridQuery.RANKED, "score" );
                 if (query.get( "FACETS" ) == null) {
@@ -284,22 +283,9 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         }
     }
     
-    private void updateQueryString(String queryString, ResourceRequest request) {
-        String paramQueryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-        if(paramQueryString != null && paramQueryString.length() > 0){
-            if(paramQueryString.indexOf(" OR ") > -1) {
-                paramQueryString = "(" + paramQueryString + ")";
-            }
-            if(queryString.indexOf(" OR ") > -1) {
-                queryString = paramQueryString +  " (" + queryString + ")";
-            } else {
-                queryString = paramQueryString + " " + queryString;
-            }
-        }
-    }
 
     private void writeResponse(ResourceRequest request, ResourceResponse response, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
-        updateQueryString(queryString, request);
+        queryString = UtilsSearch.updateQueryString(queryString, request);
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
         if(it != null){
