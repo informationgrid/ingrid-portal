@@ -38,6 +38,9 @@
           <action type="fix" dev="wemove" issue="1133">
             Portal: Fix portal database when new installation on PostgreSQL or migrating from MySQL to Postgres.
           </action>
+          <action type="add" dev="wemove" issue="1152">
+            UVP: Portal: Add UVP-NI matomo website ID.
+          </action>
           <action type="add" dev="wemove" issue="1155">
             UVP: Portal: Change UVP map legend depend on procedure hits.
           </action>
