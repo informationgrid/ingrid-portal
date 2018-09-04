@@ -44,6 +44,9 @@
           <action type="add" dev="wemove" issue="1155">
             UVP: Portal: Change UVP map legend depend on procedure hits.
           </action>
+          <action type="fix" dev="wemove" issue="1156">
+            UVP: Portal: Fix display details of 'negative Vorprüfungen'.
+          </action>
           <action type="add" dev="wemove" issue="1112">
             MapClient: Display layer name tag on infobox.
           </action>
