@@ -302,6 +302,19 @@
                                         </div>
                                     #end
                                 #end
+                                #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
+                                #if($uvpNegativeApprovalDate)
+                                    <div class="search-result--nested">
+                                        #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
+                                    </div>
+                                #end
+                                #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
+                                #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #if($uvpNegativeRelevantDocs.size() > 0)
+                                    <div class="search-result--nested">
+                                        #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+                                    </div>
+                                #end
                            </div>
                        </aside>
                     </div>
