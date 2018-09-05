@@ -191,7 +191,7 @@ define(["dojo/_base/declare",
                     name: message.get("mcloud.form.category"),
                     width: '708px',
                     type: Editors.SelectboxEditor,
-                    options: ["Bahn", "Data-Run", "Gewässer", "Infrastruktur", "Klima", "Luftfahrt", "Straßen"],
+                    options: ["Bahn", "Data-Run", "Wasserstraßen und Gewässer", "Infrastruktur", "Klima und Wetter", "Luft- und Raumfahrt", "Straßen"],
                     values: ["railway", "data-run", "waters", "infrastructure", "climate", "aviation", "roads"],
                     editable: true,
                     formatter: Formatters.ListCellFormatter,
@@ -298,9 +298,6 @@ define(["dojo/_base/declare",
                 { id: id, name: message.get("mcloud.form.downloads"), help: message.get("mcloud.form.downloads.helpMessage"), isMandatory: true, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                 structure, rubric
             );
-            var categoryWidget = registry.byId(id);
-//            domClass.add(categoryWidget.domNode, "hideTableHeader");
-            additionalFields.push(categoryWidget);
 
             /*
              * License --> Codelist 6500 in Selectbox
