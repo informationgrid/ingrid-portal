@@ -1,3 +1,5 @@
+<%--suppress HtmlUnknownTag --%>
+<%--suppress HtmlFormInputWithoutLabel --%>
 <%--
   **************************************************-
   Ingrid Portal MDEK Application
@@ -24,7 +26,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <% String currLang = (String)session.getAttribute("currLang");%>
-<% String dojoPath = (String)session.getAttribute("dojoPath");%>
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
@@ -245,7 +246,7 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <div autoComplete="false" required="true" style="width: 100%; margin:0px;" id="objectOwner" />
+                                    <div autoComplete="false" required="true" style="width: 100%; margin:0px;" id="objectOwner"></div>
                                 </td>
                                 <td class="bgBlue" style="color:#FFFFFF; ">
                                     <strong><fmt:message key="ui.obj.header.workState" />:</strong><span id="workState" style="margin-left:3px;"></span>
@@ -288,8 +289,7 @@
                                         <fmt:message key="ui.obj.general.shortDescription" />
                                     </label>
                                 </span><span class="input">
-                                    <div type="text" id="generalShortDesc" name="generalShortDesc" class="fullWidth">
-                                    </div>
+                                    <div id="generalShortDesc"></div>
                                 </span></div>
                             </span>
                             <span id="uiElement5100" class="outer optional">
@@ -298,8 +298,7 @@
                                         <fmt:message key="ui.obj.general.previewImage" />
                                     </label>
                                 </span><span class="input">
-                                    <div type="text" id="generalPreviewImage" name="generalPreviewImage" class="fullWidth">
-                                    </div>
+                                    <div id="generalPreviewImage"></div>
                                 </span></div>
                             </span>
                             <span id="uiElement5105" class="outer optional">
@@ -308,7 +307,7 @@
                                         <fmt:message key="ui.obj.general.previewImageDescription" />
                                     </label>
                                 </span><span class="input">
-                                    <div type="text" id="previewImageDescription" name="previewImageDescription" class="fullWidth">
+                                    <div id="previewImageDescription">
                                     </div>
                                 </span></div>
                             </span>
@@ -337,7 +336,7 @@
                             </span>
                             <span id="uiElement6000" class="outer checkboxContainer">
                                 <div class="input checkboxContainer input-inline">
-                                    <input type="checkbox" id="isInspireRelevant" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
+                                    <input type="checkbox" id="isInspireRelevant"  title=""/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6000)"><fmt:message key="ui.obj.general.inspireRelevant" /></label>
                                 </div>
                                 <span id="uiElement6001" class="hidden">
                                     <div class="input checkboxContainer input-inline">
@@ -350,7 +349,7 @@
                             </span>
                             <span id="uiElement6005" class="outer hidden">
                                 <div class="input checkboxContainer">
-                                    <input type="checkbox" id="isAdvCompatible" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6005)"><fmt:message key="ui.obj.general.advCompatible" /></label>
+                                    <input type="checkbox" id="isAdvCompatible"  title=""/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6005)"><fmt:message key="ui.obj.general.advCompatible" /></label>
                                 </div>
                             </span>
                             <span id="uiElement6010" class="outer halfWidth">
@@ -552,7 +551,7 @@
                                     </label>
                                 </span>
 								<span class="input">
-									<input type="text" id="ref1ObjectIdentifier" style="width:100%;" />
+									<input type="text" id="ref1ObjectIdentifier" />
                                     <div style="position:relative; top: 2px; float:right;">
                                         <button id="ref1ObjectIdentifierAddButton">
                                             <fmt:message key="ui.obj.type1.identifier.buttonAdd" />
@@ -623,7 +622,7 @@
                             </div>
                             <div id="ref1GridFormat" class="inputContainer optional hide" style="padding:5px;">
                                 <span id="uiElementN030">
-                                    <span id="ref1VFormatLabel" class="label">
+                                    <span id="ref1GridFormatLabel" class="label">
                                         <label for="ref1GridFormatFields" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5300)">
                                             <fmt:message key="ui.obj.type1.gridFormat.title" />
                                         </label>
@@ -633,7 +632,7 @@
                                             <div>
                                                 <span class="label"></span>
                                                 <span class="input checkboxContainer input-inline">
-                                                    <input style="width:100%;" id="ref1TransfParamAvail" />
+                                                    <input id="ref1TransfParamAvail" />
                                                     <label for="ref1TransfParamAvail" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5301)">
                                                         <fmt:message key="ui.obj.type1.gridFormat.transfParamAvail" />
                                                     </label>
@@ -648,7 +647,7 @@
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input style="width:100%;" id="ref1NumDimensions" />
+                                                    <input id="ref1NumDimensions" />
                                                 </span>
                                             </div>
                                         </span>
@@ -661,7 +660,7 @@
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input style="width:100%;" id="ref1AxisDimName" />
+                                                    <input id="ref1AxisDimName" />
                                                 </span>
                                             </div>
                                         </span>
@@ -673,7 +672,7 @@
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input style="width:100%;" id="ref1AxisDimSize" />
+                                                    <input id="ref1AxisDimSize" />
                                                 </span>
                                             </div>
                                         </span>
@@ -685,7 +684,7 @@
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input style="width:100%;" id="ref1CellGeometry" />
+                                                    <input id="ref1CellGeometry" />
                                                 </span>
                                             </div>
                                         </span>
@@ -708,7 +707,7 @@
                                                 <div>
                                                     <span class="label"></span>
                                                     <span class="input checkboxContainer input-inline">
-                                                        <input style="width:100%;" id="ref1GridFormatRectCheckpoint" />
+                                                        <input id="ref1GridFormatRectCheckpoint" />
                                                         <label for="ref1GridFormatRectCheckpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5308)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.rectified.checkpoint" />
                                                         </label>
@@ -723,7 +722,7 @@
                                                         </label>
                                                     </span>
                                                     <span class="input">
-                                                        <input style="width:100%;" id="ref1GridFormatRectDescription" />
+                                                        <input id="ref1GridFormatRectDescription" />
                                                     </span>
                                                 </div>
                                             </span>
@@ -735,7 +734,7 @@
                                                         </label>
                                                     </span>
                                                     <span class="input">
-                                                        <input style="width:100%;" id="ref1GridFormatRectCornerPoint" />
+                                                        <input id="ref1GridFormatRectCornerPoint" />
                                                     </span>
                                                 </div>
                                             </span>
@@ -758,7 +757,7 @@
                                                 <div>
                                                     <!-- <span class="label"></span> -->
                                                     <span class="input checkboxContainer input-inline">
-                                                        <input style="width:100%;" id="ref1GridFormatRefOrientationParam" />
+                                                        <input id="ref1GridFormatRefOrientationParam" />
                                                         <label for="ref1GridFormatRefOrientationParam" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5312)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.referenced.orientationParam" />
                                                         </label>
@@ -769,7 +768,7 @@
                                                 <div>
                                                     <!-- <span class="label"></span> -->
                                                     <span class="input checkboxContainer input-inline">
-                                                        <input style="width:100%;" id="ref1GridFormatRefControlpoint" />
+                                                        <input id="ref1GridFormatRefControlpoint" />
                                                         <label for="ref1GridFormatRefControlpoint" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5313)">
                                                             <fmt:message key="ui.obj.type1.gridFormat.referenced.controlPoint" />
                                                         </label>
@@ -784,26 +783,11 @@
                                                         </label>
                                                     </span>
                                                     <span class="input">
-                                                        <input style="width:100%;" id="ref1GridFormatRefGeoreferencedParam" />
+                                                        <input id="ref1GridFormatRefGeoreferencedParam" />
                                                     </span>
                                                 </div>
                                             </span>
                                         </div>
-                                        
-                                        <span id="uiElementN001" class="outer" style="width:67%;">
-                                            <div>
-                                                <span class="label hidden">
-                                                    <label for="ref1VFormatDetails" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10001)">
-                                                        weitere Angaben
-                                                    </label>
-                                                </span>
-                                                <div class="input tableContainer">
-                                                    <div id="ref1VFormatDetails" autoHeight="4" interactive="true">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </span>
-                                        <span>&nbsp;</span>
                                     </div>
                                 </span>
                             </div>
@@ -921,7 +905,7 @@
                             <div class="inputContainer">
                                 <span id="uiElement3515" class="outer">
                                 	<div><span class="label">
-                                        <label for="ref1ProcessTabContainer" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3515)">
+                                        <label for="ref1ProcessTabContainerSpace" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3515)">
                                             <fmt:message key="ui.obj.type1.processTable.title" />
                                         </label>
                                     </span><span id="ref1ProcessTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
@@ -1135,7 +1119,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" id="ref2Author" name="ref2Author" class="fullWidth" />
+                                            <input type="text" id="ref2Author" name="ref2Author" />
                                         </span>
                                     </div>
                                 </span>
@@ -1149,7 +1133,7 @@
                                             </label>
                                         </span>
                                         <span class="input">
-                                            <input type="text" id="ref2Publisher" name="ref2Publisher" class="fullWidth" />
+                                            <input type="text" id="ref2Publisher" name="ref2Publisher" />
                                         </span>
                                     </div>
                                 </span>
@@ -1254,7 +1238,7 @@
                                     </span>
                                     <div id="ref2LocationTabContainer" class="" selectedChild="ref2LocationTab1">
                                         <div id='ref2LocationTab1' label="<fmt:message key="ui.obj.type2.locationTable.tab.text" />">
-                                                <input type="text" id="ref2LocationText" name="ref2LocationText" class="" />
+                                                <input type="text" id="ref2LocationText" name="ref2LocationText" title="" />
                                         </div>
                                         <div id='ref2LocationTab2' label="<fmt:message key="ui.obj.type2.locationTable.tab.links" />">
                                             <div class="input tableContainer">
@@ -1275,7 +1259,7 @@
                                             </label>
                                         </span>
                                         <span class="input spaceBelow">
-                                            <div tyle="width:100%;" id="ref2DocumentType" listId="3385">
+                                            <div style="width:100%;" id="ref2DocumentType" listId="3385">
                                             </div>
                                         </span>
                                     </div>
@@ -1292,7 +1276,7 @@
 		                                </span>
 		                                <div id="ref2BaseDataTabContainer" selectedChild="ref2BaseDataTab1">
 		                                    <div id='ref2BaseDataTab1' label="<fmt:message key="ui.obj.type2.generalDataTable.tab.text" />">
-		                                            <input type="text" id="ref2BaseDataText" name="ref2BaseDataText" />
+		                                            <input type="text" id="ref2BaseDataText" name="ref2BaseDataText"  title=""/>
 		                                    </div>
 		                                    <div id='ref2BaseDataTab2' label="<fmt:message key="ui.obj.type2.generalDataTable.tab.links" />">
 		                                        <div class="input tableContainer">
@@ -1379,7 +1363,7 @@
                                 </span>
                                 <span id="uiElement3225" class="optional">
                                     <div class="input checkboxContainer" style="padding-left: 2px;">
-                                        <input type="checkbox" id="ref3IsAtomDownload" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3225)"><fmt:message key="ui.obj.type3.serviceAtomDownload" /></label>
+                                        <input type="checkbox" id="ref3IsAtomDownload" title=""/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3225)"><fmt:message key="ui.obj.type3.serviceAtomDownload" /></label>
                                     </div>
                                 </span>
                               </div> 
@@ -1476,7 +1460,7 @@
                                         </div>
                                         <div id="ref3BaseDataTabContainer" class="h088" selectedChild="ref3BaseDataTab1">
                                             <div id='ref3BaseDataTab1' label="<fmt:message key="ui.obj.type3.generalDataTable.tab.text" />">
-                                            <input type="text" id="ref3BaseDataText" name="ref3BaseDataText" />
+                                            <input type="text" id="ref3BaseDataText" name="ref3BaseDataText" title="" />
                                         </div>
                                         </div>
 										</div>
@@ -1499,7 +1483,7 @@
                             <span id="uiElement3260">
                                 <span class="checkboxContainer outer"><div>
                                     <span class="input checkboxContainer">
-                                        <input type="checkbox" id="ref3HasAccessConstraint" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3260)">
+                                        <input type="checkbox" id="ref3HasAccessConstraint" title="" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3260)">
                                             <fmt:message key="ui.obj.type3.ref3HasAccessConstraint" />
                                         </label>
                                     </span>
@@ -1533,7 +1517,7 @@
                                         </span><span id="ref4ParticipantsTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddParticipantsLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref4Participants'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {linkType: 3410, grid: 'ref4ParticipantsLink'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.type4.participantsTable.link" /></a></span>
                                         <div id="ref4ParticipantsTabContainer" selectedChild="ref4ParticipantsTab1">
                                             <div id='ref4ParticipantsTab1' label="<fmt:message key="ui.obj.type4.participantsTable.tab.text" />">
-                                                <input type="text" id="ref4ParticipantsText" name="ref4ParticipantsText" />
+                                                <input type="text" id="ref4ParticipantsText" name="ref4ParticipantsText" title="" />
                                             </div>
                                             <div id='ref4ParticipantsTab2' label="<fmt:message key="ui.obj.type4.participantsTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -1552,7 +1536,7 @@
                                         </span><span id="ref4PMTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref4AddPMLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref4PM'), 'dialogs/mdek_address_dialog.jsp?c='+userLocale, 755, 580, true, {linkType: 3400, grid: 'ref4PMLink'});" title="<fmt:message key="dialog.popup.addressTable.link" /> [Popup]"><fmt:message key="ui.obj.type4.projectManagerTable.link" /></a></span>
                                         <div id="ref4PMTabContainer" class="h088" selectedChild="ref4PMTab1">
                                             <div id='ref4PMTab1' label="<fmt:message key="ui.obj.type4.projectManagerTable.tab.text" />">
-                                                <input type="text" id="ref4PMText" name="ref4PMText" />
+                                                <input type="text" id="ref4PMText" name="ref4PMText" title="" />
                                             </div>
                                             <div id='ref4PMTab2' label="<fmt:message key="ui.obj.type4.projectManagerTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -1637,7 +1621,7 @@
                                        </span><span id="ref5MethodTab2Header" class="functionalLink onTab marginRightColumn" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref5AddMethodLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref5Method'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3100, gridId: 'ref5MethodLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type5.methodTable.link" /></a></span>
                                         <div id="ref5MethodTabContainer" selectedChild="ref5MethodTab1">
                                             <div id='ref5MethodTab1' label="<fmt:message key="ui.obj.type5.methodTable.tab.text" />">
-                                                <span class="input"><input type="text" id="ref5MethodText" name="ref5MethodText" /></span>
+                                                <span class="input"><input type="text" id="ref5MethodText" name="ref5MethodText" title="" /></span>
                                             </div>
                                             <div id='ref5MethodTab2' label="<fmt:message key="ui.obj.type5.methodTable.tab.links" />">
                                                 <div class="input tableContainer">
@@ -1740,7 +1724,7 @@
                                             <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref6AddBaseDataLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref6BaseData'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3210, gridId: 'ref6BaseDataLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
                                         </span>
                                         <div id="ref6BaseDataTabContainer" selectedChild="ref6BaseDataTab1">
-                                                <input type="text" id="ref6BaseDataText" />
+                                                <input type="text" id="ref6BaseDataText" title="" />
                                         </div>
                                         <div class="input tableContainer">
                                             <div id="ref6MethodTab2">
@@ -1814,7 +1798,7 @@
                                         <div id="spatialRefCoordsAdminUnitContent" style="display:block; height: 44px;">
                                             <span class="outer halfWidth"><div style="margin-left: -6px; margin-top: 3px;">
                                                 <div class="input">
-                                                    <select id="spatialRefAdminUnitSelect" toggle="plain" style="width:100%; margin:0.01px;"></select>
+                                                    <select id="spatialRefAdminUnitSelect" toggle="plain" style="width:100%; margin:0.01px;" title=""></select>
                                                 </div>
                                             </div></span>
                                             <span class="outer halfWidth"><div>
@@ -1853,7 +1837,7 @@
                                         <div id="spatialRefCoordsLocationContent" style="display:block; height: 44px;">
                                             <span class="outer halfWidth"><div style="margin-left: -6px; margin-top: 3px;">
                                                 <div class="input">
-                                                    <select id="spatialRefLocationSelect" toggle="plain" style="width:100%; margin:0.01px;"></select>
+                                                    <select id="spatialRefLocationSelect" toggle="plain" style="width:100%; margin:0.01px;" title=""></select>
                                                 </div>
                                                 </div>
                                             </span>
@@ -1876,7 +1860,6 @@
                                         </label>
                                     </span>
                                     <span class="input">
-                                        <!--<input autoComplete="false" style="width:100%;" maxHeight="150" listId="100" id="ref1SpatialSystem" />-->
                                         <div id="ref1SpatialSystem" interactive="true" autoHeight="3" class="hideTableHeader"></div>
                                     </span>
                                     </div>
@@ -1959,7 +1942,7 @@
                                             </label>
                                         </span>
                                         <div class="input tableContainer">
-                                            <div id="timeRefTable" interactive="true" autoHeight="4" onRowContextMenu:"onRowEvent">
+                                            <div id="timeRefTable" interactive="true" autoHeight="4" onRowContextMenu="onRowEvent">
                                             </div>
                                         </div>
 										</div>
@@ -1998,8 +1981,7 @@
                                                         Datum 1 [TT.MM.JJJJ]
                                                     </label></span>
                                                 <span class="input">
-                                                    <div id="timeRefDate1" displayFormat="dd.MM.yyyy" name="timeRefDate1">
-                                                    </div>
+                                                    <div id="timeRefDate1" displayFormat="dd.MM.yyyy"></div>
                                                     <br/>
                                                     TT.MM.JJJJ
                                                 </span>
@@ -2011,8 +1993,7 @@
                                                         Datum 2 [TT.MM.JJJJ]
                                                     </label>
                                                 </span><span class="input">
-                                                    <div id="timeRefDate2" displayFormat="dd.MM.yyyy" name="timeRefDate2">
-                                                    </div>
+                                                    <div id="timeRefDate2" displayFormat="dd.MM.yyyy"></div>
                                                     <br/>
                                                     TT.MM.JJJJ
                                                 </span>
@@ -2053,7 +2034,7 @@
 	                                                    Intervall Anzahl
 	                                                </label>
 	                                            </span>
-	                                            <span class="input" style="display:inline;"><input type="text" id="timeRefIntervalNum" ame="timeRefIntervalNum" /></span>
+	                                            <span class="input" style="display:inline;"><input type="text" id="timeRefIntervalNum" name="timeRefIntervalNum" /></span>
 											</span>
 											<span  class="outer" style="width:70%;">
 												<span class="label hidden">
@@ -2325,7 +2306,7 @@
                                         </label>
                                     </span>
                                     <span class="input right" style="padding-left: 13px;">
-                                        <select autoComplete="false" id="linksToRelationTypeFilter"></select>
+                                        <select autoComplete="false" id="linksToRelationTypeFilter" title=""></select>
                                     </span>
                                     <span class="functionalLink">
                                         <img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a href="#" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('linksTo'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 900, 680, true, {gridId: 'linksTo'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.links.linksTo.link" /></a>
@@ -2373,7 +2354,7 @@
                                     </label>
                                 </td>
                                 <td colspan="2">
-                                    <input type="text" id="addressTitle" name="addressTitle" style="width:100%;" disabled="disabled" />
+                                    <input type="text" id="addressTitle" name="addressTitle" disabled="disabled" />
                                 </td>
                             </tr>
                             <tr>
@@ -2383,7 +2364,7 @@
                                     </label>
                                 </td>
                                 <td class="col2">
-                                    <input type="text" id="addressType" style="width:100%;" disabled="disabled" />
+                                    <input type="text" id="addressType" disabled="disabled" />
                                 </td>
                                 <td class="col3">
                                     <img id="permissionAdrLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" />
@@ -2440,7 +2421,7 @@
                                         <label id="extraInfoPublishAreaAddress0Label" for="extraInfoPublishAreaAddress0" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4571)">
                                             <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
                                         </label>
-                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress0" /></span>
+                                    </span><span class="input"><input autoComplete="false" listId="3571" id="extraInfoPublishAreaAddress0" /></span>
                                     </div>
                                 </span>
                                 <span class="outer halfWidth"></span>
@@ -2478,7 +2459,7 @@
                                         <label id="extraInfoPublishAreaAddress1Label" for="extraInfoPublishAreaAddress1" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4571)">
                                             <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
                                         </label>
-                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress1" /></span>
+                                    </span><span class="input"><input autoComplete="false" listId="3571" id="extraInfoPublishAreaAddress1" /></span>
                                     </div>
                                 </span>
                                 <span class="outer halfWidth"></span>
@@ -2524,7 +2505,7 @@
                                             <label for="headerAddressType2Style" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4300)">
                                                 <fmt:message key="ui.adr.general.form" />
                                             </label>
-                                        </span><span class="input"><input tyle="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
+                                        </span><span class="input"><input style="width:129px;" listId="4300" id="headerAddressType2Style" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4305" class="outer halfWidth optional show">
@@ -2532,7 +2513,7 @@
                                             <label for="headerAddressType2Title" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4305)">
                                                 <fmt:message key="ui.adr.general.title" />
                                             </label>
-                                        </span><span class="input"><input tyle="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
+                                        </span><span class="input"><input style="width:129px;" listId="4305" id="headerAddressType2Title" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2542,13 +2523,13 @@
                                         <label id="extraInfoPublishAreaAddress2Label" for="extraInfoPublishAreaAddress2" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4571)">
                                             <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
                                         </label>
-                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress2" /></span>
+                                    </span><span class="input"><input autoComplete="false" listId="3571" id="extraInfoPublishAreaAddress2" /></span>
                                     </div>
                                 </span>
                                 <span id="uiElement4320" class="outer halfWidth optional show">
                                     <div>
                                     <div class="input"><span class="label">&nbsp;</span>
-                                        <input type="checkbox" id="headerAddressType2HideAddress" />
+                                        <input type="checkbox" id="headerAddressType2HideAddress" title="" />
                                         <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4320)">
                                             <fmt:message key="ui.adr.general.hideAddress" />
                                         </label>
@@ -2586,7 +2567,7 @@
                                             <label for="headerAddressType3Style" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4015)">
                                                 <fmt:message key="ui.adr.general.form" />
                                             </label>
-                                        </span><span class="input"><input tyle="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
+                                        </span><span class="input"><input style="width:129px;" listId="4300" id="headerAddressType3Style" /></span>
                                         </div>
                                     </span>
                                     <span id="uiElement4020" class="outer halfWidth optional show">
@@ -2594,7 +2575,7 @@
                                             <label for="headerAddressType3Title" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4020)">
                                                 <fmt:message key="ui.adr.general.title" />
                                             </label>
-                                        </span><span class="input"><input tyle="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
+                                        </span><span class="input"><input style="width:129px;" listId="4305" id="headerAddressType3Title" /></span>
                                         </div>
                                     </span>
                             </div>
@@ -2614,7 +2595,7 @@
                                         <label id="extraInfoPublishAreaAddress3Label" for="extraInfoPublishAreaAddress3" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4571)">
                                             <fmt:message key="ui.obj.additionalInfo.publicationCondition" />
                                         </label>
-                                    </span><span class="input"><input autoComplete="false" style="width:100%;" listId="3571" id="extraInfoPublishAreaAddress3" /></span>
+                                    </span><span class="input"><input autoComplete="false" listId="3571" id="extraInfoPublishAreaAddress3" /></span>
                                     </div>
                                 </span>
                                 <span class="outer halfWidth"></span>
@@ -2647,13 +2628,13 @@
                                             </label>
                                         </span>
                                         <div class="input">
-                                            <div id="addressCom" autoHeight="6" interactive="true" style="width:100%;">
+                                            <div id="addressCom" autoHeight="6" interactive="true">
                                             </div>
                                         </div>
                                     </div>
                                 </span>
                                 <span class="outer halfWidth optional">
-                                    <span id="uiElement4400" class="outer" style="width:100%;">
+                                    <span id="uiElement4400" class="outer">
                                         <div>
                                             <span id="addressStreetLabel" class="label">
                                                 <label for="addressStreet" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 4400)">
@@ -2661,7 +2642,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" id="addressStreet" ame="addressStreet" />
+                                                <input type="text" id="addressStreet" name="addressStreet" />
                                             </span>
                                         </div>
                                     </span>
@@ -2697,7 +2678,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" id="addressPOBox" ame="addressPOBox" class="w148" />
+                                                <input type="text" id="addressPOBox" name="addressPOBox" class="w148" />
                                             </span>
                                         </div>
                                     </span>
@@ -2709,7 +2690,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input type="text" id="addressZipPOBox" ame="addressZipPOBox" class="w061" />
+                                                <input type="text" id="addressZipPOBox" name="addressZipPOBox" class="w061" />
                                             </span>
                                         </div>
                                     </span>
@@ -2721,7 +2702,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input autoComplete="false" style="width:100%;" listId="6200" maxHeight="200" id="addressAdministrativeArea" />
+                                                <input autoComplete="false" listId="6200" maxHeight="200" id="addressAdministrativeArea" />
                                             </span>
                                         </div>
                                     </span>
@@ -2733,7 +2714,7 @@
                                                 </label>
                                             </span>
                                             <span class="input">
-                                                <input autoComplete="false" style="width:100%;" listId="6200" maxHeight="200" id="addressCountry" />
+                                                <input autoComplete="false" listId="6200" maxHeight="200" id="addressCountry" />
                                             </span>
                                         </div>
                                     </span>
@@ -2808,7 +2789,7 @@
                                         </label>
                                         </span>
                                         <div class="input">
-                                            <input type="text" id="thesaurusFreeTermInputAddress" />
+                                            <input type="text" id="thesaurusFreeTermInputAddress" title="" />
                                             <div style="position:relative; float:right;">
                                                 <button id="thesaurusFreeTermsAddressAddButton">
                                                     <fmt:message key="ui.adr.thesaurus.terms.custom.buttonAdd" />
