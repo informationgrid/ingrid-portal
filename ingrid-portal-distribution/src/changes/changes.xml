@@ -8,6 +8,9 @@
     <body>
         
         <release version="4.5.0-SNAPSHOT" date="20xx-xx-xx" description="Release 4.5.0">
+          <action type="fix" dev="wemove" issue="1158">
+            UVP: Fix problem showing details for "Negative Vorpruefungen".
+          </action>
           <action type="fix" dev="wemove" issue="1071">
             BKG: IGE: Fix formatting of fields "Zugriffsbeschränkungen" and "Nutzungsbedingungen" in IGE preview.
           </action>
