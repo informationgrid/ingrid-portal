@@ -59,9 +59,9 @@ define(["dojo/_base/declare",
                 .attr('onclick', undefined);
             query("#general .titleBar").attr("title", message.get("mcloud.form.general.tooltip"));
 
-            // make Geothesaurus optional but visible and remove validation after initialization
+            // make Geothesaurus optional and remove validation after initialization
             require("ingrid/hierarchy/objectLayout").deferredCreation.then(function() {
-                domClass.replace("uiElementN006", "outer show");
+                domClass.replace("uiElementN006", "outer optional");
                 validation.spatialRefAdminUnitPublishable = function() {};
                 spatialRefAdminUnitPublishable = function() {};
             });
