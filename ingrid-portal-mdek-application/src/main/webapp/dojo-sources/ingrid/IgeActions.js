@@ -488,7 +488,8 @@ define([
                         console.debug("set data");
                         self._setData(res)
                             .then(lang.partial(msg.resultHandler.resolve, res))
-                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
+                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)) // we must set dirty flag here!
+                            .then(self.onAfterCreate);
                     },
                     // timeout:10000,
                     errorHandler: function(message) {
@@ -1521,7 +1522,8 @@ define([
         onAfterSave: function() {},
         onAfterPublish: function() {},
         onAfterLoad: function() {},
-        
+        onAfterCreate: function() {},
+
         _getAddressOwner: function(uuid) {
         	var def2 = new Deferred();
         	AddressService.getAddressData(uuid, function(address) {
