@@ -163,6 +163,19 @@ public class UploadCleanupJob extends QuartzJobBean {
                         // get uploads from the iplug
                         log.debug("Getting documents from iplug: "+plugId);
                         Map<String, List<FileReference>> uploads = this.getUploads(plugId);
+                        
+                        // get uploads from data sets that do not have a phase, i.e. Negative Vorpruefungen
+                        // merge the results
+                        Map<String, List<FileReference>> uploadsWithoutPhases = this.getUploadsFromDataSetsWithoutPhases(plugId);
+                        for (String key : uploadsWithoutPhases.keySet()) {
+                            if (uploads.containsKey( key )) {
+                                List<FileReference> fileReferences = uploads.get( key );
+                                fileReferences.addAll( uploadsWithoutPhases.get( key ) );
+                            } else {
+                                uploads.put( key, uploadsWithoutPhases.get( key ) );
+                            }
+                        }
+                        
                         Set<String> uploadUris = uploads.keySet();
 
                         // process uploads
@@ -234,7 +247,7 @@ public class UploadCleanupJob extends QuartzJobBean {
     }
 
     /**
-     * Get all uploads referenced in the given iPlug
+     * Get all uploads referenced in the given iPlug from data sets with phases in additional file data tables
      * @param plugId
      * @return Map<String, List<FileReference>>
      * @throws JobExecutionException
@@ -248,6 +261,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
 
         // get uploads from working copies and published objects
+        // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
         String[] fks = new String[]{"objId", "objIdPublished"};
         for (String fk : fks) {
             String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
@@ -266,6 +280,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                     " and fdPhase.id = fdDocs.parentFieldId" +
                     " and fdDocs.id = fdLink.parentFieldId" +
                     " and fdLink.fieldKey = 'link'";
+            
             IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
             if (response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
                 IngridDocument result = MdekUtils.getResultFromResponse(response);
@@ -286,6 +301,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 // select expiry date (might not exist)
                                 // NOTE: this is done in an extra query since HQL does not support
                                 // left outer joins on unrelated tables in the used version
+                                // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
                                 Long parentId = objEntity.getLong("fdLink.parentFieldId");
                                 Integer sort = objEntity.getInt("fdLink.sort");
                                 String qStringSub = "select fdExpires.data " +
@@ -352,6 +368,128 @@ public class UploadCleanupJob extends QuartzJobBean {
 
         return resultList;
     }
+    
+    /**
+     * Get all uploads referenced in the given iPlug from data sets WITHOUT phases in additional file data tables.
+     * 
+     * "Negative Vorpruefungen" is such dataset type for instance.
+     * 
+     * @param plugId
+     * @return Map<String, List<FileReference>>
+     * @throws JobExecutionException
+     */
+    private Map<String, List<FileReference>> getUploadsFromDataSetsWithoutPhases(String plugId) throws JobExecutionException {
+        Map<String, List<FileReference>> resultList = new HashMap<String, List<FileReference>>();
+        IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
+
+        if (mdekCallerQuery == null) {
+            return resultList;
+        }
+
+        // get uploads from working copies and published objects
+        // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
+        String[] fks = new String[]{"objId", "objIdPublished"};
+        for (String fk : fks) {
+            String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
+                    " obj.objName, obj.objUuid, " +
+                    " fdRoot.fieldKey, fdDocs.fieldKey, fdLink.sort " +
+                "from ObjectNode oNode, " +
+                    " T01Object obj, " +
+                    " AdditionalFieldData fdRoot, " +
+                    " AdditionalFieldData fdDocs, " +
+                    " AdditionalFieldData fdLink " +
+                "where " +
+                    " oNode."+fk+" = obj.id " +
+                    " and obj.id = fdRoot.objId" +
+                    " and fdRoot.id = fdDocs.parentFieldId" +
+                    " and fdDocs.id = fdLink.parentFieldId" +
+                    " and fdLink.fieldKey = 'link'";
+            
+            IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+            if (response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
+                IngridDocument result = MdekUtils.getResultFromResponse(response);
+                if (result != null) {
+                    @SuppressWarnings("unchecked")
+                    List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
+                    if (objs != null) {
+                        for (IngridDocument objEntity : objs) {
+                            String file = objEntity.getString("fdLink.data");
+
+                            // exclude absolute links
+                            if (!LINK_PATTERN.matcher(file).matches()) {
+                                String path = objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")/" +
+                                        objEntity.getString("fdRoot.fieldKey") + "/" +
+                                        objEntity.getString("fdDocs.fieldKey") + "/" + objEntity.getInt("fdLink.sort");
+                                String date = null;
+
+                                // select expiry date (might not exist)
+                                // NOTE: this is done in an extra query since HQL does not support
+                                // left outer joins on unrelated tables in the used version
+                                // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
+                                Long parentId = objEntity.getLong("fdLink.parentFieldId");
+                                Integer sort = objEntity.getInt("fdLink.sort");
+                                String qStringSub = "select fdExpires.data " +
+                                    "from ObjectNode oNode, " +
+                                        " T01Object obj, " +
+                                        " AdditionalFieldData fdRoot, " +
+                                        " AdditionalFieldData fdDocs, " +
+                                        " AdditionalFieldData fdExpires " +
+                                    "where " +
+                                        " oNode."+fk+" = obj.id " +
+                                        " and obj.id = fdRoot.objId" +
+                                        " and fdRoot.id = fdDocs.parentFieldId" +
+                                        " and fdDocs.id = fdExpires.parentFieldId" +
+                                        " and fdExpires.parentFieldId = "+parentId+
+                                        " and fdExpires.sort = "+sort+
+                                        " and fdExpires.fieldKey = 'expires'";
+                                IngridDocument responseSub = mdekCallerQuery.queryHQLToMap(plugId, qStringSub, null, "");
+                                if (responseSub.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
+                                    IngridDocument resultSub = MdekUtils.getResultFromResponse(responseSub);
+                                    if (resultSub != null) {
+                                        @SuppressWarnings("unchecked")
+                                        List<IngridDocument> objsSub = (List<IngridDocument>) resultSub.get(MdekKeys.OBJ_ENTITIES);
+                                        if (objsSub != null && objsSub.size() == 1) {
+                                            date = objsSub.get(0).getString("fdExpires.data");
+                                        }
+                                    }
+                                    else {
+                                        throw new JobExecutionException("Job execution returned null response from plugId: " + plugId);
+                                    }
+                                }
+                                else {
+                                    throw new JobExecutionException(responseSub.getString("job_invoke_error_message"));
+                                }
+
+                                // create file reference
+                                FileReference reference = new FileReference(
+                                        file, path, (date != null && date.length() > 0) ? LocalDate.parse(date, dateFormatter) : null
+                                );
+                                if (!resultList.containsKey(file)) {
+                                    List<FileReference> references = new ArrayList<FileReference>();
+                                    references.add(reference);
+                                    resultList.put(file, references);
+                                }
+                                else {
+                                    resultList.get(file).add(reference);
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        throw new JobExecutionException("Job returned null as OBJ_ENTITIES from plugId: " + plugId);
+                    }
+                }
+                else {
+                    throw new JobExecutionException("Job execution returned null response from plugId: " + plugId);
+                }
+            }
+            else {
+                throw new JobExecutionException(response.getString("job_invoke_error_message"));
+            }
+        }
+
+        return resultList;
+    }    
 
     /**
      * Cleanup
