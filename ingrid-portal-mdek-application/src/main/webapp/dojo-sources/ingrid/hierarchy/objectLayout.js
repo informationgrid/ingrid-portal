@@ -231,7 +231,11 @@ define([
 	            		this._startSearchAll(); 
 	            	} ) );
 	    		};
-                
+
+                new ValidationTextBox({
+                    maxLength: 255,
+                    style: "width:100%;"
+                }, "parentIdentifier");
                 
             },
 
