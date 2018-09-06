@@ -47,6 +47,9 @@
           <action type="fix" dev="wemove" issue="1156">
             UVP: Portal: Fix display details of 'negative Vorprüfungen'.
           </action>
+          <action type="fix" dev="wemove" issue="1157">
+            UVP: Portal: Fix map legend icons.
+          </action>
           <action type="add" dev="wemove" issue="1112">
             MapClient: Display layer name tag on infobox.
           </action>
