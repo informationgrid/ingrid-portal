@@ -23,7 +23,6 @@
 define(["dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
-    "dojo/aspect",
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-style",
@@ -31,18 +30,14 @@ define(["dojo/_base/declare",
     "dojo/query",
     "dojo/topic",
     "dijit/registry",
-    "dijit/form/Button",
-    "dijit/form/RadioButton",
     "ingrid/message",
     "ingrid/layoutCreator",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
-    "ingrid/hierarchy/validation",
-    "ingrid/utils/Grid",
-    "ingrid/utils/Syslist"
-], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, Button, RadioButton, message, creator, IgeEvents, Editors, Formatters, dirty, validation, UtilGrid, UtilSyslist) {
+    "ingrid/hierarchy/validation"
+], function(declare, array, lang, dom, domClass, domStyle, construct, query, topic, registry, message, creator, IgeEvents, Editors, Formatters, dirty, validation) {
     return declare(null, {
         title: "Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
@@ -298,6 +293,7 @@ define(["dojo/_base/declare",
                 { id: id, name: message.get("mcloud.form.downloads"), help: message.get("mcloud.form.downloads.helpMessage"), isMandatory: true, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
                 structure, rubric
             );
+            additionalFields.push(registry.byId(id));
 
             /*
              * License --> Codelist 6500 in Selectbox
