@@ -10,6 +10,9 @@
           <action type="fix" dev="wemove" issue="1157">
             UVP: Portal: Fix map legend icons.
           </action>
+          <action type="fix" dev="wemove" issue="1158">
+            UVP: Fix problem showing details for "Negative Vorpruefungen".
+          </action>
         </release>
 
         <release version="4.4.4" date="2018-09-04" description="Release 4.4.4">
