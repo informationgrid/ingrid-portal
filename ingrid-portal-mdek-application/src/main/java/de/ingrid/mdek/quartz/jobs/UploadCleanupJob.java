@@ -392,16 +392,14 @@ public class UploadCleanupJob extends QuartzJobBean {
         for (String fk : fks) {
             String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
                     " obj.objName, obj.objUuid, " +
-                    " fdRoot.fieldKey, fdDocs.fieldKey, fdLink.sort " +
+                    " fdDocs.fieldKey, fdLink.sort " +
                 "from ObjectNode oNode, " +
                     " T01Object obj, " +
-                    " AdditionalFieldData fdRoot, " +
                     " AdditionalFieldData fdDocs, " +
                     " AdditionalFieldData fdLink " +
                 "where " +
                     " oNode."+fk+" = obj.id " +
-                    " and obj.id = fdRoot.objId" +
-                    " and fdRoot.id = fdDocs.parentFieldId" +
+                    " and obj.id = fdDocs.objId" +
                     " and fdDocs.id = fdLink.parentFieldId" +
                     " and fdLink.fieldKey = 'link'";
             
@@ -418,7 +416,6 @@ public class UploadCleanupJob extends QuartzJobBean {
                             // exclude absolute links
                             if (!LINK_PATTERN.matcher(file).matches()) {
                                 String path = objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")/" +
-                                        objEntity.getString("fdRoot.fieldKey") + "/" +
                                         objEntity.getString("fdDocs.fieldKey") + "/" + objEntity.getInt("fdLink.sort");
                                 String date = null;
 
@@ -431,13 +428,11 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 String qStringSub = "select fdExpires.data " +
                                     "from ObjectNode oNode, " +
                                         " T01Object obj, " +
-                                        " AdditionalFieldData fdRoot, " +
                                         " AdditionalFieldData fdDocs, " +
                                         " AdditionalFieldData fdExpires " +
                                     "where " +
                                         " oNode."+fk+" = obj.id " +
-                                        " and obj.id = fdRoot.objId" +
-                                        " and fdRoot.id = fdDocs.parentFieldId" +
+                                        " and obj.id = fdDocs.objId" +
                                         " and fdDocs.id = fdExpires.parentFieldId" +
                                         " and fdExpires.parentFieldId = "+parentId+
                                         " and fdExpires.sort = "+sort+
