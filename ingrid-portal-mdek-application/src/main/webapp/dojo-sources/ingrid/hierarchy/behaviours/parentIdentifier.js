@@ -36,7 +36,7 @@ define(["dijit/registry",
             aspect.after(igeActions, "onAfterCreate", this.handleFieldToggle);
         },
 
-        handleFieldToggle() {
+        handleFieldToggle: function() {
             var isRootObject = currentUdk.parentUuid === null;
             var isBelowFolder = registry.byId("dataTree").selectedNode.getParent().item.objectClass === 1000; // check if parent is a folder
 

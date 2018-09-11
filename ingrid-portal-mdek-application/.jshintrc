@@ -17,6 +17,7 @@
         "_container_": true,
         "UtilityService": true,
         "CatalogService": true,
-        "SecurityService": true
+        "SecurityService": true,
+        "currentUdk": true
     }
 }
