@@ -50,10 +50,11 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
-        "ingrid/hierarchy/behaviours/spatialRepresentationInfo"
+        "ingrid/hierarchy/behaviours/spatialRepresentationInfo",
+        "ingrid/hierarchy/behaviours/parentIdentifier"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
-            spatialRepresentationInfo) {
+            spatialRepresentationInfo, parentIdentifier) {
 
     return declare(null, {
         
@@ -74,6 +75,8 @@ define(["dojo/_base/declare",
         inspireConformityConnection: inspireConformityConnection,
 
         spatialRepresentationInfo: spatialRepresentationInfo,
+
+        parentIdentifier: parentIdentifier,
         
         coupledResourceDownloadDataCheck: {
             title: "Gekoppelte Daten - Überprüfung auf Download-Daten",

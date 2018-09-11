@@ -68,7 +68,18 @@ define([
             }
         },
 
-        showPage: function(caption, url, width, height, /* boolean */ modal, /* assoziative array of optional paramters, passed as ?key=value&... */ customParams, /*string*/ customId) {
+        /**
+         *
+         * @param {string} caption
+         * @param {string} url
+         * @param {number} width
+         * @param {number} height
+         * @param {boolean} modal
+         * @param {*=} customParams
+         * @param {string=} customId
+         * @returns {*}
+         */
+        showPage: function(caption, url, width, height, modal, customParams, customId) {
             // Limit max window size to the current viewport size
             var viewPort = win.getBox();
             if (viewPort.w < width) {

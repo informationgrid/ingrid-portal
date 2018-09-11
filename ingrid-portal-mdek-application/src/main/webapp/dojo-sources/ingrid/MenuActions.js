@@ -50,6 +50,7 @@ define([
     return declare(null, {
 
         COOKIE_HIDE_COPY_HINT: "ingrid.ige.copy.hint",
+        COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT: "ingrid.ige.copy.parent.identifier.hint",
 
         global: this,
 
@@ -72,7 +73,8 @@ define([
                 } else if (selectedNode.item.nodeAppType == "O") {
                     // publish a createObject request and attach the newly created node if it was successful
                     deferred.then(function(res) {
-                        self.attachNewNode(selectedNode, res);
+                        self.attachNewNode(selectedNode, res)
+                            .then(IgeActions.onAfterCreate);
                         selectedNode.setSelected(false);
                         self.openCreateObjectWizardDialog();
                     }, function(err) {
@@ -149,7 +151,7 @@ define([
 
         attachNewNode: function(selectedNode, res) {
             var tree = registry.byId("dataTree");
-            var newNode = this._createNewNode(res, selectedNode.item.objectClass);
+            var newNode = this._createNewNode(res);
 
             // expand tree node if not already done!
             var def;
@@ -161,17 +163,17 @@ define([
                 def.resolve();
             }
 
-            def.then(function() {
-                UtilTree.addNode( "dataTree", selectedNode, newNode)
-                .then(function(node) {
-                    UtilTree.selectNode("dataTree", node.item.id, true);
-                    topic.publish("/selectNode", {
-                        id: "dataTree",
-                        node: node.item
+            return def.then(function() {
+                return UtilTree.addNode( "dataTree", selectedNode, newNode)
+                    .then(function(node) {
+                        UtilTree.selectNode("dataTree", node.item.id, true);
+                        topic.publish("/selectNode", {
+                            id: "dataTree",
+                            node: node.item
+                        });
+                        wnd.scrollIntoView(node.domNode);
+                        registry.byId("dataFormContainer").resize();
                     });
-                    wnd.scrollIntoView(node.domNode);
-                    registry.byId("dataFormContainer").resize();
-                });
             });
         },
 
@@ -215,13 +217,23 @@ define([
             if (selectedNodes.length > 0 && notAllowedSelection.length > 0) {
                 dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);
             } else {
-                var deferred = new Deferred();
-                deferred.then(function() {
-                    var tree = registry.byId("dataTree");
-                    tree.prepareCut(tree.selectedItems);
-                });
+                if (cookie(this.COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT) !== "true") {
+                    var self = this;
+                    dialog.show(message.get("dialog.general.info"), message.get("tree.moveNodeParentIdentifierHint"), dialog.INFO, [{
+                        caption: message.get("general.ok.hide.next.time"),
+                        type: "checkbox",
+                        action: function (newValue) {
+                            cookie(self.COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT, newValue, {expires: 730});
+                        }
+                    }, {
+                        caption: message.get("general.ok"),
+                        action: function () {
+                        }
+                    }]);
+                }
 
-                deferred.resolve();
+                var tree = registry.byId("dataTree");
+                tree.prepareCut(tree.selectedItems);
             }
         },
 
@@ -253,9 +265,8 @@ define([
                         type: "checkbox",
                         action: function(newValue) {
                             console.debug("cookie: " + newValue);
-                            cookie(self.COOKIE_HIDE_COPY_HINT, newValue, {
-                                expires: 730
-                            });
+                            cookie(self.COOKIE_HIDE_COPY_HINT, newValue, {expires: 730});
+                            cookie(self.COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT, newValue, {expires: 730});
                         }
                     }, {
                         caption: message.get("general.ok"),
@@ -328,11 +339,9 @@ define([
                     if (invalidSubNode) {
                         // If an invalid target is selected (same node or child of node to cut)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
-                        return;
                     } else if (invalidFolderUnderObject) {
                         // If an invalid target is selected (copied folder under object/address)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
-                        return;
                     } else {
                         //              var cutNodeWidget = registry.byId(tree.nodeToCut.id);
                         appType = tree.nodesToCut[0].nodeAppType;
@@ -370,6 +379,7 @@ define([
 
                         nodeIds = [];
                         var parentNodeIds = [];
+                        var containsExternalParentIdentifier = false;
                         array.forEach(tree.nodesToCut, function(nodeItem) {
                             nodeIds.push(nodeItem.id);
                             var parentId = UtilTree.getNodeById("dataTree", nodeItem.id).getParent().item.id;
@@ -377,7 +387,20 @@ define([
                                 parentNodeIds.push(null);
                             else
                                 parentNodeIds.push(parentId);
+
+                            if (nodeItem.parentIdentifier) {
+                                containsExternalParentIdentifier = true;
+                            }
                         });
+
+                        // inform user about removed parentIdentifier field, since it'll be moved under another object
+                        // the backend will handle the actual removal
+                        var isRootNodeOrBelowFolder = tree.selectedNode.item.objectClass === 1000 || tree.selectedNode.item.objectClass === null;
+                        if (containsExternalParentIdentifier && !isRootNodeOrBelowFolder) {
+                            def.then(function() {
+                                dialog.show(message.get("general.hint"), message.get("tree.parentIdentifierWillBeRemoved"), dialog.WARNING);
+                            });
+                        }
 
                         if (appType == "O") {
                             def.then(function() {
@@ -644,7 +667,7 @@ define([
                 // Build the dialog parameters
                 // messageKey = dialog.<object|address>.discardPub<Not>ExistMessage
                 var titleText = "";
-                var displayText = "";
+                var displayText;
                 var messageKey = "dialog.";
                 if (selectedNode.item.nodeAppType == "O") {
                     messageKey += "object.";
@@ -962,8 +985,6 @@ define([
 
             if (checks.isObjectPublishable()) {
                 var deferred = new Deferred();
-
-                var dialogText = this.global.currentUdk.isMarkedDeleted ? message.get("dialog.object.markedDeleted.finalSaveMessage") : message.get("dialog.object.finalSaveMessage");
 
                 // Show a dialog to query the user before publishing
                 dialog.showPage(message.get("dialog.finalSaveTitle"), "dialogs/mdek_publish_dialog.jsp?c=" + userLocale, 350, 155, true, {
@@ -1317,14 +1338,6 @@ define([
             }
         },
 
-
-        handleUnmarkDeleted: function() {
-            // Only available for the person in charge of QS.
-            // Removes the flag which marks the obj/adr for deletion
-            this.alertNotImplementedYet();
-        },
-
-
         handleShowChanges: function(msg) {
             // Get the selected node from the message
             var selectedNode = this.getSelectedNode(msg);
@@ -1392,14 +1405,10 @@ define([
 
         // ------------------------- Helper functions -------------------------
 
-        alertNotImplementedYet: function() {
-            alert("Diese Funktionalität ist noch nicht implementiert.");
-        },
-
         /**
          * Check if the function was initiated by the context menu or from toolbar
          * @param msg
-         * @returns true, if conext menu was used
+         * @returns {boolean} true, if conext menu was used
          */
         calledFromContextMenu: function(msg) {
             var fromContextMenu = false;
@@ -1428,10 +1437,6 @@ define([
             }
         },
 
-        getTargetNode: function(msg) {
-            return this.getSelectedNode(msg);
-        },
-
         getSelectedNodes: function() {
             //    var selectedNodes = registry.byId("dataTree").allFocusedNodes;
             //    if (calledFromContextMenu(msg)) {
@@ -1446,6 +1451,12 @@ define([
             return registry.byId("dataTree").selectedNodes;
         },
 
+        /**
+         *
+         * @param obj
+         * @returns {{isFolder: (boolean|*), nodeDocType: *, title: *, nodeAppType: *, userWritePermission: boolean, userMovePermission: boolean, id: *}}
+         * @private
+         */
         _createNewNode: function(obj) {
             var title;
             // var objClass;

@@ -71,6 +71,7 @@ public class MdekDataBean {
 	private MdekAddressBean lastEditor;
 
 	// General
+	private String parentIdentifier;
 	private String generalShortDescription;
 	private String generalDescription;
 	private List<MdekAddressBean> generalAddressTable;
@@ -2220,5 +2221,13 @@ public class MdekDataBean {
 
 	public void setToBePublishedOn(Date toBePublishedOn) {
 		this.toBePublishedOn = toBePublishedOn;
+	}
+
+	public String getParentIdentifier() {
+		return parentIdentifier;
+	}
+
+	public void setParentIdentifier(String parentIdentifier) {
+		this.parentIdentifier = parentIdentifier;
 	}
 }
