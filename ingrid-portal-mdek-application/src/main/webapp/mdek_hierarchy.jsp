@@ -39,10 +39,10 @@
         <script type="text/javascript" src="generated/dynamicJS.js?lang=<%=currLang%>&c=<%=java.lang.Math.random()%>"></script>
         <script type="text/javascript">
             var pageHierachy = _container_;
-            require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom", "dojo/dom-construct", "dojo/dom-class", "dojo/topic",
+            require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom-construct", "dojo/topic",
                     "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "ingrid/utils/Catalog", "dojo/ready"
                 ],
-                function(Deferred, BorderContainer, ContentPane, registry, lang, dom, construct, domClass, topic, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
+                function(Deferred, BorderContainer, ContentPane, registry, lang, construct, topic, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
 
                     pageHierachy.dataTreePromise = new Deferred();
 
@@ -207,7 +207,7 @@
     </head>
     <body>
         <div id="hierarchy">
-        <div id="loadingZone" style="float:right; margin-top:0px; z-index: 100; visibility:hidden; top: 5px; right:60px; position: absolute;">
+        <div id="loadingZone" style="float:right; margin-top:0; z-index: 100; visibility:hidden; top: 5px; right:60px; position: absolute;">
 			<img id="imageZone" src="img/ladekreis.gif" />
 		</div>
             <!--<div id="objectContainer" style="">--><!-- START CONTENT OBJECT - HEADER -->
@@ -233,7 +233,7 @@
                                     </label>
                                 </td>
                                 <td class="col2">
-                                    <select autoComplete="false" required="true" style="width: 100%; margin:0px;" disabled="disabled" id="objectClass"></select>
+                                    <select autoComplete="false" required="true" style="width: 100%; margin:0;" disabled="disabled" id="objectClass"></select>
                                 </td>
                                 <td class="col3">
                                     <img id="permissionObjLock" src="img/lock.gif" width="9" height="14" alt="gesperrt" />
@@ -246,7 +246,7 @@
                                     </label>
                                 </td>
                                 <td>
-                                    <div autoComplete="false" required="true" style="width: 100%; margin:0px;" id="objectOwner"></div>
+                                    <div autoComplete="false" required="true" style="width: 100%; margin:0;" id="objectOwner"></div>
                                 </td>
                                 <td class="bgBlue" style="color:#FFFFFF; ">
                                     <strong><fmt:message key="ui.obj.header.workState" />:</strong><span id="workState" style="margin-left:3px;"></span>
@@ -363,7 +363,7 @@
                             </span>
                             <span id="uiElement6010" class="outer halfWidth">
                                 <div class="input checkboxContainer">
-                                    <input type="checkbox" id="isOpenData" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6010)"><fmt:message key="ui.obj.general.openData" /></label>
+                                    <input type="checkbox" id="isOpenData" title="" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 6010)"><fmt:message key="ui.obj.general.openData" /></label>
                                 </div>
                             </span>
                             <span id="uiElement6020" class="outer halfWidth">
@@ -490,7 +490,7 @@
                                     <div id="thesaurusEnvironment" class="outlined">
                                         <div class="checkboxContainer">
                                             <span class="input">
-                                                <input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7006)">
+                                                <input type="checkbox" name="thesaurusEnvExtRes" id="thesaurusEnvExtRes" title="" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7006)">
                                                     <fmt:message key="ui.obj.thesaurus.terms.enviromental.displayCatalogPage" />
                                                 </label>
                                             </span>
@@ -544,7 +544,7 @@
                                     </span>
                                     <div id="ref1BasisTabContainer" selectedChild="ref1BasisTab1">
                                         <div id='ref1BasisTab1' class="input" label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.text" />">
-                                            <textarea id="ref1BasisText" name="ref1BasisText"></textarea>
+                                            <textarea id="ref1BasisText" name="ref1BasisText" title=""></textarea>
                                         </div>
                                         <div id='ref1BasisTab2' class="input" label="<fmt:message key="ui.obj.type1.technicalBasisTable.tab.links" />">
                                             <div id="ref1BasisLink" autoHeight="4" class="hideTableHeader noValidate" contextMenu="EDIT_LINK" relation_filter="3520" query="{relationType:'3520'}">
@@ -899,7 +899,7 @@
                                     </span><span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref1DataBasis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3570, gridId: 'ref1DataBasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.dataBasisTable.link" /></a></span>
                                     <div id="ref1DataBasisTabContainer" selectedChild="ref1DataBasisTab1">
                                         <div id='ref1DataBasisTab1' class="input" label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.text" />">
-                                            <input type="text" id="ref1DataBasisText" name="ref1DataBasisText" />
+                                            <input type="text" id="ref1DataBasisText" name="ref1DataBasisText"  title=""/>
                                         </div>
                                         <div id='ref1DataBasisTab2' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.links" />">
                                             <div class="input tableContainer">
@@ -922,7 +922,7 @@
 									</span>
                                     <div id="ref1ProcessTabContainerSpace" selectedChild="ref1ProcessTab1">
                                         <!--<div id='ref1ProcessTab1' label="<fmt:message key="ui.obj.type1.processTable.tab.text" />";-->
-                                            <span class="input"><input type="text" id="ref1ProcessText" name="ref1ProcessText" class="" /></span>
+                                            <span class="input"><input type="text" id="ref1ProcessText" name="ref1ProcessText" class="" title="" /></span>
                                         <!--</div>-->
                                         <div id='ref1ProcessTab2' label="<fmt:message key="ui.obj.type1.processTable.tab.links" />">
                                             <div class="input tableContainer">
