@@ -73,7 +73,8 @@ define([
                 } else if (selectedNode.item.nodeAppType == "O") {
                     // publish a createObject request and attach the newly created node if it was successful
                     deferred.then(function(res) {
-                        self.attachNewNode(selectedNode, res);
+                        self.attachNewNode(selectedNode, res)
+                            .then(IgeActions.onAfterCreate);
                         selectedNode.setSelected(false);
                         self.openCreateObjectWizardDialog();
                     }, function(err) {
@@ -162,17 +163,17 @@ define([
                 def.resolve();
             }
 
-            def.then(function() {
-                UtilTree.addNode( "dataTree", selectedNode, newNode)
-                .then(function(node) {
-                    UtilTree.selectNode("dataTree", node.item.id, true);
-                    topic.publish("/selectNode", {
-                        id: "dataTree",
-                        node: node.item
+            return def.then(function() {
+                return UtilTree.addNode( "dataTree", selectedNode, newNode)
+                    .then(function(node) {
+                        UtilTree.selectNode("dataTree", node.item.id, true);
+                        topic.publish("/selectNode", {
+                            id: "dataTree",
+                            node: node.item
+                        });
+                        wnd.scrollIntoView(node.domNode);
+                        registry.byId("dataFormContainer").resize();
                     });
-                    wnd.scrollIntoView(node.domNode);
-                    registry.byId("dataFormContainer").resize();
-                });
             });
         },
 

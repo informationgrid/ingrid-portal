@@ -488,8 +488,7 @@ define([
                         console.debug("set data");
                         self._setData(res)
                             .then(lang.partial(msg.resultHandler.resolve, res))
-                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)) // we must set dirty flag here!
-                            .then(self.onAfterCreate);
+                            .then(lang.hitch(dirty, dirty.resetDirtyFlag)); // we must set dirty flag here!
                     },
                     // timeout:10000,
                     errorHandler: function(message) {
