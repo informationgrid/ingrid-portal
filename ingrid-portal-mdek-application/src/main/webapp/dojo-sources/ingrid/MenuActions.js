@@ -151,7 +151,7 @@ define([
 
         attachNewNode: function(selectedNode, res) {
             var tree = registry.byId("dataTree");
-            var newNode = this._createNewNode(res, selectedNode.item.objectClass);
+            var newNode = this._createNewNode(res);
 
             // expand tree node if not already done!
             var def;
@@ -339,11 +339,9 @@ define([
                     if (invalidSubNode) {
                         // If an invalid target is selected (same node or child of node to cut)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
-                        return;
                     } else if (invalidFolderUnderObject) {
                         // If an invalid target is selected (copied folder under object/address)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
-                        return;
                     } else {
                         //              var cutNodeWidget = registry.byId(tree.nodeToCut.id);
                         appType = tree.nodesToCut[0].nodeAppType;
@@ -401,7 +399,7 @@ define([
                         if (containsExternalParentIdentifier && !isRootNodeOrBelowFolder) {
                             def.then(function() {
                                 dialog.show(message.get("general.hint"), message.get("tree.parentIdentifierWillBeRemoved"), dialog.WARNING);
-                            })
+                            });
                         }
 
                         if (appType == "O") {
@@ -669,7 +667,7 @@ define([
                 // Build the dialog parameters
                 // messageKey = dialog.<object|address>.discardPub<Not>ExistMessage
                 var titleText = "";
-                var displayText = "";
+                var displayText;
                 var messageKey = "dialog.";
                 if (selectedNode.item.nodeAppType == "O") {
                     messageKey += "object.";
@@ -987,8 +985,6 @@ define([
 
             if (checks.isObjectPublishable()) {
                 var deferred = new Deferred();
-
-                var dialogText = this.global.currentUdk.isMarkedDeleted ? message.get("dialog.object.markedDeleted.finalSaveMessage") : message.get("dialog.object.finalSaveMessage");
 
                 // Show a dialog to query the user before publishing
                 dialog.showPage(message.get("dialog.finalSaveTitle"), "dialogs/mdek_publish_dialog.jsp?c=" + userLocale, 350, 155, true, {
@@ -1342,14 +1338,6 @@ define([
             }
         },
 
-
-        handleUnmarkDeleted: function() {
-            // Only available for the person in charge of QS.
-            // Removes the flag which marks the obj/adr for deletion
-            this.alertNotImplementedYet();
-        },
-
-
         handleShowChanges: function(msg) {
             // Get the selected node from the message
             var selectedNode = this.getSelectedNode(msg);
@@ -1417,14 +1405,10 @@ define([
 
         // ------------------------- Helper functions -------------------------
 
-        alertNotImplementedYet: function() {
-            alert("Diese Funktionalität ist noch nicht implementiert.");
-        },
-
         /**
          * Check if the function was initiated by the context menu or from toolbar
          * @param msg
-         * @returns true, if conext menu was used
+         * @returns {boolean} true, if conext menu was used
          */
         calledFromContextMenu: function(msg) {
             var fromContextMenu = false;
@@ -1453,10 +1437,6 @@ define([
             }
         },
 
-        getTargetNode: function(msg) {
-            return this.getSelectedNode(msg);
-        },
-
         getSelectedNodes: function() {
             //    var selectedNodes = registry.byId("dataTree").allFocusedNodes;
             //    if (calledFromContextMenu(msg)) {
@@ -1471,6 +1451,12 @@ define([
             return registry.byId("dataTree").selectedNodes;
         },
 
+        /**
+         *
+         * @param obj
+         * @returns {{isFolder: (boolean|*), nodeDocType: *, title: *, nodeAppType: *, userWritePermission: boolean, userMovePermission: boolean, id: *}}
+         * @private
+         */
         _createNewNode: function(obj) {
             var title;
             // var objClass;
