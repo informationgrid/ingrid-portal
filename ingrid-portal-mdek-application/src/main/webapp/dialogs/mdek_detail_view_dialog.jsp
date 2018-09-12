@@ -499,6 +499,7 @@ require([
             renderObjectTitel(nodeData.objectName);
 
             renderText(nodeData.generalShortDescription);
+            renderTextWithTitle(nodeData.parentIdentifier, "<fmt:message key='ui.obj.general.parentIdentifier' />");
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(8000, nodeData.objectClass), "<fmt:message key='ui.obj.header.objectClass' />");
             renderTextWithTitle(removeEvilTags(nodeData.generalDescription), "<fmt:message key='ui.obj.general.description' />");
             // addresses

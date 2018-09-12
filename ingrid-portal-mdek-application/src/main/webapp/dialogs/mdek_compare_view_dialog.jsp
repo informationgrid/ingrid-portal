@@ -86,6 +86,7 @@ require([
             renderTitel(nodeDataOld.objectName, nodeDataNew.objectName);
 
             renderText(nodeDataOld.generalShortDescription, nodeDataNew.generalShortDescription);
+            renderTextWithTitle(nodeDataOld.parentIdentifier, nodeDataNew.parentIdentifier, "<fmt:message key='ui.obj.general.parentIdentifier' />");
             renderTextWithTitle(UtilList.getSelectDisplayValue(registry.byId("objectClass"), "Class" + nodeDataOld.objectClass),
                 UtilList.getSelectDisplayValue(registry.byId("objectClass"), "Class" + nodeDataNew.objectClass), "<fmt:message key='ui.obj.header.objectClass' />");
             renderTextWithTitle(nodeDataOld.generalDescription, nodeDataNew.generalDescription, "<fmt:message key='ui.obj.general.description' />");
