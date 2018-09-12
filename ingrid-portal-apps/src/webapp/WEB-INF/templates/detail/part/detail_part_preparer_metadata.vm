@@ -811,6 +811,10 @@
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.obj_id") $tmp)
                         #set($tmp = "")
+                        ## Identifikator des übergeordneten Metadatensatzes
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:parentIdentifier"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.parent_identifier") $tmp)
+                        #set($tmp = "")
                         ## XML Darstellung 
                         #set($tmp = $TOOL.addLinkToGetXML())
                         #renderTextLabelAbove($MESSAGES.getString("xml_link_label") $tmp)
