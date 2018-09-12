@@ -608,6 +608,8 @@ define({
     "ui.obj.availability.mediaOptionTable.header.amount": "Datenvolumen [MB]",
     "ui.obj.availability.mediaOptionTable.header.location": "Speicherort",
     "ui.obj.availability.orderInfo": "Bestellinformation",
+    "ui.obj.availability.useAccessConstraintsTable.header.name": "Nutzungsbedingung",
+    "ui.obj.availability.useAccessConstraintsTable.header.source": "Quellenvermerk",
     "ui.obj.thesaurus.title": "Verschlagwortung",
     "ui.obj.thesaurus.terms": "Optionale Schlagworte",
     "ui.obj.thesaurus.terms.add.label": "Freie Schlagworte eintragen",

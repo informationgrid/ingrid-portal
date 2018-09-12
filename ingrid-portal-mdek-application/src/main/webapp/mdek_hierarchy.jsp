@@ -2200,7 +2200,7 @@
                         </div>
                         <div id="availabilityContent" class="content">
                             <div class="inputContainer">
-                                <span id="uiElementN025" class="outer halfWidth">
+                                <span id="uiElementN025" class="outer">
                                 	<div><span id="availabilityAccessConstraintsLabel" class="label">
                                         <label for="availabilityAccessConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10025)">
                                             <fmt:message key="ui.obj.availability.accessConstraints" />
@@ -2212,19 +2212,19 @@
                                     </div>
 									</div>
                                 </span>
-                                <span id="uiElementN027" class="outer halfWidth">
+                                <span id="uiElementN027" class="outer">
                                     <div><span id="availabilityUseAccessConstraintsLabel" class="label">
                                         <label for="availabilityUseAccessConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10027)">
                                             <fmt:message key="ui.obj.availability.useAccessConstraints" />
                                         </label>
                                     </span>
                                     <div class="input tableContainer">
-                                        <div id="availabilityUseAccessConstraints" autoHeight="4" interactive="true" class="hideTableHeader">
+                                        <div id="availabilityUseAccessConstraints" autoHeight="4" interactive="true">
                                         </div>
                                     </div>
                                     </div>
                                 </span>
-                                <span id="uiElementN026" class="outer">
+                                <span id="uiElementN026" class="outer optional">
                                     <div>
                                     <span id="availabilityUseConstraintsLabel" class="label left">
                                         <label for="availabilityUseConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10026)">
