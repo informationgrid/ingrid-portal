@@ -6,7 +6,6 @@
     <version>4.5.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-apps</artifactId>
   <packaging>war</packaging>
   <name>InGrid Portal Apps</name>
