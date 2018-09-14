@@ -276,13 +276,14 @@ public class DetailPartPreparer {
             // try to get the license source from other constraints (#1066)
             String source = null;
             String url = null;
-            if (constraintsNodes.getLength() > 1) {
-                String constraintSource = constraintsNodes.item(1).getTextContent();
+            for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
+                String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
                 if (constraintSource.contains("\"quelle\"")) {
                     try {
                         IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
                         source = (String) json.get("quelle");
                         url = (String) json.get("url");
+                        break;
                     } catch (ParseException e) {
                         log.error("Error parsing json from use constraints", e);
                     }
