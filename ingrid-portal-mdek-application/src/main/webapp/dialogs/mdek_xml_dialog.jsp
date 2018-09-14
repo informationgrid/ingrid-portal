@@ -34,36 +34,46 @@
 <script type="text/javascript">
 
     require(["dojo/on",
-             "dojo/dom",
-             "dojo/Deferred",
+        "dojo/Deferred",
              "dojo/promise/all",
              "dojo/_base/lang",
              "dojo/dom-style",
              "dojo/dom-attr",
-             "ingrid/message"], function(on, dom, Deferred, all, lang, style, domAttr, message) {
+             "ingrid/message"], function(on, Deferred, all, lang, domStyle, domAttr, message) {
         on(_container_, "Load", function() {
             var uuid = this.customParams.uuid;
             var type = this.customParams.type;
             var def1 = new Deferred();
             var def2 = new Deferred();
-            
+
+            var showDifference = false;
             if (type === "O") {
-                ObjectService.getIsoXml( uuid, true, {
-                    preHook: showLoadingZone,
-                    postHook: hideLoadingZone,
-                    callback: lang.partial(handleResult, 'xmlContainerPublished', def1)
-                } );
+                if (currentUdk.workState !== "B") {
+					ObjectService.getIsoXml( uuid, true, {
+						preHook: showLoadingZone,
+						postHook: hideLoadingZone,
+						callback: lang.partial(handleResult, 'xmlContainerPublished', def1)
+                	} );
+                    showDifference = true;
+				} else {
+                    handleResult('xmlContainerPublished', def1,  '<info>Es gibt keine veröffentlichte Version</info>');
+				}
                 ObjectService.getIsoXml( uuid, false, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
                     callback: lang.partial(handleResult, 'xmlContainerWorking', def2)
                 } );
             } else if (type === "A") {
-                AddressService.getIsoXml( uuid, true, {
-                    preHook: showLoadingZone,
-                    postHook: hideLoadingZone,
-                    callback: lang.partial(handleResult, 'xmlContainerPublished', def1)
-                } );
+                if (currentUdk.workState !== "B") {
+                    AddressService.getIsoXml(uuid, true, {
+                        preHook: showLoadingZone,
+                        postHook: hideLoadingZone,
+                        callback: lang.partial(handleResult, 'xmlContainerPublished', def1)
+                    });
+                    showDifference = true;
+                } else {
+                    handleResult('xmlContainerPublished', def1,  '<info>Es gibt keine veröffentlichte Version</info>');
+				}
                 AddressService.getIsoXml( uuid, false, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
@@ -73,7 +83,7 @@
             var self = this;
             all([def1, def2]).then(function(results) {
                 // if a published version exists
-                if (results[0]) {
+                if (showDifference) {
                     var diff = WDiffString( results[0], results[1] );
                     domAttr.set("xmlDiffContainer", {innerHTML: diff});
                 } else {
@@ -100,11 +110,11 @@
         }
         
         function showLoadingZone() {
-            style.set( "xmlLoadingZone", "display", "block" );
+            domStyle.set( "xmlLoadingZone", "display", "block" );
         }
         
         function hideLoadingZone() {
-            style.set( "xmlLoadingZone", "display", "none" );
+            domStyle.set( "xmlLoadingZone", "display", "none" );
         }
         
     });

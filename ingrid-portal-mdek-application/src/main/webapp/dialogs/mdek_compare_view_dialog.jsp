@@ -384,7 +384,7 @@ require([
             renderList(nodeDataOld.availabilityAccessConstraints, nodeDataNew.availabilityAccessConstraints, "<fmt:message key='ui.obj.availability.accessConstraints' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(6010, val);
             });
-            renderList(nodeDataOld.availabilityUseAccessConstraints, nodeDataNew.availabilityUseAccessConstraints, "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
+            renderTable(nodeDataOld.availabilityUseAccessConstraints, nodeDataNew.availabilityUseAccessConstraints, ["title", "source"], [message.get("ui.obj.availability.useAccessConstraintsTable.header.name"), message.get("ui.obj.availability.useAccessConstraintsTable.header.source")], "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(6500, val);
             });
             renderTextWithTitle(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
@@ -584,8 +584,8 @@ require([
 
         function renderTextWithTitle(oldVal, newVal, title) {
             // compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
-            if (oldVal === null) oldVal = "";
-            if (newVal === null) newVal = "";
+            if (oldVal === null || oldVal === undefined) oldVal = "";
+            if (newVal === null || newVal === undefined) newVal = "";
             oldVal += "";
             newVal += "";
 

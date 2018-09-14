@@ -607,6 +607,8 @@ define({
         "ui.obj.availability.mediaOptionTable.header.amount": "Amount [MB]",
         "ui.obj.availability.mediaOptionTable.header.location": "Location",
         "ui.obj.availability.orderInfo": "Order Info",
+        "ui.obj.availability.useAccessConstraintsTable.header.name": "Use constraint",
+        "ui.obj.availability.useAccessConstraintsTable.header.source": "Source",
         "ui.obj.thesaurus.title": "Thesaurus",
         "ui.obj.thesaurus.terms": "Optional Topics",
         "ui.obj.thesaurus.terms.add.label": "Add Free Optional Topics",

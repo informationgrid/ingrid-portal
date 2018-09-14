@@ -18,6 +18,8 @@
         "UtilityService": true,
         "CatalogService": true,
         "SecurityService": true,
+        "ObjectService": true,
+        "AddressService": true,
         "currentUdk": true
     }
 }
