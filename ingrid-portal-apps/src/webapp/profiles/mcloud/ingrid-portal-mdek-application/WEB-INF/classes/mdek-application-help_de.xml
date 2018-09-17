@@ -102,9 +102,7 @@
                     </li>
                 </ul>
                 <p>Das Dashboard ist die Einstiegseite für den InGrid-Editor und zeigt eine Zusammenfassung der gerade
-                in Bearbeitung befindlichen Verfahren und Adressen, abhängig vom eingeloggten Benutzer.</p>
-                <p>Die Menüpunkte Gesamtkatalogmanagement und Import/Export sind nur für den Katalog-Administrator
-                sicht- und zugreifbar.</p>
+                in Bearbeitung befindlichen Datensätze und Adressen, abhängig vom eingeloggten Benutzer.</p>
             </content>
         </section>
         <section help-key="editor-design-3">
@@ -162,15 +160,15 @@
             <header>Beschreibung</header>
             <content>
                 <p>Das Dashboard zeigt eine Übersicht des Kataloges in Form einiger allgemeiner
-                Informationen und einer Übersicht aller zuletzt bearbeiteter Verfahren und Adressen.
+                Informationen und einer Übersicht aller zuletzt bearbeiteten Datensätze und Adressen.
                 Im ersten Reiter "Meine Datensätze" werden alle in Bearbeitung befindlichen 
-                Verfahren bzw Adressen des eingeloggten Benutzers aufgelistet. Wird einer der 
+                Datensätze bzw Adressen des eingeloggten Benutzers aufgelistet. Wird einer der 
                 angezeigten Datensätze ausgewählt, so wird dieser direkt im Editor geöffnet.</p>
                 <br />
-                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Verfahren und
+                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Datensätze und
                 Adressen aller Nutzer an. Hier erhält man einen Überblick, welche
-                Verfahren/Adressen im gesamten Katalog gerade bearbeitet werden. Ist ein/e
-                Verfahren/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine
+                Datensätze/Adressen im gesamten Katalog gerade bearbeitet werden. Ist ein/e
+                Datensatz/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine
                 Schreibrechte darauf besitzt.</p>
                 <br />
                 <p>Über den Button "Aktualisieren" werden alle Informationen des Dashboards
@@ -183,77 +181,80 @@
         <section help-key="hierarchy-maintenance-1">
             <header>Anordnung der Daten (Der Strukturbaum)</header>
             <content>
-                 <p>Im <b>linken Fenster</b> werden die Verfahren und Adressen und ihre Stellung in der 
-				 Hierarchie des Kataloges angezeigt. Die Navigation in der Verfahrens- bzw. 
+                 <p>Im <b>linken Fenster</b> werden die Datensätze und Adressen und ihre Stellung in der 
+				 Hierarchie des Kataloges angezeigt. Die Navigation in der Datensatz- bzw. 
 				 Adresshierarchie erfolgt analog zu der Funktionsweise des Windowsexplorers, 
 				 d.h. Öffnen und Schließen einzelner Teilbäume der Hierarchie erfolgt über die ‚Plus’ und 
 				 ‚Minus’-Kästchen links neben den Zeilen.</p>
-                 <p>Bei den Verfahren sehen Sie den Namen und das Icon der Verfahrensklasse, 
+                 <p>Bei den Datensätzen sehen Sie den Namen und das Icon der Datensatzklasse, 
 				 bei den Adressen den Adresstitel und das Icon des Adresstyps. </p>
                  <p>Die Icons zeigen den jeweiligen Bearbeitungsstand:</p>
 				 <ul>
-				 <li><b>Blau</b> bedeutet, dass das Verfahren bzw. die Adresse veröffentlicht, d.h. 
+				 <li><b>Blau</b> bedeutet, dass der Datensatz bzw. die Adresse veröffentlicht, d.h. 
 				 recherchierbar ist.</li>
-				 <li><b>Rot</b> bedeutet, dass das Verfahren bzw. die Adresse in Bearbeitung ist.</li>
+				 <li><b>Rot</b> bedeutet, dass der Datensatz bzw. die Adresse in Bearbeitung ist.</li>
 				 <li>Wird ein <b>blaues</b> Icon <b>rot</b> überlagert, so gibt es eine veröffentlichte 
-				 Version des Verfahrens bzw. der Adresse und eine bearbeitete. </li>
+				 Version des Datensatzes bzw. der Adresse und eine bearbeitete. </li>
 				 </ul>
-				 <p>Ausgewählte ‚aktuelle’ Verfahren bzw. Adressen werden rot angezeigt und die 
-				 Informationen zum Verfahren bzw. zur Adresse im rechten Fenster dargestellt. </p>
+				 <p>Ausgewählte ‚aktuelle’ Datensätze bzw. Adressen werden rot angezeigt und die 
+				 Informationen zum Datensatz bzw. zur Adresse im rechten Fenster dargestellt. </p>
 				 <p>Die Fensterteilung zwischen rechtem und linkem Fenster kann durch Verschieben 
 				 des Mittelbalkens verändert werden.</p>
 				 <p>Einige Funktionen können direkt aus dem Kontextmenü, das über die rechte 
 				 Maustaste geöffnet wird, ausgeführt werden. Die Funktionen beziehen sich immer 
-				 auf das gerade angeklickte Verfahren bzw. die angeklickte Adresse. Die zur Verfügung 
+				 auf den gerade angeklickten Datensatz bzw. die angeklickte Adresse. Die zur Verfügung 
 				 stehenden Funktionen sind die folgenden:</p>
 				 <p><b>Neu anlegen</b></p>
-				 <p>Anlegen eines neuen Verfahrens oder einer neuen Adresse unter dem aktuellen Ordner 
+				 <p>Anlegen eines neuen Datensatzes oder einer neuen Adresse unter dem aktuellen Ordner 
 				 bzw. der aktuellen Adresse.</p>
+         <p><b>Ordner anlegen</b></p>
+         <p>Ein neuer Ordner wird hierarchisch immer unter dem aktuellen, 
+         mit roter Schrift darstellten Element angelegt. Ordner können nur unterhalb von Ordnern angelegt werden.</p>
 				 <p><b>Vorschau und Druckansicht</b></p>
-				 <p>Im Fenster Detailansicht können Sie die Anordnung der Verfahrens- bzw. 
+				 <p>Im Fenster Detailansicht können Sie die Anordnung der Datensatz- bzw. 
 				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
 				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
 				 des Betriebssystems.</p>
-				 <p>Neben der Anzeige der Detailansicht einer Adresse, ist es auch möglich die Detailinformationen des gesamten Unterbaumes anzeigen zu lassen. Sind die Auswahlboxen <i>Detailansicht</i> und <i>Untergeordnete Adressen mit einbeziehen</i> beide ausgewählt, so werden alle Adressen des Teilbaumes untereinander ausgegeben. Beachten Sie, dass die Ausgabe bei sehr vielen Objekten eine Weile dauern kann. Deshalb ist es jederzeit möglich die Anzeige abzubrechen.</p>
+				 <p>Neben der Anzeige der Detailansicht einer Adresse, ist es auch möglich die Detailinformationen des gesamten Unterbaumes anzeigen zu lassen. Sind die Auswahlboxen <i>Detailansicht</i> und <i>Untergeordnete Adressen mit einbeziehen</i> beide ausgewählt, so werden alle Adressen des Teilbaumes untereinander ausgegeben. Beachten Sie, dass die Ausgabe bei sehr vieler Daten eine Weile dauern kann. Deshalb ist es jederzeit möglich die Anzeige abzubrechen.</p>
 				 <p>Wird die Auswahlbox <i>Detailansicht</i> entfernt, so wird anstatt einer Detailansicht, nur eine gekürzte Version der Adresse angezeigt. Der Baum wird hierbei jedoch in einer hierarchischen Darstellung angezeigt.</p>				 
 				 <p>Die Druckansicht kann mit dem Kreuz oben rechts in der Fensterecke verlassen werden.</p>
 				 <p>Diese Funktion steht für Ordner und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
 				 <p><b>Objekt/Adresse/Teilbaum ausschneiden</b></p>
-				 <p>Um einem Verfahren, einer Adresse oder einem Teilbaum einen anderen Platz in der 
+				 <p>Um einem DAtensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
 				 Hierarchie des aktuellen Kataloges zuzuweisen, schneiden Sie diese zuerst aus, 
 				 um sie unter einem anderes Ordner bzw. eine andere Adresse mittels der 
 				 Funktion <i><b>Einfügen</b></i> einzufügen. </p>
-				 <p>Das zu bearbeitende Verfahren bzw. die Adresse muss vor dem Ausschneiden markiert 
-				 werden. Um einen Teilbaum (d.h. ein Ornder mit allen hierarchisch darunterliegenden 
-				 Ordnern/Verfahren) auszuschneiden, muss der hierarchisch oberste Ordner markiert sein. 
-				 Eine Markierung aller betroffenen Verfahren bei ausgeklapptem Teilbaum ist nicht 
+				 <p>Der zu bearbeitende Datensatz bzw. die Adresse muss vor dem Ausschneiden markiert 
+				 werden. Um einen Teilbaum (d.h. ein Ordner mit allen hierarchisch darunterliegenden 
+				 Ordner/Datensätze) auszuschneiden, muss der hierarchisch oberste Ordner markiert sein. 
+				 Eine Markierung aller betroffenen Datensätze bei ausgeklapptem Teilbaum ist nicht 
 				 möglich.</p>
 				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
-				 <p><b>Verfahren/Adresse kopieren</b></p>
-				 <p>Ein markiertes Verfahren oder eine markierte Adresse wird mit dieser Funktion 
+				 <p><b>Datensatz/Adresse kopieren</b></p>
+				 <p>Ein markierter Datensatz oder eine markierte Adresse wird mit dieser Funktion 
 				 in den Zwischenspeicher kopiert. Um die Kopie an die gewünschte Stelle in der 
 				 Hierarchie zu bringen, nutzen Sie die Funktion <i><b>Einfügen</b></i>.</p>
 				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
 				 <p><b>Teilbaum kopieren</b></p>
-				 <p>Um einen Teilbaum (d.h. ein Ornder/Verfahren oder eine Adresse) mit allen hierarchisch 
+				 <p>Um einen Teilbaum (d.h. ein Ordner/Datensatz oder eine Adresse) mit allen hierarchisch 
 				 darunterliegenden Elementen zu kopieren, muss das hierarchisch 
 				 oberste Element markiert sein. Eine Markierung aller betroffenen 
-				 Verfahren bei ausgeklapptem Teilbaum ist nicht möglich. Um die Kopie an die 
+				 Datensätze bei ausgeklapptem Teilbaum ist nicht möglich. Um die Kopie an die 
 				 gewünschte Stelle in der Hierarchie zu bringen, nutzen Sie die 
 				 Funktion <i><b>Einfügen</b></i>. </p>
 				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
 				 <p><b>Einfügen</b></p>
 				 <p>Markieren Sie den Ordner bzw. die Adresse, der hierarchisch über dem 
-				 einzufügenden Verfahren oder Teilbaum bzw. der einzufügenden Adresse steht. 
+				 einzufügenden Datensatz oder Teilbaum bzw. der einzufügenden Adresse steht. 
 				 Die Ordnung innerhalb einer Hierarchiestufe erfolgt alphabetisch und kann 
 				 durch Verschieben oder Einfügen nicht geändert werden. </p> 
 				 <p><b>Teilbaum neu laden</b></p>
 				 <p>Der Teilbaum unterhalb des angeklickten Elementes wird aktualisiert. </p> 
-				 <p>Für die Ebenen <i>Verfahren</i>, <i>Adressen</i> und <i>freie Adressen</i> 
+				 <p>Für die Ebenen <i>Datensatz</i>, <i>Adressen</i> und <i>freie Adressen</i> 
 				 heißt die Funktion <i>Baum neu laden</i>.</p>
 				 <p><b>Löschen</b></p>
 				 <p>Der Teilbaum ab dem aktuellen Element wird nach einer Sicherheitsabfrage endgültig gelöscht.</p>
@@ -261,22 +262,22 @@
 				 <i>freie Adressen</i> nicht zur Verfügung.</p>
                  <p><b>Kopieren/Ausschneiden/Löschen mehrerer Elemente</b></p>
                  <p>Mithilfe der "Strg"-Taste ist es möglich weitere Elemente aus dem Hierarchiebaum
-                 auszuwählen. Wird ein bereits markiertes Objekt bei gedrückter "Strg"-Taste angeklickt
+                 auszuwählen. Wird ein bereits markierter Datensatz bei gedrückter "Strg"-Taste angeklickt
                  so wird die Markierung wieder entfernt. Sobald mehr als ein Knoten markiert wird, schränkt 
-                 sich die Auswahl an möglichen Operationen auf <i>Löschen</i>, <i>Verfahren/Adressen/Teilbäume ausschneiden   
-                 </i>, <i>Verfahren/Adressen kopieren</i> und <i>Teilbäume kopieren</i> ein. Diese Operationen
+                 sich die Auswahl an möglichen Operationen auf <i>Löschen</i>, <i>Datensatz/Adressen/Teilbäume ausschneiden   
+                 </i>, <i>Datensatz/Adressen kopieren</i> und <i>Teilbäume kopieren</i> ein. Diese Operationen
                  können über die Toolbar oder über das Kontextmenü aufgerufen werden (Rechtsklick auf einen Knoten im Baum). 
                  Wird das Kontextmenü jedoch auf einem nicht markierten Knoten aufgerufen, so wird die aktuelle 
                  Markierung verworfen und nur der angeklickte Knoten wird ausgewählt.</p>
             </content>
         </section>
         <section help-key="hierarchy-maintenance-2">
-            <header>Die Erfassung von Verfahren</header>
+            <header>Die Erfassung von Datensätzen</header>
             <content>
 				<p>Im <b>rechten</b> Fenster sehen Sie alle verfügbaren Felder und Informationen zum 
-				ausgewählten Element. Diese sind je nach Verfahrenstyp und Adresstyp unterschiedlich. 
+				ausgewählten Element. Diese sind je nach Datensatztyp und Adresstyp unterschiedlich. 
 				Im oberen Teil des Fensters werden farbig hinterlegt Kopf- sowie Statusinformationen 
-				zum Verfahren bzw. zur Adresse angezeigt. Diese Anzeige ist immer sichtbar. 
+				zum Datensatz bzw. zur Adresse angezeigt. Diese Anzeige ist immer sichtbar. 
 				Die weiteren Informationen sind zu Gruppen zusammengefasst und durch Balken optisch 
 				gekennzeichnet. Standardmäßig sind nur die Pflichtfelder sichtbar. Durch Anklicken 
 				des Buttons <i>Alle Felder aufklappen</i> links vom Gruppennamen können Sie die 
@@ -291,10 +292,10 @@
 				<p>Weitere Informationen erhalten Sie unter folgenden Hilfepunkten:</p>
                 <ul>
                     <li>
-                        <a href="?hkey=creation-of-objects-1">Anlegen eines neuen Objekts</a>
+                        <a href="?hkey=creation-of-objects-1">Anlegen eines neuen Datensatzes</a>
                     </li>
                     <li>
-                        <a href="?hkey=maintanance-of-objects-1">Pflegen von Objekten</a>
+                        <a href="?hkey=maintanance-of-objects-1">Pflegen von Datensätzen</a>
                     </li>
                     <li>
                         <a href="?hkey=maintanance-of-adresses-1">Erfassen von Adressen</a>
@@ -306,92 +307,92 @@
             <header>Die Funktionsleiste für Hierarchie und Erfassung</header>
             <content>
                  <p>Über die Funktionsleiste im Untermenüpunkt <i>Hierarchie &amp; Erfassung</i> können 
-				 einzelne Funktionen zum Bearbeiten von Verfahren und Adressen aufgerufen werden. 
+				 einzelne Funktionen zum Bearbeiten von Datensätzen und Adressen aufgerufen werden. 
 				 Die Funktionen sind im Einzelnen:</p>
 				 <p><b>Neu anlegen</b></p>
-				 <p>Ein neues Verfahren oder eine neue Adresse wird hierarchisch immer unter dem aktuellen, 
+				 <p>Ein neuer Datensatz oder eine neue Adresse wird hierarchisch immer unter dem aktuellen, 
 				 mit roter Schrift darstellten Element angelegt.</p>
                  <p><b>Ordner anlegen</b></p>
                  <p>Ein neuer Ordner wird hierarchisch immer unter dem aktuellen, 
                  mit roter Schrift darstellten Element angelegt. Ordner können nur unterhalb von Ordnern angelegt werden.</p>
 				 <p><b>Vorschau und Druckansicht</b></p>
-				 <p>Im Fenster Detailansicht können Sie die Anordnung der Verfahrens- bzw. 
+				 <p>Im Fenster Detailansicht können Sie die Anordnung der Datensatz- bzw. 
 				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
 				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
 				 des Betriebssystems. 
 				 Verlassen Sie die Druckansicht mit dem Kreuz oben rechts in der Fensterecke.</p>
-				 <p><b>Verfahren/Adresse/Teilbaum ausschneiden</b></p>
-				 <p>Um einem Verfahren, einer Adresse oder einem Teilbaum einen anderen Platz in der 
+				 <p><b>Datensatz/Adresse/Teilbaum ausschneiden</b></p>
+				 <p>Um einem Datensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
 				 Hierarchie des aktuellen Kataloges zuzuweisen, schneiden Sie diese zuerst aus, 
 				 um sie unter ein anderes Objekt bzw. eine andere Adresse mittels der 
 				 Funktion <i><b>Einfügen</b></i> einzufügen. </p>
 				 <p>Das zu bearbeitende Element muss vor dem Ausschneiden markiert 
-				 werden. Um einen Teilbaum (d.h. einen Ordner/Verfahren/Adresse mit allen hierarchisch darunterliegenden 
+				 werden. Um einen Teilbaum (d.h. einen Ordner/Datensatz/Adresse mit allen hierarchisch darunterliegenden 
 				 Elementen) auszuschneiden, muss das hierarchisch oberste Element markiert sein. 
 				 Eine Markierung aller betroffenen Elemente bei ausgeklapptem Teilbaum ist nicht 
 				 möglich.</p>
 				 <p>Siehe auch Funktion <i><b>Einfügen</b></i></p>
-				 <p><b>Verfahren/Adresse kopieren</b></p>
+				 <p><b>Datensatz/Adresse kopieren</b></p>
 				 <p>Ein markiertes Element wird mit dieser Funktion 
 				 in den Zwischenspeicher kopiert. Um die Kopie an die gewünschte Stelle in der 
 				 Hierarchie zu bringen, nutzen Sie die Funktion <i><b>Einfügen</b></i>.</p>
 				 <p><b>Teilbaum kopieren</b></p>
-				 <p>Um einen Teilbaum (d.h. ein Ordner/Verfahren/Adresse mit allen hierarchisch 
-				 darunterliegenden Objekten bzw. Adressen) zu kopieren, muss das hierarchisch 
+				 <p>Um einen Teilbaum (d.h. ein Ordner/Datensatz/Adresse mit allen hierarchisch 
+				 darunterliegenden Datensätzen bzw. Adressen) zu kopieren, muss das hierarchisch 
 				 oberste Element markiert sein. Eine Markierung aller betroffenen 
 				 Elemente bei ausgeklapptem Teilbaum ist nicht möglich. Um die Kopie an die 
 				 gewünschte Stelle in der Hierarchie zu bringen, nutzen Sie die 
 				 Funktion <i><b>Einfügen</b></i>. </p>
 				 <p><b>Einfügen</b></p>
 				 <p>Markieren Sie das Element, das hierarchisch über dem 
-				 einzufügenden Verfahren oder Teilbaum bzw. der einzufügenden Adresse steht. 
+				 einzufügenden Datensatz oder Teilbaum bzw. der einzufügenden Adresse steht. 
 				 Die Ordnung innerhalb einer Hierarchiestufe erfolgt alphabetisch und kann 
 				 durch Verschieben oder Einfügen nicht geändert werden. </p> 
 				 <p><b>Zwischenspeichern</b></p>
 				 <p>Mit der Funktion sichern Sie Änderungen bzw. die Eingaben zu einem neu 
-				 angelegten Verfahren bzw. einer neu angelegten Adresse, ohne dass das Verfahren bzw. 
+				 angelegten Datensatz bzw. einer neu angelegten Adresse, ohne dass der Datensatz bzw. 
 				 die Adresse veröffentlicht wird, d.h. mit der Suchfunktion des Portals gefunden 
 				 oder im Strukturbaum des Portals angezeigt wird. Zwischenspeichern ist auch 
 				 möglich, wenn noch nicht alle Pflichtfelder ausgefüllt sind. Die Darstellung 
-				 des Verfahrens bzw. der Adresse in der Hierarchie im linken Fenster erfolgt mit 
+				 des Datensatzes bzw. der Adresse in der Hierarchie im linken Fenster erfolgt mit 
 				 einem roten Bearbeitungs-Icon. </p>
-				 <p>Um ein Verfahren zu veröffentlichen, wählen Sie die Funktion 
+				 <p>Um einen Datensatz zu veröffentlichen, wählen Sie die Funktion 
 				 <i><b>Abschließendes Speichern</b></i>.</p>
 				 <p><b>Rückgängig</b></p>
 				 <p>Die Funktion Rückgängig ist aktiv, wenn in einem Feld eine Veränderung 
 				 der Eingaben vorgenommen wurde und das Feld verlassen wurde. Nach einer positiv 
 				 beantworteten Rückfrage werden alle Bearbeitungen seit dem letzten Zwischenspeichern 
 				 gelöscht, nicht nur die Änderungen, die im letzten bearbeiteten Feld vorgenommen 
-				 wurden. Um das Verfahren bzw. die Adresse auf die Version der letzten Veröffentlichung 
-				 zurückzusetzen (falls es kein neu angelegtes Verfahren bzw. neu angelegte Adresse ist) 
-				 nutzen Sie die Funktion <i><b>Änderungen am aktuellen Verfahren/Adresse verwerfen</b></i>.
+				 wurden. Um den Datensatz bzw. die Adresse auf die Version der letzten Veröffentlichung 
+				 zurückzusetzen (falls es kein neu angelegter Datensatz bzw. neu angelegte Adresse ist) 
+				 nutzen Sie die Funktion <i><b>Änderungen am aktuellen Datensatz/Adresse verwerfen</b></i>.
 					</p>
-				 <p><b>Änderungen am aktuellen Verfahren/Adresse verwerfen</b></p>
-				 <p>Mit dieser Funktion können Verfahren und Adressen, die schon veröffentlicht wurden, 
+				 <p><b>Änderungen am aktuellen Datensatz/Adresse verwerfen</b></p>
+				 <p>Mit dieser Funktion können Datensätze und Adressen, die schon veröffentlicht wurden, 
 				 auf den Stand zurückgesetzt werden, den sie bei der Veröffentlichung hatten. </p>
 				 <p>Die Bearbeitungen, auch die mit der Funktion Zwischenspeichern gesicherten, 
 				 werden zurückgesetzt und gelöscht. Um aktuelle Bearbeitungen auf den Stand der 
 				 letzten Bearbeitung zurückzusetzen, nutzen Sie die Funktion 
 				 <i><b>Zwischenspeichern</b></i>. </p>
 				 <p><b>Abschließendes Speichern</b></p>
-				 <p>Nach Ausführen der Funktion Abschließendes Speichern ist das Verfahren/Adresse 
+				 <p>Nach Ausführen der Funktion Abschließendes Speichern ist der Datensatz/Adresse 
 				 veröffentlicht und damit in der Suchfunktion bzw. dem Strukturbaum des Portals 
-				 recherchierbar. Um ein Verfahren bzw. eine Adresse erfolgreich zu speichern, müssen 
+				 recherchierbar. Um einen Datensatz bzw. eine Adresse erfolgreich zu speichern, müssen 
 				 alle Pflichtfelder ausgefüllt sein. Bei nicht ausgefüllten Pflichtfeldern oder 
 				 falsch ausgefüllten Feldern werden die Feldnamen rot angezeigt. 
 				 Um trotz der Fehlermeldung die Bearbeitung sichern zu können, wählen Sie die 
 				 Funktion <i><b>Zwischenspeichern</b></i>. </p>
 				 <p><b>Ausgewähltes Objekt/Teilbaum löschen</b></p>
-				 <p>Nach einer Sicherheitsabfrage wird das markierte Verfahren bzw. der markierte 
+				 <p>Nach einer Sicherheitsabfrage wird der markierte Datensatz bzw. der markierte 
 				 Teilbaum endgültig gelöscht.</p>
 				 <p><b>Änderungen anzeigen</b></p>
 				 <p>In einem gesonderten Dialog-Fenster <i>Vergleichsansicht</i> können Sie die 
-				 Informationen vor der Bearbeitung eines Verfahrens bzw. einer Adresse ansehen 
+				 Informationen vor der Bearbeitung eines Datensatzes bzw. einer Adresse ansehen 
 				 (Ausgangsversion) und nach der Bearbeitung (Bearbeitungsversion). 
 				 In der Differenzansicht sind die gelöschten Daten in rot dargestellt. 
 				 Die neu eingefügten Daten werden grün angezeigt.</p>
 				 <p><b>Kommentar ansehen/hinzufügen</b></p>
-				 <p>Zu jedem Verfahren und zu jeder Adresse können Kommentare verfasst werden. 
+				 <p>Zu jedem Datensatz und zu jeder Adresse können Kommentare verfasst werden. 
 				 Die Kommentare werden nicht veröffentlicht und sind in der Druckansicht nicht 
 				 aufgeführt. </p>
 				 <p>Über den Klick auf den Button wird das 
@@ -400,11 +401,11 @@
         </section>
     </chapter>
 	<chapter>
-        <header>Neuanlegen von Verfahren</header>
+        <header>Neuanlegen von Datensätzen</header>
         <section help-key="creation-of-objects-1">
-            <header>Anlegen eines neuen Verfahrens</header>
+            <header>Anlegen eines neuen Datensatzes</header>
             <content>
-                 <p>Ein neues Verfahren kann entweder über die Schaltfläche <i><b>Neu anlegen</b></i> 
+                 <p>Ein neuer Datensatz kann entweder über die Schaltfläche <i><b>Neu anlegen</b></i> 
 				 in der Funktionsleiste oder über das Kontextmenü der rechten Maustaste im Strukturbaum
 				 angelegt werden. Es wird in der Hierarchie immer unterhalb des aktuellen Elementes 
 				 platziert.</p>                  
@@ -413,25 +414,21 @@
         </section>
     </chapter>
 	<chapter>
-        <header>Pflege von Verfahren</header>
+        <header>Pflege von Datensätzen</header>
         <section help-key="maintanance-of-objects-1">
             <header>Aufbau der Objektoberfläche</header>
             <content>
                  <p>Die Objekte werden im rechten Fenster des Untermenüpunkts <i>Hierarchie &amp; Erfassung</i>
 				 gepflegt. </p>
                  <p>Im oberen Teil des Fensters werden farbig hinterlegt die Kopfinformationen 
-				 <i>Verfahrensname</i> sowie die 
+				 <i>Datensatzname</i> sowie die 
 				 Statusinformationen <i>Erstellt am</i>, <i>Geändert am</i> und <i>Von</i> 
 				 zum Objekt angezeigt. Diese Anzeige ist immer sichtbar. </p>
                  <p>Die weiteren Informationen sind zu Gruppen zusammengefasst.</p>
-				 <ul>
-                 <li>Allgemeines</li>
-                 <li>ein oder mehrere Verfahrensschritte</li>
-				 </ul>
-                 <p>Die Gruppen können für verschiedene Vorhabentypen leicht unterschiedlich aussehen.</p>
+                 <p>Die Gruppen können für verschiedene Datensatztypen leicht unterschiedlich aussehen.</p>
                  <p>Die einzelnen Gruppen sind durch Balken optisch von einander abgegrenzt. Standardmäßig 
 				 werden nur die Pflichtfelder angezeigt. Sie sind durch fettgedruckte Überschriften und 
-				 ein Sternchen * gekennzeichnet. Ein Vorhaben lässt sich nur dann endgültig speichern, wenn alle 
+				 ein Sternchen * gekennzeichnet. Ein Datensatz lässt sich nur dann endgültig speichern, wenn alle 
 				 Pflichtfelder gefüllt sind. Wird eine 
 				 Speicherung aufgrund fehlender Pflichteinträge abgelehnt, werden die 
 				 Überschriften der entsprechenden Felder rot gekennzeichnet, um den Nutzer auf die noch 
@@ -456,9 +453,9 @@
         <section help-key="maintanance-of-objects-2">
             <header>Adresse hinzufügen</header>
             <content>
-                 <p>Der Editor unterscheidet zwischen Verfahren und Adressen. Beide werden 
+                 <p>Der Editor unterscheidet zwischen Datensätzen und Adressen. Beide werden 
 				 in separaten Teilbäumen des Kataloges gepflegt. Dies hat den Vorteil, dass eine einmal 
-				 eingepflegte Adresse in beliebig vielen Verfahren referenziert werden kann, ohne dass 
+				 eingepflegte Adresse in beliebig vielen Datensätzen referenziert werden kann, ohne dass 
 				 weiterer Erfassungsaufwand für Adressangaben entsteht. Ebenso können Adressänderungen an 
 				 einer Stelle in der Adressverwaltung geändert werden, ohne dass alle Objekte, die sie 
 				 referenzieren, bearbeitet werden müssen.</p>
@@ -473,11 +470,11 @@
 				 übereinstimmen (UND-Verknüpfung).</p>
                  <p>Die gefundenen Adressen werden in der <i>Trefferliste</i> angezeigt. Durch einfaches 
 				 Klicken auf einen Eintrag wird dieser markiert. Durch ein anschließendes Klicken auf 
-				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in das Verfahren 
+				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in den Datensatz 
 				 übernommen. </p>
                  <p>Im <i><b>Hierarchiebaum</b></i> können Sie in der üblichen Weise navigieren. Ein einfacher 
 				 Klick auf eine Adresse markiert diese. Durch ein anschließendes Klicken auf 
-				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in das Verfahren 
+				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in den Datensatz 
 				 übernommen.</p>
             </content>
         </section>
@@ -513,7 +510,7 @@
 				 <p>Die weiteren Informationen sind zu folgenden Gruppen zusammengefasst:</p>
 				 <ul>
 				 <li>Adresse</li>
-				 <li>Zugeordnete Verfahren</li>
+				 <li>Zugeordnete Datensätze</li>
 				 </ul>
 				 <p>Die einzelnen Gruppen sind durch Balken optisch voneinander abgegrenzt. Standardmäßig 
 				 werden nur die Pflichtfelder angezeigt. Sie sind durch fettgedruckte Überschriften und 
@@ -568,16 +565,16 @@
         <section help-key="search-1">
             <header>Suche</header>
             <content>
-                 <p>Über den Untermenüpunkt <i>Suche</i> der Recherche können Sie Verfahren oder Adressen 
+                 <p>Über den Untermenüpunkt <i>Suche</i> der Recherche können Sie Datensätze oder Adressen 
 				 mit Hilfe eines Stichwortes suchen, ohne deren Positionen in der Kataloghierarchie 
 				 zu kennen.</p>
 				 <p>Über die Karteireiter können Sie auswählen, ob Sie in <i>Adressen</i> oder in 
-				 <i>Verfahren</i> des Kataloges suchen wollen.</p>
+				 <i>Datensatz</i> des Kataloges suchen wollen.</p>
 				 <p>Tragen Sie einen beliebigen Suchbegriff in die Eingabezeile ein und starten Sie 
 				 die Recherche über die Schaltfläche <i>Suchen</i>.</p>
-				 <p>In der Trefferliste werden alle gefundenen Verfahren bzw. Adressen angezeigt und 
+				 <p>In der Trefferliste werden alle gefundenen Datensätze bzw. Adressen angezeigt und 
 				 können durch einen einfachen Mausklick auf die entsprechende Zeile zur Bearbeitung 
-				 aufgerufen werden. Nach dem Anklicken wird das entsprechende Verfahren bzw. die 
+				 aufgerufen werden. Nach dem Anklicken wird der entsprechende Datensatz bzw. die 
 				 entsprechende Adresse unter dem Menüpunkt <i>Hierarchie und Erfassung</i> geöffnet. 
 				 Sie können zur <i>Trefferliste</i> zurückkehren, indem Sie wieder den Menüpunkt 
 				 <i>Recherche</i> anwählen.</p>
@@ -683,7 +680,7 @@
         <section help-key="user-administration-2">
             <header>Gruppenadministration</header>
             <content>
-                 <p>Über die (Nutzer-)Gruppen werden die Schreibrechte auf Verfahren und Adressen festgelegt.</p>
+                 <p>Über die (Nutzer-)Gruppen werden die Schreibrechte auf Datensätze und Adressen festgelegt.</p>
 				 <p>In der Gruppenadministration können Sie:</p>
 				 <ul>
 				 <li><u>Eine Gruppe bearbeiten:</u> Klicken Sie auf den Namen der Gruppe in der Liste links 
@@ -701,21 +698,21 @@
 				 untenstehenden Berechtigungen) müssen über <i><b>Speichern</b></i> abgeschlossen werden, 
 				 damit die Änderungen wirksam werden und nicht verloren gehen.</p>
 				 <p>Sie können folgende Berechtigungen für eine Gruppe vergeben:</p>
-				 <p><b>Berechtigungen für Verfahren</b></p>
-				 <p>Sie können Schreibberechtigungen für Verfahren vergeben. Wählen sie dazu das Verfahren 
-				 unter <i>Berechtigungen für Verfahren</i> aus dem Hierarchiebaum aus, für das Sie oder 
-				 ab dem Sie die Schreibberechtigung vergeben wollen. Ein Klick auf das Verfahren färbt es rot 
-				 ein. Über die Schaltfläche <b>></b> können Sie das markierte Verfahren in die Liste der 
+				 <p><b>Berechtigungen für Datensätze</b></p>
+				 <p>Sie können Schreibberechtigungen für Datensätze vergeben. Wählen sie dazu der Datensatz 
+				 unter <i>Berechtigungen für Datensätze</i> aus dem Hierarchiebaum aus, für das Sie oder 
+				 ab dem Sie die Schreibberechtigung vergeben wollen. Ein Klick auf den Datensatz färbt ihn rot 
+				 ein. Über die Schaltfläche <b>></b> können Sie den markierte Datensatz in die Liste der 
 				 Berechtigungen übernehmen.</p>
-                 <p>Sie haben drei Einstellungsmöglichkeiten für die Berechtigung pro Verfahren:</p>
+                 <p>Sie haben drei Einstellungsmöglichkeiten für die Berechtigung pro Datensatz:</p>
 				 <ul>
 				 <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für diese und alle 
 				 nachgeordneten Elemente eine Schreibberechtigung. Sie können unterhalb dieses Elementes 
 				 und allen nachgeordneten Elemente neue Elemente anlegen.</li>
-                 <li><u>Unter-Verfahren:</u> Sie können direkt unterhalb dieses Elementes ein neues Element anlegen,
-                 für das Sie dann den vollen Zugriff bekommen (Teilbaum Recht auf neuem Unter-Verfahren).
+                 <li><u>Unter-Datensätze:</u> Sie können direkt unterhalb dieses Elementes ein neues Element anlegen,
+                 für das Sie dann den vollen Zugriff bekommen (Teilbaum Recht auf neuem Unter-Datensatz).
                  Alle Benutzer Ihrer Gruppe bekommen damit ebenfalls vollen Zugriff (alle Benutzer der Gruppe,
-                 die das Unter-Verfahrensrecht beinhaltet).</li>
+                 die das Unter-Datensatzrecht beinhaltet).</li>
 				 <li><u>Einzelobjekt:</u> Sie haben nur auf diesem Element eine Schreibberechtigung, auf 
 				 nachgeordnete Objekte nicht. Sie können keine neuen Elemente unterhalb dieses Objektes 
 				 anlegen.</li>
@@ -744,7 +741,7 @@
 				 <p><u>Hinweis:</u> Sie können keine Schreibrechte auf die Strukturbaumknoten <i>Adressen</i> 
 				 und <i>freie Adressen</i> vergeben. Alle Teilbäume des Kataloges, auf die ein Schreibrecht 
 				 bestehen soll, müssen einzeln ausgewählt werden.</p>
-				 <p><b>Root-Verfahren und -Adressen anlegen</b></p>
+				 <p><b>Root-Datensatz und -Adressen anlegen</b></p>
 				 <p>Dies ist ein gesondertes Schreibrecht. Wird es für eine Gruppe vergeben, haben die 
 				 Mitglieder dieser Gruppe das Recht, neue Objekte und Adressen auf der obersten Ebene des 
 				 Kataloges anzulegen. Sie erhalten dann automatisch die Schreibrechte auf den ganzen Teilbaum 
@@ -765,18 +762,18 @@
         <section help-key="user-administration-3">
             <header>Berechtigungsübersicht</header>
             <content>
-                 <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf ein Verfahren, eine 
+                 <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf einen Datensatz, eine 
                  Adresse oder einen Teilbaum Schreibrechte oder das Recht für Unterelemente oder zur
                  Qualitätssicherung haben.</p>
-				 <p>Klicken Sie auf ein beliebiges Verfahren unter <i>Berechtigung für Objekte</i> oder auf eine 
-				 beliebige Adresse unter <i>Berechtigung für Adressen</i>. Das ausgewählte Verfahren bzw. die 
+				 <p>Klicken Sie auf einen beliebigen Datensatz unter <i>Berechtigung für Objekte</i> oder auf eine 
+				 beliebige Adresse unter <i>Berechtigung für Adressen</i>. Der ausgewählte Datensatz bzw. die 
 				 ausgewählte Adresse wird rot markiert. Es werden die <i>Nutzernamen</i> und die 
-				 <i>Rollen</i> aller Nutzer angezeigt, die auf das Verfahren bzw. die Adresse mindestens eines 
+				 <i>Rollen</i> aller Nutzer angezeigt, die auf den Datensatz bzw. die Adresse mindestens eines 
 				 der folgenden Rechte haben:</p>
 				 <ul>
 				 <li>Schreibrecht auf  das <i>Einzelobjekt</i> bzw. die <i>Einzeladresse</i></li>
 				 <li>Schreibrecht auf den <i>Teilbaum</i></li>
-                 <li>Recht zur Erstellung direkter <i>Unter-Verfahren</i> bzw. <i>Unteradressen</i></li>
+                 <li>Recht zur Erstellung direkter <i>Unter-Datensatz</i> bzw. <i>Unteradressen</i></li>
 				 </ul>
             </content>
         </section>
