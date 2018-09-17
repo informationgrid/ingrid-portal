@@ -6,6 +6,13 @@ var meterStrength = {
   3: "$MESSAGES.getString('common.password.strength.good')",
   4: "$MESSAGES.getString('common.password.strength.strong')"
 };
+var meterStrengthColors = {
+  0: "red",
+  1: "red",
+  2: "yellow",
+  3: "orange",
+  4: "green",
+};
 
 </script>
 <style>
@@ -23,6 +30,16 @@ meter {
 meter::-webkit-meter-bar {
   background: none;
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* meter-gauge is used for IE browser compability */
+.meter-gauge {
+  height: inherit;
+}
+.meter-gauge > span {
+  height: inherit;
+  display: block;
+  text-indent: -9999px;
 }
 
 /* Webkit based browsers */

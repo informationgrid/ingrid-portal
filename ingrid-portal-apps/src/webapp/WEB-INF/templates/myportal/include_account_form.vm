@@ -16,7 +16,7 @@
             <option value="4" #getSelectedFlag('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
         </select>
     </div>
-</div>  
+</div>
 <div class="media">
     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*:</label>
@@ -25,7 +25,7 @@
         <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
         #addErrorFormMessage('firstname')
     </div>
-</div>  
+</div>
 <div class="media">
     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*:</label>
@@ -34,7 +34,7 @@
         <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
         #addErrorFormMessage('lastname')
     </div>
-</div>  
+</div>
 <div class="media">
     <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
         <label for="email">$MESSAGES.getString('account.edit.label.email')*:</label>
@@ -43,7 +43,7 @@
         <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
         #addErrorFormMessage('email')
     </div>
-</div>  
+</div>
 #if ($formType == 'edit')
 	<div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
@@ -53,7 +53,7 @@
             <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
             #addErrorFormMessage('password_old')
         </div>
-    </div>  
+    </div>
     <hr />
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
@@ -65,7 +65,7 @@
             <meter max="4" id="password-strength-meter" name="password-strength-meter"></meter>
             #addErrorFormMessage('password_new')
         </div>
-    </div>  
+    </div>
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="password_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>
@@ -93,7 +93,11 @@
         <div class="media__body">
             <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password') onchange="checkPassword(document.getElementById('password').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
             <b><small class="media__obj--right" id="password-strength-text"></small></b>
-            <meter max="4" id="password-strength-meter"></meter>
+            <meter max="4" id="password-strength-meter">
+              <div class="meter-gauge">
+                  <span style="width: 0.0%;">Meterfallback</span>
+              </div>
+            </meter>
             #addErrorFormMessage('password')
         </div>
     </div>
