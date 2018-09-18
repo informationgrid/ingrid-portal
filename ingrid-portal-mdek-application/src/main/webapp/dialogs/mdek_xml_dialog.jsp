@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -48,7 +48,7 @@
 
             var showDifference = false;
             if (type === "O") {
-                if (currentUdk.workState !== "B") {
+                if (currentUdk.isPublished) {
 					ObjectService.getIsoXml( uuid, true, {
 						preHook: showLoadingZone,
 						postHook: hideLoadingZone,
@@ -64,7 +64,7 @@
                     callback: lang.partial(handleResult, 'xmlContainerWorking', def2)
                 } );
             } else if (type === "A") {
-                if (currentUdk.workState !== "B") {
+                if (currentUdk.isPublished) {
                     AddressService.getIsoXml(uuid, true, {
                         preHook: showLoadingZone,
                         postHook: hideLoadingZone,
@@ -91,7 +91,7 @@
                 }
 	            self.resize();
             });
-            
+
         });
 
         function handleResult(container, def, res) {
@@ -108,15 +108,15 @@
             }
             def.resolve(res);
         }
-        
+
         function showLoadingZone() {
             domStyle.set( "xmlLoadingZone", "display", "block" );
         }
-        
+
         function hideLoadingZone() {
             domStyle.set( "xmlLoadingZone", "display", "none" );
         }
-        
+
     });
 </script>
 </head>
