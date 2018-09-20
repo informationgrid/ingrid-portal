@@ -8,26 +8,14 @@
     <body>
 
         <release version="4.5.0-SNAPSHOT" date="20xx-xx-xx" description="Release 4.5.0">
-          <action type="fix" dev="wemove" issue="1176">
-            Portal: Fix password strength indicator for IE11.
-          </action>
-          <action type="fix" dev="wemove" issue="1158">
-            UVP: Fix problem showing details for "Negative Vorpruefungen".
+          <action type="fix" dev="wemove" issue="1180">
+            IGE/BKG: Fix tooltips of checkboxes in catalog management.
           </action>
           <action type="fix" dev="wemove" issue="1071">
             BKG: IGE: Fix formatting of fields "Zugriffsbeschränkungen" and "Nutzungsbedingungen" in IGE preview.
           </action>
           <action type="add" dev="wemove" issue="1124">
             Portal: If a data format is supplied at least a name has to be set in the data format table. Also state this in the context sensitive help.
-          </action>
-          <action type="fix" dev="wemove" issue="1145">
-            UVP: IGE: Fix problem with not showing preview data.
-          </action>
-          <action type="add" dev="wemove" issue="1142">
-            UVP: IGE: Fix problem with downloading uvp statistic report in IE11.
-          </action>
-          <action type="add" dev="wemove" issue="1151">
-            UVP: Portal: Add setting and param extent to define map extent.
           </action>
           <action type="add" dev="wemove" issue="1131">
             Portal: Add ZDM profile.
@@ -41,14 +29,29 @@
           <action type="add" dev="wemove" issue="1147">
             Portal: Change default active procedures on map.
           </action>
+          <action type="fix" dev="wemove" issue="1176">
+            Portal: Fix password strength indicator for IE11.
+          </action>
           <action type="fix" dev="wemove" issue="1133">
             Portal: Fix portal database when new installation on PostgreSQL or migrating from MySQL to Postgres.
+          </action>
+          <action type="add" dev="wemove" issue="1142">
+            UVP: IGE: Fix problem with downloading uvp statistic report in IE11.
+          </action>
+          <action type="add" dev="wemove" issue="1151">
+            UVP: Portal: Add setting and param extent to define map extent.
           </action>
           <action type="add" dev="wemove" issue="1152">
             UVP: Portal: Add UVP-NI matomo website ID.
           </action>
           <action type="add" dev="wemove" issue="1155">
             UVP: Portal: Change UVP map legend depend on procedure hits.
+          </action>
+          <action type="fix" dev="wemove" issue="1145">
+            UVP: IGE: Fix problem with not showing preview data.
+          </action>
+          <action type="fix" dev="wemove" issue="1158">
+            UVP: Fix problem showing details for "Negative Vorpruefungen".
           </action>
           <action type="fix" dev="wemove" issue="1156">
             UVP: Portal: Fix display details of 'negative Vorprüfungen'.
