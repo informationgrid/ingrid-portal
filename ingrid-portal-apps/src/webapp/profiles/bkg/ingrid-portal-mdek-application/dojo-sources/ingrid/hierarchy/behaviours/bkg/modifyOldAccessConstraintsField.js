@@ -35,7 +35,7 @@ define([
     // issue: 556
     return declare(null, {
         title: "Zugriffsbeschränkungen (INSPIRE-Liste)",
-        description: "Modifiziert die bestehende Tabelle 'Zugriffsbeschränkungen' und erlaubt keine freien Einträge mehr.",
+        description: "Modifiziert die bestehende Tabelle \"Zugriffsbeschränkungen\" und erlaubt keine freien Einträge mehr.",
         defaultActive: true,
         category: "BKG",
         run: function() {

@@ -35,7 +35,7 @@ define([
     // issue: 556
     return declare(null, {
         title: "Nutzungsbedingungen (InGrid-Hauptprofil)",
-        description: "Modifiziert die bestehende Tabelle 'Nutzungsbedingungen' und erlaubt keine freien Einträge mehr.",
+        description: "Modifiziert die bestehende Tabelle \"Nutzungsbedingungen\" und erlaubt keine freien Einträge mehr.",
         defaultActive: true,
         category: "BKG",
         run: function() {
