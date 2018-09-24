@@ -321,7 +321,7 @@ thead {
 
 .icon-cat_donau, .icon-cat_elbe, .icon-cat_rhein {
     width: 7em;
-	height: unset;
+	height: auto;
 	display: block;
 	padding-bottom: 0.5em;
 }
