@@ -1517,7 +1517,7 @@ public class UtilsFacete {
         return facetSelectionState;
     }
     
-    private static int isFacetSelection(PortletRequest request){
+    private static boolean isFacetSelection(PortletRequest request){
         HashMap<String, Boolean> facetSelectionState = getFacetSelectionState(request);
         int i=0; 
         if(facetSelectionState != null){
@@ -1526,12 +1526,12 @@ public class UtilsFacete {
                 if(facetSelectionState.get(key)){
                     i=i+1;
                     if(i>1){
-                        break;
+                        return true;
                     }
                 }
             }    
         }
-        return i;
+        return false;
     }
     
     /**

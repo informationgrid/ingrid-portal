@@ -1235,11 +1235,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                 }
             }
-            if (!mapLinkAdded) {
-                // check if preview image is available
-                xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
-                map = getPreviewImage(xpathExpression);
-            }
+        }
+        if (!mapLinkAdded) {
+            // check if preview image is available
+            xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
+            map = getPreviewImage(xpathExpression);
         }
         return map;
     }

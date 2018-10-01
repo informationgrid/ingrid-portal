@@ -33,7 +33,7 @@ define([
     return declare(null, {
         
         title : "Checkbox anzeigen",
-        description : "Wenn aktiviert, wird die Checkbox 'AdV kompatibel' angezeigt.",
+        description : "Wenn aktiviert, wird die Checkbox \"AdV kompatibel\" angezeigt.",
         defaultActive : true,
         category: "AdV Kompatibel",
         run : function() {

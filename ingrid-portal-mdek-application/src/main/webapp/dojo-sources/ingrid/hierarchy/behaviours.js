@@ -50,10 +50,11 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
-        "ingrid/hierarchy/behaviours/spatialRepresentationInfo"
+        "ingrid/hierarchy/behaviours/spatialRepresentationInfo",
+        "ingrid/hierarchy/behaviours/parentIdentifier"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
-            spatialRepresentationInfo) {
+            spatialRepresentationInfo, parentIdentifier) {
 
     return declare(null, {
         
@@ -74,6 +75,8 @@ define(["dojo/_base/declare",
         inspireConformityConnection: inspireConformityConnection,
 
         spatialRepresentationInfo: spatialRepresentationInfo,
+
+        parentIdentifier: parentIdentifier,
         
         coupledResourceDownloadDataCheck: {
             title: "Gekoppelte Daten - Überprüfung auf Download-Daten",
@@ -167,7 +170,7 @@ define(["dojo/_base/declare",
         
         dqGriddedDataPositionalAccuracy: {
             title: "Verhalten für die Rasterpositionsgenauigkeit",
-            description: "Das Element ist optional und wird nicht per default eingeblendet. Es wird nur aktiviert, wenn 'Digitale Repräsentation' den Wert 'Raster' hat.",
+            description: "Das Element ist optional und wird nicht per default eingeblendet. Es wird nur aktiviert, wenn \"Digitale Repräsentation\" den Wert \"Raster\" hat.",
             defaultActive: true,
             run: function() {
                 aspect.after(registry.byId("ref1Representation"), "onDataChanged", function() {
@@ -185,6 +188,24 @@ define(["dojo/_base/declare",
                     }
                 });
             }
+        },
+        
+        dataFormat: {
+            title : "Name von Datenformat verpflichtend",
+            description : "Wenn aktiviert, muss jeder Eintrag in der Tabelle \"Datenformat\" mind. einen Namen enthalten.",
+            defaultActive : true,
+            run : function() {
+                var subscription = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                        if (array.some(UtilGrid.getTableData("availabilityDataFormat"), function(dataFormat) {
+                            return (typeof(dataFormat.name) == "undefined" ||
+                            	dataFormat.name === null ||
+                                lang.trim(dataFormat.name + "").length === 0);
+                        })) {
+                            notPublishableIDs.push( ["availabilityDataFormat", message.get("validation.error.data.format")] );
+                        }
+                    });
+            }
+        	
         },
         
         foldersInHierarchy: foldersInHierarchy,

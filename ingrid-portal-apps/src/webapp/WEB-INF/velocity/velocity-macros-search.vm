@@ -359,7 +359,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     <aside class="sidebar js-accordion-multi #if($classes)$classes#end">
         <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
             Filter
-            #if($enableFacetSelection > 0 || $isSelection)
+            #if($enableFacetSelection || $isSelection)
                 <svg class="icon-active"><use xlink:href="#check"></use></svg>
             #end
             <svg class="icon"><use xlink:href="#filter"></use></svg>

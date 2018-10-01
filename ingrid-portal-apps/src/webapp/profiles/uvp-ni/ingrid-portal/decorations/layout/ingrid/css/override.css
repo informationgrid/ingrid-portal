@@ -559,3 +559,8 @@ thead {
   box-shadow: unset;
   font-size: 12px;
 }
+
+.leaflet-legend-icon {
+  background-size: 13px 16px;
+  padding: 3px 10px 0 4px !important;
+}

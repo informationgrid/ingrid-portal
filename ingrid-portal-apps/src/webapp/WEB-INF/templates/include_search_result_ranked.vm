@@ -6,7 +6,7 @@
     #end
 #end
 
-#if($enableFacetSelection > 0 || $isSelection)
+#if($enableFacetSelection || $isSelection)
     <ul class="tag-group tag-group bx-top-m bx-bot-l">
         #renderSearchResultFacetSelection($facetConfig $MESSAGES)
     </ul>
