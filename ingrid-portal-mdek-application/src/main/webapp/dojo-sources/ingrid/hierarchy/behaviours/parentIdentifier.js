@@ -26,6 +26,7 @@ define(["dijit/registry",
     "dojo/dom-class"
 ], function (registry, declare, aspect, domClass) {
 
+    // ATTENTION: THIS WILL NOT BE EXECUTED SINCE IT'S NOT ASSIGNED IN "behaviours.js"
     return declare(null, {
         title: "Identifikator des übergeordneten Metadatensatzes",
         description: "Hier wird die Sichtbarkeit des Feldes gesteuert. Dieses soll nur für Root-Objekte und solche unter direkt unter einem Ordner sichtbar sein.",

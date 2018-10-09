@@ -76,7 +76,8 @@ define(["dojo/_base/declare",
 
         spatialRepresentationInfo: spatialRepresentationInfo,
 
-        parentIdentifier: parentIdentifier,
+        // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
+        // parentIdentifier: parentIdentifier,
         
         coupledResourceDownloadDataCheck: {
             title: "Gekoppelte Daten - Überprüfung auf Download-Daten",

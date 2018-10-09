@@ -283,7 +283,7 @@
                             </div>
                         </div>
                         <div id="generalContent" class="content">
-                            <span id="uiElement1001" class="outer optional hide">
+                            <span id="uiElement1001" class="outer optional">
                                 <div><span class="label">
                                     <label for="parentIdentifier" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1001)">
                                         <fmt:message key="ui.obj.general.parentIdentifier" />

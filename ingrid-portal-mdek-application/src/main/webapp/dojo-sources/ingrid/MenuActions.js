@@ -50,7 +50,6 @@ define([
     return declare(null, {
 
         COOKIE_HIDE_COPY_HINT: "ingrid.ige.copy.hint",
-        COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT: "ingrid.ige.copy.parent.identifier.hint",
 
         global: this,
 
@@ -217,21 +216,6 @@ define([
             if (selectedNodes.length > 0 && notAllowedSelection.length > 0) {
                 dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);
             } else {
-                if (cookie(this.COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT) !== "true") {
-                    var self = this;
-                    dialog.show(message.get("dialog.general.info"), message.get("tree.moveNodeParentIdentifierHint"), dialog.INFO, [{
-                        caption: message.get("general.ok.hide.next.time"),
-                        type: "checkbox",
-                        action: function (newValue) {
-                            cookie(self.COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT, newValue, {expires: 730});
-                        }
-                    }, {
-                        caption: message.get("general.ok"),
-                        action: function () {
-                        }
-                    }]);
-                }
-
                 var tree = registry.byId("dataTree");
                 tree.prepareCut(tree.selectedItems);
             }
@@ -266,7 +250,6 @@ define([
                         action: function(newValue) {
                             console.debug("cookie: " + newValue);
                             cookie(self.COOKIE_HIDE_COPY_HINT, newValue, {expires: 730});
-                            cookie(self.COOKIE_HIDE_COPY_PARENT_IDENTIFIER_HINT, newValue, {expires: 730});
                         }
                     }, {
                         caption: message.get("general.ok"),
@@ -379,7 +362,6 @@ define([
 
                         nodeIds = [];
                         var parentNodeIds = [];
-                        var containsExternalParentIdentifier = false;
                         array.forEach(tree.nodesToCut, function(nodeItem) {
                             nodeIds.push(nodeItem.id);
                             var parentId = UtilTree.getNodeById("dataTree", nodeItem.id).getParent().item.id;
@@ -387,20 +369,7 @@ define([
                                 parentNodeIds.push(null);
                             else
                                 parentNodeIds.push(parentId);
-
-                            if (nodeItem.parentIdentifier) {
-                                containsExternalParentIdentifier = true;
-                            }
                         });
-
-                        // inform user about removed parentIdentifier field, since it'll be moved under another object
-                        // the backend will handle the actual removal
-                        var isRootNodeOrBelowFolder = tree.selectedNode.item.objectClass === 1000 || tree.selectedNode.item.objectClass === null;
-                        if (containsExternalParentIdentifier && !isRootNodeOrBelowFolder) {
-                            def.then(function() {
-                                dialog.show(message.get("general.hint"), message.get("tree.parentIdentifierWillBeRemoved"), dialog.WARNING);
-                            });
-                        }
 
                         if (appType == "O") {
                             def.then(function() {
