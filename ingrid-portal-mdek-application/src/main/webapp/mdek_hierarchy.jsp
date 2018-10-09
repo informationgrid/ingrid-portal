@@ -698,10 +698,8 @@
                                             </div>
                                         </span>
                                         
-                                        <div style="clear: both; padding: 5px 0;">
-                                            <hr>
-                                        </div>
-                                        
+                                        <hr>
+
                                         <span id="uiElement5306" class="outer">
                                             <div class="input checkboxContainer input-inline">
                                                 <input type="radio" id="isGeoRectified"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5306)" for="isGeoRectified"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
@@ -710,7 +708,7 @@
                                                 <input type="radio" id="isGeoReferenced" /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5307)" for="isGeoReferenced"><fmt:message key="ui.obj.type1.gridFormat.geoReferenced" /></label>
                                             </div>
                                         </span>
-                                        
+
                                         <div id="geoRectifiedWrapper">
                                             <span id="uiElement5308" class="outer halfWidth">
                                                 <div>
@@ -760,7 +758,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        
+
                                         <div id="geoReferencedWrapper" class="hide">
                                             <span id="uiElement5312" class="outer halfWidth">
                                                 <div>
@@ -797,6 +795,8 @@
                                                 </div>
                                             </span>
                                         </div>
+
+                                        <div style="clear: both; padding: 5px 0;"></div>
                                     </div>
                                 </span>
                             </div>
