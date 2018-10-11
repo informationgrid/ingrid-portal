@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="4.5.0-SNAPSHOT" date="20xx-xx-xx" description="Release 4.5.0">
+        <release version="4.5.0" date="2018-10-11" description="Release 4.5.0">
           <action type="fix" dev="wemove" issue="1180">
             IGE/BKG: Fix tooltips of checkboxes in catalog management.
           </action>
@@ -17,9 +17,6 @@
           <action type="add" dev="wemove" issue="1124">
             Portal: If a data format is supplied at least a name has to be set in the data format table. Also state this in the context sensitive help.
           </action>
-          <action type="add" dev="wemove" issue="1131">
-            Portal: Add ZDM profile.
-          </action>
           <action type="add" dev="wemove" issue="1143">
             Portal: Add password policy to all portal profiles.
           </action>
@@ -28,6 +25,9 @@
           </action>
           <action type="add" dev="wemove" issue="1147">
             Portal: Change default active procedures on map.
+          </action>
+          <action type="fix" dev="wemove" issue="1164">
+            Portal: Fix displayed facet filter in result view.
           </action>
           <action type="fix" dev="wemove" issue="1176">
             Portal: Fix password strength indicator for IE11.
@@ -80,8 +80,23 @@
           <action type="fix" dev="wemove" issue="1148">
             MapClient: Fix IE11 params update outside iframe.
           </action>
+          <action type="add" dev="wemove" issue="1066">
+            IGE: Add license source. Make "accessConstraints" field optional.
+          </action>
+          <action type="add" dev="wemove" issue="364">
+            IGE: Choose free parentIdentifier for metadata.
+          </action>
+          <action type="fix" dev="wemove" issue="1177">
+            IGE: Fix published version in ISO XML view in editor.
+          </action>
           <action type="fix" dev="wemove" issue="1190">
             IGE: Fix view of grid format.
+          </action>
+          <action type="update" dev="wemove" issue="1562">
+            WSV: Portal: Separate 'impressum' and 'datenschutz' in WSV profile.
+          </action>
+          <action type="add" dev="wemove" issue="1131">
+            ZDM: Portal: Add ZDM profile.
           </action>
         </release>
 
