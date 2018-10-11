@@ -26,10 +26,13 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.json.JsonUtil;
 import de.ingrid.utils.udk.*;
 import de.ingrid.utils.xml.IDFNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.velocity.context.Context;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.NamedNodeMap;
@@ -184,8 +187,8 @@ public class DetailPartPreparer {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, codeListId, null);
     }
     
-    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, ArrayList<String> consideredValues) {
-        ArrayList<String> list = new ArrayList<String>();
+    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, List<String> consideredValues) {
+        ArrayList<String> list = new ArrayList<>();
         NodeList nodeList = XPathUtils.getNodeList(this.rootNode, xpathExpression);
         if(nodeList != null){
             for (int j=0; j < nodeList.getLength();j++){
@@ -269,17 +272,42 @@ public class DetailPartPreparer {
                 }
                 continue;
             }
+
+            // try to get the license source from other constraints (#1066)
+            String source = null;
+            String url = null;
+            for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
+                String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
+                if (constraintSource.contains("\"quelle\"")) {
+                    try {
+                        IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
+                        source = (String) json.get("quelle");
+                        url = (String) json.get("url");
+                        break;
+                    } catch (ParseException e) {
+                        log.error("Error parsing json from use constraints", e);
+                    }
+                }
+            }
+
+            String value;
             String codeListValue = getValueFromCodeList(licenceList, constraints);
+            String finalValue = codeListValue;
             if (codeListValue == null || codeListValue.trim().isEmpty()) {
-                String value = String.format("%s: %s", restrictionCode, constraints);
-                if (!result.contains(value)) {
-                    result.add(value);
-                }
+                finalValue = constraints;
+            }
+
+            if (url != null && !url.trim().isEmpty()) {
+                value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, finalValue);
             } else {
-                String value = String.format("%s: %s", restrictionCode, codeListValue);
-                if (!result.contains(value)) {
-                    result.add(value);
+                value = String.format("%s: %s", restrictionCode, finalValue);
+            }
+
+            if (!result.contains(value)) {
+                if (source != null && !source.isEmpty()) {
+                    value += "<br>Quellenvermerk: " + source;
                 }
+                result.add(value);
             }
         }
 
@@ -341,8 +369,8 @@ public class DetailPartPreparer {
      * @param consideredValues values to skip
      * @return list of values to render
      */
-    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, ArrayList<String> consideredValues) {
-        ArrayList<String> list = new ArrayList<String>();
+    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, List<String> consideredValues) {
+        ArrayList<String> list = new ArrayList<>();
         
         List<Node> siblingList = XPathUtils.getSiblingsFromXPath(rootNode, xpathExpression, siblingNodeName, includeSelection);
         if(siblingList == null) {
@@ -390,7 +418,7 @@ public class DetailPartPreparer {
         return XPathUtils.nodeExists(node, xpathExpression);
     }
     
-    public boolean aNodeOfListExist(ArrayList<String> xpathExpressions){
+    public boolean aNodeOfListExist(List<String> xpathExpressions){
         boolean exists = false;
         if(xpathExpressions != null){
             for (int i=0; i<xpathExpressions.size();i++){
@@ -540,15 +568,15 @@ public class DetailPartPreparer {
         return value;
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions) {
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, null);
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList) {
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, headCodeList, null);
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList, ArrayList<String> headTypes) {
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList, List<String> headTypes) {
         HashMap<String, Object> element = new HashMap<String, Object>();
         if(XPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);

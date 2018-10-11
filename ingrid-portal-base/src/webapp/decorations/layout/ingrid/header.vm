@@ -48,6 +48,7 @@
         ##includeJavaScriptForHead()
         ##IncludeStylesheets()
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
         #* our decorator macros, see ./decorator-macros.vm *#
@@ -60,12 +61,12 @@
         <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
         <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
         <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
-        <!-- zxcvbn -->
-        <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
         #set($lang = $renderRequest.Locale.getLanguage())
         #if($lang && $lang != "en")
             <script src='#GetPageResource("scripts/pickadate/lib/translations/${lang}.js")'></script>
         #end
+        <!-- zxcvbn -->
+        <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
     </head>
     <body>
     

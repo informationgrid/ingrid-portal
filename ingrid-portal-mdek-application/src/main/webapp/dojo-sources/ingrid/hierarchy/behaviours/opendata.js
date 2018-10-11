@@ -37,7 +37,7 @@ define(["dojo/_base/declare",
 
   return declare(null, {
     title: "Open Data",
-    description: "Bei der Aktivierung der Checkbox 'Open Data' werden folgende Verhalten hinzugefügt. Anzeige der Kategorien als Pflichtfeld. Außerdem muss ein Verweis vom Typ 'Datendownload' existieren.",
+    description: "Bei der Aktivierung der Checkbox \"Open Data\" werden folgende Verhalten hinzugefügt. Anzeige der Kategorien als Pflichtfeld. Außerdem muss ein Verweis vom Typ \"Datendownload\" existieren.",
     defaultActive: true,
     COOKIE_HIDE_OPEN_DATA_HINT: "ingrid.open.data.hint",
     run: function () {

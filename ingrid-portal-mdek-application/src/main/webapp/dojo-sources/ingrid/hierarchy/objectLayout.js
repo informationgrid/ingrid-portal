@@ -231,7 +231,11 @@ define([
 	            		this._startSearchAll(); 
 	            	} ) );
 	    		};
-                
+
+                new ValidationTextBox({
+                    maxLength: 255,
+                    style: "width:100%;"
+                }, "parentIdentifier");
                 
             },
 
@@ -1969,7 +1973,7 @@ define([
 
                 var availabilityUseAccessConstraintsStructure = [{
                     field: 'title',
-                    name: 'title',
+                    name: message.get("ui.obj.availability.useAccessConstraintsTable.header.name"),
                     width: '348px',
                     type: gridEditors.ComboboxEditor,
                     options: [], // will be filled later, when syslists are loaded
@@ -1977,6 +1981,10 @@ define([
                     editable: true,
                     listId: 6500,
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
+                }, {
+                    field: 'source',
+                    name: message.get("ui.obj.availability.useAccessConstraintsTable.header.source"),
+                    editable: true
                 }];
                 layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
                 

@@ -322,7 +322,7 @@ define([
          * optimizations it's only done once and if the grid was rendered in a hidden state where
          * the viewport's width is null. You can however force a relayout by giving the parameter 
          * force with true.
-         * @param  {[boolean]} force [does a relayout even if viewport already had a width]
+         * @param  {boolean} force [does a relayout even if viewport already had a width]
          */
         reinitLastColumn: function(force) {
             if (force || this.viewportW === 0) {

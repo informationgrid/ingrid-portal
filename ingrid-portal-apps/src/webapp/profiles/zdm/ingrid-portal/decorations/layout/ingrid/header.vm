@@ -1,0 +1,132 @@
+#* Add the current layouts configuration values to the context *#
+#defineLayoutObjects()
+
+#* Loads our custom macros *#
+#parse($layoutDecoration.getResource("decorator-macros.vm"))
+
+#* Add all template constants to the current context *#
+##defineNavigationConstants()
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
+    <head>
+        #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+        #includeHeaderResource()
+        #set($currentPage = $site.getPageOrTemplate().url)
+        <!--
+        #if($currentPage)
+            #if($currentPage != "/help.psml")
+                <base href="#BaseHref()" />
+            #end
+        #end
+        -->
+        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
+        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
+        <meta http-equiv="Content-type" content="#ContentType()" />
+        <meta http-equiv="Content-style-type" content="text/css" />   
+        <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+        <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
+        <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
+        <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
+        <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+
+        #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
+            <meta name="robots" content="noindex,follow" />
+        #else
+            <meta name="robots" content="index,follow" />
+        #end
+        <link rel="stylesheet" href="#GetPageResource('css/google/robotocondensed/v13/css/fonts.css')" />
+        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
+        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
+        <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
+        #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
+            <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
+        #end
+
+        #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
+        ##includeJavaScriptForHead()
+        ##IncludeStylesheets()
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
+        #* our decorator macros, see ./decorator-macros.vm *#
+        #decoratorIncludeJavaScriptForHead()
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
+        <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
+        <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <!-- Pickadate -->
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
+        #set($lang = $renderRequest.Locale.getLanguage())
+        #if($lang && $lang != "en")
+            <script src='#GetPageResource("scripts/pickadate/lib/translations/${lang}.js")'></script>
+        #end
+        <!-- zxcvbn -->
+        <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
+        <!-- ZDM -->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/medium.css?v=4" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/large.css?v=11" type="text/css">
+        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/css/gsb/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_iefix.css?v=1" type="text/css" /><![endif]-->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_print.css?v=3" type="text/css" media="print">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_preview.css?v=1" type="text/css">
+        <script type="text/javascript" src="/decorations/layout/ingrid/scripts/gsb/global.js?v=29"></script>
+    </head>
+    <body class="gsb lang-de fixed js-on">
+    
+    #set($mainMenu = $site.getMenu("main-menu"))
+    #set($serviceMenu = $site.getMenu("service-menu"))
+    #set($footerMenu = $site.getMenu("footer-menu"))
+    #if(!$mainMenu.empty)
+        #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
+    #end
+        <div id="wrapperOuter" class="page" >
+          <div id="wrapperInner">
+            <a id="Start"></a>
+            <div id="wrapperDivisions">
+              <div id="header">
+                <div class="wrapperBranding row mod">
+                  <div id="navServiceMeta" class="large-9 columns">
+                    <h2 class="aural">Servicemen&uuml;</h2>
+                    <ul>
+                      <li><a href="https://www.kuestendaten.de/DE/Startseite/Startseite_Kuestendaten_node.html">K&uuml;s&shy;ten&shy;da&shy;ten</a></li>
+                      <li id="Bar"><a href="https://www.kuestendaten.de/NSK/DE/Startseite/Startseite_Portal_Nordseekueste_node.html" title="Nordseek&uuml;ste">Nord&shy;see&shy;k&uuml;s&shy;te</a></li>
+                      <li><a href="https://www.kuestendaten.de/Tideems/DE/Startseite/Startseite-Portal-Tideems-node.html">Ti&shy;de&shy;ems</a></li>
+                      <li id="Bar"><a href="https://www.kuestendaten.de/Tideweser/DE/Startseite/Startseite-Portal-Tideweser-node.html" title="Tideweser">Ti&shy;de&shy;we&shy;ser</a></li>
+                      <li id="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html" title="Tideelbe">Ti&shy;de&shy;el&shy;be</a></li>
+                      <li id="Bar"><a href="https://www.kuestendaten.de/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html" title="Nord-Ostsee-Kanal">Nord-Ost&shy;see-Ka&shy;nal</a></li>
+                      <li id="Bar"><a href="https://www.kuestendaten.de/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html" title="Ostseek&uuml;ste">Ost&shy;see&shy;k&uuml;s&shy;te</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/images/template/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
+                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/images/template/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row mod">
+                  <div class="large-3 small-6 logo columns">
+                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/images/template/logo.png" alt="WSVPageAltLink"></a></p>
+                  </div>
+                  <div class="right large-5 small-6 addlogo columns subheadline">
+                    <p>
+                      <span>Zentrales Datenmanagement (ZDM)<br> K&uuml;stendaten</span>
+                    </p>
+                  </div>
+                </div>
+                <div id="navPrimary">
+                  <h2 class="aural">Hauptmen&uuml;</h2>
+                </div>
+                <div id="wrapperBreadcrumbs">
+                  <div id="navBreadcrumbsVertical">
+                  </div>
+                </div>
+                <div id="navBreadcrumbs">
+                   &nbsp;
+                </div>
+              </div>
+              <div id="main" class="row wide">
+                <div id="content" class="large-12 medium-12 small-12 columns">

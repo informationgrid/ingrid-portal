@@ -36,18 +36,12 @@
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script language="JavaScript" type="text/javascript">
-    var bounds;
-    var selectedMap = '$selectedMap.webmapclientCoords';
-    if(selectedMap.indexOf("y1") > -1){
-        bounds = [[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]];
-    }
-    
     var osm = getOSMLayer('');
-    var map = addLeafletMap([osm], bounds, new L.LatLng(51.3, 10), 5);
+    var map = addLeafletMap([osm]);
     var enablePopUp = false;
     var smallIcons = true;
     
-    if(!bounds){
+    if('$selectedMap.webmapclientCoords'.indexOf("y1") === -1){
         $( document ).ready(function() {
             $('#facet_area_map_header').each(function(index) {
                 var div = $(this);
@@ -65,10 +59,12 @@
     };
 
     function getMapBounds(){
-        $('#x1').prop("value", map.getBounds().getWest());
-        $('#x2').prop("value", map.getBounds().getEast());
-        $('#y1').prop("value", map.getBounds().getSouth());
-        $('#y2').prop("value", map.getBounds().getNorth());
+        if(map.getBounds().isValid()) {
+            $('#x1').prop("value", map.getBounds().getWest());
+            $('#x2').prop("value", map.getBounds().getEast());
+            $('#y1').prop("value", map.getBounds().getSouth());
+            $('#y2').prop("value", map.getBounds().getNorth());
+        }
     }
 
     function resizeMap(){
@@ -79,16 +75,16 @@
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10), 5);
-    
-    var htmlObject = control.getContainer();
-    // Get the desired parent node.
-    var a = document.getElementById('map-legend');
-    
-    // Finally append that node to the new parent.
-    function setParent(el, newParent)
-    {
-        newParent.appendChild(el);
+    function onReplaceLegend(control) {
+        var htmlObject = control.getContainer();
+        // Get the desired parent node.
+        var a = document.getElementById('map-legend');
+        
+        // Finally append that node to the new parent.
+        function setParent(el, newParent)
+        {
+            newParent.appendChild(el);
+        }
+        setParent(htmlObject, a);
     }
-    setParent(htmlObject, a);
 </script>

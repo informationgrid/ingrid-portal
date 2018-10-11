@@ -1521,7 +1521,8 @@ define([
         onAfterSave: function() {},
         onAfterPublish: function() {},
         onAfterLoad: function() {},
-        
+        onAfterCreate: function() {},
+
         _getAddressOwner: function(uuid) {
         	var def2 = new Deferred();
         	AddressService.getAddressData(uuid, function(address) {
@@ -1815,6 +1816,7 @@ define([
 
             // --- General ---
             registry.byId("generalShortDesc").attr("value", nodeData.generalShortDescription, true);
+            registry.byId("parentIdentifier").attr("value", nodeData.parentIdentifier, true);
             registry.byId("generalDesc").attr("value", nodeData.generalDescription, true);
             var addressTable = nodeData.generalAddressTable;
             //UtilList.addTableIndices(addressTable);
@@ -1895,7 +1897,7 @@ define([
 
             // -- Availability --
             UtilStore.updateWriteStore("availabilityAccessConstraints", UtilList.listToTableData(nodeData.availabilityAccessConstraints));
-            UtilStore.updateWriteStore("availabilityUseAccessConstraints", UtilList.listToTableData(nodeData.availabilityUseAccessConstraints));
+            UtilStore.updateWriteStore("availabilityUseAccessConstraints", nodeData.availabilityUseAccessConstraints);
             registry.byId("availabilityUseConstraints").attr("value", nodeData.availabilityUseConstraints, true);
             registry.byId("availabilityOrderInfo").attr("value", nodeData.availabilityOrderInfo, true);
             UtilStore.updateWriteStore("availabilityDataFormat", nodeData.availabilityDataFormatTable);
@@ -2402,6 +2404,7 @@ define([
             // ------------------ Object Content ------------------
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
+            nodeData.parentIdentifier = registry.byId("parentIdentifier").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
@@ -2490,7 +2493,7 @@ define([
             // -- Availability --
             //  nodeData.availabilityUsageLimitationTable = this._getTableData("availabilityUsageLimitationTable");
             nodeData.availabilityAccessConstraints = UtilList.tableDataToList(this._getTableData("availabilityAccessConstraints"));
-            nodeData.availabilityUseAccessConstraints = UtilList.tableDataToList(this._getTableData("availabilityUseAccessConstraints"));
+            nodeData.availabilityUseAccessConstraints = this._getTableData("availabilityUseAccessConstraints");
             nodeData.availabilityUseConstraints = registry.byId("availabilityUseConstraints").get("value");
 
             nodeData.availabilityOrderInfo = registry.byId("availabilityOrderInfo").get("value");

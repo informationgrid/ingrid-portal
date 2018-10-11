@@ -41,16 +41,18 @@
         });
 
         function download(filename, text) {
-            var element = document.createElement('a');
-            element.setAttribute('href', 'data:text/plain;charset=utf8,'+ '\uFEFF' + encodeURIComponent(text));
-            element.setAttribute('download', filename);
-
-            element.style.display = 'none';
-            document.body.appendChild(element);
-
-            element.click();
-
-            document.body.removeChild(element);
+        	if (window.navigator.msSaveBlob) { // // IE hack; see http://msdn.microsoft.com/en-us/library/ie/hh779016.aspx
+              var blob = new Blob(['\uFEFF' + text], { type: 'text/csv;charset=utf-8' });
+        	    window.navigator.msSaveOrOpenBlob(blob, filename);
+        	}
+        	else {
+        	    var a = window.document.createElement("a");
+              a.setAttribute('href', 'data:text/plain;charset=utf8,'+ '\uFEFF' + encodeURIComponent(text));
+              a.setAttribute('download', filename);
+        	    document.body.appendChild(a);
+        	    a.click();  // IE: "Access is denied"; see: https://connect.microsoft.com/IE/feedback/details/797361/ie-10-treats-blob-url-as-cross-origin-and-denies-access
+        	    document.body.removeChild(a);
+        	}
         }
 
         function verifyDates(startDate, endDate) {

@@ -53,7 +53,7 @@
                                     #set($nodeHasValue = true)
                                 #end
                             #end
-                            #if($nodeHasValue)
+                            #if($nodeHasValue || $node.isOpen())
                                 #renderFacetContent($node)
                             #end
                         #end
@@ -89,6 +89,8 @@
             $action.setParameter("$parentId", "$facet.getId()")
             #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
         #end
+    #elseif($facet.getWildcard())
+        #renderSubfacetWildcardContent($facet)
     #end
 #end
 
@@ -324,7 +326,7 @@
 
 #set ($rankedHitslenght = $rankedResultList.get("length").toString())
 #if($rankedHitslenght != "0")
-    #if($enableFacetSelection > 0 || $isSelection)
+    #if($enableFacetSelection || $isSelection)
         #set ($action = $renderResponse.createActionURL())
         $action.setParameter("doRemoveAll", "true")
         #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
@@ -339,15 +341,43 @@
             $MESSAGES.getString("searchResult.facete.category.no.hits") 
         #end
     </p>
-        #if($enableFacetSelection > 0 && $isSelection)
+        #if($enableFacetSelection && $isSelection)
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("doRemoveLast", "true")
             #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
         #end
-        #if($enableFacetSelection > 0 || $isSelection)
+        #if($enableFacetSelection || $isSelection)
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("doRemoveAll", "true")
             #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
         #end
     <br>
+#end
+
+#macro(renderSubfacetWildcardContent $node)
+    #set($wildcard_item_term = false)
+    #set($wildcard_item = false)
+    #set($wildcard_item = $wildcardMap.get("$node.getId()"))
+    #if($wildcard_item)
+        #set($wildcard_item_term = $wildcard_item.get("term"))
+    #end
+
+    <div class="js-accoridon-toggle sidebar-filter-subheader">
+        $node.getName()
+    </div>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter("wildcard_id", "$node.getId()")
+    $action.setParameter("wildcard", "$node.getWildcard()")
+    <form action="$action" method="post" name="wildcard_$node.getId()">
+        <div class="search-form ob-clear ob-flex">
+            <input class="field" type="text" name="termWildcard_$node.getId()" id="termWildcard_$node.getId()" #if($wildcard_item_term)value="$wildcard_item_term"#end />
+            <button type="submit" name="doSearchWildcard_$node.getId()" value="$MESSAGES.getString("searchResult.facete.wildcard.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
+                <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+            </button>
+        </div>
+        #if($wildcard_item_term)
+            $action.setParameter("doClearSearchWildcard", "$node.getId()")
+            #renderCrossLink($action $MESSAGES.getString("searchResult.facete.wildcard.name.delete"))
+        #end
+    </form>
 #end

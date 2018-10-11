@@ -6,7 +6,7 @@ pipeline {
     }
     
     options {
-      buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '5'))
+      buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
       disableConcurrentBuilds()
     }
 

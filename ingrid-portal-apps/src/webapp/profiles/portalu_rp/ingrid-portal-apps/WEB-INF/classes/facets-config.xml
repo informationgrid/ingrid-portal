@@ -216,7 +216,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                  <query>inspireidentifiziert</query>
+                <query>datatype:metadata inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
         <!-- Opendata -->
@@ -427,7 +427,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                <query>inspireidentifiziert</query>
+                <query>datatype:metadata inspireidentifiziert</query>
                 <id>inspire</id>
                 <parentId>type</parentId>
                 <icon>icon-globe-2</icon>

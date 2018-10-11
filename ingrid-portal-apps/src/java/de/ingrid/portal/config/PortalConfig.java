@@ -246,9 +246,13 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED = "portal.mapclient.uvp.category.12.checked";
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED = "portal.mapclient.uvp.category.1314.checked";
 
+    public static final String PORTAL_MAPCLIENT_LEAFLET_POSITION = "portal.mapclient.leaflet.position";
+    
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN = "portal.mapclient.uvp.category.dev.plan";
 
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_CHECKED = "portal.mapclient.uvp.category.dev.plan.checked";
+
+    public static final String PORTAL_MAPCLIENT_UVP_QUERY_LEGEND = "portal.mapclient.uvp.query.legend";
 
     public static final String PORTAL_PARTNER_LIST_QUERY = "portal.partner.list.query";
 

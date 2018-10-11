@@ -76,6 +76,9 @@ The optional _profile_ parameter adds the sources from the profile directory (in
 
 There's also a corresponding windows batch file _start.bat_, which works the same.
 
+For IntelliJ IDEA there's a dojo plugin for easier handling of imports:
+https://github.com/TomDevs/needsmoredojo
+
 ### Debug under eclipse
 
 When the jetty server is started then the InGrid-Editor can also be debugged via remote debugging. The settings are:

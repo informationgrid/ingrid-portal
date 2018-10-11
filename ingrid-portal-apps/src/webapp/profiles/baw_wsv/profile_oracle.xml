@@ -16,40 +16,6 @@
             <hidden>true</hidden>
         </page>
         <page>
-            <name>privacy.psml</name>
-            <hidden>true</hidden>
-        </page>
-        <page>
-            <name>disclaimer.psml</name>
-            <hidden>false</hidden>
-            <portlets>
-                <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::CMSPortlet</name>
-                    <preference name="infoTemplate">
-                        <value>/WEB-INF/templates/default_cms.vm</value>
-                    </preference>
-                    <preference name="titleKey">
-                        <value>disclaimer.title</value>
-                    </preference>
-                    <preference name="cmsKey">
-                        <value>ingrid.disclaimer</value>
-                    </preference>
-                    <preference name="sectionStyle">
-                        <value>block--padded</value>
-                    </preference>
-                    <preference name="articleStyle">
-                        <value>content ob-container ob-box-narrow ob-box-center</value>
-                    </preference>
-                    <preference name="titleTag">
-                        <value>h1</value>
-                    </preference>
-                </portlet>
-                <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::PrivacyPortlet</name>
-                </portlet>
-            </portlets>
-        </page>
-        <page>
             <name>cms/cms-1.psml</name>
             <hidden>true</hidden>
         </page>
