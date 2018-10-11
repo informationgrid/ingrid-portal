@@ -1,3 +1,25 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
    /* Start variables_JSON */
          var json_url_mobileMenu = 'SiteGlobals/Modules/MobileNavigation/DE/Allgemein/MobileNavigation.html?view=renderMobileNavigation';
       var json_url_mobileSearch = 'SiteGlobals/Forms/Suche/Servicesuche_Autosuggest_Formular.html?view=renderJSON';
@@ -189,7 +211,7 @@ var mejs=mejs||{};mejs.version="2.15.1";mejs.meIndex=0;mejs.plugins={silverlight
  * @params
  *  - exports - CommonJS, window ..
  */
-(function(exports,undefined){if(typeof exports.zh==="undefined"){exports.zh={"Fullscreen":"全螢幕","Go Fullscreen":"全屏模式","Turn off Fullscreen":"退出全屏模式","Close":"關閉"};}}(mejs.i18n.locale.strings));
+(function(exports,undefined){if(typeof exports.zh==="undefined"){exports.zh={"Fullscreen":"全螢幕","Go Fullscreen":"全�?模�?","Turn off Fullscreen":"退出全�?模�?","Close":"關閉"};}}(mejs.i18n.locale.strings));
    /* Ende mediaelement */
    /* Start mediaelement_i18n_de */
    (function(exports,undefined){exports.de={"None":"Entfällt","Unmute":"Lautstärke einschalten","Fullscreen":"Vollbild","Download File":"Download der Datei","Mute Toggle":"Stummschalten","Play/Pause":"Abspielen/Pause","Captions/Subtitles":"Unterschriften/Untertitel","Download Video":"Video herunterladen","Turn off Fullscreen":"Vollbild abschalten","Go Fullscreen":"Vollbild einschalten","Close":"Schließen"};}(mejs.i18n.locale.strings));
