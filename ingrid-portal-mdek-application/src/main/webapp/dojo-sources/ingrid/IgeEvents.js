@@ -217,7 +217,12 @@ define([
             });
         },
 
-        toggleFields: function(section, /* optional */ mode) {
+        /**
+         *
+         * @param section
+         * @param mode
+         */
+        toggleFields: function(section, mode) {
             var sectionElement;
 
             if (typeof(section) != "undefined" && section != "Object" && section != "Address") {

@@ -3,10 +3,9 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>4.4.0.1590-SNAPSHOT</version>
+    <version>4.6.0.1590-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-apps</artifactId>
   <packaging>war</packaging>
   <name>InGrid Portal Apps</name>
@@ -137,6 +136,7 @@
                         <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
                             <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">
                                 <include name="**/decorations/**/*.vm" />
+                                <include name="**/css/override.css" />
                                 <include name="**/images/**/*.svg" />
                                 <include name="**/images/*.ico" />
                                 <include name="**/error*.html" />

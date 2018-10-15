@@ -194,7 +194,12 @@ define(["dojo/_base/declare",
 
         },
 
-        checkValidityOfInputElements: function(/*Array*/invalidExtInputs) {
+        /**
+         *
+         * @param {[*]=} invalidExtInputs
+         * @returns {string}
+         */
+        checkValidityOfInputElements: function(invalidExtInputs) {
             this.resetRequiredFields();
 
             var widgets = query(".rubric:not(.hide) span:not(.hide) .dijitTextBox, .rubric:not(.hide) span:not(.hide) .dijitSelect", "contentFrameBodyObject");

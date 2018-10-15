@@ -831,7 +831,7 @@ require([
                 renderSectionTitel("<fmt:message key='dialog.compare.object.administrative' />");
                 renderTextWithTitle(nodeData.uuid, "<fmt:message key='dialog.compare.object.id' />");
                 if (nodeData.orgObjId)
-                	renderTextWithTitle(nodeData.orgObjId, "<fmt:message key='dialog.compare.object.orgId' />");                
+                  renderTextWithTitle(nodeData.orgObjId, "<fmt:message key='dialog.compare.object.orgId' />");                
                 renderTextWithTitle(UtilCatalog.catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
 
                 // additional fields
@@ -856,6 +856,9 @@ require([
             //console.debug("add additional fields info of rubric: " + rubric);
             var addDomWidgets = query(".additionalField", rubric);
             array.forEach(addDomWidgets, function(domWidget) {
+                if (isHiddenOrHasHiddeParent(domWidget)) {
+                    return; 
+                }
                 var widgetId = domWidget.getAttribute("widgetId");
                 if (!widgetId) widgetId = domWidget.id;
                 var label = searchLabelFrom(domWidget);
@@ -863,7 +866,7 @@ require([
                 if (isDynamic) {
                     addWidgetId = addWidgetId.split("_")[0];
                 }
-                var data = getValueFromAdditional(addWidgetId, nodeData); // isDynamic?
+                var data = getValueFromAdditional(addWidgetId, nodeData, domWidget); // isDynamic?
                 if (data) {
                     // if it's a date object
                     if (data instanceof Date) {
@@ -887,8 +890,26 @@ require([
                 }
             }, this);
         }
+        
+        // check if the element or any parent is hidden
+        // stop at content container
+        function isHiddenOrHasHiddeParent(domWidget) {
+            var element = domWidget;
+            while (element && !domClass.contains(element, "hide") && !domClass.contains(element, "contentContainer")) {
+                element = element.parentNode;
+            }
+            if (element && domClass.contains(element, "hide")) {
+                return true;
+            } else {
+                return false;
+            }
+        }
 
-        function getValueFromAdditional(id, additionalFields) {
+        function getValueFromAdditional(id, additionalFields, domWidget) {
+            var isRadio = false;
+            if (domClass.contains(domWidget, "dijitRadio")) {
+                isRadio = true;
+            }
             var result = null;
             array.some(additionalFields, function(field) {
                 //console.debug("check: " + id + " with "+field.identifier);
@@ -896,6 +917,26 @@ require([
                     // special handling of tables
                     if (field.tableRows !== null) {
                         result = prepareAdditionalTable(field.tableRows);
+                        return true;
+                    } else if (isRadio) {
+                        /* presume the following structure:
+                        
+                        <div class="input">
+                           <span ...>
+                             <label> ...
+                           </span>
+                           <span>
+                             <div class="... dijitRadio dijitRadioChecked..." ...>
+                               <input type="radio" ...>
+                             </div>
+                             <label>Ja</label>
+                           </span>
+                         </div>                
+                       */
+                        if (domClass.contains(domWidget, "dijitRadioChecked")) {
+                            var element = domWidget.nextSibling;
+                            result = dojo.isFF ? element.textContent : element.innerText
+                        }
                         return true;
                     } else if (field.value !== null) {
                         if (field.value instanceof Date) {
@@ -953,14 +994,35 @@ require([
         }
 
         function searchLabelFrom(element) {
+            
+            var isRadio = false;
+            if (domClass.contains(element, "dijitRadio")) {
+                isRadio = true;
+            }
             while (!domClass.contains(element, "input") && !domClass.contains(element, "dijitCheckBox")) {
                 element = element.parentNode;
             }
             if (domClass.contains(element, "dijitCheckBox")) {
                 element = element.nextSibling;
+            } else if (isRadio) {
+                /* presume the following structure:
+                  
+                 <div class="input">
+                    <span ...>
+                      <label> ...
+                    </span>
+                    <span>
+                      <div class="... dijitRadio ..." ...>
+                        <input type="radio" ...>
+                      </div>
+                      <label>Ja</label>
+                    </span>
+                  </div>                
+                */
+                
+                element = element.children[0].children[0];
             } else {
                 element = element.previousSibling;
-
                 while (!domClass.contains(element, "label")) {
                     element = element.previousSibling;
                 }

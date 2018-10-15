@@ -29,6 +29,7 @@
         <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
         <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
         <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+        <meta name="referrer" content="origin"/>
 
         #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
             <meta name="robots" content="noindex,follow" />
@@ -64,6 +65,8 @@
         #if($lang && $lang != "en")
             <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
         #end
+        <!-- zxcvbn -->
+        <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
     </head>
     <body>
     

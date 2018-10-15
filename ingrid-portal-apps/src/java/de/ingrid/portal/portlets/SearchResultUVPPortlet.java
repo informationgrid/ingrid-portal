@@ -24,6 +24,9 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -41,12 +44,15 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.search.SearchState;
 import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
+import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 
@@ -138,14 +144,8 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                 response.getWriter().write( "]" );
             }
             if(resourceID.equals( "devPlanMarker" )){
-                String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-                String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-                if(queryString == null || queryString.length() == 0){
-                    queryString = query;
-                }else{
-                    queryString += " " + query;
-                }
-                
+                String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
+                queryString = UtilsSearch.updateQueryString(queryString, request);
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_BLP_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 if(it != null){
@@ -188,19 +188,104 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                     response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
                 }
             }
+            if(resourceID.equals( "legendCounter" )){
+                String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_QUERY_LEGEND, "datatype:www OR datatype:metadata");
+                queryString = UtilsSearch.updateQueryString(queryString, request);
+                IngridQuery query = QueryStringParser.parse( queryString );
+                query.put( IngridQuery.RANKED, "score" );
+                if (query.get( "FACETS" ) == null) {
+                    ArrayList<IngridDocument> facetQueries = new ArrayList<IngridDocument>();
+                    ArrayList<HashMap<String, String>> facetList = new ArrayList<HashMap<String, String>> ();
+                    
+                    String tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
+                    if (tmpQuery != "") {
+                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                        facetEntry.put("id", "countMarker1");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
+                    if (tmpQuery != "") {
+                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                        facetEntry.put("id", "countMarker2");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
+                    if (tmpQuery != "") {
+                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                        facetEntry.put("id", "countMarker3");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
+                    if (tmpQuery != "") {
+                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                        facetEntry.put("id", "countMarker4");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
+                    if (tmpQuery != "") {
+                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                        facetEntry.put("id", "countMarkerDevPlan");
+                        facetEntry.put("query", tmpQuery);
+                        facetList.add(facetEntry);
+                    }
+                    if (facetList.size() > 0) {
+                        IngridDocument facet = new IngridDocument();
+                        facet.put("id", "legend_counter");
+                        facet.put("classes", facetList);
+                        facetQueries.add(facet);
+                    }
+                    if (facetQueries.size() > 0) {
+                        query.put( "FACETS", facetQueries );
+                    }
+                }
+                IngridHits hits = null;
+                try {
+                    IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
+                    hits = ibus.search( query, Settings.SEARCH_RANKED_HITS_PER_PAGE, 1, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
+
+                    if (hits == null) {
+                        if (log.isErrorEnabled()) {
+                            log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
+                        }
+                    } else {
+                        response.setContentType( "application/javascript" );
+                        if(hits.length() > 0) {
+                            Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
+                            String facetsJSON = "{";
+                            if(facets != null){
+                                for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
+                                    String key = iterator.next();
+                                    Long value = (Long) facets.get(key);
+                                    facetsJSON += "\"" + key.split(":")[1] + "\":" + value;
+                                    if(iterator.hasNext()) {
+                                        facetsJSON += ",";
+                                    }
+                                }
+                            }
+                            facetsJSON += "}";
+                            response.getWriter().write( "var legendCounter = " + facetsJSON +";");
+                        } else {
+                            response.getWriter().write( "var legendCounter = {};");
+                        }
+                    }
+                } catch (Throwable t) {
+                    if (log.isErrorEnabled()) {
+                        log.error( "Problems performing Search !", t );
+                    }
+                }
+            }
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
     
-    private void writeResponse(ResourceRequest request, ResourceResponse response, String query, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
-        String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
-        if(queryString == null || queryString.length() == 0){
-            queryString = query;
-        }else{
-            queryString += " " + query;
-        }
-        
+
+    private void writeResponse(ResourceRequest request, ResourceResponse response, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+        queryString = UtilsSearch.updateQueryString(queryString, request);
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
         if(it != null){
@@ -311,7 +396,11 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
             restUrl.setResourceID( "devPlanMarker" );
             request.setAttribute( "restUrlUVPDevPlan", restUrl.toString() );
         }
-        
+
+        if(mapclientQuery != "" || mapclientQuery2 != "" || mapclientQuery3 != "" || mapclientQuery4 != "" || mapclientUVPDevPlanURL != ""){
+            restUrl.setResourceID( "legendCounter" );
+            request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
+        }
         super.doView(request, response);
     }
 

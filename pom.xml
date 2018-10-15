@@ -8,7 +8,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>4.4.0.1590-SNAPSHOT</version>
+  <version>4.6.0.1590-SNAPSHOT</version>
   <name>InGrid Portal</name>
   <description>This is the portal where documents can be searched through the iBus and new documents can be managed by the InGrid Editor.</description>
   <scm>
@@ -27,8 +27,9 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>4.4.0</mdek.version>
-    <webmap-client.version>4.5.0-SNAPSHOT</webmap-client.version>
+    <mdek.version>4.5.0</mdek.version>
+    <webmap-client.version>4.5.0</webmap-client.version>
+    <ingrid-codelist-service.version>4.5.0</ingrid-codelist-service.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -57,7 +58,7 @@
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>4.4.0</version>
+        <version>${ingrid-codelist-service.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
@@ -111,7 +112,7 @@
   <issueManagement>
     <!-- Use JIRA instead of Redmine since the url is wrong generated otherwise! -->
     <system>JIRA</system>
-    <url>https://redmine.wemove.com/issues/</url>
+    <url>https://redmine.informationgrid.eu/issues/</url>
   </issueManagement>
   <build>
     <finalName>ingrid-portal-project-${project.version}</finalName>

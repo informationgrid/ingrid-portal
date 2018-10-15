@@ -499,6 +499,7 @@ require([
             renderObjectTitel(nodeData.objectName);
 
             renderText(nodeData.generalShortDescription);
+            renderTextWithTitle(nodeData.parentIdentifier, "<fmt:message key='ui.obj.general.parentIdentifier' />");
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(8000, nodeData.objectClass), "<fmt:message key='ui.obj.header.objectClass' />");
             renderTextWithTitle(removeEvilTags(nodeData.generalDescription), "<fmt:message key='ui.obj.general.description' />");
             // addresses
@@ -793,7 +794,7 @@ require([
                 renderList(nodeData.availabilityAccessConstraints, "<fmt:message key='ui.obj.availability.accessConstraints' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(6010, val);
                 });
-                renderList(nodeData.availabilityUseAccessConstraints, "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
+                renderTable(nodeData.availabilityUseAccessConstraints, ["title", "source"], [message.get("ui.obj.availability.useAccessConstraintsTable.header.name"), message.get("ui.obj.availability.useAccessConstraintsTable.header.source")], "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(6500, val);
                 });
                 renderTextWithTitle(nodeData.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
@@ -864,15 +865,6 @@ require([
                 if (nodeData.orgObjId)
                 	renderTextWithTitle(nodeData.orgObjId, "<fmt:message key='dialog.compare.object.orgId' />");                
                 renderTextWithTitle(UtilCatalog.catalogData.catalogName, "<fmt:message key='dialog.compare.object.catalog' />");
-
-                // additional fields
-                /*var addFields = nodeData.additionalFields;
-                if (addFields.length > 0) {
-                    renderSectionTitel("<fmt:message key='ui.obj.additionalFields.title' />");
-                    for(var i=0; i<addFields.length; i++) {
-                        renderTextWithTitle(addFields[i].value, addFields[i].name);
-                    }
-                }*/
 
                 // modification time
                 renderText("<fmt:message key='ui.obj.header.modificationTime' />" + ": " + nodeData.modificationTime);
@@ -1169,7 +1161,7 @@ require([
 
         function renderTextWithTitle(val, title) {
             // compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
-            if (val === null) val = "";
+            if (val === null || val === undefined) val = "";
             val += "";
             if (detailHelper.isValid(val)) {
                 // Replace newlines with <br/>
