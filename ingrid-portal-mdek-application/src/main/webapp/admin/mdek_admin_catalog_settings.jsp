@@ -278,7 +278,7 @@
                             }
                             modifiedBehaviours.push(beh);
                         }
-                    } else {
+                    } else if (behaviour[behave]) {
                         var children = behaviour[behave].children;
                         if (children) {
                             for (var child in children) {

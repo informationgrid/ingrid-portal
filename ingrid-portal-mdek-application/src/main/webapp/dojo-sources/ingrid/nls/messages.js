@@ -1054,6 +1054,8 @@ define({
         "validation.error.spatial.table": "At least one 'spatial' table has to contain an entry with a bounding box.",
         "validation.error.spatial.expired.table": "The spatial reference table must not contain expired entries.",
         "validation.error.email.table": "At least one entry has to be of type '${0}'.",
+        "validation.error.url": "Invalid URL: '${0}'..",
+        "validation.error.url.table": "URLs must not be empty and must begin with 'http://' or 'https://'.",
         "validation.error.missing.capabilities.entry": "An operation of type GetCapabilities is needed.",
         "validation.error.invalid.operation.name": "The operation name is invalid.",
         "validation.error.empty.rows": "The table contains rows which are empty. Please remove those before saving.",

@@ -1056,6 +1056,8 @@ define({
     "validation.error.spatial.table": "Mindestens eine Raumbezugs-Tabelle muss einen Eintrag mit Boundingbox enthalten.",
     "validation.error.spatial.expired.table": "Die Raumbezugstabelle darf keine abgelaufenen Einträge enthalten.",
     "validation.error.email.table": "Mindestens ein Eintrag muss vom Typ '${0}' sein.",
+    "validation.error.url": "Ungültige URL: '${0}'.",
+    "validation.error.url.table": "URLs müssen nicht leer sein und müssen mit 'http://' oder 'https://' starten.",
     "validation.error.missing.capabilities.entry": "Es muss eine GetCapabilities-Operation eingetragen sein.",
     "validation.error.invalid.operation.name": "Der Operationsname ist ungültig.",
     "validation.error.empty.rows": "Die Tabelle beinhaltet leere Zeilen. Bitte entfernen Sie diese vor dem Speichern.",

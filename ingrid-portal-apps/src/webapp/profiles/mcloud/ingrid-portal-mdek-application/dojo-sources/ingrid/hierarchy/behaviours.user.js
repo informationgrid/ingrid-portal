@@ -23,13 +23,20 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours/contactUrl",
     "ingrid/hierarchy/behaviours/mcloud/docTypes",
     "ingrid/hierarchy/behaviours/mcloud/generalModifications",
     "ingrid/hierarchy/behaviours/mcloud/formFields",
     "ingrid/hierarchy/behaviours/mcloud/validatePublisher"
-], function(lang, behaviours, docTypes, generalModifications, formFields, validatePublisher) {
+], function(lang, behaviours, contactUrl, docTypes, generalModifications, formFields, validatePublisher) {
 
     return lang.mixin(behaviours, {
+
+        /**
+         * Make sure that the communication urls for addresses start with either
+         * http:// or https://
+         */
+        contactUrl: contactUrl,
 
         /**
          * Define which documents can be created according to the parent.
