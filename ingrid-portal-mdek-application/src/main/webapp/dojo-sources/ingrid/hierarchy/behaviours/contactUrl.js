@@ -40,7 +40,7 @@ define([
         forAddress: true,
         run: function() {
             var isUrlValid = function(url) {
-                return url && !url.indexOf('http://') < 0 && !url.indexOf('https://') < 0;
+                return url && (url.indexOf('http://') === 0 || url.indexOf('https://') === 0);
             };
 
             topic.subscribe("/onBeforeAddressPublish", function( /*Array*/ notPublishableIDs) {
@@ -86,14 +86,11 @@ define([
 
                 var msg = args[0];
                 var item = msg.item;
-                if (item
-                        && item.medium === urlString
-                        && isUrlValid(item.value)) {
-                    UtilUI.markCells("VALID", "addressCom", msg.row, [1]);
-                } else {
+                if (item && item.medium === urlString && !isUrlValid(item.value)) {
                     UtilUI.markCells("ERROR", "addressCom", msg.row, [1]);
-                    //UtilGrid.getTable("addressCom").message = message.get("validation.error.url.table");
                     UtilUI.showToolTip("addressCom", message.get("validation.error.url.table"));
+                } else {
+                    UtilUI.markCells("VALID", "addressCom", msg.row, [1]);
                 }
             });
         }
