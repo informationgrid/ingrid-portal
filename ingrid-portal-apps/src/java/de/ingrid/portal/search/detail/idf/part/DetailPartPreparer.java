@@ -22,15 +22,20 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
-import de.ingrid.portal.global.UtilsString;
-import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.json.JsonUtil;
-import de.ingrid.utils.udk.*;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xpath.XPathUtils;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.StringTokenizer;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
 import org.apache.velocity.context.Context;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -39,12 +44,19 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.global.UtilsString;
+import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.json.JsonUtil;
+import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
+import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
+import de.ingrid.utils.udk.UtilsCountryCodelist;
+import de.ingrid.utils.udk.UtilsDate;
+import de.ingrid.utils.udk.UtilsLanguageCodelist;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 
 public class DetailPartPreparer {
 
@@ -227,6 +239,20 @@ public class DetailPartPreparer {
         return list;
     }
 
+    public String removePraefix(String value) {
+        String newValue = value;
+        if (newValue != null) {
+            if (newValue.startsWith( "Nutzungseinschränkungen: " )) {
+                newValue = newValue.replace("Nutzungseinschränkungen: ", "");
+            }
+            if (newValue.startsWith( "Nutzungsbedingungen: " )) {
+                newValue = newValue.replace("Nutzungsbedingungen: ", "");
+            }            
+        }
+        
+        return newValue;
+    }
+
     public List<String> getUseConstraints() {
         final String restrictionCodeList = "524";
         final String licenceList = "6500";
@@ -260,10 +286,7 @@ public class DetailPartPreparer {
 
             // FIXME >>> Change after redmine ticket #848 is resolved >>>
             // Temporary solution to get rid of prefix in front of the codelist value
-            int index = constraints.indexOf(':');
-            if (index >= 0) {
-                constraints = constraints.substring(index+1).trim();
-            }
+            constraints = removePraefix(constraints);
             // <<< End of temporary solution <<<
 
             if (constraints == null || constraints.trim().isEmpty()) {
@@ -276,6 +299,7 @@ public class DetailPartPreparer {
             // try to get the license source from other constraints (#1066)
             String source = null;
             String url = null;
+            String name = null;
             for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
                 String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
                 if (constraintSource.contains("\"quelle\"")) {
@@ -283,6 +307,7 @@ public class DetailPartPreparer {
                         IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
                         source = (String) json.get("quelle");
                         url = (String) json.get("url");
+                        name = (String) json.get("name");
                         break;
                     } catch (ParseException e) {
                         log.error("Error parsing json from use constraints", e);
@@ -298,9 +323,17 @@ public class DetailPartPreparer {
             }
 
             if (url != null && !url.trim().isEmpty()) {
-                value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, finalValue);
+                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                    value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, name, finalValue);
+                } else {
+                    value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, finalValue);
+                }
             } else {
-                value = String.format("%s: %s", restrictionCode, finalValue);
+                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                    value = String.format("%s: %s<br>%s", restrictionCode, name, finalValue);
+                } else {
+                    value = String.format("%s: %s", restrictionCode, finalValue);
+                }
             }
 
             if (!result.contains(value)) {
