@@ -20,10 +20,6 @@
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
         <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
             <!-- Copy xml files in java folders to target (Hibernate mapping files) -->
             <resource>
                 <directory>src/main/java</directory>
