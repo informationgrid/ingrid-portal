@@ -7,7 +7,6 @@
     <version>5.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-apps</artifactId>
   <packaging>war</packaging>
   <name>InGrid Portal Apps</name>
@@ -414,10 +413,7 @@
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-codelist-service</artifactId>
       <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring</artifactId>
-        </exclusion>
+
         <exclusion>
           <groupId>stax</groupId>
           <artifactId>stax-api</artifactId>
@@ -425,6 +421,10 @@
         <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.quartz-scheduler</groupId>
+          <artifactId>quartz</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>4.2.2</version>
+    <version>5.0.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid.portal</groupId>
@@ -35,9 +35,9 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>4.5.0</mdek.version>
+    <mdek.version>5.0.0-SNAPSHOT</mdek.version>
     <webmap-client.version>4.5.0</webmap-client.version>
-    <ingrid-codelist-service.version>4.5.0</ingrid-codelist-service.version>
+    <ingrid-codelist-service.version>5.0.0-SNAPSHOT</ingrid-codelist-service.version>
   </properties>
 
   <modules>
@@ -72,10 +72,14 @@
         <artifactId>ingrid-utils</artifactId>
         <version>4.1.0</version>
       </dependency>
+      <!--
+        Spring dependency is managed by org.apache.portals.jetspeed-2:jetspeed-2 and is
+        set to version 3.2.9.RELEASE!!!
+      -->
       <dependency>
         <groupId>de.ingrid</groupId>
         <artifactId>ingrid-codelist-service</artifactId>
-        <version>5.0.0-SNAPSHOT</version>
+        <version>${ingrid-codelist-service.version}</version>
       </dependency>
       <dependency>
         <groupId>de.ingrid</groupId>
@@ -218,11 +222,11 @@
             <executions>
               <execution>
                 <id>changes-report</id>
-                <phase>null</phase>
+                <phase>none</phase>
               </execution>
               <execution>
                 <id>changes-announcement-mail</id>
-                <phase>null</phase>
+                <phase>none</phase>
               </execution>
             </executions>
           </plugin>
