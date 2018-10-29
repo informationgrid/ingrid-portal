@@ -300,35 +300,53 @@ public class DetailPartPreparer {
             String source = null;
             String url = null;
             String name = null;
+            // also remember further otherConstraints may be used in BKG profile (#1194)
+            List<String> furtherOtherConstraints = new ArrayList<String>();
             for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
                 String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
-                if (constraintSource.contains("\"quelle\"")) {
-                    try {
-                        IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
-                        source = (String) json.get("quelle");
-                        url = (String) json.get("url");
-                        name = (String) json.get("name");
-                        break;
-                    } catch (ParseException e) {
-                        log.error("Error parsing json from use constraints", e);
+                if (constraintSource == null || constraintSource.trim().isEmpty()) {
+                    log.warn("Empty otherConstraints ! We skip this one");
+                    continue;
+                }
+                constraintSource = constraintSource.trim();
+                // parse JSON
+                boolean isJSON = false;
+                try {
+                    IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
+                    source = (String) json.get("quelle");
+                    url = (String) json.get("url");
+                    name = (String) json.get("name");
+                    isJSON = true;
+                } catch (ParseException e) {
+                    isJSON = false;
+                    if (constraintSource.startsWith( "{" )) {
+                        log.error("Error parsing json from use constraints '" + constraintSource + "'", e);
                     }
+                }
+                
+                if (!isJSON) {
+                    // no JSON but might be further other constraint (BKG), we also render !
+                    furtherOtherConstraints.add( constraintSource );
                 }
             }
 
-            String value;
-            String codeListValue = getValueFromCodeList(licenceList, constraints);
-            String finalValue = codeListValue;
-            if (codeListValue == null || codeListValue.trim().isEmpty()) {
+            String finalValue = getValueFromCodeList(licenceList, constraints);
+            if (finalValue == null || finalValue.trim().isEmpty()) {
                 finalValue = constraints;
             }
 
+            String value;
             if (url != null && !url.trim().isEmpty()) {
+                // we have a URL from JSON
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                    // we have a different license name from JSON, render it with link
                     value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, name, finalValue);
                 } else {
+                    // no license name, render whole text with link
                     value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, finalValue);
                 }
             } else {
+                // NO URL
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
                     value = String.format("%s: %s<br>%s", restrictionCode, name, finalValue);
                 } else {
@@ -341,6 +359,13 @@ public class DetailPartPreparer {
                     value += "<br>Quellenvermerk: " + source;
                 }
                 result.add(value);
+            }
+            
+            // also add other constraints if present !
+            for (String furtherConstraint : furtherOtherConstraints) {
+                if (!result.contains(furtherConstraint)) {
+                    result.add(furtherConstraint);                    
+                }
             }
         }
 
