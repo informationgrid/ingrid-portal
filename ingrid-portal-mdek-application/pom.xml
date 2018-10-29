@@ -19,6 +19,7 @@
     </properties>
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
+        <outputDirectory>target/ingrid-portal-mdek-application/WEB-INF/classes</outputDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

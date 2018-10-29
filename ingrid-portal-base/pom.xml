@@ -18,6 +18,7 @@
   <build>
     <finalName>ingrid-portal</finalName>
     <sourceDirectory>src/java</sourceDirectory>
+    <outputDirectory>target/ingrid-portal/WEB-INF/classes</outputDirectory>
     <plugins>
 
     <plugin>

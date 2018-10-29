@@ -18,6 +18,7 @@
   <build>
     <finalName>ingrid-portal-mdek</finalName>
     <sourceDirectory>src/java</sourceDirectory>
+    <outputDirectory>target/ingrid-portal-mdek/WEB-INF/classes</outputDirectory>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
