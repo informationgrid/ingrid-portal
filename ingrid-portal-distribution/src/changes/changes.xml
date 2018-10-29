@@ -15,7 +15,7 @@
 	        Portal/IGE: Fix initial codelists (1320, 6005, 6100), data was lost when codelists were separated.
 	      </action>
           <action type="fix" dev="wemove">
-            Portal: Fix update of mdek database (flyway: delete before insert). 
+            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
           </action>
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
