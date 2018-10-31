@@ -359,7 +359,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'blue';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
@@ -396,7 +396,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'red';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
@@ -433,7 +433,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'black';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
@@ -470,7 +470,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'orange';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
