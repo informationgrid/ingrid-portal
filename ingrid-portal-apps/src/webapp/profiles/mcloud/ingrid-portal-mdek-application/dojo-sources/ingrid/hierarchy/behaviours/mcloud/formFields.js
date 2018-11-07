@@ -138,7 +138,10 @@ define(["dojo/_base/declare",
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
-            var rubricContainer = creator.createRubric({ id: "mcloud", label: message.get("mcloud.form.mcloudFields"), help: message.get("mcloud.form.mcloudFields.toolTip") });
+            var rubricContainer = creator.createRubric({
+                id: "mcloud",
+                label: message.get("mcloud.form.mcloudFields"),
+                help: message.get("mcloud.form.mcloudFields.toolTip") });
             construct.place(rubricContainer, "general", "after");
 
             /*
@@ -146,7 +149,12 @@ define(["dojo/_base/declare",
              */
             var id = "mcloudTermsOfUse";
             construct.place(
-                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.termsOfUse"), help: message.get("mcloud.form.termsOfUse.helpMessage"), visible: "show", style: "width:100%" }),
+                creator.createDomTextarea({
+                    id: id,
+                    name: message.get("mcloud.form.termsOfUse"),
+                    help: message.get("mcloud.form.termsOfUse.helpMessage"),
+                    visible: "show",
+                    style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             var widgetTermsOfUse = registry.byId(id);
@@ -289,8 +297,15 @@ define(["dojo/_base/declare",
                 }
             ];
             newFieldsToDirtyCheck.push(id);
-            creator.createDomDataGrid(
-                { id: id, name: message.get("mcloud.form.downloads"), help: message.get("mcloud.form.downloads.helpMessage"), isMandatory: true, visible: "optional", rows: "1", forceGridHeight: false, style: "width:100%" },
+            creator.createDomDataGrid({
+                id: id,
+                name: message.get("mcloud.form.downloads"),
+                help: message.get("mcloud.form.downloads.helpMessage"),
+                isMandatory: true,
+                visible: "optional",
+                rows: "1",
+                forceGridHeight: false,
+                style: "width:100%" },
                 structure, rubric
             );
             additionalFields.push(registry.byId(id));
@@ -301,9 +316,13 @@ define(["dojo/_base/declare",
             id = "mcloudLicense";
             construct.place(
                 creator.createDomSelectBox({
-                    id: id, name: message.get("mcloud.form.license"), help: message.get("mcloud.form.license.helpMessage"),
+                    id: id,
+                    name: message.get("mcloud.form.license"),
+                    help: message.get("mcloud.form.license.helpMessage"),
                     useSyslist: "6500",
-                    visible: "required", style: "width:100%" }),
+                    isExtendable: true,
+                    visible: "required",
+                    style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
@@ -314,7 +333,12 @@ define(["dojo/_base/declare",
              */
             id = "mcloudSourceNote";
             construct.place(
-                creator.createDomTextarea({ id: id, name: message.get("mcloud.form.sourceNote"), help: message.get("mcloud.form.sourceNote.helpMessage"), visible: "show", style: "width:100%" }),
+                creator.createDomTextarea({
+                    id: id,
+                    name: message.get("mcloud.form.sourceNote"),
+                    help: message.get("mcloud.form.sourceNote.helpMessage"),
+                    visible: "show",
+                    style: "width:100%" }),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             var widgetSourceNote = registry.byId(id);
@@ -356,7 +380,11 @@ define(["dojo/_base/declare",
              */
             id = "mcloudMFundFKZ";
             construct.place(
-                creator.createDomTextbox({ id: id, name: message.get("mcloud.form.mFundFKZ"), help: message.get("mcloud.form.mFundFKZ.helpMessage"), visible: "show"}),
+                creator.createDomTextbox({
+                    id: id,
+                    name: message.get("mcloud.form.mFundFKZ"),
+                    help: message.get("mcloud.form.mFundFKZ.helpMessage"),
+                    visible: "show"}),
                 rubric);
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
