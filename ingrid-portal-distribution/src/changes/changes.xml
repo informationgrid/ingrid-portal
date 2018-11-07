@@ -18,7 +18,7 @@
             Portal/IGE: Fix initial codelists (1320, 6005, 6100), data was lost when codelists were separated.
           </action>
           <action type="fix" dev="wemove">
-            Portal: Fix update of portal database for oracle (flyway 4_4_0, 4_4_1).
+            Portal: Oracle: Fix update of portal database (flyway 4_4_0, 4_4_1). Make provider URL nullable.
           </action>
           <action type="fix" dev="wemove">
             Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
