@@ -490,6 +490,12 @@ define([
                                 value: item[0]
                             });
                         });
+
+                        // sort entries
+                        entries.sort( function(a, b) {
+                            return a.value.localeCompare(b.value);
+                        });
+
                         UtilStore.updateWriteStore(additionalField.id, entries, storeProps.data);
                     });
                     storeProps.data.items = [];
