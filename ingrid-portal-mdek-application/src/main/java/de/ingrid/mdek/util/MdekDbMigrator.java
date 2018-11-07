@@ -47,6 +47,10 @@ public class MdekDbMigrator {
             String dbType = getDbType( dataSource );
             flyway.setLocations( "db/migration/" + dbType );
 
+            // do NOT check changes in older migration files (checksum)
+            flyway.setValidateOnMigrate( false );
+            log.info( "flyway validateOnMigrate = FALSE" );
+
             flyway.setDataSource( dataSource );
             flyway.migrate();
         } catch (FlywayException e) {

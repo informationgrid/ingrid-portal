@@ -23,4 +23,5 @@
 *.woff binary
 *.dmp binary
 *.exe binary
+*.pdf binary
 

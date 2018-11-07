@@ -299,7 +299,7 @@
                                                     url = "http://" + url;
                                                 }
                                                 if(bpinfo.tags){
-                                                    var tags = bpinfo.tags;
+                                                    var tags = [].concat(bpinfo.tags);
                                                     for (var k = 0; k < tags.length; k++) {
                                                         var tag = tags[k];
                                                         if(tag){
@@ -308,6 +308,14 @@
                                                                 title = 'Wirksame/rechtskr&auml;ftige Bauleitpl&auml;ne';
                                                             }else if(tag === "p"){
                                                                 title = 'Bauleitpl&auml;ne im Beteiligungsverfahren';
+                                                            }else if(tag === "v_fnp"){
+                                                                title = 'Wirksame/rechtskr&auml;ftige Fl&auml;chennutzungspl&auml;ne';
+                                                            }else if(tag === "p_fnp"){
+                                                                title = 'Fl&auml;chennutzungspl&auml;ne im Beteiligungsverfahren';
+                                                            }else if(tag === "v_bp"){
+                                                                title = 'Wirksame/rechtskr&auml;ftige Bebauungspl&auml;ne';
+                                                            }else if(tag === "p_bp"){
+                                                                title = 'Bebauungspl&auml;ne im Beteiligungsverfahren';
                                                             }
                                                             if(title){
                                                                 popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" viewBox="0 0 32 32" style="font-size: 11px;"><polygon points="26,28.063 2,28.063 2,4 14,4 14,2 0,2 0,30.063 28,30.063 28,16 26,16"></polygon><polygon points="21,0 21,2 28.604,2 13.8,16.961 15.223,18.367 30,3.432 30,11 32,11 32,0" ></polygon></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
@@ -351,7 +359,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'blue';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
@@ -388,7 +396,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'red';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
@@ -425,7 +433,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'black';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
@@ -462,7 +470,7 @@
                                 var steps = a[7];
                                 var popUpHtml = '';
                                 var iconColor = 'orange';
-                                var icon = getIcon(smallIcons, iconColor);
+                                var icon = getIcon(smallIcons, iconColor, enablePopUp);
                                 var marker = L.marker(new L.LatLng(a[0], a[1]), { title: title, icon: icon, interactive: !smallIcons });
                                 marker.uuid = uuid;
                                 marker.bbox = null;
