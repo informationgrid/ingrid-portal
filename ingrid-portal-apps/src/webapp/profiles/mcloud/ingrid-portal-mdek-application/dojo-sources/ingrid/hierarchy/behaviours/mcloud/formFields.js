@@ -178,30 +178,31 @@ define(["dojo/_base/declare",
              */
             id = "mcloudCategory";
             newFieldsToDirtyCheck.push(id);
-            creator.createDomDataGrid(
-                {
-                    id: id,
-                    name: message.get("mcloud.form.category"),
-                    help: message.get("mcloud.form.category.helpMessage"),
-                    isMandatory: true,
-                    visible: "optional",
-                    rows: "4",
-                    forceGridHeight: false,
-                    style: "width:100%"
-                },
-                [{
-                    field: message.get("mcloud.form.category"),
-                    name: message.get("mcloud.form.category"),
-                    width: '708px',
-                    type: Editors.SelectboxEditor,
-                    options: ["Bahn", "Data-Run", "Wasserstraßen und Gewässer", "Infrastruktur", "Klima und Wetter", "Luft- und Raumfahrt", "Straßen"],
-                    values: ["railway", "data-run", "waters", "infrastructure", "climate", "aviation", "roads"],
-                    editable: true,
-                    formatter: Formatters.ListCellFormatter,
-                    partialSearch: true
-                }],
-                rubric);
+            creator.createDomDataGrid({
+                id: id,
+                name: message.get("mcloud.form.category"),
+                help: message.get("mcloud.form.category.helpMessage"),
+                isMandatory: true,
+                visible: "optional",
+                rows: "1",
+                forceGridHeight: false,
+                style: "width:100%"
+            },
+            [{
+                field: message.get("mcloud.form.category"),
+                name: message.get("mcloud.form.category"),
+                width: '708px',
+                type: Editors.SelectboxEditor,
+                options: ["Bahn", "Data-Run", "Wasserstraßen und Gewässer", "Infrastruktur", "Klima und Wetter", "Luft- und Raumfahrt", "Straßen"],
+                values: ["railway", "data-run", "waters", "infrastructure", "climate", "aviation", "roads"],
+                editable: true,
+                formatter: Formatters.ListCellFormatter,
+                partialSearch: true
+            }],
+            rubric
+            );
             var categoryWidget = registry.byId(id);
+            categoryWidget.reinitLastColumn(true);
             domClass.add(categoryWidget.domNode, "hideTableHeader");
             additionalFields.push(categoryWidget);
 
@@ -308,7 +309,9 @@ define(["dojo/_base/declare",
                 style: "width:100%" },
                 structure, rubric
             );
-            additionalFields.push(registry.byId(id));
+            var downloadsTable = registry.byId(id);
+            additionalFields.push(downloadsTable);
+            downloadsTable.reinitLastColumn(true);
 
             /*
              * License --> Codelist 6500 in Selectbox
