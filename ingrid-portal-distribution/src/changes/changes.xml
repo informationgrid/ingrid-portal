@@ -14,6 +14,9 @@
           <action type="add" dev="wemove" issue="1201">
             Portal: Add new profile "metaver_md".
           </action>
+          <action type="update" dev="wemove" issue="1212">
+            Portal/IGE: Update Oracle driver to ojdbc7 for Oracle 12.
+          </action>
           <action type="fix" dev="wemove" issue="1193">
             Portal/IGE: Fix initial codelists (1320, 6005, 6100), data was lost when codelists were separated.
           </action>
