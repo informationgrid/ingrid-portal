@@ -287,7 +287,7 @@ define(["dojo/_base/declare",
                 {
                     field: 'dateFormat',
                     name: 'Datenformat',
-                    type: Editors.SelectboxEditor,
+                    type: Editors.ComboboxEditor,
                     editable: true,
                     // listId: codelist,
                     options: ["ASCII","Binär","BUFR","CAP","CSV","DATEX II","ECDIS","Excel","GeoDB","GeoJSON","GeoRSS","GeoTIFF","GML","GPX","GRIB","GRIB2","GTFS","HAFAS","HTML","JPEG2000","JSON","KL","KML","KMZ","netCDF","NetCDF","OpenDrive","OVL","PNG","Shapefile","SHDL90","TCX","TIFF","TRIAS","TSV","TXT","XML","XML/JSON","ZIP","ZRXP"],
