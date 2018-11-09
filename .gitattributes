@@ -24,4 +24,4 @@
 *.dmp binary
 *.exe binary
 *.pdf binary
-
+*.bak binary
