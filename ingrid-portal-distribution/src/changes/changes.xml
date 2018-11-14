@@ -38,6 +38,9 @@
           <action type="add" dev="wemove" issue="1165">
             MapClient: Add function to copy a category.
           </action>
+          <action type="add" dev="wemove" issue="1209">
+            MapClient: Add function to edit localisation.
+          </action>
         </release>
 
         <release version="4.5.0" date="2018-10-15" description="Release 4.5.0">
