@@ -637,16 +637,6 @@
             <else>
                 <echo>WebmapClient 'help' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/help"/>
-                <if>
-                    <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/help"/>
-                    <then>
-                        <copy todir="${WebmapDataDir}/WebmapClientData/help" >
-                            <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/help">
-                                <include name="**/*.profile.json"/>
-                            </fileset>
-                        </copy>
-                    </then>
-                </if>
             </else>
         </if>
         <if>
@@ -657,19 +647,9 @@
             <else>
                 <echo>WebmapClient 'css' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/css"/>
-                <if>
-                    <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/css"/>
-                    <then>
-                        <copy todir="${WebmapDataDir}/WebmapClientData/css" >
-                            <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/css">
-                                <include name="**/*.profile.css"/>
-                            </fileset>
-                        </copy>
-                    </then>
-               </if>
             </else>
         </if>
-		<if>
+        <if>
             <available file="${WebmapDataDir}/WebmapClientData/locales"/>
             <then>
                 <echo>WebmapClient 'locales' Verzeichnis beibehalten.</echo>
