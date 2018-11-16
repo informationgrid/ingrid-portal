@@ -662,7 +662,7 @@
                     <then>
                         <copy todir="${WebmapDataDir}/WebmapClientData/css" >
                             <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/css">
-                                <include name="**/*.override.css"/>
+                                <include name="**/*.profile.css"/>
                             </fileset>
                         </copy>
                     </then>
