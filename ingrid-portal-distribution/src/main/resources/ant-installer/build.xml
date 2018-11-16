@@ -612,11 +612,6 @@
             <else>
                 <echo>WebmapClient 'config' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/config"/>
-                <copy todir="${WebmapDataDir}/WebmapClientData/config" >
-                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config">
-                        <include name="**/*.profile.js"/>
-                    </fileset>
-                </copy>
             </else>
         </if>
         <if>
