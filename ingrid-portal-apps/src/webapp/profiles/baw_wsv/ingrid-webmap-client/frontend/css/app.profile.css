@@ -31,46 +31,36 @@
    font-size: .85em;
  }
 
-[ga-topic] .ga-topics-sprite-themen {
-  background: url("../img/theme_themen.png");
-  width: 140px;
-}
-
-[ga-topic] .ga-topics-sprite-anbieter {
-  background: url("../img/theme_anbieter.png");
-  width: 140px;
-}
-
 [ga-topic] .ga-topics-sprite-favoriten {
-  background: url("../img/theme_wsvfavoriten.png");
+  background: url("/ingrid-webmap-client/frontend/prd/img/theme_wsvfavoriten.png");
   width: 140px;
 }
 
 [ga-topic] .ga-topics-sprite-inspire {
-  background: url("../img/theme_inspire.png");
+  background: url("/ingrid-webmap-client/frontend/prd/img/theme_inspire.png");
   width: 140px;
 }
 
 [ga-topic] .ga-topics-sprite-hoehen-tiefen {
-  background: url("../img/theme_hoehen_tiefen.png");
+  background: url("/ingrid-webmap-client/frontend/prd/img/theme_hoehen_tiefen.png");
   width: 140px;
 }
 
 @media (max-width: 768px) {
   [ga-background-selector] .ga-wmts_topplus_web_grau {
-    background-image: url("../img/ga-bkggrau.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkggrau.png");
     background-size: 38px 38px;
   }
   [ga-background-selector] .ga-wmts_osm {
-    background-image: url("../img/ga-osmde.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-osmde.png");
     background-size: 38px 38px;
   }
   [ga-background-selector] .ga-wmts_dop_rgb {
-    background-image: url("../img/ga-doprgb.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-doprgb.png");
     background-size: 38px 38px;
   }
   [ga-background-selector] .ga-wmts_topplus_web {
-    background-image: url("../img/ga-bkgfarbig.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkgfarbig.png");
     background-size: 38px 38px;
   }
   [ga-background-selector].ga-open .ga-bg-layer {
@@ -112,19 +102,19 @@
 }
 @media (min-width: 769px) {
   [ga-background-selector] .ga-wmts_topplus_web_grau {
-    background-image: url("../img/ga-bkggrau.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkggrau.png");
     background-size: 90px 58px;
   }
   [ga-background-selector] .ga-wmts_osm {
-    background-image: url("../img/ga-osmde.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-osmde.png");
     background-size: 90px 58px;
   }
   [ga-background-selector] .ga-wmts_dop_rgb {
-    background-image: url("../img/ga-doprgb.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-doprgb.png");
     background-size: 90px 58px;
   }
   [ga-background-selector] .ga-wmts_topplus_web {
-    background-image: url("../img/ga-bkgfarbig.png");
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkgfarbig.png");
     background-size: 90px 58px;
   }
   [ga-background-selector].ga-open .ga-bg-layer {
