@@ -20,54 +20,32 @@
  * limitations under the Licence.
  * **************************************************#
  */
-[ga-topic] .ga-topics-sprite-themen {
-  background: url("../img/themen.png");
-  width: 140px;
-}
-
-[ga-topic] .ga-topics-sprite-anbieter {
-  background: url("../img/anbieter.png");
-  width: 140px;
-}
-
 @media (max-width: 768px) {
-  [ga-background-selector] .ga-osmLayer {
-    background-image: url("../img/ga-osmLayer.png");
+  [ga-background-selector] .ga-webatlasde_light-rlp {
+    background-image: url("../img/ga-light-rlp.png");
     background-size: 38px 38px;
   }
-  [ga-background-selector] .ga-webatlasde_light {
-    background-image: url("../img/ga-light.png");
+  [ga-background-selector] .ga-webatlasde_grau-rlp {
+    background-image: url("../img/ga-light-grau-rlp.png");
     background-size: 38px 38px;
   }
-  [ga-background-selector] .ga-webatlasde_grau {
-    background-image: url("../img/ga-light-grau.png");
+  [ga-background-selector] .ga-rp_uekrlp-rlp {
+    background-image: url("../img/ga-rp_uekrlp-rlp.png");
     background-size: 38px 38px;
   }
-  [ga-background-selector].ga-open .ga-bg-layer {
-    -webkit-transform: translate3d(0, -245px, 0);
-            transform: translate3d(0, -245px, 0);
-    -ms-transform: translateY(-245px);
-    /* IE 9*/
-  }
-  [ga-background-selector].ga-open .ga-voidLayer {
-    -webkit-transform: translate3d(0, -49px, 0);
-            transform: translate3d(0, -49px, 0);
-    -ms-transform: translateY(-49px);
-    /* IE 9*/
-  }
-  [ga-background-selector].ga-open .ga-osmLayer {
+  [ga-background-selector].ga-open .ga-rp_uekrlp-rlp {
     -webkit-transform: translate3d(0, -98px, 0);
             transform: translate3d(0, -98px, 0);
     -ms-transform: translateY(-98px);
     /* IE 9*/
   }
-  [ga-background-selector].ga-open .ga-webatlasde_light {
+  [ga-background-selector].ga-open .ga-webatlasde_light-rlp {
     -webkit-transform: translate3d(0, -147px, 0);
             transform: translate3d(0, -147px, 0);
     -ms-transform: translateY(-147px);
     /* IE 9*/
   }
-  [ga-background-selector].ga-open .ga-webatlasde_grau {
+  [ga-background-selector].ga-open .ga-webatlasde_grau-rlp {
     -webkit-transform: translate3d(0, -196px, 0);
             transform: translate3d(0, -196px, 0);
     -ms-transform: translateY(-196px);
@@ -75,43 +53,31 @@
   }
 }
 @media (min-width: 769px) {
-  [ga-background-selector] .ga-osmLayer {
-    background-image: url("../img/ga-osmLayer.png");
+  [ga-background-selector] .ga-webatlasde_light-rlp {
+    background-image: url("../img/ga-light-rlp.png");
     background-size: 90px 58px;
   }
-  [ga-background-selector] .ga-webatlasde_light {
-    background-image: url("../img/ga-light.png");
+  [ga-background-selector] .ga-webatlasde_grau-rlp {
+    background-image: url("../img/ga-light-grau-rlp.png");
     background-size: 90px 58px;
   }
-  [ga-background-selector] .ga-webatlasde_grau {
-    background-image: url("../img/ga-light-grau.png");
+  [ga-background-selector] .ga-rp_uekrlp-rlp {
+    background-image: url("../img/ga-rp_uekrlp-rlp.png");
     background-size: 90px 58px;
   }
-  [ga-background-selector].ga-open .ga-bg-layer {
-    -webkit-transform: translate3d(-429px, 0, 0);
-            transform: translate3d(-429px, 0, 0);
-    -ms-transform: translateX(-429px);
-    /* IE 9*/
-  }
-  [ga-background-selector].ga-open .ga-voidLayer {
-    -webkit-transform: translate3d(-25px, 0, 0);
-            transform: translate3d(-25px, 0, 0);
-    -ms-transform: translateX(-25px);
-    /* IE 9*/
-  }
-  [ga-background-selector].ga-open .ga-osmLayer {
+  [ga-background-selector].ga-open .ga-rp_uekrlp-rlp {
     -webkit-transform: translate3d(-126px, 0, 0);
             transform: translate3d(-126px, 0, 0);
     -ms-transform: translateX(-126px);
     /* IE 9*/
   }
-  [ga-background-selector].ga-open .ga-webatlasde_light {
+  [ga-background-selector].ga-open .ga-webatlasde_light-rlp {
     -webkit-transform: translate3d(-227px, 0, 0);
             transform: translate3d(-227px, 0, 0);
     -ms-transform: translateX(-227px);
     /* IE 9*/
   }
-  [ga-background-selector].ga-open .ga-webatlasde_grau {
+  [ga-background-selector].ga-open .ga-webatlasde_grau-rlp {
     -webkit-transform: translate3d(-328px, 0, 0);
             transform: translate3d(-328px, 0, 0);
     -ms-transform: translateX(-328px);

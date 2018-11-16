@@ -31,6 +31,16 @@
    font-size: .85em;
  }
 
+[ga-topic] .ga-topics-sprite-themen {
+  background: url("/ingrid-webmap-client/frontend/prd/img/theme_themen.png");
+  width: 140px;
+}
+
+[ga-topic] .ga-topics-sprite-anbieter {
+  background: url("/ingrid-webmap-client/frontend/prd/img/theme_anbieter.png");
+  width: 140px;
+}
+
 [ga-topic] .ga-topics-sprite-favoriten {
   background: url("/ingrid-webmap-client/frontend/prd/img/theme_wsvfavoriten.png");
   width: 140px;
