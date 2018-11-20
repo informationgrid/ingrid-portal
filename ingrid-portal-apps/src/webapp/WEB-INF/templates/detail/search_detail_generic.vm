@@ -1,27 +1,27 @@
 #macro (renderUDKEntry $r $entryName)
-	#if($tool.hasContent($r.get($entryName)))
-		<p><strong>$entryName:</strong><br>
-		$r.get($entryName).replaceAll("\n","<br>")
-		</p>
+    #if($tool.hasContent($r.get($entryName)))
+        <p><strong>$entryName:</strong><br>
+        $r.get($entryName).replaceAll("\n","<br>")
+        </p>
     #end
 #end
 
 #macro (renderRec $record $level)
-	#foreach($key in $record.keySet())
-		#set($level = $level + 1)
-		#if($record.get($key).get(0))
-			#foreach($newRenderRecord in $record.get($key))
-			#if (!$newRenderRecord.isEmpty())
-			#renderRec($newRenderRecord $level)
-			#end
-			#end
-		#else
-			#if($key != "summary" && $key != "title")
-				#renderUDKEntry($record $key)
-			#end
-		#end	
-		#set($level = $level - 1)
-	#end	
+    #foreach($key in $record.keySet())
+        #set($level = $level + 1)
+        #if($record.get($key).get(0))
+            #foreach($newRenderRecord in $record.get($key))
+            #if (!$newRenderRecord.isEmpty())
+            #renderRec($newRenderRecord $level)
+            #end
+            #end
+        #else
+            #if($key != "summary" && $key != "title")
+                #renderUDKEntry($record $key)
+            #end
+        #end
+        #set($level = $level - 1)
+    #end
 #end
 
 ## ***************************
@@ -30,86 +30,72 @@
 #set($pageTitle = "")
 #set($pageDescription = "")
 #if($rec.get("title"))
-	#set($pageTitle = $rec.get("title"))
+    #set($pageTitle = $rec.get("title"))
 #end
 #if($rec.get("summary"))
-	#set($pageDescription = $rec.get("summary"))
+    #set($pageDescription = $rec.get("summary"))
 #end
 #set($pageDescription = $pageDescription.replace('"',"'"))
 #set($pageDescription = $stringTools.cutString($pageDescription, 300))
-##parse('WEB-INF/templates/search_detail_header.vm')
 
-#set ($action = $renderResponse.createActionURL())
-<div id="content_full">
-
-## render "zurueck" link if no IngridSession (entry via google)
-#if($noIngridSession)
-	<div class="section-header">
-		<p class="iconLink">
-    		<span class="icon"><img src="/ingrid-portal-apps/images/icn_linkintern.gif" alt="$MESSAGES.getString('common.alt.icon.intern')" /></span>
-    		<span><a href="$renderResponse.encodeURL('/portal/default-page.psml')">$MESSAGES.getString('search.detail.back')</a></span>
-    		<span class="clearer"></span>
-		</p>
-	</div>
-#end
-
-#if($rec)
-	<div class="section-header">
-		<h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h1>
-	</div>
-	<span class="clearer"></span>
-	<div class="section">
-	<p class="float_right"></p>
-	<p class="float_left"></p>
-	<span class="clearer"></span>
-	<p>#if($tool.hasContent($rec.get("summary")))$rec.get("summary")#end</p>
-    <div class="line"><hr /></div>
-	#renderRec($rec 0)
-	</div>
-#else
-	<p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-#end	
-
-#foreach ($file in $fileList)
-	#if($file.parenttyp == "image")
-		<p>
-			<strong>$file.title</strong>
-        </p>
-		<p>
-			<img src="/ingrid-portal-apps/filehelper/file?$file.filename" alt="$file.filename" title="$file.filename"></a>
-		</p>
-	#else
-		<p>
-			<strong>$file.title</strong>
-        </p>
-		<p>
-			<img alt="interner Link" src="/ingrid-portal-apps/images/icn_linkintern.gif"/>
-			<a href="/ingrid-portal-apps/filehelper/file?$file.filename" class="download_link" type="$file.mimetyp" title="$file.filename">$MESSAGES.getString('search.detail.download'): $file.filename</a><br>
-		</p>
-		##<p><embed src="/ingrid-portal-apps/filehelper/file?$file.path" autostart="false" type="$file.typ" pluginspage="http://www.apple.com/quicktime/download/"></p>
-	#end
-#end
-
-
-</div>
-
-## ***************************
-## include the footer here
-## ***************************
-##parse('WEB-INF/templates/search_detail_footer.vm')
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
+        <article class="content ob-container ob-box-wide">
+            #set ($action = $renderResponse.createActionURL())
+            <div id="content_full">
+            #if($rec)
+                <div class="section-header">
+                    <h1>#if($tool.hasContent($rec.get("title")))$rec.get("title")#else$MESSAGES.getString("common.result.noTitle")#end</h1>
+                </div>
+                <span class="clearer"></span>
+                <div class="section">
+                <p class="float_right"></p>
+                <p class="float_left"></p>
+                <span class="clearer"></span>
+                <p>#if($tool.hasContent($rec.get("summary")))$rec.get("summary")#end</p>
+                <div class="line"><hr /></div>
+                #renderRec($rec 0)
+                </div>
+            #else
+                <p><strong>$MESSAGES.getString("error_no_details_available")</strong></p>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            #end
+            
+            #foreach ($file in $fileList)
+                #if($file.parenttyp == "image")
+                    <p>
+                        <strong>$file.title</strong>
+                    </p>
+                    <p>
+                        <img src="/ingrid-portal-apps/filehelper/file?$file.filename" alt="$file.filename" title="$file.filename"></a>
+                    </p>
+                #else
+                    <p>
+                        <strong>$file.title</strong>
+                    </p>
+                    <p>
+                        <img alt="interner Link" src="/ingrid-portal-apps/images/icn_linkintern.gif"/>
+                        <a href="/ingrid-portal-apps/filehelper/file?$file.filename" class="download_link" type="$file.mimetyp" title="$file.filename">$MESSAGES.getString('search.detail.download'): $file.filename</a><br>
+                    </p>
+                    ##<p><embed src="/ingrid-portal-apps/filehelper/file?$file.path" autostart="false" type="$file.typ" pluginspage="http://www.apple.com/quicktime/download/"></p>
+                #end
+            #end
+            </div>
+        </article>
+    </div>
+</section>
