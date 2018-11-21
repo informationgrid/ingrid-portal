@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2016 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -28,125 +28,84 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <!--<meta name="description" content="" />-->
         <meta name="description" content="NUMIS, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
         <meta name="keywords" lang="de" content="NUMIS, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
+        <link rel='stylesheet' href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css"></link>
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css"></link>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css" />
         <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
     </head>
-    <body class="ingrid">
-        <div class="nav-overlay">
-            <a title="Freitextsuche nach Informationen" class="nav-overlay__item nav-overlay__item--level1" href="/freitextsuche">Suche</a>
-            <a class="nav-overlay__item nav-overlay__item--level1" href="/messwertsuche" title="Suche nach Messdaten">Messwerte</a>
-            <a title="Eingebundene Datenkataloge und Metadaten" class="nav-overlay__item nav-overlay__item--level1" href="/datenkataloge">Kataloge</a>
-            <a class="nav-overlay__item nav-overlay__item--level1" href="/kartendienste" title="Interaktive thematische Karten">Karten</a>
-            <a title="Suche nach Ereignissen " class="nav-overlay__item nav-overlay__item--level1" href="/umweltchronik">Chronik</a>
-            <div class="js-accordion-multi">
-                <div title="Hintergrundinformationen zu NUMIS" class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle">
-                    <svg class="nav-overlay__icon icon"><use xlink:href="#plus"/></svg>
-                    <svg class="nav-overlay__icon icon"><use xlink:href="#minus"/></svg>
-                    Über NUMIS
-                </div>
-                <div class="nav-overlay__level2 js-accordion-content is-hidden">
-                    <div class="nav-overlay__level2__content">
-                        <a title="Kurzbeschreibung und Hintergrund" class="nav-overlay__item nav-overlay__item--level2" href="/hintergrundinformationen">Porträt</a>
-                        <a title="Kooperationspartner und Informationsanbieter" class="nav-overlay__item nav-overlay__item--level2" href="/informationsanbieter">Informationsanbieter</a>
-                        <a title="Angeschlossene Datenbanken" class="nav-overlay__item nav-overlay__item--level2" href="/datenquellen">Datenquellen</a>
-                    </div>
-                </div>
-            </div>
-            <ul class="nav__mobile nav__foot">
-                <li>
-                    <a title="Erläuterungen zur Nutzung von NUMIS" href="/hilfe">Hilfe</a>
-                </li>
-                <li>
-                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS" href="/kontakt">Kontakt</a>
-                </li>
-                <li>
-                    <a title="Alle Inhalte von NUMIS auf einen Blick" href="/inhaltsverzeichnis">Inhalt</a>
-                </li>
-                <li>
-                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                </li>
-                <li>
-                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                </li>
-            </ul>
-        </div>
-        <div id="wrapper">
+    <body>
+        <div class="page">
             <header class="header">
-                <div class="ob-box-wide ob-box-padded ob-box-center">
-                    <div class="header_content">
-                        <div class="header__widgets__section">
-                            <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                                <svg class="icon">
-                                    <use xlink:href="#burger">
-                                </use></svg>
-                                <svg class="icon ob-fade">
-                                    <use xlink:href="#cross">
-                                </use></svg>
-                            </div>
-                        </div>
-                        <div class="header__widgets__section header_logo_section">
-                            <a class="header__logo header__widget header__logo" href="/startseite" title="Startseite von NUMIS aufrufen ">
-                                <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/mu-logo.png ">
-                                <img class="mq-show-xxl mq-hide-s mobile__logo" src="/decorations/layout/ingrid/images/template/mu-logo.png ">
-                                <img class="mq-show-s mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png ">
-                            </a>
-                        </div>
-                        <div class="header__widgets__section service-header">
-                            <div class="header__widget">
-                                <a href="/startseite" title="Startseite">
-                                    <i class="header__widget__icon icon icon-house-2" style=""></i>
-                                    <span class="header__widget__text mq-hide-xxl">Startseite</span>
-                                </a>
-                            </div>
-                        </div> 
-                        <div class="header__widgets__section sub-header mq-hide-xxl">
-                            <div class="header__widget">
-                                <a class="header__widget__toggle tx-upper " href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">Suche</a>
-                            </div>
-                            <div class="header__widget">
-                                <a class="header__widget__toggle tx-upper " href="/messwertsuche" title="Suche nach Umweltmessdaten">Messwerte</a>
-                            </div>
-                            <div class="header__widget">
-                                <a class="header__widget__toggle tx-upper " href="/datenkataloge" title="Eingebundene Umweltdatenkataloge, Objekte und Metadaten">Kataloge</a>
-                            </div>
-                            <div class="header__widget">
-                                <a class="header__widget__toggle tx-upper " href="/kartendienste" title="Interaktive thematische Karten von Bund, Ländern und Kommunen">Karten</a>
-                            </div>
-                            <div class="header__widget">
-                                <a class="header__widget__toggle tx-upper " href="/umweltchronik" title="Suche nach Umweltereignissen ">Chronik</a>
-                            </div>
-                            <div class="header__widget nav-desktop__item dropmenu__box">
-                                <a class="nav-desktop__title header__widget__toggle js-header-toggle " href="#" title="Hintergrundinformationen zu NUMIS">
-                                    Über NUMIS
-                                </a>
-                                <ul class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
-                                    <li>
-                                        <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Porträt</a>
-                                    </li>
-                                    <li>
-                                        <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Anbieter</a>
-                                    </li>
-                                    <li>
-                                        <a href="/datenquellen" title="Angeschlossene Datenbanken">Datenquellen</a>
-                                    </li>
-                                </ul>
-                           </div>
+                <div class="ob-box-padded-more ob-box-center">
+                    <div class="header__widgets__section">
+                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                            <svg class="icon">
+                                <use xlink:href="#burger"></use>
+                            </svg>
+                            <svg class="icon ob-fade">
+                                <use xlink:href="#cross"></use>
+                            </svg>
                         </div>
                     </div>
-                </div>
+                    <div class="header__widgets__section">
+                        <a class="header__widget header__logo" href="/startseite" title="Startseite von NUMIS aufrufen">
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
+                        </a>
+                    </div>
+                    <div class="header__widgets__section">
+                        <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von NUMIS aufrufen">
+                            <p class="main__title">NUMIS - Das niedersächsische Umweltportal</p>
+                            <p class="sub__title"></p>
+                        </a>
+                        <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von NUMIS aufrufen">NUMIS <span class="mq-hide-l">- Das niedersächsische Umweltportal</span></a>
+                    </div>
+                </div> 
+                <nav class="nav-desktop mq-hide-xxl">
+                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/messwertsuche" title="Suche nach Messdaten">Messwerte</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/datenkataloge" title="Eingebundene Datenkataloge und Metadaten">Kataloge</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/kartendienste" title="Interaktive thematische Karten">Karten</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/umweltchronik" title="Suche nach Ereignissen ">Chronik</a>
+                        </li>
+                        <li class="nav-desktop__item dropmenu__box">
+                            <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="Hintergrundinformationen zu NUMIS">
+                                Über NUMIS
+                                <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
+                            </a>
+                            <ul class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
+                                <li>
+                                    <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Porträt</a>
+                                </li>
+                                <li>
+                                    <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Informationsanbieter</a>
+                                </li>
+                                <li>
+                                    <a href="/datenquellen" title="Angeschlossene Datenbanken">Datenquellen</a>
+                                </li>
+                          </ul>
+                        </li>
+                    </ul>
+                </nav>
             </header>
             <!-- CONTENT BLOCK -->
             <section class="block block--padded">
@@ -169,7 +128,7 @@
                                 die gew&uuml;nschte Seite zu finden
                             </li>
                             <li>
-                                St&ouml;bern Sie in den verschiedenen Such-Kategorien von NUMIS:
+                                St&ouml;bern Sie in den verschiedenen Such-Kategories von NUMIS:
                             </li>
                         </ul>
                         <ul class="link-list">
@@ -208,28 +167,40 @@
                         <p>
                             Danke f&uuml;r Ihr Verst&auml;ndnis.
                         </p>
-                    </article>
+                    </div>
                 </div>
             </section>
             <footer class="footer">
-                <div class="ob-box-wide ob-box-padded ob-box-center">
-                    <a href="http://localhost:8080/startseite">
-                       <img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png " />
-                    </a>
-                    <hr class="bx-top-xs bx-bot-xs" />
-                    <div class="grid grid--gutter">
-                        <div class="column column--1-2-xl">
-                            <p class="copyright">© 2017 Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__top">
+                        <a href="/startseite">
+                            <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg "></img>
+                        </a>
+                        <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
+                    </div>
+                </div>
+                <hr class="bx-top-0 bx-bot-0"></hr>
+                <div class="grid">
+                    <div class="column column--3-4-xl">
+                        <div class="ob-box-padded ob-box-center ob-clear">
+                            <div class="footer__section">
+                                <nav class="footer__middle mq-hide-l">
+                                    <a href="/hilfe" title="ingrid.page.help.tooltip">Hilfe</a>
+                                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an InGrid-Portal">Kontakt</a>
+                                    <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen">Datenschutzbestimmung</a>
+                                    <a href="/inhaltsverzeichnis" title="Alle Inhalte von InGrid-Portal auf einen Blick">Inhaltsübersicht</a>
+                                    <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
+                                   </nav>
+                            </div>
                         </div>
-                        <div class="column column--1-2-xl">
-                            <nav class="footer__nav">
-                                <a href="http://localhost:8080/hilfe" title="Erläuterungen zur Nutzung von NUMIS - Neues Fenster öffnet sich">Hilfe</a>
-                                <a href="http://localhost:8080/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS">Kontakt</a>
-                                <a href="http://localhost:8080/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick">Inhalt</a>
-                                <a href="http://localhost:8080/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
-                                <a href="http://localhost:8080/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen">Datenschutz</a>
-                             </nav>
-                         </div>
+                    </div>
+                    <div class="column column--1-4-xl">
+                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
+                        <div class="ob-box-padded ob-box-center ob-clear">
+                            <div class="footer__section">
+                                <div class="footer__bottom"> </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </footer>
@@ -242,6 +213,15 @@
         
         <!-- Popup -->
         <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+        
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/de.js"></script>
+        <script>
+           $('.datepicker').pickadate()
+            
+        </script>
         
         <!-- Accordion -->
         <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>

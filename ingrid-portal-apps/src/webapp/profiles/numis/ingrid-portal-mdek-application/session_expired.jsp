@@ -38,9 +38,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="NUMIS bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
-        <meta name="author" content="© 2017 Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
+        <meta name="author" content="© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="keywords" lang="de" content="NUMIS, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
-        <meta name="copyright" content="© 2017 Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
+        <meta name="copyright" content="© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="robots" content="index,follow" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
@@ -116,7 +116,7 @@
                    <hr class="bx-top-xs bx-bot-xs">
                     <div class="grid grid--gutter">
                         <div class="column column--3-5-xl">
-                            <p class="copyright">© 2017 Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
+                            <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
                         </div>
                         <div class="column column--2-5-xl">
                             <nav class="footer__nav">

@@ -1,24 +1,36 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
         <footer class="footer">
-          <div class="ob-box-wide ob-box-padded ob-box-center">
-            <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
-                <img class="footer__logo" src="#GetPageResource("images/template/mobile-logo.png")"></img>
-            </a>
-            <hr class="bx-top-xs bx-bot-xs">
-            <div class="grid grid--gutter">
-                <div class="column column--3-5-xl">
+            <div class="ob-box-padded ob-box-center ob-clear">
+                <div class="footer__top">
+                    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
+                        <img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
+                    </a>
                     <p class="copyright">$MESSAGES.getString("ingrid.page.copyright")</p>
                 </div>
-                <div class="column column--2-5-xl">
-                    #set($footerMenu = $site.getMenu("footer-menu"))
-                    #if(!$footerMenu.empty)
-                      #includeFooterNavigation($footerMenu)
-                    #end
+            </div>
+            <hr class="bx-top-0 bx-bot-0">
+            <div class="grid">
+                <div class="column column--3-4-xl">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                        #set($footerMenu = $site.getMenu("footer-menu"))
+                        #if(!$footerMenu.empty)
+                          #includeFooterNavigation($footerMenu)
+                        #end
+                        </div>
+                    </div>
+                </div>
+                <div class="column column--1-4-xl">
+                    <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
+                    <div class="ob-box-padded ob-box-center ob-clear">
+                        <div class="footer__section">
+                            <div class="footer__bottom"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-          </div>
+            <div class="footer__top-link mq-show-l js-top">nach oben</div>
         </footer>
-        <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
 #end
         <!-- Popup -->
         <div class="popup">
@@ -37,14 +49,23 @@
         </div>
         
         <!-- Global scripts -->
-        <script src="#GetPageResource("scripts/all.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
         
         <!-- Popup -->
-        <script src="#GetPageResource("scripts/popup.js")"></script>
-        <script src="#GetPageResource("scripts/expander.js")"></script>
-        
+        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        #set($lang = $renderRequest.Locale.getLanguage())
+        #if($lang && $lang != "en")
+        <script src='/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js")'></script>
+        #end
+        <script>
+            $('.datepicker').pickadate()
+        </script>
         <!-- Accordion -->
-        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
         <script>
         $('.js-accordion').accordion();
         $('.js-accordion-multi').accordion({
@@ -52,37 +73,19 @@
         });
         </script>
         <!-- Tabs -->
-        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
         <script>
             $('.js-tabs').tabs();
         </script>
         <!-- Selection -->
-        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
         <script>
             $('.js-selection').selection();
         </script>
         <!-- Table Sort -->
-        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
         <script>
             $('.js-table-sortable').sortable();
         </script>
-        
-        <!-- Piwik -->
-        <script type="text/javascript">
-        var domain = document.domain;
-        if(domain == "numis.niedersachsen.de"){
-            var pkBaseURL = (("https:" == document.location.protocol) ? "https://numis.niedersachsen.de/piwik/" : "http://numis.niedersachsen.de/piwik/");
-            document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-        }
-        </script>
-        <script type="text/javascript">
-            try {
-                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
-                piwikTracker.trackPageView();
-                piwikTracker.enableLinkTracking();
-            } catch( err ) {
-            }
-        </script><noscript><p><img src="https://numis.niedersachsen.de/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
-        <!-- End Piwik Tag -->
     </body>
 </html>
