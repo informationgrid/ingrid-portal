@@ -387,7 +387,7 @@
                 if (data.params) {
                     array.forEach(data.params, function(param) {
                         //var value = param.value ? param.value : param.default;
-                        var paramInput = domConstruct.toDom("<div class='checkbox-indent'>" + param.label + " <input type='text' data-field='" + param.id + "' value='" + param.default + "'></div>");
+                        var paramInput = domConstruct.toDom("<div class='checkbox-indent'>" + param.label + ":<div style='padding-left: 20px;'><input type='text' style='width: 100%' data-field='" + param.id + "' value='" + JSON.stringify(param.default) + "'></div></div>");
                         row.appendChild(paramInput);
                     });
                 }
