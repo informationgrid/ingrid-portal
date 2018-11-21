@@ -1,6 +1,6 @@
 <style>
   #iframe_measure { height: 100%; }
-  .embed-container { width: 100%; position: absolute; bottom: 0; top: 160px;}
+  .embed-container { width: 100%; position: absolute; bottom: 0; top: 159px;}
   @media screen and (max-width: 939px) {
     .embed-container { top: 117px; }
   }
