@@ -110,9 +110,5 @@
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
         </execute>
-        <!-- Show home link -->
-        <execute>
-            <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/home.link';]]>
-        </execute>
     </sql>
 </profile>

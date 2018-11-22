@@ -34,9 +34,6 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 -- Hide '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 
--- Show '/home.link'
-UPDATE link SET is_hidden = 1 WHERE path = '/home.link';
-
 -- Delete temporary table
 DROP TABLE ingrid_temp;
 
