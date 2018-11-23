@@ -66,6 +66,7 @@ define(["dojo/_base/declare",
                 }
             });
 
+            // add codelist 11000 used for categories, which can be managed in IGE Administration
             var checkCodelist11000 = function(codelist) {
                 return codelist.id === 11000;
             };
@@ -84,7 +85,8 @@ define(["dojo/_base/declare",
             });
             aspect.before(CatalogService, "getSysLists", function(codelists, language, cb) {
                 var codelistId = codelists[0];
-                if (codelistId === "11000") {
+                // allow string and numbers here in comparison!
+                if (codelistId == "11000") {
                     var callbackOrig = cb.callback;
                     cb.callback = function(listItems) {
                         // only add if it wasn't already persisted in backend
@@ -96,11 +98,20 @@ define(["dojo/_base/declare",
                 }
             });
 
+            // if codelist 11000 was not persisted in backend, return initial list
+            topic.subscribe("/additionalSyslistsLoaded", function() {
+                if (!sysLists[11000] || sysLists[11000].length === 0) {
+                    sysLists[11000] = self.getCodelist11000("de");
+                }
+            });
+
+            // add codelist 11000 to list of codelists to be loaded from backend
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
                 ids.push(11000);
             });
         },
 
+        // initial codelist 11000
         getCodelist11000: function(language) {
             if (language === "de") {
                 return [
@@ -114,7 +125,6 @@ define(["dojo/_base/declare",
             } else {
                 return [];
             }
-
         },
 
         hideMenuItems: function() {
