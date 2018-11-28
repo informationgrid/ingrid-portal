@@ -17,6 +17,9 @@
           <action type="update" dev="wemove" issue="1212">
             Portal/IGE: Update Oracle driver to ojdbc7 for Oracle 12.
           </action>
+          <action type="fix" dev="wemove" issue="1105">
+            Portal: Add advmis to hidden keywords so will not be displayed in detail view.
+          </action>
           <action type="fix" dev="wemove" issue="1193">
             Portal/IGE: Fix initial codelists (1320, 6005, 6100), data was lost when codelists were separated.
           </action>
