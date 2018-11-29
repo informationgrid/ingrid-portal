@@ -41,10 +41,6 @@
             <outputDirectory>distribution/apache-tomcat/conf/Catalina/localhost</outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>src/main/resources/conf/mapclient</directory>
-            <outputDirectory>distribution/apache-tomcat/conf/Mapclient/localhost</outputDirectory>
-        </fileSet>
-        <fileSet>
             <directory>src/main/resources/sql</directory>
             <outputDirectory>distribution/sql</outputDirectory>
         </fileSet>
