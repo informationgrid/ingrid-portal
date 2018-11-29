@@ -39,7 +39,6 @@ WORKDIR /opt/ingrid/ingrid-portal/apache-tomcat
 EXPOSE 8000
 EXPOSE 8009
 EXPOSE 8080
-EXPOSE 8081
 EXPOSE 11000
 
 CMD ["bash", "/run.sh"]
