@@ -21,7 +21,6 @@
  * **************************************************#
  */
 define(["dojo/_base/declare",
-    "dojo/aspect",
     "dojo/cookie",
     "dojo/Deferred",
     "dojo/dom-construct",
@@ -32,7 +31,7 @@ define(["dojo/_base/declare",
     "ingrid/message",
     "ingrid/utils/UDK",
     "ingrid/utils/Security"
-], function(declare, aspect, cookie, Deferred, construct, query, topic, XContentPane, registry, message, udk, UtilSecurity) {
+], function(declare, cookie, Deferred, construct, query, topic, XContentPane, registry, message, udk, UtilSecurity) {
 
     return declare(null, {
         title: "Generelle Änderungen",
@@ -41,8 +40,6 @@ define(["dojo/_base/declare",
         category: "mcloud",
         type: "SYSTEM", // execute on IGE page load
         run: function() {
-            var self = this;
-
             this.replaceImages();
 
             this.hideMenuItems();
@@ -65,66 +62,6 @@ define(["dojo/_base/declare",
                     registry.byId("dataTree").rootNode.getChildren()[0].set("label", message.get("mcloud.tree.objectNode"));
                 }
             });
-
-            // add codelist 11000 used for categories, which can be managed in IGE Administration
-            var checkCodelist11000 = function(codelist) {
-                return codelist.id === 11000;
-            };
-            aspect.before(CatalogService, "getAllSysListInfos", function(args) {
-                var callbackOrig = args.callback;
-                args.callback = function(listInfos) {
-                    // only add if it wasn't already persisted in backend
-                    if (!listInfos.some(checkCodelist11000)) {
-                        listInfos.push({
-                            id: 11000,
-                            maintainable: true
-                        });
-                    }
-                    callbackOrig(listInfos);
-                };
-            });
-            aspect.before(CatalogService, "getSysLists", function(codelists, language, cb) {
-                var codelistId = codelists[0];
-                // allow string and numbers here in comparison!
-                if (codelistId == "11000") {
-                    var callbackOrig = cb.callback;
-                    cb.callback = function(listItems) {
-                        // only add if it wasn't already persisted in backend
-                        if (listItems[11000].length === 0) {
-                            listItems[11000] = self.getCodelist11000(language);
-                        }
-                        callbackOrig(listItems);
-                    };
-                }
-            });
-
-            // if codelist 11000 was not persisted in backend, return initial list
-            topic.subscribe("/additionalSyslistsLoaded", function() {
-                if (!sysLists[11000] || sysLists[11000].length === 0) {
-                    sysLists[11000] = self.getCodelist11000("de");
-                }
-            });
-
-            // add codelist 11000 to list of codelists to be loaded from backend
-            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
-                ids.push(11000);
-            });
-        },
-
-        // initial codelist 11000
-        getCodelist11000: function(language) {
-            if (language === "de") {
-                return [
-                    ["Bahn", "1", "N", ""],
-                    ["Wasserstraßen und Gewässer", "3", "N", ""],
-                    ["Infrastruktur", "4", "N", ""],
-                    ["Klima und Wetter", "5", "N", ""],
-                    ["Luft- und Raumfahrt", "6", "N", ""],
-                    ["Straßen", "7", "N", ""]
-                ];
-            } else {
-                return [];
-            }
         },
 
         hideMenuItems: function() {

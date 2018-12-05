@@ -81,8 +81,6 @@ define({
     "mcloud.form.general.tool,tip": "...",
 
     "mcloud.form.mcloudFields": "mCLOUD-Felder",
-    "mcloud.form.mcloudFields.toolTip": "In den nachfolgenden Feldern werden Metadaten erfasst, die in der Detailbeschreibung der Datensätze in der mCLOUD angezeigt werden.",
-
-    "ui.sysList.11000": "mcloud Kategorien"
+    "mcloud.form.mcloudFields.toolTip": "In den nachfolgenden Feldern werden Metadaten erfasst, die in der Detailbeschreibung der Datensätze in der mCLOUD angezeigt werden."
 });
 

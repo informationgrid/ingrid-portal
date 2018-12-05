@@ -159,7 +159,7 @@
                     selectWidgetData.sort(function(a, b){
                         return UtilString.compareIgnoreCase(a[0], b[0]);
                     });
-
+                    
                     UtilStore.updateWriteStore("selectionList", selectWidgetData, {identifier:'1', label:'0'});
                     selectWidget.set("value", selectWidgetData[0]);
                     

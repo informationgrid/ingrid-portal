@@ -44,6 +44,7 @@ define(["dojo/_base/declare",
         defaultActive: true,
         category: "mcloud",
         prefix: "mcloud_",
+        //params: [{id: "categoryCodelist", label: "Codelist (Kategorie)", "default": 9000}],
         run: function() {
 
             // rename default fields
@@ -192,11 +193,10 @@ define(["dojo/_base/declare",
                 name: message.get("mcloud.form.category"),
                 width: '708px',
                 type: Editors.SelectboxEditor,
-                options: [],
-                values: [],
+                options: ["Bahn", "Wasserstraßen und Gewässer", "Infrastruktur", "Klima und Wetter", "Luft- und Raumfahrt", "Straßen"],
+                values: ["railway", "waters", "infrastructure", "climate", "aviation", "roads"],
                 editable: true,
-                listId: 11000,
-                formatter: lang.partial(Formatters.SyslistCellFormatter, 11000),
+                formatter: Formatters.ListCellFormatter,
                 partialSearch: true
             }],
             rubric
