@@ -270,6 +270,11 @@
                 <a class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
               #end
             #end
+            #set($linkTitle = $MESSAGES.getString('ingrid.page.mapclient.tooltip'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.mapclient'))
+            #if($linkName != "ingrid.page.mapclient")
+              <a class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
+            #end
             </div>
         </div>
     </div>
