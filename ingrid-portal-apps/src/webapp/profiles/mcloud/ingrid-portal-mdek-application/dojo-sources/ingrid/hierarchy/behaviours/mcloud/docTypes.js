@@ -61,9 +61,9 @@ define(["dojo/_base/declare",
                 setTimeout(function() {
                     // document types
                     sysLists[8002].push(["Dokument", "20", "N", ""]);
-                    // address types
+                    // address types (only "Herausgeber")
                     sysLists[505] = sysLists[505].filter(function(item) {
-                        return item[1] === "7" || item[1] === "10";
+                        return item[1] === "10";
                     });
                     // time ref types
                     sysLists[502] = sysLists[502].filter(function(item) {

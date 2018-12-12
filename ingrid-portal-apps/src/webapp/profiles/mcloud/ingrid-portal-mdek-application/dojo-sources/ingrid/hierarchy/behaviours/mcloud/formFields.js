@@ -184,7 +184,7 @@ define(["dojo/_base/declare",
                 help: message.get("mcloud.form.category.helpMessage"),
                 isMandatory: true,
                 visible: "optional",
-                rows: "1",
+                rows: "2",
                 forceGridHeight: false,
                 style: "width:100%"
             },
