@@ -14,6 +14,9 @@
           <action type="add" dev="wemove" issue="1201">
             Portal: Add new profile "metaver_md".
           </action>
+          <action type="add" dev="wemove" issue="1231">
+            Portal: Add mapclient admin-gui as administration menu entry .
+          </action>
           <action type="update" dev="wemove" issue="1212">
             Portal/IGE: Update Oracle driver to ojdbc7 for Oracle 12.
           </action>
@@ -43,6 +46,21 @@
           </action>
           <action type="add" dev="wemove" issue="1209">
             MapClient: Add function to edit localisation.
+          </action>
+          <action type="add" dev="wemove" issue="1225">
+            MapClient: Add menu on fullscreen.
+          </action>
+          <action type="add" dev="wemove" issue="1229">
+            MapClient: Add login/logout on admin gui.
+          </action>
+          <action type="add" dev="wemove" issue="1250">
+            MapClient: Get attribution and attributionUrl from service.
+          </action>
+          <action type="add" dev="wemove" issue="1251">
+            MapClient: Adapt label on layer selection by edit category tree.
+          </action>
+          <action type="fix" dev="wemove" issue="1203">
+            MapClient: Fix extent of layers by add external service from portal on projection 'EPSG:25832'.
           </action>
         </release>
 
