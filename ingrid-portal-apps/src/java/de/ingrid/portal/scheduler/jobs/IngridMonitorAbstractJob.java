@@ -22,7 +22,9 @@
  */
 package de.ingrid.portal.scheduler.jobs;
 
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -172,6 +174,12 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 		} else {
 			emailSubject = emailSubject.concat("[FAILED]");
 		}
+		
+		try {
+            emailSubject = emailSubject.concat(" on host " + InetAddress.getLocalHost().getHostName());
+        } catch (UnknownHostException e) {
+            log.error("Unable to obtain hostname of local machine.");
+        }
 
 		String from = PortalConfig.getInstance().getString(PortalConfig.COMPONENT_MONITOR_ALERT_EMAIL_SENDER,
 				"foo@bar.com");
@@ -215,6 +223,12 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
                 PortalConfig.COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT,
                 "ingrid component monitor update alert");
         emailSubject = emailSubject.concat(" [").concat(component.getName()).concat("]");
+
+        try {
+            emailSubject = emailSubject.concat(" on host " + InetAddress.getLocalHost().getHostName());
+        } catch (UnknownHostException e) {
+            log.error("Unable to obtain hostname of local machine.");
+        }
         
         URL url = Thread.currentThread().getContextClassLoader().getResource(
                 "../templates/administration/monitor_update_alert_email.vm");
