@@ -23,8 +23,6 @@
     <measurement.client.version>1.0.2</measurement.client.version>
   </properties>
 
-
-                                <include name="**/css/override.css" />
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <!-- <dependencyManagement>
 	<dependencies>
