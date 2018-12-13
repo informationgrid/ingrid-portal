@@ -56,7 +56,7 @@ define([
 
             this.specificationName = UtilSyslist.getSyslistEntryName(6005, 12);
             this.specificationNameInspireRichtlinie = UtilSyslist.getSyslistEntryName(6005, 13);
-            
+
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1") {
@@ -86,6 +86,14 @@ define([
                     if (isChecked) {
                         domClass.remove("uiElement6001", "hidden");
 
+                        // Make inspire themes required
+                        domClass.add("uiElement5064", "required");
+                        domClass.remove("uiElement5064", "optional");
+                        registry.byId("thesaurusInspire").reinitLastColumn();
+
+                        // Also make conformity a required field
+                        domClass.add("uiElementN024", "required");
+
                         // add events implicitly
                         var isConform = registry.byId("isInspireConform").checked;
                         if (isConform) {
@@ -96,6 +104,14 @@ define([
                         }
                     } else {
                         domClass.add("uiElement6001", "hidden");
+
+                        // Make inspire themes optional
+                        domClass.remove("uiElement5064", "required");
+                        domClass.add("uiElement5064", "optional");
+                        domClass.remove("uiElement5064", "show");
+
+                        // Conformity is optional for non-INSPIRE fields
+                        domClass.remove("uiElementN024", "required");
 
                         // make digital representation optional
                         domClass.remove( "uiElement5062", "required" );
@@ -129,7 +145,7 @@ define([
                     if (inspireRelevantWidget.checked && isChecked) {
                         // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
                         // with not evaluated level
-                        utils.addConformity(self.specificationName, "3");
+                        utils.addConformity(false, self.specificationName, "3");
 
                         // remove INSPIRE Richtlinie
                         utils.removeConformity(self.specificationNameInspireRichtlinie);
@@ -155,7 +171,7 @@ define([
         handleClickConform: function() {
             // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
             // with conform level
-            utils.addConformity(this.specificationName, "1");
+            utils.addConformity(true, this.specificationName, "1");
 
             // remove INSPIRE Richtlinie
             utils.removeConformity(this.specificationNameInspireRichtlinie);
@@ -189,9 +205,23 @@ define([
                     var rule1 = msg.oldItem && msg.oldItem.specification === self.specificationName && msg.item.specification !== self.specificationName;
                     var rule2 = msg.item.specification === self.specificationName && msg.item.level !== "1";
                     if (rule1 || rule2) {
+                        var isInspire = false;
+                        var publicationDate = null;
+                        var entryData = UtilSyslist.getSyslistEntryData(6005, self.specificationName);
+                        if (entryData == null) { // No entry in list 6005
+                            entryData = UtilSyslist.getSyslistEntryData(6006, self.specificationName);
+                        } else {
+                            isInspire = true;
+                        }
+                        if (entryData != null) { // Found an entry in list 6005 or 6006
+                            publicationDate = new Date(entryData);
+                        }
+                        // TODO is this the right approach?
                         UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, {
+                            isInspire: isInspire,
                             specification: self.specificationName,
-                            level: "1"
+                            level: "1",
+                            publicationDate: publicationDate
                         });
                         UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.conform") );
                     }
@@ -261,9 +291,23 @@ define([
                     var rule1 = msg.oldItem && msg.oldItem.specification === self.specificationName && msg.item.specification !== self.specificationName;
                     var rule2 = msg.item.specification === self.specificationName && msg.item.level === "1";
                     if (rule1 || rule2) {
+                        var isInspire = false;
+                        var publicationDate = null;
+                        var entryData = UtilSyslist.getSyslistEntryData(6005, self.specificationName);
+                        if (entryData == null) { // No entry in list 6005
+                            entryData = UtilSyslist.getSyslistEntryData(6006, self.specificationName);
+                        } else {
+                            isInspire = true;
+                        }
+                        if (entryData != null) { // Found an entry in list 6005 or 6006
+                            publicationDate = new Date(entryData);
+                        }
+                        // TODO is this the right approach?
                         UtilGrid.updateTableDataRow( "extraInfoConformityTable", msg.row, {
+                            isInspire: isInspire,
                             specification: self.specificationName,
-                            level: "3"
+                            level: "3",
+                            publicationDate: publicationDate
                         });
                         UtilUI.showToolTip( "extraInfoConformityTable", message.get("validation.levelOfSpecification.notConform") );
                     }

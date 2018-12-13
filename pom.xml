@@ -96,11 +96,6 @@
         <artifactId>ingrid-mdek-services</artifactId>
         <version>${mdek.version}</version>
       </dependency>
-      <dependency>
-        <groupId>de.ingrid.mdek</groupId>
-        <artifactId>ingrid-import-export</artifactId>
-        <version>${mdek.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 

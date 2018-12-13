@@ -128,16 +128,7 @@ public class QueryPreProcessor {
                 // Extend query by property 'portal.search.extend.query'
                 String addToQuery = PortalConfig.getInstance().getString( PortalConfig.PORTAL_SEARCH_EXTEND_QUERY, "" );
                 if(addToQuery != null && addToQuery.length() > 0){
-                    if(queryString != null && queryString.length() > 0){
-                        String[] tmpQueries = addToQuery.split( " " );
-                        for (String tmpQuery : tmpQueries) {
-                            if(tmpQuery != null && tmpQuery.length() > 0){
-                                if(queryString.indexOf( tmpQuery ) == -1){
-                                    queryString = queryString.concat( " " ).concat( addToQuery );
-                                }
-                            }
-                        }
-                    }
+                    queryString = UtilsSearch.updateQueryString(addToQuery, request);
                 }
                 query = QueryStringParser.parse(queryString);
             }else{
@@ -146,10 +137,10 @@ public class QueryPreProcessor {
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
                 UtilsFacete.facetePrepareInGridQuery(request, query);
             }
-        } catch (ParseException ex) {
+        } catch (Throwable t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
-                        + queryString, ex);
+                        + queryString, t);
             }
         }
 

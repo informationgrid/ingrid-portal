@@ -385,6 +385,20 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>procedure_11</id>
                 <display>true</display>
             </facet>
+        <!-- Bauleitplanung -->
+            <facet>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <display>true</display>
+            </facet>
+            <!-- Zulassungsverfahren -->
+            <facet>
+                <name>Negative Vorprüfungen</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
+                <display>true</display>
+            </facet>
         </facets>
     </facet>
 
@@ -624,6 +638,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.procedures</name>
         <id>category_procedure</id>
         <categoryOnly>true</categoryOnly>
+        <colNum>5</colNum>
         <facets>
         <!-- Zulassungsverfahren -->
             <facet>
@@ -659,6 +674,23 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <parentId>procedure</parentId>
                 <id>procedure_11</id>
                 <shortcut>A</shortcut>
+                <display>true</display>
+            </facet>
+        <!-- Bauleitplanung -->
+            <facet>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <shortcut>B</shortcut>
+                <display>true</display>
+            </facet>
+        <!-- Negative Vorprüfungen -->
+            <facet>
+                <name>Negative Vorprüfungen</name>
+                <query>t01_object.obj_class:12</query>
+                <parentId>procedure</parentId>
+                <id>procedure_12</id>
+                <shortcut>N</shortcut>
                 <display>true</display>
             </facet>
         </facets>

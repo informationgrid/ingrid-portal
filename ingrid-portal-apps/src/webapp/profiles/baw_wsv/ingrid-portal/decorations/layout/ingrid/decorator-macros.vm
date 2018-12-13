@@ -177,9 +177,9 @@
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
         #if($element.isSelected($site))
-          <a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a>
+          <a #if($element.url == "/help.psml")target="_blank"#end href="$linkUrl" title="$linkTitle" class="selected">$linkName</a>
         #else
-          <a href="$linkUrl" title="$linkTitle">$linkName</a>
+          <a #if($element.url == "/help.psml")target="_blank"#end href="$linkUrl" title="$linkTitle">$linkName</a>
         #end
       #end
     #end
@@ -269,6 +269,12 @@
                 #end
                 <a class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
               #end
+            #end
+            #set($linkTitle = $MESSAGES.getString('ingrid.page.mapclient.tooltip'))
+            #set($linkName = $MESSAGES.getString('ingrid.page.mapclient'))
+            #if($linkName != "ingrid.page.mapclient")
+              #set($linkUrl = "/ingrid-webmap-client/admin")
+              <a target="_new" class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
             #end
             </div>
         </div>
@@ -412,7 +418,7 @@
         #if($linkUrl && $linkUrl.contains("@"))
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
-        <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
+        <li><a #if($element.url == "/help.psml")target="_blank"#end href="$linkUrl" title="$linkTitle">$linkName</a></li>
       #end
     #end
 </ul>

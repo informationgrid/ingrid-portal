@@ -152,6 +152,7 @@ public class DetailDataPreparerGeneric implements DetailDataPreparer {
         DetailDataPreparerHelper.setFieldFromHashTree(recordMap, "Tamino Documenttype", null);
         
         context.put("rec", recordMap);
+        context.put("title", recordMap.get("title"));
 	}
 	
     /**

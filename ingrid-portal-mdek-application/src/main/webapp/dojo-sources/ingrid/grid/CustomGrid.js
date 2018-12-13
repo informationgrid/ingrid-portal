@@ -322,7 +322,7 @@ define([
          * optimizations it's only done once and if the grid was rendered in a hidden state where
          * the viewport's width is null. You can however force a relayout by giving the parameter 
          * force with true.
-         * @param  {[boolean]} force [does a relayout even if viewport already had a width]
+         * @param  {boolean} force [does a relayout even if viewport already had a width]
          */
         reinitLastColumn: function(force) {
             if (force || this.viewportW === 0) {
@@ -2205,6 +2205,12 @@ define([
                     w = this.columns[i].width;
 
                 rule = this.findCssRule("." + this.uid + " .c" + i);
+
+                // a rule may not exist if a column is hidden, so we have to skip it in the calculation
+                if (!rule) {
+                    continue;
+                }
+
                 var newWidth = (w - this.cellWidthDiff) < 0 ? 0 : (w - this.cellWidthDiff);
                 // if it's the last column
                 var lastVisibleColumn = this._getLastVisibleColumn();

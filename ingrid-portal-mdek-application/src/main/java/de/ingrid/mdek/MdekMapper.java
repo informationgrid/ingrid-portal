@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import de.ingrid.mdek.beans.object.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,22 +45,6 @@ import de.ingrid.mdek.beans.KeyValuePair;
 import de.ingrid.mdek.beans.TreeNodeBean;
 import de.ingrid.mdek.beans.address.CommunicationBean;
 import de.ingrid.mdek.beans.address.MdekAddressBean;
-import de.ingrid.mdek.beans.object.AdditionalFieldBean;
-import de.ingrid.mdek.beans.object.ApplicationUrlBean;
-import de.ingrid.mdek.beans.object.ConformityBean;
-import de.ingrid.mdek.beans.object.DBContentBean;
-import de.ingrid.mdek.beans.object.DQBean;
-import de.ingrid.mdek.beans.object.DataFormatBean;
-import de.ingrid.mdek.beans.object.LinkDataBean;
-import de.ingrid.mdek.beans.object.LocationBean;
-import de.ingrid.mdek.beans.object.MdekDataBean;
-import de.ingrid.mdek.beans.object.MediaOptionBean;
-import de.ingrid.mdek.beans.object.OperationBean;
-import de.ingrid.mdek.beans.object.OperationParameterBean;
-import de.ingrid.mdek.beans.object.ScaleBean;
-import de.ingrid.mdek.beans.object.TimeReferenceBean;
-import de.ingrid.mdek.beans.object.UrlBean;
-import de.ingrid.mdek.beans.object.VectorFormatDetailsBean;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Source;
 import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
@@ -95,6 +80,8 @@ public class MdekMapper implements DataMapperInterface {
         boolean isOpenData = "Y".equals(obj.get(MdekKeys.IS_OPEN_DATA)) ? true : false;
 
         // General
+        mdekObj.setToBePublishedOn((Date) obj.get(MdekKeys.TO_BE_PUBLISHED_ON));
+        mdekObj.setParentIdentifier((String) obj.get(MdekKeys.PARENT_IDENTIFIER));
         mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
         mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
         mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
@@ -774,6 +761,8 @@ public class MdekMapper implements DataMapperInterface {
 
         // General
         udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
+        udkObj.put(MdekKeys.TO_BE_PUBLISHED_ON, data.getToBePublishedOn());
+        udkObj.put(MdekKeys.PARENT_IDENTIFIER, data.getParentIdentifier());
         udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
         udkObj.put(MdekKeys.UUID, data.getUuid());
         udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());
@@ -889,7 +878,7 @@ public class MdekMapper implements DataMapperInterface {
         case 0: // Object of type 0 doesn't have any special values
             break;
         case 1:
-            List<IngridDocument> dqList = new ArrayList<IngridDocument>();
+            List<IngridDocument> dqList = new ArrayList<>();
             mapFromDQTable(109, data.getDq109Table(), dqList);
             mapFromDQTable(112, data.getDq112Table(), dqList);
             mapFromDQTable(113, data.getDq113Table(), dqList);
@@ -1152,7 +1141,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromGeneralAddressTable(List<MdekAddressBean> adrTable) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         
         // conversion from dojo grid to js-store can nullify an empty table instead of 
         // returning an empty array back!
@@ -1188,7 +1177,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromCommunicationTable(List<CommunicationBean> commMap){
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>(); 
+        List<IngridDocument> resultList = new ArrayList<>();
 
         for (CommunicationBean comm : commMap) {
             IngridDocument mappedEntry = new IngridDocument();
@@ -1212,7 +1201,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<IngridDocument> mapFromObjectLinksTable(List<MdekDataBean> objList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (objList == null)
             return resultList;
 
@@ -1225,7 +1214,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromAdditionalFields(List<AdditionalFieldBean> additionalFieldList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (additionalFieldList == null)
             return resultList;
         
@@ -1235,7 +1224,7 @@ public class MdekMapper implements DataMapperInterface {
             additionalFieldDoc.put(MdekKeys.ADDITIONAL_FIELD_DATA,         additionalField.getValue());
             additionalFieldDoc.put(MdekKeys.ADDITIONAL_FIELD_LIST_ITEM_ID, additionalField.getListId());
             
-            List<List<IngridDocument>> tableRows = new ArrayList<List<IngridDocument>>();
+            List<List<IngridDocument>> tableRows = new ArrayList<>();
             if (additionalField.getTableRows() == null)
                 tableRows = null;
             else {
@@ -1253,7 +1242,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromUrlLinksTable(List<UrlBean> urlList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (urlList == null)
             return resultList;
 
@@ -1276,7 +1265,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<IngridDocument> mapFromLocationTables(List<LocationBean> locationSNS, List<LocationBean> locationFree) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (locationFree != null) {
             for (LocationBean loc : locationFree) {
                 IngridDocument res = new IngridDocument();
@@ -1313,7 +1302,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromTimeRefTable(List<TimeReferenceBean> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -1327,7 +1316,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromExtraInfoLangDataTable(List<Integer> keyList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         
         if (keyList != null) {
             for (Integer key : keyList) {
@@ -1341,7 +1330,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromExtraInfoConformityTable(List<ConformityBean> conList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (conList == null)
             return resultList;
 
@@ -1350,11 +1339,18 @@ public class MdekMapper implements DataMapperInterface {
             if (con.getLevel() != null) {
                 result.put(MdekKeys.CONFORMITY_DEGREE_KEY, con.getLevel());
             }
-            KeyValuePair kvp = mapFromKeyValue(MdekKeys.CONFORMITY_SPECIFICATION_KEY, con.getSpecification());
-            if (kvp.getValue() != null || kvp.getKey() != -1) {
-            	result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, kvp.getKey());
-            	result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, kvp.getValue());
+            // Assume INSPIRE if we encounter null. Is this right?
+            boolean isInspire = con.getIsInspire() == null || con.getIsInspire();
+            result.put(MdekKeys.CONFORMITY_IS_INSPIRE, isInspire ? "Y" : "N");
+            int listId = isInspire ? 6005 : 6006; // TODO: hard coded value. Change de.ingrid.mdek.SysListCache to automatically detect list ids?
+            Integer key = sysListMapper.getKeyFromListId(listId, con.getSpecification());
+            key = key == null ? -1 : key;
+            result.put(MdekKeys.CONFORMITY_SPECIFICATION_KEY, key);
+            if (con.getSpecification() != null) {
+                result.put(MdekKeys.CONFORMITY_SPECIFICATION_VALUE, con.getSpecification().trim());
             }
+            result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getPublicationDate()));
+
             if (!result.isEmpty()) {
                 resultList.add(result);
             }
@@ -1363,7 +1359,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromExtraInfoXMLExportTable(List<String> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -1380,7 +1376,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<IngridDocument> mapFromExtraInfoLegalBasicsTable(List<String> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -1397,7 +1393,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromAvailAccessConstraintsTable(List<String> acList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         
         if (acList != null) {
             for (String ac : acList) {
@@ -1414,16 +1410,17 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
-    private List<IngridDocument> mapFromAvailUseAccessConstraintsTable(List<String> acList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+    private List<IngridDocument> mapFromAvailUseAccessConstraintsTable(List<UseAccessConstraintsBean> acList) {
+        List<IngridDocument> resultList = new ArrayList<>();
         
         if (acList != null) {
-            for (String ac : acList) {
-                KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_LICENSE_KEY, ac);
+            for (UseAccessConstraintsBean ac : acList) {
+                KeyValuePair kvp = mapFromKeyValue(MdekKeys.USE_LICENSE_KEY, ac.getTitle());
                 if (kvp.getValue() != null || kvp.getKey() != -1) {
                     IngridDocument result = new IngridDocument();
                     result.put(MdekKeys.USE_LICENSE_KEY, kvp.getKey());
                     result.put(MdekKeys.USE_LICENSE_VALUE, kvp.getValue());
+                    result.put(MdekKeys.USE_LICENSE_SOURCE, ac.getSource());
                     resultList.add(result);
                 }
             }           
@@ -1433,7 +1430,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<IngridDocument> mapFromCategoriesOpenDataTable(List<String> acList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         
         if (acList != null) {
             for (String ac : acList) {
@@ -1452,7 +1449,7 @@ public class MdekMapper implements DataMapperInterface {
     
     /** Map single value to list ! UseConstraints was a table, now a text field, see INGRID32-45, REDMINE-14,-717 */
     private List<IngridDocument> mapFromAvailUseConstraints(String uc) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         
         IngridDocument result = new IngridDocument();
         // always save as free entry now since there's not syslist used anymore (REDMINE-14,-717)
@@ -1465,7 +1462,7 @@ public class MdekMapper implements DataMapperInterface {
     
     /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
     private List<IngridDocument> mapFromAvailDataFormatInspire(String inspireDataFormat) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (inspireDataFormat == null)
             return resultList;
 
@@ -1481,7 +1478,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromAvailDataFormatTable(List<DataFormatBean> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -1502,7 +1499,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<IngridDocument> mapFromAvailMediaOptionsTable(List<MediaOptionBean> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -1517,7 +1514,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromAdvProductGroupTable(List<Integer> advProductGroupList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (advProductGroupList != null) {
             for (Integer identifier : advProductGroupList) {
                 IngridDocument res = new IngridDocument();
@@ -1531,7 +1528,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromInspireTermTable(List<Integer> inspireTermList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (inspireTermList != null) {
             for (Integer identifier : inspireTermList) {
                 IngridDocument res = new IngridDocument();
@@ -1545,7 +1542,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     public static List<IngridDocument> mapFromThesTermTable(List<SNSTopic> snsList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (snsList != null) {
             for (SNSTopic t : snsList) {
                 IngridDocument res = null;
@@ -1582,7 +1579,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<IngridDocument> mapFromVFormatDetailsTable(List<VectorFormatDetailsBean> vFormatList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (vFormatList == null)
             return resultList;
 
@@ -1596,7 +1593,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromServiceTypeTable(List<Integer> serviceTypeList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (serviceTypeList == null) {
             return resultList;
         }
@@ -1610,7 +1607,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<IngridDocument> mapFromScaleTable(List<ScaleBean> scaleList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (scaleList == null)
             return resultList;
 
@@ -1626,7 +1623,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<IngridDocument> mapFromSymLinkDataTable(List<LinkDataBean> linkList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (linkList == null)
             return resultList;
 
@@ -1645,7 +1642,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromKeyLinkDataTable(List<LinkDataBean> linkList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (linkList == null)
             return resultList;
 
@@ -1664,7 +1661,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromDbContentTable(List<DBContentBean> dbList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (dbList == null)
             return resultList;
 
@@ -1679,7 +1676,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<IngridDocument> mapFromOperationTable(List<OperationBean> opList, Integer serviceType) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (opList == null)
             return resultList;
 
@@ -1707,7 +1704,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromOperationPlatformTable(List<Integer> platformList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (platformList != null) {
             for (Integer identifier : platformList) {
                 IngridDocument res = new IngridDocument();
@@ -1719,7 +1716,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<IngridDocument> mapFromOperationParamTable(List<OperationParameterBean> opList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (opList == null)
             return resultList;
 
@@ -1737,7 +1734,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<IngridDocument> mapFromCommentTable(List<CommentBean> commentList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (commentList == null)
             return resultList;
 
@@ -1755,7 +1752,7 @@ public class MdekMapper implements DataMapperInterface {
 
     
     private List<IngridDocument> mapFromUrlListTable(List<ApplicationUrlBean> urlList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (urlList == null)
             return resultList;
 
@@ -1771,7 +1768,7 @@ public class MdekMapper implements DataMapperInterface {
 
     
     private Object mapFromSpatialSystemTable(List<String> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -1788,7 +1785,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private Object mapFromServiceVersionTable(Integer serviceType, List<String> refList) {
-        List<IngridDocument> resultList = new ArrayList<IngridDocument>();
+        List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
         
@@ -1840,7 +1837,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<MdekAddressBean> mapToGeneralAddressTable(List<IngridDocument> adrTable) {
-        List<MdekAddressBean> resultList = new ArrayList<MdekAddressBean>(); 
+        List<MdekAddressBean> resultList = new ArrayList<>();
         if (adrTable == null)
             return resultList;
 
@@ -1852,7 +1849,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<CommunicationBean> mapToCommunicationTable(List<IngridDocument> commMap){
-        List<CommunicationBean> resultCommMap = new ArrayList<CommunicationBean>(); 
+        List<CommunicationBean> resultCommMap = new ArrayList<>();
         if (commMap == null)
             return resultCommMap;
 
@@ -1869,7 +1866,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<MdekDataBean> mapToObjectLinksTable(List<IngridDocument> objList) {
-        List<MdekDataBean> resultList = new ArrayList<MdekDataBean>(); 
+        List<MdekDataBean> resultList = new ArrayList<>();
         if (objList == null)
             return resultList;
 
@@ -1880,7 +1877,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<UrlBean> mapToUrlLinksTable(List<IngridDocument> objList) {
-        List<UrlBean> resultList = new ArrayList<UrlBean>(); 
+        List<UrlBean> resultList = new ArrayList<>();
         if (objList == null)
             return resultList;
         
@@ -1901,7 +1898,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<AdditionalFieldBean> mapToAdditionalFields(List<IngridDocument> additionalFieldList) {
-        List<AdditionalFieldBean> resultList = new ArrayList<AdditionalFieldBean>();
+        List<AdditionalFieldBean> resultList = new ArrayList<>();
         if (additionalFieldList == null) {
             return resultList;
         }
@@ -1916,7 +1913,7 @@ public class MdekMapper implements DataMapperInterface {
             @SuppressWarnings("unchecked")
             List<List<IngridDocument>> tableRows = (List<List<IngridDocument>>)(List<?>) additionalFieldDoc.getArrayList(MdekKeys.ADDITIONAL_FIELD_ROWS);
             if (tableRows != null) {
-                List<List<AdditionalFieldBean>> tableData = new ArrayList<List<AdditionalFieldBean>>();
+                List<List<AdditionalFieldBean>> tableData = new ArrayList<>();
                 for (List<IngridDocument> row : tableRows) {
                     List<AdditionalFieldBean> rowsData = mapToAdditionalFields(row);
                     tableData.add(rowsData);
@@ -1931,7 +1928,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<LocationBean> mapToSpatialRefAdminUnitTable(List<IngridDocument> locList) {
-        List<LocationBean> resultList = new ArrayList<LocationBean>();
+        List<LocationBean> resultList = new ArrayList<>();
         if (locList == null)
             return resultList;
 
@@ -1975,7 +1972,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<LocationBean> mapToSpatialRefLocationTable(List<IngridDocument> locList) {
-        List<LocationBean> resultList = new ArrayList<LocationBean>();
+        List<LocationBean> resultList = new ArrayList<>();
         if (locList == null)
             return resultList;
 
@@ -1999,7 +1996,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<TimeReferenceBean> mapToTimeRefTable(List<IngridDocument> refList) {
-        List<TimeReferenceBean> resultList = new ArrayList<TimeReferenceBean>();
+        List<TimeReferenceBean> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
 
@@ -2014,7 +2011,7 @@ public class MdekMapper implements DataMapperInterface {
 
     
     private List<Integer> mapToExtraInfoLangDataTable(List<IngridDocument> docList) {
-        List<Integer> resultList = new ArrayList<Integer>();
+        List<Integer> resultList = new ArrayList<>();
 
         if (docList != null) {
             for (IngridDocument doc : docList) {
@@ -2026,22 +2023,31 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<ConformityBean> mapToExtraInfoConformityTable(List<IngridDocument> conList) {
-        List<ConformityBean> resultList = new ArrayList<ConformityBean>();
+        List<ConformityBean> resultList = new ArrayList<>();
         if (conList == null)
             return resultList;
 
         for (IngridDocument con : conList) {
             ConformityBean c = new ConformityBean();
             c.setLevel((Integer) con.get(MdekKeys.CONFORMITY_DEGREE_KEY));
-            KeyValuePair kvp = mapToKeyValuePair(con, MdekKeys.CONFORMITY_SPECIFICATION_KEY, MdekKeys.CONFORMITY_SPECIFICATION_VALUE, true);
-            c.setSpecification(kvp.getValue());
+
+            String isInspireString = con.getString(MdekKeys.CONFORMITY_IS_INSPIRE);
+            boolean isInspire = isInspireString != null && isInspireString.equals("Y");
+            c.setIsInspire(isInspire);
+
+            int sysList = isInspire ? 6005 : 6006;
+            String value = sysListMapper.getValueFromListId(sysList, (Integer) con.get(MdekKeys.CONFORMITY_SPECIFICATION_KEY), true);
+            value = value == null || value.trim().isEmpty() ? (String) con.get(MdekKeys.CONFORMITY_SPECIFICATION_VALUE) : value;
+            c.setSpecification(value);
+
+            c.setPublicationDate(convertTimestampToDate(con.getString(MdekKeys.CONFORMITY_PUBLICATION_DATE)));
             resultList.add(c);
         }
         return resultList;
     }
 
     private List<String> mapToExtraInfoXMLExportTable(List<IngridDocument> refList) {
-        List<String> resultList = new ArrayList<String>();
+        List<String> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
         
@@ -2053,7 +2059,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<String> mapToExtraInfoLegalBasicsTable(List<IngridDocument> refList) {
-        List<String> resultList = new ArrayList<String>();
+        List<String> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
         for (IngridDocument ref : refList) {
@@ -2064,7 +2070,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<String> mapToAvailAccessConstraintsTable(List<IngridDocument> docList) {
-        List<String> resultList = new ArrayList<String>();
+        List<String> resultList = new ArrayList<>();
 
         if (docList != null) {
             for (IngridDocument doc : docList) {
@@ -2076,13 +2082,17 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
-    private List<String> mapToAvailUseAccessConstraintsTable(List<IngridDocument> docList) {
-        List<String> resultList = new ArrayList<String>();
+    private List<UseAccessConstraintsBean> mapToAvailUseAccessConstraintsTable(List<IngridDocument> docList) {
+        List<UseAccessConstraintsBean> resultList = new ArrayList<>();
         
         if (docList != null) {
             for (IngridDocument doc : docList) {
+                UseAccessConstraintsBean constraintsBean = new UseAccessConstraintsBean();
                 KeyValuePair kvp = mapToKeyValuePair(doc, MdekKeys.USE_LICENSE_KEY, MdekKeys.USE_LICENSE_VALUE);
-                resultList.add(kvp.getValue());
+                constraintsBean.setTitle(kvp.getValue());
+                constraintsBean.setSource((String) doc.get(MdekKeys.USE_LICENSE_SOURCE));
+
+                resultList.add(constraintsBean);
             }
         }
         
@@ -2090,7 +2100,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<String> mapToCategoriesOpenDataTable(List<IngridDocument> docList) {
-        List<String> resultList = new ArrayList<String>();
+        List<String> resultList = new ArrayList<>();
         
         if (docList != null) {
             for (IngridDocument doc : docList) {
@@ -2129,7 +2139,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<String> mapToSpatialSystemsTable(List<IngridDocument> refList) {
-        List<String> resultList = new ArrayList<String>();
+        List<String> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
         for (IngridDocument ref : refList) {
@@ -2156,7 +2166,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<DataFormatBean> mapToAvailDataFormatTable(List<IngridDocument> refList) {
-        List<DataFormatBean> resultList = new ArrayList<DataFormatBean>();
+        List<DataFormatBean> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
         for (IngridDocument ref : refList) {
@@ -2173,7 +2183,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<MediaOptionBean> mapToAvailMediaOptionsTable(List<IngridDocument> refList) {
-        List<MediaOptionBean> resultList = new ArrayList<MediaOptionBean>();
+        List<MediaOptionBean> resultList = new ArrayList<>();
         if (refList == null)
             return resultList;
         for (IngridDocument ref : refList) {
@@ -2187,7 +2197,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<Integer> mapToAdvProductGroupTable(List<IngridDocument> productList) {
-        List<Integer> resultList = new ArrayList<Integer>();
+        List<Integer> resultList = new ArrayList<>();
         
         if (productList != null) {
             for (IngridDocument topic : productList) {
@@ -2199,7 +2209,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<Integer> mapToInspireTermTable(List<IngridDocument> topicList) {
-        List<Integer> resultList = new ArrayList<Integer>();
+        List<Integer> resultList = new ArrayList<>();
 
         if (topicList != null) {
             for (IngridDocument topic : topicList) {
@@ -2212,7 +2222,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     public static List<SNSTopic> mapToThesTermsTable(List<IngridDocument> topicList) {
-        List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+        List<SNSTopic> resultList = new ArrayList<>();
         if (topicList == null)
             return resultList;
         for (IngridDocument topic : topicList) {
@@ -2241,7 +2251,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<VectorFormatDetailsBean> mapToVFormatDetailsTable(List<IngridDocument> vFormatList) {
-        List<VectorFormatDetailsBean> resultList = new ArrayList<VectorFormatDetailsBean>();
+        List<VectorFormatDetailsBean> resultList = new ArrayList<>();
         if (vFormatList == null)
             return resultList;
         for (IngridDocument vFormat : vFormatList) {
@@ -2255,7 +2265,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<Integer> mapToServiceTypeTable(List<IngridDocument> serviceTypeList) {
-        List<Integer> resultList = new ArrayList<Integer>();
+        List<Integer> resultList = new ArrayList<>();
         if (serviceTypeList == null) {
             return resultList;
         }
@@ -2266,7 +2276,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<String> mapToServiceVersionTable(Integer serviceType, List<IngridDocument> serviceVersionList) {
-        List<String> resultList = new ArrayList<String>();
+        List<String> resultList = new ArrayList<>();
         if (serviceVersionList == null) {
             return resultList;
         }
@@ -2286,7 +2296,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<ScaleBean> mapToScaleTable(List<IngridDocument> scaleList) {
-        List<ScaleBean> resultList = new ArrayList<ScaleBean>();
+        List<ScaleBean> resultList = new ArrayList<>();
         if (scaleList == null)
             return resultList;
         for (IngridDocument topic : scaleList) {
@@ -2301,7 +2311,7 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private List<LinkDataBean> mapToSymLinkDataTable(List<IngridDocument> linkList) {
-        List<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+        List<LinkDataBean> resultList = new ArrayList<>();
         if (linkList == null)
             return resultList;
         for (IngridDocument topic : linkList) {
@@ -2316,7 +2326,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private  List<LinkDataBean> mapToKeyLinkDataTable(List<IngridDocument> linkList) {
-        List<LinkDataBean> resultList = new ArrayList<LinkDataBean>();
+        List<LinkDataBean> resultList = new ArrayList<>();
         if (linkList == null)
             return resultList;
         for (IngridDocument topic : linkList) {
@@ -2331,7 +2341,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<DBContentBean> mapToDbContentTable(List<IngridDocument> dbList) {
-        List<DBContentBean> resultList = new ArrayList<DBContentBean>();
+        List<DBContentBean> resultList = new ArrayList<>();
         if (dbList == null)
             return resultList;
         for (IngridDocument content : dbList) {
@@ -2346,7 +2356,7 @@ public class MdekMapper implements DataMapperInterface {
 
     @SuppressWarnings("unchecked")
     private List<OperationBean> mapToOperationTable(List<IngridDocument> opList, Integer serviceType) {
-        List<OperationBean> resultList = new ArrayList<OperationBean>();
+        List<OperationBean> resultList = new ArrayList<>();
         if (opList == null)
             return resultList;
         for (IngridDocument operation : opList) {
@@ -2369,7 +2379,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<Integer> mapToOperationPlatformTable(List<IngridDocument> platformList) {
-        List<Integer> resultList = new ArrayList<Integer>();
+        List<Integer> resultList = new ArrayList<>();
 
         if (platformList != null) {
             for (IngridDocument platform : platformList) {
@@ -2381,7 +2391,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<OperationParameterBean> mapToOperationParamTable(List<IngridDocument> opList) {
-        List<OperationParameterBean> resultList = new ArrayList<OperationParameterBean>();
+        List<OperationParameterBean> resultList = new ArrayList<>();
         if (opList == null)
             return resultList;
         for (IngridDocument operation : opList) {
@@ -2399,7 +2409,7 @@ public class MdekMapper implements DataMapperInterface {
     
 
     private List<CommentBean> mapToCommentTable(List<IngridDocument> commentList) {
-        List<CommentBean> resultList = new ArrayList<CommentBean>();
+        List<CommentBean> resultList = new ArrayList<>();
         if (commentList == null)
             return resultList;
         for (IngridDocument comment : commentList) {
@@ -2414,7 +2424,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     private List<ApplicationUrlBean> mapToUrlList(List<IngridDocument> urlList) {
-        List<ApplicationUrlBean> resultList = new ArrayList<ApplicationUrlBean>();
+        List<ApplicationUrlBean> resultList = new ArrayList<>();
         if (urlList == null)
             return resultList;
         for (IngridDocument entry : urlList) {
@@ -2428,7 +2438,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     private List<DQBean> mapToDqTable(Integer dqElementId, List<IngridDocument> dqList) {
-        List<DQBean> resultList = new ArrayList<DQBean>();
+        List<DQBean> resultList = new ArrayList<>();
         if (dqList == null)
             return resultList;
 

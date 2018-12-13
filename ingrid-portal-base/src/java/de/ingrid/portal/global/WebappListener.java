@@ -36,6 +36,7 @@ import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.DataSource;
 
+import de.ingrid.portal.migration.Migrator;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -53,32 +54,52 @@ public class WebappListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         log.debug( "INITIALIZE DATABASE" );
 
-        Flyway flyway = new Flyway();
         DataSource ds = null;
+        InitialContext initContext = null;
         try {
-            InitialContext initContext = new InitialContext();
+            initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup( "java:/comp/env" );
             ds = (DataSource) envContext.lookup( "jdbc/jetspeed" );
+            String version = getVersionFromDB( ds );
+
+            // run migrations if needed
+            new Migrator(ds, version).run();
+
+            // run flyway migrations if needed
+            handleFlyway(ds, version);
+
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleFlyway(DataSource ds, String version) {
+        Flyway flyway = new Flyway();
+        try {
 
             String dbType = getDbType( ds );
             Map<String, String> placeholders = getPlaceHolderValues();
 
             flyway.setLocations( "db/migration/" + dbType, "db/optional/" + dbType );
             flyway.setPlaceholders( placeholders );
-            
+
+            // per default do NOT check changes in older migration files (checksum)
+            boolean validateOnMigrate = PortalConfig.getInstance().getBoolean( "flyway.validateOnMigrate", false);
+            log.info( "flyway validateOnMigrate = " + validateOnMigrate );
+            flyway.setValidateOnMigrate( validateOnMigrate );
+
             flyway.setDataSource( ds );
             flyway.migrate();
         } catch (FlywayException e) {
-            
+
             String errorMsg = e.getMessage();
-            
+
             if (errorMsg != null && errorMsg.contains( "without metadata table" )) {
                 log.warn( "DB migration failed for 'ingrid_portal'" );
-            
+
                 // the database probably isn't setup for flyway
                 // find out which version we have to set for a baseline
-                String version = getVersionFromDB( ds );
-    
+
                 if (version != null) {
                     flyway.setBaselineVersionAsString( version );
                     flyway.baseline();
@@ -92,9 +113,6 @@ public class WebappListener implements ServletContextListener {
                 log.error( "Could not migrate database 'ingrid_portal'", e );
                 throw new RuntimeException( "Could not migrate database 'ingrid_portal'", e );
             }
-
-        } catch (NamingException e) {
-            log.error( "Error migrating the database", e );
         }
     }
 
@@ -130,8 +148,7 @@ public class WebappListener implements ServletContextListener {
                 return resultset.getString( "item_value" );
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Problem fetching version from database", e);
         }
         return null;
     }

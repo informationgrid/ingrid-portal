@@ -10,12 +10,13 @@
         #renderSearchResultFacetFilter( "is-active" )
     #end
     <article class="content ob-container">
+        #if($enableFacetSelection || $isSelection)
+            <ul class="tag-group tag-group bx-top-m bx-bot-l">
+                #renderSearchResultFacetSelection($facetConfig $MESSAGES)
+            </ul>
+        #end
         #parse ('/WEB-INF/templates/include_search_result_counter.vm')
         <hr class="hr-small-full">
-        #if($enableFacetSelection > 0 || $isSelection)
-            #renderSearchResultFacetSelection($facetConfig $MESSAGES)
-        <hr class="hr-small-full" style="margin-top:0.175rem;">
-        #end
         ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
         #parse ('/WEB-INF/templates/include_search_result_filter.vm')
         #if($rankedResultList && "$rankedResultList.length()" != "0")
@@ -45,14 +46,14 @@
         Facets:
         $rankedResultList.get("FACETS")
     #end
-    
+
     #if($facetsQuery)
            Facets Query:
         #foreach($facete in $facetsQuery)
             $facete
         #end
     #end
-    
+
     #if($searchQuery)
         Search Query:
         $searchQuery

@@ -1,3 +1,7 @@
+#* @vtlvariable name="TOOL" type="de.ingrid.portal.search.detail.idf.part.DetailPartPreparerIdfMetadata" *#
+#* @vtlvariable name="MESSAGES" type="java.util.ResourceBundle" *#
+#* @vtlmacrolibrary path="../../../velocity/velocity-macros.vm" *#
+#* @vtlmacrolibrary path="../search_detail_idf_2_0.vm" *#
 ##Render header 
 #macro (renderDetailHeader $title $type $modTime)
     <section class="block block--light block--pad-top">
@@ -136,7 +140,7 @@
                         #set($tmp = "")
                         ## Addressen
                         #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact"))
-                        #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp)
+                        #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp false)
                         #set($tmp = "")
                     </div>
                 </div>
@@ -419,7 +423,7 @@
                                 #set($tmp = "")
                                 ## ISBN-Nummer des Dokumentes
                                 #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN"))
-                                #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.isbn") )
+                                #renderTextLabelAbove($MESSAGES.getString("t011_obj_literatur.isbn") $tmp )
                                 #set($tmp = "")
                                 ## Dokumententyp
                                 #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name"))
@@ -758,12 +762,11 @@
                             #renderTextList($MESSAGES.getString("object_access.restriction_value") $tmp)
                             #set($tmp = "")
                             ## Nutzungsbeschr�nkungen (useConstraints)
-                            #set($useConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints")
-                            #set($tmp = $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints", false, "6500")))
+                            #set($tmp = $TOOL.getUseConstraints())
                             #renderTextList($MESSAGES.getString("object_access.license") $tmp)
                             #set($tmp = "")
                             ## Nutzungsbedingungen (useLimitation)
-                            #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation", "."))
+                            #set($tmp = $TOOL.getUseLimitations())
                             #renderTextList($MESSAGES.getString("object_access.terms_of_use") $tmp)
                             #set($tmp = "")
                         </div>
@@ -811,6 +814,10 @@
                         ## Objekt-ID 
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.obj_id") $tmp)
+                        #set($tmp = "")
+                        ## Identifikator des übergeordneten Metadatensatzes
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:parentIdentifier"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.parent_identifier") $tmp)
                         #set($tmp = "")
                         ## XML Darstellung 
                         #set($tmp = $TOOL.addLinkToGetXML())

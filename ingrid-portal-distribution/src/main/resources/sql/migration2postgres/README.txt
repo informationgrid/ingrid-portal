@@ -2,6 +2,8 @@
 Migration PORTAL/MDEK Datenbank von MySQL/Oracle nach PostgreSQL
 ================================================================
 
+s. auch https://redmine.informationgrid.eu/projects/ingrid/wiki/Unterstuetzung_der_PostgreSQL_Datenbank
+
 Die Quelldatenbank sollte mindestens in der Portal Version 4.0.1 vorliegen.
 D.h. Portale in einer Version kleiner 4.0.1 sollten auf Ihrer Quellplattform zunächst auf die aktuelle Version aktualisiert werden, bevor die Migration nach Postgres ausgeführt wird.
 

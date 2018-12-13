@@ -32,6 +32,7 @@ define([
     "dijit/_WidgetBase",
     "dijit/registry",
     "dijit/form/Button",
+    "dijit/form/CheckBox",
     "dijit/form/DateTextBox",
     "dijit/form/_FormValueWidget",
     "ingrid/layoutCreator",
@@ -46,7 +47,7 @@ define([
     "ingrid/utils/Catalog",
     "./upload/UploadWidget",
     "dojo/NodeList-traverse"
-], function(declare, array, lang, aspect, construct, domClass, query, topic, _WidgetBase, registry, Button, DateTextBox, _FormValueWidget,
+], function(declare, array, lang, aspect, construct, domClass, query, topic, _WidgetBase, registry, Button, CheckBox, DateTextBox, _FormValueWidget,
     creator, dialog, message, IgeEvents, CustomGrid, Editors, Formatters, dirty, UtilStore, Catalog, UploadWidget) {
 
         return declare("UVPPhases", [_WidgetBase], {
@@ -61,6 +62,9 @@ define([
 
             // define which phases can be created through the dialog
             availablePhases: [1, 2, 3],
+
+            // define if the add button for a phase is shown or hidden
+            _buttonAddHide: false,
 
             // toggled state of phases (needed when saving document)
             expandedPhases: [],
@@ -85,6 +89,7 @@ define([
                 addWidgets.additionalFieldWidgets.push(this);
 
                 // create button which creates the different phases
+                console.log("Create phase button");
                 this.addButton = this._createPhaseButton();
 
                 var clearFixDiv = construct.toDom("<div class='clear' style='text-align: center'></div>");
@@ -93,7 +98,7 @@ define([
                 // show phase button depending on the selected node
                 topic.subscribe("/selectNode", function(message) {
                     var data = message.node;
-                    if (data.nodeAppType === "O" && (
+                    if (data.nodeAppType === "O" && !self._buttonAddHide && (
                         (data.id !== "objectRoot" && data.objectClass !== 1000) ||
                         data.id === "newNode")) {
                         domClass.remove(self.addButton.domNode, "hide");
@@ -256,6 +261,14 @@ define([
                                 listId: null,
                                 tableRows: tableData
                             };
+                        } else if (field instanceof CheckBox) {
+                            var value = field.get("checked") ? "Y" : "N";
+                            entry = {
+                                identifier: id,
+                                value: value,
+                                listId: null,
+                                tableRows: null
+                            }
                         }
                         entries.push([entry]);
                     });
@@ -325,6 +338,10 @@ define([
                 this.addUploadLink(id);
                 phaseFields.push({ key: "technicalDocs", field: registry.byId(id), isDocTable: true });
 
+                id = "technicalDocsPublishLater_" + counter;
+                creator.addToSection(rubric, creator.createDomCheckbox({ id: id, name: message.get("uvp.form.phase1.eachTable.publishLater"), help: message.get("uvp.form.phase1.eachTable.publishLater.helpMessage"), visible: "required showOnlyExpanded" /*, style: "margin-bottom:12px"*/ }));
+                phaseFields.push({ key: "technicalDocsPublishLater", field: registry.byId(id) });
+
                 // TODO: at least one document validation
 
                 /**
@@ -336,6 +353,10 @@ define([
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "applicationDocs", field: registry.byId(id), isDocTable: true });
+
+                id = "applicationDocsPublishLater_" + counter;
+                creator.addToSection(rubric, creator.createDomCheckbox({ id: id, name: message.get("uvp.form.phase1.eachTable.publishLater"), help: message.get("uvp.form.phase1.eachTable.publishLater.helpMessage"), visible: "required showOnlyExpanded" /*, style: "margin-bottom:12px"*/ }));
+                phaseFields.push({ key: "applicationDocsPublishLater", field: registry.byId(id) });
 
                 // TODO: at least one document validation
 
@@ -349,6 +370,10 @@ define([
                 this.addUploadLink(id);
                 phaseFields.push({ key: "reportsRecommendationsDocs", field: registry.byId(id), isDocTable: true });
 
+                id = "reportsRecommendationsDocsPublishLater_" + counter;
+                creator.addToSection(rubric, creator.createDomCheckbox({ id: id, name: message.get("uvp.form.phase1.eachTable.publishLater"), help: message.get("uvp.form.phase1.eachTable.publishLater.helpMessage"), visible: "required showOnlyExpanded" /*, style: "margin-bottom:12px"*/ }));
+                phaseFields.push({ key: "reportsRecommendationsDocsPublishLater", field: registry.byId(id) });
+
                 /**
                  * Weitere Unterlagen
                  */
@@ -358,6 +383,10 @@ define([
                     this.getDocTableStructure(), rubric);
                 this.addUploadLink(id);
                 phaseFields.push({ key: "moreDocs", field: registry.byId(id), isDocTable: true });
+
+                id = "moreDocsPublishLater_" + counter;
+                creator.addToSection(rubric, creator.createDomCheckbox({ id: id, name: message.get("uvp.form.phase1.eachTable.publishLater"), help: message.get("uvp.form.phase1.eachTable.publishLater.helpMessage"), visible: "required showOnlyExpanded" /*, style: "margin-bottom:12px"*/ }));
+                phaseFields.push({ key: "moreDocsPublishLater", field: registry.byId(id) });
 
                 /**
                  * Bekanntmachung
@@ -583,6 +612,8 @@ define([
                             var rowData = addWidgets.prepareBackendDataForGrid(valueObj[0]);
                             fieldWidget.setData(rowData);
                             fieldWidget.render();
+                        } else if (fieldWidget instanceof CheckBox) {
+                            fieldWidget.set("checked", valueObj[0].value === "Y");
                         } else {
                             fieldWidget.set("value", valueObj[0].value);
                         }
@@ -665,8 +696,8 @@ define([
             addUploadLink: function(tableId) {
                 var table = registry.byId(tableId);
                 if (table) {
-                    // upload base path
-                    var basePath = Catalog.catalogData.plugId+"/"+currentUdk.uuid;
+                    // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
+                    var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_")+"/"+currentUdk.uuid;
 
                     // create uploader instance
                     var uploader = new UploadWidget({
@@ -752,7 +783,22 @@ define([
                     var getRowData = function(row, data, basePath) {
                         if (!row.label || row.label.length === 0) {
                             var file = data.uri;
-                            var fileRel = file.substring(basePath.length, file.length);
+                            
+                            // generate basepath ready for comparison with 
+                            var basePathWithoutLeadingSlash = basePath;
+                            // strip leading slash because the file name comes in without trainling slash
+                            if (basePath.indexOf("/") == 0) {
+                            	basePathWithoutLeadingSlash = basePath.substring(1, basePath.length);
+                            }
+                            var fileRel;
+                            if (file.indexOf(basePathWithoutLeadingSlash) == 0) {
+                                // uploaded file, cut base path of uploaded file, keep hierarchy structure from extracted ZIPs
+                            	// strip slash following base path 
+                            	fileRel = file.substring(basePathWithoutLeadingSlash.length + 1, file.length);
+                            } else {
+                                // link, get the last path of the link
+                            	fileRel = file.substring(file.lastIndexOf('/')+1, file.length);
+                            }
                             var lastDotPos = fileRel.lastIndexOf(".");
                             var name = fileRel.substring(0,
                                     lastDotPos === -1 ? file.length : lastDotPos);
@@ -818,6 +864,16 @@ define([
                         })
                     );
                 }
+            },
+
+            hideAddButton: function() {
+                this._buttonAddHide = true;
+                domClass.add(this.addButton.domNode, "hide")
+            },
+
+            showAddButton: function() {
+                this._buttonAddHide = false;
+                domClass.remove(this.addButton.domNode, "hide")
             }
         });
     });

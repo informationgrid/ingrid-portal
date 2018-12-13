@@ -1552,4 +1552,28 @@ public class UtilsSearch {
         }
     }
 
+    public static String updateQueryString(String addQueryString, PortletRequest request) {
+        String paramQueryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
+        if(paramQueryString != null && paramQueryString.length() > 0){
+            String [] tmpQueries = paramQueryString.split(" ");
+            for(String tmpQuery: tmpQueries) {
+                if(tmpQuery != null && tmpQuery.length() > 0) {
+                    if(!tmpQuery.equals("OR")) {
+                        if(addQueryString.indexOf(tmpQuery) > -1) {
+                            return paramQueryString;
+                        }
+                    }
+                }
+            }
+            if(paramQueryString.indexOf(" OR ") > -1) {
+                paramQueryString = "(" + paramQueryString + ")";
+            }
+            if(addQueryString.indexOf(" OR ") > -1) {
+                addQueryString = paramQueryString +  " (" + addQueryString + ")";
+            } else {
+                addQueryString = paramQueryString + " " + addQueryString;
+            }
+        }
+        return addQueryString;
+    }
 }

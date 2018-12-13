@@ -25,6 +25,8 @@ define({
         "general.workState.B": "In Process",
         "general.workState.Q": "Assigned to Quality Assurance",
         "general.workState.R": "Reassigned from Quality Assurance",
+        "general.workState.timedPublish": "Will be published",
+        "general.workStateTitle.timedPublish": "on ${0}",
         "general.userOperation.NEW": "new",
         "general.userOperation.EDITED": "modified",
         "general.userOperation.DELETED": "marked for deletion",
@@ -529,6 +531,7 @@ define({
         "ui.obj.header.workState": "State",
         "ui.obj.header.creationTime": "Created",
         "ui.obj.header.modificationTime": "Modified",
+        "ui.obj.header.willBePublishedOn": "Publish on",
         "ui.obj.header.modUser": "Last change",
         "ui.obj.general.title": "General",
         "ui.obj.general.shortDescription": "Short Description",
@@ -583,6 +586,7 @@ define({
         "ui.obj.additionalInfo.conformityTable.title": "Conformity",
         "ui.obj.additionalInfo.conformityTable.header.level": "Degree of Conformity*",
         "ui.obj.additionalInfo.conformityTable.header.specification": "Specification of Conformity*",
+    "ui.obj.additionalInfo.conformityTable.header.publicationDate": "Date*",
         "ui.obj.additionalInfo.xmlExportCriteria": "XML-Export-Criteria",
         "ui.obj.additionalInfo.legalBasis": "Legal Basis",
         "ui.obj.additionalInfo.purpose": "Purpose",
@@ -602,6 +606,8 @@ define({
         "ui.obj.availability.mediaOptionTable.header.amount": "Amount [MB]",
         "ui.obj.availability.mediaOptionTable.header.location": "Location",
         "ui.obj.availability.orderInfo": "Order Info",
+        "ui.obj.availability.useAccessConstraintsTable.header.name": "Use constraint",
+        "ui.obj.availability.useAccessConstraintsTable.header.source": "Source",
         "ui.obj.thesaurus.title": "Thesaurus",
         "ui.obj.thesaurus.terms": "Optional Topics",
         "ui.obj.thesaurus.terms.add.label": "Add Free Optional Topics",
@@ -979,7 +985,8 @@ define({
         "ui.sysList.5200": "Object class 3 - Service Type",
         "ui.sysList.5300": "Object class 6 - Service Type",
         "ui.sysList.6000": "Conformity - Degree of Conformity",
-        "ui.sysList.6005": "Conformity - Specification of Conformity",
+        "ui.sysList.6005": "Conformity - Specification of Conformity (INSPIRE)",
+        "ui.sysList.6006": "Conformity - Specification of Conformity (Free entries)",
         "ui.sysList.6010": "Availability - Access Constraints",
         "ui.sysList.6020": "Availability - Usage Limitations",
         "ui.sysList.6100": "INSPIRE-Topics",
@@ -1057,6 +1064,7 @@ define({
         "validation.error.missing.address": "At least one address must be entered.",
         "validation.error.missing.address.user": "For each address type a valid reference must exist (and vice versa).",
         "validation.error.time.reference": "The time reference must be entered completely.",
+        "validation.error.data.format": "The name of the data format has to be supplied.",
         "validation.error.spatial.no.entry": "At least one spatial reference must be entered as thesaurus or free entry.",
         "validation.error.spatial.no.expired": "A spatial reference must not be expired.",
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
@@ -1098,3 +1106,4 @@ define({
 
     de: true
 });
+

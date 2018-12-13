@@ -77,7 +77,7 @@ import de.ingrid.utils.udk.UtilsLanguageCodelist;
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
 
-    private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/search_detail_generic.vm";
+    private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/detail/search_detail_generic.vm";
 
     private final static String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
     

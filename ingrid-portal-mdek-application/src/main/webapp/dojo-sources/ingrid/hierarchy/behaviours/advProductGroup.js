@@ -31,7 +31,7 @@ define([
     return declare(null, {
         
         title : "Produktgruppe",
-        description : "Wenn aktiviert, wird die Liste für die AdV-Produktgruppe angezeigt und verwendet. Des Weiteren wird sie verpflichtend sobald 'AdV kompatibel' ausgewählt wurde.",
+        description : "Wenn aktiviert, wird die Liste für die AdV-Produktgruppe angezeigt und verwendet. Des Weiteren wird sie verpflichtend sobald \"AdV kompatibel\" ausgewählt wurde.",
         defaultActive : true,
         category: "AdV Kompatibel",
         run : function() {

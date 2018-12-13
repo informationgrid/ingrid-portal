@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -130,13 +131,13 @@ public class UtilsDB {
         try {
             if (alwaysReloadDBData) {
                 tx = session.beginTransaction();
-                List ret = c.list();
+                List ret = new CopyOnWriteArrayList(c.list());
                 tx.commit();
                 return ret;
             } else if (cacheList == null) {
                 synchronized (UtilsDB.class) {
                     tx = session.beginTransaction();
-                    cacheList = c.list();
+                    cacheList = new CopyOnWriteArrayList(c.list());
                     tx.commit();
                 }
             }

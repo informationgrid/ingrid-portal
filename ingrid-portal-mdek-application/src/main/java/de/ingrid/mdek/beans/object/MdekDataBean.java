@@ -44,6 +44,7 @@ public class MdekDataBean {
 	private Integer parentPublicationCondition;
 	private Boolean isPublished;
 	private Boolean isMarkedDeleted;
+	private Date toBePublishedOn;
 
 	private String title;
 	private String nodeDocType;
@@ -70,6 +71,7 @@ public class MdekDataBean {
 	private MdekAddressBean lastEditor;
 
 	// General
+	private String parentIdentifier;
 	private String generalShortDescription;
 	private String generalDescription;
 	private List<MdekAddressBean> generalAddressTable;
@@ -114,7 +116,7 @@ public class MdekDataBean {
 
 	// Availability
 	private List<String> availabilityAccessConstraints;
-	private List<String> availabilityUseAccessConstraints;
+	private List<UseAccessConstraintsBean> availabilityUseAccessConstraints;
 	private String availabilityUseConstraints;
 	private String availabilityDataFormatInspire;
 	private List<DataFormatBean> availabilityDataFormatTable;
@@ -239,51 +241,51 @@ public class MdekDataBean {
 	private List<ApplicationUrlBean> ref6UrlList;
 
 	public MdekDataBean(){
-		this.setGeneralAddressTable(new ArrayList<MdekAddressBean>());
-		this.setCommentTable(new ArrayList<CommentBean>());
-		this.setSpatialRefAdminUnitTable(new ArrayList<LocationBean>());
-		this.setSpatialRefLocationTable(new ArrayList<LocationBean>());
-		this.setTimeRefTable(new ArrayList<TimeReferenceBean>());
-        this.setExtraInfoLangDataTable(new ArrayList<Integer>());
-		this.setExtraInfoConformityTable(new ArrayList<ConformityBean>());
-		this.setExtraInfoXMLExportTable(new ArrayList<String>());
-		this.setExtraInfoLegalBasicsTable(new ArrayList<String>());
-		this.setAvailabilityDataFormatTable(new ArrayList<DataFormatBean>());
-		this.setAvailabilityMediaOptionsTable(new ArrayList<MediaOptionBean>());
-		this.setThesaurusInspireTermsList(new ArrayList<Integer>());
-		this.setThesaurusTermsTable(new ArrayList<SNSTopic>());
-		this.setThesaurusTopicsList(new ArrayList<Integer>());
-		this.setThesaurusEnvTopicsList(new ArrayList<Integer>());
-		this.setLinksToObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksFromObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksFromPublishedObjectTable(new ArrayList<MdekDataBean>());
-		this.setLinksToUrlTable(new ArrayList<UrlBean>());
-		this.setRef1Representation(new ArrayList<Integer>());
-		this.setRef1VFormatDetails(new ArrayList<VectorFormatDetailsBean>());
-		this.setRef1Scale(new ArrayList<ScaleBean>());
-		this.setRef1SymbolsText(new ArrayList<LinkDataBean>());
-		this.setRef1KeysText(new ArrayList<LinkDataBean>());
-		this.setRef1Data(new ArrayList<String>());
-		this.setRef1SpatialSystemTable(new ArrayList<String>());
+		this.setGeneralAddressTable(new ArrayList<>());
+		this.setCommentTable(new ArrayList<>());
+		this.setSpatialRefAdminUnitTable(new ArrayList<>());
+		this.setSpatialRefLocationTable(new ArrayList<>());
+		this.setTimeRefTable(new ArrayList<>());
+        this.setExtraInfoLangDataTable(new ArrayList<>());
+		this.setExtraInfoConformityTable(new ArrayList<>());
+		this.setExtraInfoXMLExportTable(new ArrayList<>());
+		this.setExtraInfoLegalBasicsTable(new ArrayList<>());
+		this.setAvailabilityDataFormatTable(new ArrayList<>());
+		this.setAvailabilityMediaOptionsTable(new ArrayList<>());
+		this.setThesaurusInspireTermsList(new ArrayList<>());
+		this.setThesaurusTermsTable(new ArrayList<>());
+		this.setThesaurusTopicsList(new ArrayList<>());
+		this.setThesaurusEnvTopicsList(new ArrayList<>());
+		this.setLinksToObjectTable(new ArrayList<>());
+		this.setLinksFromObjectTable(new ArrayList<>());
+		this.setLinksFromPublishedObjectTable(new ArrayList<>());
+		this.setLinksToUrlTable(new ArrayList<>());
+		this.setRef1Representation(new ArrayList<>());
+		this.setRef1VFormatDetails(new ArrayList<>());
+		this.setRef1Scale(new ArrayList<>());
+		this.setRef1SymbolsText(new ArrayList<>());
+		this.setRef1KeysText(new ArrayList<>());
+		this.setRef1Data(new ArrayList<>());
+		this.setRef1SpatialSystemTable(new ArrayList<>());
 
-		this.setDq109Table(new ArrayList<DQBean>());
-		this.setDq112Table(new ArrayList<DQBean>());
-		this.setDq113Table(new ArrayList<DQBean>());
-		this.setDq114Table(new ArrayList<DQBean>());
-		this.setDq115Table(new ArrayList<DQBean>());
-		this.setDq120Table(new ArrayList<DQBean>());
-		this.setDq125Table(new ArrayList<DQBean>());
-		this.setDq126Table(new ArrayList<DQBean>());
-		this.setDq127Table(new ArrayList<DQBean>());
+		this.setDq109Table(new ArrayList<>());
+		this.setDq112Table(new ArrayList<>());
+		this.setDq113Table(new ArrayList<>());
+		this.setDq114Table(new ArrayList<>());
+		this.setDq115Table(new ArrayList<>());
+		this.setDq120Table(new ArrayList<>());
+		this.setDq125Table(new ArrayList<>());
+		this.setDq126Table(new ArrayList<>());
+		this.setDq127Table(new ArrayList<>());
 
-		this.setRef3ServiceTypeTable(new ArrayList<Integer>());
-		this.setRef3ServiceVersion(new ArrayList<String>());
-		this.setRef3Scale(new ArrayList<ScaleBean>());
-		this.setRef3Operation(new ArrayList<OperationBean>());
-		this.setRef5KeysText(new ArrayList<LinkDataBean>());
-		this.setRef5dbContent(new ArrayList<DBContentBean>());
-		this.setRef6ServiceVersion(new ArrayList<String>());
-		this.setRef6UrlList(new ArrayList<ApplicationUrlBean>());
+		this.setRef3ServiceTypeTable(new ArrayList<>());
+		this.setRef3ServiceVersion(new ArrayList<>());
+		this.setRef3Scale(new ArrayList<>());
+		this.setRef3Operation(new ArrayList<>());
+		this.setRef5KeysText(new ArrayList<>());
+		this.setRef5dbContent(new ArrayList<>());
+		this.setRef6ServiceVersion(new ArrayList<>());
+		this.setRef6UrlList(new ArrayList<>());
 	}
 	
 	
@@ -2038,12 +2040,12 @@ public class MdekDataBean {
     }
 
 
-    public List<String> getAvailabilityUseAccessConstraints() {
+    public List<UseAccessConstraintsBean> getAvailabilityUseAccessConstraints() {
         return availabilityUseAccessConstraints;
     }
 
 
-    public void setAvailabilityUseAccessConstraints(List<String> availabilityUseAccessConstraints) {
+    public void setAvailabilityUseAccessConstraints(List<UseAccessConstraintsBean> availabilityUseAccessConstraints) {
         this.availabilityUseAccessConstraints = availabilityUseAccessConstraints;
     }
 
@@ -2212,4 +2214,20 @@ public class MdekDataBean {
     public void setRef1GridFormatRefGeoreferencedParam(String ref1GridFormatRefGeoreferencedParam) {
         this.ref1GridFormatRefGeoreferencedParam = ref1GridFormatRefGeoreferencedParam;
     }
+
+	public Date getToBePublishedOn() {
+		return toBePublishedOn;
+	}
+
+	public void setToBePublishedOn(Date toBePublishedOn) {
+		this.toBePublishedOn = toBePublishedOn;
+	}
+
+	public String getParentIdentifier() {
+		return parentIdentifier;
+	}
+
+	public void setParentIdentifier(String parentIdentifier) {
+		this.parentIdentifier = parentIdentifier;
+	}
 }

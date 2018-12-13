@@ -1,0 +1,89 @@
+                </div>
+              </div>
+              <div id="footer">
+                <div id="navFunctionsWrapper" class="row">
+                  <div class="small-12 medium-2 medium-push-10 end columns">
+                    <p class="navToTop">
+                      <a href="#Start">Zum Seitenanfang</a>
+                    </p>
+                  </div>
+                  <div class="small-12 medium-10 medium-pull-2 columns">
+                    <h2>Diese Seite</h2>
+                    <ul id="navFunctions">
+                      <li id="navFunctionsPrint"><a href="#" title="Seite drucken (&ouml;ffnet Dialog)">drucken</a></li>
+                      <li id="navFunctionsFeedback">
+                        <a href="https://www.kuestendaten.de/DE/Service/Feedback/feedback-node.html?cms_docId=522850">Feed&shy;back</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div id="siteInfo" class="row">
+                  <h2 class="aural">Service Navigation</h2>
+                  <div class="siteInfo_links">
+                    <ul class="small-block-grid-2 large-block-grid-6">
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Datenschutz/datenschutz_node.html">Da&shy;ten&shy;schutz</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Impressum/impressum_node.html">Im&shy;pres&shy;s&shy;um</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Sitemap/sitemap_node.html">In&shy;halts&shy;ver&shy;zeich&shy;nis</a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Service/Haftungsausschluss/haftungsausschluss_node.html">Haf&shy;tungs&shy;aus&shy;schluss</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="copyright row">
+                  <div class="small-12 columns">
+                    <p>
+                      $MESSAGES.getString('ingrid.page.copyright')
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Popup -->
+        <div class="popup">
+            <header class="popup__header">
+                <div class="popup__close link--alt ob-flt-r js-popup-close">
+                    <svg class="icon"><use xlink:href="#cross" /></svg>
+                    <span class="mq-hide-m"></span>
+                </div>
+                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
+            </header>
+            <section class="popup__content ob-container">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p><a href="#">Read more</a></p>
+            </section>
+        </div>
+        
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/all.js")"></script>
+        
+        <!-- Popup -->
+        <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="#GetPageResource("scripts/expander.js")"></script>
+        
+        <!-- Accordion -->
+        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <script>
+        $('.js-accordion').accordion();
+        $('.js-accordion-multi').accordion({
+            multi: true
+        });
+        </script>
+        <!-- Tabs -->
+        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <script>
+            $('.js-tabs').tabs();
+        </script>
+        <!-- Selection -->
+        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <script>
+            $('.js-selection').selection();
+        </script>
+        <!-- Table Sort -->
+        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
+        <script>
+            $('.js-table-sortable').sortable();
+        </script>
+    </body>
+</html>

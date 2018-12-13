@@ -72,12 +72,9 @@ define([
                 } else if (selectedNode.item.nodeAppType == "O") {
                     // publish a createObject request and attach the newly created node if it was successful
                     deferred.then(function(res) {
-                        self.attachNewNode(selectedNode, res);
+                        self.attachNewNode(selectedNode, res)
+                            .then(IgeActions.onAfterCreate);
                         selectedNode.setSelected(false);
-                        // topic.publish("/selectNode", {
-                        //     id: "dataTree",
-                        //     node: res
-                        // });
                         self.openCreateObjectWizardDialog();
                     }, function(err) {
                         displayErrorMessage(err);
@@ -153,7 +150,7 @@ define([
 
         attachNewNode: function(selectedNode, res) {
             var tree = registry.byId("dataTree");
-            var newNode = this._createNewNode(res, selectedNode.item.objectClass);
+            var newNode = this._createNewNode(res);
 
             // expand tree node if not already done!
             var def;
@@ -165,17 +162,17 @@ define([
                 def.resolve();
             }
 
-            def.then(function() {
-                UtilTree.addNode( "dataTree", selectedNode, newNode)
-                .then(function(node) {
-                    UtilTree.selectNode("dataTree", node.item.id, true);
-                    topic.publish("/selectNode", {
-                        id: "dataTree",
-                        node: node.item
+            return def.then(function() {
+                return UtilTree.addNode( "dataTree", selectedNode, newNode)
+                    .then(function(node) {
+                        UtilTree.selectNode("dataTree", node.item.id, true);
+                        topic.publish("/selectNode", {
+                            id: "dataTree",
+                            node: node.item
+                        });
+                        wnd.scrollIntoView(node.domNode);
+                        registry.byId("dataFormContainer").resize();
                     });
-                    wnd.scrollIntoView(node.domNode);
-                    registry.byId("dataFormContainer").resize();
-                });
             });
         },
 
@@ -219,13 +216,8 @@ define([
             if (selectedNodes.length > 0 && notAllowedSelection.length > 0) {
                 dialog.show(message.get("dialog.general.warning"), message.get("tree.selectNodeCopyHint"), dialog.WARNING);
             } else {
-                var deferred = new Deferred();
-                deferred.then(function() {
-                    var tree = registry.byId("dataTree");
-                    tree.prepareCut(tree.selectedItems);
-                });
-
-                deferred.resolve();
+                var tree = registry.byId("dataTree");
+                tree.prepareCut(tree.selectedItems);
             }
         },
 
@@ -257,9 +249,7 @@ define([
                         type: "checkbox",
                         action: function(newValue) {
                             console.debug("cookie: " + newValue);
-                            cookie(self.COOKIE_HIDE_COPY_HINT, newValue, {
-                                expires: 730
-                            });
+                            cookie(self.COOKIE_HIDE_COPY_HINT, newValue, {expires: 730});
                         }
                     }, {
                         caption: message.get("general.ok"),
@@ -332,11 +322,9 @@ define([
                     if (invalidSubNode) {
                         // If an invalid target is selected (same node or child of node to cut)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint"), dialog.WARNING);
-                        return;
                     } else if (invalidFolderUnderObject) {
                         // If an invalid target is selected (copied folder under object/address)
                         dialog.show(message.get("general.hint"), message.get("tree.nodePasteInvalidHint.folderUnderObject"), dialog.WARNING);
-                        return;
                     } else {
                         //              var cutNodeWidget = registry.byId(tree.nodeToCut.id);
                         appType = tree.nodesToCut[0].nodeAppType;
@@ -648,7 +636,7 @@ define([
                 // Build the dialog parameters
                 // messageKey = dialog.<object|address>.discardPub<Not>ExistMessage
                 var titleText = "";
-                var displayText = "";
+                var displayText;
                 var messageKey = "dialog.";
                 if (selectedNode.item.nodeAppType == "O") {
                     messageKey += "object.";
@@ -963,43 +951,29 @@ define([
         },
 
         _handleFinalSaveObject: function() {
-            /*var valid = checkValidityOfInputElements();
 
-    if (valid != "VALID"){
-        if (valid == "INVALID_INPUT_HTML_TAG_INVALID") {
-            dialog.show(message.get("general.error"), message.get("dialog.inputInvalidHtmlTagError"), dialog.WARNING);
-            
-        } else {
-            dialog.show(message.get("general.error"), message.get("dialog.inputInvalidError"), dialog.WARNING);
-        }
-        return;
-    }*/
-
-            //var nodeData = udkDataProxy._getData();
             if (checks.isObjectPublishable()) {
                 var deferred = new Deferred();
-                deferred.then(null, displayErrorMessage);
-
-                var dialogText = this.global.currentUdk.isMarkedDeleted ? message.get("dialog.object.markedDeleted.finalSaveMessage") : message.get("dialog.object.finalSaveMessage");
 
                 // Show a dialog to query the user before publishing
-                dialog.show(message.get("dialog.finalSaveTitle"), dialogText, dialog.INFO, [{
-                    caption: message.get("general.no"),
-                    action: function() {
-                        deferred.resolve();
-                    }
-                }, {
-                    caption: message.get("general.yes"),
-                    action: function() {
-                        console.debug("Publishing event: /publishObjectRequest");
-                        topic.publish("/publishObjectRequest", {
-                            resultHandler: deferred
-                        });
-                    }
-                }]);
+                dialog.showPage(message.get("dialog.finalSaveTitle"), "dialogs/mdek_publish_dialog.jsp?c=" + userLocale, 350, 155, true, {
+                    resultHandler: deferred
+                }, "publishDialog");
+
+                deferred.then(function(toBePublishedOn) {
+                    var deferred2 = new Deferred();
+                    console.debug("Publishing event: /publishObjectRequest");
+                    topic.publish("/publishObjectRequest", {
+                        toBePublishedOn: toBePublishedOn,
+                        resultHandler: deferred2
+                    });
+                    deferred2.then(null, displayErrorMessage);
+                }, function() {
+                    // user canceled
+                }).then(null, displayErrorMessage);
 
             } else {
-                dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING);
+                dialog.show(message.get("general.hint"), message.get("tree.nodeCanPublishHint"), dialog.WARNING, null, null, null, null, "publishErrorDialog");
             }
         },
 
@@ -1333,14 +1307,6 @@ define([
             }
         },
 
-
-        handleUnmarkDeleted: function() {
-            // Only available for the person in charge of QS.
-            // Removes the flag which marks the obj/adr for deletion
-            this.alertNotImplementedYet();
-        },
-
-
         handleShowChanges: function(msg) {
             // Get the selected node from the message
             var selectedNode = this.getSelectedNode(msg);
@@ -1408,14 +1374,10 @@ define([
 
         // ------------------------- Helper functions -------------------------
 
-        alertNotImplementedYet: function() {
-            alert("Diese Funktionalität ist noch nicht implementiert.");
-        },
-
         /**
          * Check if the function was initiated by the context menu or from toolbar
          * @param msg
-         * @returns true, if conext menu was used
+         * @returns {boolean} true, if conext menu was used
          */
         calledFromContextMenu: function(msg) {
             var fromContextMenu = false;
@@ -1444,10 +1406,6 @@ define([
             }
         },
 
-        getTargetNode: function(msg) {
-            return this.getSelectedNode(msg);
-        },
-
         getSelectedNodes: function() {
             //    var selectedNodes = registry.byId("dataTree").allFocusedNodes;
             //    if (calledFromContextMenu(msg)) {
@@ -1462,6 +1420,12 @@ define([
             return registry.byId("dataTree").selectedNodes;
         },
 
+        /**
+         *
+         * @param obj
+         * @returns {{isFolder: (boolean|*), nodeDocType: *, title: *, nodeAppType: *, userWritePermission: boolean, userMovePermission: boolean, id: *}}
+         * @private
+         */
         _createNewNode: function(obj) {
             var title;
             // var objClass;

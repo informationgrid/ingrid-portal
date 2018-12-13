@@ -34,7 +34,6 @@
 
 
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
-<fmt:setBundle basename="messages" scope="session"/>
 
 <html dir="ltr">
     
@@ -92,6 +91,7 @@
         <script type='text/javascript' src='dwr/interface/ImportService.js'></script>
         <script type='text/javascript' src='dwr/interface/CTService.js'></script>
         <script type='text/javascript' src='dwr/interface/HttpService.js'></script>
+        <script type='text/javascript' src='dwr/interface/StatisticService.js'></script>
         
         <script type="text/javascript">
             // -> allow all to use the IGE

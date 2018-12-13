@@ -1,0 +1,86 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+@media (max-width: 768px) {
+  [ga-background-selector] .ga-webatlasde_light-rlp {
+    background-image: url("../img/ga-light-rlp.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-webatlasde_grau-rlp {
+    background-image: url("../img/ga-light-grau-rlp.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-rp_uekrlp-rlp {
+    background-image: url("../img/ga-rp_uekrlp-rlp.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector].ga-open .ga-rp_uekrlp-rlp {
+    -webkit-transform: translate3d(0, -98px, 0);
+            transform: translate3d(0, -98px, 0);
+    -ms-transform: translateY(-98px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-webatlasde_light-rlp {
+    -webkit-transform: translate3d(0, -147px, 0);
+            transform: translate3d(0, -147px, 0);
+    -ms-transform: translateY(-147px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-webatlasde_grau-rlp {
+    -webkit-transform: translate3d(0, -196px, 0);
+            transform: translate3d(0, -196px, 0);
+    -ms-transform: translateY(-196px);
+    /* IE 9*/
+  }
+}
+@media (min-width: 769px) {
+  [ga-background-selector] .ga-webatlasde_light-rlp {
+    background-image: url("../img/ga-light-rlp.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-webatlasde_grau-rlp {
+    background-image: url("../img/ga-light-grau-rlp.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-rp_uekrlp-rlp {
+    background-image: url("../img/ga-rp_uekrlp-rlp.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector].ga-open .ga-rp_uekrlp-rlp {
+    -webkit-transform: translate3d(-126px, 0, 0);
+            transform: translate3d(-126px, 0, 0);
+    -ms-transform: translateX(-126px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-webatlasde_light-rlp {
+    -webkit-transform: translate3d(-227px, 0, 0);
+            transform: translate3d(-227px, 0, 0);
+    -ms-transform: translateX(-227px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-webatlasde_grau-rlp {
+    -webkit-transform: translate3d(-328px, 0, 0);
+            transform: translate3d(-328px, 0, 0);
+    -ms-transform: translateX(-328px);
+    /* IE 9*/
+  }
+}

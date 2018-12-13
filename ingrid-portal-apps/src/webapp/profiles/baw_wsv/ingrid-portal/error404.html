@@ -44,15 +44,13 @@
         <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
     </head>
     <body>
-        <div class="nav-overlay">
+        <div class="nav-overlay is-fixed">
             <a title="Freitextsuche nach Informationen" class="nav-overlay__item nav-overlay__item--level1" href="/freitextsuche">Suche</a>
             <a class="nav-overlay__item nav-overlay__item--level1" href="/kartendienste" title="Interaktive thematische Karten von GeoPortal.WSV">GeoViewer.WSV</a>
             <a class="nav-overlay__item nav-overlay__item--level1" href="/anwendungen" title="Anwendungen">Anwendungen</a>
-            <a class="nav-overlay__item nav-overlay__item--level1" href="/cms1" title="Anleitungen">Anleitungen</a>
-            <a class="nav-overlay__item nav-overlay__item--level1" href="/cms2" title="Veranstaltungen">Veranstaltungen</a>
             <ul class="nav__mobile nav__foot">
                 <li>
-                    <a title="Erläuterungen zur Nutzung von GeoPortal.WSV" href="/hilfe">Hilfe</a>
+                    <a target="_blank" title="Erläuterungen zur Nutzung von GeoPortal.WSV - Neues Fenster öffnet sich" href="/hilfe">Hilfe</a>
                 </li>
                 <li>
                     <a title="Ihre Nachricht, Fragen oder Anregungen direkt an GeoPortal.WSV" href="/kontakt">Kontakt</a>
@@ -70,9 +68,9 @@
         </div>
         <div class="page">
             <header class="header">
-                <div class="ob-box-padded-more ob-box-center">
+                <div class="ob-box-padded-more ob-box-center mq-show-xxl">
                     <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <div class="header__widget nav-toggle js-nav-mobile-toggle">
                             <svg class="icon">
                                 <use xlink:href="#burger"></use>
                             </svg>
@@ -80,33 +78,30 @@
                                 <use xlink:href="#cross"></use>
                             </svg>
                         </div>
-                    </div>
-                    <div class="header__widgets__section">
                         <a class="header__widget header__logo" href="/startseite" title="Startseite von GeoPortal.WSV">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/logo.gif"></img>
-                            <img class="mq-show-xxl mobile__logo"></img>
+                            <img class="mobile__logo" src="/decorations/layout/ingrid/images/logo-mobile.png ">
                         </a>
-                    </div>
-                    <div class="header__widgets__section" style="">
-                        <a class="mq-show-xxl mobile__title" href="//startseite" title="Startseite von GeoPortal.WSV">GeoPortal.WSV</a>
+                        <a class="mobile__title mq-hide-s" href="/startseite" title="Startseite von GeoPortal.WSV">GeoPortal.WSV</a>
                     </div>
                 </div> 
                 <nav class="nav-desktop mq-hide-xxl">
-                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
+                    <ul class="nav-desktop__list ob-box-center">
+                        <li class="nav-desktop__item " style="max-width: 100px; display: inline-block;">
+                            <a class="desktop__header__logo" href="/startseite" title="Startseite von GeoPortal.WSV">
+                                <img class="desktop__logo" style="height: 57px;" src="/decorations/layout/ingrid/images/logo-desktop.png">
+                            </a>
+                        </li>
+                        <li class="nav-desktop__item mq-hide-xb" style="max-width: 200px; ">
+                            <div class="desktop__title">GeoPortal.WSV</div>
                         </li>
                         <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/kartendienste" title="Interaktive thematische Karten von GeoPortal.WSV">GeoViewer.WSV</a>
+                            <a class="nav-desktop__title " href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
                         </li>
                         <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/anwendungen" title="Anwendungen">Anwendungen</a>
+                            <a class="nav-desktop__title " href="/kartendienste" title="Interaktive thematische Karten von GeoPortal.WSV">GeoViewer.WSV</a>
                         </li>
                         <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/cms1" title="Anleitungen">Anleitungen</a>
-                        </li>
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/cms2" title="Veranstaltungen">Veranstaltungen</a>
+                            <a class="nav-desktop__title " href="/anwendungen" title="Anwendungen">Anwendungen</a>
                         </li>
                     </ul>
                 </nav>
@@ -171,7 +166,7 @@
                         <div class="ob-box-padded ob-box-center ob-clear">
                             <div class="footer__section">
                                 <nav class="footer__middle mq-hide-l">
-                                    <a href="/hilfe" title="Erläuterungen zur Nutzung von GeoPortal.WSV">Hilfe</a>
+                                    <a target="_blank" href="/hilfe" title="Erläuterungen zur Nutzung von GeoPortal.WSV - Neues Fenster öffnet sich">Hilfe</a>
                                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an GeoPortal.WSV">Kontakt</a>
                                     <a href="/inhaltsverzeichnis" title="Alle Inhalte von GeoPortal.WSV auf einen Blick">Sitemap</a>
                                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>

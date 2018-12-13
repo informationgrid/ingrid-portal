@@ -30,14 +30,7 @@ html, body {
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
 <script>
-    var homeCtlBounds;
-    if(markers.length > 0 && mapMarkers && mapMarkers.getBounds()){
-        if(map){
-            map.fitBounds(mapMarkers.getBounds());
-        }
-        homeCtlBounds = mapMarkers.getBounds();
-    }
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', homeCtlBounds, new L.LatLng(51.3, 10))
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10))
     window.onresize = resizeIframe;
     resizeIframe();
     

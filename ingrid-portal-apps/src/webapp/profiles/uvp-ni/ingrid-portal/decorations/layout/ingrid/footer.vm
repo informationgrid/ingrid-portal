@@ -78,5 +78,23 @@
         <script>
             $('.js-table-sortable').sortable();
         </script>
+
+        <!-- Piwik -->
+        <script type="text/javascript">
+        var domain = document.domain;
+        if(domain == "uvp.niedersachsen.de"){
+            var pkBaseURL = (("https:" == document.location.protocol) ? "https://numis.niedersachsen.de/piwik/" : "http://numis.niedersachsen.de/piwik/");
+            document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+        </script>
+        <script type="text/javascript">
+            try {
+                var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
+                piwikTracker.trackPageView();
+                piwikTracker.enableLinkTracking();
+            } catch( err ) {
+            }
+        </script><noscript><p><img src="https://numis.niedersachsen.de/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+        <!-- End Piwik Tag -->
     </body>
 </html>

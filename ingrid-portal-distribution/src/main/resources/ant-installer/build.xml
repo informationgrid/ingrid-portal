@@ -39,7 +39,7 @@
     <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
-    <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
+    <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc7.jar"/>
     <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
     
     <property name="prop-root"                     value="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/classes/bootstrap.override.properties"/>
@@ -389,11 +389,13 @@
     <target name="RemoveOldLibs" if="updateProcedure">
         <!-- remove copy of codelist repository to make sure we use the latest initial codelist! -->
         <delete dir="${installDir}/${tomcat-artifact}/data"/>
+        <delete dir="${installDir}/${tomcat-artifact}/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/shared/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/lib"/>
         <!-- also profiles directory to have plain profiles from update! -->
         <echo>Alte Portal Profile löschen</echo>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
@@ -549,7 +551,7 @@
         </copy>
         <copy file="${basedir}/distribution/sql/_README.txt" todir="${installDir}"/>
         <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"  todir="${installDir}/migration_35"/>
-        <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc*.jar*" todir="${installDir}/migration_35"/>
     </target>
 
     <!-- =============================================
@@ -610,11 +612,6 @@
             <else>
                 <echo>WebmapClient 'config' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/config"/>
-                <copy todir="${WebmapDataDir}/WebmapClientData/config" >
-                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config">
-                        <include name="**/*.profile.js"/>
-                    </fileset>
-                </copy>
             </else>
         </if>
         <if>
@@ -625,6 +622,36 @@
             <else>
                 <echo>WebmapClient 'kml' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/kml"/>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/help"/>
+            <then>
+                <echo>WebmapClient 'help' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'help' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/help"/>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/css"/>
+            <then>
+                <echo>WebmapClient 'css' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'css' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/css"/>
+            </else>
+        </if>
+        <if>
+            <available file="${WebmapDataDir}/WebmapClientData/locales"/>
+            <then>
+                <echo>WebmapClient 'locales' Verzeichnis beibehalten.</echo>
+            </then>
+            <else>
+                <echo>WebmapClient 'locales' Verzeichnis neu erstellen.</echo>
+                <mkdir dir="${WebmapDataDir}/WebmapClientData/locales"/>
             </else>
         </if>
     </target>

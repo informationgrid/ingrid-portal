@@ -54,6 +54,8 @@ define([
         // list of MenuBarItem-IDs, which are not supposed to be shown
         excludedMenuItems: [],
 
+        additionalMenuItems: [],
+
         selectChild: function(child) {
             // set label of menu item to show where we are
             dom.byId("currentPageName").innerHTML = this.getMenuString(child);
@@ -404,6 +406,14 @@ define([
                     }));
                 }
             }
+
+            array.forEach(this.additionalMenuItems, function(item) {
+                menu.addChild(new MenuBarItem({
+                    id: item.id,
+                    label: item.label,
+                    onClick: item.clickHandler
+                }));
+            });
         },
 
 
@@ -563,6 +573,22 @@ define([
                         dialog.showPage('Adresse', 'dialogs/mdek_address_preview_dialog.html', 500, 240, false, {
                             data: rowData
                         });
+                    }
+                }));
+            }
+
+            if (type == "EDIT_CONFORMITY") {
+                menu.addChild(new MenuSeparator());
+                menu.addChild(new MenuItem({
+                    id: "menuEditClicked_" + type,
+                    label: message.get('contextmenu.table.editClicked'),
+                    onClick: function() {
+                        var rowData = clickedSlickGrid.getData()[clickedRow];
+                        var dialogData = {
+                            gridId: clickedSlickGridProperties.id,
+                            selectedRow: rowData
+                        };
+                        dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_conformity_dialog.jsp?c=' + userLocale, 755, 485, true, dialogData);
                     }
                 }));
             }

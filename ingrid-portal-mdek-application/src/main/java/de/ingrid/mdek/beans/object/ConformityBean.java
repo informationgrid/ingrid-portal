@@ -23,9 +23,21 @@
 package de.ingrid.mdek.beans.object;
 
 
+import java.util.Date;
+
 public class ConformityBean {
+    private Boolean isInspire;
 	private Integer level;
 	private String specification;
+	private Date publicationDate;
+
+    public Boolean getIsInspire() {
+        return isInspire;
+    }
+
+    public void setIsInspire(Boolean inspire) {
+        isInspire = inspire;
+    }
 
 	public Integer getLevel() {
 		return level;
@@ -42,4 +54,12 @@ public class ConformityBean {
 	public void setSpecification(String specification) {
 		this.specification = specification;
 	}
+
+    public Date getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
+    }
 }

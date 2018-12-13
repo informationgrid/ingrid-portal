@@ -33,7 +33,7 @@
     <property name="oracleDialect"                 value="org.hibernate.dialect.Oracle10gDialect"/>
     <property name="oracleDialectPortal"           value="org.hibernate.dialect.OracleDialect"/>
     <property name="oracleValidationQuery"         value="SELECT 1 FROM DUAL"/>
-    <property name="oracleDbDriver"                location="./ojdbc14.jar"/>
+    <property name="oracleDbDriver"                location="./ojdbc7.jar"/>
     <property name="oracleQuartzDriverDelegate"    value="org.quartz.impl.jdbcjobstore.StdJDBCDelegate"/>
     
     <target name="CheckDbs" depends="checkPortalDbOracle, checkMdekDbOracle" if="useOracle">

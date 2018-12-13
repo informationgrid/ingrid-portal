@@ -51,7 +51,7 @@ a img { padding-right: 5px; }
 .clear { clear: both; }
 .left { float: left; }
 .right { float: right; }
-
+.center { text-align: center}
 
 input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Arial,sans-serif;}
 .dijitInputInner {font: normal 10px Verdana,Helvetica,Arial,sans-serif !important;}
@@ -266,14 +266,11 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 .claro #ContextHelpDlg .dijitDialogPaneContent { padding: 10px; }
 .claro #ContextHelpDlg p { margin-bottom: 10px; }
 
-#InfoDialog .dijitDialogPaneContentArea {
+#InfoDialog .dijitDialogPaneContentArea, #publishErrorDialog .dijitDialogPaneContentArea {
 	padding: 20px;	
 }
 
-#InfoDialog .info {
-}
-
-#InfoDialog .warning {
+.dijitDialog .warning {
 	background-color: #ffcaca; 
 	color: #c21130;
 }

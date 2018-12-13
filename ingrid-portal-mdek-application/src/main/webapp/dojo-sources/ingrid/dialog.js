@@ -56,17 +56,30 @@ define([
         closeDialog: function(dlgId) {
             console.debug("destroy dialog: " + dlgId);
             var dlgWidget = registry.byId(dlgId);
-            //dlgWidget.hide();
-            setTimeout(function() {
-                try {
-                    dlgWidget.destroyRecursive();
-                } catch(e) {
-                    console.warn("Exception during clean up of dialog.");
-                }
-            }, 300);
+            if (dlgWidget) {
+                //dlgWidget.hide();
+                setTimeout(function() {
+                    try {
+                        dlgWidget.destroyRecursive();
+                    } catch(e) {
+                        console.warn("Exception during clean up of dialog.");
+                    }
+                }, 300);
+            }
         },
 
-        showPage: function(caption, url, width, height, /* boolean */ modal, /* assoziative array of optional paramters, passed as ?key=value&... */ customParams) {
+        /**
+         *
+         * @param {string} caption
+         * @param {string} url
+         * @param {number} width
+         * @param {number} height
+         * @param {boolean} modal
+         * @param {*=} customParams
+         * @param {string=} customId
+         * @returns {*}
+         */
+        showPage: function(caption, url, width, height, modal, customParams, customId) {
             // Limit max window size to the current viewport size
             var viewPort = win.getBox();
             if (viewPort.w < width) {
@@ -78,9 +91,9 @@ define([
 
             var dialogWnd = registry.byId("pageDialog");
 
-            var dlgId = "pageDialog";
+            var dlgId = customId ? customId : "pageDialog";
             // create the dialog for showing pages if it wasn't already created
-            if (registry.byId("pageDialog") !== undefined)
+            if (!customId && registry.byId("pageDialog") !== undefined)
                 dlgId = "subPageDialog";
 
             dialogWnd = new Dialog({
@@ -216,18 +229,20 @@ define([
              * dialog.show("TESTDIALOG", "TEST", dialog.INFO); is equivalent to dialog.show("TEST", dialog.INFO, [{caption:"OK",action:dialog.CLOSE_ACTION}]);
             
              */
-        show: function(caption, text, /* dialog.WARNING|dialog.INFO */ type, /* array of objects with key, action properties */ btnActions, /* optional */ width, /* optional */ height, /* optional */ errorstack) {
+        show: function(caption, text, /* dialog.WARNING|dialog.INFO */ type, /* array of objects with key, action properties */ btnActions, /* optional */ width, /* optional */ height, /* optional */ errorstack, /* optional */ customId) {
             // define params
             if (!width) width = 310;
             if (!height) height = 155;
 
-            if (registry.byId("InfoDialog")) {
-                registry.byId("InfoDialog").hide();
-                registry.byId("InfoDialog").destroyRecursive();
+            var id = customId ? customId : "InfoDialog";
+
+            if (registry.byId(id)) {
+                registry.byId(id).hide();
+                registry.byId(id).destroyRecursive();
             }
 
             var dialogWnd = new Dialog({
-                id: "InfoDialog",
+                id: id,
                 title: caption,
                 showTitle: true,
                 modal: true,
@@ -257,7 +272,7 @@ define([
             var button = null;
             if (btnActions) {
                 var closeAction = function() {
-                    registry.byId("InfoDialog").hide();
+                    registry.byId(id).hide();
                 };
 
                 for (var i = 0; i < btnActions.length; i++) {
@@ -297,12 +312,18 @@ define([
                 button = new Button({
                     label: message.get('general.ok'),
                     onClick: function() {
-                        registry.byId("InfoDialog").hide();
+                        registry.byId(id).hide();
                         //registry.byId(dlgId).destroyRecursive();
                         //closeDialog(dlgId);
                     }
                 }).placeAt(dom.byId("dialogButtonBar"));
             }
+
+            var self = this;
+            on(dialogWnd, "Hide", function() {
+                self.closeDialog(id);
+            });
+
             dialogWnd.startup();
             var promise = dialogWnd.show();
             dialogWnd.promise = promise;

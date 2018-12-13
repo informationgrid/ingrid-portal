@@ -127,7 +127,7 @@
     #foreach ($facet in $list)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
             #if($count % $facetListSize == 0)
-                <div class="grid grid--gutter flex-row">
+                <div class="grid grid--gutter flex-row auto-height-m">
             #end
             <div class="column column--1-${facetListSize}-m">
                 #set($facetParam = "$pf:$facet.getId();")

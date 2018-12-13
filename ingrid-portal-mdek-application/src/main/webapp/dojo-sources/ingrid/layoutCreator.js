@@ -490,6 +490,12 @@ define([
                                 value: item[0]
                             });
                         });
+
+                        // sort entries
+                        entries.sort( function(a, b) {
+                            return a.value.localeCompare(b.value);
+                        });
+
                         UtilStore.updateWriteStore(additionalField.id, entries, storeProps.data);
                     });
                     storeProps.data.items = [];
@@ -689,6 +695,68 @@ define([
                 uiElementSpan.appendChild(uiPaddingDiv);
                 uiPaddingDiv.appendChild(nodeToInsert);
                 uiPaddingDiv.appendChild(labelElement);
+
+                return uiElementSpan;
+            },
+
+            addRadioSurroundingContainer: function( /*DomNode[]*/ nodesToInsert, additionalField, type, linkInfo) {
+                // Create the following dom structure:
+                // <span id="uiElementAdd${additionalField.id}" class="outer" type="optional">
+                //   <div>
+                //     < ingrid:Checkbox or ... depending on ${additionalField.type} /> 
+                //     <label class="inActive">
+                //       ${additionalField.name}
+                //     </label>
+                //   </div>
+                // </span>
+
+                // Create dom nodes
+                var uiElementSpan = document.createElement("span");
+                domClass.add(uiElementSpan, "outer additional content");
+                uiElementSpan.id = "uiElementAdd" + additionalField.id;
+
+                if (additionalField.isMandatory)
+                    domClass.add(uiElementSpan, "required");
+                else {
+                    domClass.add(uiElementSpan, additionalField.visible);
+                }
+
+                // uiElementSpan.setAttribute("style", additionalField.style);
+                var uiPaddingDiv = document.createElement("div");
+
+                var labelSpanElement = document.createElement("span");
+                domClass.add(labelSpanElement, "label left");
+                var labelElement = document.createElement("label");
+                //domClass.add(labelElement, "inActive");
+                labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                labelElement.innerHTML = additionalField.label;
+                labelSpanElement.appendChild(labelElement);
+
+                domClass.add(uiPaddingDiv, "input");
+
+                // Build the complete structure
+                uiElementSpan.appendChild(uiPaddingDiv);
+                uiPaddingDiv.appendChild(labelSpanElement);
+
+                var pos = 0;
+                nodesToInsert.forEach( function(nodeToInsert) {
+
+                    var uiPaddingSubSpan = document.createElement("span");
+
+                    // mark field as additional for easier saving data
+                    domClass.add(nodeToInsert, "additionalField");
+                    nodeToInsert.setAttribute("style", "margin-left: 10px;");
+                    
+                    uiPaddingSubSpan.appendChild(nodeToInsert);
+
+                    var radioLabelElement = document.createElement("label");
+                    radioLabelElement.setAttribute("for", nodeToInsert.getAttribute("widgetid"));
+
+                    domClass.add(radioLabelElement, "inActive");
+                    radioLabelElement.innerHTML = additionalField.name[pos++];
+                    uiPaddingSubSpan.appendChild(radioLabelElement);
+                    uiPaddingDiv.appendChild(uiPaddingSubSpan);
+                });
 
                 return uiElementSpan;
             }

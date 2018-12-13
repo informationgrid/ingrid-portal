@@ -6,8 +6,248 @@
     </properties>
 
     <body>
-        
-        <release version="4.3.0-SNAPSHOT" date="2018-xx-xx" description="Release 4.3.0">
+
+        <release version="4.6.0-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.0">
+          <action type="add" dev="wemove" issue="1260">
+            Portal: Add local host name no subject of alert email of monitoring jobs.
+          </action>
+          <action type="add" dev="wemove" issue="1189">
+            Add NRW "Vorschaltseite" and change display of BLP Marker: take "Flaechennutzungsplaene" and "Bebauungsplaene".
+          </action>
+          <action type="add" dev="wemove" issue="1201">
+            Portal: Add new profile "metaver_md".
+          </action>
+          <action type="add" dev="wemove" issue="1231">
+            Portal: Add mapclient admin-gui as administration menu entry .
+          </action>
+          <action type="update" dev="wemove" issue="1212">
+            Portal/IGE: Update Oracle driver to ojdbc7 for Oracle 12.
+          </action>
+          <action type="fix" dev="wemove" issue="1105">
+            Portal: Add advmis to hidden keywords so will not be displayed in detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="1193">
+            Portal/IGE: Fix initial codelists (1320, 6005, 6100), data was lost when codelists were separated.
+          </action>
+          <action type="fix" dev="wemove">
+            Portal: Oracle: Fix update of portal database (flyway 4_4_0, 4_4_1). Make provider URL nullable.
+          </action>
+          <action type="fix" dev="wemove">
+            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
+          </action>
+          <action type="fix" dev="wemove" issue="1194">
+            Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
+          </action>
+          <action type="add" dev="wemove" issue="1162">
+            MapClient: Add display layer category dependency on layer form page.
+          </action>
+          <action type="add" dev="wemove" issue="1163">
+            MapClient: Add selection layer list of a service on invalid saved layers.
+          </action>
+          <action type="add" dev="wemove" issue="1165">
+            MapClient: Add function to copy a category.
+          </action>
+          <action type="add" dev="wemove" issue="1209">
+            MapClient: Add function to edit localisation.
+          </action>
+          <action type="add" dev="wemove" issue="1225">
+            MapClient: Add menu on fullscreen.
+          </action>
+          <action type="add" dev="wemove" issue="1229">
+            MapClient: Add login/logout on admin gui.
+          </action>
+          <action type="add" dev="wemove" issue="1250">
+            MapClient: Get attribution and attributionUrl from service.
+          </action>
+          <action type="add" dev="wemove" issue="1251">
+            MapClient: Adapt label on layer selection by edit category tree.
+          </action>
+          <action type="fix" dev="wemove" issue="1203">
+            MapClient: Fix extent of layers by add external service from portal on projection 'EPSG:25832'.
+          </action>
+        </release>
+
+        <release version="4.5.0" date="2018-10-15" description="Release 4.5.0">
+          <action type="fix" dev="wemove" issue="1180">
+            IGE/BKG: Fix tooltips of checkboxes in catalog management.
+          </action>
+          <action type="fix" dev="wemove" issue="1071">
+            BKG: IGE: Fix formatting of fields "Zugriffsbeschränkungen" and "Nutzungsbedingungen" in IGE preview.
+          </action>
+          <action type="add" dev="wemove" issue="1124">
+            Portal: If a data format is supplied at least a name has to be set in the data format table. Also state this in the context sensitive help.
+          </action>
+          <action type="add" dev="wemove" issue="1143">
+            Portal: Add password policy to all portal profiles.
+          </action>
+          <action type="add" dev="wemove" issue="1146">
+            Portal: Add procedure 'Negative Vorprüfungen'.
+          </action>
+          <action type="add" dev="wemove" issue="1147">
+            Portal: Change default active procedures on map.
+          </action>
+          <action type="fix" dev="wemove" issue="1164">
+            Portal: Fix displayed facet filter in result view.
+          </action>
+          <action type="fix" dev="wemove" issue="1176">
+            Portal: Fix password strength indicator for IE11.
+          </action>
+          <action type="fix" dev="wemove" issue="1133">
+            Portal: Fix portal database when new installation on PostgreSQL or migrating from MySQL to Postgres.
+          </action>
+          <action type="add" dev="wemove" issue="1142">
+            UVP: IGE: Fix problem with downloading uvp statistic report in IE11.
+          </action>
+          <action type="add" dev="wemove" issue="1151">
+            UVP: Portal: Add setting and param extent to define map extent.
+          </action>
+          <action type="add" dev="wemove" issue="1152">
+            UVP: Portal: Add UVP-NI matomo website ID.
+          </action>
+          <action type="add" dev="wemove" issue="1155">
+            UVP: Portal: Change UVP map legend depend on procedure hits.
+          </action>
+          <action type="fix" dev="wemove" issue="1145">
+            UVP: IGE: Fix problem with not showing preview data.
+          </action>
+          <action type="fix" dev="wemove" issue="1158">
+            UVP: Fix problem showing details for "Negative Vorpruefungen".
+          </action>
+          <action type="fix" dev="wemove" issue="1156">
+            UVP: Portal: Fix display details of 'negative Vorprüfungen'.
+          </action>
+          <action type="fix" dev="wemove" issue="1157">
+            UVP: Portal: Fix map legend icons.
+          </action>
+          <action type="add" dev="wemove" issue="1112">
+            MapClient: Display layer name tag on infobox.
+          </action>
+          <action type="add" dev="wemove" issue="1138">
+            MapClient: Display saved layers with http authentification.
+          </action>
+          <action type="add" dev="wemove" issue="1139">
+            MapClient: Display layer error state on admin gui.
+          </action>
+          <action type="add" dev="wemove" issue="1141">
+            MapClient: Display saved layers with dimension time.
+          </action>
+          <action type="update" dev="wemove" issue="1130">
+            MapClient: Update mf-geoadmin3.
+          </action>
+          <action type="update" dev="wemove" issue="1144">
+            MapClient: Update admin gui libs.
+          </action>
+          <action type="fix" dev="wemove" issue="1148">
+            MapClient: Fix IE11 params update outside iframe.
+          </action>
+          <action type="add" dev="wemove" issue="1066">
+            IGE: Add license source. Make "accessConstraints" field optional.
+          </action>
+          <action type="add" dev="wemove" issue="364">
+            IGE: Choose free parentIdentifier for metadata.
+          </action>
+          <action type="fix" dev="wemove" issue="1177">
+            IGE: Fix published version in ISO XML view in editor.
+          </action>
+          <action type="fix" dev="wemove" issue="1190">
+            IGE: Fix view of grid format.
+          </action>
+          <action type="update" dev="wemove" issue="1562">
+            WSV: Portal: Separate 'impressum' and 'datenschutz' in WSV profile.
+          </action>
+          <action type="add" dev="wemove" issue="1131">
+            ZDM: Portal: Add ZDM profile.
+          </action>
+        </release>
+
+        <release version="4.4.1" date="2018-06-26" description="Release 4.4.1">
+          <action type="add" dev="wemove" issue="1120">
+            Portal: Backup partner and provider before they are overwritten by the ones from codelist-repository.
+          </action>
+        </release>
+
+        <release version="4.4.0" date="2018-06-21" description="Release 4.4.0">
+          <action type="add" dev="wemove" issue="980">
+            Portal: UVP add BLP data on map and facet.
+          </action>
+          <action type="fix" dev="wemove" issue="1075">
+            Portal: Fix UVP(-NI) search query properties.
+          </action>
+          <action type="fix" dev="wemove" issue="1096">
+            Portal: Remove old data from initial mysql portal database.
+          </action>
+          <action type="fix" dev="wemove" issue="1074">
+            Portal: Contact form without attachment.
+          </action>
+          <action type="fix" dev="wemove" issue="1080">
+            Portal: Remove old libs folder on tomcat and mapclient.
+          </action>
+          <action type="fix" dev="wemove" issue="1109">
+            Portal: Fix UVP BB page.
+          </action>
+          <action type="update" dev="wemove" issue="1103">
+            Portal: Update UVP BB HTML page.
+          </action>
+          <action type="update" dev="wemove" issue="1108">
+            Portal: Optimize loading markers on UVP maps.
+          </action>
+          <action type="update" dev="wemove" issue="1100">
+            Portal: Remove contact form for RLP.
+          </action>
+          <action type="add" dev="wemove" issue="601">
+            IGE: Add option to publish metadata at a later date. UVP: Add option to conditionally publish documents in Phase 1.
+          </action>
+          <action type="add" dev="wemove" issue="905">
+            IGE-UVP: Add Statistic page for downloading a report.
+          </action>
+          <action type="add" dev="wemove" issue="478,903">
+            IGE-UVP: Add new category for negative examinations.
+          </action>
+          <action type="add" dev="wemove" issue="881">
+            IGE-UVP: Replace checkbox with new radio buttons to define if Pre-Examination was executed.
+          </action>
+          <action type="fix" dev="wemove" issue="1069">
+            IGE: Fix session expired page layout.
+          </action>
+          <action type="fix" dev="wemove" issue="1092">
+            IGE: Fix NPE in tree when address has no title.
+          </action>
+          <action type="fix" dev="wemove" issue="815">
+            MapClient: Add admin gui.
+          </action>
+          <action type="fix" dev="wemove" issue="1089">
+            MapClient: Fix embed version.
+          </action>
+          <action type="fix" dev="wemove" issue="1090">
+            MapClient: Fix embed link to map.
+          </action>
+          <action type="fix" dev="wemove" issue="1107">
+            MapClient: Fix clean up KML directory.
+          </action>
+          <action type="update" dev="wemove" issue="1104">
+            IGE: Extend length of URL of preview image.
+          </action>
+        </release>
+
+        <release version="4.3.0" date="2018-03-28" description="Release 4.3.0">
+          <action type="fix" dev="wemove" issue="1001">
+            Portal: UVP: Upload does not work with IE 11.
+          </action>
+          <action type="fix" dev="wemove" issue="984">
+            UVP: Update Logo on hessian pre page.
+          </action>
+          <action type="fix" dev="wemove" issue="978">
+            UVP: Dokumentname bei externem Dateiupload wird falsch extrahiert.
+          </action>
+          <action type="fix" dev="wemove" issue="982">
+            Portal: Fix uncaught errors in QueryPreProcesssor.
+          </action>
+          <action type="fix" dev="wemove" issue="993">
+            IGE/Portal: Fix language of Geothesaurus result (WFS), now always german if multiple languages.
+          </action>
+          <action type="fix" dev="wemove" issue="974">
+            IGE: Fix Problem of URL validator and validation of capabilities urls.
+          </action>
           <action type="add" dev="wemove" issue="915">
             Portal: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
           </action>
@@ -20,11 +260,17 @@
           <action type="add" dev="wemove" issue="915">
             Portal: UVP: Get BLP marker data from index of iPlug SE instead from extra generated JSON File.
           </action>
+          <action type="fix" dev="wemove" issue="">
+            UVP: Fix problem with uninitialized data structure, not displaying entries of document table.
+          </action>
           <action type="fix" dev="wemove" issue="969">
             UVP NI: Re-add facet config and localization. Fixes not showing BLP data in facets and search results type.
           </action>
           <action type="fix" dev="wemove" issue="965">
             IGE: Fix problems digesting XML answers from WFS used for spatial search. The problem only occurs on java8 162 and relates to unmarshalling of XML WFS response.
+          </action>
+          <action type="update" dev="wemove" issue="859">
+            IGE: Update workflow for adding INSPIRE or custom conformities to the "Conformity" table. In this table, also display the conformity-date.
           </action>
           <action type="fix" dev="wemove" issue="733">
             Portal: Clean spaces on login name by create new portal user.
@@ -32,10 +278,19 @@
           <action type="fix" dev="wemove" issue="862">
             Portal: Fix detail view for license "official-work".
           </action>
+          <action type="fix" dev="wemove" issue="981">
+            PORTAL: UVP fix expand icon.
+          </action>
+          <action type="fix" dev="wemove" issue="992">
+            Portal: UVP fix mobile category teaser view.
+          </action>
+          <action type="fix" dev="wemove" issue="995">
+            Portal: UVP fix menu tooltips.
+          </action>
           <action type="update" dev="wemove" issue="954">
             Portal: Update detail view for UVP.
           </action>
-		      <action type="add" dev="wemove" issue="890">
+          <action type="add" dev="wemove" issue="890">
             IGE/Portal(UVP): Add ZIP upload and update portal detail view.
           </action>
           <action type="fix" dev="wemove" issue="781">
@@ -47,8 +302,11 @@
           <action type="fix" dev="wemove" issue="949">
             IGE(UVP): Fixed leaflet URL for tiles, which lead to an error on IE.
           </action>
-		      <action type="update" dev="wemove" issue="961">
+          <action type="update" dev="wemove" issue="961">
             MAPCLIENT: Update mapclient to newer mf-geoadmin3 version.
+          </action>
+          <action type="fix" dev="wemove" issue="987">
+            MAPCLIENT: Fix mapclient offline mode message.
           </action>
         </release>
 
@@ -216,7 +474,7 @@
             MAPCLIENT: Fix generate QR code with too long URL. Use short URL to generate QR code.
           </action>
           <action type="fix" dev="wemove" issue="745">
-            IGE (UVP): UploalCleanupJob deletes files too early. 
+            IGE (UVP): UploalCleanupJob deletes files too early.
           </action>
           <action type="fix" dev="wemove" issue="792">
             IGE (UVP): Changed link style for uploaded documents and prevent overlapping in firefox.
@@ -228,7 +486,7 @@
             IGE-HH: Fixed required field "UseAccessConstraints".
           </action>
         </release>
-        
+
         <release version="4.0.3" date="2017-06-14" description="Release 4.0.3">
           <action type="add" dev="wemove" issue="REDMINE-393,-556">
             BKG IGE: Added special version for input of access- and useConstraints to BKG profile.
@@ -264,7 +522,7 @@
             PORTAL: Clean up of old mapclient remains.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-542">
-            PORTAL: Remove "opendata" keyword from detail view. 
+            PORTAL: Remove "opendata" keyword from detail view.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-727">
             PORTAL: Fix remove CSW-XML on address hit by using facets.
@@ -279,7 +537,7 @@
             PORTAL: Fixed registration confirmation URL by adding setting to influence hostname.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-655">
-            PORTAL: Fixed chronicle teaser on default-page.psml. 
+            PORTAL: Fixed chronicle teaser on default-page.psml.
           </action>
           <action type="fix" dev="wemove" issue="REDMINE-721">
             IGE: Fix display of user management/groups.
@@ -300,7 +558,7 @@
             MAPCLIENT: Remove share copy button on chrome.
           </action>
         </release>
-        
+
         <release version="4.0.2" date="2017-04-11" description="Release 4.0.2">
             <action type="fix" dev="wemove" issue="REDMINE-589">
                 PORTAL: Cleanup old installation before updating with new one to remove old files.
@@ -315,7 +573,7 @@
                 IGE: Fixed resetting of cut state in hierarchy tree.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-555">
-                IGE: Fixed error in free spatial reference, when editing name. 
+                IGE: Fixed error in free spatial reference, when editing name.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-568">
                 PORTAL: Updated profile for RLP
@@ -447,10 +705,10 @@
                 IGE: Map service type version according to GDI-DE.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-370">
-                IGE: Fixed getCapabilities-assistant to extract spatial reference systems from WFS-Service. 
+                IGE: Fixed getCapabilities-assistant to extract spatial reference systems from WFS-Service.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-371">
-                IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service. 
+                IGE: Fixed getCapabilities-assistant to extract bounding box from WFS-Service.
             </action>
             <action type="fix" dev="wemove" issue="REDMINE-521">
                 IGE: Added dirty check for additional fields.
@@ -525,7 +783,7 @@
                 PORTAL: Fixed rendering of constraints in detail view in profiles.
             </action>
         </release>
-        
+
         <release version="3.6.2" date="2016-05-30" description="Release 3.6.2">
             <action type="add" dev="wemove" issue="REDMINE-302">
                 Portal: Contact form now pre-populated with name and email of logged in user.
@@ -564,7 +822,7 @@
                 IGE (lgv_hh profile): Adaptation concerning OpenData and HmbTG.
             </action>
             <action type="update" dev="wemove" issue="REDMINE-312">
-                Portal Installer: Add an installer page to configure SMTP-server when portal installed without IGE. 
+                Portal Installer: Add an installer page to configure SMTP-server when portal installed without IGE.
             </action>
             <action type="update" dev="wemove" issue="REDMINE-303">
                 IGE: Adapted sns service changes to https.
@@ -610,7 +868,7 @@
                 IGE: Fix initialization of input GUI with data when loading new object.
             </action>
         </release>
-        
+
         <release version="3.6.1.2" date="2016-01-22" description="Release 3.6.1.2">
             <action type="fix" dev="wemove" issue="REDMINE-235">
                 Portal: Also write SMTP server into portal configuration.
@@ -640,7 +898,7 @@
                 IGE: Fixed session refresh functionality.
             </action>
         </release>
-        
+
         <release version="3.6.1.1" date="2015-12-03" description="Release 3.6.1.1">
             <action type="fix" dev="wemove" issue="REDMINE-221">
                 IGE: Use constraints set to "null" when left empty.
@@ -748,13 +1006,13 @@
                 IGE: Added paging for all tables on the dashboard.
             </action>
         </release>
-        
+
         <release version="3.6.0.5" date="2015-12-22" description="Bugfix-Release 3.6.0.5">
             <action type="fix" dev="wemove" issue="REDMINE-244">
                 Portal: Fix bug in detail view (NPE).
             </action>
         </release>
-        
+
         <release version="3.6.0.3" date="2015-09-21" description="Bugfix-Release 3.6.0.3">
             <action type="fix" dev="wemove" issue="REDMINE-151">
                 Portal: Removed "show in map" functionality when clicking preview image in detail view of service with restricted access.
@@ -871,7 +1129,7 @@
                 Portal: Fix Oracle migration script when migrating portal database to 3.5 (handle empty values in user preferences).
             </action>
         </release>
-        
+
         <release version="3.5.0" date="2015-02-02">
             <action type="add" dev="wemove" issue="REDMINE-524">
                 Added license header to all source files for Open Source migration.

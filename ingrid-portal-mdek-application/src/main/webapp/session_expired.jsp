@@ -1,6 +1,6 @@
 <%--
   **************************************************-
-  Ingrid Portal Base
+  InGrid Portal MDEK Application
   ==================================================
   Copyright (C) 2014 - 2018 wemove digital solutions GmbH
   ==================================================
@@ -20,12 +20,10 @@
   limitations under the Licence.
   **************************************************#
   --%>
-  
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
-<fmt:setBundle basename="messages" scope="session"/>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
@@ -41,9 +39,10 @@
         <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700"></link>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
         <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
     </head>
     <body>
@@ -112,7 +111,7 @@
                         <a href="/startseite">
                             <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
                         </a>
-                        <p class="copyright">Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50</p>
+                        <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
                     </div>
                 </div>
                 <hr class="bx-top-0 bx-bot-0"></hr>

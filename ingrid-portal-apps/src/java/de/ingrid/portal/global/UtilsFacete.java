@@ -583,6 +583,16 @@ public class UtilsFacete {
             }else if(actionClear != null){
                 if(wildcardIds != null){
                     wildcardIds.remove( id );
+                    ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
+                    IngridFacet facetById = getFacetById(config, id);
+                    if (facetById != null && facetById.getParent() != null) {
+                        boolean open = false;
+                        ArrayList<IngridFacet> children = facetById.getParent().getFacets();
+                        for(IngridFacet child: children) {
+                            open = open || child.isOpen();
+                        }
+                        facetById.getParent().setOpen(open);
+                    }
                     if(wildcardIds.size() == 0 ){
                         removeAttributeFromSession( request, id);
                     }else{
@@ -611,7 +621,14 @@ public class UtilsFacete {
                         if(wildCardValue != null && wildCardValue.length() > 0 && wildCardValue.indexOf("*") == -1){
                             wildCardValue = wildCardValue + "*";
                         }
-                        query.addWildCardFieldQuery( new WildCardFieldQuery( required, prohibited, fieldName, wildCardValue ) );
+
+                        if (fieldName.contains("|")) {
+                            for (String s: fieldName.split("\\|")) {
+                                query.addWildCardFieldQuery(new WildCardFieldQuery(!required, prohibited, s, wildCardValue));
+                            }
+                        } else {
+                            query.addWildCardFieldQuery(new WildCardFieldQuery(required, prohibited, fieldName, wildCardValue));
+                        }
                     }
                 }
             }
@@ -1500,7 +1517,7 @@ public class UtilsFacete {
         return facetSelectionState;
     }
     
-    private static int isFacetSelection(PortletRequest request){
+    private static boolean isFacetSelection(PortletRequest request){
         HashMap<String, Boolean> facetSelectionState = getFacetSelectionState(request);
         int i=0; 
         if(facetSelectionState != null){
@@ -1509,12 +1526,12 @@ public class UtilsFacete {
                 if(facetSelectionState.get(key)){
                     i=i+1;
                     if(i>1){
-                        break;
+                        return true;
                     }
                 }
             }    
         }
-        return i;
+        return false;
     }
     
     /**
@@ -1700,29 +1717,40 @@ public class UtilsFacete {
                 resetFacetConfigSelect(config);
                 for(String paramsSplit : paramsSplits){
                     String[] split = paramsSplit.split(":");
-                    IngridFacet tmpFacetKey = getFacetById(config, split[0]);
-                    if(tmpFacetKey != null){
-                        //Set facet parent isSelect
-                        //tmpFacetKey.setSelect(true);
-                        if(tmpFacetKey.getFacets() != null){
-                            //Set facet isSelect
-                            IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
-                            tmpFacetValue.setSelect(true);
-                            //Check dependency
-                            if(tmpFacetValue.getId() != null){
-                                ArrayList<IngridFacet> facetDepList = new ArrayList<IngridFacet>();
-                                getDependencyFacetById(config, facetDepList, tmpFacetValue.getId());
-                                for(IngridFacet facetDep : facetDepList){
-                                    IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
-                                    if(dependencyValue.isSelect()){
-                                        facetDep.setDependencySelect(dependencyValue.isSelect());
-                                    }else{
-                                        if(facetDep.getFacets() != null){
-                                            for(IngridFacet facetChild : facetDep.getFacets()){
-                                                facetChild.setSelect(dependencyValue.isSelect());
+                    String split0 = split[0];
+                    IngridFacet tmpFacetKey;
+                    if (split0.equals("wildcard")) {
+                        if (split.length > 1) {
+                            tmpFacetKey = getFacetById(config, split[1].split(",")[0]);
+                            if(tmpFacetKey != null && tmpFacetKey.getParent() != null) {
+                                tmpFacetKey.getParent().setOpen(true);
+                            }
+                        }
+                    } else {
+                        tmpFacetKey = getFacetById(config, split[0]);
+                        if(tmpFacetKey != null){
+                            //Set facet parent isSelect
+                            //tmpFacetKey.setSelect(true);
+                            if(tmpFacetKey.getFacets() != null){
+                                //Set facet isSelect
+                                IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
+                                tmpFacetValue.setSelect(true);
+                                //Check dependency
+                                if(tmpFacetValue.getId() != null){
+                                    ArrayList<IngridFacet> facetDepList = new ArrayList<IngridFacet>();
+                                    getDependencyFacetById(config, facetDepList, tmpFacetValue.getId());
+                                    for(IngridFacet facetDep : facetDepList){
+                                        IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
+                                        if(dependencyValue.isSelect()){
+                                            facetDep.setDependencySelect(dependencyValue.isSelect());
+                                        }else {
+                                            if (facetDep.getFacets() != null) {
+                                                for (IngridFacet facetChild : facetDep.getFacets()) {
+                                                    facetChild.setSelect(dependencyValue.isSelect());
+                                                }
                                             }
+                                            facetDep.setDependencySelect(dependencyValue.isSelect());
                                         }
-                                        facetDep.setDependencySelect(dependencyValue.isSelect());
                                     }
                                 }
                             }
@@ -2474,15 +2502,17 @@ public class UtilsFacete {
     
     private static boolean isAnyFacetConfigSelect(ArrayList<IngridFacet> config, boolean sessionSelect) {
         boolean isSelect = false;
-        for(IngridFacet facet : config){
-            if(facet.isSelect()){
-                isSelect = true;
-                break;
-            }
-            if(facet.getFacets() != null){
-                isSelect = isAnyFacetConfigSelect(facet.getFacets(), false);
-                if(isSelect){
+        if(config != null) {
+            for(IngridFacet facet : config){
+                if(facet.isSelect()){
+                    isSelect = true;
                     break;
+                }
+                if(facet.getFacets() != null){
+                    isSelect = isAnyFacetConfigSelect(facet.getFacets(), false);
+                    if(isSelect){
+                        break;
+                    }
                 }
             }
         }

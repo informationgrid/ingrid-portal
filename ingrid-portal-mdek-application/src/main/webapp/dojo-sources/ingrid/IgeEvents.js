@@ -166,7 +166,6 @@ define([
             // show conformity-table only for class 1 and 3 
             if (clazz === "Class1" || clazz === "Class3") {
                 domClass.remove("uiElementN024", "hide");
-                domClass.add("uiElementN024", "required");
             } else if (isObjectClass) {
                 domClass.remove("uiElementN024", "required");
                 domClass.add("uiElementN024", "hide");
@@ -218,7 +217,12 @@ define([
             });
         },
 
-        toggleFields: function(section, /* optional */ mode) {
+        /**
+         *
+         * @param section
+         * @param mode
+         */
+        toggleFields: function(section, mode) {
             var sectionElement;
 
             if (typeof(section) != "undefined" && section != "Object" && section != "Address") {

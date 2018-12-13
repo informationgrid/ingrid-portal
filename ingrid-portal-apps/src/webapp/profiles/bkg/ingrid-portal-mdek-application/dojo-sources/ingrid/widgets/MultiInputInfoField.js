@@ -189,9 +189,21 @@ define([
         getDisplayedValue: function() {
             var comment = this.infoText[0].textContent;
             if (comment === "") {
-                return this.selectInput.get("displayedValue") + ", " + this.freeTextInput.get("value");
+            	var s = this.selectInput.get("displayedValue");
+            	if (s) {
+            		if (this.freeTextInput.get("value")) {
+                		s = s + ", " + this.freeTextInput.get("value");
+            		}
+            	} else if (this.freeTextInput.get("value")) {
+            		s = this.freeTextInput.get("value");
+            	}
+                return s;
             } else {
-                return comment + ", " + this.freeTextInput.get("value");
+            	var s = comment;
+            	if (this.freeTextInput.get("value")) {
+            		s = s + ", " + this.freeTextInput.get("value")
+            	}
+            	return s;
             }
         },
 

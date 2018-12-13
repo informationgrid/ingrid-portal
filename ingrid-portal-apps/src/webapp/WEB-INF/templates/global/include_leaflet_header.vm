@@ -5,3 +5,5 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
 <script src="/decorations/layout/ingrid/scripts/markercluster/leaflet.markercluster.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.spin/spin.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>

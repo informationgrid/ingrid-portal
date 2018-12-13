@@ -86,6 +86,7 @@ require([
             renderTitel(nodeDataOld.objectName, nodeDataNew.objectName);
 
             renderText(nodeDataOld.generalShortDescription, nodeDataNew.generalShortDescription);
+            renderTextWithTitle(nodeDataOld.parentIdentifier, nodeDataNew.parentIdentifier, "<fmt:message key='ui.obj.general.parentIdentifier' />");
             renderTextWithTitle(UtilList.getSelectDisplayValue(registry.byId("objectClass"), "Class" + nodeDataOld.objectClass),
                 UtilList.getSelectDisplayValue(registry.byId("objectClass"), "Class" + nodeDataNew.objectClass), "<fmt:message key='ui.obj.header.objectClass' />");
             renderTextWithTitle(nodeDataOld.generalDescription, nodeDataNew.generalDescription, "<fmt:message key='ui.obj.general.description' />");
@@ -354,14 +355,20 @@ require([
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(510, nodeDataOld.extraInfoCharSetDataCode), UtilSyslist.getSyslistEntryName(510, nodeDataNew.extraInfoCharSetDataCode), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
             // Table is only displayed for object classes 1 and 3
             if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
-                renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["specification", "level"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />"],
+                renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["specification", "level", "publicationDate"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.publicationDate' />"],
                     "<fmt:message key='ui.obj.additionalInfo.conformityTable.title' />", [
-
                         function(val) {
                             return UtilSyslist.getSyslistEntryName(6005, val);
                         },
                         function(val) {
                             return UtilSyslist.getSyslistEntryName(6000, val);
+                        },
+                        function(val) {
+                            if (val) {
+                                return UtilString.getDateString(val, "dd.MM.yyyy");
+                            } else {
+                                return "";
+                            }
                         }
                     ]);
             }
@@ -377,7 +384,7 @@ require([
             renderList(nodeDataOld.availabilityAccessConstraints, nodeDataNew.availabilityAccessConstraints, "<fmt:message key='ui.obj.availability.accessConstraints' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(6010, val);
             });
-            renderList(nodeDataOld.availabilityUseAccessConstraints, nodeDataNew.availabilityUseAccessConstraints, "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
+            renderTable(nodeDataOld.availabilityUseAccessConstraints, nodeDataNew.availabilityUseAccessConstraints, ["title", "source"], [message.get("ui.obj.availability.useAccessConstraintsTable.header.name"), message.get("ui.obj.availability.useAccessConstraintsTable.header.source")], "<fmt:message key='ui.obj.availability.useAccessConstraints' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(6500, val);
             });
             renderTextWithTitle(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
@@ -577,8 +584,8 @@ require([
 
         function renderTextWithTitle(oldVal, newVal, title) {
             // compare with null so 0 will be different ! !oldVal handles 0 the same as null so replaces it with "" !
-            if (oldVal === null) oldVal = "";
-            if (newVal === null) newVal = "";
+            if (oldVal === null || oldVal === undefined) oldVal = "";
+            if (newVal === null || newVal === undefined) newVal = "";
             oldVal += "";
             newVal += "";
 

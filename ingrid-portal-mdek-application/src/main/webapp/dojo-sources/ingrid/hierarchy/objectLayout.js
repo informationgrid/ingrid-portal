@@ -231,7 +231,11 @@ define([
 	            		this._startSearchAll(); 
 	            	} ) );
 	    		};
-                
+
+                new ValidationTextBox({
+                    maxLength: 255,
+                    style: "width:100%;"
+                }, "parentIdentifier");
                 
             },
 
@@ -277,7 +281,7 @@ define([
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
                 var previewImage = new ValidationTextBox({
-                    maxLength: 255,
+                    maxLength: 1024,
                     style: "width:100%;"
                 }, "generalPreviewImage");
                 
@@ -1898,23 +1902,27 @@ define([
                 var extraInfoConformityTableStructure = [{
                     field: 'specification',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),
-                    width: '558px',
-                    type: gridEditors.ComboboxEditor,
-                    options: [], // will be filled later, when syslists are loaded
-                    values: [],
-                    editable: true,
-                    listId: 6005,
-                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6005)
+                    width: '395px',
+                    editable: false,
+                    formatter: gridFormatters.ConformityCellFormatter
                 }, {
                     field: 'level',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.level"),
                     width: '150px',
-                    type: gridEditors.SelectboxEditor,
-                    options: [], // will be filled later, when syslists are loaded
-                    values: [],
-                    editable: true,
-                    listId: 6000,
+                    editable: false,
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6000)
+                }, {
+                    field: 'publicationDate',
+                    name: message.get("ui.obj.additionalInfo.conformityTable.header.publicationDate"),
+                    width: '150px',
+                    editable: false,
+                    formatter: gridFormatters.DateCellFormatter
+                }, {
+                    field: 'isInspire',
+                    width: '0px',
+                    hidden: true,
+                    editable: false,
+                    formatter: gridFormatters.BoolCellFormatter
                 }];
                 layoutCreator.createDataGrid("extraInfoConformityTable", null, extraInfoConformityTableStructure, null);
 
@@ -1965,7 +1973,7 @@ define([
 
                 var availabilityUseAccessConstraintsStructure = [{
                     field: 'title',
-                    name: 'title',
+                    name: message.get("ui.obj.availability.useAccessConstraintsTable.header.name"),
                     width: '348px',
                     type: gridEditors.ComboboxEditor,
                     options: [], // will be filled later, when syslists are loaded
@@ -1973,6 +1981,10 @@ define([
                     editable: true,
                     listId: 6500,
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
+                }, {
+                    field: 'source',
+                    name: message.get("ui.obj.availability.useAccessConstraintsTable.header.source"),
+                    editable: true
                 }];
                 layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
                 

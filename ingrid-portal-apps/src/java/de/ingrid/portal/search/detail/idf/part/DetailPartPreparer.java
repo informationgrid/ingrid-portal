@@ -37,8 +37,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.velocity.context.Context;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -46,6 +48,8 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.UtilsString;
+import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.json.JsonUtil;
 import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
 import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
 import de.ingrid.utils.udk.UtilsCountryCodelist;
@@ -195,8 +199,8 @@ public class DetailPartPreparer {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, codeListId, null);
     }
     
-    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, ArrayList<String> consideredValues) {
-        ArrayList<String> list = new ArrayList<String>();
+    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, List<String> consideredValues) {
+        ArrayList<String> list = new ArrayList<>();
         NodeList nodeList = XPathUtils.getNodeList(this.rootNode, xpathExpression);
         if(nodeList != null){
             for (int j=0; j < nodeList.getLength();j++){
@@ -235,6 +239,173 @@ public class DetailPartPreparer {
         return list;
     }
 
+    public String removePraefix(String value) {
+        String newValue = value;
+        if (newValue != null) {
+            if (newValue.startsWith( "Nutzungseinschränkungen: " )) {
+                newValue = newValue.replace("Nutzungseinschränkungen: ", "");
+            }
+            if (newValue.startsWith( "Nutzungsbedingungen: " )) {
+                newValue = newValue.replace("Nutzungsbedingungen: ", "");
+            }            
+        }
+        
+        return newValue;
+    }
+
+    public List<String> getUseConstraints() {
+        final String restrictionCodeList = "524";
+        final String licenceList = "6500";
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
+        final String restrictionCodeXpath = "./gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
+        final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
+        List<String> result = new ArrayList<>();
+
+        NodeList resourceConstraintsNodes = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        if (resourceConstraintsNodes == null) {
+            // Don't continue if no results found
+            return result;
+        }
+
+        for(int i=0; i<resourceConstraintsNodes.getLength(); i++) {
+            Node node = resourceConstraintsNodes.item(i);
+
+            NodeList restrictionCodeNodes = XPathUtils.getNodeList(node, restrictionCodeXpath);
+            NodeList constraintsNodes = XPathUtils.getNodeList(node, constraintsTextXpath);
+            if (restrictionCodeNodes == null || constraintsNodes == null) {
+                continue;
+            }
+            NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
+            String restrictionCode = attrs.getNamedItem("codeListValue").getTextContent();
+            log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+            if (restrictionCode == null) continue;
+            restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
+
+            String constraints = constraintsNodes.item(0).getTextContent();
+            log.debug(String.format("Discovered use constraints: %s", constraints));
+
+            // FIXME >>> Change after redmine ticket #848 is resolved >>>
+            // Temporary solution to get rid of prefix in front of the codelist value
+            constraints = removePraefix(constraints);
+            // <<< End of temporary solution <<<
+
+            if (constraints == null || constraints.trim().isEmpty()) {
+                if (!result.contains(restrictionCode )) {
+                    result.add(restrictionCode);
+                }
+                continue;
+            }
+
+            // try to get the license source from other constraints (#1066)
+            String source = null;
+            String url = null;
+            String name = null;
+            // also remember further otherConstraints may be used in BKG profile (#1194)
+            List<String> furtherOtherConstraints = new ArrayList<String>();
+            for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
+                String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
+                if (constraintSource == null || constraintSource.trim().isEmpty()) {
+                    log.warn("Empty otherConstraints ! We skip this one");
+                    continue;
+                }
+                constraintSource = constraintSource.trim();
+                // parse JSON
+                boolean isJSON = false;
+                try {
+                    IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
+                    source = (String) json.get("quelle");
+                    url = (String) json.get("url");
+                    name = (String) json.get("name");
+                    isJSON = true;
+                } catch (ParseException e) {
+                    isJSON = false;
+                    if (constraintSource.startsWith( "{" )) {
+                        log.error("Error parsing json from use constraints '" + constraintSource + "'", e);
+                    }
+                }
+                
+                if (!isJSON) {
+                    // no JSON but might be further other constraint (BKG), we also render !
+                    furtherOtherConstraints.add( constraintSource );
+                }
+            }
+
+            String finalValue = getValueFromCodeList(licenceList, constraints);
+            if (finalValue == null || finalValue.trim().isEmpty()) {
+                finalValue = constraints;
+            }
+
+            String value;
+            if (url != null && !url.trim().isEmpty()) {
+                // we have a URL from JSON
+                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                    // we have a different license name from JSON, render it with link
+                    value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, name, finalValue);
+                } else {
+                    // no license name, render whole text with link
+                    value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, finalValue);
+                }
+            } else {
+                // NO URL
+                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                    value = String.format("%s: %s<br>%s", restrictionCode, name, finalValue);
+                } else {
+                    value = String.format("%s: %s", restrictionCode, finalValue);
+                }
+            }
+
+            if (!result.contains(value)) {
+                if (source != null && !source.isEmpty()) {
+                    value += "<br>Quellenvermerk: " + source;
+                }
+                result.add(value);
+            }
+            
+            // also add other constraints if present !
+            for (String furtherConstraint : furtherOtherConstraints) {
+                if (!result.contains(furtherConstraint)) {
+                    result.add(furtherConstraint);                    
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public List<String> getUseLimitations() {
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useLimitation/gco:CharacterString";
+
+        List<String> result = new ArrayList<>();
+
+        NodeList useLimitations = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        if (useLimitations == null) {
+            // Don't continue if no results found
+            return result;
+        }
+
+        for(int i=0; i<useLimitations.getLength(); i++) {
+            Node node = useLimitations.item(i);
+
+            // FIXME >>> Change after redmine ticket #848 is resolved >>>
+            // Temporary solution to get rid of prefix in front of the codelist value
+            String constraints = node.getTextContent();
+            log.debug(String.format("Discovered use limitations: %s", constraints));
+
+            int index = constraints.indexOf(':');
+            if (index >= 0) {
+                constraints = constraints.substring(index+1).trim();
+            }
+            log.debug(String.format("Use limitations are now: %s", constraints));
+            // <<< End of temporary solution <<<
+
+            if (constraints != null && !constraints.trim().isEmpty()) {
+                result.add(constraints);
+            }
+        }
+
+        return result;
+    }
+
     public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, false);
     }
@@ -256,8 +427,8 @@ public class DetailPartPreparer {
      * @param consideredValues values to skip
      * @return list of values to render
      */
-    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, ArrayList<String> consideredValues) {
-        ArrayList<String> list = new ArrayList<String>();
+    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, List<String> consideredValues) {
+        ArrayList<String> list = new ArrayList<>();
         
         List<Node> siblingList = XPathUtils.getSiblingsFromXPath(rootNode, xpathExpression, siblingNodeName, includeSelection);
         if(siblingList == null) {
@@ -305,7 +476,7 @@ public class DetailPartPreparer {
         return XPathUtils.nodeExists(node, xpathExpression);
     }
     
-    public boolean aNodeOfListExist(ArrayList<String> xpathExpressions){
+    public boolean aNodeOfListExist(List<String> xpathExpressions){
         boolean exists = false;
         if(xpathExpressions != null){
             for (int i=0; i<xpathExpressions.size();i++){
@@ -356,12 +527,10 @@ public class DetailPartPreparer {
                     String xpathSubEntryValue = getValueFromXPath(xpathSubEntry, null, tmpNode);
                     if(xpathSubEntryValue != null) {
                         if(xpathSubEntryValue.startsWith("http")) {
-                            ArrayList rootChildren = null;
-                            if(root.get("children") != null) {
-                                rootChildren = (ArrayList) root.get("children");
-                            } else {
-                                rootChildren = new ArrayList<HashMap>();
-                            }
+                           if (root.get("children") == null) {
+                               root.put( "children", new ArrayList<HashMap>() );
+                           }
+                           ArrayList rootChildren = (ArrayList) root.get("children");
                            rootChildren.add(leaf);
                            createNewFolder = true;
                         } else {
@@ -386,12 +555,11 @@ public class DetailPartPreparer {
                                     counter++;
                                     if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
                                         if(path.length() != 0) {
-                                            ArrayList<HashMap> children = null;
-                                            if(folder.get("children") != null) {
-                                                children = (ArrayList) folder.get("children");
-                                            } else {
-                                                children = new ArrayList<HashMap>();
+                                            if(folder.get("children") == null) {
+                                                folder.put( "children", new ArrayList<HashMap>() );
                                             }
+                                            ArrayList<HashMap> children = (ArrayList) folder.get("children");
+                                            
                                             HashMap subMap = null;
                                             for (int j=children.size()-1; j>=0;j--){
                                                 HashMap tmpMap = children.get(j);
@@ -458,15 +626,15 @@ public class DetailPartPreparer {
         return value;
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions) {
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, null);
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList) {
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, headCodeList, null);
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, ArrayList<String> headTitles, ArrayList<String> headXpathExpressions, ArrayList<String> headCodeList, ArrayList<String> headTypes) {
+    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList, List<String> headTypes) {
         HashMap<String, Object> element = new HashMap<String, Object>();
         if(XPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);

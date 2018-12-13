@@ -97,6 +97,24 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("Codelists", CodeListServiceFactory.instance());
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
         context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));
+        context.put("checkedCategoryDevPlan", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN_CHECKED, false ));
+        context.put("checkedCategory10", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_10_CHECKED, false ));
+        context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
+        context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
+        context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
+        
+        String[] mapPosition = PortalConfig.getInstance().getStringArray( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_POSITION);
+        if(mapPosition != null && mapPosition.length == 3) {
+            context.put("mapPosition", mapPosition);
+            context.put("mapExtent", "");
+        } else if(mapPosition != null && mapPosition.length == 4) {
+            context.put("mapExtent", mapPosition);
+            context.put("mapPosition", "");
+        }
+        context.put("mapParamE", request.getParameter("E") != null ? request.getParameter("E"): "");
+        context.put("mapParamN", request.getParameter("N") != null ? request.getParameter("N"): "");
+        context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
+        context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent").split(","): "");
         
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());

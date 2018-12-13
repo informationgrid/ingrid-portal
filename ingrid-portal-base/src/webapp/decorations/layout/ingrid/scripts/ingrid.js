@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -86,7 +86,7 @@ function ingrid_checkGroup(group) {
     if (allChecked) {
         group[0].checked = true;
     } else {
-        group[0].checked = false;       
+        group[0].checked = false;
     }
 }
 
@@ -157,23 +157,23 @@ function adaptPartnerNode(providerElementName, formName) {
 function openNode(element){
     var status = document.getElementById(element).style.display;
     var status_img = document.getElementById(element + "_img").src;
-    
+
     document.getElementById(element).style.display = 'none';
     if(status == "none"){
         document.getElementById(element).style.display = "block";
     }
-    
+
     document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_cat_close.png';
     if(status_img.indexOf('/ingrid-portal-apps/images/facete/facete_cat_close.png') != -1){
         document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_cat_open.png';
-    }   
-    
+    }
+
 }
 
 /* Open and close facete */
 function openFaceteNode(element, id_facete, id_hits){
     var status_img = document.getElementById(element + "_img").src;
-    
+
     if(status_img.indexOf('/ingrid-portal-apps/images/facete/facete_close.png') > -1){
         document.getElementById(element).style.display = "block";
         document.getElementById(element + "_img").src = '/ingrid-portal-apps/images/facete/facete_open.png';
@@ -185,7 +185,7 @@ function openFaceteNode(element, id_facete, id_hits){
         document.getElementById(id_hits).setAttribute('class', "openNode");
         document.getElementById(id_facete).setAttribute('class', "closeNode");
     }
-    
+
 }
 
 /* select all checkboxes in form */
@@ -260,9 +260,9 @@ function showButtonSelectCheckboxForm (form, button, coordDiv){
         if(form[i].checked){
             isSelect = true;
             break;
-        }       
+        }
     }
-    
+
     if(isSelect && divStatus != null){
         if(status == "none"){
             document.getElementById(button).style.display = "inline";
@@ -272,7 +272,7 @@ function showButtonSelectCheckboxForm (form, button, coordDiv){
             document.getElementById(button).style.display = "none";
         }
     }
-    
+
 }
 
 function getAndSetMultiple(ob){
@@ -316,7 +316,7 @@ function getOSMLayer(attribution){
         osmAttrib = osmAttrib + "" + attribution;
     }
     var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
-    
+
     return osm;
 }
 
@@ -328,24 +328,25 @@ function getWMSLayer(layerUrl, layerName, attribution){
     var osm = new L.tileLayer.wms(layerUrl, {
         layers: layerName
     });
-    
+
     return osm;
 }
 
-function addLeafletMap(baselayers, bounds, latlng){
+function addLeafletMap(baselayers, bounds, latlng, zoom){
     var map = new L.Map('map', {
        layers: baselayers
     });
     if(bounds){
-        map.fitBounds(bounds);
-    }else{
-        map.setView(latlng,6);
+      map.fitBounds(bounds);
+    } else if(latlng) {
+      map.setView(latlng, zoom || 6);
+    } else {
+      map.setView(new L.LatLng(51.3, 10), 6);
     }
-
-    return map; 
+    return map;
 }
 
-function addLeafletHomeControl(map, title, position, icon, bounds, latlng){
+function addLeafletHomeControl(map, title, position, icon, bounds){
  // Controls
     var HomeControl = L.Control.extend({
         options: {
@@ -358,22 +359,20 @@ function addLeafletHomeControl(map, title, position, icon, bounds, latlng){
             link.href = '#';
             link.style.padding = '5px 0 0 0';
             link.title = title;
-            
+
             // ... initialize other DOM elements, add listeners, etc.
             L.DomEvent.addListener(link, 'click', this._homeClick, this);
-    
+
             return container;
         },
         _homeClick: function(e) {
             L.DomEvent.stop(e);
             if(bounds){
                 map.fitBounds(bounds);
-            }else{
-                map.setView(latlng,6);
             }
         }
     });
-    
+
     map.addControl(new HomeControl({}));
 }
 
@@ -398,7 +397,7 @@ function getLinkFileSize(url, element)
             }
         }
     };
-    http.send(); 
+    http.send();
     return ('');
 }
 
@@ -415,10 +414,10 @@ function convertFileSize(bytes, si) {
         bytes /= thresh;
         ++u;
     } while(Math.abs(bytes) >= thresh && u < units.length - 1);
-    
+
     var unit = units[u];
     var val = bytes.toFixed(1);
-    
+
     if((units[u] == units[0]) && (val / 1000 >= 0.1)){
         return (val / 1009).toFixed(1) + ' ' + units[1];
     }
@@ -427,16 +426,22 @@ function convertFileSize(bytes, si) {
 
 function checkPassword(pwd, idMeter, idText) {
     var meter = document.getElementById(idMeter);
+    // fallback meter needed for IE browser compability
+    var fallBackMeter = meter.lastElementChild.lastElementChild;
     var text = document.getElementById(idText);
 
     if (pwd != '') {
         var result = zxcvbn(pwd);
         meter.value = result.score;
         meter.style.display = 'block';
+        // 4 is the max score from zxcvbn
+        fallBackMeter.style.width =  (result.score/4 * 100)+"%";
+        fallBackMeter.style.background =  meterStrengthColors[result.score];
         text.innerHTML = meterStrength[result.score];
     } else {
         text.innerHTML  = ' ';
         meter.value = 0;
+        fallBackMeter.style.width = "0%";
         meter.style.display = 'none';
     }
 }

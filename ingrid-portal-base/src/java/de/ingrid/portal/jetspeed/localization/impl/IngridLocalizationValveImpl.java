@@ -86,12 +86,13 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
                 }
 
                 Locale ingridLocale = new Locale(language, country, variant);
-                if (ingridLocale.getLanguage().length() == 0) {
-                    // not a valid language
+                try {
+                    ingridLocale.getISO3Language();
+                    log.debug("INGRID language set: " + ingridLocale);
+                }catch (java.util.MissingResourceException e) {
                     ingridLocale = null;
+                    // not a valid language
                     log.error("Invalid or unrecognized INGRID language: " + language);
-                } else {
-                    log.info("INGRID language set: " + ingridLocale);
                 }
 
                 if (ingridLocale != null) {
