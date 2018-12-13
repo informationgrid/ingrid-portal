@@ -30,21 +30,42 @@ define([
     // issue: 1720
     return declare(null, {
         title: "Pflichteingabe Herausgeber",
-        description: "Stellt sicher, dass Herausgeber definiert ist.",
+        description: "Stellt sicher, dass Herausgeber definiert ist und die Download-Tabelle gültige Links hat.",
         defaultActive: true,
         type: "SYSTEM",
         category: "mcloud",
         run: function() {
+            var self = this;
             return topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
-                // get name of codelist entry for entry-id "10" = "publisher"/"Herausgeber"
-                var entryNamePublisher = UtilSyslist.getSyslistEntryName(505, 10);
+                self.validateAddress(notPublishableIDs);
 
-                // check if entry already exists in table
-                var data = UtilGrid.getTableData("generalAddress");
-                var containsPublisher = array.some(data, function(item) { if (item.nameOfRelation == entryNamePublisher) return true; });
-                if (!containsPublisher)
-                    notPublishableIDs.push(["generalAddress", "Es muss ein Herausgeber als Adresse angegeben sein."]);
+                self.validateDownloads(notPublishableIDs);
             });
+        },
+
+        validateAddress: function(notPublishableIDs) {
+            // get name of codelist entry for entry-id "10" = "publisher"/"Herausgeber"
+            var entryNamePublisher = UtilSyslist.getSyslistEntryName(505, 10);
+
+            // check if entry already exists in table
+            var data = UtilGrid.getTableData("generalAddress");
+            var containsPublisher = array.some(data, function(item) { if (item.nameOfRelation == entryNamePublisher) return true; });
+            if (!containsPublisher) {
+                notPublishableIDs.push(["generalAddress", "Es muss ein Herausgeber als Adresse angegeben sein."]);
+            }
+        },
+
+        validateDownloads: function (notPublishableIDs) {
+            var data = UtilGrid.getTableData("mcloudDownloads");
+
+            var isValid = array.every(data, function(item) {
+                return item.link.length > 0
+                    && (item.link.indexOf("http:") === 0 || item.link.indexOf("https:") === 0);
+            });
+
+            if (!isValid) {
+                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit 'http:' oder 'https:' beginnt."]);
+            }
         }
     })();
 });

@@ -245,7 +245,7 @@ define(["dojo/_base/declare",
                 },
                 {
                     field: 'link',
-                    name: 'Link',
+                    name: 'Link*',
                     editable: true,
                     width: '200px'
                 },
