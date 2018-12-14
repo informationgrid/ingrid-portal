@@ -63,7 +63,7 @@ require([
 
         // Init the select box dp
         var addressClassWidget = registry.byId("addressClassSelect");
-        var valueList = getOptionsForParentClass(parentClass);
+        var valueList = getOptionsForParentClass(parentClass, customParams.parentClass === 1000);
 
         //addressClassWidget.dataProvider.setData(valueList);
         UtilStore.updateWriteStore("addressClassSelect", valueList, {label:'0', identifier:'1'});
@@ -86,7 +86,7 @@ require([
         return parent;
     }
 
-    function getOptionsForParentClass(parentClass) {
+    function getOptionsForParentClass(parentClass, isFolder) {
         var valueList = [];
         switch (parentClass) {
             case -2:    // Free Address Root
@@ -95,7 +95,9 @@ require([
 
             case -1: // Root Address
                 valueList.push(["<fmt:message key='address.type.institution' />", "0"]);
-                valueList.push(["<fmt:message key='address.type.custom' />", "3"]);
+                if (!isFolder) {
+                    valueList.push(["<fmt:message key='address.type.custom' />", "3"]);
+                }
                 break;
 
             case 0: // Institution
