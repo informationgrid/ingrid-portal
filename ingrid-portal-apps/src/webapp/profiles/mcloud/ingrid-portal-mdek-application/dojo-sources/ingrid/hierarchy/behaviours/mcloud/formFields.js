@@ -124,6 +124,12 @@ define(["dojo/_base/declare",
                     domClass.add(item, "hide");
                 }
             });
+
+            // hide publication in addresses
+            domClass.add("uiElement4571_at0", "hide");
+            domClass.add("uiElement4571_at1", "hide");
+            domClass.add("uiElement4571_at2", "hide");
+            domClass.add("uiElement4571_at3", "hide");
         },
 
         setDefaultFieldVisibility: function() {
