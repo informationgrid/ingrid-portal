@@ -74,7 +74,9 @@ define({
     "mcloud.form.relevance": "Aktualität / Zeitraum",
     "mcloud.form.dateUpdated": "Aktualisierungsdatum",
     "mcloud.form.realTimeData": "Echtzeitdaten",
-    "mcloud.form.mFundFKZ": "mFund Förderkennzeichen",
+    "mcloud.form.mFundFKZ": "mFUND Projekt",
+    "mcloud.form.mFundFKZ.helpMessage": "Hier wird das mFUND Projekt eingetragen.",
+    "mcloud.form.mFundFKZ": "mFUND Förderkennzeichen",
     "mcloud.form.mFundFKZ.helpMessage": "Dieses Feld ist nur von Datenbereitstellern auszufüllen, die aus der Förderinitiative mFUND des BMVI gefördert werden.<br /><br />Das Förderkennzeichen wird nach diesem Muster eingetragen:<br />19F1030 oder<br />19F1030A",
 
     "mcloud.form.general": "Allgemein",

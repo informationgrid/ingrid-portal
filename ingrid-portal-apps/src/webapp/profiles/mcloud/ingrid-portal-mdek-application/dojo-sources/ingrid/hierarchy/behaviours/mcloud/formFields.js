@@ -401,12 +401,28 @@ define(["dojo/_base/declare",
             // id = "mcloudRealTimeData";
 
             /*
+             * mFUND Projekt
+             */
+            id = "mcloudMFundProject";
+            construct.place(
+                creator.createDomTextbox({
+                    id: id,
+                    style: "width: 50%",
+                    name: message.get("mcloud.form.mFundProject"),
+                    help: message.get("mcloud.form.mFundProject.helpMessage"),
+                    visible: "show"}),
+                rubric);
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            /*
              * Förderkennzeichen mFund
              */
             id = "mcloudMFundFKZ";
             construct.place(
                 creator.createDomTextbox({
                     id: id,
+                    style: "width: 50%",
                     name: message.get("mcloud.form.mFundFKZ"),
                     help: message.get("mcloud.form.mFundFKZ.helpMessage"),
                     visible: "show"}),
