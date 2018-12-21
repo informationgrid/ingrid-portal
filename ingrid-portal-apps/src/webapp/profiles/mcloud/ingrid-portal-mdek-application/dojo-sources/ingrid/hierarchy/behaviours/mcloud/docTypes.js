@@ -69,6 +69,10 @@ define(["dojo/_base/declare",
                     sysLists[502] = sysLists[502].filter(function(item) {
                         return item[1] !== "2";
                     });
+                    // remove communication items "Telex" and "X.400"
+                    sysLists[4430] = sysLists[4430].filter(function(item) {
+                        return item[1] !== "5" && item[1] !== "6";
+                    });
                 }, 200);
             });
 
