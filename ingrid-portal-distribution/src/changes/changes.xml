@@ -38,6 +38,9 @@
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
           </action>
+          <action type="fix" dev="wemove" issue="1264">
+            Portal: Fix piwik on (profile) velocity macro and remove unused piwik setting.
+          </action>
           <action type="add" dev="wemove" issue="1162">
             MapClient: Add display layer category dependency on layer form page.
           </action>
