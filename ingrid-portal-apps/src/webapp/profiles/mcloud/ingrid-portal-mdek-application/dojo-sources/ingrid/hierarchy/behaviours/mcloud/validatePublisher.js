@@ -63,9 +63,9 @@ define([
             var data = UtilGrid.getTableData("mcloudDownloads");
 
             var isValid = array.every(data, function(item) {
-                return item.link.length > 0
+                return item.link && item.link.length > 0
                     && (item.link.indexOf("http:") === 0 || item.link.indexOf("https:") === 0)
-                    && item.sourceType.trim().length > 0;
+                    && item.sourceType && item.sourceType.trim().length > 0;
             });
 
             if (!isValid) {
