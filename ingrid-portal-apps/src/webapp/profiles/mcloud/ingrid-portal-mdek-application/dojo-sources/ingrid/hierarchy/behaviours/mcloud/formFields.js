@@ -273,7 +273,7 @@ define(["dojo/_base/declare",
                 },
                 {
                     field: 'sourceType',
-                    name: 'Typ',
+                    name: 'Typ*',
                     type: Editors.SelectboxEditor,
                     editable: true,
                     // listId: codelist,
@@ -309,7 +309,7 @@ define(["dojo/_base/declare",
                 },*/
                 {
                     field: 'dateFormat',
-                    name: 'Datenformat*',
+                    name: 'Datenformat',
                     type: Editors.ComboboxEditor,
                     editable: true,
                     // listId: codelist,

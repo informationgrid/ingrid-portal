@@ -65,11 +65,11 @@ define([
             var isValid = array.every(data, function(item) {
                 return item.link.length > 0
                     && (item.link.indexOf("http:") === 0 || item.link.indexOf("https:") === 0)
-                    && item.dateFormat.trim().length > 0;
+                    && item.sourceType.trim().length > 0;
             });
 
             if (!isValid) {
-                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit 'http:' oder 'https:' beginnt. Außerdem muss ein Datenformat angegeben sein."]);
+                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit 'http:' oder 'https:' beginnt. Außerdem muss ein Typ angegeben sein."]);
             }
         }
     })();
