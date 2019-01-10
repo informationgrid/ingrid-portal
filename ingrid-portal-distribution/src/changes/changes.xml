@@ -6,10 +6,16 @@
     </properties>
 
     <body>
+        <release version="4.4.7" date="2019-01-10" description="Release 4.4.7">
+          <action type="fix" dev="wemove" issue="1248">
+            UVP: Fix statistic
+          </action>
+        </release>
+
         <release version="4.4.6" date="2018-10-16" description="Release 4.4.6">
-		      <action type="add" dev="wemove" issue="REDMINE-1189">
-		        Add NRW "Vorschaltseite" and change display of BLP Marker: take "Flaechennutzungsplaene" and "Bebauungsplaene".
-		      </action>
+          <action type="add" dev="wemove" issue="REDMINE-1189">
+            Add NRW "Vorschaltseite" and change display of BLP Marker: take "Flaechennutzungsplaene" and "Bebauungsplaene".
+          </action>
           <action type="fix" dev="wemove" issue="1176">
             Portal: Fix password strength indicator for IE11.
           </action>
