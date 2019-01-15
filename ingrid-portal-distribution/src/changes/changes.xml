@@ -41,6 +41,9 @@
           <action type="fix" dev="wemove" issue="1264">
             Portal: Fix piwik on (profile) velocity macro and remove unused piwik setting.
           </action>
+          <action type="add" dev="wemove" issue="415">
+            MapClient: Compress of layers URL parameter.
+          </action>
           <action type="add" dev="wemove" issue="1162">
             MapClient: Add display layer category dependency on layer form page.
           </action>
