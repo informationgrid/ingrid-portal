@@ -57,6 +57,8 @@ define(["dojo/_base/declare",
             // make Geothesaurus optional and remove validation after initialization
             require("ingrid/hierarchy/objectLayout").deferredCreation.then(function() {
                 domClass.replace("uiElementN006", "outer optional");
+                domClass.add('uiElement5030', 'show');
+                domClass.remove('uiElement5030', ['required', 'optional']);
                 validation.spatialRefAdminUnitPublishable = function() {};
                 spatialRefAdminUnitPublishable = function() {};
             });
