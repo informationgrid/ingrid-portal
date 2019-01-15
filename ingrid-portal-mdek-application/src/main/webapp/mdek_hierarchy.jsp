@@ -681,7 +681,7 @@
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input id="ref1AxisDimSize" />
+                                                    <input listId="529" id="ref1AxisDimSize" />
                                                 </span>
                                             </div>
                                         </span>

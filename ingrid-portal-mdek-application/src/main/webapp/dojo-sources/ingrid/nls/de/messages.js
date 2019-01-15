@@ -952,6 +952,7 @@ define({
     "ui.sysList.526": "Objektklasse 1 - Digitale Repräsentation",
     "ui.sysList.527": "ISO-Themenkategorie",
     "ui.sysList.528": "Vektorformat -Topologieinformation",
+    "ui.sysList.529": "ISO - Bezeichnung der Dimension",
     "ui.sysList.1100": "Freier Raumbezug",
     "ui.sysList.1200": "Zeitbezug",
     "ui.sysList.1230": "Zeitbezug - Alle...",

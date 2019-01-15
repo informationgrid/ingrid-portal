@@ -465,7 +465,9 @@ define([
                 /* Add spatialRepresentationInfo (REDMINE-381) */
                 new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
-                new ValidationTextBox({style: "width:100%;"}, "ref1AxisDimName");
+                layoutCreator.createFilteringSelect("ref1AxisDimName", null, lang.clone(storeProps), function() {
+                    return UtilSyslist.getSyslistEntry(529);
+                });
                 new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
                 new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
                 
