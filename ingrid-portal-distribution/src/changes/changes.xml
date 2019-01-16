@@ -35,6 +35,12 @@
           <action type="fix" dev="wemove">
             Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
           </action>
+          <action type="add" dev="wemove" issue="880">
+            IGE(UVP): Show invalid filename characters in upload dialog.
+          </action>
+          <action type="add" dev="wemove" issue="1213">
+            IGE(UVP): Remove help text from radio button.
+          </action>
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
           </action>
