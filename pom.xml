@@ -27,9 +27,9 @@
 
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>4.6.0-SNAPSHOT</mdek.version>
+    <mdek.version>4.6.0</mdek.version>
     <webmap-client.version>4.6.0-SNAPSHOT</webmap-client.version>
-    <ingrid-codelist-service.version>4.6.0-SNAPSHOT</ingrid-codelist-service.version>
+    <ingrid-codelist-service.version>4.5.2</ingrid-codelist-service.version>
   </properties>
 
     <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
