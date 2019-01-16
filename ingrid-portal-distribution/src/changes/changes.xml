@@ -41,6 +41,9 @@
           <action type="add" dev="wemove" issue="1213">
             IGE(UVP): Remove help text from radio button.
           </action>
+          <action type="add" dev="wemove" issue="1217">
+            IGE(UVP): Update delete message.
+          </action>
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
           </action>
