@@ -727,8 +727,11 @@ define([
                 var labelSpanElement = document.createElement("span");
                 domClass.add(labelSpanElement, "label left");
                 var labelElement = document.createElement("label");
-                //domClass.add(labelElement, "inActive");
-                labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                if (additionalField.help) {
+                    labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                } else {
+                    domClass.add(labelElement, "inActive");
+                }
                 labelElement.innerHTML = additionalField.label;
                 labelSpanElement.appendChild(labelElement);
 

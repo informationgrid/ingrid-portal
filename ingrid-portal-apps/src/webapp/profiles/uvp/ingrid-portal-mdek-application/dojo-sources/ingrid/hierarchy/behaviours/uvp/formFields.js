@@ -331,8 +331,7 @@ define(["dojo/_base/declare",
                     id: "preExaminationAccomplished",
                     isMandatory: true, 
                     name: [message.get("uvp.form.preExaminationAccomplished.yes"), message.get("uvp.form.preExaminationAccomplished.no")],
-                    label: message.get("uvp.form.preExaminationAccomplished.label"),
-                    help: message.get("uvp.form.preExaminationAccomplished.helpMessage")
+                    label: message.get("uvp.form.preExaminationAccomplished.label")
                 }
             );
 
