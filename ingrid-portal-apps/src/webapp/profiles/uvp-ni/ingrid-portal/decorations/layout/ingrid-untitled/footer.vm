@@ -83,7 +83,7 @@
         <script type="text/javascript">
         var domain = document.domain;
         if(domain == "uvp.niedersachsen.de"){
-            var pkBaseURL = (("https:" == document.location.protocol) ? "https://numis.niedersachsen.de/piwik/" : "http://numis.niedersachsen.de/piwik/");
+            var pkBaseURL = (("https:" == document.location.protocol) ? "https://matomo.niedersachsen.de/" : "http://matomo.niedersachsen.de/");
             document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
         }
         </script>
@@ -94,7 +94,7 @@
                 piwikTracker.enableLinkTracking();
             } catch( err ) {
             }
-        </script><noscript><p><img src="https://numis.niedersachsen.de/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
+        </script><noscript><p><img src="https://matomo.niedersachsen.de/piwik.php?idsite=4" style="border:0" alt="" /></p></noscript>
         <!-- End Piwik Tag -->
     </body>
 </html>

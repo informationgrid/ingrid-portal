@@ -62,7 +62,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class", "uvp_steps"};
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-    private static final String[] REQUESTED_FIELDS_BLP_MARKER = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress", "fnp_url_finished", "fnp_url_in_progress", "bp_url_finished", "bp_url_in_progress" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
@@ -160,19 +160,41 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             String lon_center = UtilsSearch.getDetailValue( detail, "x1", 1);
                             String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
                             String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
+                            // General "Bauleitplanung"
                             String urlFinished = UtilsSearch.getDetailValue( detail, "blp_url_finished" );
                             String urlInProgress = UtilsSearch.getDetailValue( detail, "blp_url_in_progress" );
+                            // Flächennutzungsplan
+                            String urlFnpFinished = UtilsSearch.getDetailValue( detail, "fnp_url_finished" );
+                            String urlFnpInProgress = UtilsSearch.getDetailValue( detail, "fnp_url_in_progress" );
+                            // Bebauungsplan
+                            String urlBpFinished = UtilsSearch.getDetailValue( detail, "bp_url_finished" );
+                            String urlBpInProgress = UtilsSearch.getDetailValue( detail, "bp_url_in_progress" );
                             JSONObject jsonDataEntry = new JSONObject();
                             jsonDataEntry.put("id", cnt);
                             jsonDataEntry.put("name", blpName);
                             jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( lat_center.trim()) ).put(Double.parseDouble(lon_center.trim())));
                             JSONArray bpInfos = new JSONArray();
+                            // Bauleitplaung
                             if (urlInProgress != null && !urlInProgress.isEmpty()) {
                                 bpInfos.put( new JSONObject().put( "url", urlInProgress ).put( "tags", "p" ) );
                             }
-                            if (urlInProgress != null && !urlFinished.isEmpty()) {
+                            if (urlFinished != null && !urlFinished.isEmpty()) {
                                 bpInfos.put( new JSONObject().put( "url", urlFinished ).put( "tags", "v" ) );
                             }
+                            // Flächennutzungsplanung
+                            if (urlFnpInProgress != null && !urlFnpInProgress.isEmpty()) {
+                                bpInfos.put( new JSONObject().put( "url", urlFnpInProgress ).put( "tags", "p_fnp" ) );
+                            }
+                            if (urlFnpFinished != null && !urlFnpFinished.isEmpty()) {
+                                bpInfos.put( new JSONObject().put( "url", urlFnpFinished ).put( "tags", "v_fnp" ) );
+                            }
+                            // Bebauungsplanung
+                            if (urlBpInProgress != null && !urlBpInProgress.isEmpty()) {
+                                bpInfos.put( new JSONObject().put( "url", urlBpInProgress ).put( "tags", "p_bp" ) );
+                            }
+                            if (urlBpFinished != null && !urlBpFinished.isEmpty()) {
+                                bpInfos.put( new JSONObject().put( "url", urlBpFinished ).put( "tags", "v_bp" ) );
+                            }                            
                             jsonDataEntry.put("bpinfos", bpInfos);
                             if (blpDescription != null && !blpDescription.isEmpty()) {
                                 jsonDataEntry.put( "descr", blpDescription);

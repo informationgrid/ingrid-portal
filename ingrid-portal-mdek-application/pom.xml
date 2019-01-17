@@ -3,7 +3,7 @@
     <parent>
         <groupId>de.ingrid.portal</groupId>
         <artifactId>ingrid-portal-project</artifactId>
-        <version>4.5.0</version>
+        <version>4.6.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -19,6 +19,7 @@
     </properties>
     <build>
         <finalName>ingrid-portal-mdek-application</finalName>
+        <outputDirectory>target/ingrid-portal-mdek-application/WEB-INF/classes</outputDirectory>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>

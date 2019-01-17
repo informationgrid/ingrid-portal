@@ -9,8 +9,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-        #includeHeaderResource()
         #set($currentPage = $site.getPageOrTemplate().url)
         <!--
         #if($currentPage)
@@ -19,7 +17,7 @@
             #end
         #end
         -->
-        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
+        <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
         <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "NUMIS - Das nieders&auml;chsische Umweltportal")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
@@ -36,10 +34,10 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href="#GetPageResource('css/google/robotocondensed/v13/css/fonts.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
-        <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"/>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
@@ -58,17 +56,17 @@
         <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
         <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
         <!-- Pickadate -->
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
+        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
         #set($lang = $renderRequest.Locale.getLanguage())
         #if($lang && $lang != "en")
-            <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
+            <script src='#GetPageResource("scripts/pickadate/lib/translations/${lang}.js")'></script>
         #end
         <!-- zxcvbn -->
         <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
     </head>
-    <body class="ingrid">
+    <body>
     
     #set($mainMenu = $site.getMenu("main-menu"))
     #set($serviceMenu = $site.getMenu("service-menu"))
@@ -76,33 +74,57 @@
     #if(!$mainMenu.empty)
         #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
     #end
-    <div id="wrapper" >
+    <div class="page" >
         <header class="header">
-            <div class="ob-box-wide ob-box-padded ob-box-center">
-                <div class="header_content">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                            <svg class="icon">
-                                <use xlink:href="#burger">
-                            </svg>
-                            <svg class="icon ob-fade">
-                                <use xlink:href="#cross">
-                            </svg>
-                        </div>
+            <div class="ob-box-padded-more ob-box-center">
+                <div class="header__widgets__section">
+                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <svg class="icon">
+                        <use xlink:href="#burger">
+                        </svg>
+                        <svg class="icon ob-fade">
+                        <use xlink:href="#cross">
+                        </svg>
                     </div>
-                    <div class="header__widgets__section header_logo_section">
-                        <a class="header__logo header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                            <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/mu-logo.png')"></img>
-                            <img class="mq-show-xxl mq-hide-m mobile__logo" src="#GetPageResource('images/template/mu-logo.png')"></img>
-                            <img class="mq-show-m mobile__logo" src="#GetPageResource('images/template/mobile-logo.png')"></img>
-                        </a>
-                    </div>
-                    #if($serviceMenu && !$serviceMenu.empty)
-                        #includeServiceNavigation($serviceMenu)
-                    #end
-                    #if(!$mainMenu.empty)
-                        #includeMainNavigation($mainMenu)
-                    #end
                 </div>
+                <div class="header__widgets__section">
+                    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
+                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
+                    </a>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
+                        <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
+                    </a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">NUMIS <span class="mq-hide-l">- Das niedersächsische Umweltportal</span></a>
+                </div>
+                 #if($serviceMenu && !$serviceMenu.empty)
+                    #includeServiceNavigation($serviceMenu)
+                #end
             </div>
+        #if(!$mainMenu.empty)
+          #includeMainNavigation($mainMenu)
+        #end
         </header>
+        <!--
+        #if($currentPage != "/main-maps.psml")
+            <section class="breadcrumb ob-box-padded-more mq-hide-l">
+                <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
+                <nav class="breadcrumb__list">
+                    <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+                #if($currentPage)
+                    #if($currentPage == "/search-detail.psml")
+                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                    #end
+                    #if($currentPage != "/default-page.psml")
+                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                    #end
+                #end
+                </nav>
+            </section>
+        #end
+        -->

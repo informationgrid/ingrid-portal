@@ -62,6 +62,8 @@ public class DetailDataPreparerFactory {
 		
 		if (version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || version.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
 			return new DetailDataPreparerIDF2_0_0Generic(context, iplugId, request, response);
+		} else if (version.equals(IPlugVersionInspector.VERSION_UNKNOWN)) {
+			return new DetailDataPreparerGeneric(context, dateFields, request, replacementFields);
 		}
 		
 		return null;

@@ -67,7 +67,7 @@
         <!-- zxcvbn -->
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
     </head>
-    <body class="ingrid">
+    <body>
     
     #set($mainMenu = $site.getMenu("main-menu"))
     #set($serviceMenu = $site.getMenu("service-menu"))
@@ -75,33 +75,57 @@
     #if(!$mainMenu.empty)
         #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
     #end
-    <div id="wrapper" >
+    <div class="page" >
         <header class="header">
-            <div class="ob-box-wide ob-box-padded ob-box-center">
-                <div class="header_content">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                            <svg class="icon">
-                                <use xlink:href="#burger">
-                            </svg>
-                            <svg class="icon ob-fade">
-                                <use xlink:href="#cross">
-                            </svg>
-                        </div>
+            <div class="ob-box-padded-more ob-box-center">
+                <div class="header__widgets__section">
+                    <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
+                        <svg class="icon">
+                        <use xlink:href="#burger">
+                        </svg>
+                        <svg class="icon ob-fade">
+                        <use xlink:href="#cross">
+                        </svg>
                     </div>
-                    <div class="header__widgets__section header_logo_section">
-                        <a class="header__logo header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/mu-logo.png"></img>
-                            <img class="mq-show-xxl mq-hide-m mobile__logo" src="/decorations/layout/ingrid/images/template/niedersachsen.png"></img>
-                            <img class="mq-show-m mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>
-                        </a>
-                    </div>
-                    #if($serviceMenu && !$serviceMenu.empty)
-                        #includeServiceNavigation($serviceMenu)
-                    #end
-                    #if(!$mainMenu.empty)
-                        #includeMainNavigation($mainMenu)
-                    #end
                 </div>
+                <div class="header__widgets__section">
+                    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg">
+                        <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png">
+                    </a>
+                </div>
+                <div class="header__widgets__section">
+                    <a class="mq-hide-xxl desktop__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                        <p class="main__title">$MESSAGES.getString('ingrid.header.title.main')</p>
+                        <p class="sub__title">$MESSAGES.getString('ingrid.header.title.sub')</p>
+                    </a>
+                    <a class="mq-show-xxl mobile__title" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">NUMIS <span class="mq-hide-l">- Das niedersächsische Umweltportal</span></a>
+                </div>
+                 #if($serviceMenu && !$serviceMenu.empty)
+                    #includeServiceNavigation($serviceMenu)
+                #end
             </div>
+        #if(!$mainMenu.empty)
+          #includeMainNavigation($mainMenu)
+        #end
         </header>
+        <!--
+        #if($currentPage != "/main-maps.psml")
+            <section class="breadcrumb ob-box-padded-more mq-hide-l">
+                <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
+                <nav class="breadcrumb__list">
+                    <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+                #if($currentPage)
+                    #if($currentPage == "/search-detail.psml")
+                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                    #end
+                    #if($currentPage != "/default-page.psml")
+                        <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                    #end
+                #end
+                </nav>
+            </section>
+        #end
+        -->

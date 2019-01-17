@@ -1,0 +1,299 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+img {
+  max-width: none;
+}
+
+a {
+  color: #1b5768;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+  border: 1px solid #1b5768;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #1b5768;
+}
+
+.field--success {
+  border: 2px solid #1B5768 !important;
+}
+
+.field-toggle__label--highlight .icon {
+  fill: #1b5768;
+}
+
+input:checked + .field-toggle__label--highlight .field-toggle__icon {
+  border-color: #1b5768;
+  box-shadow: 0 0 0 1px #1b5768;
+}
+
+thead {
+  border-bottom: 2px solid #1b5768;
+}
+
+.table__sort-toggle .icon {
+  fill: #1b5768;
+}
+
+.btn--primary {
+  background: #e10019;
+}
+
+.btn--secondary {
+  color: #1B5768 !important;
+}
+
+.btn {
+  border: 1px solid #e10019;
+}
+
+.btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
+  background: #B8061A;
+  border-color: #B8061A;
+}
+
+.btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  background: #1b5768;
+}
+
+.icon-active {
+  fill: #1b5768;
+}
+
+.link--alt:hover {
+  color: #1b5768;
+}
+
+.category-list a:hover {
+  color: #1b5768;
+}
+
+.list--checked .icon {
+  fill: #1b5768;
+}
+
+.nav__container__content:active {
+  color: #1b5768;
+}
+
+.nav__foot a:hover {
+  background: #9d9c9c;
+}
+
+.nav-desktop {
+  background: #9d9c9c;
+  border-bottom: 4px solid #1b5768;
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  background: #1b5768;
+}
+
+.nav-desktop__dropdown {
+  border-top: 8px solid #1b5768;
+}
+
+.nav-desktop__dropdown a:hover, .nav-desktop__dropdown a:active {
+  color: #1B5768 !important;
+}
+
+.nav__dropdown-item a:active {
+  color: #1B5768 !important;
+}
+
+.dropmenu .is-active {
+  color: #1b5768;
+}
+
+.metamenu__link.is-active {
+  color: #1b5768;
+}
+
+.nav-overlay {
+  background: #1b5768;
+}
+
+.nav-overlay__item--level1 {
+  border-bottom: 1px solid #9d9c9c;
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+  background: #9D9C9C;
+}
+
+.no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
+.nav-overlay__item--level3:hover,
+.nav-overlay__item--level3.is-active {
+  color: #1b5768;
+}
+
+.search-form input {
+  border-color: #1b5768;
+}
+
+.pagination__list a[href] .icon {
+  fill: #1b5768;
+}
+
+.tab__toggles {
+  color: #1b5768;
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+  color: #1b5768;
+}
+
+.tab__select {
+  background: #1b5768;
+}
+
+.tab__select:hover, .tab__select.is-active {
+  background: #1b5768;
+}
+
+.tab__toggle.is-active a {
+  color: #1b5768;
+}
+
+.message--success {
+  color: #1b5768;
+}
+
+.message-fill--success .icon {
+  fill: #1b5768;
+}
+
+.no-touchevents .tooltip:hover {
+  border-color: #1b5768;
+}
+.no-touchevents .tooltip:hover .tooltip__icon {
+  fill: #1b5768;
+}
+
+.popup__header {
+  border-bottom: 2px solid #1b5768;
+}
+
+.teaser__box {
+  border-top: 4px solid #1b5768;
+}
+
+.no-touchevents .filter__title:hover {
+  color: #1b5768;
+}
+
+.no-touchevents .sidebar-filter-subheader:hover {
+  color: #1b5768;
+}
+
+.no-touchevents .sidebar-filter-content ul a:hover {
+  color: #1b5768;
+}
+
+.no-touchevents .tree__toggle:hover {
+  border-color: #1b5768;
+  box-shadow: 0 1px 0 #1b5768;
+}
+
+.no-touchevents .header__widget > a:hover {
+  color: #1b5768;
+}
+
+.header__widget__icon.is-active {
+  fill: #1b5768;
+}
+
+.nav-toggle {
+  color: #c1bfbf !important;
+}
+
+.nav-toggle:after {
+  border-color: transparent transparent #1B5768 transparent;
+}
+
+.footer {
+  color: #1b5768;
+}
+
+.footer__top-link {
+  background: #1b5768;
+}
+
+.footer__logo {
+  width: unset;
+  fill: #1b5768;
+}
+
+.social_media_icon .icon {
+  fill: #1b5768;
+}
+
+.ob-border-brand {
+  border: 1px solid #1B5768 !important;
+}
+
+.tx-highlight {
+  color: #1B5768 !important;
+}
+
+@media screen and (min-width: 640px) {
+  .pagination__number:hover, .pagination__number.is-active {
+    color: #1b5768;
+    box-shadow: inset 0 -4px 0 0 #1b5768;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: inset 0 -2px 0 0 #1B5768, 0 4px 0 0 #1b5768;
+  }
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #1b5768;
+  }
+}
+
+@media screen and (min-width: 940px) {
+  .header__widget > a {
+    color: #1b5768;
+  }
+
+  .no-touchevents .header__widget > a:hover {
+    color: #1b5768;
+  }
+
+  .header__widget__icon.is-active {
+    fill: #1b5768;
+  }
+}

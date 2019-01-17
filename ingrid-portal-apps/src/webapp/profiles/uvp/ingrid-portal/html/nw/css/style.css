@@ -95,3 +95,7 @@ a {
         margin-left: 0;
     }
 }
+
+p .icon {
+    height: 0.7em;
+}

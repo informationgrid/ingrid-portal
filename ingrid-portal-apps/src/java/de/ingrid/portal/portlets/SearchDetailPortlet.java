@@ -77,6 +77,8 @@ import de.ingrid.utils.udk.UtilsLanguageCodelist;
 public class SearchDetailPortlet extends GenericVelocityPortlet {
     private final static Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
 
+    private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/detail/search_detail_generic.vm";
+
     private final static String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
     
     // ecs fields that represent a date, used for date parsing and formating
@@ -163,8 +165,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
-        context.put("piwik", PortalConfig.getInstance().getString(PortalConfig.ENABLE_PIWIK));
-        
+
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURL" );
         request.setAttribute( "restUrlHttpGet", restUrl.toString() );
@@ -397,6 +398,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 
                 if (iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT) || iPlugVersion.equals(IPlugVersionInspector.VERSION_IDF_2_0_0_ADDRESS)) {
                 	setDefaultViewPage(TEMPLATE_DETAIL_IDF_2_0_0);
+                } else {
+                    setDefaultViewPage(TEMPLATE_DETAIL_GENERIC);
                 }
                 
                 // if "testIDF"-Parameter exist, use DetailDataPreparer for "IDF" version

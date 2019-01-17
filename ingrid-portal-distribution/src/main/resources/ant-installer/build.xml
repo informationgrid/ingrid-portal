@@ -39,7 +39,7 @@
     <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"/>
-    <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc14.jar"/>
+    <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc7.jar"/>
     <property name="postgresDbDriverInApache"      location="./distribution/${tomcat-artifact}/shared/lib/postgresql-9.4.1212.jar"/>
     
     <property name="prop-root"                     value="${installDir}/${tomcat-artifact}/webapps/ROOT/WEB-INF/classes/bootstrap.override.properties"/>
@@ -551,7 +551,7 @@
         </copy>
         <copy file="${basedir}/distribution/sql/_README.txt" todir="${installDir}"/>
         <copy file="${installDir}/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.34.jar"  todir="${installDir}/migration_35"/>
-        <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc14.jar" todir="${installDir}/migration_35"/>
+        <copy file="${installDir}/${tomcat-artifact}/shared/lib/ojdbc*.jar*" todir="${installDir}/migration_35"/>
     </target>
 
     <!-- =============================================
@@ -612,11 +612,6 @@
             <else>
                 <echo>WebmapClient 'config' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/config"/>
-                <copy todir="${WebmapDataDir}/WebmapClientData/config" >
-                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/config">
-                        <include name="**/*.profile.js"/>
-                    </fileset>
-                </copy>
             </else>
         </if>
         <if>
@@ -637,11 +632,6 @@
             <else>
                 <echo>WebmapClient 'help' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/help"/>
-                <copy todir="${WebmapDataDir}/WebmapClientData/help" >
-                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/help">
-                        <include name="**/*.json"/>
-                    </fileset>
-                </copy>
             </else>
         </if>
         <if>
@@ -652,14 +642,9 @@
             <else>
                 <echo>WebmapClient 'css' Verzeichnis neu erstellen.</echo>
                 <mkdir dir="${WebmapDataDir}/WebmapClientData/css"/>
-                <copy todir="${WebmapDataDir}/WebmapClientData/css" >
-                    <fileset dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend/css">
-                        <include name="**/*.override.css"/>
-                    </fileset>
-                </copy>
             </else>
         </if>
-		<if>
+        <if>
             <available file="${WebmapDataDir}/WebmapClientData/locales"/>
             <then>
                 <echo>WebmapClient 'locales' Verzeichnis beibehalten.</echo>
