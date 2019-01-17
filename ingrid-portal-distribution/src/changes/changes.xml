@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="4.6.0-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.0">
+        <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
           <action type="add" dev="wemove" issue="1260">
             Portal: Add local host name no subject of alert email of monitoring jobs.
           </action>
@@ -43,6 +43,12 @@
           </action>
           <action type="add" dev="wemove" issue="1217">
             IGE(UVP): Update delete message.
+          </action>
+          <action type="fix" dev="wemove" issue="1248">
+            IGE(UVP): Fix statistic.
+          </action>
+          <action type="add" dev="wemove" issue="1727">
+            IGE: Sort select boxes in additional fields.
           </action>
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
