@@ -8,7 +8,7 @@
     <body>
 
         <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
-          <action type="add" dev="wemove" issue="1260">
+          <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
           </action>
         </release>
