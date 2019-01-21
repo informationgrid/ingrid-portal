@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
+          <action type="add" dev="wemove" issue="1260">
+            Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
+          </action>
+        </release>
+
         <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
           <action type="add" dev="wemove" issue="1260">
             Portal: Add local host name no subject of alert email of monitoring jobs.
