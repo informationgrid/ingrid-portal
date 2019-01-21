@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="4.4.8" date="2019-01-21" description="Release 4.4.8">
+          <action type="fix" dev="wemove" issue="">
+            Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
+          </action>
+        </release>
+
         <release version="4.4.7" date="2019-01-10" description="Release 4.4.7">
           <action type="fix" dev="wemove" issue="1248">
             UVP: Fix statistic
