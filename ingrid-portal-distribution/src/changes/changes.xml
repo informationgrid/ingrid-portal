@@ -14,6 +14,9 @@
           <action type="update" dev="wemove" issue="1271">
             Portal: Update tomcat to 7.0.92.
           </action>
+          <action type="fix" dev="wemove" issue="1280">
+            Portal: Fix header logo NUMIS.
+          </action>
         </release>
 
         <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
