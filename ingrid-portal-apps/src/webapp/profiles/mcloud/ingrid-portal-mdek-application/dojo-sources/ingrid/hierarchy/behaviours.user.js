@@ -27,8 +27,9 @@ define([
     "ingrid/hierarchy/behaviours/mcloud/docTypes",
     "ingrid/hierarchy/behaviours/mcloud/generalModifications",
     "ingrid/hierarchy/behaviours/mcloud/formFields",
+    "ingrid/hierarchy/behaviours/mcloud/formFieldsAddress",
     "ingrid/hierarchy/behaviours/mcloud/validatePublisher"
-], function(lang, behaviours, contactUrl, docTypes, generalModifications, formFields, validatePublisher) {
+], function(lang, behaviours, contactUrl, docTypes, generalModifications, formFields, addressMods, validatePublisher) {
 
     return lang.mixin(behaviours, {
 
@@ -58,6 +59,11 @@ define([
          * Create fields for all the mcloud classes and show only those fields according to the class.
          */
         mcloudFormFields: formFields,
+
+        /**
+         * Modify the display of the address form fields.
+         */
+        mcloudAddressModifications: addressMods,
 
         // valitation rule to check that publisher exists
         mcloudValidatePublisher: validatePublisher,

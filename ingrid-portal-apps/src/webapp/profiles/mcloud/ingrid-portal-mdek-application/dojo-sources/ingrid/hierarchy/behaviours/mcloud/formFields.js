@@ -70,7 +70,6 @@ define(["dojo/_base/declare",
             domClass.add("toolbarBtnPrintDoc", "hide");
 
             this.hideDefaultFieldsFromObjects();
-            this.hideDefaultFieldsFromAddresses();
             this.setDefaultFieldVisibility();
 
             var defCreateFields = this.createFields();
@@ -127,27 +126,6 @@ define(["dojo/_base/declare",
                     domClass.add(item, "hide");
                 }
             });
-        },
-
-        hideDefaultFieldsFromAddresses: function() {
-            // hide publication in addresses
-            domClass.add("uiElement4571_at0", "hide");
-            domClass.add("uiElement4571_at1", "hide");
-            domClass.add("uiElement4571_at2", "hide");
-            domClass.add("uiElement4571_at3", "hide");
-
-            // hide rubric Thesaurus
-            domClass.add("adrThesaurus", "hide");
-
-            // hide rubric Associated Objects
-            domClass.add("associatedObj", "hide");
-
-            // hide Tasks
-            domClass.add("uiElement4440", "hide");
-
-            // hide Service time
-            domClass.add("uiElement4450", "hide");
-
         },
 
         setDefaultFieldVisibility: function() {
