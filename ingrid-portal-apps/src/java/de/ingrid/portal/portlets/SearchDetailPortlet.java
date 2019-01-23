@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -165,8 +165,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
-        context.put("piwik", PortalConfig.getInstance().getString(PortalConfig.ENABLE_PIWIK));
-        
+
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURL" );
         request.setAttribute( "restUrlHttpGet", restUrl.toString() );

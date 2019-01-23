@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,20 +22,18 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
+import com.thoughtworks.xstream.XStream;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridPrincipalPreference;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thoughtworks.xstream.XStream;
-
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridPrincipalPreference;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class provides basic functionality for storing and retrieving user

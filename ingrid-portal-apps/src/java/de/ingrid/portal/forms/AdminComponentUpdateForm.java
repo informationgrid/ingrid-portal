@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,13 +22,12 @@
  */
 package de.ingrid.portal.forms;
 
-import javax.portlet.PortletRequest;
-
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.upgradeclient.IngridComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.upgradeclient.IngridComponent;
+import javax.portlet.PortletRequest;
 
 /**
  * Form Handler for Content Management of Providers.

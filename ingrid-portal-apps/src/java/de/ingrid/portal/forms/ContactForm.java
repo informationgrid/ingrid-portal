@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,15 +22,13 @@
  */
 package de.ingrid.portal.forms;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
+import org.apache.commons.fileupload.FileItem;
+
+import javax.portlet.PortletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Form Handler for Contact page. Stores and validates form input.

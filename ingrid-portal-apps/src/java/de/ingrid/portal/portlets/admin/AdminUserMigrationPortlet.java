@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,47 +22,26 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import com.thoughtworks.xstream.XStream;
+import de.ingrid.portal.global.IngridPersistencePrefs;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.UtilsString;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.page.PageManager;
 import org.apache.jetspeed.profiler.Profiler;
 import org.apache.jetspeed.profiler.rules.PrincipalRule;
-import org.apache.jetspeed.security.Group;
-import org.apache.jetspeed.security.GroupManager;
-import org.apache.jetspeed.security.PasswordCredential;
-import org.apache.jetspeed.security.PermissionManager;
-import org.apache.jetspeed.security.Role;
-import org.apache.jetspeed.security.RoleManager;
-import org.apache.jetspeed.security.User;
-import org.apache.jetspeed.security.UserManager;
+import org.apache.jetspeed.security.*;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thoughtworks.xstream.XStream;
-
-import de.ingrid.portal.global.IngridPersistencePrefs;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.UtilsString;
+import javax.portlet.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * TODO Describe your created type (class, etc.) here.

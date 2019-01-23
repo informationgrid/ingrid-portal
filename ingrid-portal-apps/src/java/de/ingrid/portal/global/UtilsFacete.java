@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,31 +22,6 @@
  */
 package de.ingrid.portal.global;
 
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Set;
-import java.util.TreeSet;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.FacetsConfig;
@@ -64,19 +39,18 @@ import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.PlugDescription;
-import de.ingrid.utils.query.ClauseQuery;
-import de.ingrid.utils.query.FieldQuery;
-import de.ingrid.utils.query.FuzzyFieldQuery;
-import de.ingrid.utils.query.FuzzyTermQuery;
-import de.ingrid.utils.query.IngridQuery;
-import de.ingrid.utils.query.RangeQuery;
-import de.ingrid.utils.query.TermQuery;
-import de.ingrid.utils.query.WildCardFieldQuery;
-import de.ingrid.utils.query.WildCardTermQuery;
+import de.ingrid.utils.query.*;
 import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsDate;
 import de.ingrid.utils.udk.UtilsUDKCodeLists;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.*;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * TODO Describe your created type (class, etc.) here.

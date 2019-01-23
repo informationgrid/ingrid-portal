@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,14 +22,14 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.codelists.comm.ICodeListCommunication;
 import de.ingrid.codelists.comm.IngridCLCommunication;
 import de.ingrid.codelists.persistency.ICodeListPersistency;
 import de.ingrid.codelists.persistency.XmlCodeListPersistency;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CodeListServiceFactory {
 

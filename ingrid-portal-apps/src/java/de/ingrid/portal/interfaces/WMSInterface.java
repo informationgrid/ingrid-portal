@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,14 +22,13 @@
  */
 package de.ingrid.portal.interfaces;
 
+import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
+import org.apache.commons.configuration.Configuration;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-
-import org.apache.commons.configuration.Configuration;
-
-import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
-import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 
 /**
  * Defines the interface to be implemented to communicate with the mapbender WMS

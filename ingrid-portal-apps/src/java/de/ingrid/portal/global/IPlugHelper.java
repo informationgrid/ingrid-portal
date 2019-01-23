@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,16 +22,12 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.PlugDescription;
+
+import java.util.*;
 
 /**
  * Helper class dealing with all aspects of iPlugs (PlugDescription).

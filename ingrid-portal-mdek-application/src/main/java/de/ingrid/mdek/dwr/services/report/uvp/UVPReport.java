@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -78,24 +78,33 @@ public class UVPReport {
         values.put(TOTAL_NEGATIVE, 0);
         values.put(TOTAL_POSITIVE, 0);
 
+        int pageSize = 10;
+        int page = 0;
+        while (true) {
+            ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(PORTAL_QUICKLIST_ALL_USERS_PUBLISHED, DATE, true, page*pageSize, pageSize);
 
-        ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(PORTAL_QUICKLIST_ALL_USERS_PUBLISHED, DATE, true, 0, 10);
-
-        for (MdekDataBean doc : workObjects.getResultList()) {
-            MdekDataBean docDetail = objectRequestHandler.getObjectDetail(doc.getUuid());
-
-            // check if document is not older than given date
-            if (datasetIsInDateRange(docDetail)) {
-                // categorize datasets by their UVP number and count them
-                handleTotalCountGroupedByUvpNumber(docDetail, values);
-
-                // count all positive pre-examinations
-                handlePositiveCount(docDetail, values);
-
-                // count all negative pre-examinations
-                handleNegativeCount(docDetail, values);
+            if (workObjects.getResultList().size() == 0) {
+                break;
             }
 
+            for (MdekDataBean doc : workObjects.getResultList()) {
+                MdekDataBean docDetail = objectRequestHandler.getObjectDetail(doc.getUuid());
+
+                // check if document is not older than given date
+                if (datasetIsInDateRange(docDetail)) {
+                    // categorize datasets by their UVP number and count them
+                    handleTotalCountGroupedByUvpNumber(docDetail, values);
+
+                    // count all positive pre-examinations
+                    handlePositiveCount(docDetail, values);
+
+                    // count all negative pre-examinations
+                    handleNegativeCount(docDetail, values);
+                }
+
+            }
+
+            page++;
         }
 
         mapUvpNumbers((Map) values.get(TOTAL_GROUPED));

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -37,12 +37,12 @@
  */
 package de.ingrid.portal.portlets.browser;
 
-import java.util.List;
-import java.util.Collections;
-import java.sql.Types;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.Types;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A class for iterating over the window. The window constitutes the selection

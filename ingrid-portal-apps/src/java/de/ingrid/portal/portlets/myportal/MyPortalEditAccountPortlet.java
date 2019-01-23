@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,36 +22,24 @@
  */
 package de.ingrid.portal.portlets.myportal;
 
-import java.io.IOException;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import de.ingrid.portal.forms.AdminUserForm;
+import de.ingrid.portal.forms.EditAccountForm;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Utils;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
 import org.apache.jetspeed.exception.JetspeedException;
-import org.apache.jetspeed.security.InvalidPasswordException;
-import org.apache.jetspeed.security.PasswordAlreadyUsedException;
-import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.User;
-import org.apache.jetspeed.security.UserManager;
+import org.apache.jetspeed.security.*;
 import org.apache.portals.bridges.common.GenericServletPortlet;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.AdminUserForm;
-import de.ingrid.portal.forms.EditAccountForm;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Utils;
+import javax.portlet.*;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * TODO Describe your created type (class, etc.) here.

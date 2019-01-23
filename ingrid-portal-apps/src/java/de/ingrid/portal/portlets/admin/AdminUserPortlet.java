@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,54 +25,6 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.File;
-import java.io.IOException;
-import java.security.PrivilegedAction;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.administration.PortalAdministration;
-import org.apache.jetspeed.exception.JetspeedException;
-import org.apache.jetspeed.om.folder.Folder;
-import org.apache.jetspeed.om.folder.FolderNotFoundException;
-import org.apache.jetspeed.om.folder.InvalidFolderException;
-import org.apache.jetspeed.page.PageManager;
-import org.apache.jetspeed.page.document.NodeException;
-import org.apache.jetspeed.profiler.Profiler;
-import org.apache.jetspeed.security.InvalidPasswordException;
-import org.apache.jetspeed.security.JSSubject;
-import org.apache.jetspeed.security.JetspeedPrincipalQueryContext;
-import org.apache.jetspeed.security.PasswordAlreadyUsedException;
-import org.apache.jetspeed.security.PasswordCredential;
-import org.apache.jetspeed.security.Role;
-import org.apache.jetspeed.security.RoleManager;
-import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.User;
-import org.apache.jetspeed.security.UserManager;
-import org.apache.jetspeed.security.UserResultList;
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminUserForm;
@@ -82,6 +34,28 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.security.role.IngridRole;
+import org.apache.jetspeed.CommonPortletServices;
+import org.apache.jetspeed.administration.PortalAdministration;
+import org.apache.jetspeed.exception.JetspeedException;
+import org.apache.jetspeed.om.folder.Folder;
+import org.apache.jetspeed.om.folder.FolderNotFoundException;
+import org.apache.jetspeed.om.folder.InvalidFolderException;
+import org.apache.jetspeed.page.PageManager;
+import org.apache.jetspeed.page.document.NodeException;
+import org.apache.jetspeed.profiler.Profiler;
+import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.*;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.*;
+import java.io.File;
+import java.io.IOException;
+import java.security.PrivilegedAction;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * TODO Describe your created type (class, etc.) here.

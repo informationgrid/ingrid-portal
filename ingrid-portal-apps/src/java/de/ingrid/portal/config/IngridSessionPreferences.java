@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,16 +22,14 @@
  */
 package de.ingrid.portal.config;
 
-import java.util.HashMap;
-
-import javax.portlet.ActionRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.search.SearchState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.ActionRequest;
+import java.util.HashMap;
 
 /**
  * encapsulates user session preferences.

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -331,8 +331,7 @@ define(["dojo/_base/declare",
                     id: "preExaminationAccomplished",
                     isMandatory: true, 
                     name: [message.get("uvp.form.preExaminationAccomplished.yes"), message.get("uvp.form.preExaminationAccomplished.no")],
-                    label: message.get("uvp.form.preExaminationAccomplished.label"),
-                    help: message.get("uvp.form.preExaminationAccomplished.helpMessage")
+                    label: message.get("uvp.form.preExaminationAccomplished.label")
                 }
             );
 

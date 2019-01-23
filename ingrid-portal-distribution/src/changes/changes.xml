@@ -7,7 +7,19 @@
 
     <body>
 
-        <release version="4.6.0-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.0">
+        <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
+          <action type="add" dev="wemove" issue="">
+            Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
+          </action>
+          <action type="update" dev="wemove" issue="1271">
+            Portal: Update tomcat to 7.0.92.
+          </action>
+          <action type="fix" dev="wemove" issue="1280">
+            Portal: Fix header logo NUMIS.
+          </action>
+        </release>
+
+        <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
           <action type="add" dev="wemove" issue="1260">
             Portal: Add local host name no subject of alert email of monitoring jobs.
           </action>
@@ -35,8 +47,29 @@
           <action type="fix" dev="wemove">
             Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
           </action>
+          <action type="add" dev="wemove" issue="880">
+            IGE(UVP): Show invalid filename characters in upload dialog.
+          </action>
+          <action type="add" dev="wemove" issue="1213">
+            IGE(UVP): Remove help text from radio button.
+          </action>
+          <action type="add" dev="wemove" issue="1217">
+            IGE(UVP): Update delete message.
+          </action>
+          <action type="fix" dev="wemove" issue="1248">
+            IGE(UVP): Fix statistic.
+          </action>
+          <action type="add" dev="wemove" issue="1727">
+            IGE: Sort select boxes in additional fields.
+          </action>
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
+          </action>
+          <action type="fix" dev="wemove" issue="1264">
+            Portal: Fix piwik on (profile) velocity macro and remove unused piwik setting.
+          </action>
+          <action type="add" dev="wemove" issue="415">
+            MapClient: Compress of layers URL parameter.
           </action>
           <action type="add" dev="wemove" issue="1162">
             MapClient: Add display layer category dependency on layer form page.

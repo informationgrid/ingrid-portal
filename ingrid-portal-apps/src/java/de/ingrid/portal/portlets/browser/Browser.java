@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -37,9 +37,8 @@
  */
 package de.ingrid.portal.portlets.browser;
 
-import java.util.List;
-
 import javax.portlet.RenderRequest;
+import java.util.List;
 
 
 /**
