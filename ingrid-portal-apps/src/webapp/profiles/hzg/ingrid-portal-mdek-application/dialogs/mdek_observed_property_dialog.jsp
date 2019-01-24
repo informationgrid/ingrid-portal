@@ -48,9 +48,8 @@
         "ingrid/dialog",
         "ingrid/hierarchy/requiredChecks",
         "ingrid/layoutCreator",
-        "ingrid/utils/Store",
-        "ingrid/utils/Events"
-    ], function(array, lang, on, keys, dom, domClass, all, query, topic, registry, CheckBox, warnDialog, checks, layoutCreator, UtilStore, UtilEvents) {
+        "ingrid/utils/Store"
+    ], function(array, lang, on, keys, dom, domClass, all, query, topic, registry, CheckBox, warnDialog, checks, layoutCreator, UtilStore) {
 
             var caller = {};
             var dialog = null;
@@ -64,35 +63,19 @@
                     caller = this.customParams;
                 }
 
-                /*
-                createDOMElements()
-                    .then(init);
-                */
+                init();
             });
 
-            function createDOMElements() {
-                var promises = [];
-                promises.push(layoutCreator.createDomTextbox({
-                    id: "observedPropertyNameInDialog",
-                    style: "width: 100%",
-                    //name: "Name", // TODO localisation
-                    help: "Name of the observed property",
-                    visible: 'show'
-                }));
-
-                promises.push(layoutCreator.createDomTextarea({
-                    id: "observedPropertyXmlDescInDialog",
-                    style: "width: 100%",
-                    rows: 10,
-                    //name: "XML Description", // TODO localisation
-                    help: "XML Description",
-                    visible: 'show'
-                }));
-
-                return all(promises);
-            }
-
             function init() {
+                if (caller && caller.selectedRow) {
+                    // Set relevant flag
+                    isRowBeingEdited = true;
+
+                    // Read existing values and write them in relevant fields
+                    var row = caller.selectedRow;
+                    registry.byId("observedPropertyNameInDialog").set("value", row.observedPropertyName);
+                    registry.byId("observedPropertyXmlDescInDialog").set("value", row.observedPropertyXmlDescription);
+                }
             }
 
             function submit() {

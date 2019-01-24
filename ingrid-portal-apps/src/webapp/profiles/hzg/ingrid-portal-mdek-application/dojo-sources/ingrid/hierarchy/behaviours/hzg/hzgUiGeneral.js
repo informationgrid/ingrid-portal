@@ -21,6 +21,8 @@
  * **************************************************#
  */
 define([
+    "dijit/MenuItem",
+    "dijit/MenuSeparator",
     "dijit/registry",
     "dojo/_base/array",
     "dojo/_base/declare",
@@ -28,11 +30,13 @@ define([
     "dojo/aspect",
     "dojo/dom",
     "dojo/dom-construct",
+    "ingrid/dialog",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
+    "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/UI"
-], function(registry, array, declare, lang, aspect, dom, construct, dirty, creator, message, UtilUI) {
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, aspect, dom, construct, dialog, dirty, creator, menu, message, UtilUI) {
 
     return declare(null, {
         title: "UI-Allgemein",
@@ -103,8 +107,11 @@ define([
             });
             construct.place(categoryContainer, 'links', 'after');
 
-            // Observed Property name
-            var id = "observedPropertyName";
+            // Observed Property table
+            // First initialise the context menu
+            this.createObsPropGridContextMenu();
+
+            // Next define the table structure
             var structure = [
                 {
                     field: "observedPropertyName",
@@ -119,9 +126,11 @@ define([
                     width: "auto"
                 }
             ];
-            id = "observedPropertiesDataGrid";
+
+            // Finally create the table
+            var id = "observedPropertiesDataGrid";
             creator.createDomDataGrid(
-                {id: id, name: "Observed Properties", style: "width: 100%"},
+                {id: id, name: "Observed Properties", style: "width: 100%", contextMenu: "OBSERVED_PROPERTIES"},
                 structure, categoryContainer
             );
             newFieldsToDirtyCheck.push(id);
@@ -152,6 +161,24 @@ define([
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
             return registry.byId(id).promiseInit;
+        },
+
+        createObsPropGridContextMenu: function() {
+            var type = "OBSERVED_PROPERTIES";
+            var contextMenu = menu.initContextMenu({contextMenu: type});
+            contextMenu.addChild(new MenuSeparator());
+            contextMenu.addChild(new MenuItem({
+                id: "menuEditClicked_" + type,
+                label: message.get('contextmenu.table.editClicked'),
+                onClick: function() {
+                    var rowData = clickedSlickGrid.getData()[clickedRow];
+                    var dialogData = {
+                        gridId: clickedSlickGridProperties.id,
+                        selectedRow: rowData
+                    };
+                    dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_observed_property_dialog.jsp?c=' + userLocale, 600, 300, true, dialogData);
+                }
+            }));
         }
     })();
 });
