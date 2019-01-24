@@ -39,17 +39,25 @@
         "dojo/on",
         "dojo/keys",
         "dojo/dom",
+        "dojo/dom-class",
         "dojo/promise/all",
+        "dojo/query",
         "dojo/topic",
         "dijit/registry",
         "dijit/form/CheckBox",
+        "ingrid/dialog",
+        "ingrid/hierarchy/requiredChecks",
         "ingrid/layoutCreator",
-        "ingrid/utils/Grid",
+        "ingrid/utils/Store",
         "ingrid/utils/Events"
-    ], function(array, lang, on, keys, dom, all, topic, registry, CheckBox, layoutCreator, UtilGrid, UtilEvents) {
+    ], function(array, lang, on, keys, dom, domClass, all, query, topic, registry, CheckBox, warnDialog, checks, layoutCreator, UtilStore, UtilEvents) {
 
             var caller = {};
             var dialog = null;
+            var isRowBeingEdited = false; // Row already exists and is being edited
+
+            var tblObsPropId = "observedPropertiesDataGrid";
+
             on(_container_, "Load", function() {
                 dialog = this;
                 if (this.customParams) {
@@ -88,11 +96,64 @@
             }
 
             function submit() {
+                // Add data to the table
+                if (!validateInputElements()) {
+                    warnDialog.show('<fmt:message key="general.error" />', '<fmt:message key="links.fillRequiredFieldsHint" />', warnDialog.WARNING);
+                    return;
+                }
+
+                var tblObsProp = registry.byId(tblObsPropId);
+                var tblObsPropData = tblObsProp.data;
+
+                var obsPropName = registry.byId("observedPropertyNameInDialog").get("value");
+                var obsPropXmlDesc = registry.byId("observedPropertyXmlDescInDialog").get("value");
+
+                if (isRowBeingEdited) { // Update the row being edited
+                    var row = caller.selectedRow;
+                    row["observedPropertyName"] = obsPropName;
+                    row["observedPropertyXmlDescription"] = obsPropXmlDesc;
+                } else { // Create a new row
+                    tblObsPropData.push({
+                        "observedPropertyName": obsPropName,
+                        "observedPropertyXmlDescription": obsPropXmlDesc
+                    });
+                }
+                // Refresh the table
+                UtilStore.updateWriteStore(tblObsPropId, tblObsPropData);
+
+                // Hide the dialog
                 _container_.hide();
             }
 
             function cancel() {
                 _container_.hide();
+            }
+
+            function validateInputElements() {
+                resetRequiredInputElements();
+
+                var visibleRequiredElements = query(".dijitDialogPaneContent .required .dijitTextBox", "pageDialog")
+                    .map(function(item) {
+                        return item.getAttribute("widgetid");
+                    });
+
+                var valid = true;
+                dojo.forEach(visibleRequiredElements, function(id) {
+                    var value = dijit.byId(id).get("value");
+                    if (!value || !value.trim()) {
+                        valid = false;
+                        checks.setErrorLabel(id);
+                    }
+                });
+
+                return valid;
+            }
+
+            // resets marked fields with invalid input
+            function resetRequiredInputElements() {
+                query(".important").forEach(function(item) {
+                    domClass.remove(item, "important");
+                });
             }
 
 
