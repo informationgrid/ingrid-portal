@@ -193,6 +193,9 @@
                             case "conformity":
                                 localizedTitle = "<fmt:message key='dialog.conformity.title' />";
                                 break;
+                            case "observedProperty":
+                                localizedTitle = "<fmt:message key='dialog.observedProperty.title' />";
+                                break;
                         }
                         return localizedTitle;
                     }

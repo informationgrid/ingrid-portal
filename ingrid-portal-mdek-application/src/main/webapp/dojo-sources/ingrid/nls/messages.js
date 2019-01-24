@@ -357,6 +357,8 @@ define({
         "dialog.links.selectObject.title": "Select object",
         "dialog.links.title.edit": "Edit Link",
 
+        "dialog.observedProperty.title": "Add Observed Property",
+
         "dialog.qa.spatialRefMod": "Updated Spatial References",
         "dialog.qa.expired": "Expired",
         "dialog.qa.assignedToQa": "Assigned to QA",
