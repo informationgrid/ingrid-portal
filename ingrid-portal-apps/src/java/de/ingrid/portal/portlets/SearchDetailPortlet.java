@@ -165,8 +165,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
-        context.put("piwik", PortalConfig.getInstance().getString(PortalConfig.ENABLE_PIWIK));
-        
+
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURL" );
         request.setAttribute( "restUrlHttpGet", restUrl.toString() );

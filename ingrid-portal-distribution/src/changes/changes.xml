@@ -8,14 +8,23 @@
     <body>
 
         <release version="4.6.0-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.0">
+          <action type="add" dev="wemove" issue="1260">
+            Portal: Add local host name no subject of alert email of monitoring jobs.
+          </action>
           <action type="add" dev="wemove" issue="1189">
             Add NRW "Vorschaltseite" and change display of BLP Marker: take "Flaechennutzungsplaene" and "Bebauungsplaene".
           </action>
           <action type="add" dev="wemove" issue="1201">
             Portal: Add new profile "metaver_md".
           </action>
+          <action type="add" dev="wemove" issue="1231">
+            Portal: Add mapclient admin-gui as administration menu entry .
+          </action>
           <action type="update" dev="wemove" issue="1212">
             Portal/IGE: Update Oracle driver to ojdbc7 for Oracle 12.
+          </action>
+          <action type="fix" dev="wemove" issue="1105">
+            Portal: Add advmis to hidden keywords so will not be displayed in detail view.
           </action>
           <action type="fix" dev="wemove" issue="1193">
             Portal/IGE: Fix initial codelists (1320, 6005, 6100), data was lost when codelists were separated.
@@ -29,6 +38,9 @@
           <action type="fix" dev="wemove" issue="1194">
             Portal: Fix detail view of useConstraints now correctly removing prefix, with license name from JSON and multiple otherConstraints.
           </action>
+          <action type="fix" dev="wemove" issue="1264">
+            Portal: Fix piwik on (profile) velocity macro and remove unused piwik setting.
+          </action>
           <action type="add" dev="wemove" issue="1162">
             MapClient: Add display layer category dependency on layer form page.
           </action>
@@ -40,6 +52,21 @@
           </action>
           <action type="add" dev="wemove" issue="1209">
             MapClient: Add function to edit localisation.
+          </action>
+          <action type="add" dev="wemove" issue="1225">
+            MapClient: Add menu on fullscreen.
+          </action>
+          <action type="add" dev="wemove" issue="1229">
+            MapClient: Add login/logout on admin gui.
+          </action>
+          <action type="add" dev="wemove" issue="1250">
+            MapClient: Get attribution and attributionUrl from service.
+          </action>
+          <action type="add" dev="wemove" issue="1251">
+            MapClient: Adapt label on layer selection by edit category tree.
+          </action>
+          <action type="fix" dev="wemove" issue="1203">
+            MapClient: Fix extent of layers by add external service from portal on projection 'EPSG:25832'.
           </action>
         </release>
 
