@@ -66,6 +66,16 @@ define(["dojo/_base/declare",
             // do not override my address title
             IgeEvents.setGeneralAddressLabel = function() { };
 
+            // disable editing the address table and automatically set point of contact type
+            UtilGrid.getTable("generalAddress").options.editable = false;
+
+            var handleAddressAdd = function() {
+                var publisher = UtilSyslist.getSyslistEntryName(505, 10);
+                UtilGrid.addTableDataRow("generalAddress", {nameOfRelation: publisher});
+            };
+            topic.subscribe("/onBeforeDialogAccept/AddressesFromTree", handleAddressAdd);
+            topic.subscribe("/onBeforeDialogAccept/Addresses", handleAddressAdd);
+
             // hide preview toolbar button
             domClass.add("toolbarBtnPrintDoc", "hide");
 

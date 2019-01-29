@@ -53,6 +53,9 @@ define([
             if (!containsPublisher) {
                 notPublishableIDs.push(["generalAddress", "Es muss ein Herausgeber als Adresse angegeben sein."]);
             }
+            if (data.length > 1) {
+                notPublishableIDs.push(["generalAddress", "Es darf derzeit nur eine Adresse angegeben werden."]);
+            }
         },
 
         /**
