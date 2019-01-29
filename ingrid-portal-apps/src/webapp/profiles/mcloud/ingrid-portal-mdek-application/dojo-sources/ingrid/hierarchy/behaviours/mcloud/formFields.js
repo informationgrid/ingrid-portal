@@ -109,6 +109,7 @@ define(["dojo/_base/declare",
             domClass.add(registry.byId("toolbarBtnISO").domNode, "hide");
 
             // general
+            domClass.add("uiElement1001", "hide");
             domClass.add("uiElement5000", "hide");
             domClass.add("uiElement5100", "hide");
             domClass.add("uiElement5105", "hide");
