@@ -6,7 +6,10 @@
     </properties>
 
     <body>
-        <release version="4.2.8" date="2018-xx-xx" description="Release 4.2.8">
+        <release version="4.2.8" date="2018-02-01" description="Release 4.2.8">
+		      <action type="fix" dev="wemove" issue="1284">
+		        Fix mapping of gmd:hoursOfService.
+		      </action>
 		      <action type="fix" dev="wemove" issue="1285">
 		        Fix problem with codelists not been able to fetch via HTTP proxy.
 		      </action>
