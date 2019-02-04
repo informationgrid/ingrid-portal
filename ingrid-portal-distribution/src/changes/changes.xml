@@ -11,8 +11,14 @@
           <action type="fix" dev="wemove" issue="1284">
             Fix mapping of gmd:hoursOfService.
           </action>
+        </release>
+
+        <release version="4.6.1" date="2019-01-22" description="Release 4.6.1">
           <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
+          </action>
+          <action type="fix" dev="wemove" issue="1280">
+            NUMIS: Fix header logo.
           </action>
         </release>
 
