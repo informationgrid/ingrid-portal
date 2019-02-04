@@ -8,9 +8,9 @@
     <body>
 
         <release version="4.7.0" date="2019-xx-xx" description="Release 4.7.0">
-		      <action type="fix" dev="wemove" issue="1285">
-		        Fix problem with codelists not been able to fetch via HTTP proxy.
-		      </action>
+          <action type="fix" dev="wemove" issue="1285">
+             Fix problem with codelists not been able to fetch via HTTP proxy.
+          </action>
           <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
           </action>
@@ -19,6 +19,9 @@
           </action>
           <action type="fix" dev="wemove" issue="1280">
             Portal: Fix header logo NUMIS.
+          </action>
+          <action type="add" dev="wemove" issue="1252">
+            MapClient: Add extended search of layers on admin GUI.
           </action>
         </release>
 
