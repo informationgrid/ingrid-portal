@@ -22,5 +22,7 @@
  */
 define({
     "table.observedProperty.name": "Name",
-    "table.observedProperty.xmlDescription": "XML Description"
+    "table.observedProperty.xmlDescription": "XML Description",
+
+    "ui.obj.type.platform": "Plattform"
 });

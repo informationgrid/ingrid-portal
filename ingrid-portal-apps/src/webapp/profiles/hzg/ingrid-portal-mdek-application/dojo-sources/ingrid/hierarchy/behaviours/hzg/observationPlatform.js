@@ -21,16 +21,33 @@
  * **************************************************#
  */
 define([
-    "dojo/_base/lang",
-    "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/hzg/hzgUiGeneral",
-    "ingrid/hierarchy/behaviours/hzg/observationPlatform"
-    ], function(lang, behaviours, hzgUiGeneral, platform) {
+    "dojo/_base/declare",
+    "dojo/topic",
+    "ingrid/message",
+    "ingrid/utils/Syslist"
+], function(declare, topic, message, Syslist) {
 
-    return lang.mixin(behaviours, {
-        hzgUiGeneral: hzgUiGeneral,
+    return declare(null, {
+        title: "Plattform-Objektklasse", // TODO localisation
+        description: "Objektklasse für Plattform Metadaten",
+        defaultActive: true,
+        category: "HZG",
+        type: 'SYSTEM',
 
-        // Plattform-Metadaten
-        observationPlatform: platform
-    });
+        run: function() {
+            this._addObjectClassForPlatform();
+        },
+
+        _addObjectClassForPlatform: function() {
+            topic.subscribe("/additionalSyslistsLoaded", function() {
+                var objectClasses = sysLists[Syslist.listIdObjectClass];
+                if (objectClasses) {
+                    objectClasses.push([message.get("ui.obj.type.platform"), "20", "N", ""]);
+                } else {
+                    alert("Syslist not found: " + Syslist.listIdObjectClass);
+                }
+            });
+        }
+    })();
 });
+
