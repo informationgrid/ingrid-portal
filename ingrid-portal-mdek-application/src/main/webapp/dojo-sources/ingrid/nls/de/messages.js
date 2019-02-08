@@ -356,8 +356,6 @@ define({
     "dialog.links.selectObject.title": "Objekt ausw&auml;hlen",
     "dialog.links.title.edit": "Verweis bearbeiten",
 
-    "dialog.observedProperty.title": "Observed Property hinzufügen",
-
     "dialog.qa.spatialRefMod": "Aktualisierte Raumeinheiten",
     "dialog.qa.expired": "Verfallszeitpunkt erreicht",
     "dialog.qa.assignedToQa": "An Qualit&auml;tssicherung &uuml;berwiesen",
