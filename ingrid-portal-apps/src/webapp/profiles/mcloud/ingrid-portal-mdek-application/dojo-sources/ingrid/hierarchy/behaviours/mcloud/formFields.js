@@ -192,32 +192,79 @@ define(["dojo/_base/declare",
             id = "mcloudCategory";
             newFieldsToDirtyCheck.push(id);
             creator.createDomDataGrid({
-                id: id,
-                name: message.get("mcloud.form.category"),
-                help: message.get("mcloud.form.category.helpMessage"),
-                isMandatory: true,
-                visible: "optional",
-                rows: "2",
-                forceGridHeight: false,
-                style: "width:100%"
-            },
-            [{
-                field: message.get("mcloud.form.category"),
-                name: message.get("mcloud.form.category"),
-                width: '708px',
-                type: Editors.SelectboxEditor,
-                options: ["Bahn", "Wasserstraßen und Gewässer", "Infrastruktur", "Klima und Wetter", "Luft- und Raumfahrt", "Straßen"],
-                values: ["railway", "waters", "infrastructure", "climate", "aviation", "roads"],
-                editable: true,
-                formatter: Formatters.ListCellFormatter,
-                partialSearch: true
-            }],
-            rubric
+                    id: id,
+                    name: message.get("mcloud.form.category"),
+                    help: message.get("mcloud.form.category.helpMessage"),
+                    isMandatory: true,
+                    visible: "optional",
+                    rows: "2",
+                    forceGridHeight: false,
+                    style: "width:50%"
+                },
+                [{
+                    field: "category",
+                    name: message.get("mcloud.form.category"),
+                    width: '708px',
+                    type: Editors.SelectboxEditor,
+                    options: ["Bahn", "Wasserstraßen und Gewässer", "Infrastruktur", "Klima und Wetter", "Luft- und Raumfahrt", "Straßen"],
+                    values: ["railway", "waters", "infrastructure", "climate", "aviation", "roads"],
+                    editable: true,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true
+                }],
+                rubric
             );
             var categoryWidget = registry.byId(id);
             categoryWidget.reinitLastColumn(true);
             domClass.add(categoryWidget.domNode, "hideTableHeader");
             additionalFields.push(categoryWidget);
+
+            /*
+             * DCAT Category
+             */
+            id = "mcloudDcatCategory";
+            newFieldsToDirtyCheck.push(id);
+            creator.createDomDataGrid({
+                    id: id,
+                    name: message.get("mcloud.form.dcatcategory"),
+                    help: message.get("mcloud.form.dcatcategory.helpMessage"),
+                    isMandatory: false,
+                    visible: "show",
+                    rows: "2",
+                    forceGridHeight: false,
+                    style: "width:50%"
+                },
+                [{
+                    field: 'dcatCategory',
+                    name: message.get("mcloud.form.dcatcategory"),
+                    width: '708px',
+                    type: Editors.SelectboxEditor,
+                    options: [
+                        "Bevölkerung und Gesellschaft",
+                        "Bildung, Kultur und Sport",
+                        "Energie",
+                        "Gesundheit",
+                        "Internationale Themen",
+                        "Justiz, Rechtssystem und öffentliche Sicherheit",
+                        "Landwirtschaft, Fischerei, Forstwirtschaft und Nahrungsmittel",
+                        "Regierung und öffentlicher Sektor",
+                        "Regionen und Städte",
+                        "Umwelt",
+                        "Verkehr",
+                        "Wirtschaft und Finanzen",
+                        "Wissenschaft und Technologie"
+                    ],
+                    values: ["SOCI", "EDUC", "ENER", "HEAL", "INTR", "JUST", "AGRI", "GOVE", "REGI", "ENVI", "TRAN", "ECON", "TECH"],
+                    editable: true,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true
+                }],
+                rubric
+            );
+            var dcatCategoryWidget = registry.byId(id);
+            dcatCategoryWidget.reinitLastColumn(true);
+            domClass.add(dcatCategoryWidget.domNode, "hideTableHeader");
+            additionalFields.push(dcatCategoryWidget);
 
             /*
              * Source Type --> not needed since "Downloads" cover this

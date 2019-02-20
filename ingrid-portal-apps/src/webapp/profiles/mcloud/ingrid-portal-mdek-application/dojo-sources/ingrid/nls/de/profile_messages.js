@@ -83,6 +83,9 @@ define({
     "mcloud.form.general.tool,tip": "...",
 
     "mcloud.form.mcloudFields": "mCLOUD-Felder",
-    "mcloud.form.mcloudFields.toolTip": "In den nachfolgenden Feldern werden Metadaten erfasst, die in der Detailbeschreibung der Datensätze in der mCLOUD angezeigt werden."
+    "mcloud.form.mcloudFields.toolTip": "In den nachfolgenden Feldern werden Metadaten erfasst, die in der Detailbeschreibung der Datensätze in der mCLOUD angezeigt werden.",
+
+    "mcloud.form.dcatcategory": "DCAT Kategorie (GovData)",
+    "mcloud.form.dcatcategory.helpMessage": "Hier können mehrere DCAT Kategorien eingetragen werden."
 });
 
