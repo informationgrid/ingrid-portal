@@ -196,6 +196,9 @@
                             case "observedProperty":
                                 localizedTitle = "<fmt:message key='dialog.observedProperty.title' />";
                                 break;
+                            case "subSensorObject":
+                                localizedTitle = "<fmt:message key='dialog.subSensorObject.title' />";
+                                break;
                         }
                         return localizedTitle;
                     }

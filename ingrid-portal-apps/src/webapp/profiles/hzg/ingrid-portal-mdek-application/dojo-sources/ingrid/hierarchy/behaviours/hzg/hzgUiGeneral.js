@@ -109,7 +109,7 @@ define([
             var categoryContainer = creator.createRubric({
                 id: "observedProperties",
                 label: "Observed Properties",
-                help: "" // TODO
+                help: message.get("ui.obj.observedProperty.help")
             });
             construct.place(categoryContainer, 'links', 'after');
 
@@ -136,13 +136,23 @@ define([
             // Finally create the table
             var id = "observedPropertiesDataGrid";
             creator.createDomDataGrid(
-                {id: id, name: "Observed Properties", style: "width: 100%", contextMenu: "OBSERVED_PROPERTIES"},
+                {id: id, name: "Observed Properties", help:message.get("table.observedProperty.help"), style: "width: 100%", contextMenu: "OBSERVED_PROPERTIES"},
                 structure, categoryContainer
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
 
+            var linkId = "observedPropertiesTableLink";
             var linkText = message.get("dialog.observedProperty.title");
+            var linkOnClick = "require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('observedProperty'), 'dialogs/mdek_observed_property_dialog.jsp?c='+userLocale, 600, 350, true, {});";
+            var span = this._createLinkToDialog(linkId, linkText, linkOnClick);
+            var node = dom.byId(id).parentElement;
+            construct.place(span, node, 'before');
+
+            array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+        },
+
+        _createLinkToDialog: function(linkId, linkText, linkOnClick) {
             var span = document.createElement("span");
             span.setAttribute("class", "functionalLink");
 
@@ -153,18 +163,16 @@ define([
             img.setAttribute("alt", "Popup");
 
             var link = document.createElement("a");
-            link.setAttribute("id", "observedPropertiesTableLink");
+            link.setAttribute("id", linkId);
             link.setAttribute("href", "javascript:void(0);");
-            link.setAttribute("onclick", "require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('observedProperty'), 'dialogs/mdek_observed_property_dialog.jsp?c='+userLocale, 600, 350, true, {});");
+            link.setAttribute("onclick", linkOnClick);
             link.setAttribute("title", linkText + " [Popup]");
             link.textContent = linkText;
 
             span.appendChild(img);
             span.appendChild(link);
-            var node = dom.byId(id).parentElement;
-            construct.place(span, node, 'before');
 
-            array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+            return span;
         },
 
         _createObsPropGridContextMenu: function() {
@@ -198,7 +206,7 @@ define([
             var identifierContainer = creator.createRubric({
                 id: identifierCategoryId,
                 label: message.get("ui.obj.identifier.title"),
-                help: "" // TODO
+                help: message.get("ui.obj.identifier.help")
             });
             construct.place(identifierContainer, "general", "after");
 
@@ -209,7 +217,7 @@ define([
                     id: id,
                     name: message.get("sensor.identifier.id") + "*",
                     style: "width: 100%",
-                    help: "TODO", // TODO
+                    help: message.get("sensor.identifier.id.help"),
                     isMandatory: true,
                     visible: true,
                     style: "width: 100%"
@@ -224,7 +232,7 @@ define([
                     id: id,
                     name: message.get("sensor.identifier.urn") + "*",
                     style: "width: 100%",
-                    help: "TODO", // TODO
+                    help: message.get("sensor.identifier.urn.help"),
                     isMandatory: true,
                     visible: true,
                     style: "width: 100%"
@@ -239,6 +247,14 @@ define([
                     id: id,
                     name: message.get("sensor.identifier.shortName") + "*",
                     style: "width: 100%",
+                    help: message.get("sensor.identifier.shortName.help"),
+                    isMandatory: true,
+                    visible: true,
+                    style: "width: 100%"
+                }),
+                identifierCategoryId, "last");
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
                     help: "TODO", // TODO
                     isMandatory: true,
                     visible: true,
@@ -254,7 +270,7 @@ define([
                     id: id,
                     name: message.get("sensor.identifier.manufacturer") + "*",
                     style: "width: 100%",
-                    help: "TODO", // TODO
+                    help: message.get("sensor.identifier.manufacturer.help"),
                     isMandatory: true,
                     visible: true,
                     style: "width: 100%"
@@ -279,7 +295,7 @@ define([
                 }
             ];
             creator.createDomDataGrid(
-                {id: id, name: message.get("table.sensor.identifier"), style: "width: 100%"},
+                {id: id, name: message.get("table.sensor.identifier"), help: message.get("table.sensor.identifier.help"), style: "width: 100%"},
                 structure, identifierCategoryId
             );
             newFieldsToDirtyCheck.push(id);
@@ -291,7 +307,7 @@ define([
             var classifierContainer = creator.createRubric({
                 id: classifierCategoryId,
                 label: message.get("ui.obj.classifier.title"),
-                help: "" // TODO
+                help: message.get("ui.obj.classifier.help")
             });
             construct.place(classifierContainer, identifierCategoryId, "after");
 
@@ -301,7 +317,7 @@ define([
                     id: id,
                     name: message.get("sensor.classifier.type") + "*",
                     style: "width: 100%",
-                    help: "TODO", // TODO
+                    help: message.get("sensor.classifier.type.help"),
                     isMandatory: true,
                     visible: true,
                     style: "width: 100%"
@@ -326,7 +342,7 @@ define([
                 }
             ];
             creator.createDomDataGrid(
-                {id: id, name: message.get("table.sensor.classifier"), style: "width: 100%"},
+                {id: id, name: message.get("table.sensor.classifier"), help: message.get("table.sensor.classifier.help"), style: "width: 100%"},
                 structure, classifierCategoryId
             );
             newFieldsToDirtyCheck.push(id);
@@ -338,7 +354,7 @@ define([
             var capabilityContainer = creator.createRubric({
                 id: capabilityCategoryId,
                 label: message.get("ui.obj.capability.title"),
-                help: "" // TODO
+                help: message.get("ui.obj.capability.help")
             });
             construct.place(capabilityContainer, classifierCategoryId, "after");
 
@@ -364,7 +380,7 @@ define([
                 }
             ];
             creator.createDomDataGrid(
-                {id: id, name: message.get("table.sensor.capability"), style: "width: 100%"},
+                {id: id, name: message.get("table.sensor.capability"), help: message.get("table.sensor.capability.help"), style: "width: 100%"},
                 structure, capabilityCategoryId
             );
             newFieldsToDirtyCheck.push(id);
@@ -376,7 +392,7 @@ define([
             var parameterContainer = creator.createRubric({
                 id: parameterCategoryId,
                 label: message.get("ui.obj.parameter.title"),
-                help: "" // TODO
+                help: message.get("ui.obj.parameter.help")
             });
             construct.place(parameterContainer, capabilityCategoryId, "after");
             newFieldsToDirtyCheck.push(id);
@@ -404,7 +420,7 @@ define([
                 }
             ];
             creator.createDomDataGrid(
-                {id: id, name: message.get("table.sensor.parameter"), style: "width: 100%"},
+                {id: id, name: message.get("table.sensor.parameter"), help: message.get("table.sensor.parameter.help"), style: "width: 100%"},
                 structure, parameterCategoryId
             );
             newFieldsToDirtyCheck.push(id);
@@ -414,20 +430,40 @@ define([
             // === Verweise ===
             structure = [
                 {
-                    field: "subSensorObject",
+                    field: "subSensorObjectLink",
                     name: message.get("table.link.subSensor.object"),
                     editable: false,
-                    width: "auto"
+                    width: "686px"
+                },
+                {
+                    field: "subSensorObjectUuid",
+                    editable: false,
+                    width: "0px",
+                    hidden: true
+                },
+                {
+                    field: "subSensorObjectName",
+                    editable: false,
+                    width: "0px",
+                    hidden: true
                 }
             ];
 
             id = "subSensorDataGrid";
             creator.createDomDataGrid(
-                {id: id, name: message.get("table.link.subSensor"), style: "width: 100%"},// contextMenu: "OBSERVED_PROPERTIES"},
+                {id: id, name: message.get("table.link.subSensor"), help: message.get("table.link.subSensor.help"), style: "width: 100%"},// contextMenu: "OBSERVED_PROPERTIES"},
                 structure, "links"
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+
+            // Add link for dialog box
+            var linkId = "subSensorTableLink";
+            var linkText = message.get("dialog.link.subSensor.title");
+            var linkOnClick = "require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('subSensorObject'), 'dialogs/mdek_subsensor_link_dialog.jsp?c='+userLocale, 600, 350, true, {});";
+            var span = this._createLinkToDialog(linkId, linkText, linkOnClick);
+            var node = dom.byId(id).parentElement;
+            construct.place(span, node, 'before');
 
             structure = [
                 {
@@ -452,7 +488,7 @@ define([
 
             id = "sensorDocumentationDataGrid";
             creator.createDomDataGrid(
-                {id: id, name: message.get("table.link.sensor.documentation"), style: "width: 100%"},// contextMenu: "OBSERVED_PROPERTIES"},
+                {id: id, name: message.get("table.link.sensor.documentation"), help: message.get("table.link.sensor.documentation.help"), style: "width: 100%"},// contextMenu: "OBSERVED_PROPERTIES"},
                 structure, "links"
             );
             newFieldsToDirtyCheck.push(id);
