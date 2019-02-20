@@ -989,7 +989,6 @@ define({
     "ui.sysList.6005": "Konformität - Spezifikation der Konformität (INSPIRE)",
     "ui.sysList.6006": "Konformität - Spezifikation der Konformität (Freie Einträge)",
     "ui.sysList.6010": "Verfügbarkeit - Zugriffsbeschränkungen",
-    "ui.sysList.6020": "Verfügbarkeit - Anwendungseinschr&auml;nkungen",
     "ui.sysList.6100": "INSPIRE-Themen",
     "ui.sysList.6200": "ISO Liste der Länder",
 	"ui.sysList.6250":"Verwaltungsgebiete",
@@ -1100,7 +1099,7 @@ define({
     "widget.spatial.helpMessage": "Nach dem Übernehmen des Ausschnitts (Button 'Übernehme Ausschnitt') erscheinen im Feld Raumbezug die entsprechenden Koordinaten und der ausgewählte Ausschnitt ist hellrot hinterlegt. Der gewählte Raumbezug kann nachträglich geändert werden.",
     "widget.showSpatial": "Anzeigen / Ändern",
     "widget.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
-    
+
     "info.address.inherit.to.children": "Es wurden ${0} Adressen verändert!",
     "ui.listentry.noFilter": "Kein Filter"
 });

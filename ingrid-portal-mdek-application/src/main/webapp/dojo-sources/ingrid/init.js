@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -53,12 +53,12 @@ define([
     "ingrid/hierarchy/dirty",
     "ingrid/hierarchy/behaviours.user",
     "dojo/_base/sniff"
-], function(declare, unload, dom, has, array, lang, Deferred, on, keys, topic, DomConstruct, wnd, dialog, message, StackContainer, BorderContainer, ContentPane, XContentPane, registry, 
+], function(declare, unload, dom, has, array, lang, Deferred, on, keys, topic, DomConstruct, wnd, dialog, message, StackContainer, BorderContainer, ContentPane, XContentPane, registry,
         igeMenuBar, layoutCreator, menuEventHandler, IgeActions, PageNavigation, UtilSecurity, UtilAddress, UtilCatalog, UtilString, UtilGeneral, dirty, behaviours) {
     return declare(null, {
 
         global: this,
-        
+
         start: function() {
 
             console.log("start");
@@ -73,31 +73,31 @@ define([
             require(["dojo/cookie"], function(cookie) {
                 UtilGeneral.initialJSessionId = cookie("JSESSIONID");
             });
-            
+
             var self = this;
             var userDeferred = this.initCurrentUser()
                 .then(this.initCurrentUserPermissions)
                 .then(this.initCurrentGroups)
                 .then(function() {
-                
+
                 var deferred2 = self.initCatalogData()
                     .then(lang.hitch(self, self.fetchSysLists));
-    
-    
-    
+
+
+
                 // get guiIds that are going to be configured for visibility
                 self.initGeneralEventListener(); // for release activate!
-    
-                // wait for page rendered before 
+
+                // wait for page rendered before
                 require(["dojo/domReady!"], function() {
                     // create the main layout with toolbar, splitter, tree, ...
                     self.createBaseLayout();
-    
+
                     // create the containers where external pages shall be loaded into
                     self.createMenuPages();
-    
+
                     self.initSessionKeepalive();
-    
+
                     // select a page initially
                     deferred2.then(function() {
                         layoutCreator.createSelectBox("languageBox", null, {
@@ -106,10 +106,10 @@ define([
                                 label: 'label'
                             }
                         }, null, "js/data/languageCode.json");
-                        
+
                         // execute additional system behaviours
                         UtilCatalog.getOverrideBehavioursDef().then(function(data) {
-                            
+
                             // mark behaviours with override values
                             array.forEach(data, function(item) {
                                 if (behaviours[item.id]) {
@@ -124,7 +124,7 @@ define([
                             });
                             for (var behave in behaviours) {
                                 if (!behaviours[behave].title) continue;
-                                // run behaviour if 
+                                // run behaviour if
                                 // 1) it's a system behaviour
                                 // 2) activated by default and not overridden
                                 // 3) activate if explicitly overridden
@@ -152,9 +152,9 @@ define([
                         }, function(error) {
                             console.error("Error executing behvaiour:", error);
                         });
-                        
-                        
-                        // the connect has to be called delayed, otherwise onChange will be 
+
+
+                        // the connect has to be called delayed, otherwise onChange will be
                         // triggered immediately and the page would be switching always
                         // -> not when set initially?! (see declaration of selectbox!)
                         setTimeout(function() {
@@ -162,8 +162,8 @@ define([
                         }, 2000);
                         registry.byId("stackContainer").selectChild(registry.byId("pageDashboard"), false);
                         self.jumpToNodeOnInit();
-    
-                        // create an iframe which will be used for printing    
+
+                        // create an iframe which will be used for printing
                         DomConstruct.create("iframe", {
                             id: 'printFrame',
                             name: 'printFrame',
@@ -366,7 +366,7 @@ define([
                     scriptHasHooks: true,
                     executeScripts: true
                 });
-                
+
                 /*
                 var behaviourSettings = new XContentPane({
                     id: "behaviourSettings",
@@ -568,7 +568,7 @@ define([
                 }, "headerContainer");
 
                 //===========================================================
-                // top pane - logo 
+                // top pane - logo
                 new ContentPane({
                     id: "logoPane",
                     splitter: false,
@@ -576,7 +576,7 @@ define([
                     style: "height: 29px;"
                 }, "logoContainer");
 
-                // top pane - menu 
+                // top pane - menu
                 new ContentPane({
                     id: "menubarPane",
                     splitter: false,
@@ -593,7 +593,7 @@ define([
                 }, "menuInfoContainer");
 
                 //===========================================================
-                // (exchangable) content pane 
+                // (exchangable) content pane
                 new XContentPane({
                     id: "contentPane",
                     //splitter: true,
@@ -632,7 +632,7 @@ define([
                 // Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
                 var languageCode = UtilCatalog.getCatalogLanguage();
                 // console.debug("LanguageShort is: " + languageCode);
-                
+
                 CatalogService.getSysListsRemoveMetadata(lstIds, languageCode, {
                     callback: function(res) {
                         if (!window.sysLists) sysLists = {};
@@ -662,7 +662,7 @@ define([
             this.fetchSysLists = function() {
 
                 var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000, 2100,
-                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6006, 6010, 6020, 6100, 6200, 6250, 6300,
+                    3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5151, 5152, 5153, 5154, 5180, 5200, 5300, 6000, 6005, 6006, 6010, 6100, 6200, 6250, 6300,
                     6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 8010, 99999999
                 ];
 
@@ -787,7 +787,7 @@ define([
                             if (dirty.dirtyFlag &&
                                     registry.byId('dataTree').selectedNode &&
                                     registry.byId('dataTree').selectedNode.item.userWritePermission) {
-                                
+
                                 menuEventHandler.handleSave();
                             }
 
