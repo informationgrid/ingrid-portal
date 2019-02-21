@@ -258,14 +258,6 @@ define([
                 identifierCategoryId, "last");
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
-                    help: "TODO", // TODO
-                    isMandatory: true,
-                    visible: true,
-                    style: "width: 100%"
-                }),
-                identifierCategoryId, "last");
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
 
             id = "identifierManufacturer";
             construct.place(
