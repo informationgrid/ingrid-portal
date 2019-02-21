@@ -384,7 +384,7 @@ define([
                     width: "500px"
                 },
                 {
-                    field: "sensorCapabilityLabel",
+                    field: "sensorCapabilityValue",
                     name: message.get("table.sensor.capability.value"),
                     editable: true,
                     width: "100px"
