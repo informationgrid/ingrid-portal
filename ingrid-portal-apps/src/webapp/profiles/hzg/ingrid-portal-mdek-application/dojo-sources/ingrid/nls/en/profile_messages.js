@@ -84,5 +84,7 @@ define({
     "ui.obj.observedProperty.help": "TODO",
     "ui.obj.parameter.help": "TODO",
     "ui.obj.parameter.title": "Parameter",
-    "ui.obj.type.platform": "Platform/Sensor"
+    "ui.obj.type.platform": "Platform/Sensor",
+
+    "validation.sensorml.table.missingValues": "For each row all of the columns must have a value"
 });

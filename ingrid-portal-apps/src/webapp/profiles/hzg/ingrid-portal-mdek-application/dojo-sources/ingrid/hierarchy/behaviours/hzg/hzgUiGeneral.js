@@ -32,12 +32,14 @@ define([
     "dojo/dom-construct",
     "dojo/topic",
     "ingrid/dialog",
+    "ingrid/grid/CustomGridEditors",
+    "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
     "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/UI"
-], function(MenuItem, MenuSeparator, registry, array, declare, lang, aspect, dom, construct, topic, dialog, dirty, creator, menu, message, UtilUI) {
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, aspect, dom, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilUI) {
 
     return declare(null, {
         title: "HZG-UI",
@@ -196,6 +198,7 @@ define([
         _createSensorMLFields: function() {
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
+            var tableIdsForValidation = [];
 
             var identifierCategoryId = "sensorIdentifier";
             var classifierCategoryId = "sensorClassifier";
@@ -280,11 +283,18 @@ define([
             additionalFields.push(registry.byId(id));
 
             id = "sensorIdentifierDataGrid";
+            var listOptions = ["Call sign", "ICES-Code", "IMO-Code", "WMO-Code" ];
+            var listValues = ["callSign", "ices", "imo", "wmo"];
             var structure = [
                 {
                     field: "sensorIdentifierLabel",
                     name: message.get("table.sensor.identifier.label"),
+                    type: Editors.SelectboxEditor,
                     editable: true,
+                    options: listOptions,
+                    values: listValues,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true,
                     width: "200px"
                 },
                 {
@@ -300,6 +310,7 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            tableIdsForValidation.push(id);
 
 
 
@@ -316,7 +327,6 @@ define([
                 creator.createDomTextbox({
                     id: id,
                     name: message.get("sensor.classifier.type") + "*",
-                    style: "width: 100%",
                     help: message.get("sensor.classifier.type.help"),
                     isMandatory: true,
                     visible: true,
@@ -327,11 +337,18 @@ define([
             additionalFields.push(registry.byId(id));
 
             id = "sensorClassifierDataGrid";
-            var structure = [
+            listOptions = ["DeviceCategory"];
+            listValues = ["deviceCategory"];
+            structure = [
                 {
                     field: "sensorClassifierLabel",
                     name: message.get("table.sensor.classifier.label"),
                     editable: true,
+                    type: Editors.SelectboxEditor,
+                    options: listOptions,
+                    values: listValues,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true,
                     width: "200px"
                 },
                 {
@@ -347,6 +364,7 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            tableIdsForValidation.push(id);
 
 
 
@@ -359,11 +377,18 @@ define([
             construct.place(capabilityContainer, classifierCategoryId, "after");
 
             id = "sensorCapabilityDataGrid";
-            var structure = [
+            listOptions = ["Präzision", "Sensitivität"];
+            listValues = ["precision", "sensitivity"];
+            structure = [
                 {
                     field: "sensorCapabilityLabel",
                     name: message.get("table.sensor.capability.label"),
                     editable: true,
+                    type: Editors.SelectboxEditor,
+                    options: listOptions,
+                    values: listValues,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true,
                     width: "500px"
                 },
                 {
@@ -385,6 +410,7 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            tableIdsForValidation.push(id);
 
 
 
@@ -399,11 +425,29 @@ define([
             additionalFields.push(registry.byId(id));
 
             id = "sensorParameterDataGrid";
-            var structure = [
+            listOptions = [
+                "chlorophyll_concentration_in_sea_water",
+                "fractional_saturation_of_oxygen_in_sea_water",
+                "sea_surface_salinity",
+                "sea_surface_temperature",
+                "sea_surface_wave_significant_height",
+                "sea_water_salinity",
+                "sea_water_temperature",
+                "sea_water_turbidity",
+                "wind_from_direction",
+                "wind_speed"
+            ];
+            listValues = listOptions;
+            structure = [
                 {
                     field: "sensorParameterLabel",
                     name: message.get("table.sensor.parameter.label"),
                     editable: true,
+                    type: Editors.ComboboxEditor,
+                    options: listOptions,
+                    values: listValues,
+                    formatter: Formatters.ListCellFormatter,
+                    partialSearch: true,
                     width: "200px"
                 },
                 {
@@ -425,6 +469,7 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            tableIdsForValidation.push(id);
 
 
             // === Verweise ===
@@ -493,6 +538,9 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            tableIdsForValidation.push(id);
+
+            this._setValidationFunctionFor(tableIdsForValidation);
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
@@ -596,6 +644,36 @@ define([
                     UtilUI.setHide(parameterCategoryId);
                 }
 
+            });
+        },
+
+        _setValidationFunctionFor: function(tableIds) {
+            topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                tableIds.forEach(function(id) {
+                    var isDataValid = true;
+
+                    var table = registry.byId(id);
+                    var data = table.data;
+                    var columnFields = table.columns.map(function (column) {
+                        return column.field;
+                    });
+
+                    for (var i=0; i<data.length; i++) {
+                        var isRowValid = true;
+                        for (var j=0; j<columnFields.length && isRowValid; j++) {
+                            var field = columnFields[j];
+                            var columnValue = data[i][field];
+                            isRowValid = isRowValid
+                                && columnValue !== undefined
+                                && columnValue !== null
+                                && columnValue.trim() !== "";
+                        }
+                        isDataValid = isDataValid && isRowValid;
+                    }
+                    if (!isDataValid) {
+                        notPublishableIDs.push([id, message.get("validation.sensorml.table.missingValues")]);
+                    }
+                });
             });
         }
     })();
