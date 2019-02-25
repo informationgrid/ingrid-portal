@@ -31,7 +31,7 @@ define([
         title: "Plattform-Objektklasse", // TODO localisation
         description: "Objektklasse für Plattform Metadaten",
         defaultActive: true,
-        category: "HZG",
+        category: "Plattform/Sensor",
         type: 'SYSTEM',
 
         run: function() {
