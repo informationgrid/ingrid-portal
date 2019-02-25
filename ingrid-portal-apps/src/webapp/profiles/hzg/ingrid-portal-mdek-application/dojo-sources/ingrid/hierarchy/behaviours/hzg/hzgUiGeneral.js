@@ -276,7 +276,7 @@ define([
 
             id = "sensorIdentifierDataGrid";
             var listOptions = ["Call sign", "ICES-Code", "IMO-Code", "WMO-Code" ];
-            var listValues = ["callSign", "ices", "imo", "wmo"];
+            var listValues = listOptions;
             var structure = [
                 {
                     field: "sensorIdentifierLabel",
@@ -330,7 +330,7 @@ define([
 
             id = "sensorClassifierDataGrid";
             listOptions = ["DeviceCategory"];
-            listValues = ["deviceCategory"];
+            listValues = listOptions;
             structure = [
                 {
                     field: "sensorClassifierLabel",
@@ -370,7 +370,7 @@ define([
 
             id = "sensorCapabilityDataGrid";
             listOptions = ["Präzision", "Sensitivität"];
-            listValues = ["precision", "sensitivity"];
+            listValues = listOptions;
             structure = [
                 {
                     field: "sensorCapabilityLabel",
