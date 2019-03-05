@@ -113,7 +113,13 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                         HashMap<String, String> provider = new HashMap<String, String>();
                         String name = null;
                         if(detail.get("title") != null){
-                            name = (String) ((ArrayList)detail.get("title")).get(0);
+                            // FIXME: title field can be an array or a list. this should be prevented in iPlug/central index
+                            if (detail.get("title") instanceof ArrayList) {
+                                name = (String) ((ArrayList)detail.get("title")).get(0);
+                            } else {
+                                name = ((String[])detail.get("title"))[0];
+                            }
+
                             if(name != null){
                                 if(detail.get("t02_address.parents.title") != null)
                                     if(detail.get("t02_address.parents.title") instanceof String[]){
