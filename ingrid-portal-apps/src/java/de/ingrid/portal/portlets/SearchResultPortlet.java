@@ -143,8 +143,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
         
         ResourceURL restUrl = response.createResourceURL();
-        restUrl.setResourceID( "httpURL" );
-        request.setAttribute( "restUrlHttpGet", restUrl.toString() );
+        restUrl.setResourceID( "httpURLImage" );
+        request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
 
         String[] mapPosition = PortalConfig.getInstance().getStringArray( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_POSITION);
         if(mapPosition != null && mapPosition.length == 3) {
