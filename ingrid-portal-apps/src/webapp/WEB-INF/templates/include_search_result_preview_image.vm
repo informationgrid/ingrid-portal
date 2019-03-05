@@ -24,8 +24,10 @@
                             http.send();
                             return ('');
                         } else {
-                            img[0].src = src;
-                            img[0].classList.remove('is-hidden');
+                            if(src.indexOf('http') > -1) {
+                                img[0].src = src;
+                                img[0].classList.remove('is-hidden');
+                            }
                         }
                     }
                 }

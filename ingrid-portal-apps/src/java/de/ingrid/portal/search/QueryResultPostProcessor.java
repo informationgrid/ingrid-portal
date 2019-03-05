@@ -158,20 +158,21 @@ public class QueryResultPostProcessor {
             // read for all dsc iplugs
 
             Object additionalHtml = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1);
-            if (additionalHtml instanceof ArrayList){
-                hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((ArrayList) additionalHtml).get( 0 ));
-            } else if (additionalHtml instanceof String[]){
-                hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((String[]) additionalHtml)[0]);
-            } else {
-                String tmp = additionalHtml.toString();
-                if(tmp.indexOf(">, <") > -1) {
-                    String[] tmpSplit = tmp.split(", ");
-                    hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, tmpSplit[0]);
+            if(additionalHtml != null) {
+                if (additionalHtml instanceof ArrayList){
+                    hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((ArrayList) additionalHtml).get( 0 ));
+                } else if (additionalHtml instanceof String[]){
+                    hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((String[]) additionalHtml)[0]);
                 } else {
-                    hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, tmp.split(", "));
+                    String tmp = additionalHtml.toString();
+                    if(tmp.indexOf(">, <") > -1) {
+                        String[] tmpSplit = tmp.split(", ");
+                        hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, tmpSplit[0]);
+                    } else {
+                        hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, tmp.split(", "));
+                    }
                 }
             }
-            
             boolean doNotShowMaps = false;
             String firstResourceId = null;
             
