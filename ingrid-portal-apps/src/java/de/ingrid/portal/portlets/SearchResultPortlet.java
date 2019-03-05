@@ -89,7 +89,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         
         try {
-            if (resourceID.equals( "httpURL" )) {
+            if (resourceID.equals( "httpURLImage" )) {
                 String paramURL = request.getParameter( "url" );
                 if(paramURL != null){
                     URL url = new URL(paramURL);
