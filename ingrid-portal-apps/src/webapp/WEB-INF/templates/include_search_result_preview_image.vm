@@ -4,24 +4,30 @@
             var img = $(this);
             if(img){
                 if(img.length > 0){
-                    //var src = img[0].alt;
-                    var src = img[0].src;
-                    var respJson;
-                    var http = new XMLHttpRequest();
-                    http.open('GET', '$restUrlHttpGet?url=' + encodeURIComponent(src), true);
-                    http.onreadystatechange = function() {
-                        if (this.readyState == this.DONE) {
-                            if (this.status === 200) {
-                                if(this.response){
-                                    img[0].src = this.response;
-                                } else {
-                                    img[0].alt = '';
+                    var srcRegEx = img[0].outerHTML.match(new RegExp( "tmp=\"(.*)\" class"));
+                    if(srcRegEx && srcRegEx.length > 0) {
+                        var src = srcRegEx[srcRegEx.length - 1];
+                        if(src.indexOf("https://") == -1) {
+                            var respJson;
+                            var http = new XMLHttpRequest();
+                            http.open('GET', '$restUrlHttpGet?url=' + encodeURIComponent(src), true);
+                            http.onreadystatechange = function() {
+                                if (this.readyState == this.DONE) {
+                                    if (this.status === 200) {
+                                        if(this.response){
+                                            img[0].src = this.response;
+                                        } else {
+                                            img[0].alt = '';
+                                        }
+                                    }
                                 }
-                            }
+                            };
+                            http.send();
+                            return ('');
+                        } else {
+                            img[0].src = src;
                         }
-                    };
-                    http.send();
-                    return ('');
+                    }
                 }
             }
         });
