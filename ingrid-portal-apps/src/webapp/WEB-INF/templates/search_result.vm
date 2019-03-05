@@ -7,31 +7,6 @@
         #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
     </article>
 </div>
-#if($adminContent)
-    <!--
-    #if($rankedResultList.get("FACETS"))
-        Facets:
-        $rankedResultList.get("FACETS")
-    #end
-    
-    #if($facetsQuery)
-           Facets Query:
-        #foreach($facete in $facetsQuery)
-            $facete
-        #end
-    #end
-    
-    #if($searchQuery)
-        Search Query:
-        $searchQuery
-    #end
-    -->
-#end
-<script >
-    // Resize facet map on filter click
-    function onClickFilterEvent(){
-        if(resizeMap){
-            resizeMap();
-        }
-    }
-</script>
+#parse ('/WEB-INF/templates/include_search_result_admin_info.vm')
+#parse ('/WEB-INF/templates/include_search_result_map.vm')
+#parse ('/WEB-INF/templates/include_search_result_preview_image.vm')

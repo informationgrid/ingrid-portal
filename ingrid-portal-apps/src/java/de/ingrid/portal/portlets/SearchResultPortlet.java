@@ -22,9 +22,14 @@
  */
 package de.ingrid.portal.portlets;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +39,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -77,6 +85,37 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     
     private HttpClient client;
 
+    public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
+        String resourceID = request.getResourceID();
+        
+        try {
+            if (resourceID.equals( "httpURL" )) {
+                String paramURL = request.getParameter( "url" );
+                if(paramURL != null){
+                    URL url = new URL(paramURL);
+                    if (null != url) {
+                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                        InputStream inStreamConvert = con.getInputStream();
+                        ByteArrayOutputStream os = new ByteArrayOutputStream();
+                        if (null != con.getContentType()) {
+                            byte[] chunk = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                                os.write(chunk, 0, bytesRead);
+                            }
+                            os.flush();
+                            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                                    Base64.getEncoder().encodeToString(os.toByteArray()));
+                            response.getWriter().write(dataUri.toString());
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error( "Error creating resource for resource ID: " + resourceID, e );
+        }
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -103,6 +142,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
         
+        ResourceURL restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURL" );
+        request.setAttribute( "restUrlHttpGet", restUrl.toString() );
+
         String[] mapPosition = PortalConfig.getInstance().getStringArray( PortalConfig.PORTAL_MAPCLIENT_LEAFLET_POSITION);
         if(mapPosition != null && mapPosition.length == 3) {
             context.put("mapPosition", mapPosition);
