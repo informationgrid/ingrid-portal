@@ -14,17 +14,17 @@
             #elseif($entry.isMapLink)
                 #if(!$entry.get("href"))
                     <figure>
-                        <img class="ob-box-left" height=130 width=155 src="$entry.src" alt="">
+                        <img class="preview_image is-hidden ob-box-left" height=130 width=155 tmp="$entry.src" alt="">
                         <figcaption class="caption"><p>$entry.title</p></figcaption>
                     </figure>
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <figure>
-                        <img class="ob-box-left" height=130 width=155 src="$entry.src" alt="">
+                        <img class="preview_image is-hidden ob-box-left" height=130 width=155 tmp="$entry.src" alt="">
                         <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${entry.get("href")}">$entry.title</a></p></figcaption>
                     </figure>
                 #else
                     <figure>
-                        <img class="ob-box-left" height=130 width=155 src="$entry.src" alt="">
+                        <img class="preview_image is-hidden ob-box-left" height=130 width=155 tmp="$entry.src" alt="">
                         <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="${entry.get("href")}">$entry.title</a></p></figcaption>
                     </figure>
                 #end
@@ -801,3 +801,4 @@
         </div>
     </section>
 #end
+#parse ('/WEB-INF/templates/global/include_preview_image.vm')
