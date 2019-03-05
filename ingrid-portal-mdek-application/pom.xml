@@ -208,15 +208,6 @@
       <version>4.2.0</version>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.14</version>
-      <!-- LOG4J PROVIDED to avoid classloader conflicts ! Tomcat logging has to be configured (log4j.jar in common/lib) -->
-      <!-- NO !!! LOG4J has to be in webapp, otherwise log4j.properties is read from tomcat/common/classes !!! no classloader conflicts ! -->
-      <!-- errors are thrown during IGE startup ... logging still can be configured within webapp! -->
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache</artifactId>
       <version>1.4.1</version>
@@ -231,6 +222,12 @@
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-ige</artifactId>
       <version>4.0.1</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -252,11 +249,23 @@
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-gemet</artifactId>
       <version>4.0.3</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
       <version>4.0.2</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -266,6 +275,10 @@
         <exclusion>
           <groupId>javax.measure</groupId>
           <artifactId>jsr-275</artifactId>
+        </exclusion>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -631,11 +644,6 @@
             </exclusion>
           </exclusions>
         </dependency>
-        <!-- <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-        </dependency> -->
         <dependency>
           <groupId>net.sf.ehcache</groupId>
           <artifactId>ehcache</artifactId>
