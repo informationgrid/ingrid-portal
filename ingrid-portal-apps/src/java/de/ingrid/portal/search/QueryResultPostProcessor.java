@@ -163,7 +163,13 @@ public class QueryResultPostProcessor {
             } else if (additionalHtml instanceof String[]){
                 hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, ((String[]) additionalHtml)[0]);
             } else {
-                hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, additionalHtml);
+                String tmp = additionalHtml.toString();
+                if(tmp.indexOf(">, <") > -1) {
+                    String[] tmpSplit = tmp.split(", ");
+                    hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, tmpSplit[0]);
+                } else {
+                    hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, tmp.split(", "));
+                }
             }
             
             boolean doNotShowMaps = false;

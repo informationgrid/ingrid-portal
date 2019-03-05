@@ -1,6 +1,8 @@
 #if($!rs.additional_html_1)
     <div class="media__obj #if($rs.udk_class)media__obj--right#end">
-        ##$!rs.additional_html_1.replace('src', 'alt')
-        !rs.additional_html_1
+        $!rs.additional_html_1.replace('height', 'max-height').replace('src', 'tmp')
+        <noscript>
+        $!rs.additional_html_1.replace('height', 'max-height')
+        </noscript>
     </div>
 #end
