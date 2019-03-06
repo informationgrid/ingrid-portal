@@ -8,6 +8,12 @@
     <body>
 
         <release version="4.6.2-SNAPSHOT" date="2019-02-xx" description="Release 4.6.2">
+          <action type="fix" dev="wemove" issue="1304">
+            Portal: Fix portal load mixed content.
+          </action>
+          <action type="fix" dev="wemove" issue="1305">
+            Portal: Measure client load OSM tiles with HTTPS protocol.
+          </action>
           <action type="fix" dev="wemove" issue="1284">
             Fix mapping of gmd:hoursOfService.
           </action>
