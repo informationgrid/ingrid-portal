@@ -60,8 +60,8 @@ define({
     "mcloud.form.termsOfUse": "Nutzungshinweise",
     "mcloud.form.termsOfUse.helpMessage": "Wenn es in Bezug auf die Nachnutzung der Daten spezielle Hinweise gibt, sind diese hier einzutragen. Die Einträge erscheinen in der mCLOUD unterhalb der Links zu den Daten.<br /><br />Hier kann beispielsweise angegeben werden, wenn der Datensatz für die Nutzung in bestimmten Kontexten nicht geeignet ist oder aufgrund möglicherweise enthaltener Fehler keine Gewähr übernommen wird.<br /><br />Der Eintrag in dieses Feld ist optional.",
     "mcloud.form.dataHoldingPlace": "Datenhaltende Stelle",
-    "mcloud.form.category": "Kategorie",
-    "mcloud.form.category.helpMessage": "Die Daten in der mCLOUD sind den folgenden Kategorien zuzuordnen:<br /><ul><li>Bahn</li><li>Wasserstraßen und Gewässer</li><li>Infrastruktur</li><li>Klima und Wetter</li><li>Luft- und Raumfahrt</li><li>Straßen</li></ul>Eine Mehrfachauswahl ist möglich.<br /><br />Der Eintrag in dieses Feld ist obligatorisch.",
+    "mcloud.form.category": "mCLOUD Kategorie",
+    "mcloud.form.category.helpMessage": "Bitte wählen Sie mindestens eine Kategorie aus, unter der die Daten in der mCLOUD eingeordnet werden.<br /><br />Eine Mehrfachauswahl ist möglich.<br /><br />Der Eintrag in dieses Feld ist obligatorisch.",
     "mcloud.form.downloads": "Downloads",
     "mcloud.form.downloads.helpMessage": "In diese Felder werden die Links auf die eigentlichen Daten eingetragen. Für jeden Link sind vier Felder auszufüllen:<br /><ul><li>Titel: Ein kurzer für den verlinkten Datensatz spezifischer Titel.</li><li>Beispiel: Reisezentrenliste der DB Vertrieb GmbH (Stand: 19.07.2018)</li><li>Link: Der Link auf die Datenquelle.</li><li>Typ: Angabe, um welche Art des Datenzugangs es sich handelt (z.B. Download, FTP, WMS, AtomFeed, etc.).</li><li>Datenformat: Dateiformat, in dem die Daten vorliegen. Hier ist auch eine freie Eingabe möglich.</li></ul>Die Einträge in dieses Feld sind obligatorisch (Link, Typ).",
     "mcloud.form.license": "Lizenz",
@@ -85,7 +85,7 @@ define({
     "mcloud.form.mcloudFields": "mCLOUD-Felder",
     "mcloud.form.mcloudFields.toolTip": "In den nachfolgenden Feldern werden Metadaten erfasst, die in der Detailbeschreibung der Datensätze in der mCLOUD angezeigt werden.<br /><br />Außerdem werden 'opendata'-Metadaten erfasst, die z.B. bei der Abgabe nach GovData obligatorisch sind.",
 
-    "mcloud.form.dcatcategory": "DCAT Kategorie (GovData)",
-    "mcloud.form.dcatcategory.helpMessage": "Hier können mehrere 'opendata'-Kategorien eingetragen werden. Bei der Abgabe nach GovData sind diese Kategorien bestimmend, werden in der mCLOUD allerdings nicht angezeigt.<br /><br />Es muss mindestens eine Kategorie eingetragen werden."
+    "mcloud.form.dcatcategory": "OpenData Kategorie (GovData)",
+    "mcloud.form.dcatcategory.helpMessage": "Hier können mehrere OpenData-Kategorien eingetragen werden. Bei der Abgabe nach GovData sind diese Kategorien bestimmend, werden in der mCLOUD allerdings nicht angezeigt.<br /><br />Es muss mindestens eine Kategorie eingetragen werden."
 });
 
