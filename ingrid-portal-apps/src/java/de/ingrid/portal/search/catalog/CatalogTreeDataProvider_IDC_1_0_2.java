@@ -163,9 +163,10 @@ public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvide
     }
     
     private List getSubordinatedObjects(String objUuid, String plugId, Integer maxResults) {
-        String[] requestedMetadata = new String[2];
+        String[] requestedMetadata = new String[3];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
+        requestedMetadata[2] = Settings.HIT_KEY_ORG_OBJ_ID;
     	return IPlugHelperDscEcs.getHits(FIELD_PARENT_OBJ_UUID + ":".concat(objUuid).concat(
         " iplugs:\"").concat(IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
     }
