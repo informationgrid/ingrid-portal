@@ -58,6 +58,9 @@ define(["dojo/_base/declare",
             // hide Service time
             domClass.add("uiElement4450", "hide");
 
+            // set address rubric as expanded initially (#2039)
+            domClass.add("address", "expanded");
+
         }
 
     })();
