@@ -644,11 +644,12 @@ public class UtilsDB {
             // delete it
             Session session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
-            Statement st = session.connection().createStatement();
-            if (log.isDebugEnabled()) {
-                log.debug("Execute SQL: " + sqlStr);
+            try (Statement st = session.connection().createStatement()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Execute SQL: " + sqlStr);
+                }
+                st.executeUpdate(session.connection().nativeSQL(sqlStr));
             }
-            st.executeUpdate(session.connection().nativeSQL(sqlStr));
             tx.commit();
         } catch (Exception ex) {
             if (tx != null) {
