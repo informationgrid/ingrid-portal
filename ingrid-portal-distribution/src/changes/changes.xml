@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="1280">
             Portal: Fix header logo NUMIS.
           </action>
+          <action type="fix" dev="wemove" issue="1303">
+            Portal: Change directory for codelists to prevent conflict with kml directory.
+          </action>
         </release>
 
         <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
