@@ -93,13 +93,23 @@ define(["dojo/_base/declare",
                         notPublishableIDs.push(["uiElementAddpreExaminationAccomplished", message.get("uvp.form.preExaminationAccomplished.required")]);
                     }
                 }
+
+                // check if receipt of application date is before begin date of first publication
+                var publicationBeginDate = registry.byId("publicDateFrom_1").get("value");
+                if (publicationBeginDate) {
+                    var applicationReceiptDate = registry.byId("uvpApplicationReceipt").get("value");
+                    if (applicationReceiptDate > publicationBeginDate) {
+                        notPublishableIDs.push(["uiElementAdduvpApplicationReceipt", message.get("uvp.form.applicationReceipt.invalid")]);
+                    }
+                }
             });
         },
 
         prepareDocument: function(classInfo) {
             console.log("Prepare document for class: ", classInfo);
             var objClass = classInfo.objClass;
-            if (objClass === "Class10") { // UVP Vorhaben
+            if (objClass === "Class10") { // Zulassungsvorhaben
+                domClass.remove("uiElementAdduvpApplicationReceipt", "hide");
                 domClass.remove("uiElementAdduvpgCategory", "hide");
                 domClass.remove("uiElementAddpreExaminationAccomplished", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.generalDescription"), "only");
@@ -112,6 +122,7 @@ define(["dojo/_base/declare",
                 domClass.remove("uiElement1010", "hide");
 
             } else if (objClass === "Class11") { // ausländische
+                domClass.add("uiElementAdduvpApplicationReceipt", "hide");
                 domClass.add("uiElementAdduvpgCategory", "hide");
                 domClass.add("uiElementAddpreExaminationAccomplished", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.foreign.generalDescription"), "only");
@@ -125,6 +136,7 @@ define(["dojo/_base/declare",
                 
             } else if (objClass === "Class12") { // negative
                 this.uvpPhaseField.hideAddButton();
+                domClass.add("uiElementAdduvpApplicationReceipt", "hide");
                 query("#generalAddressTableLabel label").addContent(message.get("uvp.form.negative.address"), "only");
                 domClass.add("uiElementAddpreExaminationAccomplished", "hide");
                 domClass.remove("uiElementAdduvpNegativeApprovalDate", "hide");
@@ -145,7 +157,8 @@ define(["dojo/_base/declare",
                     domClass.add("uiElementAdduvpNegativeRelevantDocs", "hide");
                 }
 
-            } else if (objClass === "Class13" || objClass === "Class14") { // Raumordnungsverfahren or Linienbestimmungen
+            } else if (objClass === "Class13" || objClass === "Class14") { // vorgelagerte Verfahren (Raumordnungsverfahren or Linienbestimmungen)
+                domClass.remove("uiElementAdduvpApplicationReceipt", "hide");
                 domClass.remove("uiElementAdduvpgCategory", "hide");
                 domClass.add("uiElementAddpreExaminationAccomplished", "hide");
                 query("#generalDescLabel label").addContent(message.get("uvp.form.spatial.generalDescription"), "only");
@@ -279,8 +292,21 @@ define(["dojo/_base/declare",
             this.uvpPhaseField = new UvpPhases({ id: "UVPPhases" });
             this.uvpPhaseField.placeAt("generalContent");
 
+            /**
+             * Raumbezug
+             */
             this.createSpatial(rubric);
             newFieldsToDirtyCheck.push(this.prefix + "spatialValue");
+
+            /**
+             * Eingang des Antrags
+             */
+            id = "uvpApplicationReceipt";
+            var applicationReceipt = creator.createDomDatebox({ id: id, name: message.get("uvp.form.applicationReceipt"), help: message.get("uvp.form.applicationReceipt.helpMessage"), visible: "required", style: "width:33%" });
+            newFieldsToDirtyCheck.push(id);
+            construct.place(applicationReceipt, rubric);
+            additionalFields.push(registry.byId(id));
+            registry.byId(id).storeAsTimestamp = true;
 
             /**
              * Vorhabensnummer

@@ -53,6 +53,7 @@ public class UVPReport {
     private static final String TOTAL_GROUPED = "totalGrouped";
     private static final String TOTAL_NEGATIVE = "totalNegative";
     private static final String TOTAL_POSITIVE = "totalPositive";
+    private static final String AVERAGE_DURATION = "averageDuration";
 
     private final ObjectRequestHandler objectRequestHandler;
     private final CatalogRequestHandler catalogRequestHandler;
@@ -78,6 +79,8 @@ public class UVPReport {
         values.put(TOTAL_NEGATIVE, 0);
         values.put(TOTAL_POSITIVE, 0);
 
+        List<Integer> durations = new ArrayList<>();
+
         int pageSize = 10;
         int page = 0;
         while (true) {
@@ -100,6 +103,12 @@ public class UVPReport {
 
                     // count all negative pre-examinations
                     handleNegativeCount(docDetail, values);
+
+                    // get duration of this dataset
+                    Integer duration = getDuration(docDetail);
+                    if (duration != null) {
+                        durations.add(duration);
+                    }
                 }
 
             }
@@ -109,9 +118,23 @@ public class UVPReport {
 
         mapUvpNumbers((Map) values.get(TOTAL_GROUPED));
 
+        Optional<Float> avgDuration = calculateAverageValue(durations);
+        values.put(AVERAGE_DURATION, avgDuration.orElse(null));
+
         report.setValues(values);
 
         return report;
+    }
+
+    private Integer getDuration(MdekDataBean docDetail) {
+        // TODO: implement
+        return null;
+    }
+
+    private Optional<Float> calculateAverageValue(List<Integer> list) {
+        return list.stream()
+                .reduce(Integer::sum)
+                .map(val -> (float)val / list.size());
     }
 
     private boolean datasetIsInDateRange(MdekDataBean doc) {

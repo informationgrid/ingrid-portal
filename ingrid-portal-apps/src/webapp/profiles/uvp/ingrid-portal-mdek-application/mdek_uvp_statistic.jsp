@@ -67,13 +67,13 @@
             pageUvpStatistic.startDate = date;
             registry.byId("dateEndUvpStatistic").constraints.min = date;
             verifyDates(pageUvpStatistic.startDate, pageUvpStatistic.endDate);
-        }
+        };
         
         pageUvpStatistic.setEndDate = function(date) {
             pageUvpStatistic.endDate = date;
             registry.byId("dateStartUvpStatistic").constraints.max = date;
             verifyDates(pageUvpStatistic.startDate, pageUvpStatistic.endDate);
-        }
+        };
 
         pageUvpStatistic.createStatistic = function() {
             var self = this;
@@ -89,7 +89,7 @@
                 download(filename, self.convertToCSV(report));
                 setGenerationState(true);
             });
-        }
+        };
 
         function setGenerationState(isFinished) {
             isFinished
@@ -102,9 +102,9 @@
 
         pageUvpStatistic.convertToCSV = function(report) {
             console.log("Convert report to CSV");
-            var csv = "UVP Nummer; UVP-G Kategorie; Anzahl; Positive Vorprüfungen; Negative Vorprüfungen\n";
+            var csv = "UVP Nummer; UVP-G Kategorie; Anzahl; Positive Vorprüfungen; Negative Vorprüfungen; Durchschnittliche Verfahrensdauer\n";
 
-            csv += ";;;" + report.values.totalPositive + ";" + report.values.totalNegative + "\n";
+            csv += ";;;" + report.values.totalPositive + ";" + report.values.totalNegative + ";" + report.values.averageDuration + "\n";
 
             var totalGrouped = report.values.totalGrouped;
             var groupedKeys = Object.keys(totalGrouped);

@@ -49,6 +49,10 @@ define({
     "uvp.form.categories.uvpNegative": "Vorprüfungen, negativ",
     "uvp.form.categories.uvpForeign": "Ausländische Vorhaben",
 
+    "uvp.form.applicationReceipt": "Eingang des Antrags",
+    "uvp.form.applicationReceipt.helpMessage": "Geben Sie das Datum des Einganges des Antrags an. Das Datum wird im Portal nicht angezeigt und dient nur zur statistischen Zwecken.",
+    "uvp.form.applicationReceipt.invalid": "Das Datum muss vor dem Beginn der ersten Auslegung sein.",
+
     "uvp.form.categoryIds": "UVP-Nummer",
     "uvp.form.categoryIds.helpMessage": "Hier ist die UVP-Nummer einzugeben, die für das Zulassungsverfahren zutrifft (Mehrfach-Nennungen möglich).<br><br>Es werden die bundesrechtlichen und die für Ihr Land maßgeblichen UVP-Nummern angeboten. Sollte wider Erwarten eine Nummer fehlen, wenden Sie sich bitte an die in Ihrem Land für die Betreuung des UVP-Portals zuständigen Ansprechpartner.<br><br>Die UVP-Nummern dienen der Einordnung des Zulassungsverfahrens in die Kategorien, nach denen auf der Portalseite gesucht werden kann. Außerdem sind sie wichtig zur Erfüllung der Berichtspflicht nach Artikel 12 der UVP-Richtlinie 2011/92/EU, nach der alle sechs Jahre die bis dahin durchgeführten UVP-Verfahren ausgezählt und der EU-Kommission unter Zuordnung zu den Kategorien mitgeteilt werden müssen.",
     "uvp.form.preExaminationAccomplished.label": "Vorprüfung durchgeführt",
