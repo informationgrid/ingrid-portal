@@ -124,7 +124,7 @@ public class FileSystemStorage implements Storage {
      * @throws IOException
      */
     private List<StorageItem> list(Path path) throws IOException {
-        List<StorageItem> files = new ArrayList<StorageItem>();
+        List<StorageItem> files = new ArrayList<>();
 
         // add files from documents
         files.addAll(this.listFiles(path));
@@ -347,7 +347,7 @@ public class FileSystemStorage implements Storage {
                 .filter(p -> {
                     boolean isEmptyDir = false;
                     try {
-                        isEmptyDir = Files.isDirectory(p) &&
+                        isEmptyDir = p.toFile().isDirectory() &&
                                 !Files.newDirectoryStream(p).iterator().hasNext() &&
                                 !(p.equals(trashPath) || p.equals(archivePath));
                     }
