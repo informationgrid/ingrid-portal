@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,6 +44,7 @@ import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -143,18 +144,20 @@ public class FileSystemStorage implements Storage {
      * @throws IOException
      */
     private List<StorageItem> listFiles(Path path) throws IOException {
-        List<StorageItem> files = new ArrayList<StorageItem>();
-        if (Files.exists(path)) {
-            Files.walk(path)
-            .filter(p -> !p.getParent().endsWith(TRASH_PATH) && Files.isRegularFile(p))
-            .forEach(p -> {
-                try {
-                    files.add(this.getFileInfo(p.toString()));
-                }
-                catch (IOException e) {
-                    throw new UncheckedIOException(e);
-                }
-            });
+        List<StorageItem> files = new ArrayList<>();
+        if (path.toFile().exists()) {
+            try (Stream<Path> stream = Files.walk(path)) {
+                stream
+                .filter(p -> !p.getParent().endsWith(TRASH_PATH) && p.toFile().isFile())
+                .forEach(p -> {
+                    try {
+                        files.add(this.getFileInfo(p.toString()));
+                    }
+                    catch (IOException e) {
+                        throw new UncheckedIOException(e);
+                    }
+                });
+            }
         }
         return files;
     }
@@ -164,9 +167,11 @@ public class FileSystemStorage implements Storage {
         Path realPath = this.getRealPath(path, file, this.docsDir);
         try {
             FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
-            return Files.exists(fileInfo.getRealPath());
+            return fileInfo.getRealPath().toFile().exists();
         }
-        catch (Exception ex) {}
+        catch (Exception ex) {
+            // ignore
+        }
         return false;
     }
 
@@ -208,7 +213,7 @@ public class FileSystemStorage implements Storage {
         Files.createDirectories(realPath.getParent());
 
         // copy file
-        List<CopyOption> copyOptionList = new ArrayList<CopyOption>();
+        List<CopyOption> copyOptionList = new ArrayList<>();
         if (replace) {
             copyOptionList.add(StandardCopyOption.REPLACE_EXISTING);
         }
@@ -278,7 +283,7 @@ public class FileSystemStorage implements Storage {
             throw new IllegalFileException("The file name is invalid.", path+"/"+file);
         }
         // combine parts into stream
-        Vector<InputStream> streams = new Vector<InputStream>();
+        Vector<InputStream> streams = new Vector<>();
         Path[] parts = new Path[totalParts];
         for (int i = 0; i < totalParts; i++) {
             String part = id + "-" + i;
@@ -337,27 +342,29 @@ public class FileSystemStorage implements Storage {
         boolean hasEmptyDirs = true;
         while (hasEmptyDirs) {
             // collect empty directories
-            List<Path> emptyDirs = Files.walk(Paths.get(this.docsDir))
-            .filter(p -> {
-                boolean isEmptyDir = false;
-                try {
-                    isEmptyDir = Files.isDirectory(p) &&
-                            !Files.newDirectoryStream(p).iterator().hasNext() &&
-                            !(p.equals(trashPath) || p.equals(archivePath));
-                }
-                catch (IOException ex) {
-                    throw new UncheckedIOException(ex);
-                }
-                return isEmptyDir;
-            })
-            .collect(Collectors.toList());
+            try (Stream<Path> stream = Files.walk(Paths.get(this.docsDir))) {
+                List<Path> emptyDirs = stream
+                .filter(p -> {
+                    boolean isEmptyDir = false;
+                    try {
+                        isEmptyDir = Files.isDirectory(p) &&
+                                !Files.newDirectoryStream(p).iterator().hasNext() &&
+                                !(p.equals(trashPath) || p.equals(archivePath));
+                    }
+                    catch (IOException ex) {
+                        throw new UncheckedIOException(ex);
+                    }
+                    return isEmptyDir;
+                })
+                .collect(Collectors.toList());
 
-            // delete directories
-            for (Path emptyDir : emptyDirs) {
-                Files.delete(emptyDir);
+                // delete directories
+                for (Path emptyDir : emptyDirs) {
+                    Files.delete(emptyDir);
+                }
+
+                hasEmptyDirs = !emptyDirs.isEmpty();
             }
-
-            hasEmptyDirs = emptyDirs.size() > 0;
         }
     }
 
@@ -382,7 +389,7 @@ public class FileSystemStorage implements Storage {
      * @throws Exception
      */
     private String[] extract(Path path, CopyOption... copyOptions) throws Exception {
-        List<Path> result = new ArrayList<Path>();
+        List<Path> result = new ArrayList<>();
 
         // get the directory name from the archive name
         Path dir = this.getExtractPath(path);
@@ -411,7 +418,6 @@ public class FileSystemStorage implements Storage {
                 zipEntry = zis.getNextEntry();
             }
             zis.closeEntry();
-            zis.close();
         }
         catch (Exception ex) {
             log.error("Failed to extract archive '" + path + "'. Cleaning up...");
@@ -436,11 +442,10 @@ public class FileSystemStorage implements Storage {
      */
     private Path getExtractPath(Path path) {
         String filename = path.getName(path.getNameCount()-1).toString();
-        if (filename.indexOf(".") > 0) {
-            filename = filename.substring(0, filename.lastIndexOf("."));
+        if (filename.indexOf('.') > 0) {
+            filename = filename.substring(0, filename.lastIndexOf('.'));
         }
-        Path directory = Paths.get(path.getParent().toString(), this.sanitize(filename, ILLEGAL_PATH_CHARS));
-        return directory;
+        return Paths.get(path.getParent().toString(), this.sanitize(filename, ILLEGAL_PATH_CHARS));
     }
 
     /**
@@ -562,7 +567,7 @@ public class FileSystemStorage implements Storage {
     private FileSystemItem getFileInfo(String file) throws IOException {
         Path filePath = Paths.get(file);
         Path archivePath = this.getArchivePath(file, this.docsDir);
-        if (!Files.exists(filePath) && Files.exists(archivePath)) {
+        if (!filePath.toFile().exists() && archivePath.toFile().exists()) {
             // fall back to archive, if file does not exist
             file = archivePath.toString();
             filePath = archivePath;
