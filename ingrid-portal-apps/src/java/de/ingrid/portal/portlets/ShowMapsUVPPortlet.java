@@ -62,7 +62,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
     private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "title", "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
@@ -296,9 +296,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         StringBuilder s = new StringBuilder();
         s.append("var markers = [");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
-                .getIBus() , 100);
-        long now = System.currentTimeMillis();
-        System.out.println("iBus Search for Query: " + queryString);
+                .getIBus() );
         if(it != null){
             while (it.hasNext()) {
                 IngridHit hit = it.next();
@@ -308,25 +306,25 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 if (latCenterValue != null && lonCenterValue != null) {
                     if(latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
                         lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
-                        s.append( "["
-                            + latCenterValue.trim() + ","
-                            + lonCenterValue.trim() + ",'"
-                            + detail.get( "title" ).toString() + "','"
-                            + UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) + "','"
-                            + UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) + "','"
-                            + sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) + "'");
+                        s.append( "[" )
+                            .append( latCenterValue.trim() ).append( "," )
+                            .append( lonCenterValue.trim() ).append( ",'" )
+                            .append( detail.get( "title" ).toString() ).append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
+                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
                         
                         if(detail.get( "uvp_category" ) != null){
                             ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
-                            s.append( "," + "[" );
+                            s.append( "," ).append( "[" );
                             if(categories != null && categories.size() > 0){
                                 int index = 0;
                                 for (String category : categories) {
-                                    s.append( "{"
-                                    + "'id':'" + category.trim() + "'"
-                                    + ","
-                                    + "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'"
-                                    + "}");
+                                    s.append( "{" );
+                                    s.append( "'id':'" + category.trim() + "'" );
+                                    s.append( ",");
+                                    s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
+                                    s.append( "}" );
                                     if(index < categories.size() - 1){
                                         s.append( "," );
                                     }
@@ -335,13 +333,13 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             }
                             s.append( "]" );
                         }else{
-                            s.append( "," + "[" +
-                                "]" );
+                            s.append( "," ).append( "[" );
+                            s.append( "]" );
                         }
                         
                         if(detail.get( "uvp_steps" ) != null){
                             ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
-                            s.append( "," + "[" );
+                            s.append( "," ).append( "[" );
                             if(steps != null && steps.size() > 0){
                                 int index = 0;
                                 s.append( "'" );
@@ -357,8 +355,8 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             }
                             s.append( "]" );
                         }else{
-                            s.append( "," + "[" +
-                                "]" );
+                            s.append( "," ).append( "[" );
+                            s.append( "]" );
                         }
                         
                         s.append( "]" );
@@ -370,7 +368,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             }
         }
         s.append("];");
-        System.out.println("StringBuilder finished: " + (System.currentTimeMillis() - now) + " ms");
         return s.toString();
     }
 

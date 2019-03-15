@@ -61,8 +61,8 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
     private final static Logger log = LoggerFactory.getLogger(SearchResultUVPPortlet.class);
 
     private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
-    private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "title", "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "title", "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
+    private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
@@ -77,28 +77,28 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
                     response.setContentType( "application/javascript" );
-                    response.getWriter().write(writeResponse(request, response, query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "marker2" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
                 if(!query.isEmpty()) {
                     response.setContentType( "application/javascript" );
-                    response.getWriter().write(writeResponse(request, response, query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "marker3" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
                 if(!query.isEmpty()) {
                     response.setContentType( "application/javascript" );
-                    response.getWriter().write(writeResponse(request, response, query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "marker4" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
                 if(!query.isEmpty()) {
                     response.setContentType( "application/javascript" );
-                    response.getWriter().write(writeResponse(request, response, query, messages, sysCodeList));
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "bbox" )) {
@@ -271,7 +271,8 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         }
     }
     
-    private String writeResponse(ResourceRequest request, ResourceResponse response, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+    private String writeResponse(ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+        queryString = UtilsSearch.updateQueryString(queryString, request);
         StringBuilder s = new StringBuilder();
         s.append("var markers = [");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
