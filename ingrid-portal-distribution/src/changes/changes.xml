@@ -8,6 +8,12 @@
     <body>
 
         <release version="4.6.3-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.3">
+          <action type="fix" dev="wemove" issue="">
+            Portal: Fix load favicon.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            IGE: Fix closing uploaded file streams.
+          </action>
         </release>
 
         <release version="4.6.2" date="2019-03-07" description="Release 4.6.2">
