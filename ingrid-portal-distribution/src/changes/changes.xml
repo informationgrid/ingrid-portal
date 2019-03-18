@@ -32,6 +32,9 @@
           <action type="add" dev="wemove" issue="1252">
             MapClient: Add extended search of layers on admin GUI.
           </action>
+          <action type="add" dev="wemove" issue="1110">
+            IGE(UVP): Add new field for determination of duration.
+          </action>
         </release>
 
         <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
