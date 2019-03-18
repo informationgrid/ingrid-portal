@@ -79,7 +79,7 @@ public class UVPReport {
         values.put(TOTAL_NEGATIVE, 0);
         values.put(TOTAL_POSITIVE, 0);
 
-        List<Integer> durations = new ArrayList<>();
+        List<Long> durations = new ArrayList<>();
 
         int pageSize = 10;
         int page = 0;
@@ -105,7 +105,7 @@ public class UVPReport {
                     handleNegativeCount(docDetail, values);
 
                     // get duration of this dataset
-                    Integer duration = getDuration(docDetail);
+                    Long duration = getDuration(docDetail);
                     if (duration != null) {
                         durations.add(duration);
                     }
@@ -126,15 +126,48 @@ public class UVPReport {
         return report;
     }
 
-    private Integer getDuration(MdekDataBean docDetail) {
-        // TODO: implement
+    private Long getDuration(MdekDataBean docDetail) {
+        AdditionalFieldBean applicationReceipt = docDetail.getAdditionalFields().stream()
+                .filter(field -> "uvpApplicationReceipt".equals(field.getIdentifier()))
+                .findFirst().orElse(null);
+
+        List<AdditionalFieldBean> publicationDates = docDetail.getAdditionalFields().stream()
+                .filter(field -> "UVPPhases".equals(field.getIdentifier()))
+                .flatMap(phases -> {
+                    if (phases.getTableRows() == null) return Stream.empty();
+                    return phases.getTableRows().stream()
+                            .filter(p -> "phase3".equals(p.get(0).getIdentifier()))
+                            .map(i -> i.get(0));
+                })
+                .flatMap(p1 -> p1.getTableRows().stream()
+                        .filter(f -> "approvalDate".equals(f.get(0).getIdentifier()))
+                        .map(i -> i.get(0)))
+                .sorted((a,b) -> {
+                    if (a == null) return 1;
+                    if (b == null) return -1;
+                    if (Long.valueOf(a.getValue()) < Long.valueOf(b.getValue())) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        if (publicationDates.size() > 0 && applicationReceipt != null) {
+            Long applicationReceiptValue = Long.valueOf(applicationReceipt.getValue());
+            Long publicationDate = Long.valueOf(publicationDates.get(0).getValue());
+
+            return publicationDate - applicationReceiptValue;
+        }
+
         return null;
     }
 
-    private Optional<Float> calculateAverageValue(List<Integer> list) {
+    private Optional<Float> calculateAverageValue(List<Long> list) {
         return list.stream()
-                .reduce(Integer::sum)
-                .map(val -> (float)val / list.size());
+                .reduce(Long::sum)
+                .map(val -> (float)val / list.size()) //calculate average value
+                .map(val -> val/1000/60/60/24); // convert to days
     }
 
     private boolean datasetIsInDateRange(MdekDataBean doc) {

@@ -100,11 +100,39 @@
             registry.byId("btnUvpStatisticCreate").set("disabled", !isFinished);
         }
 
+        /**
+         * Convert number of days into format "x years y months z days"
+         * @param durationInDays
+         * @return {string}
+         */
+        function convertAverageDuration(durationInDays) {
+            // The string we're working with to create the representation
+            var str = '';
+            // Map lengths of `diff` to different time periods
+            var values = [[' Jahr', 365], [' Monat', 30], [' Tag', 1]];
+
+            // Iterate over the values...
+            for (var i=0;i<values.length;i++) {
+                var amount = Math.floor(durationInDays / values[i][1]);
+
+                // ... and find the largest time value that fits into the diff
+                if (amount >= 1) {
+                    // If we match, add to the string ('s' is for pluralization)
+                    str += amount + values[i][0] + (amount > 1 ? 'e' : '') + ' ';
+
+                    // and subtract from the diff
+                    durationInDays -= amount * values[i][1];
+                }
+            }
+
+            return str;
+        }
+
         pageUvpStatistic.convertToCSV = function(report) {
             console.log("Convert report to CSV");
             var csv = "UVP Nummer; UVP-G Kategorie; Anzahl; Positive Vorprüfungen; Negative Vorprüfungen; Durchschnittliche Verfahrensdauer\n";
 
-            csv += ";;;" + report.values.totalPositive + ";" + report.values.totalNegative + ";" + report.values.averageDuration + "\n";
+            csv += ";;;" + report.values.totalPositive + ";" + report.values.totalNegative + ";" + convertAverageDuration(report.values.averageDuration) + "\n";
 
             var totalGrouped = report.values.totalGrouped;
             var groupedKeys = Object.keys(totalGrouped);

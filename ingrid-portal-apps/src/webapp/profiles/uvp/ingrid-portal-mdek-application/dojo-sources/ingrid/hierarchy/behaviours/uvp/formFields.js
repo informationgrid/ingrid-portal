@@ -95,10 +95,13 @@ define(["dojo/_base/declare",
                 }
 
                 // check if receipt of application date is before begin date of first publication
-                var publicationBeginDate = registry.byId("publicDateFrom_1").get("value");
-                if (publicationBeginDate) {
+                var publicationDate = registry.byId("UVPPhases").phases
+                    .filter( phase => phase.key === "phase1" )
+                    .map( phase => phase.fields.filter( field => field.key === "publicDateFrom")[0].field.get("value"))
+                    .sort( (a,b) => a < b && a !== null ? -1 : 1);
+                if (publicationDate && publicationDate.length > 0 && publicationDate[0]) {
                     var applicationReceiptDate = registry.byId("uvpApplicationReceipt").get("value");
-                    if (applicationReceiptDate > publicationBeginDate) {
+                    if (applicationReceiptDate > publicationDate[0]) {
                         notPublishableIDs.push(["uiElementAdduvpApplicationReceipt", message.get("uvp.form.applicationReceipt.invalid")]);
                     }
                 }
