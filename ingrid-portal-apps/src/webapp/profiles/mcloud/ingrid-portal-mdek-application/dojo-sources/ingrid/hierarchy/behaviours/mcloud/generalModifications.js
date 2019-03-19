@@ -38,7 +38,8 @@ define(["dojo/_base/declare",
         description: "Hier werden Menüpunkte ausgeblendet und sonstige allgemeine Änderungen am Editor vorgenommen.",
         defaultActive: true,
         category: "mcloud",
-        type: "SYSTEM", // execute on IGE page load
+        type: "SYSTEM",
+        // execute on IGE page load
         run: function() {
             this.replaceImages();
 
@@ -53,6 +54,8 @@ define(["dojo/_base/declare",
             this.interceptHelpMessages();
 
             this.disableRules();
+
+            this.addPrivacyPolicyLink();
 
             query("head title").addContent("mcloud Editor", "only");
 
@@ -159,6 +162,25 @@ define(["dojo/_base/declare",
             applyRule5 = function() {};
             applyRule6 = function() {};
             applyRule7 = function() {};
+        },
+        addPrivacyPolicyLink: function () {
+            construct.create(
+                "span", {
+                    id: "privacyPolicy",
+                    style: "float: right",
+                    innerHTML: "<a href='/datenschutz' target='_blank'>Datenschutz</a>"
+                },
+                "logout",
+                "after"
+            );
+            construct.create(
+                "span", {
+                    style: "float:right; padding:0px 5px 0px 5px;",
+                    innerHTML: "|"
+                },
+                "privacyPolicy",
+                "before"
+            );
         }
 
     })();
