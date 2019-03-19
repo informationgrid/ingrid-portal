@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -67,10 +67,10 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
-        
+
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
-        
+
         IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
             if (resourceID.equals( "marker" )) {
@@ -111,18 +111,18 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     StringBuilder s = new StringBuilder();
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
-                        String x1Value = UtilsSearch.getDetailValue( detail, "x1" );
-                        String y1Value = UtilsSearch.getDetailValue( detail, "y1" );
-                        String x2Value = UtilsSearch.getDetailValue( detail, "x2" );
-                        String y2Value = UtilsSearch.getDetailValue( detail, "y2" );
+                    String x1Value = UtilsSearch.getDetailValue( detail, "x1" );
+                    String y1Value = UtilsSearch.getDetailValue( detail, "y1" );
+                    String x2Value = UtilsSearch.getDetailValue( detail, "x2" );
+                    String y2Value = UtilsSearch.getDetailValue( detail, "y2" );
 
-                        if (y1Value != null && y2Value != null && x1Value != null && x2Value != null) {
+                    if (y1Value != null && y2Value != null && x1Value != null && x2Value != null) {
                         if(x1Value.length() > 0 && x1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                            x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                            y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                            y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
-                                s.append("[").append( y1Value.trim() ).append( "," ).append( x1Value.trim() ).append( "],[" ).append( y2Value.trim() )
-                                        .append( "," ).append( x2Value.trim() ).append("]");
+                                x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
+                                y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
+                                y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
+                            s.append("[").append( y1Value.trim() ).append( "," ).append( x1Value.trim() ).append( "],[" ).append( y2Value.trim() )
+                                    .append( "," ).append( x2Value.trim() ).append("]");
                             response.getWriter().write( s.toString() );
                         }
                     }
@@ -131,7 +131,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             }
             if(resourceID.equals( "devPlanMarker" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-                
+
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse(queryString) , REQUESTED_FIELDS_BLP_MARKER, IBUSInterfaceImpl.getInstance()
                         .getIBus() );
                 int cnt = 1;
@@ -201,7 +201,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 if (query.get( "FACETS" ) == null) {
                     ArrayList<IngridDocument> facetQueries = new ArrayList<>();
                     ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
-                    
+
                     String tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                     if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<>();
@@ -287,7 +287,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
-    
+
     private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
         StringBuilder s = new StringBuilder();
         s.append("var markers = [");
@@ -296,16 +296,18 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         while (it.hasNext()) {
             IngridHit hit = it.next();
             IngridHitDetail detail = hit.getHitDetail();
-                String latCenterValue = UtilsSearch.getDetailValue( detail, "lat_center" );
-                String lonCenterValue = UtilsSearch.getDetailValue( detail, "lon_center" );
-                if (latCenterValue != null && lonCenterValue != null) {
+            String latCenterValue = UtilsSearch.getDetailValue( detail, "lat_center" );
+            String lonCenterValue = UtilsSearch.getDetailValue( detail, "lon_center" );
+            if (latCenterValue != null && lonCenterValue != null) {
+                if(latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
+                        lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
                     s.append( "[" )
                             .append( latCenterValue.trim() ).append( "," )
                             .append( lonCenterValue.trim() ).append( ",'" )
-                        .append( detail.get( "title" ).toString() ).append( "','" )
-                        .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
-                        .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
-                        .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
+                            .append( detail.get( "title" ).toString() ).append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
+                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
+                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
 
                     if(detail.get( "uvp_category" ) != null){
                         ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
@@ -359,9 +361,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 }
             }
         }
-    }
         s.append("];");
         return s.toString();
+    }
 
     public void doView(RenderRequest request, RenderResponse response)
             throws PortletException, IOException {
