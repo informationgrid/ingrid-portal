@@ -31,7 +31,6 @@ import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
-import de.ingrid.utils.xml.WctsNamespaceContext;
 import de.ingrid.utils.xml.WmtsNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 import org.w3c.dom.Document;
