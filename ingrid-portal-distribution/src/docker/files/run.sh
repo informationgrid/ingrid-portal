@@ -32,7 +32,7 @@ then
 else
     sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ingrid-portal-apps.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-apps.xml
-    sed -i 's/jdbc:mysql://localhost\/mdek/'${DB_URL_MDEK}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
+    sed -i 's/jdbc:mysql:\/\/localhost\/mdek/'${DB_URL_MDEK}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-mdek.xml
     sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ROOT.xml
     sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ROOT.xml
