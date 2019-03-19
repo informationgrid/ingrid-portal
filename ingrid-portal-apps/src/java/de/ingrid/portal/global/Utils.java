@@ -424,8 +424,7 @@ public class Utils {
 		context.put(attributesName, attributes);
 		StringWriter sw = new StringWriter();
 
-		try {
-			BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(realTemplatePath), "UTF8"));
+		try ( BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(realTemplatePath), "UTF8")) ) {
 
 			sw = new StringWriter();
 			Velocity.init();

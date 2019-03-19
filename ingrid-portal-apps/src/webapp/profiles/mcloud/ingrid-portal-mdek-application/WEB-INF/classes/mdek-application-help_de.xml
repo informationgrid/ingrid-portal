@@ -1,0 +1,781 @@
+﻿<?xml-stylesheet type="text/xsl" href="IGE-application-help.xsl" ?>
+<!--
+  **************************************************-
+  Ingrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
+<help>
+    <back>Zurück</back>
+    <chapter>
+        <header>Hilfe zum Editor</header>
+        <section help-key="index">
+            <header>Hilfethemen</header>
+            <content>
+                <ul>
+                    <li>
+                        <a href="?hkey=editor-design-1">Aufbau des Editors</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=hierarchy-maintenance-1">Hierarchie u. Erfassung</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=search-1">Recherche</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=user-administration-1">Verwaltungsfunktion: Nutzerverwaltung</a>
+                    </li>
+                </ul>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Aufbau des Editors</header>
+        <section help-key="editor-design-1">
+            <header>Datenerfassung und Verwaltungsfunktionen</header>
+            <content>
+			<p>Der Editor (InGrid Editor - IGE) besteht aus zwei Komponenten, die Metadatenerfassungskomponente und die
+			Verwaltungskomponente. Der IGE wird aus dem InGrid-Portal heraus 
+			über die Schaltflächen "Login IGE" gestartet. </p>
+			<p>Das Hauptmenü unterscheidet sich, abhängig von der Rolle des eingeloggten Benutzers.
+            So steht einem Katalog-Administrator mehr Funktionen zur Verfügung als einem Autor.</p>
+			<p>Jedes <a href="?hkey=editor-design-2">Hauptmenü</a> kann weitere 
+			<a href="?hkey=editor-design-3">Untermenüs</a> enthalten. Bei
+			einzelnen Menüpunkten kann zudem zusätzlich eine 
+			<a href="?hkey=editor-design-4">Funktionsleiste</a> existieren.</p>
+			<p>Am rechten oberen Rand des Kopfes des IGEs befindet sich eine
+			<a href="?hkey=editor-design-1a">Navigationsleiste</a>.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-1a">
+            <header>Die Navigationsleiste</header>
+            <content>
+			<p> Die Navigationsleiste befindet sich in der rechten oberen Ecke des Editors. 
+			Sie ist für alle Komponenten und alle Menüpunkte gleich und besteht aus folgenden Punkten:</p>
+			<ul>
+			<li> <u>Informationen zum aufgeschalteten Nutzer</u>: Name des Nutzers in der Adressverwaltung 
+				 • Rolle des Nutzers • Name des Metadaten-Katalogs</li>
+			<li> <u>Hilfe</u>: Verweis auf die Hilfetexte zum InGridEditor</li>
+			<li> <u>Info</u>: Verweis auf Informationen zum Editor (z.B. die Versionsnummer der Anwendung)</li>
+			<li> <u>Schliessen</u>: Schließt die Anwendung</li>
+			</ul>
+            </content>
+        </section>
+        <section help-key="editor-design-2">
+            <header>Das Hauptmenü</header>
+            <content>
+			<p>Das Hauptmenü unterscheidet sich in das für die Metadatenerfassung und das für die Verwaltungsfunktionen.</p>
+			<p>Die Menüpunkte für die <b>Metadatenerfassung</b> sind:</p>
+
+                <ul>
+                    <li>
+                        <a href="?hkey=dashboard-1">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=hierarchy-maintenance-1">Hierarchie &amp; Erfassung</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=search-1">Recherche</a>
+                    </li>
+                </ul>
+			<p>Die Menüpunkte für die <b>Verwaltung</b> sind:</p>
+                <ul>
+                    <li>
+                        <a href="?hkey=user-administration-1">Nutzerverwaltung</a>
+                    </li>
+                </ul>
+                <p>Das Dashboard ist die Einstiegseite für den InGrid-Editor und zeigt eine Zusammenfassung der gerade
+                in Bearbeitung befindlichen Datensätze und Adressen, abhängig vom eingeloggten Benutzer.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-3">
+            <header>Untermenüs</header>
+            <content>
+                 <p>Untermenüs sind abhängig vom jeweiligen Hauptmenüpunkt. 
+				 Einen Hilfetext zu einem Untermenüpunkt finden Sie unterhalb des zugehörigen Hauptmenüpunkts.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-4">
+            <header>Funktionsleiste</header>
+            <content>
+                 <p>Funktionsleisten sind nur für wenige Menüpunkte vorhanden. 
+				 Einen Hilfetext zu einer Funktionsleiste finden Sie unterhalb des zugehörigen Hauptmenüpunkts.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-5">
+            <header>Hilfestellungen bei der Erfassung</header>
+            <content>
+                 <p>Sie finden einen Hilfetext zu jedem Untermenüpunkt und zu jedem Dialogfenster. 
+				 Er kann, falls eine Funktionsleiste vorhanden ist, 
+				 über die mit „<b>?</b>“ gekennzeichnete Schaltfläche 
+				 aufgerufen werden. Ist keine Funktionsleiste vorhanden, ist ein Verweis hinter 
+				 dem Symbol „<b>[?]</b>“ 
+				 angebracht, über den ebenfalls der Hilfetext aufgerufen werden kann.</p>
+				 <p>Zusätzlich erhalten Sie Hilfe zu der Befüllung einzelner Felder, 
+				 indem Sie den Mauszeiger über die Überschrift des jeweiligen Feldes ziehen. 
+				 Er verändert dann seine Form zu einer Kombination aus Zeiger und Fragezeichen. 
+				 Ein einfacher Klick mit der linken Maustaste öffnet ein Dialogfeld, das einen speziellen Hilfetext 
+				 zu dem zugehörigen Feld anzeigt.</p>
+            </content>
+        </section>
+        <section help-key="editor-design-6">
+            <header>Besonderheiten bei Tabellen</header>
+            <content>
+                 <p>In den Editiermodus eines Eingabefeldes gelangen Sie normalerweise über einen einfachen Klick 
+				 mit der linken Maustaste in das jeweilige Feld. </p>
+				 <p>Bei Tabellen markiert ein einfacher Klick die Zeile, in der der Mauszeiger steht. 
+				 Sie können mehrere Zeilen markieren, in dem sie die Shift-Taste oder die Strg-Taste gleichzeitig 
+				 mit einem einfachen Klick der linken Maustaste verwenden. Ein gleichzeitiges Drücken der 
+				 Strg-Taste markiert eine Zeile, ohne die Markierung der bereits vorher markierten Zeilen 
+				 aufzuheben. Ein gleichzeitiges Drücken der Shift-Taste markiert alle Zeilen zwischen der zuletzt 
+				 markierten bis zu der angeklickten Zeile.</p>
+				 <p>Mit der rechten Maustaste lässt sich ein Kontextmenü öffnen, über das Sie die markierten Zeilen 
+				 bearbeiten (z.B. löschen) können.</p>
+				 <p>Um in den Editiermodus eines Feldes innerhalb einer Tabelle zu gelangen, müssen Sie einen 
+				 Doppelklick mit der linken Maustaste auf das gewünschte Feld ausführen. Gleiches gilt z.B. auch 
+				 für die Eingabe von Datumsangaben in einer Tabelle.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Dashboard</header>
+        <section help-key="dashboard-1">
+            <header>Beschreibung</header>
+            <content>
+                <p>Das Dashboard zeigt eine Übersicht des Kataloges in Form einiger allgemeiner
+                Informationen und einer Übersicht aller zuletzt bearbeiteten Datensätze und Adressen.
+                Im ersten Reiter "Meine Datensätze" werden alle in Bearbeitung befindlichen 
+                Datensätze bzw Adressen des eingeloggten Benutzers aufgelistet. Wird einer der 
+                angezeigten Datensätze ausgewählt, so wird dieser direkt im Editor geöffnet.</p>
+                <br />
+                <p>Ein Klick auf "Alle Datensätze" zeigt die zuletzt bearbeiteten Datensätze und
+                Adressen aller Nutzer an. Hier erhält man einen Überblick, welche
+                Datensätze/Adressen im gesamten Katalog gerade bearbeitet werden. Ist ein/e
+                Datensatz/Adresse grau, so bedeutet dies, dass der eingeloggte Benutzer keine
+                Schreibrechte darauf besitzt.</p>
+                <br />
+                <p>Über den Button "Aktualisieren" werden alle Informationen des Dashboards
+                neu geladen.</p>
+            </content>
+        </section>
+    </chapter>
+    <chapter>
+        <header>Hierarchie u. Erfassung</header>
+        <section help-key="hierarchy-maintenance-1">
+            <header>Anordnung der Daten (Der Strukturbaum)</header>
+            <content>
+                 <p>Im <b>linken Fenster</b> werden die Datensätze und Adressen und ihre Stellung in der 
+				 Hierarchie des Kataloges angezeigt. Die Navigation in der Datensatz- bzw. 
+				 Adresshierarchie erfolgt analog zu der Funktionsweise des Windowsexplorers, 
+				 d.h. Öffnen und Schließen einzelner Teilbäume der Hierarchie erfolgt über die ‚Plus’ und 
+				 ‚Minus’-Kästchen links neben den Zeilen.</p>
+                 <p>Bei den Datensätzen sehen Sie den Namen und das Icon der Datensatzklasse, 
+				 bei den Adressen den Adresstitel und das Icon des Adresstyps. </p>
+                 <p>Die Icons zeigen den jeweiligen Bearbeitungsstand:</p>
+				 <ul>
+				 <li><b>Blau</b> bedeutet, dass der Datensatz bzw. die Adresse veröffentlicht, d.h. 
+				 recherchierbar ist.</li>
+				 <li><b>Rot</b> bedeutet, dass der Datensatz bzw. die Adresse in Bearbeitung ist.</li>
+				 <li>Wird ein <b>blaues</b> Icon <b>rot</b> überlagert, so gibt es eine veröffentlichte 
+				 Version des Datensatzes bzw. der Adresse und eine bearbeitete. </li>
+				 </ul>
+				 <p>Ausgewählte ‚aktuelle’ Datensätze bzw. Adressen werden rot angezeigt und die 
+				 Informationen zum Datensatz bzw. zur Adresse im rechten Fenster dargestellt. </p>
+				 <p>Die Fensterteilung zwischen rechtem und linkem Fenster kann durch Verschieben 
+				 des Mittelbalkens verändert werden.</p>
+				 <p>Einige Funktionen können direkt aus dem Kontextmenü, das über die rechte 
+				 Maustaste geöffnet wird, ausgeführt werden. Die Funktionen beziehen sich immer 
+				 auf den gerade angeklickten Datensatz bzw. die angeklickte Adresse. Die zur Verfügung 
+				 stehenden Funktionen sind die folgenden:</p>
+				 <p><b>Neu anlegen</b></p>
+				 <p>Anlegen eines neuen Datensatzes oder einer neuen Adresse unter dem aktuellen Ordner 
+				 bzw. der aktuellen Adresse.</p>
+         <p><b>Ordner anlegen</b></p>
+         <p>Ein neuer Ordner wird hierarchisch immer unter dem aktuellen, 
+         mit roter Schrift darstellten Element angelegt. Ordner können nur unterhalb von Ordnern angelegt werden.</p>
+				 <p><b>Vorschau und Druckansicht</b></p>
+				 <p>Im Fenster Detailansicht können Sie die Anordnung der Datensatz- bzw. 
+				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
+				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
+				 des Betriebssystems.</p>
+				 <p>Neben der Anzeige der Detailansicht einer Adresse, ist es auch möglich die Detailinformationen des gesamten Unterbaumes anzeigen zu lassen. Sind die Auswahlboxen <i>Detailansicht</i> und <i>Untergeordnete Adressen mit einbeziehen</i> beide ausgewählt, so werden alle Adressen des Teilbaumes untereinander ausgegeben. Beachten Sie, dass die Ausgabe bei sehr vieler Daten eine Weile dauern kann. Deshalb ist es jederzeit möglich die Anzeige abzubrechen.</p>
+				 <p>Wird die Auswahlbox <i>Detailansicht</i> entfernt, so wird anstatt einer Detailansicht, nur eine gekürzte Version der Adresse angezeigt. Der Baum wird hierbei jedoch in einer hierarchischen Darstellung angezeigt.</p>				 
+				 <p>Die Druckansicht kann mit dem Kreuz oben rechts in der Fensterecke verlassen werden.</p>
+				 <p>Diese Funktion steht für Ordner und 
+				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+				 <p><b>Objekt/Adresse/Teilbaum ausschneiden</b></p>
+				 <p>Um einem DAtensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
+				 Hierarchie des aktuellen Kataloges zuzuweisen, schneiden Sie diese zuerst aus, 
+				 um sie unter einem anderes Ordner bzw. eine andere Adresse mittels der 
+				 Funktion <i><b>Einfügen</b></i> einzufügen. </p>
+				 <p>Der zu bearbeitende Datensatz bzw. die Adresse muss vor dem Ausschneiden markiert 
+				 werden. Um einen Teilbaum (d.h. ein Ordner mit allen hierarchisch darunterliegenden 
+				 Ordner/Datensätze) auszuschneiden, muss der hierarchisch oberste Ordner markiert sein. 
+				 Eine Markierung aller betroffenen Datensätze bei ausgeklapptem Teilbaum ist nicht 
+				 möglich.</p>
+				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
+				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+				 <p><b>Datensatz/Adresse kopieren</b></p>
+				 <p>Ein markierter Datensatz oder eine markierte Adresse wird mit dieser Funktion 
+				 in den Zwischenspeicher kopiert. Um die Kopie an die gewünschte Stelle in der 
+				 Hierarchie zu bringen, nutzen Sie die Funktion <i><b>Einfügen</b></i>.</p>
+				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
+				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+				 <p><b>Teilbaum kopieren</b></p>
+				 <p>Um einen Teilbaum (d.h. ein Ordner/Datensatz oder eine Adresse) mit allen hierarchisch 
+				 darunterliegenden Elementen zu kopieren, muss das hierarchisch 
+				 oberste Element markiert sein. Eine Markierung aller betroffenen 
+				 Datensätze bei ausgeklapptem Teilbaum ist nicht möglich. Um die Kopie an die 
+				 gewünschte Stelle in der Hierarchie zu bringen, nutzen Sie die 
+				 Funktion <i><b>Einfügen</b></i>. </p>
+				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
+				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+				 <p><b>Einfügen</b></p>
+				 <p>Markieren Sie den Ordner bzw. die Adresse, der hierarchisch über dem 
+				 einzufügenden Datensatz oder Teilbaum bzw. der einzufügenden Adresse steht. 
+				 Die Ordnung innerhalb einer Hierarchiestufe erfolgt alphabetisch und kann 
+				 durch Verschieben oder Einfügen nicht geändert werden. </p> 
+				 <p><b>Teilbaum neu laden</b></p>
+				 <p>Der Teilbaum unterhalb des angeklickten Elementes wird aktualisiert. </p> 
+				 <p>Für die Ebenen <i>Datensatz</i>, <i>Adressen</i> und <i>freie Adressen</i> 
+				 heißt die Funktion <i>Baum neu laden</i>.</p>
+				 <p><b>Löschen</b></p>
+				 <p>Der Teilbaum ab dem aktuellen Element wird nach einer Sicherheitsabfrage endgültig gelöscht.</p>
+				 <p>Diese Funktion steht für vorkonfigurierte Ordner und 
+				 <i>freie Adressen</i> nicht zur Verfügung.</p>
+                 <p><b>Kopieren/Ausschneiden/Löschen mehrerer Elemente</b></p>
+                 <p>Mithilfe der "Strg"-Taste ist es möglich weitere Elemente aus dem Hierarchiebaum
+                 auszuwählen. Wird ein bereits markierter Datensatz bei gedrückter "Strg"-Taste angeklickt
+                 so wird die Markierung wieder entfernt. Sobald mehr als ein Knoten markiert wird, schränkt 
+                 sich die Auswahl an möglichen Operationen auf <i>Löschen</i>, <i>Datensatz/Adressen/Teilbäume ausschneiden   
+                 </i>, <i>Datensatz/Adressen kopieren</i> und <i>Teilbäume kopieren</i> ein. Diese Operationen
+                 können über die Toolbar oder über das Kontextmenü aufgerufen werden (Rechtsklick auf einen Knoten im Baum). 
+                 Wird das Kontextmenü jedoch auf einem nicht markierten Knoten aufgerufen, so wird die aktuelle 
+                 Markierung verworfen und nur der angeklickte Knoten wird ausgewählt.</p>
+            </content>
+        </section>
+        <section help-key="hierarchy-maintenance-2">
+            <header>Die Erfassung von Datensätzen</header>
+            <content>
+				<p>Im <b>rechten</b> Fenster sehen Sie alle verfügbaren Felder und Informationen zum 
+				ausgewählten Element. Diese sind je nach Datensatztyp und Adresstyp unterschiedlich. 
+				Im oberen Teil des Fensters werden farbig hinterlegt Kopf- sowie Statusinformationen 
+				zum Datensatz bzw. zur Adresse angezeigt. Diese Anzeige ist immer sichtbar. 
+				Die weiteren Informationen sind zu Gruppen zusammengefasst und durch Balken optisch 
+				gekennzeichnet. Standardmäßig sind nur die Pflichtfelder sichtbar. Durch Anklicken 
+				des Buttons <i>Alle Felder aufklappen</i> links vom Gruppennamen können Sie die 
+				zusätzlichen Informationen öffnen und wieder schließen. Ein Button <i>nach oben</i> am 
+				rechten Rand des Gruppenbalkens ermöglicht den Sprung in die oberste Feldgruppe.</p>
+				<p>In der Funktionsleiste finden Sie am rechten Rand ein Button 
+				<i>Alle Felder aufklappen</i>, mit dem Sie alle 
+				Felder in allen Gruppen öffnen bzw. wieder schließen können.</p>
+				<p>Informationen über die einzelnen Felder und Gruppen erhalten Sie, indem Sie mit 
+				dem Mauszeiger (dann mit Fragezeichen am Pfeil) auf die Feld- bzw. Gruppennamen 
+				klicken. </p>
+				<p>Weitere Informationen erhalten Sie unter folgenden Hilfepunkten:</p>
+                <ul>
+                    <li>
+                        <a href="?hkey=creation-of-objects-1">Anlegen eines neuen Datensatzes</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=maintanance-of-objects-1">Pflegen von Datensätzen</a>
+                    </li>
+                    <li>
+                        <a href="?hkey=maintanance-of-adresses-1">Erfassen von Adressen</a>
+                    </li>
+                </ul>
+            </content>
+        </section>
+        <section help-key="hierarchy-maintenance-3">
+            <header>Die Funktionsleiste für Hierarchie und Erfassung</header>
+            <content>
+                 <p>Über die Funktionsleiste im Untermenüpunkt <i>Hierarchie &amp; Erfassung</i> können 
+				 einzelne Funktionen zum Bearbeiten von Datensätzen und Adressen aufgerufen werden. 
+				 Die Funktionen sind im Einzelnen:</p>
+				 <p><b>Neu anlegen</b></p>
+				 <p>Ein neuer Datensatz oder eine neue Adresse wird hierarchisch immer unter dem aktuellen, 
+				 mit roter Schrift darstellten Element angelegt.</p>
+                 <p><b>Ordner anlegen</b></p>
+                 <p>Ein neuer Ordner wird hierarchisch immer unter dem aktuellen, 
+                 mit roter Schrift darstellten Element angelegt. Ordner können nur unterhalb von Ordnern angelegt werden.</p>
+				 <p><b>Vorschau und Druckansicht</b></p>
+				 <p>Im Fenster Detailansicht können Sie die Anordnung der Datensatz- bzw. 
+				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
+				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
+				 des Betriebssystems. 
+				 Verlassen Sie die Druckansicht mit dem Kreuz oben rechts in der Fensterecke.</p>
+				 <p><b>Datensatz/Adresse/Teilbaum ausschneiden</b></p>
+				 <p>Um einem Datensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
+				 Hierarchie des aktuellen Kataloges zuzuweisen, schneiden Sie diese zuerst aus, 
+				 um sie unter ein anderes Objekt bzw. eine andere Adresse mittels der 
+				 Funktion <i><b>Einfügen</b></i> einzufügen. </p>
+				 <p>Das zu bearbeitende Element muss vor dem Ausschneiden markiert 
+				 werden. Um einen Teilbaum (d.h. einen Ordner/Datensatz/Adresse mit allen hierarchisch darunterliegenden 
+				 Elementen) auszuschneiden, muss das hierarchisch oberste Element markiert sein. 
+				 Eine Markierung aller betroffenen Elemente bei ausgeklapptem Teilbaum ist nicht 
+				 möglich.</p>
+				 <p>Siehe auch Funktion <i><b>Einfügen</b></i></p>
+				 <p><b>Datensatz/Adresse kopieren</b></p>
+				 <p>Ein markiertes Element wird mit dieser Funktion 
+				 in den Zwischenspeicher kopiert. Um die Kopie an die gewünschte Stelle in der 
+				 Hierarchie zu bringen, nutzen Sie die Funktion <i><b>Einfügen</b></i>.</p>
+				 <p><b>Teilbaum kopieren</b></p>
+				 <p>Um einen Teilbaum (d.h. ein Ordner/Datensatz/Adresse mit allen hierarchisch 
+				 darunterliegenden Datensätzen bzw. Adressen) zu kopieren, muss das hierarchisch 
+				 oberste Element markiert sein. Eine Markierung aller betroffenen 
+				 Elemente bei ausgeklapptem Teilbaum ist nicht möglich. Um die Kopie an die 
+				 gewünschte Stelle in der Hierarchie zu bringen, nutzen Sie die 
+				 Funktion <i><b>Einfügen</b></i>. </p>
+				 <p><b>Einfügen</b></p>
+				 <p>Markieren Sie das Element, das hierarchisch über dem 
+				 einzufügenden Datensatz oder Teilbaum bzw. der einzufügenden Adresse steht. 
+				 Die Ordnung innerhalb einer Hierarchiestufe erfolgt alphabetisch und kann 
+				 durch Verschieben oder Einfügen nicht geändert werden. </p> 
+				 <p><b>Zwischenspeichern</b></p>
+				 <p>Mit der Funktion sichern Sie Änderungen bzw. die Eingaben zu einem neu 
+				 angelegten Datensatz bzw. einer neu angelegten Adresse, ohne dass der Datensatz bzw. 
+				 die Adresse veröffentlicht wird, d.h. mit der Suchfunktion des Portals gefunden 
+				 oder im Strukturbaum des Portals angezeigt wird. Zwischenspeichern ist auch 
+				 möglich, wenn noch nicht alle Pflichtfelder ausgefüllt sind. Die Darstellung 
+				 des Datensatzes bzw. der Adresse in der Hierarchie im linken Fenster erfolgt mit 
+				 einem roten Bearbeitungs-Icon. </p>
+				 <p>Um einen Datensatz zu veröffentlichen, wählen Sie die Funktion 
+				 <i><b>Abschließendes Speichern</b></i>.</p>
+				 <p><b>Rückgängig</b></p>
+				 <p>Die Funktion Rückgängig ist aktiv, wenn in einem Feld eine Veränderung 
+				 der Eingaben vorgenommen wurde und das Feld verlassen wurde. Nach einer positiv 
+				 beantworteten Rückfrage werden alle Bearbeitungen seit dem letzten Zwischenspeichern 
+				 gelöscht, nicht nur die Änderungen, die im letzten bearbeiteten Feld vorgenommen 
+				 wurden. Um den Datensatz bzw. die Adresse auf die Version der letzten Veröffentlichung 
+				 zurückzusetzen (falls es kein neu angelegter Datensatz bzw. neu angelegte Adresse ist) 
+				 nutzen Sie die Funktion <i><b>Änderungen am aktuellen Datensatz/Adresse verwerfen</b></i>.
+					</p>
+				 <p><b>Änderungen am aktuellen Datensatz/Adresse verwerfen</b></p>
+				 <p>Mit dieser Funktion können Datensätze und Adressen, die schon veröffentlicht wurden, 
+				 auf den Stand zurückgesetzt werden, den sie bei der Veröffentlichung hatten. </p>
+				 <p>Die Bearbeitungen, auch die mit der Funktion Zwischenspeichern gesicherten, 
+				 werden zurückgesetzt und gelöscht. Um aktuelle Bearbeitungen auf den Stand der 
+				 letzten Bearbeitung zurückzusetzen, nutzen Sie die Funktion 
+				 <i><b>Zwischenspeichern</b></i>. </p>
+				 <p><b>Abschließendes Speichern</b></p>
+				 <p>Nach Ausführen der Funktion Abschließendes Speichern ist der Datensatz/Adresse 
+				 veröffentlicht und damit in der Suchfunktion bzw. dem Strukturbaum des Portals 
+				 recherchierbar. Um einen Datensatz bzw. eine Adresse erfolgreich zu speichern, müssen 
+				 alle Pflichtfelder ausgefüllt sein. Bei nicht ausgefüllten Pflichtfeldern oder 
+				 falsch ausgefüllten Feldern werden die Feldnamen rot angezeigt. 
+				 Um trotz der Fehlermeldung die Bearbeitung sichern zu können, wählen Sie die 
+				 Funktion <i><b>Zwischenspeichern</b></i>. </p>
+				 <p><b>Ausgewähltes Objekt/Teilbaum löschen</b></p>
+				 <p>Nach einer Sicherheitsabfrage wird der markierte Datensatz bzw. der markierte 
+				 Teilbaum endgültig gelöscht.</p>
+				 <p><b>Änderungen anzeigen</b></p>
+				 <p>In einem gesonderten Dialog-Fenster <i>Vergleichsansicht</i> können Sie die 
+				 Informationen vor der Bearbeitung eines Datensatzes bzw. einer Adresse ansehen 
+				 (Ausgangsversion) und nach der Bearbeitung (Bearbeitungsversion). 
+				 In der Differenzansicht sind die gelöschten Daten in rot dargestellt. 
+				 Die neu eingefügten Daten werden grün angezeigt.</p>
+				 <p><b>Kommentar ansehen/hinzufügen</b></p>
+				 <p>Zu jedem Datensatz und zu jeder Adresse können Kommentare verfasst werden. 
+				 Die Kommentare werden nicht veröffentlicht und sind in der Druckansicht nicht 
+				 aufgeführt. </p>
+				 <p>Über den Klick auf den Button wird das 
+				 <a href="?hkey=maintanance-of-objects-10">Kommentarfenster</a> geöffnet.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Neuanlegen von Datensätzen</header>
+        <section help-key="creation-of-objects-1">
+            <header>Anlegen eines neuen Datensatzes</header>
+            <content>
+                 <p>Ein neuer Datensatz kann entweder über die Schaltfläche <i><b>Neu anlegen</b></i> 
+				 in der Funktionsleiste oder über das Kontextmenü der rechten Maustaste im Strukturbaum
+				 angelegt werden. Es wird in der Hierarchie immer unterhalb des aktuellen Elementes 
+				 platziert.</p>                  
+				 <p>Standardmäßig werden für ein leeres Objekt die Ansprechpartneradresse.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Pflege von Datensätzen</header>
+        <section help-key="maintanance-of-objects-1">
+            <header>Aufbau der Objektoberfläche</header>
+            <content>
+                 <p>Die Objekte werden im rechten Fenster des Untermenüpunkts <i>Hierarchie &amp; Erfassung</i>
+				 gepflegt. </p>
+                 <p>Im oberen Teil des Fensters werden farbig hinterlegt die Kopfinformationen 
+				 <i>Datensatzname</i> sowie die 
+				 Statusinformationen <i>Erstellt am</i>, <i>Geändert am</i> und <i>Von</i> 
+				 zum Objekt angezeigt. Diese Anzeige ist immer sichtbar. </p>
+                 <p>Die weiteren Informationen sind zu Gruppen zusammengefasst.</p>
+                 <p>Die Gruppen können für verschiedene Datensatztypen leicht unterschiedlich aussehen.</p>
+                 <p>Die einzelnen Gruppen sind durch Balken optisch von einander abgegrenzt. Standardmäßig 
+				 werden nur die Pflichtfelder angezeigt. Sie sind durch fettgedruckte Überschriften und 
+				 ein Sternchen * gekennzeichnet. Ein Datensatz lässt sich nur dann endgültig speichern, wenn alle 
+				 Pflichtfelder gefüllt sind. Wird eine 
+				 Speicherung aufgrund fehlender Pflichteinträge abgelehnt, werden die 
+				 Überschriften der entsprechenden Felder rot gekennzeichnet, um den Nutzer auf die noch 
+				 benötigten Einträge aufmerksam zu machen.</p>
+                 <p>Durch Anklicken des Icons „<i>Alle Felder aufklappen</i>“ links vom Gruppennamen werden 
+				 auch alle optional zu füllenden Felder angezeigt. Ein erneutes Klicken auf das Icon 
+				 blendet diese Felder wieder aus. In der Funktionsleiste finden Sie am rechten Rand ein 
+				 Icon „<i>Alle Felder aufklappen</i>“, mit dem Sie alle Felder in allen Gruppen 
+				 ein- bzw. wieder ausblenden können.</p>
+                 <p>Am rechten Rand der die Gruppen trennenden Balken befindet sich ein Icon 
+				 „<i>nach oben</i>“. Es ermöglicht den Sprung in die oberste Feldgruppe.</p>
+                 <p>Hilfetexte zu den einzelnen Feldern und Gruppen erhalten Sie, indem Sie mit dem 
+				 Mauszeiger (dann mit Fragezeichen am Pfeil) auf die Feld- bzw. Gruppennamen klicken.</p>
+                 <p>Zum Füllen von Textfeldern klicken Sie einfach in das Feld. Auswahllisten werden 
+				 über den Pfeil an der rechten Seite des Feldes aufgeklappt. Für Tabellen gibt es 
+				 aufgrund der zusätzlichen Funktionalität Sonderregelungen für die Bedienung 
+				 (siehe auch <a href="?hkey=editor-design-6">Besonderheiten bei Tabellen</a>). 
+				 Einige Felder können nur über eigene Dialoge gefüllt werden. Die Dialoge sind in den 
+				 folgenden Unterkapiteln beschrieben.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-2">
+            <header>Adresse hinzufügen</header>
+            <content>
+                 <p>Der Editor unterscheidet zwischen Datensätzen und Adressen. Beide werden 
+				 in separaten Teilbäumen des Kataloges gepflegt. Dies hat den Vorteil, dass eine einmal 
+				 eingepflegte Adresse in beliebig vielen Datensätzen referenziert werden kann, ohne dass 
+				 weiterer Erfassungsaufwand für Adressangaben entsteht. Ebenso können Adressänderungen an 
+				 einer Stelle in der Adressverwaltung geändert werden, ohne dass alle Objekte, die sie 
+				 referenzieren, bearbeitet werden müssen.</p>
+                 <p>Über <i>Adresse hinzufügen</i> wird eine Referenz auf eine bereits im Teilbaum 
+				 <i>Adressen</i> erstellte Adresse hergestellt.</p>
+                 <p>Die Adresse kann entweder über eine <i>Direkte Suche</i> oder den <i>Hierarchiebaum</i> 
+				 gefunden und ausgewählt werden.</p>
+                 <p>In der <i><b>Direkten Suche</b></i> können Sie entweder nach der Einheit bzw. Institution, 
+				 dem Nachnamen, dem Vornamen oder einer Kombination aus den Feldern suchen. Es wird immer 
+				 eine Suche nach einer Teilzeichenkette durchgeführt. Werden Zeichenketten in mehreren 
+				 Feldern angegeben, wird eine Adresse nur dann gefunden, wenn alle Zeichenketten 
+				 übereinstimmen (UND-Verknüpfung).</p>
+                 <p>Die gefundenen Adressen werden in der <i>Trefferliste</i> angezeigt. Durch einfaches 
+				 Klicken auf einen Eintrag wird dieser markiert. Durch ein anschließendes Klicken auf 
+				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in den Datensatz 
+				 übernommen. </p>
+                 <p>Im <i><b>Hierarchiebaum</b></i> können Sie in der üblichen Weise navigieren. Ein einfacher 
+				 Klick auf eine Adresse markiert diese. Durch ein anschließendes Klicken auf 
+				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in den Datensatz 
+				 übernommen.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-10">
+            <header>Das Kommentarfenster</header>
+            <content>
+                 <p>Klicken Sie in das untere Fenster und schreiben Sie den Kommentar. 
+				 Mit der <i><b>Funktion Kommentar</b></i> eintragen übertragen Sie den Kommentar in die oben 
+				 aufgeführte Liste. Das Datum und der Nutzername werden automatisch eingetragen.</p>
+                 <p>Kommentare können über das Kontextmenü der rechten Maustaste wieder aus der Tabelle 
+				 gelöscht werden.</p>
+                 <p>Mit einem Klick auf das Kreuz oben rechts in der Fensterecke verlassen Sie das 
+				 Kommentarfenster und kehren zum aktuellen Objekt bzw. zur aktuellen Adresse zurück.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Pflege von Adressen</header>
+        <section help-key="maintanance-of-adresses-1">
+            <header>Aufbau der Objektoberfläche</header>
+            <content>
+                 <p>Die Adressen werden im rechten Fenster des Untermenüpunktes 
+				 <i>Hierarchie &amp; Erfassung</i> gepflegt. </p>
+				 <p>Im oberen Teil des Fensters werden farbig hinterlegt die Kopfinformationen 
+				 <i>Adresstitel</i>, <i>Adresstyp</i> sowie die 
+				 Statusinformationen <i>Erstellt am</i>, <i>Geändert am</i>, <i>Von</i> und <i>Status</i> 
+				 zu der Adresse angezeigt. Diese Anzeige ist immer sichtbar.</p>
+				 <p>Darunter wird - grau hinterlegt - je nach Adresstyp der Name der Institution, 
+				 der Einheit oder der Person angezeigt.</p>
+                 <p>Bei dem Adresstyp "Person" gibt es zusätzlich die Besonderheit "Daten nicht anzeigen" als 
+                 Checkbox. Hierdurch lassen sich die Daten einer Adresse verstecken und stattdessen, die der 
+                 übergeordneten Adresse verwendet.</p>
+				 <p>Die weiteren Informationen sind zu folgenden Gruppen zusammengefasst:</p>
+				 <ul>
+				 <li>Adresse</li>
+				 <li>Zugeordnete Datensätze</li>
+				 </ul>
+				 <p>Die einzelnen Gruppen sind durch Balken optisch voneinander abgegrenzt. Standardmäßig 
+				 werden nur die Pflichtfelder angezeigt. Sie sind durch fettgedruckte Überschriften und 
+				 ein Sternchen * gekennzeichnet. Eine Adresse lässt sich nur dann endgültig speichern, 
+				 wenn alle Pflichtfelder gefüllt sind. Wird 
+				 eine Speicherung aufgrund fehlender Pflichteinträge abgelehnt, werden 
+				 die Überschriften der entsprechenden Felder rot gekennzeichnet, um den Nutzer auf die 
+				 noch benötigten Einträge aufmerksam zu machen.</p>
+				 <p>Durch Anklicken des Buttons <i>Alle Felder aufklappen</i> links vom Gruppennamen werden 
+				 auch alle optional zu füllenden Felder angezeigt. Ein erneutes Klicken auf den Button blendet 
+				 diese Felder wieder aus. In der Funktionsleiste finden Sie am rechten Rand einen Button 
+				 <i>Alle Felder aufklappen</i>, mit dem Sie <b>alle</b> Felder in allen Gruppen ein- bzw. 
+				 wieder ausblenden können.</p>
+				 <p>Am rechten Rand der die Gruppen trennenden Balken befindet sich einen Button
+				 <i>nach oben</i>. Es ermöglicht den Sprung in die oberste Feldgruppe.</p>
+				 <p>Hilfetexte zu den einzelnen Feldern und Gruppen erhalten Sie, indem Sie mit dem Mauszeiger 
+				 (dann mit Fragezeichen am Pfeil) auf die Feld- bzw. Gruppennamen klicken.</p>
+				 <p>Zum Füllen von Textfeldern klicken Sie einfach in das Feld. Auswahllisten werden über 
+				 den Pfeil an der rechten Seite des Feldes aufgeklappt. Für Tabellen gibt es aufgrund der 
+				 zusätzlichen Funktionalität Sonderregelungen für die Bedienung (siehe auch 
+				 <a href="?hkey=editor-design-6">Besonderheiten bei Tabellen</a>).</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2">
+            <header>Anlegen einer neuen Adresse</header>
+            <content>
+                 <p>Eine neue Adresse kann entweder über die Schaltfläche <i>Neu anlegen</i> in der 
+				 Funktionsleiste oder über das Kontextmenü der rechten Maustaste im Strukturbaum angelegt 
+				 werden. Es wird in der Hierarchie immer unterhalb der aktuellen Adresse platziert. Wollen 
+				 Sie eine Adresse auf der obersten Hierarchieebene anlegen, so wählen Sie die Ebene 
+				 <i>Adressen</i> im Strukturbaum aus und legen dann eine neue Adresse an.</p>
+				 <p>Über ein Dialogfenster Adresse anlegen wählen Sie zuerst den Adresstyp der neu 
+				 anzulegenden Adresse aus. Welche Adresstypen Ihnen zur Neuanlage zur Verfügung stehen, 
+				 hängt von dem Adresstyp der Adresse ab, unter der sie die neue Adresse anlegen wollen. 
+				 Danach öffnet sich die entsprechende Maske mit auszufüllenden Feldern. Standardmäßig 
+				 wird das Feld Kommunikation aus der übergeordneten Adresse übernommen. 
+				 Wollen Sie eine „freie Adresse“, also ein Adresse ohne übergeordnete Institution und 
+				 Einheit anlegen, so wählen sie die Ebene <i>freie Adresse</i> im Strukturbaum aus 
+				 und legen darunter eine neue Adresse an.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-adresses-2a">
+            <header>Angaben aus übergeordneter Adresse übernehmen</header>
+            <content>
+                 <p>Anstatt die Adressinformationen per Hand eingeben zu müssen, ist es möglich, die Informationen aus der übergeordneten Adresse zu erhalten. Dabei werden die Felder <i>Straße/Hausnummer</i>, <i>PLZ</i>, <i>Ort</i>, <i>Postfach</i>, <i>PLZ (Postfach)</i> und <i>Land</i> überschrieben.</p>
+                 <p>Außerdem ist es über den Strukturbaum möglich, ausgehend von einer Adresse, die Adressinformationen auf alle Unteradressen zu verteilen. Dazu ruft man das Kontextmenü einer Adresse im Hierarchiebaum auf und wählt den Eintrag <i>Adressangaben in nachgeordnete Adressen übernehmen</i>. Nach einer Sicherheitsabfrage werden die Änderungen an den Adressen vorgenommen.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Recherche</header>
+        <section help-key="search-1">
+            <header>Suche</header>
+            <content>
+                 <p>Über den Untermenüpunkt <i>Suche</i> der Recherche können Sie Datensätze oder Adressen 
+				 mit Hilfe eines Stichwortes suchen, ohne deren Positionen in der Kataloghierarchie 
+				 zu kennen.</p>
+				 <p>Über die Karteireiter können Sie auswählen, ob Sie in <i>Adressen</i> oder in 
+				 <i>Datensatz</i> des Kataloges suchen wollen.</p>
+				 <p>Tragen Sie einen beliebigen Suchbegriff in die Eingabezeile ein und starten Sie 
+				 die Recherche über die Schaltfläche <i>Suchen</i>.</p>
+				 <p>In der Trefferliste werden alle gefundenen Datensätze bzw. Adressen angezeigt und 
+				 können durch einen einfachen Mausklick auf die entsprechende Zeile zur Bearbeitung 
+				 aufgerufen werden. Nach dem Anklicken wird der entsprechende Datensatz bzw. die 
+				 entsprechende Adresse unter dem Menüpunkt <i>Hierarchie und Erfassung</i> geöffnet. 
+				 Sie können zur <i>Trefferliste</i> zurückkehren, indem Sie wieder den Menüpunkt 
+				 <i>Recherche</i> anwählen.</p>
+            </content>
+        </section>
+        <section help-key="search-3">
+            <header>Datenbank-Suche</header>
+            <content>
+                 <p>Die Datenbank-Suche ist eine Funktion, die für Experten gedacht ist. Über sie können 
+				 ganz spezielle Informationen aus der Datenbank abgerufen werden. Änderungen an 
+				 Datenbankinhalten sind nicht möglich.</p>
+            </content>
+        </section>
+    </chapter>
+	<chapter>
+        <header>Verwaltungsfunktion: Nutzerverwaltung</header>
+        <section help-key="user-administration-1">
+            <header>Nutzeradministration</header>
+            <content>
+                 <p><b>Konzept der Nutzerverwaltung des InGridEditors</b></p>
+				 <p>Der InGridEditor (IGE) ist eine Komponente der Portal-Software InGrid. Durch die Verknüpfung 
+				 der Nutzverwaltungen des Portals und des IGEs ergibt sich der Vorteil, dass sich ein 
+				 Nutzer nur einmal zentral im Portal (unter <i>Anmelden</i>) oder in einer anderen externen 
+				 Benutzerverwaltung anmelden muss.</p>
+				 <p>Die IGE-Nutzerrechte werden in der 
+				 <a href="?hkey=hierarchy-maintenance-3">Gruppenadministration</a> der IGE-Nutzerverwaltung 
+				 festgelegt. Zunächst werden Gruppen definiert, die spezifische Rechte für einen Teilbereich des 
+				 Katalogs aufweisen und anschließend die Nutzer einer oder mehreren Gruppen  zugeordnet. </p>
+				 <p>Im IGE werden hierbei folgende Rechte (Rollen) unterschieden:</p>
+				 <ol>
+				 <li><b>Katalog-Administrator</b>: Es gibt nur einen Nutzer mit diesen Rechten. Er hat das 
+				 Recht alle Verwaltungsfunktionen bedienen zu dürfen und kann Nutzer auf allen 
+				 darunterliegenden Hierarchieebenen mit Schreibrechten auf beliebige Teilbäume erstellen.</li>
+				 <li><b>Metadaten-Administrator</b>: Er darf von den Verwaltungsfunktionen nur die Nutzerverwaltung 
+				 bedienen. Er darf Nutzer mit der Rolle Metadaten-Autor erstellen. Die Rechte dieser Nutzer 
+				 dürfen aber maximal den Rechten des jeweiligen Metadaten-Administrators entsprechen (z.B. 
+				 Schreibrechte nur auf einen Teilbaum des Katalogs).</li>
+				 <li><b>Metadaten-Autor</b>: Er hat Schreibrechte auf einen Teilbaum des Kataloges, hat aber 
+				 keinen Zugang zur Nutzerverwaltung oder zu anderen Verwaltungsfunktionen.</li>
+				 </ol>
+				 <p>Der Katalog-Administrator kann Metadaten-Autoren unter beliebigen Metadaten-Administratoren 
+				 einrichten. Ein Metadaten-Administrator hat immer das Recht, die ihm nachgeordneten 
+				 Metadaten-Autoren zu administrieren.</p>
+				 <br/>
+				 <p><b>Neuanlegen eines Nutzers</b></p>
+				 <br/>
+				 <p>Vorbereitende Schritte:</p>
+				 <ol>
+				 <li>Der Nutzer muss in der externen Benutzerverwaltung registriert worden sein (Portal-Nutzer). Wird als 
+				 externe Nutzerverwaltung das Portal verwendet, kann sich der Nutzer selbst anmelden oder vom 
+				 Administrator im Portal unter <i>Anmelden</i> angemeldet werden.</li>
+				 <li>Der Nutzer erhält eine Email zur Bestätigung seiner Anmeldung. Mit der Bestätigung des Links 
+				 in der Email wird die Anmeldung aktiviert. </li>
+				 <li>Um dem neuen Nutzer passende Rechte zuordnen zu können, muss in der  
+                 <a href="?hkey=user-administration-2">Gruppenadministration</a> der IGE-Nutzerverwaltung geprüft 
+				 werden, ob bereits eine oder mehrere Gruppen existieren, die mit entsprechenden Rechten 
+				 ausgestattet sind. Ist dies nicht der Fall, müssen eine oder mehrere neue Gruppen angelegt werden. </li>
+				 </ol>
+				 <p>Nachdem gehen Sie bitte wie folgt vor:</p>
+				 <ol>
+				 <li>Klicken Sie in der Nutzeradministration (IGE-Nutzerverwaltung) auf den Administrator, der 
+				 für den neuen Nutzer zuständig sein soll (Hierarchiebaum auf der linken Seite). Der Name des 
+				 Administrators wird rot markiert.  
+				 <br/>Als Katalog-Administrator können Sie Metadaten-Administratoren und Metadaten-Autoren im 
+				 gesamten Katalog anlegen. Als Metadaten-Administrator können Sie nur Metadaten-Autoren unterhalb 
+				 ihres eigenen Eintrags anlegen. Unterhalb von Metadaten-Autoren können keine weiteren Nutzer 
+				 angelegt werden.</li>
+				 <li>Klicken Sie auf die Schalfläche <i>Nutzer anlegen</i> (unterhalb des Hierarchiebaums). Geben Sie nun 
+				 in das Dialogfeld die Anfangsbuchstaben des neuen Portal-Nutzers ein und wählen Sie dann aus der Auswahlliste 
+				 den entsprechenden Nutzer aus.  Klicken Sie anschließend auf 
+				 die Schalfläche <i>Übernehmen</i>, um dem neuen Nutzer dem ausgewählten IGE-Administrator zuzuordnen.
+				 <br/><u>Hinweis 1:</u> Die Auswahlliste öffnet sich nur durch die Eingabe von Buchstaben und nicht 
+				 wie üblich über einen Klick auf das Symbol an der rechten Seite der Eingabezeile. Namen, die mit großen 
+				 Anfangsbuchstaben beginnen, werden in der Auswahlliste zuerst gelistet. 
+				 <br/><u>Hinweis 2:</u> Ein Portal-Nutzer, der bereits einem IGE-Katalog zugeordnet ist, kann keinem 
+				 zweiten Katalog zugeordnet werden. Diese Regelung betrifft auch Schulungskataloge. Deshalb werden Nutzer, 
+				 die bereits mit IGE-Rechten ausgestattet sind, nicht mehr in der Auswahlliste angezeigt.</li>
+				 <li>Für den neuen IGE-Nutzer müssen nun einige Nutzerdaten (Name, Email, Institution) erfasst. </li>
+                 <li>Weisen Sie dem neuen IGE-Nutzer einer oder mehreren Gruppen zu. In der Auswahlliste werden alle 
+				 in der  <a href="?hkey=user-administration-2">Gruppenadministration</a> definierten Gruppen angezeigt 
+				 für die Sie die Berechtigung zur Administration besitzen.</li>
+				 <li>Mit <i>Speichern</i> (Schaltfläche unten rechts) schließen Sie den Vorgang ab.</li>
+				 </ol>
+				 <br/>
+				 <p><b>Bearbeiten und Löschen eines bereits existierenden Nutzers</b></p>
+				 <br/>
+				 <p>Wählen Sie durch Mausklick im Hierarchiebaum auf der linken Seite des Fensters einen 
+				 Nutzer aus, den Sie bearbeiten oder löschen wollen.</p>
+				 <p>Die Nutzerdaten werden in die Felder auf der rechten Seite des Fensters geladen. Sie 
+				 können das <i>Login</i>, die <i>Adressdaten</i> und die <i>Gruppe</i> ändern. Über 
+				 <i>Speichern</i> sichern Sie die Änderungen.</p>
+				 <p><u>Hinweis:</u> Dem Katalog-Administrator ist immer automatisch die Gruppe 
+				 <i>administrators</i> zugewiesen. Diese Zuordnung kann nicht geändert werden. Die Gruppe 
+				 steht anderen Nutzern nicht zur Verfügung.</p>
+				 <p>Zum Löschen des Nutzers klicken Sie auf die Schaltfläche <i>Nutzer löschen</i> und 
+				 bestätigen den Vorgang in dem sich öffnenden Dialog.</p>
+                 <p><b>Anzeige der Verantwortlichkeiten</b></p>
+                 <p>Über den Reiter "Als Verantwortlicher" werden zwei Tabellen angezeigt, die die Objekte
+                 und Adressen auflisten, in denen der ausgewählte Benutzer als Verantwortlicher eingetragen
+                 ist. Es ist möglich direkt von diesen Tabellen auf ein Objekt bzw. Adresse zu springen.</p>
+            </content>
+        </section>
+        <section help-key="user-administration-2">
+            <header>Gruppenadministration</header>
+            <content>
+                 <p>Über die (Nutzer-)Gruppen werden die Schreibrechte auf Datensätze und Adressen festgelegt.</p>
+				 <p>In der Gruppenadministration können Sie:</p>
+				 <ul>
+				 <li><u>Eine Gruppe bearbeiten:</u> Klicken Sie auf den Namen der Gruppe in der Liste links 
+				 oben im Fenster. Sie können nun den Namen der Gruppe ändern sowie die Rechte für die Gruppe 
+				 (siehe unten). Änderungen müssen mit <i>Speichern</i> abgeschlossen werden und stehen dann 
+				 sofort zur Verfügung.</li>
+				 <li><u>Eine Gruppe neu anlegen:</u> Klicken Sie auf die Schaltfläche <i>Neue Gruppe anlegen</i>. 
+				 Sie müssen den Gruppennamen angeben und den Vorgang mit <i>Speichern</i> abschließen. Sie 
+				 können nun die Rechte für die Gruppe angeben (siehe unten).</li>
+				 <li><u>Eine Gruppe löschen:</u> Klicken Sie mit der rechten Maustaste auf den Namen der 
+				 Gruppe, die Sie löschen wollen. Wählen Sie <i>Zeile löschen</i> aus dem Kontextmenü und 
+				 bestätigen Sie den Vorgang in dem sich öffnenden Dialog.</li>
+				 </ul>
+				 <p><u><b>Wichtig:</b></u> Alle Änderungen an den Gruppeneigenschaften (auch die an den 
+				 untenstehenden Berechtigungen) müssen über <i><b>Speichern</b></i> abgeschlossen werden, 
+				 damit die Änderungen wirksam werden und nicht verloren gehen.</p>
+				 <p>Sie können folgende Berechtigungen für eine Gruppe vergeben:</p>
+				 <p><b>Berechtigungen für Datensätze</b></p>
+				 <p>Sie können Schreibberechtigungen für Datensätze vergeben. Wählen sie dazu der Datensatz 
+				 unter <i>Berechtigungen für Datensätze</i> aus dem Hierarchiebaum aus, für das Sie oder 
+				 ab dem Sie die Schreibberechtigung vergeben wollen. Ein Klick auf den Datensatz färbt ihn rot 
+				 ein. Über die Schaltfläche <b>></b> können Sie den markierte Datensatz in die Liste der 
+				 Berechtigungen übernehmen.</p>
+                 <p>Sie haben drei Einstellungsmöglichkeiten für die Berechtigung pro Datensatz:</p>
+				 <ul>
+				 <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für diese und alle 
+				 nachgeordneten Elemente eine Schreibberechtigung. Sie können unterhalb dieses Elementes 
+				 und allen nachgeordneten Elemente neue Elemente anlegen.</li>
+                 <li><u>Unter-Datensätze:</u> Sie können direkt unterhalb dieses Elementes ein neues Element anlegen,
+                 für das Sie dann den vollen Zugriff bekommen (Teilbaum Recht auf neuem Unter-Datensatz).
+                 Alle Benutzer Ihrer Gruppe bekommen damit ebenfalls vollen Zugriff (alle Benutzer der Gruppe,
+                 die das Unter-Datensatzrecht beinhaltet).</li>
+				 <li><u>Einzelobjekt:</u> Sie haben nur auf diesem Element eine Schreibberechtigung, auf 
+				 nachgeordnete Objekte nicht. Sie können keine neuen Elemente unterhalb dieses Objektes 
+				 anlegen.</li>
+				 </ul>
+				 <p><u>Hinweis:</u> Alle Teilbäume des Kataloges, auf die ein Schreibrecht bestehen soll, müssen 
+				 einzeln ausgewählt werden.</p>
+				 <p><b>Berechtigungen für Adressen</b></p>
+				 <p>Sie können Schreibberechtigungen für Adressen vergeben. Wählen sie dazu die Adresse 
+				 unter <i>Berechtigungen für Adressen</i> aus dem Hierarchiebaum aus, für die Sie oder 
+				 ab der Sie die Schreibberechtigung vergeben wollen. Ein Klick auf die Adresse färbt sie 
+				 rot ein. Über die Schaltfläche <b>></b> können Sie die markierte Adresse in die Liste der 
+				 Berechtigungen übernehmen.</p>
+                 <p>Sie haben drei Einstellungsmöglichkeiten für die Berechtigung pro Adresse:</p>
+				 <ul>
+				 <li><u>Teilbaum:</u> Dies ist die Standardeinstellung. Sie haben für diese Adresse und alle 
+				 nachgeordneten Adressen eine Schreibberechtigung. Sie können unterhalb dieser und allen 
+				 nachgeordneten Adressen neue Adressen anlegen.</li>
+                 <li><u>Unteradressen:</u> Sie können direkt unterhalb dieser Adresse eine neue Adresse anlegen,
+                 für die Sie dann den vollen Zugriff bekommen (Teilbaum Recht auf neuer Unteradresse).
+                 Alle Benutzer Ihrer Gruppe bekommen damit ebenfalls vollen Zugriff (alle Benutzer der Gruppe,
+                 die das Unteradressenrecht beinhaltet).</li>
+                 <li><u>Einzeladresse:</u> Sie haben nur auf diese Adresse eine Schreibberechtigung, auf 
+				 nachgeordnete Adressen nicht. Sie können keine neuen Adressen unterhalb dieser Adresse 
+				 anlegen.</li>
+				 </ul>
+				 <p><u>Hinweis:</u> Sie können keine Schreibrechte auf die Strukturbaumknoten <i>Adressen</i> 
+				 und <i>freie Adressen</i> vergeben. Alle Teilbäume des Kataloges, auf die ein Schreibrecht 
+				 bestehen soll, müssen einzeln ausgewählt werden.</p>
+				 <p><b>Root-Datensatz und -Adressen anlegen</b></p>
+				 <p>Dies ist ein gesondertes Schreibrecht. Wird es für eine Gruppe vergeben, haben die 
+				 Mitglieder dieser Gruppe das Recht, neue Objekte und Adressen auf der obersten Ebene des 
+				 Kataloges anzulegen. Sie erhalten dann automatisch die Schreibrechte auf den ganzen Teilbaum 
+				 des neuangelegten Objektes bzw. der neuangelegten Adresse.</p>
+				 <p><u>Wichtig:</u> Durch dieses Recht hat die Gruppe <i>nicht</i> automatisch das Schreibrecht 
+				 auf schon vorhandene Teilbäume, für die ihr nicht explizit Schreibrechte eingeräumt wurden.</p>
+                 <p><b>Zugeordnete Nutzer</b></p>
+                 <p>Auf dem dritten Reiter werden alle Benutzer aufgelistet, welche der gewählten Gruppe zugeordnet wurden.</p>
+				 <p><b>Die spezielle Gruppe <i>administrators</i> des Katalogadministrators</b></p>
+				 <p>Dem Katalogadministrator wird immer automatisch die Gruppe <i>administrators</i> zugewiesen. 
+				 Diese Zuweisung kann <b>nicht</b> verändert werden. Die Gruppe hat Schreibrechte auf den gesamten 
+				 Katalog (natürlich einschließlich des Rechts auf Anlegen von neuen Objekten und Adressen 
+				 auf der obersten Ebene). Die Gruppe hat feste Rechte und ist in jedem Katalog automatisch 
+				 vorhanden. Sie lässt sich nicht über die Gruppenadministration pflegen und wird daher auch nicht 
+				 in der Liste der Gruppen angezeigt.</p>
+            </content>
+        </section>
+        <section help-key="user-administration-3">
+            <header>Berechtigungsübersicht</header>
+            <content>
+                 <p>In der Berechtigungsübersicht werden alle Nutzer angezeigt, die auf einen Datensatz, eine 
+                 Adresse oder einen Teilbaum Schreibrechte oder das Recht für Unterelemente oder zur
+                 Qualitätssicherung haben.</p>
+				 <p>Klicken Sie auf einen beliebigen Datensatz unter <i>Berechtigung für Objekte</i> oder auf eine 
+				 beliebige Adresse unter <i>Berechtigung für Adressen</i>. Der ausgewählte Datensatz bzw. die 
+				 ausgewählte Adresse wird rot markiert. Es werden die <i>Nutzernamen</i> und die 
+				 <i>Rollen</i> aller Nutzer angezeigt, die auf den Datensatz bzw. die Adresse mindestens eines 
+				 der folgenden Rechte haben:</p>
+				 <ul>
+				 <li>Schreibrecht auf  das <i>Einzelobjekt</i> bzw. die <i>Einzeladresse</i></li>
+				 <li>Schreibrecht auf den <i>Teilbaum</i></li>
+                 <li>Recht zur Erstellung direkter <i>Unter-Datensatz</i> bzw. <i>Unteradressen</i></li>
+				 </ul>
+            </content>
+        </section>
+    </chapter>
+</help>

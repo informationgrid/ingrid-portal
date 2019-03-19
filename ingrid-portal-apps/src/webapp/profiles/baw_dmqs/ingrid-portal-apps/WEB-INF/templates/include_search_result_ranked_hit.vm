@@ -76,7 +76,7 @@
                 </h4>
             #end
         #else
-            <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end<strong>renderTitle($rs.title)<strong></h4>
+            <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end<strong>#renderTitle($rs.title)<strong></h4>
         #end
         #if($!rs.additional_html_1)
         <div class="media__obj media__obj--right">

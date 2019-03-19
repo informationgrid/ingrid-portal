@@ -52,8 +52,6 @@
         }
     }
 
-    // All markers
-    var mapMarkers = L.markerClusterGroup();
     // "Zulassungsverfahren" markers
     var mapMarkers10 = L.markerClusterGroup({
         id: 'mapMarkers10',
@@ -332,7 +330,6 @@
                                     marker.on('popupopen', showMarker);
                                     marker.on('popupclose', hideMarker);
                                 }
-                                mapMarkers.addLayer(marker);
                                 mapMarkersDevPlan.addLayer(marker);
                             }
                         }
@@ -369,7 +366,6 @@
                                     marker.on('popupopen', showMarker);
                                     marker.on('popupclose', hideMarker);
                                 }
-                                mapMarkers.addLayer(marker);
                                 mapMarkers10.addLayer(marker);
                             }
                         }
@@ -406,7 +402,6 @@
                                     marker.on('popupopen', showMarker);
                                     marker.on('popupclose', hideMarker);
                                 }
-                                mapMarkers.addLayer(marker);
                                 mapMarkers1314.addLayer(marker);
                             }
                         }
@@ -443,7 +438,6 @@
                                     marker.on('popupopen', showMarker);
                                     marker.on('popupclose', hideMarker);
                                 }
-                                mapMarkers.addLayer(marker);
                                 mapMarkers11.addLayer(marker);
                             }
                         }
@@ -480,7 +474,6 @@
                                     marker.on('popupopen', showMarker);
                                     marker.on('popupclose', hideMarker);
                                 }
-                                mapMarkers.addLayer(marker);
                                 mapMarkers12.addLayer(marker);
                             }
                         }

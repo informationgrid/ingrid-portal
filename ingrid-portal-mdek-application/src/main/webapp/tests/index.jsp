@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -67,7 +67,7 @@
                 { name: "global", location: "../../js" }
             ]
         };
-    
+
     catalogData = "de";
 </script>
 <script type="text/javascript" src="../dojo-sources/dojo/dojo.js"></script>
@@ -100,9 +100,9 @@ require([
     "dwr/interface/CatalogService",
     "dojo/domReady!"
 ], function(StackContainer, BorderContainer, TabContainer, array, Deferred, ContentPane, ContentPaneX, MenuBar, MenuBarItem, UtilCatalog, UtilString, dialog, message, registry) {
-    
+
     // create BorderContainer (Splitpane)
-    var main = new BorderContainer({ 
+    var main = new BorderContainer({
         design: "headline",
         gutters: false,
         toggleSplitterClosedThreshold: "100px",
@@ -115,15 +115,15 @@ require([
         region: "center",
         style: "padding: 10px;"
         }).placeAt(main.domNode);
-    
-    // top pane - menu 
+
+    // top pane - menu
     var topMenuPane = new ContentPane({
         id: "menubarPane",
         splitter: false,
         region: "top",
         style: "height: 32px;"
         }, "menuContainer");
-    
+
     var menu = new MenuBar({}).placeAt(topMenuPane.domNode);
     menu.addChild(new MenuBarItem({
         label: "Tables",
@@ -154,7 +154,7 @@ require([
         style: "width: 100%;",
         id: "stackContainer"
     }).placeAt(registry.byId("contentPane").domNode);
-    
+
     var tableTests = new ContentPaneX({
         id: "pageTable",
         title: "tables",
@@ -171,7 +171,7 @@ require([
         scriptHasHooks: true,
         executeScripts: true
     });
-    
+
     var additionalTests = new ContentPaneX({
         id: "pageAdditionalTest",
         layoutAlign: "client",
@@ -179,7 +179,7 @@ require([
         scriptHasHooks: true,
         executeScripts: true
     });
-    
+
     var treeTests = new ContentPaneX({
         id: "pageTreeTest",
         layoutAlign: "client",
@@ -195,9 +195,9 @@ require([
     sc.startup();
 
     //main.startup();
-    
+
     sc.selectChild(registry.byId("pageDialogTest"));
-    
+
 	//get an array of Inspire topics
 	var getInspireTopics = function(topics) {
 	    var inspireArray = new Array();
@@ -205,7 +205,7 @@ require([
 	        if (topic.inspireList.length > 0) {
 	            array.forEach(topic.inspireList, function(inspireTopic) {
 	                // exclude multiple same entries
-	                if (!inspireArrayContains(inspireArray,inspireTopic)) {         
+	                if (!inspireArrayContains(inspireArray,inspireTopic)) {
 	                    var obj = new Object();
 	                    obj.title = inspireTopic;
 	                    obj.label = inspireTopic;
@@ -217,24 +217,24 @@ require([
 	    });
 	    return inspireArray;
 	}
-	
+
 	var fetchSysLists = function() {
 	    var def = new Deferred();
-	
+
 	    // Setting the language code to "de". Uncomment the previous block to enable language specific settings depending on the browser language
 	    var languageCode = UtilCatalog.getCatalogLanguage();
 	    console.debug("LanguageShort is: " + languageCode);
-	    
+
 	    var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
-	        3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5180, 5200, 5300, 6000, 6005, 6010, 6020, 6100, 6200, 6300,
+	        3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5180, 5200, 5300, 6000, 6005, 6010, 6100, 6200, 6300,
 	        6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 8000, 99999999];
-	
+
 	    CatalogService.getSysListsRemoveMetadata(lstIds, languageCode, {
 	        //preHook: UtilDWR.enterLoadingState,
 	        //postHook: UtilDWR.exitLoadingState,
 	        callback: function(res){
 	            sysLists = res;
-	            
+
 	            // only if not sorted in backend, e.g. INSPIRE Themes (6100) !
 	            array.forEach(lstIds, function(id) {
 	                if (id != 6100) {
@@ -243,7 +243,7 @@ require([
 	                    });
 	                }
 	            });
-	            
+
 	            def.resolve();
 	        },
 	        errorHandler: function(mes){
@@ -255,10 +255,10 @@ require([
 	            def.reject(mes);
 	        }
 	    });
-	
+
 	    return def;
 	}
-	
+
 	fetchSysLists();
 
 });

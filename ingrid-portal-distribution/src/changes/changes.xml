@@ -8,6 +8,18 @@
     <body>
 
         <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
+          <action type="fix" dev="wemove" issue="1304">
+            Portal: Fix portal load mixed content.
+          </action>
+          <action type="fix" dev="wemove" issue="1305">
+            Portal: Measure client load OSM tiles with HTTPS protocol.
+          </action>
+          <action type="fix" dev="wemove" issue="1284">
+             Fix mapping of gmd:hoursOfService.
+          </action>
+          <action type="fix" dev="wemove" issue="1285">
+             Fix problem with codelists not been able to fetch via HTTP proxy.
+          </action>
           <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
           </action>
@@ -16,6 +28,15 @@
           </action>
           <action type="fix" dev="wemove" issue="1280">
             Portal: Fix header logo NUMIS.
+          </action>
+          <action type="add" dev="wemove" issue="1252">
+            MapClient: Add extended search of layers on admin GUI.
+          </action>
+          <action type="add" dev="wemove" issue="1110">
+            IGE(UVP): Add new field for determination of duration.
+          </action>
+          <action type="add" dev="wemove" issue="513">
+            IGE: Support getCapabilities assistant for WMTS.
           </action>
           <action type="fix" dev="wemove" issue="1303">
             Portal: Change directory for codelists to prevent conflict with kml directory.

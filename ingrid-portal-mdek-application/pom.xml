@@ -881,6 +881,28 @@
       </dependencies>
     </profile>
     <profile>
+                <dependency>
+                    <groupId>de.ingrid</groupId>
+                    <artifactId>ingrid-utils</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
+                    <version>1.4.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.portals.jetspeed-2</groupId>
+                    <artifactId>jetspeed-api</artifactId>
+                    <version>${org.apache.portals.jetspeed.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.portals.jetspeed-2</groupId>
+                    <artifactId>jetspeed-commons</artifactId>
+                    <version>${org.apache.portals.jetspeed.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
       <id>linux-optimization</id>
       <activation>
         <os>

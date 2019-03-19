@@ -22,11 +22,15 @@
  */
 package de.ingrid.portal.portlets;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -108,6 +112,29 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 }
             }
 
+            if (resourceID.equals( "httpURLImage" )) {
+                String paramURL = request.getParameter( "url" );
+                if(paramURL != null){
+                    URL url = new URL(paramURL);
+                    if (null != url) {
+                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                        InputStream inStreamConvert = con.getInputStream();
+                        ByteArrayOutputStream os = new ByteArrayOutputStream();
+                        if (null != con.getContentType()) {
+                            byte[] chunk = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                                os.write(chunk, 0, bytesRead);
+                            }
+                            os.flush();
+                            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                                    Base64.getEncoder().encodeToString(os.toByteArray()));
+                            response.getWriter().write(dataUri.toString());
+                        }
+                    }
+                }
+            }
+
         } catch (Exception e) {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
@@ -169,7 +196,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURL" );
         request.setAttribute( "restUrlHttpGet", restUrl.toString() );
-        
+
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLImage" );
+        request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
+
         try {
         	// check whether we come from google (no IngridSessionPreferences)
         	boolean noIngridSession = false;

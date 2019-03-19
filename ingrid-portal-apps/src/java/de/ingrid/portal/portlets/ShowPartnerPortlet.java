@@ -46,6 +46,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.search.UtilsSearch;
 import de.ingrid.portal.search.net.IBusQueryResultIterator;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -113,17 +114,12 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                         HashMap<String, String> provider = new HashMap<String, String>();
                         String name = null;
                         if(detail.get("title") != null){
-                            // FIXME: title field can be an array or a list. this should be prevented in iPlug/central index
-                            if (detail.get("title") instanceof ArrayList) {
-                                name = (String) ((ArrayList)detail.get("title")).get(0);
-                            } else {
-                                name = ((String[])detail.get("title"))[0];
-                            }
+                            name = UtilsSearch.getDetailValue(detail, "title");
 
                             if(name != null){
                                 if(detail.get("t02_address.parents.title") != null)
                                     if(detail.get("t02_address.parents.title") instanceof String[]){
-                                        name = ((String[])detail.get("t02_address.parents.title"))[0] + "<br>" + name.trim();
+                                        name = UtilsSearch.getDetailValue(detail, "t02_address.parents.title") + "<br>" + name.trim();
                                     } else {
                                         ArrayList<String> parentsTitle = (ArrayList<String>) detail.get("t02_address.parents.title");
                                         if(parentsTitle != null){

@@ -30,12 +30,20 @@ if [ -e /initialized ]
 then
     echo "Container already initialized"
 else
+    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ingrid-portal-apps.xml
+    sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-apps.xml
+    sed -i 's/jdbc:mysql://localhost\/mdek/'${DB_URL_MDEK}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
+    sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-mdek.xml
+    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ROOT.xml
+    sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ROOT.xml
+    sed -i 's/hibernate.driverClass=com.mysql.jdbc.Driver/hibernate.driverClass='${DB_DRIVERCLASS}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    sed -i 's/hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect/hibernate.dialect='${DB_DIALECT}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    sed -i 's/jdbc:mysql:\/\/localhost\/mdek/'${DB_URL_MDEK}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    sed -i 's/hibernate.user=root/hibernate.user='${DB_USER}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    sed -i 's/hibernate.password=/hibernate.password='${DB_PASSWORD}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    echo "communications.ibus=/ingrid-group:ibus,"${IBUS_IP}",9900" > webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
 
-    if [[ ! $JAVA_OPTS == *"DB_PASSWORD"* ]]; then
-        echo "Database password not set or empty. Setting it empty to make sure that it's really set."
-        export JAVA_OPTS="$JAVA_OPTS -DDB_PASSWORD="""
-    fi
-
+    # handle portal profiles
     if [ "$PORTAL_PROFILE" ]; then
         echo "Using specific portal profile: $PORTAL_PROFILE"
 
@@ -85,14 +93,29 @@ else
             sed -i 's/<session-timeout>30<\/session-timeout>/<session-timeout>120<\/session-timeout>/' conf/web.xml
         fi
 
-
     else
         echo "No specific portal profile used."
     fi
     
+    # IGE standalone configuration
+    if [ "$STANDALONE_IGE" == "true" ]; then
+        # remove all contexts except ingrid-portal-mdek-application
+        rm -rf webapps/ingrid-portal-apps*
+        rm -rf webapps/ingrid-webmap-client*
+        rm -rf webapps/ingrid-portal-mdek.war
+        rm -rf webapps/ingrid-portal-mdek/
+        rm -rf webapps/ROOT*
+
+        # remove context files
+        rm conf/Catalina/localhost/ingrid-portal-apps.xml conf/Catalina/localhost/ingrid-portal-mdek.xml conf/Catalina/localhost/ingrid-webmap-client.xml conf/Catalina/localhost/ROOT.xml
+
+        # adapt configuration use standalone version of IGE
+        echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+        echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
+    fi
+        
     touch /initialized
 fi
-
 
 if [ "$DEBUG" = 'true' ]; then
     ./bin/catalina.sh jpda run

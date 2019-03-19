@@ -322,6 +322,9 @@ define([
                     behaviour[item.id].override = item.active;
                 });
                 for (var behave in behaviour) {
+                    // check if behaviour is defined
+                    if (!behaviour[behave]) continue;
+
                     // ignore invalid and non-address behaviours
                     if (!behaviour[behave].title || !behaviour[behave].forAddress) continue;
                     
