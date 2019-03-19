@@ -41,7 +41,7 @@
                 <inherited>true</inherited>
                 <configuration>
                     <wtpversion>1.5</wtpversion>
-                    <downloadSources>1.5</downloadSources>
+                    <downloadSources>false</downloadSources>
                 </configuration>
             </plugin>
 
@@ -71,7 +71,7 @@
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
-                <version>9.4.2.v20170220</version>
+                <version>9.4.10.v20180503</version>
                 <configuration>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <reload>automatic</reload>
@@ -243,7 +243,13 @@
             <groupId>de.ingrid</groupId>
 			<artifactId>ingrid-external-service-wfs</artifactId>
             <version>4.3.0</version>
-		</dependency>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.measure</groupId>
+                    <artifactId>jsr-275</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
             <artifactId>ingrid-codelist-service</artifactId>
@@ -720,6 +726,114 @@
             </build>
         </profile>
         <profile>
+            <id>profile-mcloud</id>
+            <activation>
+                <property>
+                    <name>profile</name>
+                    <value>mcloud</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <webApp>
+                                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                                    <resourcesAsCSV>../ingrid-portal-apps/src/webapp/profiles/mcloud/ingrid-portal-mdek-application,src/main/webapp</resourcesAsCSV>
+                                </baseResource>
+                            </webApp>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>profile-mcloud-build</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-cli</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-dependencies</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>./mcloud-docker/libs</outputDirectory>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
+                        <configuration combine.self="override">
+                            <warSourceExcludes>start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**</warSourceExcludes>
+                            <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
+                            <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
+                            <packagingExcludes></packagingExcludes>
+                            <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED to name of .jar -->
+                            <attachClasses>true</attachClasses>
+                            <classesClassifier />
+                            <!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
+                            <archiveClasses>false</archiveClasses>
+                            <webResources>
+                                <resource>
+                                    <directory>../ingrid-portal-apps/src/webapp/profiles/mcloud/ingrid-portal-mdek-application</directory>
+                                </resource>
+                                <resource>
+                                    <!-- this is relative to the pom.xml directory -->
+                                    <directory>target/dojo-release</directory>
+                                </resource>
+                            </webResources>
+                            <outputDirectory>mcloud-docker/</outputDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>de.ingrid.mdek</groupId>
+                    <artifactId>ingrid-mdek-api</artifactId>
+                    <exclusions>
+                        <exclusion>
+                            <groupId>ojdbc</groupId>
+                            <artifactId>ojdbc</artifactId>
+                        </exclusion>
+                        <exclusion>
+                            <groupId>de.ingrid</groupId>
+                            <artifactId>ingrid-base-webapp</artifactId>
+                        </exclusion>
+                    </exclusions>
+                </dependency>
+                <dependency>
+                    <groupId>de.ingrid</groupId>
+                    <artifactId>ingrid-utils</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>net.sf.ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
+                    <version>1.4.1</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.portals.jetspeed-2</groupId>
+                    <artifactId>jetspeed-api</artifactId>
+                    <version>${org.apache.portals.jetspeed.version}</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.apache.portals.jetspeed-2</groupId>
+                    <artifactId>jetspeed-commons</artifactId>
+                    <version>${org.apache.portals.jetspeed.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
             <id>linux-optimization</id>
             <activation>
                 <os>
@@ -788,6 +902,7 @@
                                             </and>
                                         </condition>
                                         <if>
+                                            <!--suppress UnresolvedMavenProperty -->
                                             <equals arg1="${foundRepeatable}" arg2="true" />
                                             <then>
                                                 <fail message="Flyway: You must not have repeatable SQL files during a release!" />

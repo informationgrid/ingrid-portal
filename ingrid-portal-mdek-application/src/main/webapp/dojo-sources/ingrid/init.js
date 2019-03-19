@@ -123,7 +123,7 @@ define([
                                 }
                             });
                             for (var behave in behaviours) {
-                                if (!behaviours[behave].title) continue;
+                                if (!behaviours[behave] || !behaviours[behave].title) continue;
                                 // run behaviour if
                                 // 1) it's a system behaviour
                                 // 2) activated by default and not overridden
