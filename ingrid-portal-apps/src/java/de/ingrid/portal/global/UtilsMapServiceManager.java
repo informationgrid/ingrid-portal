@@ -230,8 +230,7 @@ public class UtilsMapServiceManager {
 		sw = new StringWriter();
 		templatePath = path;
 		
-		try {
-			BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(templatePath), "UTF8"));
+		try (BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(templatePath), "UTF8"))) {
 			Velocity.init();
 			Velocity.evaluate(context, sw, "TemporaryService", templateReader);
 		} catch (Exception e) {

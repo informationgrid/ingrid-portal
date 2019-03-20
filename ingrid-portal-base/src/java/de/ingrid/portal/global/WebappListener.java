@@ -22,6 +22,7 @@
  */
 package de.ingrid.portal.global;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -140,12 +141,13 @@ public class WebappListener implements ServletContextListener {
     }
 
     private String getVersionFromDB(DataSource ds) {
-        try {
-            PreparedStatement statement = ds.getConnection().prepareStatement( "SELECT item_value FROM ingrid_lookup WHERE item_key='ingrid_db_version'" );
-            ResultSet resultset;
-            resultset = statement.executeQuery();
-            if (resultset.next()) {
-                return resultset.getString( "item_value" );
+        try (Connection con = ds.getConnection()) {
+            try (PreparedStatement statement = con.prepareStatement( "SELECT item_value FROM ingrid_lookup WHERE item_key='ingrid_db_version'" )) {
+                try (ResultSet resultset = statement.executeQuery()) {
+                    if (resultset.next()) {
+                        return resultset.getString( "item_value" );
+                    }
+                }
             }
         } catch (SQLException e) {
             log.error("Problem fetching version from database", e);
