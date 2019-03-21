@@ -293,9 +293,12 @@ public class FileSystemStorage implements Storage {
         }
 
         // delegate to write method
-        InputStream data = new SequenceInputStream(streams.elements());
-        FileSystemItem[] result = this.write(path, file, data, size, replace, extract);
-
+        FileSystemItem[] result = null;
+        // this also closes InputStreams of streams
+        try (InputStream data = new SequenceInputStream(streams.elements())) {
+            result = this.write(path, file, data, size, replace, extract);
+        }
+        
         // delete parts
         for (Path part : parts) {
             Files.delete(part);
