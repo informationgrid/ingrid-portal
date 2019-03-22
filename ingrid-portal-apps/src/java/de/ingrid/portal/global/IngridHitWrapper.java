@@ -22,8 +22,6 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.HashMap;
-
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 

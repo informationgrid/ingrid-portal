@@ -22,9 +22,9 @@
  */
 package de.ingrid.portal.forms;
 
-import javax.portlet.PortletRequest;
-
 import de.ingrid.portal.global.Utils;
+
+import javax.portlet.PortletRequest;
 
 /**
  * TODO Describe your created type (class, etc.) here.

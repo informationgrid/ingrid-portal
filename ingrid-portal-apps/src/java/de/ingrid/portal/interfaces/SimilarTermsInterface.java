@@ -22,10 +22,10 @@
  */
 package de.ingrid.portal.interfaces;
 
-import java.util.Locale;
-
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+
+import java.util.Locale;
 
 /**
  * TODO Describe your created type (class, etc.) here.

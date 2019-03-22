@@ -22,18 +22,16 @@
  */
 package de.ingrid.portal.config;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Iterator;
-
+import com.tngtech.configbuilder.ConfigBuilder;
+import de.ingrid.portal.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tngtech.configbuilder.ConfigBuilder;
-
-import de.ingrid.portal.Configuration;
+import java.io.File;
+import java.net.URL;
+import java.util.Iterator;
 
 /**
  * Provides access to the ingrid portal preferences.

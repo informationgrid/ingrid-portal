@@ -22,20 +22,13 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.ActionForm;
+import de.ingrid.portal.global.*;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridCMS;
+import de.ingrid.portal.om.IngridRSSStore;
+import de.ingrid.portal.scheduler.IngridMonitorFacade;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.generic.ListTool;
@@ -47,17 +40,12 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.ActionForm;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridCMS;
-import de.ingrid.portal.om.IngridRSSStore;
-import de.ingrid.portal.scheduler.IngridMonitorFacade;
+import javax.portlet.*;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This portlet is the abstract base class of all content portlets. Encapsulates

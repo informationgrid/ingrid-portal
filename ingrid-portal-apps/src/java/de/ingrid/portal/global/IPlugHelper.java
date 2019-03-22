@@ -22,16 +22,12 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
 import de.ingrid.portal.search.IPlugVersionInspector;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.PlugDescription;
+
+import java.util.*;
 
 /**
  * Helper class dealing with all aspects of iPlugs (PlugDescription).

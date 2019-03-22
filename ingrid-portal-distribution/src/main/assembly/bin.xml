@@ -21,7 +21,9 @@
   limitations under the Licence.
   **************************************************#
   -->
-<assembly>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
     <id>installer</id>
     <formats>
         <format>jar</format>
@@ -46,11 +48,11 @@
         </fileSet>
         <fileSet>
             <directory>src/main/resources/ant-installer</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
         </fileSet>
         <fileSet>
             <directory>../target/installer</directory>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory/>
         </fileSet>
         <fileSet>
             <directory>../target/installer/resources/scripts</directory>

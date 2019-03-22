@@ -22,24 +22,6 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Date;
-import java.util.HashSet;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.generic.ListTool;
-import org.hibernate.Session;
-
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminCMSForm;
 import de.ingrid.portal.global.Settings;
@@ -49,6 +31,17 @@ import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
 import de.ingrid.portal.om.IngridCMSItem;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.ListTool;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.*;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Date;
+import java.util.HashSet;
 
 /**
  * Portlet handling content management of Partners

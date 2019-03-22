@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="4.7.0" date="2019-xx-xx" description="Release 4.7.0">
+        <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
           <action type="fix" dev="wemove" issue="1304">
             Portal: Fix portal load mixed content.
           </action>
@@ -37,6 +37,9 @@
           </action>
           <action type="add" dev="wemove" issue="513">
             IGE: Support getCapabilities assistant for WMTS.
+          </action>
+          <action type="fix" dev="wemove" issue="1303">
+            Portal: Change directory for codelists to prevent conflict with kml directory.
           </action>
         </release>
 

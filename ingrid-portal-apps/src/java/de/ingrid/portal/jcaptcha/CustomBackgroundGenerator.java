@@ -22,13 +22,12 @@
  */
 package de.ingrid.portal.jcaptcha;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator;
 import com.octo.captcha.component.image.color.ColorGenerator;
 import com.octo.captcha.component.image.color.SingleColorGenerator;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class CustomBackgroundGenerator extends UniColorBackgroundGenerator {
 

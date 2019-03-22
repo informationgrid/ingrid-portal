@@ -22,18 +22,16 @@
  */
 package de.ingrid.portal.forms;
 
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.PortletRequest;
+import java.util.List;
 
 /**
  * TODO Describe your created type (class, etc.) here.

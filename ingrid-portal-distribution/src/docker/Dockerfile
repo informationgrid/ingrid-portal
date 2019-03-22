@@ -5,7 +5,7 @@ ENV DB_USER=root
 ENV DB_PASSWORD=""
 ENV DB_DRIVERCLASS=com.mysql.jdbc.Driver
 ENV DB_URL_MDEK=jdbc:mysql:\\/\\/mysql\\/mdek
-ENV DB_URL_PORTAL=jdbc:mysql:\\/\\/mysql\\/portal
+ENV DB_URL_PORTAL=jdbc:mysql:\\/\\/mysql\\/ingrid_portal
 ENV DB_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
 
 ADD ingrid-portal*-installer.jar /

@@ -22,14 +22,14 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.codelists.comm.ICodeListCommunication;
 import de.ingrid.codelists.comm.IngridCLCommunication;
 import de.ingrid.codelists.persistency.ICodeListPersistency;
 import de.ingrid.codelists.persistency.XmlCodeListPersistency;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CodeListServiceFactory {
 
@@ -48,8 +48,8 @@ public class CodeListServiceFactory {
 
     private static List<ICodeListPersistency> getPersistencies() {
         XmlCodeListPersistency persistency = new XmlCodeListPersistency();
-        persistency.setPathToXml("data");
-        List<ICodeListPersistency> persistencies = new ArrayList<ICodeListPersistency>();
+        persistency.setPathToXml("data/codelists");
+        List<ICodeListPersistency> persistencies = new ArrayList<>();
         persistencies.add(persistency);
         return persistencies;
     }

@@ -115,6 +115,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                         String name = null;
                         if(detail.get("title") != null){
                             name = UtilsSearch.getDetailValue(detail, "title");
+
                             if(name != null){
                                 if(detail.get("t02_address.parents.title") != null)
                                     if(detail.get("t02_address.parents.title") instanceof String[]){

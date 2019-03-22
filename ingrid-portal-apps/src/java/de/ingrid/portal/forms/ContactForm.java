@@ -22,15 +22,13 @@
  */
 package de.ingrid.portal.forms;
 
-import java.io.UnsupportedEncodingException;
-import java.util.List;
-
-import javax.portlet.PortletRequest;
-
-import org.apache.commons.fileupload.FileItem;
-
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.Utils;
+import org.apache.commons.fileupload.FileItem;
+
+import javax.portlet.PortletRequest;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 /**
  * Form Handler for Contact page. Stores and validates form input.

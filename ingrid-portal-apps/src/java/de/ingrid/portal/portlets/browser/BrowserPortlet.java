@@ -37,30 +37,19 @@
  */
 package de.ingrid.portal.portlets.browser;
 
+import org.apache.jetspeed.sso.SSOProvider;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.portals.messaging.PortletMessaging;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
-import javax.portlet.PortletMode;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.jetspeed.sso.SSOProvider;
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
-import org.apache.portals.messaging.PortletMessaging;
-import org.apache.velocity.context.Context;
 
 /**
  * AbstractBrowserPortlet

@@ -22,6 +22,9 @@
  */
 package de.ingrid.portal.forms;
 
+import de.ingrid.portal.global.Settings;
+
+import javax.portlet.PortletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,10 +32,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.portlet.PortletRequest;
-
-import de.ingrid.portal.global.Settings;
 
 /**
  * Form Handler for Environment Chronicles page. Stores and validates form

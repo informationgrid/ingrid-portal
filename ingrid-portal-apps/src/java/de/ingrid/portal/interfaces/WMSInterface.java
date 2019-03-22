@@ -22,14 +22,13 @@
  */
 package de.ingrid.portal.interfaces;
 
+import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
+import org.apache.commons.configuration.Configuration;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-
-import org.apache.commons.configuration.Configuration;
-
-import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
-import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 
 /**
  * Defines the interface to be implemented to communicate with the mapbender WMS

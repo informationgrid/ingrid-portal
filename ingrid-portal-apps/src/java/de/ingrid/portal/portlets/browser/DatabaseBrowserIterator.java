@@ -37,12 +37,12 @@
  */
 package de.ingrid.portal.portlets.browser;
 
-import java.util.List;
-import java.util.Collections;
-import java.sql.Types;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.Types;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * A class for iterating over the window. The window constitutes the selection

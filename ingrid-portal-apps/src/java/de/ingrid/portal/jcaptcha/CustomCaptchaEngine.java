@@ -22,8 +22,6 @@
  */
 package de.ingrid.portal.jcaptcha;
 
-import java.awt.Color;
-
 import com.octo.captcha.component.image.backgroundgenerator.BackgroundGenerator;
 import com.octo.captcha.component.image.fontgenerator.DeformedRandomFontGenerator;
 import com.octo.captcha.component.image.fontgenerator.FontGenerator;
@@ -36,6 +34,8 @@ import com.octo.captcha.component.word.wordgenerator.WordGenerator;
 import com.octo.captcha.engine.image.ListImageCaptchaEngine;
 import com.octo.captcha.image.ImageCaptchaFactory;
 import com.octo.captcha.image.gimpy.GimpyFactory;
+
+import java.awt.*;
 
 public class CustomCaptchaEngine extends ListImageCaptchaEngine {
 
