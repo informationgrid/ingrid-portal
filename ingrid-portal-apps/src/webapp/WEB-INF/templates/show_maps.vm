@@ -13,7 +13,10 @@ var buffer = 0; //scroll bar buffer
 var iframe = document.getElementById('iframe_map');
 var urlParams = location.search;
 var url = '$mapUrl' + '?lang=$lang';
-var editParams = "";
+var editParams = '';
+var editParamsE = '';
+var editParamsN = '';
+var isBackHistory = false;
 
 if($hasKML){
     var kml = '$kmlUrl';
@@ -48,31 +51,57 @@ function resizeIframe() {
 }
 
 // Change params
-function onParamChange(params){
-    var newParams = '?';
-    var key = [];
-    for (var i in params) {
-        key.push(i);
-    };
+function onParamChange(params) {
+  var newParams = '?';
+  var key = [];
+  var paramsE = params.E || '';
+  var paramsN = params.N || '';
+  var paramsZoom = params.zoom || '';
+  
+  for (var i in params) {
+    key.push(i);
+  };
 
-    key.forEach(function (s, i, o) {
-        if(s == 'lang'){
-            newParams = newParams + '' + s + '=' + '$lang';
-        }else if(s == 'layers'){
-            newParams = newParams + '' + s + '=' + encodeURIComponent(params[s]);
-        }else{
-            newParams = newParams + '' + s + '=' + params[s];
-        }
-        if(i < o.length - 1){
-            newParams = newParams + '&';
-        }
-    });
-
-    if(newParams){
-        if(newParams != editParams){
-            window.history.replaceState('', '', newParams );
-            editParams = newParams
-        }
+  key.forEach(function (s, i, o) {
+    if (s == 'lang') {
+      newParams = newParams + '' + s + '=' + '$lang';
+    } else if (s == 'layers') {
+      newParams = newParams + '' + s + '=' + encodeURIComponent(params[s]);
+    } else {
+      newParams = newParams + '' + s + '=' + params[s];
     }
+    if (i < o.length - 1) {
+      newParams = newParams + '&';
+    }
+  });
+
+  if (paramsE !== '' &&
+      paramsN !== '' &&
+      paramsZoom !== '') {
+    if (paramsE !== editParamsE && editParamsE !== '' &&
+        paramsN !== editParamsN && editParamsN !== '' ) {
+      if (newParams && !isBackHistory) {
+        if (newParams != editParams) {
+          window.history.pushState({id:newParams, params: params}, '', newParams );
+          editParams = newParams
+        }
+      }
+    } else {
+      if (newParams && !isBackHistory) {
+        if (newParams != editParams) {
+          window.history.replaceState({id:newParams, params: params}, '', newParams );
+          editParams = newParams
+        }
+      }
+    }
+    editParamsE = paramsE;
+    editParamsN = paramsN;
+  } else {
+    if(newParams != editParams){
+      window.history.replaceState({id:newParams, params: params}, '', newParams );
+      editParams = newParams
+    }
+  }
+  isBackHistory = false;
 }
 </script>
