@@ -16,6 +16,7 @@ var url = '$mapUrl' + '?lang=$lang';
 var editParams = '';
 var editParamsE = '';
 var editParamsN = '';
+var editParamsZ = '';
 var isBackHistory = false;
 
 if($hasKML){
@@ -78,8 +79,9 @@ function onParamChange(params) {
   if (paramsE !== '' &&
       paramsN !== '' &&
       paramsZoom !== '') {
-    if (paramsE !== editParamsE && editParamsE !== '' &&
-        paramsN !== editParamsN && editParamsN !== '' ) {
+    if ((paramsE !== editParamsE && editParamsE !== '' &&
+        paramsN !== editParamsN && editParamsN !== '') ||
+        paramsZoom !== editParamsZ && editParamsZ !== '' ) {
       if (newParams && !isBackHistory) {
         if (newParams != editParams) {
           window.history.pushState({id:newParams, params: params}, '', newParams );
@@ -96,6 +98,7 @@ function onParamChange(params) {
     }
     editParamsE = paramsE;
     editParamsN = paramsN;
+    editParamsZ = paramsZoom;
   } else {
     if(newParams != editParams){
       window.history.replaceState({id:newParams, params: params}, '', newParams );
