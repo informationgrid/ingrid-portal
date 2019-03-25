@@ -100,6 +100,14 @@ define([
 
             // Zeitbezug / Periodizität
             UtilUI.setShow("uiElement1240");
+
+            // Zusatzinformation
+            var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+            if (isInspireRelevant) {
+                domClass.add("uiElementN024", "required");
+            } else {
+                domClass.remove("uiElementN024", "required");
+            }
         },
 
         _createObservedPropertiesFields: function() {
