@@ -29,6 +29,7 @@ define([
     "dojo/_base/lang",
     "dojo/aspect",
     "dojo/dom",
+    "dojo/dom-class",
     "dojo/dom-construct",
     "ingrid/dialog",
     "ingrid/hierarchy/dirty",
@@ -36,7 +37,7 @@ define([
     "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/UI"
-], function(MenuItem, MenuSeparator, registry, array, declare, lang, aspect, dom, construct, dialog, dirty, creator, menu, message, UtilUI) {
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, aspect, dom, domClass, construct, dialog, dirty, creator, menu, message, UtilUI) {
 
     return declare(null, {
         title: "HZG-UI",
@@ -86,6 +87,10 @@ define([
 
             // Fachbezug / Sachdaten/Attributinformation
             UtilUI.setShow("uiElement5070");
+
+            // Datenqualität / Datendefizit
+            domClass.remove("uiElement3565", "show");
+            domClass.add("uiElement3565", "optional");
 
             // Zeitbezug / Durch die Ressource Abgedeckte Zeitspanne
             UtilUI.setShow("uiElementN011");
