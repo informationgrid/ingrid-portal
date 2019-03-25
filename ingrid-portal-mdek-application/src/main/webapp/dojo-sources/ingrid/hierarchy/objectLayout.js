@@ -450,6 +450,10 @@ define([
                     style: "width: 100%;"
                 }, "boundingPolygon");
 
+                var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
+                additionalFields.push(registry.byId("boundingPolygon"));
+                array.forEach(["boundingPolygon"], lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
                 var ref1SpatialSystemStructure = [{
                     field: 'title',
                     name: 'System',
