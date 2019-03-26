@@ -75,6 +75,7 @@ define([
                     UtilUI.setShow("ref1VFormat");
                     UtilUI.setShow("uiElement5063");
                     UtilUI.setShow("uiElementN001");
+                    registry.byId("ref1VFormatDetails").reinitLastColumn(true);
                 } else {
                     UtilUI.setHide("ref1VFormat");
                 }
