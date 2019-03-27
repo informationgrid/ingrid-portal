@@ -170,7 +170,15 @@
     <chapter>
         <header>Dashboard</header>
         <section help-key="dashboard-1">
-            <header>Beschreibung</header>
+            <header>mCLOUD Erfassungsanleitung</header>
+            <content>
+                <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
+                <br />
+                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
+            </content>
+        </section>
+        <section>
+            <header>Dashboard</header>
             <content>
                 <p>Das Dashboard zeigt eine Übersicht des Kataloges in Form einiger allgemeiner
                 Informationen und einer Übersicht aller zuletzt bearbeiteten Datensätze und Adressen.
