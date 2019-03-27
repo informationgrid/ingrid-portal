@@ -30,12 +30,13 @@
             <header>mCLOUD Erfassungsanleitung</header>
             <content>
                 <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
+                <br />
+                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
             </content>
         </section>
         <section>
             <header>Allgemeine Hilfethemen</header>
             <content>
-                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
                 <ul>
                     <li>
                         <a href="?hkey=editor-design-1">Aufbau des Editors</a>
@@ -56,11 +57,7 @@
             <header>mCLOUD Erfassungsanleitung</header>
             <content>
                 <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
-            </content>
-        </section>
-        <section>
-            <header>Allgemeine Hilfethemen</header>
-            <content>
+                <br />
                 <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
             </content>
         </section>
@@ -198,11 +195,7 @@
             <header>mCLOUD Erfassungsanleitung</header>
             <content>
                 <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
-            </content>
-        </section>
-        <section>
-            <header>Allgemeine Hilfethemen</header>
-            <content>
+                <br />
                 <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
             </content>
         </section>
@@ -594,11 +587,7 @@
             <header>mCLOUD Erfassungsanleitung</header>
             <content>
                 <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
-            </content>
-        </section>
-        <section>
-            <header>Allgemeine Hilfethemen</header>
-            <content>
+                <br />
                 <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
             </content>
         </section>
