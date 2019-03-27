@@ -27,7 +27,13 @@
     <chapter>
         <header>Hilfe zum Editor</header>
         <section help-key="index">
-            <header>Hilfethemen</header>
+            <header>mCLOUD Erfassungsanleitung</header>
+            <content>
+                <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
+            </content>
+        </section>
+        <section>
+            <header>Allgemeine Hilfethemen</header>
             <content>
                 <ul>
                     <li>
@@ -38,9 +44,6 @@
                     </li>
                     <li>
                         <a href="?hkey=search-1">Recherche</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=user-administration-1">Verwaltungsfunktion: Nutzerverwaltung</a>
                     </li>
                 </ul>
             </content>
