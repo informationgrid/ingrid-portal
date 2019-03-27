@@ -35,6 +35,7 @@
         <section>
             <header>Allgemeine Hilfethemen</header>
             <content>
+                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
                 <ul>
                     <li>
                         <a href="?hkey=editor-design-1">Aufbau des Editors</a>
@@ -52,6 +53,18 @@
     <chapter>
         <header>Aufbau des Editors</header>
         <section help-key="editor-design-1">
+            <header>mCLOUD Erfassungsanleitung</header>
+            <content>
+                <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
+            </content>
+        </section>
+        <section>
+            <header>Allgemeine Hilfethemen</header>
+            <content>
+                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
+            </content>
+        </section>
+        <section>
             <header>Datenerfassung und Verwaltungsfunktionen</header>
             <content>
 			<p>Der Editor (InGrid Editor - IGE) besteht aus zwei Komponenten, die Metadatenerfassungskomponente und die
@@ -182,6 +195,18 @@
     <chapter>
         <header>Hierarchie u. Erfassung</header>
         <section help-key="hierarchy-maintenance-1">
+            <header>mCLOUD Erfassungsanleitung</header>
+            <content>
+                <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
+            </content>
+        </section>
+        <section>
+            <header>Allgemeine Hilfethemen</header>
+            <content>
+                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
+            </content>
+        </section>
+        <section>
             <header>Anordnung der Daten (Der Strukturbaum)</header>
             <content>
                  <p>Im <b>linken Fenster</b> werden die Datensätze und Adressen und ihre Stellung in der 
@@ -566,6 +591,18 @@
 	<chapter>
         <header>Recherche</header>
         <section help-key="search-1">
+            <header>mCLOUD Erfassungsanleitung</header>
+            <content>
+                <p>Lesen Sie die eigene <b><a href="https://mcloud-editor-dokumentation.readthedocs.io">Erfassungsanleitung</a></b> für die mCLOUD.</p>
+            </content>
+        </section>
+        <section>
+            <header>Allgemeine Hilfethemen</header>
+            <content>
+                <p>Nachfolgend allgemeine Hilfe zum InGrid Editor.</p>
+            </content>
+        </section>
+        <section>
             <header>Suche</header>
             <content>
                  <p>Über den Untermenüpunkt <i>Suche</i> der Recherche können Sie Datensätze oder Adressen 
