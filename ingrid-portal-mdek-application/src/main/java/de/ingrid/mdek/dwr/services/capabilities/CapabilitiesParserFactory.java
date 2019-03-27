@@ -40,18 +40,18 @@ import de.ingrid.utils.xpath.XPathUtils;
  */
 public class CapabilitiesParserFactory {
     
-    private final static Logger log = Logger.getLogger(CapabilitiesParserFactory.class);
+    private static final Logger log = Logger.getLogger(CapabilitiesParserFactory.class);
     
     // Definition of all supported types
     private enum ServiceType { WMS, WMS111, WFS110, WFS200, WCS, WCS11, CSW, WCTS, WMTS }
     
     // identifier for each service type
-    private final static String SERVICE_TYPE_WMS = "WMS";
-    private final static String SERVICE_TYPE_WFS = "WFS";
-    private final static String SERVICE_TYPE_WCS = "WCS";
-    private final static String SERVICE_TYPE_CSW = "CSW";
-    private final static String SERVICE_TYPE_WCTS = "WCTS";
-    private final static String SERVICE_TYPE_WMTS = "WMTS";
+    private static final String SERVICE_TYPE_WMS = "WMS";
+    private static final String SERVICE_TYPE_WFS = "WFS";
+    private static final String SERVICE_TYPE_WCS = "WCS";
+    private static final String SERVICE_TYPE_CSW = "CSW";
+    private static final String SERVICE_TYPE_WCTS = "WCTS";
+    private static final String SERVICE_TYPE_WMTS = "WMTS";
 
     private static XPathUtils xPathUtils = null;
     

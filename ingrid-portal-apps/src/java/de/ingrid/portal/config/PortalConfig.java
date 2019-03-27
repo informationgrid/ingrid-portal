@@ -41,43 +41,43 @@ import java.util.Iterator;
 public class PortalConfig extends PropertiesConfiguration {
 
     /** how old can rss news be, before the are deleted from news history in days */
-    public final static String RSS_HISTORY_DAYS = "rss.history.days";
+    public static final String RSS_HISTORY_DAYS = "rss.history.days";
     
     /** define number of rss feeds for RSSNewsTeaserPortlet */
-    public final static String PORTAL_RSS_NEWS_NUMBER = "portal.rss.news.number";
+    public static final String PORTAL_RSS_NEWS_NUMBER = "portal.rss.news.number";
 
     /**
      * timout for queries in ms should be larger than query.timout.ranked and
      * query.timout.unranked because ranked and unranked query is encapsulated
      * inside a threaded query
      */
-    public final static String QUERY_TIMEOUT_THREADED = "query.timeout.threaded";
+    public static final String QUERY_TIMEOUT_THREADED = "query.timeout.threaded";
 
     /** timout for ranked queries in ms */
-    public final static String QUERY_TIMEOUT_RANKED = "query.timeout.ranked";
+    public static final String QUERY_TIMEOUT_RANKED = "query.timeout.ranked";
     
     /** requested fields for search queries in portal */
-    public final static String QUERY_REQUESTED_FIELDS = "portal.query.requestedfields";
+    public static final String QUERY_REQUESTED_FIELDS = "portal.query.requestedfields";
 
     /** default timeout for sns queries in ms */
-    public final static String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
+    public static final String SNS_TIMEOUT_DEFAULT = "sns.timeout.default";
     
     /** default length of chronicle hits  */
-    public final static String SNS_CHRONICLE_HITS_LENGTH = "sns.chronicle.hits.length";
+    public static final String SNS_CHRONICLE_HITS_LENGTH = "sns.chronicle.hits.length";
     
     /**
      * always read values from database or only once and then from cache, true
      * or false
      */
-    public final static String ALWAYS_REREAD_DB_VALUES = "db.reread";
+    public static final String ALWAYS_REREAD_DB_VALUES = "db.reread";
 
-    public final static String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
+    public static final String EMAIL_REGISTRATION_CONFIRMATION_SENDER = "email.registration.confirmation.sender";
 
-    public final static String EMAIL_REGISTRATION_CONFIRMATION_URL = "email.registration.confirmation.url";
+    public static final String EMAIL_REGISTRATION_CONFIRMATION_URL = "email.registration.confirmation.url";
 
     public static final String EMAIL_SMTP_SERVER = "email.smtp.server";
     public static final String EMAIL_SMTP_USER = "email.smtp.user";
-    public static final String EMAIL_SMTP_PASSWORD = "email.smtp.password";
+    public static final String EMAIL_SMTP_PW = "email.smtp.password";
     public static final String EMAIL_SMTP_PORT = "email.smtp.port";
     public static final String EMAIL_SMTP_SSL = "email.smtp.ssl";
     public static final String EMAIL_SMTP_PROTOCOL = "email.smtp.protocol";
@@ -152,7 +152,7 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String COMPONENT_MONITOR_SNS_LOGIN = "component.monitor.sns.login";
     
-    public static final String COMPONENT_MONITOR_SNS_PASSWORD = "component.monitor.sns.password";
+    public static final String COMPONENT_MONITOR_SNS_PW = "component.monitor.sns.password";
     
     public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
     
@@ -171,7 +171,7 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String UPGRADE_SERVER_USERNAME = "upgrade.server.username";
     
-    public static final String UPGRADE_SERVER_PASSWORD = "upgrade.server.password";
+    public static final String UPGRADE_SERVER_PW = "upgrade.server.password";
 
     // disable button and textfield for edit partner/provider 
     public static final String DISABLE_PARTNER_PROVIDER_EDIT = "portal.disable.partner.provider.edit";
@@ -257,22 +257,20 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_FORM_LENGTH_CHECK_LOGIN = "portal.form.length.check.login";
 
-    public static final String PORTAL_FORM_STRENGTH_CHECK_PASSWORD = "portal.form.strength.check.passsword";
+    public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.passsword";
 
     public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
 
     // private stuff
     private static PortalConfig instance = null;
 
-    private static Configuration config = null;
-
-    private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalConfig.class);
 
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {
             try {
                 instance = new PortalConfig();
-                config = new ConfigBuilder<Configuration>(Configuration.class).build();
+                Configuration config = new ConfigBuilder<Configuration>(Configuration.class).build();
                 config.initialize();
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {
@@ -285,7 +283,7 @@ public class PortalConfig extends PropertiesConfiguration {
         return instance;
     }
 
-    private PortalConfig() throws Exception {
+    private PortalConfig() throws ConfigurationException {
         super("ingrid-portal-apps.properties");
         //this.setReloadingStrategy(ReloadingStrategy)
         URL urlProfile = this.getClass().getResource("/ingrid-portal-apps.profile.properties");

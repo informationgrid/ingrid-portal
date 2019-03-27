@@ -58,18 +58,16 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(SearchSimilarPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(SearchSimilarPortlet.class);
 
-    /** view templates */
-    private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
+    private static final String TEMPLATE_RESULT = "/WEB-INF/templates/search_similar.vm";
 
-    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/search_similar.vm";
-
-    //    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/empty.vm";
+    //    private static final String TEMPLATE_NO_RESULT = "/WEB-INF/templates/empty.vm";
 
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
         setTopic(Settings.MSG_TOPIC_SEARCH);
@@ -77,6 +75,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -124,6 +123,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
@@ -188,17 +188,17 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                     while (it.hasNext()) {
                         DisplayTreeNode queryTerm = (DisplayTreeNode) it.next();
                         Iterator it2 = queryTerm.getChildren().iterator();
-                        StringBuffer subQueryStr = null;
+                        StringBuilder subQueryStr = null;
                         boolean hasSubTerms = false;
                         while (it2.hasNext()) {
                             DisplayTreeNode node = (DisplayTreeNode) it2.next();
                             if (request.getParameter("chk_" + node.getId()) != null) {
                                 if (!hasSubTerms) {
-                                    subQueryStr = new StringBuffer("(" + queryTerm.getName());
+                                    subQueryStr = new StringBuilder("(" + queryTerm.getName());
                                     hasSubTerms = true;
                                 }
                                 // check for phases, quote phrases
-                                if (node.getName().indexOf(" ") > -1) {
+                                if (node.getName().indexOf(' ') > -1) {
                                     subQueryStr.append(" OR \"").append(node.getName()).append("\"");
                                 } else {
                                     subQueryStr.append(" OR ").append(node.getName());
@@ -214,7 +214,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                         }
                     }
                     // republish the query
-                    if (!queryStr.toLowerCase().equals(newQueryStr)) {
+                    if (!queryStr.equalsIgnoreCase(newQueryStr)) {
                         publishRenderMessage(request, Settings.PARAM_QUERY_STRING, newQueryStr);
                     }
                 }
@@ -241,29 +241,27 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
     private void openNode(DisplayTreeNode rootNode, String nodeId, Locale language, boolean loadData) {
         DisplayTreeNode node = rootNode.getChild(nodeId);
         node.setOpen(true);
-        if(loadData){
-            if (node != null && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().size() == 0
-                    && !node.isLoading()) {
-                node.setLoading(true);
-                IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName(), language);
-                if (hits == null || hits.length == 0) {
-                    DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + 0, "similar.terms.not.available", false);
-                    snsNode.setType(DisplayTreeNode.MESSAGE_NODE);
-                    snsNode.setParent(node);
-                    node.addChild(snsNode);
-                } else {
-                    for (int i = 0; i < hits.length; i++) {
-                        Topic hit = (Topic) hits[i];
-                        if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
-                            DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
-                            snsNode.setType(DisplayTreeNode.SNS_TERM);
-                            snsNode.setParent(node);
-                            node.addChild(snsNode);
-                        }
+        if (loadData && node.getType() == DisplayTreeNode.SEARCH_TERM && node.getChildren().isEmpty()
+                && !node.isLoading()) {
+            node.setLoading(true);
+            IngridHit[] hits = SNSSimilarTermsInterfaceImpl.getInstance().getSimilarTerms(node.getName(), language);
+            if (hits == null || hits.length == 0) {
+                DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + 0, "similar.terms.not.available", false);
+                snsNode.setType(DisplayTreeNode.MESSAGE_NODE);
+                snsNode.setParent(node);
+                node.addChild(snsNode);
+            } else {
+                for (int i = 0; i < hits.length; i++) {
+                    Topic hit = (Topic) hits[i];
+                    if (!hit.getTopicName().equalsIgnoreCase(node.getName())) {
+                        DisplayTreeNode snsNode = new DisplayTreeNode(node.getId() + i, hit.getTopicName(), false);
+                        snsNode.setType(DisplayTreeNode.SNS_TERM);
+                        snsNode.setParent(node);
+                        node.addChild(snsNode);
                     }
                 }
-                node.setLoading(false);
             }
+            node.setLoading(false);
         }
     }
 

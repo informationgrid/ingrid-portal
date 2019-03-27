@@ -44,13 +44,11 @@ import java.util.*;
 import java.util.Map.Entry;
 
 /**
- * TODO Describe your created type (class, etc.) here.
- * 
  * @author joachim@wemove.com
  */
 public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(AdminUserMigrationPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminUserMigrationPortlet.class);
 
     private PortalAdministration admin;
 
@@ -60,10 +58,6 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
 
     private GroupManager groupManager;
 
-    private PermissionManager permissionManager;
-
-    private PageManager pageManager;
-
     private Profiler profiler;
 
     private static final XStream xstream;
@@ -72,8 +66,7 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
         try {
             // Create the SessionFactory
             xstream = new XStream();
-        } catch (Throwable ex) {
-            log.error("Initial Xstream creation failed.", ex);
+        } catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
@@ -81,6 +74,7 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -88,7 +82,7 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
         if (null == profiler) {
             throw new PortletException("Failed to find the Portal Profiler on portlet initialization");
         }
-        pageManager = (PageManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
+        PageManager pageManager = (PageManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
         if (null == pageManager) {
             throw new PortletException("Failed to find the Portal Pagemanager on portlet initialization");
         }
@@ -110,7 +104,7 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
         if (null == groupManager) {
             throw new PortletException("Failed to find the Group Manager on portlet initialization");
         }
-        permissionManager = (PermissionManager) getPortletContext().getAttribute(
+        PermissionManager permissionManager = (PermissionManager) getPortletContext().getAttribute(
                 CommonPortletServices.CPS_PERMISSION_MANAGER);
         if (permissionManager == null) {
             throw new PortletException("Could not get instance of portal permission manager component");
@@ -121,6 +115,7 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -133,62 +128,59 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
         String action = request.getParameter("action");
         if (action != null && action.equals("doExport")) {
             try {
-                HashMap<String, List<HashMap<String, Object>>> export = new HashMap<String, List<HashMap<String, Object>>>();
-                export.put("users", new ArrayList<HashMap<String, Object>>());
+                HashMap<String, List<HashMap<String, Object>>> export = new HashMap<>();
+                export.put("users", new ArrayList<>());
                 List<HashMap<String, Object>> userList = export.get("users");
                 // iterate over all users
                 List<User> users = userManager.getUsers("");
                 for (User user : users) {
-                    HashMap<String, Object> userMap = new HashMap<String, Object>();
+                    HashMap<String, Object> userMap = new HashMap<>();
                     userList.add(userMap);
                     String password = "";
                     PasswordCredential pc = userManager.getPasswordCredential(user);
                     if (pc.getPassword() != null && pc.getPassword().length() > 0) {
-                        password = new String(pc.getPassword());
+                        password = pc.getPassword();
                     }
                     userMap.put("userPasswordCredential", password);
 
-                    // userMap.put("userSubject", user.getSubject());
-                    //Principal userPrincipal = SecurityUtil.getPrincipal(userManager.getSubject(user), User.class);
                     userMap.put("userPrincipalName", user.getName());
 
-                    HashMap<String, String> userAttribs = new HashMap<String, String>();
+                    HashMap<String, String> userAttribs = new HashMap<>();
                     Map<String, String> prefs = user.getInfoMap();
-                    for (String prefKey : prefs.keySet()) {
-                    	String prefValue = prefs.get(prefKey);
-                        userAttribs.put(prefKey, (prefValue == null ? "" : prefValue));
+                    for (Entry<String, String> pref : prefs.entrySet()) {
+                    	String prefValue = pref.getValue();
+                        userAttribs.put(pref.getKey(), (prefValue == null ? "" : prefValue));
                     }
                     userMap.put("userAttributes", userAttribs);
 
                     List<Role> roles = roleManager.getRolesForUser(user.getName());
-                    List<String> rolesList = new ArrayList<String>();
+                    List<String> rolesList = new ArrayList<>();
                     for (Role role : roles) {
                         rolesList.add(role.getName());
                     }
                     userMap.put("userRoles", rolesList);
 
                     List<Group> groups = groupManager.getGroupsForUser(user.getName());
-                    List<String> groupsList = new ArrayList<String>();
+                    List<String> groupsList = new ArrayList<>();
                     for (Group group : groups) {
                     	groupsList.add(group.getName());
                     }
                     userMap.put("userGroups", groupsList);
 
                     Collection<PrincipalRule> rules = profiler.getRulesForPrincipal(user);
-                    HashMap<String, String> userRules = new HashMap<String, String>();
+                    HashMap<String, String> userRules = new HashMap<>();
                     for (PrincipalRule rule : rules) {
                         userRules.put(rule.getProfilingRule().getId(), rule.getLocatorName());
                     }
                     userMap.put("userRules", userRules);
 
-                    HashMap<String, String> ingridPrefs = IngridPersistencePrefs.getPrefs(user.getName());
+                    HashMap<String, String> ingridPrefs = (HashMap<String, String>) IngridPersistencePrefs.getPrefs(user.getName());
                     userMap.put("userIngridPrefs", ingridPrefs);
                 }
                 context.put("xmlData", UtilsString.htmlescape(xstream.toXML(export)));
             } catch (Exception e) {
                 log.error("Error serializing data", e);
             }
-        } else if (action != null && action.equals("doImport")) {
         }
         super.doView(request, response);
     }
@@ -197,6 +189,7 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         if (request.getParameter("doExport") != null) {
             response.setRenderParameter("action", "doExport");
@@ -205,55 +198,60 @@ public class AdminUserMigrationPortlet extends GenericVelocityPortlet {
             if (path == null || path.trim().length() == 0) {
                 return;
             }
-            FileInputStream fis = new FileInputStream(path);
-            int x = fis.available();
-            byte b[] = new byte[x];
-            fis.read(b);
-            String xmlData = new String(b);
+            try(
+                FileInputStream fis = new FileInputStream(path);
+            ){
+                int x = fis.available();
+                byte b[] = new byte[x];
+                fis.read(b);
+                String xmlData = new String(b);
 
-            Object obj = xstream.fromXML(xmlData);
-            if (obj instanceof HashMap) {
-                Map<String, Object> map = (Map<String, Object>) obj;
-                List<Map<String, Object>> users = (List<Map<String, Object>>) map.get("users");
-                for (Map<String, Object> userMap : users) {
-                    String userName = (String) userMap.get("userPrincipalName");
-                    String oldPassword = (String) userMap.get("userPasswordCredential");
-                    if (!userManager.userExists(userName) && oldPassword != null && oldPassword.length() > 0) {
-                        String password = null;
-                        Map<String, String> userAttributes = (Map<String, String>) userMap.get("userAttributes");
-                        List<String> roles = (List<String>) userMap.get("userRoles");
-                        List<String> groups = (List<String>) userMap.get("userGroups");
-                        Map<String, String> rules = (Map<String, String>) userMap.get("userRules");
-                        Map<String, String> ingridPrefs = (Map<String, String>) userMap.get("userIngridPrefs");
+                Object obj = xstream.fromXML(xmlData);
+                if (obj instanceof HashMap) {
+                    Map<String, Object> map = (Map<String, Object>) obj;
+                    List<Map<String, Object>> users = (List<Map<String, Object>>) map.get("users");
+                    for (Map<String, Object> userMap : users) {
+                        String userName = (String) userMap.get("userPrincipalName");
+                        String oldPassword = (String) userMap.get("userPasswordCredential");
+                        if (!userManager.userExists(userName) && oldPassword != null && oldPassword.length() > 0) {
+                            String password = null;
+                            Map<String, String> userAttributes = (Map<String, String>) userMap.get("userAttributes");
+                            List<String> roles = (List<String>) userMap.get("userRoles");
+                            List<String> groups = (List<String>) userMap.get("userGroups");
+                            Map<String, String> rules = (Map<String, String>) userMap.get("userRules");
+                            Map<String, String> ingridPrefs = (Map<String, String>) userMap.get("userIngridPrefs");
 
-                        try {
-                            // create user
-                            admin.registerUser(userName, password, roles, groups, userAttributes, rules, null);
-                            User user = userManager.getUser(userName);
+                            try {
+                                // create user
+                                admin.registerUser(userName, password, roles, groups, userAttributes, rules, null);
+                                User user = userManager.getUser(userName);
 
-                            PasswordCredential pwc = userManager.getPasswordCredential(user);
-                            pwc.setPassword(oldPassword, true);
-                            userManager.storePasswordCredential(pwc);
+                                PasswordCredential pwc = userManager.getPasswordCredential(user);
+                                pwc.setPassword(oldPassword, true);
+                                userManager.storePasswordCredential(pwc);
 
-                            // activate user
-                            user.setEnabled(true);
+                                // activate user
+                                user.setEnabled(true);
 
-                            // create ingrid specific user preferences
-                            Set<Entry<String, String>> ingridPrefKeys = ingridPrefs.entrySet();
-                            Iterator<Entry<String, String>> it = ingridPrefKeys.iterator();
-                            while (it.hasNext()) {
-                                Entry<String, String> entry = it.next();
-                                String prefValue = entry.getValue();
-                                IngridPersistencePrefs.setPref(userName, entry.getKey(), xstream.fromXML(prefValue));
+                                // create ingrid specific user preferences
+                                Set<Entry<String, String>> ingridPrefKeys = ingridPrefs.entrySet();
+                                Iterator<Entry<String, String>> it = ingridPrefKeys.iterator();
+                                while (it.hasNext()) {
+                                    Entry<String, String> entry = it.next();
+                                    String prefValue = entry.getValue();
+                                    IngridPersistencePrefs.setPref(userName, entry.getKey(), xstream.fromXML(prefValue));
+                                }
+
+                                response.setRenderParameter("action", "doImport");
+
+                            } catch (Exception e) {
+                                log.error("Error registering new user", e);
                             }
-
-                            response.setRenderParameter("action", "doImport");
-
-                        } catch (Exception e) {
-                            log.error("Error registering new user", e);
                         }
                     }
                 }
+            } catch (Exception e) {
+                log.error("Error read stream.", e);
             }
         }
     }

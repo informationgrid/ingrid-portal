@@ -54,7 +54,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 @Service
 public class MdekMapper implements DataMapperInterface {
 
-    private final static Logger log = Logger.getLogger(MdekMapper.class);
+    private static final Logger log = Logger.getLogger(MdekMapper.class);
     
     @Autowired
     private SysListCache sysListMapper;
@@ -2519,7 +2519,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
 
-    private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
     private static Date convertTimestampToDate(String timeStamp) {
         if (timeStamp != null && timeStamp.length() != 0) {

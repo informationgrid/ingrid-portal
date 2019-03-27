@@ -51,7 +51,7 @@ public class UtilsMimeType {
 	public static String getFileExtensionOfMimeType(String mimeType) {
 		readMimeTypeBundle();
 		
-		String ext = (String) mimeTypeToExtension.get(mimeType);
+		String ext = mimeTypeToExtension.get(mimeType);
 		
 		if (ext == null) {
 			ext = "dat";
@@ -69,8 +69,8 @@ public class UtilsMimeType {
 		if (mimeTypeToExtension != null)
 			return;
 		
-		mimeTypeToExtension = new HashMap<String, String>();
-		fileMimeType = new HashMap<String, String>();
+		mimeTypeToExtension = new HashMap<>();
+		fileMimeType = new HashMap<>();
 		
 		ResourceBundle bundle = ResourceBundle.getBundle(MIME_TYP_BUNDLE);
 		for (Enumeration e = bundle.getKeys(); e.hasMoreElements();) {
@@ -141,7 +141,7 @@ public class UtilsMimeType {
         readMimeTypeBundle();
 
         String extension = getExtensionOfFile(file.getName());
-        mimeType = (String) fileMimeType.get(extension);
+        mimeType = fileMimeType.get(extension);
 
         return mimeType;
 	}

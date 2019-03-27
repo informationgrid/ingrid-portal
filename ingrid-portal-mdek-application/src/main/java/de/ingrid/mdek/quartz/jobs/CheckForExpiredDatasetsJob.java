@@ -53,7 +53,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class CheckForExpiredDatasetsJob extends QuartzJobBean {
 
-	private final static Logger log = Logger.getLogger(CheckForExpiredDatasetsJob.class);
+	private static final Logger log = Logger.getLogger(CheckForExpiredDatasetsJob.class);
 
 	private ConnectionFacade connectionFacade;
 	private Integer notifyDaysBeforeExpiry;

@@ -67,7 +67,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class CatalogManagementServiceImpl {
 
-	private final static Logger log = Logger
+	private static final Logger log = Logger
 			.getLogger(CatalogManagementServiceImpl.class);
 
 	private MdekJobHandler mdekJobHandler;

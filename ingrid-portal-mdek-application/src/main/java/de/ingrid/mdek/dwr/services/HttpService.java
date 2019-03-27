@@ -42,7 +42,7 @@ import org.htmlparser.util.SimpleNodeIterator;
 
 public class HttpService {
 
-	private final static Logger log = Logger.getLogger(HttpService.class);	
+	private static final Logger log = Logger.getLogger(HttpService.class);	
 
     public String getHtmlTitle(String url) {
     	try {

@@ -40,7 +40,7 @@ public class IngridSessionPreferences extends HashMap {
 
     private static final long serialVersionUID = -9079742501129971482L;
 
-    private final static Logger log = LoggerFactory.getLogger(Utils.class);
+    private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
     /** attribute name of action form in session */
     public static final String SESSION_KEY = IngridSessionPreferences.class.getName();

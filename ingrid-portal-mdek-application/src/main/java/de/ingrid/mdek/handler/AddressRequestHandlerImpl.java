@@ -56,7 +56,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("addressRequestHandler")
 public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
-	private final static Logger log = Logger.getLogger(AddressRequestHandlerImpl.class);
+	private static final Logger log = Logger.getLogger(AddressRequestHandlerImpl.class);
 
 	// Injected by Spring
 	@Autowired
@@ -67,7 +67,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	private IMdekCallerAddress mdekCallerAddress;
 
 	// Number of object references that are initially loaded from the backend
-	private final static int NUM_INITIAL_REFERENCES = 20;
+	private static final int NUM_INITIAL_REFERENCES = 20;
 
 
 	public void init() {

@@ -37,7 +37,7 @@ import de.ingrid.rdf.SNSServiceRDF;
 @Qualifier("rdf")
 public class RDFService extends SNSService {
     
-    private final static Logger log = Logger.getLogger(RDFService.class);
+    private static final Logger log = Logger.getLogger(RDFService.class);
 
     public List<SNSTopic> getRootTopics(String rootUrl, Locale locale) {
     	//Locale sessionLocale = MdekUtils.getLocaleFromSession();

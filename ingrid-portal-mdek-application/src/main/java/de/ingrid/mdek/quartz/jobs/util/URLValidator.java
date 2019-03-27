@@ -43,7 +43,7 @@ import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 
 public class URLValidator implements Callable<URLState> {
 
-	private final static Logger log = Logger.getLogger(URLValidator.class);	
+	private static final Logger log = Logger.getLogger(URLValidator.class);	
 	protected final HttpClient httpClient;
 	protected final URLState urlState;
 	protected String responseString = null;

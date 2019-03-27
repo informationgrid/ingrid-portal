@@ -46,7 +46,7 @@ import net.sf.ehcache.Element;
 @Service
 public class SysListCache {
 
-	private final static Logger log = Logger.getLogger(SysListCache.class);
+	private static final Logger log = Logger.getLogger(SysListCache.class);
 
 	// Injected by Spring
 	@Autowired

@@ -72,7 +72,7 @@ import de.ingrid.utils.IngridDocument;
 @Service
 public class MdekEmailUtils {
 
-	private final static Logger log = Logger.getLogger(MdekEmailUtils.class);
+	private static final Logger log = Logger.getLogger(MdekEmailUtils.class);
 
 	@Autowired
 	private SpringConfiguration springConfig;
@@ -89,7 +89,7 @@ public class MdekEmailUtils {
 	
 	private static String MDEK_DIRECT_LINK;
 
-	private final static String MAIL_SUBJECT = "[MDEK] Information";
+	private static final String MAIL_SUBJECT = "[MDEK] Information";
 
 	private static ConnectionFacade connectionFacade;
 	private static IMdekCallerCatalog mdekCallerCatalog;
@@ -509,11 +509,10 @@ public class MdekEmailUtils {
 		context.put(attributesName, attributes);
 		StringWriter sw = new StringWriter();
 
-		try {
-			FileReader templateReader = new FileReader(realTemplatePath);
-
+		try (
+	        FileReader templateReader = new FileReader(realTemplatePath);
+        ){
 			sw = new StringWriter();
-
 		    Properties p = new Properties();
 		    p.setProperty("input.encoding", "UTF-8");
 		    Velocity.init(p);
@@ -522,8 +521,7 @@ public class MdekEmailUtils {
 		} catch (Exception e) {
 			log.error("failed to merge velocity template: " + realTemplatePath, e);
 		}
-		String buffer = sw.getBuffer().toString();
-		return buffer;
+		return sw.getBuffer().toString();
 	}
 
 	private static List<User> getQAUsersForObject(MdekDataBean data) {

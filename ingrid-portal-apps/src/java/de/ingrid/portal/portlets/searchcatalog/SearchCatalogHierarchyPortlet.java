@@ -55,10 +55,11 @@ import de.ingrid.utils.PlugDescription;
 public class SearchCatalogHierarchyPortlet extends SearchCatalog {
 
     // VIEW TEMPLATES
-    private final static String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
+    private static final String TEMPLATE_START = "/WEB-INF/templates/search_catalog/search_cat_hierarchy.vm";
     //scroll top value
     private String scrollTop = "0";
     
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -87,8 +88,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
         if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
+            ps = initPageState(new PageState(this.getClass().getName()));
             session.setAttribute("portlet_state", ps);
         }
         context.put("ps", ps);
@@ -96,11 +96,6 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
         // ----------------------------------
-        String action = request.getParameter(Settings.PARAM_ACTION);
-        if (action == null) {
-            action = "";
-        }
-
         if (ps.get("plugsRoot") == null) {
 
             // set up ECS plug list for view
@@ -140,6 +135,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
@@ -156,8 +152,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
         if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
+            ps = initPageState(new PageState(this.getClass().getName()));
             session.setAttribute("portlet_state", ps);
         }
 
@@ -195,7 +190,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
             node.setOpen(true);
 
             // only load if not loaded yet !
-            if (!node.isLoading() && node.getChildren().size() == 0) {
+            if (!node.isLoading() && node.getChildren().isEmpty()) {
                 node.setLoading(true);
 
                 // handles all stuff
@@ -215,8 +210,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
      *            need for open sub nodes by node ID (must always be root node)
      */
     private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode) {
-        ArrayList list = new ArrayList();
-        list = node.getChildren();
+        ArrayList list = node.getChildren();
         String rootNodeLevel = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL);
 
         if (rootNodeLevel != null)

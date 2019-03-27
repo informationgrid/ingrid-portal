@@ -40,7 +40,7 @@ import org.directwebremoting.WebContextFactory;
 
 public class PortalAuthenticationProvider implements AuthenticationProvider {
     
-    private final static Logger log = Logger.getLogger(PortalAuthenticationProvider.class);  
+    private static final Logger log = Logger.getLogger(PortalAuthenticationProvider.class);  
 
     /**
      * Since authentication id done via the portal we can return always false here, since 

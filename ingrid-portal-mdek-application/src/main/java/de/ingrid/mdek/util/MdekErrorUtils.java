@@ -48,7 +48,7 @@ import de.ingrid.utils.IngridDocument;
 @Service
 public class MdekErrorUtils {
 
-	private final static Logger log = Logger.getLogger(MdekErrorUtils.class);
+	private static final Logger log = Logger.getLogger(MdekErrorUtils.class);
 
 	// Injected via Spring
 	private static DataMapperInterface dataMapper;

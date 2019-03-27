@@ -52,7 +52,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class DetailDataPreparerGeneric implements DetailDataPreparer {
 
-    private final static Logger log = LoggerFactory.getLogger(DetailDataPreparerGeneric.class);
+    private static final Logger log = LoggerFactory.getLogger(DetailDataPreparerGeneric.class);
 
 	private Context context;
 	private List dateFields;

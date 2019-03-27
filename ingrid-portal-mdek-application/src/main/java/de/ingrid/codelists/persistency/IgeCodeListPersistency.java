@@ -48,7 +48,7 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
 @Service
 public class IgeCodeListPersistency implements ICodeListPersistency {
 
-    private final static Logger log = Logger.getLogger(IgeCodeListPersistency.class);
+    private static final Logger log = Logger.getLogger(IgeCodeListPersistency.class);
 
     // injected by Spring
     @Autowired

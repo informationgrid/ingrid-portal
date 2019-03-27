@@ -48,13 +48,13 @@ public class WcsCapabilitiesParser extends GeneralCapabilitiesParser implements 
     
     private static final String XPATH_EXP_WCS_TITLE = "/wcs:WCS_Capabilities/wcs:Service/wcs:name";
     private static final String XPATH_EXP_WCS_ABSTRACT = "/wcs:WCS_Capabilities/wcs:Service/wcs:description";
-    private final static String XPATH_EXP_WCS_VERSION = "/wcs:WCS_Capabilities/@version";
-    private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCapabilities/wcs:DCPType/wcs:HTTP/wcs:Get/wcs:OnlineResource";
-    private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCapabilities/wcs:DCPType/wcs:HTTP/wcs:Post/wcs:OnlineResource/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:DescribeCoverage/wcs:DCPType/wcs:HTTP/wcs:Get/wcs:OnlineResource/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:DescribeCoverage/wcs:DCPType/wcs:HTTP/wcs:Post/wcs:OnlineResource/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCoverage/wcs:DCPType/wcs:HTTP/wcs:Get/wcs:OnlineResource/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCoverage/wcs:DCPType/wcs:HTTP/wcs:Post/wcs:OnlineResource/@xlink:href";
+    private static final String XPATH_EXP_WCS_VERSION = "/wcs:WCS_Capabilities/@version";
+    private static final String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCapabilities/wcs:DCPType/wcs:HTTP/wcs:Get/wcs:OnlineResource";
+    private static final String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCapabilities/wcs:DCPType/wcs:HTTP/wcs:Post/wcs:OnlineResource/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:DescribeCoverage/wcs:DCPType/wcs:HTTP/wcs:Get/wcs:OnlineResource/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:DescribeCoverage/wcs:DCPType/wcs:HTTP/wcs:Post/wcs:OnlineResource/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCoverage/wcs:DCPType/wcs:HTTP/wcs:Get/wcs:OnlineResource/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/wcs:WCS_Capabilities/wcs:Capability/wcs:Request/wcs:GetCoverage/wcs:DCPType/wcs:HTTP/wcs:Post/wcs:OnlineResource/@xlink:href";
     private static final String XPATH_EXT_WCS_SERVICECONTACT = "/wcs:WCS_Capabilities/wcs:Service/wcs:responsibleParty";
     private static final String XPATH_EXP_WCS_FEES = "/wcs:WCS_Capabilities/wcs:Service/wcs:fees";
     private static final String XPATH_EXP_WCS_ACCESS_CONSTRAINTS = "/wcs:WCS_Capabilities/wcs:Service/wcs:accessConstraints";

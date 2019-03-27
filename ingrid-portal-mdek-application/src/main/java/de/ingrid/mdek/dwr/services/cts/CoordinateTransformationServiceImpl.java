@@ -36,13 +36,13 @@ import com.thoughtworks.xstream.XStream;
 
 public class CoordinateTransformationServiceImpl implements CoordinateTransformationService {
 
-	private final static Logger log = Logger.getLogger(CoordinateTransformationServiceImpl.class);
+	private static final Logger log = Logger.getLogger(CoordinateTransformationServiceImpl.class);
 	
-	private final static String REQUEST_KEY = "REQUEST";
-	private final static String GET_COORDINATES_REQUEST = "GetCoordinates";
-	private final static String SRS_SRC_KEY = "FROMSRS";
-	private final static String SRS_DST_KEY = "TOSRS";
-	private final static String COORDINATES_KEY = "COORDS";
+	private static final String REQUEST_KEY = "REQUEST";
+	private static final String GET_COORDINATES_REQUEST = "GetCoordinates";
+	private static final String SRS_SRC_KEY = "FROMSRS";
+	private static final String SRS_DST_KEY = "TOSRS";
+	private static final String COORDINATES_KEY = "COORDS";
 
 
 	private ResourceBundle resourceBundle; 

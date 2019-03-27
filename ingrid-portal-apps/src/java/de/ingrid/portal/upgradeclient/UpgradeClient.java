@@ -38,7 +38,7 @@ import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.utils.PlugDescription;
 
 public class UpgradeClient {
-    private final static Logger log = LoggerFactory.getLogger(UpgradeClient.class);
+    private static final Logger log = LoggerFactory.getLogger(UpgradeClient.class);
 
     private static final String UNKNOWN_COMPONENT_ID = "MANUAL_COMPONENT_ID";
     
@@ -171,8 +171,7 @@ public class UpgradeClient {
         try {
             IngridMonitorFacade.instance().getScheduler().addJob(jobDetail, true);
         } catch (SchedulerException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error on updateJobData.", e);
         }
     }
     

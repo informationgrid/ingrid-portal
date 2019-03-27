@@ -46,12 +46,12 @@ import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class AddressServiceImpl implements AddressService {
 
-	private final static Logger log = Logger.getLogger(AddressServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(AddressServiceImpl.class);	
 
 	// Injected by Spring
 	private AddressRequestHandler addressRequestHandler;
 
-	private final static String ADDRESS_APPTYPE = "A";
+	private static final String ADDRESS_APPTYPE = "A";
 
 	public boolean canCopyAddress(String uuid) {
 		log.debug("Query if address can be copied: "+uuid);

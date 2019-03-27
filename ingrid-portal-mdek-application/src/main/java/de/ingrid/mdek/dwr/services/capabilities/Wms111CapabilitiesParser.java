@@ -67,12 +67,12 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXP_WMS_IDENTIFIER = "/WMT_MS_Capabilities/Capability/Layer//Identifier";
     // Version 1.3.0 of the WMS uses 'WMS_Capabilities' as its root element (OGC 06-042, Chapter 7.2.4.1)
     // Version 1.1.1 uses 'WMT_MS_Capabilities'
-    private final static String XPATH_EXP_WMS_1_1_1_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
-    private final static String XPATH_EXP_WMS_1_1_1_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
-    private final static String XPATH_EXP_WMS_1_1_1_VERSION = "/WMT_MS_Capabilities/@version";
-    private final static String XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
-    private final static String XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
-    private final static String XPATH_EXP_WMS_1_1_1_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_1_1_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
+    private static final String XPATH_EXP_WMS_1_1_1_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
+    private static final String XPATH_EXP_WMS_1_1_1_VERSION = "/WMT_MS_Capabilities/@version";
+    private static final String XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_1_1_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
 
     private static final String XPATH_EXP_WMS_FEES = "WMT_MS_Capabilities/Service/Fees";
     private static final String XPATH_EXP_WMS_ACCESS_CONSTRAINTS = "/WMT_MS_Capabilities/Service/AccessConstraints";

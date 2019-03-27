@@ -82,13 +82,12 @@ public class XXSUrlAttackFilter implements Filter
         chain.doFilter(request, response);
     }
 
-    private boolean isInvalid(String value)
-    {
+    private boolean isInvalid(String value){
+        boolean isInvalid = false;
         if (value != null && (value.indexOf('>') != -1 || value.indexOf("%3e") != -1 || value.indexOf("%3E") != -1 || value.indexOf("&gt;") != -1) && (value.indexOf('<') != -1 || value.indexOf("%3c") != -1 || value.indexOf("%3C") != -1 || value.indexOf("&lt;") != -1)) {
-            return true;
-        } else {
-            return false;
+            isInvalid = true;
         }
+        return isInvalid;
     }
 
     public void destroy()

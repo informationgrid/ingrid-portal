@@ -56,7 +56,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("objectRequestHandler")
 public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
-	private final static Logger log = Logger.getLogger(ObjectRequestHandlerImpl.class);
+	private static final Logger log = Logger.getLogger(ObjectRequestHandlerImpl.class);
 
 	// Injected by Spring
 	@Autowired

@@ -56,7 +56,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 
-	private final static Logger log = Logger.getLogger(SNSLocationUpdateJob.class);	
+	private static final Logger log = Logger.getLogger(SNSLocationUpdateJob.class);	
 
 	private static final String JOB_BASE_NAME = "snsLocationUpdateJob_";
 	private final String plugId;

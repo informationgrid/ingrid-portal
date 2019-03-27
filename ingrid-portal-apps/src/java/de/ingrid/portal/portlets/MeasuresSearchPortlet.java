@@ -37,12 +37,14 @@ import de.ingrid.portal.global.UtilsString;
 
 public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(MeasuresSearchPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(MeasuresSearchPortlet.class);
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);

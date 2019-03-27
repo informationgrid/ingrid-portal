@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class AdminRSSForm extends ActionForm {
 
-    private final static Logger log = LoggerFactory.getLogger(AdminRSSForm.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminRSSForm.class);
 
     private static final long serialVersionUID = 8335389649101260301L;
 
@@ -71,7 +71,7 @@ public class AdminRSSForm extends ActionForm {
         clear();
         String[] ids = request.getParameterValues(PARAM_ID);
         if (ids != null) {
-            setInput("numEntities", new Integer(ids.length).toString());
+            setInput("numEntities", Integer.toString(ids.length));
             for (int i = 0; i < ids.length; i++) {
                 setInput(PARAM_ID + i, ids[i]);
                 setInput(FIELD_PROVIDER + i, request.getParameter(FIELD_PROVIDER + i));
@@ -99,14 +99,14 @@ public class AdminRSSForm extends ActionForm {
         try {
             String numEntities = getInput("numEntities");
             if (numEntities != null) {
-                int intNumEntities = new Integer(numEntities).intValue();
+                int intNumEntities = Integer.parseInt(numEntities);
                 String fieldName = "";
                 for (int i = 0; i < intNumEntities; i++) {
                 	
                 	fieldName = FIELD_DESCRIPTION + i;
                 	if (hasInput(fieldName)) {
                         if(getInput(fieldName).length() > 1024)
-                		setError(fieldName, "admin.rss.error.description.too.long");
+                            setError(fieldName, "admin.rss.error.description.too.long");
                         allOk = false;
                     }
                     
@@ -127,6 +127,7 @@ public class AdminRSSForm extends ActionForm {
                         try {
                             id = new Long(getInput(PARAM_ID + i));
                         } catch (Exception ex) {
+                            log.error("Error on validate.", ex);
                         }
                         String url = getInput(fieldName);
                         Session session = HibernateUtil.currentSession();
@@ -136,7 +137,7 @@ public class AdminRSSForm extends ActionForm {
                             crit.add(Restrictions.ne(PARAM_ID, id));
                         }
                         List foundURLs = UtilsDB.getValuesFromDB(crit, session, null, true);
-                        if (foundURLs != null && !foundURLs.isEmpty()) {
+                        if (!foundURLs.isEmpty()) {
                             setError(fieldName, "admin.rss.error.url.exists");
                             allOk = false;
                         }
@@ -148,7 +149,7 @@ public class AdminRSSForm extends ActionForm {
                     }
                 }
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Error validating input.", t);
             }

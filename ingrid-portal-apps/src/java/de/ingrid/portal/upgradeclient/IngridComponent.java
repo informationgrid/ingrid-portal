@@ -62,14 +62,14 @@ public class IngridComponent implements Serializable {
     private String errorStatus;
     private String connected;
     
-    private Map<String, Object> extraInfo = new HashMap<String, Object>();
+    private Map<String, Object> extraInfo = new HashMap<>();
     
     public IngridComponent(String id, String type) {
         this.setId(id);
         this.setName(id);
         this.setType(type);
         
-        this.emails = new ArrayList<String>();
+        this.emails = new ArrayList<>();
         setConnected(IngridAbstractStateJob.STATUS_IS_MANUALLY_CONNECTED);
         setIPlug(false);
         setHasBeenSent(false);

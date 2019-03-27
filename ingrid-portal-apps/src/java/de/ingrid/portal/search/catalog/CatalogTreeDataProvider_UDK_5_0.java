@@ -58,7 +58,7 @@ public class CatalogTreeDataProvider_UDK_5_0 implements CatalogTreeDataProvider 
 	}
 
 	public boolean hasChildren(String objUuid, String plugId, String plugType) {
-		return (IPlugHelperDscEcs.getSubDocs(objUuid, plugId, plugType, null).size() > 0);
+		return (!IPlugHelperDscEcs.getSubDocs(objUuid, plugId, plugType, null).isEmpty());
 	}
 
 }

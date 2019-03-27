@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class StatisticService {
 
-    private final static Logger log = LogManager.getLogger(StatisticService.class);
+    private static final Logger log = LogManager.getLogger(StatisticService.class);
 
     // Injected by Spring
     private ObjectRequestHandler objectRequestHandler;

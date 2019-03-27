@@ -37,7 +37,7 @@ import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class QueryServiceImpl implements QueryService {
 
-	private final static Logger log = Logger.getLogger(QueryServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(QueryServiceImpl.class);	
 
 	// Injected by Spring
 	private QueryRequestHandler queryRequestHandler;

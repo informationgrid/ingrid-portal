@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 
 public class HashMapProtocolHandler implements ProtocolHandler {
 	
-	private final static Logger log = Logger.getLogger(HashMapProtocolHandler.class);	
+	private static final Logger log = Logger.getLogger(HashMapProtocolHandler.class);	
 	
 	private ArrayList<String> messageList;
     private String currentFilename;

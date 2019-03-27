@@ -52,16 +52,16 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
     //private static final String XPATH_EXP_WMTS_ONLINE_RESOURCE = "/wcts:";
     private static final String XPATH_EXP_WMTS_KEYWORDS = "/wmts:Capabilities/ows11:ServiceIdentification/ows11:Keywords/ows11:Keyword";
 
-    private final static String XPATH_EXP_WMTS_TITLE = "/wmts:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
-    private final static String XPATH_EXP_WMTS_ABSTRACT = "/wmts:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
-    private final static String XPATH_EXP_WMTS_VERSION = "/wmts:Capabilities/@version";
+    private static final String XPATH_EXP_WMTS_TITLE = "/wmts:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
+    private static final String XPATH_EXP_WMTS_ABSTRACT = "/wmts:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
+    private static final String XPATH_EXP_WMTS_VERSION = "/wmts:Capabilities/@version";
 
-    private final static String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WMTS_OP_GET_FEATURE_INFO_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeatureInfo']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_FEATURE_INFO_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeatureInfo']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WMTS_OP_GET_TILE_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
 
     private static final String XPATH_EXT_WMTS_SERVICECONTACT = "/wmts:Capabilities/ows11:ServiceProvider/ows11:ServiceContact";
 

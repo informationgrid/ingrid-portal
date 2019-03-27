@@ -53,7 +53,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class SecurityServiceImpl implements SecurityService {
 
-	private final static Logger log = Logger.getLogger(SecurityServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(SecurityServiceImpl.class);	
 
 	// Injected by Spring
 	private SecurityRequestHandler securityRequestHandler;

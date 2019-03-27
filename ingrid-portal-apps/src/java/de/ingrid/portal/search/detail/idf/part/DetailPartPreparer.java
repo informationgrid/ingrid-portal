@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.portlet.RenderRequest;
@@ -60,7 +61,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 
 public class DetailPartPreparer {
 
-    private final static Logger log = LoggerFactory.getLogger(DetailPartPreparer.class);
+    private static final Logger log = LoggerFactory.getLogger(DetailPartPreparer.class);
 
     public NodeList                nodeList;
     public IngridSysCodeList       sysCodeList;
@@ -76,7 +77,7 @@ public class DetailPartPreparer {
     public String namespaceUri = "";
     public Node rootNode = null;
 
-    protected XPathUtils XPathUtils = null;
+    protected XPathUtils xPathUtils = null;
 
     public enum LinkType {
         EMAIL, WWW_URL
@@ -107,7 +108,7 @@ public class DetailPartPreparer {
         this.sysCodeList = new IngridSysCodeList(request.getLocale());
         this.uuid = this.request.getParameter("docuuid");
 
-        XPathUtils = new XPathUtils(new IDFNamespaceContext());
+        xPathUtils = new XPathUtils(new IDFNamespaceContext());
     }
 
     public String getiPlugId() {
@@ -129,22 +130,20 @@ public class DetailPartPreparer {
     
     public String getValueFromXPath(String xpathExpression, String codeListId, Node root) {
         String value = null;
-        Node node = XPathUtils.getNode(root, xpathExpression);
-        if(node != null){
-            if(node.getTextContent().length() > 0){
-                value = node.getTextContent().trim();
-                if(value != null && codeListId != null){
-                    String tmpValue = getValueFromCodeList(codeListId, value);
-                    if(tmpValue.length() > 0){
-                        value = tmpValue;
-                    }
+        Node node = xPathUtils.getNode(root, xpathExpression);
+        if(node != null && node.getTextContent().length() > 0){
+            value = node.getTextContent().trim();
+            if(value != null && codeListId != null){
+                String tmpValue = getValueFromCodeList(codeListId, value);
+                if(tmpValue.length() > 0){
+                    value = tmpValue;
                 }
-                if(value != null){
-                    if(value.equals("false")){
-                        value = messages.getString("general.no"); 
-                    }else if(value.equals("true")){
-                        value = messages.getString("general.yes");
-                    }
+            }
+            if(value != null){
+                if(value.equals("false")){
+                    value = messages.getString("general.no"); 
+                }else if(value.equals("true")){
+                    value = messages.getString("general.yes");
                 }
             }
         }
@@ -155,19 +154,19 @@ public class DetailPartPreparer {
         if (value != null){
            try {
                 value = URLDecoder.decode(value, "UTF-8");
-            } catch (UnsupportedEncodingException e) {}
+            } catch (UnsupportedEncodingException e) {
+                log.error("Error on getDecodeValue.", e);
+            }
         }
         return value;
     }
     
     public String getDateValueFromXPath(String xpathExpression) {
         String value = null;
-        Node node = XPathUtils.getNode(this.rootNode, xpathExpression);
-        if(node != null){
-            if(node.getTextContent().length() > 0){
-                value = node.getTextContent().trim();
-                return getDateFormatValue(value);
-            }
+        Node node = xPathUtils.getNode(this.rootNode, xpathExpression);
+        if(node != null && node.getTextContent().length() > 0){
+            value = node.getTextContent().trim();
+            return getDateFormatValue(value);
         }
         return value;
     }
@@ -184,28 +183,29 @@ public class DetailPartPreparer {
                         return new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(cal.getTime());
                     }
                 }
+                return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
             }
-            return new SimpleDateFormat("dd.MM.yyyy").format(cal.getTime());
         } catch (Exception e) {
+            log.error("Error on getDateFormatValue.", e);
         }
         return value;
     }
     
-    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression) {
+    public List<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression) {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, null);
     }
     
-    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId) {
+    public List<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId) {
         return getListOfValuesFromXPath(xpathExpression, xpathSubExpression, codeListId, null);
     }
     
-    public ArrayList<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, List<String> consideredValues) {
+    public List<String> getListOfValuesFromXPath(String xpathExpression, String xpathSubExpression, String codeListId, List<String> consideredValues) {
         ArrayList<String> list = new ArrayList<>();
-        NodeList nodeList = XPathUtils.getNodeList(this.rootNode, xpathExpression);
-        if(nodeList != null){
-            for (int j=0; j < nodeList.getLength();j++){
-                Node nodeListNode = nodeList.item(j);{
-                    NodeList nodeListSub = XPathUtils.getNodeList(nodeListNode, xpathSubExpression);
+        NodeList tmpNodeList = xPathUtils.getNodeList(this.rootNode, xpathExpression);
+        if(tmpNodeList != null){
+            for (int j=0; j < tmpNodeList.getLength();j++){
+                Node nodeListNode = tmpNodeList.item(j);{
+                    NodeList nodeListSub = xPathUtils.getNodeList(nodeListNode, xpathSubExpression);
                     if(nodeListSub != null){
                         for (int i=0; i < nodeListSub.getLength();i++){
                             Node subNode = nodeListSub.item(i);
@@ -261,7 +261,7 @@ public class DetailPartPreparer {
         final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
         List<String> result = new ArrayList<>();
 
-        NodeList resourceConstraintsNodes = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        NodeList resourceConstraintsNodes = xPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
         if (resourceConstraintsNodes == null) {
             // Don't continue if no results found
             return result;
@@ -270,19 +270,23 @@ public class DetailPartPreparer {
         for(int i=0; i<resourceConstraintsNodes.getLength(); i++) {
             Node node = resourceConstraintsNodes.item(i);
 
-            NodeList restrictionCodeNodes = XPathUtils.getNodeList(node, restrictionCodeXpath);
-            NodeList constraintsNodes = XPathUtils.getNodeList(node, constraintsTextXpath);
+            NodeList restrictionCodeNodes = xPathUtils.getNodeList(node, restrictionCodeXpath);
+            NodeList constraintsNodes = xPathUtils.getNodeList(node, constraintsTextXpath);
             if (restrictionCodeNodes == null || constraintsNodes == null) {
                 continue;
             }
             NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
             String restrictionCode = attrs.getNamedItem("codeListValue").getTextContent();
-            log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+            if(log.isDebugEnabled()) {
+                log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+            }
             if (restrictionCode == null) continue;
             restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
 
             String constraints = constraintsNodes.item(0).getTextContent();
-            log.debug(String.format("Discovered use constraints: %s", constraints));
+            if(log.isDebugEnabled()) {
+                log.debug(String.format("Discovered use constraints: %s", constraints));
+            }
 
             // FIXME >>> Change after redmine ticket #848 is resolved >>>
             // Temporary solution to get rid of prefix in front of the codelist value
@@ -301,7 +305,7 @@ public class DetailPartPreparer {
             String url = null;
             String name = null;
             // also remember further otherConstraints may be used in BKG profile (#1194)
-            List<String> furtherOtherConstraints = new ArrayList<String>();
+            List<String> furtherOtherConstraints = new ArrayList<>();
             for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
                 String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
                 if (constraintSource == null || constraintSource.trim().isEmpty()) {
@@ -377,7 +381,7 @@ public class DetailPartPreparer {
 
         List<String> result = new ArrayList<>();
 
-        NodeList useLimitations = XPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
+        NodeList useLimitations = xPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
         if (useLimitations == null) {
             // Don't continue if no results found
             return result;
@@ -389,13 +393,17 @@ public class DetailPartPreparer {
             // FIXME >>> Change after redmine ticket #848 is resolved >>>
             // Temporary solution to get rid of prefix in front of the codelist value
             String constraints = node.getTextContent();
-            log.debug(String.format("Discovered use limitations: %s", constraints));
+            if(log.isDebugEnabled()) {
+                log.debug(String.format("Discovered use limitations: %s", constraints));
+            }
 
             int index = constraints.indexOf(':');
             if (index >= 0) {
                 constraints = constraints.substring(index+1).trim();
             }
-            log.debug(String.format("Use limitations are now: %s", constraints));
+            if(log.isDebugEnabled()) {
+                log.debug(String.format("Use limitations are now: %s", constraints));
+            }
             // <<< End of temporary solution <<<
 
             if (constraints != null && !constraints.trim().isEmpty()) {
@@ -406,15 +414,15 @@ public class DetailPartPreparer {
         return result;
     }
 
-    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
+    public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, false);
     }
     
-    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection) {
+    public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, includeSelection, null);
     }
     
-    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection, String codeListId) {
+    public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingType, boolean includeSelection, String codeListId) {
         return getSiblingsValuesFromXPath(xpathExpression, siblingType, includeSelection, codeListId, null);
     }
     
@@ -427,10 +435,10 @@ public class DetailPartPreparer {
      * @param consideredValues values to skip
      * @return list of values to render
      */
-    public ArrayList<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, List<String> consideredValues) {
+    public List<String> getSiblingsValuesFromXPath(String xpathExpression, String siblingNodeName, boolean includeSelection, String codeListId, List<String> consideredValues) {
         ArrayList<String> list = new ArrayList<>();
         
-        List<Node> siblingList = XPathUtils.getSiblingsFromXPath(rootNode, xpathExpression, siblingNodeName, includeSelection);
+        List<Node> siblingList = xPathUtils.getSiblingsFromXPath(rootNode, xpathExpression, siblingNodeName, includeSelection);
         if(siblingList == null) {
             return list;
         }
@@ -445,10 +453,8 @@ public class DetailPartPreparer {
                 continue;                            
             }
             // exclude considered values
-            if (consideredValues != null) {
-                if (consideredValues.contains( value )) {
-                    continue;
-                }
+            if (consideredValues != null && consideredValues.contains( value )) {
+                continue;
             }
             // transform with code list ?
             if(codeListId != null){
@@ -473,7 +479,7 @@ public class DetailPartPreparer {
     }
     
     public boolean nodeExist(String xpathExpression, Node node){
-        return XPathUtils.nodeExists(node, xpathExpression);
+        return xPathUtils.nodeExists(node, xpathExpression);
     }
     
     public boolean aNodeOfListExist(List<String> xpathExpressions){
@@ -481,7 +487,7 @@ public class DetailPartPreparer {
         if(xpathExpressions != null){
             for (int i=0; i<xpathExpressions.size();i++){
                 boolean tmpExist = nodeExist(xpathExpressions.get(i));
-                if(tmpExist == true){
+                if(tmpExist){
                     return tmpExist;
                 }
             }
@@ -490,7 +496,7 @@ public class DetailPartPreparer {
     }
     
     public Node getNodeFromXPath(String xpathExpression){
-        return XPathUtils.getNode(this.rootNode, xpathExpression);
+        return xPathUtils.getNode(this.rootNode, xpathExpression);
     }
 
     public NodeList getNodeListFromXPath(String xpathExpression){
@@ -498,17 +504,17 @@ public class DetailPartPreparer {
     }
     
     public NodeList getNodeListFromXPath(String xpathExpression, Node node){
-        return XPathUtils.getNodeList(node, xpathExpression);
+        return xPathUtils.getNodeList(node, xpathExpression);
     }
     
-    public HashMap getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, ArrayList<String> xpathSubEntryList){
+    public Map getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, List<String> xpathSubEntryList){
         return getTreeFromXPathBy(xpathExpression, xpathSubEntry, xpathSubEntryList, this.rootNode);
     }
     
-    public HashMap getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, ArrayList<String> xpathSubEntryList, Node node){
+    public Map getTreeFromXPathBy(String xpathExpression, String xpathSubEntry, List<String> xpathSubEntryList, Node node){
         HashMap root = new HashMap();
         root.put("type", "root");
-        NodeList tmpNodelist =  XPathUtils.getNodeList(node, xpathExpression);
+        NodeList tmpNodelist =  xPathUtils.getNodeList(node, xpathExpression);
         boolean createNewFolder = false;
         String xpathOldSubEntryValue = "";
         if(tmpNodelist != null) {
@@ -543,60 +549,54 @@ public class DetailPartPreparer {
                                 while (counter != paths.length) {
                                     String path = paths[counter];
                                     // Remove directory path in label
-                                    if(leaf != null) {
-                                        if(leaf.get("label") != null) {
-                                            String label = (String) leaf.get("label");
-                                            if(label != null && label.indexOf("/") > -1 && path.length() > 0) {
-                                                label = label.replaceFirst(getDecodeValue(path) + "/", "");
-                                            }
-                                            leaf.put("label", label);
+                                    if(leaf != null && leaf.get("label") != null) {
+                                        String label = (String) leaf.get("label");
+                                        if(label != null && label.indexOf('/') > -1 && path.length() > 0) {
+                                            label = label.replaceFirst(getDecodeValue(path) + "/", "");
                                         }
+                                        leaf.put("label", label);
                                     }
                                     counter++;
-                                    if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4)) {
-                                        if(path.length() != 0) {
-                                            if(folder.get("children") == null) {
-                                                folder.put( "children", new ArrayList<HashMap>() );
+                                    if(counter > PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_UPLOAD_PATH_INDEX, 4) && path.length() != 0) {
+                                        if(folder.get("children") == null) {
+                                            folder.put( "children", new ArrayList<HashMap>() );
+                                        }
+                                        ArrayList<HashMap> children = (ArrayList) folder.get("children");
+                                        
+                                        HashMap subMap = null;
+                                        for (int j=children.size()-1; j>=0;j--){
+                                            HashMap tmpMap = children.get(j);
+                                            if(tmpMap.get("type").equals("folder") && tmpMap.get("label").equals(path)) {
+                                                subMap = tmpMap;
+                                                break;
                                             }
-                                            ArrayList<HashMap> children = (ArrayList) folder.get("children");
-                                            
-                                            HashMap subMap = null;
-                                            for (int j=children.size()-1; j>=0;j--){
-                                                HashMap tmpMap = children.get(j);
-                                                if(tmpMap.get("type").equals("folder") && tmpMap.get("label").equals(path)) {
-                                                    subMap = tmpMap;
-                                                    break;
-                                                }
-                                            }
-                                            if(counter != paths.length) {
-                                                if(subMap != null) {
-                                                    if(counter < pathsOld.length && !path.equals(pathsOld[counter-1])) {
-                                                        if(parentFolder != null) {
-                                                            if(parentFolder.get("children") != null) {
-                                                                children = (ArrayList) parentFolder.get("children");
-                                                                createNewFolder = true;
-                                                            }
-                                                        }
-                                                    } else {
-                                                        parentFolder = subMap;
+                                        }
+                                        if(counter != paths.length) {
+                                            if(subMap != null) {
+                                                if(counter < pathsOld.length && !path.equals(pathsOld[counter-1])) {
+                                                    if(parentFolder != null && parentFolder.get("children") != null) {
+                                                        children = (ArrayList) parentFolder.get("children");
+                                                        createNewFolder = true;
                                                     }
+                                                } else {
+                                                    parentFolder = subMap;
                                                 }
-                                                if(subMap == null || createNewFolder) {
-                                                    subMap = new HashMap();
-                                                    subMap.put("type", "folder");
-                                                    subMap.put("label", path);
-                                                    children.add(subMap);
-                                                    folder.put("children", children);
-                                                    createNewFolder = false;
-                                                }
-                                            } else {
-                                                // Add leaf to folder
-                                                subMap = leaf;
+                                            }
+                                            if(subMap == null || createNewFolder) {
+                                                subMap = new HashMap();
+                                                subMap.put("type", "folder");
+                                                subMap.put("label", path);
                                                 children.add(subMap);
                                                 folder.put("children", children);
+                                                createNewFolder = false;
                                             }
-                                            folder = subMap;
+                                        } else {
+                                            // Add leaf to folder
+                                            subMap = leaf;
+                                            children.add(subMap);
+                                            folder.put("children", children);
                                         }
+                                        folder = subMap;
                                     }
                                 }
                             }
@@ -614,10 +614,10 @@ public class DetailPartPreparer {
         if(nodeList != null){
             for (int i=0; i<nodeList.getLength();i++){
                 Node node = nodeList.item(i);
-                if(XPathUtils.nodeExists(node, xpathExpressionDependOn)){
-                    String xpathValue = XPathUtils.getString(node, xpathExpressionDependOn).trim();
+                if(xPathUtils.nodeExists(node, xpathExpressionDependOn)){
+                    String xpathValue = xPathUtils.getString(node, xpathExpressionDependOn).trim();
                     if(xpathValue.equals(dependOn)){
-                        value = XPathUtils.getString(node, xpathExpression).trim();
+                        value = xPathUtils.getString(node, xpathExpression).trim();
                         break;
                     }
                 }
@@ -626,41 +626,41 @@ public class DetailPartPreparer {
         return value;
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions) {
+    public Map<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, null);
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList) {
+    public Map<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList) {
         return getNodeListTable(title, xpathExpression, headTitles, headXpathExpressions, headCodeList, null);
     }
     
-    public HashMap<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList, List<String> headTypes) {
-        HashMap<String, Object> element = new HashMap<String, Object>();
-        if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+    public Map<String, Object> getNodeListTable(String title, String xpathExpression, List<String> headTitles, List<String> headXpathExpressions, List<String> headCodeList, List<String> headTypes) {
+        HashMap<String, Object> element = new HashMap<>();
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            NodeList tmpNodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             
             element.put("type", "table");
             element.put("title", title);
             
-            ArrayList<String> head = new ArrayList<String>();
+            ArrayList<String> head = new ArrayList<>();
             head.addAll(headTitles);
             element.put("head", head);
             if(headTypes != null){
-                ArrayList<String> types = new ArrayList<String>();
+                ArrayList<String> types = new ArrayList<>();
                 types.addAll(headTypes);
                 element.put("types", types);
             }
-            ArrayList<ArrayList<String>> body = new ArrayList<ArrayList<String>>();
+            ArrayList<ArrayList<String>> body = new ArrayList<>();
             element.put("body", body);
             
-            for (int i=0; i<nodeList.getLength();i++){
-                Node node = nodeList.item(i);
-                ArrayList<String> row = new ArrayList<String>();
+            for (int i=0; i<tmpNodeList.getLength();i++){
+                Node node = tmpNodeList.item(i);
+                ArrayList<String> row = new ArrayList<>();
                 
                 for (int j=0; j<headXpathExpressions.size();j++){
                     String headXpathExpression = headXpathExpressions.get(j);
-                    if(XPathUtils.nodeExists(node, headXpathExpression)){
-                        NodeList valueNodeList = XPathUtils.getNodeList(node, headXpathExpression);
+                    if(xPathUtils.nodeExists(node, headXpathExpression)){
+                        NodeList valueNodeList = xPathUtils.getNodeList(node, headXpathExpression);
                         String valueConcated = "";
                         for (int k=0; k<valueNodeList.getLength();k++) {
                             if (valueConcated.length() > 0) {
@@ -733,11 +733,11 @@ public class DetailPartPreparer {
     
 
     public String getLanguageValue(String value){
-        return UtilsLanguageCodelist.getNameFromIso639_2(value, this.request.getLocale().getLanguage().toString());
+        return UtilsLanguageCodelist.getNameFromIso639_2(value, this.request.getLocale().getLanguage());
     }
 
     public List<String> getLanguageValues(List<String> keys){
-        ArrayList<String> myList = new ArrayList<String>();
+        ArrayList<String> myList = new ArrayList<>();
         for(String key : keys) {
             String langValue = getLanguageValue( key );
             if (langValue != null) {
@@ -751,10 +751,10 @@ public class DetailPartPreparer {
         if(UtilsCountryCodelist.getCodeFromShortcut3(value) == null){
             return value;
         }
-        return UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(value), this.request.getLocale().getLanguage().toString());
+        return UtilsCountryCodelist.getNameFromCode(UtilsCountryCodelist.getCodeFromShortcut3(value), this.request.getLocale().getLanguage());
     }
-    public ArrayList<String> mergeList(ArrayList<String> list1, ArrayList<String> list2){
-        ArrayList<String> mergedList = new ArrayList<String>();
+    public List<String> mergeList(List<String> list1, List<String> list2){
+        ArrayList<String> mergedList = new ArrayList<>();
         if(list1 != null){
             mergedList.addAll(list1);    
         }
@@ -766,7 +766,7 @@ public class DetailPartPreparer {
         return mergedList; 
     }
     
-    public void sortList(ArrayList<String> list){
+    public void sortList(List<String> list){
         Collections.sort(list, new Comparator<Object>(){
             public int compare(Object left, Object right){
                 String leftKey = (String)left;
@@ -784,16 +784,16 @@ public class DetailPartPreparer {
         }
     }
     
-    public boolean isEmptyList(HashMap listEntry) {
-        if (listEntry.get("type") != null && listEntry.get("type").equals("textList") || listEntry.get("type").equals("linkList")) {
-            if (listEntry.get("body") != null && listEntry.get("body") instanceof String && ((String) listEntry.get("body")).length() > 0) {
-                return false;
-            }
+    public boolean isEmptyList(Map listEntry) {
+        boolean isEmptyList = true;
+        if ((listEntry.get("type") != null && listEntry.get("type").equals("textList") || listEntry.get("type").equals("linkList")) &&
+                (listEntry.get("body") instanceof String && ((String) listEntry.get("body")).length() > 0)) {
+            isEmptyList = false;
         }
-        return true;
+        return isEmptyList;
     }
     
-    public int getGreatestInt(ArrayList numbers) {
+    public int getGreatestInt(List numbers) {
         int i = 0;
         int maximum = Integer.parseInt(numbers.get(i).toString());
         while (i < numbers.size()) {
@@ -807,7 +807,7 @@ public class DetailPartPreparer {
     
     public boolean isEmptyRow(List row) {
         for (int i = 0; i < row.size(); i++) {
-            if (row.get(i) != null && row.get(i) instanceof String && ((String) row.get(i)).length() > 0) {
+            if (row.get(i) instanceof String && ((String) row.get(i)).length() > 0) {
                 return false;
             }
         }
@@ -850,7 +850,7 @@ public class DetailPartPreparer {
     
     public String convertDateString(String value){
         if(value != null){
-            if(value.indexOf("T") > -1){
+            if(value.indexOf('T') > -1){
                 String[] split = value.split("T");
                 String content = UtilsDate.convertDateString(split[0], "yyyy-MM-dd", "dd.MM.yyyy");
                 if(split[1].equals("00:00:00")){
@@ -858,7 +858,7 @@ public class DetailPartPreparer {
                 }
                 return content + " " + split[1];
             }else{
-                String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");;
+                String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
                 if(content.length() > 0){
                     return content;
                 }else{
@@ -874,7 +874,7 @@ public class DetailPartPreparer {
     }
     
     public void addSpace(List<HashMap<String, String>> elements) {
-        HashMap<String, String> element = new HashMap<String, String>();
+        HashMap<String, String> element = new HashMap<>();
         element.put("type", "space");
         elements.add(element);
     }

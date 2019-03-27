@@ -57,7 +57,7 @@ import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class MdekCatalogUtils {
 
-	private final static Logger log = Logger.getLogger(MdekCatalogUtils.class);	
+	private static final Logger log = Logger.getLogger(MdekCatalogUtils.class);	
 
 	private static XStream xstream = new XStream();
 

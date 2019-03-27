@@ -36,7 +36,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 
 public class RDFReader {
     
-    private final static Logger log = Logger.getLogger(RDFReader.class);
+    private static final Logger log = Logger.getLogger(RDFReader.class);
     
     //private String root;
 

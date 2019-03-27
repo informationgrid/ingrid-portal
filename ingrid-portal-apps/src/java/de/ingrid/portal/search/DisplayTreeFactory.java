@@ -57,14 +57,14 @@ import de.ingrid.utils.query.TermQuery;
 public class DisplayTreeFactory {
     
     // keys for accessing node data
-    static private String NODE_LEVEL = "level"; 
-    static private String NODE_PLUG_TYPE = "plugType"; 
-    static private String NODE_PLUG_ID = "plugId"; 
-    static private String NODE_DOC_ID = "docId"; 
-    static private String NODE_ORIG_DOC_ID = "origDocId";
-    static private String NODE_UDK_DOC_ID = "udk_docId";
-    static private String NODE_UDK_CLASS = "udk_class"; 
-    static private String NODE_EXPANDABLE = "expandable"; 
+    private static final String NODE_LEVEL = "level"; 
+    private static final String NODE_PLUG_TYPE = "plugType"; 
+    private static final String NODE_PLUG_ID = "plugId"; 
+    private static final String NODE_DOC_ID = "docId"; 
+    private static final String NODE_ORIG_DOC_ID = "origDocId";
+    private static final String NODE_UDK_DOC_ID = "udk_docId";
+    private static final String NODE_UDK_CLASS = "udk_class"; 
+    private static final String NODE_EXPANDABLE = "expandable"; 
 
     public static DisplayTreeNode getTreeFromQueryTerms(IngridQuery query) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
@@ -101,7 +101,7 @@ public class DisplayTreeFactory {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
 
-        LinkedHashMap partnerProviderMap = UtilsDB.getPartnerProviderMap(filter);
+        LinkedHashMap partnerProviderMap = (LinkedHashMap) UtilsDB.getPartnerProviderMap(filter);
         Iterator keysPartnerMaps = partnerProviderMap.keySet().iterator();
 
         // process all partners
@@ -162,10 +162,10 @@ public class DisplayTreeFactory {
                 PlugDescription plug = plugs[i];
                 String[] plugProvider = plug.getProviders();
                 for (int j = 0; j < plugProvider.length; j++) {
-                    int delimiterPos = plugProvider[j].indexOf("_");
+                    int delimiterPos = plugProvider[j].indexOf('_');
                     String partnerIdent = null;
                     if (delimiterPos != -1) {
-                        partnerIdent = plugProvider[j].substring(0, plugProvider[j].indexOf("_"));
+                        partnerIdent = plugProvider[j].substring(0, plugProvider[j].indexOf('_'));
                     } else {
                         partnerIdent = plugProvider[j];
                     }
@@ -228,7 +228,7 @@ public class DisplayTreeFactory {
     public static DisplayTreeNode getTreeFromECSIPlugs(PlugDescription[] plugs) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
-        root.put(NODE_LEVEL, new Integer(0));
+        root.put(NODE_LEVEL, 0);
         
         DisplayTreeNode partnerNode = null;
         DisplayTreeNode catalogNode = null;
@@ -241,9 +241,9 @@ public class DisplayTreeFactory {
         for (int i = 0; i < plugs.length; i++) {
             PlugDescription plug = plugs[i];
 
-            if(hiddenCatalogName == false){
+            if(!hiddenCatalogName){
                 String[] partners = plug.getPartners();
-                StringBuffer partnerNameBuffer = new StringBuffer("");
+                StringBuilder partnerNameBuffer = new StringBuilder("");
                 for (int j = 0; j < partners.length; j++) {
                     partnerNameBuffer.append(UtilsDB.getPartnerFromKey(partners[j]));
                 }
@@ -252,10 +252,10 @@ public class DisplayTreeFactory {
                 String partnerName = partnerNameBuffer.toString();
                 if (partnerNode == null || 
                         !partnerNode.getName().equals(partnerName)) {
-                    partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);                
+                    partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);
                     partnerNode.setType(DisplayTreeNode.GENERIC);
-                    partnerNode.put(NODE_LEVEL, new Integer(1));
-                    partnerNode.put(NODE_EXPANDABLE, new Boolean(true));
+                    partnerNode.put(NODE_LEVEL, 1);
+                    partnerNode.put(NODE_EXPANDABLE, true);
                     // no "plugid", no "docid" !
                     if(partnerRestriction == null || partnerRestriction.length() < 1){
                         partnerNode.setParent(root);
@@ -270,8 +270,8 @@ public class DisplayTreeFactory {
                         !catalogNode.getName().equals(catalogName)) {
                     catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);                
                     catalogNode.setType(DisplayTreeNode.GENERIC);
-                    catalogNode.put(NODE_LEVEL, new Integer(2));
-                    catalogNode.put(NODE_EXPANDABLE, new Boolean(true));
+                    catalogNode.put(NODE_LEVEL, 2);
+                    catalogNode.put(NODE_EXPANDABLE, true);
                     // no "plugid", no "docid" !
                      if(partnerRestriction != null && partnerRestriction.length() > 0){
                          catalogNode.setParent(root);
@@ -313,11 +313,11 @@ public class DisplayTreeFactory {
     private static void addTreeNode(DisplayTreeNode root, String name, Object type, String plugId, DisplayTreeNode catalogNode) {
         DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
         node.setType(DisplayTreeNode.GENERIC);
-        node.put(NODE_LEVEL, new Integer(3));
+        node.put(NODE_LEVEL, 3);
         // only "plugid", no "docid" !
         node.put(NODE_PLUG_TYPE, type);
         node.put(NODE_PLUG_ID, plugId);
-        node.put(NODE_EXPANDABLE, new Boolean(true));
+        node.put(NODE_EXPANDABLE, true);
         node.setParent(catalogNode);
         catalogNode.addChild(node);
     }
@@ -334,8 +334,8 @@ public class DisplayTreeFactory {
 
         // get ALL children (IngridHits)
         String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
-        String key_udkDocId = "";
-        String key_udkClass = "";
+        String keyUdkDocId = "";
+        String keyUdkClass = "";
         List hits = new ArrayList();
         
         PlugDescription pd = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
@@ -349,12 +349,12 @@ public class DisplayTreeFactory {
 
         // keys for extracting data
         if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-            key_udkDocId = Settings.HIT_KEY_OBJ_ID;
-            key_udkClass = Settings.HIT_KEY_UDK_CLASS;
+            keyUdkDocId = Settings.HIT_KEY_OBJ_ID;
+            keyUdkClass = Settings.HIT_KEY_UDK_CLASS;
 
         } else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-            key_udkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
-            key_udkClass = Settings.HIT_KEY_ADDRESS_CLASS;
+            keyUdkDocId = Settings.HIT_KEY_ADDRESS_ADDRID;
+            keyUdkClass = Settings.HIT_KEY_ADDRESS_CLASS;
         }
 
         // set up according children nodes in tree
@@ -365,8 +365,8 @@ public class DisplayTreeFactory {
         while (it.hasNext()) {
             IngridHit hit = (IngridHit) it.next();
             IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
-            udkDocId = UtilsSearch.getDetailValue(detail, key_udkDocId);
-            String udkClass = UtilsSearch.getDetailValue(detail, key_udkClass);
+            udkDocId = UtilsSearch.getDetailValue(detail, keyUdkDocId);
+            String udkClass = UtilsSearch.getDetailValue(detail, keyUdkClass);
             String origDocId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ORG_OBJ_ID);
 
             String nodeName = detail.getTitle();
@@ -392,14 +392,14 @@ public class DisplayTreeFactory {
             
             DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), nodeName, false);
             childNode.setType(DisplayTreeNode.GENERIC);
-            childNode.put(NODE_LEVEL, new Integer(childrenLevel));
+            childNode.put(NODE_LEVEL, childrenLevel);
             childNode.put(NODE_PLUG_TYPE, plugType);
             childNode.put(NODE_PLUG_ID, plugId);
             childNode.put(NODE_DOC_ID, hit.getId());
             childNode.put(NODE_UDK_DOC_ID, udkDocId);
             childNode.put(NODE_ORIG_DOC_ID, origDocId);
             childNode.put(NODE_UDK_CLASS, udkClass);
-            childNode.put(NODE_EXPANDABLE, new Boolean(hasChildren));
+            childNode.put(NODE_EXPANDABLE, hasChildren);
 
             childNodes.add(childNode);
         }
@@ -419,7 +419,7 @@ public class DisplayTreeFactory {
     /**
      * Inner class: for provider sorting;
      */
-    static private class ProviderNodeComparator implements Comparator {
+    private static class ProviderNodeComparator implements Comparator {
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
@@ -438,7 +438,7 @@ public class DisplayTreeFactory {
     /**
      * Inner class: for sorting of ECS Documents;
      */
-    static private class ECSDocumentNodeComparator implements Comparator {
+    private static class ECSDocumentNodeComparator implements Comparator {
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */

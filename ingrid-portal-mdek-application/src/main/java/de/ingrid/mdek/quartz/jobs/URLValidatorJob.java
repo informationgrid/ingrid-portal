@@ -62,7 +62,7 @@ import de.ingrid.utils.capabilities.CapabilitiesUtils;
 
 public class URLValidatorJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 
-    private final static Logger log = Logger.getLogger(URLValidatorJob.class);
+    private static final Logger log = Logger.getLogger(URLValidatorJob.class);
 
 	private static final String JOB_BASE_NAME = "urlValidatorJob_";
 	private static final String JOB_LISTENER_SUFFIX = "_listener";
@@ -73,8 +73,8 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	public static final String END_TIME = "endTime";
 	public static final int NUM_THREADS = 10;
 
-    private final static int CONNECTION_TIMEOUT = 5000;
-    private final static int SOCKET_TIMEOUT = 5000;
+    private static final int CONNECTION_TIMEOUT = 5000;
+    private static final int SOCKET_TIMEOUT = 5000;
 
     private final String plugId;
     private final String jobName;

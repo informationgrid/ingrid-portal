@@ -41,7 +41,7 @@ import java.util.List;
  */
 public class UtilsPageLayout {
 
-    private final static Logger log = LoggerFactory.getLogger(UtilsPageLayout.class);
+    private static final Logger log = LoggerFactory.getLogger(UtilsPageLayout.class);
 
     /**
      * Remove a fragment defined by position inside a parent fragment from a
@@ -145,7 +145,7 @@ public class UtilsPageLayout {
         try {
             Fragment fragment = pageManager.newPortletFragment();
             fragment.setName(portletUniqueName);
-            if (portletPrefs.size()>0)
+            if (!portletPrefs.isEmpty())
             	fragment.setPreferences(portletPrefs);
             if (y == 0) {
                 fragment.setDecorator("ingrid-teaser");
@@ -185,8 +185,7 @@ public class UtilsPageLayout {
 
     public static void positionPortletOnPage(PageManager pageManager, Page page, Fragment parentFragment,
             String portletUniqueName, int x, int y) {
-    	List<FragmentPreference> dummy = new ArrayList<FragmentPreference>();
-    	//dummy.add(pageManager.newFragmentPreference());
+    	List<FragmentPreference> dummy = new ArrayList<>();
     	positionPortletOnPage(pageManager, page, parentFragment, portletUniqueName, x, y, dummy);
     }
     
@@ -216,11 +215,11 @@ public class UtilsPageLayout {
             // find the portlet in the current page
             Fragment f = null;
             List fragments = page.getFragmentsByName(portletUniqueName);
-            if (fragments != null && fragments.size() > 0) {
+            if (fragments != null && !fragments.isEmpty()) {
                 f = (Fragment) fragments.get(0);
             }
             if (f != null) {
-            	if (portletPrefs.size()>0)
+            	if (!portletPrefs.isEmpty())
             		f.setPreferences(portletPrefs);
                 // move the portlet to the configured position
                 UtilsPageLayout.moveFragmentToPosition(parentFragment, f, x, y);

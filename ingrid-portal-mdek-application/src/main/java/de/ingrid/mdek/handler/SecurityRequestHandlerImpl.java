@@ -40,7 +40,7 @@ import de.ingrid.utils.IngridDocument;
 public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 
 	@SuppressWarnings("unused")
-    private final static Logger log = Logger.getLogger(SecurityRequestHandlerImpl.class);
+    private static final Logger log = Logger.getLogger(SecurityRequestHandlerImpl.class);
 
 	// Injected by Spring
 	    

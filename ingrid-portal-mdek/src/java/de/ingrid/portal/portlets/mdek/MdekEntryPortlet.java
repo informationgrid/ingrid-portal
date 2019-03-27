@@ -65,10 +65,10 @@ import de.ingrid.utils.IngridDocument;
  */
 public class MdekEntryPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(MdekEntryPortlet.class);
+    private static final Log log = LogFactory.getLog(MdekEntryPortlet.class);
 
     // VIEW TEMPLATES
-    private final static String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_entry.vm";
+    private static final String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_entry.vm";
 
     // Parameters set on init
     private UserManager userManager;
@@ -76,6 +76,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
 	private IMdekCallerSecurity mdekCallerSecurity;
     private IMdekCallerCatalog mdekCallerCatalog;
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
     	super.init(config);
 
@@ -97,7 +98,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
     	getPortletContext().setAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT, roleManager);
     }
 
-
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
     	Context context = getContext(request);
@@ -156,6 +157,7 @@ public class MdekEntryPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
 	}
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
     }

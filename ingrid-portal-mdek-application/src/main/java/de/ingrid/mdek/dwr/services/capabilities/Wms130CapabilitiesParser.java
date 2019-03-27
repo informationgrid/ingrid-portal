@@ -65,12 +65,12 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static Logger log = LoggerFactory.getLogger( Wms130CapabilitiesParser.class );
     
     // Version 1.3.0 of the WMS uses 'WMS_Capabilities' as its root element (OGC 06-042, Chapter 7.2.4.1)
-    private final static String XPATH_EXP_WMS_1_3_0_TITLE = "/wms:WMS_Capabilities/wms:Service[1]/wms:Title[1]";
-    private final static String XPATH_EXP_WMS_1_3_0_ABSTRACT = "/wms:WMS_Capabilities/wms:Service[1]/wms:Abstract[1]";
-    private final static String XPATH_EXP_WMS_1_3_0_VERSION = "/wms:WMS_Capabilities/@version";
-    private final static String XPATH_EXP_WMS_1_3_0_OP_GET_CAPABILITIES_HREF = "/wms:WMS_Capabilities/wms:Capability[1]/wms:Request[1]/wms:GetCapabilities[1]/wms:DCPType[1]/wms:HTTP[1]/wms:Get[1]/wms:OnlineResource[1]/@xlink:href";
-    private final static String XPATH_EXP_WMS_1_3_0_OP_GET_MAP_HREF = "/wms:WMS_Capabilities/wms:Capability[1]/wms:Request[1]/wms:GetMap[1]/wms:DCPType[1]/wms:HTTP[1]/wms:Get[1]/wms:OnlineResource[1]/@xlink:href";
-    private final static String XPATH_EXP_WMS_1_3_0_OP_GET_FEATURE_INFO_HREF = "/wms:WMS_Capabilities/wms:Capability[1]/wms:Request[1]/wms:GetFeatureInfo[1]/wms:DCPType[1]/wms:HTTP[1]/wms:Get[1]/wms:OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_3_0_TITLE = "/wms:WMS_Capabilities/wms:Service[1]/wms:Title[1]";
+    private static final String XPATH_EXP_WMS_1_3_0_ABSTRACT = "/wms:WMS_Capabilities/wms:Service[1]/wms:Abstract[1]";
+    private static final String XPATH_EXP_WMS_1_3_0_VERSION = "/wms:WMS_Capabilities/@version";
+    private static final String XPATH_EXP_WMS_1_3_0_OP_GET_CAPABILITIES_HREF = "/wms:WMS_Capabilities/wms:Capability[1]/wms:Request[1]/wms:GetCapabilities[1]/wms:DCPType[1]/wms:HTTP[1]/wms:Get[1]/wms:OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_3_0_OP_GET_MAP_HREF = "/wms:WMS_Capabilities/wms:Capability[1]/wms:Request[1]/wms:GetMap[1]/wms:DCPType[1]/wms:HTTP[1]/wms:Get[1]/wms:OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_3_0_OP_GET_FEATURE_INFO_HREF = "/wms:WMS_Capabilities/wms:Capability[1]/wms:Request[1]/wms:GetFeatureInfo[1]/wms:DCPType[1]/wms:HTTP[1]/wms:Get[1]/wms:OnlineResource[1]/@xlink:href";
     private static final String XPATH_EXP_WMS_FEES = "/wms:WMS_Capabilities/wms:Service/wms:Fees";
     private static final String XPATH_EXP_WMS_ACCESS_CONSTRAINTS = "/wms:WMS_Capabilities/wms:Service/wms:AccessConstraints";
     private static final String XPATH_EXP_WMS_ONLINE_RESOURCE = "/wms:WMS_Capabilities/wms:Service/wms:OnlineResource";

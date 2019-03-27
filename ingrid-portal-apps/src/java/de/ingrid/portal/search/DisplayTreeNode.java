@@ -67,7 +67,7 @@ public class DisplayTreeNode extends HashMap {
 	public DisplayTreeNode(String id, String name, boolean isOpen) {
 		super();
 		this.put("name", name);
-        this.put("isOpen", new Boolean(isOpen));
+        this.put("isOpen", isOpen);
         this.put("id", id);
 	}
 
@@ -207,7 +207,7 @@ public class DisplayTreeNode extends HashMap {
             parents.add((String)node.get("topicID"));
             return parents;
         }
-        return new ArrayList<String>();
+        return new ArrayList<>();
     }
     
     /**
@@ -248,14 +248,14 @@ public class DisplayTreeNode extends HashMap {
     /**
      * ONLY USE ON ROOT NODE !!! Id is stored in node !
      */
-    synchronized public int getNextId() {
-    	String KEY_NEXT_ID = "nextId";
-        Integer nextId = (Integer) this.get(KEY_NEXT_ID);
+    public synchronized int getNextId() {
+    	String keyNextId = "nextId";
+        Integer nextId = (Integer) this.get(keyNextId);
         if (nextId == null) {
-        	nextId = new Integer(0);
+        	nextId = 0;
         }
 
-    	this.put(KEY_NEXT_ID, new Integer(nextId.intValue() + 1));
+    	this.put(keyNextId, nextId.intValue() + 1);
     	
     	return nextId.intValue();
     }

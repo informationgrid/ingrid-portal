@@ -59,9 +59,7 @@ public class IngridSysCodeList {
             langId = "de";
         } else if (!locale.getLanguage().equals(new Locale("en", "", "").getLanguage())) {
         	// different language, we use english !
-        	if (log.isDebugEnabled()) {
-        		log.debug("Unknown language for syslists ('" + locale.getLanguage() + "'), we use english syslist");
-        	}
+    		log.debug("Unknown language for syslists ('" + locale.getLanguage() + "'), we use english syslist");
         }
         
         return CodeListServiceFactory.instance().getCodeListValue(String.valueOf(codeListId), String.valueOf(domainId), langId);
@@ -96,20 +94,15 @@ public class IngridSysCodeList {
                     }
                     if(checkDataId) {
                         String data = entry.getData();
-                        if(data != null) {
-                            if(data.startsWith("{") && data.endsWith("}")) {
-                                try {
-                                    JSONObject json = new JSONObject(data);
-                                    if(json != null) {
-                                        String jsonId = json.getString("id");
-                                        if(jsonId.equals(domainValue)) {
-                                            return getName(codeListId, entry.getId());
-                                        }
-                                    }
-                                } catch (JSONException e) {
-                                    continue;
+                        if(data != null && data.startsWith("{") && data.endsWith("}")) {
+                            try {
+                                JSONObject json = new JSONObject(data);
+                                String jsonId = json.getString("id");
+                                if(jsonId.equals(domainValue)) {
+                                    return getName(codeListId, entry.getId());
                                 }
-                                
+                            } catch (JSONException e) {
+                                log.error("Error on getNameByCodeListValue.", e);
                             }
                         }
                     }

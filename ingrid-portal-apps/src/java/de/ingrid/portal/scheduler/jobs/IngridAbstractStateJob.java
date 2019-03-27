@@ -36,7 +36,7 @@ import org.quartz.StatefulJob;
  */
 public abstract class IngridAbstractStateJob implements StatefulJob {
 
-	private final static Logger log = LoggerFactory.getLogger(IngridAbstractStateJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridAbstractStateJob.class);
 
 	public static final int STATUS_OK = 0;
 

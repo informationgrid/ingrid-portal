@@ -42,7 +42,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class URLValidatorJobListener implements JobListener {
 
-	private final static Logger log = Logger.getLogger(URLValidatorJobListener.class);	
+	private static final Logger log = Logger.getLogger(URLValidatorJobListener.class);	
 
 	private final String listenerName;
 	private final String plugId;

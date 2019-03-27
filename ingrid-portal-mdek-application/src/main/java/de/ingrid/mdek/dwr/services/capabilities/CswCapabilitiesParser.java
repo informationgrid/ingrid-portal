@@ -52,31 +52,31 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
     private static final String XPATH_EXP_CSW_EXTENDED_CAPABILITIES = "/csw:Capabilities/ows:OperationsMetadata/inspire_ds:ExtendedCapabilities";
     private static final String XPATH_EXT_CSW_SERVICECONTACT = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact";
     private static final String XPATH_EXP_CSW_KEYWORDS = "/csw:Capabilities/ows:ServiceIdentification/ows:Keywords/ows:Keyword/text()";
-    private final static String XPATH_EXP_CSW_TITLE = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Title[1]";
-    private final static String XPATH_EXP_CSW_ABSTRACT = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Abstract[1]";
-    private final static String XPATH_EXP_CSW_VERSION = "/csw:Capabilities/@version";
+    private static final String XPATH_EXP_CSW_TITLE = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Title[1]";
+    private static final String XPATH_EXP_CSW_ABSTRACT = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Abstract[1]";
+    private static final String XPATH_EXP_CSW_VERSION = "/csw:Capabilities/@version";
 
-    private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_CSW_FEES = "/csw:Capabilities/ows:ServiceIdentification/ows:Fees";
-    private final static String XPATH_EXP_CSW_ACCESS_CONSTRAINTS = "/csw:Capabilities/ows:ServiceIdentification/ows:AccessConstraints";
-    private final static String XPATH_EXP_CSW_ONLINE_RESOURCE = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource";
+    private static final String XPATH_EXP_CSW_FEES = "/csw:Capabilities/ows:ServiceIdentification/ows:Fees";
+    private static final String XPATH_EXP_CSW_ACCESS_CONSTRAINTS = "/csw:Capabilities/ows:ServiceIdentification/ows:AccessConstraints";
+    private static final String XPATH_EXP_CSW_ONLINE_RESOURCE = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource";
     
     private Map<String, Integer> versionSyslistMap;
     

@@ -34,7 +34,6 @@ import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.httpclient.Credentials;
 import org.apache.commons.httpclient.HttpClient;
@@ -46,16 +45,16 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.auth.AuthScope;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpClientParams;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.hibernate.HibernateUtil;
@@ -73,7 +72,7 @@ import de.ingrid.utils.PlugDescription;
  */
 public class UpgradeClientJob extends IngridMonitorAbstractJob {
 
-    protected final static Logger log = LoggerFactory.getLogger(UpgradeClientJob.class);
+    protected static final Logger log = LoggerFactory.getLogger(UpgradeClientJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -120,7 +119,6 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             status 		= STATUS_ERROR;
 			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
 			log.error("An exception occured: " + e.getMessage());
-			e.printStackTrace();
         } finally {
             computeTime(dataMap, stopTimer());
             sendEmailOnUpdate(installedComponents);
@@ -133,7 +131,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
     }
 
     private Set<String> getComponentTypes(Map<String, IngridComponent> serverComponents) {
-        Set<String> types = new HashSet<String>();
+        Set<String> types = new HashSet<>();
         Collection<IngridComponent> components = serverComponents.values();
         
         for (IngridComponent component : components) {
@@ -191,7 +189,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
     }
     
     private List<String> getTranslatedPartner(List<IngridPartner> allIngridPartnerInDB, String[] partnerFromPD) {
-        List<String> partners = new ArrayList<String>();
+        List<String> partners = new ArrayList<>();
         boolean added = false;
         for (String partner : partnerFromPD) {
             added = false;
@@ -209,7 +207,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
     }
     
     private List<String> getTranslatedProvider(List<IngridProvider> allIngridProviderInDB, String[] providerFromPD) {
-        List<String> providers = new ArrayList<String>();
+        List<String> providers = new ArrayList<>();
         boolean added = false;
         for (String provider : providerFromPD) {
             added = false;
@@ -239,7 +237,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
                     // compare using build number only if it is provided in the version info of the managed component
                     // (on the client side)
                     String serverVersion = component.getVersionAvailable();
-                    if (component.getVersionAvailableBuild() != "") {
+                    if (StringUtils.isEmpty(component.getVersionAvailableBuild())) {
                         serverVersion += " Build:" + component.getVersionAvailableBuild(); 
                     }
                     if (component.getVersion().compareToIgnoreCase(serverVersion) >= 0) {
@@ -259,7 +257,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
     }
 
     public Map<String,IngridComponent> getComponentsFromUpgrader(String url) {
-        Map<String,IngridComponent> components = new HashMap<String,IngridComponent>();
+        Map<String,IngridComponent> components = new HashMap<>();
         
         InputStream feed = getFeed(url);
         // return empty map if upgrade server couldn't be reached
@@ -267,34 +265,34 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             return components;
         
         Document document = buildDocument(feed);
-        
-        NodeList entryNodes  = document.getElementsByTagName("entry");
-        
-        for (int i=0; i<entryNodes.getLength(); i++) {
-            String type = findSubNode("type", entryNodes.item(i)).getTextContent();
-            // if type is unknown then skip
-            if (type.toLowerCase().equals("unknown")) {
-                continue;
-            }
-            IngridComponent component = new IngridComponent(
-                    findSubNode("title", entryNodes.item(i)).getTextContent(),
-                    type);
+        if(document != null) {
+            NodeList entryNodes  = document.getElementsByTagName("entry");
             
-            component.setVersionAvailable(findSubNode("version", entryNodes.item(i)).getTextContent());
-            component.setVersionAvailableBuild(findSubNode("build", entryNodes.item(i)).getTextContent());
-            component.setDownloadLink(findSubNode("link", entryNodes.item(i)).getAttributes().getNamedItem("href").getTextContent());
-            Node changeLogLink = findSubNode("changelogLink", entryNodes.item(i));
-            if (changeLogLink != null)
-                component.setChangelogLink(findSubNode("changelogLink", entryNodes.item(i)).getTextContent());
-            
-            // only add newer version of a component
-            if ((components.get(component.getType()) == null) || 
-                    ((components.get(type) != null)
-                    && (components.get(type).getVersionAvailable().compareToIgnoreCase(component.getVersionAvailable()) < 0))) {
-                components.put(component.getType(), component);
+            for (int i=0; i<entryNodes.getLength(); i++) {
+                String type = findSubNode("type", entryNodes.item(i)).getTextContent();
+                // if type is unknown then skip
+                if (type.equalsIgnoreCase("unknown")) {
+                    continue;
+                }
+                IngridComponent component = new IngridComponent(
+                        findSubNode("title", entryNodes.item(i)).getTextContent(),
+                        type);
+                
+                component.setVersionAvailable(findSubNode("version", entryNodes.item(i)).getTextContent());
+                component.setVersionAvailableBuild(findSubNode("build", entryNodes.item(i)).getTextContent());
+                component.setDownloadLink(findSubNode("link", entryNodes.item(i)).getAttributes().getNamedItem("href").getTextContent());
+                Node changeLogLink = findSubNode("changelogLink", entryNodes.item(i));
+                if (changeLogLink != null)
+                    component.setChangelogLink(findSubNode("changelogLink", entryNodes.item(i)).getTextContent());
+                
+                // only add newer version of a component
+                if ((components.get(component.getType()) == null) || 
+                        ((components.get(type) != null)
+                        && (components.get(type).getVersionAvailable().compareToIgnoreCase(component.getVersionAvailable()) < 0))) {
+                    components.put(component.getType(), component);
+                }
             }
         }
-        
         return components;
     }
     
@@ -309,8 +307,8 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         NodeList list = node.getChildNodes();
         for (int i=0; i < list.getLength(); i++) {
           Node subnode = list.item(i);
-          if (subnode.getNodeType() == Node.ELEMENT_NODE) {
-            if (subnode.getNodeName().equals(name)) return subnode;
+          if (subnode.getNodeType() == Node.ELEMENT_NODE && subnode.getNodeName().equals(name)) {
+            return subnode;
           }
         }
         return null;
@@ -352,7 +350,7 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
      */
     private void setCredentialsIfAny(HttpClient client) {
         String username = PortalConfig.getInstance().getString(PortalConfig.UPGRADE_SERVER_USERNAME);
-        String password = PortalConfig.getInstance().getString(PortalConfig.UPGRADE_SERVER_PASSWORD);
+        String password = PortalConfig.getInstance().getString(PortalConfig.UPGRADE_SERVER_PW);
         if (username != null && !username.isEmpty() && password != null && !password.isEmpty()) {
             Credentials defaultcreds = new UsernamePasswordCredentials(username, password);
             //client.getState().setCredentials(new AuthScope("localhost", 80, AuthScope.ANY_REALM), defaultcreds);
@@ -367,7 +365,6 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
             return builder.parse(input);
         } catch (Exception e) {
             log.error( "Error building document from upgrade client response", e );
-            e.printStackTrace();
         }
         return null;
     }

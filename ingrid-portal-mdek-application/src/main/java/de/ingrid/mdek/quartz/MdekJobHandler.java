@@ -56,7 +56,7 @@ import de.ingrid.utils.IngridDocument;
 @Service
 public class MdekJobHandler implements BeanFactoryAware {
 
-	private final static Logger log = Logger.getLogger(MdekJobHandler.class);
+	private static final Logger log = Logger.getLogger(MdekJobHandler.class);
 
 	// Spring Bean Factory for lookup of job specific dependencies
 	private BeanFactory beanFactory;

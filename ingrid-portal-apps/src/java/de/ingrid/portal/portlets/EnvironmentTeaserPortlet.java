@@ -41,10 +41,12 @@ import de.ingrid.portal.search.SearchState;
 
 public class EnvironmentTeaserPortlet extends GenericVelocityPortlet {
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -79,6 +81,7 @@ public class EnvironmentTeaserPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 

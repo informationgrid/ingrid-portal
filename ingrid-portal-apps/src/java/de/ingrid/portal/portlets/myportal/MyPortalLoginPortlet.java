@@ -59,7 +59,7 @@ import java.util.*;
  */
 public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 	
-	private final static Logger log = LoggerFactory.getLogger(MyPortalLoginPortlet.class);
+	private static final Logger log = LoggerFactory.getLogger(MyPortalLoginPortlet.class);
 	
 	private static final String VIEW_SHIB = "/WEB-INF/templates/myportal/myportal_shib.vm";
 
@@ -68,12 +68,13 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
      * {portletApplication}::{portlet}
      * Taken from org.apache.jetspeed.components.portletregistry.PersistenceBrokerPortletRegistry
      */
-    static public final String PORTLET_UNIQUE_NAME_SEPARATOR = "::";
+    public static final String PORTLET_UNIQUE_NAME_SEPARATOR = "::";
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         // check SSO Login, set in ShibbolethPortalFilter !
@@ -107,15 +108,15 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
             if (errorCode.equals(LoginConstants.ERROR_UNKNOWN_USER.toString())) {
                 frm.setError(LoginForm.FIELD_USERNAME, "login.error.unknownUser");
             } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
-                frm.setError(LoginForm.FIELD_PASSWORD, "login.error.invalidPassword");
+                frm.setError(LoginForm.FIELD_PW, "login.error.invalidPassword");
             } else if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_DISABLED.toString())) {
-                frm.setError(LoginForm.FIELD_PASSWORD, "login.error.userDisabled");
+                frm.setError(LoginForm.FIELD_PW, "login.error.userDisabled");
             } else {
                 frm.setError("", "login.error.general");
             }
         } else if (!frm.hasErrors()) {
-            frm.setINITIAL_USERNAME(messages.getString("login.form.username.initialValue"));
-            frm.setINITIAL_PASSWORD(messages.getString("login.form.passwd.initialValue"));
+            frm.setInitialUsername(messages.getString("login.form.username.initialValue"));
+            frm.setInitialPassword(messages.getString("login.form.passwd.initialValue"));
             frm.init();
             String loginRedirect = request.getParameter(Settings.PARAM_LOGIN_REDIRECT);
             if (loginRedirect == null || loginRedirect.length() == 0) {
@@ -127,7 +128,6 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         }
         context.put("actionForm", frm);
         context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
-        context.put("loginConstants", new FieldMethodizer(new LoginConstants()));
         context.put("enableNewUser", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_ENABLE_NEW_USER, true ));
         super.doView(request, response);
     }
@@ -136,6 +136,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
 
         LoginForm frm = (LoginForm) Utils.getActionForm(request, LoginForm.SESSION_KEY, LoginForm.class);
@@ -184,7 +185,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         	List<String> groups = getInitialParameterFromOtherPortlet("groups");
         	List<String> rulesNames = getInitialParameterFromOtherPortlet("rulesNames");
         	List<String> rulesValues = getInitialParameterFromOtherPortlet("rulesValues");
-        	Map<String, String> rules = new HashMap<String, String>();
+        	Map<String, String> rules = new HashMap<>();
         	for (int ix = 0; ix < ((rulesNames.size() < rulesValues.size()) ? rulesNames.size() : rulesValues.size()); ix++) {
         	    // Jetspeed 2.3 vice versa !
                 //rules.put(rulesNames.get(ix), rulesValues.get(ix));
@@ -238,9 +239,9 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 				    addAdminSystemRole(username);
 				}
 			} catch (RegistrationException e) {
-				e.printStackTrace();
+				log.error("RegistrationException." , e);
 			} catch (SecurityException e) {
-                e.printStackTrace();
+			    log.error("SecurityException." , e);
             }
         } else {
             Integer errorCode = (Integer) ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
@@ -283,7 +284,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 	}
 
 	private Map<String, String> getUserAttributes(ActionRequest request) {
-    	Map<String, String> userAttributes = new HashMap<String, String>();
+    	Map<String, String> userAttributes = new HashMap<>();
     	String username = (String)request.getAttribute(Settings.USER_AUTH_INFO);
     	
         // we'll assume that these map back to PLT.D values
@@ -306,11 +307,11 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
     
     private List<String> getInitParamAsList(InitParam initParam) {
         if (initParam == null)
-            return new ArrayList<String>();
+            return new ArrayList<>();
         
         String temp = initParam.getParamValue();
         if (temp == null)
-            return new ArrayList<String>();
+            return new ArrayList<>();
 
         String[] temps = temp.split("\\,");
         for (int ix = 0; ix < temps.length; ix++)

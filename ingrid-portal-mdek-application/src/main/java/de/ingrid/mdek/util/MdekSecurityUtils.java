@@ -47,7 +47,7 @@ import de.ingrid.mdek.services.persistence.db.IGenericDao;
 @Service
 public class MdekSecurityUtils {
 
-	private final static Logger log = Logger.getLogger(MdekSecurityUtils.class);
+	private static final Logger log = Logger.getLogger(MdekSecurityUtils.class);
 
 	// Injected by Spring
 	private static IDaoFactory daoFactory;

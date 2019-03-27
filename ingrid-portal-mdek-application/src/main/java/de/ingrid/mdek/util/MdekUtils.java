@@ -59,7 +59,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class MdekUtils {
 
-	private final static Logger log = Logger.getLogger(MdekUtils.class);
+	private static final Logger log = Logger.getLogger(MdekUtils.class);
 
 	public static IngridDocument extractAdditionalInformationFromResponse(IngridDocument response) {
 		IngridDocument result = getResultFromResponse(response);
@@ -95,7 +95,7 @@ public class MdekUtils {
 		return result;
 	}
 
-	private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	private static final SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 	public static Date convertTimestampToDate(String timeStamp) {
 		if (timeStamp != null && timeStamp.length() != 0) {

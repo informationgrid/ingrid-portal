@@ -36,7 +36,7 @@ import de.ingrid.external.om.TreeTerm;
 
 public class SNSServiceRDF implements ThesaurusService {
     
-    private final static Logger log = Logger.getLogger(SNSServiceRDF.class);
+    private static final Logger log = Logger.getLogger(SNSServiceRDF.class);
     
     private RDFReader rdfReader;
     private RDFMapper rdfMapper;

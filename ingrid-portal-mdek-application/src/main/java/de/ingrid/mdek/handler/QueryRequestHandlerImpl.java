@@ -43,7 +43,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("queryRequestHandler")
 public class QueryRequestHandlerImpl implements QueryRequestHandler {
 
-	private final static Logger log = Logger.getLogger(QueryRequestHandlerImpl.class);
+	private static final Logger log = Logger.getLogger(QueryRequestHandlerImpl.class);
 
 	// Injected by Spring
 	@Autowired

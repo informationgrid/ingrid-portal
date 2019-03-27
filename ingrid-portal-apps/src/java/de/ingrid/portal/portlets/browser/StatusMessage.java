@@ -58,13 +58,13 @@ public class StatusMessage implements Serializable
     
     public StatusMessage(String text, String type)
     {
-        this.text = new String(text);
+        this.text = text;
         this.type = type;
     }
 
     public StatusMessage(String text)
     {
-        this.text = new String(text);
+        this.text = text;
         this.type = INFO;
     }
     

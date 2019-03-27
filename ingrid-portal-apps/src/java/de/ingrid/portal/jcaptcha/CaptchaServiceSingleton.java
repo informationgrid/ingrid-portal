@@ -49,11 +49,8 @@ public class CaptchaServiceSingleton {
 		CaptchaStore captchaStore = new FastHashMapCaptchaStore();
 		captchaStore.empty();
 
-		ImageCaptchaService service = new DefaultManageableImageCaptchaService(
+		return new DefaultManageableImageCaptchaService(
 				captchaStore, engine, 180, 100000, 75000);
-
-		return service;
-
 	}
 
 }

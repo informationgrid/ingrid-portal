@@ -51,15 +51,15 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
     private static final String XPATH_EXP_WCS_ACCESS_CONSTRAINTS = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:AccessConstraints";
     private static final String XPATH_EXP_WCS_ONLINE_RESOURCE = "/wcs11:Capabilities/ows11:ServiceProvider/ows11:ServiceContact/ows11:ContactInfo/ows11:OnlineResource";
 
-    private final static String XPATH_EXP_WCS_TITLE = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
-    private final static String XPATH_EXP_WCS_ABSTRACT = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
-    private final static String XPATH_EXP_WCS_VERSION = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
-    private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_TITLE = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
+    private static final String XPATH_EXP_WCS_ABSTRACT = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
+    private static final String XPATH_EXP_WCS_VERSION = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
+    private static final String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
     private static final String XPATH_EXP_WCS_KEYWORDS = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:Keywords/ows11:Keyword";
 
     

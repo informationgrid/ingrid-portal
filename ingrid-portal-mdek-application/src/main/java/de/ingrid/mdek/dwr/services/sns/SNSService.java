@@ -54,7 +54,7 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 @Qualifier("sns")
 public class SNSService {
 
-	private final static Logger log = Logger.getLogger(SNSService.class);	
+	private static final Logger log = Logger.getLogger(SNSService.class);	
 
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;

@@ -33,7 +33,7 @@ import org.directwebremoting.WebContextFactory;
 
 public class UtilityServiceImpl {
 
-	private final static Logger log = Logger.getLogger(UtilityServiceImpl.class);
+	private static final Logger log = Logger.getLogger(UtilityServiceImpl.class);
 
 	public void refreshSession() {
 		WebContext wctx = WebContextFactory.get();

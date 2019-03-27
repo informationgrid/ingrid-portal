@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SNSChronicleInterfaceImpl implements ChronicleInterface {
 
-    private final static Logger log = LoggerFactory.getLogger(SNSChronicleInterfaceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(SNSChronicleInterfaceImpl.class);
 
     private static ChronicleInterface instance = null;
 
@@ -42,14 +42,13 @@ public class SNSChronicleInterfaceImpl implements ChronicleInterface {
             try {
                 instance = new SNSChronicleInterfaceImpl();
             } catch (Exception e) {
-                log.error("Error initiating the SNSChronicle Interface");
-                e.printStackTrace();
+                log.error("Error initiating the SNSChronicle Interface", e);
             }
         }
         return instance;
     }
 
-    private SNSChronicleInterfaceImpl() throws Exception {
+    private SNSChronicleInterfaceImpl() {
         super();
     }
 }

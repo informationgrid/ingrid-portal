@@ -54,33 +54,33 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
     //private static final String XPATH_EXP_WCTS_ONLINE_RESOURCE = "/wcts:";
     private static final String XPATH_EXP_WCTS_KEYWORDS = "/wcts:Capabilities/owsgeo:ServiceIdentification/owsgeo:Keywords/owsgeo:Keyword";
 
-    private final static String XPATH_EXP_WCTS_TITLE = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Title[1]";
-    private final static String XPATH_EXP_WCTS_ABSTRACT = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Abstract[1]";
-    private final static String XPATH_EXP_WCTS_VERSION = "/wcts:Capabilities/@version";
+    private static final String XPATH_EXP_WCTS_TITLE = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Title[1]";
+    private static final String XPATH_EXP_WCTS_ABSTRACT = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Abstract[1]";
+    private static final String XPATH_EXP_WCTS_VERSION = "/wcts:Capabilities/@version";
 
-    private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     private static final String XPATH_EXT_WCTS_SERVICECONTACT = "/wcts:Capabilities/owsgeo:ServiceProvider/owsgeo:ServiceContact";
 
     private Map<String, Integer> versionSyslistMap;

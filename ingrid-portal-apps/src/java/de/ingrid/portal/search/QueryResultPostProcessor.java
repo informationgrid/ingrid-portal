@@ -51,9 +51,9 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class QueryResultPostProcessor {
 
-    private final static Logger log = LoggerFactory.getLogger(QueryResultPostProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(QueryResultPostProcessor.class);
 
-    public static IngridHitsWrapper processRankedHits(IngridHitsWrapper hits, String ds) {
+    public static IngridHitsWrapper processRankedHits(IngridHitsWrapper hits) {
         try {
             if (hits == null) {
                 return null;
@@ -68,14 +68,14 @@ public class QueryResultPostProcessor {
                     hit = hitArray[i];
                     detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
-                    processRankedHit(hit, detail, ds);
+                    processRankedHit(hit, detail);
                     
                     // also process group sub hits !
                     hit = (IngridHitWrapper) hit.get(Settings.RESULT_KEY_SUB_HIT);
                     if (hit != null) {
                         detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
-                        processRankedHit(hit, detail, ds);
+                        processRankedHit(hit, detail);
                     }
 
                 } catch (Exception ex) {
@@ -93,7 +93,7 @@ public class QueryResultPostProcessor {
         return hits;
     }
 
-    private static void processRankedHit(IngridHitWrapper hit, IngridHitDetail detail, String ds) {
+    private static void processRankedHit(IngridHitWrapper hit, IngridHitDetail detail) {
         // if no detail, skip processing OF THIS HIT !
         if (detail == null) {
             if (log.isErrorEnabled()) {
@@ -120,7 +120,7 @@ public class QueryResultPostProcessor {
 
         // THIS IS THE iPlugClass from PD !!! :(
         if (tmpString.contains("igesearchplug") || (tmpString.contains("dsc") && tmpString.contains("search"))) {
-            processDSCHit(hit, detail, ds);
+            processDSCHit(hit, detail);
         } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher") || tmpString.equals("de.ingrid.iplug.se.seiplug")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
         } else if (tmpString.equals("de.ingrid.iplug.tamino.taminosearcher")) {
@@ -128,7 +128,7 @@ public class QueryResultPostProcessor {
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else if (tmpString.equals("de.ingrid.iplug.opensearch.opensearchplug")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "opensearch");
-        } else if (plugDescr.containsDataType("dsc_other")){
+        } else if (plugDescr != null && plugDescr.containsDataType("dsc_other")){
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else {
@@ -144,7 +144,7 @@ public class QueryResultPostProcessor {
      * @param detail
      * @param ds
      */
-    private static void processDSCHit(IngridHitWrapper hit, IngridHitDetail detail, String ds) {
+    private static void processDSCHit(IngridHitWrapper hit, IngridHitDetail detail) {
         String tmpString = null;
 
         try {
@@ -211,7 +211,7 @@ public class QueryResultPostProcessor {
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
                 // check for protected access setting
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
-                        Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
+                        Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y");
                 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
@@ -230,11 +230,9 @@ public class QueryResultPostProcessor {
             
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
             
-            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
-	              if(UtilsSearch.getDetailValue(detail, "kml").length() > 0){
-	            	  hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId());
-	              }
-            }
+              if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && UtilsSearch.getDetailValue(detail, "kml").length() > 0){
+            	  hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId());
+              }
             // determine type of hit dependent from plug description !!!
             boolean isObject = true;
             Object type = hit.getHit().get("es_type");
@@ -255,7 +253,7 @@ public class QueryResultPostProcessor {
             	}
             }
             if (isObject) {
-                hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(false));
+                hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, false);
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_UDK_CLASS);
                 // take first value if it was an array!
                 if (tmpString.contains(",")) {
@@ -285,7 +283,7 @@ public class QueryResultPostProcessor {
                     }
                 }
             } else {
-                hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, new Boolean(true));
+                hit.put(Settings.RESULT_KEY_UDK_IS_ADDRESS, true);
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
                 hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
 
@@ -376,7 +374,7 @@ public class QueryResultPostProcessor {
                         if (hitArray.length > 0) {
                             // find first parent of the address in the result set
                         	for (int j = 0; j < hitArray.length; j++) {
-                                IngridHitDetail addrDetail = (IngridHitDetail) hitArray[j].getHitDetail();
+                                IngridHitDetail addrDetail = hitArray[j].getHitDetail();
                                 addrClass = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_CLASS);
                                 newAddressId = UtilsSearch.getDetailValue(addrDetail, Settings.HIT_KEY_ADDRESS_ADDRID);
                                 if ((addrClass.equals("0") || addrClass.equals("1"))
@@ -404,7 +402,7 @@ public class QueryResultPostProcessor {
                     hit.put(Settings.RESULT_KEY_UDK_TITLE, tmpTitle);
                 }
             }
-            String cswUrl = (String) PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+            String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
             String id = (String) hit.get(Settings.RESULT_KEY_DOC_UUID);
             if(id != null){
             	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
@@ -416,12 +414,10 @@ public class QueryResultPostProcessor {
                     isMetadata = !Boolean.parseBoolean( hit.get( "is_address" ).toString() );
                 }
             	
-            	if(isMetadata){
-            		if (!cswUrl.isEmpty()) {
-                        String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
-                        hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
-                    }
-            	}
+        		if (isMetadata && !cswUrl.isEmpty()) {
+                    String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
+                    hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
+                }
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -432,7 +428,7 @@ public class QueryResultPostProcessor {
 
     private static String addCapabilitiesInformation(String url) throws UnsupportedEncodingException {
         if (url.toLowerCase().indexOf("request=getcapabilities") == -1) {
-            if (url.indexOf("?") == -1) {
+            if (url.indexOf('?') == -1) {
                 url += "?";
             }
             if (!url.endsWith("?")) {
@@ -466,7 +462,7 @@ public class QueryResultPostProcessor {
 
         if (servicesArray != null && WMSInterfaceImpl.getInstance().hasWMSViewer()) {
             boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
-                    Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y") ? true : false;
+                    Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y");
 
             if (!objServHasAccessConstraint) {
 
@@ -485,7 +481,7 @@ public class QueryResultPostProcessor {
                     // only show FIRST URL which matches the conditions of a WMS getCapabilities URL
 
                     for (int j = 0; j < servicesArray.length; j++) {
-                        if (serviceTypeKey.toLowerCase().equals("2")
+                        if (serviceTypeKey.equalsIgnoreCase("2")
                                 || serviceType.toLowerCase().indexOf("wms") != -1
                                 || serviceType.toLowerCase().indexOf("view") != -1
                                 || (servicesArray[j].toLowerCase().indexOf("service=wms") > -1 && servicesArray[j]
@@ -507,27 +503,25 @@ public class QueryResultPostProcessor {
                     }
                 }
 
-                if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
-                    if (tmpString.length() > 0) {
-                        try {
-                            if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
-                                if (tmpString.indexOf("?") == -1) {
-                                    tmpString = tmpString + "?";
-                                }
-                                if (!tmpString.endsWith("?")) {
-                                    tmpString = tmpString + "&";
-                                }
-                                tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
-                            } else if (tmpString.toLowerCase().indexOf("version=") == -1) {
-                                if (!tmpString.endsWith("&")) {
-                                    tmpString = tmpString + "&";
-                                }
-                                tmpString = tmpString + "VERSION=1.1.1";
+                if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && tmpString.length() > 0) {
+                    try {
+                        if (tmpString.toLowerCase().indexOf("request=getcapabilities") == -1) {
+                            if (tmpString.indexOf('?') == -1) {
+                                tmpString = tmpString + "?";
                             }
-                            hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8") + "||");
-                        } catch (UnsupportedEncodingException e) {
-                            log.error("Error url encoding wms URL!", e);
+                            if (!tmpString.endsWith("?")) {
+                                tmpString = tmpString + "&";
+                            }
+                            tmpString = tmpString + "REQUEST=GetCapabilities&SERVICE=WMS&VERSION=1.1.1";
+                        } else if (tmpString.toLowerCase().indexOf("version=") == -1) {
+                            if (!tmpString.endsWith("&")) {
+                                tmpString = tmpString + "&";
+                            }
+                            tmpString = tmpString + "VERSION=1.1.1";
                         }
+                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8") + "||");
+                    } catch (UnsupportedEncodingException e) {
+                        log.error("Error url encoding wms URL!", e);
                     }
                 }
             }

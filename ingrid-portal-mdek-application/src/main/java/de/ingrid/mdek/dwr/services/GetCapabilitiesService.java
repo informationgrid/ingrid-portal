@@ -52,7 +52,7 @@ import de.ingrid.utils.xpath.XPathUtils;
 
 public class GetCapabilitiesService {
 
-    private final static Logger log = Logger.getLogger( GetCapabilitiesService.class );
+    private static final Logger log = Logger.getLogger( GetCapabilitiesService.class );
 
     private static String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
     private static String ERROR_GETCAP = "ERROR_GETCAP_ERROR";

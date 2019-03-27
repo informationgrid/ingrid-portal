@@ -60,17 +60,17 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXP_WFS_ABSTRACT = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:Abstract";
     private static final String XPATH_EXP_WFS_VERSION = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
     
-    private final static String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
     private static final String XPATH_EXP_WFS_FEES = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:Fees";
     private static final String XPATH_EXP_WFS_ACCESS_CONSTRAINTS = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:AccessConstraints";
     private static final String XPATH_EXP_WFS_ONLINE_RESOURCE = "/wfs20:WFS_Capabilities/ows11:ServiceProvider/ows11:ServiceContact/ows11:ContactInfo/ows11:OnlineResource";

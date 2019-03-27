@@ -59,7 +59,7 @@ import de.ingrid.utils.IngridDocument;
 @Service
 public class ImportServiceImpl {
 
-	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(ImportServiceImpl.class);	
 
 	private enum FileType { GZIP, ZIP, XML, UNKNOWN }
     
@@ -328,7 +328,7 @@ public class ImportServiceImpl {
 // Helper thread which starts an import process
 class ImportEntitiesThread extends Thread {
 
-	private final static Logger log = Logger.getLogger(ImportEntitiesThread.class);	
+	private static final Logger log = Logger.getLogger(ImportEntitiesThread.class);	
 
 	private final CatalogRequestHandler catalogRequestHandler;
 	private final UserData currentUser;

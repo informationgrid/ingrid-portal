@@ -48,7 +48,7 @@ import static de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType.PORTAL_QUICK
 
 public class UVPReport {
 
-    private final static Logger log = LogManager.getLogger(UVPReport.class);
+    private static final Logger log = LogManager.getLogger(UVPReport.class);
 
     private static final String TOTAL_GROUPED = "totalGrouped";
     private static final String TOTAL_NEGATIVE = "totalNegative";

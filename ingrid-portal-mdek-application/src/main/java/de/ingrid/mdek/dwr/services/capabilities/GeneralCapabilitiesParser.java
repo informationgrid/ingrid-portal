@@ -62,12 +62,12 @@ import de.ingrid.utils.xpath.XPathUtils;
  */
 public class GeneralCapabilitiesParser {
     
-    private final static Logger log = Logger.getLogger(GeneralCapabilitiesParser.class);
+    private static final Logger log = Logger.getLogger(GeneralCapabilitiesParser.class);
     
     /** ID of syslist entry "HTTPGet" in Syslist 5180 */
-    protected final static Integer ID_OP_PLATFORM_HTTP_GET = 7;
+    protected static final Integer ID_OP_PLATFORM_HTTP_GET = 7;
     /** ID of syslist entry "HTTPPost" in Syslist 5180 */
-    protected final static Integer ID_OP_PLATFORM_HTTP_POST = 8;
+    protected static final Integer ID_OP_PLATFORM_HTTP_POST = 8;
     
     protected XPathUtils xPathUtils;
     

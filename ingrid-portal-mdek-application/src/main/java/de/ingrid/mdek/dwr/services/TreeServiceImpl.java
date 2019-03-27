@@ -37,27 +37,27 @@ import de.ingrid.mdek.handler.ObjectRequestHandler;
 public class TreeServiceImpl {
 
 	@SuppressWarnings("unused")
-    private final static Logger log = Logger.getLogger(TreeServiceImpl.class);	
+    private static final Logger log = Logger.getLogger(TreeServiceImpl.class);	
 
 	// Injected by Spring
 	private ObjectRequestHandler objectRequestHandler;
 	private AddressRequestHandler addressRequestHandler;
 
 	// OBJECT_ROOT specifies the uuid for the object root node. 
-	private final static String OBJECT_ROOT = "objectRoot"; 
+	private static final String OBJECT_ROOT = "objectRoot"; 
 	// TODO Load from a cfg file -> localization 
-	private final static String OBJECT_ROOT_NAME = "general.objects";
+	private static final String OBJECT_ROOT_NAME = "general.objects";
 
-	private final static String OBJECT_ROOT_DOCTYPE = "Objects";
-	private final static String OBJECT_APPTYPE = "O";
+	private static final String OBJECT_ROOT_DOCTYPE = "Objects";
+	private static final String OBJECT_APPTYPE = "O";
 
 
-	private final static String ADDRESS_ROOT = "addressRoot"; 
-	private final static String ADDRESS_FREE_ROOT = "addressFreeRoot"; 
-	private final static String ADDRESS_ROOT_NAME = "general.addresses";
-	private final static String ADDRESS_FREE_ROOT_NAME = "general.addresses.free";
-	private final static String ADDRESS_ROOT_DOCTYPE = "Addresses";
-	private final static String ADDRESS_APPTYPE = "A";
+	private static final String ADDRESS_ROOT = "addressRoot"; 
+	private static final String ADDRESS_FREE_ROOT = "addressFreeRoot"; 
+	private static final String ADDRESS_ROOT_NAME = "general.addresses";
+	private static final String ADDRESS_FREE_ROOT_NAME = "general.addresses.free";
+	private static final String ADDRESS_ROOT_DOCTYPE = "Addresses";
+	private static final String ADDRESS_APPTYPE = "A";
 
 	public List<TreeNodeBean> getSubTree(String nodeUuid, String nodeType, String language) {
 		if (nodeUuid != null && nodeType == null) {

@@ -57,7 +57,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("catalogRequestHandler")
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
-    private final static Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
+    private static final Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
 
     // Injected by Spring
     @Autowired

@@ -46,10 +46,10 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
     
     public String getAddressClassType() {
         String xpathExpression = "./idf:hierarchyParty";
-        if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-            Node node = XPathUtils.getNode(rootNode, xpathExpression);
-            if(XPathUtils.nodeExists(node, "./idf:addressType")){
-                return XPathUtils.getString(node, "./idf:addressType").trim();
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            Node node = xPathUtils.getNode(rootNode, xpathExpression);
+            if(xPathUtils.nodeExists(node, "./idf:addressType")){
+                return xPathUtils.getString(node, "./idf:addressType").trim();
             }
         }
         return "1"; 
@@ -58,21 +58,21 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
     public String getAddressClassTitle(String addressType) {
         String addressTitle = null;
         String xpathExpression = "./idf:hierarchyParty";
-        if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-            Node node = XPathUtils.getNode(rootNode, xpathExpression);
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            Node node = xPathUtils.getNode(rootNode, xpathExpression);
             if(addressType.equals("2")){
-                if(XPathUtils.nodeExists(node, "./idf:addressIndividualName")){
-                    addressTitle = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
+                if(xPathUtils.nodeExists(node, "./idf:addressIndividualName")){
+                    addressTitle = getIndividualName(xPathUtils.getString(node, "./idf:addressIndividualName").trim());
                 }
             }else if(addressType.equals("3")){
-                if(XPathUtils.nodeExists(node, "./idf:addressIndividualName")){
-                    addressTitle = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
-                }else if(XPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                    addressTitle = XPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                if(xPathUtils.nodeExists(node, "./idf:addressIndividualName")){
+                    addressTitle = getIndividualName(xPathUtils.getString(node, "./idf:addressIndividualName").trim());
+                }else if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
+                    addressTitle = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
                 }
             }else{
-                if(XPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                    addressTitle = XPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
+                    addressTitle = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
                 }    
                 
             }
@@ -81,17 +81,17 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
     }
     
     public ArrayList<HashMap<String, Object>> getReference(String xpathExpression, boolean isObject) {
-        ArrayList<HashMap<String, Object>> linkList = new ArrayList<HashMap<String, Object>>();
+        ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
         
         int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
         
-        if(XPathUtils.nodeExists(rootNode, xpathExpression)){
-            NodeList nodeList = XPathUtils.getNodeList(rootNode, xpathExpression);
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength();i++){
                 
                 if (i >= limitReferences){
                     if (linkList.size() >= limitReferences){
-                        HashMap<String, Object> link = new HashMap<String, Object>();
+                        HashMap<String, Object> link = new HashMap<>();
                         link.put("type", "html");
                         link.put("body", messages.getString("info_limit_references"));
                         linkList.add(link);
@@ -104,43 +104,43 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                 String title = "";
                 String type = "";
                 
-                if(XPathUtils.nodeExists(node, "@uuid")){
-                    uuid = XPathUtils.getString(node, "@uuid").trim();
+                if(xPathUtils.nodeExists(node, "@uuid")){
+                    uuid = xPathUtils.getString(node, "@uuid").trim();
                 }
                 
                 if(isObject){
-                    if(XPathUtils.nodeExists(node, "./idf:objectName")){
-                        title = XPathUtils.getString(node, "./idf:objectName").trim();
+                    if(xPathUtils.nodeExists(node, "./idf:objectName")){
+                        title = xPathUtils.getString(node, "./idf:objectName").trim();
                     }
                     
-                    if(XPathUtils.nodeExists(node, "./idf:objectType")){
-                        type = XPathUtils.getString(node, "./idf:objectType").trim();
+                    if(xPathUtils.nodeExists(node, "./idf:objectType")){
+                        type = xPathUtils.getString(node, "./idf:objectType").trim();
                     }
                 }else{
-                    if(XPathUtils.nodeExists(node, "./idf:addressType")){
-                        type = XPathUtils.getString(node, "./idf:addressType").trim();
+                    if(xPathUtils.nodeExists(node, "./idf:addressType")){
+                        type = xPathUtils.getString(node, "./idf:addressType").trim();
                     }
                     
                     if(type.equals("2")){
-                        if(XPathUtils.nodeExists(node, "./idf:addressIndividualName")){
-                            title = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
+                        if(xPathUtils.nodeExists(node, "./idf:addressIndividualName")){
+                            title = getIndividualName(xPathUtils.getString(node, "./idf:addressIndividualName").trim());
                         }
                     }else if(type.equals("3")){
-                        if(XPathUtils.nodeExists(node, "./idf:addressIndividualName")){
-                            title = getIndividualName(XPathUtils.getString(node, "./idf:addressIndividualName").trim());
-                        }else if(XPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                            title = XPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                        if(xPathUtils.nodeExists(node, "./idf:addressIndividualName")){
+                            title = getIndividualName(xPathUtils.getString(node, "./idf:addressIndividualName").trim());
+                        }else if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
+                            title = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
                         }
                     }else{
-                        if(XPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                            title = XPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                        if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
+                            title = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
                         }
                     }
                 }
                 
                 HashMap link = new HashMap();
-                link.put("hasLinkIcon", new Boolean(true));
-                link.put("isExtern", new Boolean(false));
+                link.put("hasLinkIcon", true);
+                link.put("isExtern", false);
                 link.put("title", title);
                 if(this.iPlugId != null){
                     if(uuid != null){

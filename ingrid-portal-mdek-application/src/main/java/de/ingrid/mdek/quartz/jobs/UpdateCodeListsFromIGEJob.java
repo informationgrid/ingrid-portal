@@ -40,7 +40,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
 
-    private final static Logger log = Logger.getLogger(UpdateCodeListsFromIGEJob.class);
+    private static final Logger log = Logger.getLogger(UpdateCodeListsFromIGEJob.class);
     private ConnectionFacade connectionFacade;
     
     @Override

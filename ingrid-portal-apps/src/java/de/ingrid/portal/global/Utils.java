@@ -44,6 +44,7 @@ import javax.portlet.PortletSession;
 import java.io.*;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
@@ -56,7 +57,7 @@ import java.util.*;
  */
 public class Utils {
 
-	private final static Logger log = LoggerFactory.getLogger(Utils.class);
+	private static final Logger log = LoggerFactory.getLogger(Utils.class);
 
 	/**
 	 * Get ActionForm from Session in given scope. Add new one of given Class if
@@ -85,7 +86,7 @@ public class Utils {
 	 * @param aClass
 	 * @return
 	 */
-	public static IngridSessionPreferences getSessionPreferences(PortletRequest request, String aKey, Class aClass) {
+	public static IngridSessionPreferences getSessionPreferences(PortletRequest request, String aKey) {
 		IngridSessionPreferences obj = (IngridSessionPreferences) request.getPortletSession().getAttribute(aKey,
 				PortletSession.APPLICATION_SCOPE);
 		if (obj == null) {
@@ -173,15 +174,6 @@ public class Utils {
 	 * form "albert", for example, are valid but almost always undesired.
 	 */
 	public static boolean isValidEmailAddress(String aEmailAddress) {
-		// org.apache.portals.gems.util.ValidationHelper doesn't work !
-		// NOTICE: needs
-		// MAVEN_REPO/org.apache.portals.jetspeed-2/jars/portals-gems-2.0.jar
-		// if (!ValidationHelper.isEmailAddress(myEmail, true)) {
-		// return false;
-		// } else {
-		// return true;
-		// }
-
 		if (aEmailAddress == null)
 			return false;
 
@@ -215,14 +207,10 @@ public class Utils {
         if (login == null)
             return false;
 
-        boolean result = true;
         if (login.length() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_LENGTH_CHECK_LOGIN, 4)) {
             return false;
         }
-        if (result) {
-            result = login.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, ""));
-        }
-        return result;
+        return login.matches(PortalConfig.getInstance().getString(PortalConfig.PORTAL_FORM_REGEX_CHECK_LOGIN, ""));
     }
 
     public static boolean isStrengthPassword(String password) {
@@ -232,17 +220,15 @@ public class Utils {
         boolean result = true;
         Zxcvbn zxcvbn = new Zxcvbn();
         Strength strength = zxcvbn.measure(password);
-        if(strength != null) {
-            if(strength.getScore() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_STRENGTH_CHECK_PASSWORD, 3)) {
-                result = false;
-            }
+        if(strength != null && strength.getScore() < PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_STRENGTH_CHECK_PW, 3)) {
+            result = false;
         }
         return result;
     }
 
 	public static String[] getShortStrings(String[] myStrings, int maxLength) {
 		if (myStrings == null) {
-			return null;
+			return new String[0];
 		}
 
 		for (int i = 0; i < myStrings.length; i++) {
@@ -358,7 +344,7 @@ public class Utils {
 	 * @param currentURLParams
 	 * @param newURLParam
 	 */
-	public static void appendURLParameter(StringBuffer currentURLParams, String newURLParam) {
+	public static void appendURLParameter(StringBuilder currentURLParams, String newURLParam) {
 		if (newURLParam != null && newURLParam.length() > 0) {
 			if (!currentURLParams.toString().equals("?")) {
 				currentURLParams.append("&");
@@ -375,12 +361,14 @@ public class Utils {
 	 * @return True for JavaScript enabled, false for not.
 	 */
 	public static boolean isJavaScriptEnabled(PortletRequest request) {
+	    boolean isJavaScriptEnabled = false;
 		String hasJavaScriptStr = (String) request.getPortletSession().getAttribute(Settings.MSG_HAS_JAVASCRIPT, PortletSession.APPLICATION_SCOPE);
 		if (hasJavaScriptStr != null && hasJavaScriptStr.equals(Settings.MSGV_TRUE)) {
-			return true;
+		    isJavaScriptEnabled = true;
 		} else {
-			return false;
+		    isJavaScriptEnabled = false;
 		}
+		return isJavaScriptEnabled;
 	}
 
 	public static String getMD5Hash(String val) {
@@ -424,7 +412,7 @@ public class Utils {
 		context.put(attributesName, attributes);
 		StringWriter sw = new StringWriter();
 
-		try ( BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(realTemplatePath), "UTF8")) ) {
+		try ( BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(realTemplatePath), StandardCharsets.UTF_8)) ) {
 
 			sw = new StringWriter();
 			Velocity.init();
@@ -433,11 +421,10 @@ public class Utils {
 		} catch (Exception e) {
 			log.error("failed to merge velocity template: " + realTemplatePath, e);
 		}
-		String buffer = sw.getBuffer().toString();
-		return buffer;
+		return sw.getBuffer().toString();
 	}
 
-	public static boolean sendEmail(String from, String subject, String[] to, String text, HashMap headers) {
+	public static boolean sendEmail(String from, String subject, String[] to, String text, Map headers) {
 		return sendEmail(from, subject, to, text, headers, null);
 	}
 	
@@ -451,7 +438,7 @@ public class Utils {
 	 * @param headers
 	 * @return true if email was sent, else false
 	 */
-	public static boolean sendEmail(String from, String subject, String[] to, String text, HashMap headers, File attachment) {
+	public static boolean sendEmail(String from, String subject, String[] to, String text, Map headers, File attachment) {
 
 		boolean debug = log.isDebugEnabled();
 		boolean emailSent = false;
@@ -475,12 +462,13 @@ public class Utils {
 			props.put("mail.smtp.starttls.enable","true");
 		    props.put("mail.smtp.socketFactory.port", port);
 		    props.put("mail.smtp.ssl.enable", true);
+		    props.put("mail.smtp.ssl.checkserveridentity", true);
 			props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
 		    props.put("mail.smtp.socketFactory.fallback", "false"); 
 		}
 
 		String user = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_USER, "");
-		String password = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PASSWORD, "");
+		String password = PortalConfig.getInstance().getString(PortalConfig.EMAIL_SMTP_PW, "");
 		
 		if(!user.equals("") && !password.equals("")){
 			props.put("mail.smtp.auth", "true");
@@ -545,8 +533,8 @@ public class Utils {
 		} catch (MessagingException e) {
 			log.error("error sending email.", e);
 		} finally{
-			if(attachment != null){
-				attachment.delete();
+			if(attachment != null && attachment.delete()){
+				log.debug("Delete attachment: " + attachment.getName());
 			}
 		}
 
@@ -679,14 +667,14 @@ public class Utils {
 		
 		if(log.isDebugEnabled()){
 			log.debug("checkSupportedLanguage language: " + supportedLanguage);
-			}
+		}
 		
 		return supportedLanguage;
 	}
 	
-	public static ArrayList getPortalVersion(String applicationRootPath){
+	public static List getPortalVersion(String applicationRootPath){
 		String filePath;
-    	ArrayList<HashMap<String,String>> versionList = new ArrayList<HashMap<String,String>>();
+    	ArrayList<Map<String,String>> versionList = new ArrayList<>();
     		
 		// InGrid portal base data
     	filePath = "./META-INF/MANIFEST.MF";
@@ -736,6 +724,7 @@ class MailAuthenticator extends Authenticator {
 		this.password = password;
 	}
 
+	@Override
 	public PasswordAuthentication getPasswordAuthentication() {
 		return new PasswordAuthentication(this.user, this.password);
 	}

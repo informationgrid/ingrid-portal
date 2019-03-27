@@ -45,7 +45,7 @@ import de.ingrid.utils.ige.profile.beans.ProfileBean;
 
 public class CatalogServiceImpl implements CatalogService {
 
-	private final static Logger log = Logger.getLogger(CatalogServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(CatalogServiceImpl.class);	
 
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;

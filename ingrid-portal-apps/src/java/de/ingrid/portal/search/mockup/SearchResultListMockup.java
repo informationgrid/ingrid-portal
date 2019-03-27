@@ -42,9 +42,9 @@ public class SearchResultListMockup {
     public static SearchResultList getRankedSearchResultList() {
 
         SearchResultList srs = new SearchResultList();
-        int COUNT = 22;
+        int count = 22;
 
-        for (int i = 0; i < COUNT; i++) {
+        for (int i = 0; i < count; i++) {
             IngridDocument rsr = new IngridDocument();
             rsr.put("title", "BMVEL - Blei und Trinkwasser");
             rsr.put("type", "WEBSITE");
@@ -89,7 +89,7 @@ public class SearchResultListMockup {
             rsr.put("service_rubric", "Veranstaltungen, Presse");
             srs.add(rsr);
         }
-        srs.setNumberOfHits(3 * COUNT);
+        srs.setNumberOfHits(3 * count);
 
         return srs;
     }

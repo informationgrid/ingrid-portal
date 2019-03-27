@@ -52,7 +52,7 @@ import de.ingrid.mdek.util.MdekObjectUtils;
 
 public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
 
-    private final static Logger log = Logger.getLogger(ObjectServiceImpl.class);	
+    private static final Logger log = Logger.getLogger(ObjectServiceImpl.class);	
 
 	// Injected by Spring
 	private ObjectRequestHandler objectRequestHandler;
@@ -62,8 +62,8 @@ public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
     private SNSService snsService;
     private CatalogService catalogService;
 
-	private final static String OBJECT_APPTYPE = "O";
-	private final static String OBJECT_INITIAL_DOCTYPE = "Class0_B";
+	private static final String OBJECT_APPTYPE = "O";
+	private static final String OBJECT_INITIAL_DOCTYPE = "Class0_B";
 
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
         this.beanFactory = beanFactory;

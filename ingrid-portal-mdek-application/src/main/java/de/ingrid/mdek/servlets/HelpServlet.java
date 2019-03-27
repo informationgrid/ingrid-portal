@@ -46,7 +46,7 @@ import org.dom4j.tree.DefaultElement;
 
 public class HelpServlet extends HttpServlet {
 
-	private final static Logger log = Logger.getLogger(HelpServlet.class);	
+	private static final Logger log = Logger.getLogger(HelpServlet.class);	
 
 	// base filename for the xml helpfile. Additional chars are added depending on the request locale before '.xml'
 	// e.g. if the base filename is 'mdek-application-help.xml' and the locale is 'en', the resulting String will be:

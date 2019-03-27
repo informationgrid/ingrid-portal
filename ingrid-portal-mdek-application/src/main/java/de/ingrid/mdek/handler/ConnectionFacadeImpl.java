@@ -49,7 +49,7 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 @Service( "connectionFacade" )
 public class ConnectionFacadeImpl implements ConnectionFacade {
 
-	private final static Logger log = Logger.getLogger(ConnectionFacadeImpl.class);
+	private static final Logger log = Logger.getLogger(ConnectionFacadeImpl.class);
 
 	private IMdekClientCaller mdekClientCaller;
 	private IMdekCallerObject mdekCallerObject;

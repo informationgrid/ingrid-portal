@@ -36,7 +36,7 @@ import de.ingrid.portal.search.IPlugVersionInspector;
  */
 public class CatalogTreeDataProviderFactory {
 
-    private final static Logger log = LoggerFactory.getLogger(CatalogTreeDataProviderFactory.class);	
+    private static final Logger log = LoggerFactory.getLogger(CatalogTreeDataProviderFactory.class);	
 	
 	public static CatalogTreeDataProvider getDetailDataPreparer(String version) {
 		
