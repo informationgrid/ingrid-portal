@@ -58,6 +58,7 @@ function onParamChange(params) {
   var paramsE = params.E || '';
   var paramsN = params.N || '';
   var paramsZoom = params.zoom || '';
+  var isPushState = false;
   
   for (var i in params) {
     key.push(i);
@@ -83,27 +84,17 @@ function onParamChange(params) {
         paramsN !== editParamsN && editParamsN !== '') ||
         paramsZoom !== editParamsZ && editParamsZ !== '' ) {
       if (newParams && !isBackHistory) {
-        if (newParams != editParams) {
-          window.history.pushState({id:newParams, params: params}, '', newParams );
-          editParams = newParams
-        }
-      }
-    } else {
-      if (newParams && !isBackHistory) {
-        if (newParams != editParams) {
-          window.history.replaceState({id:newParams, params: params}, '', newParams );
-          editParams = newParams
-        }
+        isPushState = true;
       }
     }
     editParamsE = paramsE;
     editParamsN = paramsN;
     editParamsZ = paramsZoom;
+  }
+  if (isPushState) {
+    window.history.pushState({id:newParams, params: params}, '', newParams );
   } else {
-    if(newParams != editParams){
-      window.history.replaceState({id:newParams, params: params}, '', newParams );
-      editParams = newParams
-    }
+    window.history.replaceState({id:newParams, params: params}, '', newParams );
   }
   isBackHistory = false;
 }
