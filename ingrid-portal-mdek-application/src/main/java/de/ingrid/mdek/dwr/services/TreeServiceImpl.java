@@ -113,7 +113,7 @@ public class TreeServiceImpl {
 	}
 	
 	public List<TreeNodeBean> getAllSubTreeChildren(String nodeUuid, String nodeType, String language) {
-	    List<TreeNodeBean> allChildren = new ArrayList<TreeNodeBean>();
+	    List<TreeNodeBean> allChildren = new ArrayList<>();
 	    List<TreeNodeBean> children = getSubTree(nodeUuid, nodeType, language);
 	    for (TreeNodeBean child : children) {
 	        allChildren.addAll(getAllSubTreeChildren(child.getId(), child.getNodeAppType(), language));
@@ -126,7 +126,7 @@ public class TreeServiceImpl {
 	private static List<TreeNodeBean> createTree(String language)
 	{
 		ResourceBundle res = new MdekResourceBundle(new Locale(language));
-		List<TreeNodeBean> treeRoot = new ArrayList<TreeNodeBean>();
+		List<TreeNodeBean> treeRoot = new ArrayList<>();
 
 		TreeNodeBean objectRoot = new TreeNodeBean();
 		objectRoot.setIsFolder(true);

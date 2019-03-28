@@ -37,8 +37,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.geo.utils.transformation.CoordTransformUtil;
-import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
 import de.ingrid.mdek.SysListCache;
@@ -85,7 +83,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
     public Wfs110CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wfs110NamespaceContext()), syslistCache);
         
-        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "1.1.0", 1 );
         versionSyslistMap.put( "2.0", 2 );
     }
@@ -142,7 +140,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setAddress(getAddress(doc));
         
         // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = mapToOperationBean(doc,
@@ -152,7 +150,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("VERSION=" + version, "Request version", "", true, false));
             paramList.add(new OperationParameterBean("SERVICE=WFS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
@@ -169,7 +167,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             describeFeatureTypeOp.setName("DescribeFeatureType");
             describeFeatureTypeOp.setMethodCall("DescribeFeatureType");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=DescribeFeatureType", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("TYPENAME", "A comma separated list of feature types to describe. If no value is specified that is to be interpreted as all feature types", "", true, false));
             paramList.add(new OperationParameterBean("OUTPUTFORMAT", "The output format to use to describe feature types. text/xml; subtype=gml/3.1.1 must be supported. Other output formats, such as DTD are possible", "", true, false));
@@ -185,7 +183,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getFeatureOp.setName("GetFeature");
             getFeatureOp.setMethodCall("GetFeature");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("outputFormat=GML2", "This value is kept for backward compatability and indicates that an XML instance document must be generated that validates against a GML2 application schema", "", true, false));
             paramList.add(new OperationParameterBean("outputFormat=text/xml; subtype=gml/2.1.2", "Same as GML2", "", true, false));
             paramList.add(new OperationParameterBean("outputFormat=text/xml; subtype=gml/3.1.1; subtype=gml/2.1.2", "This value indicates that an XML instance document must be generated that validates against a GML3 application schema. This is the default values of the outputFormat attribute if the attribute is not specified in the GetFeature request", "", true, false));
@@ -204,7 +202,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getGmlObjectOp.setName("GetGmlObject");
             getGmlObjectOp.setMethodCall("GetGmlObject");
 
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=[GetGmlObject]", "The name of the WFS request", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKDEPTH", "The depth to which nested property XLink linking element locator attribute (href) XLinks are traversed and resolved if possible. The range of valid values consists of positive integers plus \"*\" for unlimited", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKEXPIRY", "The number of minutes a WFS should wait to receive a response to a nested GetGmlObject request.. If no value is specified then the period is implementation dependent", "", true, false));
@@ -222,7 +220,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             lockFeatureOp.setName("LockFeature");
             lockFeatureOp.setMethodCall("LockFeature");
 
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=[LockFeature]", "The name of the WFS request", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKDEPTH", "The depth to which nested property XLink linking element locator attribute (href) XLinks are traversed and resolved if possible. The range of valid values consists of positive integers plus \"*\" for unlimited", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKEXPIRY", "The number of minutes a WFS should wait to receive a response to a nested GetGmlObject request.. If no value is specified then the period is implementation dependent", "", true, false));
@@ -240,7 +238,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             transactionOp.setName("Transaction");
             transactionOp.setMethodCall("Transaction");
 
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=Transaction", "The name of the WFS request", "", false, false));
             paramList.add(new OperationParameterBean("OPERATION=Delete", "Transaction operation to execute. Currently only Delete is defined", "", false, false));
             paramList.add(new OperationParameterBean("TYPENAME (Optional if FEATUREID is specified.)", "A list of feature types upon which to apply the operation", "", false, false));
@@ -263,12 +261,12 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
      * @return
      */
     private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
-        List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
+        List<SpatialReferenceSystemBean> result = new ArrayList<>();
         String[] crs = xPathUtils.getStringArray(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/wfs:DefaultSRS");
         String[] crsOther = xPathUtils.getStringArray(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType/wfs:OtherSRS");
         String[] crsAll = (String[]) ArrayUtils.addAll( crs, crsOther );
         
-        List<String> uniqueCrs = new ArrayList<String>();
+        List<String> uniqueCrs = new ArrayList<>();
         
         // check codelists for matching entryIds
         for (String item : crsAll) {
@@ -299,7 +297,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
      * @return
      */
     private List<LocationBean> getBoundingBoxesFromLayers(Document doc) {
-        List<LocationBean> bboxes = new ArrayList<LocationBean>();
+        List<LocationBean> bboxes = new ArrayList<>();
         NodeList layers = xPathUtils.getNodeList(doc, "/wfs:WFS_Capabilities/wfs:FeatureTypeList/wfs:FeatureType");
         for (int i = 0; i < layers.getLength(); i++) {
             Node layer = layers.item(i);
@@ -314,10 +312,7 @@ public class Wfs110CapabilitiesParser extends GeneralCapabilitiesParser implemen
             box.setLongitude2(Double.valueOf( upper[1] ));
             
             // add a fallback for the name, since it's mandatory
-            String name = xPathUtils.getString(layer, "wfs:Name");
             String title = xPathUtils.getString(layer, "wfs:Title");
-            if (name == null) name = title; 
-            if (name == null) name ="UNKNOWN";
             
             box.setName(title);
             // shall be a free spatial reference, but needs an ID to check for duplications!

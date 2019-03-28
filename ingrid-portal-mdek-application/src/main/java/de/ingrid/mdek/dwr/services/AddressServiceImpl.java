@@ -198,16 +198,12 @@ public class AddressServiceImpl implements AddressService {
 			throw e;
 		}
 
-		// TODO check for errors and throw an exception?
-		// Return a newly created node
-		if (address == null) {;}
-
 		return address;
 	}
 	
 	public List<String> getAddressInstitutions(List<String> uuidList) {
 		MdekAddressBean address 	= null;
-		List<String> institutions 	= new ArrayList<String>();
+		List<String> institutions 	= new ArrayList<>();
 		
 		for (String uuid : uuidList) {
 			address = getAddressData(uuid, false);
@@ -227,8 +223,6 @@ public class AddressServiceImpl implements AddressService {
 			log.error("Error while getting published address data.", e);
 			throw e;
 		}
-
-		if (address == null) {;}
 
 		return address;
 	}

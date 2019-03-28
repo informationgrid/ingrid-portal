@@ -199,11 +199,6 @@ public class QueryResultPostProcessor {
                     
                 }
                 hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray2);
-                
-                // maps will be shown with the coupled services here, so there
-                // is no need for showing a special map link ... we wouldn't even
-                // know which one!
-                //doNotShowMaps = true;
             }
             
             // Capabilities Url
@@ -213,15 +208,13 @@ public class QueryResultPostProcessor {
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
                         Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y");
                 
-                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
-                    for (String url : tmpArray) {
-                        url = addCapabilitiesInformation(url) + "||";
-                        // add layer information to link
-                        if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
-                        // only take the first map url, which should be the only one! 
-                        hit.put(Settings.RESULT_KEY_WMS_URL, url);
-                        break;
-                    }
+                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) &&
+                    tmpArray != null && tmpArray.length > 0 && firstResourceId != null) {
+                    String url = addCapabilitiesInformation(tmpArray[0]) + "||";
+                    // add layer information to link
+                    url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
+                    // only take the first map url, which should be the only one! 
+                    hit.put(Settings.RESULT_KEY_WMS_URL, url);
                 }
             } else {
                 // if an old datasource is connected try to get WMS url the old way
@@ -245,8 +238,8 @@ public class QueryResultPostProcessor {
             // if we have an old iplug connected then we check the plug description's datatypes    
             } else if (plugDescr != null) {
             	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
-            	for (int i=0; i < Settings.QVALUES_DATATYPES_ADDRESS.length; i++) {
-                	if (typesPlug.contains(Settings.QVALUES_DATATYPES_ADDRESS[i])) {
+            	for (int i=0; i < Settings.getQValuesDatatypesAddress().length; i++) {
+                	if (typesPlug.contains(Settings.getQValuesDatatypesAddress()[i])) {
                 		isObject = false;
                 		break;
                 	}

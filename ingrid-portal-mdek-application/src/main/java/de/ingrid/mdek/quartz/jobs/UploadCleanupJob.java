@@ -130,7 +130,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         try {
             IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
             List<String> iplugList = caller.getRegisteredIPlugs();
-            if (iplugList == null || iplugList.size() == 0) {
+            if (iplugList == null || iplugList.isEmpty()) {
                 throw new JobExecutionException("No iPlugs found.");
             }
 
@@ -139,10 +139,10 @@ public class UploadCleanupJob extends QuartzJobBean {
                 log.debug("Processing iplug: "+plugId);
                 try {
                     // initialize file maps
-                    Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
-                    Map<String, StorageItem> unreferencedFiles = new HashMap<String, StorageItem>();
-                    Map<String, StorageItem> expiredFiles = new HashMap<String, StorageItem>();
-                    Map<String, StorageItem> unexpiredFiles = new HashMap<String, StorageItem>();
+                    Map<String, StorageItem> allFiles = new HashMap<>();
+                    Map<String, StorageItem> unreferencedFiles = new HashMap<>();
+                    Map<String, StorageItem> expiredFiles = new HashMap<>();
+                    Map<String, StorageItem> unexpiredFiles = new HashMap<>();
 
                     // collect files from the file storage
                     log.debug("Collecting files from the storage");
@@ -253,7 +253,7 @@ public class UploadCleanupJob extends QuartzJobBean {
      * @throws JobExecutionException
      */
     private Map<String, List<FileReference>> getUploads(String plugId) throws JobExecutionException {
-        Map<String, List<FileReference>> resultList = new HashMap<String, List<FileReference>>();
+        Map<String, List<FileReference>> resultList = new HashMap<>();
         IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
 
         if (mdekCallerQuery == null) {
@@ -343,7 +343,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                                         file, path, (date != null && date.length() > 0) ? LocalDate.parse(date, dateFormatter) : null
                                 );
                                 if (!resultList.containsKey(file)) {
-                                    List<FileReference> references = new ArrayList<FileReference>();
+                                    List<FileReference> references = new ArrayList<>();
                                     references.add(reference);
                                     resultList.put(file, references);
                                 }
@@ -379,7 +379,7 @@ public class UploadCleanupJob extends QuartzJobBean {
      * @throws JobExecutionException
      */
     private Map<String, List<FileReference>> getUploadsFromDataSetsWithoutPhases(String plugId) throws JobExecutionException {
-        Map<String, List<FileReference>> resultList = new HashMap<String, List<FileReference>>();
+        Map<String, List<FileReference>> resultList = new HashMap<>();
         IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
 
         if (mdekCallerQuery == null) {
@@ -460,7 +460,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                                         file, path, (date != null && date.length() > 0) ? LocalDate.parse(date, dateFormatter) : null
                                 );
                                 if (!resultList.containsKey(file)) {
-                                    List<FileReference> references = new ArrayList<FileReference>();
+                                    List<FileReference> references = new ArrayList<>();
                                     references.add(reference);
                                     resultList.put(file, references);
                                 }

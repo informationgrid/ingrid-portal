@@ -116,7 +116,7 @@ public class QueryRequestHandlerImpl implements QueryRequestHandler {
 	}
 
 	public AddressSearchResultBean searchAddresses(MdekAddressBean adr, int startHit, int numHits) {
-		IngridDocument adrDoc = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(adr);
+		IngridDocument adrDoc = MdekAddressUtils.convertFromAddressRepresentation(adr);
 
 		log.debug("Sending the following address search:");
 		log.debug(adrDoc);

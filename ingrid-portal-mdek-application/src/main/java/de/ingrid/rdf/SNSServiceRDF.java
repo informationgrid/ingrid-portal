@@ -41,8 +41,6 @@ public class SNSServiceRDF implements ThesaurusService {
     private RDFReader rdfReader;
     private RDFMapper rdfMapper;
 
-//    private String thesaurusRootURI;
-    
     public void init() {
         rdfReader = new RDFReader();
         rdfMapper = new RDFMapper();
@@ -86,12 +84,6 @@ public class SNSServiceRDF implements ThesaurusService {
     	// different handling if root nodes shall be fetched
    		// check first if description names of children are contained
     	// within the same RDF-file
-    	
-    	// or if we have to fetch each child to get the name information (takes long!)
-    	/*if (resultList == null) {
-	        termModels = rdfReader.fetchAllChildren(termURI);
-	        resultList = rdfMapper.mapToTreeTerms(termModels);
-    	}*/
     	
     	try {
     		ModelWrapper hierarchy = rdfReader.fetchHierarchy(termURI);
@@ -149,7 +141,6 @@ public class SNSServiceRDF implements ThesaurusService {
     }
 
     public void setThesaurusRootURI(String thesaurusRootURI) {
-        //this.thesaurusRootURI = thesaurusRootURI;
     }
 
 }

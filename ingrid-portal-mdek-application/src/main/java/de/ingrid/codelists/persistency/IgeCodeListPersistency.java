@@ -108,7 +108,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
 
         // force to get initial codelist if one connected iPlug has never fetched any codelists
         if (getLowestTimestamp(iplugList) == -1) {
-            return null;
+            return new ArrayList<>();
         }
 
         Integer[] codelistsIds = getSyslistIDs(iplugList.get(0));
@@ -118,7 +118,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         Map<Integer, List<String[]>> listIso = getSyslists(iplugList.get(0), codelistsIds, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
         Map<Integer, List<String[]>> listReq = getSyslists(iplugList.get(0), codelistsIds, UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
 
-        List<CodeList> codelists = new ArrayList<CodeList>();
+        List<CodeList> codelists = new ArrayList<>();
         for (Integer id : codelistsIds) {
             CodeList cl = new CodeList();
             cl.setId(String.valueOf(id));
@@ -130,11 +130,11 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             List<String[]> entriesIso = listIso.get(id);
             List<String[]> entriesReq = listReq.get(id);
             Map<Integer, Map<String, String[]>> allEntries = mergeLists(entriesDe, entriesEn, entriesIso, entriesReq);
-            List<Integer> sortedList = new ArrayList<Integer>();
+            List<Integer> sortedList = new ArrayList<>();
             sortedList.addAll(allEntries.keySet());
             Collections.sort(sortedList);
 
-            List<CodeListEntry> entries = new ArrayList<CodeListEntry>();
+            List<CodeListEntry> entries = new ArrayList<>();
             String defaultEntry = "";
             for (Integer key : sortedList) {
                 Map<String, String[]> entrySet = allEntries.get(key);
@@ -155,10 +155,8 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                     cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, entrySet.get("req")[0]);
                 }
 
-                if (entrySet.get("de") != null) {
-                    if (MdekUtils.YES.equals(entrySet.get("de")[1]))
-                        defaultEntry = cle.getId();
-                }
+                if (entrySet.get("de") != null && MdekUtils.YES.equals(entrySet.get("de")[1]))
+                    defaultEntry = cle.getId();
                 entries.add(cle);
             }
             cl.setEntries(entries);
@@ -176,9 +174,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     }
 
     private Map<Integer, Map<String, String[]>> mergeLists(List<String[]> de, List<String[]> en, List<String[]> iso, List<String[]> req) {
-        Map<Integer, Map<String, String[]>> result = new HashMap<Integer, Map<String,String[]>>();
+        Map<Integer, Map<String, String[]>> result = new HashMap<>();
 
-        Map<String, List<String[]>> allLists = new HashMap<String, List<String[]>>();
+        Map<String, List<String[]>> allLists = new HashMap<>();
         allLists.put("de", de);allLists.put("en", en);allLists.put("iso", iso);allLists.put("req", req);
         for (String key : allLists.keySet()) {
             for (String[] value : allLists.get(key)) {
@@ -239,7 +237,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             log.debug("Number of iplugs found: "+iplugList.size());
             for (String plugId : iplugList) {
                 String user = getCatAdminUuid(plugId);
-                boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, user); ;
+                boolean success = updateConnectedIgePlugs(plugId, doc, highestTimestamp, user);
                 if (!success) {
                     log.error("Could not update codelists in iPlug: " + plugId);
                 }
@@ -248,7 +246,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 log.debug("Successfully written codelists to database!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error on write.", e);
             return false;
         }
 
@@ -261,7 +259,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     }
 
     private List<IngridDocument> mapToIngridDocument(List<CodeList> codelists) throws Exception {
-        List<IngridDocument> lists = new ArrayList<IngridDocument>();
+        List<IngridDocument> lists = new ArrayList<>();
         IngridDocument doc = null;
         try {
             for (CodeList codelist : codelists) {
@@ -269,26 +267,13 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 doc.putInt(MdekKeys.LST_ID, Integer.valueOf(codelist.getId()));
                 doc.put(MdekKeys.LST_NAME, codelist.getName());
                 doc.put(MdekKeys.LST_DESCRIPTION, codelist.getDescription());
-//                doc.put(MdekKeys.LST_LAST_MODIFIED, String.valueOf(codelist.getLastModified()));
                 doc.putBoolean(MdekKeys.LST_MAINTAINABLE, false);
                 if (!codelist.getDefaultEntry().isEmpty())
                     doc.putInt(MdekKeys.LST_DEFAULT_ENTRY_ID, Integer.valueOf(codelist.getDefaultEntry()));
                 // language specific default entry
-                //docEntry.put(MdekKeys.LST_DEFAULT_ENTRY, codelist.getDefaultEntries());
                 IngridDocument[] entriesDoc = new IngridDocument[codelist.getEntries().size()];
                 int i=0;
                 for (CodeListEntry entry : codelist.getEntries()) {
-                	// check umlaute !
-/*
-                    if (log.isDebugEnabled()) {
-                    	if ("100".equals(codelist.getId()) && "28462".equals(entry.getId())) {
-                            log.debug("Checking Umlaut of syslist/entry " + codelist.getId() + "/" + entry.getId());
-                            for (String langKey : entry.getLocalisations().keySet()) {
-                            	log.debug(entry.getLocalisedEntry(langKey));
-                            }
-                    	}
-                    }
-*/
                     IngridDocument docEntry = new IngridDocument();
                     docEntry.putInt(MdekKeys.LST_ENTRY_ID, Integer.valueOf(entry.getId()));
                     docEntry.put(MdekKeys.LST_ENTRY_DESCRIPTION, entry.getDescription());
@@ -304,7 +289,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 lists.add(doc);
             }
         } catch (Exception e) {
-            log.error("Error during mapping of codelist to IngridDocument: " + doc.get(MdekKeys.LST_ID));
+            if(doc != null) {
+                log.error("Error during mapping of codelist to IngridDocument: " + doc.get(MdekKeys.LST_ID));
+            }
             throw e;
         }
 

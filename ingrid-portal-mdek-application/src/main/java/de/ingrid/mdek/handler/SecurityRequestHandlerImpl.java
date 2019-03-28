@@ -81,7 +81,6 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		boolean forceDelete = false;
 		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, forceDelete, MdekSecurityUtils.getCurrentUserUuid());
 		MdekUtils.checkForErrors(response);
-		return;
 	}
 
 	public List<User> getSubUsers(Long userId) {
@@ -115,7 +114,6 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 	public void deleteUser(Long userId) {
 		IngridDocument response = mdekCallerSecurity.deleteUser(connectionFacade.getCurrentPlugId(), userId, MdekSecurityUtils.getCurrentUserUuid());
 		MdekUtils.extractSecurityUserFromResponse(response);
-		return;
 	}
 
 	public User getCatalogAdmin() {

@@ -129,11 +129,7 @@ public class QueryServiceImpl implements QueryService {
 			// Wrap the MdekException in a RuntimeException so dwr can convert it
 			log.error("MdekException while searching for objects.", e);
 			throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(e));
-//		} catch (Exception e) {
-//			log.error("Error while searching for objects.", e);
-//			throw e;
 		}
-//		return new SearchResultBean();
 	}
 
 	public FileTransfer queryHQLToCSV(String hqlQuery) {

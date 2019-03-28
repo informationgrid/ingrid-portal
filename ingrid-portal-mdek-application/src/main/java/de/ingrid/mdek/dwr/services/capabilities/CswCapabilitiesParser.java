@@ -83,7 +83,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
     public CswCapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Csw202NamespaceContext()), syslistCache);
         
-        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "2.0.2", 1 );
     }
     
@@ -126,7 +126,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
         result.setAddress(getAddress(doc));
         
         // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = mapToOperationBean(doc,
@@ -136,7 +136,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("SERVICE=CSW", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
@@ -156,7 +156,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             describeRecordOp.setName("DescribeRecord");
             describeRecordOp.setMethodCall("DescribeRecord");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeRecord", "Fixed value of DescribeRecord, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -177,7 +177,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getDomainOp.setName("GetDomain");
             getDomainOp.setMethodCall("GetDomain");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("request=GetDomain", "Fixed value of GetDomain, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -195,7 +195,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getRecordsOp.setName("GetRecords");
             getRecordsOp.setMethodCall("GetRecords");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("request=GetRecords", "Fixed value of GetRecords, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -227,7 +227,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getRecordByIdOp.setName("GetRecordById");
             getRecordByIdOp.setMethodCall("GetRecordById");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("request=GetRecordById", "Fixed value of GetRecordById, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("Id", "Comma separated list of anyURI", "", false, false));
             paramList.add(new OperationParameterBean("ElementSetName", "CodeList with allowed values: 'brief', 'summary' or 'full'", "", true, false));
@@ -245,7 +245,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             harvestOp.setName("Harvest");
             harvestOp.setMethodCall("Harvest");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("request=Harvest", "Fixed value of Harvest, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));

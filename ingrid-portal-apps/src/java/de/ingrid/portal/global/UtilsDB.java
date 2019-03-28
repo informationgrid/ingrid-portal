@@ -76,7 +76,7 @@ public class UtilsDB {
     /** cache for chronicle eventTypes */
     private static List chronicleEventTypes = null;
 
-    public static boolean getAlwaysReloadDBData() {
+    public static synchronized boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
     }
 

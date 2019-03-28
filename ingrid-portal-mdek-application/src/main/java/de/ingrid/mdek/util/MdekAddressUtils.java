@@ -54,7 +54,7 @@ public class MdekAddressUtils {
     }
 	
 	public static IngridDocument convertFromAddressRepresentation(MdekAddressBean adr) {
-		return (IngridDocument) dataMapper.convertFromAddressRepresentation(adr);
+		return dataMapper.convertFromAddressRepresentation(adr);
 	}
 
 	
@@ -85,7 +85,7 @@ public class MdekAddressUtils {
 	}
 
 	public static List<MdekAddressBean> extractDetailedAddresses(IngridDocument doc) {
-		List<MdekAddressBean> results = new ArrayList<MdekAddressBean>();
+		List<MdekAddressBean> results = new ArrayList<>();
 
 		if (doc != null) {
 			List<IngridDocument> adrs = (List<IngridDocument>) doc.get(MdekKeys.ADR_ENTITIES);
@@ -104,7 +104,7 @@ public class MdekAddressUtils {
 			return extractDetailedAddresses(result);
 		} else {
 			MdekErrorUtils.handleError(response);
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
@@ -114,7 +114,7 @@ public class MdekAddressUtils {
 		List<TreeNodeBean> nodeList = null;
 
 		if (result != null) {
-			nodeList = new ArrayList<TreeNodeBean>();
+			nodeList = new ArrayList<>();
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
 			for (IngridDocument adrEntity : adrs) {
 				nodeList.add(dataMapper.getSimpleAddressRepresentation(adrEntity));
@@ -132,7 +132,7 @@ public class MdekAddressUtils {
 
 		if (result != null) {
 			List<IngridDocument> adrs = (List<IngridDocument>) result.get(MdekKeys.ADR_ENTITIES);
-			List<MdekAddressBean> nodeList = new ArrayList<MdekAddressBean>();
+			List<MdekAddressBean> nodeList = new ArrayList<>();
 
 			if (adrs == null) {
 				return null;
@@ -155,7 +155,7 @@ public class MdekAddressUtils {
 			}
 
 			// Additional data
-			Map<String, String> additionalData = new HashMap<String, String>();
+			Map<String, String> additionalData = new HashMap<>();
 			searchResult.setAdditionalData(additionalData);
 			Long totalNumQAAssigned = (Long) result.get(MdekKeys.TOTAL_NUM_QA_ASSIGNED);
 			if (totalNumQAAssigned != null) {
@@ -188,13 +188,13 @@ public class MdekAddressUtils {
 
 	public static AddressStatisticsResultBean extractAddressStatistics(IngridDocument result) {
 		AddressStatisticsResultBean res = new AddressStatisticsResultBean();
-		Map<Integer, StatisticsBean> resultMap = new HashMap<Integer, StatisticsBean>();
+		Map<Integer, StatisticsBean> resultMap = new HashMap<>();
 
 		Object[] adrClasses = EnumUtil.getDbValues(AddressType.class);
 		Object[] workStates = EnumUtil.getDbValues(WorkState.class);
 		for (Object adrClass : adrClasses) {
 			StatisticsBean stats = new StatisticsBean();
-			Map<String, Long> resClassMap = new HashMap<String, Long>();
+			Map<String, Long> resClassMap = new HashMap<>();
 			IngridDocument classMap = (IngridDocument) result.get(adrClass);
 
 			if (classMap == null) {
@@ -208,7 +208,6 @@ public class MdekAddressUtils {
 				for (Object workState : workStates) {
 					// dwr uses the 'toString' method to convert enums to javascript strings. Therefore, if we use enums
 					// we end up with the wrong identifiers on the client. Use strings instead.
-	//				resClassMap.put(WorkState.valueOf((String) workState), (Long) classMap.get(workState));
 					resClassMap.put((String) workState, (Long) classMap.get(workState));
 				}
 				stats.setNumTotal((Long) classMap.get(MdekKeys.TOTAL_NUM));
@@ -229,7 +228,7 @@ public class MdekAddressUtils {
 	
 	public static String extractInstitutions(MdekAddressBean address) {
         String organisations = "";
-        if (address.getParentInstitutions().size() > 0) {
+        if (!address.getParentInstitutions().isEmpty()) {
             for (int i = address.getParentInstitutions().size()-1; i >= 0; --i) {
                 if (address.getParentInstitutions().get(i).getAddressClass() == 0) {
                     // Only display the first institution we encounter and break

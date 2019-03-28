@@ -881,7 +881,7 @@ public class UtilsSearch {
     private static String getBasicDataTypeFromQuery(IngridQuery q) {
     	String ret = null;
     	if (q != null) {
-        	List basicDataTypes = Arrays.asList(Settings.QVALUES_DATATYPE_AREAS_BASIC);
+        	List basicDataTypes = Arrays.asList(Settings.getQValuesDatatypesAreaBasic());
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
@@ -901,7 +901,7 @@ public class UtilsSearch {
      */
     private static boolean isAddressQuery(IngridQuery q) {
     	if (q != null) {
-        	List addressDataTypes = Arrays.asList(Settings.QVALUES_DATATYPES_ADDRESS);
+        	List addressDataTypes = Arrays.asList(Settings.getQValuesDatatypesAddress());
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();

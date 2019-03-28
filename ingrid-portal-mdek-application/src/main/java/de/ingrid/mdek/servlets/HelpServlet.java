@@ -31,7 +31,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
@@ -51,24 +50,21 @@ public class HelpServlet extends HttpServlet {
 	// base filename for the xml helpfile. Additional chars are added depending on the request locale before '.xml'
 	// e.g. if the base filename is 'mdek-application-help.xml' and the locale is 'en', the resulting String will be:
 	// mdek-application-help_en.xml
-	private String baseHelpFileName = null;
-	private String xslFileName = null;
+	private static ResourceBundle resourceBundle = ResourceBundle.getBundle("help");
+	private static String baseHelpFileName = "/WEB-INF/classes/"+resourceBundle.getString("help.baseFileName");
+	private static String xslFileName = "/WEB-INF/classes/"+resourceBundle.getString("help.xslFileName");
 
-
+	@Override
 	public void init() throws ServletException {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle("help");
-		baseHelpFileName = "/WEB-INF/classes/"+resourceBundle.getString("help.baseFileName");
-		xslFileName = "/WEB-INF/classes/"+resourceBundle.getString("help.xslFileName");
 	}
 
-
+	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-		HttpSession session = request.getSession();
 		Enumeration<String> enumeration = request.getParameterNames();
 
 		while (enumeration.hasMoreElements()) {
 			String parameterName = enumeration.nextElement();
-			String parameter = (String) request.getParameter(parameterName);
+			String parameter = request.getParameter(parameterName);
 			log.debug("parameter name: "+parameterName);
 			log.debug("parameter value: "+parameter);
 		}
@@ -95,7 +91,7 @@ public class HelpServlet extends HttpServlet {
             doc = xmlReader.read(getServletContext().getResourceAsStream(fileName));
 
         } catch (Exception e) {
-//            log.error("Error reading help source file!", e);
+            log.error("Error on doGet.", e);
         }
 
         // If the doc could not be found, use the base help filename
@@ -118,14 +114,13 @@ public class HelpServlet extends HttpServlet {
 
         // transform the xml content to valid html using xslt
         if (chapterObj == null) {
-//        	context.put("help_content", "<p>help key (" + helpKey + ") not found!</p>");
         	out.print("<p>help key (" + helpKey + ") not found!</p>");
 
         } else {
             TransformerFactory factory;
             try {
                 factory = TransformerFactory.newInstance();
-            } catch (Throwable t) {
+            } catch (Exception t) {
                 System.setProperty("javax.xml.transform.TransformerFactory", "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
                 factory = TransformerFactory.newInstance();
             }
@@ -139,7 +134,6 @@ public class HelpServlet extends HttpServlet {
                 
                 transformer.transform(source, result);
                 String helpContent = result.getDocument().asXML();
-//                context.put("help_content", helpContent);
                 out.print(helpContent);
 
             } catch (Exception e) {

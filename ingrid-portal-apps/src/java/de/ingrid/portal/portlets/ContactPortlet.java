@@ -198,7 +198,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
 
             // Set overall request size constraint
-            upload.setSizeMax(uploadSize * 1000 * 1000);
+            upload.setSizeMax(uploadSize * 1000L * 1000L);
 
             // Parse the request
             try {

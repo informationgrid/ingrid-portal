@@ -41,9 +41,9 @@ import de.ingrid.utils.PlugDescription;
  * @author Administrator
  *
  */
-public class CatalogTreeDataProvider_IDC_1_0_2 implements CatalogTreeDataProvider {
+public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
 
-    private static final Logger log = LoggerFactory.getLogger(CatalogTreeDataProviderFactory.class);    
+    private static final Logger log = LoggerFactory.getLogger(CatalogTreeDataProviderFactory.class);
 
     static final String FIELD_TITLE = "title";
     static final String FIELD_OBJECT_ID = "t01_object.id";

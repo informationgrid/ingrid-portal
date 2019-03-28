@@ -94,20 +94,10 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
         // TODO: Resource Locator / Type
         // ...
         
-        // Spatial Data Type
-        //result.setDataServiceType(xPathUtils.getString(doc,  XPATH_EXP_WCS_SPATIAL_DATA_TYPE));
-        
-        // add Temporal References if available
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_CREATED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_PUBLISHED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_LAST_REVISION));
-        
         // Keywords
         List<String> keywords = getKeywords(doc, XPATH_EXP_WCS_KEYWORDS);
         
         // Extended - Keywords
-        //String[] extKeywords = xPathUtils.getStringArray(doc, XPATH_EXP_CSW_KEYWORDS_EXTENDED);
-        //keywords.addAll(Arrays.asList(extKeywords));
         // add found keywords to our result bean
         result.setKeywords(keywords);
         
@@ -115,7 +105,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
         result.setAddress(getAddress(doc));
         
      // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
 
         // Operation - GetCapabilities
@@ -128,7 +118,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("SERVICE=WCS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
@@ -149,7 +139,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
             describeCoverageOp.setName("DescribeCoverage");
             describeCoverageOp.setMethodCall("DescribeCoverage");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeCoverage", "Request name. Shall be DescribeCoverage", "", false, false));
             paramList.add(new OperationParameterBean("version=1.1.2", "Request protocol version", "", false, false));
@@ -168,7 +158,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
             getCoverageOp.setName("GetCoverage");
             getCoverageOp.setMethodCall("GetCoverage");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeCoverage", "Request name. Shall be GetCoverage", "", false, false));
             paramList.add(new OperationParameterBean("version=1.1.2", "Request protocol version", "", false, false));

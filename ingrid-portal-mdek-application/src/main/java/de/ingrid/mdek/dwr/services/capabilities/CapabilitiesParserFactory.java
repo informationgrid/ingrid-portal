@@ -25,13 +25,19 @@
  */
 package de.ingrid.mdek.dwr.services.capabilities;
 
-import javax.xml.xpath.XPathExpressionException;
-
-import de.ingrid.utils.xml.*;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 import de.ingrid.mdek.SysListCache;
+import de.ingrid.utils.xml.ConfigurableNamespaceContext;
+import de.ingrid.utils.xml.Csw202NamespaceContext;
+import de.ingrid.utils.xml.Wcs11NamespaceContext;
+import de.ingrid.utils.xml.WcsNamespaceContext;
+import de.ingrid.utils.xml.WctsNamespaceContext;
+import de.ingrid.utils.xml.Wfs110NamespaceContext;
+import de.ingrid.utils.xml.Wfs200NamespaceContext;
+import de.ingrid.utils.xml.Wms130NamespaceContext;
+import de.ingrid.utils.xml.WmtsNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
 /**
@@ -55,7 +61,7 @@ public class CapabilitiesParserFactory {
 
     private static XPathUtils xPathUtils = null;
     
-    private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
+    private static final String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
 
     public static ICapabilitiesParser getDocument(Document doc, SysListCache syslistCache) {
         if (xPathUtils == null) {
@@ -71,12 +77,11 @@ public class CapabilitiesParserFactory {
             xPathUtils = new XPathUtils(ns);
         }
         
-        try {
-            ServiceType serviceType = getServiceType(doc);
-            
-            switch (serviceType) {
+        ServiceType serviceType = getServiceType(doc);
+        
+        switch (serviceType) {
             case WMS: return new Wms130CapabilitiesParser(syslistCache);
-            case WMS111: return new Wms111CapabilitiesParser(syslistCache);            
+            case WMS111: return new Wms111CapabilitiesParser(syslistCache);
             case WFS110: return new Wfs110CapabilitiesParser(syslistCache);
             case WFS200: return new Wfs200CapabilitiesParser(syslistCache);
             case WCS: return new WcsCapabilitiesParser(syslistCache);
@@ -87,15 +92,9 @@ public class CapabilitiesParserFactory {
             default:
                 throw new RuntimeException("Unknown Service Type.");
         }
-            
-        } catch (XPathExpressionException e) {
-            log.debug("", e);
-            throw new RuntimeException(ERROR_GETCAP_XPATH, e);
-        }
-        
     }
     
-    private static ServiceType getServiceType(Document doc) throws XPathExpressionException {
+    private static ServiceType getServiceType(Document doc) {
         // WMS Version 1.3.0
         String serviceType = xPathUtils.getString(doc, "/wms:WMS_Capabilities/wms:Service/wms:Name[1]");
         if (serviceType != null && serviceType.length() != 0) {

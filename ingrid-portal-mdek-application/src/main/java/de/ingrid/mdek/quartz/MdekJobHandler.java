@@ -30,7 +30,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +73,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 	@Autowired
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
-		this.jobMap = new HashMap<String, MdekJob>();
+		this.jobMap = new HashMap<>();
 	}
 
 	public void setConnectionFacade(ConnectionFacade connectionFacade) {
@@ -264,7 +263,7 @@ public class MdekJobHandler implements BeanFactoryAware {
 		return MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, false);
 	}
 
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+	public void setBeanFactory(BeanFactory beanFactory) {
 		this.beanFactory = beanFactory;
 	}
 } 

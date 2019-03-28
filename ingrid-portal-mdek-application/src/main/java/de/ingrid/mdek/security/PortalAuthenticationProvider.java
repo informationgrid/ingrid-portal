@@ -53,7 +53,7 @@ public class PortalAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public List<String> getAllUserIds() {
-        List<String> userList = new ArrayList<String>();
+        List<String> userList = new ArrayList<>();
         
         WebContext wctx = WebContextFactory.get();
         HttpSession session = wctx.getSession();

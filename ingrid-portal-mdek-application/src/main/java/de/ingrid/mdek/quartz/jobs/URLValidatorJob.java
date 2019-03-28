@@ -120,22 +120,22 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		Map<String, URLState> urlMap = createUrlMap(urlObjectReferences);
 		Map<String, URLState> capabilitiesMap = createUrlMap(capabilitiesReferences);
 
-		Map<String, Object> dataMap = new HashMap<String, Object>();
+		Map<String, Object> dataMap = new HashMap<>();
 		dataMap.put(URLValidatorJob.URL_MAP, urlMap);
 		dataMap.put(URLValidatorJob.CAP_URL_MAP, capabilitiesMap);
 		dataMap.put(URLValidatorJob.URL_OBJECT_REFERENCES, urlObjectReferences);
 		dataMap.put(URLValidatorJob.CAPABILITIES_REFERENCES, capabilitiesReferences);
 
-        JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, URLValidatorJob.class);
+        JobDetail jd = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, URLValidatorJob.class);
         JobDataMap jobDataMap = new JobDataMap(dataMap);
-        jobDetail.setJobDataMap(jobDataMap);
-        jobDetail.addJobListener(jobListener.getName());
+        jd.setJobDataMap(jobDataMap);
+        jd.addJobListener(jobListener.getName());
 
-        return jobDetail;
+        return jd;
     }
 
     private Map<String, URLState> createUrlMap(List<URLObjectReference> urlObjectReferences) {
-        Map<String, URLState> urlMap = new HashMap<String, URLState>();
+        Map<String, URLState> urlMap = new HashMap<>();
         for (URLObjectReference ref : urlObjectReferences) {
             urlMap.put(ref.getUrlState().getUrl(), ref.getUrlState());
         }
@@ -179,12 +179,12 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 	}
 	
 	private List<URLObjectReference> mapToUrlReferences(IngridDocument result, boolean isCapabilities) {
-		List<URLObjectReference> resultList = new ArrayList<URLObjectReference>();
+		List<URLObjectReference> resultList = new ArrayList<>();
 		
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			if (objs != null) {
-				Map<String, URLState> urlStateMap = new HashMap<String, URLState>();
+				Map<String, URLState> urlStateMap = new HashMap<>();
 				for (IngridDocument objEntity : objs) {
 					URLObjectReference ref = new URLObjectReference();
 					ref.setObjectClass(objEntity.getInt("obj.objClass"));
@@ -234,10 +234,10 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
         ExecutorService executorService = Executors.newFixedThreadPool(NUM_THREADS);
         JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
         Map<String, URLState> urlMap = (Map<String, URLState>) mergedJobDataMap.get(URL_MAP);
-        List<URLValidator> validatorTasks = new ArrayList<URLValidator>(urlMap.size());
+        List<URLValidator> validatorTasks = new ArrayList<>(urlMap.size());
 
 		Map<String, URLState> capabilitiesMap = (Map<String, URLState>) mergedJobDataMap.get(CAP_URL_MAP);
-		List<CapabilitiesValidator> capabilitiesValidatorTasks = new ArrayList<CapabilitiesValidator>(capabilitiesMap.size());
+		List<CapabilitiesValidator> capabilitiesValidatorTasks = new ArrayList<>(capabilitiesMap.size());
 
         HttpClientParams httpClientParams = new HttpClientParams();
         httpClientParams.setConnectionManagerTimeout(0);
@@ -258,7 +258,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 
         log.debug("Starting url validation...");
         long startTime = System.currentTimeMillis();
-        List<Future<URLState>> resultFutureList = new ArrayList<Future<URLState>>();
+        List<Future<URLState>> resultFutureList = new ArrayList<>();
         for (URLValidator validator : validatorTasks) {
             resultFutureList.add(executorService.submit(validator));
         }
@@ -288,7 +288,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 
         // Only store if job was not cancelled
         if (!cancelJob) {
-		    Map<String, List<URLObjectReference>> map = new HashMap<String, List<URLObjectReference>>();
+		    Map<String, List<URLObjectReference>> map = new HashMap<>();
 		    map.put(MdekKeys.URL_RESULT, (List<URLObjectReference>)mergedJobDataMap.get(URL_OBJECT_REFERENCES));
 		    map.put(MdekKeys.CAP_RESULT, (List<URLObjectReference>)mergedJobDataMap.get(CAPABILITIES_REFERENCES));
 			jobExecutionContext.setResult(map);
@@ -358,9 +358,6 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
             log.debug("trying to interrupt job via scheduler...");
             scheduler.interrupt(jobName, Scheduler.DEFAULT_GROUP);
             scheduler.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
-
-        } catch (UnableToInterruptJobException ex) {
-            log.error("Error interrupting URL Validation job.", ex);
 
         } catch (SchedulerException ex) {
             log.error("Error interrupting URL Validation job.", ex);

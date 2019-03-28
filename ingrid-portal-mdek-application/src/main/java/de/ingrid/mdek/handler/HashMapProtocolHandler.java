@@ -37,7 +37,7 @@ public class HashMapProtocolHandler implements ProtocolHandler {
 	
 	public void startProtocol(){
 		if(messageList == null){
-			messageList = new ArrayList<String>(); 
+			messageList = new ArrayList<>(); 
 		}else{
 			messageList.clear();
 		}

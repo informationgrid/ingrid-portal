@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.util;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.Principal;
 import java.util.HashMap;
@@ -112,9 +113,6 @@ public class MdekSecurityUtils {
 				throw new RuntimeException("USER_LOGIN_ERROR");
 			}
 		}
-//		return getUserData("Testmdadmin");
-//		return getUserData("Testmdadmin2");
-//		return getUserData("Testcatadmin");
 	}
 
 
@@ -184,7 +182,7 @@ public class MdekSecurityUtils {
 		dao.beginTransaction();
 		UserData u = (UserData) dao.findUniqueByExample(sampleUser);
 		
-		return u == null ? false : true;
+		return u != null;
 	}
 	
 	public static String userFromAddress(String address) {
@@ -261,10 +259,9 @@ public class MdekSecurityUtils {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             digest.reset();
-            input = digest.digest(password.getBytes("UTF-8"));
+            input = digest.digest(password.getBytes(StandardCharsets.UTF_8));
         } catch (Exception e) {
-            log.error("Could not create hash from password!");
-            e.printStackTrace();
+            log.error("Could not create hash from password!", e);
         }
         return String.valueOf(new String(input).hashCode());
 	}
@@ -314,7 +311,7 @@ public class MdekSecurityUtils {
         List<UserData> userList = (List) dao.findAll();  // Can't cast to List<RepoUser>
         dao.commitTransaction();
         
-        Map<String, String> users = new HashMap<String, String>();
+        Map<String, String> users = new HashMap<>();
         for (UserData user : userList) {
             users.put(user.getPortalLogin(), user.getPlugId());
         }

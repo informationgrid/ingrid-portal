@@ -30,6 +30,7 @@ import java.io.PushbackInputStream;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -54,8 +55,8 @@ public class GetCapabilitiesService {
 
     private static final Logger log = Logger.getLogger( GetCapabilitiesService.class );
 
-    private static String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
-    private static String ERROR_GETCAP = "ERROR_GETCAP_ERROR";
+    private static final String ERROR_GETCAP_INVALID_URL = "ERROR_GETCAP_INVALID_URL";
+    private static final String ERROR_GETCAP = "ERROR_GETCAP_ERROR";
 
     @Autowired
     private SysListCache sysListMapper;
@@ -94,10 +95,8 @@ public class GetCapabilitiesService {
     private static InputStream checkForUtf8BOMAndDiscardIfAny(InputStream inputStream) throws IOException {
         PushbackInputStream pushbackInputStream = new PushbackInputStream( new BufferedInputStream( inputStream ), 3 );
         byte[] bom = new byte[3];
-        if (pushbackInputStream.read( bom ) != -1) {
-            if (!(bom[0] == (byte) 0xEF && bom[1] == (byte) 0xBB && bom[2] == (byte) 0xBF)) {
-                pushbackInputStream.unread( bom );
-            }
+        if (pushbackInputStream.read( bom ) != -1 && !(bom[0] == (byte) 0xEF && bom[1] == (byte) 0xBB && bom[2] == (byte) 0xBF)) {
+            pushbackInputStream.unread( bom );
         }
         return pushbackInputStream;
     }
@@ -141,7 +140,7 @@ public class GetCapabilitiesService {
         URL url = new URL( urlStr );
         // get the content in UTF-8 format, to avoid "MalformedByteSequenceException: Invalid byte 1 of 1-byte UTF-8 sequence"
         InputStream input = checkForUtf8BOMAndDiscardIfAny( url.openStream() );
-        Reader reader = new InputStreamReader( input, "UTF-8" );
+        Reader reader = new InputStreamReader( input, StandardCharsets.UTF_8 );
         InputSource inputSource = new InputSource( reader );
         // Build a document from the xml response
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -149,8 +148,7 @@ public class GetCapabilitiesService {
         // query for the correct namespace for every evaluation
         factory.setNamespaceAware( namespaceAware );
         DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse( inputSource );
-        return doc;
+        return builder.parse( inputSource );
     }
 
     public SysListCache getSysListMapper() {

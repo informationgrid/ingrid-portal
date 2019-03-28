@@ -118,12 +118,16 @@ public class Settings {
     public static final String QVALUE_DATATYPE_AREA_RESEARCH = "research";
     public static final String QVALUE_DATATYPE_AREA_LAW = "law";
     public static final String QVALUE_DATATYPE_AREA_CATALOG = "metadata";
-    public static final String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
+    private static final String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
     	QVALUE_DATATYPE_AREA_ENVINFO,
     	QVALUE_DATATYPE_AREA_ADDRESS,
     	QVALUE_DATATYPE_AREA_RESEARCH,
     	QVALUE_DATATYPE_AREA_LAW
     };
+    
+    public static final String[] getQValuesDatatypesAreaBasic() {
+        return QVALUES_DATATYPE_AREAS_BASIC.clone();
+    }
 
     // datatype: source types
     // ----------------------
@@ -142,12 +146,16 @@ public class Settings {
     public static final String QVALUE_DATATYPE_IPLUG_DSC_OTHER = "dsc_other";
     
     // all sub datatypes indicating address search (switch to address rendering of results) 
-    public static final String[] QVALUES_DATATYPES_ADDRESS = new String[] {
+    private static final String[] QVALUES_DATATYPES_ADDRESS = new String[] {
     	QVALUE_DATATYPE_AREA_ADDRESS,
     	QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS,
     	// temporary datatype:training-address ! these are the new training "idc iplugs" (MDEK), should be rendered in live Portal !
     	"training-address"
     };
+    
+    public static final String[] getQValuesDatatypesAddress() {
+        return QVALUES_DATATYPES_ADDRESS.clone();
+    }
 
     public static final String QVALUE_LANG_DE = "de";
     

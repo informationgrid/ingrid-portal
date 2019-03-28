@@ -100,11 +100,11 @@ public class MdekAddressBean {
 	
 	
 	public MdekAddressBean() {
-		this.communication = new ArrayList<CommunicationBean>();
-		this.thesaurusTermsTable = new ArrayList<SNSTopic>();
-		this.linksFromObjectTable = new ArrayList<MdekDataBean>();
-		this.linksFromPublishedObjectTable = new ArrayList<MdekDataBean>();
-		this.parentInstitutions = new ArrayList<MdekAddressBean>();
+		this.communication = new ArrayList<>();
+		this.thesaurusTermsTable = new ArrayList<>();
+		this.linksFromObjectTable = new ArrayList<>();
+		this.linksFromPublishedObjectTable = new ArrayList<>();
+		this.parentInstitutions = new ArrayList<>();
 	}
 	
 	public String getAddressOwner() {

@@ -366,7 +366,7 @@
         function removeCatalogue(catalogue, login) {
             dialog.show("Katalog entfernen", "Möchten Sie die Verbindung wirklich entfernen: <br />" + catalogue +" <-> " + login, dialog.INFO,
                     [{caption:"OK", action:function(){
-                        SecurityService.removeCatAdmin(catalogue, login, {
+                        SecurityService.removeCatAdmin(login, {
                             callback: function(result) {
                                 console.debug(result);
                                 if (result === true) {

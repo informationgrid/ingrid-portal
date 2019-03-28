@@ -38,19 +38,10 @@ public class RDFReader {
     
     private static final Logger log = Logger.getLogger(RDFReader.class);
     
-    //private String root;
-
-    /*public RDFReader(String thesaurusRootURI) {
-        this.root = thesaurusRootURI;
-    }*/
-
     public Model fetchTerm(String uri, String params) {
     	// create an empty model
         Model model = ModelFactory.createDefaultModel();
 
-        //if (uri == null)
-        //    uri = root;
-        
         // read the RDF/XML file
         model.read(uri + ".rdf" + params);
 
@@ -67,7 +58,7 @@ public class RDFReader {
     }
     
     public List<ModelWrapper> fetchAllChildren(String uri) {
-        List<ModelWrapper> children = new ArrayList<ModelWrapper>();
+        List<ModelWrapper> children = new ArrayList<>();
         
         // get parent model to find children relations
         Model parent = fetchTerm(uri);
@@ -96,37 +87,18 @@ public class RDFReader {
         return childrenIt;
     }
     
-    private List<Model> fetchAllMembers(String uri) {
-        List<Model> children = new ArrayList<Model>();
-        
-        // get parent model to find children relations
-        Model parent = fetchTerm(uri);
-        
-        // get Iterator for all children within parent model
-        NodeIterator childrenIt = RDFUtils.getMembers(parent);
-        
-        while (childrenIt.hasNext()) {
-            RDFNode node = childrenIt.next();  // get next statement
-            children.add(fetchTerm(node.toString()));
-        }
-        
-        return children;
-    }
-    
     public ModelWrapper fetchHierarchy(String uri) {
     	URL url = null;
-    	int pos = uri.lastIndexOf( "/" );
+    	int pos = uri.lastIndexOf( '/' );
     	try {
 			url = new URL(uri);
-			//pos = uri.indexOf(url.getHost()) + url.getHost().length();
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error("Error on fetchHierarchy.", e);
 			return null;
 		}
     	
     	String params = "?dir=down&depth=2";
-    	String doc = url.getPath().substring(url.getPath().lastIndexOf("/"));
+    	String doc = url.getPath().substring(url.getPath().lastIndexOf('/'));
         Model hierarchy = fetchTerm(uri.substring(0, pos) + "/de/hierarchy" + doc, params);
 		return new ModelWrapper(hierarchy, uri.substring(0, pos) + doc);
     }
@@ -140,25 +112,21 @@ public class RDFReader {
         model.read(searchQuery);
 
         // write it to standard out
-        //if (log.isDebugEnabled()) {
-            model.write(System.out);
-        //}
-        
+        model.write(System.out);
         return model;
     }
 
     private String buildSearchQuery(String rootUrl, String queryTerm) {
-        String searchQuery = rootUrl + "search.rdf?utf8=%E2%9C%93&qt=begins_with&for=all&c=&l[]=de&q=" + queryTerm;
-        return searchQuery;
+        return rootUrl + "search.rdf?utf8=%E2%9C%93&qt=begins_with&for=all&c=&l[]=de&q=" + queryTerm;
     }
 
-	public Model findRootTerms(String rootURI) {
+	public Model findRootTerms() {
 		//http://data.uba.de/umt/de/search.rdf?c=&amp;for=concept&amp;l%5B%5D=de&amp;page=1&amp;q=%5B&amp;qt=begins_with&amp;t=labeling-skosxl-base#
 		return null;
 	}
 
 	public List<ModelWrapper> fetchHierarchiesFromRoot(String uri) {
-		List<ModelWrapper> hierarchies = new ArrayList<ModelWrapper>();
+		List<ModelWrapper> hierarchies = new ArrayList<>();
 		try {
 			// try to get the hierarchy from this uri
 			hierarchies.add(fetchHierarchy(uri));

@@ -166,7 +166,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean publishAddress(MdekAddressBean data, boolean forcePublicationCondition) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
@@ -181,7 +181,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
@@ -201,7 +201,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		log.debug("Sending the following address to the author:");
 		log.debug(adr);
@@ -217,9 +217,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
 	
 	public MdekAddressBean saveAddress(MdekAddressBean data) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
-//		log.debug("saveAddress() not implemented yet.");
-
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
 			adr.remove(MdekKeys.ID);

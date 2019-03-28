@@ -49,7 +49,6 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
 
     private static final String XPATH_EXP_WMTS_FEES = "/wmts:Capabilities/ows11:ServiceIdentification/ows11:Fees";
     private static final String XPATH_EXP_WMTS_ACCESS_CONSTRAINTS = "/wmts:Capabilities/ows11:ServiceIdentification/ows11:AccessConstraints";
-    //private static final String XPATH_EXP_WMTS_ONLINE_RESOURCE = "/wcts:";
     private static final String XPATH_EXP_WMTS_KEYWORDS = "/wmts:Capabilities/ows11:ServiceIdentification/ows11:Keywords/ows11:Keyword";
 
     private static final String XPATH_EXP_WMTS_TITLE = "/wmts:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
@@ -99,26 +98,13 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
         // Access Constraints
         result.setAccessConstraints(getNodesContentAsList(doc, XPATH_EXP_WMTS_ACCESS_CONSTRAINTS));
         
-        // Online Resources
-        //result.setOnlineResources(getOnlineResources(doc, XPATH_EXP_WMTS_ONLINE_RESOURCE));
-
         // TODO: Resource Locator / Type
         // ...
-        
-        // Spatial Data Type
-        //result.setDataServiceType(xPathUtils.getString(doc,  XPATH_EXP_WCS_SPATIAL_DATA_TYPE));
-        
-        // add Temporal References if available
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_CREATED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_PUBLISHED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_LAST_REVISION));
         
         // Keywords
         List<String> keywords = getKeywords(doc, XPATH_EXP_WMTS_KEYWORDS);
         
         // Extended - Keywords
-        //String[] extKeywords = xPathUtils.getStringArray(doc, XPATH_EXP_CSW_KEYWORDS_EXTENDED);
-        //keywords.addAll(Arrays.asList(extKeywords));
         // add found keywords to our result bean
         result.setKeywords(keywords);
         

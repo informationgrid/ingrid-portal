@@ -58,11 +58,11 @@ public class MdekErrorUtils {
 	    MdekErrorUtils.dataMapper = mapper;
     }
 
-	public static void handleError(IngridDocument response) throws RuntimeException {
+	public static void handleError(IngridDocument response) {
 		String errorMessage = getErrorMsgFromResponse(response);
 		log.error(errorMessage);
 		List<MdekError> err = getErrorsFromResponse(response);
-		if (err != null && err.size() > 0) {
+		if (err != null && !err.isEmpty()) {
 			if (containsErrorType(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ)) {
 				handleEntityReferencedByObjectError(err, MdekErrorType.ENTITY_REFERENCED_BY_OBJ);
 			
@@ -94,13 +94,10 @@ public class MdekErrorUtils {
 			} else if (containsErrorType(err, MdekErrorType.REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION)) {
                 handlePublicationConditionConflictError(err, MdekErrorType.REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION);
 			} else {
-				//throw new MdekException(err);
 				throw convertToRuntimeException(new MdekException(err));
 			}
 		} else if (errorMessage != null){
 			throw new RuntimeException(errorMessage);
-		} else {
-			return;
 		}
 	}
 
@@ -111,12 +108,12 @@ public class MdekErrorUtils {
 	    List<MdekAddressBean> referencedConflictingAddresses = null;
 	    
 	    if (errType.equals(MdekErrorType.REFERENCING_OBJECTS_HAVE_LARGER_PUBLICATION_CONDITION)) {
-	        referencedConflictingObjects = new ArrayList<MdekDataBean>();
+	        referencedConflictingObjects = new ArrayList<>();
 	        for (MdekError error : errors) {
 	            referencedConflictingObjects.addAll(MdekObjectUtils.extractDetailedObjects((IngridDocument)error.getErrorInfo()));
             }
 	    } else if (errType.equals(MdekErrorType.REFERENCED_ADDRESSES_HAVE_SMALLER_PUBLICATION_CONDITION)) {
-	        referencedConflictingAddresses = new ArrayList<MdekAddressBean>();
+	        referencedConflictingAddresses = new ArrayList<>();
             for (MdekError error : errors) {
                 referencedConflictingAddresses.addAll(MdekAddressUtils.extractDetailedAddresses((IngridDocument)error.getErrorInfo()));
             }
@@ -134,7 +131,7 @@ public class MdekErrorUtils {
     }
 
     private static void handleAddressNeverPublishedError(List<MdekError> errorList, MdekErrorType errType) {
-	    List<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
+	    List<MdekAddressBean> sourceAddresses = new ArrayList<>();
 	    
         // TODO Auto-generated method stub
 	    for (MdekError mdekError : errorList) {
@@ -153,8 +150,8 @@ public class MdekErrorUtils {
     private static void handleEntityReferencedByObjectError(List<MdekError> errorList, MdekErrorType errType) {
 		MdekAddressBean targetAddress = null;
 		MdekDataBean targetObject = null;
-		List<MdekAddressBean> sourceAddresses = new ArrayList<MdekAddressBean>();
-		List<MdekDataBean> sourceObjects = new ArrayList<MdekDataBean>();
+		List<MdekAddressBean> sourceAddresses = new ArrayList<>();
+		List<MdekDataBean> sourceObjects = new ArrayList<>();
 
 		for (MdekError mdekError : errorList) {
 			if (mdekError.getErrorType().equals(errType)) {
@@ -235,10 +232,10 @@ public class MdekErrorUtils {
 				List<MdekAddressBean> adrs = MdekAddressUtils.extractDetailedAddresses(errorInfo);
 				List<MdekDataBean> objs = MdekObjectUtils.extractDetailedObjects(errorInfo);
 
-				if (adrs != null && adrs.size() > 0) {
+				if (adrs != null && !adrs.isEmpty()) {
 					rootAddress = adrs.get(0);
 				}
-				if (objs != null && objs.size() > 0) {
+				if (objs != null && !objs.isEmpty()) {
 					rootObject = objs.get(0);
 				}
 				break;
@@ -249,17 +246,19 @@ public class MdekErrorUtils {
 				break;
 			}
 		}
-
-		InvalidPermissionException e = new InvalidPermissionException(errorType.toString());
-		e.setRootAddress(rootAddress);
-		e.setRootObject(rootObject);
-		e.setInvalidAddress(invalidAddress);
-		e.setInvalidObject(invalidObject);
-		throw e;
+		
+		if(errorType != null) {
+    		InvalidPermissionException e = new InvalidPermissionException(errorType.toString());
+    		e.setRootAddress(rootAddress);
+    		e.setRootObject(rootObject);
+    		e.setInvalidAddress(invalidAddress);
+    		e.setInvalidObject(invalidObject);
+    		throw e;
+		}
 	}
 
 	private static void handleGroupHasUsersError(List<MdekError> errorList) {
-		List<MdekAddressBean> addresses = new ArrayList<MdekAddressBean>();
+		List<MdekAddressBean> addresses = new ArrayList<>();
 		MdekErrorType errorType = null;
 		
 		for (MdekError mdekError : errorList) {
@@ -274,10 +273,11 @@ public class MdekErrorUtils {
 				break;
 			}
 		}
-
-		GroupDeleteException e = new GroupDeleteException(errorType.toString());
-		e.setAddresses(addresses);
-		throw e;
+		if(errorType != null) {
+    		GroupDeleteException e = new GroupDeleteException(errorType.toString());
+    		e.setAddresses(addresses);
+    		throw e;
+		}
 	}
 	
 	private static boolean containsErrorType(List<MdekError> errorList, MdekErrorType errorType) {

@@ -52,12 +52,4 @@ public interface DataMapperInterface {
 	// List IDs for key/value lookup
 	public static final int MDEK_ADDRESS_REF_ID = 505;
 	public static final int MDEK_ADDRESS_REF_SPECIAL_ID = 2010;
-
-	// Language codes
-	//   Codes are stored in the database
-//	public static final String LANGUAGE_CODE_GERMAN = "de";
-//	public static final String LANGUAGE_CODE_ENGLISH = "en";
-	//   Identifiers are used by the frontend (sysList lookup, etc.)
-//	public static final String LANGUAGE_ID_GERMAN = "121";
-//	public static final String LANGUAGE_ID_ENGLISH = "94";
 }

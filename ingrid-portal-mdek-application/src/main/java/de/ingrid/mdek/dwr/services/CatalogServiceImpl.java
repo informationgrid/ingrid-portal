@@ -23,6 +23,7 @@
 package de.ingrid.mdek.dwr.services;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -60,9 +61,7 @@ public class CatalogServiceImpl implements CatalogService {
 	}
 
 	public Map<Integer, List<String[]>> getSysListsRemoveMetadata(Integer[] listIds, String language) {
-		Map<Integer, List<String[]>> listMap = catalogRequestHandler.getSysLists(listIds, language);
-		
-		return listMap;
+		return catalogRequestHandler.getSysLists(listIds, language);
 	}
 
 	public String[] getFreeListEntries(Integer sysListId) {
@@ -82,11 +81,11 @@ public class CatalogServiceImpl implements CatalogService {
 
 	public FileTransfer exportSysLists(Integer[] listIds) throws UnsupportedEncodingException {
 		String xmlDoc = catalogRequestHandler.exportSysLists(listIds);
-		return new FileTransfer("sysLists.xml", "text/xml", xmlDoc.getBytes("UTF-8"));
+		return new FileTransfer("sysLists.xml", "text/xml", xmlDoc.getBytes(StandardCharsets.UTF_8));
 	}
 
 	public void importSysLists(byte[] data) throws UnsupportedEncodingException {
-		catalogRequestHandler.importSysLists(new String(data, "UTF-8"));
+		catalogRequestHandler.importSysLists(new String(data, StandardCharsets.UTF_8));
 
 		// Reset timestamp of codelist repo so all syslists will be synchronized after manual import of syslist.
 		// This way we guarantee that syslist entries are not lost via import. 
@@ -96,7 +95,7 @@ public class CatalogServiceImpl implements CatalogService {
 	        	"so syslists will be reloaded from codelist repo after manual import.");
 		}
 
-        List<GenericValueBean> genericValues = new ArrayList<GenericValueBean>();
+        List<GenericValueBean> genericValues = new ArrayList<>();
         GenericValueBean valueBean = new GenericValueBean();
         valueBean.setKey("lastModifiedSyslist");
         valueBean.setValue("-1");
@@ -136,7 +135,7 @@ public class CatalogServiceImpl implements CatalogService {
 	public CatalogBean getCatalogData() {
 		CatalogBean catalogData = catalogRequestHandler.getCatalogData();
 		List<GenericValueBean> sysGenericValues = getSysGenericValues( new String[]{"sortByClass"}, null );
-		if (sysGenericValues.size() > 0) {
+		if (sysGenericValues.isEmpty()) {
 		    catalogData.setSortByClass( sysGenericValues.get( 0 ).getValue() );
 		}
 		return catalogData;
@@ -146,7 +145,7 @@ public class CatalogServiceImpl implements CatalogService {
 		try {
 			CatalogBean storeCatalogData = catalogRequestHandler.storeCatalogData(cat);
 			
-			List<GenericValueBean> genericValues = new ArrayList<GenericValueBean>();
+			List<GenericValueBean> genericValues = new ArrayList<>();
 	        GenericValueBean valueBean = new GenericValueBean("sortByClass", cat.getSortByClass());
 	        genericValues.add(valueBean);
 	        storeSysGenericValues(genericValues);
@@ -181,31 +180,24 @@ public class CatalogServiceImpl implements CatalogService {
         else
             data = getSysGenericValues(new String[]{"profileXML"}, req);
         
-        if (data.size() == 0) {
+        if (data.isEmpty()) {
             return new ProfileBean();
         }
         
         // convert data to bean
         ProfileMapper pM = new ProfileMapper();
-        
-        //
-        //ProfileBean bean = pM.mapStreamToBean(new InputSource(getClass().getResourceAsStream("/coreProfile.xml")));
-        //
 
-        ProfileBean bean = pM.mapStringToBean(data.get(0).getValue());        
-
-        return bean;
+        return pM.mapStringToBean(data.get(0).getValue());
     }
     
     @Override
     public void saveProfileData(ProfileBean bean) {
         // get profile xml data from backend (as stream?)
-        //if (log.)
         log.debug("saving profile bean: " + bean.getRubrics().size() + " rubrics");
         // convert bean to XML
         ProfileMapper pM = new ProfileMapper();
         String profileString = pM.mapBeanToXmlString(bean);
-        List<GenericValueBean> data = new ArrayList<GenericValueBean>();
+        List<GenericValueBean> data = new ArrayList<>();
         GenericValueBean valueBean = new GenericValueBean();
         valueBean.setKey("profileXML");
         valueBean.setValue(profileString);

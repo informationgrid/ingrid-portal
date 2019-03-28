@@ -60,11 +60,6 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 
 	@Autowired
 	public ConnectionFacadeImpl(Config config) {
-//		if (communicationProperties == null || !(communicationProperties instanceof File)) {
-//			throw new IllegalStateException(
-//					"Please specify the location of the communication.properties file via the Property 'mdekClientCaller.properties' in /src/resources/mdek.properties");
-//		}
-		
 		log.debug("Initializing MdekCaller...");
 		MdekClientCaller.initialize(new File(config.communicationLocation));
 		log.debug("MdekCaller initialized.");
@@ -93,14 +88,6 @@ public class ConnectionFacadeImpl implements ConnectionFacade {
 
 
 	public String getCurrentPlugId() {
-/*
-		List<String> iPlugs = mdekClientCaller.getRegisteredIPlugs();
-		if (iPlugs.size() > 0) {
-			return iPlugs.get(0);
-		} else {
-			return null;
-		}
-*/
 		return MdekSecurityUtils.getCurrentPortalUserData().getPlugId();
 	}
 	

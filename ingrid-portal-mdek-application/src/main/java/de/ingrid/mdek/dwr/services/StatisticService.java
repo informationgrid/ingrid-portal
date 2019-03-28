@@ -22,6 +22,11 @@
  */
 package de.ingrid.mdek.dwr.services;
 
+import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.mdek.dwr.services.report.Report;
 import de.ingrid.mdek.dwr.services.report.ReportType;
@@ -29,11 +34,6 @@ import de.ingrid.mdek.dwr.services.report.uvp.UVPReport;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
 import de.ingrid.mdek.handler.ObjectRequestHandler;
 import de.ingrid.mdek.job.MdekException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class StatisticService {
 

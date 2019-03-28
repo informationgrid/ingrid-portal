@@ -32,8 +32,6 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.concurrent.Callable;
 
-import javax.xml.ws.http.HTTPException;
-
 import org.apache.commons.httpclient.ConnectTimeoutException;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -69,17 +67,15 @@ public class URLValidator implements Callable<URLState> {
 				urlState.setState(State.VALID);
 				// get content for further analysis if page is ok
 				// -> getResponseBodyAsString-method can easily lead to OOM!!!
-				// responseString = getMethod.getResponseBodyAsString();
-				Reader reader = new InputStreamReader(getMethod.getResponseBodyAsStream(), getMethod.getResponseCharSet()); 
-			    // consume the response entity
-				responseString = getStringFromInputStream( reader, 10 );
+				try(Reader reader = new InputStreamReader(getMethod.getResponseBodyAsStream(), getMethod.getResponseCharSet()))
+				{
+				    // consume the response entity
+	                responseString = getStringFromInputStream( reader, 10 );
+				}
 			} else {
 				urlState.setState(State.HTTP_ERROR);
 			}
 
-		} catch (HTTPException ex) {
-			urlState.setState(State.HTTP_ERROR);
-			
 		} catch (ConnectException ex) {
 		    urlState.setState(State.CONNECT_REFUSED);		    
 
@@ -92,16 +88,13 @@ public class URLValidator implements Callable<URLState> {
 		} catch (UnknownHostException ex) {
 		    urlState.setState(State.UNKNOWN_HOST);		    
 
-		} catch (IOException ex) {
-			urlState.setState(State.HTTP_ERROR);
-
 		} catch (IllegalArgumentException ex) {
 			urlState.setState(State.MALFORMED_URL);
 
 		} catch (Exception ex) {
-			urlState.setState(State.HTTP_ERROR);
+            urlState.setState(State.HTTP_ERROR);
 
-		} finally {
+        } finally {
 			if (getMethod != null) {
 				getMethod.releaseConnection();
 			}
@@ -116,14 +109,12 @@ public class URLValidator implements Callable<URLState> {
 	// convert InputStream to String
     private static String getStringFromInputStream(Reader reader, int numLinesToRead) {
  
-        BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
  
         String line;
         int currentLine = 1;
-        try {
- 
-            br = new BufferedReader(reader);
+        try (BufferedReader br = new BufferedReader(reader)){
+            
             while ((line = br.readLine()) != null) {
                 // stop reading after a specified amount of lines
                 if (currentLine >= numLinesToRead) break;
@@ -133,15 +124,7 @@ public class URLValidator implements Callable<URLState> {
             }
  
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            log.error("Error on getStringFromInputStream.", e);
         }
  
         return sb.toString();

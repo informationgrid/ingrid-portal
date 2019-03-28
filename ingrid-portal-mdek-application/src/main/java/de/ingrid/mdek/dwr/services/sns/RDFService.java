@@ -39,14 +39,14 @@ public class RDFService extends SNSService {
     
     private static final Logger log = Logger.getLogger(RDFService.class);
 
+    @Override
     public List<SNSTopic> getRootTopics(String rootUrl, Locale locale) {
-    	//Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from null (toplevel), " + locale.getLanguage());
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    	List<SNSTopic> resultList = new ArrayList<>(); 
     	
     	TreeTerm[] treeTerms = ((SNSServiceRDF)thesaurusService).getHierarchyTopLevel(rootUrl, locale);
 
-    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator(locale));
+    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<>(new TermComparator(locale));
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
 
     	for (TreeTerm treeTerm : orderedTreeTerms) {
@@ -57,29 +57,4 @@ public class RDFService extends SNSService {
 
     	return resultList;
     }
-    
-    /*@Override
-    public List<SNSTopic> getSubTopics(String topicID, long depth, String direction) {
-        Locale sessionLocale = MdekUtils.getLocaleFromSession();
-        log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from "
-            +topicID+", "+depth+", "+direction+", " + sessionLocale.getLanguage());
-        List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
-        
-        //TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(topicID, sessionLocale);
-        
-        SNSServiceRDF rdfService = new SNSServiceRDF();
-        rdfService.init();
-        TreeTerm[] treeTerms = rdfService.getHierarchyNextLevel(topicID, sessionLocale);
-
-        TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator());
-        orderedTreeTerms.addAll(Arrays.asList(treeTerms));
-
-        for (TreeTerm treeTerm : orderedTreeTerms) {
-            // ADDING OF CHILDREN !!!!!!!!! For right behavior in JSP !
-            SNSTopic resultTopic = convertTreeTermToSNSTopic(treeTerm);
-            resultList.add(resultTopic);
-        }
-
-        return resultList;
-    }*/
 }

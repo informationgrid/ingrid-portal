@@ -33,8 +33,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.xpath.XPathExpressionException;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -81,14 +79,14 @@ public class GeneralCapabilitiesParser {
         this.connectionFacade = syslistCache.getConnectionFacade();
     }
 
-    protected List<String> getKeywords(Node doc, String xpath) throws XPathExpressionException {
+    protected List<String> getKeywords(Node doc, String xpath) {
         String[] keywordsArray = xPathUtils.getStringArray(doc, xpath);
         // explicit conversion into an ArrayList to support the addAll-Method
-        return new ArrayList<String>(Arrays.asList(keywordsArray));
+        return new ArrayList<>(Arrays.asList(keywordsArray));
     }
     
-    protected List<SNSTopic> transformKeywordListToSNSTopics(List<String> keywords) throws XPathExpressionException {
-        List<SNSTopic> snsTopics = new ArrayList<SNSTopic>();
+    protected List<SNSTopic> transformKeywordListToSNSTopics(List<String> keywords) {
+        List<SNSTopic> snsTopics = new ArrayList<>();
         for (String keyword : keywords) {
             SNSTopic snsTopic = new SNSTopic(SNSTopic.Type.NON_DESCRIPTOR, null, null, keyword, null, null);
             snsTopics.add(snsTopic);
@@ -96,10 +94,10 @@ public class GeneralCapabilitiesParser {
         return snsTopics;
     }
     
-    protected OperationBean mapToOperationBean(Document doc, String[] xPathsOfMethods, Integer[] platformsOfMethods) throws XPathExpressionException {
+    protected OperationBean mapToOperationBean(Document doc, String[] xPathsOfMethods, Integer[] platformsOfMethods) {
         OperationBean opBean = new OperationBean();
-        List<String> methodAddresses = new ArrayList<String>();
-        List<Integer> methodPlatforms = new ArrayList<Integer>();
+        List<String> methodAddresses = new ArrayList<>();
+        List<Integer> methodPlatforms = new ArrayList<>();
         for (int i=0; i < xPathsOfMethods.length; i++) {
             String methodAddress = xPathUtils.getString(doc, xPathsOfMethods[i]);
             if (methodAddress != null && methodAddress.length() != 0) {
@@ -138,12 +136,14 @@ public class GeneralCapabilitiesParser {
         Date d = null;
         try {
             d = formatter.parse(date);
-        } catch (ParseException e) {}
+        } catch (ParseException e) {
+            log.debug("Error on getSimpleDate", e);
+        }
         return d;
     }
     
     private List<ConformityBean> mapToConformityBeans(Document doc, String xPath) {
-        List<ConformityBean> beans = new ArrayList<ConformityBean>();
+        List<ConformityBean> beans = new ArrayList<>();
         NodeList conformityNodes = xPathUtils.getNodeList(doc, xPath);
         if ( conformityNodes != null ) {
             for (int index = 0; index < conformityNodes.getLength(); ++index) {
@@ -174,23 +174,6 @@ public class GeneralCapabilitiesParser {
             confKey = 2;
         }
         
-        // syslist has no ISO code yet, so we compare hard coded!
-        /*Integer confKey = syslistCache.getKeyFromListId(6000, value);
-
-        // fallback to English ... should be ISO value to check for!
-        if (confKey == null) {
-            List<String[]> syslists = syslistCache.getSyslistByLanguage(6000, "en");
-            if (syslists.size() > 0) {
-                for (String[] entry : syslists) {
-                    if (entry[0].trim().equalsIgnoreCase(value.trim())) {
-                        return Integer.valueOf(entry[1]);
-                    }
-                }
-            }
-            // default set to "not evaluated" (3)
-            confKey = 3;
-        }*/
-        
         return confKey;
     }
 
@@ -212,29 +195,29 @@ public class GeneralCapabilitiesParser {
      * @return
      */
     protected String[] extractName(String name) {
-        if (name == null) return null;
-        
-        String[] splitByComma = name.split(",");
-        if (splitByComma.length > 1) {
-            String[] result = {splitByComma[1], splitByComma[0]}; 
-            return result;
-        } else {
-            String[] splitBySpace = name.split(" ");
-            if (splitBySpace.length == 2) {
-                String[] result = {splitBySpace[0], splitBySpace[1]}; 
+        if (name != null){
+            String[] splitByComma = name.split(",");
+            if (splitByComma.length > 1) {
+                String[] result = {splitByComma[1], splitByComma[0]}; 
                 return result;
-            } else if (splitBySpace.length > 2) {
-                String[] result = {splitBySpace[splitBySpace.length-2], splitBySpace[splitBySpace.length-1]}; 
-                return result;
-                
+            } else {
+                String[] splitBySpace = name.split(" ");
+                if (splitBySpace.length == 2) {
+                    String[] result = {splitBySpace[0], splitBySpace[1]}; 
+                    return result;
+                } else if (splitBySpace.length > 2) {
+                    String[] result = {splitBySpace[splitBySpace.length-2], splitBySpace[splitBySpace.length-1]}; 
+                    return result;
+                    
+                }
             }
         }
-        return null;
+        return new String[0];
     }
     
     protected List<String> getNodesContentAsList(Document doc, String xPath) {
         NodeList versionNodes = xPathUtils.getNodeList(doc, xPath);
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         if ( versionNodes == null ) return list;
         for (int i = 0; i < versionNodes.getLength(); i++) {
             String content = versionNodes.item(i).getTextContent();
@@ -246,7 +229,7 @@ public class GeneralCapabilitiesParser {
     }
     
     protected List<String> mapVersionsFromCodelist(Integer listId, List<String> versionList, Map<String, Integer> versionSyslistMap) {
-        List<String> mappedVersionList = new ArrayList<String>(); 
+        List<String> mappedVersionList = new ArrayList<>(); 
         for (String version : versionList) {
             Integer entryId = versionSyslistMap.get( version );
             String value = version;
@@ -267,7 +250,7 @@ public class GeneralCapabilitiesParser {
     
     protected List<UrlBean> getOnlineResources(Document doc, String xPath) {
         NodeList orNodes = xPathUtils.getNodeList(doc, xPath);
-        List<UrlBean> urls = new ArrayList<UrlBean>();
+        List<UrlBean> urls = new ArrayList<>();
         if (orNodes != null) {
             for (int i = 0; i < orNodes.getLength(); i++) {
                 UrlBean url = new UrlBean();
@@ -292,7 +275,7 @@ public class GeneralCapabilitiesParser {
      * @return
      */
     protected List<UrlBean> getResourceLocators(Document doc, String xPathExtCap) {
-        List<UrlBean> locators = new ArrayList<UrlBean>();
+        List<UrlBean> locators = new ArrayList<>();
         NodeList url = xPathUtils.getNodeList(doc, xPathExtCap + "/inspire_common:ResourceLocator/inspire_common:URL");
         if ( url != null ) {
             for (int i = 0; i < url.getLength(); i++) {
@@ -358,7 +341,7 @@ public class GeneralCapabilitiesParser {
             String startDate = xPathUtils.getString(doc, xpathExtCap + "/inspire_common:TemporalReference/inspire_common:TemporalExtent/inspire_common:IntervalOfDates/inspire_common:StartingDate");
             String endDate = xPathUtils.getString(doc, xpathExtCap + "/inspire_common:TemporalReference/inspire_common:TemporalExtent/inspire_common:IntervalOfDates/inspire_common:EndDate");
             if ( startDate != null|| endDate != null ) {
-                List<TimeReferenceBean> timeSpans = new ArrayList<TimeReferenceBean>();
+                List<TimeReferenceBean> timeSpans = new ArrayList<>();
                 TimeReferenceBean tr = new TimeReferenceBean();
                 Date dateObj = getSimpleDate(startDate);
                 if (dateObj != null) tr.setFrom(dateObj);
@@ -383,7 +366,7 @@ public class GeneralCapabilitiesParser {
      */
     private Integer mapServiceTypeToKey(String type) {
         List<String[]> syslists = syslistCache.getSyslistByLanguage(5100, "iso");
-        if (syslists.size() > 0) {
+        if (!syslists.isEmpty()) {
             for (String[] entry : syslists) {
                 if (entry[0].trim().equalsIgnoreCase(type.trim())) {
                     return Integer.valueOf(entry[1]);
@@ -418,7 +401,7 @@ public class GeneralCapabilitiesParser {
             
             // add the found uuid to the address object which marks it as found
             // if there are more than one results, then use the first one!
-            if (addresses != null && addresses.size() > 0) {
+            if (addresses != null && !addresses.isEmpty()) {
                 address.setUuid( addresses.get( 0 ).getString( "aNode.addrUuid" ) );
                 address.setType( addresses.get( 0 ).getInt( "addr.adrType" ) );
             }
@@ -444,7 +427,7 @@ public class GeneralCapabilitiesParser {
         if (result != null) {
             @SuppressWarnings("unchecked")
             List<IngridDocument> objects = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-            if (objects != null && objects.size() > 0) {
+            if (objects != null && !objects.isEmpty()) {
                 resultBean.setRef1ObjectIdentifier( id );
                 resultBean.setObjectClass( objects.get( 0 ).getInt( "obj.objClass" ) );
                 resultBean.setUuid( objects.get( 0 ).getString( "oNode.objUuid" ) );
@@ -453,7 +436,7 @@ public class GeneralCapabilitiesParser {
             } else {
             	// if no dataset was found then try another search if a namespace exists in the id
             	// In this case remove the namespace search again (INGRID34-6)
-            	int seperatorPos = id.indexOf( "#" );
+            	int seperatorPos = id.indexOf( '#' );
             	if (seperatorPos != -1) {
             		return checkForCoupledResource( id.substring( seperatorPos + 1 ) );
             	}

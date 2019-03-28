@@ -22,14 +22,11 @@
  */
 package de.ingrid.mdek.dwr.services;
 
-import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -147,7 +144,7 @@ public class SecurityServiceImpl implements SecurityService {
 	public List<User> getSubUsers(Long userId) {
 		try {
 			List<User> users = securityRequestHandler.getSubUsers(userId);		
-			List<User> resultList = new ArrayList<User>();
+			List<User> resultList = new ArrayList<>();
 			for (User user : users) {
 				User detailedUser = getUserDetails(user.getAddressUuid());
 				detailedUser.setUserData(MdekSecurityUtils.getUserDataForAddress(user.getAddressUuid()));
@@ -356,22 +353,6 @@ public class SecurityServiceImpl implements SecurityService {
 		this.securityRequestHandler = securityRequestHandler;
 	}
 
-    private static Principal getPrincipal(Subject subject, Class classe)
-    {
-        Principal principal = null;
-        Iterator principals = subject.getPrincipals().iterator();
-        while (principals.hasNext())
-        {
-            Principal p = (Principal) principals.next();
-            if (classe.isInstance(p))
-            {
-                principal = p;
-                break;
-            }
-        }
-        return principal;
-    }
-
     public void setAuthProvider(AuthenticationProvider authProvider) {
         this.authProvider = authProvider;
     }
@@ -390,12 +371,10 @@ public class SecurityServiceImpl implements SecurityService {
             }
         } else {
             isValid = authProvider.authenticate(username, password);
-            if (isValid) {
-                // next check if user also is known in mdek database and therefore an IGE user
-                // admin user does not have to be in mdek db
-                if (MdekSecurityUtils.portalLoginExists(username)) {
-                    isValid = true;
-                }
+            // next check if user also is known in mdek database and therefore an IGE user
+            // admin user does not have to be in mdek db
+            if (isValid && MdekSecurityUtils.portalLoginExists(username)) {
+                isValid = true;
             }
         }
         if (isValid) {
@@ -439,7 +418,7 @@ public class SecurityServiceImpl implements SecurityService {
         }
     }
     
-    public boolean removeCatAdmin(String plugId, String login) {
+    public boolean removeCatAdmin(String login) {
         UserData user = MdekSecurityUtils.getUserDataFromLogin(login);
         if (user != null)
             MdekSecurityUtils.deleteUserDataForAddress(user.getAddressUuid());
@@ -477,9 +456,10 @@ public class SecurityServiceImpl implements SecurityService {
     }
     
     public boolean isPortalConnected() {
+        boolean isPortalConnected = false;
         if (authProvider instanceof PortalAuthenticationProvider) {
-            return true;
+            isPortalConnected = true;
         }
-        return false;
+        return isPortalConnected;
     }
 }

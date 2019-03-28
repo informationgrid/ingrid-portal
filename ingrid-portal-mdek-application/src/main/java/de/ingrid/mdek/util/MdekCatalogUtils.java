@@ -64,16 +64,16 @@ public class MdekCatalogUtils {
 
 	public static Integer[] extractSysListIdsFromResponse(IngridDocument response) {
 		List<SysList> result = extractSysListInfosFromResponse(response);
-		List<Integer> listIdsTemp = new ArrayList<Integer>();
+		List<Integer> listIdsTemp = new ArrayList<>();
         for (SysList codelist : result) {
             listIdsTemp.add(codelist.getId());
         }
-        return (Integer[]) listIdsTemp.toArray(new Integer[0]);
+        return listIdsTemp.toArray(new Integer[0]);
 	}
 	
 	public static List<SysList> extractSysListInfosFromResponse(IngridDocument response) {
         IngridDocument result = MdekUtils.getResultFromResponse(response);
-        List<SysList> codelists = new ArrayList<SysList>();
+        List<SysList> codelists = new ArrayList<>();
         
         List<Object> docs = result.getArrayList(MdekKeys.LST_SYSLISTS);
         for (IngridDocument doc : (List<IngridDocument>)(List<?>)docs) {
@@ -96,11 +96,11 @@ public class MdekCatalogUtils {
 	public static Map<Integer, List<String[]>> extractSysListFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 		if (result != null) {
-			Map<Integer, List<String[]>> resultMap = new HashMap<Integer, List<String[]>>();
+			Map<Integer, List<String[]>> resultMap = new HashMap<>();
 			Set<Object> listKeys = result.keySet();
 			for (Object listKey : listKeys) {
 				IngridDocument listDocument = (IngridDocument) result.get(listKey);
-				List<String[]> resultList = new ArrayList<String[]>();
+				List<String[]> resultList = new ArrayList<>();
 				Integer listId = (Integer) listDocument.get(MdekKeys.LST_ID);
 
 				Integer[] entryIds = (Integer[]) listDocument.get(MdekKeys.LST_ENTRY_IDS);
@@ -110,7 +110,7 @@ public class MdekCatalogUtils {
 
 				if (entryIds != null && entryNames != null) {
 					for (int index = 0; index < entryIds.length; ++index) {
-						boolean isDefault = defaultIndex != null ? defaultIndex == index : false;
+						boolean isDefault = defaultIndex == index;
 						
 						resultList.add( new String[] {
 								entryNames[index],
@@ -139,13 +139,13 @@ public class MdekCatalogUtils {
 
 		} else {
 			MdekErrorUtils.handleError(response);
-			return null;
+			return new String[0];
 		}
 	}
 
 	public static String convertSysListsToXML(IngridDocument resultDe, IngridDocument resultEn) {
 		Set<String> listKeys = (Set<String>)(Set<?>) resultDe.keySet();
-		List<SysList> sysLists = new ArrayList<SysList>();
+		List<SysList> sysLists = new ArrayList<>();
 
 		for (String listKey : listKeys) {
 			SysList sysList = new SysList();
@@ -171,53 +171,17 @@ public class MdekCatalogUtils {
 		}
 
 		xstream.alias("sysList", SysList.class);
-		String xmlDoc = xstream.toXML(sysLists);
-		return xmlDoc;
+		return xstream.toXML(sysLists);
 	}
 
 	public static List<SysList> convertXMLToSysLists(String xmlDoc) {
 		xstream.alias("sysList", SysList.class);
-		List<SysList> sysLists = (List<SysList>) xstream.fromXML(xmlDoc);
-		return sysLists;
+		return (List<SysList>) xstream.fromXML(xmlDoc);
 	}
-
-	/*public static List<Map<String, String>> extractSysGuisFromResponse(IngridDocument response) {
-		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		List<Map<String, String>> sysGuiList = new ArrayList<Map<String,String>>();
-
-		Set<Map.Entry<String, Map<String, Object>>> entrySet = result.entrySet();
-		Iterator<Map.Entry<String, Map<String, Object>>> it = entrySet.iterator();
-
-		while (it.hasNext()) {
-			Map.Entry<String, Map<String, Object>> entry = it.next();
-			Map<String, Object> guiEntry = entry.getValue();
-			
-			Map<String, String> res = new HashMap<String, String>();
-			res.put(SYS_GUI_ID, (String) guiEntry.get(MdekKeys.SYS_GUI_ID));
-			res.put(SYS_GUI_MODE, ((Integer) guiEntry.get(MdekKeys.SYS_GUI_BEHAVIOUR)).toString());
-
-			sysGuiList.add(res);
-		}
-		
-		return sysGuiList;
-	}
-
-	public static List<IngridDocument> convertFromSysGuiRepresentation(List<Map<String, String>> sysGuiList) {
-		List<IngridDocument> result = new ArrayList<IngridDocument>();
-
-		for (Map<String, String> sysGuiEntry : sysGuiList) {
-			IngridDocument doc = new IngridDocument();
-			doc.put(MdekKeys.SYS_GUI_ID, sysGuiEntry.get(SYS_GUI_ID));
-			doc.put(MdekKeys.SYS_GUI_BEHAVIOUR, new Integer(sysGuiEntry.get(SYS_GUI_MODE)));
-
-			result.add(doc);
-		}
-		return result;
-	}*/
 
 	public static List<GenericValueBean> extractSysGenericKeysFromResponse(IngridDocument response) {
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
-		List<GenericValueBean> genericValueList = new ArrayList<GenericValueBean>();
+		List<GenericValueBean> genericValueList = new ArrayList<>();
 
 		log.debug(result);
 
@@ -240,7 +204,6 @@ public class MdekCatalogUtils {
 			log.debug("MDEK KEYS:");
 			log.debug(result.getInt(MdekKeys.LANGUAGE_CODE));
 			log.debug(result.getString(MdekKeys.LANGUAGE_NAME));
-			//log.debug(result.getString(MdekKeys.LANGUAGE_SHORTCUT));
 			
 			resultCat.setUuid(result.getString(MdekKeys.UUID));
 			resultCat.setCatalogName(result.getString(MdekKeys.CATALOG_NAME));
@@ -358,7 +321,7 @@ public class MdekCatalogUtils {
 	}
 
     private static List<URLObjectReference> getUrlReferencesFromResult(List<Map<String, Object>> urlResult) {
-        List<URLObjectReference> urlReferences = new ArrayList<URLObjectReference>();
+        List<URLObjectReference> urlReferences = new ArrayList<>();
         if (urlResult != null) {
         	for (Map<String, Object> urlRef : urlResult) {
         		URLObjectReference urlObjectRef = new URLObjectReference();
@@ -441,11 +404,11 @@ public class MdekCatalogUtils {
 	}
 
 	public static List<Map<String, Object>> convertFromUrlJobResult(List<URLObjectReference> urlObjectReferences) {
-		List<Map<String, Object>> urlInfoList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> urlInfoList = new ArrayList<>();
 		if (urlObjectReferences != null) {
 			for (URLObjectReference ref : urlObjectReferences) {
 				URLState urlState = ref.getUrlState();
-				Map<String, Object> urlInfo = new HashMap<String, Object>();
+				Map<String, Object> urlInfo = new HashMap<>();
 				urlInfo.put(MdekKeys.URL_RESULT_URL, urlState.getUrl());
 				urlInfo.put(MdekKeys.URL_RESULT_STATE, urlState.getState().toString());
 				urlInfo.put(MdekKeys.URL_RESULT_RESPONSE_CODE, urlState.getResponseCode());
@@ -478,7 +441,7 @@ public class MdekCatalogUtils {
 	private static void addAnalyzeJobInfoFromResponse(IngridDocument response,
 			AnalyzeJobInfoBean analyzeJobInfo) {
 		IngridDocument analyzeResult = MdekUtils.getResultFromResponse(response);
-		List<ErrorReport> errorReports = new ArrayList<ErrorReport>();
+		List<ErrorReport> errorReports = new ArrayList<>();
 		if (analyzeResult != null) {
 			List<IngridDocument> errorReportDocList = (List<IngridDocument>)(List<?>)analyzeResult.getArrayList(MdekKeys.VALIDATION_RESULT);
 			if (errorReportDocList != null) {
@@ -499,8 +462,6 @@ public class MdekCatalogUtils {
 	public static CodeListJobInfoBean extractCodeListInfoFromResponse(IngridDocument response) {
 		CodeListJobInfoBean codeListJobInfo = new CodeListJobInfoBean();
 		addGeneralJobInfoFromResponse(response, codeListJobInfo);
-		//addCodeListJobInfoFromResponse(response, codeListJobInfo);
-
 		return codeListJobInfo;
 	}
 
@@ -522,7 +483,7 @@ public class MdekCatalogUtils {
 
 			List<Map<String, Object>> updateMessages = (List<Map<String, Object>>) snsResult.get(MdekKeys.JOBINFO_TERMS_UPDATED);
 
-			List<SNSTopicUpdateResult> snsUpdateResults = new ArrayList<SNSTopicUpdateResult>();
+			List<SNSTopicUpdateResult> snsUpdateResults = new ArrayList<>();
 			if (updateMessages != null) {
 				for (Map<String, Object> updateMessage : updateMessages) {
 					snsUpdateResults.add(new SNSTopicUpdateResult(updateMessage));
@@ -553,7 +514,7 @@ public class MdekCatalogUtils {
 
 			List<Map<String, Object>> updateMessages = (List<Map<String, Object>>) snsResult.get(MdekKeys.JOBINFO_LOCATIONS_UPDATED);
 
-			List<SNSLocationUpdateResult> snsUpdateResults = new ArrayList<SNSLocationUpdateResult>();
+			List<SNSLocationUpdateResult> snsUpdateResults = new ArrayList<>();
 			if (updateMessages != null) {
 				for (Map<String, Object> updateMessage : updateMessages) {
 					snsUpdateResults.add(new SNSLocationUpdateResult(updateMessage, extractObjectEntities));
