@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,19 +22,12 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.List;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.AdminContentPartnerForm;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsDB;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridProvider;
 import org.apache.velocity.context.Context;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -44,12 +37,11 @@ import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.AdminContentPartnerForm;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridProvider;
+import javax.portlet.*;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Portlet handling content management of providers

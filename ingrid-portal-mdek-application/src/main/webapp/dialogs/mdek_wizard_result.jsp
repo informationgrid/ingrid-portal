@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -1161,7 +1161,10 @@ require([
                     </div>
 
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllDescriptors" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantDescriptorTableCheckbox" id="assistantDescriptorTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllDescriptors" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1173,7 +1176,10 @@ require([
                         <div id="assistantSpatialRefTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantSpatialRefTableCheckbox" id="assistantSpatialRefTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllSpatialRefs" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1185,7 +1191,10 @@ require([
                         <div id="assistantOnlineResourcesTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantOnlineResourcesTableCheckbox" id="assistantOnlineResourcesTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllOnlineResources" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantOnlineResourcesTableCheckbox" id="assistantOnlineResourcesTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllOnlineResources" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1197,7 +1206,10 @@ require([
                         <div id="assistantResourceLocatorsTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantResourceLocatorsTableCheckbox" id="assistantResourceLocatorsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllResourceLocators" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantResourceLocatorsTableCheckbox" id="assistantResourceLocatorsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllResourceLocators" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1209,7 +1221,10 @@ require([
                         <div id="assistantCRSTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantCRSTableCheckbox" id="assistantCRSTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllCrs" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantCRSTableCheckbox" id="assistantCRSTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllCrs" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1221,7 +1236,10 @@ require([
                         <div id="assistantKeywordsTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantKeywordsTableCheckbox" id="assistantKeywordsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllKeywords" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantKeywordsTableCheckbox" id="assistantKeywordsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllKeywords" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1233,7 +1251,10 @@ require([
                         <div id="assistantConformityTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantConformityTableCheckbox" id="assistantConformityTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllConformities" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantConformityTableCheckbox" id="assistantConformityTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllConformities" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
@@ -1253,30 +1274,39 @@ require([
                         <div id="assistantTimeEventsTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantTimeEventsTableCheckbox" id="assistantTimeEventsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllTimeEvents" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantTimeEventsTableCheckbox" id="assistantTimeEventsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllTimeEvents" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
             <span class="outer">
                 <div>
-                    <span class="label"><label for="assistantAddAddress" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10209)"><fmt:message key="dialog.wizard.create.address" /></label></span>
+                    <span class="label"><label for="assistantAddressTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10209)"><fmt:message key="dialog.wizard.create.address" /></label></span>
                     <div class="tableContainer">
                         <div id="assistantAddressTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantAddressTableCheckbox" id="assistantAddressTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllAddresses" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantAddressTableCheckbox" id="assistantAddressTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllAddresses" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>
             
             <span class="outer">
                 <div id="assistantDatasetsContainer">
-                    <span class="label"><label for="assistantAddDatasets" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10210)"><fmt:message key="dialog.wizard.create.datasets" /></label></span>
+                    <span class="label"><label for="assistantDatasetsTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10210)"><fmt:message key="dialog.wizard.create.datasets" /></label></span>
                     <div class="tableContainer">
                         <div id="assistantDatasetsTable" interactive="true" autoEdit="true"></div>
                     </div>
                     <div class="checkboxContainer">
-                        <label class="inActive"><span class="input allSelector"><input type="checkbox" name="assistantDatasetsTableCheckbox" id="assistantDatasetsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllDatasets" /></label></span>
+                        <label class="inActive">
+                            <span class="input allSelector"><input type="checkbox" name="assistantDatasetsTableCheckbox" id="assistantDatasetsTableCheckbox" data-dojo-type="dijit/form/CheckBox" /><fmt:message key="dialog.wizard.create.selectAllDatasets" />
+                            </span>
+                        </label>
                     </div>
                 </div>
             </span>

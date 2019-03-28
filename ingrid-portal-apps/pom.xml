@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
@@ -9,183 +10,26 @@
   <artifactId>ingrid-portal-apps</artifactId>
   <packaging>war</packaging>
   <name>InGrid Portal Apps</name>
+
+  <!-- ==================== Source Code Management ==================== -->
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-apps</developerConnection>
     <tag>HEAD</tag>
   </scm>
+
+  <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <measurement.client.version>1.0.2</measurement.client.version>
+    <measurement.client.version>1.0.3</measurement.client.version>
   </properties>
-  <build>
-    <finalName>ingrid-portal-apps</finalName>
-    <sourceDirectory>src/java</sourceDirectory>
-    <outputDirectory>target/ingrid-portal-apps/WEB-INF/classes</outputDirectory>
-    <plugins>
 
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <configuration>
-          <warSourceDirectory>${basedir}/src/webapp</warSourceDirectory>
-          <archiveClasses>false</archiveClasses>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-changes-plugin</artifactId>
-        <version>2.9</version>
-        <configuration>
-          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
-          <smtpHost>localhost</smtpHost>
-          <toAddresses />
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack-measurement-client</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>unpack</goal>
-            </goals>
-            <configuration>
-              <artifactItems>
-                <artifactItem>
-                  <groupId>de.ingrid</groupId>
-                  <artifactId>measurement-client</artifactId>
-                  <type>zip</type>
-                  <outputDirectory>${project.build.directory}</outputDirectory>
-                </artifactItem>
-              </artifactItems>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <version>3.0.1</version>
-        <executions>
-          <execution>
-            <id>copy-resources</id>
-            <!-- here the phase you need -->
-            <phase>prepare-package</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/${project.artifactId}/measures</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${project.build.directory}/measurement-client-${measurement.client.version}</directory>
-                </resource>
-              </resources>
-              <overwrite>true</overwrite>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-        <configuration>
-          <excludes>
-            <exclude>**/*.properties</exclude>
-            <exclude>**/*.json</exclude>
-            <exclude>**/*.sql</exclude>
-            <exclude>**/*.xml</exclude>
-            <exclude>**/*.svg</exclude>
-          </excludes>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-            <execution>
-                <phase>compile</phase>
-                <configuration>
-                    <tasks>
-                        <echo>INGRID-PORTAL-APPS: Copy default WEB-INF folder to profile 'ingrid'</echo>
-                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF">
-                            <fileset dir="${project.basedir}/src/webapp/WEB-INF/">
-                                 <include name="**/*.vm" />
-                                 <include name="**/portlet.xml" />
-                            </fileset>
-                        </copy>
-                        <echo>INGRID-PORTAL-APPS: Copy default properties to profile 'ingrid'</echo>
-                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF/classes">
-                            <fileset dir="${project.basedir}/src/java/">
-                                <include name="*.xml" />
-                                <include name="**/wms*.properties" />
-								<exclude name="hibernate.cfg.xml" />
-                            </fileset>
-                        </copy>
-                        <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
-                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
-                            <fileset dir="${project.basedir}/src/webapp/dwd_warnmodul/">
-                                <include name="*.cfg" />
-                            </fileset>
-                        </copy>
-                        <echo>INGRID-PORTAL: Copy portal-base layout ingrid properties to profile 'ingrid'</echo>
-                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
-                            <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">
-                                <include name="**/decorations/**/*.vm" />
-                                <include name="**/css/override.css" />
-                                <include name="**/images/**/*.svg" />
-                                <include name="**/images/*.ico" />
-                                <include name="**/error*.html" />
-                                <include name="**/urlrewrite.xml" />
-                            </fileset>
-                        </copy>
-                        <echo>INGRID-PORTAL: Copy portal-base localisation ingrid properties to profile 'ingrid'</echo>
-                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/WEB-INF/classes">
-                            <fileset dir="${project.basedir}/../ingrid-portal-base/src/java/">
-                                <include name="**/PortalLayout*.properties" />
-                            </fileset>
-                        </copy>
-                        <echo>INGRID-PORTAL-MDEK-APPLICATION: Copy portal-base localisation ingrid properties to profile 'ingrid'</echo>
-                        <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-mdek-application/WEB-INF/classes">
-                            <fileset dir="${project.basedir}/../ingrid-portal-mdek-application/src/main/resources">
-                                <include name="**/*help*.xml" />
-                                <include name="**/messages*.properties" />
-                            </fileset>
-                        </copy>
-                    </tasks>
-                </configuration>
-                <goals>
-                    <goal>run</goal>
-                </goals>
-            </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <resources>
-      <resource>
-        <directory>src/java</directory>
-        <includes>
-          <include>**/*.properties</include>
-          <include>**/*.properties_sample</include>
-          <include>**/*.dtd</include>
-          <include>**/*.xml</include>
-          <include>**/*.xsl</include>
-          <include>**/*.xsd</include>
-        </includes>
-      </resource>
-    </resources>
-  </build>
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
   <!-- <dependencyManagement>
 	<dependencies>
 
 	</dependencies>
   </dependencyManagement> -->
+
   <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
 
@@ -194,14 +38,14 @@
       <artifactId>config-builder</artifactId>
       <version>1.3</version>
       <exclusions>
-      	<exclusion>
-      		<groupId>org.slf4j</groupId>
-      		<artifactId>slf4j-api</artifactId>
-      	</exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
 
-<!-- Jetspeed / Apache Portals -->
+    <!-- Jetspeed / Apache Portals -->
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-page-manager</artifactId>
@@ -223,8 +67,8 @@
           <artifactId>castor</artifactId>
         </exclusion>
         <exclusion>
-        	<groupId>org.slf4j</groupId>
-        	<artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -240,24 +84,24 @@
     </dependency>
     <!-- provides the IFramePortlet -->
     <dependency>
-        <groupId>org.apache.portals.applications</groupId>
-        <artifactId>apa-webcontent-jar</artifactId>
-        <version>1.3</version>
-        <exclusions>
-        	<exclusion>
-        		<groupId>org.slf4j</groupId>
-        		<artifactId>slf4j-api</artifactId>
-        	</exclusion>
-        </exclusions>
+      <groupId>org.apache.portals.applications</groupId>
+      <artifactId>apa-webcontent-jar</artifactId>
+      <version>1.3</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.sf.ehcache</groupId>
       <artifactId>ehcache-core</artifactId>
       <exclusions>
-      	<exclusion>
-      		<groupId>org.slf4j</groupId>
-      		<artifactId>slf4j-api</artifactId>
-      	</exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -268,13 +112,13 @@
     <!-- java.lang.ClassCastException: org.dom4j.DocumentFactory cannot be cast to org.dom4j.DocumentFactory -->
     <!-- when PSML file is created on new user (file system PSML manager) !? -->
     <!-- Commented again cause local dom4j works with PSML in database ! -->
-<!--
-    <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-      <scope>provided</scope>
-    </dependency>
--->
+    <!--
+        <dependency>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+          <scope>provided</scope>
+        </dependency>
+    -->
     <!-- Needed for dom4j ! Why no transitive dependency ??? -->
     <dependency>
       <groupId>jaxen</groupId>
@@ -286,7 +130,7 @@
       <artifactId>saxpath</artifactId>
       <scope>runtime</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.apache.portals.jetspeed-2</groupId>
       <artifactId>jetspeed-security</artifactId>
@@ -304,13 +148,13 @@
           <artifactId>spring-ldap</artifactId>
         </exclusion>
         <exclusion>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
 
-<!-- InGrid -->
+    <!-- InGrid -->
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
@@ -364,15 +208,18 @@
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
       <version>3.5.0</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>log4j</artifactId>
+          <groupId>log4j</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-codelist-service</artifactId>
       <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring</artifactId>
-        </exclusion>
+
         <exclusion>
           <groupId>stax</groupId>
           <artifactId>stax-api</artifactId>
@@ -380,6 +227,10 @@
         <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.quartz-scheduler</groupId>
+          <artifactId>quartz</artifactId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -391,13 +242,13 @@
       <type>zip</type>
     </dependency>
 
-<!-- Diverses -->
-	<!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
-	<dependency>
-	  <groupId>com.thoughtworks.xstream</groupId>
-	  <artifactId>xstream</artifactId>
-	  <version>1.4.7</version>
-	</dependency>
+    <!-- Diverses -->
+    <!-- Version 1.4.4 causes error with Java 1.8: xstream.toXML see REDMINE-702 -->
+    <dependency>
+      <groupId>com.thoughtworks.xstream</groupId>
+      <artifactId>xstream</artifactId>
+      <version>1.4.7</version>
+    </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>
       <artifactId>commons-fileupload</artifactId>
@@ -515,10 +366,10 @@
       <version>2.8.1</version>
     </dependency>
     <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.5.6</version>
-        <scope>provided</scope>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.5.6</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.nulab-inc</groupId>
@@ -526,4 +377,175 @@
       <version>1.2.3</version>
     </dependency>
   </dependencies>
+
+  <!-- ==================== Build Configuration ==================== -->
+  <build>
+    <finalName>ingrid-portal-apps</finalName>
+    <sourceDirectory>src/java</sourceDirectory>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <configuration>
+          <warSourceDirectory>${basedir}/src/webapp</warSourceDirectory>
+          <archiveClasses>false</archiveClasses>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+          <smtpHost>localhost</smtpHost>
+          <toAddresses/>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-measurement-client</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>de.ingrid</groupId>
+                  <artifactId>measurement-client</artifactId>
+                  <type>zip</type>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.1</version>
+        <executions>
+          <execution>
+            <id>copy-resources</id>
+            <!-- here the phase you need -->
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${project.artifactId}/measures</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.build.directory}/measurement-client-${measurement.client.version}</directory>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/*.properties</exclude>
+            <exclude>**/*.json</exclude>
+            <exclude>**/*.sql</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.svg</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <echo>INGRID-PORTAL-APPS: Copy default WEB-INF folder to profile 'ingrid'</echo>
+                <copy
+                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF">
+                  <fileset dir="${project.basedir}/src/webapp/WEB-INF/">
+                    <include name="**/*.vm"/>
+                    <include name="**/portlet.xml"/>
+                  </fileset>
+                </copy>
+                <echo>INGRID-PORTAL-APPS: Copy default properties to profile 'ingrid'</echo>
+                <copy
+                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF/classes">
+                  <fileset dir="${project.basedir}/src/java/">
+                    <include name="*.xml"/>
+                    <include name="**/wms*.properties"/>
+                    <exclude name="hibernate.cfg.xml"/>
+                  </fileset>
+                </copy>
+                <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
+                <copy
+                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
+                  <fileset dir="${project.basedir}/src/webapp/dwd_warnmodul/">
+                    <include name="*.cfg"/>
+                  </fileset>
+                </copy>
+                <echo>INGRID-PORTAL: Copy portal-base layout ingrid properties to profile 'ingrid'</echo>
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
+                  <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">
+                    <include name="**/decorations/**/*.vm"/>
+                    <include name="**/css/override.css"/>
+                    <include name="**/images/**/*.svg"/>
+                    <include name="**/images/*.ico"/>
+                    <include name="**/error*.html"/>
+                    <include name="**/urlrewrite.xml"/>
+                  </fileset>
+                </copy>
+                <echo>INGRID-PORTAL: Copy portal-base localisation ingrid properties to profile 'ingrid'</echo>
+                <copy
+                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/WEB-INF/classes">
+                  <fileset dir="${project.basedir}/../ingrid-portal-base/src/java/">
+                    <include name="**/PortalLayout*.properties"/>
+                  </fileset>
+                </copy>
+                <echo>INGRID-PORTAL-MDEK-APPLICATION: Copy portal-base localisation ingrid properties to profile
+                  'ingrid'
+                </echo>
+                <copy
+                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-mdek-application/WEB-INF/classes">
+                  <fileset dir="${project.basedir}/../ingrid-portal-mdek-application/src/main/resources">
+                    <include name="**/*help*.xml"/>
+                    <include name="**/messages*.properties"/>
+                  </fileset>
+                </copy>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <resources>
+      <resource>
+        <directory>src/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.properties_sample</include>
+          <include>**/*.dtd</include>
+          <include>**/*.xml</include>
+          <include>**/*.xsl</include>
+          <include>**/*.xsd</include>
+        </includes>
+      </resource>
+    </resources>
+  </build>
 </project>

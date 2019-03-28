@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -60,9 +60,9 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
 
     private final static Logger log = LoggerFactory.getLogger(SearchResultUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
-    private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-    private static final String[] REQUESTED_FIELDS_BLP_MARKER = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
+    private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
+    private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
@@ -74,40 +74,32 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
             if (resourceID.equals( "marker" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    response.setContentType( "application/javascript" );
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "marker2" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    response.setContentType( "application/javascript" );
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "marker3" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    response.setContentType( "application/javascript" );
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "marker4" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    response.setContentType( "application/javascript" );
+                    response.getWriter().write(writeResponse(request, query, messages, sysCodeList));
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "bbox" )) {
                 String uuid = request.getParameter( "uuid" );
@@ -120,22 +112,18 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                         StringBuilder s = new StringBuilder();
                         IngridHit hit = it.next();
                         IngridHitDetail detail = hit.getHitDetail();
-                        Object[] x1 = (Object[]) detail.get( "x1" );
-                        Object[] y1 = (Object[]) detail.get( "y1" );
-                        Object[] x2 = (Object[]) detail.get( "x2" );
-                        Object[] y2 = (Object[]) detail.get( "y2" );
+                        String x1Value = UtilsSearch.getDetailValue( detail, "x1" );
+                        String y1Value = UtilsSearch.getDetailValue( detail, "y1" );
+                        String x2Value = UtilsSearch.getDetailValue( detail, "x2" );
+                        String y2Value = UtilsSearch.getDetailValue( detail, "y2" );
                         
-                        if (y1 != null && y2 != null && x1 != null && x2 != null) {
-                            String y1Value = y1[0].toString().trim();
-                            String x1Value = x1[0].toString().trim();
-                            String y2Value = y2[0].toString().trim();
-                            String x2Value = x2[0].toString().trim();
+                        if (y1Value != null && y2Value != null && x1Value != null && x2Value != null) {
                             if(x1Value.length() > 0 && x1Value.toLowerCase().indexOf( "nan" ) == -1 &&
                                 x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
                                 y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
                                 y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
-                                s.append("[").append( y1Value ).append( "," ).append( x1Value ).append( "],[" ).append( y2Value )
-                                        .append( "," ).append( x2Value ).append("]");
+                                s.append("[").append( y1Value.trim() ).append( "," ).append( x1Value.trim() ).append( "],[" ).append( y2Value.trim() )
+                                        .append( "," ).append( x2Value.trim() ).append("]");
                                 response.getWriter().write( s.toString() );
                             }
                         }
@@ -198,35 +186,35 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                     ArrayList<HashMap<String, String>> facetList = new ArrayList<HashMap<String, String>> ();
                     
                     String tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-                    if (tmpQuery != "") {
+                    if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                         facetEntry.put("id", "countMarker1");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
-                    if (tmpQuery != "") {
+                    if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                         facetEntry.put("id", "countMarker2");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
-                    if (tmpQuery != "") {
+                    if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                         facetEntry.put("id", "countMarker3");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-                    if (tmpQuery != "") {
+                    if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                         facetEntry.put("id", "countMarker4");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-                    if (tmpQuery != "") {
+                    if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<String, String>();
                         facetEntry.put("id", "countMarkerDevPlan");
                         facetEntry.put("query", tmpQuery);
@@ -283,26 +271,24 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         }
     }
     
-
-    private void writeResponse(ResourceRequest request, ResourceResponse response, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+    private String writeResponse(ResourceRequest request, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
         queryString = UtilsSearch.updateQueryString(queryString, request);
+        StringBuilder s = new StringBuilder();
+        s.append("var markers = [");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
         if(it != null){
             while (it.hasNext()) {
-                StringBuilder s = new StringBuilder();
                 IngridHit hit = it.next();
                 IngridHitDetail detail = hit.getHitDetail();
-                Object[] lat_center = (Object[]) detail.get( "lat_center" );
-                Object[] lon_center = (Object[]) detail.get( "lon_center" );
-                if (lat_center != null && lon_center != null) {
-                    String latCenterValue = lat_center[0].toString().trim();
-                    String lonCenterValue = lon_center[0].toString().trim();
+                String latCenterValue = UtilsSearch.getDetailValue( detail, "lat_center" );
+                String lonCenterValue = UtilsSearch.getDetailValue( detail, "lon_center" );
+                if (latCenterValue != null && lonCenterValue != null) {
                     if(latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
                         lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
                         s.append( "[" )
-                            .append( latCenterValue ).append( "," )
-                            .append( lonCenterValue ).append( ",'" )
+                            .append( latCenterValue.trim() ).append( "," )
+                            .append( lonCenterValue.trim() ).append( ",'" )
                             .append( detail.get( "title" ).toString() ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
                             .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
@@ -357,11 +343,12 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
                         if (it.hasNext()) {
                             s.append( "," );
                         }
-                        response.getWriter().write( s.toString() );
                     }
                 }
             }
         }
+        s.append("];");
+        return s.toString();
     }
 
     public void doView(RenderRequest request, RenderResponse response)
@@ -369,22 +356,22 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         // define an REST URL to get the map data dynamically
         ResourceURL restUrl = response.createResourceURL();
         String mapclientQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-        if(mapclientQuery != ""){
+        if(!mapclientQuery.isEmpty()){
             restUrl.setResourceID( "marker" );
             request.setAttribute( "restUrlMarker", restUrl.toString() );
         }
         String mapclientQuery2 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
-        if(mapclientQuery2 != ""){
+        if(!mapclientQuery2.isEmpty()){
             restUrl.setResourceID( "marker2" );
             request.setAttribute( "restUrlMarker2", restUrl.toString() );
         }
         String mapclientQuery3 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
-        if(mapclientQuery3 != ""){
+        if(!mapclientQuery3.isEmpty()){
             restUrl.setResourceID( "marker3" );
             request.setAttribute( "restUrlMarker3", restUrl.toString() );
         }
         String mapclientQuery4 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-        if(mapclientQuery4 != ""){
+        if(!mapclientQuery4.isEmpty()){
             restUrl.setResourceID( "marker4" );
             request.setAttribute( "restUrlMarker4", restUrl.toString() );
         }
@@ -392,12 +379,12 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
         String mapclientUVPDevPlanURL = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-        if(mapclientUVPDevPlanURL != ""){
+        if(!mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "devPlanMarker" );
             request.setAttribute( "restUrlUVPDevPlan", restUrl.toString() );
         }
 
-        if(mapclientQuery != "" || mapclientQuery2 != "" || mapclientQuery3 != "" || mapclientQuery4 != "" || mapclientUVPDevPlanURL != ""){
+        if(!mapclientQuery.isEmpty() || !mapclientQuery2.isEmpty() || !mapclientQuery3.isEmpty() || !mapclientQuery4.isEmpty() || !mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
         }

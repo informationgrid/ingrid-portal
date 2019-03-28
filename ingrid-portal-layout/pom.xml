@@ -1,20 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
     <version>4.6.0.1236-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-layout</artifactId>
   <packaging>war</packaging>
   <name>InGrid Portal Layout</name>
+
+  <!-- ==================== Source Code Management ==================== -->
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-layout</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-layout</developerConnection>
     <tag>HEAD</tag>
   </scm>
+
+  <!-- ==================== DEPENDENCIES ==================== -->
   <dependencies>
     <!-- Overlay ! jetspeed-layouts will be extracted to this war ! -->
     <dependency>
@@ -24,6 +28,8 @@
       <type>war</type>
     </dependency>
   </dependencies>
+
+  <!-- ==================== Build Configuration ==================== -->
   <build>
     <finalName>ingrid-portal-layout</finalName>
     <plugins>
@@ -34,7 +40,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses />
+          <toAddresses/>
         </configuration>
       </plugin>
     </plugins>

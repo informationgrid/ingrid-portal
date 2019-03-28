@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,22 +22,14 @@
  */
 package de.ingrid.portal.global;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import de.ingrid.portal.interfaces.IBUSInterface;
+import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.dsc.Column;
+import de.ingrid.utils.dsc.Record;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xml.XPathUtils;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -51,14 +43,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import de.ingrid.portal.interfaces.IBUSInterface;
-import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
-import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
-import de.ingrid.utils.IngridHit;
-import de.ingrid.utils.dsc.Column;
-import de.ingrid.utils.dsc.Record;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xml.XPathUtils;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
+import java.net.URL;
+import java.util.*;
 
 public class UtilsMapServiceManager {
 	private static final Logger		log	= LoggerFactory.getLogger(UtilsMapServiceManager.class);
@@ -230,8 +219,7 @@ public class UtilsMapServiceManager {
 		sw = new StringWriter();
 		templatePath = path;
 		
-		try {
-			BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(templatePath), "UTF8"));
+		try (BufferedReader templateReader = new BufferedReader(new InputStreamReader(new FileInputStream(templatePath), "UTF8"))) {
 			Velocity.init();
 			Velocity.evaluate(context, sw, "TemporaryService", templateReader);
 		} catch (Exception e) {

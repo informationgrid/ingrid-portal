@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -33,6 +33,8 @@ define([
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-style",
+    "dojo/promise/all",
+    "dojo/promise/Promise",
     "dojox/validate",
     "dojox/widget/Standby",
     "dijit/registry",
@@ -62,7 +64,7 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
-], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, validate, Standby,
+], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
@@ -2352,25 +2354,6 @@ define([
             },
 
             applyDefaultConnections: function() {
-                // textareas do not have a validate function so we have to implement this
-                // on our own
-                var textAreas = query(".dijitTextArea", "contentFrameBodyObject");
-                array.forEach(textAreas, function(element) {
-                    var widget = registry.getEnclosingWidget(element);
-                    widget.validate = function() {
-                        return this.validator();
-                    };
-                    widget.validator = function() {
-                        if (this.required && this.get("value") == "") {
-                            domClass.add(this.domNode, "importantBackground");
-                            return false;
-                        } else {
-                            domClass.remove(this.domNode, "importantBackground");
-                            return true;
-                        }
-                    };
-                });
-
                 // onResize fix for IE9
                 if (has("ie") > 8) {
                     on(window, "resize", function() {
@@ -2413,7 +2396,8 @@ define([
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 
                 // activate default behaviour
-                UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                return UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                    var behaviourDefs = [];
                     // mark behaviours with override values
                     array.forEach(data, function(item) {
                         if (behaviour[item.id]) {
@@ -2428,7 +2412,7 @@ define([
                     });
                     for (var behave in behaviour) {
                         // ignore invalid or address behaviours
-                        if (!behaviour[behave].title || behaviour[behave].forAddress) continue; 
+                        if (!behaviour[behave] || !behaviour[behave].title || behaviour[behave].forAddress) continue;
                         
                         // run behaviour if 
                         // 1) activated by default and not overridden
@@ -2441,14 +2425,37 @@ define([
                                 )) {
                             console.debug("execute behaviour: " + behave);
                             try {
-                                behaviour[behave].run();
+                                var def = behaviour[behave].run();
+                                if (def instanceof Promise) {
+                                    behaviourDefs.push( def );
+                                }
                             } catch (error) {
                                 console.error("Could not execute behaviour: " + behave, error);
                             }
                         }
                     }
+                     return all(behaviourDefs);
                 }, function(error) {
                     console.error("Error getting override behaviours:", error);
+                }).then(function() {
+                    // textareas do not have a validate function so we have to implement this
+                    // on our own
+                    var textAreas = query(".dijitTextArea", "contentFrameBodyObject");
+                    array.forEach(textAreas, function(element) {
+                        var widget = registry.getEnclosingWidget(element);
+                        widget.validate = function() {
+                            return this.validator();
+                        };
+                        widget.validator = function() {
+                            if (this.required && this.get("value") == "") {
+                                domClass.add(this.domNode, "importantBackground");
+                                return false;
+                            } else {
+                                domClass.remove(this.domNode, "importantBackground");
+                                return true;
+                            }
+                        };
+                    });
                 });
             }
         })();

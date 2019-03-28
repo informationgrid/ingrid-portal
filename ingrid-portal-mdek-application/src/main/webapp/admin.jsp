@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -428,7 +428,7 @@
 <body class="claro">
     <div id="header">
         <img src="img/logo.png" alt="InGrid Editor">
-        <h1>InGrid Editor Administration</h1>
+        <h1><fmt:message key="ui.login.title" /></h1>
         <span id="logoutContainer"><a href="logout.jsp">Logout</a></span>
     </div>
     <div id="menu">

@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,15 +47,15 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
 
 @Service
 public class IgeCodeListPersistency implements ICodeListPersistency {
-    
+
     private final static Logger log = Logger.getLogger(IgeCodeListPersistency.class);
-    
+
     // injected by Spring
     @Autowired
     private ConnectionFacade connectionFacade;
 
     /**
-     *  Nothing to do here since old interface is used to get syslists. Unless 
+     *  Nothing to do here since old interface is used to get syslists. Unless
      *  we use it to migrate the codelists from the database to an XML file,
      *  which is useful for the introduction of the central repository!
      */
@@ -63,9 +63,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
     public List<CodeList> read() {
 
         // mapping of codelist names
-        Map<Integer, String> syslistMap = new HashMap<Integer, String> () 
+        Map<Integer, String> syslistMap = new HashMap<Integer, String> ()
             {{
-                put(100,"Raumbezugssystem");    put(101,"Vertikaldatum");   put(102,"Maßeinheit");  
+                put(100,"Raumbezugssystem");    put(101,"Vertikaldatum");   put(102,"Maßeinheit");
                 put(502,"Zeitbezug des Datensatzes - Typ"); put(505,"Adresstyp");
                 put(510,"ISO Liste Text-Kodierung");    put(515,"Vektorformat - Geometrietyp");
                 put(517,"ISO Liste Thesaurus Typ"); put(518,"Periodizität");    put(520,"Medienoption - Medium");
@@ -84,7 +84,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(5130,"Objektklasse 3 - Name der Operation - WCTS");    put(5180,"Objektklasse 3 - Operation - Unterstützte Platformen");
                 put(5200,"Objektklasse 3 - Klassifikation des Dienstes");    put(5300,"Objektklasse 6 - Art des Dienstes");
                 put(6000,"Konformität - Grad der Konformität"); put(6005,"Konformität - Spezifikation der Konformität");
-                put(6010,"Verfügbarkeit - Zugriffsbeschränkungen");  put(6020,"Verfügbarkeit - Anwendungseinschränkungen");
+                put(6010,"Verfügbarkeit - Zugriffsbeschränkungen");
                 put(6100,"INSPIRE-Themen"); put(6200,"ISO Liste der Länder"); put(6250,"Verwaltungsgebiete");   put(6300,"INSPIRE-Datenformat");
                 put(7109,"Datenqualität - Datenüberschuss - Art der Messung");
                 put(7112,"Datenqualität - Konzeptionelle Konsistenz - Art der Messung");
@@ -97,34 +97,34 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(7127,"Datenqualität - Genauigkeit quantitativer Attribute - Art der Messung");
                 put(99999999,"Sprache der Ressource / des Metadatensatzes");
             }};
-        
 
-            
+
+
         IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
         List<String> iplugList = caller.getRegisteredIPlugs();
         if (iplugList.isEmpty()) {
             throw new RuntimeException("Codelist-Update aborted! No IGE-IPlugs connected!");
         }
-        
+
         // force to get initial codelist if one connected iPlug has never fetched any codelists
         if (getLowestTimestamp(iplugList) == -1) {
             return null;
         }
-        
+
         Integer[] codelistsIds = getSyslistIDs(iplugList.get(0));
-        
+
         Map<Integer, List<String[]>> listDe = getSyslists(iplugList.get(0), codelistsIds, "de");
         Map<Integer, List<String[]>> listEn = getSyslists(iplugList.get(0), codelistsIds, "en");
         Map<Integer, List<String[]>> listIso = getSyslists(iplugList.get(0), codelistsIds, UtilsUDKCodeLists.LANG_ID_ISO_ENTRY);
         Map<Integer, List<String[]>> listReq = getSyslists(iplugList.get(0), codelistsIds, UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE);
-        
+
         List<CodeList> codelists = new ArrayList<CodeList>();
         for (Integer id : codelistsIds) {
             CodeList cl = new CodeList();
             cl.setId(String.valueOf(id));
-            
-            cl.setName(syslistMap.get(id));            
-            
+
+            cl.setName(syslistMap.get(id));
+
             List<String[]> entriesDe = listDe.get(id);
             List<String[]> entriesEn = listEn.get(id);
             List<String[]> entriesIso = listIso.get(id);
@@ -133,7 +133,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             List<Integer> sortedList = new ArrayList<Integer>();
             sortedList.addAll(allEntries.keySet());
             Collections.sort(sortedList);
-            
+
             List<CodeListEntry> entries = new ArrayList<CodeListEntry>();
             String defaultEntry = "";
             for (Integer key : sortedList) {
@@ -166,18 +166,18 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             cl.setDefaultEntry(defaultEntry);
             codelists.add(cl);
         }
-        
+
         // find lowest timestamp to get all necessary codelists for an eventual update
         // add this timestamp to one codelist at least to be identified and used for the
         // update procedure
         codelists.get(0).setLastModified(getLowestTimestamp(iplugList));
-        
+
         return codelists;
     }
-    
+
     private Map<Integer, Map<String, String[]>> mergeLists(List<String[]> de, List<String[]> en, List<String[]> iso, List<String[]> req) {
         Map<Integer, Map<String, String[]>> result = new HashMap<Integer, Map<String,String[]>>();
-        
+
         Map<String, List<String[]>> allLists = new HashMap<String, List<String[]>>();
         allLists.put("de", de);allLists.put("en", en);allLists.put("iso", iso);allLists.put("req", req);
         for (String key : allLists.keySet()) {
@@ -186,8 +186,8 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                     result.put(Integer.valueOf(value[1]), new HashMap<String, String[]>());
                 result.get(Integer.valueOf(value[1])).put(key, new String[]{value[0],value[2],value[3]});
             }
-        }        
-        
+        }
+
         return result;
     }
 
@@ -209,12 +209,12 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         IngridDocument response = connectionFacade.getMdekCallerCatalog().getSysLists(iplug, null, null, getCatAdminUuid(iplug));
         return MdekCatalogUtils.extractSysListIdsFromResponse(response);
     }
-    
+
     private Map<Integer, List<String[]>> getSyslists(String iplug, Integer[] listIds, String languageCode) {
         IngridDocument response = connectionFacade.getMdekCallerCatalog().getSysLists(iplug, listIds, languageCode, getCatAdminUuid(iplug));
         return MdekCatalogUtils.extractSysListFromResponse(response);
     }
-    
+
 
 
     @Override
@@ -224,16 +224,16 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 log.debug("Write updated codelists to database ...");
             }
             List<IngridDocument> doc = mapToIngridDocument(codelists);
-            
+
             // find highest timestamp which will be used for future requests to
             // the codelist repository
             Long highestTimestamp = 0L;
             for (CodeList codelist : codelists) {
                 if (highestTimestamp < codelist.getLastModified()) {
                     highestTimestamp = codelist.getLastModified();
-                }                
+                }
             }
-            
+
             IMdekClientCaller caller = connectionFacade.getMdekClientCaller();
             List<String> iplugList = caller.getRegisteredIPlugs();
             log.debug("Number of iplugs found: "+iplugList.size());
@@ -251,7 +251,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             e.printStackTrace();
             return false;
         }
-        
+
         return true;
     }
 
@@ -259,7 +259,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         IngridDocument response = connectionFacade.getMdekCallerCatalog().storeSysLists(plugId, doc, timestamp, catAdminUuid);
         return (Boolean) response.get(IJobRepository.JOB_INVOKE_SUCCESS);
     }
-    
+
     private List<IngridDocument> mapToIngridDocument(List<CodeList> codelists) throws Exception {
         List<IngridDocument> lists = new ArrayList<IngridDocument>();
         IngridDocument doc = null;
@@ -282,7 +282,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
 /*
                     if (log.isDebugEnabled()) {
                     	if ("100".equals(codelist.getId()) && "28462".equals(entry.getId())) {
-                            log.debug("Checking Umlaut of syslist/entry " + codelist.getId() + "/" + entry.getId());                    		
+                            log.debug("Checking Umlaut of syslist/entry " + codelist.getId() + "/" + entry.getId());
                             for (String langKey : entry.getLocalisations().keySet()) {
                             	log.debug(entry.getLocalisedEntry(langKey));
                             }
@@ -304,10 +304,10 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 lists.add(doc);
             }
         } catch (Exception e) {
-            log.error("Error during mapping of codelist to IngridDocument: " + doc.get(MdekKeys.LST_ID)); 
+            log.error("Error during mapping of codelist to IngridDocument: " + doc.get(MdekKeys.LST_ID));
             throw e;
         }
-            
+
         return lists;
     }
 
@@ -321,16 +321,16 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
             return "";
         }
     }
-    
+
     public void setConnectionFacade(ConnectionFacade cf) {
         this.connectionFacade = cf;
     }
-    
+
     @Override
     public boolean writePartial(List<CodeList> codelists) {
         return write(codelists);
     }
-    
+
     @Override
     public boolean canDoPartialUpdates() {
         return true;

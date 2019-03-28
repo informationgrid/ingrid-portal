@@ -990,7 +990,6 @@ define({
     "ui.sysList.6005": "Konformität - Spezifikation der Konformität (INSPIRE)",
     "ui.sysList.6006": "Konformität - Spezifikation der Konformität (Freie Einträge)",
     "ui.sysList.6010": "Verfügbarkeit - Zugriffsbeschränkungen",
-    "ui.sysList.6020": "Verfügbarkeit - Anwendungseinschr&auml;nkungen",
     "ui.sysList.6100": "INSPIRE-Themen",
     "ui.sysList.6200": "ISO Liste der Länder",
 	"ui.sysList.6250":"Verwaltungsgebiete",
@@ -1058,6 +1057,8 @@ define({
     "validation.error.spatial.table": "Mindestens eine Raumbezugs-Tabelle muss einen Eintrag mit Boundingbox enthalten.",
     "validation.error.spatial.expired.table": "Die Raumbezugstabelle darf keine abgelaufenen Einträge enthalten.",
     "validation.error.email.table": "Mindestens ein Eintrag muss vom Typ '${0}' sein.",
+    "validation.error.url": "Ungültige URL: '${0}'.",
+    "validation.error.url.table": "URLs müssen nicht leer sein und müssen mit 'http://' oder 'https://' starten.",
     "validation.error.missing.capabilities.entry": "Es muss eine GetCapabilities-Operation eingetragen sein.",
     "validation.error.invalid.operation.name": "Der Operationsname ist ungültig.",
     "validation.error.empty.rows": "Die Tabelle beinhaltet leere Zeilen. Bitte entfernen Sie diese vor dem Speichern.",
@@ -1101,7 +1102,7 @@ define({
     "widget.spatial.helpMessage": "Nach dem Übernehmen des Ausschnitts (Button 'Übernehme Ausschnitt') erscheinen im Feld Raumbezug die entsprechenden Koordinaten und der ausgewählte Ausschnitt ist hellrot hinterlegt. Der gewählte Raumbezug kann nachträglich geändert werden.",
     "widget.showSpatial": "Anzeigen / Ändern",
     "widget.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
-    
+
     "info.address.inherit.to.children": "Es wurden ${0} Adressen verändert!",
     "ui.listentry.noFilter": "Kein Filter"
 });

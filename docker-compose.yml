@@ -1,11 +1,8 @@
-version: '2'
+version: '3'
 services:
   mysql:
-    image: awallat/ingrid-mysql:4.0.1_uvp
+    image: docker-registry.wemove.com/dev-ingrid-databases
     container_name: mysql-ingrid
-    environment:
-      - MYSQL_ALLOW_EMPTY_PASSWORD=true
-      - MYSQL_ROOT_HOST=%%
     ports:
       - 3306:3306
 

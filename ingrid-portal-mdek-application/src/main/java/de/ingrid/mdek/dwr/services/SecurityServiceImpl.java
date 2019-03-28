@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -383,7 +383,7 @@ public class SecurityServiceImpl implements SecurityService {
     public boolean authenticate(String username, String password) {
         boolean isValid = false; 
         if ("admin".equals(username)) {
-            ResourceBundle resourceBundle = ResourceBundle.getBundle("mdek");
+            ResourceBundle resourceBundle = ResourceBundle.getBundle("igeAdminUser");
             String pw = resourceBundle.getString("admin.password");
             if (password.equals(pw)) {
                 isValid = true;
@@ -452,7 +452,7 @@ public class SecurityServiceImpl implements SecurityService {
     public List<String> getAvailableUsers() {
         List<String> allUsers = authProvider.getAllUserIds();
         Map<String, String> existingUsers = MdekSecurityUtils.getAllIgeUserLogins();
-        List<String> availableUsers = new ArrayList<String>();
+        List<String> availableUsers = new ArrayList<>();
         
         for (String user : allUsers) {
             if (!existingUsers.keySet().contains(user)) {

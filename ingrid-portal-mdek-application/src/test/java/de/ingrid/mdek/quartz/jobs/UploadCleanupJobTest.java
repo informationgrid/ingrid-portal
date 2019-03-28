@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,12 +22,34 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import de.ingrid.mdek.MdekKeys;
+import de.ingrid.mdek.caller.MdekCallerQuery;
+import de.ingrid.mdek.caller.MdekClientCaller;
+import de.ingrid.mdek.handler.ConnectionFacade;
+import de.ingrid.mdek.job.repository.IJobRepository;
+import de.ingrid.mdek.job.repository.Pair;
+import de.ingrid.mdek.quartz.jobs.UploadCleanupJob.FileReference;
+import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
+import de.ingrid.utils.IngridDocument;
+import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.*;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.apache.logging.log4j.core.layout.PatternLayout;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.quartz.JobExecutionContext;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,28 +62,8 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggingEvent;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.quartz.JobExecutionContext;
-
-import de.ingrid.mdek.MdekKeys;
-import de.ingrid.mdek.caller.MdekCallerQuery;
-import de.ingrid.mdek.caller.MdekClientCaller;
-import de.ingrid.mdek.handler.ConnectionFacade;
-import de.ingrid.mdek.job.repository.IJobRepository;
-import de.ingrid.mdek.job.repository.Pair;
-import de.ingrid.mdek.quartz.jobs.UploadCleanupJob.FileReference;
-import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
-import de.ingrid.utils.IngridDocument;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.when;
 
 public class UploadCleanupJobTest {
 
@@ -87,11 +89,11 @@ public class UploadCleanupJobTest {
     private UploadCleanupJob job;
     private FileSystemStorage storage;
 
-    private Logger jobLogger = Logger.getLogger(UploadCleanupJob.class);
-    private TestAppender testAppender = new TestAppender();
+    private Logger jobLogger = LogManager.getLogger(UploadCleanupJob.class);
+    private TestAppender testAppender = new TestAppender("test", null, PatternLayout.createDefaultLayout());
 
-    public class TestAppender extends AppenderSkeleton {
-        public List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
+    public class TestAppender extends AbstractAppender {
+        /*public List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
 
         @Override
         protected void append(LoggingEvent event) {
@@ -106,14 +108,30 @@ public class UploadCleanupJobTest {
         public boolean requiresLayout() {
             return false;
         }
-
-        public List<LoggingEvent> getEvents(Level level) {
-            return this.eventList.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
-        }
-
+*/
         public boolean hasIssues() {
             return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 ||
                 this.getEvents(Level.WARN).size() > 0;
+        }
+
+        public List<LogEvent> getEvents(Level level) {
+            return this.events.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
+        }
+
+        //for verifying.
+        List<LogEvent> events = new ArrayList<>();
+
+        public TestAppender(String name, Filter filter, Layout<? extends Serializable> layout) {
+            super(name, filter, layout);
+        }
+
+        @Override
+        public void append(LogEvent event) {
+            events.add(event);
+        }
+
+        public List<LogEvent> getEvents() {
+            return events;
         }
     }
 
@@ -141,12 +159,26 @@ public class UploadCleanupJobTest {
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
 
         // setup logging
-        this.jobLogger.addAppender(this.testAppender);
+        //this.jobLogger.addAppender(this.testAppender);
+        final LoggerContext context = LoggerContext.getContext(false);
+        final Configuration config = context.getConfiguration();
+        this.updateLoggers(testAppender, config);
+        testAppender.start();
+    }
+
+    private void updateLoggers(final Appender appender, final Configuration config) {
+        final Level level = null;
+        final Filter filter = null;
+        for (final LoggerConfig loggerConfig : config.getLoggers().values()) {
+            loggerConfig.addAppender(appender, level, filter);
+        }
+        config.getRootLogger().addAppender(appender, level, filter);
     }
 
     @After
     public void tearDown() throws Exception {
-    	this.jobLogger.removeAppender(this.testAppender);
+    	//this.jobLogger.removeAppender(this.testAppender);
+        testAppender.stop();
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
 

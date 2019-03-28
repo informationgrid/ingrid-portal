@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,18 +22,16 @@
  */
 package de.ingrid.portal.config;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Iterator;
-
+import com.tngtech.configbuilder.ConfigBuilder;
+import de.ingrid.portal.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.tngtech.configbuilder.ConfigBuilder;
-
-import de.ingrid.portal.Configuration;
+import java.io.File;
+import java.net.URL;
+import java.util.Iterator;
 
 /**
  * Provides access to the ingrid portal preferences.

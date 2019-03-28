@@ -1,27 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
     <version>4.6.0.1236-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-base</artifactId>
   <packaging>war</packaging>
   <name>InGrid Portal Base</name>
+
+  <!-- ==================== Source Code Management ==================== -->
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-base</connection>
     <developerConnection>scm:git:git@github.com:informationgrid/ingrid-portal.git/ingrid-portal-base</developerConnection>
     <tag>HEAD</tag>
   </scm>
+
+  <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
+
+  <!-- ==================== DEPENDENCIES ==================== -->
+  <dependencies>
+    <!-- InGrid -->
+    <dependency>
+      <groupId>de.ingrid.portal</groupId>
+      <artifactId>ingrid-portal-layout</artifactId>
+      <version>${project.version}</version>
+      <type>war</type>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- Jetspeed / Apache Portals -->
+    <dependency>
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed-dependencies</artifactId>
+      <version>${org.apache.portals.jetspeed.version}</version>
+      <type>pom</type>
+      <exclusions>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <!-- Needed for overlaying ! -->
+      <groupId>org.apache.portals.jetspeed-2</groupId>
+      <artifactId>jetspeed</artifactId>
+      <type>war</type>
+    </dependency>
+
+    <!-- Problems when dom4j in portal-base and portal-apps locally, then causing: -->
+    <!-- java.lang.ClassCastException: org.dom4j.DocumentFactory cannot be cast to org.dom4j.DocumentFactory -->
+    <!-- when PSML file is created on new user (file system PSML manager) !? -->
+    <!-- Commented again cause local dom4j works with PSML in database ! -->
+    <!--
+        <dependency>
+          <groupId>dom4j</groupId>
+          <artifactId>dom4j</artifactId>
+          <scope>provided</scope>
+        </dependency>
+    -->
+
+    <dependency>
+      <groupId>org.flywaydb</groupId>
+      <artifactId>flyway-core</artifactId>
+      <version>4.2.0</version>
+    </dependency>
+
+    <!-- backward compatible -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-1.2-api</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    <!-- end -->
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-api</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.8.1</version>
+    </dependency>
+  </dependencies>
+
+  <!-- ==================== Build Configuration ==================== -->
   <build>
     <finalName>ingrid-portal</finalName>
     <sourceDirectory>src/java</sourceDirectory>
-    <outputDirectory>target/ingrid-portal/WEB-INF/classes</outputDirectory>
     <plugins>
 
-    <plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>license-maven-plugin</artifactId>
         <configuration>
@@ -93,7 +166,8 @@
                   <type>war</type>
                   <overWrite>false</overWrite>
                   <destFileName>jetspeed-layouts.war</destFileName>
-                  <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy/local</outputDirectory>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy/local
+                  </outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>de.ingrid.portal</groupId>
@@ -101,7 +175,8 @@
                   <version>${project.version}</version>
                   <type>war</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy</outputDirectory>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy
+                  </outputDirectory>
                 </artifactItem>
                 <artifactItem>
                   <groupId>de.ingrid.portal</groupId>
@@ -109,7 +184,8 @@
                   <version>${project.version}</version>
                   <type>war</type>
                   <overWrite>false</overWrite>
-                  <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy</outputDirectory>
+                  <outputDirectory>${project.build.directory}/${project.build.finalName}/WEB-INF/deploy
+                  </outputDirectory>
                 </artifactItem>
               </artifactItems>
             </configuration>
@@ -166,7 +242,8 @@
             </goals>
             <phase>process-resources</phase>
             <configuration>
-              <srcFilePath>${project.build.directory}/${project.build.finalName}/WEB-INF/conf/jetspeed.properties</srcFilePath>
+              <srcFilePath>${project.build.directory}/${project.build.finalName}/WEB-INF/conf/jetspeed.properties
+              </srcFilePath>
               <editPattern>^jetui.customization.method%5Cs*=.*%24</editPattern><!-- use %24 for '$' and %5C for '\' -->
               <replacePattern>jetui.customization.method%20=%20ajax</replacePattern><!-- use %20 for space -->
               <event>edit</event>
@@ -175,29 +252,30 @@
         </executions>
       </plugin>
       <plugin>
-          <groupId>nl.geodienstencentrum.maven</groupId>
-          <artifactId>sass-maven-plugin</artifactId>
-          <version>2.17</version>
-          <executions>
-              <execution>
-                  <phase>prepare-package</phase>
-                  <goals>
-                      <goal>update-stylesheets</goal>
-                  </goals>
-              </execution>
-          </executions>
-          <configuration>
-              <resources>
-                  <resource>
-                      <!-- Set source and destination dirs -->
-                      <source>
-                          <directory>${project.basedir}/src/webapp/decorations/layout/ingrid/css</directory>
-                      </source>
-                      <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/ingrid/css</destination>
-                  </resource>
-              </resources>
-              <outputName>styles.css</outputName>
-          </configuration>
+        <groupId>nl.geodienstencentrum.maven</groupId>
+        <artifactId>sass-maven-plugin</artifactId>
+        <version>2.17</version>
+        <executions>
+          <execution>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>update-stylesheets</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <resources>
+            <resource>
+              <!-- Set source and destination dirs -->
+              <source>
+                <directory>${project.basedir}/src/webapp/decorations/layout/ingrid/css</directory>
+              </source>
+              <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/ingrid/css
+              </destination>
+            </resource>
+          </resources>
+          <outputName>styles.css</outputName>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -206,10 +284,10 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses />
+          <toAddresses/>
         </configuration>
       </plugin>
-      
+
     </plugins>
     <resources>
       <resource>
@@ -222,83 +300,6 @@
       </resource>
     </resources>
   </build>
-  <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
-<!--
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
--->
-
-  <!-- ==================== DEPENDENCIES ==================== -->
-  <dependencies>
-<!-- InGrid -->
-    <dependency>
-      <groupId>de.ingrid.portal</groupId>
-      <artifactId>ingrid-portal-layout</artifactId>
-      <version>${project.version}</version>
-      <type>war</type>
-      <scope>runtime</scope>
-    </dependency>
-
-<!-- Jetspeed / Apache Portals -->
-    <dependency>
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed-dependencies</artifactId>
-      <version>${org.apache.portals.jetspeed.version}</version>
-      <type>pom</type>
-      <exclusions>
-        <exclusion>
-          <groupId>log4j</groupId>
-          <artifactId>log4j</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-    <!-- Needed for overlaying ! -->
-      <groupId>org.apache.portals.jetspeed-2</groupId>
-      <artifactId>jetspeed</artifactId>
-      <type>war</type>
-    </dependency>
-
-    <!-- Problems when dom4j in portal-base and portal-apps locally, then causing: -->
-    <!-- java.lang.ClassCastException: org.dom4j.DocumentFactory cannot be cast to org.dom4j.DocumentFactory -->
-    <!-- when PSML file is created on new user (file system PSML manager) !? -->
-    <!-- Commented again cause local dom4j works with PSML in database ! -->
-<!--
-    <dependency>
-      <groupId>dom4j</groupId>
-      <artifactId>dom4j</artifactId>
-      <scope>provided</scope>
-    </dependency>
--->
-
-    <dependency>
-      <groupId>org.flywaydb</groupId>
-      <artifactId>flyway-core</artifactId>
-      <version>4.2.0</version>
-    </dependency>
-
-    <!-- backward compatible -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-1.2-api</artifactId>
-      <version>2.8.1</version>
-    </dependency>
-    <!-- end -->
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-api</artifactId>
-      <version>2.8.1</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.logging.log4j</groupId>
-      <artifactId>log4j-core</artifactId>
-      <version>2.8.1</version>
-    </dependency>
-  </dependencies>
 
   <profiles>
     <profile>
@@ -314,26 +315,26 @@
                 <phase>compile</phase>
                 <configuration>
                   <target>
-                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
+                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
                     <condition property="foundRepeatable">
                       <and>
                         <resourcecount count="0" when="greater">
                           <fileset dir="src/java/db/migration">
-                            <include name="**/R*.sql" />
+                            <include name="**/R*.sql"/>
                           </fileset>
                         </resourcecount>
                         <not>
-                          <contains string="${project.version}" substring="-SNAPSHOT" />
+                          <contains string="${project.version}" substring="-SNAPSHOT"/>
                         </not>
                       </and>
                     </condition>
                     <if>
-                      <equals arg1="${foundRepeatable}" arg2="true" />
+                      <equals arg1="${foundRepeatable}" arg2="true"/>
                       <then>
-                        <fail message="Flyway: You must not have repeatable SQL files during a release!" />
+                        <fail message="Flyway: You must not have repeatable SQL files during a release!"/>
                       </then>
                       <else>
-                        <echo message="Flyway: No release version or no repeatable SQL found. OK!" />
+                        <echo message="Flyway: No release version or no repeatable SQL found. OK!"/>
                       </else>
                     </if>
                   </target>

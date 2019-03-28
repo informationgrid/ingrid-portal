@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: mariadb:5
+    networks:
+      - mcloud-ige
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+
+  ige-backend:
+    image: docker-registry.wemove.com/ingrid-iplug-ige
+    depends_on:
+      - db
+    networks:
+      - mcloud-ige
+    volumes:
+      - ./backend/config.override.properties:/opt/ingrid/ingrid-iplug-ige/conf/config.override.properties
+      - ./_logs/backend:/opt/ingrid/ingrid-iplug-ige/logs
+
+  ige-frontend:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - DB_PASSWORD=
+    networks:
+      - mcloud-ige
+    ports:
+      - 8080:8080
+
+networks:
+  mcloud-ige:
+    driver: "bridge"

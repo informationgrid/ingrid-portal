@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -322,6 +322,9 @@ define([
                     behaviour[item.id].override = item.active;
                 });
                 for (var behave in behaviour) {
+                    // check if behaviour is defined
+                    if (!behaviour[behave]) continue;
+
                     // ignore invalid and non-address behaviours
                     if (!behaviour[behave].title || !behaviour[behave].forAddress) continue;
                     

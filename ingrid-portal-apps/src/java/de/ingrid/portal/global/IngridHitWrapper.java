@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -21,8 +21,6 @@
  * **************************************************#
  */
 package de.ingrid.portal.global;
-
-import java.util.HashMap;
 
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;

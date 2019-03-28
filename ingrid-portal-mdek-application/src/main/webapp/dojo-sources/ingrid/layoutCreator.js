@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -474,6 +474,8 @@ define([
 
             createDomSelectBox: function(additionalField) {
 
+                var def = null;
+
                 var storeProps = {
                     data: {
                         identifier: 'id',
@@ -482,7 +484,7 @@ define([
                 };
                 
                 if (additionalField.useSyslist) {
-                    UtilSyslist.readSysListData(additionalField.useSyslist).then(function(entry) {
+                    def = UtilSyslist.readSysListData(additionalField.useSyslist).then(function(entry) {
                         var entries = [];
                         array.forEach(entry, function(item) {
                             entries.push({
@@ -523,6 +525,9 @@ define([
                     var inputWidget = new FilteringSelect(elementProperties);
                 
                 inputWidget.startup();
+                if (def) {
+                    inputWidget.promiseInit = def;
+                }
                 
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
@@ -727,8 +732,11 @@ define([
                 var labelSpanElement = document.createElement("span");
                 domClass.add(labelSpanElement, "label left");
                 var labelElement = document.createElement("label");
-                //domClass.add(labelElement, "inActive");
-                labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                if (additionalField.help) {
+                    labelElement.setAttribute("onclick", "require('ingrid/dialog').showContextHelp(arguments[0], \"" + additionalField.help + "\")");
+                } else {
+                    domClass.add(labelElement, "inActive");
+                }
                 labelElement.innerHTML = additionalField.label;
                 labelSpanElement.appendChild(labelElement);
 

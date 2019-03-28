@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,16 +47,16 @@ import de.ingrid.utils.xml.XMLSerializer;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/spring/application-context.xml"})
 public class dbSyslistTransferTestLocal {
-    
+
     @Autowired
     private CodeListService codeListService;
 
     private HashMap codeListsFromFile;
-    
+
     @Before
     public void setUp() throws Exception {
     }
-    
+
     /**
      * It's important that two persistent objects are configured via spring
      * and that the DB-one is used as the default (for reading)!
@@ -64,27 +64,27 @@ public class dbSyslistTransferTestLocal {
     @Test
     public void readFromDbAndWriteToFile() {
         initializeAndWait();
-        
+
         // read codelists from default source (db)
         List<CodeList> codelists = codeListService.getCodeLists();
 
         removeUnwantedSyslists(codelists);
-        
+
         addAdditionalValues(codelists);
-        
-        
-        // write codelists to xml file 
-        codeListService.persistTo(0);  
+
+
+        // write codelists to xml file
+        codeListService.persistTo(0);
     }
 
     private void removeUnwantedSyslists(List<CodeList> codelists) {
-        // ignore the following codelists (they are only local and might not 
+        // ignore the following codelists (they are only local and might not
         // contain all languages!
-        List<String> removeCodeLists = new ArrayList<String>(Arrays.asList( 
-                new String[] {"1100", "1350", "1370", "3535", "3555", "6010", "6020"}));
-        
+        List<String> removeCodeLists = new ArrayList<String>(Arrays.asList(
+                new String[] {"1100", "1350", "1370", "3535", "3555", "6010"}));
+
         List<CodeList> codelistsToRemove = new ArrayList<CodeList>();
-        
+
         for (CodeList codelist : codelists) {
             if (removeCodeLists.contains(codelist.getId()))
                 codelistsToRemove.add(codelist);
@@ -100,18 +100,18 @@ public class dbSyslistTransferTestLocal {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         // load xml file which contains information that need to be merged
         loadCodeListFile();
-        
-        
+
+
     }
 
     private void addAdditionalValues(List<CodeList> codelists) {
         String extraLangValue = "";
         for (CodeList codelist : codelists) {
             for (CodeListEntry cle : codelist.getEntries()) {
-                
+
                 // add iso and 0815-languages!
                 extraLangValue = getCodeListEntryName(Long.valueOf(codelist.getId()), Long.valueOf(cle.getId()), 150150150L);
                 if (extraLangValue != null && !extraLangValue.isEmpty()) cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_ISO_ENTRY, extraLangValue);
@@ -119,11 +119,11 @@ public class dbSyslistTransferTestLocal {
                 if (extraLangValue != null && !extraLangValue.isEmpty()) cle.setLocalisedEntry(UtilsUDKCodeLists.LANG_ID_INGRID_QUERY_VALUE, extraLangValue);
             }
         }
-        
+
         // add codelist 524, which is only in xml-file, but used for extra IDF-mapping
         codelists.add(migrateCodelist524());
     }
-    
+
     private CodeList migrateCodelist524() {
         List<de.ingrid.utils.udk.CodeListEntry> list524En = getCodeList(524L, 123L);
         List<de.ingrid.utils.udk.CodeListEntry> list524De = getCodeList(524L, 150L);
@@ -146,7 +146,7 @@ public class dbSyslistTransferTestLocal {
         cl.setEntries(entries);
         return cl;
     }
-    
+
     public void setCodeListService(CodeListService codeListService) {
         this.codeListService = codeListService;
     }
@@ -169,8 +169,8 @@ public class dbSyslistTransferTestLocal {
             throw new ExceptionInInitializerError(ex);
         }
     }
-    
-    
+
+
     private String getCodeListEntryName(long lstId, long entryId, long lang) {
         String retValue = "";
         try {
@@ -180,10 +180,10 @@ public class dbSyslistTransferTestLocal {
             }
         } catch (NullPointerException e) {
         }
-        
+
         return retValue;
     }
-    
+
     private List<de.ingrid.utils.udk.CodeListEntry> getCodeList(long lstId, long lang) {
         List<de.ingrid.utils.udk.CodeListEntry> result = new ArrayList<de.ingrid.utils.udk.CodeListEntry>();
         HashMap domain = (HashMap) codeListsFromFile.get(lstId);

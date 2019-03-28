@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -49,10 +49,13 @@ define({
     "uvp.form.categories.uvpNegative": "Vorprüfungen, negativ",
     "uvp.form.categories.uvpForeign": "Ausländische Vorhaben",
 
+    "uvp.form.applicationReceipt": "Eingang des Antrags",
+    "uvp.form.applicationReceipt.helpMessage": "Geben Sie das Datum des Einganges des Antrags an. Das Datum wird im Portal nicht angezeigt und dient nur zur statistischen Zwecken.",
+    "uvp.form.applicationReceipt.invalid": "Das Datum muss vor dem Beginn der ersten Auslegung sein.",
+
     "uvp.form.categoryIds": "UVP-Nummer",
     "uvp.form.categoryIds.helpMessage": "Hier ist die UVP-Nummer einzugeben, die für das Zulassungsverfahren zutrifft (Mehrfach-Nennungen möglich).<br><br>Es werden die bundesrechtlichen und die für Ihr Land maßgeblichen UVP-Nummern angeboten. Sollte wider Erwarten eine Nummer fehlen, wenden Sie sich bitte an die in Ihrem Land für die Betreuung des UVP-Portals zuständigen Ansprechpartner.<br><br>Die UVP-Nummern dienen der Einordnung des Zulassungsverfahrens in die Kategorien, nach denen auf der Portalseite gesucht werden kann. Außerdem sind sie wichtig zur Erfüllung der Berichtspflicht nach Artikel 12 der UVP-Richtlinie 2011/92/EU, nach der alle sechs Jahre die bis dahin durchgeführten UVP-Verfahren ausgezählt und der EU-Kommission unter Zuordnung zu den Kategorien mitgeteilt werden müssen.",
     "uvp.form.preExaminationAccomplished.label": "Vorprüfung durchgeführt",
-    "uvp.form.preExaminationAccomplished.helpMessage": "WICHTIG! Bitte Haken setzen, wenn es sich um ein entsprechendes Zulassungsverfahren handelt.<br><br>Bei Änderungen/Erweiterungen wie auch bei kumulierenden Vorhaben wurde häufig eine Vorprüfung zur Feststellung der UVP-Pflicht durchgeführt. Hierfür gibt es nicht immer eine genau passende UVP-Nummer (z.B. wenn es nur eine UVP-Nummer für UVP-pflichtige  Zulassungsverfahren („X“) gibt). Da wegen der Berichtspflicht nach Art. 12 UVP-Richtlinie die Vorprüfungen zu zählen sind, werden die Zulassungsverfahren, bei denen eine Vorprüfung die UVP-Pflicht ergab, durch diese Checkbox erfasst.",
     "uvp.form.preExaminationAccomplished.yes": "Ja",
     "uvp.form.preExaminationAccomplished.no": "Nein",
     "uvp.form.preExaminationAccomplished.required": "Es muss eine Auswahl getroffen werden.",
@@ -142,5 +145,7 @@ define({
 
     "page.breadcrumb.pageUvpStatistic": "UVP Statistik",
 
-    "uvp.error.init": "Bei der Initialisierung von UVP ist ein Problem aufgetreten. Für die Initialisierung muss man sich als Katalogadministrator oder Metadatenadministrator anmelden."
+    "uvp.error.init": "Bei der Initialisierung von UVP ist ein Problem aufgetreten. Für die Initialisierung muss man sich als Katalogadministrator oder Metadatenadministrator anmelden.",
+
+    "dialog.object.deleteMessage": "Achtung! Die Datensätze werden endgültig gelöscht und können nicht wiederhergestellt werden. Sie werden auch in den Statistiken nicht mehr berücksichtigt, obwohl dies bei abgeschlossenen Verfahren sowie bei negativen Vorprüfungen für die Berichtspflicht gegenüber der EU-Kommission erforderlich ist!<br><br>Sollen die folgenden Objekte ${0} wirklich endg&uuml;ltig gel&ouml;scht werden?"
 });

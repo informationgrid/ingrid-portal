@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Management iPlug
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,6 +25,7 @@ package de.ingrid.mdek;
 import java.io.IOException;
 import java.util.List;
 
+import de.ingrid.mdek.userrepo.UserRepoManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -96,16 +97,24 @@ public class SpringConfiguration {
 	}
 
 	@Bean
-	public AuthenticationProvider authenticationProvider(Config config, @Value("#{daoFactory}") DaoFactory dao) {
+	public AuthenticationProvider authenticationProvider(Config config, UserRepoManager manager) {
 		if (config.noPortal) {
 			TomcatAuthenticationProvider provider = new TomcatAuthenticationProvider();
-			DbUserRepoManager manager = new DbUserRepoManager();
-			manager.setDaoFactory(dao);
 			provider.setRepoManager(manager);
 			return provider;
 		} else {
 			return new PortalAuthenticationProvider();
 		}
+	}
+
+	@Bean
+	public UserRepoManager userRepoManager(Config config, @Value("#{daoFactory}") DaoFactory dao) {
+		if (config.noPortal) {
+			DbUserRepoManager manager = new DbUserRepoManager();
+			manager.setDaoFactory(dao);
+			return manager;
+		}
+		return null;
 	}
 
 	/**

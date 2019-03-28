@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -61,7 +61,8 @@ public class DisplayTreeFactory {
     static private String NODE_PLUG_TYPE = "plugType"; 
     static private String NODE_PLUG_ID = "plugId"; 
     static private String NODE_DOC_ID = "docId"; 
-    static private String NODE_UDK_DOC_ID = "udk_docId"; 
+    static private String NODE_ORIG_DOC_ID = "origDocId";
+    static private String NODE_UDK_DOC_ID = "udk_docId";
     static private String NODE_UDK_CLASS = "udk_class"; 
     static private String NODE_EXPANDABLE = "expandable"; 
 
@@ -366,6 +367,7 @@ public class DisplayTreeFactory {
             IngridHitDetail detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
             udkDocId = UtilsSearch.getDetailValue(detail, key_udkDocId);
             String udkClass = UtilsSearch.getDetailValue(detail, key_udkClass);
+            String origDocId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ORG_OBJ_ID);
 
             String nodeName = detail.getTitle();
             // different node text, when person
@@ -395,6 +397,7 @@ public class DisplayTreeFactory {
             childNode.put(NODE_PLUG_ID, plugId);
             childNode.put(NODE_DOC_ID, hit.getId());
             childNode.put(NODE_UDK_DOC_ID, udkDocId);
+            childNode.put(NODE_ORIG_DOC_ID, origDocId);
             childNode.put(NODE_UDK_CLASS, udkClass);
             childNode.put(NODE_EXPANDABLE, new Boolean(hasChildren));
 

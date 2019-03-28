@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,19 +22,13 @@
  */
 package de.ingrid.portal.forms;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.om.IngridFormToQuery;
 
 import javax.portlet.PortletRequest;
-
-import de.ingrid.portal.global.UtilsString;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.om.IngridFormToQuery;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * Super class of all Form Handlers. Defines framework for form validation and

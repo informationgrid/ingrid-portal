@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -121,7 +121,7 @@
             function removeBehaviours() {
                 for (var behave in behaviour) {
                     var entry = behaviour[behave];
-                    if (!entry.title) continue;
+                    if (!entry || !entry.title) continue;
                     var check = registry.byId("behaviour_" + behave);
                     if (check) check.destroy();
                     if (entry.children) {
@@ -278,7 +278,7 @@
                             }
                             modifiedBehaviours.push(beh);
                         }
-                    } else {
+                    } else if (behaviour[behave]) {
                         var children = behaviour[behave].children;
                         if (children) {
                             for (var child in children) {
@@ -344,7 +344,7 @@
                 var behavioursByCategory = {};
                 for (var behave in behaviour) {
                     var entry = behaviour[behave];
-                    if (!entry.title) continue;
+                    if (!entry || !entry.title) continue;
                     
                     // TODO: group by categories
                     var cat = behaviour[behave].category;

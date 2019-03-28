@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,12 +22,10 @@
  */
 package de.ingrid.portal.config;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
+import de.ingrid.portal.global.UtilsFacete;
+import de.ingrid.portal.om.IngridFacet;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration.Node;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -35,10 +33,11 @@ import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.om.IngridFacet;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class FacetsConfig {
 

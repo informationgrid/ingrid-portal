@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -53,6 +53,7 @@ public class UVPReport {
     private static final String TOTAL_GROUPED = "totalGrouped";
     private static final String TOTAL_NEGATIVE = "totalNegative";
     private static final String TOTAL_POSITIVE = "totalPositive";
+    private static final String AVERAGE_DURATION = "averageDuration";
 
     private final ObjectRequestHandler objectRequestHandler;
     private final CatalogRequestHandler catalogRequestHandler;
@@ -78,6 +79,8 @@ public class UVPReport {
         values.put(TOTAL_NEGATIVE, 0);
         values.put(TOTAL_POSITIVE, 0);
 
+        List<Long> durations = new ArrayList<>();
+
         int pageSize = 10;
         int page = 0;
         while (true) {
@@ -100,6 +103,12 @@ public class UVPReport {
 
                     // count all negative pre-examinations
                     handleNegativeCount(docDetail, values);
+
+                    // get duration of this dataset
+                    Long duration = getDuration(docDetail);
+                    if (duration != null) {
+                        durations.add(duration);
+                    }
                 }
 
             }
@@ -109,9 +118,56 @@ public class UVPReport {
 
         mapUvpNumbers((Map) values.get(TOTAL_GROUPED));
 
+        Optional<Float> avgDuration = calculateAverageValue(durations);
+        values.put(AVERAGE_DURATION, avgDuration.orElse(null));
+
         report.setValues(values);
 
         return report;
+    }
+
+    private Long getDuration(MdekDataBean docDetail) {
+        AdditionalFieldBean applicationReceipt = docDetail.getAdditionalFields().stream()
+                .filter(field -> "uvpApplicationReceipt".equals(field.getIdentifier()))
+                .findFirst().orElse(null);
+
+        List<AdditionalFieldBean> publicationDates = docDetail.getAdditionalFields().stream()
+                .filter(field -> "UVPPhases".equals(field.getIdentifier()))
+                .flatMap(phases -> {
+                    if (phases.getTableRows() == null) return Stream.empty();
+                    return phases.getTableRows().stream()
+                            .filter(p -> "phase3".equals(p.get(0).getIdentifier()))
+                            .map(i -> i.get(0));
+                })
+                .flatMap(p1 -> p1.getTableRows().stream()
+                        .filter(f -> "approvalDate".equals(f.get(0).getIdentifier()))
+                        .map(i -> i.get(0)))
+                .sorted((a,b) -> {
+                    if (a == null) return 1;
+                    if (b == null) return -1;
+                    if (Long.valueOf(a.getValue()) < Long.valueOf(b.getValue())) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                })
+                .collect(Collectors.toList());
+
+        if (publicationDates.size() > 0 && applicationReceipt != null) {
+            Long applicationReceiptValue = Long.valueOf(applicationReceipt.getValue());
+            Long publicationDate = Long.valueOf(publicationDates.get(0).getValue());
+
+            return publicationDate - applicationReceiptValue;
+        }
+
+        return null;
+    }
+
+    private Optional<Float> calculateAverageValue(List<Long> list) {
+        return list.stream()
+                .reduce(Long::sum)
+                .map(val -> (float)val / list.size()) //calculate average value
+                .map(val -> val/1000/60/60/24); // convert to days
     }
 
     private boolean datasetIsInDateRange(MdekDataBean doc) {
