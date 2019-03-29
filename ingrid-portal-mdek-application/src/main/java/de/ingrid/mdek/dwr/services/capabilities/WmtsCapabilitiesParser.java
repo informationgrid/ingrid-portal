@@ -71,7 +71,7 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
         super(new XPathUtils(new WmtsNamespaceContext()), syslistCache);
         
         versionSyslistMap = new HashMap<>();
-        versionSyslistMap.put( "1.0", 1 );
+        versionSyslistMap.put( "1.0.0", 3 );
     }
     
     /* (non-Javadoc)
@@ -88,7 +88,7 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
         result.setDescription(xPathUtils.getString(doc, XPATH_EXP_WMTS_ABSTRACT));
         
         List<String> versionList = getNodesContentAsList(doc, XPATH_EXP_WMTS_VERSION);
-        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WCTS.getDbValue(), versionList, versionSyslistMap);
+        List<String> mappedVersionList = mapVersionsFromCodelist(MdekSysList.OBJ_SERV_VERSION_WMS.getDbValue(), versionList, versionSyslistMap);
         result.setVersions(mappedVersionList);
 
         String version = versionList.get(0);
