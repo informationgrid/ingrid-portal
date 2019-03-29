@@ -263,8 +263,11 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 /* .claro .dijitDialogPaneContent, .dojoxFloatingPaneContent { padding: 20px 15px; width: auto; height: auto;} */
 .claro .dijitDialogPaneContent .inputContainer { padding: 0 !important; }
 .claro .dijitDialogPaneContent .inputContainerFooter { padding: 0px !important; background: #C6C6C6; float: left; margin: 2px 0 0; width: 100%; }
-.claro #ContextHelpDlg .dijitDialogPaneContent { padding: 10px; }
-.claro #ContextHelpDlg p { margin-bottom: 10px; }
+.claro #ContextHelpDlg .dijitDialogPaneContent { padding: 10px;}
+.claro #ContextHelpDlg p { font-size: 100%; margin-bottom: 5px; margin-top: 5px;}
+.claro #ContextHelpDlg pre {padding: 1em}
+.claro #ContextHelpDlg pre code {font-size: 100%; border: 0px}
+
 
 #InfoDialog .dijitDialogPaneContentArea, #publishErrorDialog .dijitDialogPaneContentArea {
 	padding: 20px;	
@@ -683,3 +686,5 @@ iframe {
 }
 
 .selectEntryBtn { float: left; width:54px; margin:90px 12px -64px 8px; }
+
+
