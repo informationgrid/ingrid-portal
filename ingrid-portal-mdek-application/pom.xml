@@ -31,7 +31,7 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>4.3.20.RELEASE</spring.version>
+    <spring.version>4.0.0.RELEASE</spring.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
