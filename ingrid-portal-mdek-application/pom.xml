@@ -481,6 +481,11 @@
       <artifactId>jarchivelib</artifactId>
       <version>0.7.1</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.tika</groupId>
+      <artifactId>tika-core</artifactId>
+      <version>1.20</version>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework</groupId>
