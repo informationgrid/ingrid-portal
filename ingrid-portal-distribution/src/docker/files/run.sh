@@ -42,6 +42,7 @@ else
     sed -i 's/hibernate.user=root/hibernate.user='${DB_USER}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.password=/hibernate.password='${DB_PASSWORD}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     echo "communications.ibus=/ingrid-group:ibus,"${IBUS_IP}",9900" > webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
+    echo "portal.enable.caching="${PORTAL_CACHE_ENABLE} >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
 
     # handle portal profiles
     if [ "$PORTAL_PROFILE" ]; then
