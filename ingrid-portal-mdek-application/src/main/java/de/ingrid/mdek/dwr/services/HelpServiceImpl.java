@@ -33,6 +33,7 @@ import de.ingrid.mdek.services.persistence.db.IDaoFactory;
 import de.ingrid.mdek.services.persistence.db.IEntity;
 import de.ingrid.mdek.services.persistence.db.IGenericDao;
 import de.ingrid.mdek.util.MarkdownContextHelpItem;
+import de.ingrid.mdek.util.MarkdownContextHelpItemKey;
 import de.ingrid.mdek.util.MarkdownContextHelpUtils;
 
 public class HelpServiceImpl {
@@ -42,54 +43,53 @@ public class HelpServiceImpl {
     // Injected by Spring
     private IDaoFactory daoFactory;
 
-    private Map<MarkdownContextHelpItem, String> markdownContextHelp = null;
+    private Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> markdownContextHelp = null;
+
+    private MarkdownContextHelpUtils mchu;
 
     public HelpServiceImpl() {
 
-        MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils();
-        markdownContextHelp = mchu.buildAvailableMarkdownHelp();
+        mchu = new MarkdownContextHelpUtils();
+        markdownContextHelp = mchu.getAvailableMarkdownHelpFiles();
 
     }
 
     public HelpMessage getHelpEntry(Integer guiId, Integer entityClass, String language, String defaultLanguage) {
-        MarkdownContextHelpItem mItem;
+        MarkdownContextHelpItemKey mItemKey;
         if (entityClass != null) {
-            mItem = new MarkdownContextHelpItem( guiId.toString(), entityClass.toString() );
+            mItemKey = new MarkdownContextHelpItemKey( guiId.toString(), entityClass.toString() );
         } else {
-            mItem = new MarkdownContextHelpItem( guiId.toString() );
+            mItemKey = new MarkdownContextHelpItemKey( guiId.toString() );
         }
 
         HelpMessage helpMessage = null;
 
         boolean markDownFound = false;
-        if (markdownContextHelp.containsKey( mItem )) {
+        if (markdownContextHelp.containsKey( mItemKey )) {
             markDownFound = true;
         } else {
-            mItem.setOid( null );
-            if (!markdownContextHelp.containsKey( mItem )) {
-                log.debug( "No markdown help file found for { guid: " + guiId + "; oid: " + entityClass + "; language: " + language + "}.");
+            mItemKey.setOid( null );
+            if (!markdownContextHelp.containsKey( mItemKey )) {
+                log.debug( "No markdown help file found for { guid: " + guiId + "; oid: " + entityClass + "; language: " + language + "}." );
             } else {
                 markDownFound = true;
             }
         }
         if (markDownFound) {
-            for (MarkdownContextHelpItem item : markdownContextHelp.keySet()) {
-                if (item.equals( mItem )) {
-                    helpMessage = new HelpMessage();
-                    helpMessage.setHelpText( markdownContextHelp.get( item ) );
-                    helpMessage.setGuiId( Integer.valueOf( item.getGuid() ) );
-                    if (item.getOid() != null) {
-                        helpMessage.setEntityClass( Integer.valueOf( item.getOid() ) );
-                    }
-                    
-                    if (item.getTitle() != null) {
-                        helpMessage.setName( item.getTitle() );
-                    }
-                    if (item.getLang() != null) {
-                        helpMessage.setLanguage( item.getLang() );
-                    }
-                    break;
-                }
+
+            MarkdownContextHelpItem mItemVal = markdownContextHelp.get( mItemKey );
+
+            helpMessage = new HelpMessage();
+            helpMessage.setHelpText( mchu.renderMarkdownFile( mItemVal.getMarkDownFilename() ) );
+            helpMessage.setGuiId( Integer.valueOf( mItemKey.getGuid() ) );
+            if (mItemKey.getOid() != null) {
+                helpMessage.setEntityClass( Integer.valueOf( mItemKey.getOid() ) );
+            }
+            if (mItemVal.getTitle() != null) {
+                helpMessage.setName( mItemVal.getTitle() );
+            }
+            if (mItemKey.getLang() != null) {
+                helpMessage.setLanguage( mItemKey.getLang() );
             }
         } else {
             IGenericDao<IEntity> dao = daoFactory.getDao( HelpMessage.class );

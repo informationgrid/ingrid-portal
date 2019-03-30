@@ -2,7 +2,7 @@ package de.ingrid.mdek.util;
 
 import java.util.Objects;
 
-public class MarkdownContextHelpItem {
+public class MarkdownContextHelpItemKey {
 
     /**
      * GUID fo the ingrid form.
@@ -20,25 +20,20 @@ public class MarkdownContextHelpItem {
      */
     String lang = null;
 
-    /**
-     * Title, used in help window bar.
-     */
-    String title = null;
-
-    public MarkdownContextHelpItem(String guid, String oid, String title) {
+    public MarkdownContextHelpItemKey(String guid, String oid, String lang) {
         super();
         this.guid = guid;
         this.oid = oid;
-        this.title = title;
+        this.lang = lang;
     }
 
-    public MarkdownContextHelpItem(String guid, String oid) {
+    public MarkdownContextHelpItemKey(String guid, String oid) {
         super();
         this.guid = guid;
         this.oid = oid;
     }
 
-    public MarkdownContextHelpItem(String guid) {
+    public MarkdownContextHelpItemKey(String guid) {
         super();
         this.guid = guid;
     }
@@ -67,14 +62,6 @@ public class MarkdownContextHelpItem {
         this.lang = lang;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     @Override
     public String toString() {
         return "MarkdownContextHelpItem: {guid: " + guid + "; oid: " + oid + "; lang: " + lang + "}";
@@ -85,10 +72,10 @@ public class MarkdownContextHelpItem {
 
         if (o == this)
             return true;
-        if (!(o instanceof MarkdownContextHelpItem)) {
+        if (!(o instanceof MarkdownContextHelpItemKey)) {
             return false;
         }
-        MarkdownContextHelpItem mchi = (MarkdownContextHelpItem) o;
+        MarkdownContextHelpItemKey mchi = (MarkdownContextHelpItemKey) o;
         return Objects.equals( guid, mchi.guid ) && Objects.equals( lang, mchi.lang ) && Objects.equals( oid, mchi.oid );
     }
 

@@ -36,17 +36,32 @@ public class MarkdownContextHelpUtilsTest {
     public void testBuildAvailableMarkdownHelp() throws Exception {
         MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils("context_help_test/");
         
-        Map<MarkdownContextHelpItem, String> m = mchu.buildAvailableMarkdownHelp();
+        Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
         
         Assert.assertEquals( false, m.isEmpty() );
 
-        Optional<Entry<MarkdownContextHelpItem, String>> findAny = m.entrySet().stream().findAny();
-        MarkdownContextHelpItem item = findAny.get().getKey();
+        Optional<Entry<MarkdownContextHelpItemKey, MarkdownContextHelpItem>> findAny = m.entrySet().stream().findAny();
+        MarkdownContextHelpItemKey item = findAny.get().getKey();
+        MarkdownContextHelpItem val = findAny.get().getValue();
         Assert.assertEquals( "3000", item.getGuid() );
         Assert.assertEquals( "1", item.getOid() );
-        Assert.assertEquals( "Objektname", item.getTitle() );
-        
-        Assert.assertEquals( true, findAny.get().getValue().length() > 0 );
-        
+
+        Assert.assertEquals( "Objektname", val.getTitle() );
+        Assert.assertEquals( "object_name.md", val.getMarkDownFilename().getFileName().toString() );
     }
+    
+    @Test
+    public void testRenderMarkdownFile() throws Exception {
+        MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils("context_help_test/");
+        
+        Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
+        
+        Assert.assertEquals( false, m.isEmpty() );
+
+        Optional<Entry<MarkdownContextHelpItemKey, MarkdownContextHelpItem>> findAny = m.entrySet().stream().findAny();
+        MarkdownContextHelpItem val = findAny.get().getValue();
+        String html = mchu.renderMarkdownFile( val.getMarkDownFilename() );
+        Assert.assertEquals( true, html.contains( "h1" ) );
+    }
+    
 }
