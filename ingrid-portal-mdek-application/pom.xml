@@ -769,6 +769,32 @@
       </build>
     </profile>
     <profile>
+      <id>profile-hzg</id>
+      <activation>
+        <property>
+          <name>profile</name>
+          <value>hzg</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <configuration>
+              <webApp>
+                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                  <resourcesAsCSV>
+                    ../ingrid-portal-apps/src/webapp/profiles/hzg/ingrid-portal-mdek-application,src/main/webapp
+                  </resourcesAsCSV>
+                </baseResource>
+              </webApp>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>profile-mcloud</id>
       <activation>
         <property>
