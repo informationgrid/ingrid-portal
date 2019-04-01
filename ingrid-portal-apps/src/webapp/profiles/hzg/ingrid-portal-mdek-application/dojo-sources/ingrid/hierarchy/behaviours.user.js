@@ -24,12 +24,16 @@ define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/hzg/hzgUiGeneral",
+    "ingrid/hierarchy/behaviours/hzg/platformLinkType",
     "ingrid/hierarchy/behaviours/sensorml/sensorObjectClass",
     "ingrid/hierarchy/behaviours/sensorml/sensorUI"
-    ], function(lang, behaviours, hzgUiGeneral, platform, sensorUI) {
+    ], function(lang, behaviours, hzgUiGeneral, platformLinkType, platform, sensorUI) {
 
     return lang.mixin(behaviours, {
         hzgUiGeneral: hzgUiGeneral,
+
+        // Link Type syslist
+        platformLinkType: platformLinkType,
 
         // Plattform-Metadaten
         observationPlatform: platform,

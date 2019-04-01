@@ -75,6 +75,8 @@ define({
     "table.sensor.parameter.units": "Maßeinheit",
     "table.sensor.parameter.description": "Beschreibung",
 
+    "dialog.link.type.platform": "Plattform",
+
     "ui.obj.capability.help": "TODO",
     "ui.obj.capability.title": "Fähigkeiten",
     "ui.obj.classifier.help": "TODO",
