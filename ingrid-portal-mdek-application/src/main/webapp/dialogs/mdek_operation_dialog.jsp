@@ -209,9 +209,9 @@
                 var listId = 5110;
                 if (serviceType == "1") // CSW
                     listId = 5105;
-                else if (serviceType == "2") // WMS
+                else if (serviceType == "2") { // WMS or WMTS
                     listId = 5110;
-                else if (serviceType == "3") // WFS
+                } else if (serviceType == "3") // WFS
                     listId = 5120;
                 else if (serviceType == "4") // WCTS
                     listId = 5130;

@@ -1,5 +1,6 @@
 FROM docker-registry.wemove.com/ingrid-java:jdk-8
 ENV INGRID_USER=root
+ENV PORTAL_CACHE_ENABLE=true
 ENV IBUS_IP=ibus
 ENV DB_USER=root
 ENV DB_PASSWORD=""
