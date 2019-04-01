@@ -210,7 +210,7 @@ public class SearchCatalogHierarchyPortlet extends SearchCatalog {
      *            need for open sub nodes by node ID (must always be root node)
      */
     private void openNodesUntilHierarchyLevel(DisplayTreeNode node, DisplayTreeNode rootNode) {
-        ArrayList list = node.getChildren();
+        ArrayList list = (ArrayList) node.getChildren();
         String rootNodeLevel = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER_LEVEL);
 
         if (rootNodeLevel != null)

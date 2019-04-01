@@ -24,8 +24,6 @@ package de.ingrid.portal.servlet;
 
 import java.io.File;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -49,12 +47,6 @@ public class FileHelperServlet extends HttpServlet {
 	private static final long	serialVersionUID	= -9167034970446594129L;
 	private static final Log log = LogFactory.getLog(FileHelperServlet.class);
     
-	@Override
-	public void init(ServletConfig servletConfig) throws ServletException {
-		
-		super.init(servletConfig);
-	}
-	
 	/* (non-Javadoc)
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */

@@ -331,8 +331,6 @@ public class UtilsSearch {
                     "\\<.*?\\>", ""));
             result.put(PlugDescription.DATA_TYPE, plugDescr.getDataTypes());
             result.put(PlugDescription.ORGANISATION, plugDescr.getOrganisation());
-            // FIXME: is this correct? should be taken from the detail only?
-            //result.put(PlugDescription.PROVIDER, plugDescr.getOrganisationAbbr());
             if (plugDescr.containsKey("domainGroupingSupport"))
                 result.put("domainGroupingSupport", plugDescr.getBoolean("domainGroupingSupport"));
         } catch (Exception t) {
@@ -474,19 +472,19 @@ public class UtilsSearch {
      * @return
      */
     public static String getFilteredDuplicateDetailValue(IngridHit detail, String key){
-        String filteredValues = "";
+        StringBuilder filteredValues = new StringBuilder("");
         String [] values = getDetailValue( detail, key ).split(DETAIL_VALUES_SEPARATOR); 
         for (int i = 0; i < values.length; i++) {
             String v = values[i].trim();
             if(filteredValues.indexOf(v) == -1){
                 if(i != 0){
-                    filteredValues += DETAIL_VALUES_SEPARATOR;
+                    filteredValues.append(DETAIL_VALUES_SEPARATOR);
                 }
-                filteredValues += v;
+                filteredValues.append(v);
             }
         }
         if(filteredValues.length() > 0){
-            return filteredValues;
+            return filteredValues.toString();
         }
         return null;
     }
@@ -688,18 +686,6 @@ public class UtilsSearch {
         }
 
         return qStr;
-
-        /*
-         * StringBuffer qStr = new StringBuffer(); qStr.append(query);
-         * qStr.append(", ");
-         * 
-         * FieldQuery[] fields = query.getDataTypes(); for (int i = 0; i <
-         * fields.length; i++) { qStr.append(" "); qStr.append(fields[i]);
-         * qStr.append("/required:"); qStr.append(fields[i].isRequred());
-         * qStr.append("/prohibited:"); qStr.append(fields[i].isProhibited()); }
-         * 
-         * return qStr.toString();
-         */
     }
 
     private static String buildFieldQueryStr(FieldQuery field) {
@@ -1068,55 +1054,6 @@ public class UtilsSearch {
             }
         }
     }
-
-    /**
-     * Remove the passed data type from the query
-     * 
-     * @param query
-     */
-    /*
-     * // TODO: remove this helper method if functionality is in IngridQuery
-     * public static boolean removeDataType(IngridQuery query, String
-     * datatypeValue) { boolean removed = false; FieldQuery[] dataTypesInQuery =
-     * query.getDataTypes(); if (dataTypesInQuery.length == 0) { return removed; }
-     * 
-     * ArrayList processedDataTypes = new
-     * ArrayList(Arrays.asList(dataTypesInQuery)); for (Iterator iter =
-     * processedDataTypes.iterator(); iter.hasNext();) { FieldQuery field =
-     * (FieldQuery) iter.next(); String value = field.getFieldValue(); if (value !=
-     * null && value.equals(datatypeValue)) { iter.remove(); removed = true; } } //
-     * remove all old datatypes and set our new ones
-     * query.remove(Settings.QFIELD_DATATYPE); for (int i = 0; i <
-     * processedDataTypes.size(); i++) { query.addField((FieldQuery)
-     * processedDataTypes.get(i)); }
-     * 
-     * return removed; }
-     */
-
-    /**
-     * Remove the Basic DataTypes from the query (the ones above the Simple
-     * Search Input) to obtain a "clean" query
-     * 
-     * @param query
-     */
-    /*
-     * // TODO: remove this helper method if functionality is in IngridQuery
-     * public static void removeBasicDataTypes(IngridQuery query) { FieldQuery[]
-     * dataTypesInQuery = query.getDataTypes(); if (dataTypesInQuery.length ==
-     * 0) { return; }
-     * 
-     * ArrayList processedDataTypes = new
-     * ArrayList(Arrays.asList(dataTypesInQuery)); for (Iterator iter =
-     * processedDataTypes.iterator(); iter.hasNext();) { FieldQuery field =
-     * (FieldQuery) iter.next(); String value = field.getFieldValue(); if (value ==
-     * null || value.equals(Settings.QVALUE_DATATYPE_AREA_ENVINFO) ||
-     * value.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS) ||
-     * value.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH)) { iter.remove(); } } //
-     * remove all old datatypes and set our new ones
-     * query.remove(Settings.QFIELD_DATATYPE); for (int i = 0; i <
-     * processedDataTypes.size(); i++) { query.addField((FieldQuery)
-     * processedDataTypes.get(i)); } }
-     */
 
     /**
      * Encapsulates common doView functionality for all partner selection

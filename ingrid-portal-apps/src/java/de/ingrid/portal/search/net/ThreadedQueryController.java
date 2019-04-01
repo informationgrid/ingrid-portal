@@ -102,6 +102,7 @@ public class ThreadedQueryController {
 
         } catch (InterruptedException e) {
             log.error("Error on search.", e);
+            Thread.currentThread().interrupt();
         }
         
         return ingridResults;
@@ -130,7 +131,7 @@ public class ThreadedQueryController {
         ingridResults.put(key, hits);
         if (ingridQueryDescriptors.size() == ingridResults.size()) {
             synchronized (threadMonitor) {
-                threadMonitor.notify();
+                threadMonitor.notifyAll();
             }
         }
     }

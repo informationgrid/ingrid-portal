@@ -393,7 +393,9 @@ public class Utils {
 			}
 			return hexString.toString();
 		} catch (NoSuchAlgorithmException e) {
-			log.error("unable to create MD5 hash from String '" + val + "'", e);
+		    if(log.isErrorEnabled()) {
+		        log.error("unable to create MD5 hash from String '" + val + "'", e);
+		    }
 			return null;
 		}
 
@@ -419,7 +421,9 @@ public class Utils {
 			Velocity.evaluate(context, sw, "UserEmailProcessor", templateReader);
 
 		} catch (Exception e) {
-			log.error("failed to merge velocity template: " + realTemplatePath, e);
+		    if(log.isErrorEnabled()) {
+		        log.error("failed to merge velocity template: " + realTemplatePath, e);
+		    }
 		}
 		return sw.getBuffer().toString();
 	}
@@ -529,12 +533,16 @@ public class Utils {
 			Transport.send(msg);
 			emailSent = true;
 		} catch (AddressException e) {
-			log.error("invalid email address format", e);
+		    if(log.isErrorEnabled()) {
+		        log.error("invalid email address format", e);
+		    }
 		} catch (MessagingException e) {
-			log.error("error sending email.", e);
+		    if(log.isErrorEnabled()) {
+		        log.error("error sending email.", e);
+		    }
 		} finally{
-			if(attachment != null && attachment.delete()){
-				log.debug("Delete attachment: " + attachment.getName());
+			if(attachment != null && attachment.delete() && log.isDebugEnabled()){
+		        log.debug("Delete attachment: " + attachment.getName());
 			}
 		}
 

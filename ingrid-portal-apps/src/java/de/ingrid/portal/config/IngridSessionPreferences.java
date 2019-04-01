@@ -83,7 +83,9 @@ public class IngridSessionPreferences extends HashMap {
                 put(key, obj);
             }
         } catch (Exception e) {
-            log.error("Unable to create new instance of class '" + cl.getName() + "'", e);
+            if(log.isErrorEnabled()) {
+                log.error("Unable to create new instance of class '" + cl.getName() + "'", e);
+            }
         }
         return obj;
     }

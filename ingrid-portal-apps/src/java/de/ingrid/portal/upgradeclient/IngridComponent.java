@@ -62,7 +62,7 @@ public class IngridComponent implements Serializable {
     private String errorStatus;
     private String connected;
     
-    private Map<String, Object> extraInfo = new HashMap<>();
+    private transient Map<String, Object> extraInfo = new HashMap<>();
     
     public IngridComponent(String id, String type) {
         this.setId(id);
@@ -75,9 +75,6 @@ public class IngridComponent implements Serializable {
         setHasBeenSent(false);
         setWasUnknown(true);
         setStatus(IngridAbstractStateJob.STATUS_NO_UPDATE_AVAILABLE);
-        //this.setVersion(version);
-        //this.setVersionAvailable(versionAvailable);
-        //this.setDate(date);
     }
 
     public void setName(String name) {
@@ -103,15 +100,6 @@ public class IngridComponent implements Serializable {
     public Date getEmailSentDate() {
         return emailSent;
     }
-/*
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-*/
     public void setId(String id) {
         this.id = id;
     }

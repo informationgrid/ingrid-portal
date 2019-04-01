@@ -54,21 +54,6 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
             } catch (Exception e) {
                 log.error("Failed to start iBus communication.", e);
             }
-            
-            /*
-             * comment out because there is only one quartz instance in the future.
-             * See IngridComponentMonitorStartListener.java for initialization.
-             * 
-             *             try {
-                StdSchedulerFactory sf = new StdSchedulerFactory();
-                sf.initialize("quartz.properties");
-                sched = sf.getScheduler();
-                sched.start();
-                
-            } catch (SchedulerException e) {
-                log.error("Failed to start scheduler.", e);
-            }
-            */
         }
     }
 

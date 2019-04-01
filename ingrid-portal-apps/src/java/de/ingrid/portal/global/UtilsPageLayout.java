@@ -157,7 +157,9 @@ public class UtilsPageLayout {
             parentFragment.getFragments().add(fragment);
             moveFragmentToPosition(parentFragment, fragment, x, y);
         } catch (Exception e) {
-            log.error("failed to add portlet " + portletUniqueName + " to fragment: " + parentFragment.getName(), e);
+            if (log.isErrorEnabled()) {
+                log.error("failed to add portlet " + portletUniqueName + " to fragment: " + parentFragment.getName(), e);
+            }
         }
     }
 

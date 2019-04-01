@@ -104,7 +104,7 @@ public class DisplayTreeNode extends HashMap {
 	/**
 	 * @return Returns the children.
 	 */
-	public ArrayList getChildren() {
+	public List getChildren() {
         if (get("children") == null) {
             put("children", new ArrayList());
         }
@@ -139,7 +139,7 @@ public class DisplayTreeNode extends HashMap {
     }
     
     private static DisplayTreeNode getChild(DisplayTreeNode node, String nodeId, String field) {
-        ArrayList c = node.getChildren();
+        ArrayList c = (ArrayList) node.getChildren();
         for (int i=0; i<c.size(); i++) {
             DisplayTreeNode aNode = (DisplayTreeNode)c.get(i);
             if (field == null) {
@@ -158,7 +158,7 @@ public class DisplayTreeNode extends HashMap {
         return null;
     }
 
-    public ArrayList getAllChildren() {
+    public List getAllChildren() {
         return getAllChildren(this);
     }
     
@@ -183,7 +183,7 @@ public class DisplayTreeNode extends HashMap {
         StringBuilder parentsAsString = new StringBuilder();
         List<String> parents = getAllParents();
         for (String parent : parents) {
-            parentsAsString.append(parent + ",");            
+            parentsAsString.append(parent + ",");
         }
         return parentsAsString.toString();
     }

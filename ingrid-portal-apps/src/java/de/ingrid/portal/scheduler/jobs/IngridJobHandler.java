@@ -152,7 +152,6 @@ public class IngridJobHandler {
 			JobDetail jobDetail = monitor.getScheduler().getJobDetail(id,
 					IngridMonitorFacade.SCHEDULER_GROUP_NAME);
 						
-			//updateDataFromForm(cf, jobDetail);
 			String componentType = cf.getInput(AdminComponentMonitorForm.FIELD_TYPE);
 			
 			// get the correct class depending on the monitor type
@@ -160,7 +159,6 @@ public class IngridJobHandler {
 			
 			// happens if a singleton job wanted to be created a second time 
 			if (cf.hasErrors()) {
-				//return false;
 				// cannot happen when updating a job
 				cf.clearErrors();
 			}
@@ -201,9 +199,6 @@ public class IngridJobHandler {
 					contacts.add(contact);
 				}
 				dataMap.put(IngridMonitorIPlugJob.PARAM_CONTACTS, contacts);
-			} else {
-				//throw SchedulerException;
-				//return false;
 			}
 			
 			//===============================
@@ -362,7 +357,6 @@ public class IngridJobHandler {
 			// IBus shall exist only once
 			if (jobClassExists(IngridMonitorIBusJob.class)) {
 				cf.setError(AdminComponentMonitorForm.FIELD_TYPE, "component.monitor.form.error.single.job");
-				//return null;
 			}
 		} else	if (type.equals(IngridMonitorRSSCheckerJob.COMPONENT_TYPE)) {
 			jobClass = IngridMonitorRSSCheckerJob.class;
@@ -372,7 +366,6 @@ public class IngridJobHandler {
 			// RSSFetcherJob shall exist only once
 			if (jobClassExists(IngridMonitorRSSFetcherJob.class)) {
 				cf.setError(AdminComponentMonitorForm.FIELD_TYPE, "component.monitor.form.error.single.job");
-				//return null;
 			}
 		} else	if (type.equals(IngridMonitorProviderCheckJob.COMPONENT_TYPE)) {
 			jobClass = IngridMonitorProviderCheckJob.class;
@@ -380,7 +373,6 @@ public class IngridJobHandler {
 			// RSSProviderCheck shall exist only once
 			if (jobClassExists(IngridMonitorProviderCheckJob.class)) {
 				cf.setError(AdminComponentMonitorForm.FIELD_TYPE, "component.monitor.form.error.single.job");
-				//return null;
 			}
 		}
 		return jobClass;
@@ -479,7 +471,6 @@ public class IngridJobHandler {
 			fillJobDataMap(jobDetail.getJobDataMap(), activate, iPlug.getDataSourceName(), stdEmail);
 			
 			// add specific data to the dataMap according to the iPlug
-			//if (iPlug.getIPlugClass().equals(IPlugType.IPLUG_SE)) {}
 			if (iPlug.containsDataType("management")) {
 			    jobDetail.getJobDataMap().put(IngridMonitorIPlugJob.PARAM_QUERY,
 	                "datatype:management management_request_type:2 ranking:any cache:off");
@@ -880,7 +871,7 @@ public class IngridJobHandler {
     }
 	
 	@SuppressWarnings("unchecked")
-	public List<JobDetail> getRunningJobs(boolean ascending) {
+	public List<JobDetail> getRunningJobs() {
 		List<JobDetail> runningJobs = new ArrayList<>();
 		List<JobExecutionContext> runningJobContexts = null;
 		try {
@@ -938,57 +929,57 @@ public class IngridJobHandler {
 
     private String convertJobDetail(JobDetail jobDetail, IngridResourceBundle messages) {
         JobDataMap dataMap = jobDetail.getJobDataMap();
-        String job = "";
+        StringBuilder job = new StringBuilder("");
         String separator = ";";
         
         // active?
         if (dataMap.get(IngridMonitorIPlugJob.PARAM_ACTIVE) != null)
-            job += dataMap.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE) == 1 ? "true" : "false";
+            job.append(dataMap.getInt(IngridMonitorIPlugJob.PARAM_ACTIVE) == 1 ? "true" : "false");
         else
-            job += "false";
-        job += separator;
+            job.append("false");
+        job.append(separator);
         // id
-        job += jobDetail.getName() + separator;
+        job.append(jobDetail.getName() + separator);
         // name
-        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE) + separator;
+        job.append(dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TITLE) + separator);
         // type
-        job += messages.getString((String)dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE)) + separator;
+        job.append(messages.getString((String)dataMap.getString(IngridMonitorIPlugJob.PARAM_COMPONENT_TYPE)) + separator);
         // queryString
-        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_QUERY) + separator;
+        job.append(dataMap.getString(IngridMonitorIPlugJob.PARAM_QUERY) + separator);
         // service url
-        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_SERVICE_URL) + separator;
+        job.append(dataMap.getString(IngridMonitorIPlugJob.PARAM_SERVICE_URL) + separator);
         // excluded provider
-        job += dataMap.getString(IngridMonitorIPlugJob.PARAM_EXCLUDED_PROVIDER) + separator;
+        job.append(dataMap.getString(IngridMonitorIPlugJob.PARAM_EXCLUDED_PROVIDER) + separator);
         // interval
-        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)) + separator;
+        job.append(String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_CHECK_INTERVAL)) + separator);
         // timeout
-        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMEOUT)) + separator;
+        job.append(String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMEOUT)) + separator);
         // status
-        job += String.valueOf(messages.getString((String)dataMap.get(IngridMonitorIPlugJob.PARAM_STATUS_CODE))) + separator;
+        job.append(String.valueOf(messages.getString((String)dataMap.get(IngridMonitorIPlugJob.PARAM_STATUS_CODE))) + separator);
         // lastExecution;nextExecution
         if (getTrigger(jobDetail.getName(), jobDetail.getGroup()) == null)
-            job += "null;null;";
+            job.append("null;null;");
         else {
-            job += String.valueOf(getTrigger(jobDetail.getName(), jobDetail.getGroup()).getPreviousFireTime()) + separator;
-            job += String.valueOf(getTrigger(jobDetail.getName(), jobDetail.getGroup()).getNextFireTime()) + separator;
+            job.append(String.valueOf(getTrigger(jobDetail.getName(), jobDetail.getGroup()).getPreviousFireTime()) + separator);
+            job.append(String.valueOf(getTrigger(jobDetail.getName(), jobDetail.getGroup()).getNextFireTime()) + separator);
         }
         // lastSuccessfulExecution
-        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_LAST_ERRORFREE_RUN)) + separator;
+        job.append(String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_LAST_ERRORFREE_RUN)) + separator);
         // numExecutions
-        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMER_NUM)) + separator;
+        job.append(String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMER_NUM)) + separator);
         // averageExecution
-        job += String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE)) + separator;
+        job.append(String.valueOf(dataMap.get(IngridMonitorIPlugJob.PARAM_TIMER_AVERAGE)) + separator);
         // emails
         List<Map> contacts = (List<Map>) dataMap.get(IngridMonitorIPlugJob.PARAM_CONTACTS);
         if (contacts != null) {
             for (Map contact : contacts) {
-                job += contact.get(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL) + " ";
-                job += contact.get(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT) + " ";
+                job.append(contact.get(IngridMonitorAbstractJob.PARAM_CONTACT_EMAIL) + " ");
+                job.append(contact.get(IngridMonitorAbstractJob.PARAM_CONTACT_EVENT_OCCURENCE_BEFORE_ALERT) + " ");
             }
         } else {
-            job += "null";
+            job.append("null");
         }
         
-        return job;
+        return job.toString();
     }
 }

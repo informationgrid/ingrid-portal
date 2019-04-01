@@ -229,7 +229,9 @@ public class ChronicleSearchForm extends ActionForm {
             DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
             return dateFormatter.parse(dateString);
         } catch (ParseException e) {
-            log.error("Error on getDate.", e);
+            if(log.isErrorEnabled()) {
+                log.error("Error on getDate.", e);
+            }
         }
         return null;
     }

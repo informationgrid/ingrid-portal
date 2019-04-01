@@ -127,7 +127,9 @@ public class AdminRSSForm extends ActionForm {
                         try {
                             id = new Long(getInput(PARAM_ID + i));
                         } catch (Exception ex) {
-                            log.error("Error on validate.", ex);
+                            if(log.isErrorEnabled()) {
+                                log.error("Error on validate.", ex);
+                            }
                         }
                         String url = getInput(fieldName);
                         Session session = HibernateUtil.currentSession();

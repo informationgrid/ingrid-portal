@@ -299,27 +299,31 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (entryId.equals("3600") && type.equals("3")) {
                         // get link from operation (unique one)
                         if (serviceType != null && serviceType.trim().equals("view")) {
-                            String capabilityUrl = serviceUrl;
-                            if(serviceUrl == null){
-                                capabilityUrl = getCapabilityUrl();
+                            StringBuilder capabilityUrl;
+                            if(serviceUrl != null){
+                                capabilityUrl= new StringBuilder(serviceUrl);
+                            } else {
+                                capabilityUrl =  new StringBuilder(getCapabilityUrl());
                             }
                             if ( capabilityUrl != null ) {
-                                capabilityUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl, ServiceType.WMS );
-                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
+                                capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
+                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString()) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
                             }
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
                         linkList.add(link);
                     } else if (entryId.equals("3600") && type.equals("1")) {
-                        String capUrl = serviceUrl;
-                        if(serviceUrl == null){
-                            capUrl = getCapabilityUrlFromCrossReference( uuid );
+                        StringBuilder capUrl;
+                        if(serviceUrl != null){
+                            capUrl = new StringBuilder(serviceUrl);
+                        } else {
+                            capUrl = new StringBuilder(getCapabilityUrlFromCrossReference( uuid ));
                         }
                         if ( capUrl != null ) {
                             // add possible missing parameters
-                            capUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl );
-                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
+                            capUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl.toString() ));
+                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString()) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
@@ -351,7 +355,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 
                 for (int j=0; j<onLineList.getLength();j++){
                     
-                //if(XPathUtils.nodeExists(nodeList.item(i),"./gmd:MD_DigitalTransferOptions/gmd:onLine")){
                     xpathExpression = "./*/gmd:linkage/gmd:URL";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         url = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
@@ -843,10 +846,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             
             for (int i=0; i<nodeList.getLength();i++){
                 if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL")){
-                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");                
-                    String urlValue = xPathUtils.getString(node, ".").trim();
+                    Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:CI_OnlineResource/gmd:linkage/gmd:URL");
+                    StringBuilder urlValue = new StringBuilder(xPathUtils.getString(node, ".").trim());
                     // do not display empty URLs
-                    if (urlValue == null || urlValue.length() == 0) {
+                    if (urlValue.length() == 0) {
                         continue;
                     }
 
@@ -858,7 +861,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                     if (operationName.equals("GetCapabilities")) {
                         // add missing parameters
-                        urlValue += CapabilitiesUtils.getMissingCapabilitiesParameter( urlValue, serviceType );
+                        urlValue.append(CapabilitiesUtils.getMissingCapabilitiesParameter( urlValue.toString(), serviceType ));
 
                         element.put("type", "textLabelLeft");
                         element.put("line", true);
@@ -879,7 +882,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS||" + UtilsVelocity.urlencode(urlValue) + "||");
+                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS||" + UtilsVelocity.urlencode(urlValue.toString()) + "||");
                                   element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
@@ -1123,7 +1126,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     public String getGeoReport(String xpathExpression, String checkDescription, String checkNameOfMeasure) {
-        String value = null;
+        StringBuilder value = new StringBuilder("");
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i < nodeList.getLength(); i++){
@@ -1152,16 +1155,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     
                     if ((description != null || nameOfMeasure != null) && (checkDescription.equals(description) || checkNameOfMeasure.equalsIgnoreCase(nameOfMeasure))){
-                        value = content;
+                        value.append(content);
                         if(symbol != null){
-                            value +=  " " + symbol;
+                            value.append(" " + symbol);
                         }
                         break;
                     }
                 }
             }
         }
-        return value;
+        return value.toString();
     }
     
     public String addLinkToGetXML() {

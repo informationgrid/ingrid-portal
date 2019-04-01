@@ -102,7 +102,9 @@ public class IngridSysCodeList {
                                     return getName(codeListId, entry.getId());
                                 }
                             } catch (JSONException e) {
-                                log.error("Error on getNameByCodeListValue.", e);
+                                if(log.isErrorEnabled()) {
+                                    log.error("Error on getNameByCodeListValue.", e);
+                                }
                             }
                         }
                     }

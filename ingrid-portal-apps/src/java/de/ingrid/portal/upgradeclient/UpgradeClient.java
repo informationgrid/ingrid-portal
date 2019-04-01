@@ -22,6 +22,7 @@
  */
 package de.ingrid.portal.upgradeclient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -58,7 +59,7 @@ public class UpgradeClient {
         List<IngridComponent> components = (List<IngridComponent>)jobDetail.getJobDataMap().get(UpgradeTools.INSTALLED_COMPONENTS);
         if (components == null) {
             log.error("UpgradeClientJob DataMap contains non-initialized INSTALLED_COMPONENTS-Key!");
-            return null;
+            return new ArrayList<>();
         } else
             return components;
     }
@@ -197,11 +198,9 @@ public class UpgradeClient {
         for (PlugDescription pd : iPlugs) {
             String version = null;
             String type    = null;
-            String date    = null;
             
             if (pd.getMetadata() != null) {
                 version = pd.getMetadata().getVersion();
-                date    = pd.getMetadata().getReleaseDate().toString();
                 type    = pd.getMetadata().getPlugType().toString(); 
             }
             IngridComponent component = new IngridComponent(pd.getPlugId(), type);
@@ -224,7 +223,6 @@ public class UpgradeClient {
             }
             component.setVersion(version);
             component.setIPlug(true);
-            //component.setStatus();
             component.setConnected(IngridAbstractStateJob.STATUS_IS_AVAILABLE);
             
             addComponent(component);

@@ -118,12 +118,11 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         } catch (Exception e) {
             status 		= STATUS_ERROR;
 			statusCode 	= STATUS_CODE_ERROR_UNSPECIFIC;
-			log.error("An exception occured: " + e.getMessage());
+			log.error(String.format("An exception occured: %s", e.getMessage()));
         } finally {
             computeTime(dataMap, stopTimer());
             sendEmailOnUpdate(installedComponents);
             updateJobData(context, status, statusCode);
-            //context.getScheduler().addJob(context.getJobDetail(), true);
             updateJob(context);
         }
         log.info("UpgradeClientJob finished");
@@ -145,7 +144,6 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         if (installedComponents == null)
             return;
         
-        //PlugDescription[] pds = IBUSInterfaceImpl.getInstance().getAllIPlugsWithoutTimeLimitation();
         // get all partner and provider from db to get the long name later
         Session session = HibernateUtil.currentSession();
         List<IngridProvider> allIngridProviderInDB = session.createCriteria(IngridProvider.class).list();
@@ -236,11 +234,11 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
                     component.setChangelogLink(serverComponents.get(component.getType()).getChangelogLink());
                     // compare using build number only if it is provided in the version info of the managed component
                     // (on the client side)
-                    String serverVersion = component.getVersionAvailable();
+                    StringBuilder serverVersion = new StringBuilder(component.getVersionAvailable());
                     if (StringUtils.isEmpty(component.getVersionAvailableBuild())) {
-                        serverVersion += " Build:" + component.getVersionAvailableBuild(); 
+                        serverVersion.append(" Build:" + component.getVersionAvailableBuild()); 
                     }
-                    if (component.getVersion().compareToIgnoreCase(serverVersion) >= 0) {
+                    if (component.getVersion().compareToIgnoreCase(serverVersion.toString()) >= 0) {
                         component.setStatus(STATUS_NO_UPDATE_AVAILABLE);
                     } else {
                         component.setStatus(STATUS_UPDATE_AVAILABLE);
@@ -329,10 +327,14 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         
             int status = client.executeMethod(method);
             if (status == 200) {
-                log.debug("Successfully received: " + url);
+                if(log.isDebugEnabled()) {
+                    log.debug(String.format("Successfully received: %s", url));
+                }
                 return method.getResponseBodyAsStream();
             } else {
-                log.error("Response code for '" + url + "' was: " + status);
+                if(log.isErrorEnabled()) {
+                    log.error(String.format("Response code for '%s' was: %s", url, status));
+                }
                 return null;
             }
         } catch (HttpException e) {
@@ -353,7 +355,6 @@ public class UpgradeClientJob extends IngridMonitorAbstractJob {
         String password = PortalConfig.getInstance().getString(PortalConfig.UPGRADE_SERVER_PW);
         if (username != null && !username.isEmpty() && password != null && !password.isEmpty()) {
             Credentials defaultcreds = new UsernamePasswordCredentials(username, password);
-            //client.getState().setCredentials(new AuthScope("localhost", 80, AuthScope.ANY_REALM), defaultcreds);
             client.getState().setCredentials(AuthScope.ANY, defaultcreds);
         }
     }

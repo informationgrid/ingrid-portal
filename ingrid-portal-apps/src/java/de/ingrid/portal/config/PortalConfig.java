@@ -274,9 +274,7 @@ public class PortalConfig extends PropertiesConfiguration {
                 config.initialize();
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {
-                    log.error(
-                            "Error loading the portal config application config file. (ingrid-portal-apps.properties)",
-                            e);
+                    log.error("Error loading the portal config application config file. (ingrid-portal-apps.properties)", e);
                 }
             }
         }

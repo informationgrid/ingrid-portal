@@ -62,8 +62,6 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
 
     private static final String TEMPLATE_RESULT = "/WEB-INF/templates/search_similar.vm";
 
-    //    private static final String TEMPLATE_NO_RESULT = "/WEB-INF/templates/empty.vm";
-
     /* (non-Javadoc)
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
@@ -103,8 +101,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
         PortletSession session = request.getPortletSession();
         PageState ps = (PageState) session.getAttribute("portlet_state");
         if (ps == null) {
-            ps = new PageState(this.getClass().getName());
-            ps = initPageState(ps);
+            ps = initPageState(new PageState(this.getClass().getName()));
             session.setAttribute("portlet_state", ps);
         }
 
@@ -183,7 +180,7 @@ public class SearchSimilarPortlet extends AbstractVelocityMessagingPortlet {
                 String newQueryStr = queryStr;
                 similarRoot = (DisplayTreeNode) session.getAttribute("similarRoot");
                 if (similarRoot != null) {
-                    ArrayList queryTerms = similarRoot.getChildren();
+                    ArrayList queryTerms = (ArrayList) similarRoot.getChildren();
                     Iterator it = queryTerms.iterator();
                     while (it.hasNext()) {
                         DisplayTreeNode queryTerm = (DisplayTreeNode) it.next();

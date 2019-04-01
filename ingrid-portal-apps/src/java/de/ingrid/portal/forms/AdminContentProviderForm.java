@@ -118,7 +118,9 @@ public class AdminContentProviderForm extends ActionForm {
                             try {
                                 id = new Long(getInput(PARAM_ID + i));
                             } catch (Exception ex) {
-                                log.error("Error on validate.", ex);
+                                if(log.isErrorEnabled()) {
+                                    log.error("Error on validate.", ex);
+                                }
                             }
                             Session session = HibernateUtil.currentSession();
                             Criteria crit = session.createCriteria(IngridProvider.class).add(

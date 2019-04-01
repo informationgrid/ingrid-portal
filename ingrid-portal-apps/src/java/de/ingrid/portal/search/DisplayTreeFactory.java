@@ -97,7 +97,7 @@ public class DisplayTreeFactory {
      * @param filter The partners to restrict. null for all partner.
      * @return
      */
-    public static DisplayTreeNode getTreeFromPartnerProviderFromDB(ArrayList filter) {
+    public static DisplayTreeNode getTreeFromPartnerProviderFromDB(List filter) {
         DisplayTreeNode root = new DisplayTreeNode("root", "root", true);
         root.setType(DisplayTreeNode.ROOT);
 
@@ -284,7 +284,7 @@ public class DisplayTreeFactory {
                 }
             }
             // iPlug Node
-            String name = "searchCatHierarchy.tree.unknown";
+            String name;
             String type = null;
             if(hiddenCatalogName){
                 catalogNode = root;
@@ -336,7 +336,7 @@ public class DisplayTreeFactory {
         String udkDocId = (String) nodeToOpen.get(NODE_UDK_DOC_ID);
         String keyUdkDocId = "";
         String keyUdkClass = "";
-        List hits = new ArrayList();
+        List hits;
         
         PlugDescription pd = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
         CatalogTreeDataProvider ctdp = CatalogTreeDataProviderFactory.getDetailDataPreparer(IPlugVersionInspector.getIPlugVersion(pd));
@@ -344,7 +344,7 @@ public class DisplayTreeFactory {
         if (udkDocId == null) {
             hits = ctdp.getTopEntities(plugId, plugType);
         } else {
-            hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);            
+            hits = ctdp.getSubEntities(udkDocId, plugId, plugType, null);
         }
 
         // keys for extracting data
@@ -371,19 +371,17 @@ public class DisplayTreeFactory {
 
             String nodeName = detail.getTitle();
             // different node text, when person
-            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-                if (udkClass.equals("2") || udkClass.equals("3")) {
-                    String[] titleElements = new String[] {
-                        UtilsSearch.getDetailValue(detail, "T02_address.address_value"),
-                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
-                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
-                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
-                        UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
-                    };
-                    String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
-                    if (personStr != null && personStr.length() > 0) {
-                        nodeName = personStr;
-                    }
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && (udkClass.equals("2") || udkClass.equals("3"))) {
+                String[] titleElements = new String[] {
+                    UtilsSearch.getDetailValue(detail, "T02_address.address_value"),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRESS),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_TITLE),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_FIRSTNAME),
+                    UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_LASTNAME)
+                };
+                String personStr =  UtilsString.concatStringsIfNotNull(titleElements, " ");
+                if (personStr != null && personStr.length() > 0) {
+                    nodeName = personStr;
                 }
             }
 

@@ -140,7 +140,6 @@ public class ThreadedQuery extends Thread {
                             // grouping by domain ? -> one sub hit is shown, we need details of first sub hit ...
                             String grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
                             if (IngridQuery.GROUPED_BY_DATASOURCE.equals(grouping)) {
-                            	//IngridHit subHit = subHitArray[0];
                             	IngridHitWrapper subHitWrapper = new IngridHitWrapper(subHitArray[0]);
                             	subHitWrapper.put(Settings.RESULT_KEY_PLUG_DESCRIPTION, topHitWrapper.get(Settings.RESULT_KEY_PLUG_DESCRIPTION));
                                 IngridHitDetail subDetail = ibus.getDetail(subHitWrapper.getHit(), qd.getQuery(), qd.getRequestedFields());

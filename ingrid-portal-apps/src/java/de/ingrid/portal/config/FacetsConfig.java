@@ -53,7 +53,9 @@ public class FacetsConfig {
             try {
                 instance = new XMLConfiguration( "facets-config.xml" );
             } catch (ConfigurationException cex) {
-                log.error( "Error reading facets config file!" );
+                if(log.isErrorEnabled()) {
+                    log.error( "Error reading facets config file!" );
+                }
             }
         }
         return instance;

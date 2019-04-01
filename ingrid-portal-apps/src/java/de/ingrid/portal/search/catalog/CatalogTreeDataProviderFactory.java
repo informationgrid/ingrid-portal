@@ -51,9 +51,9 @@ public class CatalogTreeDataProviderFactory {
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_2_DSC_ADDRESS)) {
 			return new CatalogTreeDataProviderIDC102();
 		} else if (version.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_OBJECT)) {
-			return new CatalogTreeDataProvider_UDK_5_0();
+			return new CatalogTreeDataProviderUDK50();
 		} else if (version.equals(IPlugVersionInspector.VERSION_UDK_5_0_DSC_ADDRESS)) {
-			return new CatalogTreeDataProvider_UDK_5_0();
+			return new CatalogTreeDataProviderUDK50();
 		} else if (version.equals(IPlugVersionInspector.VERSION_UNKNOWN)) {
 			return new CatalogTreeDataProviderIDC102();
 		} else if (version.equals(IPlugVersionInspector.VERSION_IDC_1_0_8_DSC_OBJECT)) {

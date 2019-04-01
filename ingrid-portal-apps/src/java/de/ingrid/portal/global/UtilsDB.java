@@ -141,9 +141,13 @@ public class UtilsDB {
 						HibernateUtil.closeSession();	
             		}
 				} catch (HibernateException e) {
-					log.error("HibernateException:", e);
+				    if (log.isErrorEnabled()) {
+				        log.error("HibernateException:", e);
+				    }
 				} catch (SQLException e) {
-					log.error("SQLException: While trying to close hibernate session.");
+				    if (log.isErrorEnabled()) {
+				        log.error("SQLException: While trying to close hibernate session.");
+				    }
 				}
             	
             }
@@ -635,7 +639,9 @@ public class UtilsDB {
             if (tx != null) {
                 tx.rollback();
             }
-            log.error("Problems executing RAW-SQL:" + sqlStr, ex);
+            if (log.isErrorEnabled()) {
+                log.error("Problems executing RAW-SQL:" + sqlStr, ex);
+            }
         } finally {
             HibernateUtil.closeSession();
         }

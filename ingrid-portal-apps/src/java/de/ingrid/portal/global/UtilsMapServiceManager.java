@@ -231,7 +231,9 @@ public class UtilsMapServiceManager {
             Velocity.init();
             Velocity.evaluate(context, sw, "TemporaryService", templateReader);
         } catch (Exception e) {
-            log.error("failed to merge velocity template: " + templatePath, e);
+            if (log.isErrorEnabled()) {
+                log.error("failed to merge velocity template: " + templatePath, e);
+            }
         }
         return sw.getBuffer().toString();
     }
@@ -267,9 +269,13 @@ public class UtilsMapServiceManager {
                 try {
                     kmlFile = UtilsMapServiceManager.createTemporaryService((String) data.get("coord_class"), (List<Map<String, String>>) data.get("placemarks"), UtilsFileHelper.KML);
                 } catch (ConfigurationException e) {
-                    log.error("ConfigurationException" + e);
+                    if (log.isErrorEnabled()) {
+                        log.error("ConfigurationException", e);
+                    }
                 } catch (Exception e) {
-                    log.error("Exception" + e);
+                    if (log.isErrorEnabled()) {
+                        log.error("Exception", e);
+                    }
                 }
             }
         }

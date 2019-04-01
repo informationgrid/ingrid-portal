@@ -155,9 +155,6 @@ public class QueryPreProcessor {
         // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
         UtilsSearch.processBasicDataType(request, query, ds);
 
-        // change datasource dependent from query input
-        //ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
-
         // start hit
         int startHit = 0;
         String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
@@ -263,11 +260,6 @@ public class QueryPreProcessor {
             startHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
 
-        // set language for query
-        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
-            // UtilsSearch.processLanguage(query, request.getLocale());
-        }
-        
         // add partner to query if the portal is restricted to a certain partner
         UtilsSearch.processRestrictingPartners(query);
         
@@ -302,11 +294,7 @@ public class QueryPreProcessor {
                         FieldQuery[] datatypes = q.getDataTypes();
                         for (int i = 0; i < datatypes.length; i++) {
                             FieldQuery datatype = datatypes[i];
-                            // add datatype if it does not already exist in the query
-                            //                            if ((!datatype.isProhibited() && !UtilsSearch.hasPositiveDataType(query,datatype.getFieldName())) 
-                            //                                    || (datatype.isProhibited() && !UtilsSearch.hasPositiveDataType(query,datatype.getFieldName()))) {
                             query.addField(datatype);
-                            //                            }
                         }
                         // add metaclass
                         //check for field metaclass (if only one metaclass was selected)

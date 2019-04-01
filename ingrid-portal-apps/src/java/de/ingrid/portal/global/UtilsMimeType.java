@@ -92,7 +92,9 @@ public class UtilsMimeType {
 				
 			}
 			catch (MissingResourceException ex) {
-				log.error("ERROR while reading MIME Type" + MIME_TYP_BUNDLE + " with type " + type, ex);
+			    if (log.isErrorEnabled()) {
+			        log.error("ERROR while reading MIME Type" + MIME_TYP_BUNDLE + " with type " + type, ex);
+			    }
 			}
 		}
 	}

@@ -63,19 +63,19 @@ public class DetailPartPreparer {
 
     private static final Logger log = LoggerFactory.getLogger(DetailPartPreparer.class);
 
-    public NodeList                nodeList;
-    public IngridSysCodeList       sysCodeList;
-    public RenderRequest           request;
-    public RenderResponse          response;
-    public String                  iPlugId;
-    public String                  uuid;
-    public Context                 context;
-    public IngridResourceBundle    messages;
+    protected NodeList                nodeList;
+    protected IngridSysCodeList       sysCodeList;
+    protected RenderRequest           request;
+    protected RenderResponse          response;
+    protected String                  iPlugId;
+    protected String                  uuid;
+    protected Context                 context;
+    protected IngridResourceBundle    messages;
     
-    public String templateName = "";
-    public String localTagName = "";
-    public String namespaceUri = "";
-    public Node rootNode = null;
+    protected String templateName = "";
+    protected String localTagName = "";
+    protected String namespaceUri = "";
+    protected Node rootNode = null;
 
     protected XPathUtils xPathUtils = null;
 
@@ -204,31 +204,30 @@ public class DetailPartPreparer {
         NodeList tmpNodeList = xPathUtils.getNodeList(this.rootNode, xpathExpression);
         if(tmpNodeList != null){
             for (int j=0; j < tmpNodeList.getLength();j++){
-                Node nodeListNode = tmpNodeList.item(j);{
-                    NodeList nodeListSub = xPathUtils.getNodeList(nodeListNode, xpathSubExpression);
-                    if(nodeListSub != null){
-                        for (int i=0; i < nodeListSub.getLength();i++){
-                            Node subNode = nodeListSub.item(i);
-                            String value = subNode.getTextContent().trim();
-                            if(value != null && value.length() > 0){
-                                boolean isConsidered = false;
-                                if(consideredValues != null){
-                                    for (int k=0; k < consideredValues.size();k++){
-                                        if(value.equals(consideredValues.get(k))){
-                                            isConsidered = true;
-                                            break;
-                                        }
+                Node nodeListNode = tmpNodeList.item(j);
+                NodeList nodeListSub = xPathUtils.getNodeList(nodeListNode, xpathSubExpression);
+                if(nodeListSub != null){
+                    for (int i=0; i < nodeListSub.getLength();i++){
+                        Node subNode = nodeListSub.item(i);
+                        String value = subNode.getTextContent().trim();
+                        if(value != null && value.length() > 0){
+                            boolean isConsidered = false;
+                            if(consideredValues != null){
+                                for (int k=0; k < consideredValues.size();k++){
+                                    if(value.equals(consideredValues.get(k))){
+                                        isConsidered = true;
+                                        break;
                                     }
                                 }
-                                if(!isConsidered){
-                                    if(codeListId != null){
-                                        String tmpValue = getValueFromCodeList(codeListId, value);
-                                        if(tmpValue.length() > 0){
-                                            value = tmpValue;
-                                        }
+                            }
+                            if(!isConsidered){
+                                if(codeListId != null){
+                                    String tmpValue = getValueFromCodeList(codeListId, value);
+                                    if(tmpValue.length() > 0){
+                                        value = tmpValue;
                                     }
-                                    list.add(value);
                                 }
+                                list.add(value);
                             }
                         }
                     }
@@ -344,10 +343,10 @@ public class DetailPartPreparer {
                 // we have a URL from JSON
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
                     // we have a different license name from JSON, render it with link
-                    value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, name, finalValue);
+                    value = String.format("%s: <a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, url, name, finalValue);
                 } else {
                     // no license name, render whole text with link
-                    value = String.format("%s: <a target='_blank' href='" + url + "'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, finalValue);
+                    value = String.format("%s: <a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, url, finalValue);
                 }
             } else {
                 // NO URL
@@ -661,15 +660,15 @@ public class DetailPartPreparer {
                     String headXpathExpression = headXpathExpressions.get(j);
                     if(xPathUtils.nodeExists(node, headXpathExpression)){
                         NodeList valueNodeList = xPathUtils.getNodeList(node, headXpathExpression);
-                        String valueConcated = "";
+                        StringBuilder valueConcated = new StringBuilder("");
                         for (int k=0; k<valueNodeList.getLength();k++) {
                             if (valueConcated.length() > 0) {
-                                valueConcated += ";";
+                                valueConcated.append(";");
                             }
                             String value = valueNodeList.item( k ).getTextContent().trim();
                             if(headXpathExpression.endsWith("date")){
                                 value = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
-                                valueConcated += value;
+                                valueConcated.append(value);
                                 break;
                             }
                             if(headCodeList != null){
@@ -678,15 +677,15 @@ public class DetailPartPreparer {
                                     String tmpValue = sysCodeList.getNameByCodeListValue(codelist, value).trim();
                                     if(tmpValue.length() > 0){
                                         value = tmpValue;
-                                        valueConcated += value;
+                                        valueConcated.append(value);
                                         break;
                                     }
                                 }
                             } else {
-                                valueConcated += value;
+                                valueConcated.append(value);
                             }
                         }
-                        row.add(valueConcated);
+                        row.add(valueConcated.toString());
                     }else{
                         row.add("");
                     }
@@ -817,11 +816,11 @@ public class DetailPartPreparer {
     public String getIndividualName(String value) {
         String[] valueSpitter = value.split(",");
         
-        String name = "";
+        StringBuilder name = new StringBuilder("");
         for (int j=valueSpitter.length; 0 < j ;j--){
-            name = name + " " + valueSpitter[j-1];
+            name.append(" " + valueSpitter[j-1]);
         }    
-        return name;
+        return name.toString();
     }
     
     public String timePeriodDurationToTimeAlle(String value){

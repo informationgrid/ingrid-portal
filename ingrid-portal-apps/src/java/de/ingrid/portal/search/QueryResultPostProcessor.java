@@ -123,14 +123,11 @@ public class QueryResultPostProcessor {
             processDSCHit(hit, detail);
         } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher") || tmpString.equals("de.ingrid.iplug.se.seiplug")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
-        } else if (tmpString.equals("de.ingrid.iplug.tamino.taminosearcher")) {
+        } else if (tmpString.equals("de.ingrid.iplug.tamino.taminosearcher") || (plugDescr != null && plugDescr.containsDataType("dsc_other"))) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else if (tmpString.equals("de.ingrid.iplug.opensearch.opensearchplug")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "opensearch");
-        } else if (plugDescr != null && plugDescr.containsDataType("dsc_other")){
-            hit.put(Settings.RESULT_KEY_URL_TYPE, "dsc");
-            hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else {
             hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
         }

@@ -335,7 +335,9 @@ public class UtilsFileHelper {
                 }
             }
         } catch (IOException e) {
-            log.error("File not found: " + path);
+            if (log.isErrorEnabled()) {
+                log.error("File not found: " + path);
+            }
         }
         
         if(versionMap.size() > 0){

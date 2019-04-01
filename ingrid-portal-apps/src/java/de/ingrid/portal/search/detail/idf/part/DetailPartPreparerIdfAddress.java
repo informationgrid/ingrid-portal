@@ -24,6 +24,7 @@ package de.ingrid.portal.search.detail.idf.part;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -80,7 +81,7 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
         return addressTitle;
     }
     
-    public ArrayList<HashMap<String, Object>> getReference(String xpathExpression, boolean isObject) {
+    public List<HashMap<String, Object>> getReference(String xpathExpression, boolean isObject) {
         ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
         
         int limitReferences = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_DETAIL_VIEW_LIMIT_REFERENCES, 100);
@@ -111,10 +112,6 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                 if(isObject){
                     if(xPathUtils.nodeExists(node, "./idf:objectName")){
                         title = xPathUtils.getString(node, "./idf:objectName").trim();
-                    }
-                    
-                    if(xPathUtils.nodeExists(node, "./idf:objectType")){
-                        type = xPathUtils.getString(node, "./idf:objectType").trim();
                     }
                 }else{
                     if(xPathUtils.nodeExists(node, "./idf:addressType")){

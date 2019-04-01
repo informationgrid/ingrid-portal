@@ -31,6 +31,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamSource;
@@ -124,8 +125,9 @@ public class HelpServlet extends HttpServlet {
                 System.setProperty("javax.xml.transform.TransformerFactory", "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
                 factory = TransformerFactory.newInstance();
             }
-
+            
             try {
+                factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
                 StreamSource stylesheet = new StreamSource(getServletContext().getResourceAsStream(xslFileName));
                 Transformer transformer = factory.newTransformer(stylesheet);
                 DocumentResult result = new DocumentResult();

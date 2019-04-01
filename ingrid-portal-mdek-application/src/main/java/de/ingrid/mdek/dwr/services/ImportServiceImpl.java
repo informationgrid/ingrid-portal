@@ -158,6 +158,7 @@ public class ImportServiceImpl {
             case UNKNOWN:
                 log.debug("Unknown file type. Assuming uncompressed xml data.");
                 // Fall through
+                break;
             case XML:
                 
             	IngridDocument result = analyzeXMLData( importDataStream, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );

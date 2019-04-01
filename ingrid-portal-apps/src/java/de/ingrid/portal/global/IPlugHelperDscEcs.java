@@ -426,16 +426,22 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	String[] types = hitTypes.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
         	
     	if (hitObjIds.length > 1) {
-    		log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
+    	    if(log.isErrorEnabled()) {
+    	        log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
+    	    }
     		return null;
     	}
     	if (fromObjIds.length != types.length ||
         	fromObjIds.length != toObjIds.length) {
-    		log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
+    	    if(log.isErrorEnabled()) {
+    	        log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
+    	    }
     		return null;
     	}
     	if (fromObjIds.length == 0) {
-    		log.warn("NO from Relation Data in HIT !");
+    	    if(log.isWarnEnabled()) {
+    	        log.warn("NO from Relation Data in HIT !");
+    	    }
     		return null;
     	}
         	
