@@ -36,7 +36,7 @@ import javax.portlet.PortletRequest;
  */
 public class AdminComponentUpdateForm extends ActionForm {
 
-	private final static Logger log = LoggerFactory.getLogger(AdminComponentUpdateForm.class);
+	private static final Logger log = LoggerFactory.getLogger(AdminComponentUpdateForm.class);
 
 	private static final long serialVersionUID = 8335389649101265303L;
 
@@ -125,28 +125,16 @@ public class AdminComponentUpdateForm extends ActionForm {
 				allOk = false;
 			}
 
-			if (hasInput(FIELD_CONTACT_EMAILS_NEW)) {
-                if (!Utils.isValidEmailAddress(getInput(FIELD_CONTACT_EMAILS_NEW))) {
-                    setError(FIELD_CONTACT_EMAILS_NEW, "component.monitor.form.error.invalid.email");
-                    allOk = false;
-                }
-			}
-			
+			if (hasInput(FIELD_CONTACT_EMAILS_NEW) && !Utils.isValidEmailAddress(getInput(FIELD_CONTACT_EMAILS_NEW))) {
+                setError(FIELD_CONTACT_EMAILS_NEW, "component.monitor.form.error.invalid.email");
+                allOk = false;
+            }
 			if (getInput(FIELD_TYPE).equals("OTHER") && !getInput(FIELD_ANY_DISTRIBUTIONS).equals("false")) {
 			    setError(FIELD_TYPE, "component.monitor.form.error.missing.type");
                 allOk = false;
 			}
             
-			/*String[] emails = this.getInputAsArray(FIELD_CONTACT_EMAILS);
-			if (emails != null) {
-				for (int i = 0; i < emails.length; i++) {
-					if (!Utils.isValidEmailAddress(emails[i])) {
-						setError(FIELD_CONTACT_EMAILS + (i+1), "component.monitor.form.error.invalid.email");
-						allOk = false;
-					}
-				}
-			}*/
-		} catch (Throwable t) {
+		} catch (Exception t) {
 			if (log.isErrorEnabled()) {
 				log.error("Error validating input.", t);
 			}

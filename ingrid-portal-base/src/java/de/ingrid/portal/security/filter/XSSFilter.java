@@ -88,19 +88,15 @@ public class XSSFilter implements Filter {
         chain.doFilter(request, response);
     }
 
-    private boolean isInvalid(String value)
-    {
-    	if (value == null) {
-    		return false;
+    private boolean isInvalid(String value){
+        boolean isInvalid = false;
+    	if (value != null) {
+        	String decodedValue = xssUtil.urlDecode(value);
+    		if (xssUtil.containsXSS(decodedValue)) {
+    		    isInvalid = true;
+    		}
     	}
-    	
-    	String decodedValue = xssUtil.urlDecode(value);
-
-		if (xssUtil.containsXSS(decodedValue)) {
-			return true;
-		}
-		
-		return false;
+		return isInvalid;
     }
 
 }

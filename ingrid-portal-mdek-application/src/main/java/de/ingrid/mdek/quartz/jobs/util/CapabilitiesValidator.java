@@ -29,7 +29,7 @@ import de.ingrid.mdek.quartz.jobs.util.URLState.State;
 
 public class CapabilitiesValidator extends URLValidator {
 
-	private final static Logger log = Logger.getLogger(CapabilitiesValidator.class);	
+	private static final Logger log = Logger.getLogger(CapabilitiesValidator.class);	
 
 	public CapabilitiesValidator(HttpClient httpClient, URLState urlState) {
 	    super(httpClient, urlState);

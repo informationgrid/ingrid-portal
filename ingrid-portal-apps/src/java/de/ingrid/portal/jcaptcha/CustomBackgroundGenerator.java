@@ -31,8 +31,6 @@ import java.awt.image.BufferedImage;
 
 public class CustomBackgroundGenerator extends UniColorBackgroundGenerator {
 
-	private BufferedImage backround;
-
 	private ColorGenerator colorGenerator = null;
 
 	public CustomBackgroundGenerator(Integer width, Integer height) {
@@ -57,8 +55,9 @@ public class CustomBackgroundGenerator extends UniColorBackgroundGenerator {
 	/* (non-Javadoc)
 	 * @see com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator#getBackground()
 	 */
+	@Override
 	public BufferedImage getBackground() {
-		backround = new BufferedImage(getImageWidth(), getImageHeight(),
+	    BufferedImage backround = new BufferedImage(getImageWidth(), getImageHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics2D pie = (Graphics2D) backround.getGraphics();
 		Color color = colorGenerator.getNextColor();

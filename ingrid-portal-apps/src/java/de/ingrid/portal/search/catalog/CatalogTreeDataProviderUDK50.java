@@ -34,7 +34,7 @@ import de.ingrid.utils.PlugDescription;
  * @author joachim@wemove.com
  *
  */
-public class CatalogTreeDataProvider_UDK_5_0 implements CatalogTreeDataProvider {
+public class CatalogTreeDataProviderUDK50 implements CatalogTreeDataProvider {
 
 	/* (non-Javadoc)
 	 * @see de.ingrid.portal.search.catalog.CatalogTreeDataProvider#isCorrupt(de.ingrid.utils.PlugDescription)
@@ -58,7 +58,7 @@ public class CatalogTreeDataProvider_UDK_5_0 implements CatalogTreeDataProvider 
 	}
 
 	public boolean hasChildren(String objUuid, String plugId, String plugType) {
-		return (IPlugHelperDscEcs.getSubDocs(objUuid, plugId, plugType, null).size() > 0);
+		return (!IPlugHelperDscEcs.getSubDocs(objUuid, plugId, plugType, null).isEmpty());
 	}
 
 }

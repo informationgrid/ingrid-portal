@@ -27,6 +27,7 @@ package de.ingrid.portal.search.detail;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -48,13 +49,13 @@ public class DetailDataPreparerFactory {
 	private RenderResponse response;
 	private HashMap replacementFields;
 	
-	public DetailDataPreparerFactory(Context context, String iPlugId, List dateFields, RenderRequest request, RenderResponse response,HashMap replacementFields) {
+	public DetailDataPreparerFactory(Context context, String iPlugId, List dateFields, RenderRequest request, RenderResponse response,Map replacementFields) {
 		this.context = context;
 		this.iplugId = iPlugId;
 		this.dateFields = dateFields;
 		this.request = request;
 		this.response = response;
-		this.replacementFields = replacementFields;
+		this.replacementFields = (HashMap) replacementFields;
 	}
 	
 	

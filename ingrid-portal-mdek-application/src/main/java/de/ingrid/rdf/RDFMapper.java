@@ -40,7 +40,7 @@ import de.ingrid.external.om.impl.TreeTermImpl;
 public class RDFMapper {
     
     public List<TreeTerm> mapToTreeTerms(List<ModelWrapper> models) {
-        List<TreeTerm> resultList = new ArrayList<TreeTerm>();
+        List<TreeTerm> resultList = new ArrayList<>();
         
         for (ModelWrapper model : models) {
             TreeTerm child = mapTreeTerm(model.getResource());
@@ -51,7 +51,7 @@ public class RDFMapper {
     }
     
     public List<TreeTerm> mapSearchToTreeTerms(Model model) {
-        List<TreeTerm> resultList = new ArrayList<TreeTerm>();
+        List<TreeTerm> resultList = new ArrayList<>();
         
         ResIterator l = model.listSubjects();
 		while (l.hasNext()) {
@@ -67,18 +67,13 @@ public class RDFMapper {
         treeTerm.setId(RDFUtils.getId(res));
         treeTerm.setName(RDFUtils.getName(res));
         treeTerm.setType(Term.TermType.DESCRIPTOR);
-        //addParentInfo(treeTerm, res);
 		return treeTerm;
 	}
 
     // always add a parent for RDF terms
-	private void addParentInfo(TreeTerm treeTerm, Resource resource) {
-        //RDFNode parentNode = RDFUtils.getParent(resource.getModel());
-        //if (parentNode != null) {
+	private void addParentInfo(TreeTerm treeTerm) {
             TreeTerm parentTreeTerm = new TreeTermImpl();
-        //    parentTreeTerm.setId(parentNode.toString());
             treeTerm.addParent(parentTreeTerm);
-        //}
         
     }
 
@@ -87,7 +82,7 @@ public class RDFMapper {
         treeTerm.setId(resource.toString());
         treeTerm.setName(RDFUtils.getName(resource));
         treeTerm.setType(Term.TermType.DESCRIPTOR);
-        addParentInfo(treeTerm, resource);
+        addParentInfo(treeTerm);
         
         // check for children (simple check)
         // needed to presentation ("plus"-sign in front of node)
@@ -104,7 +99,7 @@ public class RDFMapper {
 
 
 	public List<TreeTerm> mapHierarchyToTreeTerms(ModelWrapper parent) {
-		List<TreeTerm> resultList = new ArrayList<TreeTerm>();
+		List<TreeTerm> resultList = new ArrayList<>();
 		NodeIterator children = RDFUtils.getChildren(parent.getModel());
 		while (children.hasNext()) {
 			TreeTerm treeTerm = new TreeTermImpl();
@@ -133,7 +128,7 @@ public class RDFMapper {
 	}
 	
 	public List<TreeTerm> mapHierarchyRootToTreeTerms(List<ModelWrapper> parents) {
-		List<TreeTerm> resultList = new ArrayList<TreeTerm>();
+		List<TreeTerm> resultList = new ArrayList<>();
 		for (ModelWrapper parent : parents) {
 				
 			ResIterator children = RDFUtils.getTopConceptsOf(parent.getModel());

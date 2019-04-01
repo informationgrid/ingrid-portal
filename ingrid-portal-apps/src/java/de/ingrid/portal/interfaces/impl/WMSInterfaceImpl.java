@@ -58,9 +58,9 @@ import java.util.*;
  */
 public class WMSInterfaceImpl implements WMSInterface {
 
-    private final static Logger log = LoggerFactory.getLogger(WMSInterfaceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(WMSInterfaceImpl.class);
 
-    private final static String LANGUAGE_PARAM = "lang";
+    private static final String LANGUAGE_PARAM = "lang";
 
     private static WMSInterfaceImpl instance = null;
     
@@ -73,11 +73,9 @@ public class WMSInterfaceImpl implements WMSInterface {
             try {
                 instance = new WMSInterfaceImpl();
             } catch (Exception e) {
-                log.error("Error initiating the WMS interface.");
-                e.printStackTrace();
+                log.error("Error initiating the WMS interface.", e);
             }
         }
-
         return instance;
     }
 
@@ -106,10 +104,8 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             EntityResolver resolver = new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId) {
-                    if (systemId.indexOf("portalCommunication.dtd") > 0) {
-
+                    if (systemId.indexOf("portalCommunication.dtd") > -1) {
                         InputStream in = getClass().getResourceAsStream("wms_interface.dtd");
-
                         return new InputSource(in);
                     }
                     return null;
@@ -170,7 +166,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             EntityResolver resolver = new EntityResolver() {
                 public InputSource resolveEntity(String publicId, String systemId) {
-                    if (systemId.indexOf("portalCommunication.dtd") > 0) {
+                    if (systemId.indexOf("portalCommunication.dtd") > -1) {
 
                         InputStream in = getClass().getResourceAsStream("wms_interface.dtd");
 
@@ -185,7 +181,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
             String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
             
-            if (urlStr.indexOf("?") > 0) {
+            if (urlStr.indexOf('?') > -1) {
             	urlStr = urlStr.concat("&PREQUEST=getWMSSearch").concat("&PHPSESSID=" + sessionID);
             } else {
             	urlStr = urlStr.concat("?PREQUEST=getWMSSearch").concat("&PHPSESSID=" + sessionID);
@@ -245,12 +241,13 @@ public class WMSInterfaceImpl implements WMSInterface {
      * @return
      */
     public boolean hasWMSViewer() {
+        boolean hasWMSViewer = false;
         String viewerURL = config.getString("display_viewer_url", null);
         if (viewerURL != null && viewerURL.trim().length() > 0) {
-            return true;
+            hasWMSViewer = true;
         }
 
-        return false;
+        return hasWMSViewer;
     }
 
     /**
@@ -265,7 +262,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             viewerURL = config.getString("nojs_display_viewer_url",
                     "http://localhost/mapbender/frames/wms_viewer_nojs.php");
         }
-        if (viewerURL.indexOf("?") > 0) {
+        if (viewerURL.indexOf('?') > -1) {
             viewerURL = viewerURL.concat("&PHPSESSID=" + sessionId);
         } else {
             viewerURL = viewerURL.concat("?PHPSESSID=" + sessionId);
@@ -290,7 +287,7 @@ public class WMSInterfaceImpl implements WMSInterface {
             searchURL = config.getString("nojs_display_search_url",
                     "http://localhost/mapbender/frames/wms_search_nojs.php");
         }
-        if (searchURL.indexOf("?") > 0) {
+        if (searchURL.indexOf('?') > -1) {
         	searchURL = searchURL.concat("&PHPSESSID=" + sessionId);
         } else {
         	searchURL = searchURL.concat("?PHPSESSID=" + sessionId);
@@ -322,16 +319,16 @@ public class WMSInterfaceImpl implements WMSInterface {
         WMSServiceDescriptor service;
         String serviceURL;
         String serviceName;
-        StringBuffer resultB;
+        StringBuilder resultB;
         if (isViewer) {
-            resultB = new StringBuffer(getWMSViewerURL(sessionId, language));
+            resultB = new StringBuilder(getWMSViewerURL(sessionId, language));
         } else {
-            resultB = new StringBuffer(this.getWMSSearchURL(sessionId, language));
+            resultB = new StringBuilder(this.getWMSSearchURL(sessionId, language));
         }
         boolean prequestAdded = false;
 
         // check for invalid service parameter
-        if (services == null || services.size() == 0) {
+        if (services == null || services.isEmpty()) {
             return resultB.toString();
         }
 
@@ -354,7 +351,7 @@ public class WMSInterfaceImpl implements WMSInterface {
                         resultB.append("&wmsName" + (i + 1) + "=" + URLEncoder.encode(serviceName, "UTF-8"));
                     }
                     if (mapBenderVersion.equals(MAPBENDER_VERSION_2_1)) {
-                    	serviceURL.replace('&', ',');
+                        resultB.append(serviceURL.replace('&', ','));
                     }
                     resultB.append("&wms" + (i + 1) + "=" + URLEncoder.encode(serviceURL, "UTF-8")+ "&addwms_zoomToExtent=1&addwms_showWMS=10");
                 
@@ -402,7 +399,7 @@ public class WMSInterfaceImpl implements WMSInterface {
         
         try {
             String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
-            if (urlStr.indexOf("?") > 0) {
+            if (urlStr.indexOf('?') > -1) {
             	urlStr = urlStr.concat("&PREQUEST=getWMC").concat("&PHPSESSID=" + sessionId);
             } else {
             	urlStr = urlStr.concat("?PREQUEST=getWMC").concat("&PHPSESSID=" + sessionId);
@@ -460,9 +457,7 @@ public class WMSInterfaceImpl implements WMSInterface {
                 throw new Exception("MapBender Server Error: session Id (" + sessionId + ") from request and session Id (" + sessionMapBender + ") from MapBender are not the same.");
             }
             
-            String urlEncodedWmc = document.valueOf("//portal_communication/wmc");
-        	return urlEncodedWmc;
-
+            return document.valueOf("//portal_communication/wmc");
         } catch (Exception e) {
             log.error(e.toString());
         }
@@ -471,7 +466,7 @@ public class WMSInterfaceImpl implements WMSInterface {
 
 	public void setWMCDocument(String wmc, String sessionId) {
         String urlStr = config.getString("interface_url", "http://localhost/mapbender/php/mod_portalCommunication_gt.php");
-        if (urlStr.indexOf("?") > 0) {
+        if (urlStr.indexOf('?') > -1) {
         	urlStr = urlStr.concat("&PREQUEST=setWMC").concat("&PHPSESSID=" + sessionId);
         } else {
         	urlStr = urlStr.concat("?PREQUEST=setWMC").concat("&PHPSESSID=" + sessionId);

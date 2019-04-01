@@ -60,17 +60,17 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
     private static final String XPATH_EXP_WFS_ABSTRACT = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:Abstract";
     private static final String XPATH_EXP_WFS_VERSION = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
     
-    private final static String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_CAPABILITIES_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_DESCRIBE_FEATURE_TYPE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeFeatureType']/ows11:DCP[1]/ows11:HTTP[1]/Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_GML_OBJECT_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_GET_GML_OBJECT_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetGmlObject']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_LOCK_FEATURE_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_LOCK_FEATURE_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='LockFeature']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_TRANSACTION_GET_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WFS_OP_TRANSACTION_POST_HREF = "/wfs20:WFS_Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='Transaction']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
     private static final String XPATH_EXP_WFS_FEES = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:Fees";
     private static final String XPATH_EXP_WFS_ACCESS_CONSTRAINTS = "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:AccessConstraints";
     private static final String XPATH_EXP_WFS_ONLINE_RESOURCE = "/wfs20:WFS_Capabilities/ows11:ServiceProvider/ows11:ServiceContact/ows11:ContactInfo/ows11:OnlineResource";
@@ -83,7 +83,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
     public Wfs200CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wfs200NamespaceContext()), syslistCache);
         
-        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "1.1.0", 1 );
         versionSyslistMap.put( "2.0", 2 );
         versionSyslistMap.put( "2.0.0", 2 );
@@ -140,7 +140,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
         result.setAddress(getAddress(doc));
         
         // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = mapToOperationBean(doc,
@@ -150,7 +150,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("VERSION=" + version, "Request version", "", true, false));
             paramList.add(new OperationParameterBean("SERVICE=WFS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
@@ -167,7 +167,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             describeFeatureTypeOp.setName("DescribeFeatureType");
             describeFeatureTypeOp.setMethodCall("DescribeFeatureType");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=DescribeFeatureType", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("TYPENAME", "A comma separated list of feature types to describe. If no value is specified that is to be interpreted as all feature types", "", true, false));
             paramList.add(new OperationParameterBean("OUTPUTFORMAT", "The output format to use to describe feature types. text/xml; subtype=gml/3.1.1 must be supported. Other output formats, such as DTD are possible", "", true, false));
@@ -183,7 +183,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getFeatureOp.setName("GetFeature");
             getFeatureOp.setMethodCall("GetFeature");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("outputFormat=GML2", "This value is kept for backward compatability and indicates that an XML instance document must be generated that validates against a GML2 application schema", "", true, false));
             paramList.add(new OperationParameterBean("outputFormat=text/xml; subtype=gml/2.1.2", "Same as GML2", "", true, false));
             paramList.add(new OperationParameterBean("outputFormat=text/xml; subtype=gml/3.1.1; subtype=gml/2.1.2", "This value indicates that an XML instance document must be generated that validates against a GML3 application schema. This is the default values of the outputFormat attribute if the attribute is not specified in the GetFeature request", "", true, false));
@@ -202,7 +202,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             getGmlObjectOp.setName("GetGmlObject");
             getGmlObjectOp.setMethodCall("GetGmlObject");
 
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=[GetGmlObject]", "The name of the WFS request", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKDEPTH", "The depth to which nested property XLink linking element locator attribute (href) XLinks are traversed and resolved if possible. The range of valid values consists of positive integers plus \"*\" for unlimited", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKEXPIRY", "The number of minutes a WFS should wait to receive a response to a nested GetGmlObject request.. If no value is specified then the period is implementation dependent", "", true, false));
@@ -220,7 +220,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             lockFeatureOp.setName("LockFeature");
             lockFeatureOp.setMethodCall("LockFeature");
 
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=[LockFeature]", "The name of the WFS request", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKDEPTH", "The depth to which nested property XLink linking element locator attribute (href) XLinks are traversed and resolved if possible. The range of valid values consists of positive integers plus \"*\" for unlimited", "", false, false));
             paramList.add(new OperationParameterBean("TRAVERSEXLINKEXPIRY", "The number of minutes a WFS should wait to receive a response to a nested GetGmlObject request.. If no value is specified then the period is implementation dependent", "", true, false));
@@ -238,7 +238,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             transactionOp.setName("Transaction");
             transactionOp.setMethodCall("Transaction");
 
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("REQUEST=Transaction", "The name of the WFS request", "", false, false));
             paramList.add(new OperationParameterBean("OPERATION=Delete", "Transaction operation to execute. Currently only Delete is defined", "", false, false));
             paramList.add(new OperationParameterBean("TYPENAME (Optional if FEATUREID is specified.)", "A list of feature types upon which to apply the operation", "", false, false));
@@ -261,7 +261,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
      * @return
      */
     private List<LocationBean> getBoundingBoxesFromLayers(Document doc) {
-        List<LocationBean> bboxes = new ArrayList<LocationBean>();
+        List<LocationBean> bboxes = new ArrayList<>();
         NodeList layers = xPathUtils.getNodeList(doc, "/wfs20:WFS_Capabilities/wfs20:FeatureTypeList/wfs20:FeatureType");
         for (int i = 0; i < layers.getLength(); i++) {
             Node layer = layers.item(i);
@@ -276,10 +276,7 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
             box.setLongitude2(Double.valueOf( upper[1] ));
             
             // add a fallback for the name, since it's mandatory
-            String name = xPathUtils.getString(layer, "wfs20:Name");
             String title = xPathUtils.getString(layer, "wfs20:Title");
-            if (name == null) name = title; 
-            if (name == null) name ="UNKNOWN";
             
             box.setName(title);
             // shall be a free spatial reference, but needs an ID to check for duplications!
@@ -296,12 +293,12 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
      * @return
      */
     private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
-        List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
+        List<SpatialReferenceSystemBean> result = new ArrayList<>();
         String[] crs = xPathUtils.getStringArray(doc, "/wfs20:WFS_Capabilities/wfs20:FeatureTypeList/wfs20:FeatureType/wfs20:DefaultCRS");
         String[] crsOther = xPathUtils.getStringArray(doc, "/wfs20:WFS_Capabilities/wfs20:FeatureTypeList/wfs20:FeatureType/wfs20:OtherCRS");
         String[] crsAll = (String[]) ArrayUtils.addAll( crs, crsOther );
         
-        List<String> uniqueCrs = new ArrayList<String>();
+        List<String> uniqueCrs = new ArrayList<>();
         
         // check codelists for matching entryIds
         for (String item : crsAll) {

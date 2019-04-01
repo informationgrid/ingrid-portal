@@ -44,7 +44,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class IBusQueryResultIterator implements Iterator<IngridHit> {
 
-    private final static Log log = LogFactory.getLog(IBusQueryResultIterator.class);
+    private static final Log log = LogFactory.getLog(IBusQueryResultIterator.class);
 
     private IngridQuery q;
     private String[] requestedFields;
@@ -95,20 +95,22 @@ public class IBusQueryResultIterator implements Iterator<IngridHit> {
 
     @Override
     public boolean hasNext() {
+        boolean hasNext = false;
         // make sure we have hits
         if (resultBuffer == null) {
             resultBuffer = fetchHits(resultPageCursor);
         }
-        if (resultBuffer.getHits() != null && resultBufferCursor >= resultBuffer.getHits().length && (resultCursor + this.startHit) < resultBuffer.length() && resultCursor < maxHits) {
-            resultPageCursor++;
-            resultBuffer = fetchHits(resultPageCursor);
-            resultBufferCursor = 0;
+        if (resultBuffer != null) {
+            if (resultBuffer.getHits() != null && resultBufferCursor >= resultBuffer.getHits().length && (resultCursor + this.startHit) < resultBuffer.length() && resultCursor < maxHits) {
+                resultPageCursor++;
+                resultBuffer = fetchHits(resultPageCursor);
+                resultBufferCursor = 0;
+            }
+            if (resultBuffer != null && (resultCursor + this.startHit) < resultBuffer.length() && resultBuffer.length() > 0 && resultCursor < maxHits) {
+                return true;
+            }
         }
-        if ((resultCursor + this.startHit) < resultBuffer.length() && resultBuffer.length() > 0 && resultCursor < maxHits) {
-            return true;
-        } else {
-            return false;
-        }
+        return hasNext;
     }
 
     @Override

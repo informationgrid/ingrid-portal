@@ -23,6 +23,7 @@
 package de.ingrid.portal.om;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IngridFacet {
 
@@ -71,11 +72,11 @@ public class IngridFacet {
     public void setQuery(String query) {
         this.query = query;
     }
-    public ArrayList<IngridFacet> getFacets() {
+    public List<IngridFacet> getFacets() {
         return facets;
     }
-    public void setFacets(ArrayList<IngridFacet> facets) {
-        this.facets = facets;
+    public void setFacets(List<IngridFacet> facets) {
+        this.facets = (ArrayList<IngridFacet>) facets;
     }
     public String getId() {
         return id;

@@ -34,7 +34,7 @@ import de.ingrid.mdek.services.persistence.db.IGenericDao;
 
 public class HelpServiceImpl {
 
-	private final static Logger log = Logger.getLogger(HelpServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(HelpServiceImpl.class);	
 
 	// Injected by Spring
 	private IDaoFactory daoFactory;
@@ -81,26 +81,6 @@ public class HelpServiceImpl {
 		return new ArrayList(helpList);
 	}
 
-	private HelpMessage testPersistHelpMessage(HelpMessage m) {
-		try {
-			IGenericDao<IEntity> dao = daoFactory.getDao(HelpMessage.class);
-
-			dao.beginTransaction();
-			dao.makePersistent(m);
-			dao.commitTransaction();
-
-			dao.beginTransaction();
-			HelpMessage helpMessage = (HelpMessage) dao.getById(m.getId());
-			dao.commitTransaction();
-
-			return helpMessage;
-
-		} catch (Exception e) {
-			log.error("Error: ", e);
-			return null;
-		}		
-	}
-	
 	public IDaoFactory getDaoFactory() {
 		return daoFactory;
 	}

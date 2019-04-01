@@ -24,7 +24,6 @@ package de.ingrid.portal.hibernate;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -39,7 +38,7 @@ public class HibernateUtil {
         try {
             // Create the SessionFactory
             sessionFactory = new Configuration().configure().buildSessionFactory();
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             log.error("Initial SessionFactory creation failed.", ex);
             throw new ExceptionInInitializerError(ex);
         }
@@ -47,7 +46,7 @@ public class HibernateUtil {
 
     public static final ThreadLocal session = new ThreadLocal();
 
-    public static Session currentSession() throws HibernateException {
+    public static Session currentSession() {
         Session s = (Session) session.get();
         // Open a new Session, if this Thread has none yet
         if (s == null) {
@@ -57,7 +56,7 @@ public class HibernateUtil {
         return s;
     }
 
-    public static void closeSession() throws HibernateException {
+    public static void closeSession() {
         Session s = (Session) session.get();
         session.set(null);
         if (s != null)

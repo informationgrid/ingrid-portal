@@ -39,8 +39,8 @@ public class AddressSearchResultBean {
 	public AddressSearchResultBean() {
 		this.numHits = 0;
 		this.totalNumHits = 0;
-		this.resultList = new ArrayList<MdekAddressBean>();
-		this.additionalData = new HashMap<String, String>();
+		this.resultList = new ArrayList<>();
+		this.additionalData = new HashMap<>();
 	}
 
 	public long getNumHits() {

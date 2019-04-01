@@ -49,13 +49,14 @@ import de.ingrid.portal.global.Utils;
  */
 public class LanguageSwitchPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(LanguageSwitchPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(LanguageSwitchPortlet.class);
 
     /*
      * (non-Javadoc)
      * 
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
@@ -66,6 +67,7 @@ public class LanguageSwitchPortlet extends GenericVelocityPortlet {
      * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -91,6 +93,7 @@ public class LanguageSwitchPortlet extends GenericVelocityPortlet {
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
     	// when the language is switched the variable "lang" will be submitted as a 

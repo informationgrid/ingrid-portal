@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
 
-    private final static Logger log = LoggerFactory.getLogger(DBAnniversaryInterfaceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(DBAnniversaryInterfaceImpl.class);
 
     private static AnniversaryInterface instance = null;
 
@@ -53,14 +53,13 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
             try {
                 instance = new DBAnniversaryInterfaceImpl();
             } catch (Exception e) {
-                log.error("Error initiating the WMS interface.");
-                e.printStackTrace();
+                log.error("Error initiating the WMS interface.", e);
             }
         }
         return instance;
     }
 
-    private DBAnniversaryInterfaceImpl() throws Exception {
+    private DBAnniversaryInterfaceImpl() {
         super();
     }
 
@@ -90,8 +89,8 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
             
             tx = session.beginTransaction();
             List anniversaryList = session.createCriteria(IngridAnniversary.class)
-                    .add(Restrictions.eq("dateFromDay", new Integer(fromCal.get(Calendar.DAY_OF_MONTH))))
-                    .add(Restrictions.eq("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1)))
+                    .add(Restrictions.eq("dateFromDay", fromCal.get(Calendar.DAY_OF_MONTH)))
+                    .add(Restrictions.eq("dateFromMonth", fromCal.get(Calendar.MONTH) + 1))
                     .add(Restrictions.eq("language", lang))
                     .list();
             tx.commit();
@@ -103,7 +102,7 @@ public class DBAnniversaryInterfaceImpl implements AnniversaryInterface {
 
                 tx = session.beginTransaction();
                 anniversaryList = session.createCriteria(IngridAnniversary.class)
-                        .add(Restrictions.between("dateFromMonth", new Integer(fromCal.get(Calendar.MONTH) + 1), new Integer(toCal.get(Calendar.MONTH) + 1)))
+                        .add(Restrictions.between("dateFromMonth", fromCal.get(Calendar.MONTH) + 1, toCal.get(Calendar.MONTH) + 1))
                         .add(Restrictions.sqlRestriction("length({alias}.date_from) > 4"))
                         .add(Restrictions.eq("language", lang))
                         .list();

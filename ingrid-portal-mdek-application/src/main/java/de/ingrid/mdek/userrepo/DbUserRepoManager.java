@@ -46,7 +46,7 @@ public class DbUserRepoManager implements UserRepoManager {
         List<RepoUser> userList = (List) dao.findAll();  // Can't cast to List<RepoUser>
         dao.commitTransaction();
         
-        List<Map<String,String>> users = new ArrayList<Map<String,String>>();
+        List<Map<String,String>> users = new ArrayList<>();
         for (RepoUser repoUser : userList) {
             Map info = new HashMap<String, String>();
             info.put("surname", repoUser.getSurname());
@@ -68,7 +68,7 @@ public class DbUserRepoManager implements UserRepoManager {
         List<RepoUser> userList = (List) dao.findByExample(sample);  // Can't cast to List<RepoUser>
         dao.commitTransaction();
         
-        List<String> users = new ArrayList<String>();
+        List<String> users = new ArrayList<>();
         for (RepoUser repoUser : userList) {
             users.add(repoUser.getLogin());
         }

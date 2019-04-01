@@ -112,7 +112,7 @@ define([
                     else
                         this.service.getRootTopics(userLocale, serviceCallbacks);
                 } else {
-                    this.service.getSubTopics(this.rootUrl, query.parent, 2, 'down', userLocale, {
+                    this.service.getSubTopics(query.parent, 2, 'down', userLocale, {
                         preHook: _this.showLoadingZone,
                         postHook: _this.hideLoadingZone,
                         callback: function(res) {
@@ -169,7 +169,7 @@ define([
                 var def = new Deferred();
                 var treePane = this.treeWidget;
                 var _this = this;
-                this.service.getSubTopicsWithRoot(this.rootUrl, topicID, 0, 'up', userLocale, {
+                this.service.getSubTopicsWithRoot(topicID, 0, 'up', userLocale, {
                     preHook: function() {
                         _this.showLoadingZone();
                     },

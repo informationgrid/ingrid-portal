@@ -26,11 +26,10 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 
@@ -38,13 +37,14 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
 
     private static final long serialVersionUID = 432942374839749234L;
 
-    private final static Logger log = LoggerFactory.getLogger(IngridPortalSchedulerServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(IngridPortalSchedulerServlet.class);
 
-    Scheduler sched = null;
+    private static Scheduler sched = null;
 
     
-    public synchronized final void init(ServletConfig config) throws ServletException {
-        synchronized (this.getClass()) {
+    @Override
+    public final synchronized void init(ServletConfig config) throws ServletException {
+        synchronized (IngridPortalSchedulerServlet.class) {
             super.init(config);
             log.info("IngridPortalSchedulerServlet startet");
 
@@ -54,21 +54,6 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
             } catch (Exception e) {
                 log.error("Failed to start iBus communication.", e);
             }
-            
-            /*
-             * comment out because there is only one quartz instance in the future.
-             * See IngridComponentMonitorStartListener.java for initialization.
-             * 
-             *             try {
-                StdSchedulerFactory sf = new StdSchedulerFactory();
-                sf.initialize("quartz.properties");
-                sched = sf.getScheduler();
-                sched.start();
-                
-            } catch (SchedulerException e) {
-                log.error("Failed to start scheduler.", e);
-            }
-            */
         }
     }
 
@@ -76,6 +61,7 @@ public class IngridPortalSchedulerServlet extends HttpServlet {
     /**
      * The <code>Servlet</code> destroy method.
      */
+    @Override
     public final void destroy()
     {
         try {

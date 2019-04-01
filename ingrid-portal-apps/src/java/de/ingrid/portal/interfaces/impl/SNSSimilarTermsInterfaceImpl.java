@@ -48,7 +48,7 @@ import java.util.Locale;
  */
 public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
-    private final static Logger log = LoggerFactory.getLogger(SNSSimilarTermsInterfaceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(SNSSimilarTermsInterfaceImpl.class);
 
     private static SimilarTermsInterface instance = null;
 
@@ -57,21 +57,20 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
             try {
                 instance = new SNSSimilarTermsInterfaceImpl();
             } catch (Exception e) {
-                log.error("Error initiating the SNSSimilarTerms interface.");
-                e.printStackTrace();
+                log.error("Error initiating the SNSSimilarTerms interface.", e);
             }
         }
         return instance;
     }
 
-    private SNSSimilarTermsInterfaceImpl() throws Exception {
+    private SNSSimilarTermsInterfaceImpl() {
         super();
     }
 
     public IngridHit[] getTopicsFromText(String term, String filter, Locale language) {
         try {
         	// enclose term in '"' if the term has a space, otherwise no results will be returned from SNS
-        	if (term.indexOf(" ") != -1 && !term.startsWith("\"") && !term.endsWith("\"")) {
+        	if (term.indexOf(' ') != -1 && !term.startsWith("\"") && !term.endsWith("\"")) {
         		term = "\"".concat(term).concat("\"");
         	}
         	IngridQuery query = QueryStringParser.parse(term);
@@ -256,9 +255,7 @@ public class SNSSimilarTermsInterfaceImpl implements SimilarTermsInterface {
 
             IBUSInterface iBus = IBUSInterfaceImpl.getInstance();
 
-            IngridHitDetail detail = iBus.getDetail(hit, query, null);
-
-            return detail;
+            return iBus.getDetail(hit, query, null);
         } catch (Exception e) {
             log.error("Exception while querying sns for detailed topic.", e);
             return null;

@@ -25,6 +25,7 @@ package de.ingrid.portal.search.detail.idf.part;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -45,35 +46,35 @@ public class DetailPartPreparerIdfKml extends DetailPartPreparer{
         this.localTagName = "kml";
     }
     
-    public HashMap getKML(){
+    public Map getKML(){
         HashMap element = new HashMap();
         if (rootNode != null) {
-            ArrayList<Object> elementsKml = new ArrayList<Object>();
+            ArrayList<Object> elementsKml = new ArrayList<>();
             HashMap<String, Object> kmlDocument;
-            Node childNode = XPathUtils.getNode(rootNode, "./kml:Document");
+            Node childNode = xPathUtils.getNode(rootNode, "./kml:Document");
             
-            kmlDocument = new HashMap<String, Object>();
-            List<HashMap<String, String>> kmlDocumentPlacemark = new ArrayList<HashMap<String, String>>();
-            String docName =   XPathUtils.getString(childNode,"kml:name").trim();
+            kmlDocument = new HashMap<>();
+            List<HashMap<String, String>> kmlDocumentPlacemark = new ArrayList<>();
+            String docName =   xPathUtils.getString(childNode,"kml:name").trim();
             kmlDocument.put("kml_name", docName);
-            boolean nodeExistPlacemark = XPathUtils.nodeExists(childNode, "kml:Placemark");
+            boolean nodeExistPlacemark = xPathUtils.nodeExists(childNode, "kml:Placemark");
             if(nodeExistPlacemark){
-                NodeList nodeListPlacemark = XPathUtils.getNodeList(childNode, "kml:Placemark");
+                NodeList nodeListPlacemark = xPathUtils.getNodeList(childNode, "kml:Placemark");
                 for(int j=0; j<nodeListPlacemark.getLength();j++){
                     Node nodePlacemark = nodeListPlacemark.item(j);
-                    HashMap<String, String> placemark = new HashMap<String, String>();
-                    String placemarkName = XPathUtils.getString(nodePlacemark, "kml:name").trim();
+                    HashMap<String, String> placemark = new HashMap<>();
+                    String placemarkName = xPathUtils.getString(nodePlacemark, "kml:name").trim();
                     placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_TITLE, placemarkName);
-                    String placemarkDescription = XPathUtils.getString(nodePlacemark, "kml:description").trim();
+                    String placemarkDescription = xPathUtils.getString(nodePlacemark, "kml:description").trim();
                     placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_DESCR, placemarkDescription);
                     
-                    String placemarkCoordinates = XPathUtils.getString(nodePlacemark, "kml:Point/kml:coordinates").trim();
-                    if(placemarkCoordinates.indexOf(" ") > -1){
+                    String placemarkCoordinates = xPathUtils.getString(nodePlacemark, "kml:Point/kml:coordinates").trim();
+                    if(placemarkCoordinates.indexOf(' ') > -1){
                         String [] coordinates = placemarkCoordinates.split(" ");
                         placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordinates[0]);
                         placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordinates[1]);
                         kmlDocumentPlacemark.add(placemark);
-                    }else if(placemarkCoordinates.indexOf(",") > -1){
+                    }else if(placemarkCoordinates.indexOf(',') > -1){
                         String [] coordinates = placemarkCoordinates.split(",");
                         placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_X, coordinates[0]);
                         placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_Y, coordinates[1]);
@@ -89,8 +90,6 @@ public class DetailPartPreparerIdfKml extends DetailPartPreparer{
     }
     
     private HashMap addKmlToContext(List kml, String title) {
-        List<HashMap<String, String>> coords = mergeCoordsByKML(kml, title);
-        
         HashMap element = new HashMap();
         element.put("type", "kml");
         element.put("title", title);
@@ -140,22 +139,5 @@ public class DetailPartPreparerIdfKml extends DetailPartPreparer{
         }
         
         return kmlTables;
-    }
-    
-    private List mergeCoordsByKML(List kml, String title) {
-        List<HashMap<String, String>> pointCoords = new ArrayList<HashMap<String, String>>();
-        
-        for (int i = 0; i < kml.size(); i++) {
-            HashMap kmlDocument = (HashMap) kml.get(i);
-            String coordClass = (String) kmlDocument.get("kml_name");
-            List<HashMap<String, String>> placemarkList = (List) kmlDocument.get("kml_placemark");
-            for (int j = 0; j < placemarkList.size(); j++) {
-                HashMap<String, String> placemark = placemarkList.get(j);
-                placemark.put(Settings.RESULT_KEY_WMS_TMP_COORD_CLASS, coordClass);
-                pointCoords.add(placemark);
-            }
-        }
-    
-        return pointCoords;
     }
 }

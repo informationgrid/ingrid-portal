@@ -25,10 +25,14 @@ package de.ingrid.portal.scheduler.jobs;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DummyJob implements Job {
 
+    private static final Logger log = LoggerFactory.getLogger(DummyJob.class);
+
     public void execute(JobExecutionContext arg0) throws JobExecutionException {
-        System.out.println("executing the dummy job");
+        log.info("executing the dummy job");
     }
 }

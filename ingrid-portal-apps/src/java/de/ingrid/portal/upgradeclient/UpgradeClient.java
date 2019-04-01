@@ -22,6 +22,7 @@
  */
 package de.ingrid.portal.upgradeclient;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.utils.PlugDescription;
 
 public class UpgradeClient {
-    private final static Logger log = LoggerFactory.getLogger(UpgradeClient.class);
+    private static final Logger log = LoggerFactory.getLogger(UpgradeClient.class);
 
     private static final String UNKNOWN_COMPONENT_ID = "MANUAL_COMPONENT_ID";
     
@@ -58,7 +59,7 @@ public class UpgradeClient {
         List<IngridComponent> components = (List<IngridComponent>)jobDetail.getJobDataMap().get(UpgradeTools.INSTALLED_COMPONENTS);
         if (components == null) {
             log.error("UpgradeClientJob DataMap contains non-initialized INSTALLED_COMPONENTS-Key!");
-            return null;
+            return new ArrayList<>();
         } else
             return components;
     }
@@ -171,8 +172,7 @@ public class UpgradeClient {
         try {
             IngridMonitorFacade.instance().getScheduler().addJob(jobDetail, true);
         } catch (SchedulerException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error on updateJobData.", e);
         }
     }
     
@@ -198,11 +198,9 @@ public class UpgradeClient {
         for (PlugDescription pd : iPlugs) {
             String version = null;
             String type    = null;
-            String date    = null;
             
             if (pd.getMetadata() != null) {
                 version = pd.getMetadata().getVersion();
-                date    = pd.getMetadata().getReleaseDate().toString();
                 type    = pd.getMetadata().getPlugType().toString(); 
             }
             IngridComponent component = new IngridComponent(pd.getPlugId(), type);
@@ -225,7 +223,6 @@ public class UpgradeClient {
             }
             component.setVersion(version);
             component.setIPlug(true);
-            //component.setStatus();
             component.setConnected(IngridAbstractStateJob.STATUS_IS_AVAILABLE);
             
             addComponent(component);

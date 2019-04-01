@@ -61,7 +61,6 @@ public class WMSServiceDescriptor {
      */
     public WMSServiceDescriptor(String name, String url) {
         super();
-        // TODO Auto-generated constructor stub
         this.name = name;
         this.url = url;
     }

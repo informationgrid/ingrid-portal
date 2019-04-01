@@ -40,7 +40,7 @@ import de.ingrid.portal.scheduler.IngridMonitorFacade;
  */
 public class IngridComponentMonitorStartListener implements ServletContextListener {
 
-    private final static Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
+    private static final Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
 
     /**
      * @see javax.servlet.ServletContextListener#contextInitialized(javax.servlet.ServletContextEvent)

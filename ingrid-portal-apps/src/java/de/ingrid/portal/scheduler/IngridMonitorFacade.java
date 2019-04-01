@@ -50,7 +50,7 @@ import de.ingrid.portal.servlet.IngridComponentMonitorStartListener;
  */
 public class IngridMonitorFacade {
 
-	private final static Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridComponentMonitorStartListener.class);
 
 	private static IngridMonitorFacade instance = null;
 
@@ -90,7 +90,7 @@ public class IngridMonitorFacade {
 	}
 
 	public List<JobDetail> getJobs(String sortBy, boolean ascending) {
-		ArrayList<JobDetail> result = new ArrayList<JobDetail>();
+		ArrayList<JobDetail> result = new ArrayList<>();
 		try {
 			if (scheduler != null && !scheduler.isShutdown()) {
 				String[] allJobGroupNames = scheduler.getJobGroupNames();
@@ -125,7 +125,6 @@ public class IngridMonitorFacade {
 			}
 		} catch (SchedulerException e) {
 			log.error("Error while getting trigger of job " + jobName + "!");
-			e.printStackTrace();			
 		}
 		
 		return trigger;
@@ -199,15 +198,14 @@ public class IngridMonitorFacade {
 			} 
 			for (int i = 0; i < jobs.size(); i++){ 
 				JobExecutionContext jobExecutionContext = (JobExecutionContext) jobs.get(i);
-				if (jobExecutionContext.getJobDetail().getName().equals(context.getJobDetail().getName())) {
-					if (jobExecutionContext.getTrigger().getName().equals(name) ||
-							jobExecutionContext.getTrigger().getGroup().equals(group)) {
-						return true; 
-					}
+				if (jobExecutionContext.getJobDetail().getName().equals(context.getJobDetail().getName()) && 
+			        (jobExecutionContext.getTrigger().getName().equals(name) ||
+						jobExecutionContext.getTrigger().getGroup().equals(group))) {
+				    return true; 
 				}
 			} 
 		} catch (SchedulerException e) {
-			e.printStackTrace(); 
+			log.error("Error on isExecuting.", e);
 		} 
 		return false;
 	} 

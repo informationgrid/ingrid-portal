@@ -58,7 +58,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
 
     private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
     private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
@@ -116,15 +116,14 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     String x2Value = UtilsSearch.getDetailValue( detail, "x2" );
                     String y2Value = UtilsSearch.getDetailValue( detail, "y2" );
 
-                    if (y1Value != null && y2Value != null && x1Value != null && x2Value != null) {
-                        if(x1Value.length() > 0 && x1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                                x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                                y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                                y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
-                            s.append("[").append( y1Value.trim() ).append( "," ).append( x1Value.trim() ).append( "],[" ).append( y2Value.trim() )
-                                    .append( "," ).append( x2Value.trim() ).append("]");
-                            response.getWriter().write( s.toString() );
-                        }
+                    if(y1Value != null && y2Value != null && x1Value != null && x2Value != null &&
+                            x1Value.length() > 0 && x1Value.toLowerCase().indexOf( "nan" ) == -1 &&
+                            x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
+                            y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
+                            y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
+                        s.append("[").append( y1Value.trim() ).append( "," ).append( x1Value.trim() ).append( "],[" ).append( y2Value.trim() )
+                                .append( "," ).append( x2Value.trim() ).append("]");
+                        response.getWriter().write( s.toString() );
                     }
                 }
                 response.getWriter().write( "]" );
@@ -138,11 +137,10 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 JSONArray jsonData = new JSONArray();
                 while (it.hasNext()) {
                     try {
-                        StringBuilder s = new StringBuilder();
                         IngridHit hit = it.next();
                         IngridHitDetail detail = hit.getHitDetail();
-                        String lat_center = UtilsSearch.getDetailValue( detail, "y1", 1);
-                        String lon_center = UtilsSearch.getDetailValue( detail, "x1", 1);
+                        String latCenter = UtilsSearch.getDetailValue( detail, "y1", 1);
+                        String lonCenter = UtilsSearch.getDetailValue( detail, "x1", 1);
                         String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
                         String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
                         // General "Bauleitplanung"
@@ -157,7 +155,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         JSONObject jsonDataEntry = new JSONObject();
                         jsonDataEntry.put("id", cnt);
                         jsonDataEntry.put("name", blpName);
-                        jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( lat_center.trim()) ).put(Double.parseDouble(lon_center.trim())));
+                        jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( latCenter.trim()) ).put(Double.parseDouble(lonCenter.trim())));
                         JSONArray bpInfos = new JSONArray();
                         // Bauleitplaung
                         if (urlInProgress != null && !urlInProgress.isEmpty()) {
@@ -237,13 +235,13 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
-                    if (facetList.size() > 0) {
+                    if (!facetList.isEmpty()) {
                         IngridDocument facet = new IngridDocument();
                         facet.put("id", "legend_counter");
                         facet.put("classes", facetList);
                         facetQueries.add(facet);
                     }
-                    if (facetQueries.size() > 0) {
+                    if (!facetQueries.isEmpty()) {
                         query.put( "FACETS", facetQueries );
                     }
                 }
@@ -277,7 +275,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             response.getWriter().write( "var legendCounter = {};");
                         }
                     }
-                } catch (Throwable t) {
+                } catch (Exception t) {
                     if (log.isErrorEnabled()) {
                         log.error( "Problems performing Search !", t );
                     }
@@ -288,7 +286,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         }
     }
 
-    private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+    private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException {
         StringBuilder s = new StringBuilder();
         s.append("var markers = [");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
@@ -298,66 +296,65 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             IngridHitDetail detail = hit.getHitDetail();
             String latCenterValue = UtilsSearch.getDetailValue( detail, "lat_center" );
             String lonCenterValue = UtilsSearch.getDetailValue( detail, "lon_center" );
-            if (latCenterValue != null && lonCenterValue != null) {
-                if(latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
-                        lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
-                    s.append( "[" )
-                            .append( latCenterValue.trim() ).append( "," )
-                            .append( lonCenterValue.trim() ).append( ",'" )
-                            .append( detail.get( "title" ).toString() ).append( "','" )
-                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
-                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
-                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
+            if(latCenterValue != null && lonCenterValue != null &&
+                    latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
+                    lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
+                s.append( "[" )
+                        .append( latCenterValue.trim() ).append( "," )
+                        .append( lonCenterValue.trim() ).append( ",'" )
+                        .append( detail.get( "title" ).toString() ).append( "','" )
+                        .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
+                        .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
+                        .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
 
-                    if(detail.get( "uvp_category" ) != null){
-                        ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
-                        s.append( "," ).append( "[" );
-                        if(categories != null && categories.size() > 0){
-                            int index = 0;
-                            for (String category : categories) {
-                                s.append( "{" );
-                                s.append( "'id':'" + category.trim() + "'" );
-                                s.append( ",");
-                                s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
-                                s.append( "}" );
-                                if(index < categories.size() - 1){
-                                    s.append( "," );
-                                }
-                                index ++;
+                if(detail.get( "uvp_category" ) != null){
+                    ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
+                    s.append( "," ).append( "[" );
+                    if(categories != null && !categories.isEmpty()){
+                        int index = 0;
+                        for (String category : categories) {
+                            s.append( "{" );
+                            s.append( "'id':'" + category.trim() + "'" );
+                            s.append( ",");
+                            s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
+                            s.append( "}" );
+                            if(index < categories.size() - 1){
+                                s.append( "," );
                             }
+                            index ++;
                         }
-                        s.append( "]" );
-                    }else{
-                        s.append( "," ).append( "[" );
-                        s.append( "]" );
                     }
-
-                    if(detail.get( "uvp_steps" ) != null){
-                        ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
-                        s.append( "," ).append( "[" );
-                        if(steps != null && steps.size() > 0){
-                            int index = 0;
-                            s.append( "'" );
-                            for (String step : steps) {
-                                s.append( messages.getString( "common.steps.uvp." + step.trim() ) );
-                                if(index < steps.size() - 1){
-                                    s.append( "','" );
-                                }else{
-                                    s.append( "'" );
-                                }
-                                index ++;
-                            }
-                        }
-                        s.append( "]" );
-                    }else{
-                        s.append( "," ).append( "[" );
-                        s.append( "]" );
-                    }
-
                     s.append( "]" );
-                    if (it.hasNext()) {
-                        s.append( "," );
+                }else{
+                    s.append( "," ).append( "[" );
+                    s.append( "]" );
+                }
+
+                if(detail.get( "uvp_steps" ) != null){
+                    ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
+                    s.append( "," ).append( "[" );
+                    if(steps != null && !steps.isEmpty()){
+                        int index = 0;
+                        s.append( "'" );
+                        for (String step : steps) {
+                            s.append( messages.getString( "common.steps.uvp." + step.trim() ) );
+                            if(index < steps.size() - 1){
+                                s.append( "','" );
+                            }else{
+                                s.append( "'" );
+                            }
+                            index ++;
+                        }
                     }
+                    s.append( "]" );
+                }else{
+                    s.append( "," ).append( "[" );
+                    s.append( "]" );
+                }
+
+                s.append( "]" );
+                if (it.hasNext()) {
+                    s.append( "," );
                 }
             }
         }
@@ -365,6 +362,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         return s.toString();
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response)
             throws PortletException, IOException {
         // define an REST URL to get the map data dynamically

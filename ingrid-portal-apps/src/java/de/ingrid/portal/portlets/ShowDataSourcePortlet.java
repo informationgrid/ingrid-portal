@@ -31,14 +31,13 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.utils.PlugDescription;
 
@@ -49,12 +48,13 @@ import de.ingrid.utils.PlugDescription;
  */
 public class ShowDataSourcePortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ShowDataSourcePortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowDataSourcePortlet.class);
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 
         Context context = getContext(request);
@@ -94,7 +94,7 @@ public class ShowDataSourcePortlet extends GenericVelocityPortlet {
             }
 
             context.put("plugs", plugDescriptions);
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems processing partner/provider and iPlugs.", t);
             }

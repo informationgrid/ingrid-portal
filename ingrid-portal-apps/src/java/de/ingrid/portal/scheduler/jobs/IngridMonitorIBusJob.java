@@ -45,7 +45,7 @@ public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID = "iBus";
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorIBusJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorIBusJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -94,7 +94,7 @@ public class IngridMonitorIBusJob extends IngridMonitorAbstractJob {
 				status = STATUS_OK;
 				statusCode = STATUS_CODE_NO_ERROR;
 			}
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 		}

@@ -57,7 +57,6 @@ public class SavedSearchQueries extends ArrayList {
                 
                 this.add(0, map);
             }
-            return;
         } else {
             this.add(0, map);
         }

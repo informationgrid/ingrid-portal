@@ -55,10 +55,10 @@ public class XSSUtil {
     private String regexReplaceValue = "";
 
 	/** The regular expressions from filter configuration. */
-	List<String> regexpFromConfig = new ArrayList<String>();
+	List<String> regexpFromConfig = new ArrayList<>();
 
 	/** Our patterns (regexps) to be matched and replaced ! */
-	List<Pattern> patterns = new ArrayList<Pattern>();
+	List<Pattern> patterns = new ArrayList<>();
 
 	/** The default patterns (regexps) which will be used if no configuration from filter ! */
     private Pattern[] defaultPatterns = new Pattern[]{
@@ -90,7 +90,7 @@ public class XSSUtil {
 	/** Return to default state clearing all encapsulated values, states ... */
 	public void clear() {
 		this.regexReplaceValue = "";
-		this.regexpFromConfig = new ArrayList<String>();
+		this.regexpFromConfig = new ArrayList<>();
 		this.patterns = Arrays.asList(defaultPatterns);
 	}
 
@@ -99,7 +99,7 @@ public class XSSUtil {
 	public void parseFilterConfig(FilterConfig filterConfig) {
         // extract regexp from configuration
         if (filterConfig != null) {
-        	List<String> myRegexps = new ArrayList<String>();
+        	List<String> myRegexps = new ArrayList<>();
 
         	Enumeration paramNames = filterConfig.getInitParameterNames();
         	while (paramNames.hasMoreElements()) {
@@ -123,10 +123,10 @@ public class XSSUtil {
         	}
         	
             // set up patterns from configuration
-        	if (myRegexps.size() > 0) {
+        	if (!myRegexps.isEmpty()) {
         		regexpFromConfig = myRegexps;
 
-        		this.patterns = new ArrayList<Pattern>();
+        		this.patterns = new ArrayList<>();
             	for (String regexp : myRegexps) {
             		this.patterns.add(
                 		Pattern.compile(regexp, Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL));        		
@@ -173,7 +173,7 @@ public class XSSUtil {
      */
     public String[] stripParameterValues(String[] values, String name) {
         if (values == null) {
-            return null;
+            return new String[0];
         }
  
         int count = values.length;

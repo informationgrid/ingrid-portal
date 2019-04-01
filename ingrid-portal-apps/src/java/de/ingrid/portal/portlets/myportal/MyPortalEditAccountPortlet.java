@@ -48,11 +48,9 @@ import java.util.Map;
  */
 public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(MyPortalEditAccountPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(MyPortalEditAccountPortlet.class);
 
     private static final String STATE_ACCOUNT_SAVED = "account_saved";
-
-    private PortalAdministration admin;
 
     private UserManager userManager;
 
@@ -61,10 +59,11 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
-        admin = (PortalAdministration) getPortletContext()
+        PortalAdministration admin = (PortalAdministration) getPortletContext()
                 .getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
         if (null == admin) {
             throw new PortletException("Failed to find the Portal Administration on portlet initialization");
@@ -78,6 +77,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -135,6 +135,7 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
@@ -177,20 +178,17 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
 
         try {
             // update password only if a old password was provided
-            String oldPassword = f.getInput(EditAccountForm.FIELD_PASSWORD_OLD);
+            String oldPassword = f.getInput(EditAccountForm.FIELD_PW_OLD);
             if (oldPassword != null && oldPassword.length() > 0) {
         		PasswordCredential credential = userManager.getPasswordCredential(user);
-        		credential.setPassword(oldPassword, f.getInput(EditAccountForm.FIELD_PASSWORD_NEW));
+        		credential.setPassword(oldPassword, f.getInput(EditAccountForm.FIELD_PW_NEW));
         		userManager.storePasswordCredential(credential);
             }
         } catch (PasswordAlreadyUsedException e) {
-            f.setError(EditAccountForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
-            return;
-        } catch (InvalidPasswordException e) {
-            f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
+            f.setError(EditAccountForm.FIELD_PW_NEW, "account.edit.error.password.in.use");
             return;
         } catch (SecurityException e) {
-            f.setError(EditAccountForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
+            f.setError(EditAccountForm.FIELD_PW_OLD, "account.edit.error.wrong.password");
             return;
         }
 

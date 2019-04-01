@@ -40,24 +40,24 @@ public class LoginForm extends ActionForm {
 
     public static final String FIELD_USERNAME = LoginConstants.USERNAME;
 
-    public static final String FIELD_PASSWORD = LoginConstants.PASSWORD;
+    public static final String FIELD_PW = LoginConstants.PASSWORD;
 
     public static final String FIELD_DESTINATION = LoginConstants.DESTINATION;
 
     /**
      * initial values. can be set from outside and may differ because of Locale
      */
-    protected String INITIAL_USERNAME = "";
+    protected String initialUsername = "";
 
-    protected String INITIAL_PASSWORD = "";
+    protected String initialPw = "";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
         clearInput();
-        setInput(FIELD_USERNAME, INITIAL_USERNAME);
-        setInput(FIELD_PASSWORD, INITIAL_PASSWORD);
+        setInput(FIELD_USERNAME, initialUsername);
+        setInput(FIELD_PW, initialPw);
     }
 
     /**
@@ -66,7 +66,7 @@ public class LoginForm extends ActionForm {
     public void populate(PortletRequest request) {
         clearInput();
         setInput(FIELD_USERNAME, request.getParameter(FIELD_USERNAME));
-        setInput(FIELD_PASSWORD, request.getParameter(FIELD_PASSWORD));
+        setInput(FIELD_PW, request.getParameter(FIELD_PW));
         setInput(FIELD_DESTINATION, request.getParameter(FIELD_DESTINATION));
     }
 
@@ -77,12 +77,12 @@ public class LoginForm extends ActionForm {
         boolean allOk = true;
         clearErrors();
 
-        if (!hasInput(FIELD_USERNAME) || FIELD_USERNAME.equals(INITIAL_USERNAME)) {
+        if (!hasInput(FIELD_USERNAME) || FIELD_USERNAME.equals(initialUsername)) {
             setError(FIELD_USERNAME, "login.error.noUsername");
             allOk = false;
         }
-        if (!hasInput(FIELD_PASSWORD) || FIELD_PASSWORD.equals(INITIAL_PASSWORD)) {
-            setError(FIELD_PASSWORD, "login.error.noPassword");
+        if (!hasInput(FIELD_PW) || FIELD_PW.equals(initialPw)) {
+            setError(FIELD_PW, "login.error.noPassword");
             allOk = false;
         }
 
@@ -92,29 +92,29 @@ public class LoginForm extends ActionForm {
     /**
      * @return Returns the iNITIAL_PASSWORD.
      */
-    public String getINITIAL_PASSWORD() {
-        return INITIAL_PASSWORD;
+    public String getInitialPassword() {
+        return initialPw;
     }
 
     /**
      * @param initial_password The iNITIAL_PASSWORD to set.
      */
-    public void setINITIAL_PASSWORD(String initial_password) {
-        INITIAL_PASSWORD = initial_password;
+    public void setInitialPassword(String password) {
+        initialPw = password;
     }
 
     /**
      * @return Returns the iNITIAL_USERNAME.
      */
-    public String getINITIAL_USERNAME() {
-        return INITIAL_USERNAME;
+    public String getInitialUsername() {
+        return initialUsername;
     }
 
     /**
      * @param initial_username The iNITIAL_USERNAME to set.
      */
-    public void setINITIAL_USERNAME(String initial_username) {
-        INITIAL_USERNAME = initial_username;
+    public void setInitialUsername(String username) {
+        initialUsername = username;
     }
 
 }

@@ -36,7 +36,7 @@ public class AddressSearchResultSimpleBean {
 	public AddressSearchResultSimpleBean() {
 		this.numHits = 0;
 		this.totalNumHits = 0;
-		this.resultList = new ArrayList<MdekAddressSimpleBean>();
+		this.resultList = new ArrayList<>();
 	}
 
 	public long getNumHits() {

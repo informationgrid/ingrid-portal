@@ -32,7 +32,7 @@ public class IllegalFileException extends WebApplicationException implements Upl
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, Object> data = new HashMap<String, Object>();
+    private Map<String, Object> data = new HashMap<>();
 
     /**
      * Constructor

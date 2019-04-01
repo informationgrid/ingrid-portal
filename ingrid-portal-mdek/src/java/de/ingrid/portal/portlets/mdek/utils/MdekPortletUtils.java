@@ -37,7 +37,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class MdekPortletUtils {
 
-	private final static Logger log = Logger.getLogger(MdekPortletUtils.class);
+	private static final Logger log = Logger.getLogger(MdekPortletUtils.class);
 
     /** Throws Exception if frontend IGC Version does NOT fit to backend IGC Version ! */
     public static void checkIGCCompatibility(String plugId,
