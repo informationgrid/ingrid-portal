@@ -30,6 +30,8 @@ import org.commonmark.renderer.html.HtmlRenderer;
  */
 public class MarkdownContextHelpUtils {
 
+    protected static final String PROFILE_DIR = "_profile";
+
     private static final String DEFAULT_CONTEXT_HELP_PATH = "context_help";
     private static final String DEFAULT_LANG = "de";
 
@@ -106,7 +108,7 @@ public class MarkdownContextHelpUtils {
             result.putAll( getLocMarkdownHelpFilesFromPath(contextHelpPath, null));
             
             // override directory
-            Path overrideDir = Paths.get( contextHelpPath, "_profile");
+            Path overrideDir = Paths.get( contextHelpPath, PROFILE_DIR);
             if (getClass().getClassLoader().getResource( overrideDir.toString() ) != null) {
                 try (Stream<Path> profilePathStream = Files.list( Paths.get( getClass().getClassLoader().getResource( overrideDir.toString() ).toURI() ) )) {
                     

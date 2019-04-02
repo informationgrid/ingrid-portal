@@ -7,12 +7,12 @@ public class MarkdownContextHelpItem {
     /**
      * Path to of the markdown file.
      */
-    Path markDownFilename = null;
+    private Path markDownFilename = null;
 
     /**
      * Title, used in help window bar.
      */
-    String title = null;
+    private String title = null;
 
     public MarkdownContextHelpItem(Path markDownFilename) {
         super();

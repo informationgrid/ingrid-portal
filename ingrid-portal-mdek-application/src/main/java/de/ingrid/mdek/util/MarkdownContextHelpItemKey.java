@@ -7,23 +7,23 @@ public class MarkdownContextHelpItemKey {
     /**
      * GUID fo the ingrid form.
      */
-    String guid = null;
+    private String guid = null;
 
     /**
      * Object class ID, since help messages for one GUID can be dependent on the
      * object class.
      */
-    String oid = null;
+    private String oid = null;
 
     /**
      * Language ISO 639-1
      */
-    String lang = null;
+    private String lang = null;
 
     /**
      * Profile string
      */
-    String profile = null;
+    private String profile = null;
     
     public MarkdownContextHelpItemKey(String guid) {
         super();

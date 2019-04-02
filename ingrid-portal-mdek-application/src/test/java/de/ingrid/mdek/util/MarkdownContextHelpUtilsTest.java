@@ -40,6 +40,8 @@ public class MarkdownContextHelpUtilsTest {
         Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
         
         Assert.assertEquals( false, m.isEmpty() );
+        // invalid mark down files must be ignored
+        Assert.assertEquals( 1, m.size() );
 
         MarkdownContextHelpItemKey key = new MarkdownContextHelpItemKey("3000");
         key.setOid( "1" );
@@ -131,7 +133,7 @@ public class MarkdownContextHelpUtilsTest {
         val = m.get( key );
         
         Assert.assertEquals( "Objektname (myprofile)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", "_profile", "myprofile", "object_name.md" ).toString() ));
+        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", MarkdownContextHelpUtils.PROFILE_DIR, "myprofile", "object_name.md" ).toString() ));
     
         key.setLang( "en" );
         key.setProfile( "myprofile" );
@@ -141,7 +143,7 @@ public class MarkdownContextHelpUtilsTest {
         val = m.get( key );
         
         Assert.assertEquals( "Objektname (en) (myprofile)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", "_profile", "myprofile", "en", "object_name.md" ).toString() ));
+        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", MarkdownContextHelpUtils.PROFILE_DIR, "myprofile", "en", "object_name.md" ).toString() ));
     }
     
     
