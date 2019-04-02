@@ -336,8 +336,9 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
         return true;
     }
 
-    @Override
+    /*@Override
     public boolean remove(String id) {
         return false;
     }
+    */
 }
