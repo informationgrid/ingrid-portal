@@ -84,8 +84,10 @@ public class MarkdownContextHelpUtils {
      *   markdownfile.md
      * </pre>
      * 
+     * <p>Base directory is <pre>TOMCAT/webapps/ingrid-portal-mdek-application/WEB-INF/classes/context_help</pre></p>
      * 
-     * <p>Markdown files must contain front matter meta data like this:</p>
+     * <p>Markdown files must contain front matter meta data like this to be assigned to a GUI element. 
+     * The markdown can be specific to GUI element and object class.</p>
      * 
      * <pre>
      * ---
@@ -120,10 +122,8 @@ public class MarkdownContextHelpUtils {
                         String dir = abs.substring( abs.indexOf( contextHelpPath ) );
                         result.putAll( getLocMarkdownHelpFilesFromPath(dir, profilePath.getFileName().toString()));
                     }
-    
                 }
             }
-
         } catch (IOException | URISyntaxException e) {
             LOG.error( "Impossible to get ressource from class path.", e );
             throw new RuntimeException( e );
@@ -161,6 +161,7 @@ public class MarkdownContextHelpUtils {
             
             // read default language files
             List<Path> list = files.filter( Files::isRegularFile ).collect( Collectors.toList() );
+            files.close();
 
             for (Path path : list) {
 
