@@ -58,90 +58,64 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class", "uvp_steps"};
+    private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class", "uvp_steps"};
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
     private static final String[] REQUESTED_FIELDS_BLP_MARKER = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress", "fnp_url_finished", "fnp_url_in_progress", "bp_url_finished", "bp_url_in_progress" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
-        
+        response.setContentType( "application/javascript" );
+
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         
         IngridSysCodeList sysCodeList = new IngridSysCodeList(request.getLocale());
         try {
             if (resourceID.equals( "marker" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    writeResponse(response, query, messages, sysCodeList);
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "marker2" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    writeResponse(response, query, messages, sysCodeList);
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "marker3" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    writeResponse(response, query, messages, sysCodeList);
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "marker4" )) {
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "var markers = [" );
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-                if(query != "") {
-                    writeResponse(request, response, query, messages, sysCodeList);
+                if(!query.isEmpty()) {
+                    writeResponse(response, query, messages, sysCodeList);
                 }
-                response.getWriter().write( "];" );
             }
             if (resourceID.equals( "bbox" )) {
                 String uuid = request.getParameter( "uuid" );
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "[" );
+                JSONArray bbox = new JSONArray();
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( "t01_object.obj_id:" + uuid + " ranking:score" ), REQUESTED_FIELDS_BBOX,
                         IBUSInterfaceImpl.getInstance().getIBus() );
-                if(it!= null){
-                    if (it.hasNext()) {
-                        StringBuilder s = new StringBuilder();
-                        IngridHit hit = it.next();
-                        IngridHitDetail detail = hit.getHitDetail();
-                        Object[] x1 = (Object[]) detail.get( "x1" );
-                        Object[] y1 = (Object[]) detail.get( "y1" );
-                        Object[] x2 = (Object[]) detail.get( "x2" );
-                        Object[] y2 = (Object[]) detail.get( "y2" );
-                        
-                        if (y1 != null && y2 != null && x1 != null && x2 != null) {
-                            String y1Value = y1[0].toString().trim();
-                            String x1Value = x1[0].toString().trim();
-                            String y2Value = y2[0].toString().trim();
-                            String x2Value = x2[0].toString().trim();
-                            if(x1Value.length() > 0 && x1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                                x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                                y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                                y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
-                                s.append("[").append( y1Value ).append( "," ).append( x1Value ).append( "],[" ).append( y2Value )
-                                        .append( "," ).append( x2Value ).append("]");
-                                response.getWriter().write( s.toString() );
-                            }
-                        }
-                    }
+                if(it!= null && it.hasNext()){
+                    IngridHit hit = it.next();
+                    IngridHitDetail detail = hit.getHitDetail();
+                    JSONArray bboxItems = new JSONArray();
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "y1", 1)));
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "x1", 1)));
+                    bbox.put(bboxItems);
+                    bboxItems = new JSONArray();
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "y2", 1)));
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "x2", 1)));
+                    bbox.put(bboxItems);
                 }
-                response.getWriter().write( "]" );
+                response.getWriter().write( bbox.toString() );
             }
             if(resourceID.equals( "devPlanMarker" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
@@ -153,11 +127,10 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     JSONArray jsonData = new JSONArray();
                     while (it.hasNext()) {
                         try {
-                            StringBuilder s = new StringBuilder();
                             IngridHit hit = it.next();
                             IngridHitDetail detail = hit.getHitDetail();
-                            String lat_center = UtilsSearch.getDetailValue( detail, "y1", 1);
-                            String lon_center = UtilsSearch.getDetailValue( detail, "x1", 1);
+                            String latCenter = UtilsSearch.getDetailValue( detail, "y1", 1);
+                            String lonCenter = UtilsSearch.getDetailValue( detail, "x1", 1);
                             String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
                             String blpDescription = UtilsSearch.getDetailValue( detail, "blp_description" );
                             // General "Bauleitplanung"
@@ -172,7 +145,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             JSONObject jsonDataEntry = new JSONObject();
                             jsonDataEntry.put("id", cnt);
                             jsonDataEntry.put("name", blpName);
-                            jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( lat_center.trim()) ).put(Double.parseDouble(lon_center.trim())));
+                            jsonDataEntry.put("latlon", new JSONArray().put( Double.parseDouble( latCenter.trim()) ).put(Double.parseDouble(lonCenter.trim())));
                             JSONArray bpInfos = new JSONArray();
                             // Bauleitplaung
                             if (urlInProgress != null && !urlInProgress.isEmpty()) {
@@ -202,11 +175,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             jsonData.put( jsonDataEntry );
                             cnt++;
                         } catch (Exception e) {
-                            log.error("Error get json object:" + e);
+                            log.error("Error get json object.", e);
                         }
                     }
-                        
-                    response.setContentType( "application/javascript" );
                     response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
                 }
             }
@@ -215,51 +186,51 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 IngridQuery query = QueryStringParser.parse( queryString );
                 query.put( IngridQuery.RANKED, "score" );
                 if (query.get( "FACETS" ) == null) {
-                    ArrayList<IngridDocument> facetQueries = new ArrayList<IngridDocument>();
-                    ArrayList<HashMap<String, String>> facetList = new ArrayList<HashMap<String, String>> ();
+                    ArrayList<IngridDocument> facetQueries = new ArrayList<>();
+                    ArrayList<HashMap<String, String>> facetList = new ArrayList<> ();
                     
                     String tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-                    if (tmpQuery != "") {
-                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
                         facetEntry.put("id", "countMarker1");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
-                    if (tmpQuery != "") {
-                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
                         facetEntry.put("id", "countMarker2");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
-                    if (tmpQuery != "") {
-                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
                         facetEntry.put("id", "countMarker3");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-                    if (tmpQuery != "") {
-                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
                         facetEntry.put("id", "countMarker4");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
                     tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-                    if (tmpQuery != "") {
-                        HashMap<String, String> facetEntry = new HashMap<String, String>();
+                    if (!tmpQuery.isEmpty()) {
+                        HashMap<String, String> facetEntry = new HashMap<>();
                         facetEntry.put("id", "countMarkerDevPlan");
                         facetEntry.put("query", tmpQuery);
                         facetList.add(facetEntry);
                     }
-                    if (facetList.size() > 0) {
+                    if (!facetList.isEmpty()) {
                         IngridDocument facet = new IngridDocument();
                         facet.put("id", "legend_counter");
                         facet.put("classes", facetList);
                         facetQueries.add(facet);
                     }
-                    if (facetQueries.size() > 0) {
+                    if (!facetQueries.isEmpty()) {
                         query.put( "FACETS", facetQueries );
                     }
                 }
@@ -273,27 +244,22 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
                         }
                     } else {
-                        response.setContentType( "application/javascript" );
                         if(hits.length() > 0) {
                             Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
-                            String facetsJSON = "{";
+                            JSONObject obj = new JSONObject();
                             if(facets != null){
                                 for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
                                     String key = iterator.next();
                                     Long value = (Long) facets.get(key);
-                                    facetsJSON += "\"" + key.split(":")[1] + "\":" + value;
-                                    if(iterator.hasNext()) {
-                                        facetsJSON += ",";
-                                    }
+                                    obj.put(key.split(":")[1], value);
                                 }
                             }
-                            facetsJSON += "}";
-                            response.getWriter().write( "var legendCounter = " + facetsJSON +";");
+                            response.getWriter().write( "var legendCounter = " + obj.toString() +";");
                         } else {
                             response.getWriter().write( "var legendCounter = {};");
                         }
                     }
-                } catch (Throwable t) {
+                } catch (Exception t) {
                     if (log.isErrorEnabled()) {
                         log.error( "Problems performing Search !", t );
                     }
@@ -304,106 +270,72 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         }
     }
     
-    private void writeResponse(ResourceRequest request, ResourceResponse response, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
+    private void writeResponse(ResourceResponse response, String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException, IOException {
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
         if(it != null){
+            JSONArray jsonData = new JSONArray();
             while (it.hasNext()) {
-                StringBuilder s = new StringBuilder();
-                IngridHit hit = it.next();
-                IngridHitDetail detail = hit.getHitDetail();
-                Object[] lat_center = (Object[]) detail.get( "lat_center" );
-                Object[] lon_center = (Object[]) detail.get( "lon_center" );
-                if (lat_center != null && lon_center != null) {
-                    String latCenterValue = lat_center[0].toString().trim();
-                    String lonCenterValue = lon_center[0].toString().trim();
-                    if(latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
-                        lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
-                        s.append( "[" )
-                            .append( latCenterValue ).append( "," )
-                            .append( lonCenterValue ).append( ",'" )
-                            .append( detail.get( "title" ).toString() ).append( "','" )
-                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
-                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
-                            .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
-                        
-                        if(detail.get( "uvp_category" ) != null){
-                            ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
-                            s.append( "," ).append( "[" );
-                            if(categories != null && categories.size() > 0){
-                                int index = 0;
-                                for (String category : categories) {
-                                    s.append( "{" );
-                                    s.append( "'id':'" + category.trim() + "'" );
-                                    s.append( ",");
-                                    s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
-                                    s.append( "}" );
-                                    if(index < categories.size() - 1){
-                                        s.append( "," );
-                                    }
-                                    index ++;
-                                }
-                            }
-                            s.append( "]" );
-                        }else{
-                            s.append( "," ).append( "[" );
-                            s.append( "]" );
+                try {
+                    IngridHit hit = it.next();
+                    IngridHitDetail detail = hit.getHitDetail();
+                    JSONArray jsonDataEntry = new JSONArray();
+                    jsonDataEntry.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "lat_center", 1)));
+                    jsonDataEntry.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "lon_center", 1)));
+                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "title" ));
+                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ));
+                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ));
+                    jsonDataEntry.put(sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )));
+                    ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
+                    JSONArray jsonCategories = new JSONArray();
+                    if(categories != null && !categories.isEmpty()){
+                        for (String category : categories) {
+                            JSONObject obj = new JSONObject();
+                            obj.put( "id", category.trim());
+                            obj.put( "name", messages.getString("searchResult.categories.uvp." + category.trim()));
+                           jsonCategories.put(obj);
                         }
-                        
-                        if(detail.get( "uvp_steps" ) != null){
-                            ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
-                            s.append( "," ).append( "[" );
-                            if(steps != null && steps.size() > 0){
-                                int index = 0;
-                                s.append( "'" );
-                                for (String step : steps) {
-                                    s.append( messages.getString( "common.steps.uvp." + step.trim() ) );
-                                    if(index < steps.size() - 1){
-                                        s.append( "','" );
-                                    }else{
-                                        s.append( "'" );
-                                    }
-                                    index ++;
-                                }
-                            }
-                            s.append( "]" );
-                        }else{
-                            s.append( "," ).append( "[" );
-                            s.append( "]" );
-                        }
-                        
-                        s.append( "]" );
-                        if (it.hasNext()) {
-                            s.append( "," );
-                        }
-                        response.getWriter().write( s.toString() );
                     }
+                    jsonDataEntry.put(jsonCategories);
+                    ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
+                    JSONArray jsonSteps = new JSONArray();
+                    if(steps != null && !steps.isEmpty()){
+                        for (String step : steps) {
+                            jsonSteps.put( messages.getString( "common.steps.uvp." + step.trim()));
+                        }
+                    }
+                    jsonDataEntry.put(jsonSteps);
+                    jsonData.put(jsonDataEntry);
+                } catch (Exception e) {
+                    log.error("Error write response.", e);
                 }
             }
+            response.getWriter().write( "var markers = " + jsonData.toString() + ";" );
         }
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response)
             throws PortletException, IOException {
         // define an REST URL to get the map data dynamically
         ResourceURL restUrl = response.createResourceURL();
         String mapclientQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
-        if(mapclientQuery != ""){
+        if(!mapclientQuery.isEmpty()){
             restUrl.setResourceID( "marker" );
             request.setAttribute( "restUrlMarker", restUrl.toString() );
         }
         String mapclientQuery2 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
-        if(mapclientQuery2 != ""){
+        if(!mapclientQuery2.isEmpty()){
             restUrl.setResourceID( "marker2" );
             request.setAttribute( "restUrlMarker2", restUrl.toString() );
         }
         String mapclientQuery3 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
-        if(mapclientQuery3 != ""){
+        if(!mapclientQuery3.isEmpty()){
             restUrl.setResourceID( "marker3" );
             request.setAttribute( "restUrlMarker3", restUrl.toString() );
         }
         String mapclientQuery4 = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
-        if(mapclientQuery4 != ""){
+        if(!mapclientQuery4.isEmpty()){
             restUrl.setResourceID( "marker4" );
             request.setAttribute( "restUrlMarker4", restUrl.toString() );
         }
@@ -411,12 +343,12 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
         String mapclientUVPDevPlanURL = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
-        if(mapclientUVPDevPlanURL != ""){
+        if(!mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "devPlanMarker" );
             request.setAttribute( "restUrlUVPDevPlan", restUrl.toString() );
         }
 
-        if(mapclientQuery != "" || mapclientQuery2 != "" || mapclientQuery3 != "" || mapclientQuery4 != "" || mapclientUVPDevPlanURL != ""){
+        if(!mapclientQuery.isEmpty() || !mapclientQuery2.isEmpty() || !mapclientQuery3.isEmpty() || !mapclientQuery4.isEmpty() || !mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
         }
@@ -424,16 +356,18 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
     }
 
     private ArrayList<String> getIndexValue(Object obj){
-        ArrayList<String> array = new ArrayList<String>();
-        if(obj instanceof String[]){
-            String [] tmp = (String[]) obj;
-            for (String s : tmp) {
-                array.add( s );
+        ArrayList<String> array = new ArrayList<>();
+        if(obj != null) { 
+            if(obj instanceof String[]){
+                String [] tmp = (String[]) obj;
+                for (String s : tmp) {
+                    array.add( s );
+                }
+            }else if(obj instanceof ArrayList){
+                array = (ArrayList) obj;
+            }else {
+                array.add( obj.toString() );
             }
-        }else if(obj instanceof ArrayList){
-            array = (ArrayList) obj;
-        }else {
-            array.add( obj.toString() );
         }
         return array;
     }
