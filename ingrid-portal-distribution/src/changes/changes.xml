@@ -7,7 +7,10 @@
 
     <body>
 
-        <release version="4.6.3-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.3">
+        <release version="4.6.3" date="2019-04-03" description="Release 4.6.3">
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
+          </action>
           <action type="fix" dev="wemove" issue="">
             Portal: Fix load favicon.
           </action>
