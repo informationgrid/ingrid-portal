@@ -48,7 +48,7 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
 
     private static final Logger log = LoggerFactory.getLogger(IngridLocalizationValveImpl.class);
 
-    private static final String INGRID_LOCALE__REQUEST_KEY = "lang";
+    private static final String INGRID_LOCALE_REQUEST_KEY = "lang";
 
     private JetspeedCache contentCache;
 
@@ -63,7 +63,7 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
     public void invoke(RequestContext request, ValveContext context) throws PipelineException {
 
         try {
-            String language = request.getRequestParameter(INGRID_LOCALE__REQUEST_KEY);
+            String language = request.getRequestParameter(INGRID_LOCALE_REQUEST_KEY);
             
             if (language != null && language.length() > 0) {
             	
@@ -77,7 +77,7 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
                 if (countryIndex > -1) {
                     country = language.substring(countryIndex + 1).trim();
                     language = language.substring(0, countryIndex).trim();
-                    int vDash = country.indexOf("_");
+                    int vDash = country.indexOf('_');
                     if (vDash > 0) {
                         String cTemp = country.substring(0, vDash);
                         variant = country.substring(vDash + 1);
@@ -88,11 +88,15 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
                 Locale ingridLocale = new Locale(language, country, variant);
                 try {
                     ingridLocale.getISO3Language();
-                    log.debug("INGRID language set: " + ingridLocale);
+                    if(log.isDebugEnabled()) {
+                        log.debug(String.format("INGRID language set: %s", ingridLocale));
+                    }
                 }catch (java.util.MissingResourceException e) {
                     ingridLocale = null;
                     // not a valid language
-                    log.error("Invalid or unrecognized INGRID language: " + language);
+                    if(log.isErrorEnabled()){
+                        log.error(String.format("Invalid or unrecognized INGRID language: %s", language));
+                    }
                 }
 
                 if (ingridLocale != null) {

@@ -38,7 +38,7 @@ import de.ingrid.mdek.util.MarkdownContextHelpUtils;
 
 public class HelpServiceImpl {
 
-    private final static Logger log = Logger.getLogger( HelpServiceImpl.class );
+	private static final Logger log = Logger.getLogger(HelpServiceImpl.class);	
 
     // Injected by Spring
     private IDaoFactory daoFactory;
@@ -126,7 +126,6 @@ public class HelpServiceImpl {
             }
             dao.commitTransaction();
         }
-
         return helpMessage;
     }
 

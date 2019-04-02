@@ -24,3 +24,4 @@ ingrid-portal-apps/src/java/ingrid-portal-apps.override.properties
 ingrid-portal-mdek-application/src/main/webapp/WEB-INF/classes/
 ingrid-portal-base/overlays/
 ingrid-portal-layout/overlays/
+bin/

@@ -55,7 +55,7 @@ public class MdekObjectUtils {
 
 
 	public static IngridDocument convertFromObjectRepresentation(MdekDataBean obj) {
-		return (IngridDocument) dataMapper.convertFromObjectRepresentation(obj);
+		return dataMapper.convertFromObjectRepresentation(obj);
 	}
 
 	
@@ -75,7 +75,7 @@ public class MdekObjectUtils {
 	}
 
 	public static List<MdekDataBean> extractDetailedObjects(IngridDocument doc) {
-		List<MdekDataBean> results = new ArrayList<MdekDataBean>();
+		List<MdekDataBean> results = new ArrayList<>();
 
 		if (doc != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) doc.get(MdekKeys.OBJ_ENTITIES);
@@ -94,7 +94,7 @@ public class MdekObjectUtils {
 			return extractDetailedObjects(result);
 		} else {
 			MdekErrorUtils.handleError(response);
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
@@ -104,7 +104,7 @@ public class MdekObjectUtils {
 		List<TreeNodeBean> nodeList = null;
 
 		if (result != null) {
-			nodeList = new ArrayList<TreeNodeBean>();
+			nodeList = new ArrayList<>();
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
 			for (IngridDocument objEntity : objs) {
 				nodeList.add(dataMapper.getSimpleObjectRepresentation(objEntity));
@@ -134,7 +134,7 @@ public class MdekObjectUtils {
 
 		if (result != null) {
 			List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
-			List<MdekDataBean> nodeList = new ArrayList<MdekDataBean>();
+			List<MdekDataBean> nodeList = new ArrayList<>();
 			if (objs == null) {
 				return null;
 			}
@@ -157,7 +157,7 @@ public class MdekObjectUtils {
 			searchResult.setResultList(nodeList);
 
 			// Additional data
-			Map<String, String> additionalData = new HashMap<String, String>();
+			Map<String, String> additionalData = new HashMap<>();
 			searchResult.setAdditionalData(additionalData);
 			Long totalNumQAAssigned = (Long) result.get(MdekKeys.TOTAL_NUM_QA_ASSIGNED);
 			if (totalNumQAAssigned != null) {
@@ -176,19 +176,18 @@ public class MdekObjectUtils {
 
 	public static ObjectStatisticsResultBean extractObjectStatistics(IngridDocument result) {
 		ObjectStatisticsResultBean res = new ObjectStatisticsResultBean();
-		Map<Integer, StatisticsBean> resultMap = new HashMap<Integer, StatisticsBean>();
+		Map<Integer, StatisticsBean> resultMap = new HashMap<>();
 
 		Object[] objClasses = EnumUtil.getDbValues(ObjectType.class);
 		Object[] workStates = EnumUtil.getDbValues(WorkState.class);
 		for (Object objClass : objClasses) {
 			StatisticsBean stats = new StatisticsBean();
-			Map<String, Long> resClassMap = new HashMap<String, Long>();
+			Map<String, Long> resClassMap = new HashMap<>();
 			IngridDocument classMap = (IngridDocument) result.get(objClass);
 
 			for (Object workState : workStates) {
 				// dwr uses the 'toString' method to convert enums to javascript strings. Therefore, if we use enums
 				// we end up with the wrong identifiers on the client. Use strings instead.
-//				resClassMap.put(WorkState.valueOf((String) workState), (Long) classMap.get(workState));
 				resClassMap.put((String) workState, (Long) classMap.get(workState));
 			}
 			stats.setNumTotal((Long) classMap.get(MdekKeys.TOTAL_NUM));

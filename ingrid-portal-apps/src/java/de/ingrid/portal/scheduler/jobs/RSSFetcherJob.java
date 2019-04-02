@@ -67,7 +67,7 @@ import de.ingrid.portal.om.IngridRSSStore;
  */
 public class RSSFetcherJob extends IngridMonitorAbstractJob {
 
-    protected final static Logger log = LoggerFactory.getLogger(RSSFetcherJob.class);
+    protected static final Logger log = LoggerFactory.getLogger(RSSFetcherJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -143,7 +143,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                         if (categoryFilter != null && !categoryFilter.equalsIgnoreCase("all")) {
                             includeEntry = false;
                             List categories = entry.getCategories();
-                            if (categories != null && categories.size() > 0) {
+                            if (categories != null && !categories.isEmpty()) {
                                 for (int i = 0; i < categories.size(); i++) {
                                     SyndCategoryImpl category = (SyndCategoryImpl) categories.get(i);
                                     String categoryStr = category.getName().toLowerCase();
@@ -278,13 +278,13 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                             + "). Probable timeouted by watch dog thread.", e);
                     status = STATUS_ERROR;
                     statusCode = STATUS_CODE_ERROR_TIMEOUT;
-                } catch (Throwable t) {
+                } catch (Exception t) {
                     log.error("Error building RSS feed (" + rssSource.getUrl() + ").", t);
                     status = STATUS_ERROR;
                     statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
                 } finally {
                     try {
-                        if (urlCon != null && urlCon instanceof HttpURLConnection) {
+                        if (urlCon instanceof HttpURLConnection) {
                             if (log.isDebugEnabled()) {
                                 log.debug("Close '" + urlCon.getURL() + "' regulary.");
                             }
@@ -413,7 +413,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                 if (log.isDebugEnabled()) {
                     log.debug("Close '" + con.getURL() + "' by watch thread after " + timeout + " ms.");
                 }
-                if (con != null && con instanceof HttpURLConnection) {
+                if (con instanceof HttpURLConnection) {
                     ((HttpURLConnection) con).disconnect();
                 }
             } catch (Exception e) {

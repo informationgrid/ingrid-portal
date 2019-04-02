@@ -56,8 +56,9 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ChronicleSearchPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ChronicleSearchPortlet.class);
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
         setTopic(Settings.MSG_TOPIC_CHRONICLE);
@@ -65,6 +66,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -108,7 +110,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         ChronicleSearchForm af = (ChronicleSearchForm) Utils.getActionForm(request, ChronicleSearchForm.SESSION_KEY,
                 ChronicleSearchForm.class, PortletSession.APPLICATION_SCOPE);
         // if no initial rubric selection set, set it and initialize the form (first instantiation)
-        if (ChronicleSearchForm.getINITIAL_EVENT_TYPES().length() == 0) {
+        if (ChronicleSearchForm.getInitialEventTypes().length() == 0) {
             // compute initial selection string for all event types and initialize selection
             ChronicleSearchForm.setInitialSelectedEventTypes(eventTypes);
             af.init();
@@ -155,6 +157,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         // get our ActionForm for generating URL params from current form state
@@ -202,7 +205,7 @@ public class ChronicleSearchPortlet extends AbstractVelocityMessagingPortlet {
 
             try {
                 query = QueryStringParser.parse(inputTerm);
-            } catch (Throwable t) {
+            } catch (Exception t) {
                 if (log.isWarnEnabled()) {
                     log.warn("Problems creating IngridQuery from input term: " + inputTerm, t);
                 }

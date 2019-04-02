@@ -39,7 +39,7 @@ import javax.portlet.PortletRequest;
  */
 public class AdminComponentMonitorForm extends ActionForm {
 
-	private final static Logger log = LoggerFactory.getLogger(AdminComponentMonitorForm.class);
+	private static final Logger log = LoggerFactory.getLogger(AdminComponentMonitorForm.class);
 
 	private static final long serialVersionUID = 8335389649101265303L;
 
@@ -104,10 +104,8 @@ public class AdminComponentMonitorForm extends ActionForm {
 		setInput(FIELD_TITLE, request.getParameter(FIELD_TITLE));
 		setInput(FIELD_ID, request.getParameter(FIELD_ID));
 		setInput(FIELD_TYPE, request.getParameter(FIELD_TYPE));
-		//setInput(FIELD_QUERY, request.getParameter(FIELD_QUERY));
 		setInput(FIELD_INTERVAL, request.getParameter(FIELD_INTERVAL));
 		setInput(FIELD_TIMEOUT, request.getParameter(FIELD_TIMEOUT));
-		//setInput(FIELD_SERVICE_URL, request.getParameter(FIELD_SERVICE_URL));
 		setInput(FIELD_QUERY, request.getParameter(FIELD_QUERY));
 		setInput(FIELD_SERVICE_URL, request.getParameter(FIELD_SERVICE_URL));
 		setInput(FIELD_EXCLUDED_PROVIDER, request.getParameter(FIELD_EXCLUDED_PROVIDER));
@@ -212,7 +210,7 @@ public class AdminComponentMonitorForm extends ActionForm {
 					}
 				}
 			}
-		} catch (Throwable t) {
+		} catch (Exception t) {
 			if (log.isErrorEnabled()) {
 				log.error("Error validating input.", t);
 			}

@@ -94,16 +94,16 @@ public class MdekDbMigrator {
     }
 
     private String getVersionFromDB(DataSource ds) {
-        try {
+        try (
             PreparedStatement statement = ds.getConnection().prepareStatement( "SELECT value_name FROM info WHERE key_name='version'" );
-            ResultSet resultset;
-            resultset = statement.executeQuery();
+            ResultSet resultset = statement.executeQuery();
+        ){
+            
             if (resultset.next()) {
                 return resultset.getString( "value_name" );
             }
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error on getVersionFromDB.", e);
         }
         return null;
     }

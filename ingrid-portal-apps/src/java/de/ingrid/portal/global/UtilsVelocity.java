@@ -45,37 +45,26 @@ public class UtilsVelocity {
      * @return true if obj has content, false of not.
      */
     public static Boolean hasContent(Object obj) {
-        if (obj == null) {
-            return new Boolean(false);
-        }
-        
-        if (obj instanceof String) {
-            if (((String)obj).length() > 0) {
-            	if (!((String)obj).equals("null")) {
-                    return new Boolean(true);            		
-            	}
+        boolean hasContent = false;
+        if (obj != null) {
+            if (obj instanceof String && ((String)obj).length() > 0 && !((String)obj).equals("null")) {
+                hasContent = true;
             }
-        }
-        
-        if (obj instanceof List) {
-            if (!((List)obj).isEmpty()) {
-                return new Boolean(true);
+            
+            if (obj instanceof List && !((List)obj).isEmpty()) {
+                hasContent = true;
             }
-        }
-
-        if (obj instanceof HashMap) {
-            if (!((HashMap)obj).isEmpty()) {
-                return new Boolean(true);
+    
+            if (obj instanceof HashMap && !((HashMap)obj).isEmpty()) {
+                hasContent = true;
+            }
+    
+            if (obj instanceof Object[] && ((Object[])obj).length > 0) {
+                hasContent = true;
             }
         }
 
-        if (obj instanceof Object[]) {
-            if (((Object[])obj).length > 0) {
-                return new Boolean(true);
-            }
-        }
-
-        return new Boolean(false);
+        return hasContent;
     }
     
     public static String urlencode(String str) {

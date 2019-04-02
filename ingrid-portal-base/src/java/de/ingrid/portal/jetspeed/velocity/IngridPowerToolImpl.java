@@ -69,7 +69,7 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         Iterator<FragmentPreference> it = prefs.iterator();
         while (it.hasNext()) {
             FragmentPreference pref = it.next();
-            if (pref.getName().equals(key) && pref.getValueList() != null && pref.getValueList().size() > 0) {
+            if (pref.getName().equals(key) && pref.getValueList() != null && !pref.getValueList().isEmpty()) {
                 return pref.getValueList().get(0);
             }
         }
@@ -89,11 +89,12 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         return "";
     }
 
+    @Override
     public String getAbsoluteUrl(String relativePath) {
         // only rewrite a non-absolute url
         if (relativePath != null && relativePath.indexOf("://") == -1 && relativePath.indexOf("mailto:") == -1) {
             HttpServletRequest request = getRequestContext().getRequest();
-            StringBuffer path = new StringBuffer();
+            StringBuilder path = new StringBuilder();
             return renderResponse.encodeURL(path.append(request.getScheme()).append("://").append(
                     request.getServerName()).append(":").append(request.getServerPort()).append(
                     request.getContextPath()).append(request.getServletPath()).append(relativePath).toString());
@@ -110,7 +111,7 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
             try {
                 user = userManager.getUser(userName);
             } catch (SecurityException e) {
-                e.printStackTrace();
+                log.error("Error on getUserProperties.", e);
             }
             if (user != null) {
                 return user.getInfoMap();
@@ -126,7 +127,7 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
     public String htmlescapeAll(String s1) {
         if (s1 == null)
             return null;
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int i;
         for (i = 0; i < s1.length(); ++i) {
             char ch = s1.charAt(i);
@@ -146,7 +147,9 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         if (c != null) {
             for (LocalizedField entry : c) {
                 value = entry.getValue();
-                break;
+                if(value != null) {
+                    break;
+                }
             }
         }
         return value;

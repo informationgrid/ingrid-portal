@@ -51,15 +51,15 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
     private static final String XPATH_EXP_WCS_ACCESS_CONSTRAINTS = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:AccessConstraints";
     private static final String XPATH_EXP_WCS_ONLINE_RESOURCE = "/wcs11:Capabilities/ows11:ServiceProvider/ows11:ServiceContact/ows11:ContactInfo/ows11:OnlineResource";
 
-    private final static String XPATH_EXP_WCS_TITLE = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
-    private final static String XPATH_EXP_WCS_ABSTRACT = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
-    private final static String XPATH_EXP_WCS_VERSION = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
-    private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_TITLE = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Title[1]";
+    private static final String XPATH_EXP_WCS_ABSTRACT = "/wcs11:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
+    private static final String XPATH_EXP_WCS_VERSION = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:ServiceTypeVersion";
+    private static final String XPATH_EXP_WCS_OP_GET_CAPABILITIES_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_CAPABILITIES_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_DESCRIBE_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='DescribeCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_COVERAGE_GET_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCS_OP_GET_COVERAGE_POST_HREF = "/wcs11:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCoverage']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
     private static final String XPATH_EXP_WCS_KEYWORDS = "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:Keywords/ows11:Keyword";
 
     
@@ -94,20 +94,10 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
         // TODO: Resource Locator / Type
         // ...
         
-        // Spatial Data Type
-        //result.setDataServiceType(xPathUtils.getString(doc,  XPATH_EXP_WCS_SPATIAL_DATA_TYPE));
-        
-        // add Temporal References if available
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_CREATED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_PUBLISHED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_LAST_REVISION));
-        
         // Keywords
         List<String> keywords = getKeywords(doc, XPATH_EXP_WCS_KEYWORDS);
         
         // Extended - Keywords
-        //String[] extKeywords = xPathUtils.getStringArray(doc, XPATH_EXP_CSW_KEYWORDS_EXTENDED);
-        //keywords.addAll(Arrays.asList(extKeywords));
         // add found keywords to our result bean
         result.setKeywords(keywords);
         
@@ -115,7 +105,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
         result.setAddress(getAddress(doc));
         
      // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
 
         // Operation - GetCapabilities
@@ -128,7 +118,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("SERVICE=WCS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
@@ -149,7 +139,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
             describeCoverageOp.setName("DescribeCoverage");
             describeCoverageOp.setMethodCall("DescribeCoverage");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeCoverage", "Request name. Shall be DescribeCoverage", "", false, false));
             paramList.add(new OperationParameterBean("version=1.1.2", "Request protocol version", "", false, false));
@@ -168,7 +158,7 @@ public class Wcs11CapabilitiesParser extends GeneralCapabilitiesParser implement
             getCoverageOp.setName("GetCoverage");
             getCoverageOp.setMethodCall("GetCoverage");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCS", "Service name. Shall be WCS", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeCoverage", "Request name. Shall be GetCoverage", "", false, false));
             paramList.add(new OperationParameterBean("version=1.1.2", "Request protocol version", "", false, false));

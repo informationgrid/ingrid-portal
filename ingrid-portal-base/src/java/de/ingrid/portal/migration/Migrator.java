@@ -87,6 +87,9 @@ public class Migrator {
     private void backupPartner() {
         try (ResultSet resultSet = getPartner()) {
 
+            // finish when there's no resultset
+            if (resultSet.isClosed()) return;
+
             List<Element> partners = new ArrayList<>();
             while (resultSet.next()) {
                 partners.add(getPartnerEntry(resultSet));
@@ -143,6 +146,9 @@ public class Migrator {
 
     private void backupProvider() {
         try (ResultSet resultSet = getProvider()) {
+
+            // finish when there's no resultset
+            if (resultSet.isClosed()) return;
 
             List<Element> providers = new ArrayList<>();
             while (resultSet.next()) {

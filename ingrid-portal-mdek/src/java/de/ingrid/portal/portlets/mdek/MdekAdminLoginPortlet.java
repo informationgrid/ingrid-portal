@@ -66,31 +66,31 @@ import de.ingrid.utils.IngridDocument;
  */
 public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(MdekAdminLoginPortlet.class);
+    private static final Log log = LogFactory.getLog(MdekAdminLoginPortlet.class);
 
     // VIEW TEMPLATES
-    private final static String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_admin_login.vm";
+    private static final String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_admin_login.vm";
 
     // Possible Actions
     
     // NOT USED ANYMORE !!!!?
-//    private final static String PARAMV_ACTION_DO_LOGIN_ADMIN 	= "doLoginAdmin";
+//    private static final String PARAMV_ACTION_DO_LOGIN_ADMIN 	= "doLoginAdmin";
 
-    private final static String PARAMV_ACTION_DO_LOGIN_IGE 		= "doLoginIGE";
+    private static final String PARAMV_ACTION_DO_LOGIN_IGE 		= "doLoginIGE";
     // NOT USED ANYMORE !!!!?
 //    private enum ACTION {ADMIN_LOGIN, IGE_LOGIN, UNKNOWN};
-    private enum ACTION {IGE_LOGIN, UNKNOWN};
+    private enum ACTION {IGE_LOGIN, UNKNOWN}
 
     
-    private final static String CATALOG			= "CATALOG";
-    private final static String USER_OF_CATALOG = "USER_OF_CATALOG";
+    private static final String CATALOG			= "CATALOG";
+    private static final String USER_OF_CATALOG = "USER_OF_CATALOG";
     
     
     // Parameters set on init
     private IMdekClientCaller mdekClientCaller;
     private IMdekCallerCatalog mdekCallerCatalog;
 
-    
+    @Override
     public void init(PortletConfig config) throws PortletException {
     	super.init(config);
 
@@ -98,6 +98,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
 		this.mdekCallerCatalog = MdekCallerCatalog.getInstance();
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
     	Context context = getContext(request);
@@ -124,6 +125,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
@@ -240,9 +242,9 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	// query all connected iPlugs and return catalog info with users of catalog (only if catalog is already mapped in portal) ! 
 
     	// all catalogs mapped
-        List<Map<String, String>> catalogList = new ArrayList<Map<String,String>>();
+        List<Map<String, String>> catalogList = new ArrayList<>();
         // all users of according catalog
-        List<List> userLists = new ArrayList<List>();
+        List<List> userLists = new ArrayList<>();
 
         // query all connected iPlugs
     	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
@@ -250,10 +252,10 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
         	List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
         	
             // only process iPlug if we have mapped portal users (mdek database)
-        	if (userDataList != null && userDataList.size() != 0) {
+        	if (userDataList != null && !userDataList.isEmpty()) {
 
                 // get users that belong to the iPlug (are mdek user)
-                List<String> userList = new ArrayList<String>();
+                List<String> userList = new ArrayList<>();
                 for (UserData userData : userDataList) {
                     userList.add('"' + userData.getPortalLogin() + '"');
                 }
@@ -281,7 +283,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
         		}
 
     			// and add to mapped catalogs
-                HashMap<String, String> catalogData = new HashMap<String, String>();
+                HashMap<String, String> catalogData = new HashMap<>();
         		catalogData.put("plugId", plugId);
         		catalogData.put("catName", catName);
         		catalogList.add(catalogData);
@@ -293,7 +295,7 @@ public class MdekAdminLoginPortlet extends GenericVelocityPortlet {
     	
     	// put all necessary data in another hashmap
     	// NOTICE: Number of entries in lists have to be the same !
-        Map<String,List> dataContainer = new HashMap<String,List>();
+        Map<String,List> dataContainer = new HashMap<>();
     	dataContainer.put(USER_OF_CATALOG, userLists);
     	dataContainer.put(CATALOG, catalogList);
     	return dataContainer;

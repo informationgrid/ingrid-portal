@@ -62,19 +62,19 @@ import org.apache.jetspeed.security.SecurityException;
  */
 public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(MyPortalPasswordForgottenPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(MyPortalPasswordForgottenPortlet.class);
 
-    private static final String CTX_NEW_PASSWORD = "password";
+    private static final String CTX_NEW_PW = "password";
 
     private static final String CTX_USER_NAME = "username";
 
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
 
-    private static final String STATE_PASSWORD_SENT = "password_sent";
+    private static final String STATE_PW_SENT = "password_sent";
 
-    private static final String STATE_PASSWORD_NOT_SENT = "not_sent";
+    private static final String STATE_PW_NOT_SENT = "not_sent";
 
-    private static final String TEMPLATE_PASSWORD_DONE = "/WEB-INF/templates/myportal/myportal_password_forgotten_done.vm";
+    private static final String TEMPLATE_PW_DONE = "/WEB-INF/templates/myportal/myportal_password_forgotten_done.vm";
 
     private static final String USER_NOT_FOUND_FROM_EMAIL = "User not found for Email address: ";
 
@@ -88,6 +88,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -107,6 +108,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -122,14 +124,14 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
         if (cmd == null) {
             f.clear();
-        } else if (cmd.equals(STATE_PASSWORD_SENT)) {
+        } else if (cmd.equals(STATE_PW_SENT)) {
             context.put("success", "true");
             response.setTitle(messages.getString("password.sent.title"));
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_PASSWORD_DONE);
-        } else if (cmd.equals(STATE_PASSWORD_NOT_SENT)) {
+            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_PW_DONE);
+        } else if (cmd.equals(STATE_PW_NOT_SENT)) {
             context.put("success", "false");
             response.setTitle(messages.getString("password.problems.title"));
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_PASSWORD_DONE);
+            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, TEMPLATE_PW_DONE);
         }
 
         super.doView(request, response);
@@ -138,6 +140,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         actionResponse.setRenderParameter("cmd", request.getParameter("cmd"));
@@ -195,7 +198,6 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         
         if(user == null) {
             f.setError(PasswordForgottenForm.FIELD_EMAIL, "password.forgotten.error.emailNotExists");
-            return;
         } else {
             try {
                 String userName = user.getName();
@@ -205,10 +207,10 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         		credential.setPassword(null, newPassword);
         		userManager.storePasswordCredential(credential);
         
-        		Map<String, String> userAttributes = new HashMap<String, String>();
+        		Map<String, String> userAttributes = new HashMap<>();
         		userAttributes.putAll(user.getInfoMap());
                 // special attributes
-                userAttributes.put(CTX_NEW_PASSWORD, newPassword);
+                userAttributes.put(CTX_NEW_PW, newPassword);
                 userAttributes.put(CTX_USER_NAME, userName);
                 // map coded stuff
                 Locale locale = request.getLocale();
@@ -219,7 +221,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         
                 String language = locale.getLanguage();
                 String localizedTemplatePath = this.emailTemplate;
-                int period = localizedTemplatePath.lastIndexOf(".");
+                int period = localizedTemplatePath.lastIndexOf('.');
                 if (period > 0) {
                     String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
                             + localizedTemplatePath.substring(period + 1);
@@ -229,9 +231,9 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                     }
                 }
         
-                if (localizedTemplatePath == null) {
+                if (!localizedTemplatePath.isEmpty()) {
                     log.error("email template not available");
-                    actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
+                    actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
                     return;
                 }
         
@@ -239,17 +241,17 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         
                 String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
                         "foo@bar.com");
-                String to = (String) userAttributes.get("user.business-info.online.email");
+                String to = userAttributes.get("user.business-info.online.email");
                 String text = Utils.mergeTemplate(getPortletConfig(), userAttributes, "map", localizedTemplatePath);
                 if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-                    actionResponse.setRenderParameter("cmd", STATE_PASSWORD_SENT);
+                    actionResponse.setRenderParameter("cmd", STATE_PW_SENT);
                 } else {
-                    actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
+                    actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
                 }
         
             } catch (Exception e) {
                 log.error("error sending new password.", e);
-                actionResponse.setRenderParameter("cmd", STATE_PASSWORD_NOT_SENT);
+                actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
             }
         }
     }

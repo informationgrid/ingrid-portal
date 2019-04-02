@@ -39,6 +39,8 @@ import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.velocity.AbstractVelocityMessagingPortlet;
 import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.global.IngridPersistencePrefs;
@@ -53,11 +55,13 @@ import de.ingrid.portal.global.Utils;
  */
 public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
 
+    private static final Logger log = LoggerFactory.getLogger(MyPortalOverviewPortlet.class);
     private UserManager userManager;
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -71,6 +75,7 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
@@ -88,7 +93,7 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
             // initialize the session preference with persistent data from
             // personalization
             IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                    IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+                    IngridSessionPreferences.SESSION_KEY);
             if (sessionPrefs != null) {
                 Principal principal = request.getUserPrincipal();
                 if (principal != null) {
@@ -106,7 +111,7 @@ public class MyPortalOverviewPortlet extends AbstractVelocityMessagingPortlet {
         try {
             user = userManager.getUser(userName);
         } catch (SecurityException e) {
-            e.printStackTrace();
+            log.error("SecurityException.", e);
         }
 
         if (user != null) {

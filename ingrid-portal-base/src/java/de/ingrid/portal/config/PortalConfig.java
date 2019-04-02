@@ -41,7 +41,7 @@ public class PortalConfig extends PropertiesConfiguration {
        // private stuff
     private static PortalConfig instance = null;
 
-    private final static Logger log = LoggerFactory.getLogger(PortalConfig.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalConfig.class);
 
     public static synchronized PortalConfig getInstance() {
         if (instance == null) {

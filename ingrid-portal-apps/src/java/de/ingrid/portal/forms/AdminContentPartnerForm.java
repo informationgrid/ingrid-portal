@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class AdminContentPartnerForm extends ActionForm {
 
-    private final static Logger log = LoggerFactory.getLogger(AdminContentPartnerForm.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminContentPartnerForm.class);
 
     private static final long serialVersionUID = 8335389649101260309L;
 
@@ -68,7 +68,7 @@ public class AdminContentPartnerForm extends ActionForm {
         clear();
         String[] ids = request.getParameterValues(PARAM_ID);
         if (ids != null) {
-            setInput("numEntities", new Integer(ids.length).toString());
+            setInput("numEntities", Integer.toString(ids.length));
             for (int i = 0; i < ids.length; i++) {
                 setInput(PARAM_ID + i, ids[i]);
                 setInput(FIELD_IDENT + i, request.getParameter(FIELD_IDENT + i));
@@ -89,7 +89,7 @@ public class AdminContentPartnerForm extends ActionForm {
         try {
             String numEntities = getInput("numEntities");
             if (numEntities != null) {
-                int intNumEntities = new Integer(numEntities).intValue();
+                int intNumEntities = Integer.parseInt(numEntities);
                 String fieldName = "";
                 ArrayList newIdents = new ArrayList(intNumEntities);
                 for (int i = 0; i < intNumEntities; i++) {
@@ -112,6 +112,7 @@ public class AdminContentPartnerForm extends ActionForm {
                             try {
                                 id = new Long(getInput(PARAM_ID + i));
                             } catch (Exception ex) {
+                                log.error("Error on validate.", ex);
                             }
                             Session session = HibernateUtil.currentSession();
                             Criteria crit = session.createCriteria(IngridPartner.class).add(
@@ -135,7 +136,7 @@ public class AdminContentPartnerForm extends ActionForm {
                     }
                 }
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Error validating input.", t);
             }

@@ -55,7 +55,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class SNSUpdateJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 
-	private final static Logger log = Logger.getLogger(SNSUpdateJob.class);	
+	private static final Logger log = Logger.getLogger(SNSUpdateJob.class);	
 
 	private static final String JOB_BASE_NAME = "snsUpdateJob_";
 	private final String plugId;
@@ -68,16 +68,12 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
     private Locale locale;
 
-    //private String urlThesaurus;
-
-
 	// No args constructor is required for the job to be scheduled by quartz
 	public SNSUpdateJob() {
 		this.plugId = null;
 		this.jobName = null;
 		this.jobDetail = null;
 		this.cancelJob = false;
-		//this.urlThesaurus = ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus");
 	}
 
 	public SNSUpdateJob(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
@@ -91,17 +87,16 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	private JobDetail createJobDetail(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
-		JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, SNSUpdateJob.class);
+		JobDetail jd = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, SNSUpdateJob.class);
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("SNS_SERVICE", snsService);
 		jobDataMap.put("CONNECTION_FACADE", connectionFacade);
 		jobDataMap.put("PLUG_ID", connectionFacade.getCurrentPlugId());
 		jobDataMap.put("USER_ID", MdekSecurityUtils.getCurrentUserUuid());
 		jobDataMap.put("LOCALE", new Locale( lang ));
-		//jobDataMap.put("URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
-		jobDetail.setJobDataMap(jobDataMap);
+		jd.setJobDataMap(jobDataMap);
 
-		return jobDetail;
+		return jd;
 	}
 
 	public boolean start(Scheduler scheduler) throws SchedulerException {
@@ -125,11 +120,10 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
 			SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
 			ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
-			String plugId = mergedJobDataMap.getString("PLUG_ID");
+			String pId = mergedJobDataMap.getString("PLUG_ID");
 			String userId = mergedJobDataMap.getString("USER_ID");
 			locale = (Locale) mergedJobDataMap.get("LOCALE");
-			//urlThesaurus = mergedJobDataMap.getString("URL_THESAURUS");
-			List<String> freeTerms = fetchFreeTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
+			List<String> freeTerms = fetchFreeTopics(connectionFacade.getMdekCallerCatalog(), pId, userId);
 	
 			log.debug("Starting sns update...");
 			long startTime = System.currentTimeMillis();
@@ -138,33 +132,35 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			// Filter the list of sns topics according to the changed/expired lists
 			// Update all topics that were found.
 			// Changed topics are updated, expired topics are removed and added as free terms
-			List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
-	
-			jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
-			jobExecutionContext.put("NUM_TOTAL", snsTopics.size() + freeTerms.size());
-
-			log.debug("changed topic matches: " + snsTopics.size());
-			List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopics, jobExecutionContext);
-	
-			List<SNSTopic> snsTopicsToExpire = filterExpired(snsTopicsResult);
-			
-			log.debug("expired topic matches: " + snsTopicsToExpire.size());
-			log.debug("total free terms: " + freeTerms.size());
-
-			List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
-	
-			long endTime = System.currentTimeMillis();
-			log.debug("SNS Update took "+(endTime - startTime)+" ms.");
-	
-			if (!cancelJob) {
-				JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
-				jobExecutionContext.setResult(jobResult);
-	
-				connectionFacade.getMdekCallerCatalog().updateSearchTerms(
-						plugId,
-						MdekMapper.mapFromThesTermTable(jobResult.getOldTopics()),
-						MdekMapper.mapFromThesTermTable(jobResult.getNewTopics()),
-						userId);
+			List<SNSTopic> snsTopics = fetchSNSTopics(connectionFacade.getMdekCallerCatalog(), pId, userId);
+			if(!snsTopics.isEmpty()) {
+    			jobExecutionContext.put("NUM_PROCESSED", 0);
+    			jobExecutionContext.put("NUM_TOTAL", snsTopics.size() + freeTerms.size());
+    
+    			log.debug("changed topic matches: " + snsTopics.size());
+    			List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopics, jobExecutionContext);
+    	
+    			List<SNSTopic> snsTopicsToExpire = filterExpired(snsTopicsResult);
+    			if(!snsTopicsToExpire.isEmpty()) {
+        			log.debug("expired topic matches: " + snsTopicsToExpire.size());
+        			log.debug("total free terms: " + freeTerms.size());
+        
+        			List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
+        	
+        			long endTime = System.currentTimeMillis();
+        			log.debug("SNS Update took "+(endTime - startTime)+" ms.");
+        	
+        			if (!cancelJob) {
+        				JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
+        				jobExecutionContext.setResult(jobResult);
+        	
+        				connectionFacade.getMdekCallerCatalog().updateSearchTerms(
+        						pId,
+        						MdekMapper.mapFromThesTermTable(jobResult.getOldTopics()),
+        						MdekMapper.mapFromThesTermTable(jobResult.getNewTopics()),
+        						userId);
+        			}
+    			}
 			}
 		} catch (Exception e) {
 			log.error("Error during SNS Update.", e);
@@ -175,8 +171,8 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	private static JobResult createJobResult(List<SNSTopic> modTopics, List<SNSTopic> modResultTopics,
 			List<SNSTopic> expiredTopics, List<String> freeTerms, List<SNSTopic> descriptorsForFreeTerms) {
 
-		List<SNSTopic> oldTopics = new ArrayList<SNSTopic>();
-		List<SNSTopic> newTopics = new ArrayList<SNSTopic>();
+		List<SNSTopic> oldTopics = new ArrayList<>();
+		List<SNSTopic> newTopics = new ArrayList<>();
 
 		// Check if the newly found topics differ from the old ones
 		removeIdenticalTopics(modTopics, modResultTopics);
@@ -233,7 +229,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	private static boolean isEqual(String s1, String s2) {
-		return s1 != null ? s1.equals(s2) : s1 == s2;
+		return s1.equals(s2);
 	}
 
 	private static void removeUnknownTerms(List<String> freeTerms, List<SNSTopic> topics) {
@@ -241,8 +237,6 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		Iterator<SNSTopic> topicsIt = topics.iterator();
 
 		while (freeTermsIt.hasNext()) {
-			@SuppressWarnings("unused")
-            String freeTerm = freeTermsIt.next();
 			SNSTopic topic = topicsIt.next();
 			if (topic == null) {
 				freeTermsIt.remove();
@@ -252,7 +246,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	private static List<SNSTopic> convertToSNSTopics(List<String> terms) {
-		List<SNSTopic> topics = new ArrayList<SNSTopic>();
+		List<SNSTopic> topics = new ArrayList<>();
 		for (String term : terms) {
 			SNSTopic topic = new SNSTopic();
 			topic.setSource(Source.FREE);
@@ -266,7 +260,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	private List<String> fetchFreeTopics(IMdekCallerCatalog mdekCallerCatalog, String plugId, String userId) {
 		List<SNSTopic> snsTopics = fetchTopics(mdekCallerCatalog, plugId, userId, new SearchtermType[] { SearchtermType.FREI });
 
-		List<String> topics = new ArrayList<String>();
+		List<String> topics = new ArrayList<>();
 
 		if (snsTopics != null) {
 			for (SNSTopic topic : snsTopics) {
@@ -294,26 +288,24 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
 		} else {
 			MdekErrorUtils.handleError(response);
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
 	private List<SNSTopic> filterExpired(List<SNSTopic> snsTopics) {
-		if (snsTopics != null) {
-			List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+	    List<SNSTopic> resultList = new ArrayList<>();
+        if (snsTopics != null) {
 			for (SNSTopic topic : snsTopics) {
 				if (topic != null && topic.isExpired()) {
 					resultList.add(topic);
 				}
 			}
-			return resultList;
-
 		} 
-		return null;
+		return resultList;
 	}
 
 	private List<SNSTopic> updateChangedTopics(SNSService snsService, List<SNSTopic> snsTopics, JobExecutionContext jobExecutionContext) {
-		List<SNSTopic> newTopics = new ArrayList<SNSTopic>(snsTopics.size());
+		List<SNSTopic> newTopics = new ArrayList<>(snsTopics.size());
 		for (SNSTopic oldTopic : snsTopics) {
 			if (cancelJob) {
 				break;
@@ -323,9 +315,6 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			SNSTopic newTopic;
 			try {
 			    String topicId = oldTopic.getTopicId();
-//			    if (!topicId.startsWith( "http" )) {
-//			        topicId = urlThesaurus + "_000" + topicId.substring( topicId.lastIndexOf( "_" ) + 1 );
-//			    }
 				newTopic = getSNSTopicForTopicId(snsService, topicId);
 	
 				if (newTopic == null) {
@@ -355,7 +344,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	// Query the SNS for a given topicId
 	// Returns null if no DESCRIPTOR could be found
 	// Throws an exception if something went wrong while communicating with the sns
-	private SNSTopic getSNSTopicForTopicId(SNSService snsService, String topicId) throws Exception {
+	private SNSTopic getSNSTopicForTopicId(SNSService snsService, String topicId) {
 		SNSTopic snsTopic = snsService.getPSI(topicId, locale);
 		if (snsTopic != null && snsTopic.getType().equals(Type.DESCRIPTOR)) {
 			return snsTopic;
@@ -389,7 +378,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	private List<SNSTopic> updateFreeTerms(SNSService snsService, List<String> freeTerms, JobExecutionContext jobExecutionContext) {
-		List<SNSTopic> foundTopics = new ArrayList<SNSTopic>();
+		List<SNSTopic> foundTopics = new ArrayList<>();
 		for (String freeTerm : freeTerms) {
 			if (cancelJob) {
 				break;
@@ -461,11 +450,9 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			scheduler.interrupt(jobName, Scheduler.DEFAULT_GROUP);
 			scheduler.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
 
-		} catch (UnableToInterruptJobException ex) {
-			log.error("Error interrupting SNS Update job.", ex);
-		
 		} catch (SchedulerException ex) {
 			log.error("Error interrupting SNS Update job.", ex);
+		
 		}
  
 	}

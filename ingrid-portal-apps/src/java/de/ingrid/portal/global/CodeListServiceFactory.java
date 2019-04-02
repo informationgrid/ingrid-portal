@@ -32,6 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CodeListServiceFactory {
+    
+    private CodeListServiceFactory() {
+        throw new IllegalStateException("CodeListServiceFactory class");
+    }
 
     private static CodeListService instance;
     

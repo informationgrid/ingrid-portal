@@ -50,7 +50,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class DetailDataPreparerHelper {
 
-	public static void getUDKAddressParents(HashMap result, String addrId, String iPlugId) throws Exception {
+	public static void getUDKAddressParents(HashMap result, String addrId, String iPlugId) {
         // get id of the address
         String addressId = addrId;
         // set initial address type to 1
@@ -94,9 +94,9 @@ public class DetailDataPreparerHelper {
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
-        ArrayList result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
+        List result = getHits("T022_adr_adr.adr_to_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, filter);
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return (IngridHit) result.get(0);
         } else {
             return null;
@@ -111,15 +111,15 @@ public class DetailDataPreparerHelper {
     	return IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId);
     }
     
-    public static ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumHits) {
+    public static List getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumHits) {
     	return IPlugHelperDscEcs.getHits(queryStr, requestedMetaData, filter, maxNumHits);
     }
     
-    public static ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
+    public static List getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
     	return IPlugHelperDscEcs.getHits(queryStr, requestedMetaData, filter);
     }
     
-    public static ArrayList getAddressChildren(String addrId, String iPlugId) {
+    public static List getAddressChildren(String addrId, String iPlugId) {
     	return IPlugHelperDscEcs.getAddressChildren(addrId, iPlugId);
     }
     
@@ -158,26 +158,24 @@ public class DetailDataPreparerHelper {
             }
 
             for (int j = 0; j < columns.length; j++) {
-				if (!columns[j].getType().equals(Column.BINARY)) {
-					if (columns[j].toIndex()) {
-						String columnName = columns[j].getTargetName();
-						if (!columnName.equals(UtilsFileHelper.FILE_TITLE) && !columnName.equals(UtilsFileHelper.MIME)){
-							columnName = columnName.toLowerCase();
-							
-							if (dateFields.contains(columnName)) {
-								subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
-							} else if (replacementFields.containsKey(columnName)) {
-								// replace value according to translation config
-								Map transMap = (Map) replacementFields.get(columnName);
-								String src = subRecords[i].getValueAsString(columns[j]).trim();
-								if (transMap.containsKey(src)) {
-									subRecordMap.put(columnName, transMap.get(src));
-								} else {
-									subRecordMap.put(columnName, src);
-								}
+				if (!columns[j].getType().equals(Column.BINARY) && columns[j].toIndex()) {
+					String columnName = columns[j].getTargetName();
+					if (!columnName.equals(UtilsFileHelper.FILE_TITLE) && !columnName.equals(UtilsFileHelper.MIME)){
+						columnName = columnName.toLowerCase();
+						
+						if (dateFields.contains(columnName)) {
+							subRecordMap.put(columnName, UtilsDate.parseDateToLocale(subRecords[i].getValueAsString(columns[j]).trim(), locale));
+						} else if (replacementFields.containsKey(columnName)) {
+							// replace value according to translation config
+							Map transMap = (Map) replacementFields.get(columnName);
+							String src = subRecords[i].getValueAsString(columns[j]).trim();
+							if (transMap.containsKey(src)) {
+								subRecordMap.put(columnName, transMap.get(src));
 							} else {
-								subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n", "<br />"));
+								subRecordMap.put(columnName, src);
 							}
+						} else {
+							subRecordMap.put(columnName, subRecords[i].getValueAsString(columns[j]).trim().replaceAll("\n", "<br />"));
 						}
 					}
 				}
@@ -258,10 +256,8 @@ public class DetailDataPreparerHelper {
             if (hash.get(key) instanceof ArrayList) {
                 ArrayList array = (ArrayList) hash.get(key);
                 for (int i = 0; i < array.size(); i++) {
-                    if (array.get(i) instanceof HashMap) {
-                        if (setFieldFromHashTree((HashMap) array.get(i), fieldName, value)) {
-                            return true;
-                        }
+                    if (array.get(i) instanceof HashMap && setFieldFromHashTree((HashMap) array.get(i), fieldName, value)) {
+                        return true;
                     }
                 }
             }

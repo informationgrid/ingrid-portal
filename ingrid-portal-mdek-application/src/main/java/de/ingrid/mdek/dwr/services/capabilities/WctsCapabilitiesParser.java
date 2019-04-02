@@ -51,36 +51,35 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
     
     private static final String XPATH_EXP_WCTS_FEES = "/wcts:Capabilities/owsgeo:ServiceIdentification/owsgeo:Fees";
     private static final String XPATH_EXP_WCTS_ACCESS_CONSTRAINTS = "/wcts:Capabilities/owsgeo:ServiceIdentification/owsgeo:AccessConstraints";
-    //private static final String XPATH_EXP_WCTS_ONLINE_RESOURCE = "/wcts:";
     private static final String XPATH_EXP_WCTS_KEYWORDS = "/wcts:Capabilities/owsgeo:ServiceIdentification/owsgeo:Keywords/owsgeo:Keyword";
 
-    private final static String XPATH_EXP_WCTS_TITLE = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Title[1]";
-    private final static String XPATH_EXP_WCTS_ABSTRACT = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Abstract[1]";
-    private final static String XPATH_EXP_WCTS_VERSION = "/wcts:Capabilities/@version";
+    private static final String XPATH_EXP_WCTS_TITLE = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Title[1]";
+    private static final String XPATH_EXP_WCTS_ABSTRACT = "/wcts:Capabilities/owsgeo:ServiceIdentification[1]/owsgeo:Abstract[1]";
+    private static final String XPATH_EXP_WCTS_VERSION = "/wcts:Capabilities/@version";
 
-    private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_CAPABILITIES_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetCapabilities']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_TRANSFORM_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_TRANSFORM_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='Transform']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_IS_TRANSFORMABLE_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='IsTransformable']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_TRANSFORMATION_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeTransformation']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_GET_RESOURCE_BY_ID_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='GetResourceByID']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_CRS_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeCRS']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_GET_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WCTS_OP_DESCRIBE_METHOD_POST_HREF = "/wcts:Capabilities/owsgeo:OperationsMetadata[1]/owsgeo:Operation[@name='DescribeMethod']/owsgeo:DCP[1]/owsgeo:HTTP[1]/owsgeo:Post[1]/@xlink:href";
     private static final String XPATH_EXT_WCTS_SERVICECONTACT = "/wcts:Capabilities/owsgeo:ServiceProvider/owsgeo:ServiceContact";
 
     private Map<String, Integer> versionSyslistMap;
@@ -88,7 +87,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
     public WctsCapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new WctsNamespaceContext()), syslistCache);
         
-        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "1.0", 1 );
     }
     
@@ -115,26 +114,11 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
         // Access Constraints
         result.setAccessConstraints(getNodesContentAsList(doc, XPATH_EXP_WCTS_ACCESS_CONSTRAINTS));
         
-        // Online Resources
-        //result.setOnlineResources(getOnlineResources(doc, XPATH_EXP_WCTS_ONLINE_RESOURCE));
-
         // TODO: Resource Locator / Type
         // ...
         
-        // Spatial Data Type
-        //result.setDataServiceType(xPathUtils.getString(doc,  XPATH_EXP_WCS_SPATIAL_DATA_TYPE));
-        
-        // add Temporal References if available
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_CREATED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_PUBLISHED));
-        //result.addTimeReference(mapToTimeReferenceBean(doc, XPATH_EXP_WCS_DATE_LAST_REVISION));
-        
-        // Keywords
         List<String> keywords = getKeywords(doc, XPATH_EXP_WCTS_KEYWORDS);
         
-        // Extended - Keywords
-        //String[] extKeywords = xPathUtils.getStringArray(doc, XPATH_EXP_CSW_KEYWORDS_EXTENDED);
-        //keywords.addAll(Arrays.asList(extKeywords));
         // add found keywords to our result bean
         result.setKeywords(keywords);
         
@@ -142,7 +126,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
         result.setAddress(getAddress(doc));
         
         // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = mapToOperationBean(doc,
@@ -152,7 +136,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("SERVICE=WCTS", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
@@ -171,7 +155,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             transformOp.setName("Transform");
             transformOp.setMethodCall("Transform");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
             paramList.add(new OperationParameterBean("request=Transform", "Operation name", "", false, false));
             paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
@@ -195,7 +179,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             isTransformableOp.setName("IsTransformable");
             isTransformableOp.setMethodCall("IsTransformable");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
             paramList.add(new OperationParameterBean("request=IsTransformable", "Operation name", "", false, false));
             paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
@@ -218,7 +202,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             getTransformationOp.setName("GetTransformation");
             getTransformationOp.setMethodCall("GetTransformation");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
             paramList.add(new OperationParameterBean("request=GetTransformation", "Operation name", "", false, false));
             paramList.add(new OperationParameterBean("version=0.0.20", "Specification and schema version for this operation", "", false, false));
@@ -237,7 +221,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             describeTransformationOp.setName("DescribeTransformation");
             describeTransformationOp.setMethodCall("DescribeTransformation");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeTransformation", "Operation name", "", false, false));
             paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
@@ -254,7 +238,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
         	getResourceByIdOp.setName("GetResourceById");
         	getResourceByIdOp.setMethodCall("GetResourceByID");
         	
-        	List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+        	List<OperationParameterBean> paramList = new ArrayList<>();
         	paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
         	paramList.add(new OperationParameterBean("request=GetResourceByID", "Operation name", "", false, false));
         	paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
@@ -271,7 +255,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             describeCRSOp.setName("DescribeCRS");
             describeCRSOp.setMethodCall("DescribeCRS");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeCRS", "Operation name", "", false, false));
             paramList.add(new OperationParameterBean("version=0.0.0", "Specification and schema version for this operation", "", false, false));
@@ -288,7 +272,7 @@ public class WctsCapabilitiesParser extends GeneralCapabilitiesParser implements
             describeMethodOp.setName("DescribeMethod");
             describeMethodOp.setMethodCall("DescribeMethod");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=WCTS", "Service type identifier", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeMethod", "Operation name", "", false, false));
             paramList.add(new OperationParameterBean("version=0.0.20", "Specification and schema version for this operation", "", false, false));

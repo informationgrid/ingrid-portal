@@ -34,21 +34,21 @@ import de.ingrid.mdek.services.persistence.db.IGenericDao;
 
 public class DaoFactory implements IDaoFactory {
 
-    private final SessionFactory _sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    DaoFactory(SessionFactory sessionFactory) {
-        _sessionFactory = sessionFactory;
+    DaoFactory(SessionFactory sf) {
+        sessionFactory = sf;
     }
 
     public IGenericDao<IEntity> getDao(Class clazz) {
 		IGenericDao dao = null;
 
 		if (clazz.isAssignableFrom(HelpMessage.class)) {
-			dao = new GenericHibernateDao<HelpMessage>(_sessionFactory, HelpMessage.class);
+			dao = new GenericHibernateDao<HelpMessage>(sessionFactory, HelpMessage.class);
 		} else if (clazz.isAssignableFrom(UserData.class)) {
-			dao = new GenericHibernateDao<UserData>(_sessionFactory, UserData.class);
+			dao = new GenericHibernateDao<UserData>(sessionFactory, UserData.class);
 		} else if (clazz.isAssignableFrom(RepoUser.class)) {
-            dao = new GenericHibernateDao<RepoUser>(_sessionFactory, RepoUser.class);
+            dao = new GenericHibernateDao<RepoUser>(sessionFactory, RepoUser.class);
 		} else {
 			throw new IllegalArgumentException("Unsupported class: " + clazz.getName());
 		}

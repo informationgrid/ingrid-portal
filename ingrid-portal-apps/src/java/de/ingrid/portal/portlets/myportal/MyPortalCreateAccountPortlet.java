@@ -51,7 +51,7 @@ import java.util.*;
  */
 public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(MyPortalCreateAccountPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(MyPortalCreateAccountPortlet.class);
 
     private static final String STATE_ACCOUNT_CREATED = "account_created";
 
@@ -98,6 +98,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -120,7 +121,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
         // rules (name,value pairs)
         List<String> names = getInitParameterList(config, IP_RULES_NAMES);
         List<String> values = getInitParameterList(config, IP_RULES_VALUES);
-        rules = new HashMap<String, String>();
+        rules = new HashMap<>();
         for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
         // jetspeed 2.3 reads rule key/values vice versa than Jetspeed 2.1 !!!
         // see PortalAdministrationImpl.registerUser
@@ -138,6 +139,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -206,6 +208,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
@@ -224,7 +227,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
         try {
             String userName = f.getInput(CreateAccountForm.FIELD_LOGIN);
-            String password = f.getInput(CreateAccountForm.FIELD_PASSWORD);
+            String password = f.getInput(CreateAccountForm.FIELD_PW);
 
             // check if the user name exists
             boolean userIdExistsFlag = true;
@@ -238,7 +241,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
                 return;
             }
 
-            Map<String, String> userAttributes = new HashMap<String, String>();
+            Map<String, String> userAttributes = new HashMap<>();
             // we'll assume that these map back to PLT.D values
             userAttributes.put("user.name.prefix", f.getInput(CreateAccountForm.FIELD_SALUTATION));
             userAttributes.put("user.name.given", f.getInput(CreateAccountForm.FIELD_FIRSTNAME));
@@ -286,7 +289,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             String returnUrl = generateReturnURL(request, actionResponse, userName, confirmId);
 
-            HashMap<String, String> userInfo = new HashMap<String, String>(userAttributes);
+            HashMap<String, String> userInfo = new HashMap<>(userAttributes);
             userInfo.put("returnURL", returnUrl);
             // map coded stuff
             String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
@@ -295,7 +298,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             String language = locale.getLanguage();
             String localizedTemplatePath = this.emailTemplate;
-            int period = localizedTemplatePath.lastIndexOf(".");
+            int period = localizedTemplatePath.lastIndexOf('.');
             if (period > 0) {
                 String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
                         + localizedTemplatePath.substring(period + 1);
@@ -315,7 +318,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
                     "foo@bar.com");
-            String to = (String) userInfo.get("user.business-info.online.email");
+            String to = userInfo.get("user.business-info.online.email");
             String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
             if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
             	actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_CREATED);
@@ -324,7 +327,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
             }
 
         } catch (JetspeedException e) {
-            e.printStackTrace();
+            log.error("JetspeedException." , e);
             actionResponse.setRenderParameter("cmd", STATE_ACCOUNT_PROBLEMS);
         }
     }
@@ -332,7 +335,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
     protected List<String> getInitParameterList(PortletConfig config, String ipName) {
         String temp = config.getInitParameter(ipName);
         if (temp == null)
-            return new ArrayList<String>();
+            return new ArrayList<>();
 
         String[] temps = temp.split("\\,");
         for (int ix = 0; ix < temps.length; ix++)

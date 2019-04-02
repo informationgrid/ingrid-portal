@@ -51,11 +51,12 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
+    private static final Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
 
     private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id", "bawAuftragsnummer", "simProcess", "simModelType" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init( config );
     }
@@ -138,6 +139,7 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
 
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext( request );
         IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
@@ -160,6 +162,7 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
         super.doView( request, response );
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
 
     }

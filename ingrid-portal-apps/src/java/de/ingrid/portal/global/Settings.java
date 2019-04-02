@@ -36,41 +36,37 @@ public class Settings {
     // ===========================================
 
     /** number of ranked hits per page */
-    public final static int SEARCH_RANKED_HITS_PER_PAGE = 10;
+    public static final int SEARCH_RANKED_HITS_PER_PAGE = 10;
 
     /** number of ranked pages displayed for selection ("selector pages") */
-    public final static int SEARCH_RANKED_NUM_PAGES_TO_SELECT = 5;
+    public static final int SEARCH_RANKED_NUM_PAGES_TO_SELECT = 5;
 
-    /* max. number of hits displayed for every iPlug (in unranked search) */
-    // NOT NEEDED ANYMORE, WE ALWAYS DISPLAY ONE HIT PER GROUP !
-//    public final static int SEARCH_NUM_HITS_PER_GROUP = 3;
-
-    public final static String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
+    public static final String SEARCH_INITIAL_DATASOURCE = Settings.PARAMV_DATASOURCE_ENVINFO;
 
     /** maximum length of a row without white space in the left columnn, KEEP 80 ! depends on Characters, Uppercase takes 50 ! */
-    public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 50;
+    public static final int SEARCH_RANKED_MAX_ROW_LENGTH = 50;
     
     // ===========================================
     // PSML pages
     // ===========================================
 
     /** main-search page -> displays and handles simple search, also with results */
-    public final static String PAGE_SEARCH_RESULT = "/portal/main-search.psml";
+    public static final String PAGE_SEARCH_RESULT = "/portal/main-search.psml";
 
     /** main-service page -> service catalogue, also displays results */
-    public final static String PAGE_SERVICE = "/portal/main-service.psml";
+    public static final String PAGE_SERVICE = "/portal/main-service.psml";
 
     /** main-measures page -> measures catalogue, also displays results */
-    public final static String PAGE_MEASURES = "/portal/main-measures.psml";
+    public static final String PAGE_MEASURES = "/portal/main-measures.psml";
 
     /** main-environment page -> environment catalogue, also displays results */
-    public final static String PAGE_ENVIRONMENT = "/portal/main-environment.psml";
+    public static final String PAGE_ENVIRONMENT = "/portal/main-environment.psml";
 
     /** main-chronicle page -> environment chronicle, also displays results */
-    public final static String PAGE_CHRONICLE = "/portal/main-chronicle.psml";
+    public static final String PAGE_CHRONICLE = "/portal/main-chronicle.psml";
 
     /** contact page */
-    public final static String PAGE_CONTACT = "/portal/service-contact.psml";
+    public static final String PAGE_CONTACT = "/portal/service-contact.psml";
 
     // ===========================================
     // IngridQuery
@@ -79,30 +75,30 @@ public class Settings {
     // ------------- query field names -----------------------------
 
     // grouped Field
-    public final static String QFIELD_GROUPED = "grouped";
+    public static final String QFIELD_GROUPED = "grouped";
 
-    public final static String QFIELD_PARTNER = "partner";
+    public static final String QFIELD_PARTNER = "partner";
     public static final String QFIELD_PROVIDER = "provider";
 
     public static final String QFIELD_WWW_DOMAIN = "site";
     public static final String QFIELD_PLUG_ID = "plugid";
-    public final static String QFIELD_DATATYPE = IngridQuery.DATA_TYPE;
+    public static final String QFIELD_DATATYPE = IngridQuery.DATA_TYPE;
     public static final String QFIELD_METACLASS = "metaclass";
 
     // "service", "measures"; rubric
-    public final static String QFIELD_RUBRIC = "topic";
+    public static final String QFIELD_RUBRIC = "topic";
 
     // "environment topics": first category
-    public final static String QFIELD_TOPIC = "topic";
+    public static final String QFIELD_TOPIC = "topic";
 
     // "environment chronicle": event type
-    public final static String QFIELD_EVENT_TYPE = "eventtype";
+    public static final String QFIELD_EVENT_TYPE = "eventtype";
     // "environment chronicle", ...: at date
-    public final static String QFIELD_DATE_AT = "t0";
+    public static final String QFIELD_DATE_AT = "t0";
     // "environment chronicle", ...: from date
-    public final static String QFIELD_DATE_FROM = "t1";
+    public static final String QFIELD_DATE_FROM = "t1";
     // "environment chronicle", ...: to date
-    public final static String QFIELD_DATE_TO = "t2";
+    public static final String QFIELD_DATE_TO = "t2";
 
     // search settings: search sns metadata as well
     public static final String QFIELD_INCL_META = "incl_meta";
@@ -114,44 +110,52 @@ public class Settings {
 
     // datatype: area types
     // --------------------
-    public final static String QVALUE_DATATYPE_AREA_SERVICE = "service";
-    public final static String QVALUE_DATATYPE_AREA_MEASURES = "measure";
-    public final static String QVALUE_DATATYPE_AREA_ENVTOPICS = "topics";
-    public final static String QVALUE_DATATYPE_AREA_ENVINFO = "default";
-    public final static String QVALUE_DATATYPE_AREA_ADDRESS = "address";
-    public final static String QVALUE_DATATYPE_AREA_RESEARCH = "research";
+    public static final String QVALUE_DATATYPE_AREA_SERVICE = "service";
+    public static final String QVALUE_DATATYPE_AREA_MEASURES = "measure";
+    public static final String QVALUE_DATATYPE_AREA_ENVTOPICS = "topics";
+    public static final String QVALUE_DATATYPE_AREA_ENVINFO = "default";
+    public static final String QVALUE_DATATYPE_AREA_ADDRESS = "address";
+    public static final String QVALUE_DATATYPE_AREA_RESEARCH = "research";
     public static final String QVALUE_DATATYPE_AREA_LAW = "law";
     public static final String QVALUE_DATATYPE_AREA_CATALOG = "metadata";
-    public final static String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
+    private static final String[] QVALUES_DATATYPE_AREAS_BASIC = new String[] {
     	QVALUE_DATATYPE_AREA_ENVINFO,
     	QVALUE_DATATYPE_AREA_ADDRESS,
     	QVALUE_DATATYPE_AREA_RESEARCH,
     	QVALUE_DATATYPE_AREA_LAW
     };
+    
+    public static final String[] getQValuesDatatypesAreaBasic() {
+        return QVALUES_DATATYPE_AREAS_BASIC.clone();
+    }
 
     // datatype: source types
     // ----------------------
-    public final static String QVALUE_DATATYPE_SOURCE_WWW = "www";
-    public final static String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
-    public final static String QVALUE_DATATYPE_SOURCE_FIS = "fis";
+    public static final String QVALUE_DATATYPE_SOURCE_WWW = "www";
+    public static final String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
+    public static final String QVALUE_DATATYPE_SOURCE_FIS = "fis";
     
     // datatype: IPLUG types
     // ---------------------
-    public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
-    public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS = "dsc_ecs_address";
+    public static final String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
+    public static final String QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS = "dsc_ecs_address";
     public static final String QVALUE_DATATYPE_IPLUG_TAMINO = "tamino";
-    public final static String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
-    public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
-    public final static String QVALUE_DATATYPE_IPLUG_DSC_CSW = "dsc_csw";
-    public final static String QVALUE_DATATYPE_IPLUG_DSC_OTHER = "dsc_other";
+    public static final String QVALUE_DATATYPE_IPLUG_ECS = "ecs";
+    public static final String QVALUE_DATATYPE_IPLUG_CSW = "csw";
+    public static final String QVALUE_DATATYPE_IPLUG_DSC_CSW = "dsc_csw";
+    public static final String QVALUE_DATATYPE_IPLUG_DSC_OTHER = "dsc_other";
     
     // all sub datatypes indicating address search (switch to address rendering of results) 
-    public final static String[] QVALUES_DATATYPES_ADDRESS = new String[] {
+    private static final String[] QVALUES_DATATYPES_ADDRESS = new String[] {
     	QVALUE_DATATYPE_AREA_ADDRESS,
     	QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS,
     	// temporary datatype:training-address ! these are the new training "idc iplugs" (MDEK), should be rendered in live Portal !
     	"training-address"
     };
+    
+    public static final String[] getQValuesDatatypesAddress() {
+        return QVALUES_DATATYPES_ADDRESS.clone();
+    }
 
     public static final String QVALUE_LANG_DE = "de";
     
@@ -171,44 +175,44 @@ public class Settings {
     // IF POSSIBLE, USE THESE KEYS ALSO TO ACCESS HIT DETAIL DATA !!! 
     // ===========================================
 
-    public final static String RESULT_KEY_TITLE = "title";
-    public final static String RESULT_KEY_ABSTRACT = "abstract";
+    public static final String RESULT_KEY_TITLE = "title";
+    public static final String RESULT_KEY_ABSTRACT = "abstract";
 
-    public final static String RESULT_KEY_ADDITIONAL_HTML_1 = "additional_html_1";
+    public static final String RESULT_KEY_ADDITIONAL_HTML_1 = "additional_html_1";
 
-    public final static String RESULT_KEY_RUBRIC = "topic";
-    public final static String RESULT_KEY_TOPIC = "topic";
+    public static final String RESULT_KEY_RUBRIC = "topic";
+    public static final String RESULT_KEY_TOPIC = "topic";
 
-    public final static String RESULT_KEY_URL = "url";
-    public final static String RESULT_KEY_URL_STR = "url_str";
-    public final static String RESULT_KEY_URL_DOMAIN = "url_domain";
-    public final static String RESULT_KEY_URL_TYPE = "url_type";
+    public static final String RESULT_KEY_URL = "url";
+    public static final String RESULT_KEY_URL_STR = "url_str";
+    public static final String RESULT_KEY_URL_DOMAIN = "url_domain";
+    public static final String RESULT_KEY_URL_TYPE = "url_type";
 
-    public final static String RESULT_KEY_PARTNER = "partner";
-    public final static String RESULT_KEY_PROVIDER = "provider";
+    public static final String RESULT_KEY_PARTNER = "partner";
+    public static final String RESULT_KEY_PROVIDER = "provider";
 
-    public final static String RESULT_KEY_SOURCE = "source";
-    public final static String RESULT_KEY_TYPE = "type";
+    public static final String RESULT_KEY_SOURCE = "source";
+    public static final String RESULT_KEY_TYPE = "type";
 
-    public final static String RESULT_KEY_PLUG_ID = "plugid";
-    public final static String RESULT_KEY_DOC_ID = "docid";
-    public final static String RESULT_KEY_DOC_UUID = "docuuid";
+    public static final String RESULT_KEY_PLUG_ID = "plugid";
+    public static final String RESULT_KEY_DOC_ID = "docid";
+    public static final String RESULT_KEY_DOC_UUID = "docuuid";
 
-    public final static String RESULT_KEY_WMS_URL = "wms_url";
-    public final static String RESULT_KEY_WMS_COORD = "wms_coord";
-    public final static String RESULT_KEY_WMS_COORD_CHECK = "wms_check";
-    public final static String RESULT_KEY_WMS_TMP_COORD_X = "coord_x";
-    public final static String RESULT_KEY_WMS_TMP_COORD_Y = "coord_y";
-    public final static String RESULT_KEY_WMS_TMP_COORD_CLASS = "coord_class";
-    public final static String RESULT_KEY_WMS_TMP_COORD_TITLE = "coord_title";
-    public final static String RESULT_KEY_WMS_TMP_COORD_DESCR = "coord_descr";
+    public static final String RESULT_KEY_WMS_URL = "wms_url";
+    public static final String RESULT_KEY_WMS_COORD = "wms_coord";
+    public static final String RESULT_KEY_WMS_COORD_CHECK = "wms_check";
+    public static final String RESULT_KEY_WMS_TMP_COORD_X = "coord_x";
+    public static final String RESULT_KEY_WMS_TMP_COORD_Y = "coord_y";
+    public static final String RESULT_KEY_WMS_TMP_COORD_CLASS = "coord_class";
+    public static final String RESULT_KEY_WMS_TMP_COORD_TITLE = "coord_title";
+    public static final String RESULT_KEY_WMS_TMP_COORD_DESCR = "coord_descr";
 
-    public final static String RESULT_KEY_UDK_IS_ADDRESS = "is_address";
-    public final static String RESULT_KEY_UDK_CLASS = "udk_class";
-    public final static String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";
-    public final static String RESULT_KEY_UDK_ADDRESS_LASTNAME = "address_lastname";
-    public final static String RESULT_KEY_UDK_ADDRESS_TITLE = "address_title";
-    public final static String RESULT_KEY_UDK_ADDRESS_SALUTATION = "address_salutation";
+    public static final String RESULT_KEY_UDK_IS_ADDRESS = "is_address";
+    public static final String RESULT_KEY_UDK_CLASS = "udk_class";
+    public static final String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";
+    public static final String RESULT_KEY_UDK_ADDRESS_LASTNAME = "address_lastname";
+    public static final String RESULT_KEY_UDK_ADDRESS_TITLE = "address_title";
+    public static final String RESULT_KEY_UDK_ADDRESS_SALUTATION = "address_salutation";
     public static final String RESULT_KEY_UDK_TITLE = "title";
 
     public static final String RESULT_KEY_SUB_HIT = "subhit";
@@ -229,25 +233,24 @@ public class Settings {
     // NOTICE: Define here only special stuff, WHEN YOU CAN'T USE RESULT_KEY_... from above
     // ===========================================
 
-    public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
+    public static final String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
     
     // needed to determine the display of the "show in map" link 
-    public final static String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";
+    public static final String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";
     
     // this key represents the index key for the service type.
     public static final String HIT_KEY_OBJ_SERV_TYPE = "t011_obj_serv.type";
     public static final String HIT_KEY_OBJ_SERV_TYPE_KEY = "t011_obj_serv.type_key";
 
     
-    public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
-    public final static String HIT_KEY_ORG_OBJ_ID = "T01_object.org_obj_id";
+    public static final String HIT_KEY_OBJ_ID = "T01_object.obj_id";
+    public static final String HIT_KEY_ORG_OBJ_ID = "T01_object.org_obj_id";
 
     // mapped ! NO, NOT MAPPED ANYMORE in Plug Description, instead in iBus when querying.
     // ECS iPlug has to be adapted (maybe !)
-    public final static String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
-//    public final static String HIT_KEY_UDK_CLASS = "metaclass";
+    public static final String HIT_KEY_UDK_CLASS = "T01_object.obj_class";
 
-    public final static String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
+    public static final String HIT_KEY_ADDRESS_CLASS = "T02_address.typ";
 	public static final String HIT_KEY_ADDRESS_CLASS2 = "T02_address2.typ";
 	public static final String HIT_KEY_ADDRESS_CLASS3 = "T02_address3.typ";
     public static final String HIT_KEY_ADDRESS_FIRSTNAME = "T02_address.firstname";
@@ -290,22 +293,22 @@ public class Settings {
     // define the message "scope", will be "prefix" in message key -> "topic:message" 
 
     /** message "scope" for search pages (start page, simple search, extended search ...) */
-    public final static String MSG_TOPIC_SEARCH = "search";
+    public static final String MSG_TOPIC_SEARCH = "search";
 
     /** message "scope" for the Thesaurus search page */
-    public final static String MSG_TOPIC_SEARCH_THESAURUS = "searchThes";
+    public static final String MSG_TOPIC_SEARCH_THESAURUS = "searchThes";
 
     /** set message "scope" service page */
-    public final static String MSG_TOPIC_SERVICE = "service";
+    public static final String MSG_TOPIC_SERVICE = "service";
 
     /** set message "scope" measures page */
-    public final static String MSG_TOPIC_MEASURES = "measures";
+    public static final String MSG_TOPIC_MEASURES = "measures";
 
     /** set message "scope" measures page */
-    public final static String MSG_TOPIC_ENVIRONMENT = "environment";
+    public static final String MSG_TOPIC_ENVIRONMENT = "environment";
 
     /** set message "scope" chronicle page */
-    public final static String MSG_TOPIC_CHRONICLE = "chronicle";
+    public static final String MSG_TOPIC_CHRONICLE = "chronicle";
 
     // ------------- DATA MESSAGES: KEYS (MSG_...) -----------------------------
     // define the message itself, will be "suffix" in message key -> "topic:message"
@@ -355,39 +358,39 @@ public class Settings {
 
     // ------------- PARAM values -----------------------------
 
-    public final static String PARAMV_ALL = "all";
+    public static final String PARAMV_ALL = "all";
 
     // ACTION VALUES used by multiple portlets
-    public final static String PARAMV_ACTION_SUBMIT = "doSubmit";
-    public final static String PARAMV_ACTION_ORIGINAL_SETTINGS = "doOriginalSettings";
-    public final static String PARAMV_ACTION_FROM_TEASER = "doTeaser";
-    public final static String PARAMV_ACTION_NEW_SEARCH = "doSearch";
-    public final static String PARAMV_ACTION_CHANGE_TAB = "doChangeTab";
+    public static final String PARAMV_ACTION_SUBMIT = "doSubmit";
+    public static final String PARAMV_ACTION_ORIGINAL_SETTINGS = "doOriginalSettings";
+    public static final String PARAMV_ACTION_FROM_TEASER = "doTeaser";
+    public static final String PARAMV_ACTION_NEW_SEARCH = "doSearch";
+    public static final String PARAMV_ACTION_CHANGE_TAB = "doChangeTab";
 
     // DATASOURCE VALUES
-    public final static String PARAMV_DATASOURCE_ENVINFO = "1";
-    public final static String PARAMV_DATASOURCE_ADDRESS = "2";
-    public final static String PARAMV_DATASOURCE_RESEARCH = "3";
-	public final static String PARAMV_DATASOURCE_LAW = "4";
-	public final static String PARAMV_DATASOURCE_CATALOG = "5";
+    public static final String PARAMV_DATASOURCE_ENVINFO = "1";
+    public static final String PARAMV_DATASOURCE_ADDRESS = "2";
+    public static final String PARAMV_DATASOURCE_RESEARCH = "3";
+	public static final String PARAMV_DATASOURCE_LAW = "4";
+	public static final String PARAMV_DATASOURCE_CATALOG = "5";
 
     // GROUPING VALUES
-    public final static String PARAMV_GROUPING_OFF = "none";
-    public final static String PARAMV_GROUPING_PARTNER = "partner";
-    public final static String PARAMV_GROUPING_PROVIDER = "provider";
-    public final static String PARAMV_GROUPING_DOMAIN = "domain";
-    public final static String PARAMV_GROUPING_PLUG_ID = "plugid";
+    public static final String PARAMV_GROUPING_OFF = "none";
+    public static final String PARAMV_GROUPING_PARTNER = "partner";
+    public static final String PARAMV_GROUPING_PROVIDER = "provider";
+    public static final String PARAMV_GROUPING_DOMAIN = "domain";
+    public static final String PARAMV_GROUPING_PLUG_ID = "plugid";
     
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
-    public final static String PARAM_QUERY_STRING = "q";
+    public static final String PARAM_QUERY_STRING = "q";
     public static final String PARAM_QUERY_STRING_EXT = "q_ext";
     
-    public final static String PARAM_STARTHIT_RANKED = "rstart";
+    public static final String PARAM_STARTHIT_RANKED = "rstart";
 
-    public final static String PARAM_DATASOURCE = "ds";
+    public static final String PARAM_DATASOURCE = "ds";
 
-    public final static String PARAM_RANKING = "rank";
+    public static final String PARAM_RANKING = "rank";
     
     // history of starthits of grouped pages
     public static final String PARAM_GROUPING_STARTHITS = "grouping_starthits";
@@ -397,19 +400,19 @@ public class Settings {
     
     // ------------- PARAM Keys, NOT used for messaging, just for access in Request -----------------------------
 
-    public final static String PARAM_RUBRIC = "rubric";
-    public final static String PARAM_TOPIC_ID = "topId";
+    public static final String PARAM_RUBRIC = "rubric";
+    public static final String PARAM_TOPIC_ID = "topId";
 
-    public final static String PARAM_PARTNER = "partner";
+    public static final String PARAM_PARTNER = "partner";
     public static final String PARAM_PROVIDER = "provider";
 
     public static final String PARAM_SUBJECT = "subject";
     
-    public final static String PARAM_GROUPING = "grouping";
+    public static final String PARAM_GROUPING = "grouping";
 
-    public final static String PARAM_ACTION = "action";
+    public static final String PARAM_ACTION = "action";
 
-    public final static String PARAM_TAB = "tab";
+    public static final String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
     

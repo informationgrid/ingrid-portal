@@ -53,7 +53,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.csw";
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorCSWJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorCSWJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -112,7 +112,7 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 		        // Process line...
 		        int start = line.indexOf("numberOfRecordsMatched");
 		        if (start != -1) {
-		            numberOfMatchedHitsStr = line.substring(start+24, line.indexOf("\"", start+24));
+		            numberOfMatchedHitsStr = line.substring(start+24, line.indexOf('"', start+24));
 		            numberOfMatchedHits = Integer.parseInt(numberOfMatchedHitsStr);
 		            break;
 		        }
@@ -145,11 +145,11 @@ public class IngridMonitorCSWJob extends IngridMonitorAbstractJob {
 			if (log.isDebugEnabled()) {
 				log.debug("Error processing URL Request.", e);
 			}
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 			if (log.isDebugEnabled()) {
-				e.printStackTrace();
+			    log.debug("Error processing URL Request.", e);
 			}	
 		}
 

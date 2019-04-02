@@ -51,7 +51,7 @@ import de.ingrid.portal.upgradeclient.IngridComponent;
  */
 public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorAbstractJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorAbstractJob.class);
 
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
@@ -156,7 +156,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 		if (log.isDebugEnabled()) {
 			log.debug("Try to sent alert email to " + email);
 		}
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		HashMap<String, Object> mailData = new HashMap<>();
 		mailData.put("JOB", job);
 		ResourceBundle resources = ResourceBundle.getBundle("de.ingrid.portal.resources.AdminPortalResources",
 				Locale.GERMAN);
@@ -198,7 +198,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
                 for (String email : component.getEmails()) {
                     wasSent = wasSent && sendUpdateEmail(email, component);
                 }
-                if (component.getEmails().size()>0) {
+                if (!component.getEmails().isEmpty()) {
                     if (wasSent) {
                         component.setEmailSentDate(new Date());
                         component.setHasBeenSent(true);
@@ -234,7 +234,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
                 "../templates/administration/monitor_update_alert_email.vm");
         String templatePath = url.getPath();
         
-        HashMap<String, Object> mailData = new HashMap<String, Object>();
+        HashMap<String, Object> mailData = new HashMap<>();
         mailData.put("COMPONENT", component);
         ResourceBundle resources = ResourceBundle.getBundle(
                 "de.ingrid.portal.resources.AdminPortalResources",

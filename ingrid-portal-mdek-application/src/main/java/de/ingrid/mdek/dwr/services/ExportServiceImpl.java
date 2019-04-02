@@ -36,7 +36,7 @@ import de.ingrid.mdek.util.MdekErrorUtils;
 
 public class ExportServiceImpl {
 
-	private final static Logger log = Logger.getLogger(ExportServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(ExportServiceImpl.class);	
 
 	// Injected by Spring
 	private CatalogRequestHandler catalogRequestHandler;

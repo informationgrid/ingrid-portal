@@ -45,7 +45,7 @@ public abstract class ActionForm implements Serializable {
      * shouldn't be a problem, there aren't multiple threads accessing this one
      * (one form per user !)
      */
-    protected HashMap input = new HashMap();
+    private HashMap input = new HashMap();
 
     /**
      * encapsulates form input validation error messages. We use LinkedHashMap
@@ -53,7 +53,7 @@ public abstract class ActionForm implements Serializable {
      * shouldn't be a problem, there aren't multiple threads accessing this one
      * (one form per user !)
      */
-    protected LinkedHashMap errors = new LinkedHashMap();
+    private LinkedHashMap errors = new LinkedHashMap();
 
     /**
      * encapsulates form messages at your command. We use LinkedHashMap
@@ -61,7 +61,7 @@ public abstract class ActionForm implements Serializable {
      * shouldn't be a problem, there aren't multiple threads accessing this one
      * (one form per user !)
      */
-    protected ArrayList messages = new ArrayList();
+    private ArrayList messages = new ArrayList();
     
     /**
      * initialize form with default values
@@ -94,8 +94,7 @@ public abstract class ActionForm implements Serializable {
         if (inputVal == null || inputVal.length() < 2) {
             return "";
         }
-        String result = inputVal.substring(1, inputVal.length() - 1);
-        return result;
+        return inputVal.substring(1, inputVal.length() - 1);
     }
 
     /**
@@ -112,11 +111,11 @@ public abstract class ActionForm implements Serializable {
      * @return
      */
     public String[] getInputAsArray(String field) {
-        String input = getInput(field);
-        if (input.length() == 0) {
+        String inputValue = getInput(field);
+        if (inputValue.length() == 0) {
             return new String[0];
         } else {
-            return input.split(VALUE_SEPARATOR + VALUE_SEPARATOR);
+            return inputValue.split(VALUE_SEPARATOR + VALUE_SEPARATOR);
         }
     }
 
@@ -126,11 +125,11 @@ public abstract class ActionForm implements Serializable {
      * string has length > 0
      */
     public boolean hasInput(String field) {
-    	int len = getInput(field).trim().length();
+        boolean hasInput = false;
         if (getInput(field).trim().length() > 0) {
-            return true;
+            hasInput = true;
         }
-        return false;
+        return hasInput;
     }
 
     /**
@@ -141,7 +140,7 @@ public abstract class ActionForm implements Serializable {
             input.remove(field);
             return;
         }
-        StringBuffer dataWithSep = new StringBuffer();
+        StringBuilder dataWithSep = new StringBuilder();
         dataWithSep.append(VALUE_SEPARATOR);
         dataWithSep.append(data);
         dataWithSep.append(VALUE_SEPARATOR);
@@ -159,7 +158,7 @@ public abstract class ActionForm implements Serializable {
             return;
         }
 
-        StringBuffer dataWithSep = new StringBuffer();
+        StringBuilder dataWithSep = new StringBuilder();
         if (dataArray.length > 0) {
             for (int i = 0; i < dataArray.length; i++) {
                 dataWithSep.append(VALUE_SEPARATOR);
@@ -290,21 +289,22 @@ public abstract class ActionForm implements Serializable {
      * ...)
      */
     public boolean isCurrentInput(String fieldName, String value) {
+        boolean isCurrentInput = true;
         String currValue = (String) input.get(fieldName);
         if (currValue == null) {
-            return false;
+            isCurrentInput = false;
         }
 
-        StringBuffer dataWithSep = new StringBuffer();
+        StringBuilder dataWithSep = new StringBuilder();
         dataWithSep.append(VALUE_SEPARATOR);
         dataWithSep.append(value);
         dataWithSep.append(VALUE_SEPARATOR);
 
-        if (currValue.indexOf(dataWithSep.substring(0, dataWithSep.length())) == -1) {
-            return false;
+        if (currValue != null && currValue.indexOf(dataWithSep.substring(0, dataWithSep.length())) == -1) {
+            isCurrentInput =  false;
         }
 
-        return true;
+        return isCurrentInput;
     }
 
     // =======================
@@ -325,7 +325,7 @@ public abstract class ActionForm implements Serializable {
      * @return
      */
     public String toURLParams() {
-        StringBuffer urlParams = new StringBuffer();
+        StringBuilder urlParams = new StringBuilder();
 
         Iterator iterator = input.keySet().iterator();
         while (iterator.hasNext()) {
@@ -346,7 +346,7 @@ public abstract class ActionForm implements Serializable {
      * @return
      */
     protected static String getInitialSelectString(List formToQueryValues) {
-        StringBuffer dataWithSep = new StringBuffer();
+        StringBuilder dataWithSep = new StringBuilder();
         for (int i = 0; i < formToQueryValues.size(); i++) {
             if (i != 0) {
                 dataWithSep.append(VALUE_SEPARATOR);
@@ -357,7 +357,6 @@ public abstract class ActionForm implements Serializable {
             }
         }
         
-        String tmp = dataWithSep.substring(0, dataWithSep.length());
-        return tmp;
+        return dataWithSep.substring(0, dataWithSep.length());
     }
 }

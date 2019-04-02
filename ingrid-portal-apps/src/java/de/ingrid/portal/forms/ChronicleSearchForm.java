@@ -22,9 +22,6 @@
  */
 package de.ingrid.portal.forms;
 
-import de.ingrid.portal.global.Settings;
-
-import javax.portlet.PortletRequest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +29,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import de.ingrid.portal.global.Settings;
 
 /**
  * Form Handler for Environment Chronicles page. Stores and validates form
@@ -42,6 +46,8 @@ import java.util.List;
 public class ChronicleSearchForm extends ActionForm {
 
     private static final long serialVersionUID = 7744744902434768965L;
+
+    private static final Logger log = LoggerFactory.getLogger(ChronicleSearchForm.class);
 
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "chronicles_form";
@@ -74,18 +80,16 @@ public class ChronicleSearchForm extends ActionForm {
     public static final String FIELDV_TIME_SELECT_DATE = "date";
 
     /** WHEN MULTIPLE VALUES USE "''" TO SEPARATE VALUES !!!!!!!!! */
-    protected static String INITIAL_EVENT_TYPES = "";
+    protected static String initialEventTypes = "";
 
     protected static final String INITIAL_TIME_SELECT = FIELDV_TIME_SELECT_PERIOD;
-
-    protected static final DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
         clearInput();
-        setInput(FIELD_EVENT, INITIAL_EVENT_TYPES);
+        setInput(FIELD_EVENT, initialEventTypes);
         setInput(FIELD_TIME_SELECT, INITIAL_TIME_SELECT);
     }
 
@@ -190,11 +194,9 @@ public class ChronicleSearchForm extends ActionForm {
             setInput(FIELD_TIME_FROM, "");
             setInput(FIELD_TIME_TO, "");
 
-            if (inputTimeAt.length() != 0) {
-                if (getDate(inputTimeAt) == null) {
-                    setError(FIELD_TIME_AT, "chronicle.form.error.invalidTimeAt");
-                    allOk = false;
-                }
+            if (inputTimeAt.length() != 0 && getDate(inputTimeAt) == null) {
+                setError(FIELD_TIME_AT, "chronicle.form.error.invalidTimeAt");
+                allOk = false;
             }
         }
 
@@ -207,14 +209,14 @@ public class ChronicleSearchForm extends ActionForm {
      */
     public static void setInitialSelectedEventTypes(List eventTypes) {
         String allType = Settings.PARAMV_ALL.concat(VALUE_SEPARATOR).concat(VALUE_SEPARATOR);
-        INITIAL_EVENT_TYPES = allType.concat(getInitialSelectString(eventTypes));
+        initialEventTypes = allType.concat(getInitialSelectString(eventTypes));
     }
 
     /**
      * @return Returns the INITIAL_EVENT_TYPES.
      */
-    public static String getINITIAL_EVENT_TYPES() {
-        return INITIAL_EVENT_TYPES;
+    public static String getInitialEventTypes() {
+        return initialEventTypes;
     }
 
     /**
@@ -224,8 +226,12 @@ public class ChronicleSearchForm extends ActionForm {
      */
     public static Date getDate(String dateString) {
         try {
-            return (Date) dateFormatter.parse(dateString);
+            DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
+            return dateFormatter.parse(dateString);
         } catch (ParseException e) {
+            if(log.isErrorEnabled()) {
+                log.error("Error on getDate.", e);
+            }
         }
         return null;
     }

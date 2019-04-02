@@ -40,7 +40,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
 
-    private final static Logger log = Logger.getLogger(UpdateCodeListsFromIGEJob.class);
+    private static final Logger log = Logger.getLogger(UpdateCodeListsFromIGEJob.class);
     private ConnectionFacade connectionFacade;
     
     @Override
@@ -66,7 +66,7 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
             	updateIndexForAllIPlugs();
             }
             
-            log.info("UpdateCodeListsFromIGEJob finished! (timestamp = " + timestamp + ", successful = " + (modifiedCodelists == null ? false : true) + ")");
+            log.info("UpdateCodeListsFromIGEJob finished! (timestamp = " + timestamp + ", successful = " + (modifiedCodelists != null) + ")");
         } else {
             log.info("No iPlug connected to update codelists to!");
         }
@@ -89,14 +89,15 @@ public class UpdateCodeListsFromIGEJob extends UpdateCodeListsJob {
     }
     
     private boolean rebuildSyslists(String plugId, String catAdminUuid) {
+        boolean rebuildSyslists = true;
         if (log.isDebugEnabled()) {
             log.debug("Call backend to rebuild syslist data (reindex) ...");
         }
         IngridDocument response = connectionFacade.getMdekCallerCatalog().rebuildSyslistData(plugId, catAdminUuid);
         if (null == de.ingrid.mdek.util.MdekUtils.getResultFromResponse(response)) {
-            return false;
+            rebuildSyslists = false;
         }
-        return true;
+        return rebuildSyslists;
     }
 
     private Long getLastModifiedTimestampFromDb() {
