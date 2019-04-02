@@ -14,7 +14,9 @@ pipeline {
         // normal build if it's not the master branch and not the support branch, except if it's a SNAPSHOT-version
         stage('Build-SNAPSHOT') {
             when {
-                not { branch 'master' }
+                not {
+                    anyOf { branch 'master'; branch 'mcloud-master' }
+                }
                 not { 
                     allOf {
                         branch 'support/*'
@@ -42,7 +44,7 @@ pipeline {
         // release build if it's the master or the support branch and is not a SNAPSHOT version
         stage ('Build-Release') {
             when {
-                anyOf { branch 'master'; branch 'support/*' }
+                anyOf { branch 'master'; branch 'support/*'; branch 'mcloud-master' }
                 expression { return !VERSION.endsWith("-SNAPSHOT") }
             }
             steps {
