@@ -57,7 +57,8 @@ pipeline {
                     // check is release version
                     // deploy to distribution
                     // send release email
-                    sh 'mvn clean deploy -Pdocker,release'
+                    // ATTENTION: Skip Tests for mCLOUD, but DO NOT include when merged back to develop!
+                    sh 'mvn clean deploy -Pdocker,release -DskipTests'
                 }
             }
         }
