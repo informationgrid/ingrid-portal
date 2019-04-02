@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="4.4.9" date="2019-04-02" description="Release 4.4.9">
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
+          </action>
+        </release>
+
         <release version="4.4.8" date="2019-01-21" description="Release 4.4.8">
           <action type="fix" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
