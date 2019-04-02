@@ -137,6 +137,7 @@ public class SysListCache {
 			}
 
 		} catch (Exception e) {
+			log.error("Could not get syslists from backend", e);
 			// Could not get the lists from the backend
 			// Possibly the connection was not established yet
 			cache = null;			
