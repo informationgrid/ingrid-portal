@@ -30,11 +30,14 @@ import org.commonmark.renderer.html.HtmlRenderer;
  */
 public class MarkdownContextHelpUtils {
 
-    private static final String DEFAULT_CONTEXT_HELP_PATH = "context_help/";
+    private static final String DEFAULT_CONTEXT_HELP_PATH = "context_help";
+    private static final String DEFAULT_LANG = "de";
 
     private final static Logger LOG = Logger.getLogger( MarkdownContextHelpUtils.class );
 
     private String contextHelpPath = DEFAULT_CONTEXT_HELP_PATH;
+    private String defaultLanguage = DEFAULT_LANG;
+
     private Parser parser = null;
     private HtmlRenderer htmlRenderer = null;
 
@@ -55,16 +58,40 @@ public class MarkdownContextHelpUtils {
     }
 
     /**
-     * Returns a Map with rendered HTML from markdown files. Mardown files must
-     * contain front matter meta data like this:
+     * Returns a Map with rendered HTML from markdown files. 
+     * 
+     * <p>The markdown files can be localized.</p>
+     * 
+     * <p>A profile mechanism exists to be able to support catalog dependent 
+     * context help. This is not yet supported by the current editor but will 
+     * be in the future. The idea is, that the catalogs can be configured with
+     * a context help profile parameter. This parameter must match a profile 
+     * directory in the context help file structure.</p>
+     * 
+     * <p>The context help file structure can be as follows:</p>
+     * 
+     * <pre> 
+     * context_help
+     *   _profile // profiles
+     *     myprofile // profile directory
+     *       en // localization directory
+     *         markdownfile_en.md
+     *       markdownfile.md
+     *   en // localization directory
+     *     markdownfile_en.md
+     *   markdownfile.md
+     * </pre>
+     * 
+     * 
+     * <p>Markdown files must contain front matter meta data like this:</p>
      * 
      * <pre>
      * ---
-     * # ID des GUI Elements
+     * # ID of GUI element
      * guid: 3000
-     * # ID der Objektklasse
+     * # optional: ID of "Objektklasse"
      * oid: 1
-     * # title, used as windows title
+     * # optional: title, used as windows title
      * title: My Title
      * ---
      * </pre>
@@ -74,8 +101,63 @@ public class MarkdownContextHelpUtils {
     public Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> getAvailableMarkdownHelpFiles() {
 
         Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> result = new HashMap<MarkdownContextHelpItemKey, MarkdownContextHelpItem>();
+        
+        try {
+            result.putAll( getLocMarkdownHelpFilesFromPath(contextHelpPath, null));
+            
+            // override directory
+            Path overrideDir = Paths.get( contextHelpPath, "_profile");
+            if (getClass().getClassLoader().getResource( overrideDir.toString() ) != null) {
+                try (Stream<Path> profilePathStream = Files.list( Paths.get( getClass().getClassLoader().getResource( overrideDir.toString() ).toURI() ) )) {
+                    
+                    // read profile directories, exclude directory override
+                    List<Path> profilePathList = profilePathStream.filter( Files::isDirectory ).collect( Collectors.toList() );
+                    profilePathStream.close();
+                    for (Path profilePath : profilePathList) {
+                        String abs = profilePath.toAbsolutePath().toString();
+                        String dir = abs.substring( abs.indexOf( contextHelpPath ) );
+                        result.putAll( getLocMarkdownHelpFilesFromPath(dir, profilePath.getFileName().toString()));
+                    }
+    
+                }
+            }
 
-        try (Stream<Path> files = Files.list( Paths.get( getClass().getClassLoader().getResource( contextHelpPath ).toURI() ) )) {
+        } catch (IOException | URISyntaxException e) {
+            LOG.error( "Impossible to get ressource from class path.", e );
+            throw new RuntimeException( e );
+        }
+        return result;
+
+    }
+    
+    private Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> getLocMarkdownHelpFilesFromPath(String sourcePath, String profile) throws IOException, URISyntaxException {
+        Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> result = new HashMap<MarkdownContextHelpItemKey, MarkdownContextHelpItem>();
+
+            result.putAll( getMarkdownHelpFilesFromPath(sourcePath, defaultLanguage, profile));
+            
+            try (Stream<Path> langPathStream = Files.list( Paths.get( getClass().getClassLoader().getResource( sourcePath ).toURI() ) )) {
+                
+                // read language directories, exclude directory override
+                List<Path> langPathList = langPathStream.filter( Files::isDirectory ).filter( path -> !"override".equals(path.getFileName().toString()) ).collect( Collectors.toList() );
+                langPathStream.close();
+                for (Path langPath : langPathList) {
+                    String abs = langPath.toAbsolutePath().toString();
+                    String dir = abs.substring( abs.indexOf( sourcePath ) );
+                    result.putAll( getMarkdownHelpFilesFromPath(dir, langPath.getFileName().toString(), profile));
+                }
+            }
+            
+            return result;
+    }
+    
+    
+    
+    private Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> getMarkdownHelpFilesFromPath(String sourcePath, String language, String profile) throws IOException, URISyntaxException {
+        Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> result = new HashMap<MarkdownContextHelpItemKey, MarkdownContextHelpItem>();
+
+        try (Stream<Path> files = Files.list( Paths.get( getClass().getClassLoader().getResource( sourcePath ).toURI() ) )) {
+            
+            // read default language files
             List<Path> list = files.filter( Files::isRegularFile ).collect( Collectors.toList() );
 
             for (Path path : list) {
@@ -91,7 +173,6 @@ public class MarkdownContextHelpUtils {
 
                 String guid = null;
                 String oid = null;
-                String lang = null;
                 String title = null;
 
                 for (Map.Entry<String, List<String>> entry : data.entrySet()) {
@@ -101,9 +182,6 @@ public class MarkdownContextHelpUtils {
                     if (entry.getKey().equals( "oid" )) {
                         oid = entry.getValue().get( 0 );
                     }
-                    if (entry.getKey().equals( "lang" )) {
-                        lang = entry.getValue().get( 0 );
-                    }
                     if (entry.getKey().equals( "title" )) {
                         title = entry.getValue().get( 0 );
                     }
@@ -112,11 +190,12 @@ public class MarkdownContextHelpUtils {
                 if (guid != null) {
 
                     MarkdownContextHelpItemKey mchik = new MarkdownContextHelpItemKey( guid );
-
+                    mchik.setLang( language );
                     if (oid != null) {
                         mchik.setOid( oid );
-                    } else if (lang != null) {
-                        mchik.setLang( lang );
+                    } 
+                    if (profile != null) {
+                        mchik.setProfile( profile );
                     }
 
                     MarkdownContextHelpItem mchi = new MarkdownContextHelpItem( path );
@@ -126,17 +205,9 @@ public class MarkdownContextHelpUtils {
                     result.put( mchik, mchi );
                 }
             }
-
-        } catch (URISyntaxException e) {
-            LOG.error( "Impossible to get ressource from class path.", e );
-            throw new RuntimeException( e );
-        } catch (IOException e) {
-            LOG.error( "Impossible to open ressource from class path.", e );
-            throw new RuntimeException( e );
         }
-
+        
         return result;
-
     }
 
     public String renderMarkdownFile(Path markdownPath) {
@@ -156,5 +227,31 @@ public class MarkdownContextHelpUtils {
         return renderedNode;
 
     }
+
+    public String getContextHelpPath() {
+        return contextHelpPath;
+    }
+
+    public void setContextHelpPath(String contextHelpPath) {
+        this.contextHelpPath = contextHelpPath;
+    }
+
+    /**
+     * Default language (ISO 639-1)
+     * 
+     * @return
+     */
+    public String getDefaultLanguage() {
+        return defaultLanguage;
+    }
+
+    /**
+     * @param language (ISO 639-1)
+     */
+    public void setDefaultLanguage(String language) {
+        this.defaultLanguage = language;
+    }
+    
+    
 
 }

@@ -55,11 +55,15 @@ public class HelpServiceImpl {
     }
 
     public HelpMessage getHelpEntry(Integer guiId, Integer entityClass, String language, String defaultLanguage) {
-        MarkdownContextHelpItemKey mItemKey;
+        MarkdownContextHelpItemKey mItemKey = new MarkdownContextHelpItemKey( guiId.toString() );
+        
         if (entityClass != null) {
-            mItemKey = new MarkdownContextHelpItemKey( guiId.toString(), entityClass.toString() );
+            mItemKey.setOid( entityClass.toString() );
+        }
+        if (language != null) {
+            mItemKey.setLang( language );
         } else {
-            mItemKey = new MarkdownContextHelpItemKey( guiId.toString() );
+            mItemKey.setLang( defaultLanguage );
         }
 
         HelpMessage helpMessage = null;

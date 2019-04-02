@@ -20,19 +20,11 @@ public class MarkdownContextHelpItemKey {
      */
     String lang = null;
 
-    public MarkdownContextHelpItemKey(String guid, String oid, String lang) {
-        super();
-        this.guid = guid;
-        this.oid = oid;
-        this.lang = lang;
-    }
-
-    public MarkdownContextHelpItemKey(String guid, String oid) {
-        super();
-        this.guid = guid;
-        this.oid = oid;
-    }
-
+    /**
+     * Profile string
+     */
+    String profile = null;
+    
     public MarkdownContextHelpItemKey(String guid) {
         super();
         this.guid = guid;
@@ -61,10 +53,18 @@ public class MarkdownContextHelpItemKey {
     public void setLang(String lang) {
         this.lang = lang;
     }
+    
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
     @Override
     public String toString() {
-        return "MarkdownContextHelpItem: {guid: " + guid + "; oid: " + oid + "; lang: " + lang + "}";
+        return "MarkdownContextHelpItem: {guid: " + guid + "; oid: " + oid + "; lang: " + lang + "; profile: " + profile + "}";
     }
 
     @Override
@@ -76,12 +76,12 @@ public class MarkdownContextHelpItemKey {
             return false;
         }
         MarkdownContextHelpItemKey mchi = (MarkdownContextHelpItemKey) o;
-        return Objects.equals( guid, mchi.guid ) && Objects.equals( lang, mchi.lang ) && Objects.equals( oid, mchi.oid );
+        return Objects.equals( guid, mchi.guid ) && Objects.equals( lang, mchi.lang ) && Objects.equals( oid, mchi.oid ) && Objects.equals( profile, mchi.profile );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash( guid, lang, oid );
+        return Objects.hash( guid, lang, oid, profile);
     }
 
 }
