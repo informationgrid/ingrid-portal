@@ -767,6 +767,9 @@ define({
     "ui.obj.type6.urlList.header.url": "Url*",
     "ui.obj.type6.urlList.header.urlDescription": "Erl&auml;uterung",
 
+    "ui.obj.previewImage.table.fileName": "Dateiname",
+    "ui.obj.previewImage.table.fileDescription": "Dateibeschreibung",
+
     "ui.adr.header.addressTitle": "Adresstitel",
     "ui.adr.header.addressType": "Adresstyp",
     "ui.adr.header.responsibleUser": "Verantwortlicher",
@@ -1083,6 +1086,7 @@ define({
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
     "validation.encoding.added": "Das Kodierungsschema '${0}' wurde ebenfalls geändert.",
     "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
+    "validation.previewImage.table.missingUrl": "Ein Dateiname muss für jeden Eintrag vorhanden sein",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 

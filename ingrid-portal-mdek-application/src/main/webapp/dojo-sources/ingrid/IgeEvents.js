@@ -45,12 +45,13 @@ define([
     "ingrid/utils/Thesaurus",
     "ingrid/utils/General",
     "ingrid/utils/String",
+    "ingrid/utils/Store",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/dirty",
     "ingrid/message",
     "ingrid/dialog"
 ], function(declare, array, lang, Deferred, DeferredList, ready, wnd, topic, string, dom, query, domClass, style, Memory, registry,
-    UtilUI, UtilList, UtilAddress, UtilSyslist, UtilCatalog, UtilGrid, UtilThesaurus, UtilGeneral, UtilString,
+    UtilUI, UtilList, UtilAddress, UtilSyslist, UtilCatalog, UtilGrid, UtilThesaurus, UtilGeneral, UtilString, UtilStore,
     rules, dirty, message, dialog) {
 
     var lib = declare(null, {
@@ -856,9 +857,12 @@ define([
             var objLinkTable = nodeData.linksToObjectTable;
             var urlLinkTable = nodeData.linksToUrlTable;
 
-            var url = this._filterPreviewImage(urlLinkTable);
-            registry.byId("generalPreviewImage").set("value", url.url);
-            registry.byId("previewImageDescription").set("value", url.description);
+            var previews = this._filterPreviewImages(urlLinkTable);
+            UtilStore.updateWriteStore("generalPreviewImageTable", previews)
+
+            urlLinkTable = array.filter(urlLinkTable, function(row) {
+                return row.relationType !== 9000;
+            });
 
             var linkTable = objLinkTable.concat(urlLinkTable);
             // Replace relationTypeName with name from according syslist entry. Leave it if it's a free entry.
@@ -876,23 +880,17 @@ define([
             return linkTable;
         },
 
-        _filterPreviewImage: function(urlList) {
-            var foundObjectIndex = null;
-            array.some(urlList, function(urlObject, index) {
-                if (urlObject.relationType == 9000) {
-                    foundObjectIndex = index;
-                    return true;
+        _filterPreviewImages: function(urlList) {
+            var previews = [];
+            array.forEach(urlList, function(row) {
+                if (row.relationType === 9000) {
+                    previews.push({
+                        fileName: row.url,
+                        fileDescription: row.description
+                    });
                 }
-                return false;
             });
-
-            if (foundObjectIndex !== null) {
-                var url = urlList[foundObjectIndex];
-                urlList.splice(foundObjectIndex, 1);
-                return url;
-            } else {
-                return { url: "", description: "" };
-            }
+            return previews;
         },
 
         // load content when object class changes ! Also triggered on initial setting of object class !

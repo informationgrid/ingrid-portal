@@ -55,6 +55,7 @@ define([
 
             // Allgemeines / Vorschaugrafik
             UtilUI.setShow("uiElement5100");
+            registry.byId("generalPreviewImageTable").reinitLastColumn(true);
 
             // Fachbezug / Digitale Repräsentation
             UtilUI.setShow("uiElement5062");

@@ -308,23 +308,16 @@
                                 </span></div>
                             </span>
                             <span id="uiElement5100" class="outer optional">
-                                <div><span class="label">
-                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5100)">
-                                        <fmt:message key="ui.obj.general.previewImage" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="generalPreviewImage"></div>
-                                </span></div>
-                            </span>
-                            <span id="uiElement5105" class="outer optional">
-                                <div><span class="label">
-                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5105)">
-                                        <fmt:message key="ui.obj.general.previewImageDescription" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="previewImageDescription">
+                                <div>
+                                    <span class="label">
+                                        <label for="generalPreviewImageTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5100)">
+                                            <fmt:message key="ui.obj.general.previewImage" />
+                                        </label>
+                                    </span>
+                                    <div class="input tableContainer clear">
+                                        <div id="generalPreviewImageTable" interactive="true"></div>
                                     </div>
-                                </span></div>
+                                </div>
                             </span>
                             <span id="uiElement1010" class="outer">
                             	<div><span id="generalDescLabel" class="label">
