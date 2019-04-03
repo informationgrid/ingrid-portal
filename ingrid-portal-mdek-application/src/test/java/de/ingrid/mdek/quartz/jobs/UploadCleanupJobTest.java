@@ -162,8 +162,10 @@ public class UploadCleanupJobTest {
         //this.jobLogger.addAppender(this.testAppender);
         final LoggerContext context = LoggerContext.getContext(false);
         final Configuration config = context.getConfiguration();
-        this.updateLoggers(testAppender, config);
-        testAppender.start();
+        org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
+        coreLogger.addAppender(testAppender);
+        //this.updateLoggers(testAppender, config);
+        //testAppender.start();
     }
 
     private void updateLoggers(final Appender appender, final Configuration config) {
