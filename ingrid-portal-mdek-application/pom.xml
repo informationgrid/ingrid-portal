@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
@@ -77,7 +76,7 @@
           </packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED to name of .jar -->
           <attachClasses>true</attachClasses>
-          <classesClassifier/>
+          <classesClassifier />
           <!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
           <archiveClasses>false</archiveClasses>
           <webResources>
@@ -116,7 +115,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses/>
+          <toAddresses />
         </configuration>
       </plugin>
       <plugin>
@@ -826,10 +825,10 @@
               </warSourceExcludes>
               <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
               <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
-              <packagingExcludes></packagingExcludes>
+              <packagingExcludes />
               <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED to name of .jar -->
               <attachClasses>true</attachClasses>
-              <classesClassifier/>
+              <classesClassifier />
               <!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
               <archiveClasses>false</archiveClasses>
               <webResources>
@@ -938,27 +937,27 @@
                 <phase>compile</phase>
                 <configuration>
                   <target>
-                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
                     <condition property="foundRepeatable">
                       <and>
                         <resourcecount count="0" when="greater">
                           <fileset dir="src/main/resources/db/migration">
-                            <include name="**/R*.sql"/>
+                            <include name="**/R*.sql" />
                           </fileset>
                         </resourcecount>
                         <not>
-                          <contains string="${project.version}" substring="-SNAPSHOT"/>
+                          <contains string="${project.version}" substring="-SNAPSHOT" />
                         </not>
                       </and>
                     </condition>
                     <if>
                       <!--suppress UnresolvedMavenProperty -->
-                      <equals arg1="${foundRepeatable}" arg2="true"/>
+                      <equals arg1="${foundRepeatable}" arg2="true" />
                       <then>
-                        <fail message="Flyway: You must not have repeatable SQL files during a release!"/>
+                        <fail message="Flyway: You must not have repeatable SQL files during a release!" />
                       </then>
                       <else>
-                        <echo message="Flyway: No release version or no repeatable SQL found. OK!"/>
+                        <echo message="Flyway: No release version or no repeatable SQL found. OK!" />
                       </else>
                     </if>
                   </target>
