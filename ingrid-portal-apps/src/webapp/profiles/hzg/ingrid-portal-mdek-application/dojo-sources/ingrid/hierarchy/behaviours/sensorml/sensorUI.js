@@ -427,7 +427,6 @@ define([
                     // Allgemeines
                     domClass.add("uiElement1001", "hide");
                     domClass.add("uiElement5000", "hide");
-                    domClass.add("uiElement5100", "hide");
                     domClass.add("uiElement6005", "hide");
 
                     // Verschlagwortung
@@ -470,7 +469,6 @@ define([
                     // Allgemeines
                     domClass.remove("uiElement1001", "hide");
                     domClass.remove("uiElement5000", "hide");
-                    domClass.remove("uiElement5100", "hide");
                     domClass.remove("uiElement6005", "hide");
 
                     // Verschlagwortung
