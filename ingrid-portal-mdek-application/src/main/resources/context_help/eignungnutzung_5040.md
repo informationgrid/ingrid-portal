@@ -1,0 +1,20 @@
+---
+# ID des GUI Elements
+guid: 5040
+# title, used as window title
+title: Eignung/Nutzung
+---
+
+# Eignung/Nutzung
+
+Angaben über die Verwendungsmöglichkeiten, die diese Daten in Verbindung mit weiteren Informationen erfüllen können.
+
+## Beispiel:
+
+Präsentation des Raumordnungsprogramms auf Basis der topografischen Kartenwerke
+
+# ISO Abbildung
+
+kurze Beschreibung zur Verwendung der Ressource
+
+Domain: 63
