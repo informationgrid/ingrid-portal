@@ -12,7 +12,7 @@
                             #if($node.getFacets())
                                 #set($nodeHasValueDependency = false)
                                 #foreach($facet in $node.getFacets())
-                                    #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                    #if($facet.getFacetValue())
                                         #set($nodeHasValueDependency = true)
                                     #end
                                 #end
@@ -31,7 +31,7 @@
                                 #if($node.getFacets())
                                     #set($nodeHasValueHidden = false)
                                     #foreach($facet in $node.getFacets())
-                                        #if($facet.getFacetValue() || $facet.isOldIPlug())
+                                        #if($facet.getFacetValue())
                                             #set($nodeHasValueHidden = true)
                                         #end
                                     #end
@@ -49,7 +49,7 @@
                         #elseif($node.getFacets())
                             #set($nodeHasValue = false)
                             #foreach($facet in $node.getFacets())
-                                #if($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay())
+                                #if($facet.getFacetValue() || $facet.isDisplay())
                                     #set($nodeHasValue = true)
                                 #end
                             #end
@@ -65,18 +65,12 @@
 #end
 
 #macro(renderFacetCategoryEntry $facet $parentId)
-    #if(($facet.getFacetValue() || $facet.isOldIPlug() || $facet.isDisplay()) && !$facet.isCategoryOnly())
+    #if(($facet.getFacetValue() || $facet.isDisplay()) && !$facet.isCategoryOnly())
         #if($facet.getFacets())
             ## Check for sub facets
             #if($facet.isSelect())
                 ## Create Tree with single selection
-                #if($facet.isOldIPlug())
-                    #set ($action = $renderResponse.createActionURL())
-                    $action.setParameter("$parentId", "$facet.getId()")
-                    #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
-                #else
-                    #renderTree ($facet $parentId)
-                #end
+                #renderTree ($facet $parentId)
             #else
                 ## Set single facets
                 #set ($action = $renderResponse.createActionURL())
