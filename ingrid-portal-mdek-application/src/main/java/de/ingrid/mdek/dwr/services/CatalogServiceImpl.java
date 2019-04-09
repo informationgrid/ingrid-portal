@@ -135,7 +135,7 @@ public class CatalogServiceImpl implements CatalogService {
 	public CatalogBean getCatalogData() {
 		CatalogBean catalogData = catalogRequestHandler.getCatalogData();
 		List<GenericValueBean> sysGenericValues = getSysGenericValues( new String[]{"sortByClass"}, null );
-		if (sysGenericValues.isEmpty()) {
+		if (!sysGenericValues.isEmpty()) {
 		    catalogData.setSortByClass( sysGenericValues.get( 0 ).getValue() );
 		}
 		return catalogData;

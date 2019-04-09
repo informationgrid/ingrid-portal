@@ -20,6 +20,9 @@
           <action type="fix" dev="wemove" issue="1285">
              Fix problem with codelists not been able to fetch via HTTP proxy.
           </action>
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
+          </action>
           <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
           </action>

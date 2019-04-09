@@ -110,7 +110,7 @@ public class MdekCatalogUtils {
 
 				if (entryIds != null && entryNames != null) {
 					for (int index = 0; index < entryIds.length; ++index) {
-						boolean isDefault = defaultIndex == index;
+						boolean isDefault = defaultIndex != null ? defaultIndex == index : false;
 						
 						resultList.add( new String[] {
 								entryNames[index],

@@ -55,7 +55,6 @@ public class IngridFacet {
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
-    private boolean isOldIPlug = false;
     
     private IngridFacet parent; 
     private ArrayList<IngridFacet> facets;
@@ -137,12 +136,6 @@ public class IngridFacet {
     }
     public void setSort(String sort) {
         this.sort = sort;
-    }
-    public boolean isOldIPlug() {
-        return isOldIPlug;
-    }
-    public void setOldIPlug(boolean isOldIPlug) {
-        this.isOldIPlug = isOldIPlug;
     }
     public boolean isParentHidden() {
         return isParentHidden;

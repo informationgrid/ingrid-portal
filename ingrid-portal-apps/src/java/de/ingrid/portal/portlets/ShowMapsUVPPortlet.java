@@ -67,6 +67,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
+        response.setContentType( "application/javascript" );
 
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
@@ -76,57 +77,45 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             if (resourceID.equals( "marker" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                 if(!query.isEmpty()) {
-                    response.setContentType( "application/javascript" );
                     response.getWriter().write(writeResponse(query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "marker2" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_2, "");
                 if(!query.isEmpty()) {
-                    response.setContentType( "application/javascript" );
                     response.getWriter().write(writeResponse(query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "marker3" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_3, "");
                 if(!query.isEmpty()) {
-                    response.setContentType( "application/javascript" );
                     response.getWriter().write(writeResponse(query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "marker4" )) {
                 String query = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY_4, "");
                 if(!query.isEmpty()) {
-                    response.setContentType( "application/javascript" );
                     response.getWriter().write(writeResponse(query, messages, sysCodeList));
                 }
             }
             if (resourceID.equals( "bbox" )) {
                 String uuid = request.getParameter( "uuid" );
-                response.setContentType( "application/javascript" );
-                response.getWriter().write( "[" );
+                JSONArray bbox = new JSONArray();
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( "t01_object.obj_id:" + uuid + " ranking:score" ), REQUESTED_FIELDS_BBOX,
                         IBUSInterfaceImpl.getInstance().getIBus() );
-                if (it.hasNext()) {
-                    StringBuilder s = new StringBuilder();
+                if(it!= null && it.hasNext()){
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
-                    String x1Value = UtilsSearch.getDetailValue( detail, "x1" );
-                    String y1Value = UtilsSearch.getDetailValue( detail, "y1" );
-                    String x2Value = UtilsSearch.getDetailValue( detail, "x2" );
-                    String y2Value = UtilsSearch.getDetailValue( detail, "y2" );
-
-                    if(y1Value != null && y2Value != null && x1Value != null && x2Value != null &&
-                            x1Value.length() > 0 && x1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                            x2Value.length() > 0 && x2Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                            y1Value.length() > 0 && y1Value.toLowerCase().indexOf( "nan" ) == -1 &&
-                            y2Value.length() > 0 && y2Value.toLowerCase().indexOf( "nan" ) == -1) {
-                        s.append("[").append( y1Value.trim() ).append( "," ).append( x1Value.trim() ).append( "],[" ).append( y2Value.trim() )
-                                .append( "," ).append( x2Value.trim() ).append("]");
-                        response.getWriter().write( s.toString() );
-                    }
+                    JSONArray bboxItems = new JSONArray();
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "y1", 1)));
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "x1", 1)));
+                    bbox.put(bboxItems);
+                    bboxItems = new JSONArray();
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "y2", 1)));
+                    bboxItems.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "x2", 1)));
+                    bbox.put(bboxItems);
                 }
-                response.getWriter().write( "]" );
+                response.getWriter().write( bbox.toString() );
             }
             if(resourceID.equals( "devPlanMarker" )){
                 String queryString = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_DEV_PLAN, "");
@@ -185,8 +174,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                         jsonData.put( jsonDataEntry );
                         cnt++;
                     } catch (Exception e) {
-                        log.error("Error get json object:" + e);
+                        log.error("Error get json object.", e);
                     }
+                    response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
                 }
 
                 response.setContentType( "application/javascript" );
@@ -199,7 +189,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 if (query.get( "FACETS" ) == null) {
                     ArrayList<IngridDocument> facetQueries = new ArrayList<>();
                     ArrayList<HashMap<String, String>> facetList = new ArrayList<>();
-
                     String tmpQuery = PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_QUERY, "");
                     if (!tmpQuery.isEmpty()) {
                         HashMap<String, String> facetEntry = new HashMap<>();
@@ -255,22 +244,17 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                             log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
                         }
                     } else {
-                        response.setContentType( "application/javascript" );
                         if(hits.length() > 0) {
                             Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
-                            String facetsJSON = "{";
+                            JSONObject obj = new JSONObject();
                             if(facets != null){
                                 for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
                                     String key = iterator.next();
                                     Long value = (Long) facets.get(key);
-                                    facetsJSON += "\"" + key.split(":")[1] + "\":" + value;
-                                    if(iterator.hasNext()) {
-                                        facetsJSON += ",";
-                                    }
+                                    obj.put(key.split(":")[1], value);
                                 }
                             }
-                            facetsJSON += "}";
-                            response.getWriter().write( "var legendCounter = " + facetsJSON +";");
+                            response.getWriter().write( "var legendCounter = " + obj.toString() +";");
                         } else {
                             response.getWriter().write( "var legendCounter = {};");
                         }
@@ -285,81 +269,49 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
-
+    
     private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException {
-        StringBuilder s = new StringBuilder();
-        s.append("var markers = [");
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
-        while (it.hasNext()) {
-            IngridHit hit = it.next();
-            IngridHitDetail detail = hit.getHitDetail();
-            String latCenterValue = UtilsSearch.getDetailValue( detail, "lat_center" );
-            String lonCenterValue = UtilsSearch.getDetailValue( detail, "lon_center" );
-            if(latCenterValue != null && lonCenterValue != null &&
-                    latCenterValue.length() > 0 && latCenterValue.toLowerCase().indexOf( "nan" ) == -1 &&
-                    lonCenterValue.length() > 0 && lonCenterValue.toLowerCase().indexOf( "nan" ) == -1 ){
-                s.append( "[" )
-                        .append( latCenterValue.trim() ).append( "," )
-                        .append( lonCenterValue.trim() ).append( ",'" )
-                        .append( detail.get( "title" ).toString() ).append( "','" )
-                        .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) ).append( "','" )
-                        .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ) ).append( "','" )
-                        .append( sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )) ).append( "'");
-
-                if(detail.get( "uvp_category" ) != null){
+        JSONArray jsonData = new JSONArray();
+        if(it != null){
+            while (it.hasNext()) {
+                try {
+                    IngridHit hit = it.next();
+                    IngridHitDetail detail = hit.getHitDetail();
+                    JSONArray jsonDataEntry = new JSONArray();
+                    jsonDataEntry.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "lat_center", 1)));
+                    jsonDataEntry.put(Double.parseDouble(UtilsSearch.getDetailValue( detail, "lon_center", 1)));
+                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "title" ));
+                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ));
+                    jsonDataEntry.put(UtilsSearch.getDetailValue( detail, "t01_object.obj_class" ));
+                    jsonDataEntry.put(sysCodeList.getName( "8001", UtilsSearch.getDetailValue( detail, "t01_object.obj_class" )));
                     ArrayList<String> categories = getIndexValue(detail.get( "uvp_category" ));
-                    s.append( "," ).append( "[" );
+                    JSONArray jsonCategories = new JSONArray();
                     if(categories != null && !categories.isEmpty()){
-                        int index = 0;
                         for (String category : categories) {
-                            s.append( "{" );
-                            s.append( "'id':'" + category.trim() + "'" );
-                            s.append( ",");
-                            s.append( "'name':'" + messages.getString( "searchResult.categories.uvp." + category.trim() ) + "'" );
-                            s.append( "}" );
-                            if(index < categories.size() - 1){
-                                s.append( "," );
-                            }
-                            index ++;
+                            JSONObject obj = new JSONObject();
+                            obj.put( "id", category.trim());
+                            obj.put( "name", messages.getString("searchResult.categories.uvp." + category.trim()));
+                           jsonCategories.put(obj);
                         }
                     }
-                    s.append( "]" );
-                }else{
-                    s.append( "," ).append( "[" );
-                    s.append( "]" );
-                }
-
-                if(detail.get( "uvp_steps" ) != null){
+                    jsonDataEntry.put(jsonCategories);
                     ArrayList<String> steps = getIndexValue(detail.get( "uvp_steps" ));
-                    s.append( "," ).append( "[" );
+                    JSONArray jsonSteps = new JSONArray();
                     if(steps != null && !steps.isEmpty()){
-                        int index = 0;
-                        s.append( "'" );
                         for (String step : steps) {
-                            s.append( messages.getString( "common.steps.uvp." + step.trim() ) );
-                            if(index < steps.size() - 1){
-                                s.append( "','" );
-                            }else{
-                                s.append( "'" );
-                            }
-                            index ++;
+                            jsonSteps.put( messages.getString( "common.steps.uvp." + step.trim()));
                         }
                     }
-                    s.append( "]" );
-                }else{
-                    s.append( "," ).append( "[" );
-                    s.append( "]" );
-                }
-
-                s.append( "]" );
-                if (it.hasNext()) {
-                    s.append( "," );
+                    jsonDataEntry.put(jsonSteps);
+                    jsonData.put(jsonDataEntry);
+                } catch (Exception e) {
+                    log.error("Error write response.", e);
                 }
             }
         }
-        s.append("];");
-        return s.toString();
+        return "var markers = " + jsonData.toString() + ";";
     }
 
     @Override
@@ -405,15 +357,17 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private ArrayList<String> getIndexValue(Object obj){
         ArrayList<String> array = new ArrayList<>();
-        if(obj instanceof String[]){
-            String [] tmp = (String[]) obj;
-            for (String s : tmp) {
-                array.add( s );
+        if(obj != null) { 
+            if(obj instanceof String[]){
+                String [] tmp = (String[]) obj;
+                for (String s : tmp) {
+                    array.add( s );
+                }
+            }else if(obj instanceof ArrayList){
+                array = (ArrayList) obj;
+            }else {
+                array.add( obj.toString() );
             }
-        }else if(obj instanceof ArrayList){
-            array = (ArrayList) obj;
-        }else {
-            array.add( obj.toString() );
         }
         return array;
     }
