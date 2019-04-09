@@ -2,18 +2,18 @@
 # ID des GUI Elements
 guid: 3000
 # optional ID der Objektklasse
-oid: 3
+oid: 4
 # title, used as window title
 title: Objektname
 ---
 
 # Objektname
 
-Angabe einer kurzen prägnanten Bezeichnung des beschriebenen Geodatendienstes. Der Objektname kann z.B. identisch mit dem Namen des Geodatendienstes sein, sofern dieser ausreichend kurz und aussagekräftig ist. Soweit ein gängiges Kürzel vorhanden ist, ist dieses Kürzel mit anzugeben. Der Eintrag in dieses Feld ist obligatorisch.
+Angabe einer kurzen prägnanten Bezeichnung des beschriebenen Vorhabens / Projekts / Programms. Der Objektname kann z.B. identisch mit dem Titel des Vorhabens / Projekts / Programms sein, sofern dieser ausreichend kurz und aussagekräftig ist. Soweit ein gängiges Kürzel vorhanden ist, ist dieses Kürzel mit anzugeben. Der Eintrag in dieses Feld ist obligatorisch.
 
 ## Beispiel:
 
-Emissions-Fernüberwachung EFÜ
+Moorschutzprogramm
 
 # ISO Abbildung
 
@@ -26,7 +26,7 @@ Domain: 360
 ```XML
 <MD_Metadata>
   <identificationInfo>
-    <srv:SV_ServiceIdentification>
+    <MD_DataIdentification>
       <citation>
         <CI_Citation>
           <title>
@@ -34,7 +34,7 @@ Domain: 360
           </title>
         </CI_Citation>
       </citation>
-    </srv:SV_ServiceIdentification>
+    </MD_DataIdentification>
   </identificationInfo>
 </MD_Metadata>
 ```

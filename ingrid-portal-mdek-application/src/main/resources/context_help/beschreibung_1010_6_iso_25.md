@@ -2,14 +2,14 @@
 # ID des GUI Elements
 guid: 1010
 # optional ID der Objektklasse
-oid: 4
+oid: 6
 # title, used as window title
 title: Beschreibung
 ---
 
 # Beschreibung
 
-Fachliche Inhaltsangabe des Vorhabens / Projektes / Programms. Hier sollen in knapper Form die Zielsetzungen und wichtigsten Rahmenbedingungen des Vorhabens / Projektes / Programms beschrieben werden. Auf Verständlichkeit für fachfremde Dritte ist zu achten. Für Detailinformationen (Name des Projektleiters, Projektbeteiligte, etc.) stehen gesonderte Eingabefelder zur Verfügung. Das Feld Beschreibungen muss ausgefüllt werden, damit das Objekt abgespeichert werden kann.
+Fachliche Inhaltsangabe des Dienstes, der Anwendung oder des Informationssystems. Hier sollen in knapper Form die Art des Dienstes, der Anwendung oder des Informationssystems sowie die fachlichen Informationsgehalte beschrieben werden. Auf Verständlichkeit für fachfremde Dritte ist zu achten. DV-technische Einzelheiten sollten auf zentrale, kennzeichnende Aspekte beschränkt werden. Das Feld Beschreibungen muss ausgefüllt werden, damit das Objekt abgespeichert werden kann.
 
 
 # ISO Abbildung

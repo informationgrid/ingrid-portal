@@ -1,25 +1,23 @@
 ---
 # ID des GUI Elements
-guid: 3000
-# optional ID der Objektklasse
-oid: 0
+guid: 5000
 # title, used as window title
-title: Objektname
+title: Kurzbezeichnung
 ---
 
-# Objektname
+# Kurzbezeichnung
 
-Angabe einer kurzen, prägnanten Bezeichnung der beschriebenen Organisationseinheit oder Fachaufgabe.
+Angabe einer Kurzbezeichnung für ein Objekt. (Wird insbes. von GeoMIS.Bund unterstützt)
 
 ## Beispiel:
 
-Jahresstatistik zum Stand der Altlastenbearbeitung
+DTK25 digitale topographische Karte GK25 - Grundkarte
 
 # ISO Abbildung
 
-Bezeichnung, unter der die Ressource bekannt ist
+Kurzbezeichnung oder anderer Titel der Ressource
 
-Domain: 360
+Domain: 361
 
 ## Abbildung ISO 19139 XML
 
@@ -29,9 +27,9 @@ Domain: 360
     <MD_DataIdentification>
       <citation>
         <CI_Citation>
-          <title>
+          <alternateTitle>
             <gco:CharacterString>TITLE</gco:CharacterString>
-          </title>
+          </alternateTitle>
         </CI_Citation>
       </citation>
     </MD_DataIdentification>
