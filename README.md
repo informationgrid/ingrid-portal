@@ -26,11 +26,11 @@ Requirements
 Installation
 ------------
 
-Download from https://dev.informationgrid.eu/ingrid-distributions/ingrid-portal/
+Download from https://distributions.informationgrid.eu/ingrid-portal/
  
 or
 
-build from source with `mvn package assembly:single`.
+build from source with `mvn clean package`.
 
 Execute
 
@@ -49,18 +49,14 @@ Contribute
 - Issue Tracker: https://github.com/informationgrid/ingrid-portal/issues
 - Source Code: https://github.com/informationgrid/ingrid-portal
  
-### Set up eclipse project
+### Setup project
 
-```
-mvn eclipse:eclipse
-```
-
-and import project into eclipse. There are several sub projects:
+Import project as Maven project. There are several sub projects:
 
 - ingrid-portal-base: The JSR-286 compatible portal framework based on Jetspeed 2
 - ingrid-portal-apps: The portal application that encapsules the InGrid portal
 - ingrid-portal-layout: Layout definitions for the InGrid Portal
-- ingrid-portal-mdek-application: JavaScript (Dojo Toolkit) based meta data editor (German MDEK: **M**etadaten **E**rfassungs **K**omponente = English IGE: **I**n**G**rid **E**ditor)
+- ingrid-portal-mdek-application: JavaScript (Dojo Toolkit) based meta data editor (German MDEK: **M**eta**D**aten **E**rfassungs **K**omponente = English IGE: **I**n**G**rid **E**ditor)
 - ingrid-portal-mdek: Portal integration of the InGrid Editor
 - ingrid-portal-distribution: The assembly project to gather the pieces and build an installer
 
@@ -79,7 +75,7 @@ There's also a corresponding windows batch file _start.bat_, which works the sam
 For IntelliJ IDEA there's a dojo plugin for easier handling of imports:
 https://github.com/TomDevs/needsmoredojo
 
-### Debug under eclipse
+### Debugging
 
 When the jetty server is started then the InGrid-Editor can also be debugged via remote debugging. The settings are:
 ```
