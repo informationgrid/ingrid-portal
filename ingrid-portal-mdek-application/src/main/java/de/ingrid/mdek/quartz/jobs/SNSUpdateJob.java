@@ -28,14 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.quartz.InterruptableJob;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.UnableToInterruptJobException;
+import org.quartz.*;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
@@ -91,15 +84,19 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	private JobDetail createJobDetail(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
-		JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, SNSUpdateJob.class);
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("SNS_SERVICE", snsService);
 		jobDataMap.put("CONNECTION_FACADE", connectionFacade);
 		jobDataMap.put("PLUG_ID", connectionFacade.getCurrentPlugId());
 		jobDataMap.put("USER_ID", MdekSecurityUtils.getCurrentUserUuid());
 		jobDataMap.put("LOCALE", new Locale( lang ));
-		//jobDataMap.put("URL_THESAURUS", ResourceBundle.getBundle("sns").getString("sns.serviceURL.thesaurus"));
-		jobDetail.setJobDataMap(jobDataMap);
+
+		JobDetail jobDetail = JobBuilder
+				.newJob(SNSUpdateJob.class)
+				.withIdentity(jobName, Scheduler.DEFAULT_GROUP)
+				.setJobData(jobDataMap)
+				.storeDurably()
+				.build();
 
 		return jobDetail;
 	}
@@ -109,7 +106,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 
 		if (!isRunning()) {
 			scheduler.addJob(jobDetail, true);
-			scheduler.triggerJobWithVolatileTrigger(jobName, Scheduler.DEFAULT_GROUP);
+			scheduler.triggerJob(JobKey.jobKey(jobName));
 			return true;
 
 		} else {
@@ -416,7 +413,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 			if (scheduler != null) {
 				List<JobExecutionContext> executionContextList = scheduler.getCurrentlyExecutingJobs();
 				for (JobExecutionContext executionContext : executionContextList) {
-					if (jobName.equals(executionContext.getJobDetail().getName())) {
+					if (jobName.equals(executionContext.getJobDetail().getKey().getName())) {
 						return executionContext;
 					}
 				}
@@ -458,8 +455,8 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	public void stop() {
 		try {
 			log.debug("trying to interrupt job via scheduler...");
-			scheduler.interrupt(jobName, Scheduler.DEFAULT_GROUP);
-			scheduler.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
+			scheduler.interrupt(JobKey.jobKey(jobName));
+			scheduler.deleteJob(JobKey.jobKey(jobName));
 
 		} catch (UnableToInterruptJobException ex) {
 			log.error("Error interrupting SNS Update job.", ex);
