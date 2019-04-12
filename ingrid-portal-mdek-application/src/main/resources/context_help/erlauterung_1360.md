@@ -12,3 +12,6 @@ Angabe, warum die Daten erhoben werden.
 ## Beispiel:
 
 Topographische Karten werden erstellt für den Nachweis des Landesgebietes.
+
+
+KANN NICHT ZUGEORDNET WERDEN! VERALTET? 

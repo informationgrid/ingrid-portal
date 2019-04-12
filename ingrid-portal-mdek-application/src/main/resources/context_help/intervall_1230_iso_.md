@@ -12,3 +12,9 @@ Angabe des zeitlichen Abstands (Frequenz) der Datenerhebung. Erfolgt die Datener
 ## Beispiel:
 
 Alle 6 Monate
+
+# ISO Abbildung
+
+Benutzerdefiniertes Pflegeintervall: Pflegeintervall, welches in der Codeliste nicht vordefiniert ist
+
+Domain: 145

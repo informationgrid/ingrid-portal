@@ -12,3 +12,8 @@ Anmerkungen zu dem erstellten Verweis. Hier können weitergehende Informationen 
 ## Beispiel:
 
 Das Objekt, auf das verwiesen wird, enthält weiterführende Literaturhinweise zum aktuellen Objekt.
+
+
+# ISO Abbildung
+
+Keine Abbildung in ISO 19115/19119.

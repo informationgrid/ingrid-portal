@@ -15,6 +15,6 @@ Präsentation des Raumordnungsprogramms auf Basis der topografischen Kartenwerke
 
 # ISO Abbildung
 
-kurze Beschreibung zur Verwendung der Ressource
+Spezifische Nutzung: kurze Beschreibung zur Verwendung der Ressource
 
 Domain: 63
