@@ -1,82 +1,56 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
-        <footer class="footer">
-            <div class="ob-box-padded ob-box-center ob-clear">
-                <div class="footer__top">
-                    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
-                        <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
+    <footer>
+        <hr>
+        <div class="row">
+            <div class="xsmall-24 columns">
+                <div class="social-buttons">
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-twitter"></span><span class="text"></span>
                     </a>
-                    <p class="copyright">$MESSAGES.getString('ingrid.page.copyright')</p>
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-facebook"></span><span class="text"></span>
+                    </a>
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-linkedin"></span><span class="text"></span>
+                    </a>
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-whatsapp"></span><span class="text"></span>
+                    </a>
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-xing"></span><span class="text"></span>
+                    </a>
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-mailto"></span><span class="text"></span>
+                    </a>
+                    <a href="#" class="button round social" target="_blank">
+                        <span class="ic-ic-share"></span><span class="text"></span>
+                    </a>
                 </div>
             </div>
-            <hr class="bx-top-0 bx-bot-0">
-            <div class="grid">
-                <div class="column column--3-4-xl">
-                    <div class="ob-box-padded ob-box-center ob-clear">
-                        <div class="footer__section">
-                        #set($footerMenu = $site.getMenu("footer-menu"))
-                        #if(!$footerMenu.empty)
-                          #includeFooterNavigation($footerMenu)
-                        #end
-                        </div>
-                    </div>
-                </div>
-                <div class="column column--1-4-xl">
-                    <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
-                    <div class="ob-box-padded ob-box-center ob-clear">
-                        <div class="footer__section">
-                            <div class="footer__bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
-        </footer>
-#end
-        <!-- Popup -->
-        <div class="popup">
-            <header class="popup__header">
-                <div class="popup__close link--alt ob-flt-r js-popup-close">
-                    <svg class="icon"><use xlink:href="#cross" /></svg>
-                    <span class="mq-hide-m"></span>
-                </div>
-                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
-            </header>
-            <section class="popup__content ob-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p><a href="#">Read more</a></p>
-            </section>
         </div>
-        
-        <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
-        
-        <!-- Popup -->
-        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
-        
-        <!-- Accordion -->
-        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
-        <script>
-        $('.js-accordion').accordion();
-        $('.js-accordion-multi').accordion({
-            multi: true
-        });
-        </script>
-        <!-- Tabs -->
-        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
-        <script>
-            $('.js-tabs').tabs();
-        </script>
-        <!-- Selection -->
-        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
-        <script>
-            $('.js-selection').selection();
-        </script>
-        <!-- Table Sort -->
-        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
-        <script>
-            $('.js-table-sortable').sortable();
-        </script>
+      <div class="row">
+          <div class="xsmall-24 columns">
+              <div class="button-up">
+                  <button type="button" class="button round"><span class="ic-ic-angle-up"></span></button>
+              </div>
+          </div>
+      </div>
+      <div class="footer">
+          <div class="row">
+              <div class="xsmall-24 large-7 xlarge-6 columns">
+                  #set($footerMenu = $site.getMenu("footer-menu"))
+                  #if(!$footerMenu.empty)
+                      #includeFooterNavigation($footerMenu)
+                  #end
+              </div>
+              <div class="xsmall-24 large-17 xlarge-18 columns">
+                  <div class="copyright">
+                      <p>© 2018 Landesbetrieb Geoinformation und Vermessung</p>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </footer>
+#end
     </body>
 </html>

@@ -4,13 +4,12 @@
 #set($uvp_procedures = false)
 
 #if($rs.get("detail"))
-    <ul class="tag-group">
     ## Show object class
     #set($objClass = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 't01_object.obj_class'))
     #if($objClass)
         #set($objClassName = $Codelists.getCodeListValue('8001', $objClass, $languageCode))
         #if($objClassName)
-            <li class="tag tag--small">$objClassName</li>
+            <div class="helper text"><span class="">$objClassName</span></div>
         #end
     #end
     ## Show categories
@@ -19,7 +18,7 @@
         #set($categories = $uvp_categories.split(","))
         #if($categories && $categories.size() > 0)
             #foreach($category in $categories)
-                <li class="tag tag--small">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</li>
+                <div class="helper text"><span class="">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</span></div>
             #end
         #end
     #end
@@ -29,9 +28,8 @@
         #set($procedures = $uvp_procedures.split(","))
         #if($procedures && $procedures.size() > 0)
             #foreach($procedure in $procedures)
-                <li class="tag tag--small">$MESSAGES.getString("searchResult.procedure.uvp.$procedure.trim()")</li>
+                 <div class="helper text"><span class="">$MESSAGES.getString("searchResult.procedure.uvp.$procedure.trim()")</span></div>
             #end
         #end
     #end
-    </ul>
 #end

@@ -1,0 +1,18 @@
+#set ($action = $renderResponse.createActionURL())
+<form class="form" action="$action" method="post" name="edit_account" id="edit_account">
+    <input type="hidden" name="cmd" value="form_sent" />
+    #set ($formType = 'edit')
+    #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+    <div class="subtext-submit">
+        <h6>* $MESSAGES.getString('account.edit.required.fields')</h6>
+        #renderInputButtonClass("$MESSAGES.getString('account.edit.submit')" "" "" "" "")
+    </div>
+</form>
+<br/>
+<br/>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('edit_account');
+    }
+</script>

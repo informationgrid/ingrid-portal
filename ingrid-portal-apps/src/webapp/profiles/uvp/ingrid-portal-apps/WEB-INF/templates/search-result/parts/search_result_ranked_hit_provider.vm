@@ -7,13 +7,12 @@
     #if($rs.get("detail"))
         #set ($uvp_address = $rs.get('detail').get('uvp_address'))
         #if($uvp_address && $uvp_address != "")
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
-                #foreach($address in $uvp_address)
-                    <br>
-                    <span class="tx-light">$address.replaceAll("\n","<br>")</span>
-                #end
-            </small>
+            <h6 class="no-margin">$MESSAGES.getString('common.result.provider')</h6>
+            <p>
+            #foreach($address in $uvp_address)
+                <small>$address</small><br>
+            #end
+            </p>
         #end
     #end
 #end

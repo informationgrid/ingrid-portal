@@ -506,30 +506,29 @@
     
     function createPopUp(title, procedure, categories, steps, id) {
         var popUpHtml = '';
-        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank">' + title + '</a>';
+        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank"><h5>' + title + '</h5></a>';
         
         if(procedure && procedure.length > 0){
-            popUpHtml += '<div class="map_popup_proc">' + procedure + '</div>';
+            //popUpHtml += '<div class="map_popup_proc">' + procedure + '</div>';
         }
         
         if(categories && categories.length > 0){
-            popUpHtml += '<div class="map_popup_cat">';
-            popUpHtml += '<b>Kategorie:</b><br>';
             var categoryList = [];
             for (category in categories){
                 var value = categories[category].name;
+                var id = categories[category].id;
                 if(categoryList.indexOf(value) == -1){
-                    popUpHtml += value + '<br>';
+                    popUpHtml += '<div class="helper icon">';
+                    popUpHtml += '<span class="ic-ic-' + id + '"></span>';
+                    popUpHtml += '<span>' + value + '</span>';
                     categoryList.push(value);
                 }
             }
             popUpHtml += '</div>';
         }
         if(steps && steps.length > 0){
-            popUpHtml += '<div class="map_popup_cat">';
-            popUpHtml += '<b>Letzter Verfahrensschritt:</b><br>';
-            popUpHtml += steps[steps.length - 1] + '<br>';
-            popUpHtml += '</div>';
+            popUpHtml += '<h6 class="no-margin">Letzter Verfahrensschritt:</h6>';
+            popUpHtml += '<p>' + steps[steps.length - 1] + '</p>';
         }
         return popUpHtml;
     }

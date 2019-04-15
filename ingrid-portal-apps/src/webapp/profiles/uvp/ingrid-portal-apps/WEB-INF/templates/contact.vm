@@ -1,0 +1,87 @@
+<div class="columns">
+    <div class="form">
+        <div>$contactIntroPostEmail</div>
+        <h4>Kontakformular</h4>
+        #set ($action = $renderResponse.createActionURL())
+        <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
+            #displayFormError()
+            <div class="form-element">
+                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
+            </div>
+            <div class="form-element">
+                <textarea name="message" id="bemerkungen" #addErrorFormClass('message') rows="10">#getFieldValue('message')</textarea>
+                #addErrorFormMessage('message')
+            </div>
+            <div class="form-element">
+                <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') />
+                #addErrorFormMessage('firstname')
+            </div>
+            <div class="form-element">
+                <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
+                #addErrorFormMessage('lastname')
+            </div>
+            <div class="form-element">
+                <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="xx4" name="company" value="#getFieldValue('company')"/>
+            </div>
+            <div class="form-element">
+                <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="xx5" name="phone" value="#getFieldValue('phone')"/>
+            </div>
+            <div class="form-element">
+                <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
+                #addErrorFormMessage('email')
+            </div>
+            #if ($uploadEnable)
+                <div class="form-element">
+                    <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
+                </div>
+                <div class="form-element">
+                    <input type="file" id="upload" name="upload"></input>
+                </div>
+            #end
+            #if($enableCaptcha)
+                <div class="form-element">
+                    <label for="xx7">$MESSAGES.getString('contact.jcaptcha.title')</label>
+                </div>
+                <div class="sg-gradientbox">
+                #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
+                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
+                #else
+                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
+                #end 
+                </div>
+                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "")
+                $action.setParameter("doRefresh",  "Refresh")
+                <div class="form-element">
+                    <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha')/>
+                    #addErrorFormMessage('jcaptcha')
+                </div>
+            #end
+            <hr>
+            <div class="subtext-submit">
+                <h6>$MESSAGES.getString('contact.form.required')</h6>
+                <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('contact');
+    }
+</script>

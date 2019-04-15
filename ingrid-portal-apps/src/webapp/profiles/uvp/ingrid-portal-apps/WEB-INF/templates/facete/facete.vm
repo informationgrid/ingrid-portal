@@ -1,0 +1,373 @@
+#set ($action = $renderResponse.createActionURL())
+#set ($rankedHitslenght = $rankedResultList.get("length").toString())
+
+#if($rankedHitslenght != "0")
+    #renderFacetCategory($facetConfig)
+#else
+    <p>
+        #if($isSelection)
+            $MESSAGES.getString("searchResult.facete.category.error")
+        #else
+            $MESSAGES.getString("searchResult.facete.category.no.hits") 
+        #end
+    </p>
+        #if($enableFacetSelection && $isSelection)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("doRemoveLast", "true")
+            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
+        #end
+        #if($enableFacetSelection || $isSelection)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("doRemoveAll", "true")
+            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
+        #end
+    <br>
+#end
+
+#macro(renderFacetCategory $nodes)
+    #foreach($node in $nodes)
+        #if(!$node.isCategoryOnly())
+            #if(!$node.getQuery())
+                #if($node.getDependency())
+                    #if($node.isDependencySelect())
+                        #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                            #renderFacetContent($node)
+                        #else
+                            #if($node.getFacets())
+                                #set($nodeHasValueDependency = false)
+                                #foreach($facet in $node.getFacets())
+                                    #if($facet.getFacetValue())
+                                        #set($nodeHasValueDependency = true)
+                                    #end
+                                #end
+                                #if($nodeHasValueDependency)
+                                    #renderFacetContent($node)
+                                #end
+                            #end
+                        #end
+                    #end
+                #else
+                    #if($node.getHidden())
+                        #if($node.isHiddenSelect() == false)
+                            #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                                #renderFacetContent($node)
+                            #else
+                                #if($node.getFacets())
+                                    #set($nodeHasValueHidden = false)
+                                    #foreach($facet in $node.getFacets())
+                                        #if($facet.getFacetValue())
+                                            #set($nodeHasValueHidden = true)
+                                        #end
+                                    #end
+                                    #if($nodeHasValueHidden)
+                                        #renderFacetContent($node)
+                                    #end
+                                #end
+                            #end
+                        #end
+                    #else
+                        #if($node.getId() == 'area' || $node.getId() == 'area.map' || $node.getId() == 'attribute' || $node.getId() == 'area.address')
+                            #renderFacetContent($node)
+                        #elseif($node.getWildcard())
+                            #parse ('/WEB-INF/templates/facete/facete_wildcard.vm')
+                        #elseif($node.getFacets())
+                            #set($nodeHasValue = false)
+                            #foreach($facet in $node.getFacets())
+                                #if($facet.getFacetValue() || $facet.isDisplay())
+                                    #set($nodeHasValue = true)
+                                #end
+                            #end
+                            #if($nodeHasValue || $node.isOpen())
+                                #renderFacetContent($node)
+                            #end
+                        #end
+                    #end
+                #end
+            #end
+        #end
+    #end
+#end
+
+#macro(renderFacetCategoryEntry $facet $parentId)
+    #if(($facet.getFacetValue() || $facet.isDisplay()) && !$facet.isCategoryOnly())
+        #if($facet.getFacets())
+            ## Check for sub facets
+            #if($facet.isSelect())
+                ## Create Tree with single selection
+                #if($facet.isOldIPlug())
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("$parentId", "$facet.getId()")
+                    #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                #else
+                    #renderTree ($facet $parentId)
+                #end
+            #else
+                ## Set single facets
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$parentId", "$facet.getId()")
+                #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+            #end
+        #else
+            ## Set single facets
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("$parentId", "$facet.getId()")
+            #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+        #end
+    #elseif($facet.getWildcard())
+        #renderSubfacetWildcardContent($facet)
+    #end
+#end
+
+
+#macro(renderFacetContent $facet)
+    #if($facet && !$facet.isCategoryOnly())
+        #if($facet.getId() == 'area' || $facet.getId() == 'area.map' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
+            ## RAUMBEZUG ##
+            #if($facet.getId() == 'area')
+                #parse ('/WEB-INF/templates/facete/facete_area.vm')
+            #end
+            
+            #if($facet.getId() == 'area.map')
+                #parse ('/WEB-INF/templates/facete/facete_area_map.vm')
+            #end
+            
+            ## ATTRIBUTE ##
+            #if($facet.getId() == 'attribute')
+                #parse ('/WEB-INF/templates/facete/facete_attribute.vm')
+            #end
+            
+            ## RAUMBEZUG - ADDRESSEN ##
+            #if($facet.getId() == 'area.address')
+                #parse ('/WEB-INF/templates/facete/facete_area_address.vm')
+            #end
+        #else
+            #set($count = 0)
+            #if($facet.getShowOnMoreThan() != 0)
+                #foreach($tmpFacet in $facet.getFacets())
+                    #if($tmpFacet.getFacetValue() || $facet.isDisplay())
+                        #set($count = $count + 1)
+                    #end
+                #end
+            #end
+            #if($facet.getShowOnMoreThan() == 0 || $count > $facet.getShowOnMoreThan())
+                #set($isSelected = false)
+                #foreach($subFacet in $facet.getFacets())
+                    #if($subFacet.isSelect())
+                        #set($isSelected = true)
+                    #end
+                #end
+                <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                    <li class="accordion-item #if($isSelected)is-active#end" data-accordion-item="">
+                        <a class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label" #if($facet.isSelect() || $facet.isOpen())aria-expanded="true" aria-selected="true"#end>
+                            <span class="text">$MESSAGES.getString("$facet.getName()")</span>
+                        </a>
+                        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
+                            <div class="boxes">
+                            #foreach($subFacet in $facet.getFacets())
+                                #if($isSelected)
+                                    #if($subFacet.isSelect())
+                                        #renderFacetCategoryEntry($subFacet $facet.getId())
+                                    #end
+                                #else
+                                    #renderFacetCategoryEntry($subFacet $facet.getId())
+                                #end
+                            #end
+                           </div>
+                        </div>
+                    </li>
+                </ul>
+            #end
+        #end
+    #end
+#end
+
+#macro (renderTree $treeFacet $treeParentId)
+    <div class="js-accordion-multi">
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("$treeParentId", "$treeFacet.getId()")
+        <div class="js-accordion-toggle sidebar-filter-subheader is-active" onclick="location.href='$action'">
+        #set ($action = $renderResponse.createActionURL())
+            <svg class="sidebar-subheader-icon icon">
+                <use xlink:href="#select-arrow">
+            </svg>
+            $MESSAGES.getString("$treeFacet.getName()")
+            <strong>($treeFacet.getFacetValue())</strong>
+        </div>
+    </div>
+    <div id="$treeFacet.getId()" class="sidebar-filter-content">
+    #set($isSelectedTree = false)
+    #foreach ($treeSubFacet in $treeFacet.getFacets())
+        #if($treeSubFacet.isSelect())
+            #set($isSelectedTree = true)
+        #end
+    #end
+    
+    #foreach ($treeSubFacet in $treeFacet.getFacets())
+        <ul>
+        #if($treeSubFacet.getFacetValue() && !$treeSubFacet.isCategoryOnly())
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
+            #if($treeSubFacet.getCodelistId())
+               #set ($name = $Codelists.getCodeListValue($treeSubFacet.getCodelistId(), $treeSubFacet.getCodelistEntryId(), $languageCode))
+            #else
+               #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
+            #end
+            <li>
+                <svg class="icon sidebar-filter-content-icon">
+                #if($treeSubFacet.isSelect())
+                    <use xlink:href="#cross">
+                #else
+                    <use xlink:href="#select-arrow"/>
+                #end
+                </svg>
+                <a href="$action">$name <strong>($treeSubFacet.getFacetValue())</strong></a>
+            </li>
+        #end
+        </ul>
+    #end
+    </div>
+#end
+
+#macro (renderInputButtonDialog $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
+    <button type="submit" style="$buttonstyle" class="$buttonclass" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick">$buttontitle</button>
+#end
+
+#macro (renderFaceteSelectedAttributeNumber $doAction $facet $tooltip $number $isDelete)
+    <div class="form-element boxed">
+        <div class="input-check">
+            <div class="control-group">
+                <label class="control control--checkbox" for="facet-$facet.getId()">
+                    #set ($hasShortName = false)
+                    #if($facet.getShortName())
+                      #set ($hasShortName = true)
+                    #end
+                    #set ($hasMobileName = false)
+                    #if($facet.getMobileName())
+                      #set ($hasMobileName = true)
+                    #end
+                    <input id="facet-$facet.getId()" name="" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
+                    <div class="control__indicator"></div>$MESSAGES.getString("$facet.getName()")</span>
+                    <span class="nr-results">
+                    #if($number)
+                        ($number)
+                    #else
+                        (0)
+                    #end
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+#end
+
+#macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
+    <p>
+        <a class="btn btn--delete btn--small btn--block" href="$doAction">
+        <svg class="icon link__icon"><use xlink:href="#cross"/></svg>
+        $title
+        #if($numbers && $key)
+            #renderLinkEntryNumberInArrayHashMap($numbers $key)
+        #end
+        </a>
+    </p>
+#end
+
+#macro(renderLinkEntryNumberInArrayHashMap $numbers $id)
+    <span class="facete_label_number">
+    #set($isFound = false)
+    #foreach($number in $numbers)
+        #foreach($key in $number.keySet())
+            #if($key == "$id")
+                #set($num = "$number.get($key)")
+                #if($num != "" && $num != "0")
+                    ($num)
+                #end
+            #end
+        #end
+    #end
+    </span>
+#end
+
+#macro(renderLinkEntryNumberInHashMap $numbers $id)
+    <span class="facete_label_number">
+    #set($isFound = false)
+    #foreach($key in $numbers.keySet())
+        #if($key == "$id")
+            #set($num = "$numbers.get($key)")
+            #if($num != "" && $num != "0")
+                ($num)
+            #end
+        #end
+    #end
+    </span>
+#end
+
+#macro(renderLinkEntryNumber $number)
+    <span class="facete_label_number">
+        #if($number != "" && $number != "0")
+                ($number)
+        #end
+    </span>
+#end
+
+#macro(renderDeleteIcon $doAction $title)
+    <a href="$doAction" class="facete_link_line">
+        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title"></img>
+    </a>
+#end
+
+#macro(renderResetLink $doAction $title)
+    <a type="reset" href="$doAction" class="button pill">
+        $title
+    </a>
+#end
+
+#macro(renderCheckLink $doAction $title $onclick)
+    <p class="bx-top-xs bx-bot-0 tx-right">
+        <small>
+            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
+                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
+                $title
+            </a>
+        </small>
+    </p>
+#end
+
+#macro(renderCrossLink $doAction $title $onclick)
+    <p class="bx-top-xs bx-bot-0 tx-right">
+        <small>
+            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
+                <svg class="icon link__icon icon-xs"><use xlink:href="#cross"/></svg>
+                $title
+            </a>
+        </small>
+    </p>
+#end
+
+#macro(renderSubfacetWildcardContent $node)
+    #set($wildcard_item_term = false)
+    #set($wildcard_item = false)
+    #set($wildcard_item = $wildcardMap.get("$node.getId()"))
+    #if($wildcard_item)
+        #set($wildcard_item_term = $wildcard_item.get("term"))
+    #end
+
+    <div class="js-accoridon-toggle sidebar-filter-subheader">
+        $node.getName()
+    </div>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter("wildcard_id", "$node.getId()")
+    $action.setParameter("wildcard", "$node.getWildcard()")
+    <form action="$action" method="post" name="wildcard_$node.getId()">
+        <div class="search-form ob-clear ob-flex">
+            <input class="field" type="text" name="termWildcard_$node.getId()" id="termWildcard_$node.getId()" #if($wildcard_item_term)value="$wildcard_item_term"#end />
+            <button type="submit" name="doSearchWildcard_$node.getId()" value="$MESSAGES.getString("searchResult.facete.wildcard.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
+                <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+            </button>
+        </div>
+        #if($wildcard_item_term)
+            $action.setParameter("doClearSearchWildcard", "$node.getId()")
+            #renderCrossLink($action $MESSAGES.getString("searchResult.facete.wildcard.name.delete"))
+        #end
+    </form>
+#end

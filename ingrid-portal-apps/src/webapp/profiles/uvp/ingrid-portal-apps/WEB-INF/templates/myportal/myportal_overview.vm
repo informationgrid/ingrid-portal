@@ -1,0 +1,30 @@
+<div class="columns">
+    <div class="form">
+        #set ($userNameGiven = $userAttributes.get("user.name.given"))
+        #set ($userNameFamily = $userAttributes.get("user.name.family"))
+        #set ($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
+        
+        #if($userNameGiven)
+            #set($salutation = " $userNameGiven")
+        #end
+        #if($userNameFamily)
+            #set($salutation = "$!{salutation} $userNameFamily")
+        #end
+        
+        <p>
+            $MESSAGES.resetMsgParams()
+            $MESSAGES.setMsgParam("$!{salutation}")
+            $MESSAGES.getStringWithMsgParams('overview.welcome')
+            <br />
+            $MESSAGES.getString('overview.content.description')
+        </p>
+        <div class="link-list">
+        #if(!$externalLogin)
+            <a class="icon" href="/portal/myportal-edit-account.psml"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry2')</span></a>
+        #end
+        #if(!$externalLogin)
+            <a class="icon" href="/login/logout"><span class="ic-ic-arrow"></span><span class="text">$MESSAGES.getString('overview.content.entry4')</span></a>
+        #end
+        </div>
+    </div>
+</div>

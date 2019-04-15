@@ -37,7 +37,7 @@
         <portlet-info>
             <title>javascript detection portlet</title>
             <short-title>javascript detection portlet</short-title>
-        </portlet-info>        
+        </portlet-info>
     </portlet>
 
     <portlet id="HelpPortlet">
@@ -59,14 +59,6 @@
             <preference>
                 <name>disableTitle</name>
                 <value>1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
@@ -100,10 +92,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -131,10 +119,6 @@
             <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -164,10 +148,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -195,10 +175,6 @@
             <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -230,11 +206,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>divStyle</name>
-                <value>ob-box-padded-more ob-box-center</value>
+                <value>columns</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -292,14 +264,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -327,10 +291,6 @@
             <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -360,14 +320,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -395,14 +347,6 @@
             <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -433,14 +377,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -468,14 +404,6 @@
             <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -521,6 +449,10 @@
             <preference>
                 <name>disableTitle</name>
                 <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>banner home</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -574,7 +506,11 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top</value>
+                <value>category</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -620,14 +556,6 @@
                 <name>noOfEntriesDisplayed</name>
                 <value>4</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
-            </preference>
-            <preference>
-                <name>extendSpace</name>
-                <value>1</value>
-            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -654,10 +582,6 @@
             <preference>
                 <name>startWithEntry</name>
                 <value>0</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
             </preference>
         </portlet-preferences>
         
@@ -766,11 +690,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>row</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -794,7 +714,7 @@
         <portlet-preferences>
             <preference>
                 <name>infoTemplate</name>
-                <value>/WEB-INF/templates/default_cms.vm</value>
+                <value>/WEB-INF/templates/info_cms.vm</value>
             </preference>
             <preference>
                 <name>helpKey</name>
@@ -817,8 +737,12 @@
                 <value>1</value>
             </preference>
             <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
+                <value>about</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -890,14 +814,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
         </portlet-preferences>
 
         <resource-bundle>de.ingrid.portal.resources.ContactResources</resource-bundle>
@@ -925,13 +841,6 @@
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
         <supported-locale>de</supported-locale>
         <supported-locale>en</supported-locale>
-        <portlet-preferences>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-        </portlet-preferences>
-        
     </portlet>
 
     <portlet id="MyPortalOverviewPortlet">
@@ -953,10 +862,6 @@
             <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1016,16 +921,8 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>columns row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1052,16 +949,8 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>columns row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1095,14 +984,6 @@
                 <name>titleTag</name>
                 <value>h1</value>
             </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
 <!-- supported-locale needed with JS 2.3 and PSML from filesystem to localize title via resource-bundle (javax.portlet.title) !!! :( -->
@@ -1131,16 +1012,8 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>
@@ -1166,16 +1039,8 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
                 <name>titleTag</name>
                 <value>h1</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>
@@ -1274,10 +1139,6 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
                 <name>disableTitle</name>
                 <value>1</value>
             </preference>
@@ -1310,6 +1171,7 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
     </portlet>
+
     <portlet id="SearchResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1331,8 +1193,8 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>divStyle</name>
-                <value>ob-box-wide ob-box-padded ob-box-center ob-rel</value>
+                <name>sectionStyle</name>
+                <value>search-filtered</value>
             </preference>
             <preference>
                 <name>disableTitle</name>
@@ -1396,14 +1258,6 @@
             <preference>
                 <name>disableTitle</name>
                 <value>1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
             </preference>
         </portlet-preferences>
     </portlet>

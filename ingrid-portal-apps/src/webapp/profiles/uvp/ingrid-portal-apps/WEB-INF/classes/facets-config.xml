@@ -467,7 +467,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-1</icon>
+                <icon>ic-ic-UVPG-1</icon>
                 <display>true</display>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
@@ -476,7 +476,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-2</icon>
+                <icon>ic-ic-UVPG-2</icon>
                 <display>true</display>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
@@ -485,7 +485,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-3</icon>
+                <icon>ic-ic-UVPG-3</icon>
                 <display>true</display>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
@@ -494,7 +494,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-4</icon>
+                <icon>ic-ic-UVPG-4</icon>
                 <display>true</display>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
@@ -503,7 +503,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-5</icon>
+                <icon>ic-ic-UVPG-5</icon>
                 <display>true</display>
             </facet>
         <!-- Holz, Zellstoff -->
@@ -512,7 +512,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-6</icon>
+                <icon>ic-ic-UVPG-6</icon>
                 <display>true</display>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
@@ -521,7 +521,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-7</icon>
+                <icon>ic-ic-UVPG-7</icon>
                 <display>true</display>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
@@ -530,7 +530,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-8</icon>
+                <icon>ic-ic-UVPG-8</icon>
                 <display>true</display>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
@@ -539,7 +539,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-9</icon>
+                <icon>ic-ic-UVPG-9</icon>
                 <display>true</display>
             </facet>
         <!-- Sonstige Industrieanlagen -->
@@ -548,7 +548,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-10</icon>
+                <icon>ic-ic-UVPG-10</icon>
                 <display>true</display>
             </facet>
         <!-- Kernenergie -->
@@ -557,7 +557,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-11</icon>
+                <icon>ic-ic-UVPG-11</icon>
                 <display>true</display>
             </facet>
         <!-- Abfalldeponien -->
@@ -566,7 +566,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-12</icon>
+                <icon>ic-ic-UVPG-12</icon>
                 <display>true</display>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
@@ -575,7 +575,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-13"</query>
                 <id>wasservorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-13</icon>
+                <icon>ic-ic-UVPG-13</icon>
                 <display>true</display>
             </facet>
         <!-- Verkehrsvorhaben -->
@@ -584,7 +584,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-14</icon>
+                <icon>ic-ic-UVPG-14</icon>
                 <display>true</display>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
@@ -593,7 +593,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-15</icon>
+                <icon>ic-ic-UVPG-15</icon>
                 <display>true</display>
             </facet>
         <!-- Flurbereinigung -->
@@ -602,7 +602,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-16</icon>
+                <icon>ic-ic-UVPG-16</icon>
                 <display>true</display>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
@@ -611,7 +611,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-17</icon>
+                <icon>ic-ic-UVPG-17</icon>
                 <display>true</display>
             </facet>
         <!-- Bauvorhaben -->
@@ -620,7 +620,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-18</icon>
+                <icon>ic-ic-UVPG-18</icon>
                 <display>true</display>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
@@ -629,7 +629,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-19</icon>
+                <icon>ic-ic-UVPG-19</icon>
                 <display>true</display>
             </facet>
         </facets>
@@ -646,7 +646,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:10</query>
                 <parentId>procedure</parentId>
                 <id>procedure_10</id>
-                <shortcut>Z</shortcut>
+                <icon>ic-ic-Z</icon>
                 <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
@@ -655,7 +655,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:13</query>
                 <parentId>procedure</parentId>
                 <id>procedure_13</id>
-                <shortcut>R</shortcut>
+                <icon>ic-ic-R</icon>
                 <display>true</display>
             </facet>
         <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
@@ -664,7 +664,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:14</query>
                 <parentId>procedure</parentId>
                 <id>procedure_14</id>
-                <shortcut>L</shortcut>
+                <icon>ic-ic-L</icon>
                 <display>true</display>
             </facet>
         <!-- Ausländische Vorhaben -->
@@ -673,7 +673,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:11</query>
                 <parentId>procedure</parentId>
                 <id>procedure_11</id>
-                <shortcut>A</shortcut>
+                <icon>ic-ic-A</icon>
                 <display>true</display>
             </facet>
         <!-- Bauleitplanung -->
@@ -681,7 +681,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Bauleitplanung</name>
                 <query>procedure:dev_plan</query>
                 <id>procedure_dev_plan</id>
-                <shortcut>B</shortcut>
+                <icon>ic-ic-B</icon>
                 <display>true</display>
             </facet>
         <!-- Negative Vorprüfungen -->
@@ -690,7 +690,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:12</query>
                 <parentId>procedure</parentId>
                 <id>procedure_12</id>
-                <shortcut>N</shortcut>
+                <icon>ic-ic-N</icon>
                 <display>true</display>
             </facet>
         </facets>

@@ -1,0 +1,12 @@
+<div>
+## RANKED (left column stuff)
+#if($grouping)
+    #if($grouping == 'domain')
+        #renderRankedPageNavigationGroupingWithPages($rankedPageSelector true)
+    #else
+        #renderRankedPageNavigationGrouping($rankedPageSelector true)
+    #end
+#else
+    #renderRankedPageNavigation($rankedPageSelector true)
+#end
+</div>

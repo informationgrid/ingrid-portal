@@ -24,13 +24,17 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>service-sitemap.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
-                <portlet col="0" row="1">
+                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="2">
@@ -45,7 +49,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
-                <portlet col="0" row="1">
+                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="2">
@@ -60,7 +64,7 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
-                <portlet col="0" row="1">
+                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="2">
@@ -80,7 +84,7 @@
                 </portlet>
             </portlets>
         </page>
-      </pages>
+    </pages>
     <files>
         <file>
             <action>copy-dir</action>

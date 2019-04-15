@@ -1,0 +1,9 @@
+<div class="columns">
+    <!-- <h4>$MESSAGES.getString('admin.statistics.headline')</h4> -->
+    <div class="link-list">
+        <a href="$apacheStatisticsURL" class="icon">
+            <span class="ic-ic-arrow"></span>
+            <span class="text">$MESSAGES.getString('admin.statistics.apache')</span>
+        </a>
+    </div>
+</div>

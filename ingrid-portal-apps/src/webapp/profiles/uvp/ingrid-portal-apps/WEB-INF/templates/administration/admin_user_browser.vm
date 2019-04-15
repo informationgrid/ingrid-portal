@@ -1,0 +1,56 @@
+#set($isFiltering = false)
+#if(($!browser.filterCriteria.filterCriteriaId &&  $!browser.filterCriteria.filterCriteriaId.length() > 0) 
+    || ($!browser.filterCriteria.filterCriteriaFirstName && $!browser.filterCriteria.filterCriteriaFirstName.length() > 0)
+    || ($!browser.filterCriteria.filterCriteriaLastName && $!browser.filterCriteria.filterCriteriaLastName.length() > 0)
+    || ($!browser.filterCriteria.filterCriteriaEmail && $!browser.filterCriteria.filterCriteriaEmail.length() > 0)
+    || ($!browser.filterCriteria.filterCriteriaRole && $!browser.filterCriteria.filterCriteriaRole.length() > 0))
+    #set($isFiltering = true)
+#end
+
+#set ($action = $renderResponse.createActionURL())
+<form class="form xsmall-24 large-24 xlarge-24 row" action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
+    <div class="xsmall-24 large-6 xlarge-4 columns">
+        <h4>
+            <span class="mq-hide-l">Filter</span>
+        </h4>
+        <input class="bx-bot-xs" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" placeholder="$MESSAGES.getString('account.view.id')"/>
+        <input class="bx-bot-xs" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" placeholder="$MESSAGES.getString('account.view.first.name')"/>
+        <input class="bx-bot-xs" type="text" name="filterCriteriaLastName" id="filterCriteriaLastName" value="$!browser.filterCriteria.filterCriteriaLastName" placeholder="$MESSAGES.getString('account.view.last.name')"/>
+        <input class="bx-bot-xs" type="text" name="filterCriteriaEmail" id="filterCriteriaEmail" value="$!browser.filterCriteria.filterCriteriaEmail" placeholder="$MESSAGES.getString('account.view.email')"/>
+        <input class="bx-bot-xs" type="text" name="filterCriteriaRole" id="filterCriteriaRole" value="$!browser.filterCriteria.filterCriteriaRole" placeholder="$MESSAGES.getString('account.view.roles')"/>
+        #if($isFiltering)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter("doFilter", "")
+            $action.setParameter("filterCriteriaId", "")
+            $action.setParameter("filterCriteriaFirstName", "")
+            $action.setParameter("filterCriteriaLastName", "")
+            $action.setParameter("filterCriteriaEmail", "")
+            $action.setParameter("filterCriteriaRole", "")
+            #renderHrefAction($action $MESSAGES.getString("component.forms.text.filter.clear") "" "width:100%")
+        #end
+        <p>
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%" "doFilter" "" "")
+        </p>
+    </div>
+    <div class="xsmall-24 large-18 xlarge-20 columns">
+        #renderPaginationAndHint($browser "$MESSAGES.getString('account.view.tip')")
+        <table class="boxed-table">
+        #set ($colNames = ["id", "firstName", "lastName", "email", "roles", "lastLogin"])
+        #set ($colTitles = [$MESSAGES.getString('account.view.id'), $MESSAGES.getString('account.view.first.name'), $MESSAGES.getString('account.view.last.name'), $MESSAGES.getString('account.view.email'), $MESSAGES.getString('account.view.roles'), $MESSAGES.getString('account.view.last.login')])
+        #renderDBBrowserHeader($colNames $colTitles)
+        #foreach ($dbEntity in $dbEntities)
+            #set ($rowId = $dbEntity.id)
+            #set ($rowValues = [$UtilsString.cutString($dbEntity.firstName, 20, 20), $UtilsString.cutString($dbEntity.lastName, 20, 20), $UtilsString.cutString($dbEntity.email, 40, 40), $dbEntity.roles, $dbEntity.lastLogin])
+            #renderDBBrowserRowWithEditLink($rowId $rowValues)
+        #end
+        </table>
+        <div class="subtext-submit">
+        #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+        #renderDBBrowserFooterButtonsDisable($buttons true)
+        </div>
+    </div>
+</form>
+
+<script>
+ingrid_enableButtonByCheckbox('id', 'doDelete');
+</script>
