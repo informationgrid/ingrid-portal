@@ -1,0 +1,90 @@
+<div class="columns">
+    <div class="form">
+        #set ($action = $renderResponse.createActionURL())
+        
+        #if($ibusURL && $ibusURL != "")
+            <h4>$MESSAGES.getString('admin.iplug.headline.ibus')</h4>
+            <div class="link-list">
+                <a href="$ibusURL">
+                    $MESSAGES.getString('admin.iplug.headline.ibus')
+                </a>
+            </div>
+        #end
+        
+        #if($SEIplugs.size() > 0)
+            <h4>$MESSAGES.getString('admin.iplug.headline.iplug.se')</h4>
+            <div class="link-list">
+            #foreach($plug in $SEIplugs)
+                #if($plug.getIplugAdminGuiUrl())
+                <a href="$plug.getIplugAdminGuiUrl()">
+                    $plug.getDataSourceName()
+                </a>
+                #else
+                    $plug.getDataSourceName() (kein Administrationsinterface angegeben!)
+                </li>
+                #end
+            #end
+            </div>
+        #end
+        
+        <h4>$MESSAGES.getString('admin.iplug.headline.iplug')</h4>
+        <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+        #foreach($partnerNode in $tree.getChildren())
+            #set($partnerId = $partnerNode.id)
+            $action.setParameter('id',"$partnerId")
+            #if($partnerNode.isOpen())
+                $action.setParameter('action','doCloseNode')
+                <li class="accordion-item is-active" data-accordion-item="">
+                    <a id="${partnerId}-accordion-label" class="accordion-title" href="$action" aria-controls="${partnerId}-accordion" aria-expanded="true" aria-selected="true">
+                        <span class="text">$partnerNode.name</span>
+                    </a>
+                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="${partnerId}-accordion-label" aria-hidden="false" id="${partnerId}-accordion" style="display: block;">
+                        <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                        #foreach($providerNode in $partnerNode.getChildren())
+                            #set($providerId = $providerNode.id)
+                            $action.setParameter('id',"$providerNode.id")
+                                #if($providerNode.isOpen())
+                                    $action.setParameter('action','doCloseNode')
+                                    <li class="accordion-item is-active" data-accordion-item="">
+                                        <a id="${providerId}-accordion-label" class="accordion-title" href="$action" aria-controls="${providerId}-accordion" aria-expanded="true" aria-selected="true">
+                                            <span>$providerNode.name</span>
+                                        </a>
+                                        <div class="link-list">
+                                        #foreach($plugNode in $providerNode.getChildren())
+                                            #set($plug = $plugNode.get("iplug"))
+                                            #if($plug.getIplugAdminGuiUrl())
+                                                <a href="$plug.getIplugAdminGuiUrl()" class="icon" target="_blank">
+                                                    <span class="ic-ic-arrow"></span>
+                                                    <span class="text">$plugNode.name</span>
+                                                </a>
+                                            #else
+                                              $plugNode.name (kein Administrationsinterface angegeben!)
+                                            #end
+                                        #end
+                                        </div>
+                                    </li>
+                                #else
+                                    $action.setParameter('action','doOpenNode')
+                                    <li class="accordion-item" data-accordion-item="">
+                                        <a id="${providerId}-accordion-label" class="accordion-title" href="$action" aria-controls="${providerId}-accordion" aria-expanded="false" aria-selected="false">
+                                            <span>$providerNode.name</span>
+                                        </a>
+                                    </li>
+                                #end
+                            </li>
+                        #end
+                        </ul>
+                    </div>
+                 </li>
+            #else
+                $action.setParameter('action','doOpenNode')
+                <li class="accordion-item" data-accordion-item="">
+                    <a id="${partnerId}-accordion-label" class="accordion-title" href="$action" aria-controls="${partnerId}-accordion" aria-expanded="false" aria-selected="false">
+                        <span>$partnerNode.name</span>
+                    </a>
+                </li>
+            #end
+        #end
+        </ul>
+    </div>
+</div>
