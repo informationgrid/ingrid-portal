@@ -35,10 +35,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.*;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.Layout;
+import org.apache.logging.log4j.core.LogEvent;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.apache.logging.log4j.core.config.LoggerConfig;
 import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.junit.After;
 import org.junit.Before;
@@ -93,22 +93,7 @@ public class UploadCleanupJobTest {
     private TestAppender testAppender = new TestAppender("test", null, PatternLayout.createDefaultLayout());
 
     public class TestAppender extends AbstractAppender {
-        /*public List<LoggingEvent> eventList = new ArrayList<LoggingEvent>();
 
-        @Override
-        protected void append(LoggingEvent event) {
-            this.eventList.add(event);
-        }
-
-        @Override
-        public void close() {
-        }
-
-        @Override
-        public boolean requiresLayout() {
-            return false;
-        }
-*/
         public boolean hasIssues() {
             return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 ||
                 this.getEvents(Level.WARN).size() > 0;
@@ -159,27 +144,16 @@ public class UploadCleanupJobTest {
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
 
         // setup logging
-        //this.jobLogger.addAppender(this.testAppender);
-        final LoggerContext context = LoggerContext.getContext(false);
-        final Configuration config = context.getConfiguration();
         org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
         testAppender.start();
         coreLogger.addAppender(testAppender);
     }
 
-    private void updateLoggers(final Appender appender, final Configuration config) {
-        final Level level = null;
-        final Filter filter = null;
-        for (final LoggerConfig loggerConfig : config.getLoggers().values()) {
-            loggerConfig.addAppender(appender, level, filter);
-        }
-        config.getRootLogger().addAppender(appender, level, filter);
-    }
-
     @After
     public void tearDown() throws Exception {
-    	//this.jobLogger.removeAppender(this.testAppender);
         testAppender.stop();
+        org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
+        coreLogger.removeAppender(this.testAppender);
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
 
