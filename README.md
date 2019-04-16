@@ -60,17 +60,38 @@ Import project as Maven project. There are several sub projects:
 - ingrid-portal-mdek: Portal integration of the InGrid Editor
 - ingrid-portal-distribution: The assembly project to gather the pieces and build an installer
 
+Alternatively use the maven plugin of you IDE.
+
 ### Development
 
-For development of the InGrid-Editor, go to the directory ingrid-portal-mdek-application and execute the following command:
+For development on the InGrid-Editor a special environment is needed. 
+This is provided by multiple Docker containers.
+
+When starting all the containers within the ingrid-portal directory with:
+
+`docker compose up -d`
+
+then a mysql container with several databases is initialized and started, 
+as well as phpmyadmin for administration of the databases.
+
+By running
+
+`mvn jetty:run -Denv=dev`
+
+the webapplication is started and can be accessed by the URL:
+
+`http://localhost:8088/ingrid-portal-mdek-application/start_dev.jsp?user=mdek`
+
+To develop a specific profile, use
 
 ```
 run.sh [<profile>]
 ```
 
-The optional _profile_ parameter adds the sources from the profile directory (ingrid-portal-apps/src/webapp/profiles/<profile>) for the startup. A jetty server is started and the sources can be edited directly. When editing Java classes, the server is automatically restarted. If you change resource files like messages.properties, then the server also needs to be restarted.
+from the sub directory `ingrid-portal-mdek-application`. The optional _profile_ parameter adds the sources from the profile directory (ingrid-portal-apps/src/webapp/profiles/<profile>) for the startup. A jetty server is started and the sources can be edited directly. When editing Java classes, the server is automatically restarted. If you change resource files like messages.properties, then the server also needs to be restarted.
 
-There's also a corresponding windows batch file _start.bat_, which works the same.
+
+For complete function the backend (ingrid-mdek aka ingird-iplug-ige) also has to be started.
 
 For IntelliJ IDEA there's a dojo plugin for easier handling of imports:
 https://github.com/TomDevs/needsmoredojo
