@@ -368,16 +368,7 @@ public class UtilsFacete {
                         }
                     }
                     // Set dependency selection
-                    boolean isOldIPlug = false;
-                    IngridFacet tmpFacetKey = getFacetById(config, key);
-                    if(tmpFacetKey != null){
-                        IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
-                        if(tmpFacetValue != null && tmpFacetValue.isOldIPlug()){
-                            isOldIPlug = true;
-                        }
-                    }
-                    
-                    if(!isOldIPlug && config != null && value != null){
+                    if(config != null && value != null){
                         ArrayList<IngridFacet> facetDepList = (ArrayList<IngridFacet>) getDependencyFacetById(config, new ArrayList<>(), value);
                         for(IngridFacet facetDep : facetDepList){
                             IngridFacet dependencyValue  = getFacetById(config, facetDep.getDependency());
@@ -498,8 +489,6 @@ public class UtilsFacete {
                 removeAttributeFromSession(request, ELEMENTS_MAP);
             }
         }
-        // Add facets from older iplugs without facets values
-        checkNonFacetsIplugs(hits.getHits(), request);
     }
 
     /***************************** WILDCARD ***********************************************/
@@ -2465,7 +2454,6 @@ public class UtilsFacete {
                 }
                 if(!isOrSelect){
                     facet.setFacetValue(null);
-                    facet.setOldIPlug(false);
                     if(facet.getFacets() != null){
                         resetFacetConfigValues(facet.getFacets(), key);
                     }
@@ -2482,57 +2470,6 @@ public class UtilsFacete {
                     resetFacetConfigSelect(facet.getFacets());
                 }
             }
-        }
-    }
-
-    private static void checkNonFacetsIplugs(IngridHit[] hits, PortletRequest request) {
-        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-        
-        if(hits != null && config != null){
-            for (IngridHit hit : hits){
-                if(hit.getHitDetail() != null){
-                    PlugDescription pd = (PlugDescription) hit.get("plugDescr");
-                    if(pd != null){
-                        String[] partners = pd.getPartners();
-                        if(partners != null){
-                            for(String partner : partners){
-                                IngridFacet facetParent = getFacetById(config, "provider");
-                                if(facetParent != null && facetParent.getFacets() != null){
-                                    IngridFacet facet = getFacetById(facetParent.getFacets(), partner);
-                                    if(facet != null && facet.getFacetValue() == null){
-                                        facet.setOldIPlug(true);
-                                    }
-                                }
-                            }
-                        }
-                        String[] providers = pd.getProviders();
-                        if(providers != null){
-                            for(String provider : providers){
-                                IngridFacet facetParent = getFacetById(config, "provider");
-                                if(facetParent != null && facetParent.getFacets() != null){
-                                    IngridFacet facet = getFacetById(facetParent.getFacets(), provider);
-                                    if(facet != null && facet.getFacetValue() == null){
-                                        facet.setOldIPlug(true);
-                                    }
-                                }
-                            }
-                        }
-                        String[] datatypes = pd.getDataTypes();
-                        if(datatypes != null){
-                            for(String datatype : datatypes){
-                                IngridFacet facetParent = getFacetById(config, "type");
-                                if(facetParent != null && facetParent.getFacets() != null && datatype.equals("www")){
-                                    IngridFacet facet = getFacetById(facetParent.getFacets(), datatype);
-                                    if(facet != null && facet.getFacetValue() == null){
-                                        facet.setOldIPlug(true);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            setAttributeToSession(request, FACET_CONFIG, config);
         }
     }
 }

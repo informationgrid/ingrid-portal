@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0.272-SNAPSHOT</version>
+    <version>5.1.0.272-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-base</artifactId>
@@ -284,7 +283,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses/>
+          <toAddresses />
         </configuration>
       </plugin>
 
@@ -315,26 +314,26 @@
                 <phase>compile</phase>
                 <configuration>
                   <target>
-                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
                     <condition property="foundRepeatable">
                       <and>
                         <resourcecount count="0" when="greater">
                           <fileset dir="src/java/db/migration">
-                            <include name="**/R*.sql"/>
+                            <include name="**/R*.sql" />
                           </fileset>
                         </resourcecount>
                         <not>
-                          <contains string="${project.version}" substring="-SNAPSHOT"/>
+                          <contains string="${project.version}" substring="-SNAPSHOT" />
                         </not>
                       </and>
                     </condition>
                     <if>
-                      <equals arg1="${foundRepeatable}" arg2="true"/>
+                      <equals arg1="${foundRepeatable}" arg2="true" />
                       <then>
-                        <fail message="Flyway: You must not have repeatable SQL files during a release!"/>
+                        <fail message="Flyway: You must not have repeatable SQL files during a release!" />
                       </then>
                       <else>
-                        <echo message="Flyway: No release version or no repeatable SQL found. OK!"/>
+                        <echo message="Flyway: No release version or no repeatable SQL found. OK!" />
                       </else>
                     </if>
                   </target>

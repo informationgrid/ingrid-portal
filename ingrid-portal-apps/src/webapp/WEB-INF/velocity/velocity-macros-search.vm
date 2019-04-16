@@ -8,7 +8,7 @@
             #set($term = $searchName)
         #end
     #end
-    #if($term.lenght() > 0)
+    #if($term.length() > 0)
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam($term)
