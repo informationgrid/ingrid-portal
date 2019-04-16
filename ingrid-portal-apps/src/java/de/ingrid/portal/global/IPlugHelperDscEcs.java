@@ -22,19 +22,6 @@
  */
 package de.ingrid.portal.global;
 
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.search.UtilsSearch;
@@ -44,6 +31,11 @@ import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.text.Collator;
+import java.util.*;
 
 /**
  * Helper class dealing with all aspects of DSC_ECS iPlugs.

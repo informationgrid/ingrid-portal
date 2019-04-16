@@ -22,9 +22,9 @@
  */
 package de.ingrid.portal.forms;
 
-import javax.portlet.PortletRequest;
-
 import org.apache.jetspeed.login.LoginConstants;
+
+import javax.portlet.PortletRequest;
 
 /**
  * TODO Describe your created type (class, etc.) here.

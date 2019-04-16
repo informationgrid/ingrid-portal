@@ -22,15 +22,13 @@
  */
 package de.ingrid.portal.global;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import de.ingrid.portal.portlets.MeasuresSearchPortlet;
 
 /**
  * Resource bundle extending default functionality, e.g. also

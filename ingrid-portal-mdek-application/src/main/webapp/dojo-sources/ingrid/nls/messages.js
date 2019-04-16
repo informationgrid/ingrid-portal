@@ -988,7 +988,6 @@ define({
         "ui.sysList.6005": "Conformity - Specification of Conformity (INSPIRE)",
         "ui.sysList.6006": "Conformity - Specification of Conformity (Free entries)",
         "ui.sysList.6010": "Availability - Access Constraints",
-        "ui.sysList.6020": "Availability - Usage Limitations",
         "ui.sysList.6100": "INSPIRE-Topics",
         "ui.sysList.6200": "ISO code list countries",
 	"ui.sysList.6250":"Administrative Areas",
@@ -1056,6 +1055,8 @@ define({
         "validation.error.spatial.table": "At least one 'spatial' table has to contain an entry with a bounding box.",
         "validation.error.spatial.expired.table": "The spatial reference table must not contain expired entries.",
         "validation.error.email.table": "At least one entry has to be of type '${0}'.",
+        "validation.error.url": "Invalid URL: '${0}'..",
+        "validation.error.url.table": "URLs must not be empty and must begin with 'http://' or 'https://'.",
         "validation.error.missing.capabilities.entry": "An operation of type GetCapabilities is needed.",
         "validation.error.invalid.operation.name": "The operation name is invalid.",
         "validation.error.empty.rows": "The table contains rows which are empty. Please remove those before saving.",
@@ -1099,7 +1100,7 @@ define({
         "widget.spatial.helpMessage": "Nach dem Übernehmen des Ausschnitts (Button 'Übernehme Ausschnitt') erscheinen im Feld Raumbezug die entsprechenden Koordinaten und der ausgewählte Ausschnitt ist hellrot hinterlegt. Der gewählte Raumbezug kann nachträglich geändert werden.",
         "widget.showSpatial": "Anzeigen / Ändern",
         "widget.spatial.placeholder": "Für die Erstellung eines Raumbezuges bitte einen Ausschnitt festlegen.",
-        
+
         "info.address.inherit.to.children": "${0} addresses have been modified!",
         "ui.listentry.noFilter": "No Filter"
     },

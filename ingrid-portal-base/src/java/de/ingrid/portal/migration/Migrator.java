@@ -34,6 +34,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -83,8 +85,10 @@ public class Migrator {
     }
 
     private void backupPartner() {
-        try {
-            ResultSet resultSet = getPartner();
+        try (ResultSet resultSet = getPartner()) {
+
+            // finish when there's no resultset
+            if (resultSet.isClosed()) return;
 
             List<Element> partners = new ArrayList<>();
             while (resultSet.next()) {
@@ -133,12 +137,18 @@ public class Migrator {
     }
 
     private ResultSet getPartner() throws SQLException {
-        return ds.getConnection().prepareStatement("SELECT * FROM ingrid_partner").executeQuery();
+        try (Connection con = ds.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement("SELECT * FROM ingrid_partner")) {
+                return ps.executeQuery();
+            }
+        }
     }
 
     private void backupProvider() {
-        try {
-            ResultSet resultSet = getProvider();
+        try (ResultSet resultSet = getProvider()) {
+
+            // finish when there's no resultset
+            if (resultSet.isClosed()) return;
 
             List<Element> providers = new ArrayList<>();
             while (resultSet.next()) {
@@ -169,7 +179,11 @@ public class Migrator {
     }
 
     private ResultSet getProvider() throws SQLException {
-        return ds.getConnection().prepareStatement("SELECT * FROM ingrid_provider").executeQuery();
+        try (Connection con = ds.getConnection()) {
+            try (PreparedStatement ps = con.prepareStatement("SELECT * FROM ingrid_provider")) {
+                return ps.executeQuery();
+            }
+        }
     }
 
     private Element getProviderEntry(ResultSet resultSet) throws SQLException {

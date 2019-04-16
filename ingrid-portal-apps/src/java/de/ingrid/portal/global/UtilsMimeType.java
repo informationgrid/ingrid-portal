@@ -22,15 +22,11 @@
  */
 package de.ingrid.portal.global;
 
-import java.io.File;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
+import java.util.*;
 
 /**
  * Utils class for get file extension

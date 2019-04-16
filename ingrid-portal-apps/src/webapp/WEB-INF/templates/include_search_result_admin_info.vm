@@ -1,0 +1,20 @@
+#if($adminContent)
+    <!--
+    #if($rankedResultList.get("FACETS"))
+        Facets:
+        $rankedResultList.get("FACETS")
+    #end
+
+    #if($facetsQuery)
+           Facets Query:
+        #foreach($facete in $facetsQuery)
+            $facete
+        #end
+    #end
+
+    #if($searchQuery)
+        Search Query:
+        $searchQuery
+    #end
+    -->
+#end

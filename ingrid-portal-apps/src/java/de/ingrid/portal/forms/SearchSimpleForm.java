@@ -22,9 +22,9 @@
  */
 package de.ingrid.portal.forms;
 
-import javax.portlet.PortletRequest;
-
 import de.ingrid.portal.global.Settings;
+
+import javax.portlet.PortletRequest;
 
 /**
  * Form Handler for Simple Search form. Stores and validates form input.

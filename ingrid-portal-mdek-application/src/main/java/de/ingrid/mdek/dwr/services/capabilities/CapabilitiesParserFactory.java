@@ -27,18 +27,11 @@ package de.ingrid.mdek.dwr.services.capabilities;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import de.ingrid.utils.xml.*;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 import de.ingrid.mdek.SysListCache;
-import de.ingrid.utils.xml.ConfigurableNamespaceContext;
-import de.ingrid.utils.xml.Csw202NamespaceContext;
-import de.ingrid.utils.xml.Wcs11NamespaceContext;
-import de.ingrid.utils.xml.WcsNamespaceContext;
-import de.ingrid.utils.xml.WctsNamespaceContext;
-import de.ingrid.utils.xml.Wfs110NamespaceContext;
-import de.ingrid.utils.xml.Wfs200NamespaceContext;
-import de.ingrid.utils.xml.Wms130NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
 /**
@@ -50,7 +43,7 @@ public class CapabilitiesParserFactory {
     private final static Logger log = Logger.getLogger(CapabilitiesParserFactory.class);
     
     // Definition of all supported types
-    private enum ServiceType { WMS, WMS111, WFS110, WFS200, WCS, WCS11, CSW, WCTS }
+    private enum ServiceType { WMS, WMS111, WFS110, WFS200, WCS, WCS11, CSW, WCTS, WMTS }
     
     // identifier for each service type
     private final static String SERVICE_TYPE_WMS = "WMS";
@@ -58,7 +51,8 @@ public class CapabilitiesParserFactory {
     private final static String SERVICE_TYPE_WCS = "WCS";
     private final static String SERVICE_TYPE_CSW = "CSW";
     private final static String SERVICE_TYPE_WCTS = "WCTS";
-    
+    private final static String SERVICE_TYPE_WMTS = "WMTS";
+
     private static XPathUtils xPathUtils = null;
     
     private static String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
@@ -73,6 +67,7 @@ public class CapabilitiesParserFactory {
             ns.addNamespaceContext(new WcsNamespaceContext());
             ns.addNamespaceContext(new Wcs11NamespaceContext());
             ns.addNamespaceContext(new WctsNamespaceContext());
+            ns.addNamespaceContext(new WmtsNamespaceContext());
             xPathUtils = new XPathUtils(ns);
         }
         
@@ -88,6 +83,7 @@ public class CapabilitiesParserFactory {
             case WCS11: return new Wcs11CapabilitiesParser(syslistCache);
             case CSW: return new CswCapabilitiesParser(syslistCache);
             case WCTS: return new WctsCapabilitiesParser(syslistCache);
+            case WMTS: return new WmtsCapabilitiesParser(syslistCache);
             default:
                 throw new RuntimeException("Unknown Service Type.");
         }
@@ -138,6 +134,12 @@ public class CapabilitiesParserFactory {
         serviceType = xPathUtils.getString(doc, "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceType[1]");
         if (serviceType != null && serviceType.length() != 0) {
             return ServiceType.WFS200;
+        }
+
+        // WMTS
+        serviceType = xPathUtils.getString(doc, "/wmts:Capabilities/ows11:ServiceIdentification/ows11:ServiceType");
+        if (serviceType != null && serviceType.length() != 0) {
+            return ServiceType.WMTS;
         }
 
         // All other services have can be evaluated via '/Capabilities/ServiceIdentification/ServiceType[1]'

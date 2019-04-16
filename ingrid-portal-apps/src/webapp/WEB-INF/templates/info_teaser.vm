@@ -2,14 +2,11 @@
     <div class="ob-box-wide ob-box-center">
         <article class="content ob-container">
             <div class="grid grid--gutter grid--equal bx-top-l">
-                <div class="column column--1-2-s column--1-3-l">
+                <div class="column column--1-2-s column--1-2-l">
                     #parse('/WEB-INF/templates/chronicle_teaser.vm')
                 </div>
-                <div class="column column--1-2-s column--1-3-l">
+                <div class="column column--1-2-s column--1-2-l">
                     #parse('/WEB-INF/templates/measures_teaser.vm')
-                </div>
-                <div class="column column--1-2-s column--1-3-l">
-                    #parse('/WEB-INF/templates/weather_teaser.vm')
                 </div>
             </div>
         </article>

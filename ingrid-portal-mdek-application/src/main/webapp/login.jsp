@@ -107,7 +107,7 @@
     <body>
         <div id="header">
             <img src="img/logo.png" alt="InGrid Editor">
-            <h1>InGrid-Editor Administration</h1>
+            <h1><fmt:message key="ui.login.title" /></h1>
         </div>
         <div id="menu">
             <div class="block"><p></p></div><h2>Login</h2></div>

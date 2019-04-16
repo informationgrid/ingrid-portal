@@ -36,5 +36,5 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 --%>
-<% response.sendRedirect(response.encodeRedirectURL(request.getContextPath() +
-        "/html")); %>
+<%@ page session="false" trimDirectiveWhitespaces="true" %>
+<% response.sendRedirect(request.getContextPath() + "/html"); %>

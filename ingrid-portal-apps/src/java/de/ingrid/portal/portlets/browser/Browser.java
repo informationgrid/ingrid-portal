@@ -37,9 +37,8 @@
  */
 package de.ingrid.portal.portlets.browser;
 
-import java.util.List;
-
 import javax.portlet.RenderRequest;
+import java.util.List;
 
 
 /**

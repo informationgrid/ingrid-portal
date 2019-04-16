@@ -22,18 +22,12 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.IOException;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import de.ingrid.portal.global.IngridResourceBundle;
 import org.apache.jetspeed.om.folder.Folder;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.global.IngridResourceBundle;
+import javax.portlet.*;
+import java.io.IOException;
 
 /**
  * Portlet for configuration of default home page (only possible as admin).

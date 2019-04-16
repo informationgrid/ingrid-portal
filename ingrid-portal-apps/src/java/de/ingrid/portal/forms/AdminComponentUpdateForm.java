@@ -22,13 +22,12 @@
  */
 package de.ingrid.portal.forms;
 
-import javax.portlet.PortletRequest;
-
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.upgradeclient.IngridComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.upgradeclient.IngridComponent;
+import javax.portlet.PortletRequest;
 
 /**
  * Form Handler for Content Management of Providers.

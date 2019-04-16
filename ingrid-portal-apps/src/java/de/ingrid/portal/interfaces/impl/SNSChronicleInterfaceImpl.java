@@ -22,10 +22,9 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import de.ingrid.portal.interfaces.ChronicleInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import de.ingrid.portal.interfaces.ChronicleInterface;
 
 /**
  * TODO Describe your created type (class, etc.) here.

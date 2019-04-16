@@ -22,21 +22,20 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
-
 import de.ingrid.iplug.sns.utils.DetailedTopic;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.AnniversaryInterface;
 import de.ingrid.portal.om.IngridAnniversary;
 import de.ingrid.utils.IngridHitDetail;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * TODO Describe your created type (class, etc.) here.

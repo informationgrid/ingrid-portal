@@ -22,17 +22,16 @@
  */
 package de.ingrid.portal.global;
 
-import java.util.Locale;
-import java.util.Map;
-
+import de.ingrid.codelists.CodeListService;
+import de.ingrid.codelists.model.CodeList;
+import de.ingrid.codelists.model.CodeListEntry;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.codelists.CodeListService;
-import de.ingrid.codelists.model.CodeList;
-import de.ingrid.codelists.model.CodeListEntry;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * TODO Describe your created type (class, etc.) here.

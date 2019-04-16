@@ -22,41 +22,32 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.interfaces.WMSInterface;
+import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
+import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.NameValuePair;
+import org.apache.commons.httpclient.*;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.hibernate.cfg.Environment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.interfaces.WMSInterface;
-import de.ingrid.portal.interfaces.om.WMSSearchDescriptor;
-import de.ingrid.portal.interfaces.om.WMSServiceDescriptor;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * Implements the WMS interface. It allows to communicate with the mapbender WMS

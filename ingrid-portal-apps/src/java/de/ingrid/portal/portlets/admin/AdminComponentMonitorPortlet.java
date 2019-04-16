@@ -22,31 +22,6 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.apache.portals.bridges.common.GenericServletPortlet;
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
-import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.generic.SortTool;
-import org.quartz.JobDataMap;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
 import de.ingrid.portal.forms.AdminComponentUpdateForm;
@@ -62,6 +37,20 @@ import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
 import de.ingrid.portal.upgradeclient.IngridComponent;
 import de.ingrid.portal.upgradeclient.UpgradeClient;
 import de.ingrid.portal.upgradeclient.UpgradeTools;
+import org.apache.portals.bridges.common.GenericServletPortlet;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.SortTool;
+import org.quartz.JobDataMap;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.*;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**

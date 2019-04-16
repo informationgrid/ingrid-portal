@@ -71,66 +71,85 @@
     
     <!-- Quartz Beans -->
 	<!-- Jobs -->
-	<bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass" value="de.ingrid.mdek.quartz.jobs.CheckForExpiredDatasetsJob" />
-		<property name="jobDataAsMap">
-			<map>
-				<entry key="connectionFacade"><ref bean="connectionFacade"/></entry>
-				<entry key="notifyDaysBeforeExpiry"><value>${workflow.notifyDaysBeforeExpiry}</value></entry>
-				<entry key="repeatExpiryCheck"><value>${workflow.repeatExpiryCheck}</value></entry>
-				<entry key="numAddressesMax"><value>${workflow.mail.numAddressesMax}</value></entry>
-				<entry key="numObjectsMax"><value>${workflow.mail.numObjectsMax}</value></entry>
-			</map>
-	  </property>
-	</bean>
-
-    <bean name="uploadCleanupJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UploadCleanupJob" />
+    <bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.CheckForExpiredDatasetsJob"/>
+        <property name="durability" value="true"/>
         <property name="jobDataAsMap">
             <map>
-                <entry key="connectionFacade"><ref bean="connectionFacade"/></entry>
-                <entry key="storage"><ref bean="uploadStorage"/></entry>
-                <entry key="deleteFileMinAge"><value>${upload.cleanup.file.minAge}</value></entry>
+                <entry key="connectionFacade">
+                    <ref bean="connectionFacade"/>
+                </entry>
+                <entry key="notifyDaysBeforeExpiry">
+                    <value>${workflow.notifyDaysBeforeExpiry}</value>
+                </entry>
+                <entry key="repeatExpiryCheck">
+                    <value>${workflow.repeatExpiryCheck}</value>
+                </entry>
+                <entry key="numAddressesMax">
+                    <value>${workflow.mail.numAddressesMax}</value>
+                </entry>
+                <entry key="numObjectsMax">
+                    <value>${workflow.mail.numObjectsMax}</value>
+                </entry>
             </map>
-      </property>
+        </property>
     </bean>
 
-	<!-- Trigger -->
-	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
-		<property name="jobDetail" ref="checkForExpiredDatasetsJob" />
-		<property name="startDelay" value="10000" />
-		<property name="repeatInterval" value="${workflow.expiryJob.repeatInterval}" />
-	</bean>
-
-    <bean id="simpleTriggerUploadCleanup" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="uploadCleanupJob" />
-        <property name="cronExpression" value="${upload.cleanup.schedule}" />
+    <bean name="uploadCleanupJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UploadCleanupJob"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="connectionFacade">
+                    <ref bean="connectionFacade"/>
+                </entry>
+                <entry key="storage">
+                    <ref bean="uploadStorage"/>
+                </entry>
+                <entry key="deleteFileMinAge">
+                    <value>${upload.cleanup.file.minAge}</value>
+                </entry>
+            </map>
+        </property>
     </bean>
-	<!-- Scheduler Factory -->
 
-	<bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		<property name="triggers">
-			<list>
-				<ref bean="simpleTrigger" />
-                <ref bean="simpleTriggerCodeLists" />
+    <!-- Trigger -->
+    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+        <property name="jobDetail" ref="checkForExpiredDatasetsJob"/>
+        <property name="startDelay" value="10000"/>
+        <property name="repeatInterval" value="${workflow.expiryJob.repeatInterval}"/>
+    </bean>
+
+    <bean id="simpleTriggerUploadCleanup" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="uploadCleanupJob"/>
+        <property name="cronExpression" value="${upload.cleanup.schedule}"/>
+    </bean>
+    <!-- Scheduler Factory -->
+
+    <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="simpleTrigger" />
+                <ref bean="simpleTriggerCodeLists"/>
                 <ref bean="simpleTriggerUploadCleanup" />
-			</list>
-		</property>
-        <property name="applicationContextSchedulerContextKey">  
-            <value>applicationContext</value>  
-        </property> 
-	</bean>
+            </list>
+        </property>
+        <property name="applicationContextSchedulerContextKey">
+            <value>applicationContext</value>
+        </property>
+    </bean>
 	
 	<!-- Mapper Factory -->
 
 	
 	<bean id="protocolFactory" class="de.ingrid.mdek.job.protocol.HashMapProtocolFactory"/>
 	
-    <bean name="updateCodeListsJobDetail" class="org.springframework.scheduling.quartz.JobDetailBean">
-        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateCodeListsFromIGEJob" />
+    <bean name="updateCodeListsJobDetail" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+      <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UpdateCodeListsFromIGEJob" />
+      <property name="durability" value="true" />
     </bean>
     
-    <bean id="simpleTriggerCodeLists" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+    <bean id="simpleTriggerCodeLists" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="updateCodeListsJobDetail" />
         <property name="startDelay" value="120000" />
         <property name="repeatInterval" value="1800000" />

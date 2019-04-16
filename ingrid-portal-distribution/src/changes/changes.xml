@@ -7,6 +7,48 @@
 
     <body>
 
+        <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
+          <action type="add" dev="wemove" issue="835">
+            Portal: Add central index functionality.
+          </action>
+          <action type="fix" dev="wemove" issue="1304">
+            Portal: Fix portal load mixed content.
+          </action>
+          <action type="fix" dev="wemove" issue="1305">
+            Portal: Measure client load OSM tiles with HTTPS protocol.
+          </action>
+          <action type="fix" dev="wemove" issue="1284">
+             Fix mapping of gmd:hoursOfService.
+          </action>
+          <action type="fix" dev="wemove" issue="1285">
+             Fix problem with codelists not been able to fetch via HTTP proxy.
+          </action>
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
+          </action>
+          <action type="add" dev="wemove" issue="">
+            Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
+          </action>
+          <action type="update" dev="wemove" issue="1271">
+            Portal: Update tomcat to 7.0.92.
+          </action>
+          <action type="fix" dev="wemove" issue="1280">
+            Portal: Fix header logo NUMIS.
+          </action>
+          <action type="add" dev="wemove" issue="1252">
+            MapClient: Add extended search of layers on admin GUI.
+          </action>
+          <action type="add" dev="wemove" issue="1110">
+            IGE(UVP): Add new field for determination of duration.
+          </action>
+          <action type="add" dev="wemove" issue="513">
+            IGE: Support getCapabilities assistant for WMTS.
+          </action>
+          <action type="fix" dev="wemove" issue="1303">
+            Portal: Change directory for codelists to prevent conflict with kml directory.
+          </action>
+        </release>
+
         <release version="4.6.0" date="2019-01-17" description="Release 4.6.0">
           <action type="add" dev="wemove" issue="1260">
             Portal: Add local host name no subject of alert email of monitoring jobs.
@@ -33,7 +75,7 @@
             Portal: Oracle: Fix update of portal database (flyway 4_4_0, 4_4_1). Make provider URL nullable.
           </action>
           <action type="fix" dev="wemove">
-            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
+            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).
           </action>
           <action type="add" dev="wemove" issue="880">
             IGE(UVP): Show invalid filename characters in upload dialog.

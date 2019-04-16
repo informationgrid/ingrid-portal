@@ -22,17 +22,9 @@
  */
 package de.ingrid.portal.global;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.*;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -41,15 +33,10 @@ import org.hibernate.criterion.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.IngridChronicleEventType;
-import de.ingrid.portal.om.IngridEnvTopic;
-import de.ingrid.portal.om.IngridFormToQuery;
-import de.ingrid.portal.om.IngridMeasuresRubric;
-import de.ingrid.portal.om.IngridPartner;
-import de.ingrid.portal.om.IngridProvider;
-import de.ingrid.portal.om.IngridServiceRubric;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Global STATIC data and utility methods for Database.
@@ -644,11 +631,12 @@ public class UtilsDB {
             // delete it
             Session session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
-            Statement st = session.connection().createStatement();
-            if (log.isDebugEnabled()) {
-                log.debug("Execute SQL: " + sqlStr);
+            try (Statement st = session.connection().createStatement()) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Execute SQL: " + sqlStr);
+                }
+                st.executeUpdate(session.connection().nativeSQL(sqlStr));
             }
-            st.executeUpdate(session.connection().nativeSQL(sqlStr));
             tx.commit();
         } catch (Exception ex) {
             if (tx != null) {

@@ -31,7 +31,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -94,9 +93,9 @@ public class UtilsFileHelper {
 				file = new File(directory.getAbsolutePath() + "/" + generateFilename(parentTyp, title, new String(byteFile).hashCode(), typ));
 				file.createNewFile();
 				
-				FileOutputStream fos = new FileOutputStream(file);
-				fos.write(byteFile);
-				fos.close();
+				try (FileOutputStream fos = new FileOutputStream(file)) {
+    				fos.write(byteFile);
+				}
 				if (log.isDebugEnabled()) {
 					log.debug("Create file: " + file.getAbsolutePath());
 				}
@@ -155,10 +154,9 @@ public class UtilsFileHelper {
 			File file = new File(path);
 			if(file.length() < 1){
 				if (content != null) {
-					Writer writer = null;
-					writer = new FileWriter(path);
-					writer.write(content);
-					writer.close();		
+					try (Writer writer = new FileWriter(path)) {
+    					writer.write(content);
+					}
 				}else{
 					if (log.isErrorEnabled()) {
 						log.error("Content is null!");
@@ -260,34 +258,36 @@ public class UtilsFileHelper {
 	 * @throws IOException
 	 */
 	public static byte[] getBytesFromFile(File file) throws IOException {
-		InputStream is = new FileInputStream(file);
-		// Get the size of the file
-		long length = file.length();
-		
-		// You cannot create an array using a long type.
-		// It needs to be an int type.
-		// Before converting to an int type, check
-		// to ensure that file is not larger than Integer.MAX_VALUE.
-		if (length > Integer.MAX_VALUE) {
-			// File is too large
+
+        // Get the size of the file
+        long length = file.length();
+
+        // Create the byte array to hold the data
+        byte[] bytes = new byte[(int) length];
+
+        // You cannot create an array using a long type.
+        // It needs to be an int type.
+        // Before converting to an int type, check
+        // to ensure that file is not larger than Integer.MAX_VALUE.
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+
+        try (InputStream is = new FileInputStream(file)) {
+
+    		// Read in the bytes
+    		int offset = 0;
+    		int numRead = 0;
+    		while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+    			offset += numRead;
+    		}
+
+    		// Ensure all the bytes have been read in
+    		if (offset < bytes.length) {
+    			throw new IOException("Could not completely read file " + file.getName());
+    		}
+
 		}
-		// Create the byte array to hold the data
-		byte[] bytes = new byte[(int) length];
-		
-		// Read in the bytes
-		int offset = 0;
-		int numRead = 0;
-		while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-			offset += numRead;
-		}
-		
-		// Ensure all the bytes have been read in
-		if (offset < bytes.length) {
-			throw new IOException("Could not completely read file " + file.getName());
-		}
-		
-		// Close the input stream and return bytes
-		is.close();
 		
 		return bytes;
 	}
@@ -316,9 +316,7 @@ public class UtilsFileHelper {
 	
 	public static HashMap<String, String> getInstallVersion(String path, String title){
 		HashMap<String, String> versionMap = new HashMap<String, String>();
-		BufferedReader bufferReader;
-		try {
-			bufferReader = new BufferedReader(new FileReader(path));
+		try (BufferedReader bufferReader = new BufferedReader(new FileReader(path))) {
 			String input = "";
 			while((input = bufferReader.readLine()) != null) {
 				if(input.startsWith("Implementation-Build")){

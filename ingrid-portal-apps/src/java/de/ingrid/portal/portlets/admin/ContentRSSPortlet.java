@@ -22,16 +22,15 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.lang.reflect.Array;
+import de.ingrid.portal.forms.AdminRSSForm;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.om.IngridRSSSource;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-
-import de.ingrid.portal.forms.AdminRSSForm;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.om.IngridRSSSource;
+import java.lang.reflect.Array;
 
 /**
  * Portlet handling content management of RSS feeds

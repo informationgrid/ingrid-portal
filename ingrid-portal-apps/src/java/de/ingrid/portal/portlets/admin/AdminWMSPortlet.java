@@ -22,17 +22,15 @@
  */
 package de.ingrid.portal.portlets.admin;
 
-import java.io.IOException;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.velocity.context.Context;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
-import org.apache.velocity.context.Context;
-
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
+import java.io.IOException;
 
 /**
  * TODO Describe your created type (class, etc.) here.
