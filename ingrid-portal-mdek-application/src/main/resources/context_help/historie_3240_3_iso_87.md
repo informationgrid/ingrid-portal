@@ -19,4 +19,4 @@ Angaben zur Implementierungsgeschichte des Dienstes.
 
 Beschreibung des Bearbeitungsschritts einschließlich wichtiger Parameter oder Toleranzen
 
-Domain: 87
+Domain: 87 (gmd:description)

@@ -19,4 +19,4 @@ Band IV
 
 Kennung eines Elements einer Serie
 
-Domain: 405
+Domain: 405 (gmd:issueIdentification)

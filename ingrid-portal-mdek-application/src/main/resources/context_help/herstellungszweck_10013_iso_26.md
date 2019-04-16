@@ -14,4 +14,4 @@ Grund für die Datenerhebung
 
 Zusammenfassung, für welchen Zweck oder mit welcher Absicht die Ressource erstellt wurde
 
-Domain: 26
+Domain: 87 (gmd:purpose)

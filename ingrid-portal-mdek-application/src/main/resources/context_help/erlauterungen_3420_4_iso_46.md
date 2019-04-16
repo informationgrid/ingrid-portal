@@ -19,4 +19,4 @@ Finanzierung über BMU, EU
 
 Zusatzinformation: ergänzende, den Datenbestand beschreibende Information
 
-Domain: 46
+Domain: 46 (gmd:supplementalInformation)

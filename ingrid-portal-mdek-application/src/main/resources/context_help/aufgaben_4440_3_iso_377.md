@@ -19,4 +19,4 @@ Vorbereitung von Ausweisungen von Naturschutzgebieten; Erarbeitung von Abgrenzun
 
 Position oder Funktion der zuständigen Person
 
-Domain: 377
+Domain: 377 (gmd:positionName)

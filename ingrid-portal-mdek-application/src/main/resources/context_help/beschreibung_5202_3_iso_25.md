@@ -19,4 +19,4 @@ Die getMap Operation des WMS gibt eine Raster-Repräsentation der in "Basisdaten
 
 kurze, beschreibende Zusammenfassung des Inhalts der Ressource
 
-Domain: 25
+Domain: 25 (gmd:abstract)

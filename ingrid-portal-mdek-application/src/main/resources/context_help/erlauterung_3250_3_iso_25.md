@@ -19,7 +19,7 @@ Der Datensatz ist eine Shape-Datei, die alle Grundwassermessstellen in Hessen mi
 
 Kurzbeschreibung: kurze, beschreibende Zusammenfassung des Inhalts der Ressource
 
-Domain: 25
+Domain: 25 (gmd:abstract)
 
 Die Kurzbezeichnung wird hier erweitert, weil diese Information nicht unter `srv:SV_ServiceIdentification` abgebildet werden kann. 
 

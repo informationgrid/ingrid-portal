@@ -19,4 +19,4 @@ UMN Mapserver 4.0.2 auf Linux 2.6.0 Für Echtzeit- und near-online-GPS-Anwendung
 
 Beschreibung der Bearbeitungsumgebung, in welcher der Datenbestand erstellt wird, wie Software, Betriebssystem, Dateinamen  oder Größe des Datenbestands
 
-Domain: 44
+Domain: 44 (gmd:environmentDescription)

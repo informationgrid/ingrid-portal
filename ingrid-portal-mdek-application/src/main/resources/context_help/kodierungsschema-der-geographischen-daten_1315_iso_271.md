@@ -17,8 +17,4 @@ Hydrography GML application schema (automatischer Eintrag bei Auswahl des INSPIR
 
 Abgabeformat: Beschreibung des Formats, in dem die Daten bereitgestellt werden
 
-Domain: 271
-
-
-
-distributionFormat
+Domain: 271 (gmd:distributionFormat)

@@ -1,20 +1,17 @@
 ---
 # ID des GUI Elements
-guid: 5100
-# optional ID der Objektklasse
-#oid: 1
+guid: 5105
 # title, used as window title
-title: Dateibeschreibung der Vorschaugrafik
+title: Dateibeschreibung
 ---
 
-# Dateibeschreibung der Vorschaugrafik
+# Dateibeschreibung
 
 Textliche Beschreibung des Inhalts der Grafik.
 
-
 # ISO Abbildung
 
-Grafik, die die Ressource darstellt (möglichst einschließlich Legende)
+Dateibeschreibung: textliche Beschreibung des Inhalts der Grafik
 
 Domain: 31 (gmd:graphicOverview), 50 (gmd:fileDescription)
 
@@ -28,7 +25,7 @@ Domain: 31 (gmd:graphicOverview), 50 (gmd:fileDescription)
       <graphicOverview>
         <MD_BrowseGraphic>
           <fileDescription>
-            <gco:CharacterString>DESCRIPTION OF IMAGE</gco:CharacterString>
+            <gco:CharacterString>[DATEI_BESCHREIBUNG]</gco:CharacterString>
           </fileDescription>
         </MD_BrowseGraphic>
       </graphicOverview>
@@ -36,3 +33,4 @@ Domain: 31 (gmd:graphicOverview), 50 (gmd:fileDescription)
   </identificationInfo>
 </MD_Metadata>
 ```
+

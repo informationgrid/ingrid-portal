@@ -19,4 +19,4 @@ Erarbeitung von fachlichen Grundlagen für Ausweisung von Naturschutzgebieten so
 
 Position oder Funktion der zuständigen Person
 
-Domain: 377
+Domain: 377 (gmd:positionName)

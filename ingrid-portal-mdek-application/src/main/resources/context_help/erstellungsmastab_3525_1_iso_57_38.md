@@ -22,13 +22,13 @@ Bodenauflösung: Auflösungseinheit in Linien/cm; Einheit: z.B. 1 cm geteilt dur
 
 Maßstabszahl: Angabe der Maßstabszahl (mz) eines Maßstabs 1 : mz
 
-Domain: 57
+Domain: 57 (gmd:denominator)
 
 ## Bodenauflösung
 
 Räumliche Auflösung: Angaben über die räumliche Auflösung der geografischen Informationen
 
-Domain: 38
+Domain: 38 (gmd:spatialResolution)
 
 ```
 <spatialResolution>
@@ -44,7 +44,7 @@ Domain: 38
 
 Räumliche Auflösung: Angaben über die räumliche Auflösung der geografischen Informationen
 
-Domain: 38
+Domain: 38 (gmd:spatialResolution)
 
 ```
 <spatialResolution>

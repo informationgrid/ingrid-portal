@@ -19,4 +19,4 @@ Jahresberichte zur Abfallwirtschaft
 
 Bezeichnung der Serie oder des Gesamtdatenbestands, wozu der Datenbestand gehört
 
-Domain: 404
+Domain: 404 (gmd:name)

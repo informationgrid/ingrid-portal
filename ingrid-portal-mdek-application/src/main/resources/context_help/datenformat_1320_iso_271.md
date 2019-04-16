@@ -17,4 +17,4 @@ Formatkürzel: tif Version: 6.0 Kompression: LZW Bildpunkttiefe: 8 Bit
 
 Abgabeformat: Beschreibung des Formats, in dem die Daten bereitgestellt werden
 
-Domain: 271
+Domain: 271 (gmd:distributionFormat)

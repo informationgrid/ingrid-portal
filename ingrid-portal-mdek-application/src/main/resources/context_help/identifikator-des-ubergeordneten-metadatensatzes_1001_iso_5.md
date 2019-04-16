@@ -17,7 +17,7 @@ Für Datensätze in der obersten Ebene oder direkt unter einem Ordner, kann eine
 
 eindeutiger Identifikator des übergeordneten Metadatensatzes (Elternobjekt), auf den sich der aktuelle Metadatensatz (Kindobjekt) bezieht
 
-Domain: 5
+Domain: 5 (gmd:parentIdentifier)
 
 
 ## Abbildung ISO 19139 XML

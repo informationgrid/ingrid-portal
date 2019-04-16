@@ -19,4 +19,4 @@ Dr. Antje Robbe
 
 Kontaktinformation zu Person(en) und Organisation(en), welche im Bezug zur Ressource stehen
 
-Domain: 29
+Domain: 29 (gmd:pointOfContact)

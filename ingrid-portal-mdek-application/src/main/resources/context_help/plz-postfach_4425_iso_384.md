@@ -17,4 +17,4 @@ Postleitzahl des Postfaches. Hier ist die Postleitzahl einzugeben, die sich auf 
 
 Postleitzahl
 
-Domain: 384
+Domain: 384 (gmd:postalCode)

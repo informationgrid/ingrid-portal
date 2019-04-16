@@ -19,4 +19,4 @@ Vektor
 
 Räumliche Darstellungsart: Methode, mit der geografische Informationen räumlich dargestellt werden.
 
-Domain: 37
+Domain: 37 (gmd:spatialRepresentationType)

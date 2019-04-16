@@ -17,4 +17,4 @@ Boden (automatischer Eintrag von "INSPIRE Data Specification on Soil - Draft Tec
 
 Schlüsselwörter: Schlüsselwörter, ihr Typ und Quellenangabe
 
-Domain: 33
+Domain: 33 (gmd:descriptiveKeywords)

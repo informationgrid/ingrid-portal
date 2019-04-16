@@ -16,4 +16,4 @@ Angaben zum Betriebssystem und der Software, ggf. auch Hardware, die zur Impleme
 
 Beschreibung der Bearbeitungsumgebung, in welcher der Datenbestand erstellt wird, wie Software, Betriebssystem, Dateinamen  oder Größe des Datenbestands
 
-Domain: 44
+Domain: 44 (gmd:environmentDescription)

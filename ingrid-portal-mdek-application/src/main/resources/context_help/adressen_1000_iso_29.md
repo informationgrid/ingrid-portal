@@ -17,7 +17,7 @@ Ansprechpartner / Robbe, Antje, Anbieter / Dr. Seehund, Siegfried
 
 Kontaktinformation zu Person(en) und Organisation(en), welche im Bezug zur Ressource stehen
 
-Domain: 29
+Domain: 29 (gmd:pointOfContact)
 
 
 ## Abbildung ISO 19139 XML

@@ -19,6 +19,4 @@ BfN, BMU
 
 Verantwortliche Stelle: Name und Funktion der Person oder Organisation, die für die Ressource verantwortlich ist
 
-Domain: 367, gmd:role = projectParticipant
-
-citedResponsibleParty
+Domain: 367 (gmd:citedResponsibleParty), gmd:role = projectParticipant

@@ -14,7 +14,7 @@ Informationen über die räumliche Zuordnung des in dem Objekt beschriebenen Dat
 
 Geografische Ausdehnung: geografische Komponente der Ausdehnung des betreffenden Objekts
 
-Domain: 336
+Domain: 336 (gmd:geographicElement)
 
 ## Abbildung ISO 19139
 

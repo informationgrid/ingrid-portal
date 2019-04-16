@@ -19,4 +19,4 @@ Angabe der Jahreszahl der Publikation der Literatur. Das Erscheinungsjahr ist vo
 
 Erscheinungsdatum der Ausgabe oder Version
 
-Domain: 364
+Domain: 364 (gmd:editionDate)

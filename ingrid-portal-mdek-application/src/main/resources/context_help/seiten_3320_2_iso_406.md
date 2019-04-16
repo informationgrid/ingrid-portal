@@ -19,4 +19,4 @@ Angabe der Anzahl der Seiten der Literatur. Hier ist die Anzahl der Seiten anzug
 
 Seitenangabe zum Artikel in einer Publikation
 
-Domain: 406
+Domain: 406 (gmd:page)

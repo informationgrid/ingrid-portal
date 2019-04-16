@@ -19,4 +19,4 @@ Feldkartierung
 
 Beschreibung des Bearbeitungsschritts einschließlichwichtiger Parameter oder Toleranzen
 
-Domain: 87
+Domain: 87 (gmd:description)

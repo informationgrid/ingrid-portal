@@ -19,4 +19,4 @@ Angabe der 10-stelligen Identifikationsnummer der Literatur.
 
 Internationale  Standardbuchnummer
 
-Domain: 372
+Domain: 372 (gmd:ISBN)

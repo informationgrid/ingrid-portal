@@ -19,4 +19,4 @@ Kartieroriginale der Pflanzenerfassung
 
 detaillierte Beschreibung der Ebene der Quelldaten
 
-Domain: 93
+Domain: 93  (gmd:description)

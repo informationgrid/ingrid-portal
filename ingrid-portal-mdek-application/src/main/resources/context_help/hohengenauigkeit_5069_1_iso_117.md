@@ -19,7 +19,7 @@ Angabe über die Genauigkeit der Höhe z.B. in einem Geländemodell.
 
 Absolute Positionsgenauigkeit: Abweichung der Ist-Koordinaten von den Soll-Koordinaten
 
-Domain: 117
+Domain: 117 (gmd:DQ_AbsoluteExternalPositionalAccuracy)
 
 ## Abbildung ISO 19139
 

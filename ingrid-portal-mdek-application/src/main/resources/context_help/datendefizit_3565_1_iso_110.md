@@ -19,7 +19,7 @@ Eingabe einer Prozentangabe zum Anteil der Daten, die im Vergleich zum beschrieb
 
 Datendefizit: Daten, die im Vergleich zum beschriebenen Geltungsbereich fehlen
 
-Domain: 110
+Domain: 110 (gmd:DQ_CompletenessOmission)
 
 ## Abbildung ISO 19139 XML
 

@@ -19,4 +19,4 @@ Zeichenvorschrift
 
 allgemeine Aussagen des Datenerzeugers zur Herkunft des Datenbestands
 
-Domain: 83
+Domain: 83 (gmd:statement)

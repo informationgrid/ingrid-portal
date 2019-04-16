@@ -19,7 +19,7 @@ Mustermann, Erika
 
 Für die Metadaten verantwortliche Stelle.
 
-Domain: 8
+Domain: 8 (gmd:contact)
 
 
 ## Abbildung ISO 19139 XML

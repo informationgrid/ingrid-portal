@@ -19,4 +19,4 @@ Deponieüberwachung Berlin-Tegel, Statistikauswertungen seit 1974
 
 detaillierte Beschreibung der Ebene der Quelldaten
 
-Domain: 93
+Domain: 93 (gmd:description)

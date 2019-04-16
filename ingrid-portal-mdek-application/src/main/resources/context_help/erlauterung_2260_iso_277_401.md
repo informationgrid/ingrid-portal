@@ -17,4 +17,4 @@ Es werden Java-Applets geladen
 
 Beschreibung: ausführliche Beschreibung der Online-Ressource
 
-Domain: 277, 401
+Domain: 277 (gmd:onLine), 401 (gmd:description)

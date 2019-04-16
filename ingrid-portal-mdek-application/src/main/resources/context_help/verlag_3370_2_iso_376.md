@@ -19,4 +19,4 @@ econ
 
 Bezeichnung der verantwortlichen Organisation
 
-Domain: 376
+Domain: 376 (gmd:organisationName)

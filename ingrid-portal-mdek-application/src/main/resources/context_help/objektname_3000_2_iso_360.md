@@ -19,7 +19,7 @@ Schwermetallbelastung des Bodens im Umkreis von Deponien vor 1950.
 
 Bezeichnung, unter der die Ressource bekannt ist
 
-Domain: 360
+Domain: 360 (gmd:title)
 
 ## Abbildung ISO 19139 XML
 

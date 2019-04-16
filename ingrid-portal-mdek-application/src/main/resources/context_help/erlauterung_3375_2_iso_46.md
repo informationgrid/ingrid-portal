@@ -19,4 +19,4 @@ Der Artikel beruht auf der Diplomarbeit des Autors aus dem Jahr 1995 an der Univ
 
 Zusatzinformation: ergänzende, den Datenbestand beschreibende Information
 
-Domain: 46
+Domain: 46 (gmd:supplementalInformation)

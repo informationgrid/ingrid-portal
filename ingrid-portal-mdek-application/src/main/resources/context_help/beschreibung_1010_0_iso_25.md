@@ -16,7 +16,7 @@ Fachliche Beschreibung der Organisationseinheit/Fachaufgabe. Im Falle einer Orga
 
 kurze, beschreibende Zusammenfassung des Inhalts der Ressource
 
-Domain: 25
+Domain: 25 (gmd:abstract)
 
 ## Abbildung ISO 19139 XML
 

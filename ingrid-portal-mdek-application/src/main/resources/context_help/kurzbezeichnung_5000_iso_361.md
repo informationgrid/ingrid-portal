@@ -17,7 +17,7 @@ DTK25 digitale topographische Karte GK25 - Grundkarte
 
 Kurzbezeichnung oder anderer Titel der Ressource
 
-Domain: 361
+Domain: 361 (gmd:alternateTitle)
 
 ## Abbildung ISO 19139 XML
 

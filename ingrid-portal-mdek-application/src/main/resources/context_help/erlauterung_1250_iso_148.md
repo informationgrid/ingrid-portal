@@ -18,4 +18,4 @@ Die Messungen erfolgten nur tagsüber.
 
 Anmerkung: Information zu besonderen Anforderungen bei der Pflege der Ressource
 
-Domain: 148
+Domain: 148 (gmd:maintenanceNote)

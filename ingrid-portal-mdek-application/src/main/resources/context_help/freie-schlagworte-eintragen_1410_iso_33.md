@@ -18,4 +18,4 @@ Bestandsaufnahme; Rasterkarte; Nachtfalter
 
 Schlüsselwörter: Schlüsselwörter, ihr Typ und Quellenangabe
 
-Domain: 33
+Domain: 33 (gmd:descriptiveKeywords)

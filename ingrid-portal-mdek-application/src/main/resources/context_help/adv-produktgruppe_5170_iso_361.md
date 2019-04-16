@@ -11,9 +11,9 @@ Zuordnung zu einer Produktgruppe bzw. Fachthema der AdV.
 
 # ISO Abbildung
 
-Inhalte werden als ´´´gmd:alternateTitle´´´ Elemente hinzugefügt.
+Inhalte werden als `gmd:alternateTitle` Elemente hinzugefügt.
 
-Domain: 361
+Domain: 361 (gmd:alternateTitle)
 
 
 

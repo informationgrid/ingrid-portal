@@ -19,4 +19,4 @@ Umweltbundesamt
 
 Name der zuständigen Kontaktperson in der Reihenfolge Name, Vorname, Titel durch Trennzeichen getrennt
 
-Domain: 375
+Domain: 375 (gmd:individualName)

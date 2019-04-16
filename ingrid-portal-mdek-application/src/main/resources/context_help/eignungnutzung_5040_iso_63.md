@@ -17,4 +17,4 @@ Präsentation des Raumordnungsprogramms auf Basis der topografischen Kartenwerke
 
 Spezifische Nutzung: kurze Beschreibung zur Verwendung der Ressource
 
-Domain: 63
+Domain: 63 (gmd:specificUsage)

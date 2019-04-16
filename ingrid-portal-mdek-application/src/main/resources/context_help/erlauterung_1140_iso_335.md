@@ -18,4 +18,4 @@ Die Koordinaten für die Fachliche Gebietseinheit sind ungefähre Angaben.
 
 Beschreibung: Räumliche und zeitliche Ausdehnung des betreffenden Objekts.
 
-Domain: 335
+Domain: 335 (gmd:description)

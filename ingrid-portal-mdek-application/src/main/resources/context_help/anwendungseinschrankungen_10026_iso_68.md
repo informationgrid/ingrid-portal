@@ -17,4 +17,4 @@ Nicht für Navigationszwecke geeignet
 
 Einschränkungen, die die Eignung der Ressource oder Metadaten betreffenBeispiel: "nicht für Navigationszwecke geeignet"
 
-Domain: 68
+Domain: 68 (gmd:useLimitation)

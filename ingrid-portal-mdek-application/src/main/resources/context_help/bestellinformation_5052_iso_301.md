@@ -17,4 +17,4 @@ Lieferzeit beträgt 3 Wochen
 
 allgemeine Hinweise, Lieferbedingungen und zusätzliche Leistungen der Vertriebsstelle
 
-Domain: 301
+Domain: 301 (gmd:orderingInstructions)

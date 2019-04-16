@@ -19,4 +19,4 @@ Bibliothek Umweltbundesamt
 
 zusätzliche Angaben wie oder wann die verantwortliche Person oder Organisation zu erreichen ist
 
-Domain: 392
+Domain: 392 (gmd:contactInstructions)

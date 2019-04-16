@@ -19,4 +19,4 @@ Der Datensatz ist eine Shape-Datei, die alle Grundwassermessstellen in Hessen mi
 
 Zusatzinformation: ergänzende, den Datenbestand beschreibende Information
 
-Domain: 46
+Domain: 46 (gmd:supplementalInformation)

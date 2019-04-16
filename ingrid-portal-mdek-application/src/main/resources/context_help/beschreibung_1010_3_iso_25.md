@@ -16,7 +16,7 @@ Fachliche Inhaltsangabe des Geodatendienstes. Hier sollen in knapper Form die Ar
 
 kurze, beschreibende Zusammenfassung des Inhalts der Ressource
 
-Domain: 25
+Domain: 25 (gmd:abstract)
 
 ## Abbildung ISO 19139 XML
 

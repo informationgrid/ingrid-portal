@@ -17,7 +17,7 @@ https://domain.de/pfad/grafik.png
 
 Grafik, die die Ressource darstellt (möglichst einschließlich Legende)
 
-Domain: 31, 49
+Domain: 31 (gmd:graphicOverview), 49 (gmd:fileName)
 
 
 ## Abbildung ISO 19139 XML

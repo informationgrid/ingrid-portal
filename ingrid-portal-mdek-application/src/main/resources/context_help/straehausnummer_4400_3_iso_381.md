@@ -19,4 +19,4 @@ Blocksberg 17
 
 Angabe der Straße und Hausnummer (ggf. auch als Postfach) gemäß ISO 11180, Anhang A
 
-Domain: 381
+Domain: 381 (gmd:deliveryPoint)

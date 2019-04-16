@@ -19,4 +19,4 @@ Das Kartenwerk ist im DIN A3-Format erschienen.
 
 Information, welche für eine vollständige Ressourcenbeschreibung benötig wird und in keinem anderen Metadatenelement erfasst  wurde
 
-Domain: 370
+Domain: 370 (gmd:otherCitationDetails)

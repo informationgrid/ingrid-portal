@@ -17,4 +17,4 @@ Alle 6 Monate
 
 Benutzerdefiniertes Pflegeintervall: Pflegeintervall, welches in der Codeliste nicht vordefiniert ist
 
-Domain: 145
+Domain: 145 (gmd:userDefinedMaintenanceFrequency)

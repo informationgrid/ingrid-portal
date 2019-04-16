@@ -19,4 +19,4 @@ Die angegebenen Inhalte der Datenbank stellen nur eine Auswahl aller gemessenen 
 
 Zusatzinformation: ergänzende, den Datenbestand beschreibende Information
 
-Domain: 46
+Domain: 46 (gmd:supplementalInformation)

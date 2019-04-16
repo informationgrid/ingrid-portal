@@ -19,6 +19,6 @@ z.B. Katalogdienst, Dienst für geografische Visualisierung, usw.
 
 Schlüsselwörter: Schlüsselwörter, ihr Typ und Quellenangabe (Service Classification, version 1.0)
 
-Domain: 33
+Domain: 33 (gmd:descriptiveKeywords)
 
 

@@ -19,4 +19,4 @@ Hamburg
 
 Ortsname (Stadt, Gemeinde)
 
-Domain: 382
+Domain: 382 (gmd:city)
