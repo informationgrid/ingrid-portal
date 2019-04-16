@@ -11,9 +11,11 @@ Beim Anhaken der Checkbox "AdV kompatibel" werden die Anforderungen des AdV-Meta
 
 # ISO Abbildung
 
-Hinzufügen eines ´´´gmd:keywords´´´ 'AdVMIS'.
+Hinzufügen eines `gmd:keywords` 'AdVMIS'.
 
-Domain: 53
+Schlüsselwort: umgangssprachlich verwendete Wörter, Ausdrücke oder formalisierte Fachbegriffe, die den Inhalt beschreiben
+
+Domain: 53 (gmd:keyword)
 
 
 

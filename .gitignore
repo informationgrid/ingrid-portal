@@ -25,3 +25,7 @@ ingrid-portal-mdek-application/src/main/webapp/WEB-INF/classes/
 ingrid-portal-base/overlays/
 ingrid-portal-layout/overlays/
 bin/
+ingrid-portal-distribution/src/main/resources/apache-tomcat/data/*
+ingrid-portal-distribution/src/main/resources/apache-tomcat/logs/*
+ingrid-portal-distribution/src/main/resources/apache-tomcat/work/*
+ingrid-portal-distribution/src/main/resources/apache-tomcat/temp/*

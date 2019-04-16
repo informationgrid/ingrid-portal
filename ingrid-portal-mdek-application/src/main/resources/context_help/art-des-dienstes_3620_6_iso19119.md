@@ -29,7 +29,7 @@ Das Feld wird in ISO 19119 beschrieben. Es existiert keine deutsche Übersetzuuu
   <identificationInfo>
     <srv:SV_ServiceIdentification>
       <srv:serviceType>
-        <gco:LocalName>SERVICE_TYPE</gco:LocalName>
+        <gco:LocalName>[SERVICE_TYPE]</gco:LocalName>
       </srv:serviceType>
     </srv:SV_ServiceIdentification>
   </identificationInfo>

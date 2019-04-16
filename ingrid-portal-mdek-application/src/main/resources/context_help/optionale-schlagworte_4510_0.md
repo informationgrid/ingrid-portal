@@ -14,3 +14,4 @@ Eingabe von möglichst mindestens drei Schlagworten, die im Thesaurus verzeichne
 ## Beispiel:
 
 Naturschutz; Schmetterling; Kartierung; Artenschutz
+

@@ -19,7 +19,7 @@ Darstellungsdienst (automatischer Eintrag "Technical Guidance for the implementa
 
 # ISO Abbildung
 
-Das Feld wird in ISO 19119 beschrieben. Es existiert keine deutsche Übersetzuuung. 
+Das Feld wird in ISO 19119 beschrieben. Es existiert keine deutsche Übersetzung. 
 
 ## Abbildung ISO 19139 XML
 
@@ -28,7 +28,7 @@ Das Feld wird in ISO 19119 beschrieben. Es existiert keine deutsche Übersetzuuu
   <identificationInfo>
     <srv:SV_ServiceIdentification>
       <srv:serviceType>
-        <gco:LocalName>SERVICE_TYPE</gco:LocalName>
+        <gco:LocalName>[SERVICE_TYPE]</gco:LocalName>
       </srv:serviceType>
     </srv:SV_ServiceIdentification>
   </identificationInfo>
