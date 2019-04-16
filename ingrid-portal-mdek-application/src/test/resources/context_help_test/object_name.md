@@ -19,7 +19,12 @@ Jahresstatistik zum Stand der Altlastenbearbeitung
 
 ### Deutsche Übersetzung der Metadatenfelder des ISO 19115
 
-Bezeichnung, unter der die Ressource bekannt ist.
+Bezeichnung, unter der die Ressource bekannt ist..
+
+| First Header  | Second Header |
+| ------------- | ------------- |
+| Content Cell  | Content Cell  |
+| Content Cell  | Content Cell  |
 
 ### Abbildung im XML
 

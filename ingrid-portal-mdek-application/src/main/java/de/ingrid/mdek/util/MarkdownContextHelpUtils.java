@@ -5,11 +5,10 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.commonmark.Extension;
 import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
 import org.commonmark.ext.front.matter.YamlFrontMatterVisitor;
+import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
@@ -54,9 +54,11 @@ public class MarkdownContextHelpUtils {
     }
 
     private void init() {
-        Set<Extension> extensions = Collections.singleton( YamlFrontMatterExtension.create() );
+        List<Extension> extensions = Arrays.asList(YamlFrontMatterExtension.create(), TablesExtension.create());        
         parser = Parser.builder().extensions( extensions ).build();
-        htmlRenderer = HtmlRenderer.builder().build();
+        
+        List<Extension> renderExtensions = Arrays.asList(TablesExtension.create());        
+        htmlRenderer = HtmlRenderer.builder().extensions(renderExtensions).build();
     }
 
     /**

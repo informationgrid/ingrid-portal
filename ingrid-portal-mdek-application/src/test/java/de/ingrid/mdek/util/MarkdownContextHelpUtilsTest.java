@@ -24,8 +24,6 @@ package de.ingrid.mdek.util;
 
 import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -157,10 +155,15 @@ public class MarkdownContextHelpUtilsTest {
         
         Assert.assertEquals( false, m.isEmpty() );
 
-        Optional<Entry<MarkdownContextHelpItemKey, MarkdownContextHelpItem>> findAny = m.entrySet().stream().findAny();
-        MarkdownContextHelpItem val = findAny.get().getValue();
+        MarkdownContextHelpItemKey mchik = new MarkdownContextHelpItemKey("3000");
+        mchik.setOid( "1" );
+        mchik.setLang( "de" );
+        
+        MarkdownContextHelpItem val = m.get( mchik );
+        
         String html = mchu.renderMarkdownFile( val.getMarkDownFilename() );
         Assert.assertEquals( true, html.contains( "h1" ) );
+        Assert.assertEquals( true, html.contains( "table" ) );
     }
     
 }
