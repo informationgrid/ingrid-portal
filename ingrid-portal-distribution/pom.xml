@@ -153,33 +153,18 @@
         </excludes>
       </resource>
     </resources>
+
     <plugins>
+
+      <!-- Activate maven-assembly-plugin from release pom to build installer -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <!-- Add Type of Component to Manifest of Installer for Upgrade Server -->
-        <configuration>
-          <appendAssemblyId>true</appendAssemblyId>
-          <archive>
-            <manifestEntries>
-              <ingridComponentType>PORTAL</ingridComponentType>
-            </manifestEntries>
-          </archive>
-          <descriptors>
-            <descriptor>src/main/assembly/bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
+
     </plugins>
+
   </build>
+
   <profiles>
     <profile>
       <id>docker</id>
