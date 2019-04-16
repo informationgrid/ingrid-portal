@@ -14,3 +14,9 @@ Angabe der Art des Dokumentes. Es ist eine Kurzcharakteristik über die Art der 
 ## Beispiel:
 
 Zeitschriftenartikel
+
+## ISO Abbildung
+
+Format der Ressource: Formatbeschreibung der Ressource
+
+Domain: 32 (gmd:resourceFormat)
