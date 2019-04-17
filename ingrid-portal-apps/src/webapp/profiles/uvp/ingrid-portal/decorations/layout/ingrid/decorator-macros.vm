@@ -301,7 +301,9 @@
                         <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
                     #end
                 #else
-                    #if($element.url != "/mdek")
+                    #if($element.url == "/mdek")
+                        <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
+                    #else
                         <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
                     #end
                 #end
@@ -310,6 +312,7 @@
         </div>
     #end
     #if($_menuFooter)
+        <div class="highlighted">
         #set($currentPage = $site.getPageOrTemplate().url)
         #foreach($element in $_menuFooter.elements.iterator())
           #if($element.elementType == "option")
@@ -329,34 +332,9 @@
                 #set($linkTitle = $defaultTitle)
             #end
             <a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a>
-        </a>
           #end
         #end
-    #end
-    #if($_menuMain)
-        #set($currentPage = $site.getPageOrTemplate().url)
-        #foreach($element in $_menuMain.elements.iterator())
-          #if($element.elementType == "option")
-            #set($lastType = $element.type)
-            #set($linkTitle = $element.getTitle($preferedLocale))
-            #set($linkName = $element.getShortTitle($preferedLocale))
-            ## read localized title from resource with title from psml as key !
-            #if($linkTitle.startsWith('ingrid'))
-                #set($linkTitle = $MESSAGES.getString($linkTitle))
-                #set($linkName = $MESSAGES.getString($linkName))
-            #end
-            #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
-            #set($linkPage = $element.url)
-            #set($isSelected = $element.isSelected($site))
-            #set($defaultTitle = $element.getTitle())
-            #if($defaultTitle == "ingrid.page.language")
-                #set($linkTitle = $defaultTitle)
-            #end
-            #if($element.url == "/mdek")
-                <a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a>
-            #end
-          #end
-        #end
+        </div>
     #end
     #if($_menu)
         #foreach($element in $_menu.elements.iterator())
@@ -399,11 +377,13 @@
             #end
         #end
     #end
-    #if($jetspeed.getLoggedOn())
-        <a class="" href="/login/logout">$MESSAGES.getString('ingrid.page.login.logout')</a>
-    #else
-        <a class="" href="/log-in">Anmelden</a>
-    #end
+        <div class="highlighted">
+        #if($jetspeed.getLoggedOn())
+            <a class="icon" href="/login/logout"><span class="ic-ic-arrow"></span>$MESSAGES.getString('ingrid.page.login.logout')</a>
+        #else
+            <a class="icon" href="/log-in"><span class="ic-ic-arrow"></span>Anmelden</a>
+        #end
+        </div>
     </div>
 </div> 
 #end
