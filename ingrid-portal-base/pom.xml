@@ -272,8 +272,15 @@
               <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/ingrid/css
               </destination>
             </resource>
+            <resource>
+              <!-- Set source and destination dirs -->
+              <source>
+                <directory>${project.basedir}/src/webapp/decorations/layout/uvp/css</directory>
+              </source>
+              <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/uvp/css
+              </destination>
+            </resource>
           </resources>
-          <outputName>styles.css</outputName>
         </configuration>
       </plugin>
       <plugin>

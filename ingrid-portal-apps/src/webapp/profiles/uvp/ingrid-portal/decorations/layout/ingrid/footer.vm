@@ -1,56 +1,64 @@
-#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
-    <footer>
-        <hr>
-        <div class="row">
-            <div class="xsmall-24 columns">
-                <div class="social-buttons">
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-twitter"></span><span class="text"></span>
-                    </a>
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-facebook"></span><span class="text"></span>
-                    </a>
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-linkedin"></span><span class="text"></span>
-                    </a>
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-whatsapp"></span><span class="text"></span>
-                    </a>
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-xing"></span><span class="text"></span>
-                    </a>
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-mailto"></span><span class="text"></span>
-                    </a>
-                    <a href="#" class="button round social" target="_blank">
-                        <span class="ic-ic-share"></span><span class="text"></span>
-                    </a>
+    #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
+        <footer>
+            <hr>
+            <div class="row">
+                <div class="xsmall-24 columns">
+                    <div class="social-buttons">
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-twitter"></span><span class="text"></span>
+                        </a>
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-facebook"></span><span class="text"></span>
+                        </a>
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-linkedin"></span><span class="text"></span>
+                        </a>
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-whatsapp"></span><span class="text"></span>
+                        </a>
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-xing"></span><span class="text"></span>
+                        </a>
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-mailto"></span><span class="text"></span>
+                        </a>
+                        <a href="#" class="button round social" target="_blank">
+                            <span class="ic-ic-share"></span><span class="text"></span>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-      <div class="row">
-          <div class="xsmall-24 columns">
-              <div class="button-up">
-                  <button type="button" class="button round"><span class="ic-ic-angle-up"></span></button>
-              </div>
-          </div>
-      </div>
-      <div class="footer">
           <div class="row">
-              <div class="xsmall-24 large-7 xlarge-6 columns">
-                  #set($footerMenu = $site.getMenu("footer-menu"))
-                  #if(!$footerMenu.empty)
-                      #includeFooterNavigation($footerMenu)
-                  #end
-              </div>
-              <div class="xsmall-24 large-17 xlarge-18 columns">
-                  <div class="copyright">
-                      <p>© 2018 Landesbetrieb Geoinformation und Vermessung</p>
+              <div class="xsmall-24 columns">
+                  <div class="button-up">
+                      <button type="button" class="button round js-top"><span class="ic-ic-angle-up"></span></button>
                   </div>
               </div>
           </div>
-      </div>
-    </footer>
-#end
+          <div class="footer">
+              <div class="row">
+                  <div class="xsmall-24 large-7 xlarge-6 columns">
+                      #set($footerMenu = $site.getMenu("footer-menu"))
+                      #if(!$footerMenu.empty)
+                          #includeFooterNavigation($footerMenu)
+                      #end
+                  </div>
+                  <div class="xsmall-24 large-17 xlarge-18 columns">
+                      <div class="copyright">
+                          <p>© 2018 Landesbetrieb Geoinformation und Vermessung</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </footer>
+    #end
+    <!-- Global scripts -->
+    <script src="#GetPageResource("scripts/all.js")"></script>
+    
+    <!-- Popup -->
+    <script src="#GetPageResource("scripts/popup.js")"></script>
+    
+    <!-- Expand -->
+    <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
     </body>
 </html>

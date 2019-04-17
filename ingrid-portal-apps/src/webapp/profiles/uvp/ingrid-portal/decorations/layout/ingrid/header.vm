@@ -36,9 +36,6 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
         <link rel="shortcut icon" href="#" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
@@ -47,12 +44,7 @@
         #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
         ##includeJavaScriptForHead()
         ##IncludeStylesheets()
-        <!--
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px-filled-in/styles.css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
-        -->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/main.css">
+        <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
         
        #* our decorator macros, see ./decorator-macros.vm *#
@@ -61,17 +53,11 @@
         <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/foundation.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/vendor/select2.full.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/main.js"></script>
-        <!-- Pickadate -->
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
-        #set($lang = $renderRequest.Locale.getLanguage())
-        #if($lang && $lang != "en")
-            <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
-        #end
+        <script src="/decorations/layout/uvp/scripts/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/uvp/scripts/main.js"></script>
+        
         <!-- zxcvbn -->
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
     </head>
@@ -85,8 +71,8 @@
             <div class="row">
                 <div class="columns xsmall-10 small-7 medium-8 large-7 xlarge-6">
                     <div class="logo">
-                        <a href="/startseite" class="hide-for-large"><img src="/decorations/layout/ingrid/images/template/logo.svg" alt="UVP"></a>
-                        <a href="/startseite" class="show-for-large"><img src="/decorations/layout/ingrid/images/template/logo-mit-tag.svg" alt="UVP"></a>
+                        <a href="/startseite" class="hide-for-large"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"></a>
+                        <a href="/startseite" class="show-for-large"><img src="/decorations/layout/uvp/images/template/logo-mit-tag.svg" alt="UVP"></a>
                     </div>
                 </div>
                 <div class="columns xsmall-10 small-11 medium-9 large-7 xlarge-6 nav-tabs">
