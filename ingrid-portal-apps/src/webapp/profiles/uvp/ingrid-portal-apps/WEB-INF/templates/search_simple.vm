@@ -4,7 +4,7 @@ $action.setParameter('action','doSearch')
 #if($page && $page.endsWith("default-page.psml"))
     #set($isDefault = true)
 #end
-<div class="home-wrapper" style="background-image: url('/decorations/layout/ingrid/images/template/drops-big.svg');">
+<div class="home-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-big.svg');">
     <div class="row align-center">
         <div class="large-19 columns dark">
             <h1>Informationen &uuml;ber</h1>
