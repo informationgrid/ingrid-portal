@@ -359,7 +359,7 @@ function addLeafletHomeControl(map, title, position, icon, bounds){
         onAdd: function (map) {
             // create the control container with a particular class name
             var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
-            var link = L.DomUtil.create('a', 'icon small ' + icon, container);
+            var link = L.DomUtil.create('a', icon, container);
             link.href = '#';
             link.style.padding = '5px 0 0 0';
             link.title = title;
