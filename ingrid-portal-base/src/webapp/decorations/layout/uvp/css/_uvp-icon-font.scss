@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?h1or0g');
-  src:  url('fonts/icomoon.eot?h1or0g#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?h1or0g') format('truetype'),
-    url('fonts/icomoon.woff?h1or0g') format('woff'),
-    url('fonts/icomoon.svg?h1or0g#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?xc81ld');
+  src:  url('fonts/icomoon.eot?xc81ld#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?xc81ld') format('truetype'),
+    url('fonts/icomoon.woff?xc81ld') format('woff'),
+    url('fonts/icomoon.svg?xc81ld#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -206,4 +206,19 @@
 }
 .ic-ic-Z:before {
   content: "\e93c";
+}
+.ic-ic-user:before {
+  content: "\e941";
+}
+.ic-ic-metadaten:before {
+  content: "\e940";
+}
+.ic-ic-katalog:before {
+  content: "\e93f";
+}
+.ic-ic-administration:before {
+  content: "\e93d";
+}
+.ic-ic-hamburger-logged-user:before {
+  content: "\e93e";
 }

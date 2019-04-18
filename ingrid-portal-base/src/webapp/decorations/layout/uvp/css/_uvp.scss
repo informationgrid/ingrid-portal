@@ -415,14 +415,13 @@ ul ol, ol ol { margin-left: 2.25rem; }
     text-align: center;
     border-left: 1px solid $white-cascade;
     border-right: 1px solid $white-cascade;
-    cursor: pointer;
     background-color: $white;
     -webkit-transition: background-color .5s; /* Safari */
     transition: background-color .5s;
 
     .link-menu-tab {
       position: relative;
-      top: 74px;
+      top: 60px;
       color: $green-jelly;
       padding: 16px 0;
       -webkit-transition: color 1s; /* Safari */
@@ -431,7 +430,7 @@ ul ol, ol ol { margin-left: 2.25rem; }
       [class^="ic-"], [class*=" ic-"] {
         position: absolute;
         top: -30px;
-        left: 13px;
+        left: 44px;
         font-size: 32px;
       }
     }
@@ -442,9 +441,9 @@ ul ol, ol ol { margin-left: 2.25rem; }
   }
   .menu-tab:hover {
     background-color: $white-cascade;
+    text-decoration: none;
     .link-menu-tab {
       color: $green-blue;
-      text-decoration: none;
     }
   }
 }
@@ -700,7 +699,7 @@ header {
       height: 100vh;
       padding: 8px;
       z-index: 1020;
-      background-color: $green-jelly;
+      background-color: #24786f;
       overflow: auto;
       box-shadow: -8px 4px 60px 9px rgba(0,0,0,.3);
     }
@@ -713,9 +712,8 @@ header {
       }
     }
     .header-menu-entries {
-      margin-top: 4.5rem;
 
-      .highlighted { margin-bottom: 4.5rem; }
+      .highlighted { margin: 2rem 0; }
       a {
         display: block;
         font-family: 'Roboto-Medium';
@@ -728,7 +726,24 @@ header {
       a.header-menu-entry {
         font-family: 'RobotoSlab-Bold';
         font-size: 18px;
-        padding: 16px 24px;
+        padding: 12px 20px;
+      }
+      .sub-links {
+        margin: 2rem 0 .5rem;
+
+        a {
+          font-family: "Roboto-Regular";
+          text-transform: capitalize;
+          letter-spacing: .5px;
+        }
+      }
+      [class^="ic-"], [class*=" ic-"] {
+        font-size: 18px;
+        vertical-align: text-bottom;
+        margin-right: 8px;
+      }
+      .login-logout {
+        font-family: 'Roboto-Bold';
       }
       a:hover {
         text-decoration: none;
@@ -1052,6 +1067,29 @@ a.data:hover {
     margin-bottom: 16px;
   }
   .form-element { margin-bottom: 48px; }
+}
+
+.map-wrapper {
+  position: relative;
+}
+.map-center-icon {
+  position: absolute;
+  top: 80px;
+  left: 10px;
+  z-index: 500;
+  width: 33px;
+  height: 33px;
+  background-color: $white;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+
+  .ic-ic-center {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    font-size: 23px;
+    color: $black;
+  }
 }
 
 /* banner */
