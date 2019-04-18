@@ -6,9 +6,8 @@
 #set($bar = $list.add('size'))
 
 #if($TOOL.getValueFromXPath("./name"))
-    <br>
     <div class="row">
-        <div class="xsmall-24 large-16 columns">
+        <div class="form">
             <div class="helper text">
                 <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
             </div>
@@ -17,13 +16,8 @@
             ## used to get title.
             ## Title will be read from context and set to page head title tag.
             $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
-        </div>
-    </div>
-<br>
     ## Allgemeines
-    <div class="row">
         ## Allgemeine Vorhabenbeschreibung
-        <div class="columns">
             #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
         ## UVP Kategorien
             #set($uvpCats = [])
@@ -60,7 +54,6 @@
                 </ul>
             #end
         -->
-<br>
         ## Raumbezug
             #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
             #if($spatialValue)
@@ -108,7 +101,6 @@
                     #end
                 #end
             #end
-<br>
         ## Addressen
             <h2>Adressen</h2>
             #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
@@ -128,91 +120,81 @@
                     #set($postalcode = $TOOL.getValueFromXPath("./addresses/address[$number]/postalcode"))
                     #set($country = $TOOL.getValueFromXPath("./addresses/address[$number]/country"))
                     #set($postbox = $TOOL.getValueFromXPath("./addresses/address[$number]/postbox"))
-                    #if($number % 2 != 0)
-                    <div class="grid grid--gutter">
+                    <h4 class="no-margin">Ansprechpartner</h4>
+                    <p>
+                    #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
+                    #set($entryLengthParent = $nodelistParent.getLength())
+                    #if($entryLengthParent > 0)
+                        #foreach($numberParent in [$entryLengthParent..1])
+                            #set($idParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/@id"))
+                            #set($nameParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/name"))
+                                $nameParent
+                                <br>
+                        #end
                     #end
-                        <div>
-                            <h4 class="no-margin">Ansprechpartner</h4>
-                            <p>
-                            #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
-                            #set($entryLengthParent = $nodelistParent.getLength())
-                            #if($entryLengthParent > 0)
-                                #foreach($numberParent in [$entryLengthParent..1])
-                                    #set($idParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/@id"))
-                                    #set($nameParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/name"))
-                                        $nameParent
-                                        <br>
-                                #end
-                            #end
-                                $name
-                            </p>
-                            <p>
-                                #if($street && $street.length() > 0)
-                                    $street
-                                    <br>
-                                    #set($street = "")
-                                #end
-                                #if($postalcode && $postalcode.length() > 0)
-                                    $postalcode
-                                #end
-                                #if($city && $city.length() > 0)
-                                    $city
-                                #end
-                                #if($city && $city.length() > 0 || $postalcode && $postalcode.length() > 0)
-                                    #set($postalcode = "")
-                                    #set($city = "")
-                                    <br>
-                                #end
-                                #if($postbox && $postbox.length() > 0)
-                                    $postbox
-                                    <br>
-                                    #set($postbox = "")
-                                #end
-                                #if($country && $country.length() > 0)
-                                    $country
-                                    #set($country = "")
-                                #end
-                            </p>
-                            <div class="table table--lined2">
-                                <table>
-                                    #if($mail)
-                                    <tr>
-                                        <td>E-Mail:</td>
-                                        <td>
-                                            <a href="mailto:$mail">$mail</a>
-                                        </td>
-                                    <tr>
-                                    #end
-                                    #if($phone)
-                                    <tr>
-                                        <td>Telefon:</td>
-                                        <td>
-                                            $phone
-                                        </td>
-                                    <tr>
-                                    #end
-                                    #if($fax)
-                                    <tr>
-                                        <td>Fax:</td>
-                                        <td>
-                                            $fax
-                                        </td>
-                                    <tr>
-                                    #end
-                                    #if($url)
-                                    <tr>
-                                        <td>URL:</td>
-                                        <td>
-                                            <a href="$url">$url</a>
-                                        </td>
-                                    <tr>
-                                    #end
-                                </table>
-                            </div>
-                        </div>
-                    #if ($number % 2 == 0 || $entryLength == $number)
-                    </div>
-                    #end
+                        $name
+                    </p>
+                    <p>
+                        #if($street && $street.length() > 0)
+                            $street
+                            <br>
+                            #set($street = "")
+                        #end
+                        #if($postalcode && $postalcode.length() > 0)
+                            $postalcode
+                        #end
+                        #if($city && $city.length() > 0)
+                            $city
+                        #end
+                        #if($city && $city.length() > 0 || $postalcode && $postalcode.length() > 0)
+                            #set($postalcode = "")
+                            #set($city = "")
+                            <br>
+                        #end
+                        #if($postbox && $postbox.length() > 0)
+                            $postbox
+                            <br>
+                            #set($postbox = "")
+                        #end
+                        #if($country && $country.length() > 0)
+                            $country
+                            #set($country = "")
+                        #end
+                    </p>
+                    <table>
+                        #if($mail)
+                        <tr>
+                            <td>E-Mail:</td>
+                            <td>
+                                <a href="mailto:$mail">$mail</a>
+                            </td>
+                        <tr>
+                        #end
+                        #if($phone)
+                        <tr>
+                            <td>Telefon:</td>
+                            <td>
+                                $phone
+                            </td>
+                        <tr>
+                        #end
+                        #if($fax)
+                        <tr>
+                            <td>Fax:</td>
+                            <td>
+                                $fax
+                            </td>
+                        <tr>
+                        #end
+                        #if($url)
+                        <tr>
+                            <td>URL:</td>
+                            <td>
+                                <a href="$url">$url</a>
+                            </td>
+                        <tr>
+                        #end
+                    </table>
                 #end
             #end
             #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
