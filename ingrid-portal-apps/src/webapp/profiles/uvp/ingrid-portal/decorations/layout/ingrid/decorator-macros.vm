@@ -66,19 +66,19 @@
             #set($elemSelected = true)
         #end
         #if($element.url == "/main-maps.psml")
-            <div class="menu-tab ">
-                <a class="link-menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+            <a class="menu-tab bottom-border #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
                     <span class="ic-ic-karten"></span>
-                    $tabName
-                </a>
-            </div>
+                    <span>$tabName</span>
+                </div>
+            </a>
         #elseif($element.url == "/main-search.psml")
-             <div class="menu-tab ">
-                <a class="link-menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+            <a class="menu-tab bottom-border #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
                     <span class="ic-ic-daten"></span>
-                    $tabName
-                </a>
-            </div>
+                    <span>$tabName</span>
+                </div>
+            </a>
         #end
       #end
     #end
@@ -302,9 +302,9 @@
                     #end
                 #else
                     #if($element.url == "/mdek")
-                        <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
+                        <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="ic-ic-katalog"></span><span class="text">$linkName</span></a>
                     #else
-                        <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
+                        <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"></span><span class="text">$linkName</span></a>
                     #end
                 #end
               #end
@@ -336,6 +336,13 @@
         #end
         </div>
     #end
+        <div class="highlighted">
+        #if($jetspeed.getLoggedOn())
+            <a class="icon" href="/login/logout"><span class="ic-ic-user"></span><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</a>
+        #else
+            <a class="icon" href="/log-in"><span class="ic-ic-user"></span><span class="text">Anmelden</span></a>
+        #end
+        </div>
     #if($_menu)
         #foreach($element in $_menu.elements.iterator())
             #if($element.url == "/administration")
@@ -365,25 +372,12 @@
                         #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                         #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
                     #end
-                    <a href="$linkUrl" title="$linkTitle">$linkName</a>
+                    <a href="$linkUrl" title="$linkTitle"><span class="ic-ic-administration"></span><span class="text">$linkName</span></a>
                   #end
-                #end
-                #set($linkTitle = $MESSAGES.getString('ingrid.page.mapclient.tooltip'))
-                #set($linkName = $MESSAGES.getString('ingrid.page.mapclient'))
-                #if($linkName != "ingrid.page.mapclient")
-                  #set($linkUrl = "/ingrid-webmap-client/admin/")
-                  <a target="_new" href="$linkUrl" title="$linkTitle">$linkName</a>
                 #end
             #end
         #end
     #end
-        <div class="highlighted">
-        #if($jetspeed.getLoggedOn())
-            <a class="icon" href="/login/logout"><span class="ic-ic-arrow"></span>$MESSAGES.getString('ingrid.page.login.logout')</a>
-        #else
-            <a class="icon" href="/log-in"><span class="ic-ic-arrow"></span>Anmelden</a>
-        #end
-        </div>
     </div>
 </div> 
 #end

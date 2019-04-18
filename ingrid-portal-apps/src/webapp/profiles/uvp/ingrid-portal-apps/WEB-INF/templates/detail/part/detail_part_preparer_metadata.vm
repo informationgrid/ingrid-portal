@@ -23,11 +23,9 @@
     ## Allgemeines
     <div class="row">
         ## Allgemeine Vorhabenbeschreibung
-        <div class="xsmall-24 large-16 columns">
+        <div class="columns">
             #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
-        </div>
         ## UVP Kategorien
-        <div class="xsmall-24 large-16 columns">
             #set($uvpCats = [])
             #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
                 #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
@@ -36,87 +34,82 @@
                 #end
             #end
             #renderTextList("UVP-Kategorie" $uvpCats)
-        </div>
-    </div>
-
         ## UVP-Nummer
         <!-- 
-        #set($nodeList = $TOOL.getNodeListFromXPath("./uvpgs/uvpg"))
-        #if($nodeList.length > 0)
-            <h4 class="title-font">
-                UVP-Nummer
-                <div class="tooltip ob-circle js-popup" data-title="$MESSAGES.getString('search.detail.categories.uvp.explanation.title')" data-content="$MESSAGES.getString('search.detail.categories.uvp.explanation.default')" style="">
-                    <svg class="tooltip__icon icon"><use xlink:href="#attention"></use></svg>
-                </div>
-            </h4>
-            <ul class="list list--bullets bx-top-s">
-            #set ($length = $nodeList.length - 1)
-            #foreach($index in [0..$length])
-                #set($node = $nodeList.item($index))
-                #set($catNum = $node.getTextContent())
-                #set($catType = $TOOL.getValueFromXPath("./@type", "", $node))
-                <li>
-                    $node.getTextContent()
-                    #if($catType)
-                        #set($messageKey = "search.detail.categories.uvp.explanation.${catType}")
-                    #end
-                </li>
+            #set($nodeList = $TOOL.getNodeListFromXPath("./uvpgs/uvpg"))
+            #if($nodeList.length > 0)
+                <h4 class="title-font">
+                    UVP-Nummer
+                    <div class="tooltip ob-circle js-popup" data-title="$MESSAGES.getString('search.detail.categories.uvp.explanation.title')" data-content="$MESSAGES.getString('search.detail.categories.uvp.explanation.default')" style="">
+                        <svg class="tooltip__icon icon"><use xlink:href="#attention"></use></svg>
+                    </div>
+                </h4>
+                <ul class="list list--bullets bx-top-s">
+                #set ($length = $nodeList.length - 1)
+                #foreach($index in [0..$length])
+                    #set($node = $nodeList.item($index))
+                    #set($catNum = $node.getTextContent())
+                    #set($catType = $TOOL.getValueFromXPath("./@type", "", $node))
+                    <li>
+                        $node.getTextContent()
+                        #if($catType)
+                            #set($messageKey = "search.detail.categories.uvp.explanation.${catType}")
+                        #end
+                    </li>
+                #end
+                </ul>
             #end
-            </ul>
-        #end
         -->
 <br>
         ## Raumbezug
-    #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
-    #if($spatialValue)
-        #set($spatialValueSplit = $spatialValue.split(":"))
-        #if($spatialValueSplit.size() == 2)
-            #set($spatial = $spatialValueSplit.get(1))
-            #set($spatialEntries = $spatial.split(","))
-            #if($spatialEntries.size() == 4)
-                #set($west = "$spatialEntries.get(0).trim()")
-                #set($south = "$spatialEntries.get(1).trim()")
-                #set($east = "$spatialEntries.get(2).trim()")
-                #set($north = "$spatialEntries.get(3).trim()")
-                #if($west.toLowerCase() != "nan" && $west.length() > 0
-                    && $north.toLowerCase() != "nan" && $north.length() > 0
-                    && $south.toLowerCase() != "nan" && $south.length() > 0
-                    && $east.toLowerCase() != "nan" && $east.length() > 0)
-                    <div class="row">
-                        <div class="xsmall-24 large-16 columns">
-                            <h2>Raumbezug</h2>
-                        </div>
-                        <div class="xsmall-24 large-16 columns">
-                            <p>$MESSAGES.getString('search.detail.spatial.map.info')</p>
-                        </div>
-                    #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-                    <div id="map" style="height: 400px; width:100%;"></div>
-                    <script language="JavaScript" type="text/javascript">
-                        var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
-                        northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
-                        bounds = L.latLngBounds(southWest, northEast);
-                        
-                        var osm = getOSMLayer();
-                        var map = addLeafletMap([osm], bounds);
-                        var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
-                            var popLocation= e.latlng;
-                            var popup = L.popup()
-                            .setLatLng(popLocation)
-                            .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
-                            .openOn(map);
-                        }).addTo(map);
-                        
-                        addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', bounds)
-                    </script>
-                    </div>
+            #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
+            #if($spatialValue)
+                #set($spatialValueSplit = $spatialValue.split(":"))
+                #if($spatialValueSplit.size() == 2)
+                    #set($spatial = $spatialValueSplit.get(1))
+                    #set($spatialEntries = $spatial.split(","))
+                    #if($spatialEntries.size() == 4)
+                        #set($west = "$spatialEntries.get(0).trim()")
+                        #set($south = "$spatialEntries.get(1).trim()")
+                        #set($east = "$spatialEntries.get(2).trim()")
+                        #set($north = "$spatialEntries.get(3).trim()")
+                        #if($west.toLowerCase() != "nan" && $west.length() > 0
+                            && $north.toLowerCase() != "nan" && $north.length() > 0
+                            && $south.toLowerCase() != "nan" && $south.length() > 0
+                            && $east.toLowerCase() != "nan" && $east.length() > 0)
+                            <div class="row">
+                                <div class="xsmall-24 large-16 columns">
+                                    <h2>Raumbezug</h2>
+                                </div>
+                                <div class="xsmall-24 large-16 columns">
+                                    <p>$MESSAGES.getString('search.detail.spatial.map.info')</p>
+                                </div>
+                            #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                            <div id="map" style="height: 400px; width:100%;"></div>
+                            <script language="JavaScript" type="text/javascript">
+                                var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
+                                northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
+                                bounds = L.latLngBounds(southWest, northEast);
+                                
+                                var osm = getOSMLayer();
+                                var map = addLeafletMap([osm], bounds);
+                                var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
+                                    var popLocation= e.latlng;
+                                    var popup = L.popup()
+                                    .setLatLng(popLocation)
+                                    .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                                    .openOn(map);
+                                }).addTo(map);
+                                
+                                addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
+                            </script>
+                            </div>
+                        #end
+                    #end
                 #end
             #end
-        #end
-    #end
 <br>
         ## Addressen
-    <div class="row">
-        <div class="xsmall-24 large-16 columns">
             <h2>Adressen</h2>
             #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
             #set($entryLength = $nodelist.getLength())
@@ -222,107 +215,101 @@
                     #end
                 #end
             #end
-        </div>
-    </div>
-    #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
-    #if($nodelist.getLength() > 0)
-<br>
-    <div class="timeline"> 
-        <div class="row">
-            <div class="xsmall-24 large-16 columns">
-                <h1>Verfahrensschritte</h1>
-            </div>
-            <div class="xsmall-24 large-16 columns">
-                <div class="timeline-graph"></div>
-                <div class="timeline-text">
-                #set($nodelistLength = $nodelist.getLength())
-                #foreach($number in [1..$nodelistLength])
-                    #set($step = $TOOL.getValueFromXPath("./steps/step[$number]/@type"))
-                    #if($step == "phase1")
-                        #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase1')")
-                    #elseif($step == "phase2")
-                        #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase2')")
-                    #elseif($step == "phase3")
-                        #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase3')")
-                    #end
-                    #if($number == 1)
-                    <h2 class="icon-dot">
-                    #else
-                    <h2 class="icon-check">
-                    #end
-                        $step_title
-                        <span class="ic-ic-timeline-bullet icon"></span>
-                    </h2>
-                    ## Zeitraum der Auslegung
-                        #if($step == "phase1")
-                            #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
-                            #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                            #renderDate ("Zeitraum der Auslegung" $from $to "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
+            #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
+            #if($nodelist.getLength() > 0)
+            <br>
+            <h1>Verfahrensschritte</h1>
+                <div class="timeline"> 
+                <div class="row">
+                    <div class="columns">
+                        <div class="timeline-graph"></div>
+                        <div class="timeline-text">
+                        #set($nodelistLength = $nodelist.getLength())
+                        #foreach($number in [1..$nodelistLength])
+                            #set($step = $TOOL.getValueFromXPath("./steps/step[$number]/@type"))
+                            #if($step == "phase1")
+                                #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase1')")
+                            #elseif($step == "phase2")
+                                #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase2')")
+                            #elseif($step == "phase3")
+                                #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase3')")
+                            #end
+                            #if($number == 1)
+                            <h2 class="icon-dot">
+                            #else
+                            <h2 class="icon-check">
+                            #end
+                                $step_title
+                                <span class="ic-ic-timeline-bullet icon"></span>
+                            </h2>
+                            ## Zeitraum der Auslegung
+                                #if($step == "phase1")
+                                    #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                    #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                    #renderDate ("Zeitraum der Auslegung" $from $to "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
+                                #end
+                            ## Auslegungsinformationen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Auslegungsinformationen" $nodelist "technicalDocs")
+                            ## UVP-Bericht, ggf. Antragsunterlagen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("UVP-Bericht, ggf. Antragsunterlagen" $nodelist "applicationDocs")
+                            ## Berichte und Empfehlungen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Berichte und Empfehlungen" $nodelist "reportsRecommendationsDocs")
+                            ## Weitere Unterlagen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Weitere Unterlagen" $nodelist "moreDocs")
+                            ## Bekanntmachung
+                                ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
+                                ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                ##renderTableToList("Bekanntmachung" $nodelist "publicationDocs")
+                            ## Zeitraum der Erörterung
+                                #if($step == "phase2")
+                                    #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                    #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                    #renderDate ("Zeitraum der Er&ouml;rterung " $from $to "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
+                                #end
+                            ## Informationen zum Erörterungstermin
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
+                            ## Datum der Entscheidung
+                                #if($step == "phase3")
+                                    #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
+                                    #renderDate ("Datum der Entscheidung" $from)
+                                #end
+                            ## Auslegungsinformationen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Auslegungsinformationen" $nodelist "approvalDocs")
+                            ## Entscheidung
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Entscheidung" $nodelist "designDocs")
                         #end
-                    ## Auslegungsinformationen
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("Auslegungsinformationen" $nodelist "technicalDocs")
-                    ## UVP-Bericht, ggf. Antragsunterlagen
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("UVP-Bericht, ggf. Antragsunterlagen" $nodelist "applicationDocs")
-                    ## Berichte und Empfehlungen
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("Berichte und Empfehlungen" $nodelist "reportsRecommendationsDocs")
-                    ## Weitere Unterlagen
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("Weitere Unterlagen" $nodelist "moreDocs")
-                    ## Bekanntmachung
-                        ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
-                        ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
-                        ##renderTableToList("Bekanntmachung" $nodelist "publicationDocs")
-                    ## Zeitraum der Erörterung
-                        #if($step == "phase2")
-                            #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
-                            #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                            #renderDate ("Zeitraum der Er&ouml;rterung " $from $to "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
-                        #end
-                    ## Informationen zum Erörterungstermin
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
-                    ## Datum der Entscheidung
-                        #if($step == "phase3")
-                            #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
-                            #renderDate ("Datum der Entscheidung" $from)
-                        #end
-                    ## Auslegungsinformationen
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("Auslegungsinformationen" $nodelist "approvalDocs")
-                    ## Entscheidung
-                        #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
-                        #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-                        #renderTableToTree("Entscheidung" $nodelist "designDocs")
-                #end
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
     #else
-    ## Negative Vorprüfung
-    <div class="row">
-        <div class="xsmall-24 large-16 columns">
-        #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
-        #if($uvpNegativeApprovalDate)
-            #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
-        #end
-        #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
-        #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-        #if($uvpNegativeRelevantDocs.size() > 0)
-            #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
-        #end
+        ## Negative Vorprüfung
+            #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
+            #if($uvpNegativeApprovalDate)
+                #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
+            #end
+            #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
+            #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+            #if($uvpNegativeRelevantDocs.size() > 0)
+                #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+            #end
+    #end
         </div>
     </div>
-    #end
 #end
 
 #macro (renderDate $dateTitle $dateFrom $dateTo $info)

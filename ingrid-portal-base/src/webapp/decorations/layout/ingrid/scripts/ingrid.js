@@ -350,7 +350,7 @@ function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom){
   return map;
 }
 
-function addLeafletHomeControl(map, title, position, icon, bounds){
+function addLeafletHomeControl(map, title, position, icon, bounds, padding, fontSize){
  // Controls
     var HomeControl = L.Control.extend({
         options: {
@@ -361,7 +361,12 @@ function addLeafletHomeControl(map, title, position, icon, bounds){
             var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
             var link = L.DomUtil.create('a', icon, container);
             link.href = '#';
-            link.style.padding = '5px 0 0 0';
+            if(padding){
+              link.style.padding = padding;
+            }
+            if(fontSize){
+              link.style.fontSize = fontSize;
+            }
             link.title = title;
 
             // ... initialize other DOM elements, add listeners, etc.
