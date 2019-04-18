@@ -2,7 +2,6 @@
 #set($objClassName = false)
 #set($uvp_categories = false)
 #set($uvp_procedures = false)
-
 #if($rs.get("detail"))
     ## Show object class
     #set($objClass = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 't01_object.obj_class'))
@@ -10,16 +9,6 @@
         #set($objClassName = $Codelists.getCodeListValue('8001', $objClass, $languageCode))
         #if($objClassName)
             <div class="helper text"><span class="">$objClassName</span></div>
-        #end
-    #end
-    ## Show categories
-    #set($uvp_categories = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'uvp_category'))
-    #if($uvp_categories )
-        #set($categories = $uvp_categories.split(","))
-        #if($categories && $categories.size() > 0)
-            #foreach($category in $categories)
-                <div class="helper text"><span class="">$MESSAGES.getString("searchResult.categories.uvp.$category.trim()")</span></div>
-            #end
         #end
     #end
     ## Show procedures

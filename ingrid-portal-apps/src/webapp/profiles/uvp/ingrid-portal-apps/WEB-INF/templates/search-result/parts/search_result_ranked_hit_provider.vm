@@ -1,5 +1,7 @@
 #set ($showProvider = true)
 #set ($uvp_address = "")
+#set ($uvp_steps = false)
+
 #if($grouping && $grouping == 'provider')
     #set ($showProvider = false)
 #end
@@ -13,6 +15,17 @@
                 <small>$address</small><br>
             #end
             </p>
+        #end
+        #set($uvp_steps = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'uvp_steps'))
+        #if($uvp_steps)
+            #set($steps = $uvp_steps.split(","))
+            #if($steps && $steps.size() > 0)
+                <h6 class="no-margin">Letzter Verfahrensschritt</h6>
+                <p>
+                    #set($lastEntry = $steps.size() - 1)
+                    <small>$MESSAGES.getString("common.steps.uvp.$steps.get($lastEntry).trim()")</small>
+                </p>
+            #end
         #end
     #end
 #end
