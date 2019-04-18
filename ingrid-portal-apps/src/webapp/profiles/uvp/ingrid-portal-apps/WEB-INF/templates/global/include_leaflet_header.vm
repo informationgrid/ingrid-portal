@@ -1,0 +1,6 @@
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.css" />
+<script src="/decorations/layout/uvp/scripts/vendor/leaflet.js"></script>
+<script src="/decorations/layout/uvp/scripts/vendor/leaflet.markercluster.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.spin/spin.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>

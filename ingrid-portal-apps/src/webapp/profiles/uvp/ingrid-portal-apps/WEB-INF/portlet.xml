@@ -515,6 +515,41 @@
         </portlet-preferences>
     </portlet>
 
+    <portlet id="HitTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/hit_teaser.vm</value>
+        </init-param>
+        <portlet-name>HitTeaser</portlet-name>
+        <display-name>Ergebnisliste</display-name>
+        <description>This portlet displayes a search box for the home AND main search page.</description>
+        <portlet-class>de.ingrid.portal.portlets.HitTeaserPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>search.teaser.portlet.title</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
     <portlet id="RssNewsTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

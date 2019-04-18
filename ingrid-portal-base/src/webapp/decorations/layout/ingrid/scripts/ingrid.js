@@ -333,17 +333,21 @@ function getWMSLayer(layerUrl, layerName, attribution){
 }
 
 function addLeafletMap(baselayers, bounds, latlng, zoom){
-    var map = new L.Map('map', {
-       layers: baselayers
-    });
-    if(bounds){
-      map.fitBounds(bounds);
-    } else if(latlng) {
-      map.setView(latlng, zoom || 6);
-    } else {
-      map.setView(new L.LatLng(51.3, 10), 6);
-    }
-    return map;
+    return addLeafletMapWithId('map', baselayers, bounds, latlng, zoom);
+}
+
+function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom){
+  var map = new L.Map(mapId, {
+     layers: baselayers
+  });
+  if(bounds){
+    map.fitBounds(bounds);
+  } else if(latlng) {
+    map.setView(latlng, zoom || 6);
+  } else {
+    map.setView(new L.LatLng(51.3, 10), 6);
+  }
+  return map;
 }
 
 function addLeafletHomeControl(map, title, position, icon, bounds){
