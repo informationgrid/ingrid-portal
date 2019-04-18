@@ -103,7 +103,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                 JSONArray bbox = new JSONArray();
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( "t01_object.obj_id:" + uuid + " ranking:score" ), REQUESTED_FIELDS_BBOX,
                         IBUSInterfaceImpl.getInstance().getIBus() );
-                if(it!= null && it.hasNext()){
+                if(it.hasNext()){
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
                     JSONArray bboxItems = new JSONArray();
@@ -269,7 +269,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
             log.error( "Error creating resource for resource ID: " + resourceID, e );
         }
     }
-    
+
     private String writeResponse(String queryString, IngridResourceBundle messages, IngridSysCodeList sysCodeList) throws ParseException {
         IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( queryString ), REQUESTED_FIELDS_MARKER, IBUSInterfaceImpl.getInstance()
                 .getIBus() );
@@ -357,7 +357,7 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private ArrayList<String> getIndexValue(Object obj){
         ArrayList<String> array = new ArrayList<>();
-        if(obj != null) { 
+        if(obj != null) {
             if(obj instanceof String[]){
                 String [] tmp = (String[]) obj;
                 for (String s : tmp) {

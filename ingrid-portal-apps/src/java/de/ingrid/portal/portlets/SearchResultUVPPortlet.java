@@ -339,7 +339,7 @@ public class SearchResultUVPPortlet extends SearchResultPortlet {
 
     private ArrayList<String> getIndexValue(Object obj){
         ArrayList<String> array = new ArrayList<>();
-        if(obj != null) { 
+        if(obj != null) {
             if(obj instanceof String[]){
                 String [] tmp = (String[]) obj;
                 for (String s : tmp) {

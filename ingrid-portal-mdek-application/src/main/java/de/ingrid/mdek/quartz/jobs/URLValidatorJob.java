@@ -22,29 +22,6 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
-import org.apache.commons.httpclient.params.HttpClientParams;
-import org.apache.commons.httpclient.params.HttpConnectionParams;
-import org.apache.log4j.Logger;
-import org.quartz.InterruptableJob;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.UnableToInterruptJobException;
-import org.springframework.scheduling.quartz.QuartzJobBean;
-
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.beans.JobInfoBean;
 import de.ingrid.mdek.beans.JobInfoBean.EntityType;
@@ -59,6 +36,21 @@ import de.ingrid.mdek.util.MdekSecurityUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.apache.commons.httpclient.params.HttpConnectionParams;
+import org.apache.log4j.Logger;
+import org.quartz.*;
+import org.springframework.scheduling.quartz.QuartzJobBean;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class URLValidatorJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 
@@ -125,13 +117,15 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 		dataMap.put(URLValidatorJob.CAP_URL_MAP, capabilitiesMap);
 		dataMap.put(URLValidatorJob.URL_OBJECT_REFERENCES, urlObjectReferences);
 		dataMap.put(URLValidatorJob.CAPABILITIES_REFERENCES, capabilitiesReferences);
-
-        JobDetail jd = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, URLValidatorJob.class);
         JobDataMap jobDataMap = new JobDataMap(dataMap);
-        jd.setJobDataMap(jobDataMap);
-        jd.addJobListener(jobListener.getName());
 
-        return jd;
+        JobDetail jobDetail = JobBuilder.newJob(URLValidatorJob.class)
+                .withIdentity(jobName, Scheduler.DEFAULT_GROUP)
+                .setJobData(jobDataMap)
+                .storeDurably()
+                .build();
+
+        return jobDetail;
     }
 
     private Map<String, URLState> createUrlMap(List<URLObjectReference> urlObjectReferences) {
@@ -218,8 +212,8 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
 
 		if (!isRunning()) {
 			scheduler.addJob(jobDetail, true);
-			scheduler.addJobListener(jobListener);
-			scheduler.triggerJobWithVolatileTrigger(jobName, Scheduler.DEFAULT_GROUP);
+			scheduler.getListenerManager().addJobListener(jobListener, key -> key.getName().equals(jobName));
+			scheduler.triggerJob(JobKey.jobKey(jobName));
 			return true;
 
         } else {
@@ -302,7 +296,7 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
             if (scheduler != null) {
                 List<JobExecutionContext> executionContextList = scheduler.getCurrentlyExecutingJobs();
                 for (JobExecutionContext executionContext : executionContextList) {
-                    if (jobName.equals(executionContext.getJobDetail().getName())) {
+                    if (jobName.equals(executionContext.getJobDetail().getKey().getName())) {
                         return executionContext;
                     }
                 }
@@ -356,8 +350,8 @@ public class URLValidatorJob extends QuartzJobBean implements MdekJob, Interrupt
     public void stop() {
         try {
             log.debug("trying to interrupt job via scheduler...");
-            scheduler.interrupt(jobName, Scheduler.DEFAULT_GROUP);
-            scheduler.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
+            scheduler.interrupt(JobKey.jobKey(jobName));
+            scheduler.deleteJob(JobKey.jobKey(jobName));
 
         } catch (SchedulerException ex) {
             log.error("Error interrupting URL Validation job.", ex);
