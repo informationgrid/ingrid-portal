@@ -61,6 +61,8 @@
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapBounds);
+
     function onReplaceLegend(control) {
         var htmlObject = control.getContainer();
         // Get the desired parent node.

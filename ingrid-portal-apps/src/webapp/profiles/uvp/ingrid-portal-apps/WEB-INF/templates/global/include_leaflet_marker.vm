@@ -254,8 +254,7 @@
         map.setView(new L.LatLng(mapLat, mapLng), mapZoom);
         mapBounds = map.getBounds();
     }
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapBounds);
-
+    
     function onOverlayAdd(e){
         if(e.layer.options.id === 'mapMarkersDevPlan') {
             if("$restUrlUVPDevPlan") {

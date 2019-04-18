@@ -51,7 +51,8 @@
                                         <div class="map-wrapper">
                                             <div id="map-id-$hit.getHitDetail().getId()" class="map-teaser"></div>
                                             <script>
-                                                addLeafletMapWithId('map-id-$hit.getHitDetail().getId()', getOSMLayer('<br>$MESSAGES.getString("common.map.info")'), null, new L.LatLng($UtilsSearch.getDetailValue( $hit.getHitDetail(), "lat_center" ), $UtilsSearch.getDetailValue( $hit.getHitDetail(), "lon_center" )), 10);
+                                                var map = addLeafletMapWithId('map-id-$hit.getHitDetail().getId()', getOSMLayer('<br>$MESSAGES.getString("common.map.info")'), null, new L.LatLng($UtilsSearch.getDetailValue( $hit.getHitDetail(), "lat_center" ), $UtilsSearch.getDetailValue( $hit.getHitDetail(), "lon_center" )), 10);
+                                                addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1');
                                             </script>
                                         </div>
                                     </div>

@@ -9,14 +9,14 @@
     <br>
     <div class="row">
         <div class="xsmall-24 large-16 columns">
+            <div class="helper text">
+                <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
+            </div>
             <h2 class="">$TOOL.getValueFromXPath("./name")</h2>
             ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
             ## used to get title.
             ## Title will be read from context and set to page head title tag.
             $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
-            <div class="helper text">
-                <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
-            </div>
         </div>
     </div>
 <br>
@@ -307,15 +307,21 @@
             </div>
         </div>
     </div>
-    #end
-    #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
-    #if($uvpNegativeApprovalDate)
-        #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
-    #end
-    #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
-    #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
-    #if($uvpNegativeRelevantDocs.size() > 0)
-        #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+    #else
+    ## Negative Vorprüfung
+    <div class="row">
+        <div class="xsmall-24 large-16 columns">
+        #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
+        #if($uvpNegativeApprovalDate)
+            #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
+        #end
+        #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
+        #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+        #if($uvpNegativeRelevantDocs.size() > 0)
+            #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+        #end
+        </div>
+    </div>
     #end
 #end
 
