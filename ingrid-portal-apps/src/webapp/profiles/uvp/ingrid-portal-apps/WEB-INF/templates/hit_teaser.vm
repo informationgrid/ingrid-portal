@@ -83,7 +83,7 @@
         </div>
         <div class="row">
             <div class="columns text-center">
-                <button type="button" class="button outline">Mehr anzeigen<span class="ic-ic-angle-down"></span></button>
+                <button type="button" class="button outline" onclick="location.href='$renderResponse.encodeURL("/portal/main-search.psml")'" >Mehr anzeigen<span class="ic-ic-angle-down"></span></button>
             </div>
         </div>
     </div>
