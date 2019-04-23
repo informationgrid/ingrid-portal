@@ -1,0 +1,70 @@
+#macro (renderDBBrowserHeader $colNames $colTitles)
+    <thead>
+        <tr>
+            #foreach ($colTitle in $colTitles)
+                <th class="">$colTitle</th>
+            #end
+        </tr>
+    </thead>
+#end
+
+#macro (renderDBBrowserRow $rowId $rowValues)
+    <tr>
+        <td>
+            <div class="field-toggle field-toggle--check">
+                <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+                <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
+                    <div class="field-toggle__icon field-toggle__icon-alt">
+                        <svg class="icon">
+                            <use xlink:href="#tick">
+                        </svg>
+                    </div>
+                    $rowId
+                </label>
+            </div>
+        </td>
+        #foreach ($rowValue in $rowValues)
+            <td>$rowValue</td>
+        #end
+    </tr>
+#end
+
+#macro (renderDBBrowserFooterButtons $buttons)
+    <div class="form-element subtext-submit">
+    #foreach ($button in $buttons)
+        #if($button == "doEdit")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.edit')" "" "doEdit" "" "")
+        #end
+        #if($button == "doDelete")
+            #renderInputButtonOnClick("$MESSAGES.getString('mdek.portal.admin.delete')" "" "doDelete" "" "sg_eleven" "return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')")
+        #end
+        #if($button == "doRefresh")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.reload')" "" "doRefresh" "" "sg_three")
+        #end
+        #if($button == "doNew")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.add')" "float:right" "doNew" "" "")
+        #end
+    #end
+    </div>
+#end
+
+#set ($action = $renderResponse.createActionURL())
+<div class="columns">
+    <form class="form" action="$action" method="post" name="mdek_portal_admin" id="mdek_portal_admin">
+        <h4>$MESSAGES.getString('mdek.portaladmin.catalog.exist')</h4>
+        <table class="boxed-table">
+            #set ($colNames = ["plugId", "catName", "partner", "provider", "catAdmin", "portalLogin"])
+            #set ($colTitles = [$MESSAGES.getString('mdek.portal.admin.id'), $MESSAGES.getString('mdek.portal.admin.catalogname'), $MESSAGES.getString('mdek.portal.admin.partner'), $MESSAGES.getString('mdek.portal.admin.provider'), $MESSAGES.getString('mdek.portal.admin.administrator'), $MESSAGES.getString('mdek.portal.admin.login')])
+            #renderDBBrowserHeader($colNames $colTitles)
+            #foreach ($entry in $catalogList)
+                #set ($rowId = $entry.plugId)
+                #set ($rowValues = ["$!entry.catName", "$!entry.partner", "$!entry.provider", "$!entry.catAdmin", "$!entry.portalLogin"])
+                #renderDBBrowserRow($rowId $rowValues)
+            #end
+        </table>
+        #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+        #renderDBBrowserFooterButtons($buttons)
+    </form>
+</div>
+<br>
+<br>

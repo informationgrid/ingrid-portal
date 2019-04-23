@@ -1,0 +1,36 @@
+#macro (displayListItems $strList)
+  #foreach ($item in $strList)
+    <option value="$item" title="$item">$item</option>
+  #end
+#end
+
+#set ($action = $renderResponse.createActionURL())
+<div class="columns">
+    <form class="form" action="$action" method="GET" name="mdek_portal_admin" id="mdek_portal_admin">
+        <h4>$MESSAGES.getString('mdek.portaladmin.catalog.new')</h4>
+        <div class="form-element">
+            <label for="plugId">$MESSAGES.getString('mdek.portaladmin.catalog.exist')</label>
+        </div>
+        <div class="form-element">
+            <p>
+                <select name="plugId" class="select2">
+                    #displayListItems($plugIdList)
+                </select>
+            </p>
+        </div>
+        <div class="form-element">
+            <label for="userName">$MESSAGES.getString('mdek.portaladmin.administrator')</label>
+        </div>
+        <div class="form-element">
+            <p>
+                <select name="userName" class="select2">
+                    #displayListItems($userNameList)
+                </select>
+            </p>
+        </div>
+        <div class="form-element subtext-submit">
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "" "doCancel" "" "sg_three")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "float:right" "doCreateCatalog" "" "")
+        </div>
+    </form>
+</div>

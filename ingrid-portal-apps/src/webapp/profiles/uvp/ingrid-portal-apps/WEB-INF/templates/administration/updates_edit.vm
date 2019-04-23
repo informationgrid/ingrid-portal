@@ -176,7 +176,7 @@
                             </tr>
                         </table>
                         <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-                            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.remove.email')" "width:100%;" "doUpdateAddEmail" "" "btn btn--secondary btn--small")
+                            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.remove.email')" "width:100%;" "doUpdateAddEmail" "" "")
                         </div>
                     #end
                 </div>
@@ -193,7 +193,7 @@
                             -->
                             <td><input class="#getInputStyleText('contact_email_new')" id="newEmail" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text"></td>
                             <td>
-                                #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add.new.email')" "width:100%;" "doUpdateAddEmail" "" "btn btn--primary btn--small")
+                                #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.add.new.email')" "width:100%;" "doUpdateAddEmail" "" "")
                             </td>
                         </tr>
                     </table>
@@ -205,11 +205,11 @@
     
     <div>
         <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.back')" "width:100%;" "doShowUpdates" "" "btn btn--secondary btn--small")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.back')" "width:100%;" "doShowUpdates" "" "")
         </div>
         <span>&nbsp;</span>
         <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.save')" "width:100%;" "doSaveUpdates" "" "btn btn--primary btn--small")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.update.component.edit.save')" "width:100%;" "doSaveUpdates" "" "")
         </div>
     </div>
 </form>

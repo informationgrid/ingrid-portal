@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    function validate_form(msg) {
+        if (!document.mdek_admin_login.user.value) {
+          alert(msg);
+          return false;
+        }
+        return true;
+    }
+    
+    function catalogChanged() {
+        var index = document.mdek_admin_login.catalog.selectedIndex;
+        document.mdek_admin_login.user.options.length = 0;
+        for (i=0;i<$userLists[index - 1].length;i++) {
+            document.mdek_admin_login.user.options[i] = new Option($userLists[index - 1][i],$userLists[index - 1][i]);
+        }        
+    }
+    
+    function userChanged() {
+    }
+</script>
+
+#set ($action = $renderResponse.createActionURL())
+#if ($igeError)
+    $igeError
+#end
+<div class="columns">
+    <form class="form" action="$action" method="post" name="mdek_admin_login" id="mdek_admin_login" onsubmit="return validate_form('$MESSAGES.getString('mdek.admin.login.alert')')" target="_blank">
+        <div class="form-element">
+            <label for="catalog">$MESSAGES.getString('entry.text.catalog')</label>
+        </div>
+        <div class="form-element">
+            <p>
+                <select id="catalog" name="catalog" onchange="catalogChanged();" class="select2">
+                    <option disabled selected value>
+                    #foreach ($entry in $catalogList)
+                        <option value="$entry.plugId">$entry.catName ($entry.plugId)</option>
+                    #end
+                </select>
+            </p>
+        </div>
+        <div class="form-element">
+            <label for="user">$MESSAGES.getString('entry.text.user')</label>
+        </div>
+        <div class="form-element">
+            <p>
+                <select id="user" name="user" onchange="userChanged();" class="select2">
+                </select>
+            </p>
+        </div>
+        <div class="subtext-submit">
+            #renderInputButtonClass("$MESSAGES.getString('entry.button.ige')" "width:100%" "doLoginIGE" "" "")
+        </div>
+    </form>
+</div>
+<br />
+<br />

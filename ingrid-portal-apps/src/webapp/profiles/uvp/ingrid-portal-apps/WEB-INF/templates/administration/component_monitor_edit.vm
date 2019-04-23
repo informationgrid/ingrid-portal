@@ -131,7 +131,7 @@
                                             <input size="3" maxlength="3" id="contact_threshhold$velocityCount" name="contact_threshold" value="$threshold" type="text">
                                         </td>
                                         <td>
-                                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.delete')" "width:100%" "doDeleteContact_$velocityCount" "" "btn btn--secondary btn--small")
+                                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.delete')" "width:100%" "doDeleteContact_$velocityCount" "" "")
                                         </td>
                                         </tr>
                                     #end
@@ -143,7 +143,7 @@
                                             <input class="#getInputStyleText('contact_threshold_new')" size="3" maxlength="3" id="contact_threshold_new" name="contact_threshold_new" value="#getFieldValue('contact_threshold_new')" type="text">
                                         </td>
                                         <td>
-                                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "width:100%" "doAddContact" "" "btn btn--primary btn--small")
+                                            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "width:100%" "doAddContact" "" "")
                                         </td>
                                     </tr>
                                 </table>
@@ -193,7 +193,7 @@
         <div class="subtext-submit">
         #if ($actionForm.getInput('last_execution') != "")
             <div class="media__obj media__obj--left" style="margin-bottom: 0;">
-                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset.time')" "width:100%;" "doResetTime" "" "btn btn--secondary btn--small")
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset.time')" "width:100%;" "doResetTime" "" "")
             </div>
             <span>&nbsp;</span>
         #end

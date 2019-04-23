@@ -35,7 +35,7 @@
                                 #renderHrefAction($action $MESSAGES.getString("component.forms.text.filter.clear") "btn btn--secondary btn--small" "width:100%")
                             #end
                             <p>
-                                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "btn btn--primary btn--small")
+                                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.search')" "width:100%;" "doFilter" "$MESSAGES.getString('component.forms.buttons.search')" "")
                             </p>
                         </div>
                     </div>
@@ -105,7 +105,7 @@
         </div>
     </div>
     <div class="media__obj media__obj--right" style="margin-bottom: 0;">
-        #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "btn btn--primary btn--small")
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.provider.button.import')" "width:100%;" "doImport" "" "")
     </div>
 </form>
 
