@@ -10,7 +10,10 @@ html, body {
 }
 </style>
 
-<div id="map" style="width:100%;position:fixed;z-index:0;"></div>
+<div id="map" class="map-ingrid" style="width:100%;position:fixed;z-index:0;">
+    <div class="map-filter">
+    </div>
+</div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script language="JavaScript" type="text/javascript">

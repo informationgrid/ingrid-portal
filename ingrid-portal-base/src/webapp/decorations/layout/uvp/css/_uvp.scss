@@ -218,7 +218,10 @@ img { width: 100%; }
   font-size: 22px;
   margin: 12px;
 }
-.button-up { text-align: right; }
+.button-up {
+  text-align: right;
+  margin-top: .45rem;
+}
 .button.pill {
   font-size: 14px;
   color: $green-jelly;
@@ -1165,6 +1168,12 @@ a.data:hover {
 }
 
 footer {
+  .footer-buttons-bar {
+    position: fixed;
+    right: 13%;
+    bottom: 2rem;
+    z-index: 1050;
+  }
   .footer {
     font-size: 16px;
     text-transform: uppercase;
@@ -1365,7 +1374,7 @@ footer {
 }
 
 /* map */
-#map-id-5 {
+.map-ingrid {
   position: relative;
   height: 60rem;
 
