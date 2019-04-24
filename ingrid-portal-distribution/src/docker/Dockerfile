@@ -20,6 +20,8 @@ RUN unzip ingrid-portal*-installer.jar -d /tmp \
     && mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT/WEB-INF/deploy/*.war /opt/ingrid/ingrid-portal/apache-tomcat/webapps \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
     && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
+    && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek \
+    && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
     && unzip /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
