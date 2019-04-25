@@ -143,6 +143,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
+        context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
@@ -527,16 +528,21 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             url = UtilsFacete.setFaceteParamsToSessionByAction(request);
         }
         
+        String doRanking = request.getParameter("ranking");
+        if(doRanking != null) {
+            SearchState.adaptSearchState(request, Settings.PARAM_RANKING, doRanking);
+        }
+        
         boolean doRemoveFilter = Boolean.parseBoolean(request.getParameter("doRemoveFilter")); 
         // redirect to our page wih parameters for bookmarking
         if(doRemoveFilter){
              // reset filter and grouping and page selector
              SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
-              SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
+             SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
              SearchState.adaptSearchState(request, Settings.PARAM_FILTER, "");
              SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
              SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
-              actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
+             actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
         }else{
              if(!url.equals(ps.getAttribute("facetsURL")) && (StringUtils.isNotEmpty(url) || (StringUtils.isEmpty(url) && ps.getAttribute("facetsURL") != null && ps.getAttribute("facetsURL") != ""))){
                  ps.setAttribute("facetsURL", url);

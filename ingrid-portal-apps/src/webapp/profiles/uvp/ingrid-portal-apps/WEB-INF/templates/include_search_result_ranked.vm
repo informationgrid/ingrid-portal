@@ -5,8 +5,27 @@
         #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
     #end
 #end
-
-#parse ('/WEB-INF/templates/include_search_result_counter.vm')
+<div class="results-index">
+    <div class="row">
+        <div class="xsmall-24 medium-12 xlarge-15 columns">
+            #parse ('/WEB-INF/templates/include_search_result_counter.vm')
+        </div>
+        <div class="xsmall-10 medium-5 xlarge-4 columns text-right">
+            <p class="result-text no-margin"><b>Sortieren nach</b></p>
+        </div>
+        <div class="xsmall-14 medium-7 xlarge-5 columns">
+            <div class="form-element">
+                #set ($action = $renderResponse.createActionURL())
+                <form action="$action" method="get" name="sortForm" id="sortForm" style="display:inline; ">
+                    <select class="select2" id="ranking" name="ranking" aria-hidden="true" onchange="this.form.submit();">
+                        <option value="score" #if($ranking == "score")selected#end>Relevanz</option>
+                        <option value="date"  #if($ranking == "date")selected#end>Aktualit&auml;t</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 #if($enableFacetSelection || $isSelection)
     <div class="filters-active">
         #renderSearchResultFacetSelection($facetConfig $MESSAGES)
