@@ -64,7 +64,7 @@
                     <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
                 #end 
                 </div>
-                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "")
+                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline")
                 $action.setParameter("doRefresh",  "Refresh")
                 <div class="form-element">
                     <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha')/>

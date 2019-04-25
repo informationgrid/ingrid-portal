@@ -29,7 +29,7 @@
             </p>
         </div>
         <div class="form-element subtext-submit">
-            #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "" "doCancel" "" "sg_three")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.back')" "" "doCancel" "" "outline")
             #renderInputButtonClass("$MESSAGES.getString('mdek.portaladmin.catalog.create')" "float:right" "doCreateCatalog" "" "")
         </div>
     </form>

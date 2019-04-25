@@ -266,13 +266,13 @@ $actionForm.getInputHTMLEscaped($field)#end
             #end
         #end
         #if($button == "doRefresh")
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "" "doRefresh" "" "")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "" "doRefresh" "" "outline")
         #end
         #if($button == "doNew")
             #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "" "doNew" "" "")
         #end
         #if($button == "doClear")
-            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "" "doClear" "" "")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "" "doClear" "" "outline")
         #end
     #end
 #end
@@ -356,7 +356,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     #elseif ($mode == 'new')
         #set ($butAction = 'doSave')
     #end
-    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "" "doCancel" "" "")
+    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "" "doCancel" "" "outline")
     #if ($disableSaving && $disableSaving == 'true')
         ## do nothing
     #else

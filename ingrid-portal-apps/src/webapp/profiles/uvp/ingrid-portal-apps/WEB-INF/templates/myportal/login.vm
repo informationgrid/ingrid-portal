@@ -21,14 +21,14 @@
             #addErrorFormMessage('org.apache.jetspeed.login.password')
         </div>
         <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
-        #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "" "doLogin" "" "")
+        #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "width:100%" "doLogin" "" "")
     </form>
     #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
     <br>
     #end
     #if($enableNewUser)
     <div class="metamenu__box ob-container">
-        #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "" "" "" "btn btn--secondary btn--small btn--block" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
+        #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "width:100%" "" "" "outline" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
     </div>
     #end
 </div>

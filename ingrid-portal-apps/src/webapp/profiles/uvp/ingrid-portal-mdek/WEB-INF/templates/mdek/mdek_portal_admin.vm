@@ -39,7 +39,7 @@
             #renderInputButtonOnClick("$MESSAGES.getString('mdek.portal.admin.delete')" "" "doDelete" "" "sg_eleven" "return confirm('$MESSAGES.getString('mdek.portal.admin.delete.message')')")
         #end
         #if($button == "doRefresh")
-            #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.reload')" "" "doRefresh" "" "sg_three")
+            #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.reload')" "" "doRefresh" "" "outline")
         #end
         #if($button == "doNew")
             #renderInputButtonClass("$MESSAGES.getString('mdek.portal.admin.add')" "float:right" "doNew" "" "")
