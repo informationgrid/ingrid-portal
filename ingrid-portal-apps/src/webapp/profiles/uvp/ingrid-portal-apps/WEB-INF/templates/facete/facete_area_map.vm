@@ -1,10 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
 <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li class="accordion-item #if($selectedMap)is-active#end" data-accordion-item="" onclick="resizeMap()">
+    <li id="facet_area_map_header" class="accordion-item is-active" data-accordion-item="" onclick="resizeMap()">
         <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
-        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if($selectedMap)aria-hidden="true" style="display:block;"#end>
+        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if($selectedMap)aria-hidden="true"#end style="display:block;">
             <div id="map" style="height:320px;"></div>
             <div id="map-legend"></div>
             <p class="subtext">$MESSAGES.getString("common.map.info")</span></small></p>
@@ -13,7 +13,7 @@
                 <input id="x2" name="x2" type="hidden" />
                 <input id="y1" name="y1" type="hidden" />
                 <input id="y2" name="y2" type="hidden" />
-                <input id="areaid" name="areaid" type="hidden" />    
+                <input id="areaid" name="areaid" type="hidden" />
                 #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "width:100%;" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button filter_submit" "getMapBounds()")
             </form>
         </div>
@@ -32,6 +32,10 @@
             $('#facet_area_map_header').each(function(index) {
                 var div = $(this);
                 div.removeClass('is-active');
+            });
+            $('#facet_area_map_header .accordion-content').each(function(index) {
+                var div = $(this);
+                div.css('display', 'none');
             });
             $('#facet_area_map_content').each(function(index) {
                 var div = $(this);
