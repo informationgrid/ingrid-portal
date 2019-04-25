@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
+          <action type="fix" dev="wemove" issue="1344">
+            IGE: IGE: Dienst-URLs per GetCapabilities-Assistenten nicht erreichbar.
+          </action>
           <action type="add" dev="wemove" issue="835">
             Portal: Add central index functionality.
           </action>
