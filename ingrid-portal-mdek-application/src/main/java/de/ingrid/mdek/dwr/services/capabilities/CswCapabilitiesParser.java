@@ -271,13 +271,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
      */
     private AddressBean getAddress(Document doc) {
         AddressBean address = new AddressBean();
-        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT+"/ows:IndividualName"));
-        if (name == null) {
-            address.setLastname("N/A");
-        } else {
-            address.setFirstname(name[0].trim());
-            address.setLastname(name[1].trim());
-        }
+        setNameInAddressBean(address, xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT+"/ows:IndividualName"));
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"));
         
         // try to find address in database and set the uuid if found

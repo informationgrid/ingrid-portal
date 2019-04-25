@@ -185,13 +185,7 @@ public class WcsCapabilitiesParser extends GeneralCapabilitiesParser implements 
      */
     private AddressBean getAddress(Document doc) {
         AddressBean address = new AddressBean();
-        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_WCS_SERVICECONTACT + "/wcs:individualName"));
-        if (name != null) {
-            address.setFirstname(name[0].trim());
-            address.setLastname(name[1].trim());
-        } else {
-            address.setLastname("N/A");
-        }
+        setNameInAddressBean(address, xPathUtils.getString(doc, XPATH_EXT_WCS_SERVICECONTACT + "/wcs:individualName"));
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WCS_SERVICECONTACT + "/wcs:contactInfo/wcs:address/wcs:electronicMailAddress"));
         
         // try to find address in database and set the uuid if found

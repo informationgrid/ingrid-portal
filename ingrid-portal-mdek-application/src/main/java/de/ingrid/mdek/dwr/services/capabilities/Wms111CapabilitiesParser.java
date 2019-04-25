@@ -314,14 +314,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
      */
     private AddressBean getAddress(Document doc) {
         AddressBean address = new AddressBean();
-        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactPerson"));
-        if (name != null) {
-            address.setFirstname(name[0].trim());
-            address.setLastname(name[1].trim());
-        } else {
-            address.setLastname("N/A");
-        }
-        
+        setNameInAddressBean(address, xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactPerson"));
         address.setOrganisation(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactOrganization"));
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactElectronicMailAddress"));
         
