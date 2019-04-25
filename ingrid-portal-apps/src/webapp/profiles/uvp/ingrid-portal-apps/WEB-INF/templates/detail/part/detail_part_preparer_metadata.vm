@@ -86,7 +86,7 @@
                                 
                                 var osm = getOSMLayer();
                                 var map = addLeafletMap([osm], bounds);
-                                var rect = L.rectangle(bounds, {color: 'blue', weight: 3, fill: false}).on('click', function (e) {
+                                var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
                                     var popLocation= e.latlng;
                                     var popup = L.popup()
                                     .setLatLng(popLocation)
