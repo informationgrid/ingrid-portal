@@ -101,7 +101,7 @@
             #if($import_message)
                 #renderMessageError($import_message)
             #end
-            <textarea rows="30" cols="125" id="csvData" name="csvData"></textarea>
+            <textarea class="custom-scrollbar" rows="30" cols="125" id="csvData" name="csvData"></textarea>
         </div>
     </div>
     <div class="media__obj media__obj--right" style="margin-bottom: 0;">

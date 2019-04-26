@@ -126,7 +126,7 @@
                     <label>$MESSAGES.getString('component.forms.update.component.info')</label>
                 </div>
                 <div class="media__body">
-                    <textarea cols="119" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
+                    <textarea class="custom-scrollbar" cols="119" rows="3" id="componentInfo" name="componentInfo">#getFieldValue('componentInfo')</textarea>
                     #renderMessageInfo($MESSAGES.getString('component.forms.update.component.help.info'))
                 </div>
             </div>

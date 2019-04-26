@@ -308,7 +308,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
 </div>
 <div class="form-element">
-    <textarea cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
+    <textarea class="custom-scrollbar" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
 </div>
 #end
 

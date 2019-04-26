@@ -9,7 +9,7 @@
                 <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
             </div>
             <div class="form-element">
-                <textarea name="message" id="bemerkungen" #addErrorFormClass('message') rows="10">#getFieldValue('message')</textarea>
+                <textarea class="custom-scrollbar" name="message" id="bemerkungen" #addErrorFormClass('message') rows="10">#getFieldValue('message')</textarea>
                 #addErrorFormMessage('message')
             </div>
             <div class="form-element">
