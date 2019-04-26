@@ -66,6 +66,7 @@
                                                     bounds = L.latLngBounds(southWest, northEast);
                                                 }
                                                 var map = addLeafletMapWithId('map-id-$hit.getHitDetail().getId()', getOSMLayer('<br>$MESSAGES.getString("common.map.info")'), bounds, new L.LatLng($UtilsSearch.getDetailValue( $hit.getHitDetail(), "lat_center" ), $UtilsSearch.getDetailValue( $hit.getHitDetail(), "lon_center" )), 10);
+                                                map.scrollWheelZoom.disable();
                                                 addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
                                                 if(bounds) {
                                                     L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).addTo(map);

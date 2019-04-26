@@ -25,6 +25,7 @@
 <script language="JavaScript" type="text/javascript">
     var osm = getOSMLayer('');
     var map = addLeafletMap([osm]);
+    map.scrollWheelZoom.disable();
     var enablePopUp = false;
     var smallIcons = true;
     
