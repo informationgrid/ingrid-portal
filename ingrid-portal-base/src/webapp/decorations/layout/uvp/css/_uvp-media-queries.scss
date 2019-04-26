@@ -5,12 +5,15 @@
     height: 56px;
     width: 66px;
     font-size: 14px;
+
     .link-menu-tab {
-      top: 30px;
+      top: 22px;
       padding: 8px 0;
+
       [class^="ic-"], [class*=" ic-"] {
         font-size: 22px;
         top: -18px;
+        left: 22px;
       }
     }
   }
@@ -38,9 +41,10 @@
       }
       .header-menu {
         width: 450px;
-        padding: 25px 8px 25px 38px;
       }
       .header-menu-close {
+        padding: 25px 8px 0 0;
+
         button { padding: 14px 24px; }
       }
     }
@@ -75,7 +79,10 @@
         padding-right: .6666666667rem;
       }
     }
-    .header-menu-wrapper .header-menu { padding: 25px 12px 25px 38px; }
+    .header-menu-wrapper {
+      .header-menu-close { padding: 25px 12px 0 0; }
+      .menu-main-links, .menu-sub-links { padding: 25px 12px 25px 38px; }
+    }
   }
 
   .social-buttons { text-align: center; }
@@ -255,6 +262,7 @@
     }
     .header-menu-close {
       text-align: left;
+      padding: 25px 12px 0 34px;
     }
   }
 

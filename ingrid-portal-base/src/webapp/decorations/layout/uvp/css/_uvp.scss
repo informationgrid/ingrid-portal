@@ -700,58 +700,73 @@ header {
       right: 0;
       width: 100vw;
       height: 100vh;
-      padding: 8px;
       z-index: 1020;
       background-color: #24786f;
       overflow: auto;
       box-shadow: -8px 4px 60px 9px rgba(0,0,0,.3);
+
+      a {
+        display: block;
+        color: $white;
+        font-size: 16px;
+        padding: 8px 24px;
+        border-radius: 50px;
+      }
+      a:hover { text-decoration: none; }
     }
     .header-menu-close {
       text-align: right;
+      padding: 8px;
+
       button {
         height: 50px;
         width: 122.84px;
         padding: 8px;
       }
     }
-    .header-menu-entries {
+    .menu-main-links {
+      padding: 8px;
 
-      .highlighted { margin: 2rem 0; }
+      .highlighted { padding-bottom: 1.5rem; }
       a {
-        display: block;
         font-family: 'Roboto-Medium';
-        color: $white;
-        font-size: 16px;
         text-transform: uppercase;
-        padding: 8px 24px;
-        border-radius: 50px;
       }
       a.header-menu-entry {
         font-family: 'RobotoSlab-Bold';
         font-size: 18px;
-        padding: 12px 20px;
+        padding: 12px 24px;
       }
-      .sub-links {
-        margin: 2rem 0 .5rem;
+      a:hover { background-color: $green-blue; }
+    }
+    .menu-sub-links {
+      background-color: #1a6164;
+      padding: 16px 8px;
 
-        a {
-          font-family: "Roboto-Regular";
-          text-transform: capitalize;
-          letter-spacing: .5px;
+      h6 {
+        color: $blue-light;
+        padding: 2px 24px;
+      }
+      a {
+        font-family: "Roboto-Regular";
+        letter-spacing: .5px;
+      }
+      .button.logout {
+        display: inline-block;
+        font-family: 'Roboto-Bold';
+        font-size: 14px;
+        background-color: #1a6164;
+        padding: 12px 24px;
+        border: 2px solid;
+        margin: 1rem 0;
+
+        .text { margin: 0; }
+        [class^="ic-"] {
+          font-size: 16px;
+          vertical-align: text-bottom;
         }
       }
-      [class^="ic-"], [class*=" ic-"] {
-        font-size: 18px;
-        vertical-align: text-bottom;
-        margin-right: 8px;
-      }
-      .login-logout {
-        font-family: 'Roboto-Bold';
-      }
-      a:hover {
-        text-decoration: none;
-        background-color: $green-blue;
-      }
+      a:hover, .button.logout:hover { background-color: #24786f; }
     }
   }
 }
