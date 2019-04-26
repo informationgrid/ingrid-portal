@@ -20,6 +20,12 @@ $(function() {
     railpadding: { top: 25, right: 0, left: 0, bottom: 5 }
   });
 
+  //custom scrollbar for header burger menu
+  $('.header-menu').niceScroll({
+    cursorcolor:"#f6f6f6",
+    cursorwidth:"8px",
+    cursorborderradius: "6px",
+  });
 
 });
 
