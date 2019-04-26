@@ -456,7 +456,7 @@
 ## Render group title
 #macro (renderGroupTitle $entry)
     #if($tool.hasContent($entry))
-        <h4 class="title-font">$entry</h4>
+        <h3 class="title-font">$entry</h3>
     #end
 #end
 
@@ -643,7 +643,7 @@
 #macro (renderTextListSpace $title $textList $space)
     #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
-            <h4 class="title-font">$title</h4>
+            <h3 class="title-font">$title</h3>
             ##renderGroupTitle($entry.title)
         #end
         <ul>
@@ -667,7 +667,7 @@
 #macro (renderTextLabelAboveSpace $title $body $space)
      #if($tool.hasContent($body) || $space != "")
         #if($tool.hasContent($title))
-            <h4 class="title-font">$title</h4>
+            <h3 class="title-font">$title</h3>
         #end
         #if($tool.hasContent($body))
             <p>$body</p>

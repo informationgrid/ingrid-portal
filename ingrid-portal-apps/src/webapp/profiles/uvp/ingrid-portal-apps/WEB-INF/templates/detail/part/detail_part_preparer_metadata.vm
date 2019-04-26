@@ -8,55 +8,36 @@
 #if($TOOL.getValueFromXPath("./name"))
     <div class="row">
         <div class="form">
-            <div class="helper text">
-                <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
+            <div style="padding-bottom: 2.25rem;">
+                <div class="helper text">
+                    <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
+                </div>
+                <h2 class="">$TOOL.getValueFromXPath("./name")</h2>
+                ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
+                ## used to get title.
+                ## Title will be read from context and set to page head title tag.
+                $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
             </div>
-            <h2 class="">$TOOL.getValueFromXPath("./name")</h2>
-            ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
-            ## used to get title.
-            ## Title will be read from context and set to page head title tag.
-            $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
     ## Allgemeines
-        ## Allgemeine Vorhabenbeschreibung
-            #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
-        ## UVP Kategorien
-            #set($uvpCats = [])
-            #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
-                #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
-                #if($uvpCats.indexOf($uvpCatValue) < 0)
-                    #set($tmp = $uvpCats.add($uvpCatValue))
+            <div style="padding-bottom: 1.25rem;">
+                ## Allgemeine Vorhabenbeschreibung
+                #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
+            </div>
+            <div style="padding-bottom: 1.25rem;">
+                ## UVP Kategorien
+                #set($uvpCats = [])
+                #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
+                    #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
+                    #if($uvpCats.indexOf($uvpCatValue) < 0)
+                        #set($tmp = $uvpCats.add($uvpCatValue))
+                    #end
                 #end
-            #end
-            #renderTextList("UVP-Kategorie" $uvpCats)
-        ## UVP-Nummer
-        <!-- 
-            #set($nodeList = $TOOL.getNodeListFromXPath("./uvpgs/uvpg"))
-            #if($nodeList.length > 0)
-                <h4 class="title-font">
-                    UVP-Nummer
-                    <div class="tooltip ob-circle js-popup" data-title="$MESSAGES.getString('search.detail.categories.uvp.explanation.title')" data-content="$MESSAGES.getString('search.detail.categories.uvp.explanation.default')" style="">
-                        <svg class="tooltip__icon icon"><use xlink:href="#attention"></use></svg>
-                    </div>
-                </h4>
-                <ul class="list list--bullets bx-top-s">
-                #set ($length = $nodeList.length - 1)
-                #foreach($index in [0..$length])
-                    #set($node = $nodeList.item($index))
-                    #set($catNum = $node.getTextContent())
-                    #set($catType = $TOOL.getValueFromXPath("./@type", "", $node))
-                    <li>
-                        $node.getTextContent()
-                        #if($catType)
-                            #set($messageKey = "search.detail.categories.uvp.explanation.${catType}")
-                        #end
-                    </li>
-                #end
-                </ul>
-            #end
-        -->
-        ## Raumbezug
+                #renderTextList("UVP-Kategorie" $uvpCats)
+            </div>
+            ## Raumbezug
             #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
             #if($spatialValue)
+            <div style="padding-bottom: 2.25rem;">
                 #set($spatialValueSplit = $spatialValue.split(":"))
                 #if($spatialValueSplit.size() == 2)
                     #set($spatial = $spatialValueSplit.get(1))
@@ -72,10 +53,7 @@
                             && $east.toLowerCase() != "nan" && $east.length() > 0)
                             <div class="row">
                                 <div class="xsmall-24 large-16 columns">
-                                    <h2>Raumbezug</h2>
-                                </div>
-                                <div class="xsmall-24 large-16 columns">
-                                    <p>$MESSAGES.getString('search.detail.spatial.map.info')</p>
+                                    <h3>Raumbezug</h3>
                                 </div>
                             #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                             <div id="map" style="height: 400px; width:100%;"></div>
@@ -84,7 +62,7 @@
                                 northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
                                 bounds = L.latLngBounds(southWest, northEast);
                                 
-                                var osm = getOSMLayer();
+                                var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
                                 var map = addLeafletMap([osm], bounds);
                                 var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
                                     var popLocation= e.latlng;
@@ -100,12 +78,14 @@
                         #end
                     #end
                 #end
+            </div>
             #end
         ## Addressen
-            <h2>Adressen</h2>
+            <h3>Adressen</h3>
             #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
             #set($entryLength = $nodelist.getLength())
             #if($entryLength > 0)
+            <div style="padding-bottom: 1.25rem;">
                 #foreach($number in [1..$entryLength])
                     #set($id = $TOOL.getValueFromXPath("./addresses/address[$number]/@id"))
                     #set($name = $TOOL.getValueFromXPath("./addresses/address[$number]/name"))
@@ -196,18 +176,18 @@
                         #end
                     </table>
                 #end
+            </div>
             #end
             #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
             #if($nodelist.getLength() > 0)
-            <br>
             <h1>Verfahrensschritte</h1>
-                <div class="timeline"> 
+            <div class="timeline"> 
                 <div class="row">
                     <div class="columns">
                         <div class="timeline-graph"></div>
                         <div class="timeline-text">
                         #set($nodelistLength = $nodelist.getLength())
-                        #foreach($number in [1..$nodelistLength])
+                        #foreach($number in [$nodelistLength..1])
                             #set($step = $TOOL.getValueFromXPath("./steps/step[$number]/@type"))
                             #if($step == "phase1")
                                 #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase1')")
@@ -216,13 +196,16 @@
                             #elseif($step == "phase3")
                                 #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase3')")
                             #end
-                            #if($number == 1)
+                            #if($number == $nodelistLength)
                             <h2 class="icon-dot">
-                            #else
-                            <h2 class="icon-check">
-                            #end
                                 $step_title
                                 <span class="ic-ic-timeline-bullet icon"></span>
+                            #else
+                            <h2 class="icon-check">
+                                $step_title
+                                <span class="ic-ic-check icon"></span>
+                                
+                            #end
                             </h2>
                             ## Zeitraum der Auslegung
                                 #if($step == "phase1")
@@ -278,8 +261,8 @@
                     </div>
                 </div>
             </div>
-    #else
-        ## Negative Vorprüfung
+        #else
+            ## Negative Vorprüfung
             #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
             #if($uvpNegativeApprovalDate)
                 #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
@@ -289,7 +272,7 @@
             #if($uvpNegativeRelevantDocs.size() > 0)
                 #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
             #end
-    #end
+        #end
         </div>
     </div>
 #end
