@@ -66,14 +66,14 @@
             #set($elemSelected = true)
         #end
         #if($element.url == "/main-maps.psml")
-            <a class="menu-tab bottom-border #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
                     <span class="ic-ic-karten"></span>
                     <span>$tabName</span>
                 </div>
             </a>
         #elseif($element.url == "/main-search.psml")
-            <a class="menu-tab bottom-border #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
                     <span class="ic-ic-daten"></span>
                     <span>$tabName</span>
@@ -255,6 +255,18 @@
 
 ## include service navigation component
 #macro (includeServiceNavigation $_menu $_menuMain $_menuFooter $_menuAboutSub)
+#if($jetspeed.getLoggedOn())
+    #set($userAttributes = $jetspeed.getUserProperties())
+    #set($userNameGiven = $userAttributes.get("user.name.given"))
+    #set($userNameFamily = $userAttributes.get("user.name.family"))
+    
+    #if($userNameGiven)
+        #set ($salutation = " $userNameGiven")
+    #end
+    #if($userNameFamily)
+        #set ($salutation = "$!{salutation} $userNameFamily")
+    #end
+#end
 <div class="header-menu-open">
     <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
     <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
@@ -263,7 +275,7 @@
     <div class="header-menu-close">
         <button type="button" class="button ">Menü<span class="ic-ic-cross"></span></button>
     </div>
-    <div class="header-menu-entries">
+    <div class="menu-main-links">
     #if($_menuMain)
         <div class="highlighted">
             #set($currentPage = $site.getPageOrTemplate().url)
@@ -308,7 +320,6 @@
         </div>
     #end
     #if($_menuFooter)
-        <div class="highlighted">
         #set($currentPage = $site.getPageOrTemplate().url)
         #foreach($element in $_menuFooter.elements.iterator())
           #if($element.elementType == "option")
@@ -330,15 +341,12 @@
             <a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a>
           #end
         #end
-        </div>
     #end
-        <div class="highlighted">
-        #if($jetspeed.getLoggedOn())
-            <a class="icon" href="/login/logout"><span class="ic-ic-user"></span><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</a>
-        #else
-            <a class="icon" href="/log-in"><span class="ic-ic-user"></span><span class="text">Anmelden</span></a>
-        #end
-        </div>
+    </div>
+    <div class="menu-sub-links">
+    #if($jetspeed.getLoggedOn())
+        <h6>$salutation</h6>
+    #end
     #if($_menu)
         #foreach($element in $_menu.elements.iterator())
             #if($element.url == "/administration")
@@ -368,11 +376,16 @@
                         #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                         #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
                     #end
-                    <a href="$linkUrl" title="$linkTitle"><span class="ic-ic-administration"></span><span class="text">$linkName</span></a>
+                    <a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a>
                   #end
                 #end
             #end
         #end
+    #end
+    #if($jetspeed.getLoggedOn())
+        <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
+    #else
+        <a class="button logout" href="/log-in"><span class="text">Anmelden</span><span class="ic-ic-user"></span></a>
     #end
     </div>
 </div> 
