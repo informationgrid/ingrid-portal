@@ -4,27 +4,31 @@
             <div class="row">
                 <div class="xsmall-24 columns">
                     <div class="social-buttons">
-                        <a href="#" class="button round social" target="_blank">
+                        #defineUrlParams()
+                        #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
+                        #set($shareUrl = "${shareUrl}${urlParams}")
+                        #set($shareUrlEncode = $esc.url("${shareUrl}${urlParams}"))
+                        <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank" title="Twitter">
                             <span class="ic-ic-twitter"></span><span class="text"></span>
                         </a>
-                        <a href="#" class="button round social" target="_blank">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=$shareUrlEncode" class="button round social" target="_blank" title="Facebook">
                             <span class="ic-ic-facebook"></span><span class="text"></span>
                         </a>
-                        <a href="#" class="button round social" target="_blank">
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=$shareUrlEncode" class="button round social" target="_blank" title="LinkedIn">
                             <span class="ic-ic-linkedin"></span><span class="text"></span>
                         </a>
-                        <a href="#" class="button round social" target="_blank">
+                        <a href="whatsapp://send?text=$shareUrl" class="button round social" target="_blank" title="WhatsApp">
                             <span class="ic-ic-whatsapp"></span><span class="text"></span>
                         </a>
-                        <a href="#" class="button round social" target="_blank">
+                        <a href="https://www.xing.com/social_plugins/share?url=$shareUrlEncode" class="button round social" target="_blank" title="XING">
                             <span class="ic-ic-xing"></span><span class="text"></span>
                         </a>
-                        <a href="#" class="button round social" target="_blank">
+                        <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
                             <span class="ic-ic-mailto"></span><span class="text"></span>
                         </a>
-                        <a href="#" class="button round social" target="_blank">
+                        <button class="button round social" target="_blank" onclick="copyToClipboard('$shareUrl')" title="Link kopieren">
                             <span class="ic-ic-share"></span><span class="text"></span>
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

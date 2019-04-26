@@ -26,6 +26,16 @@ function ingrid_openWindow(url, winWidth, winHeight)
   popupWin.focus();
 }
 
+function copyToClipboard(message) {
+  var $body = document.getElementsByTagName('body')[0];
+  var $tempInput = document.createElement('INPUT');
+  $body.appendChild($tempInput);
+  $tempInput.setAttribute('value', message)
+  $tempInput.select();
+  document.execCommand('copy');
+  $body.removeChild($tempInput);
+}
+
 function ingrid_checkAll(group) {
   // NOTICE: first field in group has to be "checkAll" field
   if (group[0]) {
