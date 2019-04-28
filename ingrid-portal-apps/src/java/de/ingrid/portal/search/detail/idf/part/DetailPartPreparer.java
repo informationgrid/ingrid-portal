@@ -272,7 +272,7 @@ public class DetailPartPreparer {
 
             NodeList restrictionCodeNodes = XPathUtils.getNodeList(node, restrictionCodeXpath);
             NodeList constraintsNodes = XPathUtils.getNodeList(node, constraintsTextXpath);
-            if (restrictionCodeNodes == null || constraintsNodes == null) {
+            if (restrictionCodeNodes == null || constraintsNodes == null || restrictionCodeNodes.getLength() > 0 || constraintsNodes.getLength() > 0) {
                 continue;
             }
             NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
