@@ -276,7 +276,11 @@ public class DetailPartPreparer {
                 continue;
             }
             NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
-            String restrictionCode = attrs.getNamedItem("codeListValue").getTextContent();
+            Node attrNode = attrs.getNamedItem("codeListValue");
+            if (attrNode == null) {
+                continue;
+            }
+            String restrictionCode = attrNode.getTextContent();
             log.debug(String.format("Discovered restriction code: %s", restrictionCode));
             if (restrictionCode == null) continue;
             restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
