@@ -300,6 +300,7 @@
                     #foreach($subElement in $_menuAboutSub.elements.iterator())
                         #set($linkTitle = $subElement.getTitle($preferedLocale))
                         #set($linkName = $subElement.getShortTitle($preferedLocale))
+                        #set($isSelected = $subElement.isSelected($site))
                         ## read localized title from resource with title from psml as key !
                         #if($linkTitle.startsWith('ingrid'))
                             #set($linkTitle = $MESSAGES.getString($linkTitle))
@@ -310,10 +311,10 @@
                         #if($defaultTitle == "ingrid.page.language")
                             #set($linkTitle = $defaultTitle)
                         #end
-                        <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
+                        <a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>
                     #end
                 #else
-                    <a href="$linkUrl" class="header-menu-entry" title="$linkTitle"><span class="text">$linkName</span></a>
+                    <a href="$linkUrl" class="header-menu-entry #if($isSelected)is-active#end" title="$linkTitle"><span class="text">$linkName</span></a>
                 #end
               #end
             #end
@@ -338,7 +339,7 @@
             #if($defaultTitle == "ingrid.page.language")
                 #set($linkTitle = $defaultTitle)
             #end
-            <a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a>
+            <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
           #end
         #end
     #end
@@ -355,6 +356,7 @@
                   #if($element.elementType == "option")
                     #set($linkTitle = $element.getTitle($preferedLocale))
                     #set($linkName = $element.getShortTitle($preferedLocale))
+                    #set($isSelected = $element.isSelected($site))
                     ## read localized title from resource with title from psml as key !
                     #if($linkTitle.startsWith('ingrid'))
                         #set($linkTitle = $MESSAGES.getString($linkTitle))
@@ -376,7 +378,7 @@
                         #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
                         #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
                     #end
-                    <a href="$linkUrl" title="$linkTitle"><span class="text">$linkName</span></a>
+                    <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
                   #end
                 #end
             #end

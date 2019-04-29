@@ -16,11 +16,13 @@
                         #foreach($provider in $providers)
                             #if($provider.provider && $provider.provider.name && !$provider.provider.name.equals(","))
                                 #if($provider.provider.url && $provider.provider.url != "")
-                                    <a href="#" class="icon" target="_blank">
+                                    <a href="$provider.provider.url" class="icon" target="_blank">
                                         <span class="ic-ic-arrow"></span><span class="text">$provider.provider.name</span>
                                     </a>
                                 #else
-                                    <p>$provider.provider.name</p>
+                                    <a class="icon">
+                                        <span class="text">$provider.provider.name</span>
+                                    </a>
                                 #end
                             #end
                         #end
@@ -33,11 +35,13 @@
                         #foreach($provider in $providers)
                             #if($provider.provider && $provider.provider.name && !$provider.provider.name.equals(","))
                                 #if($provider.provider.url && $provider.provider.url != "")
-                                    <a href="#" class="icon" target="_blank">
+                                    <a href="$provider.provider.url" class="icon" target="_blank">
                                         <span class="ic-ic-arrow"></span><span class="text">$provider.provider.name</span>
                                     </a>
                                 #else
-                                    <p>$provider.provider.name</p>
+                                    <a class="icon">
+                                        <span class="text">$provider.provider.name</span>
+                                    </a>
                                 #end
                             #end
                         #end

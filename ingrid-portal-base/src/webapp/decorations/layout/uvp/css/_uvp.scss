@@ -250,6 +250,14 @@ a.icon:hover {
   text-decoration: none;
   color: $green-blue;
 }
+a.icon:not([href]) {
+  color: #5e788d;
+  cursor: default;
+}
+a.icon:not([href]):hover {
+  color: #5e788d;
+}
+
 .dark a.icon { text-decoration: none; }
 .dark a.icon:hover {
   color: $white;
@@ -713,6 +721,7 @@ header {
         border-radius: 50px;
       }
       a:hover { text-decoration: none; }
+      a.is-active { background-color: #349980; }
     }
     .header-menu-close {
       text-align: right;
