@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="4.6.4-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.4">
+          <action type="fix" dev="wemove" issue="1373">
+            Change email address on uvp "vorschaltseite"
+          </action>
+        </release>
+
         <release version="4.6.3" date="2019-04-03" description="Release 4.6.3">
           <action type="fix" dev="wemove" issue="1334">
             Fix map marker with illegal characters on hit title.
