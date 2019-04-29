@@ -196,23 +196,48 @@ public class GeneralCapabilitiesParser {
      */
     protected String[] extractName(String name) {
         if (name != null){
-            String[] splitByComma = name.split(",");
+            String[] splitByComma = name.trim().split(",");
             if (splitByComma.length > 1) {
-                String[] result = {splitByComma[1], splitByComma[0]}; 
+                String[] result = {splitByComma[1].trim(), splitByComma[0].trim()}; 
                 return result;
             } else {
                 String[] splitBySpace = name.split(" ");
                 if (splitBySpace.length == 2) {
-                    String[] result = {splitBySpace[0], splitBySpace[1]}; 
+                    String[] result = {splitBySpace[0].trim(), splitBySpace[1].trim()}; 
                     return result;
                 } else if (splitBySpace.length > 2) {
-                    String[] result = {splitBySpace[splitBySpace.length-2], splitBySpace[splitBySpace.length-1]}; 
+                    String[] sub = Arrays.copyOfRange(splitBySpace, 0, splitBySpace.length-1);
+                    String[] result = {String.join( " ", sub ), splitBySpace[splitBySpace.length-1].trim()};
                     return result;
-                    
+                } else {
+                    String[] result = {"", name.trim()};
+                    return result; 
                 }
             }
         }
         return new String[0];
+    }
+    
+    /**
+     * Extract first and last name from name string and deploy a given 
+     * AddressBean with it. If no first name can be detected, use the 
+     * complete name string as last name 
+     * 
+     * @param ab
+     * @param address
+     * @return
+     */
+    protected AddressBean setNameInAddressBean(AddressBean ab, String name) {
+        String[] nameParts = this.extractName(name);
+        if (nameParts == null || nameParts.length == 0) {
+            ab.setLastname("N/A");
+        } else if (nameParts.length == 1) {
+            ab.setLastname(nameParts[0]);
+        } else if (nameParts.length == 2) {
+            ab.setFirstname(nameParts[0].trim());
+            ab.setLastname(nameParts[1].trim());
+        }
+        return ab;
     }
     
     protected List<String> getNodesContentAsList(Document doc, String xPath) {
