@@ -68,6 +68,8 @@ import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.udk.UtilsCSWDate;
+import de.ingrid.utils.udk.UtilsDate;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
@@ -489,7 +491,24 @@ public class UtilsSearch {
         return null;
     }
     
-    
+    public static String getDateFormatValue (String value){
+        String result = UtilsCSWDate.mapFromIgcToIso8601(value);
+        if(result != null) {
+            value = result;
+        }
+        return UtilsSearch.convertDateString(value);
+    }
+
+    public static String convertDateString(String value){
+        if(value != null){
+            String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
+            if(content.length() > 0){
+                return content;
+            }
+        }
+        return value;
+    }
+
     /**
      * Map the given value to a "real" value, e.g. map partner id to partner
      * name. The passed key determines what kind of id the passed value is (this

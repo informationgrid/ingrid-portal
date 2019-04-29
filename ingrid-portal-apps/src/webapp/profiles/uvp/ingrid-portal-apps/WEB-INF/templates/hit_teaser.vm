@@ -28,7 +28,6 @@
                 #if($hits)
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     #foreach($hit in $hits)
-                        
                         <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" class="data">
                             <div class="teaser-data">
                                 <div class="row">
@@ -36,6 +35,7 @@
                                         <div class="text-wrapper">
                                             <div class="helper text">
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
+                                                <span class="float-right">$UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" ))</span>
                                             </div>
                                             <h2 class="header">$hit.getHitDetail().getTitle()</h2>
                                             <p class="data-text">$hit.getHitDetail().getSummary()</p>

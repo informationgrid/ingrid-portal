@@ -8,7 +8,10 @@
     #if($objClass)
         #set($objClassName = $Codelists.getCodeListValue('8001', $objClass, $languageCode))
         #if($objClassName)
-            <div class="helper text"><span class="">$objClassName</span></div>
+            <div class="helper text">
+                <span class="">$objClassName</span>
+                <span class="float-right">$UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" ))</span>
+            </div>
         #end
     #end
     ## Show procedures
