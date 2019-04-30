@@ -24,6 +24,7 @@
                 $action.setParameter("doRemoveAll", "true")
                 #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
             #end
+            #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
         </div>
         #if($rankedResultList && "$rankedResultList.length()" != "0")
             #foreach($rs in $rankedResultList.getWrapperHits())

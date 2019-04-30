@@ -1,7 +1,7 @@
 #set ($action = $renderResponse.createActionURL())
-#set ($rankedHitslenght = $rankedResultList.get("length").toString())
+#set ($rankedHitslenght = $rankedResultList.get("length"))
 
-#if($rankedHitslenght != "0")
+#if($rankedHitslenght > 0)
     #renderFacetCategory($facetConfig)
 #else
     <p>
@@ -163,6 +163,7 @@
                         </a>
                         <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
                             <div class="boxes">
+                            #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
                             #foreach($subFacet in $facet.getFacets())
                                 #if($isSelected)
                                     #if($subFacet.isSelect())

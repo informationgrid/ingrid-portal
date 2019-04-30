@@ -406,6 +406,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
+        <info>Bauleitpläne können im Filter "Aktualität" leider nicht berücksichtigt werden.</info>
+        <infoResultSelect>Bauleitpläne können im Filter "Aktualität" leider nicht berücksichtigt werden.</infoResultSelect>
         <facets>
             <!-- letzter Monat -->
             <facet>

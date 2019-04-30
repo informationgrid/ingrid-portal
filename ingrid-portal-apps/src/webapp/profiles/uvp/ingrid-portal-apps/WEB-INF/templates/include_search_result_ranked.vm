@@ -18,6 +18,7 @@
             $action.setParameter("doRemoveAll", "true")
             #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
         #end
+        #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
     </div>
 #end
 

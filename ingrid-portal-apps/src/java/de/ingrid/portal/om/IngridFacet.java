@@ -44,6 +44,8 @@ public class IngridFacet {
     private String shortcut;
     private String url;
     private String wildcard;
+    private String info;
+    private String infoResultSelect;
     private int showOnMoreThan;
     private int colNum;
     private boolean isDependencySelect = false;
@@ -230,5 +232,17 @@ public class IngridFacet {
     }
     public void setMobileName(String mobileName) {
         this.mobileName = mobileName;
+    }
+    public String getInfo() {
+        return info;
+    }
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    public String getInfoResultSelect() {
+        return infoResultSelect;
+    }
+    public void setInfoResultSelect(String infoResultSelect) {
+        this.infoResultSelect = infoResultSelect;
     }
 }
