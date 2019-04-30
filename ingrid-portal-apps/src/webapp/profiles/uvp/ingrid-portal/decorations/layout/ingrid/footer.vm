@@ -6,7 +6,7 @@
                     #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
                     #set($shareUrl = "${shareUrl}${urlParams}")
                     #set($shareUrlEncode = $esc.url("${shareUrl}${urlParams}"))
-                    <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank">
+                    <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank" title="Twitter">
                       <span class="ic-ic-twitter"></span><span class="text"></span>
                     </a>
                     <a href="https://www.facebook.com/sharer/sharer.php?u=$shareUrlEncode" class="button round social" target="_blank" title="Facebook">
@@ -24,13 +24,13 @@
                     <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
                       <span class="ic-ic-mailto"></span><span class="text"></span>
                     </a>
-                    <button id="share-buttons" class="button round social share" title="Link kopieren">
+                    <button id="share-buttons" class="button round social share" title="Seite teilen">
                       <span class="ic-ic-share"></span>
                       <span class="text"></span>
                     </button>
                 </div>
                 <div class="button-up">
-                    <button type="button" class="button round social js-top">
+                    <button type="button" class="button round social js-top" title="Nach oben">
                         <span class="ic-ic-angle-up"></span>
                     </button>
                 </div>
