@@ -17,7 +17,8 @@ Struktur:
         <name></name> ******************************* Facettierungsbaum-Name (lokalisiert per Portal-Resource-Key oder nicht lokalisiert als reiner Text)
         <id></id> *********************************** Facettierungsbaum-ID (dieser muss eindeutig sein und darf bei weiteren Facetten nicht existieren)
         <isOpen></isOpen>**************************** Facettierungsbaum wird bei true aufgeklappt dargestellt (default: false)
-        
+        <info></info>******************************** Facettierungsbaum zeigt im aufgeklapptem Zustand den eingetragenen Info-Text an
+        <infoResultSelect></infoResultSelect>******** Wird ein Element (Kind) unterhalb des Facettierungsbaums selektiert, so wird der eingetragene Info-Text über der Ergebnisliste im Portal angezeigt
         <facets> ************************************ Facettierungsbaum-Kinder (zur Auswahl)
             <facet> ********************************* Neuer Facettierungs-Kind (kann die Eigenschaft "sort" enthalten, siehe unten)
                 <name></name> *********************** Neuer Facettierungs-Kind-Name
