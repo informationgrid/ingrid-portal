@@ -12,6 +12,13 @@ $(function() {
     $('.header-menu').hide();
   });
 
+  //custom scrollbar for header burger menu
+  $('.header-menu').niceScroll({
+    cursorcolor:"#f6f6f6",
+    cursorwidth:"8px",
+    cursorborderradius: "6px",
+  });
+
   //custom scrollbar in contact form textarea
   $('.custom-scrollbar').niceScroll({
     cursorcolor:"#c6cfe2",
@@ -20,11 +27,9 @@ $(function() {
     railpadding: { top: 25, right: 0, left: 0, bottom: 5 }
   });
 
-  //custom scrollbar for header burger menu
-  $('.header-menu').niceScroll({
-    cursorcolor:"#f6f6f6",
-    cursorwidth:"8px",
-    cursorborderradius: "6px",
+  //toggle social media links
+  $('button.social.share').click(function() {
+    $('footer .footer-buttons-bar .social-buttons a.social').fadeToggle( "slow", "linear" ).css("display","inline-block");
   });
 
 });
