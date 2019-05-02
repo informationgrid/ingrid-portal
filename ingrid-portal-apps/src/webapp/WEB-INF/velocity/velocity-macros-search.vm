@@ -371,6 +371,28 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     </aside>
 #end
 
+#macro(renderSearchResultFacetSelectionInfo $entry $resourceMsgs)
+    #if($entry.getInfo())
+        <div class="message__simple-content">
+            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+            $entry.getInfo()
+        </div>
+    #end
+#end
+
+#macro(renderSearchResultFacetSelectionInfoResult $entries $resourceMsgs)
+    #foreach($entry in $entries)
+        #if($entry.isSelect() && $entry.getInfoResultSelect())
+            <div class="message message--info bx-top-s bx-bot-s">
+                <div class="message__simple-content message-fill--info">
+                    <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                    $entry.getInfo()
+                </div>
+            </div>
+        #end
+    #end
+#end
+
 #macro(renderSearchResultFacetSelection $entries $resourceMsgs $cat)
     #foreach($entry in $entries)
         #if(!$entry.getQuery())
