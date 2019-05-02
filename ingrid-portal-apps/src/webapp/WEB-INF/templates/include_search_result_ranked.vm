@@ -7,9 +7,10 @@
 #end
 
 #if($enableFacetSelection || $isSelection)
-    <ul class="tag-group tag-group bx-top-m bx-bot-l">
+    <ul class="tag-group tag-group bx-top-m bx-bot-s">
         #renderSearchResultFacetSelection($facetConfig $MESSAGES)
     </ul>
+    #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
 #end
 
 ## set flag indicating how to render stuff (e.g. in includes)
@@ -31,6 +32,7 @@
         #end
         #parse ('/WEB-INF/templates/include_search_result_group_footer.vm')
     #end
+    
 #elseif($rankedSearchFinished)
     <p><strong>$MESSAGES.getString('common.result.noResults')</strong><br /><br /></p>
 #else

@@ -128,6 +128,7 @@
                         </svg>
                     </div>
                     <div id="facet_$facet.getId()_content" class="sidebar__widget__content js-accordion-content #if(!$facet.isSelect() && !$facet.isOpen())is-hidden#end">
+                        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
                         #set($isSelected = false)
                         #foreach($subFacet in $facet.getFacets())
                             #if($subFacet.isSelect())
