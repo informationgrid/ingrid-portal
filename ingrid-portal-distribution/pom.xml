@@ -179,6 +179,7 @@
                   <tasks>
                     <echo message="Unzipping installer for docker image" />
                     <unzip src="target/${project.build.finalName}-installer.jar" dest="target/docker/installer-unzipped/" />
+                    <move file="target/docker/installer-unzipped/distribution/apache-tomcat/webapps/ingrid-portal-base.war" tofile="target/docker/installer-unzipped/distribution/apache-tomcat/webapps/ROOT.war" />
                   </tasks>
                 </configuration>
                 <goals>

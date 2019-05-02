@@ -12,8 +12,7 @@ ENV DB_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
 COPY ./files /
 COPY installer-unzipped/distribution /opt/ingrid/ingrid-portal/
 
-RUN mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-base.war /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT.war \
-    && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
+RUN mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
     && unzip -q /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
     && mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT/WEB-INF/deploy/*.war /opt/ingrid/ingrid-portal/apache-tomcat/webapps \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
@@ -25,7 +24,8 @@ RUN mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-base.war /o
     && sed -i 's/portal.logger.resource=.*$/portal.logger.resource=http:\/\/localhost:8080\/logger.html/' /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/logs \
     && chmod 755 /opt/ingrid/ingrid-portal/apache-tomcat/bin/*.sh \
-    && rm -Rf /tmp/*
+    && rm -Rf /tmp/* \
+    && rm -f ingrid-*.jar
 
 WORKDIR /opt/ingrid/ingrid-portal/apache-tomcat
 EXPOSE 8000
