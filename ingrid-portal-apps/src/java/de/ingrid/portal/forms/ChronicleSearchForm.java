@@ -221,10 +221,16 @@ public class ChronicleSearchForm extends ActionForm {
 
     /**
      * Returns the Date of the given INPUT Value from Form.
-     * @param dateString
+     * @param dateString is the string version of the date object in the format "dd.MM.yyyy"
      * @return null if input not valid
      */
     public static Date getDate(String dateString) {
+
+        // catch empty dates
+        if (dateString == null || dateString.isEmpty()) {
+            return null;
+        }
+
         try {
             DateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy");
             return dateFormatter.parse(dateString);
