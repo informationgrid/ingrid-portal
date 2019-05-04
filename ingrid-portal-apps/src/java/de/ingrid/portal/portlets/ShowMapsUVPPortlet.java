@@ -176,7 +176,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     } catch (Exception e) {
                         log.error("Error get json object.", e);
                     }
-                    response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
                 }
 
                 response.setContentType( "application/javascript" );
