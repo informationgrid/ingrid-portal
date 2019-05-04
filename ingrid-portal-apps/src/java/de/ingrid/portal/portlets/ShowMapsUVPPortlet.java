@@ -128,6 +128,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     try {
                         IngridHit hit = it.next();
                         IngridHitDetail detail = hit.getHitDetail();
+                        if (log.isDebugEnabled()) {
+                            log.debug("Got BLP result: " + detail.toString());
+                        }
                         String latCenter = UtilsSearch.getDetailValue( detail, "y1", 1);
                         String lonCenter = UtilsSearch.getDetailValue( detail, "x1", 1);
                         String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
