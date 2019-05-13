@@ -24,7 +24,7 @@ package de.ingrid.portal.global;
 
 public class UtilsBaseConverter {
 
-    private static final String baseDigits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";  
+    private static final String BASE_DIGITS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";  
    
      public static String toBase62( int decimalNumber ) {  
          return fromDecimalToOtherBase( 62, decimalNumber );  
@@ -72,7 +72,7 @@ public class UtilsBaseConverter {
    
          while( decimalNumber != 0 ) {  
             mod = decimalNumber % base;  
-             tempVal = baseDigits.substring( mod, mod + 1 ) + tempVal;  
+             tempVal = BASE_DIGITS.substring( mod, mod + 1 ) + tempVal;  
             decimalNumber = decimalNumber / base;  
          }  
    
@@ -85,7 +85,7 @@ public class UtilsBaseConverter {
          int multiplier = 1;  
    
          while( iterator > 0 ) {  
-             returnValue = returnValue + ( baseDigits.indexOf( number.substring( iterator - 1, iterator ) ) * multiplier );  
+             returnValue = returnValue + ( BASE_DIGITS.indexOf( number.substring( iterator - 1, iterator ) ) * multiplier );  
              multiplier = multiplier * base;  
              --iterator;  
          }  

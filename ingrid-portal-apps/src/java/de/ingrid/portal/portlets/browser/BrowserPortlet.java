@@ -138,6 +138,7 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
      */
     protected Logger log = LoggerFactory.getLogger(BrowserPortlet.class);
 
+    @Override
     public void init(PortletConfig config) throws PortletException
     {
         super.init(config);
@@ -157,10 +158,9 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
     }
 
     public void getRows(RenderRequest request, String sql, int windowSize, String filter)
-    throws Exception
-    {
-    }
+    throws Exception {}
     
+    @Override
     public void doView(RenderRequest request, RenderResponse response)
             throws PortletException, IOException
     {
@@ -240,9 +240,9 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
                 context.put(BROWSER_ITERATOR, iterator);
                 context.put(BROWSER_TITLE_ITERATOR, iterator
                         .getResultSetTitleList());
-                context.put(BROWSER_TABLE_SIZE, new Integer(resultSetSize));
-                context.put(WINDOW_SIZE, new Integer(windowSize));
-                context.put(START, new Integer(start));
+                context.put(BROWSER_TABLE_SIZE, resultSetSize);
+                context.put(WINDOW_SIZE, windowSize);
+                context.put(START, start);
                 /*
                  * System.out.println("buildNormalContext Sort column name=
                  * "+sortColName); System.out.println("buildNormalContext
@@ -280,6 +280,7 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
         super.doView(request, response);
     }
 
+    @Override
     public void doEdit(RenderRequest request, RenderResponse response)
             throws PortletException, IOException
     {
@@ -287,6 +288,7 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
         doPreferencesEdit(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse response)
             throws PortletException, IOException
     {
@@ -312,31 +314,28 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
                 if (searchString != null)
                 {                    
                     String searchColumn = request.getParameter(SEARCH_COLUMN);
-                    String filtered = (String)request.getParameter(FILTERED);                    
-                    if (filtered != null)
-                    {
-                        clearBrowserIterator(request);                        
+                    String filtered = request.getParameter(FILTERED);
+                    if (filtered != null) {
+                        clearBrowserIterator(request);
                         response.setRenderParameter(FILTER, searchString);
                     }
-                    else
-                    {
+                    else {
                         int index = find(this.getBrowserIterator(request), searchString, searchColumn);
                         if (index == -1)
                         {
-                            try
-                            {
+                            try {
                                 StatusMessage sm = new StatusMessage("Could not find match for: " + searchString, StatusMessage.ALERT);        
                                 PortletMessaging.publish(request, "DatabaseBrowserPortlet", "action", sm);
                             }
-                            catch (Exception e)
-                            {}
+                            catch (Exception e) {
+                                log.error("Error on processAction.", e);
+                            }
                         }
-                        else
-                        {
-                            response.setRenderParameter(START, Integer.toString(index));                        
+                        else {
+                            response.setRenderParameter(START, Integer.toString(index));
                         }
                     }
-                }                
+                }
             }
         }
     }
@@ -400,7 +399,7 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
             {
                 try
                 {
-                    start = Integer.parseInt(startStr);                    
+                    start = Integer.parseInt(startStr);
                 }
                 catch (Exception e)
                 {
@@ -457,7 +456,6 @@ public class BrowserPortlet extends GenericVelocityPortlet implements Browser
 
     protected void readUserParameters(RenderRequest request, Context context)
     {
-        List userObjectList;
         Object userObjRead = request.getPortletSession().getAttribute(
                 USER_OBJECTS, PortletSession.PORTLET_SCOPE);
         if (userObjRead != null)

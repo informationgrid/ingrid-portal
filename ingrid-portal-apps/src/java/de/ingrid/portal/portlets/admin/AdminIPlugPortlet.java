@@ -49,15 +49,14 @@ import java.util.List;
  */
 public class AdminIPlugPortlet extends GenericVelocityPortlet {
 
-    private RoleManager roleManager;
-
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
-        roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
+        RoleManager roleManager = (RoleManager) getPortletContext().getAttribute(CommonPortletServices.CPS_ROLE_MANAGER_COMPONENT);
         if (null == roleManager) {
             throw new PortletException("Failed to find the Role Manager on portlet initialization");
         }
@@ -68,6 +67,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -115,6 +115,7 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
@@ -188,14 +189,14 @@ public class AdminIPlugPortlet extends GenericVelocityPortlet {
                             }
                         }
                     }
-                    if (providerNode.getChildren().size() != 0) {
+                    if (!providerNode.getChildren().isEmpty()) {
                         providerNode.setType(DisplayTreeNode.GENERIC);
                         providerNode.setParent(partnerNode);
                         partnerNode.addChild(providerNode);
                     }
                 }
             }
-            if (partnerNode.getChildren().size() != 0) {
+            if (!partnerNode.getChildren().isEmpty()) {
                 partnerNode.setType(DisplayTreeNode.GENERIC);
                 partnerNode.setParent(root);
                 root.addChild(partnerNode);

@@ -53,67 +53,67 @@ import java.util.Map;
  * 
  * @author martin@wemove.com
  */
-abstract public class ContentPortlet extends GenericVelocityPortlet {
+public abstract class ContentPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ContentPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ContentPortlet.class);
 
     // Keys/Values for velocity render context
-    protected final static String CONTEXT_MODE = "mode";
+    protected static final String CONTEXT_MODE = "mode";
 
-    protected final static String CONTEXTV_MODE_NEW = "new";
+    protected static final String CONTEXTV_MODE_NEW = "new";
 
-    protected final static String CONTEXTV_MODE_EDIT = "edit";
+    protected static final String CONTEXTV_MODE_EDIT = "edit";
 
-    protected final static String CONTEXT_ENTITIES = "dbEntities";
+    protected static final String CONTEXT_ENTITIES = "dbEntities";
 
-    protected final static String CONTEXT_BROWSER_STATE = "browser";
+    protected static final String CONTEXT_BROWSER_STATE = "browser";
 
-    protected final static String CONTEXT_UTILS_STRING = "UtilsString";
+    protected static final String CONTEXT_UTILS_STRING = "UtilsString";
 
     // Attributes in Session
-    protected final static String KEY_BROWSER_STATE = "browserState";
+    protected static final String KEY_BROWSER_STATE = "browserState";
 
-    protected final static String KEY_ACTION_FORM = "actionForm";
+    protected static final String KEY_ACTION_FORM = "actionForm";
 
     // Common Parameters in Request
-    protected final static String PARAM_SORT_COLUMN = "sortColumn";
+    protected static final String PARAM_SORT_COLUMN = "sortColumn";
 
-    protected final static String PARAM_ID = "id";
+    protected static final String PARAM_ID = "id";
 
     /**
      * indicates whether page is called from other page (then not set) or from
      * own page
      */
-    protected final static String PARAM_NOT_INITIAL = "notInitial";
+    protected static final String PARAM_NOT_INITIAL = "notInitial";
 
     // ACTIONS
-    protected static String PARAMV_ACTION_DO_REFRESH = "doRefresh";
+    protected static final String PARAMV_ACTION_DO_REFRESH = "doRefresh";
 
-    protected static String PARAMV_ACTION_DO_FIRST_PAGE = "doFirst";
+    protected static final String PARAMV_ACTION_DO_FIRST_PAGE = "doFirst";
 
-    protected static String PARAMV_ACTION_DO_PREV_PAGE = "doPrev";
+    protected static final String PARAMV_ACTION_DO_PREV_PAGE = "doPrev";
 
-    protected static String PARAMV_ACTION_DO_NEXT_PAGE = "doNext";
+    protected static final String PARAMV_ACTION_DO_NEXT_PAGE = "doNext";
 
-    protected static String PARAMV_ACTION_DO_LAST_PAGE = "doLast";
+    protected static final String PARAMV_ACTION_DO_LAST_PAGE = "doLast";
 
-    protected static String PARAMV_ACTION_DO_EDIT = "doEdit";
+    protected static final String PARAMV_ACTION_DO_EDIT = "doEdit";
 
-    protected static String PARAMV_ACTION_DO_FILTER = "doFilter";
+    protected static final String PARAMV_ACTION_DO_FILTER = "doFilter";
 
-    protected static String PARAMV_ACTION_DO_NEW = "doNew";
+    protected static final String PARAMV_ACTION_DO_NEW = "doNew";
 
-    protected static String PARAMV_ACTION_DO_RELOAD = "doReload";
+    protected static final String PARAMV_ACTION_DO_RELOAD = "doReload";
 
-    protected static String PARAMV_ACTION_DB_DO_SAVE = "doSave";
+    protected static final String PARAMV_ACTION_DB_DO_SAVE = "doSave";
 
-    protected static String PARAMV_ACTION_DB_DO_UPDATE = "doUpdate";
+    protected static final String PARAMV_ACTION_DB_DO_UPDATE = "doUpdate";
 
-    protected static String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
+    protected static final String PARAMV_ACTION_DB_DO_DELETE = "doDelete";
 
-    protected static String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
+    protected static final String PARAMV_ACTION_DB_DO_CANCEL = "doCancel";
     
-    protected static String PARAMV_ACTION_DB_DO_CLEAR = "doClear";
+    protected static final String PARAMV_ACTION_DB_DO_CLEAR = "doClear";
 
     // Data to set in Subclasses
     // -------------------------
@@ -142,6 +142,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         try {
             // add localization recources to the context
@@ -287,7 +288,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
         ActionForm af = getActionForm(request);
         if (af != null && af.hasErrors()) {
             Context context = getContext(request);
-            context.put("actionForm", af);
+            context.put(KEY_ACTION_FORM, af);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
             Object[] entities = getDBEntities(request);
             context.put(CONTEXT_ENTITIES, entities);
@@ -391,9 +392,10 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         try {
-            StringBuffer urlViewParams = new StringBuffer("?");
+            StringBuilder urlViewParams = new StringBuilder("?");
 
             // indicates call from same page
             String urlParam = Utils.toURLParam(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
@@ -479,7 +481,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 doActionDelete(request);
 
             } else if (request.getParameter(PARAM_SORT_COLUMN) != null) {
-                urlParam = Utils.toURLParam("sortColumn", request.getParameter("sortColumn"));
+                urlParam = Utils.toURLParam(PARAM_SORT_COLUMN, request.getParameter("sortColumn"));
                 Utils.appendURLParameter(urlViewParams, urlParam);
                 // jump to first page when column sorting was clicked
                 ContentBrowserState state = getBrowserState(request);
@@ -510,9 +512,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    abstract protected Object[] getDBEntities(PortletRequest request);
+    protected abstract Object[] getDBEntities(PortletRequest request);
 
-    
     private void deleteAllContentOfATable() throws PortletException {
     	Session session = HibernateUtil.currentSession();
         Transaction tx = null;
@@ -531,7 +532,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
 	        //q.executeUpdate();
 
 	        tx.commit();
-	    } catch (Throwable t) {
+	    } catch (Exception t) {
 	        if (tx != null) {
 	            tx.rollback();
 	        }
@@ -580,7 +581,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * 
      * @param request
      */
-    static protected void checkInitialEnter(RenderRequest request) {
+    protected static void checkInitialEnter(RenderRequest request) {
         if (request.getParameter(PARAM_NOT_INITIAL) != null) {
             return;
         }
@@ -596,7 +597,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected String getAction(PortletRequest request) {
+    protected static String getAction(PortletRequest request) {
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
             action = "";
@@ -613,7 +614,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      *            The default column
      * @return
      */
-    static protected String getSortColumn(PortletRequest request, String defaultValue) {
+    protected static String getSortColumn(PortletRequest request, String defaultValue) {
         ContentBrowserState state = getBrowserState(request);
 
         String sortCol = request.getParameter(PARAM_SORT_COLUMN);
@@ -635,7 +636,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return true = ascending else descending
      */
-    static protected boolean isAscendingOrder(PortletRequest request) {
+    protected static boolean isAscendingOrder(PortletRequest request) {
         ContentBrowserState state = getBrowserState(request);
 
         // if no sort column in request, then keep the state
@@ -654,9 +655,8 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected String[] getIds(PortletRequest request) {
-        String[] strIds = request.getParameterValues(PARAM_ID);
-        return strIds;
+    protected static String[] getIds(PortletRequest request) {
+        return request.getParameterValues(PARAM_ID);
     }
 
     /**
@@ -665,7 +665,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param strIds
      * @return
      */
-    static protected Long[] convertIds(String[] strIds) {
+    protected static Long[] convertIds(String[] strIds) {
         Long[] longIds = null;
         if (strIds != null) {
             longIds = (Long[]) Array.newInstance(Long.class, strIds.length);
@@ -673,6 +673,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
                 try {
                     longIds[i] = new Long(strIds[i]);
                 } catch (Exception ex) {
+                    log.error("Error on convertIds." , ex);
                 }
             }
         }
@@ -686,7 +687,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected ActionForm getActionForm(PortletRequest request) {
+    protected static ActionForm getActionForm(PortletRequest request) {
         return (ActionForm) request.getPortletSession().getAttribute(KEY_ACTION_FORM);
     }
 
@@ -695,7 +696,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * 
      * @param request
      */
-    static protected void clearActionForm(PortletRequest request) {
+    protected static void clearActionForm(PortletRequest request) {
         request.getPortletSession().removeAttribute(KEY_ACTION_FORM);
     }
 
@@ -706,7 +707,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @return
      */
-    static protected ContentBrowserState getBrowserState(PortletRequest request) {
+    protected static ContentBrowserState getBrowserState(PortletRequest request) {
         ContentBrowserState state = (ContentBrowserState) request.getPortletSession().getAttribute(KEY_BROWSER_STATE,
                 PortletSession.APPLICATION_SCOPE);
         if (state == null) {
@@ -723,7 +724,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * @param request
      * @param state
      */
-    static protected void setBrowserState(PortletRequest request, ContentBrowserState state) {
+    protected static void setBrowserState(PortletRequest request, ContentBrowserState state) {
         request.getPortletSession().setAttribute(KEY_BROWSER_STATE, state, PortletSession.APPLICATION_SCOPE);
     }
 
@@ -733,7 +734,7 @@ abstract public class ContentPortlet extends GenericVelocityPortlet {
      * 
      * @param request
      */
-    static protected void clearBrowserState(PortletRequest request) {
+    protected static void clearBrowserState(PortletRequest request) {
         request.getPortletSession().removeAttribute(KEY_BROWSER_STATE, PortletSession.APPLICATION_SCOPE);
     }
 

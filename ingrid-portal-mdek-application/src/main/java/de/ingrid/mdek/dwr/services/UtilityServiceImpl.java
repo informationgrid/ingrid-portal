@@ -33,7 +33,7 @@ import org.directwebremoting.WebContextFactory;
 
 public class UtilityServiceImpl {
 
-	private final static Logger log = Logger.getLogger(UtilityServiceImpl.class);
+	private static final Logger log = Logger.getLogger(UtilityServiceImpl.class);
 
 	public void refreshSession() {
 		WebContext wctx = WebContextFactory.get();
@@ -47,7 +47,7 @@ public class UtilityServiceImpl {
         if (ses.getAttribute("userName") == null)
             log.info("userName was not in Session ... should return false now!");
         
-        return ses != null && !ses.isNew();
+        return !ses.isNew();
     }
 	
 	public int getSessionTimoutInterval() {

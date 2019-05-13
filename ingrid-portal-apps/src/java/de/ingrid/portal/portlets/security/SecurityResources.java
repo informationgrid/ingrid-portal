@@ -45,23 +45,23 @@ package de.ingrid.portal.portlets.security;
  */
 public interface SecurityResources
 {
-    public final static String CURRENT_USER = "current_user";
-    public final static String PAM_CURRENT_USER = "org.apache.jetspeed.pam.user";
-    public final static String REQUEST_SELECT_USER = "select_user";    
+    public static final String CURRENT_USER = "current_user";
+    public static final String PAM_CURRENT_USER = "org.apache.jetspeed.pam.user";
+    public static final String REQUEST_SELECT_USER = "select_user";    
 
-    public final static String PORTLET_URL = "portlet_url";
-    public final static String REQUEST_SELECT_PORTLET = "select_portlet";
-    public final static String REQUEST_SELECT_TAB = "selected_tab";
-    public final static String PORTLET_ACTION = "portlet_action";
+    public static final String PORTLET_URL = "portlet_url";
+    public static final String REQUEST_SELECT_PORTLET = "select_portlet";
+    public static final String REQUEST_SELECT_TAB = "selected_tab";
+    public static final String PORTLET_ACTION = "portlet_action";
     
     // Message Topics
-    public final static String TOPIC_USERS = "users";
-    public final static String TOPIC_USER = "user";
-    public final static String TOPIC_GROUPS = "groups";
-    public final static String TOPIC_GROUP = "group";
-    public final static String TOPIC_ROLES = "roles";
-    public final static String TOPIC_ROLE = "role";    
-    public final static String TOPIC_PROFILES = "profiles";
+    public static final String TOPIC_USERS = "users";
+    public static final String TOPIC_USER = "user";
+    public static final String TOPIC_GROUPS = "groups";
+    public static final String TOPIC_GROUP = "group";
+    public static final String TOPIC_ROLES = "roles";
+    public static final String TOPIC_ROLE = "role";    
+    public static final String TOPIC_PROFILES = "profiles";
 
     /** Messages **/
     public static final String MESSAGE_SELECTED = "selected";
@@ -75,17 +75,17 @@ public interface SecurityResources
     
     
     /** the selected non-leaf node in the tree view */
-    public final static String REQUEST_NODE = "node";
+    public static final String REQUEST_NODE = "node";
     /** the selected leaf node in the tree view */
-    public final static String REQUEST_SELECT_NODE = "select_node";
+    public static final String REQUEST_SELECT_NODE = "select_node";
        
     /** The Error Messages KEY */
     public static final String ERROR_MESSAGES = "errorMessages";
     
     
     /** user attribute keys **/
-    public final static String USER_NAME_GIVEN = "user.name.given";
-    public final static String USER_NAME_FAMILY = "user.name.family";
-    public final static String USER_EMAIL = "user.business-info.online.email";
+    public static final String USER_NAME_GIVEN = "user.name.given";
+    public static final String USER_NAME_FAMILY = "user.name.family";
+    public static final String USER_EMAIL = "user.business-info.online.email";
     
 }

@@ -34,69 +34,75 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.octo.captcha.service.CaptchaServiceException;
 
 import de.ingrid.portal.jcaptcha.CaptchaServiceSingleton;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 
 public class CaptchaImageServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -9167034970446594129L;
+    private static final Log log = LogFactory.getLog(CaptchaImageServlet.class);
 	private Cache captchaCache = null;
 
+	@Override
 	public void init(ServletConfig servletConfig) throws ServletException {
 
 		super.init(servletConfig);
 		captchaCache = CacheManager.create().getCache("de.ingrid.portal.servlet.jcaptcha");
 	}
 
-	protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException,
-			IOException {
-
-		byte[] captchaChallengeAsPng = null;
-		BufferedImage challenge = null;
-
-		String sessionId = httpServletRequest.getSession().getId();
-
-		if (httpServletRequest.getParameter("keep") != null) {
-			if (captchaCache.isKeyInCache(sessionId)) {
-				challenge = (BufferedImage) captchaCache.get(sessionId).getObjectValue();
-			}
-		}
-
-		if (challenge == null) {
-			// call the ImageCaptchaService getChallenge method
-			challenge = CaptchaServiceSingleton.getInstance().getImageChallengeForID(sessionId, httpServletRequest.getLocale());
-		}
-		
-		Element cacheElement = new Element(sessionId, challenge);
-		captchaCache.put(cacheElement);
+	@Override
+	protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
 		// the output stream to render the captcha image as jpeg into
-		ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
 		try {
-			ImageIO.write(challenge, "png", pngOutputStream);
-		} catch (IllegalArgumentException e) {
-			httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return;
+		    byte[] captchaChallengeAsPng = null;
+	        BufferedImage challenge = null;
+	        String sessionId = httpServletRequest.getSession().getId();
+
+	        if (httpServletRequest.getParameter("keep") != null && captchaCache.isKeyInCache(sessionId)) {
+	            challenge = (BufferedImage) captchaCache.get(sessionId).getObjectValue();
+	        }
+
+	        if (challenge == null) {
+	            // call the ImageCaptchaService getChallenge method
+	            challenge = CaptchaServiceSingleton.getInstance().getImageChallengeForID(sessionId, httpServletRequest.getLocale());
+	        }
+	        
+	        Element cacheElement = new Element(sessionId, challenge);
+	        captchaCache.put(cacheElement);
+	        
+	        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
+	        ImageIO.write(challenge, "png", pngOutputStream);
+			captchaChallengeAsPng = pngOutputStream.toByteArray();
+
+	        // flush it in the response
+	        httpServletResponse.setHeader("Cache-Control", "no-store");
+	        httpServletResponse.setHeader("Pragma", "no-cache");
+	        httpServletResponse.setDateHeader("Expires", 0);
+	        httpServletResponse.setContentType("image/png");
+	        ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
+	        responseOutputStream.write(captchaChallengeAsPng);
+	        responseOutputStream.flush();
+	        responseOutputStream.close();
+		} catch (IllegalArgumentException | IOException e) {
+			try {
+                httpServletResponse.sendError(HttpServletResponse.SC_NOT_FOUND);
+            } catch (IOException e1) {
+                log.error("Error SC_NOT_FOUND.", e1);
+            }
 		} catch (CaptchaServiceException e) {
-			httpServletResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-			return;
+			try {
+                httpServletResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            } catch (IOException e1) {
+                log.error("Error SC_INTERNAL_SERVER_ERROR.", e1);
+            }
 		}
-
-		captchaChallengeAsPng = pngOutputStream.toByteArray();
-
-		// flush it in the response
-		httpServletResponse.setHeader("Cache-Control", "no-store");
-		httpServletResponse.setHeader("Pragma", "no-cache");
-		httpServletResponse.setDateHeader("Expires", 0);
-		httpServletResponse.setContentType("image/png");
-		ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();
-		responseOutputStream.write(captchaChallengeAsPng);
-		responseOutputStream.flush();
-		responseOutputStream.close();
 	}
 }

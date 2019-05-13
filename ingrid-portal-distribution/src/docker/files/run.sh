@@ -41,9 +41,10 @@ else
     sed -i 's/jdbc:mysql:\/\/localhost\/mdek/'${DB_URL_MDEK}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.user=root/hibernate.user='${DB_USER}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.password=/hibernate.password='${DB_PASSWORD}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
-    echo "communications.ibus=/ingrid-group:ibus,"${IBUS_IP}",9900" >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
-    echo "portal.enable.caching="${PORTAL_CACHE_ENABLE} >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
-    echo "csw.interface.url="${PORTAL_CSW_URL} >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
+
+    sed -i 's/communications.ibus=\/ingrid-group\\:ibus-live,127.0.0.1,9900/communications.ibus=\/ingrid-group:ibus,'${IBUS_IP}',9900/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
+    sed -i 's/portal.enable.caching=true/portal.enable.caching='${PORTAL_CACHE_ENABLE}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
+    sed -i 's/csw.interface.url=https:\/\/dev.informationgrid.eu\/csw/csw.interface.url='${PORTAL_CSW_URL}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
 
     # handle portal profiles
     if [ "$PORTAL_PROFILE" ]; then

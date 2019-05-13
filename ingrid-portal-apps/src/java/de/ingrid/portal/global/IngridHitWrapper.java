@@ -25,11 +25,12 @@ package de.ingrid.portal.global;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 
-// FIXME AW: extend from IngridDocument!?
 public class IngridHitWrapper extends IngridHit {
 	private static final String PARAM_INGRID_HIT = "ingrid_hit";
 	
 	private static final String PARAM_INGRID_DETAIL = "ingrid_hit_detail";
+
+	public IngridHitWrapper() { }
 
 	public IngridHitWrapper(IngridHit hit) {
 		put(PARAM_INGRID_HIT, hit);
@@ -51,10 +52,12 @@ public class IngridHitWrapper extends IngridHit {
 		return size();
 	}
 	
+	@Override
     public void putBoolean(String key, boolean value) {
-        put(key, new Boolean(value));
+        put(key, value);
     }
     
+	@Override
     public boolean getBoolean(String key) {
         Boolean booleanObj = (Boolean) get(key);
         if (booleanObj == null) {
@@ -63,6 +66,7 @@ public class IngridHitWrapper extends IngridHit {
         return booleanObj.booleanValue();
     }
     
+	@Override
     public Object get( Object key ) {
     	Object obj = null;
     	obj = super.get(key);

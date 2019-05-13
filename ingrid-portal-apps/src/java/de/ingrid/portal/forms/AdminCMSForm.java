@@ -22,25 +22,21 @@
  */
 package de.ingrid.portal.forms;
 
+import java.util.List;
+
+import javax.portlet.PortletRequest;
+
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+
 import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.om.IngridCMS;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.portlet.PortletRequest;
-import java.util.List;
 
 /**
- * TODO Describe your created type (class, etc.) here.
- * 
  * @author joachim@wemove.com
  */
 public class AdminCMSForm extends ActionForm {
-
-    private final static Logger log = LoggerFactory.getLogger(AdminCMSForm.class);
 
     public static final String SESSION_KEY = AdminCMSForm.class.getName();
 
@@ -102,7 +98,7 @@ public class AdminCMSForm extends ActionForm {
             Session session = HibernateUtil.currentSession();
             List entities = session.createCriteria(IngridCMS.class)
                     .add(Restrictions.eq("itemKey", getInput(FIELD_KEY))).list();
-            if (entities.size() > 0) {
+            if (!entities.isEmpty()) {
                 setError(FIELD_KEY, "admin.cms.error.duplicateKey");
                 allOk = false;
             }

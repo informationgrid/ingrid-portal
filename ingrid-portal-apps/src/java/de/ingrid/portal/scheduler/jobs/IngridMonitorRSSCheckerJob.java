@@ -59,7 +59,7 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
 
     public static final String JOB_ID = "RSS-Checker";
 
-    private final static Logger log = LoggerFactory.getLogger(IngridMonitorRSSCheckerJob.class);
+    private static final Logger log = LoggerFactory.getLogger(IngridMonitorRSSCheckerJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -133,7 +133,7 @@ public class IngridMonitorRSSCheckerJob extends IngridMonitorAbstractJob {
                 }
                 status = STATUS_ERROR;
                 statusCode = STATUS_CODE_ERROR_TIMEOUT;
-            } catch (Throwable t) {
+            } catch (Exception t) {
                 // errorMsg = e.getMessage();
                 if (log.isInfoEnabled()) {
                     log.info("Error building RSS feed (" + rssSource.getUrl() + "). [" + t.getMessage() + "]");

@@ -52,38 +52,38 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
     private static final String XPATH_EXP_CSW_EXTENDED_CAPABILITIES = "/csw:Capabilities/ows:OperationsMetadata/inspire_ds:ExtendedCapabilities";
     private static final String XPATH_EXT_CSW_SERVICECONTACT = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact";
     private static final String XPATH_EXP_CSW_KEYWORDS = "/csw:Capabilities/ows:ServiceIdentification/ows:Keywords/ows:Keyword/text()";
-    private final static String XPATH_EXP_CSW_TITLE = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Title[1]";
-    private final static String XPATH_EXP_CSW_ABSTRACT = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Abstract[1]";
-    private final static String XPATH_EXP_CSW_VERSION = "/csw:Capabilities/@version";
+    private static final String XPATH_EXP_CSW_TITLE = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Title[1]";
+    private static final String XPATH_EXP_CSW_ABSTRACT = "/csw:Capabilities/ows:ServiceIdentification[1]/ows:Abstract[1]";
+    private static final String XPATH_EXP_CSW_VERSION = "/csw:Capabilities/@version";
 
-    private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_CAPABILITIES_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_CAPABILITIES_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetCapabilities']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_DESCRIBE_RECORD_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='DescribeRecord']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_DOMAIN_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_DOMAIN_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetDomain']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORDS_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORDS_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecords']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_GET_RECORD_BY_ID_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='GetRecordById']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
 
-    private final static String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
-    private final static String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_HARVEST_GET_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_CSW_OP_HARVEST_POST_HREF = "/csw:Capabilities/ows:OperationsMetadata[1]/ows:Operation[@name='Harvest']/ows:DCP[1]/ows:HTTP[1]/ows:Post[1]/@xlink:href";
     
-    private final static String XPATH_EXP_CSW_FEES = "/csw:Capabilities/ows:ServiceIdentification/ows:Fees";
-    private final static String XPATH_EXP_CSW_ACCESS_CONSTRAINTS = "/csw:Capabilities/ows:ServiceIdentification/ows:AccessConstraints";
-    private final static String XPATH_EXP_CSW_ONLINE_RESOURCE = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource";
+    private static final String XPATH_EXP_CSW_FEES = "/csw:Capabilities/ows:ServiceIdentification/ows:Fees";
+    private static final String XPATH_EXP_CSW_ACCESS_CONSTRAINTS = "/csw:Capabilities/ows:ServiceIdentification/ows:AccessConstraints";
+    private static final String XPATH_EXP_CSW_ONLINE_RESOURCE = "/csw:Capabilities/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource";
     
     private Map<String, Integer> versionSyslistMap;
     
     public CswCapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Csw202NamespaceContext()), syslistCache);
         
-        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "2.0.2", 1 );
     }
     
@@ -126,7 +126,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
         result.setAddress(getAddress(doc));
         
         // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = mapToOperationBean(doc,
@@ -136,7 +136,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("SERVICE=CSW", "Service type", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Name of request", "", false, false));
             paramList.add(new OperationParameterBean("ACCEPTVERSIONS=1.0.0,0.8.3", "Comma-separated prioritized sequence of one or more specification versions accepted by client, with preferred versions listed first", "", true, false));
@@ -156,7 +156,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             describeRecordOp.setName("DescribeRecord");
             describeRecordOp.setMethodCall("DescribeRecord");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("request=DescribeRecord", "Fixed value of DescribeRecord, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -177,7 +177,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getDomainOp.setName("GetDomain");
             getDomainOp.setMethodCall("GetDomain");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("request=GetDomain", "Fixed value of GetDomain, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -195,7 +195,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getRecordsOp.setName("GetRecords");
             getRecordsOp.setMethodCall("GetRecords");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("request=GetRecords", "Fixed value of GetRecords, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -227,7 +227,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             getRecordByIdOp.setName("GetRecordById");
             getRecordByIdOp.setMethodCall("GetRecordById");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("request=GetRecordById", "Fixed value of GetRecordById, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("Id", "Comma separated list of anyURI", "", false, false));
             paramList.add(new OperationParameterBean("ElementSetName", "CodeList with allowed values: 'brief', 'summary' or 'full'", "", true, false));
@@ -245,7 +245,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
             harvestOp.setName("Harvest");
             harvestOp.setMethodCall("Harvest");
     
-            List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+            List<OperationParameterBean> paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("request=Harvest", "Fixed value of Harvest, case insensitive", "", false, false));
             paramList.add(new OperationParameterBean("service=CSW", "Service name. Shall be CSW", "", false, false));
             paramList.add(new OperationParameterBean("version=2.0.2", "Fixed value of 2.0.2", "", false, false));
@@ -271,13 +271,7 @@ public class CswCapabilitiesParser extends GeneralCapabilitiesParser implements 
      */
     private AddressBean getAddress(Document doc) {
         AddressBean address = new AddressBean();
-        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT+"/ows:IndividualName"));
-        if (name == null) {
-            address.setLastname("N/A");
-        } else {
-            address.setFirstname(name[0].trim());
-            address.setLastname(name[1].trim());
-        }
+        setNameInAddressBean(address, xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT+"/ows:IndividualName"));
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_CSW_SERVICECONTACT + "/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"));
         
         // try to find address in database and set the uuid if found

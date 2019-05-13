@@ -24,7 +24,6 @@ package de.ingrid.portal.portlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -56,12 +55,14 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class CategoryTeaserPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger( CategoryTeaserPortlet.class );
+    private static final Logger log = LoggerFactory.getLogger( CategoryTeaserPortlet.class );
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init( config );
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         Context context = getContext( request );
 
@@ -72,7 +73,7 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         String titleKey = prefs.getValue( "titleKey", "" );
         response.setTitle(messages.getString(titleKey));
         
-        ArrayList<IngridFacet> config = FacetsConfig.getFacets();
+        ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) FacetsConfig.getFacets();
         IngridQuery query;
         IngridHits hits = null;
         String categoryQuery = null;
@@ -82,18 +83,15 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
             UtilsSearch.processRestrictingPartners(query);
             UtilsFacete.addDefaultIngridFacets( request, config );
             if (query.get( "FACETS" ) == null) {
-                ArrayList<IngridDocument> facetQueries = new ArrayList<IngridDocument>();
+                ArrayList<IngridDocument> facetQueries = new ArrayList<>();
                 UtilsFacete.getConfigFacetQuery( config, facetQueries, true, null, true );
-                if (facetQueries != null) {
-                    query.put( "FACETS", facetQueries );
-                }
+                query.put( "FACETS", facetQueries );
             }
-            UtilsFacete.setFacetQuery( null, config, request, query );
+            UtilsFacete.setFacetQuery( null, config, query );
 
-            hits = doSearch( query, 0, 0, Settings.SEARCH_RANKED_HITS_PER_PAGE, messages, request.getLocale() );
+            hits = doSearch( query, 0, 0, Settings.SEARCH_RANKED_HITS_PER_PAGE );
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("ParseExection Error.", e);
         }
         context.put( "facetsTyp", PortalConfig.getInstance().getList( PortalConfig.CATEGORY_TEASER_SEARCH_FACETS_TYP ) );
         if(categoryQuery != null){
@@ -109,11 +107,12 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
         super.doView( request, response );
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {}
 
-    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage, IngridResourceBundle resources, Locale locale) {
+    private IngridHits doSearch(IngridQuery query, int startHit, int groupedStartHit, int hitsPerPage) {
 
-        int currentPage = (int) (startHit / hitsPerPage) + 1;
+        int currentPage = (startHit / hitsPerPage) + 1;
 
         if (groupedStartHit > 0) {
             startHit = groupedStartHit;
@@ -124,12 +123,10 @@ public class CategoryTeaserPortlet extends GenericVelocityPortlet {
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
             hits = ibus.search( query, hitsPerPage, currentPage, startHit, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ) );
 
-            if (hits == null) {
-                if (log.isErrorEnabled()) {
-                    log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
-                }
+            if (hits == null && log.isErrorEnabled()) {
+                log.error( "Problems fetching details to hit list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" );
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error( "Problems performing Search !", t );
             }

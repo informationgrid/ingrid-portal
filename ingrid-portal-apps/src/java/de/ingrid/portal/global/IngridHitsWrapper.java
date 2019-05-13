@@ -71,34 +71,16 @@ public class IngridHitsWrapper extends IngridHits {
         setArray(HITS, hitsWrapper);
     }
     
-    /**
-     * @param hits
-     */
-    private void setWrapperHits(IngridHitWrapper[] hitsWrapper) {
-    	setArray(HITS, hitsWrapper);
-    }
-    
     public IngridHitWrapper[] getWrapperHits() {
     	return (IngridHitWrapper[]) getArray(HITS);
     }
-    
-    /*
-    public IngridHit[] getWrapperHitsAsIngridHits() {
-    	IngridHitWrapper[] hitWrapper = (IngridHitWrapper[]) getArray(HITS);
-    	// FIXME AW: value hard encoded
-    	IngridHit[] hit = new IngridHit[10];
-    	int i = 0;
-    	for (IngridHitWrapper hitW : hitWrapper) {
-    		hit[i++] = hitW.getHit();
-    	}
-    	return hit;
-    }*/
     
     /*
     * @return number of all hits found for the search request Attention is not
     *         equals to number of <code>Hit</code>s stored in this
     *         container, if this is not setted we return 0;
     */
+   @Override
    public long length() {
        if (get(LENGTH) != null) {
            return getLong(LENGTH);
@@ -116,6 +98,7 @@ public class IngridHitsWrapper extends IngridHits {
    /**
     * @return the plugId
     */
+   @Override
    public String getPlugId() {
        return (String) get(IPLUG_ID);
    }
@@ -123,6 +106,7 @@ public class IngridHitsWrapper extends IngridHits {
    /**
     * @param id
     */
+   @Override
    public void setPlugId(String id) {
        put(IPLUG_ID, id);
    }
@@ -130,6 +114,7 @@ public class IngridHitsWrapper extends IngridHits {
    /**
     * @return true if hits are ranked.
     */
+   @Override
    public boolean isRanked() {
        if (get(RANKED) != null) {
            return getBoolean(RANKED);
@@ -140,6 +125,7 @@ public class IngridHitsWrapper extends IngridHits {
    /**
     * @param ranked
     */
+   @Override
    public void setRanked(boolean ranked) {
        putBoolean(RANKED,ranked);
    }
@@ -148,6 +134,7 @@ public class IngridHitsWrapper extends IngridHits {
     * @return the number of hits which has been used by grouping to create this
     *         hit container
     */
+   @Override
    public int getGoupedHitsLength() {
        if (containsKey(GROUPED_HITS_LENGTH)) {
            return getInt(GROUPED_HITS_LENGTH);
@@ -158,6 +145,7 @@ public class IngridHitsWrapper extends IngridHits {
    /**
     * @return the number of different iplugs the hits come from
     */
+   @Override
    public int getInVolvedPlugs() {
        if (containsKey(INVOLVED_PLUGS)) {
            return getInt(INVOLVED_PLUGS);
@@ -168,6 +156,7 @@ public class IngridHitsWrapper extends IngridHits {
    /**
     * @param howMany
     */
+   @Override
    public void setInVolvedPlugs(int howMany) {
        putInt(INVOLVED_PLUGS, howMany);
    }

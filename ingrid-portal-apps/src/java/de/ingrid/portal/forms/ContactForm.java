@@ -114,13 +114,10 @@ public class ContactForm extends ActionForm {
             }
         }
 
-        if(PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE)){
-        	if (!hasInput(FIELD_JCAPTCHA)) {
-                setError(FIELD_JCAPTCHA, "contact.error.noJCapture");
-                allOk = false;
-            }
+        if(PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE) && !hasInput(FIELD_JCAPTCHA)){
+            setError(FIELD_JCAPTCHA, "contact.error.noJCapture");
+            allOk = false;
         }
-        
         return allOk;
     }
     

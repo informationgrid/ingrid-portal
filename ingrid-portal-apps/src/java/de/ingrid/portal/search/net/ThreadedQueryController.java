@@ -39,7 +39,7 @@ import de.ingrid.portal.global.IngridHitsWrapper;
  */
 public class ThreadedQueryController {
 
-    private final static Logger log = LoggerFactory.getLogger(ThreadedQueryController.class);
+    private static final Logger log = LoggerFactory.getLogger(ThreadedQueryController.class);
 
     private Object threadMonitor;
 
@@ -101,7 +101,8 @@ public class ThreadedQueryController {
             mySearches.clear();
 
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("Error on search.", e);
+            Thread.currentThread().interrupt();
         }
         
         return ingridResults;
@@ -130,7 +131,7 @@ public class ThreadedQueryController {
         ingridResults.put(key, hits);
         if (ingridQueryDescriptors.size() == ingridResults.size()) {
             synchronized (threadMonitor) {
-                threadMonitor.notify();
+                threadMonitor.notifyAll();
             }
         }
     }

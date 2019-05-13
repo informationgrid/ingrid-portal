@@ -36,28 +36,27 @@ import com.thoughtworks.xstream.XStream;
 
 public class CoordinateTransformationServiceImpl implements CoordinateTransformationService {
 
-	private final static Logger log = Logger.getLogger(CoordinateTransformationServiceImpl.class);
+	private static final Logger log = Logger.getLogger(CoordinateTransformationServiceImpl.class);
 	
-	private final static String REQUEST_KEY = "REQUEST";
-	private final static String GET_COORDINATES_REQUEST = "GetCoordinates";
-	private final static String SRS_SRC_KEY = "FROMSRS";
-	private final static String SRS_DST_KEY = "TOSRS";
-	private final static String COORDINATES_KEY = "COORDS";
+	private static final String REQUEST_KEY = "REQUEST";
+	private static final String GET_COORDINATES_REQUEST = "GetCoordinates";
+	private static final String SRS_SRC_KEY = "FROMSRS";
+	private static final String SRS_DST_KEY = "TOSRS";
+	private static final String COORDINATES_KEY = "COORDS";
 
 
-	private ResourceBundle resourceBundle; 
 	private String serviceURLStr;
 	private XStream xstream;
 	
 	// standard values, can be overwritten in the properties file
-	private int CONNECTION_TIMEOUT = 5000;
-	private int REQUEST_TIMEOUT = 5000;
+	private int connectionTimeout = 5000;
+	private int requestTimeout = 5000;
 
 
 	// Init Method is called by the Spring Framework on initialization
 	public void init() {
 		String resource;
-		resourceBundle = ResourceBundle.getBundle("cts");
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("cts");
 		serviceURLStr = resourceBundle.getString("cts.serviceURL");
 		
 		// XStream initialization
@@ -68,12 +67,16 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 	    // Optional parameters
 		try {
 			resource = resourceBundle.getString("cts.connectionTimeout");
-			CONNECTION_TIMEOUT = Integer.valueOf(resource);
-		} catch (MissingResourceException e) {}
+			connectionTimeout = Integer.valueOf(resource);
+		} catch (MissingResourceException e) {
+		    log.error("MissingResourceException.", e);
+		}
 		try {
 			resource = resourceBundle.getString("cts.requestTimeout");
-			REQUEST_TIMEOUT = Integer.valueOf(resource);
-		} catch (MissingResourceException e) {}
+			requestTimeout = Integer.valueOf(resource);
+		} catch (MissingResourceException e) {
+		    log.error("MissingResourceException.", e);
+		}
 	}
 
 
@@ -102,8 +105,8 @@ public class CoordinateTransformationServiceImpl implements CoordinateTransforma
 
 			// Set general parameters for the connection
 			ctsConnection.setAllowUserInteraction(false);
-			ctsConnection.setConnectTimeout(CONNECTION_TIMEOUT);
-			ctsConnection.setReadTimeout(REQUEST_TIMEOUT);
+			ctsConnection.setConnectTimeout(connectionTimeout);
+			ctsConnection.setReadTimeout(requestTimeout);
 			ctsConnection.setDoInput(true);
 			ctsConnection.setDoOutput(false);
 

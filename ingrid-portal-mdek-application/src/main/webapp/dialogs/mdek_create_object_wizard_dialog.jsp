@@ -222,7 +222,7 @@ require([
     function autoClassifyUrl(url, numWords) {
         var def = new Deferred();
 
-        SNSService.autoClassifyURL(url, numWords, null, false, null, 100, userLocale, {
+        SNSService.autoClassifyURL(url, numWords, null, false, 100, userLocale, {
             callback: function(topicMap) {
                 def.resolve(topicMap);
             },

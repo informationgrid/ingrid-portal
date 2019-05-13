@@ -40,6 +40,7 @@ public class AdminHomepagePortlet extends ConfigureHomepagePortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -61,6 +62,7 @@ public class AdminHomepagePortlet extends ConfigureHomepagePortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         if (pagePath == null) {
             pagePath = Folder.PATH_SEPARATOR + "default-page.psml";        	

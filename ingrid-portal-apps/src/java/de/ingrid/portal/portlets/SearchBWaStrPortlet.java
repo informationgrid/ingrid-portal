@@ -45,11 +45,13 @@ public class SearchBWaStrPortlet extends GenericVelocityPortlet {
     /** our BWaStr view template */
     private String defaultViewTemplate;
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
     	defaultViewTemplate = config.getInitParameter(PARAM_VIEW_PAGE);
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -108,6 +110,7 @@ public class SearchBWaStrPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
     }

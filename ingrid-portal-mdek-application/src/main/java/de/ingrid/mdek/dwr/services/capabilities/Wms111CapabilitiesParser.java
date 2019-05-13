@@ -40,14 +40,13 @@ import org.w3c.dom.NodeList;
 
 import de.ingrid.geo.utils.transformation.CoordTransformUtil;
 import de.ingrid.geo.utils.transformation.CoordTransformUtil.CoordType;
-import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.MdekUtils.SpatialReferenceType;
+import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.AddressBean;
 import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.beans.object.MdekDataBean;
-import de.ingrid.mdek.beans.object.ObjectReferenceBean;
 import de.ingrid.mdek.beans.object.OperationBean;
 import de.ingrid.mdek.beans.object.OperationParameterBean;
 import de.ingrid.mdek.beans.object.SpatialReferenceSystemBean;
@@ -64,15 +63,14 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
     /**
      * 
      */
-    private static final String XPATH_EXP_WMS_IDENTIFIER = "/WMT_MS_Capabilities/Capability/Layer//Identifier";
     // Version 1.3.0 of the WMS uses 'WMS_Capabilities' as its root element (OGC 06-042, Chapter 7.2.4.1)
     // Version 1.1.1 uses 'WMT_MS_Capabilities'
-    private final static String XPATH_EXP_WMS_1_1_1_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
-    private final static String XPATH_EXP_WMS_1_1_1_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
-    private final static String XPATH_EXP_WMS_1_1_1_VERSION = "/WMT_MS_Capabilities/@version";
-    private final static String XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
-    private final static String XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
-    private final static String XPATH_EXP_WMS_1_1_1_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_1_1_TITLE = "/WMT_MS_Capabilities/Service[1]/Title[1]";
+    private static final String XPATH_EXP_WMS_1_1_1_ABSTRACT = "/WMT_MS_Capabilities/Service[1]/Abstract[1]";
+    private static final String XPATH_EXP_WMS_1_1_1_VERSION = "/WMT_MS_Capabilities/@version";
+    private static final String XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetCapabilities[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetMap[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
+    private static final String XPATH_EXP_WMS_1_1_1_OP_GET_FEATURE_INFO_HREF = "/WMT_MS_Capabilities/Capability[1]/Request[1]/GetFeatureInfo[1]/DCPType[1]/HTTP[1]/Get[1]/OnlineResource[1]/@xlink:href";
 
     private static final String XPATH_EXP_WMS_FEES = "WMT_MS_Capabilities/Service/Fees";
     private static final String XPATH_EXP_WMS_ACCESS_CONSTRAINTS = "/WMT_MS_Capabilities/Service/AccessConstraints";
@@ -87,7 +85,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
     public Wms111CapabilitiesParser(SysListCache syslistCache) {
         super(new XPathUtils(new Wms130NamespaceContext()), syslistCache);
         
-        versionSyslistMap = new HashMap<String, Integer>();
+        versionSyslistMap = new HashMap<>();
         versionSyslistMap.put( "1.1.1", 1 );
         versionSyslistMap.put( "1.3.0", 2 );
     }
@@ -127,13 +125,10 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         List<String> commonKeywords = getKeywords(doc, XPATH_EXP_WMS_KEYWORDS);
         Set<String> allKeywordsSet = new HashSet( getKeywords(doc, XPATH_EXP_WMS_KEYWORDS_LAYER) );        
         allKeywordsSet.addAll( commonKeywords );
-        List<String> allKeywordsList = new ArrayList<String>();
+        List<String> allKeywordsList = new ArrayList<>();
         allKeywordsList.addAll( allKeywordsSet );
         
         // Extended - Keywords
-        //String[] extKeywords = xPathUtils.getStringArray(doc, "/csw:Capabilities/ows:OperationsMetadata/inspire_ds:ExtendedCapabilities/inspire_common:Keyword/inspire_common:KeywordValue");
-        //keywords.addAll(Arrays.asList(extKeywords));
-        // add found keywords to our result bean
         result.setKeywords(allKeywordsList);
         
         // get bounding boxes of each layer and create a union
@@ -142,17 +137,14 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         if ( !boundingBoxesFromLayers.isEmpty() ) {
             unionOfBoundingBoxes = getUnionOfBoundingBoxes(boundingBoxesFromLayers);
             unionOfBoundingBoxes.setName("Raumbezug von: " + result.getTitle());
-            List<LocationBean> union = new ArrayList<LocationBean>();
+            List<LocationBean> union = new ArrayList<>();
             union.add(unionOfBoundingBoxes);
             result.setBoundingBoxes(union);            
         }
         
         // Coupled Resources
-        //String[] references = xPathUtils.getStringArray(doc, XPATH_EXP_WMS_IDENTIFIER);
-        
-        // Coupled Resources
         NodeList identifierNodes = xPathUtils.getNodeList(doc, "/WMT_MS_Capabilities/Capability/Layer//Identifier");
-        List<MdekDataBean> coupledResources = new ArrayList<MdekDataBean>();
+        List<MdekDataBean> coupledResources = new ArrayList<>();
         List<SNSTopic> commonSNSTopics = transformKeywordListToSNSTopics( commonKeywords );
         for ( int i = 0; i < identifierNodes.getLength(); i++ ) {
             String id = identifierNodes.item(i).getTextContent();
@@ -168,7 +160,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
                 List<SNSTopic> keywordsFromLayer = transformKeywordListToSNSTopics( getKeywords(layerNode, "KeywordList/Keyword") );
                 keywordsFromLayer.addAll( commonSNSTopics );
                 newDataset.setThesaurusTermsTable( keywordsFromLayer );
-                List<LocationBean> boxes = new ArrayList<LocationBean>();
+                List<LocationBean> boxes = new ArrayList<>();
                 LocationBean box = getBoundingBoxFromLayer( layerNode );
                 if ( box != null ) boxes.add( box );
                 else if ( unionOfBoundingBoxes != null ) boxes.add( unionOfBoundingBoxes );
@@ -198,21 +190,21 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // result.setConformities(mapToConformityBeans(doc, XPATH_EXP_CSW_CONFORMITY));
 
         // Operation List
-        List<OperationBean> operations = new ArrayList<OperationBean>();
+        List<OperationBean> operations = new ArrayList<>();
 
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = new OperationBean();
         getCapabilitiesOp.setName("GetCapabilities");
         getCapabilitiesOp.setMethodCall("GetCapabilities");
-        List<Integer> getCapabilitiesOpPlatform = new ArrayList<Integer>();
+        List<Integer> getCapabilitiesOpPlatform = new ArrayList<>();
         getCapabilitiesOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
         getCapabilitiesOp.setPlatform(getCapabilitiesOpPlatform);
-        List<String> getCapabilitiesOpAddressList = new ArrayList<String>();
+        List<String> getCapabilitiesOpAddressList = new ArrayList<>();
         String address = xPathUtils.getString(doc, XPATH_EXP_WMS_1_1_1_OP_GET_CAPABILITIES_HREF);
         getCapabilitiesOpAddressList.add(address);
         getCapabilitiesOp.setAddressList(getCapabilitiesOpAddressList);
 
-        List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
+        List<OperationParameterBean> paramList = new ArrayList<>();
         paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", true, false));
         paramList.add(new OperationParameterBean("SERVICE=WMS", "Service type", "", false, false));
         paramList.add(new OperationParameterBean("REQUEST=GetCapabilities", "Request name", "", false, false));
@@ -224,14 +216,14 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         OperationBean getMapOp = new OperationBean();
         getMapOp.setName("GetMap");
         getMapOp.setMethodCall("GetMap");
-        List<Integer> getMapOpPlatform = new ArrayList<Integer>();
+        List<Integer> getMapOpPlatform = new ArrayList<>();
         getMapOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
         getMapOp.setPlatform(getMapOpPlatform);
-        List<String> getMapOpAddressList = new ArrayList<String>();
+        List<String> getMapOpAddressList = new ArrayList<>();
         getMapOpAddressList.add(xPathUtils.getString(doc, XPATH_EXP_WMS_1_1_1_OP_GET_MAP_HREF));
         getMapOp.setAddressList(getMapOpAddressList);
 
-        paramList = new ArrayList<OperationParameterBean>();
+        paramList = new ArrayList<>();
         paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
         paramList.add(new OperationParameterBean("REQUEST=GetMap", "Request name", "", false, false));
         paramList.add(new OperationParameterBean("LAYERS=layer_list", "Comma-separated list of one or more map layers. Optional if SLD parameter is present", "", false, false));
@@ -260,14 +252,14 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
             OperationBean getFeatureInfoOp = new OperationBean();
             getFeatureInfoOp.setName("GetFeatureInfo");
             getFeatureInfoOp.setMethodCall("GetFeatureInfo");
-            List<Integer> getFeatureInfoOpPlatform = new ArrayList<Integer>();
+            List<Integer> getFeatureInfoOpPlatform = new ArrayList<>();
             getFeatureInfoOpPlatform.add(ID_OP_PLATFORM_HTTP_GET);
             getFeatureInfoOp.setPlatform(getFeatureInfoOpPlatform);
-            List<String> getFeatureInfoOpAddressList = new ArrayList<String>();
+            List<String> getFeatureInfoOpAddressList = new ArrayList<>();
             getFeatureInfoOpAddressList.add(getFeatureInfoAddress);
             getFeatureInfoOp.setAddressList(getFeatureInfoOpAddressList);
     
-            paramList = new ArrayList<OperationParameterBean>();
+            paramList = new ArrayList<>();
             paramList.add(new OperationParameterBean("VERSION="+version, "Request version", "", false, false));
             paramList.add(new OperationParameterBean("REQUEST=GetFeatureInfo", "Request name", "", false, false));
             paramList.add(new OperationParameterBean("(map_request_copy)", "Partial copy of the Map request parameters that generated the map for which information is desired", "", false, false));
@@ -322,14 +314,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
      */
     private AddressBean getAddress(Document doc) {
         AddressBean address = new AddressBean();
-        String[] name = extractName(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactPerson"));
-        if (name != null) {
-            address.setFirstname(name[0].trim());
-            address.setLastname(name[1].trim());
-        } else {
-            address.setLastname("N/A");
-        }
-        
+        setNameInAddressBean(address, xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactPerson"));
         address.setOrganisation(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactPersonPrimary/ContactOrganization"));
         address.setEmail(xPathUtils.getString(doc, XPATH_EXT_WMS_CONTACTINFORMATION + "/ContactElectronicMailAddress"));
         
@@ -351,7 +336,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
      * @return
      */
     private List<LocationBean> getBoundingBoxesFromLayers(Document doc) {
-        List<LocationBean> bboxes = new ArrayList<LocationBean>();
+        List<LocationBean> bboxes = new ArrayList<>();
         CoordTransformUtil coordUtils = CoordTransformUtil.getInstance();
         NodeList layers = xPathUtils.getNodeList(doc, "/WMT_MS_Capabilities/Capability/Layer/Layer");
         for (int i = 0; i < layers.getLength(); i++) {
@@ -419,7 +404,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
             coordsTrans[0] = transMin[0];
             coordsTrans[1] = transMin[1];
             coordsTrans[2] = transMax[0];
-            coordsTrans[3] = transMax[1];            
+            coordsTrans[3] = transMax[1];
         } catch (Exception e) {
             coordsTrans = null;
             e.printStackTrace();
@@ -455,7 +440,7 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
      * @return
      */
     private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
-        List<SpatialReferenceSystemBean> result = new ArrayList<SpatialReferenceSystemBean>();
+        List<SpatialReferenceSystemBean> result = new ArrayList<>();
         String[] crs = xPathUtils.getStringArray(doc, XPATH_EXP_WMS_LAYER_CRS);
         
         // check codelists for matching entryIds
@@ -477,22 +462,6 @@ public class Wms111CapabilitiesParser extends GeneralCapabilitiesParser implemen
         return result;
     }
 
-    /**
-     * @param references
-     * @return
-     */
-    private List<ObjectReferenceBean> checkForCoupledResource(String[] references) {
-        List<ObjectReferenceBean> result = new ArrayList<ObjectReferenceBean>();
-        for (String resourceId : references) {
-            ObjectReferenceBean bean = new ObjectReferenceBean();
-            bean.setUuid(resourceId);
-            bean.setObjClass("1");
-            bean.setTitle("to be implemented");
-            result.add(bean);            
-        }
-        return result;
-    }
-    
     private LocationBean getBoundingBoxFromLayer(Node layerNode) {
         LocationBean box = null;
         CoordTransformUtil coordUtils = CoordTransformUtil.getInstance();

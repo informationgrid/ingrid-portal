@@ -28,14 +28,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.quartz.InterruptableJob;
-import org.quartz.JobDataMap;
-import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.UnableToInterruptJobException;
+import org.quartz.*;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import de.ingrid.mdek.MdekKeys;
@@ -56,7 +49,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, InterruptableJob {
 
-	private final static Logger log = Logger.getLogger(SNSLocationUpdateJob.class);	
+	private static final Logger log = Logger.getLogger(SNSLocationUpdateJob.class);
 
 	private static final String JOB_BASE_NAME = "snsLocationUpdateJob_";
 	private final String plugId;
@@ -68,8 +61,6 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	private boolean cancelJob;
 
 	private Locale locale;
-
-    //private String urlGazetteer;
 
 	// No args constructor is required for the job to be scheduled by quartz
 	public SNSLocationUpdateJob() {
@@ -90,15 +81,19 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	}
 
 	private JobDetail createJobDetail(ConnectionFacade connectionFacade, SNSService snsService, String lang) {
-		JobDetail jobDetail = new JobDetail(jobName, Scheduler.DEFAULT_GROUP, SNSLocationUpdateJob.class);
 		JobDataMap jobDataMap = new JobDataMap();
 		jobDataMap.put("SNS_SERVICE", snsService);
 		jobDataMap.put("CONNECTION_FACADE", connectionFacade);
 		jobDataMap.put("PLUG_ID", connectionFacade.getCurrentPlugId());
 		jobDataMap.put("USER_ID", MdekSecurityUtils.getCurrentUserUuid());
 		jobDataMap.put("LOCALE", new Locale( lang ));
-		//jobDataMap.put("URL_GAZETTEER", ResourceBundle.getBundle("sns").getString("sns.serviceURL.gazetteer"));
-		jobDetail.setJobDataMap(jobDataMap);
+
+		JobDetail jobDetail = JobBuilder.newJob(SNSLocationUpdateJob.class)
+				.withIdentity(jobName, Scheduler.DEFAULT_GROUP)
+				.setJobData(jobDataMap)
+				.storeDurably()
+				.build();
+
 
 		return jobDetail;
 	}
@@ -108,7 +103,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 		if (!isRunning()) {
 			scheduler.addJob(jobDetail, true);
-			scheduler.triggerJobWithVolatileTrigger(jobName, Scheduler.DEFAULT_GROUP);
+			scheduler.triggerJob(JobKey.jobKey(jobName));
 			return true;
 
 		} else {
@@ -123,46 +118,45 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		JobDataMap mergedJobDataMap = jobExecutionContext.getMergedJobDataMap();
 		SNSService snsService = (SNSService) mergedJobDataMap.get("SNS_SERVICE");
 		ConnectionFacade connectionFacade = (ConnectionFacade) mergedJobDataMap.get("CONNECTION_FACADE");
-		String plugId = mergedJobDataMap.getString("PLUG_ID");
+		String pId = mergedJobDataMap.getString("PLUG_ID");
 		String userId = mergedJobDataMap.getString("USER_ID");
 		locale = (Locale) mergedJobDataMap.get("LOCALE");
-		//urlGazetteer = mergedJobDataMap.getString("URL_GAZETTEER");
 
 		log.debug("Starting sns location update...");
 		long startTime = System.currentTimeMillis();
-		List<SNSLocationTopic> snsTopics = fetchSNSLocationTopics(connectionFacade.getMdekCallerCatalog(), plugId, userId);
+		List<SNSLocationTopic> snsTopics = fetchSNSLocationTopics(connectionFacade.getMdekCallerCatalog(), pId, userId);
+		if(!snsTopics.isEmpty()) {
+    		jobExecutionContext.put("NUM_PROCESSED", 0);
+    		jobExecutionContext.put("NUM_TOTAL", snsTopics.size());
 
-		jobExecutionContext.put("NUM_PROCESSED", new Integer(0));
-		jobExecutionContext.put("NUM_TOTAL", snsTopics.size());
+    		log.debug("changed topic matches: " + snsTopics.size());
+    		List<SNSLocationTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopics, jobExecutionContext);
 
-		log.debug("changed topic matches: " + snsTopics.size());
-		List<SNSLocationTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopics, jobExecutionContext);
+    		List<SNSLocationTopic> snsTopicsToExpire = filterExpired(snsTopics);
+    		log.debug("expired topic matches: " + snsTopicsToExpire.size());
 
+    		long endTime = System.currentTimeMillis();
+    		log.debug("SNS Location Update took "+(endTime - startTime)+" ms.");
 
-		List<SNSLocationTopic> snsTopicsToExpire = filterExpired(snsTopics);
-		log.debug("expired topic matches: " + snsTopicsToExpire.size());
+    		if (!cancelJob) {
+    			JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire);
+    			jobExecutionContext.setResult(jobResult);
 
-		long endTime = System.currentTimeMillis();
-		log.debug("SNS Location Update took "+(endTime - startTime)+" ms.");
+    			// TODO Send result to backend
+    			IngridDocument response = connectionFacade.getMdekCallerCatalog().updateSpatialReferences(
+    					pId,
+    					mapFromSNSLocationTopics(jobResult.getOldTopics()),
+    					mapFromSNSLocationTopics(jobResult.getNewTopics()),
+    					userId);
 
-		if (!cancelJob) {
-			JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire);
-			jobExecutionContext.setResult(jobResult);
-
-			// TODO Send result to backend
-			IngridDocument response = connectionFacade.getMdekCallerCatalog().updateSpatialReferences(
-					plugId,
-					mapFromSNSLocationTopics(jobResult.getOldTopics()),
-					mapFromSNSLocationTopics(jobResult.getNewTopics()),
-					userId);
-
-			SNSLocationUpdateJobInfoBean jobInfo = MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, true);
-			sendExpiryMails(jobInfo.getSnsUpdateResults(), plugId, userId);
+    			SNSLocationUpdateJobInfoBean jobInfo = MdekCatalogUtils.extractSNSLocationUpdateJobInfoFromResponse(response, true);
+    			sendExpiryMails(jobInfo.getSnsUpdateResults(), pId, userId);
+    		}
 		}
 	}
 
     private static List<IngridDocument> mapFromSNSLocationTopics(List<SNSLocationTopic> topics) {
-		List<IngridDocument> resultDocs = new ArrayList<IngridDocument>();
+		List<IngridDocument> resultDocs = new ArrayList<>();
 
 		if (topics != null) {
 			for (SNSLocationTopic topic : topics) {
@@ -217,53 +211,49 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 
 		} else {
 			MdekErrorUtils.handleError(response);
-			return null;
+			return new ArrayList<>();
 		}
 	}
 
 	private static List<SNSLocationTopic> mapToSNSLocationTopics(List<IngridDocument> topics) {
-		List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
-		if (resultList != null) {
-			for (IngridDocument topic : topics) {
-				SNSLocationTopic t = new SNSLocationTopic();
-				t.setTopicId((String) topic.get(MdekKeys.LOCATION_SNS_ID));
-				t.setName((String) topic.get(MdekKeys.LOCATION_NAME));
-				t.setNativeKey((String) topic.get(MdekKeys.LOCATION_CODE));
-				t.setTypeId((String) topic.get(MdekKeys.SNS_TOPIC_TYPE));
-	
-				if (topic.get(MdekKeys.WEST_BOUNDING_COORDINATE) != null &&
-						topic.get(MdekKeys.SOUTH_BOUNDING_COORDINATE) != null &&
-						topic.get(MdekKeys.EAST_BOUNDING_COORDINATE) != null &&
-						topic.get(MdekKeys.NORTH_BOUNDING_COORDINATE) != null) {
-					t.setBoundingBox(
-							((Double) topic.get(MdekKeys.WEST_BOUNDING_COORDINATE)).floatValue(),
-							((Double) topic.get(MdekKeys.SOUTH_BOUNDING_COORDINATE)).floatValue(),
-							((Double) topic.get(MdekKeys.EAST_BOUNDING_COORDINATE)).floatValue(),
-							((Double) topic.get(MdekKeys.NORTH_BOUNDING_COORDINATE)).floatValue());
-				}
-				resultList.add(t);
+		List<SNSLocationTopic> resultList = new ArrayList<>();
+		for (IngridDocument topic : topics) {
+			SNSLocationTopic t = new SNSLocationTopic();
+			t.setTopicId((String) topic.get(MdekKeys.LOCATION_SNS_ID));
+			t.setName((String) topic.get(MdekKeys.LOCATION_NAME));
+			t.setNativeKey((String) topic.get(MdekKeys.LOCATION_CODE));
+			t.setTypeId((String) topic.get(MdekKeys.SNS_TOPIC_TYPE));
+
+			if (topic.get(MdekKeys.WEST_BOUNDING_COORDINATE) != null &&
+					topic.get(MdekKeys.SOUTH_BOUNDING_COORDINATE) != null &&
+					topic.get(MdekKeys.EAST_BOUNDING_COORDINATE) != null &&
+					topic.get(MdekKeys.NORTH_BOUNDING_COORDINATE) != null) {
+				t.setBoundingBox(
+						((Double) topic.get(MdekKeys.WEST_BOUNDING_COORDINATE)).floatValue(),
+						((Double) topic.get(MdekKeys.SOUTH_BOUNDING_COORDINATE)).floatValue(),
+						((Double) topic.get(MdekKeys.EAST_BOUNDING_COORDINATE)).floatValue(),
+						((Double) topic.get(MdekKeys.NORTH_BOUNDING_COORDINATE)).floatValue());
 			}
+			resultList.add(t);
 		}
 
 		return resultList;
 	}
 
 	private List<SNSLocationTopic> filterExpired(List<SNSLocationTopic> snsTopics) {
-		if (snsTopics != null) {
-			List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+	    List<SNSLocationTopic> resultList = new ArrayList<>();
+        if (snsTopics != null) {
 			for (SNSLocationTopic topic : snsTopics) {
 				if (topic.isExpired()) {
 					resultList.add(topic);
 				}
 			}
-			return resultList;
-
 		}
-		return null;
+		return resultList;
 	}
 
 	private List<SNSLocationTopic> updateChangedTopics(SNSService snsService, List<SNSLocationTopic> snsTopics, JobExecutionContext jobExecutionContext) {
-		List<SNSLocationTopic> newTopics = new ArrayList<SNSLocationTopic>(snsTopics.size());
+		List<SNSLocationTopic> newTopics = new ArrayList<>(snsTopics.size());
 		for (SNSLocationTopic oldTopic : snsTopics) {
 			if (cancelJob) {
 				break;
@@ -272,9 +262,6 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			SNSLocationTopic newTopic;
 			try {
 			    String topicId = oldTopic.getTopicId();
-//			    if (!topicId.startsWith( "http" )) {
-//			        topicId = urlGazetteer + topicId;
-//			    }
 				newTopic = findTopicById(snsService, topicId);
 
 				// If the topic was not found, query by name and find a 'best match'
@@ -287,7 +274,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 					// Find a 'best match' from the returned topics
 					for (SNSLocationTopic topic : topics) {
 						newTopic = topic;
-						if (topic.getNativeKey() != null && topic.getNativeKey().equals(oldTopic.getNativeKey())) {// && topic.getTypeId() != null && topic.getTypeId().equals(oldTopic.getTypeId())) {
+						if (topic.getNativeKey() != null && topic.getNativeKey().equals(oldTopic.getNativeKey())) {
 							log.debug("found topic with same name and native key");
 							break;
 
@@ -307,7 +294,9 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			// flatten all successors, in case several references of expired topics occurred
 			if (newTopic != null) {
     			List<SNSLocationTopic> validSuccessors = getNonExpiredSuccessors( newTopic );
-    			newTopic.setSuccessors( validSuccessors );
+    			if(!validSuccessors.isEmpty()) {
+    			    newTopic.setSuccessors( validSuccessors );
+			    }
 			}
 			
 			log.debug("old topic: " + oldTopic);
@@ -319,26 +308,22 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	}
 
 	private List<SNSLocationTopic> getNonExpiredSuccessors( SNSLocationTopic newTopic ) {
-	    List<SNSLocationTopic> successors = newTopic.getSuccessors();
-	    if (successors == null) return null;
-	    
-	    List<SNSLocationTopic> topics = new ArrayList<SNSLocationTopic>();
-	    for (SNSLocationTopic successor : successors) {
-            // only add successor that is not expired AND that is not a reference to itself!!!
-	        if (!successor.isExpired() && !successor.getTopicId().equals( newTopic.getTopicId() )) {
-                topics.add( successor );
+	    List<SNSLocationTopic> topics = new ArrayList<>();
+        List<SNSLocationTopic> successors = newTopic.getSuccessors();
+	    if (successors != null) {
+    	    for (SNSLocationTopic successor : successors) {
+                // only add successor that is not expired AND that is not a reference to itself!!!
+    	        if (!successor.isExpired() && !successor.getTopicId().equals( newTopic.getTopicId() )) {
+                    topics.add( successor );
+                }
+
+    	        // include successors of a successor
+    	        List<SNSLocationTopic> moreSuccessors = getNonExpiredSuccessors( successor );
+    	        if (!moreSuccessors.isEmpty()) {
+    	            topics.addAll( moreSuccessors );
+    	        }
             }
-	        
-	        // include successors of a successor
-	        List<SNSLocationTopic> moreSuccessors = getNonExpiredSuccessors( successor );
-	        if (moreSuccessors != null) {
-	            topics.addAll( moreSuccessors );
-	        }
-        }
-        
-	    // do not add empty lists!
-	    if (topics.isEmpty()) return null;
-	    
+	    }
         return topics;
     }
 
@@ -355,7 +340,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 		List<SNSLocationTopic> topics = snsService.getLocationTopics(topicName, null, null, locale);
 
 		for (Iterator<SNSLocationTopic> iterator = topics.iterator(); iterator.hasNext();) {
-			SNSLocationTopic topic = (SNSLocationTopic) iterator.next();
+			SNSLocationTopic topic = iterator.next();
 			if (topic.getName() == null || !topic.getName().equalsIgnoreCase((topicName))) {
 				iterator.remove();
 			}
@@ -368,8 +353,8 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	private static JobResult createJobResult(List<SNSLocationTopic> modTopics, List<SNSLocationTopic> modResultTopics,
 			List<SNSLocationTopic> expiredTopics) {
 
-		List<SNSLocationTopic> oldTopics = new ArrayList<SNSLocationTopic>();
-		List<SNSLocationTopic> newTopics = new ArrayList<SNSLocationTopic>();
+		List<SNSLocationTopic> oldTopics = new ArrayList<>();
+		List<SNSLocationTopic> newTopics = new ArrayList<>();
 
 		// Check if the newly found topics differ from the old ones
 		removeIdenticalTopics(modTopics, modResultTopics);
@@ -419,7 +404,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	}
 
 	private static boolean isEqual(String s1, String s2) {
-		return s1 != null ? s1.equals(s2) : s1 == s2;
+		return s1.equals(s2);
 	}
 
 	private static boolean isEqual(float[] bb1, float[] bb2) {
@@ -447,7 +432,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 			if (scheduler != null) {
 				List<JobExecutionContext> executionContextList = scheduler.getCurrentlyExecutingJobs();
 				for (JobExecutionContext executionContext : executionContextList) {
-					if (jobName.equals(executionContext.getJobDetail().getName())) {
+					if (jobName.equals(executionContext.getJobDetail().getKey().getName())) {
 						return executionContext;
 					}
 				}
@@ -487,16 +472,12 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	public void stop() {
 		try {
 			log.debug("trying to interrupt job via scheduler...");
-			scheduler.interrupt(jobName, Scheduler.DEFAULT_GROUP);
-			scheduler.deleteJob(jobName, Scheduler.DEFAULT_GROUP);
+			scheduler.interrupt(JobKey.jobKey(jobName));
+			scheduler.deleteJob(JobKey.jobKey(jobName));
 
-		} catch (UnableToInterruptJobException ex) {
-			log.error("Error interrupting SNS Location Update job.", ex);
-		
 		} catch (SchedulerException ex) {
 			log.error("Error interrupting SNS Location Update job.", ex);
 		}
- 
 	}
 
 	public String getName() {

@@ -479,14 +479,15 @@ public class FileSystemStorage implements Storage {
      * @return String
      */
     private boolean isValid(final String path, final Pattern illegalChars) {
+        boolean isValid = true;
         // check against rules provided in https://en.m.wikipedia.org/wiki/Filename
         if (path == null || path.length() == 0 || path.length() > MAX_FILE_LENGTH) {
-            return false;
+            isValid = false;
         }
         if (illegalChars.matcher(path).matches()) {
-            return false;
+            isValid = false;
         }
-        return true;
+        return isValid;
     }
 
     /**

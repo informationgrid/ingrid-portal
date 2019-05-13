@@ -29,7 +29,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.portlet.PortletException;
@@ -61,7 +60,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class ShowPartnerPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ShowPartnerPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowPartnerPortlet.class);
 
     private static final String[] REQUESTED_FIELDS_ADDRESS = new String[] { "t02_address.id", "t02_address.adr_id", "title", "t02_address.lastname", "t02_address.firstname", "t02_address.address_key", "t02_address.address_value", "t02_address.title_key", "t02_address.title", "t021_communication.commtype_key", "t021_communication.commtype_value", "t021_communication.comm_value", "children.address_node.addr_type", "t02_address.parents.title", "partner", "provider" };
     
@@ -69,6 +68,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 
         Context context = getContext(request);
@@ -90,8 +90,8 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
         if(partnerQuery != null && partnerQuery.length() > 0){
             try {
                 IBusQueryResultIterator it = new IBusQueryResultIterator( QueryStringParser.parse( partnerQuery ), REQUESTED_FIELDS_ADDRESS, IBUSInterfaceImpl.getInstance().getIBus() );
-                ArrayList<String> addedInstitution = new ArrayList<String>();
-                TreeMap<String, HashMap<String, Object>> partnersMap = new TreeMap<String, HashMap<String, Object>>();
+                ArrayList<String> addedInstitution = new ArrayList<>();
+                TreeMap<String, HashMap<String, Object>> partnersMap = new TreeMap<>();
                 
                 while (it.hasNext()) {
                     IngridHit hit = it.next();
@@ -101,34 +101,31 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                     for (String partnerOfHit : partnersOfHit) {
                         HashMap<String, Object> partnerProvider = partnersMap.get( partnerOfHit );
                         if(partnerProvider == null){
-                            HashMap<String, Object> partner = new HashMap<String, Object>();
+                            HashMap<String, Object> partner = new HashMap<>();
                             partner.put( "ident", partnerOfHit );
                             partner.put( "name", UtilsDB.getPartnerFromKey( partnerOfHit ) );
-                            partnerProvider = new HashMap<String, Object>();
+                            partnerProvider = new HashMap<>();
                             partnerProvider.put( "partner", partner );
-                            partnerProvider.put( "providers", new ArrayList<HashMap<String, HashMap<String, String>>>() );
+                            partnerProvider.put( "providers", new ArrayList<>() );
                             partnersMap.put( partnerOfHit, partnerProvider );
                         }
                         
                         ArrayList<HashMap<String, HashMap<String, String>>> providers = (ArrayList<HashMap<String, HashMap<String, String>>>) partnerProvider.get( "providers" );
-                        HashMap<String, String> provider = new HashMap<String, String>();
+                        HashMap<String, String> provider = new HashMap<>();
                         String name = null;
                         if(detail.get("title") != null){
                             name = UtilsSearch.getDetailValue(detail, "title");
-
-                            if(name != null){
-                                if(detail.get("t02_address.parents.title") != null)
-                                    if(detail.get("t02_address.parents.title") instanceof String[]){
-                                        name = UtilsSearch.getDetailValue(detail, "t02_address.parents.title") + "<br>" + name.trim();
-                                    } else {
-                                        ArrayList<String> parentsTitle = (ArrayList<String>) detail.get("t02_address.parents.title");
-                                        if(parentsTitle != null){
-                                            for(String title : parentsTitle){
-                                                name = title + "<br>" + name.trim();
-                                            }
+                            if(name != null && detail.get("t02_address.parents.title") != null) {
+                                if(detail.get("t02_address.parents.title") instanceof String[]){
+                                    name = UtilsSearch.getDetailValue(detail, "t02_address.parents.title") + "<br>" + name.trim();
+                                } else {
+                                    ArrayList<String> parentsTitle = (ArrayList<String>) detail.get("t02_address.parents.title");
+                                    if(parentsTitle != null){
+                                        for(String title : parentsTitle){
+                                            name = title + "<br>" + name.trim();
                                         }
                                     }
-                                
+                                }
                             }
                             provider.put( "name", name.trim());
                         }
@@ -147,15 +144,13 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                                 values = getIndexValue(detail.get("t021_communication.comm_value"));
                                 
                                 for (int i = 0; i < typeKeys.size(); i++) {
-                                    String typeKey = (String) typeKeys.get(i);
+                                    String typeKey = typeKeys.get(i);
                                     String typeValue = null;
                                     String value = null;
                                     if(typeValues.size() > i){
-                                        typeValue = ((String)typeValues.get(i)).toLowerCase();
-                                        if(typeKey.equals("4") && typeValue.indexOf( "url" ) > -1){
-                                            if(values.size() > i){
-                                                value = (String) values.get(i);
-                                            }
+                                        typeValue = (typeValues.get(i)).toLowerCase();
+                                        if(typeKey.equals("4") && typeValue.indexOf( "url" ) > -1 && values.size() > i){
+                                            value = values.get(i);
                                         }
                                     }
                                     if(value != null){
@@ -167,13 +162,12 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                                     }
                                 }
                             }
-                            if(provider != null && provider.size() > 0){
-                                if(addedInstitution.indexOf( (detail.getPlugId() + "_" + detail.getId()).toLowerCase().trim() ) == -1){
-                                    HashMap<String, HashMap<String, String>> providerMap = new HashMap<String, HashMap<String, String>>();
-                                    providerMap.put( "provider", provider );
-                                    providers.add( providerMap );
-                                    addedInstitution.add( (detail.getPlugId() + "_" + detail.getId()).toLowerCase().trim() );
-                                }
+                            if(provider != null && provider.size() > 0 &&
+                                    addedInstitution.indexOf( (detail.getPlugId() + "_" + detail.getId()).toLowerCase().trim() ) == -1){
+                                HashMap<String, HashMap<String, String>> providerMap = new HashMap<>();
+                                providerMap.put( "provider", provider );
+                                providers.add( providerMap );
+                                addedInstitution.add( (detail.getPlugId() + "_" + detail.getId()).toLowerCase().trim() );
                             }
                         }
                     }
@@ -184,11 +178,11 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                         Map.Entry<String, HashMap<String, Object>>  partner = itPartnerMap.next();
                         if(partner.getValue() != null){
                             ArrayList<HashMap<String, HashMap<String, String>>> providers = (ArrayList<HashMap<String, HashMap<String, String>>>) partner.getValue().get( "providers" );
-                            if(providers.size() > 0){
+                            if(!providers.isEmpty()){
                                 Collections.sort(providers, new Comparator<HashMap>(){
                                     public int compare(HashMap left, HashMap right){
-                                        String leftKey = (String) ((HashMap<String, String>) left.get("provider")).get("name");
-                                        String rightKey = (String) ((HashMap<String, String>) right.get("provider")).get("name");
+                                        String leftKey = ((HashMap<String, String>) left.get("provider")).get("name");
+                                        String rightKey = ((HashMap<String, String>) right.get("provider")).get("name");
                                         return leftKey.toLowerCase().compareTo(rightKey.toLowerCase());
                                     }
                                 });
@@ -200,7 +194,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 }
                 context.put( "partners", partnersMap );
             } catch (ParseException e) {
-                log.error( "Error by executing search with query: " + partnerQuery);
+                log.error( "Error by executing search with query: " + partnerQuery, e);
             }
         } else {
             try {
@@ -239,7 +233,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
                 }
 
                 context.put("plugs", plugDescriptions);
-            } catch (Throwable t) {
+            } catch (Exception t) {
                 if (log.isErrorEnabled()) {
                     log.error("Problems processing partner/provider and iPlugs.", t);
                 }
@@ -271,7 +265,7 @@ public class ShowPartnerPortlet extends GenericVelocityPortlet {
     }
     
     private ArrayList<String> getIndexValue(Object obj){
-        ArrayList<String> array = new ArrayList<String>();
+        ArrayList<String> array = new ArrayList<>();
         if(obj instanceof String[]){
             String [] tmp = (String[]) obj;
             for (String s : tmp) {

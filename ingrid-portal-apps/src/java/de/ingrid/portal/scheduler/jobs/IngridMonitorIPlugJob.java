@@ -49,7 +49,7 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.iplug";
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorIPlugJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorIPlugJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -108,16 +108,13 @@ public class IngridMonitorIPlugJob extends IngridMonitorAbstractJob {
 		} catch (InterruptedException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
-		} catch (IOException e) {
+		} catch (IOException | TimeoutException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
-		} catch (TimeoutException e) {
-			status = STATUS_ERROR;
-			statusCode = STATUS_CODE_ERROR_TIMEOUT;
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
-			e.printStackTrace();
+			log.error("Error on execute.", e);
 		}
 		
 		updateJobData(context, status, statusCode);

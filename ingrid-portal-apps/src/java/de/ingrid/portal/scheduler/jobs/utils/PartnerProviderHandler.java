@@ -34,26 +34,23 @@ import de.ingrid.portal.om.IngridProvider;
 
 public class PartnerProviderHandler {
     
-    private final static Logger log = Logger.getLogger(PartnerProviderHandler.class);
+    private static final Logger log = Logger.getLogger(PartnerProviderHandler.class);
 
     public void run(List<CodeList> codelists) {
         for (CodeList codeList : codelists) {
             
-            switch ( codeList.getId() ) {
-            case "110": // PARTNER
+            if ( codeList.getId().equals("110") ) {
                 log.info( "Partner are being updated." );
                 deleteAllPartner();
-                codeList.getEntries().forEach( entry -> {
-                    addPartner(entry);
-                });
-                break;
-            case "111": // PROVIDER
+                codeList.getEntries().forEach( entry -> 
+                    addPartner(entry)
+                );
+            } else if( codeList.getId().equals("111")) { // PROVIDER
                 log.info( "Provider are being updated." );
                 deleteAllProvider();
-                codeList.getEntries().forEach( entry -> {
-                    addProvider(entry);
-                });
-                break;
+                codeList.getEntries().forEach( entry -> 
+                    addProvider(entry)
+                );
             }
             
         }

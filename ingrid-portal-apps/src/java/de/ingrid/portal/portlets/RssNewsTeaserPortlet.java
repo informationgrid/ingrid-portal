@@ -45,12 +45,14 @@ import de.ingrid.portal.om.IngridRSSStore;
 
 public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
     
-    private final static Logger log = LoggerFactory.getLogger(RssNewsTeaserPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(RssNewsTeaserPortlet.class);
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 
@@ -83,7 +85,7 @@ public class RssNewsTeaserPortlet extends GenericVelocityPortlet {
             rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate"))
                     .setMaxResults(noOfEntriesDisplayed).list();
             tx.commit();
-        } catch (Throwable t) {
+        } catch (Exception t) {
             log.error("Error getting RSS entries", t);
             if (tx != null) {
                 tx.rollback();

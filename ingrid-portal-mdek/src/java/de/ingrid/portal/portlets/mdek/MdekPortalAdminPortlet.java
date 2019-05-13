@@ -75,30 +75,30 @@ import de.ingrid.utils.IngridDocument;
  */
 public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
-    private final static Log log = LogFactory.getLog(MdekPortalAdminPortlet.class);
+    private static final Log log = LogFactory.getLog(MdekPortalAdminPortlet.class);
 
     // VIEW TEMPLATES
-    private final static String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_portal_admin.vm";
-    private final static String TEMPLATE_NEW = "/WEB-INF/templates/mdek/mdek_portal_admin_create_catalog.vm";
+    private static final String TEMPLATE_START = "/WEB-INF/templates/mdek/mdek_portal_admin.vm";
+    private static final String TEMPLATE_NEW = "/WEB-INF/templates/mdek/mdek_portal_admin_create_catalog.vm";
 
     // Portlet State
-    private enum STATE {START, NEW};
+    private enum STATE {START, NEW}
     private STATE state;
 
     // Possible Actions
-    private final static String PARAMV_ACTION_DO_DELETE = "doDelete";
-    private final static String PARAMV_ACTION_DO_NEW = "doNew";
-    private final static String PARAMV_ACTION_DO_RELOAD = "doReload";
-    private final static String PARAMV_ACTION_DO_CREATE_CATALOG = "doCreateCatalog";
-    private final static String PARAMV_ACTION_DO_CANCEL = "doCancel";
-    private enum ACTION {DELETE, NEW, RELOAD, CREATE_CATALOG, CANCEL};
+    private static final String PARAMV_ACTION_DO_DELETE = "doDelete";
+    private static final String PARAMV_ACTION_DO_NEW = "doNew";
+    private static final String PARAMV_ACTION_DO_RELOAD = "doReload";
+    private static final String PARAMV_ACTION_DO_CREATE_CATALOG = "doCreateCatalog";
+    private static final String PARAMV_ACTION_DO_CANCEL = "doCancel";
+    private enum ACTION {DELETE, NEW, RELOAD, CREATE_CATALOG, CANCEL}
 
     // Parameters set on init
     private UserManager userManager;
     private RoleManager roleManager;
     private IMdekClientCaller mdekClientCaller;
 
-    
+    @Override
     public void init(PortletConfig config) throws PortletException {
     	super.init(config);
 
@@ -130,8 +130,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     }
 
 
-    public void doViewStart(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
-    throws PortletException, IOException {
+    public void doViewStart(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) {
 		setDefaultViewPage(TEMPLATE_START);
     	
     	Context context = getContext(request);
@@ -148,7 +147,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
 
 
     public void doViewNew(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
-    throws PortletException, IOException {
+    throws PortletException {
 		setDefaultViewPage(TEMPLATE_NEW);
 
 		Context context = getContext(request);
@@ -169,6 +168,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         context.put("userNameList", userNameList);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 
@@ -181,16 +181,17 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 
     	switch (getAction(request)) {
     	case NEW:
-    		processActionNew(request, actionResponse);
+    		processActionNew();
     		break;
     	
     	case DELETE:
-    		processActionDelete(request, actionResponse);
+    		processActionDelete(request);
     		break;
     	
     	case RELOAD:
@@ -198,7 +199,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     		break;
     	
     	case CREATE_CATALOG:
-    		processActionCreateCatalog(request, actionResponse);
+    		processActionCreateCatalog(request);
     		break;
     	
     	case CANCEL:
@@ -213,13 +214,11 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	}
     }
 
-    public void processActionNew(ActionRequest request, ActionResponse actionResponse) throws PortletException,
-    IOException {
+    public void processActionNew() {
 		this.state = STATE.NEW;
     }
 
-    public void processActionDelete(ActionRequest request, ActionResponse actionResponse) throws PortletException,
-    IOException {
+    public void processActionDelete(ActionRequest request) throws PortletException {
     	String[] plugIdList = request.getParameterValues("id");
 
     	if (plugIdList == null) {
@@ -232,12 +231,11 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	}
     }
 
-    public void processActionReload(ActionRequest request, ActionResponse actionResponse) throws PortletException,
-    IOException {
+    public void processActionReload(ActionRequest request, ActionResponse actionResponse) {
 		this.state = STATE.START;
     }
 
-    public void processActionCreateCatalog(ActionRequest request, ActionResponse actionResponse) throws PortletException,
+    public void processActionCreateCatalog(ActionRequest request) throws PortletException,
     IOException {
     	String plugId = request.getParameter("plugId");
     	String userName = request.getParameter("userName");
@@ -302,7 +300,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
         try {
             @SuppressWarnings("unchecked")
             List<UserData> userDataList = (List<UserData>) s.createCriteria( UserData.class ).add( Restrictions.eq( "plugId", plugId ) ).list();
-            if (userDataList != null && userDataList.size() != 0) {
+            if (userDataList != null && !userDataList.isEmpty()) {
                 // TODO Delete all idc users in the catalog?
                 for (UserData userData : userDataList) {
                     s.delete( userData );
@@ -346,7 +344,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     private List<String> getUnconnectedUserList() throws PortletException {
         try {
         	List<String> users = userManager.getUserNames("");
-            List<String> userNameList = new ArrayList<String>();
+            List<String> userNameList = new ArrayList<>();
 
             for (String user : users) {
                 if (canBecomeCatalogAdmin(user)) {
@@ -364,7 +362,7 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     }
 
     private List<String> getUnconnectedPlugIdList(javax.portlet.RenderRequest request) throws PortletException {
-    	List<String> plugIdList = new ArrayList<String>();
+    	List<String> plugIdList = new ArrayList<>();
     
     	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
     		if (!hasCatalogAdmin(request, plugId)) {
@@ -379,15 +377,15 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     }
 
     private List<Map<String, String>> buildConnectedCatalogList() {
-    	List<Map<String, String>> catalogList = new ArrayList<Map<String,String>>();
+    	List<Map<String, String>> catalogList = new ArrayList<>();
     	Session s = HibernateUtil.currentSession();
     	s.beginTransaction();
 
     	for (String plugId : this.mdekClientCaller.getRegisteredIPlugs()) {
         	@SuppressWarnings("unchecked")
             List<UserData> userDataList = (List<UserData>) s.createCriteria(UserData.class).add(Restrictions.eq("plugId", plugId)).list();
-        	if (userDataList != null && userDataList.size() != 0) {
-        		HashMap<String, String> catalogData = new HashMap<String, String>();
+        	if (userDataList != null && !userDataList.isEmpty()) {
+        		HashMap<String, String> catalogData = new HashMap<>();
         		UserData userData = userDataList.get(0);
         		
         		IMdekCallerCatalog mdekCallerCatalog = MdekCallerCatalog.getInstance();
@@ -474,11 +472,13 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     		if (organisation != null)
     			title += " ("+organisation+")";
     		break;
+    	default:
     	}
     	return title;
     }
 
     private boolean hasCatalogAdmin(javax.portlet.RenderRequest request, String plugId) throws PortletException {
+        boolean hasCatalogAdmin = false;
     	IMdekCallerSecurity mdekCallerSecurity = MdekCallerSecurity.getInstance();
 		IngridDocument response = mdekCallerSecurity.getCatalogAdmin(plugId, request.getUserPrincipal().getName());
     	IngridDocument catAdmin = MdekUtils.getResultFromResponse(response);
@@ -496,11 +496,11 @@ public class MdekPortalAdminPortlet extends GenericVelocityPortlet {
     	s.getTransaction().commit();
     	HibernateUtil.closeSession();
 
-    	if (userDataList != null && userDataList.size() != 0) {
-    		return true;
+    	if (userDataList != null && !userDataList.isEmpty()) {
+    	    hasCatalogAdmin = true;
     	}
 
-    	return false;
+    	return hasCatalogAdmin;
     }
 
 

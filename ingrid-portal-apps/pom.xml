@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0.mCLOUD</version>
+    <version>5.1.0.mCLOUD-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -400,7 +399,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses/>
+          <toAddresses />
         </configuration>
       </plugin>
 
@@ -474,55 +473,50 @@
             <configuration>
               <tasks>
                 <echo>INGRID-PORTAL-APPS: Copy default WEB-INF folder to profile 'ingrid'</echo>
-                <copy
-                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF">
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF">
                   <fileset dir="${project.basedir}/src/webapp/WEB-INF/">
-                    <include name="**/*.vm"/>
-                    <include name="**/portlet.xml"/>
+                    <include name="**/*.vm" />
+                    <include name="**/portlet.xml" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL-APPS: Copy default properties to profile 'ingrid'</echo>
-                <copy
-                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF/classes">
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/WEB-INF/classes">
                   <fileset dir="${project.basedir}/src/java/">
-                    <include name="*.xml"/>
-                    <include name="**/wms*.properties"/>
-                    <exclude name="hibernate.cfg.xml"/>
+                    <include name="*.xml" />
+                    <include name="**/wms*.properties" />
+                    <exclude name="hibernate.cfg.xml" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
-                <copy
-                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
                   <fileset dir="${project.basedir}/src/webapp/dwd_warnmodul/">
-                    <include name="*.cfg"/>
+                    <include name="*.cfg" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL: Copy portal-base layout ingrid properties to profile 'ingrid'</echo>
                 <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
                   <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">
-                    <include name="**/decorations/**/*.vm"/>
-                    <include name="**/css/override.css"/>
-                    <include name="**/images/**/*.svg"/>
-                    <include name="**/images/*.ico"/>
-                    <include name="**/error*.html"/>
-                    <include name="**/urlrewrite.xml"/>
+                    <include name="**/decorations/**/*.vm" />
+                    <include name="**/css/override.css" />
+                    <include name="**/images/**/*.svg" />
+                    <include name="**/images/*.ico" />
+                    <include name="**/error*.html" />
+                    <include name="**/urlrewrite.xml" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL: Copy portal-base localisation ingrid properties to profile 'ingrid'</echo>
-                <copy
-                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/WEB-INF/classes">
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/WEB-INF/classes">
                   <fileset dir="${project.basedir}/../ingrid-portal-base/src/java/">
-                    <include name="**/PortalLayout*.properties"/>
+                    <include name="**/PortalLayout*.properties" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL-MDEK-APPLICATION: Copy portal-base localisation ingrid properties to profile
                   'ingrid'
                 </echo>
-                <copy
-                    todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-mdek-application/WEB-INF/classes">
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-mdek-application/WEB-INF/classes">
                   <fileset dir="${project.basedir}/../ingrid-portal-mdek-application/src/main/resources">
-                    <include name="**/*help*.xml"/>
-                    <include name="**/messages*.properties"/>
+                    <include name="**/*help*.xml" />
+                    <include name="**/messages*.properties" />
                   </fileset>
                 </copy>
               </tasks>

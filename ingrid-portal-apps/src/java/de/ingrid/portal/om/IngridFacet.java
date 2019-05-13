@@ -23,6 +23,7 @@
 package de.ingrid.portal.om;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IngridFacet {
 
@@ -54,7 +55,6 @@ public class IngridFacet {
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
-    private boolean isOldIPlug = false;
     
     private IngridFacet parent; 
     private ArrayList<IngridFacet> facets;
@@ -71,11 +71,11 @@ public class IngridFacet {
     public void setQuery(String query) {
         this.query = query;
     }
-    public ArrayList<IngridFacet> getFacets() {
+    public List<IngridFacet> getFacets() {
         return facets;
     }
-    public void setFacets(ArrayList<IngridFacet> facets) {
-        this.facets = facets;
+    public void setFacets(List<IngridFacet> facets) {
+        this.facets = (ArrayList<IngridFacet>) facets;
     }
     public String getId() {
         return id;
@@ -136,12 +136,6 @@ public class IngridFacet {
     }
     public void setSort(String sort) {
         this.sort = sort;
-    }
-    public boolean isOldIPlug() {
-        return isOldIPlug;
-    }
-    public void setOldIPlug(boolean isOldIPlug) {
-        this.isOldIPlug = isOldIPlug;
     }
     public boolean isParentHidden() {
         return isParentHidden;

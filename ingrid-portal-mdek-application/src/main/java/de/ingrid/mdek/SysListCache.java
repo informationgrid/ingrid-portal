@@ -46,7 +46,7 @@ import net.sf.ehcache.Element;
 @Service
 public class SysListCache {
 
-	private final static Logger log = Logger.getLogger(SysListCache.class);
+	private static final Logger log = Logger.getLogger(SysListCache.class);
 
 	// Injected by Spring
 	@Autowired
@@ -58,22 +58,22 @@ public class SysListCache {
 	// Keycache used to identify lists via keys defined in sysList.properties
 	private Map<String, Integer> keyCache;
 	// The key prefix used in sysList.properties
-	private final String SYSLIST_MAPPING_PREFIX = "sysList.map.";
+	private static final String SYSLIST_MAPPING_PREFIX = "sysList.map.";
 	// sysList language - remember language for each catalog
 	private Map<String, Integer> languageCodeCache;
 
 	// EHCache manager
 	private CacheManager cacheManager;
-	private Cache sysListCache;
+	private Cache cache;
 
 	public void init() {
 		mdekCallerCatalog = connectionFacade.getMdekCallerCatalog();
 
 		// Initialize EHCache
 		cacheManager = new CacheManager();
-		Cache cache = new Cache("sysListCache", 10000, true, false, 120, 120);
-		cacheManager.addCache(cache);
-		languageCodeCache = new HashMap<String, Integer>();
+		Cache ehCache = new Cache("sysListCache", 10000, true, false, 120, 120);
+		cacheManager.addCache(ehCache);
+		languageCodeCache = new HashMap<>();
 	}
 
 	public void destroy() {
@@ -83,9 +83,9 @@ public class SysListCache {
 	// Load the initial lists from the backend for all lists defined in sysList.properties
 	public void loadInitialLists() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("sysList");
-		List<Integer> initialListIds = new ArrayList<Integer>();
+		List<Integer> initialListIds = new ArrayList<>();
 		Integer currentLangCode = null;
-		keyCache = new HashMap<String, Integer>();
+		keyCache = new HashMap<>();
 
 		// Load the catalog data from the backend to extract the catalog language
 		try {
@@ -95,15 +95,10 @@ public class SysListCache {
 		} catch (Exception e) {
 			// Could not get the lists from the backend
 			// Possibly the connection was not established yet
-//			log.debug("SysListCache: Could not get catalog language.", e);			
 
 			// Fallback to the language defined in the properties file?
-			// languageCode = resourceBundle.getString("sysList.languageCode");
 			return;
 		}
-
-// Don't load the language from the properties file. It is fetched from the catalog instead
-//		languageCode = resourceBundle.getString("sysList.languageCode");
 
 		// For all keys...
 		Enumeration<String> keys = resourceBundle.getKeys();
@@ -121,9 +116,9 @@ public class SysListCache {
 		try {
 			String langShort = MdekCatalogUtils.getLanguageShort(currentLangCode);
 			Map<Integer, List<String[]>> sysLists = getSysLists(initialListIds.toArray(new Integer[]{}), langShort);
-			sysListCache = cacheManager.getCache("sysListCache");
+			cache = cacheManager.getCache("sysListCache");
 			
-			if (sysListCache == null) {
+			if (cache == null) {
 				log.debug("Could not get ehcache - sysListCache. Please check if it's defined in ehcache.xml!");
 				return;
 			}
@@ -137,16 +132,15 @@ public class SysListCache {
 
 					String key = createCacheKey(listId);
 					Element e = new Element(key, list);
-					sysListCache.put(e);
+					cache.put(e);
 				}
 			}
 
 		} catch (Exception e) {
+			log.error("Could not get syslists from backend", e);
 			// Could not get the lists from the backend
 			// Possibly the connection was not established yet
-//			log.debug("Could not get sysLists.", e);
-			sysListCache = null;			
-			return;
+			cache = null;			
 		}
 	}
 
@@ -165,7 +159,7 @@ public class SysListCache {
 	 * @return entry value
 	 */
 	public String getValue(String key, Integer entryId, boolean removeMetadata) {
-		if (sysListCache == null) {
+		if (cache == null) {
 			this.loadInitialLists();
 		}
 
@@ -192,7 +186,7 @@ public class SysListCache {
 			return "";
 		}
 
-		if (sysListCache == null) {
+		if (cache == null) {
 			this.loadInitialLists();
 		}
 
@@ -212,7 +206,7 @@ public class SysListCache {
 	}
 
 	public String getInitialValueFromListId(Integer listId) {
-		if (sysListCache == null) {
+		if (cache == null) {
 			this.loadInitialLists();
 		}
 
@@ -241,7 +235,7 @@ public class SysListCache {
 	}
 
 	public Integer getKey(String key, String entryVal) {
-		if (sysListCache == null) {
+		if (cache == null) {
 			this.loadInitialLists();
 		}
 		if (entryVal == null) {
@@ -261,7 +255,7 @@ public class SysListCache {
 	/** Checks also syslist entries without metadata !
 	 * E.g. MdekSysList.OBJ_CONFORMITY_SPECIFICATION contains date at end NOT displayed in IGE selection lists */
 	public Integer getKeyFromListId(Integer listId, String entryVal) {
-		if (sysListCache == null) {
+		if (cache == null) {
 			this.loadInitialLists();
 		}
 
@@ -283,7 +277,7 @@ public class SysListCache {
 	}
 
 	public Integer getInitialKeyFromListId(Integer listId) {
-		if (sysListCache == null) {
+		if (cache == null) {
 			this.loadInitialLists();
 		}
 
@@ -327,12 +321,12 @@ public class SysListCache {
 		String langShort = MdekCatalogUtils.getLanguageShort(languageCode);
 		List<String[]> sysList = getSysLists(listIds, langShort).get(listId);
 		Element e = new Element(createCacheKey(listId), sysList);
-		sysListCache.put(e);	
+		cache.put(e);	
 		return sysList;
 	}
 
 	private List<String[]> getSysListForListId(Integer listId) {
-		Element e = sysListCache.get(createCacheKey(listId));
+		Element e = cache.get(createCacheKey(listId));
 
 		if (e == null) {
 			return addSysListToCache(listId);

@@ -29,7 +29,7 @@ public class Record {
     private String identifier;
     private String title;
     private String uuid;
-    private List<String> downloadData = new ArrayList<String>();
+    private List<String> downloadData = new ArrayList<>();
     private boolean hasDownloadData = false;
     
     public String getIdentifier() {
@@ -62,7 +62,7 @@ public class Record {
 
     public void setDownloadData(List<String> downloadData) {
         this.downloadData = downloadData;
-        if (downloadData.size() > 0) this.hasDownloadData = true;
+        if (!downloadData.isEmpty()) this.hasDownloadData = true;
     }
     
     public void addDownloadData(String data) {

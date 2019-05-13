@@ -50,13 +50,14 @@ import java.util.Map;
  */
 public class ContentProviderPortlet extends ContentPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ContentProviderPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ContentProviderPortlet.class);
 
     private static final String PARAMV_ACTION_DO_IMPORT = "doImport";
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -92,18 +93,21 @@ public class ContentProviderPortlet extends ContentPortlet {
                     try {
                         dbEntities[i - nullCount].setIdent(request.getParameter("ident" + i).toLowerCase());
                     } catch (Exception ex) {
+                        log.error("Error on getDBEntities.", ex);
                     }
                     dbEntities[i - nullCount].setName(request.getParameter("name" + i));
                     dbEntities[i - nullCount].setUrl(request.getParameter("url" + i));
                     try {
-                        int sortKey = new Integer(request.getParameter("sortkey" + i)).intValue();
+                        int sortKey = Integer.parseInt(request.getParameter("sortkey" + i));
                         dbEntities[i - nullCount].setSortkey(sortKey);
                     } catch (Exception ex) {
+                        log.error("Error on getDBEntities.", ex);
                     }
                     try {
-                        int sortKeyPartner = new Integer(request.getParameter("sortkey_partner" + i)).intValue();
+                        int sortKeyPartner = Integer.parseInt(request.getParameter("sortkey_partner" + i));
                         dbEntities[i - nullCount].setSortkeyPartner(sortKeyPartner);
                     } catch (Exception ex) {
+                        log.error("Error on getDBEntities.", ex);
                     }
                 }else{
                     nullCount = nullCount + 1;
@@ -119,6 +123,7 @@ public class ContentProviderPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionUpdate(ActionRequest request) {
         AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
                 AdminContentPartnerForm.class);
@@ -135,6 +140,7 @@ public class ContentProviderPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -149,6 +155,7 @@ public class ContentProviderPortlet extends ContentPortlet {
         super.doView(request, response);
     }
     
+    @Override
     protected boolean doViewDefault(RenderRequest request) {
         try {
             // always refresh !
@@ -200,6 +207,7 @@ public class ContentProviderPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionSave(ActionRequest request) {
         AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
                 AdminContentPartnerForm.class);
@@ -216,6 +224,7 @@ public class ContentProviderPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         // handle action
         String action = getAction(request);
@@ -237,7 +246,7 @@ public class ContentProviderPortlet extends ContentPortlet {
                         List entities = session.createCriteria(dbEntityClass).add(Restrictions.eq("ident", fields[1]))
                                 .list();
                         IngridProvider p;
-                        if (entities.size() > 0) {
+                        if (!entities.isEmpty()) {
                             p = (IngridProvider) entities.iterator().next();
                             p.setName(fields[2].trim());
                             p.setUrl(fields[3].trim());

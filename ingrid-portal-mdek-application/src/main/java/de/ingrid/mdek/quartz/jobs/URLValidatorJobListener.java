@@ -22,8 +22,6 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +40,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class URLValidatorJobListener implements JobListener {
 
-	private final static Logger log = Logger.getLogger(URLValidatorJobListener.class);	
+	private static final Logger log = Logger.getLogger(URLValidatorJobListener.class);	
 
 	private final String listenerName;
 	private final String plugId;

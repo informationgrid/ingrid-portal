@@ -127,19 +127,19 @@ public class FileSystemItem implements StorageItem {
     @Override
     public String getNextName() {
         if (this.storage.exists(this.path, this.file)) {
-            List<String> parts = new LinkedList<String>(Arrays.asList(this.file.split("\\.")));
+            List<String> parts = new LinkedList<>(Arrays.asList(this.file.split("\\.")));
             String extension = parts.size() > 1 ? parts.remove(parts.size()-1) : "";
             String filename = String.join(".", parts);
-            String file = this.file;
+            String tmpFile = this.file;
             int i = 0;
-            while (this.storage.exists(this.path, file)) {
+            while (this.storage.exists(this.path, tmpFile)) {
                 i++;
-                file = filename + "-" + i;
+                tmpFile = filename + "-" + i;
                 if (extension.length() > 0) {
-                    file += "." + extension;
+                    tmpFile += "." + extension;
                 }
             }
-            return file;
+            return tmpFile;
         }
         return this.file;
     }

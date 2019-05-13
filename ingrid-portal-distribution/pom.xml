@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0.mCLOUD</version>
+    <version>5.1.0.mCLOUD-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal</artifactId>
@@ -154,38 +153,42 @@
         </excludes>
       </resource>
     </resources>
+
     <plugins>
+
+      <!-- Activate maven-assembly-plugin from release pom to build installer -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
-        <!-- Add Type of Component to Manifest of Installer for Upgrade Server -->
-        <configuration>
-          <appendAssemblyId>true</appendAssemblyId>
-          <archive>
-            <manifestEntries>
-              <ingridComponentType>PORTAL</ingridComponentType>
-            </manifestEntries>
-          </archive>
-          <descriptors>
-            <descriptor>src/main/assembly/bin.xml</descriptor>
-          </descriptors>
-        </configuration>
-        <executions>
-          <execution>
-            <id>make-installer</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
       </plugin>
+
     </plugins>
+
   </build>
+
   <profiles>
     <profile>
       <id>docker</id>
       <build>
         <plugins>
+          <plugin>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>package</phase>
+                <configuration>
+                  <tasks>
+                    <echo message="Unzipping installer for docker image" />
+                    <unzip src="target/${project.build.finalName}-installer.jar" dest="target/docker/installer-unzipped/" />
+                    <move file="target/docker/installer-unzipped/distribution/apache-tomcat/webapps/ingrid-portal-base.war" tofile="target/docker/installer-unzipped/distribution/apache-tomcat/webapps/ROOT.war" />
+                  </tasks>
+                </configuration>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
           <plugin>
             <groupId>com.spotify</groupId>
             <artifactId>docker-maven-plugin</artifactId>
@@ -210,7 +213,7 @@
             <configuration>
               <tasks>
                 <jar destfile="target/${project.build.finalName}-installer.jar" update="true">
-                  <fileset dir="src/main/resources/ant-installer"/>
+                  <fileset dir="src/main/resources/ant-installer" />
                 </jar>
               </tasks>
             </configuration>
