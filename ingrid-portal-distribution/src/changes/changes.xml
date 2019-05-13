@@ -14,6 +14,12 @@
           <action type="fix" dev="wemove" issue="1344">
             IGE: IGE: Dienst-URLs per GetCapabilities-Assistenten nicht erreichbar.
           </action>
+          <action type="update" dev="wemove" issue="1372">
+            Portal: Update tomcat to 7.0.94.
+          </action>
+          <action type="add" dev="wemove" issue="1253">
+            MapClient: Add upload of category and background images on admin GUI.
+          </action>
         </release>
 
         <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
