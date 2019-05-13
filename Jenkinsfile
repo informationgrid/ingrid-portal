@@ -15,7 +15,7 @@ pipeline {
         stage('Build-SNAPSHOT') {
             when {
                 not {
-                    anyOf { branch 'master'; branch 'mcloud-master' }
+                    anyOf { branch 'master'; }
                 }
                 not { 
                     allOf {
