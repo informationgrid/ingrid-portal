@@ -19,7 +19,7 @@ pipeline {
                 }
                 not { 
                     allOf {
-                        branch 'support/*'
+                        anyOf { branch 'support/*'; branch 'mcloud-master' }
                         expression { return !VERSION.endsWith("-SNAPSHOT") }
                     }
                 }
