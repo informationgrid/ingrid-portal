@@ -53,6 +53,7 @@ public class DbUserRepoManager implements UserRepoManager {
             info.put("firstName", repoUser.getFirstName());
             info.put("email", repoUser.getEmail());
             info.put("login", repoUser.getLogin());
+            info.put("passwordChangeId", repoUser.getPasswordChangeId());
             users.add(info);
         }
 
@@ -128,6 +129,7 @@ public class DbUserRepoManager implements UserRepoManager {
         user.setFirstName(userData.getFirstName());
         user.setSurname(userData.getSurname());
         user.setEmail(userData.getEmail());
+        user.setPasswordChangeId(userData.getPasswordChangeId());
         
         dao.makePersistent(user);
         dao.commitTransaction();
