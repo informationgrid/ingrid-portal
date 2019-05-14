@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1344">
             IGE: IGE: Dienst-URLs per GetCapabilities-Assistenten nicht erreichbar.
           </action>
+          <action type="fix" dev="wemove" issue="1389">
+            Portal: Fix data source page.
+          </action>
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
           </action>
