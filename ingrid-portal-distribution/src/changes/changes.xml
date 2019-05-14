@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="1373">
             Change email address on uvp "vorschaltseite"
           </action>
+          <action type="fix" dev="wemove" issue="1387">
+            Portal: Fix UVP date on detail page.
+          </action>
         </release>
 
         <release version="4.6.3" date="2019-04-03" description="Release 4.6.3">
