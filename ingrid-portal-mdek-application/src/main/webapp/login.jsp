@@ -35,7 +35,7 @@
         String destination ="admin.jsp";
         response.sendRedirect(response.encodeRedirectURL(destination));
     } else if (currentUser != null) {
-        String destination ="start_dev.jsp";
+        String destination ="start.jsp";
         String redirect = request.getParameter("r") == null ? "" : request.getParameter("r");
         if (redirect.length() > 0) destination = redirect; 
         response.sendRedirect(response.encodeRedirectURL(destination));
