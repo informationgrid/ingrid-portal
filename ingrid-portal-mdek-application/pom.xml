@@ -586,16 +586,6 @@
         <artifactId>commonmark-ext-gfm-tables</artifactId>
         <version>0.12.1</version>
     </dependency>
-    <dependency>
-		    <groupId>com.vladsch.flexmark</groupId>
-		    <artifactId>flexmark-all</artifactId>
-		    <version>0.40.32</version>
-		</dependency>
-		<dependency>
-		    <groupId>com.vladsch.flexmark</groupId>
-		    <artifactId>flexmark-ext-yaml-front-matter</artifactId>
-		    <version>0.40.32</version>
-		</dependency>
 
   </dependencies>
 

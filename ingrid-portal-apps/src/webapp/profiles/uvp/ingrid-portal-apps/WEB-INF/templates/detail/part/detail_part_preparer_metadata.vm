@@ -210,9 +210,9 @@
                             </h2>
                             ## Zeitraum der Auslegung
                                 #if($step == "phase1")
-                                    #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
-                                    #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                    #renderDate ("Zeitraum der Auslegung" $from $to "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
+                                    #set($from1 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                    #set($to1 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                    #renderDate ("Zeitraum der Auslegung" $from1 $to1 "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
                                 #end
                             ## Auslegungsinformationen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
@@ -236,9 +236,9 @@
                                 ##renderTableToList("Bekanntmachung" $nodelist "publicationDocs")
                             ## Zeitraum der Erörterung
                                 #if($step == "phase2")
-                                    #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
-                                    #set($to = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
-                                    #renderDate ("Zeitraum der Er&ouml;rterung " $from $to "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
+                                    #set($from2 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                    #set($to2 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                    #renderDate ("Zeitraum der Er&ouml;rterung " $from2 $to2 "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
                                 #end
                             ## Informationen zum Erörterungstermin
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
@@ -246,8 +246,8 @@
                                 #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
                             ## Datum der Entscheidung
                                 #if($step == "phase3")
-                                    #set($from = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
-                                    #renderDate ("Datum der Entscheidung" $from)
+                                    #set($from3 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
+                                    #renderDate ("Datum der Entscheidung" $from3)
                                 #end
                             ## Auslegungsinformationen
                                 #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")

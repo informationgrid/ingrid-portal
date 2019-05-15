@@ -199,8 +199,13 @@ public class SNSService {
      * @return All topics returned by the SNS, converted to SNSTopics 
      */
     public List<SNSTopic> findTopics(String queryTerm, Locale locale) {
-    	return findTopics(null, queryTerm, locale, MatchingType.EXACT);
-    }
+		try {
+			return findTopics(null, queryTerm, locale, MatchingType.EXACT);
+		} catch (Exception e) {
+			log.error("Error calling findTopics: ", e);
+			return null;
+		}
+	}
     
     /**
      * Find all topics containing the given query string. 
@@ -632,7 +637,7 @@ public class SNSService {
     /** NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
     private static Type getTypeFromTerm(Term term) {
     	// first check whether we have a tree term ! Only then we can determine whether top node !
-		if (((TreeTerm)term).getParents() == null && TreeTerm.class.isAssignableFrom(term.getClass())) {
+		if (TreeTerm.class.isAssignableFrom(term.getClass()) && ((TreeTerm)term).getParents() == null) {
     		return Type.TOP_TERM;
 		}
 
