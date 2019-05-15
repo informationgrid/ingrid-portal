@@ -72,7 +72,7 @@
         <div style="padding: 10px;">
             <table style="width: 100%;">
                 <tr>
-                    <td>Neues Password:</td>
+                    <td style="width: 250px;">Neues Password:</td>
                     <td>
                         <input id="password" name="password" type="password" style="width: 200px;">
                     </td>

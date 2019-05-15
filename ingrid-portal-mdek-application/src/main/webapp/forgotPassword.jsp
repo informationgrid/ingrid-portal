@@ -52,8 +52,12 @@
             document.getElementById("success").style.display = "block";
 
             setTimeout(function() {
-                window.location.href = "login.jsp";
+                gotoLoginPage();
             }, 3000);
+        }
+
+        function gotoLoginPage() {
+            window.location.href = "login.jsp";
         }
 
     </script>
@@ -63,6 +67,8 @@
     <img src="img/logo.png" alt="InGrid Editor">
     <h1><fmt:message key="ui.login.title"/></h1>
 </div>
+
+<input onclick="gotoLoginPage()" type="submit" value="Zurück" style="float: left;">
 
 <div class="content-password" style="display: block;">
     <div class="contentBorder">
