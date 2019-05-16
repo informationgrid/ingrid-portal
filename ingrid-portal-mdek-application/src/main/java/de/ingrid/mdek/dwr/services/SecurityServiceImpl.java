@@ -395,14 +395,11 @@ public class SecurityServiceImpl implements SecurityService {
 
 		if (userWithEmail.isPresent()) {
 			String login = userWithEmail.get().get("login");
-			RepoUser user = userRepoManager.getUser(login);
 			String passwordChangeId = UUID.randomUUID().toString();
-			user.setPassword(""); // do not change password
-			user.setPasswordChangeId(passwordChangeId);
 
 			// mark user entry for password change
 			// we just add a generated ID to the user and send this ID to the users email address
-			userRepoManager.updateUser(login, user);
+			userRepoManager.setPasswordRecoveryId(login, passwordChangeId, null);
 
 			// send email
 			MdekEmailUtils.sendForgottenPasswordMail(email, passwordChangeId);
@@ -421,11 +418,7 @@ public class SecurityServiceImpl implements SecurityService {
 
 		if (userWithChangeId.isPresent()) {
 			String login = userWithChangeId.get().get("login");
-			RepoUser user = userRepoManager.getUser(login);
-			user.setPassword(password);
-			user.setPasswordChangeId(null);
-
-			userRepoManager.updateUser(login, user);
+			userRepoManager.setPasswordRecoveryId(login, null, password);
 
 			return true;
 		}

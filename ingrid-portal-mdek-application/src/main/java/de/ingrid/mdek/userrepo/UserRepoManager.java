@@ -44,5 +44,7 @@ public interface UserRepoManager {
     public RepoUser getUser(String username);
 
     void updateUser(String login, RepoUser userData);
-    
+
+    void setPasswordRecoveryId(String login, String passwordChangeId, String newPassword);
+
 }

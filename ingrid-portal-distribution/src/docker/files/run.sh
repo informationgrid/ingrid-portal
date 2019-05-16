@@ -119,7 +119,10 @@ else
 
     # SMTP_HOST
     echo "workflow.mail.smtp=$SMTP_HOST" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
-        
+    echo "workflow.mail.sender=$MAIL_SENDER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.user=$MAIL_USER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.password=$MAIL_PASSWORD" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
     touch /initialized
 fi
 

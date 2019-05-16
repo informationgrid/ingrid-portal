@@ -89,7 +89,7 @@ public class MdekEmailUtils {
 	
 	private static String mdekDirectLink;
 
-	private static final String MAIL_SUBJECT = "[MDEK] Information";
+	private static final String MAIL_SUBJECT = "[IGE] Information";
 
 	private static ConnectionFacade connectionFacade;
 	private static IMdekCallerCatalog mdekCallerCatalog;
@@ -370,15 +370,19 @@ public class MdekEmailUtils {
 		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/password_forgotten_email.vm");
 		String templatePath = url.getPath();
 		Map<String, Object> mailData = new HashMap<>();
-		String link = mdekDirectLink.substring(0, mdekDirectLink.lastIndexOf('/')) + "changePassword.jsp?id=" + passwordChangeId;
+		String link = mdekDirectLink.substring(0, mdekDirectLink.lastIndexOf('/')) + "/changePassword.jsp?id=" + passwordChangeId;
 		mailData.put("link", link);
 
 		String text = mergeTemplate(templatePath, mailData, "map");
-		sendEmail(text, mailSender, new String[] {email} );
+		sendEmail("[IGE] Passwort zurücksetzen", text, mailSender, new String[] {email} );
 
 	}
 
 	public static void sendEmail(String content, String from, String[] to) {
+		sendEmail(MAIL_SUBJECT, content, from, to);
+	}
+
+	public static void sendEmail(String subject, String content, String from, String[] to) {
 		Properties props = (Properties)System.getProperties().clone();
 		Session session;
 		
@@ -431,7 +435,7 @@ public class MdekEmailUtils {
 
 			msg.setFrom( new InternetAddress(from) );
 			msg.setRecipients(Message.RecipientType.TO, receivers);
-			msg.setSubject(MAIL_SUBJECT);
+			msg.setSubject(subject);
 			msg.setContent(content, "text/plain; charset=UTF-8");
 			Transport.send(msg, msg.getAllRecipients());
 

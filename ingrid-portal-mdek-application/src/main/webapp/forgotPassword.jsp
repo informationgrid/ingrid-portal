@@ -52,14 +52,9 @@
             document.getElementById("success").style.display = "block";
 
             setTimeout(function() {
-                gotoLoginPage();
+                window.location.href = "login.jsp";
             }, 3000);
         }
-
-        function gotoLoginPage() {
-            window.location.href = "login.jsp";
-        }
-
     </script>
 </head>
 <body>

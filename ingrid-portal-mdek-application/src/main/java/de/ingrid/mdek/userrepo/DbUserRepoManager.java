@@ -164,7 +164,25 @@ public class DbUserRepoManager implements UserRepoManager {
             log.warn("The user " + currentUser + " tried to change user data for another one");
         }
     }
-    
+
+    @Override
+    public void setPasswordRecoveryId(String login, String passwordChangeId, String newPassword) {
+
+        // this method must not have a user check, since recovery for a password must work for not logged in users
+
+        IGenericDao<IEntity> dao = daoFactory.getDao(RepoUser.class);
+        dao.beginTransaction();
+        RepoUser user = (RepoUser) dao.getById(login);
+
+        user.setPasswordChangeId(passwordChangeId);
+        if (newPassword != null && !newPassword.isEmpty()) {
+            user.setPassword(MdekSecurityUtils.getHash(newPassword));
+        }
+
+        dao.makePersistent(user);
+        dao.commitTransaction();
+    }
+
     @Override
     public void removeUser(String username) {
 
