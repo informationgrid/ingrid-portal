@@ -26,6 +26,9 @@
           <action type="add" dev="wemove" issue="1253">
             MapClient: Add upload of category and background images on admin GUI.
           </action>
+          <action type="fix" dev="wemove" issue="1354">
+            MapClient: Fix encoding of GetCapabilities request.
+          </action>
           <action type="fix" dev="wemove" issue="1365">
             MapClient: Fix generate stable IDs of added layers on admin GUI.
           </action>
