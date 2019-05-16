@@ -10,6 +10,7 @@ ENV DB_URL_PORTAL=jdbc:mysql:\\/\\/mysql\\/ingrid_portal
 ENV DB_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
 ENV SMTP_HOST=localhost
 ENV MAIL_SENDER=test@wemove.de
+ENV IGE_DIRECT_LINK=http://localhost:8080/ingrid-portal-mdek-application/index.jsp
 
 COPY ./files /
 COPY installer-unzipped/distribution /opt/ingrid/ingrid-portal/
