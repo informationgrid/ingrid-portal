@@ -23,6 +23,7 @@
 define(["dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
+    "dojo/aspect",
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-style",
@@ -30,20 +31,26 @@ define(["dojo/_base/declare",
     "dojo/query",
     "dojo/topic",
     "dijit/registry",
+    "ingrid/dialog",
     "ingrid/message",
     "ingrid/layoutCreator",
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/dirty",
-    "ingrid/hierarchy/validation"
-], function(declare, array, lang, dom, domClass, domStyle, construct, query, topic, registry, message, creator, IgeEvents, Editors, Formatters, dirty, validation) {
+    "ingrid/hierarchy/validation",
+    "ingrid/utils/Catalog",
+    "ingrid/widgets/upload/UploadWidget",
+    "ingrid/utils/Store"
+], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, dialog, message, creator, IgeEvents, Editors, Formatters, dirty, validation, Catalog, UploadWidget, UtilStore) {
     return declare(null, {
         title: "Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
         defaultActive: true,
         category: "mcloud",
         prefix: "mcloud_",
+        uploadUrl: "rest/document",
+
         //params: [{id: "categoryCodelist", label: "Codelist (Kategorie)", "default": 9000}],
         run: function() {
 
@@ -306,8 +313,9 @@ define(["dojo/_base/declare",
                 {
                     field: 'link',
                     name: 'Link*',
-                    editable: true,
-                    width: '200px'
+                    editable: false,
+                    width: '200px',
+                    formatter: Formatters.LinkCellFormatter
                 },
                 {
                     field: 'sourceType',
@@ -370,6 +378,7 @@ define(["dojo/_base/declare",
                 structure, rubric
             );
             var downloadsTable = registry.byId(id);
+            this.addUploadLink(id);
             additionalFields.push(downloadsTable);
             downloadsTable.reinitLastColumn(true);
 
@@ -471,7 +480,190 @@ define(["dojo/_base/declare",
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
 
             return registry.byId("mcloudLicense").promiseInit;
-        }
+        },
+
+        addUploadLink: function(tableId) {
+            var table = registry.byId(tableId);
+
+            if (table) {
+                // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
+                var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_")+"/"+currentUdk.uuid;
+
+                // create uploader instance
+                var uploader = new UploadWidget({
+                    uploadUrl: this.uploadUrl
+                });
+
+                // upload handler
+                var handleUploads = lang.hitch(this, function(uploads, basePath) {
+                    // get existing table data
+                    var rows = table.data;
+
+                    // create map from uploads array
+                    var uploadMap = {};
+                    array.forEach(uploads, function(upload) {
+                        uploadMap[upload.uri] = upload;
+                    });
+                    // update existing uploads
+                    array.forEach(rows, function(row) {
+                        var uri = row.link;
+                        if (uri && uploadMap[uri]) {
+                            var upload = uploadMap[uri];
+                            getRowData(row, upload, basePath);
+                            delete uploadMap[uri];
+                        }
+                    });
+                    // map back to list
+                    uploads = [];
+                    for (var uri in uploadMap) {
+                        uploads.push(uploadMap[uri]);
+                    }
+
+                    // fill existing rows without link
+                    array.forEach(rows, function(row) {
+                        var uri = row.link;
+                        if (!uri) {
+                            var upload = uploads.shift();
+                            if (upload) {
+                                getRowData(row, upload, basePath);
+                            }
+                        }
+                    });
+
+                    // add remaining uploads
+                    array.forEach(uploads, function(upload) {
+                        rows.push(getRowData({}, upload, basePath));
+                    });
+
+                    // store changes
+                    UtilStore.updateWriteStore(tableId, rows);
+                });
+
+                var getFiles = function(phases, flat) {
+                    var files = flat ? [] : {};
+                    for (var phase in phases) {
+                        if (!flat) {
+                            files[phase] = {};
+                        }
+                        var fields = phases[phase].fields;
+                        for (var field in fields) {
+                            var key = fields[field].key;
+                            var data = fields[field].field.data;
+                            if (data) {
+                                if (!flat) {
+                                    files[phase][key] = [];
+                                }
+                                for (var row in data) {
+                                    var file = decodeURI(data[row].link);
+                                    if (flat) {
+                                        if (array.indexOf(files, file) === -1) {
+                                            files.push(file)
+                                        }
+                                    }
+                                    else {
+                                        files[phase][key].push(file);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    return files;
+                };
+
+                var getRowData = function(row, data, basePath) {
+                    if (!row.title || row.title.length === 0) {
+                        var file = data.uri;
+
+                        // generate basepath ready for comparison with
+                        var basePathWithoutLeadingSlash = basePath;
+                        // strip leading slash because the file name comes in without trainling slash
+                        if (basePath.indexOf("/") === 0) {
+                            basePathWithoutLeadingSlash = basePath.substring(1, basePath.length);
+                        }
+                        var fileRel;
+                        if (file.indexOf(basePathWithoutLeadingSlash) === 0) {
+                            // uploaded file, cut base path of uploaded file, keep hierarchy structure from extracted ZIPs
+                            // strip slash following base path
+                            fileRel = file.substring(basePathWithoutLeadingSlash.length + 1, file.length);
+                        } else {
+                            // link, get the last path of the link
+                            fileRel = file.substring(file.lastIndexOf('/')+1, file.length);
+                        }
+                        var lastDotPos = fileRel.lastIndexOf(".");
+                        var name = fileRel.substring(0,
+                            lastDotPos === -1 ? file.length : lastDotPos);
+                        row.title = decodeURI(name);
+                    }
+                    row.link = data.uri;
+                    row.type = data.type;
+                    row.size = data.size;
+                    return row;
+                };
+
+                // create interface
+                var inactiveHint = construct.create("span", {
+                    id: tableId + "_uploadHint",
+                    'class': "right",
+                    innerHTML: "Dokument-Upload inaktiv",
+                    style: {
+                        cursor: "help"
+                    },
+                    onclick: function(e) {
+                        dialog.showContextHelp(e, "Die Upload Funktionalität steht nach dem ersten Speichern zur Verfügung.");
+                    }
+                }, table.domNode.parentNode, "before");
+
+                var linkContainer = construct.create("span", {
+                    "class": "functionalLink",
+                    innerHTML: "<img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />"
+                }, table.domNode.parentNode, "before");
+
+                construct.create("a", {
+                    id: tableId + "_uploadLink",
+                    title: "Dokument-Upload [Popup]",
+                    innerHTML: "Dokument-Upload",
+                    style: {
+                        cursor: "pointer"
+                    },
+                    onclick: lang.hitch(this, function() {
+                        var files = getFiles(this.phases, true);
+                        uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
+                            handleUploads(uploads, basePath);
+                        }));
+                    })
+                }, linkContainer);
+
+
+                // adapt upload interface to currentUdk state
+                require(["ingrid/IgeActions"], function(igeAction) {
+
+                    // link state handler
+                    var setLinkState = function() {
+                        var isActive = currentUdk.uuid !== "newNode";
+                        if (isActive) {
+                            domClass.remove(linkContainer, "hide");
+                            domClass.add(inactiveHint, "hide");
+                        }
+                        else {
+                            domClass.remove(inactiveHint, "hide");
+                            domClass.add(linkContainer, "hide");
+                        }
+                    };
+
+                    aspect.after(igeAction, "onAfterLoad", function () {
+                        setLinkState();
+                    });
+                    aspect.after(igeAction, "onAfterSave", function () {
+                        setLinkState();
+                    });
+                    topic.subscribe("/onAfterObjectCreate", function() {
+                        setLinkState();
+                    });
+
+                });
+            }
+        },
+
 
     })();
 });
