@@ -74,41 +74,47 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
                     if (detail.containsKey( "bwstr-center-lat" ) && detail.containsKey( "bwstr-center-lon" )) {
-                        s.append( "[" )
-                            .append( detail.get( "bwstr-center-lat" ).toString() )
-                            .append( "," )
-                            .append( detail.get( "bwstr-center-lon" ).toString() )
-                            .append( ",'" )
-                            .append( detail.get( "title" ).toString() )
-                            .append( "','" )
-                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) );
-                        
-                        String bawAuftragsnummer = UtilsSearch.getDetailValue( detail, "bawAuftragsnummer" );
-                        s.append( "','" );
-                        if(bawAuftragsnummer != null){
-                            s.append( bawAuftragsnummer );
-                        }else{
-                            s.append( "" );
+                        String lat = UtilsSearch.getDetailValue(detail, "bwstr-center-lat");
+                        String lon = UtilsSearch.getDetailValue(detail, "bwstr-center-lon");
+                        if (!"NaN".equals(lat) && !"NaN".equals(lon)) {
+                            s.append("[")
+                                    //.append( detail.get( "bwstr-center-lat" ).toString() )
+                                    .append(lat)
+                                    .append(",")
+                                    //.append( detail.get( "bwstr-center-lon" ).toString() )
+                                    .append(lon)
+                                    .append(",'")
+                                    .append(detail.get("title").toString())
+                                    .append("','")
+                                    .append(UtilsSearch.getDetailValue(detail, "t01_object.obj_id"));
+
+                            String bawAuftragsnummer = UtilsSearch.getDetailValue(detail, "bawAuftragsnummer");
+                            s.append("','");
+                            if (bawAuftragsnummer != null) {
+                                s.append(bawAuftragsnummer);
+                            } else {
+                                s.append("");
+                            }
+                            String simProcess = UtilsSearch.getDetailValue(detail, "simProcess");
+                            s.append("','");
+                            if (simProcess != null) {
+                                s.append(simProcess);
+                            } else {
+                                s.append("");
+                            }
+                            String simModelType = UtilsSearch.getDetailValue(detail, "simModelType");
+                            s.append("','");
+                            if (simModelType != null) {
+                                s.append(simModelType);
+                            } else {
+                                s.append("");
+                            }
+                            s.append("']");
+                            if (it.hasNext()) {
+                                s.append(",");
+                            }
+                            response.getWriter().write(s.toString());
                         }
-                        String simProcess = UtilsSearch.getDetailValue( detail, "simProcess" );
-                        s.append( "','" );
-                        if(simProcess != null){
-                            s.append( simProcess );
-                        }else{
-                            s.append( "" );
-                        }
-                        String simModelType = UtilsSearch.getDetailValue( detail, "simModelType" );
-                        s.append( "','" );
-                        if(simModelType != null){
-                            s.append( simModelType );
-                        }else{
-                            s.append( "" );
-                        }
-                        s.append( "']" );
-                        if (it.hasNext()) {
-                            s.append( "," );
-                        }
-                        response.getWriter().write( s.toString() );
                     }
                 }
                 response.getWriter().write( "];" );
