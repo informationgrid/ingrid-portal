@@ -27,13 +27,6 @@
 
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 
-<%
-    String currentUser = (String)request.getSession(true).getAttribute("userName");
-    if (!"admin".equals(currentUser)) {
-        String destination ="login.jsp";
-        response.sendRedirect(response.encodeRedirectURL(destination));
-    }
-%>
 <html dir="ltr">
 
 <head>
@@ -48,12 +41,16 @@
 
         var isNewUser = false;
         var user = _container_.customParams.user;
-        
+        var callback = _container_.customParams.callback;
+        var dlgContainer = _container_;
+
         if (user) {
-            dom.byId("edit_login").value = user.login;
-            dom.byId("edit_firstName").value = user.firstName;
-            dom.byId("edit_surname").value = user.surname;
-            dom.byId("edit_email").value = user.email;
+            UserRepoManager.getUser(user, function(data) {
+                dom.byId("edit_login").value = data.login;
+                dom.byId("edit_firstName").value = data.firstName;
+                dom.byId("edit_surname").value = data.surname;
+                dom.byId("edit_email").value = data.email;
+            });
             style.set("btn_addUser", "display", "none");
 
         } else {
@@ -66,6 +63,7 @@
         }
         
         function updateUser() {
+            var execCallback = callback;
             var user = {};
             user.login = dom.byId("edit_login").value;
             user.password = dom.byId("edit_password").value;
@@ -74,19 +72,21 @@
             user.email = dom.byId("edit_email").value;
             
             var errors = isValidUserData(user, dom.byId("edit_password_again").value);
-            
             if (errors.length === 0) {
                 UserRepoManager.updateUser(user.login, user, function(success) {
-                    window.location.search="?section=user&rnd="+Math.random();
                     console.debug("success updating user: " + success);
+                    if (execCallback) execCallback(user);
                 });
             } else {
                 style.set("edit_errorAddUser", "display", "");
                 dom.byId("edit_errorAddUser").innerHTML = errors;
             }
+
+            dlgContainer.hide();
         }
         
         function addNewUser() {
+            var execCallback = callback;
             var user = {};
             user.login = dom.byId("edit_login").value;
             user.password = dom.byId("edit_password").value;
@@ -101,14 +101,15 @@
             // check if username already exists
             if (errors.length === 0) {
                 UserRepoManager.addUser(user, function(success) {
-                    window.location.search="?section=user&rnd="+Math.random();
-                    //window.location.reload();
                     console.debug("success adding user: " + success);
+                    if (execCallback) execCallback(user);
                 });
             } else {
                 style.set("edit_errorAddUser", "display", "");
                 dom.byId("edit_errorAddUser").innerHTML = errors;
             }
+
+            dlgContainer.hide();
         }
         
         function isValidNewUserData(user) {
@@ -151,7 +152,7 @@
                     <div class="td">Login:</div><div class="td"><input id="edit_login" type="text" disabled></div>
                 </div>
                 <div class="tr">
-                    <div class="td">Passwort:</div><div class="td"><input id="edit_password" type="password"></div>
+                    <div class="td">Passwort:</div><div class="td"><input id="edit_password" type="password" autocomplete="new-password"></div>
                 </div>
                 <div class="tr">
                     <div class="td">Passwort (Wiederholung):</div><div class="td"><input id="edit_password_again" type="password"></div>
@@ -170,8 +171,8 @@
                 </div>
                 <div class="tr">
                     <div class="td">
-                        <input type="button" id="btn_updateUser" onclick="dialogAdminEditUser.updateUser()" value="Benutzer aktualisieren">
-                        <input type="button" id="btn_addUser" onclick="dialogAdminEditUser.addNewUser()" value="Benutzer hinzufügen">
+                        <button data-dojo-type="dijit/form/Button" id="btn_updateUser" onclick="dialogAdminEditUser.updateUser()">Benutzer aktualisieren</button>
+                        <button data-dojo-type="dijit/form/Button" id="btn_addUser" onclick="dialogAdminEditUser.addNewUser()">Benutzer hinzufügen</button>
                     </div>
                 </div>
             </div>

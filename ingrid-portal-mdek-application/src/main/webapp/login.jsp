@@ -80,6 +80,10 @@
 //                 }
             }
 
+            function forgotPassword() {
+                window.location.href = "forgotPassword.jsp";
+            }
+
             function showLoginError() {
                 document.getElementById("error").style.display = "block";
             }
@@ -118,9 +122,15 @@
                 <h3>Loginseite</h3>
                 <div style="padding: 10px;">
                     <table style="width: 100%;">
-                        <tr><td>Login:</td><td><input id="username" name="j_username" style="width: 200px;"></td></tr>
-                        <tr><td>Passwort:</td><td><input id="password" name="j_password" type="password" style="width: 200px;"></td></tr>
-                        <tr><td></td><td><input id="submit" type="submit" onclick="authenticate()" name="Login" value="Login"></td></tr>
+                        <tr><td>Login:</td><td><input id="username" name="j_username" style="width: 265px;"></td></tr>
+                        <tr><td>Passwort:</td><td><input id="password" name="j_password" type="password" style="width: 265px;"></td></tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input id="submit" type="submit" onclick="authenticate()" name="Login" value="Login">
+                                <input id="forgotPassword" type="submit" onclick="forgotPassword()" name="forgotPassword" value="Passwort vergessen">
+                            </td>
+                        </tr>
 						<!--<tr><td></td><td><input id="submit" type="submit" name="Login" value="Login"></td></tr>-->
                         <span id="error" class="error" style="display:none;">Unbekannter Benutzername oder Passwort!</span>
                     </table>

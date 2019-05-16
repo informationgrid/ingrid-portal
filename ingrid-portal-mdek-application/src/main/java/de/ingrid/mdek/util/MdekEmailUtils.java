@@ -365,6 +365,18 @@ public class MdekEmailUtils {
 		}
 	}
 
+	public static void sendForgottenPasswordMail(String email, String passwordChangeId) {
+
+		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/password_forgotten_email.vm");
+		String templatePath = url.getPath();
+		Map<String, Object> mailData = new HashMap<>();
+		String link = mdekDirectLink.substring(0, mdekDirectLink.lastIndexOf('/')) + "changePassword.jsp?id=" + passwordChangeId;
+		mailData.put("link", link);
+
+		String text = mergeTemplate(templatePath, mailData, "map");
+		sendEmail(text, mailSender, new String[] {email} );
+
+	}
 
 	public static void sendEmail(String content, String from, String[] to) {
 		Properties props = (Properties)System.getProperties().clone();

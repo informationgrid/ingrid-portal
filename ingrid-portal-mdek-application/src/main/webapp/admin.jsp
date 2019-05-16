@@ -296,9 +296,13 @@
         }
 
         function addUser() {
+            var reloadPage = function() {
+                window.location.search = "?section=user&rnd="+Math.random();
+            };
             
             dialog.showPage("Benutzer hinzufügen", "dialogs/admin_editUser.jsp", null, null, true, {
-                user: null
+                user: null,
+                callback: reloadPage
             });
             
         }
@@ -321,10 +325,13 @@
         }
         
         function editUser(userLogin) {
-            var user = getUserInfo(userLogin);
+            var reloadPage = function() {
+                window.location.search = "?section=user&rnd="+Math.random();
+            };
             
             dialog.showPage("Benutzer bearbeiten", "dialogs/admin_editUser.jsp", null, null, true, {
-                user: user
+                user: userLogin,
+                callback: reloadPage
             });
         }
         
@@ -382,7 +389,6 @@
         }
         
         function loginAs(login) {
-            console.debug("Not yet implemented!");
             SecurityService.forceUserLogin(login, function() {
                 window.location.reload();
                 //window.open("start.jsp", "_blank");
