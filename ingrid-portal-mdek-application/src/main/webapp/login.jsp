@@ -80,10 +80,6 @@
 //                 }
             }
 
-            function forgotPassword() {
-                window.location.href = "forgotPassword.jsp";
-            }
-
             function showLoginError() {
                 document.getElementById("error").style.display = "block";
             }
@@ -128,7 +124,7 @@
                             <td></td>
                             <td>
                                 <input id="submit" type="submit" onclick="authenticate()" name="Login" value="Login">
-                                <input id="forgotPassword" type="submit" onclick="forgotPassword()" name="forgotPassword" value="Passwort vergessen">
+                                <a href="forgotPassword.jsp">Passwort vergessen</a>
                             </td>
                         </tr>
 						<!--<tr><td></td><td><input id="submit" type="submit" name="Login" value="Login"></td></tr>-->

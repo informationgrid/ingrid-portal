@@ -52,8 +52,12 @@
             document.getElementById("success").style.display = "block";
 
             setTimeout(function() {
-                window.location.href = "login.jsp";
+                gotoLoginPage();
             }, 3000);
+        }
+
+        function gotoLoginPage() {
+            window.location.href = "login.jsp";
         }
     </script>
 </head>
