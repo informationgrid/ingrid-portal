@@ -10,12 +10,16 @@
 
 <script>
     function getOSMLayer(attribution){
-        var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var osmAttrib='&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+        var osmUrl = 'https://maps.omniscale.net/v2/{id}/style.default/{z}/{x}/{y}.png';
+        var osmAttrib='&copy; 2019 &middot; <a href="https://maps.omniscale.com/">Omniscale</a> ' +
+            '&middot; Map data: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
         if(attribution){
             osmAttrib = osmAttrib + "" + attribution;
         }
-        return new L.TileLayer(osmUrl, {attribution: osmAttrib});
+        return new L.TileLayer(osmUrl, {
+            id: 'numistest-38457db2',
+            attribution: osmAttrib
+        });
     }
     
     function getWMSLayer(layerUrl, layerName, attribution){

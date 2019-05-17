@@ -32,8 +32,7 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');
     var lat = $facetMapCenter.get(0);

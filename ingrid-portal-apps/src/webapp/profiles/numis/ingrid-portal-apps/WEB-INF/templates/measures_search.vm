@@ -20,6 +20,10 @@
   // define the URL for the elastic search requests
   var elasticSearchUrl = 'https://numis.niedersachsen.de/elastic-measure/';
 
+  var bgTileLayerUrl = 'https://maps.omniscale.net/v2/numistest-38457db2/style.default/{z}/{x}/{y}.png';
+  var bgTileLayerAttribution = '&copy; 2019 &middot; <a href="https://maps.omniscale.com/">Omniscale</a> ' +
+    '&middot; Map data: <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+
   // exclude networks which shall not be shown
   // var excludeNetworks = ['luen_new'];
   
