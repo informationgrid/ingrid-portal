@@ -62,12 +62,15 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
         String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
         if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
             context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
-            context.put( "leafletBgLayerWMSName", leafletBgLayerWMS[1]);
-        }else{
-            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
-            context.put( "leafletBgLayerWMSName", "");
+            StringBuilder leafletBgLayerWMSName = new StringBuilder("");
+            for (int i = 1; i < leafletBgLayerWMS.length; i++) {
+                leafletBgLayerWMSName.append(leafletBgLayerWMS[i]);
+                if(i < (leafletBgLayerWMS.length - 1)) {
+                    leafletBgLayerWMSName.append(",");
+                }
+            }
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
         }
-
         super.doView(request, response);
     }
 }
