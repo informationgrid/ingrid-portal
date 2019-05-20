@@ -35,6 +35,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.velocity.context.Context;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -353,6 +354,20 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientQuery.isEmpty() || !mapclientQuery2.isEmpty() || !mapclientQuery3.isEmpty() || !mapclientQuery4.isEmpty() || !mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
+        }
+        
+        Context context = getContext(request);
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMS[1]);
+        }else{
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            context.put( "leafletBgLayerWMSName", "");
         }
         super.doView(request, response);
     }

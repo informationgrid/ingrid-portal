@@ -10,8 +10,8 @@
 
 <script>
     function getOSMLayer(attribution){
-        var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var osmAttrib='&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+        var osmUrl='$leafletBgLayerWMTS';
+        var osmAttrib='$leafletBgLayerAttribution';
         if(attribution){
             osmAttrib = osmAttrib + "" + attribution;
         }
@@ -19,12 +19,13 @@
     }
     
     function getWMSLayer(layerUrl, layerName, attribution){
-        var osmAttrib='';
+        var osmAttrib='$leafletBgLayerAttribution';
         if(attribution){
             osmAttrib += attribution;
         }
         return new L.tileLayer.wms(layerUrl, {
-            layers: layerName
+            layers: layerName,
+            attribution: osmAttrib
         });
     }
     

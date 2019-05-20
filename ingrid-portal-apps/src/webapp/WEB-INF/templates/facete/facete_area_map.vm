@@ -38,8 +38,8 @@
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
     var zoom = $facetMapCenter.get(2);
-    var layerUrl = '$facetMapLayerUrl';
-    var layerName = '$facetMapLayerName';
+    var layerUrl = '$leafletBgLayerWMSUrl';
+    var layerName = '$leafletBgLayerWMSName';
     var layer;
     
     if(layerUrl.length > 0 && layerName.length > 0){

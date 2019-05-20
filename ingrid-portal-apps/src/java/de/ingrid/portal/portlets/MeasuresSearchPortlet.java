@@ -32,6 +32,7 @@ import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
 
@@ -53,6 +54,19 @@ public class MeasuresSearchPortlet extends AbstractVelocityMessagingPortlet {
         context.put("MESSAGES", messages);
 
         context.put("UtilsString", new UtilsString());
+
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMS[1]);
+        }else{
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            context.put( "leafletBgLayerWMSName", "");
+        }
 
         super.doView(request, response);
     }

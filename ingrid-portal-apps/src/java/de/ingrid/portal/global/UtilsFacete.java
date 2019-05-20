@@ -249,14 +249,17 @@ public class UtilsFacete {
         }
         context.put( "subFacetsCount", PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_FACETE_SUB_COUNT, 5));
         context.put( "facetMapCenter", PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_CENTER));
-        String [] facetMapLayer = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_SEARCH_FACETE_MAP_LAYER);
-        String facetMapLayerUrl = facetMapLayer[0];
-        if(facetMapLayerUrl.length() > 0 && facetMapLayer.length > 1){
-            context.put( "facetMapLayerUrl", facetMapLayerUrl);
-            context.put( "facetMapLayerName", facetMapLayer[1]);
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMS[1]);
         }else{
-            context.put( "facetMapLayerUrl", facetMapLayerUrl);
-            context.put( "facetMapLayerName", "");
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            context.put( "leafletBgLayerWMSName", "");
         }
         // Remove flag
         removeAttributeFromSession(request, "isSelection");
