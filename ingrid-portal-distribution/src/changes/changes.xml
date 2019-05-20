@@ -23,6 +23,9 @@
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
           </action>
+          <action type="add" dev="wemove" issue="1392">
+            Portal: Add properties to change leaflet background layer.
+          </action>
           <action type="add" dev="wemove" issue="1253">
             MapClient: Add upload of category and background images on admin GUI.
           </action>
