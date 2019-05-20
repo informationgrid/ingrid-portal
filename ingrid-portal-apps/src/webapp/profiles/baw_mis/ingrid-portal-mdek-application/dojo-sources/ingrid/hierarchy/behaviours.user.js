@@ -23,10 +23,16 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawValidationRules) {
+], function(lang, behaviours, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
+
+        /**
+         * UI changes for BAW-MIS profile
+         */
+        bawUiGeneral: bawUiGeneral,
 
         /**
          * Extra validation rules for BAW-MIS
