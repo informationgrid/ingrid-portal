@@ -20,6 +20,9 @@
   // define the URL for the elastic search requests
   var elasticSearchUrl = 'https://numis.niedersachsen.de/elastic-measure/';
 
+  var bgTileLayerUrl = '$leafletBgLayerWMTS';
+  var bgTileLayerAttribution = '$leafletBgLayerAttribution';
+
   // exclude networks which shall not be shown
   // var excludeNetworks = ['luen_new'];
   

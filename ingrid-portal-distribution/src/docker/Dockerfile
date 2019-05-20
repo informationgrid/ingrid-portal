@@ -8,6 +8,11 @@ ENV DB_DRIVERCLASS=com.mysql.jdbc.Driver
 ENV DB_URL_MDEK=jdbc:mysql:\\/\\/mysql\\/mdek
 ENV DB_URL_PORTAL=jdbc:mysql:\\/\\/mysql\\/ingrid_portal
 ENV DB_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect
+ENV SMTP_HOST=localhost
+ENV MAIL_SENDER=test@wemove.de
+ENV IGE_DIRECT_LINK=http://localhost:8080/ingrid-portal-mdek-application/index.jsp
+ENV UPLOAD_DOCS_DIR=/tmp/ingrid/upload/documents/
+ENV UPLOAD_PARTS_DIR=/tmp/ingrid/upload/parts/
 
 COPY ./files /
 COPY installer-unzipped/distribution /opt/ingrid/ingrid-portal/

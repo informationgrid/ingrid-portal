@@ -35,6 +35,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.velocity.context.Context;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -128,6 +129,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     try {
                         IngridHit hit = it.next();
                         IngridHitDetail detail = hit.getHitDetail();
+                        if (log.isDebugEnabled()) {
+                            log.debug("Got BLP result: " + detail.toString());
+                        }
                         String latCenter = UtilsSearch.getDetailValue( detail, "y1", 1);
                         String lonCenter = UtilsSearch.getDetailValue( detail, "x1", 1);
                         String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
@@ -176,7 +180,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     } catch (Exception e) {
                         log.error("Error get json object.", e);
                     }
-                    response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
                 }
 
                 response.setContentType( "application/javascript" );
@@ -351,6 +354,24 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientQuery.isEmpty() || !mapclientQuery2.isEmpty() || !mapclientQuery3.isEmpty() || !mapclientQuery4.isEmpty() || !mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
+        }
+        
+        Context context = getContext(request);
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            StringBuilder leafletBgLayerWMSName = new StringBuilder("");
+            for (int i = 1; i < leafletBgLayerWMS.length; i++) {
+                leafletBgLayerWMSName.append(leafletBgLayerWMS[i]);
+                if(i < (leafletBgLayerWMS.length - 1)) {
+                    leafletBgLayerWMSName.append(",");
+                }
+            }
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
         }
         super.doView(request, response);
     }

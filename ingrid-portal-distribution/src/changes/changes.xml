@@ -14,6 +14,30 @@
           <action type="fix" dev="wemove" issue="1344">
             IGE: IGE: Dienst-URLs per GetCapabilities-Assistenten nicht erreichbar.
           </action>
+          <action type="fix" dev="wemove" issue="1389">
+            Portal: Fix data source page.
+          </action>
+          <action type="fix" dev="wemove" issue="1387">
+            Portal: Fix UVP date on detail page.
+          </action>
+          <action type="update" dev="wemove" issue="1372">
+            Portal: Update tomcat to 7.0.94.
+          </action>
+          <action type="add" dev="wemove" issue="1392">
+            Portal: Add properties to change leaflet background layer.
+          </action>
+          <action type="add" dev="wemove" issue="1253">
+            MapClient: Add upload of category and background images on admin GUI.
+          </action>
+          <action type="fix" dev="wemove" issue="1354">
+            MapClient: Fix encoding of GetCapabilities request.
+          </action>
+          <action type="fix" dev="wemove" issue="1365">
+            MapClient: Fix generate stable IDs of added layers on admin GUI.
+          </action>
+          <action type="fix" dev="wemove" issue="1380">
+            BAW: Fix metadata markers in map view
+          </action>
         </release>
 
         <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
@@ -58,6 +82,12 @@
           </action>
           <action type="fix" dev="wemove" issue="1303">
             Portal: Change directory for codelists to prevent conflict with kml directory.
+          </action>
+        </release>
+
+        <release version="5.0.0.mCLOUD" date="2019-04-02" description="Release 5.0.0.mCLOUD">
+          <action type="add" dev="wemove" issue="1590">
+            IGE: Add profile for mCLOUD
           </action>
         </release>
 

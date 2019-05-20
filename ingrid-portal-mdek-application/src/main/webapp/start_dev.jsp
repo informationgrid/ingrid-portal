@@ -79,6 +79,7 @@
         <script type='text/javascript' src='dwr/interface/CTService.js'></script>
         <script type='text/javascript' src='dwr/interface/HttpService.js'></script>
         <script type='text/javascript' src='dwr/interface/StatisticService.js'></script>
+        <script type='text/javascript' src='dwr/interface/UserRepoManager.js'></script>
 
         <script type="text/javascript">
             // define some global functions for easier debugging!
