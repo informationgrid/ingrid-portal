@@ -240,7 +240,7 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED = "portal.mapclient.uvp.category.1314.checked";
 
     public static final String PORTAL_MAPCLIENT_LEAFLET_POSITION = "portal.mapclient.leaflet.position";
-    public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WTMS = "portal.mapclient.leaflet.bg.layer.wmts";
+    public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS = "portal.mapclient.leaflet.bg.layer.wmts";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS = "portal.mapclient.leaflet.bg.layer.wms";
     public static final String PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION = "portal.mapclient.leaflet.bg.layer.attribution";
     
