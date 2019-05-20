@@ -694,3 +694,11 @@ iframe {
 .selectEntryBtn { float: left; width:54px; margin:90px 12px -64px 8px; }
 
 
+#editUserDiv .tr {
+	display: table-row;
+}
+
+#editUserDiv .td {
+	display: table-cell;
+	padding: 5px;
+}

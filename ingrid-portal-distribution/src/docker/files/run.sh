@@ -116,7 +116,19 @@ else
         echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
     fi
-        
+
+    # SMTP_HOST
+    echo "workflow.mail.smtp=$SMTP_HOST" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.sender=$MAIL_SENDER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.user=$MAIL_USER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.password=$MAIL_PASSWORD" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
+    echo "mdek.directLink=$IGE_DIRECT_LINK" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
+    # Upload settings
+    echo "upload.docsdir=$UPLOAD_DOCS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "upload.partsdir=$UPLOAD_PARTS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
     touch /initialized
 fi
 

@@ -46,6 +46,9 @@ public class RepoUser implements IEntity {
     private String email;
     
     private String password;
+
+    // this field contains an ID which was sent to a user to be able to change the password
+    private String passwordChangeId;
     
     public RepoUser() {}
     
@@ -101,5 +104,12 @@ public class RepoUser implements IEntity {
     public String getEmail() {
         return email;
     }
-    
+
+    public String getPasswordChangeId() {
+        return passwordChangeId;
+    }
+
+    public void setPasswordChangeId(String passwordChangeId) {
+        this.passwordChangeId = passwordChangeId;
+    }
 }
