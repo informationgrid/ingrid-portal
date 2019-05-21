@@ -38,6 +38,9 @@
           <action type="fix" dev="wemove" issue="1380">
             BAW: Fix metadata markers in map view
           </action>
+          <action type="fix" dev="wemove" issue="2124">
+            IGE: Fix user table not shown for standalone IGE
+          </action>
         </release>
 
         <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
