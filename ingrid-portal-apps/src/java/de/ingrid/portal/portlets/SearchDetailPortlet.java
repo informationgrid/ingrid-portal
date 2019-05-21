@@ -194,6 +194,23 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
 
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            StringBuilder leafletBgLayerWMSName = new StringBuilder("");
+            for (int i = 1; i < leafletBgLayerWMS.length; i++) {
+                leafletBgLayerWMSName.append(leafletBgLayerWMS[i]);
+                if(i < (leafletBgLayerWMS.length - 1)) {
+                    leafletBgLayerWMSName.append(",");
+                }
+            }
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
+        }
+
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURL" );
         request.setAttribute( "restUrlHttpGet", restUrl.toString() );

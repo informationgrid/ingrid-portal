@@ -22,13 +22,13 @@
  */
 package de.ingrid.mdek.dwr.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
+import de.ingrid.mdek.persistence.db.model.RepoUser;
+import de.ingrid.mdek.userrepo.UserRepoManager;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContextFactory;
 
@@ -57,6 +57,9 @@ public class SecurityServiceImpl implements SecurityService {
 	
 	// Injected by Spring
 	private AuthenticationProvider authProvider;
+
+	// Injected by Spring
+	private UserRepoManager userRepoManager;
 
 	
 	/* (non-Javadoc)
@@ -383,7 +386,46 @@ public class SecurityServiceImpl implements SecurityService {
         return isValid;
     }
 
-    private void setSessionAttribute(String key, String value) {
+	@Override
+	public boolean sendPasswordEmail(String email) {
+		// check if email exists in user table
+		Optional<Map<String, String>> userWithEmail = userRepoManager.getAllUsers().stream()
+				.filter( user -> email.equals(user.get("email")))
+				.findAny();
+
+		if (userWithEmail.isPresent()) {
+			String login = userWithEmail.get().get("login");
+			String passwordChangeId = UUID.randomUUID().toString();
+
+			// mark user entry for password change
+			// we just add a generated ID to the user and send this ID to the users email address
+			userRepoManager.setPasswordRecoveryId(login, passwordChangeId, null);
+
+			// send email
+			MdekEmailUtils.sendForgottenPasswordMail(email, passwordChangeId);
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean updatePassword(String passwordChangeId, String password) {
+
+		Optional<Map<String, String>> userWithChangeId = userRepoManager.getAllUsers().stream()
+				.filter( user -> passwordChangeId.equals(user.get("passwordChangeId")))
+				.findAny();
+
+		if (userWithChangeId.isPresent()) {
+			String login = userWithChangeId.get().get("login");
+			userRepoManager.setPasswordRecoveryId(login, null, password);
+
+			return true;
+		}
+		return false;
+	}
+
+	private void setSessionAttribute(String key, String value) {
         HttpSession session = WebContextFactory.get().getHttpServletRequest().getSession();
         session.setAttribute(key, value);
     }
@@ -462,4 +504,8 @@ public class SecurityServiceImpl implements SecurityService {
         }
         return isPortalConnected;
     }
+
+	public void setUserRepoManager(UserRepoManager userRepoManager) {
+		this.userRepoManager = userRepoManager;
+	}
 }
