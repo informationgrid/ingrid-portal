@@ -7,7 +7,16 @@
 
     <body>
 
-        <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
+        <release version="5.0.1.mCLOUD-SNAPSHOT" date="2019-xx-xx" description="Release 5.1.0">
+          <action type="fix" dev="wemove" issue="2124">
+            IGE: Fix user table not shown for standalone IGE
+          </action>
+        </release>
+
+        <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
+          <action type="add" dev="wemove" issue="835">
+            Portal: Add central index functionality.
+          </action>
           <action type="fix" dev="wemove" issue="1304">
             Portal: Fix portal load mixed content.
           </action>
@@ -19,6 +28,12 @@
           </action>
           <action type="fix" dev="wemove" issue="1285">
              Fix problem with codelists not been able to fetch via HTTP proxy.
+          </action>
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
+          </action>
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
           </action>
           <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
@@ -75,7 +90,7 @@
             Portal: Oracle: Fix update of portal database (flyway 4_4_0, 4_4_1). Make provider URL nullable.
           </action>
           <action type="fix" dev="wemove">
-            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
+            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).
           </action>
           <action type="add" dev="wemove" issue="880">
             IGE(UVP): Show invalid filename characters in upload dialog.

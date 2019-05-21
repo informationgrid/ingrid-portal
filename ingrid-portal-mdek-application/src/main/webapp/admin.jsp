@@ -396,6 +396,10 @@
             if (previousContent) style.set(previousContent, "display", "");
             previousContent = divId;
             usersGrid.resize();
+            // the sort method will call _refresh function, which makes sure that
+            // the table is correctly rendered, since it happened that the table
+            // wasn't shown after making div-container visible
+            usersGrid.sort();
             connectedCataloguesGrid.resize();
             availableCataloguesGrid.resize();
         }
