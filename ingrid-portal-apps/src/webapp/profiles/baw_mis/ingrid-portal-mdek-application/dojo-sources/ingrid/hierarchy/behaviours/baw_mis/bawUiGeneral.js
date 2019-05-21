@@ -36,9 +36,78 @@ define([
         run: function() {
 
             topic.subscribe("/onObjectClassChange", function(data) {
+
+                var isNewItem = "newNode" === currentUdk.uuid;
+
+
                 // ========================================
+                // Hide fields
+                // ========================================
+
+                // ----------------------------------------
+                // Allgemeines
+                // ----------------------------------------
+
+                // Kurzbezeichnung
+                domClass.add("uiElement5000", "hide");
+                // AdV kompatibel
+                domClass.add("uiElement6005", "hide");
+
+                // ----------------------------------------
+                // Verschlagwortung
+                // ----------------------------------------
+                // AdV-Produktgruppe
+                domClass.add("uiElement5170", "hide");
+
+                // ----------------------------------------
+                // Fachbezug
+                // ----------------------------------------
+                // Vektorformat
+                domClass.add("uiElementN005", "hide");
+
+                // ----------------------------------------
+                // Datenqualität
+                // ----------------------------------------
+                // Datendefizit
+                domClass.add("uiElement3565", "hide");
+                // Höhengenauigkeit
+                domClass.add("uiElement5069", "hide");
+                // Lagegenauigkeit
+                domClass.add("uiElement3530", "hide");
+
+                // ----------------------------------------
+                // Zusatzinformation
+                // ----------------------------------------
+                // XML-Export-Kriterium
+                domClass.add("uiElementN012", "hide");
+                // Herstellungszweck
+                domClass.add("uiElementN013", "hide");
+                // Eignung/Nutzung
+                domClass.add("uiElement5040", "hide");
+
+
+
+
+                // ========================================
+                // Additional customisations
+                // ========================================
+
+                // ----------------------------------------
+                // Verschlagwortung: ISO-Themenkategorie
+                // ----------------------------------------
+
+                // For new items, add "transportation" as category automatically
+                var topicsTableId = "thesaurusTopics";
+                var topicsTableNodeId = "uiElement5060";
+                if (isNewItem && !domClass.contains(topicsTableNodeId, "hide")) {
+                    var topicsTableData = registry.byId(topicsTableId).data;
+                    topicsTableData.push({title: "18"});
+                    UtilStore.updateWriteStore(topicsTableId, topicsTableData);
+                }
+
+                // ----------------------------------------
                 // Zusatzinformation: Zeichensatz des Datensatzes
-                // ========================================
+                // ----------------------------------------
 
                 // Make the node mandatory if it has not been hidden by some
                 // other rule
@@ -52,26 +121,11 @@ define([
                 var datasetCharsetUtf8Value = "4";
                 var datasetCharsetWidgetId = "extraInfoCharSetData";
 
-                var isNewItem = "newNode" === currentUdk.uuid;
-
                 var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
                 if (isNewItem
                         && datasetCharsetWidget
                         && !datasetCharsetWidget.get("value")) {
                     datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
-                }
-
-                // ========================================
-                // Verschlagwortung: ISO-Themenkategorie
-                // ========================================
-
-                // For new items, add "transportation" as category automatically
-                var topicsTableId = "thesaurusTopics";
-                var topicsTableNodeId = "uiElement5060";
-                if (isNewItem && !domClass.contains(topicsTableNodeId, "hide")) {
-                    var topicsTableData = registry.byId(topicsTableId).data;
-                    topicsTableData.push({title: "18"});
-                    UtilStore.updateWriteStore(topicsTableId, topicsTableData);
                 }
             });
         }})();
