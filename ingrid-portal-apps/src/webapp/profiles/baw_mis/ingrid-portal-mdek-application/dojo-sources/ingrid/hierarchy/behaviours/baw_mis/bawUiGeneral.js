@@ -24,8 +24,9 @@ define([
     "dijit/registry",
     "dojo/_base/declare",
     "dojo/dom-class",
-    "dojo/topic"
-], function(registry, declare, domClass, topic) {
+    "dojo/topic",
+    "ingrid/utils/Store"
+], function(registry, declare, domClass, topic, UtilStore) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -51,14 +52,26 @@ define([
                 var datasetCharsetUtf8Value = "4";
                 var datasetCharsetWidgetId = "extraInfoCharSetData";
 
-                var newUuid = "newNode";
-                var uuid = currentUdk.uuid;
+                var isNewItem = "newNode" === currentUdk.uuid;
 
                 var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
-                if (uuid === newUuid
+                if (isNewItem
                         && datasetCharsetWidget
                         && !datasetCharsetWidget.get("value")) {
                     datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
+                }
+
+                // ========================================
+                // Verschlagwortung: ISO-Themenkategorie
+                // ========================================
+
+                // For new items, add "transportation" as category automatically
+                var topicsTableId = "thesaurusTopics";
+                var topicsTableNodeId = "uiElement5060";
+                if (isNewItem && !domClass.contains(topicsTableNodeId, "hide")) {
+                    var topicsTableData = registry.byId(topicsTableId).data;
+                    topicsTableData.push({title: "18"});
+                    UtilStore.updateWriteStore(topicsTableId, topicsTableData);
                 }
             });
         }})();
