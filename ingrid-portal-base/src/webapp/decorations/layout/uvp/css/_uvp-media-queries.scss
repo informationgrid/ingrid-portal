@@ -111,7 +111,7 @@
       }
     }
   }
-  .banner.subpage .subpage-wrapper {
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     background-position: -140px -135px;
     padding: 64px 0 16px;
   }
@@ -236,7 +236,7 @@
       h1 .ic-ic-asterisc { font-size: 37px; }
     }
   }
-  .banner.subpage .subpage-wrapper { padding: 80px 0 32px; }
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper { padding: 80px 0 32px; }
 
   .map-filter {
     border-top-right-radius: 0;

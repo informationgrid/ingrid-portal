@@ -147,6 +147,27 @@ img { width: 100%; }
     padding-right: 0;
   }
 }
+
+.row.content-small {
+  max-width: 848px;
+}
+
+.list-item div {
+  padding: 0 0 24px;
+}
+
+div.row div.columns {
+  padding-bottom: 24px;
+} 
+
+div.row.no-padding div.columns {
+  margin-top: -24px;
+} 
+
+.banner-noimage h1 {
+  margin-bottom: 8px;
+}
+
 .dont-break-out {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -1154,11 +1175,9 @@ a.data:hover {
     }
   }
 }
-.banner.subpage {
-  .subpage-wrapper {
-    background-position: right bottom;
-    padding: 24px 0 0;
-  }
+.banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
+  background-position: right bottom;
+  padding: 24px 0 0;
 }
 .banner.search {
   background: $blue-sky;

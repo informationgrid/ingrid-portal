@@ -1,43 +1,41 @@
     #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
         <footer>
-            <hr>
-            <div class="row">
-                <div class="xsmall-24 columns">
-                    <div class="social-buttons">
-                        #defineUrlParams()
-                        #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
-                        #set($shareUrl = "${shareUrl}${urlParams}")
-                        #set($shareUrlEncode = $esc.url("${shareUrl}${urlParams}"))
-                        <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank" title="Twitter">
-                            <span class="ic-ic-twitter"></span><span class="text"></span>
-                        </a>
-                        <a href="https://www.facebook.com/sharer/sharer.php?u=$shareUrlEncode" class="button round social" target="_blank" title="Facebook">
-                            <span class="ic-ic-facebook"></span><span class="text"></span>
-                        </a>
-                        <a href="https://www.linkedin.com/shareArticle?mini=true&url=$shareUrlEncode" class="button round social" target="_blank" title="LinkedIn">
-                            <span class="ic-ic-linkedin"></span><span class="text"></span>
-                        </a>
-                        <a href="whatsapp://send?text=$shareUrl" class="button round social" target="_blank" title="WhatsApp">
-                            <span class="ic-ic-whatsapp"></span><span class="text"></span>
-                        </a>
-                        <a href="https://www.xing.com/social_plugins/share?url=$shareUrlEncode" class="button round social" target="_blank" title="XING">
-                            <span class="ic-ic-xing"></span><span class="text"></span>
-                        </a>
-                        <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
-                            <span class="ic-ic-mailto"></span><span class="text"></span>
-                        </a>
-                        <button class="button round social" target="_blank" onclick="copyToClipboard('$shareUrl')" title="Link kopieren">
-                            <span class="ic-ic-share"></span><span class="text"></span>
-                        </button>
-                    </div>
+            <div class="footer-buttons-bar show-for-large">
+                <div class="social-buttons">
+                    #defineUrlParams()
+                    #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
+                    #set($shareUrl = "${shareUrl}${urlParams}")
+                    #set($shareUrlEncode = $esc.url("${shareUrl}${urlParams}"))
+                    <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank" title="Twitter">
+                      <span class="ic-ic-twitter"></span><span class="text"></span>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=$shareUrlEncode" class="button round social" target="_blank" title="Facebook">
+                      <span class="ic-ic-facebook"></span><span class="text"></span>
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=$shareUrlEncode" class="button round social" target="_blank" title="LinkedIn">
+                      <span class="ic-ic-linkedin"></span><span class="text"></span>
+                    </a>
+                    <a href="whatsapp://send?text=$shareUrl" class="button round social" target="_blank" title="WhatsApp">
+                      <span class="ic-ic-whatsapp"></span><span class="text"></span>
+                    </a>
+                    <a href="https://www.xing.com/social_plugins/share?url=$shareUrlEncode" class="button round social" target="_blank" title="XING">
+                      <span class="ic-ic-xing"></span><span class="text"></span>
+                    </a>
+                    <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
+                      <span class="ic-ic-mailto"></span><span class="text"></span>
+                    </a>
+                    <button id="share-buttons" class="button round social share" title="Seite teilen">
+                      <span class="ic-ic-share"></span>
+                      <span class="text"></span>
+                    </button>
                 </div>
-            </div>
-          <div class="row">
-              <div class="xsmall-24 columns">
-                  <div class="button-up">
-                      <button type="button" class="button round js-top"><span class="ic-ic-angle-up"></span></button>
-                  </div>
+                <div class="button-up">
+                    <button type="button" class="button round social js-top" title="Nach oben">
+                        <span class="ic-ic-angle-up"></span>
+                    </button>
+                </div>
               </div>
+            </div>
           </div>
           <div class="footer">
               <div class="row">
@@ -57,10 +55,10 @@
         </footer>
     #end
     <!-- Global scripts -->
-    <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+    <script src="#GetPageResource("scripts/all.js")"></script>
     
     <!-- Popup -->
-    <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+    <script src="#GetPageResource("scripts/popup.js")"></script>
     
     <!-- Expand -->
     <script src="/decorations/layout/ingrid/scripts/expander.js"></script>

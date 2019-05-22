@@ -658,6 +658,22 @@
     #end
 #end
 
+#macro (renderIconTextList $title $textList)
+    #if($tool.hasContent($textList))
+        #if($tool.hasContent($title))
+            <h3 class="title-font">$title</h3>
+            ##renderGroupTitle($entry.title)
+        #end
+        <div class="list-item">
+        #foreach($text in $sorter.sort($textList,"text"))
+             <div>
+                <span class="ic-ic-$text.get('key')"></span>
+                <span class="text">$text.get('text')</span>
+             </div>
+        #end
+        </div>
+    #end
+#end
 
 ## Render label above text
 #macro (renderTextLabelAbove $title $body)

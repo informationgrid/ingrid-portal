@@ -6,81 +6,98 @@
 #set($bar = $list.add('size'))
 
 #if($TOOL.getValueFromXPath("./name"))
-    <div class="row">
-        <div class="form">
-            <div style="padding-bottom: 2.25rem;">
-                <div class="helper text">
-                    <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
-                </div>
-                <h2 class="">$TOOL.getValueFromXPath("./name")</h2>
-                ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
-                ## used to get title.
-                ## Title will be read from context and set to page head title tag.
-                $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
+    <div class="banner-noimage">
+      <div class="page-wrapper">
+        <div class="row content-small">
+          <div class="columns">
+            <div class="helper text">
+                <span>TODO: Verfahren</span>
             </div>
-    ## Allgemeines
-            <div style="padding-bottom: 1.25rem;">
-                ## Allgemeine Vorhabenbeschreibung
-                #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
+            <h1>
+                $TOOL.getValueFromXPath("./name")
+            </h1>
+            ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
+            ## used to get title.
+            ## Title will be read from context and set to page head title tag.
+            $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
+            <div class="helper text">
+                <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
             </div>
-            <div style="padding-bottom: 1.25rem;">
-                ## UVP Kategorien
-                #set($uvpCats = [])
-                #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
-                    #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
-                    #if($uvpCats.indexOf($uvpCatValue) < 0)
-                        #set($tmp = $uvpCats.add($uvpCatValue))
-                    #end
-                #end
-                #renderTextList("UVP-Kategorie" $uvpCats)
-            </div>
-            ## Raumbezug
-            #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
-            #if($spatialValue)
-            <div style="padding-bottom: 2.25rem;">
-                #set($spatialValueSplit = $spatialValue.split(":"))
-                #if($spatialValueSplit.size() == 2)
-                    #set($spatial = $spatialValueSplit.get(1))
-                    #set($spatialEntries = $spatial.split(","))
-                    #if($spatialEntries.size() == 4)
-                        #set($west = "$spatialEntries.get(0).trim()")
-                        #set($south = "$spatialEntries.get(1).trim()")
-                        #set($east = "$spatialEntries.get(2).trim()")
-                        #set($north = "$spatialEntries.get(3).trim()")
-                        #if($west.toLowerCase() != "nan" && $west.length() > 0
-                            && $north.toLowerCase() != "nan" && $north.length() > 0
-                            && $south.toLowerCase() != "nan" && $south.length() > 0
-                            && $east.toLowerCase() != "nan" && $east.length() > 0)
-                            <div class="row">
-                                <div class="xsmall-24 large-16 columns">
-                                    <h3>Raumbezug</h3>
-                                </div>
-                            #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-                            <div id="map" style="height: 400px; width:100%;"></div>
-                            <script language="JavaScript" type="text/javascript">
-                                var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
-                                northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
-                                bounds = L.latLngBounds(southWest, northEast);
-                                
-                                var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
-                                var map = addLeafletMap([osm], bounds);
-                                map.scrollWheelZoom.disable();
-                                var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
-                                    var popLocation= e.latlng;
-                                    var popup = L.popup()
-                                    .setLatLng(popLocation)
-                                    .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
-                                    .openOn(map);
-                                }).addTo(map);
-                                
-                                addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
-                            </script>
-                            </div>
-                        #end
-                    #end
-                #end
-            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row content-small">
+        <div class="columns">
+            ## Allgemeine Vorhabenbeschreibung
+            #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
+        </div>
+    </div>
+    <div class="row content-small">
+        <div class="columns">
+            ## UVP Kategorien
+            #set($uvpCats = [])
+            #set($uvpCat = {})
+            #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
+                #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
+                #set($tmp = $uvpCat.put('key', $tmpCat))
+                #set($tmp = $uvpCat.put('text', $uvpCatValue))
+                #set($tmp = $uvpCats.add($uvpCat))
             #end
+            #renderIconTextList("UVP-Kategorie" $uvpCats)
+        </div>
+    </div>
+    ## Raumbezug
+    #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
+    #if($spatialValue)
+    <div class="row content-small">
+        <div class="columns">
+        #set($spatialValueSplit = $spatialValue.split(":"))
+        #if($spatialValueSplit.size() == 2)
+            #set($spatial = $spatialValueSplit.get(1))
+            #set($spatialEntries = $spatial.split(","))
+            #if($spatialEntries.size() == 4)
+                #set($west = "$spatialEntries.get(0).trim()")
+                #set($south = "$spatialEntries.get(1).trim()")
+                #set($east = "$spatialEntries.get(2).trim()")
+                #set($north = "$spatialEntries.get(3).trim()")
+                #if($west.toLowerCase() != "nan" && $west.length() > 0
+                    && $north.toLowerCase() != "nan" && $north.length() > 0
+                    && $south.toLowerCase() != "nan" && $south.length() > 0
+                    && $east.toLowerCase() != "nan" && $east.length() > 0)
+                    <h3 class="title-font">Raumbezug</h3>
+        </div>
+    </div>
+    <div class="row no-padding">
+        <div class="columns">
+                    #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                    <div id="map" style="height: 400px; width:100%;"></div>
+                    <script language="JavaScript" type="text/javascript">
+                        var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
+                        northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
+                        bounds = L.latLngBounds(southWest, northEast);
+                        
+                        var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
+                        var map = addLeafletMap([osm], bounds);
+                        map.scrollWheelZoom.disable();
+                        var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
+                            var popLocation= e.latlng;
+                            var popup = L.popup()
+                            .setLatLng(popLocation)
+                            .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                            .openOn(map);
+                        }).addTo(map);
+                        
+                        addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
+                    </script>
+                #end
+            #end
+        #end
+        </div>
+    </div>
+    #end
+    <div class="row content-small">
+        <div class="columns">
         ## Addressen
             <h3>Adressen</h3>
             #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
@@ -181,6 +198,10 @@
             #end
             #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
             #if($nodelist.getLength() > 0)
+        </div>
+    </div>
+    <div class="row content-small">
+        <div class="columns">
             <h1>Verfahrensschritte</h1>
             <div class="timeline"> 
                 <div class="row">
@@ -205,7 +226,6 @@
                             <h2 class="icon-check">
                                 $step_title
                                 <span class="ic-ic-check icon"></span>
-                                
                             #end
                             </h2>
                             ## Zeitraum der Auslegung
