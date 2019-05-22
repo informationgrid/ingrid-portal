@@ -38,19 +38,23 @@
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
     var zoom = $facetMapCenter.get(2);
+    var layer;
+</script>
+#if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
+    <script>
     var layerUrl = '$leafletBgLayerWMSUrl';
     var layerName = '$leafletBgLayerWMSName';
-    var layer;
-    
-    if(layerUrl.length > 0 && layerName.length > 0){
-        layer = getWMSLayer(layerUrl, layerName); 
-    } else {
-        var osm = getOSMLayer();
-        osm.options.minZoom = 5;
-        osm.options.maxZoom = 20;
-        layer = osm; 
-    }
-
+    layer = getWMSLayer(layerUrl, layerName); 
+    </script>
+#else
+   <script>
+    var osm = getOSMLayer('');
+    osm.options.minZoom = 5;
+    osm.options.maxZoom = 20;
+    layer = osm; 
+   </script>
+#end
+<script>
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     map.setView(new L.LatLng(lat, lng),zoom);
