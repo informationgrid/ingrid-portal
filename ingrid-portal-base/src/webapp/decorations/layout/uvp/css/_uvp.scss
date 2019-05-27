@@ -665,12 +665,6 @@ ul ol, ol ol { margin-left: 2.25rem; }
   z-index: 5;
   width: 30rem;
   margin-left: -15rem;
-  
-  & .is-open {
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-    z-index: 999999;
-  }
   .headline {
     position: relative;
     background-color: $green-jelly;
@@ -693,6 +687,12 @@ ul ol, ol ol { margin-left: 2.25rem; }
     border-bottom-right-radius: 24px;
     border-bottom-left-radius: 24px;
   }
+}
+
+.popup.is-open {
+  -ms-transform: translateY(0);
+  transform: translateY(0);
+  z-index: 999999;
 }
 
 /* results index */
