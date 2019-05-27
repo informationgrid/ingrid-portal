@@ -16,11 +16,15 @@
             #end
             </p>
         #end
-        #foreach($uvp_category in $hit.getHitDetail().getArray("uvp_category"))
-        <div class="helper icon">
-            <span class="ic-ic-$uvp_category"></span>
-            <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
-        </div>
+        #set($tmpCats = [])
+        #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
+            #if($tmpCats.indexOf($uvp_category) == -1)
+                #set($tmp = $tmpCats.add($uvp_category))
+                <div class="helper icon">
+                    <span class="ic-ic-$uvp_category"></span>
+                    <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
+                </div>
+            #end
         #end
         <!-- 
         #set($uvp_steps = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'uvp_steps'))

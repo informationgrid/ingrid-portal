@@ -38,11 +38,15 @@
             ## UVP Kategorien
             #set($uvpCats = [])
             #set($uvpCat = {})
+            #set($tmpCats = [])
             #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
-                #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
-                #set($tmp = $uvpCat.put('key', $tmpCat))
-                #set($tmp = $uvpCat.put('text', $uvpCatValue))
-                #set($tmp = $uvpCats.add($uvpCat))
+                #if($tmpCats.indexOf($tmpCat) == -1)
+                    #set($tmp = $tmpCats.add($tmpCat))
+                    #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
+                    #set($tmp = $uvpCat.put('key', $tmpCat))
+                    #set($tmp = $uvpCat.put('text', $uvpCatValue))
+                    #set($tmp = $uvpCats.add($uvpCat))
+                #end
             #end
             #renderIconTextList("UVP-Kategorie" $uvpCats)
         </div>
