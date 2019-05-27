@@ -654,7 +654,23 @@ ul ol, ol ol { margin-left: 2.25rem; }
 .popup {
   border-radius: 24px;
   box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.3);
-
+  left: 0;
+  max-height: 100%;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
+  -ms-transform: translateY(-150%);
+  transform: translateY(-150%);
+  transition: transform .2s;
+  z-index: 5;
+  width: 30rem;
+  margin-left: -15rem;
+  
+  & .is-open {
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    z-index: 999999;
+  }
   .headline {
     position: relative;
     background-color: $green-jelly;
@@ -845,6 +861,7 @@ header {
   .subtext-submit {
     padding: 10px 0;
 
+    button { margin-left: 0.5rem }
     button[type="submit"] { float: right; }
   }
 }

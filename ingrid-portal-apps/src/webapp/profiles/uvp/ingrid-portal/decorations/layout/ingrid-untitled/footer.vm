@@ -53,11 +53,21 @@
           </div>
         </footer>
     #end
+       <!-- Popup -->
+        <div class="popup">
+            <div class="headline popup__header">
+                <p class="popup__title medium">$MESSAGES.getString("ingrid.page.help")</p>
+                <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span>
+            </div>
+            <div class="popup__content text-box">
+                <p></p>
+            </div>
+        </div>
     <!-- Global scripts -->
-    <script src="#GetPageResource("scripts/all.js")"></script>
+    <script src="/decorations/layout/ingrid/scripts/all.js"></script>
     
     <!-- Popup -->
-    <script src="#GetPageResource("scripts/popup.js")"></script>
+    <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
     
     <!-- Expand -->
     <script src="/decorations/layout/ingrid/scripts/expander.js"></script>

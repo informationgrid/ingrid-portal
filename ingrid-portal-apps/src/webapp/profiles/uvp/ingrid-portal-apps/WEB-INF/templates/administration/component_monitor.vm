@@ -30,8 +30,6 @@
         $action.setParameter("id", "$jobId")
         #if($running)
             ##<input id="stop_$count" name="id" type="button" value="x" title="Stop running job" class="btn" style="background-color:red; height:15px; width:15px; padding:0;" />
-        #elseif($entry.getGroup() == "monitor")
-            <td><div class="field-toggle field-toggle--check"><input id="chk_$count" name="id" type="checkbox" value="$jobId" />
         #end
         
         ## for non monitoring jobs
@@ -60,14 +58,18 @@
             #end
             <td><a href="$action">$interval</a></td>
         #else
-            <label class="field-toggle__label field-toggle__label--highlight" for="chk_$count">
-            <div class="field-toggle__icon field-toggle__icon-alt">
-	            <svg class="icon">
-	                <use xlink:href="#tick">
-	            </svg>
-	        </div>
-            <a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a>
-            </label></div></td>
+            <td>
+            <div class="form-element boxed">
+                <div class="input-check">
+                    <div class="control-group">
+                        <label class="control control--checkbox" for="chk_$count">
+                            <input id="chk_$count" type="checkbox" name="id" type="checkbox" value="$jobId">
+                            <div class="control__indicator"></div>$!jobData.getString("component.monitor.general.title")
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </td>
             <td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
             <td>
             #if($running)
@@ -99,7 +101,6 @@
     #set ($action = $renderResponse.createActionURL())
     <form class="form" action="$action" method="post" name="frmContentProvider" id="frmContentMonitor1">
         <input name="modelSize" type="hidden" value="#if ($model) $model.size() #end" />
-        #set ($buttons = ["doDelete", "doRefresh", "doNew"])
         <table class="boxed-table">
             #set ($colNames = ["component.monitor.general.title", "component.monitor.general.type", "component.monitor.general.status", "component.monitor.general.last.check", "component.monitor.general.last.errorfree.run", "component.monitor.general.timer.average", "component.monitor.general.check.interval"]) ##, "component.monitor.general.active"])
             #set ($colTitles = [$MESSAGES.getString('component.forms.text.name'), $MESSAGES.getString('component.forms.text.type'), $MESSAGES.getString('component.forms.text.status'), $MESSAGES.getString('component.forms.text.last.check'), $MESSAGES.getString('component.forms.text.last.errorfree.run'), $MESSAGES.getString('component.forms.text.average.exec.time'), $MESSAGES.getString('component.forms.text.interval')]) ##, "aktiv"])
@@ -138,6 +139,7 @@
             #fillTable($filterMap false false)
         </table>
         <div class="subtext-submit">
+            #set ($buttons = ["doNew", "doRefresh", "doDelete"])
             #renderDBBrowserFooterButtonsDisable($buttons true)
         </div>
     </form>

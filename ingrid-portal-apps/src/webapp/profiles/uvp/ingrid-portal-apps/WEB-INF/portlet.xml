@@ -90,11 +90,11 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row content-small</value>
+                <value>row</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -202,7 +202,7 @@
         <portlet-preferences>
             <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered columns</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>

@@ -26,7 +26,7 @@
         </div>
     #end
     
-    <h4>$MESSAGES.getString('admin.iplug.headline.iplug')</h4>
+    <h4>$MESSAGES.getString('admin.iplug.headline.iplug') #renderPopUpIcon("$MESSAGES.getString('admin.iplug.description')" "" "float:right;")</h4>
     <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
     #foreach($partnerNode in $tree.getChildren())
         #set($partnerId = $partnerNode.id)

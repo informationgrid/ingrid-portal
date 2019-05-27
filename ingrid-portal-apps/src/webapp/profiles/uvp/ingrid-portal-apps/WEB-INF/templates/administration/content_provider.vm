@@ -84,7 +84,7 @@
                     #end
                 </table>
             </div>
-            #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+            #set ($buttons = ["doNew", "doRefresh", "doDelete"])
             #renderDBBrowserFooterButtonsDisable($buttons true)
         </article>
     </form>

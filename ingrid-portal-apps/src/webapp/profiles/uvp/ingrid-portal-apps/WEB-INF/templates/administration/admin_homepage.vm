@@ -1,6 +1,6 @@
 <div class="columns">
     #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" name="personalize_home" id="personalize_home">
+    <form class="form" action="$action" method="post" name="personalize_home" id="personalize_home">
         <p>$MESSAGES.getString('admin.homepage.explanation')</p>
         <hr/>
         <h4>$MESSAGES.getString('admin.homepage.content')</h4>
@@ -31,6 +31,7 @@
                 </p>
             </div>
         #end
+        <hr>
         #parse ('/WEB-INF/templates/administration/include_form_footer_save.vm')
     </form>
 </div>

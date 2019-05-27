@@ -308,7 +308,7 @@
         <h4 class="no-margin">
             $dateTitle
             #if($info)
-                <span class="ic-ic-info"></span>
+                <span class="ic-ic-info js-popup" data-title="Hinweis" data-content="$info"></span>
             #end
         </h4>
         <p>

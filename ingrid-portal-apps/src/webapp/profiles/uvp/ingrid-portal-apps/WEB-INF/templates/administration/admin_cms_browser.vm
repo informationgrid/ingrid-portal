@@ -1,6 +1,6 @@
 <div class="columns">
     #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+    <form class="form" action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
         #renderPaginationAndHint($browser "")
         <table class="boxed-table">
         #set ($colNames = ["id", "itemKey", "itemDescription"])

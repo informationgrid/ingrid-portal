@@ -295,7 +295,7 @@ $actionForm.getInputHTMLEscaped($field)#end
             <label>Id</label>
         </div>
         <div class="form-element">
-            $!{id}
+            <p>$!{id}</p>
         </div>
     #else
     ## new entity, but we add id so we have something to extract entity from request !
@@ -327,11 +327,9 @@ $actionForm.getInputHTMLEscaped($field)#end
         <input type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
     #end
     #if($info)
-        <div class="message--info" style="margin: 0.5rem 0;">
-            <div class="message__simple-content message-fill--info" style="">
-                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
-                $info
-            </div>
+        <div class="helper icon">
+            <span class="ic-ic-info"></span>
+            <span class="">$info</span>
         </div>
     #end
     </div>
@@ -342,11 +340,13 @@ $actionForm.getInputHTMLEscaped($field)#end
         <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
     </div>
     <div class="form-element">
-        <select class="select2" id="${colName}$!{index}" name="${colName}$!{index}">
-            #foreach ($selectValue in $selectValues)
-            <option id="$selectValue" value="$selectValue" class="selection-options #if($colValue == $selectValue) is-active" selected #else " #end >$selectValue</option>
-            #end
-        </select>
+        <p>
+            <select class="select2" id="${colName}$!{index}" name="${colName}$!{index}">
+                #foreach ($selectValue in $selectValues)
+                <option id="$selectValue" value="$selectValue" class="selection-options #if($colValue == $selectValue) is-active" selected #else " #end >$selectValue</option>
+                #end
+            </select>
+        </p>
     </div>
 #end
 
@@ -365,14 +365,12 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderTextField $label $id)
-    <div class="media">
-        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="query">$label</label>
-        </div>
-        <div class="media__body">
-            <input id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" #addErrorFormClass($id) type="text">
-            #addErrorFormMessage($id)
-        </div>
+    <div class="form-element">
+        <label for="query">$label</label>
+    </div>
+    <div class="form-element">
+        <input id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" #addErrorFormClass($id) type="text">
+        #addErrorFormMessage($id)
     </div>
 #end
 
@@ -404,9 +402,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderPopUpIcon $_message $_class $_style $_title )
-    <div class="tooltip ob-circle js-popup #if($_class)$_class#end" #if($_title)data-title="$_title"#end data-content="$_message" #if($_style)style="$_style"#end>
-        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
-    </div>
+    <span class="ic-ic-info js-popup #if($_class)$_class#end" #if($_title)data-title="$_title"#end data-content="$_message" #if($_style)style="$_style"#end></span>
 #end
 
 #macro (renderMessageInfo $_message)

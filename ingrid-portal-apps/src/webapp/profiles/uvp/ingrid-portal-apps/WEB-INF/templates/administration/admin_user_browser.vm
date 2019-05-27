@@ -8,10 +8,11 @@
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<form class="xsmall-24 large-24 xlarge-24 row" action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
+<form class="xsmall-24 large-24 xlarge-24 row form " action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
     <div class="xsmall-24 large-6 xlarge-4 columns">
         <h4>
             <span class="mq-hide-l">Filter</span>
+            #renderPopUpIcon("<p>$MESSAGES.getString('component.forms.text.search.wildcard')</p>" "" "float:right")
         </h4>
         <input class="bx-bot-xs" type="text" name="filterCriteriaId" id="filterCriteriaId" value="$!browser.filterCriteria.filterCriteriaId" placeholder="$MESSAGES.getString('account.view.id')"/>
         <input class="bx-bot-xs" type="text" name="filterCriteriaFirstName" id="filterCriteriaFirstName" value="$!browser.filterCriteria.filterCriteriaFirstName" placeholder="$MESSAGES.getString('account.view.first.name')"/>
@@ -45,7 +46,7 @@
         #end
         </table>
         <div class="subtext-submit">
-        #set ($buttons = ["doDelete", "doRefresh", "doNew"])
+        #set ($buttons = ["doNew", "doRefresh", "doDelete"])
         #renderDBBrowserFooterButtonsDisable($buttons true)
         </div>
     </div>
