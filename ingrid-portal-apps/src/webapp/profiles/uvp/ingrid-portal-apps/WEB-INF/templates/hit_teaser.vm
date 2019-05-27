@@ -35,9 +35,16 @@
                                         <div class="text-wrapper">
                                             <div class="helper text">
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
-                                                <span class="float-right">$UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" ))</span>
                                             </div>
-                                            <h2 class="header">$hit.getHitDetail().getTitle()</h2>
+                                            #set ($date = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
+                                            <h2 class="header">
+                                                $hit.getHitDetail().getTitle()
+                                            </h2>
+                                            #if($date)
+                                            <div class="helper text date">
+                                                <span class="">$date</span>
+                                            </div>
+                                            #end
                                             <p class="data-text">$hit.getHitDetail().getSummary()</p>
                                             #foreach($uvp_category in $hit.getHitDetail().getArray("uvp_category"))
                                                 <div class="helper icon">

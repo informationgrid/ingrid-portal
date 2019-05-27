@@ -1,9 +1,7 @@
 #if($cmsItemValue)
 <div class="row">
     <div class="columns">
-        <div class="form">
-            $cmsItemValue
-        </div>
+        $cmsItemValue
     </div>
 </div>
 #end

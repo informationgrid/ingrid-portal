@@ -267,10 +267,6 @@
         #set ($salutation = "$!{salutation} $userNameFamily")
     #end
 #end
-<div class="header-menu-open">
-    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
-    <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
-</div>
 <div class="header-menu" style="display: none;">
     <div class="header-menu-close">
         <button type="button" class="button ">Menü<span class="ic-ic-cross"></span></button>
@@ -343,52 +339,53 @@
           #end
         #end
     #end
-    </div>
-    <div class="menu-sub-links">
-    #if($jetspeed.getLoggedOn())
-        <h6>$salutation</h6>
+    #if(!$jetspeed.getLoggedOn())
+        <!--
+        <a class="button logout" href="/log-in"><span class="text">Anmelden</span><span class="ic-ic-user"></span></a>
+        -->
     #end
-    #if($_menu)
-        #foreach($element in $_menu.elements.iterator())
-            #if($element.url == "/administration")
-                #set($subMenu = $site.getMenu("sub-menu"))
-                #foreach($element in $subMenu.elements.iterator())
-                  #if($element.elementType == "option")
-                    #set($linkTitle = $element.getTitle($preferedLocale))
-                    #set($linkName = $element.getShortTitle($preferedLocale))
-                    #set($isSelected = $element.isSelected($site))
-                    ## read localized title from resource with title from psml as key !
-                    #if($linkTitle.startsWith('ingrid'))
-                        #set($linkTitle = $MESSAGES.getString($linkTitle))
-                        #set($linkName = $MESSAGES.getString($linkName))
+    </div>
+    #if($jetspeed.getLoggedOn())
+    <div class="menu-sub-links">
+        <h6 class="login_user">$salutation</h6>
+        #if($_menu)
+            #foreach($element in $_menu.elements.iterator())
+                #if($element.url == "/administration")
+                    #set($subMenu = $site.getMenu("sub-menu"))
+                    #foreach($element in $subMenu.elements.iterator())
+                      #if($element.elementType == "option")
+                        #set($linkTitle = $element.getTitle($preferedLocale))
+                        #set($linkName = $element.getShortTitle($preferedLocale))
+                        #set($isSelected = $element.isSelected($site))
+                        ## read localized title from resource with title from psml as key !
+                        #if($linkTitle.startsWith('ingrid'))
+                            #set($linkTitle = $MESSAGES.getString($linkTitle))
+                            #set($linkName = $MESSAGES.getString($linkName))
+                        #end
+                        #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
+                        ## flags indicating how to render menu item
+                        ## process and set flags accordingly
+                        #if ($element.url.startsWith('/main-about.psml'))
+                            #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
+                            #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
+                        #elseif($element.url.startsWith('/main-about-partner.psml'))
+                            #set($linkTitle = $MESSAGES.getString('ingrid.page.partner.tooltip'))
+                            #set($linkName = $MESSAGES.getString('ingrid.page.partner'))
+                        #elseif($element.url.startsWith('/main-about-data-source.psml'))
+                            #set($linkTitle = $MESSAGES.getString('ingrid.page.data.source.tooltip'))
+                            #set($linkName = $MESSAGES.getString('ingrid.page.data.source'))
+                        #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
+                            #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
+                            #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
+                        #end
+                        <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
+                      #end
                     #end
-                    #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
-                    ## flags indicating how to render menu item
-                    ## process and set flags accordingly
-                    #if ($element.url.startsWith('/main-about.psml'))
-                        #set($linkTitle = $MESSAGES.getString('ingrid.page.portrait.tooltip'))
-                        #set($linkName = $MESSAGES.getString('ingrid.page.portrait')) 
-                    #elseif($element.url.startsWith('/main-about-partner.psml'))
-                        #set($linkTitle = $MESSAGES.getString('ingrid.page.partner.tooltip'))
-                        #set($linkName = $MESSAGES.getString('ingrid.page.partner'))
-                    #elseif($element.url.startsWith('/main-about-data-source.psml'))
-                        #set($linkTitle = $MESSAGES.getString('ingrid.page.data.source.tooltip'))
-                        #set($linkName = $MESSAGES.getString('ingrid.page.data.source'))
-                    #elseif($element.url.startsWith('/search-catalog/search-catalog-hierarchy.psml'))
-                        #set($linkTitle = $MESSAGES.getString('ingrid.page.hierarchy.tooltip'))
-                        #set($linkName = $MESSAGES.getString('ingrid.page.hierarchy'))
-                    #end
-                    <a href="$linkUrl" title="$linkTitle" #if($isSelected)class="is-active"#end><span class="text">$linkName</span></a>
-                  #end
                 #end
             #end
         #end
-    #end
-    #if($jetspeed.getLoggedOn())
         <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
-    #else
-        <a class="button logout" href="/log-in"><span class="text">Anmelden</span><span class="ic-ic-user"></span></a>
-    #end
     </div>
+    #end
 </div> 
 #end

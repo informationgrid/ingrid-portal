@@ -20,7 +20,7 @@
                 href="$!rs.url">
                     <div class="teaser-data search">
                         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                        <h2 class="header">$rs.title</h2>
+                        #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
             #elseif($rs.type == "detail-style")
                 #if($rs.udk_class)
                     #if($rs.is_address)
@@ -46,7 +46,7 @@
                         #end
                         <div class="teaser-data search">
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                            <h2 class="header">$title</h2>
+                            #renderHitTitle($title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
                     #else
                         #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
                         #if($rs.docuuid && $rs.docuuid.length() > 0)
@@ -56,7 +56,7 @@
                         #end
                         <div class="teaser-data search">
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                            <h2 class="header">$rs.title</h2>
+                            #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
                     #end
                 #else
                     #if($rs.docuuid && $rs.docuuid.length() > 0)
@@ -65,13 +65,13 @@
                         href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">
                     #end
                     <div class="teaser-data search">
-                        <h2 class="header">$rs.title</h2>
+                        #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
                 #end
             #else
                 >
                 <div class="teaser-data search">
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                    <h2 class="header">$rs.title</h2>
+                    #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
             #end
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_additional.vm")
             #if($rs.url)

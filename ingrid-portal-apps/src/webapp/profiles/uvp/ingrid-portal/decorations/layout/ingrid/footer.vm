@@ -1,3 +1,4 @@
+    </div>
     #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
         <footer>
             <div class="footer-buttons-bar show-for-large">
@@ -34,8 +35,6 @@
                         <span class="ic-ic-angle-up"></span>
                     </button>
                 </div>
-              </div>
-            </div>
           </div>
           <div class="footer">
               <div class="row">
@@ -62,5 +61,6 @@
     
     <!-- Expand -->
     <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+    </div>
     </body>
 </html>

@@ -8,7 +8,7 @@
 #end
 
 #set ($action = $renderResponse.createActionURL())
-<form class="form xsmall-24 large-24 xlarge-24 row" action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
+<form class="xsmall-24 large-24 xlarge-24 row" action="$action" method="post" name="frmUserBrowser" id="frmUserBrowser">
     <div class="xsmall-24 large-6 xlarge-4 columns">
         <h4>
             <span class="mq-hide-l">Filter</span>

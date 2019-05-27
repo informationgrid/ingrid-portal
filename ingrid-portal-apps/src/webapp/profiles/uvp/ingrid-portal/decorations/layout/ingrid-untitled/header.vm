@@ -61,11 +61,36 @@
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
     </head>
     <body>
-    
+        <div class="container">
     #set($mainMenu = $site.getMenu("main-menu"))
     #set($serviceMenu = $site.getMenu("service-menu"))
     #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
     #set($footerMenu = $site.getMenu("footer-menu"))
+        #if($serviceMenu && !$serviceMenu.empty)
+            <div class="header-menu-open">
+                #if($jetspeed.getLoggedOn())
+                    #set($userAttributes = $jetspeed.getUserProperties())
+                    #set($userNameGiven = $userAttributes.get("user.name.given"))
+                    #set($userNameFamily = $userAttributes.get("user.name.family"))
+                    
+                    #if($userNameGiven)
+                        #set ($salutation = " $userNameGiven")
+                    #end
+                    #if($userNameFamily)
+                        #set ($salutation = "$!{salutation} $userNameFamily")
+                    #end
+                    <div class="login">
+                        <span class="ic-ic-user"></span>
+                        <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
+                    </div>
+                    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
+                #else
+                    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
+                #end
+                <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+            </div>
+            #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
+        #end
         <header>
             <div class="row">
                 <div class="columns xsmall-10 small-7 medium-8 large-7 xlarge-6">
@@ -79,10 +104,6 @@
                     #includeMainNavigation($mainMenu)
                 #end
                 </div>
-                <div class="columns xsmall-4 small-6 medium-7 large-10 xlarge-12 header-menu-wrapper">
-                #if($serviceMenu && !$serviceMenu.empty)
-                    #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
-                #end
-                </div>
             </div>
         </header>
+        <div class="body">

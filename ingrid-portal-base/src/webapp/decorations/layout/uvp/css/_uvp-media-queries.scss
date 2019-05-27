@@ -17,7 +17,13 @@
       }
     }
   }
-
+  .header-menu-open {
+    text-align: right;
+    right: 1rem;
+    .login {
+      display: none;
+    }
+  }
 }
 
 /* SMALL 560px  */
@@ -32,29 +38,29 @@
       }
     }
     .logo a { top: 22px; left: 0; }
-    .header-menu-wrapper {
-      .xsmall-button { display: none; }
-      .small-button { display: inline-block; }
-      .header-menu-open {
-        text-align: right;
-        button { margin: 25px 0 0 0; }
-      }
-      .header-menu {
-        width: 450px;
-      }
-      .header-menu-close {
-        padding: 25px 8px 0 0;
+  }
 
-        button { padding: 14px 24px; }
-      }
-    }
+  .xsmall-button { display: none; }
+  .small-button { display: inline-block; }
+  .header-menu-open {
+    text-align: right;
+    right: 1rem;
+    button { margin: 25px 0 0 0; }
+  }
+  .header-menu {
+    width: 450px;
+    z-index: 1100;
+  }
+  .header-menu-close {
+    padding: 25px 8px 0 0;
+
+    button { padding: 14px 24px; }
   }
 
   .tabs .tabs-title>a { padding: 24px 60px 16px; }
 
   .teaser-data {
-    .header { height: 60px; }
-    .data-text { height: 140px; }
+    .data-text { height: 112px; }
   }
 
 }
@@ -79,13 +85,15 @@
         padding-right: .6666666667rem;
       }
     }
-    .header-menu-wrapper {
-      .header-menu-close { padding: 25px 12px 0 0; }
-      .menu-main-links, .menu-sub-links { padding: 25px 12px 25px 38px; }
-    }
   }
+  
+  .header-menu-close { padding: 25px 12px 0 0; }
+  .menu-main-links, .menu-sub-links { padding: 25px 12px 25px 38px; }
 
-  .social-buttons { text-align: center; }
+  .social-buttons {
+    text-align: center;
+    width: 0px;
+  }
 
   .intro {
     font-size: 24px;
@@ -101,7 +109,7 @@
       line-height: 50px;
     }
     .home-wrapper {
-      padding: 0 24px 48px;
+      padding: 48px 24px;
 
       h1 .ic-ic-asterisc { font-size: 29px; }
       .indent {
@@ -138,14 +146,13 @@
   .tabs .tabs-title>a { padding: 24px 80px 16px; }
 
   .teaser-data {
-    height: 669px;
 
     .text-wrapper { padding: 40px; }
     .header {
       font-size: 24px;
       line-height: 30px;
     }
-    .data-text { height: 110px; }
+    .data-text { height: 82px; }
   }
   .teaser-data-projects {
     margin: 64px 0;
@@ -158,6 +165,8 @@
     .form-element { margin-bottom: 0; }
   }
   .teaser-data.search { padding: 40px; }
+
+  .portlet-margin-bottom { margin-bottom: 64px;}
 
   .about {
     .about-wrapper { padding: 64px 0; }
@@ -189,7 +198,7 @@
   .teaser-data {
     height: 420px;
 
-    .data-text { height: 163px; }
+    .data-text { height: 110px; }
     .map-wrapper { border-left: 2px solid $blue-light; }
     .map-teaser {
       height: 416px;
@@ -205,6 +214,8 @@
       line-height: 40px;
     }
   }
+
+  .portlet-margin-bottom { margin-bottom: 72px;}
 
   .about {
     .about-wrapper {
@@ -249,21 +260,19 @@
     left: 0;
   }
 
+  .teaser-data {
+    .data-text { height: 140px; }
+  }
 }
 
 // XXLARGE large desktop screen
 @media screen and (min-width: 1800px) {
 
-  header .header-menu-wrapper {
     .header-menu {
-      right: unset;
-      left: 73%;
       width: 400px;
     }
     .header-menu-close {
-      text-align: left;
       padding: 25px 12px 0 34px;
     }
-  }
 
 }

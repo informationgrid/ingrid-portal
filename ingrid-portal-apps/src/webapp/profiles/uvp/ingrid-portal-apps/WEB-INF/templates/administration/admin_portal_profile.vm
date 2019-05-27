@@ -1,5 +1,4 @@
 <div class="columns">
-    <div class="form">
     #if($switchedToProfile)
         #renderMessageSuccess("$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile")
         #renderMessageSuccess($MESSAGES.getString('admin.portal.profile.restart'))
@@ -18,5 +17,4 @@
             #end
         </div>
     #end
-    </div>
 </div>

@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<form class="form" action="$action" method="post" name="create_account" id="create_account">
+<form class="columns" action="$action" method="post" name="create_account" id="create_account">
     <input type="hidden" name="cmd" value="form_sent" />
     #set ($formType = 'create')
     #parse ('/WEB-INF/templates/myportal/include_account_form.vm')

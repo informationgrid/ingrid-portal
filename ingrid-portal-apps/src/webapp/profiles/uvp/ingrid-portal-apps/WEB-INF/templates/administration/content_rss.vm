@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<form class="form row columns" action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+<form action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
     #renderPaginationAndHint($browser "")
     <table class="boxed-table">
         #set ($colNames = ["id", "provider", "description", "language", "categories", "numLastCount", "lastUpdate", "error"])

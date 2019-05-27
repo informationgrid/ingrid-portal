@@ -2,8 +2,8 @@
 
 ##Default style values
 #set($titleStyle = "bx-top-0")
-#set($sectionClass = "row")
-#set($bannerClass = "row")
+#set($sectionStyle = "row")
+#set($bannerStyle = "row")
 
 ## Jetspeed style values
 #set($titleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleStyle'))
@@ -11,14 +11,14 @@
     #set($titleStyle = $titleStyleJetspeed)
 #end
 
-#set($sectionStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'sectionClass'))
+#set($sectionStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'sectionStyle'))
 #if($sectionStyleJetspeed && $sectionStyleJetspeed.length() > 0)
-    #set($sectionClass = $sectionStyleJetspeed)
+    #set($sectionStyle = $sectionStyleJetspeed)
 #end
 
-#set($bannerStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'bannerClass'))
+#set($bannerStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'bannerStyle'))
 #if($bannerStyleJetspeed && $bannerStyleJetspeed.length() > 0)
-    #set($bannerClass = $bannerStyleJetspeed)
+    #set($bannerStyle = $bannerStyleJetspeed)
 #end
 
 #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)

@@ -4,7 +4,7 @@
 #set($bar = $list.add('type'))
 #set($bar = $list.add('label'))
 #set($bar = $list.add('size'))
-
+<div class="detail">
 #if($TOOL.getValueFromXPath("./name"))
     <div class="banner-noimage">
       <div class="page-wrapper">
@@ -20,7 +20,7 @@
             ## used to get title.
             ## Title will be read from context and set to page head title tag.
             $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
-            <div class="helper text">
+            <div class="helper text date">
                 <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
             </div>
           </div>
@@ -297,6 +297,7 @@
         </div>
     </div>
 #end
+</div>
 
 #macro (renderDate $dateTitle $dateFrom $dateTo $info)
     #if($dateFrom || $dateTo)

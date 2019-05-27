@@ -1,6 +1,6 @@
 <div class="columns">
     #set ($action = $renderResponse.createActionURL())
-    <form class="form" action="$action" method="post" name="personalize_home" id="personalize_home">
+    <form action="$action" method="post" name="personalize_home" id="personalize_home">
         <p>$MESSAGES.getString('admin.homepage.explanation')</p>
         <hr/>
         <h4>$MESSAGES.getString('admin.homepage.content')</h4>

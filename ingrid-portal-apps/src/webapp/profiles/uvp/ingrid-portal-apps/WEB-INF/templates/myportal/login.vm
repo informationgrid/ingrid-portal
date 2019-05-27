@@ -1,6 +1,6 @@
 <div class="columns">
     #set ($action = $renderResponse.createActionURL())
-    <form class="form" action="$action" method="post" id="frm_login">
+    <form action="$action" method="post" id="frm_login">
         #set($name = "#getFieldValue($loginConstants.USERNAME)")
         #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
         

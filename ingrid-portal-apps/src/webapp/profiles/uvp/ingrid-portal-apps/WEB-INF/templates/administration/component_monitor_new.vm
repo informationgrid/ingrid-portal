@@ -1,7 +1,7 @@
 #macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
 <div class="columns">
     #set ($action = $renderResponse.createActionURL())
-    <form class="form" action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
+    <form action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
         <input type="hidden" name="mode" value="$mode"/>
         <h4>$MESSAGES.getString('component.forms.text.new.job')</h4>
         #displayFormError()
@@ -22,6 +22,7 @@
             #end
             </select>
         </div>
+        <hr>
         <div class="subtext-submit">
             #renderDBEditFooter($mode)
         </div>

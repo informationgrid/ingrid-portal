@@ -1,6 +1,6 @@
 <div class="columns">
     #set ($action = $renderResponse.createActionURL())
-    <form class="form" action="$action" method="post" name="frmEditCMS" id="frmEditCMS">
+    <form action="$action" method="post" name="frmEditCMS" id="frmEditCMS">
         <input type="hidden" name="mode" value="$mode"/>
         
         #if ($mode == 'edit')

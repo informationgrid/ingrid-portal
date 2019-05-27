@@ -1,5 +1,5 @@
 #set ($action = $renderResponse.createActionURL())
-<form class="form" action="$action" method="post" name="edit_account" id="edit_account">
+<form action="$action" method="post" name="edit_account" id="edit_account">
     <input type="hidden" name="cmd" value="form_sent" />
     #set ($formType = 'edit')
     #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
