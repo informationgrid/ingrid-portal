@@ -2,12 +2,12 @@
 @media screen and (max-width: 559px) {
   
   header .menu-tab-row .menu-tab {
-    height: 56px;
+    height: 76px;
     width: 66px;
     font-size: 14px;
 
     .link-menu-tab {
-      top: 22px;
+      top: 42px;
       padding: 8px 0;
 
       [class^="ic-"], [class*=" ic-"] {
@@ -19,7 +19,7 @@
   }
   .header-menu-open {
     text-align: right;
-    right: 1rem;
+    right: 12px;
     .login {
       display: none;
     }
@@ -44,7 +44,7 @@
   .small-button { display: inline-block; }
   .header-menu-open {
     text-align: right;
-    right: 1rem;
+    right: 12px;
     button { margin: 25px 0 0 0; }
   }
   .header-menu {
