@@ -1,1 +1,12 @@
-<svg width="1347" height="369" viewBox="0 0 1347 369" xmlns="http://www.w3.org/2000/svg"><g fill="#133268" fill-rule="evenodd" opacity=".2"><path d="M.486 1h1346.263l.048.023S571.094 368.609 368.072 368.609C165.05 368.61.486 204.045.486 1.023V1z" style="mix-blend-mode:multiply"/><path d="M158.031 1h829.632l.032.015S509.67 227.541 384.556 227.541c-125.112 0-226.525-101.413-226.525-226.526V1z" style="mix-blend-mode:multiply"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1347 369" style="enable-background:new 0 0 1347 369;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.2;fill:#133268;enable-background:new    ;}
+</style>
+<title>assets/images/svg-raw/backgrounds/drops-small</title>
+<desc>Created with Sketch.</desc>
+<path id="Path" class="st0" d="M0.5,1h1346.3c0,0,0,0,0,0S571.1,368.6,368.1,368.6S0.5,204,0.5,1L0.5,1L0.5,1z"/>
+<path id="Path_1_" class="st0" d="M158,1h829.6l0,0c0,0-478,226.5-603.1,226.5S158,126.1,158,1L158,1L158,1z"/>
+</svg>
