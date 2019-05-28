@@ -446,7 +446,7 @@ ul ol, ol ol { margin-left: 2.25rem; }
     margin-top: -0.5rem;
   }
 }
-.accordion-item.is-active .accordion-title::after { content: '\e903'; }
+li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
 .accordion-item::before { content:""; }
 
 /* menu tabs */ 
