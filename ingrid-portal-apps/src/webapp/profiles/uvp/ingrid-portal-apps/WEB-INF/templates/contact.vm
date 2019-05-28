@@ -1,5 +1,6 @@
 <div class="columns">
-        <div>$contactIntroPostEmail</div>
+    <div>$contactIntroPostEmail</div>
+    <div class="search-filtered">
         <h2>Kontakformular</h2>
         #set ($action = $renderResponse.createActionURL())
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
@@ -75,7 +76,8 @@
             <h6>$MESSAGES.getString('contact.form.required')</h6>
             <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
         </div>
-    </form>
+        </form>
+    </div>
 </div>
 <script >
     var error = $actionForm.hasErrors();
