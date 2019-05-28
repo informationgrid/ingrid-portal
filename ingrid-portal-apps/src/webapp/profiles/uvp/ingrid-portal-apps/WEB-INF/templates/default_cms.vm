@@ -1,9 +1,7 @@
 #if($cmsItemValue)
-<div class="row">
     <div class="columns">
         $cmsItemValue
     </div>
-</div>
 #end
 
 #if($version)
