@@ -99,7 +99,7 @@
                         <a href="/startseite" class="show-for-large"><img src="/decorations/layout/uvp/images/template/logo-mit-tag.svg" alt="UVP"></a>
                     </div>
                 </div>
-                <div class="columns xsmall-10 small-11 medium-9 large-7 xlarge-6 nav-tabs">
+                <div class="columns xsmall-10 small-12 medium-9 large-7 xlarge-6 nav-tabs">
                 #if(!$mainMenu.empty)
                     #includeMainNavigation($mainMenu)
                 #end
