@@ -2,7 +2,16 @@
 #set ($rankedHitslenght = $rankedResultList.get("length"))
 
 #if($rankedHitslenght > 0)
-    #renderFacetCategory($facetConfig)
+    <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="5rmu1i-e">
+        <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="imwclr-accordion" role="tab" id="imwclr-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
+            <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="brgaav-accordion-label" aria-hidden="true" id="brgaav-accordion">
+                <div class="boxes">
+                    #renderFacetCategory($facetConfig)
+                </div>
+            </div>
+        </div>
+    </div>
 #else
     <p>
         #if($isSelection)
