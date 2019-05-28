@@ -11,7 +11,7 @@
         <div class="row content-small">
           <div class="columns">
             <div class="helper text">
-                <span>TODO: Verfahren</span>
+                <!-- <span>TODO: Verfahren</span> -->
             </div>
             <h1>
                 $TOOL.getValueFromXPath("./name")
@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="row no-padding">
-        <div class="columns">
+        <div class="columns form">
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     <div id="map" style="height: 400px; width:100%;"></div>
                     <script language="JavaScript" type="text/javascript">
@@ -101,13 +101,12 @@
     </div>
     #end
     <div class="row content-small">
-        <div class="columns">
+        <div class="columns form">
         ## Addressen
             <h3>Adressen</h3>
             #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
             #set($entryLength = $nodelist.getLength())
             #if($entryLength > 0)
-            <div style="padding-bottom: 1.25rem;">
                 #foreach($number in [1..$entryLength])
                     #set($id = $TOOL.getValueFromXPath("./addresses/address[$number]/@id"))
                     #set($name = $TOOL.getValueFromXPath("./addresses/address[$number]/name"))
@@ -198,7 +197,6 @@
                         #end
                     </table>
                 #end
-            </div>
             #end
             #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
             #if($nodelist.getLength() > 0)
