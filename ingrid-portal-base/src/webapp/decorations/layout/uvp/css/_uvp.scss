@@ -1485,6 +1485,7 @@ footer {
     width: 100%;
   }
 }
+.leaflet-container a:hover { text-decoration: none; }
 .leaflet-popup-content-wrapper { border-radius: 24px; }
 .leaflet-container {
   a.leaflet-popup-close-button {
