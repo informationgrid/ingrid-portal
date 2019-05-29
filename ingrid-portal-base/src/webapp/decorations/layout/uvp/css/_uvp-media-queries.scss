@@ -176,6 +176,13 @@
     .icon-check .icon { top: 6px; }
   }
 
+  .map-ingrid.map-full { 
+    .leaflet-control-container { 
+      .leaflet-control-attribution {
+        width: unset;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 63.9375em) {

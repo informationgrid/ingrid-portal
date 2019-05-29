@@ -1491,6 +1491,13 @@ footer {
     width: 100%;
   }
 }
+.map-ingrid.map-full { 
+  .leaflet-control-container { 
+    .leaflet-control-attribution {
+      width: 50%;
+    }
+  }
+}
 .leaflet-container a:hover { text-decoration: none; }
 .leaflet-popup-content-wrapper { border-radius: 24px; }
 .leaflet-container {

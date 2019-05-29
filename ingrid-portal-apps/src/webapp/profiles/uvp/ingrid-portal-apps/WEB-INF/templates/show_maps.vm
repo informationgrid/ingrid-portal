@@ -10,7 +10,7 @@ html, body {
 }
 </style>
 
-<div id="map" class="map-ingrid" style="width:100%;position:fixed;z-index:0;">
+<div id="map" class="map-ingrid map-full" style="width:100%;position:fixed;z-index:0;">
     <div class="map-filter">
       <h5 class="show-for-large">Verfahrentypen</h5>
       <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist">
