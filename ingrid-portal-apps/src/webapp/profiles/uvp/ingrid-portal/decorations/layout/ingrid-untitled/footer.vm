@@ -71,9 +71,6 @@
     
     <!-- Expand -->
     <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
-
-    <!-- Toybox -->
-    <script src="https://d16ahjtmf9d1au.cloudfront.net/inject.bundle.js" async data-id="ToyboxSnippet" data-token="TwsyHJoLBiPw" ></script>
     </div>
     </body>
 </html>
