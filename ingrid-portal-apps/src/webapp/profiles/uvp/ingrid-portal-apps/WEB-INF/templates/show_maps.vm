@@ -12,6 +12,16 @@ html, body {
 
 <div id="map" class="map-ingrid" style="width:100%;position:fixed;z-index:0;">
     <div class="map-filter">
+      <h5 class="show-for-large">Verfahrentypen</h5>
+      <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist">
+        <li class="accordion-item" data-accordion-item="">
+            <a class="accordion-title hide-for-large" aria-controls="legend-accordion" role="tab" id="legend-accordion-label" aria-expanded="false" aria-selected="false">
+                <span class="text">Verfahrentypen</span>
+            </a>
+            <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="legend-accordion-label" id="legend-accordion" aria-hidden="true" data-e="">
+            </div>
+        </li>
+      </ul>
     </div>
 </div>
 

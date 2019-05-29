@@ -150,11 +150,10 @@
     
     jQuery.get("$restUrlLegendCounter")
     .done(function(data, textStatus, jqxhr) {
-        var mapFilter = $('.map-filter');
+        var mapFilter = $('.map-filter ul li div');
         var overlayers = {};
         if(mapFilter) {
             if(legendCounter){
-                mapFilter.append( "<h5>Verfahrentypen</h5>" );
                 if(legendCounter.countMarker1){
                     mapFilter.append( '<div class="form-element boxed map blue"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><div class="control__indicator"></div>Zulassungsverfahren</label></div></div></div>');
                     $('#mapMarkers10').on('change', function() {
