@@ -1498,7 +1498,6 @@ footer {
     }
   }
 }
-.leaflet-container a:hover { text-decoration: none; }
 .leaflet-popup-content-wrapper { border-radius: 24px; }
 .leaflet-container {
   a.leaflet-popup-close-button {
@@ -1507,6 +1506,10 @@ footer {
     right: 16px;
     color: $blue-prov;
     font: 24px 'Roboto-Regular';
+  }
+  a:hover, .leaflet-container a:focus { 
+   color: black; 
+   text-decoration: none;
   }
 }
 .leaflet-popup-content {
