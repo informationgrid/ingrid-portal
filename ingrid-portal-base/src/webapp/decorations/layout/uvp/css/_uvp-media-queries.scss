@@ -314,5 +314,9 @@
     .header-menu-close {
       padding: 25px 12px 0 34px;
     }
-
+    .banner.home {
+      .home-wrapper {
+        background-size: contain;
+      }
+    }
 }

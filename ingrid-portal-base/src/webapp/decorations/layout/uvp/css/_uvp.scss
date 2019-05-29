@@ -1226,7 +1226,8 @@ a.data:hover {
 
   .home-wrapper {
     padding: 0 0 32px;
-    background-position: bottom left;
+    background-position: center bottom;
+    background-size: cover;
 
     .dark { padding-top: 2.5rem; }
     h1 .ic-ic-asterisc {
