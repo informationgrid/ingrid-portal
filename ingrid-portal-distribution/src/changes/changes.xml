@@ -7,9 +7,15 @@
 
     <body>
 
-        <release version="5.0.2-SNAPSHOT" date="2019-xx-xx" description="Release 5.0.1">
+        <release version="5.0.2-SNAPSHOT" date="2019-xx-xx" description="Release 5.0.2">
+          <action type="fix" dev="wemove" issue="1396">
+            UVP: In Sektion "Allgemein" wird beim Ausklappen das Feld "ID des übergeordneten Datensatzes angezeigt"
+          </action>
+          <action type="fix" dev="wemove" issue="1395">
+            UVP: Im IE11 wird das UVP Erfassungsformular nicht angezeigt
+          </action>
           <action type="fix" dev="wemove" issue="1373">
-            Change email address on uvp "vorschaltseite"
+            UVP: Change email address on uvp "vorschaltseite"
           </action>
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
