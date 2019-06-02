@@ -95,10 +95,22 @@ define(["dojo/_base/declare",
                 }
 
                 // check if receipt of application date is before begin date of first publication
+
+                /*
+                  INCOMPATIBLE WITH IE11, IE11 DOES NOIT SUPPORT ARROW FUNCTIONS
+                  see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#Browser_compatibility
+
                 var publicationDate = registry.byId("UVPPhases").phases
                     .filter( phase => phase.key === "phase1" )
                     .map( phase => phase.fields.filter( field => field.key === "publicDateFrom")[0].field.get("value"))
                     .sort( (a,b) => a < b && a !== null ? -1 : 1);
+                */
+                var publicationDate = registry.byId("UVPPhases").phases
+                    .filter(function(phase) { return phase.key === "phase1"; })
+                    .map(function(phase) { return phase.fields.filter(function(field) { return field.key === "publicDateFrom"; })[0].field.get("value"); })
+                    .sort(function(a,b) { return a < b && a !== null ? -1 : 1; });
+
+
                 if (publicationDate && publicationDate.length > 0 && publicationDate[0]) {
                     var applicationReceiptDate = registry.byId("uvpApplicationReceipt").get("value");
                     if (applicationReceiptDate > publicationDate[0]) {
@@ -188,6 +200,7 @@ define(["dojo/_base/declare",
             domClass.add("uiElement5105", "hide");
             domClass.add("uiElement6005", "hide");
             domClass.add("uiElement6010", "hide");
+            domClass.add("uiElement1001", "hide");
 
             // hide all rubrics
             query(".rubric", "contentFrameBodyObject").forEach(function(item) {
