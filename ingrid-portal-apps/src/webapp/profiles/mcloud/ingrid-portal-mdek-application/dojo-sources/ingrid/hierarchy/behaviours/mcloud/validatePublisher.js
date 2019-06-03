@@ -69,7 +69,7 @@ define([
                 return item.link && item.link.length > 0
                     // an external link must start with http or https
                     // an uploaded document however consists of at least two slashes
-                    && (item.link.indexOf("http:") === 0 || item.link.indexOf("https:") === 0 || item.link.split("/").length > 2)
+                    && ((item.link.indexOf("://") <= 5 && item.link.indexOf("://") !== -1) || item.link.split("/").length > 2)
                     && item.sourceType && item.sourceType.trim().length > 0;
             });
 
