@@ -67,12 +67,12 @@ define([
 
             var isValid = array.every(data, function(item) {
                 return item.link && item.link.length > 0
-                    && (item.link.indexOf("http:") === 0 || item.link.indexOf("https:") === 0)
+                    && item.link.indexOf("://") <= 5 && item.link.indexOf("://") !== -1
                     && item.sourceType && item.sourceType.trim().length > 0;
             });
 
             if (!isValid) {
-                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit 'http:' oder 'https:' beginnt. Außerdem muss ein Typ angegeben sein."]);
+                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit einem Protokoll beginnt 'http', 'https', 'ftp', ... beginnt. Außerdem muss ein Typ angegeben sein."]);
             }
         }
     })();
