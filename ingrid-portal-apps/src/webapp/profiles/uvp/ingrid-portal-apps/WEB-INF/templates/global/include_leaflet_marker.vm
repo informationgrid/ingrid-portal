@@ -273,31 +273,35 @@
         }
         if(map){
             map.on('layeradd', onOverlayAdd);
-            if($checkedCategoryDevPlan){
+            var mapParamLayer = '$mapParamLayer';
+            if(mapParamLayer) {
+                mapParamLayer = mapParamLayer.split(',');
+            }
+            if($checkedCategoryDevPlan && mapParamLayer.length == 0 || mapParamLayer.indexOf('blp') > -1){
                 if(mapMarkersDevPlan) {
                     map.addLayer(mapMarkersDevPlan);
                     $('#mapMarkersDevPlan').prop('checked', true);
                 }
             }
-            if($checkedCategory10){
+            if($checkedCategory10 && mapParamLayer.length == 0 || mapParamLayer.indexOf('zv') > -1){
                 if(mapMarkers10) {
                     map.addLayer(mapMarkers10);
                     $('#mapMarkers10').prop('checked', true);
                 }
             }
-            if($checkedCategory11){
+            if($checkedCategory11 && mapParamLayer.length == 0 || mapParamLayer.indexOf('av') > -1){
                 if(mapMarkers11) {
                     map.addLayer(mapMarkers11);
                     $('#mapMarkers11').prop('checked', true);
                 }
             }
-            if($checkedCategory1314){
+            if($checkedCategory1314 && mapParamLayer.length == 0 || mapParamLayer.indexOf('vv') > -1){
                 if(mapMarkers1314) {
                     map.addLayer(mapMarkers1314);
                     $('#mapMarkers1314').prop('checked', true);
                 }
             }
-            if($checkedCategory12){
+            if($checkedCategory12 && mapParamLayer.length == 0 || mapParamLayer.indexOf('nv') > -1){
                 if(mapMarkers12) {
                     map.addLayer(mapMarkers12);
                     $('#mapMarkers12').prop('checked', true);
