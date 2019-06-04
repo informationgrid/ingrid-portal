@@ -1,4 +1,5 @@
 #if($!rs.additional_html_1)
+    #if($!rs.additional_html_1.indexOf("preview_image") > -1)
     <div class="media__obj #if($rs.udk_class)media__obj--right#end">
         #if($!rs.additional_html_1.indexOf(">, <") == -1) 
             $!rs.additional_html_1.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
@@ -12,4 +13,7 @@
             </noscript>
         #end
     </div>
+    #else
+        $!rs.additional_html_1
+    #end
 #end
