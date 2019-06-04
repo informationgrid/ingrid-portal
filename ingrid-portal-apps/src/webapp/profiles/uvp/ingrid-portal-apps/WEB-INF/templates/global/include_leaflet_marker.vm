@@ -277,31 +277,31 @@
             if(mapParamLayer) {
                 mapParamLayer = mapParamLayer.split(',');
             }
-            if($checkedCategoryDevPlan && mapParamLayer.length == 0 || mapParamLayer.indexOf('blp') > -1){
+            if($checkedCategoryDevPlan && mapParamLayer.length === 0 || mapParamLayer.indexOf('blp') > -1){
                 if(mapMarkersDevPlan) {
                     map.addLayer(mapMarkersDevPlan);
                     $('#mapMarkersDevPlan').prop('checked', true);
                 }
             }
-            if($checkedCategory10 && mapParamLayer.length == 0 || mapParamLayer.indexOf('zv') > -1){
+            if($checkedCategory10 && mapParamLayer.length === 0 || mapParamLayer.indexOf('zv') > -1){
                 if(mapMarkers10) {
                     map.addLayer(mapMarkers10);
                     $('#mapMarkers10').prop('checked', true);
                 }
             }
-            if($checkedCategory11 && mapParamLayer.length == 0 || mapParamLayer.indexOf('av') > -1){
+            if($checkedCategory11 && mapParamLayer.length === 0 || mapParamLayer.indexOf('av') > -1){
                 if(mapMarkers11) {
                     map.addLayer(mapMarkers11);
                     $('#mapMarkers11').prop('checked', true);
                 }
             }
-            if($checkedCategory1314 && mapParamLayer.length == 0 || mapParamLayer.indexOf('vv') > -1){
+            if($checkedCategory1314 && mapParamLayer.length === 0 || mapParamLayer.indexOf('vv') > -1){
                 if(mapMarkers1314) {
                     map.addLayer(mapMarkers1314);
                     $('#mapMarkers1314').prop('checked', true);
                 }
             }
-            if($checkedCategory12 && mapParamLayer.length == 0 || mapParamLayer.indexOf('nv') > -1){
+            if($checkedCategory12 && mapParamLayer.length === 0 || mapParamLayer.indexOf('nv') > -1){
                 if(mapMarkers12) {
                     map.addLayer(mapMarkers12);
                     $('#mapMarkers12').prop('checked', true);
@@ -396,7 +396,7 @@
                                             var bpinfo = bpinfos[j];
                                             if(bpinfo.url){
                                                 var url = bpinfo.url;
-                                                if(url.indexOf("http") == -1){
+                                                if(url.indexOf("http") === -1){
                                                     url = "http://" + url;
                                                 }
                                                 if(bpinfo.tags){
@@ -620,7 +620,7 @@
             for (category in categories){
                 var value = categories[category].name;
                 var id = categories[category].id;
-                if(categoryList.indexOf(value) == -1){
+                if(categoryList.indexOf(value) === -1){
                     popUpHtml += '<div class="helper icon">';
                     popUpHtml += '<span class="ic-ic-' + id + '"></span>';
                     popUpHtml += '<span>' + value + '</span>';
