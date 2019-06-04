@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="1373">
             UVP: Change email address on uvp "vorschaltseite"
           </action>
+          <action type="add" dev="wemove" issue="1113">
+            UVP: Add URL param to select layer on leaflet map.
+          </action>
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
           </action>

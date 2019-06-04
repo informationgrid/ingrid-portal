@@ -158,6 +158,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("mapParamN", request.getParameter("N") != null ? request.getParameter("N"): "");
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
         context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent").split(","): "");
+        context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
         
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());

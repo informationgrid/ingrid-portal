@@ -173,28 +173,32 @@
             var control = L.control.layers({}, overlayers, {position: 'topright', collapsed:false });
             control.addTo(map);
             map.on('overlayadd', onOverlayAdd);
+            var mapParamLayer = '$mapParamLayer';
+            if(mapParamLayer) {
+                mapParamLayer = mapParamLayer.split(',');
+            }
             if(map){
-                if($checkedCategoryDevPlan){
+                if($checkedCategoryDevPlan && mapParamLayer.length === 0 || mapParamLayer.indexOf('blp') > -1){
                     if(mapMarkersDevPlan) {
                         map.addLayer(mapMarkersDevPlan);
                     }
                 }
-                if($checkedCategory10){
+                if($checkedCategory10 && mapParamLayer.length === 0 || mapParamLayer.indexOf('zv') > -1){
                     if(mapMarkers10) {
                         map.addLayer(mapMarkers10);
                     }
                 }
-                if($checkedCategory11){
+                if($checkedCategory11 && mapParamLayer.length === 0 || mapParamLayer.indexOf('av') > -1){
                     if(mapMarkers11) {
                         map.addLayer(mapMarkers11);
                     }
                 }
-                if($checkedCategory1314){
+                if($checkedCategory1314 && mapParamLayer.length === 0 || mapParamLayer.indexOf('vv') > -1){
                     if(mapMarkers1314) {
                         map.addLayer(mapMarkers1314);
                     }
                 }
-                if($checkedCategory12){
+                if($checkedCategory12 && mapParamLayer.length === 0 || mapParamLayer.indexOf('nv') > -1){
                     if(mapMarkers12) {
                         map.addLayer(mapMarkers12);
                     }
