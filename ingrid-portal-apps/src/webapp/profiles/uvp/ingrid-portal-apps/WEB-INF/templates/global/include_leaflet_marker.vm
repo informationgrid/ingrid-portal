@@ -334,10 +334,10 @@
         mapZoom = parseFloat('$mapParamZoom') || mapZoom;
     } else if(mapParamExtent && mapParamExtent.length === 4){
         mapBounds = L.latLngBounds(
-          L.latLng(parseFloat('$mapParamExtent.get(0)'),
-            parseFloat('$mapParamExtent.get(1)')),
-          L.latLng(parseFloat('$mapParamExtent.get(2)'),
-          parseFloat('$mapParamExtent.get(3)'))
+          L.latLng(parseFloat(mapParamExtent[0]),
+            parseFloat(mapParamExtent[1])),
+          L.latLng(parseFloat(mapParamExtent[2]),
+          parseFloat(mapParamExtent[3]))
         );
     } else if('$selectedMap.webmapclientCoords'.indexOf("y1") > -1){
         mapBounds = L.latLngBounds(
