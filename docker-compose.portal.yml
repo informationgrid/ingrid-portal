@@ -1,0 +1,57 @@
+version: '3'
+services:
+  mysql:
+    image: docker-registry.wemove.com/dev-ingrid-databases
+    container_name: mysql-ingrid
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 81:80
+    volumes:
+      - /sessions
+    links:
+      - mysql:mysql
+
+  elastic:
+    image: docker-registry.wemove.com/ingrid-elasticsearch-with-decompound:6.4.2
+    environment:
+      - cluster.name=ingrid
+      - http.host=0.0.0.0
+      - transport.host=0.0.0.0
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+    # volumes:
+    #  - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+
+  ibus:
+    image: docker-registry.wemove.com/ingrid-ibus
+    restart: unless-stopped
+    #volumes:
+    # - ./ibus/activatedIplugs.properties:/opt/ingrid/ingrid-ibus/conf/activatedIplugs.properties
+    environment:
+      - TZ=Europe/Berlin
+      - IBUS_USER=admin
+      # https://stackoverflow.com/questions/9559549/how-to-compare-plain-text-password-to-hashed-password-using-bcrypt
+      # You can escape the $ symbol with another $:
+      # bcrypt hashed password
+      # initially comment, startup ibus, set password, log into container copy password from config, paste/encode here
+      - SESSION_COOKIE_PATH=/
+      - IBUS_PASSWORD=$$2a$$10$$fBHgDcUOKQ9tA8ThpXdXFuwhXPLGOfiUa4WkaoCGXNQobrFtCUj4q
+      - ELASTIC_HOSTS=elastic:9300
+    ports:
+      - 9900:9900
+      - 82:80
