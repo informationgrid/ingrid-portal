@@ -119,7 +119,7 @@ public class QueryResultPostProcessor {
         tmpString = tmpString.toLowerCase();
 
         // THIS IS THE iPlugClass from PD !!! :(
-        if (tmpString.contains("igesearchplug") || (tmpString.contains("dsc") && tmpString.contains("search"))) {
+        if (tmpString.contains("igesearchplug") || (tmpString.contains("dsc") && tmpString.contains("search") && !tmpString.contains("blp"))) {
             processDSCHit(hit, detail);
         } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher") || tmpString.equals("de.ingrid.iplug.se.seiplug")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
@@ -128,6 +128,9 @@ public class QueryResultPostProcessor {
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else if (tmpString.equals("de.ingrid.iplug.opensearch.opensearchplug")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "opensearch");
+        } else if (tmpString.equals("de.ingrid.iplug.dsc.blpsearchplug")){
+            hit.put(Settings.RESULT_KEY_TYPE, "www-style");
+            hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1));
         } else {
             hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
         }
