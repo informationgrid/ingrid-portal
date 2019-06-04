@@ -318,7 +318,10 @@
     var mapLng;
     var mapZoom;
     var mapBounds;
-    
+    var mapParamExtent = '$mapParamExtent';
+    if(mapParamExtent) {
+        mapParamExtent = mapParamExtent.split(',');
+    }
     if(mapPosition){
         mapLat = parseFloat('$mapPosition.get(0)');
         mapLng = parseFloat('$mapPosition.get(1)');
@@ -329,7 +332,7 @@
         mapLat = parseFloat('$mapParamN') || mapLat;
         mapLng = parseFloat('$mapParamE') || mapLng;
         mapZoom = parseFloat('$mapParamZoom') || mapZoom;
-    } else if('$mapParamExtent'){
+    } else if(mapParamExtent && mapParamExtent.length === 4){
         mapBounds = L.latLngBounds(
           L.latLng(parseFloat('$mapParamExtent.get(0)'),
             parseFloat('$mapParamExtent.get(1)')),
