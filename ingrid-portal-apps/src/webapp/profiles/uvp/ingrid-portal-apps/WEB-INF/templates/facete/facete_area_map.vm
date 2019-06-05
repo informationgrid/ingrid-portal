@@ -5,6 +5,7 @@
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
         <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if($selectedMap)aria-hidden="true"#end style="display:block;">
+            #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <div id="map" class="map-ingrid" style="height:320px;">
             </div>
             <div class="map-filter-xs"></div>

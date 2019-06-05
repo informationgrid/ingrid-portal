@@ -7,6 +7,7 @@
         </svg>
     </div>
     <div id="facet_area_address_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$doAddAreaAddress || $doAddAreaAddress.size() == 0)is-hidden#end">
+        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
         <form action="$action" method="post">
             <p>
               <input type="text" id="street" name="street" placeholder="$MESSAGES.getString("searchResult.facete.area.address.street")"

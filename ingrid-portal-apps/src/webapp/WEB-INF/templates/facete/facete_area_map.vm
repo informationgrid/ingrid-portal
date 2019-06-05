@@ -7,6 +7,7 @@
         </svg>
     </div>
     <div id="facet_area_map_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)is-hidden#end" >
+        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
         <div id="map" style="height:320px;"></div>
         <form action="$action" method="post" name="facete_map_form">
             <input id="x1" name="x1" type="hidden" />
