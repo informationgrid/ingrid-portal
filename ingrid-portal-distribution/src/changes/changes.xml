@@ -50,6 +50,9 @@
           <action type="fix" dev="wemove" issue="1365">
             MapClient: Fix generate stable IDs of added layers on admin GUI.
           </action>
+          <action type="add" dev="wemove" issue="">
+            MapClient: Print label depend on KML labelstyle scale.
+          </action>
           <action type="fix" dev="wemove" issue="1380">
             BAW: Fix metadata markers in map view
           </action>
