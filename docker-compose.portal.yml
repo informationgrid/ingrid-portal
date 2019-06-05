@@ -49,7 +49,6 @@ services:
       # You can escape the $ symbol with another $:
       # bcrypt hashed password
       # initially comment, startup ibus, set password, log into container copy password from config, paste/encode here
-      - SESSION_COOKIE_PATH=/
       - IBUS_PASSWORD=$$2a$$10$$fBHgDcUOKQ9tA8ThpXdXFuwhXPLGOfiUa4WkaoCGXNQobrFtCUj4q
       - ELASTIC_HOSTS=elastic:9300
     ports:

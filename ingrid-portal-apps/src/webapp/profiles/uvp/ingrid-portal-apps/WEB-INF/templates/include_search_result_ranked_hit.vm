@@ -1,7 +1,11 @@
 ## Renders Single Hit
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
     #if ($rs.title)
-        <a class="data"
+        #if(!$rs.is_blp)
+            <a class="data"
+        #else
+            <div class="data"
+        #end
             #if($rs.url)
                 #set($urlTitle = $MESSAGES.getString('common.tooltip.link.extern.result'))
                 #if ($rs.url_type && $rs.url_type == "pdf")
@@ -71,7 +75,7 @@
                 >
                 <div class="teaser-data search">
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                    #if($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" ))
+                    #if(!$rs.is_blp)
                         #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
                     #else
                         #renderHitTitle($rs.title "")
@@ -113,9 +117,15 @@
                 #end
             #end
             -->
-            <span class="ic-ic-arrow arrow"></span>
+            #if(!$rs.is_blp)
+              <span class="ic-ic-arrow arrow"></span>
+            #end
             </div>
+    #if(!$rs.is_blp)
         </a>
+    #else
+        </div>
+    #end
     #else
         <div class="teaser-data search">
             <span><strong>$MESSAGES.getString('common.result.empty')</strong></span>
