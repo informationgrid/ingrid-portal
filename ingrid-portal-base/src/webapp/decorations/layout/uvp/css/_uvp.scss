@@ -1123,6 +1123,10 @@ header {
   .helper.icon {
     font-size: 18px;
     line-height: 20px;
+   
+    span:first-child {
+        font-size: 20px;
+    }
   }
   .helper.text.date {
     font-size: 14px;

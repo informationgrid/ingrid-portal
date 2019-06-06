@@ -385,16 +385,15 @@
                                 var marker = L.marker(new L.LatLng(latlon[0],latlon[1]), { title: name, icon: icon, interactive: !smallIcons });
                                 marker.bbox = null;
                                 if(enablePopUp){
-                                    popUpHtml += '<h4>' + name + '</h4>';
+                                    popUpHtml += '<h5>' + name + '</h5>';
                                     if(descr && descr .length > 0){
-                                        popUpHtml += '<b>Mitgliedsgemeinden:</b><br>';
-                                        popUpHtml += '<span class="leaflet-hyphens">' + descr + '</span>';
-                                        popUpHtml += '<br><br>';
+                                        popUpHtml += '<h6 class="no-margin">Mitgliedsgemeinden:</h6>';
+                                        popUpHtml += '<p class="leaflet-hyphens">' + descr + '</p>';
                                     }
                                     
                                     if(bpinfos && bpinfos.length > 0){
-                                        popUpHtml += '<span>Nutzen Sie die folgenden Links um zu den Bauleitplanungs-Seiten zu gelangen:</span>';
-                                        popUpHtml += '<ul>';
+                                        popUpHtml += '<h6 class="no-margin">Nutzen Sie die folgenden Links um zu den Bauleitplanungs-Seiten zu gelangen:</h6>';
+                                        popUpHtml += '<div class="link-list">';
                                         for (var j = 0; j < bpinfos.length; j++) {
                                             var bpinfo = bpinfos[j];
                                             if(bpinfo.url){
@@ -422,15 +421,14 @@
                                                                 title = 'Bebauungspl&auml;ne im Beteiligungsverfahren';
                                                             }
                                                             if(title){
-                                                                popUpHtml += '<li style="padding: 5px 0 0 0;"><a href="' + url + '" target="_blank"><svg class="icon globe__icon" viewBox="0 0 32 32" style="font-size: 11px;"><polygon points="26,28.063 2,28.063 2,4 14,4 14,2 0,2 0,30.063 28,30.063 28,16 26,16"></polygon><polygon points="21,0 21,2 28.604,2 13.8,16.961 15.223,18.367 30,3.432 30,11 32,11 32,0" ></polygon></svg><span style="padding: 0 0 0 5px;">' + title + '</span></a></li>';
+                                                                popUpHtml += '<a class="icon" href="' + url + '" target="_blank"><span class="ic-ic-arrow"></span><span class="text">' + title + '</span></a>';
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
                                         }
-                                        popUpHtml += '</ul>';
-                                        popUpHtml += '<br>';
+                                        popUpHtml += '</div>';
                                     }
                                     marker.bindPopup(popUpHtml, popupMarkerOptions);
                                     marker.on('popupopen', showMarker);
@@ -627,10 +625,10 @@
                     popUpHtml += '<div class="helper icon">';
                     popUpHtml += '<span class="ic-ic-' + id + '"></span>';
                     popUpHtml += '<span>' + value + '</span>';
+                    popUpHtml += '</div>';
                     categoryList.push(value);
                 }
             }
-            popUpHtml += '</div>';
         }
         if(steps && steps.length > 0){
             popUpHtml += '<h6 class="no-margin">Letzter Verfahrensschritt:</h6>';
