@@ -1524,10 +1524,13 @@ footer {
     font-size: 14px;
     display: block;
     padding: 8px 0 0;
+    
+    span:first-child {
+      font-size: 14px;
+    }
   }
   a.icon:hover {
     color: $green-blue;
-    text-decoration: underline;
   }
 }
 .leaflet-popup-content {
