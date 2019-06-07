@@ -41,6 +41,9 @@
           <action type="add" dev="wemove" issue="1392">
             Portal: Add properties to change leaflet background layer.
           </action>
+          <action type="add" dev="wemove" issue="1403">
+            Portal: Search input had placeholder as input value
+          </action>
           <action type="add" dev="wemove" issue="1253">
             MapClient: Add upload of category and background images on admin GUI.
           </action>
