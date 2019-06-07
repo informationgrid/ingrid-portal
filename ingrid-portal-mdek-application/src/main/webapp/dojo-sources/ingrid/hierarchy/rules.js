@@ -87,7 +87,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 var dateValue = registry.byId("timeRefDate1").get("value");
                 var date2Widget = registry.byId("timeRefDate2");
                 //date2Widget.attr("value", dateValue);
-                if (!dateValue) {
+                if (dateValue) {
                     registry.byId("timeRefDate1").constraints.max = dateValue;
                     date2Widget.constraints.min = dateValue;
                 }
