@@ -11,6 +11,12 @@
           <action type="fix" dev="wemove" issue="2124">
             IGE: Fix user table not shown for standalone IGE
           </action>
+          <action type="fix" dev="wemove" issue="2142">
+            IGE: Fix date range input
+          </action>
+          <action type="fix" dev="wemove" issue="2141">
+            IGE(mCLOUD/UVP): Show link from upload dialog correctly if a protocol seem to be found.
+          </action>
         </release>
 
         <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
