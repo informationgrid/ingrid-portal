@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.0.1.mCLOUD-SNAPSHOT" date="2019-xx-xx" description="Release 5.1.0">
+        <release version="5.0.1.mCLOUD" date="2019-06-07" description="Release 5.1.0.mCLOUD">
           <action type="fix" dev="wemove" issue="2124">
             IGE: Fix user table not shown for standalone IGE
           </action>
@@ -16,6 +16,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2141">
             IGE(mCLOUD/UVP): Show link from upload dialog correctly if a protocol seem to be found.
+          </action>
+          <action type="fix" dev="wemove" issue="2111">
+            IGE(mCLOUD): Codelist sometimes not correctly initialized.
           </action>
         </release>
 

@@ -9,7 +9,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>5.0.1.mCLOUD-SNAPSHOT</version>
+  <version>5.0.1.mCLOUD</version>
   <name>InGrid Portal</name>
   <description>This is the portal where documents can be searched through the iBus and new documents can be managed by
     the InGrid Editor.
@@ -35,7 +35,7 @@
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
-    <mdek.version>4.4.0.mCLOUD</mdek.version>
+    <mdek.version>4.4.1.mCLOUD</mdek.version>
     <webmap-client.version>4.6.0</webmap-client.version>
     <ingrid-codelist-service.version>4.2.8</ingrid-codelist-service.version>
   </properties>
