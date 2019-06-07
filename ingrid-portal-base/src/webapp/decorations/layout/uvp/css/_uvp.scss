@@ -791,7 +791,7 @@ header {
     border-radius: 50px;
   }
   a:hover { text-decoration: none; }
-  a.is-active { background-color: #349980; }
+  a.is-active { background-color: $green-jelly; }
 }
 .header-menu-close {
   text-align: right;
@@ -1518,6 +1518,16 @@ footer {
   a:hover, .leaflet-container a:focus { 
    color: black; 
    text-decoration: none;
+  }
+  a.icon {
+    color: $green-jelly;
+    font-size: 14px;
+    display: block;
+    padding: 8px 0 0;
+  }
+  a.icon:hover {
+    color: $green-blue;
+    text-decoration: underline;
   }
 }
 .leaflet-popup-content {

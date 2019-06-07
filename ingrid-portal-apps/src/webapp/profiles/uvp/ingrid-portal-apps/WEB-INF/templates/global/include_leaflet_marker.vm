@@ -393,7 +393,6 @@
                                     
                                     if(bpinfos && bpinfos.length > 0){
                                         popUpHtml += '<h6 class="no-margin">Nutzen Sie die folgenden Links um zu den Bauleitplanungs-Seiten zu gelangen:</h6>';
-                                        popUpHtml += '<div class="link-list">';
                                         for (var j = 0; j < bpinfos.length; j++) {
                                             var bpinfo = bpinfos[j];
                                             if(bpinfo.url){
@@ -428,7 +427,6 @@
                                                 }
                                             }
                                         }
-                                        popUpHtml += '</div>';
                                     }
                                     marker.bindPopup(popUpHtml, popupMarkerOptions);
                                     marker.on('popupopen', showMarker);
