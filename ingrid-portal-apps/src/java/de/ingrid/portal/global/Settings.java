@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -49,7 +49,7 @@ public class Settings {
 
     /** maximum length of a row without white space in the left columnn, KEEP 80 ! depends on Characters, Uppercase takes 50 ! */
     public final static int SEARCH_RANKED_MAX_ROW_LENGTH = 50;
-    
+
     // ===========================================
     // PSML pages
     // ===========================================
@@ -134,7 +134,7 @@ public class Settings {
     public final static String QVALUE_DATATYPE_SOURCE_WWW = "www";
     public final static String QVALUE_DATATYPE_SOURCE_METADATA = "metadata";
     public final static String QVALUE_DATATYPE_SOURCE_FIS = "fis";
-    
+
     // datatype: IPLUG types
     // ---------------------
     public final static String QVALUE_DATATYPE_IPLUG_DSC_ECS = "dsc_ecs";
@@ -144,8 +144,8 @@ public class Settings {
     public final static String QVALUE_DATATYPE_IPLUG_CSW = "csw";
     public final static String QVALUE_DATATYPE_IPLUG_DSC_CSW = "dsc_csw";
     public final static String QVALUE_DATATYPE_IPLUG_DSC_OTHER = "dsc_other";
-    
-    // all sub datatypes indicating address search (switch to address rendering of results) 
+
+    // all sub datatypes indicating address search (switch to address rendering of results)
     public final static String[] QVALUES_DATATYPES_ADDRESS = new String[] {
     	QVALUE_DATATYPE_AREA_ADDRESS,
     	QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS,
@@ -154,10 +154,10 @@ public class Settings {
     };
 
     public static final String QVALUE_LANG_DE = "de";
-    
+
     // metaclass: types
     // ---------------------
-    
+
     public static final String QVALUE_METACLASS_JOB = "job";
     public static final String QVALUE_METACLASS_MAP = "map";
     public static final String QVALUE_METACLASS_DOCUMENT = "document";
@@ -165,10 +165,10 @@ public class Settings {
     public static final String QVALUE_METACLASS_SERVICE = "service";
     public static final String QVALUE_METACLASS_PROJECT = "project";
     public static final String QVALUE_METACLASS_DATABASE = "database";
-    
+
     // ===========================================
     // Result data (used in templates for rendering results!)
-    // IF POSSIBLE, USE THESE KEYS ALSO TO ACCESS HIT DETAIL DATA !!! 
+    // IF POSSIBLE, USE THESE KEYS ALSO TO ACCESS HIT DETAIL DATA !!!
     // ===========================================
 
     public final static String RESULT_KEY_TITLE = "title";
@@ -203,6 +203,8 @@ public class Settings {
     public final static String RESULT_KEY_WMS_TMP_COORD_TITLE = "coord_title";
     public final static String RESULT_KEY_WMS_TMP_COORD_DESCR = "coord_descr";
 
+    public static final Object RESULT_KEY_IS_BLP = "is_blp";
+
     public final static String RESULT_KEY_UDK_IS_ADDRESS = "is_address";
     public final static String RESULT_KEY_UDK_CLASS = "udk_class";
     public final static String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";
@@ -217,11 +219,11 @@ public class Settings {
 
     public static final String RESULT_KEY_NO_OF_HITS = "no_of_hits";
     public static final String RESULT_KEY_DUMMY_HIT = "dummyHit";
-    
+
     public static final String RESULT_KEY_CAPABILITIES_URL = "capabilities_url";
     public static final String RESULT_KEY_SERVICE_UUID     = "refering_service_uuid";
     public static final String RESULT_KEY_COUPLED_RESOURCE = "coupled_resource";
-    
+
     public static final String RESULT_KEY_CSW_INTERFACE_URL = "csw_link";
 
     // ===========================================
@@ -230,15 +232,15 @@ public class Settings {
     // ===========================================
 
     public final static String HIT_KEY_WMS_URL = "T011_obj_serv_op_connpoint.connect_point";
-    
-    // needed to determine the display of the "show in map" link 
+
+    // needed to determine the display of the "show in map" link
     public final static String HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT = "t011_obj_serv.has_access_constraint";
-    
+
     // this key represents the index key for the service type.
     public static final String HIT_KEY_OBJ_SERV_TYPE = "t011_obj_serv.type";
     public static final String HIT_KEY_OBJ_SERV_TYPE_KEY = "t011_obj_serv.type_key";
 
-    
+
     public final static String HIT_KEY_OBJ_ID = "T01_object.obj_id";
     public final static String HIT_KEY_ORG_OBJ_ID = "T01_object.org_obj_id";
 
@@ -287,7 +289,7 @@ public class Settings {
     // ===========================================
 
     // ------------- MESSAGE TOPICS (MSG_TOPIC_...) -----------------------------
-    // define the message "scope", will be "prefix" in message key -> "topic:message" 
+    // define the message "scope", will be "prefix" in message key -> "topic:message"
 
     /** message "scope" for search pages (start page, simple search, extended search ...) */
     public final static String MSG_TOPIC_SEARCH = "search";
@@ -328,7 +330,7 @@ public class Settings {
      * - a new query (form submitted),
      * - no query (click in similiar terms),
      * - ranked query (left page navigation clicked),
-     * - unranked query (right page navigation clicked)  
+     * - unranked query (right page navigation clicked)
      */
     public static final String MSG_QUERY_EXECUTION_TYPE = "query_state";
 
@@ -348,7 +350,7 @@ public class Settings {
 
     // ===========================================
     // REQUEST PARAMETERS
-    // NOTICE: Also used as message keys and values in SearchState !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+    // NOTICE: Also used as message keys and values in SearchState !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // names = PARAM_
     // values = PARAMV_
     // ===========================================
@@ -377,24 +379,24 @@ public class Settings {
     public final static String PARAMV_GROUPING_PROVIDER = "provider";
     public final static String PARAMV_GROUPING_DOMAIN = "domain";
     public final static String PARAMV_GROUPING_PLUG_ID = "plugid";
-    
+
     // ------------- PARAM Keys, also used as message keys (SearchState) -----------------------------
 
     public final static String PARAM_QUERY_STRING = "q";
     public static final String PARAM_QUERY_STRING_EXT = "q_ext";
-    
+
     public final static String PARAM_STARTHIT_RANKED = "rstart";
 
     public final static String PARAM_DATASOURCE = "ds";
 
     public final static String PARAM_RANKING = "rank";
-    
+
     // history of starthits of grouped pages
     public static final String PARAM_GROUPING_STARTHITS = "grouping_starthits";
 
     /** this parameter holds the type of filter for search result display (usually same as grouping: partner | provider) **/
     public static final String PARAM_FILTER = "filter";
-    
+
     // ------------- PARAM Keys, NOT used for messaging, just for access in Request -----------------------------
 
     public final static String PARAM_RUBRIC = "rubric";
@@ -404,7 +406,7 @@ public class Settings {
     public static final String PARAM_PROVIDER = "provider";
 
     public static final String PARAM_SUBJECT = "subject";
-    
+
     public final static String PARAM_GROUPING = "grouping";
 
     public final static String PARAM_ACTION = "action";
@@ -412,12 +414,12 @@ public class Settings {
     public final static String PARAM_TAB = "tab";
 
     public static final String PARAM_CURRENT_SELECTOR_PAGE = "currentSelectorPage";
-    
+
 	public static final String PARAM_LOGIN_REDIRECT = "r";
 
 
     // ------------- Session keys for direct HTTP session manipulation -------------------------
-    
+
     public static final String SESSION_LOGIN_STARTED = "session_started";
 
     // can contain external user authentication info even if user does not exist in portal
