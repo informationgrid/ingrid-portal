@@ -2,21 +2,6 @@
  html {
   font-family: large
  }
- h1 {
-  font-size: 260%
- }
- h2 {
-  font-size: 220%
- }
- h3 {
-  font-size: 200%
- }
- h4 {
-  font-size: 180%
- }
- h5, h6 {
-  font-size: 150%
- }
  .picture.banner {
   max-width: 610px;
   margin-bottom: 20px

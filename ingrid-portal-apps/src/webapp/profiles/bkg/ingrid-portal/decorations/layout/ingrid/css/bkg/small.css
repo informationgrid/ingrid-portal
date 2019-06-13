@@ -3,9 +3,9 @@
 @font-face {
  font-family: bundessansweb;
  src:
-  url('/decorations/layout/ingrid/fonts/BundesSansWeb/BundesSansWeb.eot'),
-  url('/decorations/layout/ingrid/fonts/BundesSansWeb/BundesSansWeb.woff'),
-  url('/decorations/layout/ingrid/fonts/BundesSansWeb/BundesSansWeb.ttf');
+  url('/decorations/layout/ingrid/fonts/BundesSansWeb/BundesSansWeb-Regular.eot'),
+  url('/decorations/layout/ingrid/fonts/BundesSansWeb/BundesSansWeb-Regular.woff'),
+  url('/decorations/layout/ingrid/fonts/BundesSansWeb/BundesSansWeb-Regular.ttf');
  font-style: normal;
  font-weight: normal
 }
@@ -89,45 +89,17 @@ p, th, h1, h2, h3, div {
 }
 
 html {
- font-family: small
 }
 
 h1, h2, h3, h4, h5, h6 {
  font-family: "bundessansweb", Arial, helvetica, sans-serif, "Droid Sans";
  font-weight: bold;
- line-height: 1.2;
- margin: 0 0 10px;
- padding: 0
-}
-
-h1 {
- font-size: 260%
-}
-
-h2 {
- font-size: 220%
-}
-
-h3 {
- font-size: 200%
-}
-
-h4 {
- font-size: 180%
-}
-
-h5, h6, .teaser-switcher h3 {
- font-size: 150%
 }
 
 div, a, ul, li, h2 {
  -moz-box-sizing: border-box;
  -webkit-box-sizing: border-box;
  box-sizing: border-box
-}
-
-p, address {
- margin: 0 0 20px 0
 }
 
 ul, ol {
@@ -175,11 +147,6 @@ h1.firstInSlot {
  clear: both
 }
 
-p, li, td, th, blockquote, dl, caption, .address, .contact, .contactData,
- .docData .label, .docData .value, .StndGallery .picture, .formError,
- address {
-}
-
 li li, li p, table p, table li, table dl, blockquote p {
  font-size: 100%
 }
@@ -196,11 +163,6 @@ blockquote {
 blockquote p {
  padding: 10px;
  margin-bottom: 0
-}
-
-label, input, select, textarea, .formLabel em {
- font-size: 150%;
- line-height: 1.5
 }
 
 button {
@@ -293,123 +255,12 @@ p.justify, td.justify, th.justify {
  text-align: justify
 }
 
-table {
- border-collapse: separate;
- margin: 0 0 20px;
- padding: 0 0 10px;
- table-layout: fixed;
- width: 100%
-}
-
-table .sortUp {
- background:
-  url(/SiteGlobals/Frontend/Images/icons/sort-up-b.png?__blob=normal&v=1)
-  no-repeat 100% 9px;
- padding-right: 17px;
- text-decoration: underline
-}
-
-table .sortDown {
- background:
-  url(/SiteGlobals/Frontend/Images/icons/sort-down-b.png?__blob=normal&v=1)
-  no-repeat 100% 9px;
- padding-right: 17px;
- text-decoration: underline
-}
-
-table .even {
- background: #eee
-}
-
-table .width15 {
- width: 15%
-}
-
-table .width20 {
- width: 20%
-}
-
-table .width25 {
- width: 25%
-}
-
-table .width30 {
- width: 30%
-}
-
-table .width35 {
- width: 35%
-}
-
-table .width40 {
- width: 40%
-}
-
-table .width45 {
- width: 45%
-}
-
-table .width50 {
- width: 50%
-}
-
-table .width70 {
- width: 70%
-}
-
-table .width80 {
- width: 80%
-}
-
-table .width85 {
- width: 85%
-}
-
-table h2 {
- font-size: 146.67%
-}
-
-table h3 {
- font-size: 133.34%
-}
-
-table h4 {
- font-size: 120%
-}
-
-table h5, table h6 {
- font-size: 100%
-}
-
 caption {
  font-weight: bold;
  color: #333;
  padding-bottom: 10px;
  text-transform: uppercase;
  text-align: left
-}
-
-tbody {
- padding: 0 0 10px
-}
-
-th {
- background: #eee;
- color: #333;
- border-bottom: 1px solid #dedede;
- padding: 10px;
- text-align: left
-}
-
-th a {
- color: #333
-}
-
-td {
- border-bottom: 1px solid #dedede;
- padding: 8px;
- text-align: left;
- vertical-align: top
 }
 
 .responsiveTable {
@@ -558,14 +409,6 @@ a:hover, a:active, a:focus {
  text-decoration: underline;
  color: #333;
  outline: 0
-}
-
-table a {
- text-decoration: underline
-}
-
-table a:hover, table a:active, table a:focus {
- text-decoration: none
 }
 
 .more {
@@ -1100,10 +943,6 @@ strong.button {
 
 .banner, .box {
  margin-bottom: 15px
-}
-
-.box {
- padding-bottom: 15px
 }
 
 .picture {
@@ -1656,13 +1495,6 @@ textarea {
 
 .labelspacer input {
  margin-top: 10px
-}
-
-label, .formLabel em {
- font-weight: normal;
- font-style: normal;
- display: table;
- margin-bottom: 10px
 }
 
 input[type="checkbox"], input[type="radio"] {
@@ -3413,7 +3245,6 @@ html.mm-opened #togglenav {
 
 @media only screen and (min-width:27.5em) {
  html {
-  font-family: small-1
  }
  .video-image .video-icon {
   top: 24%;

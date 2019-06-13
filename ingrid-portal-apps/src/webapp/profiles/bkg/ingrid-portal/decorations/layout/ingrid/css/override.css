@@ -80,6 +80,7 @@ thead {
 }
 #btn_search:not([disabled]):hover, #btn_search:not([disabled]):focus, #btn_search:not([disabled]):active {
   color: #fff !important;
+  text-decoration: underline;
 }
 
 .btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
@@ -191,10 +192,6 @@ thead {
 .tab__select {
   background: #407E40;
 }
-.tab__select:hover, .tab__select.is-active {
-  background: #FFFFFF;
-}
-
 .tab__toggle.is-active a {
   color: #407E40;
 }
@@ -282,11 +279,20 @@ thead {
 
 @media screen and (min-width: 940px) {
   .no-touchevents .header__widget > a:hover {
-    color: #407E40;
+    color: #333;
+    text-decoration: underline;
   }
 
   .header__widget__icon.is-active {
     fill: #407E40;
+  }
+  
+  .header__widget > a {
+    color: #333;
+  }
+
+  .copyright {
+    display: block;
   }
 }
 
@@ -308,8 +314,7 @@ thead {
 }
 
 .desktop-logo {
-    width: 56px;
-    padding:5px 0 0 0;
+    width: 21.5em;
 }
 
 .mobile__logo {
@@ -368,19 +373,13 @@ thead {
     margin: 0 0 0 5px;
 }
 
-@media screen and (min-width: 940px) {
-  .copyright {
-    display: block;
-  }
-}
-
 .page {
   min-height: 100%;
   position: relative;
 }
 
 .container {
-  padding-bottom: 160px;
+  padding-bottom: 250px;
 }
 
 footer {

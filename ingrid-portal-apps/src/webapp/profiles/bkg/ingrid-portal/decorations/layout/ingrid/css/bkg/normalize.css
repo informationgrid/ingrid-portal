@@ -43,11 +43,6 @@ a:active, a:hover {
  outline: 0
 }
 
-h1 {
- font-size: 2em;
- margin: .67em 0
-}
-
 abbr[title] {
  border-bottom: 1px dotted
 }
@@ -82,10 +77,6 @@ pre {
 
 q {
  quotes: "\201C" "\201D" "\2018" "\2019"
-}
-
-small {
- font-size: 80%
 }
 
 sub, sup {
@@ -175,9 +166,4 @@ button::-moz-focus-inner, input::-moz-focus-inner {
 textarea {
  overflow: auto;
  vertical-align: top
-}
-
-table {
- border-collapse: collapse;
- border-spacing: 0
 }
