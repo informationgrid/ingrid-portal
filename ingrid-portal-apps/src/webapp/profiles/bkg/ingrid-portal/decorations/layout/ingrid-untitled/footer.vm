@@ -27,7 +27,9 @@
             </div>
             <div class="copyright row ob-box-wide ob-box-padded ob-box-center">
               <div class="small-1 medium-2 columns bkg-logo ">
-                <img src="/decorations/layout/ingrid/images/template/bkg_logo.png" alt="$cms.escapeXml($bkgLogo.altText)">
+                <a href="https://www.bkg.bund.de/DE/Home/home.html" alt="BKG Logo">
+                    <img src="/decorations/layout/ingrid/images/template/bkg_logo.png" alt="Logo">
+                </a>
               </div>
               <div class="legal-links small-12 medium-10 columns">
                 <div class="row">

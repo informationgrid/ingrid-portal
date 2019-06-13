@@ -20,7 +20,7 @@
         #end
         -->
         <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
-        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
+        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "BKG-MIS")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
