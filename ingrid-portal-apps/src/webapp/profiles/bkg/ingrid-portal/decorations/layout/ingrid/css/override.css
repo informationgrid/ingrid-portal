@@ -387,3 +387,8 @@ footer {
   bottom: 0;
   width: 100%;
 }
+
+span.ueber {
+  color: #003300;
+  font-weight: bold;
+}
