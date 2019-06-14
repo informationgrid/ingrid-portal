@@ -298,21 +298,7 @@
                         #set($tabName = $MESSAGES.getString($tabName))
                     #end
                     #set($tabUrl = $jetspeed.getAbsoluteUrl($element.url))
-                    #if ($element.url.startsWith('/main-about'))
-                        #set($subMenu = $site.getMenu("sub-menu-about"))
-                        <div class="js-accordion-multi">
-                            <div class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle" title="$tabTitle">
-                                <svg class="nav-overlay__icon icon"><use xlink:href="#plus"/></svg>
-                                <svg class="nav-overlay__icon icon"><use xlink:href="#minus"/></svg>
-                                $tabName
-                            </div>
-                            #if($subMenu && !$subMenu.empty)
-                                #includeMobileSubNavigation($subMenu)
-                            #end
-                        </div>
-                    #else
-                        <a href="$tabUrl" class="nav-overlay__item nav-overlay__item--level1" title="$tabTitle">$tabName</a>
-                    #end
+                    <a href="$tabUrl" class="nav-overlay__item nav-overlay__item--level1" title="$tabTitle">$tabName</a>
                 #end
             #end
         #end

@@ -241,6 +241,7 @@ thead {
 }
 .nav-toggle:after {
   border-color: transparent transparent #407E40 transparent;
+  border-width: 0 0 49px 12px;
 }
 
 .nav-toggle .icon {
@@ -252,10 +253,6 @@ thead {
 }
 .tx-highlight {
   color: #407E40 !important;
-}
-
-.header__widget__icon.is-active {
-  fill: #407E40;
 }
 
 @media screen and (min-width: 640px) {
@@ -274,6 +271,10 @@ thead {
 @media screen and (max-width: 939px) {
   .header {
     background: #407E40;
+  }
+  
+  .breadcrumb {
+    border-top: 1px solid #DDD;
   }
 }
 
@@ -318,7 +319,11 @@ thead {
 }
 
 .mobile__logo {
-    height: 2.5rem;
+    height: 2rem;
+}
+
+.mobile__logo-x {
+  height: 8.5rem;
 }
 
 .desktop__title p {
@@ -359,6 +364,10 @@ thead {
 @media screen and (min-width: 768px) and (max-width: 939px) {
   .header__widgets__section {
       padding: 1.025rem 0;
+  }
+  
+  .nav-toggle:after {
+    border-width: 0 0 65px 12px;
   }
 }
 
