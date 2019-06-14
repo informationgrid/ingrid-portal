@@ -27,7 +27,7 @@ Installation
 ------------
 
 Download from https://distributions.informationgrid.eu/ingrid-portal/
- 
+
 or
 
 build from source with `mvn clean package`.
@@ -48,7 +48,7 @@ Contribute
 
 - Issue Tracker: https://github.com/informationgrid/ingrid-portal/issues
 - Source Code: https://github.com/informationgrid/ingrid-portal
- 
+
 ### Setup project
 
 Import project as Maven project. There are several sub projects:
@@ -64,37 +64,71 @@ Alternatively use the maven plugin of you IDE.
 
 ### Development
 
-For development on the InGrid-Editor a special environment is needed. 
-This is provided by multiple Docker containers.
+For development on the InGrid editor a special **environment** is needed. It consists of the following components:
 
-When starting all the containers within the ingrid-portal directory with:
+- Database server
+- InGrid backend
+- InGrid editor (this repository)
 
-`docker compose up -d`
+To set up the environment execute the following steps:
 
-then a mysql container with several databases is initialized and started, 
-as well as phpmyadmin for administration of the databases.
+##### Database server
 
-By running
+The database server is hosted inside a *Docker* container which is set up by executing the following command inside the project's root directory:
 
-`mvn jetty:run -Denv=dev`
+```
+docker-compose -f docker-compose.ige.yml up -d
+```
 
-the webapplication is started and can be accessed by the URL:
+The following containers will be created:
 
-`http://localhost:8088/ingrid-portal-mdek-application/start_dev.jsp?user=mdek`
+- *mysql*: MySQL server containing several databases
+  - Connection parameters:
+    - User: root
+    - Password: *empty*
+- *phpmyadmin*: Web application for managing the MySQL databases
+  - Login:
+    - Server: mysql
+    - Username/Password as mentioned above
 
-To develop a specific profile, use
+##### InGrid backend
+
+The InGrid backend is provided as a git repository:
+
+```
+git clone https://github.com/informationgrid/ingrid-mdek
+```
+
+For instructions how to set up and run the application in Eclipse see https://github.com/informationgrid/ingrid-mdek/blob/master/README.md
+
+##### InGrid editor
+
+The InGrid editor is a web application that is started by executing the following command inside the `ingrid-portal-mdek-application` sub directory:
 
 ```
 run.sh [<profile>]
 ```
 
-from the sub directory `ingrid-portal-mdek-application`. The optional _profile_ parameter adds the sources from the profile directory (ingrid-portal-apps/src/webapp/profiles/<profile>) for the startup. A jetty server is started and the sources can be edited directly. When editing Java classes, the server is automatically restarted. If you change resource files like messages.properties, then the server also needs to be restarted.
+The comand starts a development server (Jetty), that allows for directly editing the application sources. When editing Java classes, the server is automatically restarted. Editing resource files like *messages.properties* requires the server to be restarted.
 
+The optional `profile` parameter adds the sources from the profile directory (`ingrid-portal-apps/src/webapp/profiles/<profile>`) for startup. 
 
-For complete function the backend (ingrid-mdek aka ingird-iplug-ige) also has to be started.
+To access the application in the browser open the URL:
+
+http://localhost:8088/ingrid-portal-mdek-application/start_dev.jsp?user=mdek
 
 For IntelliJ IDEA there's a dojo plugin for easier handling of imports:
 https://github.com/TomDevs/needsmoredojo
+
+### Troubleshooting
+
+- **Cannot connect to backend**:
+  - Error messages: 
+    - Browser: *Der Benutzer konnte nicht im Katalog gefunden werden. Bitte überprüfen Sie die mdek-Datenbank und den dazugehörigen Katalog.*
+    - Application log: *PROBLEMS CONNECTING TO: /ingrid-group:ige-iplug-test*
+  - Solution: 
+    - Make sure InGrid backend is running
+    - Make sure the user (e.g. *mdek*) exists in the database (schema `mdek`, table `user_data`) and the `plug_id` column value (e.g. */ingrid-group:ige-iplug-test*) matches the property `communications.ige.clientName` set up in the InGrid backend.
 
 ### Debugging
 
