@@ -38,6 +38,9 @@
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
           </action>
+          <action type="add" dev="wemove" issue="1200">
+            Portal: Create BKG portal layout.
+          </action>
           <action type="add" dev="wemove" issue="1178">
             Portal: Add function to add info message to a facet accordeon or to the search result list by select a specify facet.
           </action>
