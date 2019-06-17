@@ -401,3 +401,18 @@ span.ueber {
   color: #003300;
   font-weight: bold;
 }
+
+#navFunctionsWrapper h2 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+#navFunctionsWrapper h2, #navFunctionsWrapper a {
+    font-size: 14px !important;
+}
+
+@media screen and (max-width: 64em) {
+    #navFunctionsPrint {
+      display:none;
+    }
+}
