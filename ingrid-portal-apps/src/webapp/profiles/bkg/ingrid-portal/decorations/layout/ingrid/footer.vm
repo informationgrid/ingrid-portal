@@ -8,8 +8,12 @@
                   <li id="navFunctionsPrint">
                     <a onclick="window.print()" title="Seite drucken (öffnet Dialog)">drucken</a>
                   </li>
+                  #defineUrlParams()
+                  #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
+                  #set($shareUrl = "${shareUrl}${urlParams}")
+                  #set($shareUrlEncode = $esc.url("${shareUrl}"))
                   <li id="navFunctionsRecommend">
-                    <a href="mailto:dlz@bkg.bund.de" class="" aria-haspopup="true" aria-owns="share" title="Mehr anzeigen">empfehlen</a>
+                    <a href="mailto:?body=$shareUrlEncode" class="" aria-haspopup="true" aria-owns="share" title="Mehr anzeigen">empfehlen</a>
                   </li>
                 </ul>
               </div>

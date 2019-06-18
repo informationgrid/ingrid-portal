@@ -6,7 +6,7 @@
                     #defineUrlParams()
                     #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
                     #set($shareUrl = "${shareUrl}${urlParams}")
-                    #set($shareUrlEncode = $esc.url("${shareUrl}${urlParams}"))
+                    #set($shareUrlEncode = $esc.url("${shareUrl}"))
                     <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank" title="Twitter">
                       <span class="ic-ic-twitter"></span><span class="text"></span>
                     </a>
