@@ -69,8 +69,9 @@ thead {
 }
 
 .btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
-  background: #E2E2E2;
-  border-color: #E2E2E2;
+  text-decoration: underline;
+  background: #FFFFFF;
+  border-color: #407E40;
   color: #407E40 !important;
 }
 
@@ -84,7 +85,10 @@ thead {
 }
 
 .btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  text-decoration: underline;
   background: #407E40;
+  border-color: #407E40;
+  color: #FFFFFF !important;
 }
 
 .icon-active {
@@ -415,4 +419,8 @@ span.ueber {
     #navFunctionsPrint {
       display:none;
     }
+}
+
+body {
+  font-size: unset;
 }
