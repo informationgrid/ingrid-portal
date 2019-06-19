@@ -1535,6 +1535,7 @@ footer {
 }
 .leaflet-popup-content {
   margin: 32px 24px;
+  min-width: 400px;
 
   .helper { margin-bottom: 16px; }
   .helper, p { color: $blue-prov; }
