@@ -608,11 +608,11 @@
     
     function createPopUp(title, procedure, categories, steps, id) {
         var popUpHtml = '';
-        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank"><h5>' + title + '</h5></a>';
-        
         if(procedure && procedure.length > 0){
-            //popUpHtml += '<div class="map_popup_proc">' + procedure + '</div>';
+            popUpHtml += '<div class="helper text"><small>' + procedure + '</small></div>';
         }
+        
+        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank"><h5>' + title + '</h5></a>';
         
         if(categories && categories.length > 0){
             var categoryList = [];
