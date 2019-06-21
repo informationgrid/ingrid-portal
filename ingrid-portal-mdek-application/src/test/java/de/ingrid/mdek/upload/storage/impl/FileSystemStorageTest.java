@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,14 +34,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.CompletableFuture;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,28 +56,77 @@ import de.ingrid.mdek.upload.IllegalFileException;
 public class FileSystemStorageTest {
 
     private static final Path DOCS_PATH = Paths.get("target", "ingrid-storage-test");
+    private static final Path TEMP_PATH = Paths.get("target", "ingrid-storage-tmp");
     private static final String OBJ_UUID = "5F1AF722-D767-4980-8403-A432173D5684";
     private static final String ARCHIVE_PATH = "_archive_";
     private static final String TRASH_PATH = "_trash_";
 
     private static final String PLUG_ID = "test-plug-id";
 
-    private FileSystemStorage storage;
+    private static final FileSystemStorage storage = new FileSystemStorage();
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
         // setup storage
-        this.storage = new FileSystemStorage();
-        this.storage.setDocsDir(DOCS_PATH.toString());
+        storage.setDocsDir(DOCS_PATH.toString());
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         Files.createDirectories(DOCS_PATH);
+        FileUtils.deleteDirectory(TEMP_PATH.toFile());
+        Files.createDirectories(TEMP_PATH);
     }
 
     @After
     public void tearDown() throws Exception {
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
+        FileUtils.deleteDirectory(TEMP_PATH.toFile());
+    }
+
+    /**
+     * Test:
+     * - List files
+     * @throws Exception
+     */
+    @Test
+    public void testList() throws Exception {
+        for (int i=0; i<10; i++) {
+            final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
+            final String file = i+"-test.txt";
+            this.storageWriteTestFile(path, file);
+        }
+
+        // test
+        assertEquals(10, storage.list().length);
+        assertFalse(storage.hasOpenFileHandles());
+    }
+
+    /**
+     * Test:
+     * - Read a file
+     * @throws Exception
+     */
+    @Test
+    public void testRead() throws Exception {
+        final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
+        final String file = "test.txt";
+        this.storageWriteTestFile(path, file);
+
+        // test
+        final CompletableFuture<Void> caller = new CompletableFuture<>();
+        final StringWriter content = new StringWriter();
+        try (InputStream data = storage.read(path, file, caller)) {
+            IOUtils.copy(data, content);
+        }
+        catch (final IOException ex) {
+            caller.completeExceptionally(ex);
+            throw new UncheckedIOException(ex);
+        }
+        finally {
+            caller.complete(null);
+        }
+        assertEquals("123", content.toString());
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -83,12 +136,13 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testWrite() throws Exception {
-        String path = PLUG_ID+"/"+OBJ_UUID;
-        String file = "test.txt";
+        final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
+        final String file = "test.txt";
         this.storageWriteTestFile(path, file);
 
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -98,22 +152,24 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testWriteZip() throws Exception {
-        String path = PLUG_ID+"/"+OBJ_UUID;
-        String file = "test.zip";
+        final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
+        final String file = "test.zip";
 
         // create zip file
-        File zipFile = this.createZipFile(file);
-        InputStream data = new FileInputStream(zipFile);
-
-        FileSystemItem[] results = this.storage.write(path, file, data, (int)zipFile.length(), true, false);
+        FileSystemItem[] results;
+        final File zipFile = this.createZipFile(file);
+        try (final InputStream data = new FileInputStream(zipFile)) {
+            results = storage.write(path, file, data, (int)zipFile.length(), true, false);
+        }
 
         // test
-        assertEquals(results.length, 1);
-        assertEquals(results[0].getFile(), "test.zip");
-        assertEquals(results[0].getPath(), path);
+        assertEquals(1, results.length);
+        assertEquals("test.zip", results[0].getFile());
+        assertEquals(path, results[0].getPath());
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test.zip")));
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -123,27 +179,29 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testWriteAndExtractZip() throws Exception {
-        String path = PLUG_ID+"/"+OBJ_UUID;
-        String file = "test.zip";
+        final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
+        final String file = "test.zip";
 
         // create zip file
-        File zipFile = this.createZipFile(file);
-        InputStream data = new FileInputStream(zipFile);
-
-        FileSystemItem[] results = this.storage.write(path, file, data, (int)zipFile.length(), true, true);
+        FileSystemItem[] results;
+        final File zipFile = this.createZipFile(file);
+        try (final InputStream data = new FileInputStream(zipFile)) {
+            results = storage.write(path, file, data, (int)zipFile.length(), true, true);
+        }
 
         // test
-        assertEquals(results.length, 3);
-        assertEquals(results[2].getFile(), "file2");
-        assertEquals(results[2].getPath(), path+"/test/dir1");
-        assertEquals(results[1].getFile(), "file0");
-        assertEquals(results[1].getPath(), path+"/test/dir2");
-        assertEquals(results[0].getFile(), "file1");
-        assertEquals(results[0].getPath(), path+"/test");
+        assertEquals(3, results.length);
+        assertEquals("file2", results[2].getFile());
+        assertEquals(Paths.get(path, "test", "dir1").toString(), results[2].getPath());
+        assertEquals("file0", results[1].getFile());
+        assertEquals(Paths.get(path, "test", "dir2").toString(), results[1].getPath());
+        assertEquals("file1", results[0].getFile());
+        assertEquals(Paths.get(path, "test").toString(), results[0].getPath());
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test.zip")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir2", "file0")));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -153,14 +211,15 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testArchive() throws Exception {
-        String path = "test-plug-id/"+OBJ_UUID;
-        String file = "test.txt";
+        final String path = Paths.get("test-plug-id", OBJ_UUID).toString();
+        final String file = "test.txt";
         this.storageWriteTestFile(path, file);
-        this.storage.archive(path, file);
+        storage.archive(path, file);
 
         // test
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH, path, file)));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -170,15 +229,16 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testRestore() throws Exception {
-        String path = "test-plug-id/"+OBJ_UUID;
-        String file = "test.txt";
+        final String path = Paths.get("test-plug-id", OBJ_UUID).toString();
+        final String file = "test.txt";
         this.storageWriteTestFile(path, file);
-        this.storage.archive(path, file);
-        this.storage.restore(path, file);
+        storage.archive(path, file);
+        storage.restore(path, file);
 
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, file)));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -188,14 +248,15 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testDelete() throws Exception {
-        String path = "test-plug-id/"+OBJ_UUID;
-        String file = "test.txt";
+        final String path = Paths.get("test-plug-id", OBJ_UUID).toString();
+        final String file = "test.txt";
         this.storageWriteTestFile(path, file);
-        this.storage.delete(path, file);
+        storage.delete(path, file);
 
         // test
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), TRASH_PATH, path, file)));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -205,12 +266,15 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testSanitizeIPlugId() throws Exception {
-        String path = "illegal-plug-id:<5>/"+OBJ_UUID;
-        String file = "test.txt";
+        org.junit.Assume.assumeTrue(!isWindows());
+
+        final String path = "illegal-plug-id:<5>/"+OBJ_UUID;
+        final String file = "test.txt";
         this.storageWriteTestFile(path, file);
 
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), "illegal-plug-id__5_/", OBJ_UUID, file)));
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -220,25 +284,26 @@ public class FileSystemStorageTest {
      */
     @Test
     public void testFilenameConflictWithSpecialDirs() throws Exception {
-        String path = PLUG_ID+"/"+OBJ_UUID;
+        final String path = Paths.get(PLUG_ID, OBJ_UUID).toString();
 
         try {
-            String file = "_trash_";
+            final String file = "_trash_";
             this.storageWriteTestFile(path, file);
             fail("Expected an IllegalFileException to be thrown");
         }
-        catch (IllegalFileException ex) {
-            assertEquals(ex.getMessage(), "The file name is invalid.");
+        catch (final IllegalFileException ex) {
+            assertEquals("The file name is invalid.", ex.getMessage());
         }
 
         try {
-            String file = "_archive_";
+            final String file = "_archive_";
             this.storageWriteTestFile(path, file);
             fail("Expected an IllegalFileException to be thrown");
         }
-        catch (IllegalFileException ex) {
-            assertEquals(ex.getMessage(), "The file name is invalid.");
+        catch (final IllegalFileException ex) {
+            assertEquals("The file name is invalid.", ex.getMessage());
         }
+        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -248,13 +313,14 @@ public class FileSystemStorageTest {
      * @return FileSystemItem
      * @throws Exception
      */
-    private FileSystemItem storageWriteTestFile(String path, String file) throws Exception {
-        String content = "123";
+    private FileSystemItem storageWriteTestFile(final String path, final String file) throws Exception {
+        final String content = "123";
 
-        InputStream data = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
-        FileSystemItem result = this.storage.write(path, file, data, content.length(), true, false)[0];
-        assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));
-        return result;
+        try (final InputStream data = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
+            final FileSystemItem result = storage.write(path, file, data, content.length(), true, false)[0];
+            assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));
+            return result;
+        }
     }
 
     /**
@@ -267,11 +333,11 @@ public class FileSystemStorageTest {
      * @throws IOException
      * @return File
      */
-    private File createZipFile(String file) throws IOException {
-        File zipFile = Paths.get(DOCS_PATH.toString(), file).toFile();
-        FileOutputStream fos = new FileOutputStream(zipFile);
-        BufferedOutputStream bos = new BufferedOutputStream(fos);
-        ZipOutputStream zos = new ZipOutputStream(bos);
+    private File createZipFile(final String file) throws IOException {
+        final File zipFile = Paths.get(TEMP_PATH.toString(), file).toFile();
+        final FileOutputStream fos = new FileOutputStream(zipFile);
+        final BufferedOutputStream bos = new BufferedOutputStream(fos);
+        final ZipOutputStream zos = new ZipOutputStream(bos);
         try {
             zos.putNextEntry(new ZipEntry("file1"));
             zos.putNextEntry(new ZipEntry("dir2/file0"));
@@ -282,5 +348,9 @@ public class FileSystemStorageTest {
             zos.close();
         }
         return zipFile;
+    }
+
+    private boolean isWindows() {
+        return System.getProperty("os.name").startsWith("Windows");
     }
 }
