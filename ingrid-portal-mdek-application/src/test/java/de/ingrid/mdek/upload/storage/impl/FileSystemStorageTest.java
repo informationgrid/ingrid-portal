@@ -40,7 +40,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.CompletableFuture;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -98,7 +97,6 @@ public class FileSystemStorageTest {
 
         // test
         assertEquals(10, storage.list().length);
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -113,20 +111,14 @@ public class FileSystemStorageTest {
         this.storageWriteTestFile(path, file);
 
         // test
-        final CompletableFuture<Void> caller = new CompletableFuture<>();
         final StringWriter content = new StringWriter();
-        try (InputStream data = storage.read(path, file, caller)) {
+        try (InputStream data = storage.read(path, file)) {
             IOUtils.copy(data, content);
         }
         catch (final IOException ex) {
-            caller.completeExceptionally(ex);
             throw new UncheckedIOException(ex);
         }
-        finally {
-            caller.complete(null);
-        }
         assertEquals("123", content.toString());
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -142,7 +134,6 @@ public class FileSystemStorageTest {
 
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -169,7 +160,6 @@ public class FileSystemStorageTest {
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test.zip")));
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -201,7 +191,6 @@ public class FileSystemStorageTest {
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "file1")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir1", "file2")));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, "test", "dir2", "file0")));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -219,7 +208,6 @@ public class FileSystemStorageTest {
         // test
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH, path, file)));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -238,7 +226,6 @@ public class FileSystemStorageTest {
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, ARCHIVE_PATH, file)));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -256,7 +243,6 @@ public class FileSystemStorageTest {
         // test
         assertFalse(Files.exists(Paths.get(DOCS_PATH.toString(), path, file)));
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), TRASH_PATH, path, file)));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -274,7 +260,6 @@ public class FileSystemStorageTest {
 
         // test
         assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), "illegal-plug-id__5_/", OBJ_UUID, file)));
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
@@ -303,7 +288,6 @@ public class FileSystemStorageTest {
         catch (final IllegalFileException ex) {
             assertEquals("The file name is invalid.", ex.getMessage());
         }
-        assertFalse(storage.hasOpenFileHandles());
     }
 
     /**
