@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +24,7 @@ package de.ingrid.mdek.upload.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Storage defines the interface for classes, that are responsible for storing and retrieving files.
@@ -79,10 +80,11 @@ public interface Storage {
      *
      * @param path The path
      * @param file The file
+     * @param caller Is used to notify method of end of operation
      * @return InputStream
      * @throws IOException
      */
-    InputStream read(String path, String file) throws IOException;
+    InputStream read(String path, String file, CompletableFuture<Void> caller) throws IOException;
 
     /**
      * Write data to a file in a path and extract archives contained in data

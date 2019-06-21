@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -51,6 +51,9 @@ import de.ingrid.utils.IngridDocument;
 
 public class UploadCleanupJob extends QuartzJobBean {
 
+    // Separator used in file paths
+    public static final String PATH_SEPARATOR = "/";
+
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     /**
@@ -69,7 +72,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         public String path;
         public LocalDate expiryDate;
 
-        public FileReference(String file, String path, LocalDate expiryDate) {
+        public FileReference(final String file, final String path, final LocalDate expiryDate) {
             this.file = file;
             this.path = path;
             this.expiryDate = expiryDate;
@@ -89,7 +92,7 @@ public class UploadCleanupJob extends QuartzJobBean {
      * Set the connection facade used for communication.
      * @param connectionFacade
      */
-    public void setConnectionFacade(ConnectionFacade connectionFacade) {
+    public void setConnectionFacade(final ConnectionFacade connectionFacade) {
         this.connectionFacade = connectionFacade;
     }
 
@@ -97,7 +100,7 @@ public class UploadCleanupJob extends QuartzJobBean {
      * Set the storage to cleanup.
      * @param storage
      */
-    public void setStorage(Storage storage) {
+    public void setStorage(final Storage storage) {
         this.storage = storage;
     }
 
@@ -105,7 +108,7 @@ public class UploadCleanupJob extends QuartzJobBean {
      * Set the minimum age that unreferenced files must have before deletion
      * @param deleteFileMinAge
      */
-    public void setDeleteFileMinAge(Integer deleteFileMinAge) {
+    public void setDeleteFileMinAge(final Integer deleteFileMinAge) {
         this.deleteFileMinAge = deleteFileMinAge;
     }
 
@@ -114,45 +117,45 @@ public class UploadCleanupJob extends QuartzJobBean {
      * Defaults to now if not set explicitly.
      * @param referenceDateTime
      */
-    public void setReferenceDate(LocalDateTime referenceDateTime) {
+    public void setReferenceDate(final LocalDateTime referenceDateTime) {
         this.referenceDateTime = referenceDateTime;
     }
 
     @Override
-    protected void executeInternal(JobExecutionContext ctx) throws JobExecutionException {
+    protected void executeInternal(final JobExecutionContext ctx) throws JobExecutionException {
         log.info("Executing UploadCleanupJob...");
 
-        LocalDate referenceDate = this.referenceDateTime.toLocalDate();
+        final LocalDate referenceDate = this.referenceDateTime.toLocalDate();
         log.info("Reference time: "+this.referenceDateTime);
         log.info("Reference date: "+referenceDate);
         log.info("Minimum file age: "+this.deleteFileMinAge+" seconds");
 
         try {
-            IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
-            List<String> iplugList = caller.getRegisteredIPlugs();
-            if (iplugList == null || iplugList.size() == 0) {
+            final IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
+            final List<String> iplugList = caller.getRegisteredIPlugs();
+            if (iplugList == null || iplugList.isEmpty()) {
                 throw new JobExecutionException("No iPlugs found.");
             }
 
             log.debug("Number of iplugs found: "+iplugList.size());
-            for (String plugId : iplugList) {
+            for (final String plugId : iplugList) {
                 log.debug("Processing iplug: "+plugId);
                 try {
                     // initialize file maps
-                    Map<String, StorageItem> allFiles = new HashMap<String, StorageItem>();
-                    Map<String, StorageItem> unreferencedFiles = new HashMap<String, StorageItem>();
-                    Map<String, StorageItem> expiredFiles = new HashMap<String, StorageItem>();
-                    Map<String, StorageItem> unexpiredFiles = new HashMap<String, StorageItem>();
+                    final Map<String, StorageItem> allFiles = new HashMap<>();
+                    final Map<String, StorageItem> unreferencedFiles = new HashMap<>();
+                    final Map<String, StorageItem> expiredFiles = new HashMap<>();
+                    final Map<String, StorageItem> unexpiredFiles = new HashMap<>();
 
                     // collect files from the file storage
                     log.debug("Collecting files from the storage");
-                    StorageItem[] fileItems = this.storage.list(plugId);
+                    final StorageItem[] fileItems = this.storage.list(plugId);
                     log.debug("Number of files found in the storage: "+fileItems.length);
 
                     if (fileItems.length > 0) {
                          // initialize file maps
-                        for (StorageItem item : fileItems) {
-                            String uri = item.getUri();
+                        for (final StorageItem item : fileItems) {
+                            final String uri = item.getUri();
                             allFiles.put(uri, item);
 
                             // put all files in the unreferenced map first
@@ -162,28 +165,28 @@ public class UploadCleanupJob extends QuartzJobBean {
 
                         // get uploads from the iplug
                         log.debug("Getting documents from iplug: "+plugId);
-                        Map<String, List<FileReference>> uploads = this.getUploads(plugId);
-                        
+                        final Map<String, List<FileReference>> uploads = this.getUploads(plugId);
+
                         // get uploads from data sets that do not have a phase, i.e. Negative Vorpruefungen
                         // merge the results
-                        Map<String, List<FileReference>> uploadsWithoutPhases = this.getUploadsFromDataSetsWithoutPhases(plugId);
-                        for (String key : uploadsWithoutPhases.keySet()) {
+                        final Map<String, List<FileReference>> uploadsWithoutPhases = this.getUploadsFromDataSetsWithoutPhases(plugId);
+                        for (final String key : uploadsWithoutPhases.keySet()) {
                             if (uploads.containsKey( key )) {
-                                List<FileReference> fileReferences = uploads.get( key );
+                                final List<FileReference> fileReferences = uploads.get( key );
                                 fileReferences.addAll( uploadsWithoutPhases.get( key ) );
                             } else {
                                 uploads.put( key, uploadsWithoutPhases.get( key ) );
                             }
                         }
-                        
-                        Set<String> uploadUris = uploads.keySet();
+
+                        final Set<String> uploadUris = uploads.keySet();
 
                         // process uploads
                         log.debug("Number of documents: "+uploadUris.size());
                         log.debug("Collecting file references from documents");
-                        for (String uploadUri : uploadUris) {
+                        for (final String uploadUri : uploadUris) {
                             // get the references
-                            List<FileReference> references = uploads.get(uploadUri);
+                            final List<FileReference> references = uploads.get(uploadUri);
                             log.debug("Found reference: "+uploadUri+" in "+references.size()+" document(s): "+references+")");
 
                             // remove referenced file from unreferenced list
@@ -192,7 +195,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                             }
 
                             // get the storage item for the reference
-                            StorageItem item = allFiles.get(uploadUri);
+                            final StorageItem item = allFiles.get(uploadUri);
                             if (item == null) {
                                 log.warn("File "+uploadUri+" does not exist in the storage");
                                 continue;
@@ -201,7 +204,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                             // get latest expire date from references
                             // null values count as infinite
                             LocalDate expiryDate = null;
-                            for (FileReference reference : references) {
+                            for (final FileReference reference : references) {
                                 if (expiryDate == null ||
                                         (reference.expiryDate == null || reference.expiryDate.isAfter(expiryDate))) {
                                     expiryDate = reference.expiryDate;
@@ -231,13 +234,13 @@ public class UploadCleanupJob extends QuartzJobBean {
                         log.debug("Nothing to clean up");
                     }
                 }
-                catch (Exception e) {
+                catch (final Exception e) {
                     // current iplug failed
                     this.logError("Processing "+plugId+" failed", e);
                 }
             }
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             this.logError(ex.toString(), ex);
             log.info("Aborted UploadCleanupJob");
             return;
@@ -252,9 +255,9 @@ public class UploadCleanupJob extends QuartzJobBean {
      * @return Map<String, List<FileReference>>
      * @throws JobExecutionException
      */
-    private Map<String, List<FileReference>> getUploads(String plugId) throws JobExecutionException {
-        Map<String, List<FileReference>> resultList = new HashMap<String, List<FileReference>>();
-        IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
+    private Map<String, List<FileReference>> getUploads(final String plugId) throws JobExecutionException {
+        final Map<String, List<FileReference>> resultList = new HashMap<>();
+        final IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
 
         if (mdekCallerQuery == null) {
             return resultList;
@@ -262,9 +265,9 @@ public class UploadCleanupJob extends QuartzJobBean {
 
         // get uploads from working copies and published objects
         // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
-        String[] fks = new String[]{"objId", "objIdPublished"};
-        for (String fk : fks) {
-            String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
+        final String[] fks = new String[]{"objId", "objIdPublished"};
+        for (final String fk : fks) {
+            final String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
                     " obj.objName, obj.objUuid, " +
                     " fdRoot.fieldKey, fdPhase.fieldKey, fdPhase.fieldKey, fdDocs.fieldKey, fdLink.sort " +
                 "from ObjectNode oNode, " +
@@ -280,31 +283,32 @@ public class UploadCleanupJob extends QuartzJobBean {
                     " and fdPhase.id = fdDocs.parentFieldId" +
                     " and fdDocs.id = fdLink.parentFieldId" +
                     " and fdLink.fieldKey = 'link'";
-            
-            IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+
+            final IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
             if (response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
-                IngridDocument result = MdekUtils.getResultFromResponse(response);
+                final IngridDocument result = MdekUtils.getResultFromResponse(response);
                 if (result != null) {
                     @SuppressWarnings("unchecked")
+                    final
                     List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
                     if (objs != null) {
-                        for (IngridDocument objEntity : objs) {
-                            String file = objEntity.getString("fdLink.data");
+                        for (final IngridDocument objEntity : objs) {
+                            final String file = objEntity.getString("fdLink.data");
 
                             // exclude absolute links
                             if (!LINK_PATTERN.matcher(file).matches()) {
-                                String path = objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")/" +
-                                        objEntity.getString("fdRoot.fieldKey") + "/" + objEntity.getString("fdPhase.fieldKey") + "/" +
-                                        objEntity.getString("fdDocs.fieldKey") + "/" + objEntity.getInt("fdLink.sort");
+                                final String path = objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")" + PATH_SEPARATOR +
+                                        objEntity.getString("fdRoot.fieldKey") + PATH_SEPARATOR + objEntity.getString("fdPhase.fieldKey") + PATH_SEPARATOR +
+                                        objEntity.getString("fdDocs.fieldKey") + PATH_SEPARATOR + objEntity.getInt("fdLink.sort");
                                 String date = null;
 
                                 // select expiry date (might not exist)
                                 // NOTE: this is done in an extra query since HQL does not support
                                 // left outer joins on unrelated tables in the used version
                                 // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
-                                Long parentId = objEntity.getLong("fdLink.parentFieldId");
-                                Integer sort = objEntity.getInt("fdLink.sort");
-                                String qStringSub = "select fdExpires.data " +
+                                final Long parentId = objEntity.getLong("fdLink.parentFieldId");
+                                final Integer sort = objEntity.getInt("fdLink.sort");
+                                final String qStringSub = "select fdExpires.data " +
                                     "from ObjectNode oNode, " +
                                         " T01Object obj, " +
                                         " AdditionalFieldData fdRoot, " +
@@ -320,11 +324,12 @@ public class UploadCleanupJob extends QuartzJobBean {
                                         " and fdExpires.parentFieldId = "+parentId+
                                         " and fdExpires.sort = "+sort+
                                         " and fdExpires.fieldKey = 'expires'";
-                                IngridDocument responseSub = mdekCallerQuery.queryHQLToMap(plugId, qStringSub, null, "");
+                                final IngridDocument responseSub = mdekCallerQuery.queryHQLToMap(plugId, qStringSub, null, "");
                                 if (responseSub.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
-                                    IngridDocument resultSub = MdekUtils.getResultFromResponse(responseSub);
+                                    final IngridDocument resultSub = MdekUtils.getResultFromResponse(responseSub);
                                     if (resultSub != null) {
                                         @SuppressWarnings("unchecked")
+                                        final
                                         List<IngridDocument> objsSub = (List<IngridDocument>) resultSub.get(MdekKeys.OBJ_ENTITIES);
                                         if (objsSub != null && objsSub.size() == 1) {
                                             date = objsSub.get(0).getString("fdExpires.data");
@@ -339,11 +344,11 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 }
 
                                 // create file reference
-                                FileReference reference = new FileReference(
+                                final FileReference reference = new FileReference(
                                         file, path, (date != null && date.length() > 0) ? LocalDate.parse(date, dateFormatter) : null
                                 );
                                 if (!resultList.containsKey(file)) {
-                                    List<FileReference> references = new ArrayList<FileReference>();
+                                    final List<FileReference> references = new ArrayList<>();
                                     references.add(reference);
                                     resultList.put(file, references);
                                 }
@@ -368,19 +373,19 @@ public class UploadCleanupJob extends QuartzJobBean {
 
         return resultList;
     }
-    
+
     /**
      * Get all uploads referenced in the given iPlug from data sets WITHOUT phases in additional file data tables.
-     * 
+     *
      * "Negative Vorpruefungen" is such dataset type for instance.
-     * 
+     *
      * @param plugId
      * @return Map<String, List<FileReference>>
      * @throws JobExecutionException
      */
-    private Map<String, List<FileReference>> getUploadsFromDataSetsWithoutPhases(String plugId) throws JobExecutionException {
-        Map<String, List<FileReference>> resultList = new HashMap<String, List<FileReference>>();
-        IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
+    private Map<String, List<FileReference>> getUploadsFromDataSetsWithoutPhases(final String plugId) throws JobExecutionException {
+        final Map<String, List<FileReference>> resultList = new HashMap<>();
+        final IMdekCallerQuery mdekCallerQuery = this.connectionFacade.getMdekCallerQuery();
 
         if (mdekCallerQuery == null) {
             return resultList;
@@ -388,9 +393,9 @@ public class UploadCleanupJob extends QuartzJobBean {
 
         // get uploads from working copies and published objects
         // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
-        String[] fks = new String[]{"objId", "objIdPublished"};
-        for (String fk : fks) {
-            String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
+        final String[] fks = new String[]{"objId", "objIdPublished"};
+        for (final String fk : fks) {
+            final String qString = "select fdLink.data, fdLink.parentFieldId, fdLink.sort, " +
                     " obj.objName, obj.objUuid, " +
                     " fdDocs.fieldKey, fdLink.sort " +
                 "from ObjectNode oNode, " +
@@ -402,30 +407,31 @@ public class UploadCleanupJob extends QuartzJobBean {
                     " and obj.id = fdDocs.objId" +
                     " and fdDocs.id = fdLink.parentFieldId" +
                     " and fdLink.fieldKey = 'link'";
-            
-            IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
+
+            final IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
             if (response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
-                IngridDocument result = MdekUtils.getResultFromResponse(response);
+                final IngridDocument result = MdekUtils.getResultFromResponse(response);
                 if (result != null) {
                     @SuppressWarnings("unchecked")
+                    final
                     List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
                     if (objs != null) {
-                        for (IngridDocument objEntity : objs) {
-                            String file = objEntity.getString("fdLink.data");
+                        for (final IngridDocument objEntity : objs) {
+                            final String file = objEntity.getString("fdLink.data");
 
                             // exclude absolute links
                             if (!LINK_PATTERN.matcher(file).matches()) {
-                                String path = objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")/" +
-                                        objEntity.getString("fdDocs.fieldKey") + "/" + objEntity.getInt("fdLink.sort");
+                                final String path = objEntity.getString("obj.objName") + "(" + objEntity.getString("obj.objUuid") + ")" + PATH_SEPARATOR +
+                                        objEntity.getString("fdDocs.fieldKey") + PATH_SEPARATOR + objEntity.getInt("fdLink.sort");
                                 String date = null;
 
                                 // select expiry date (might not exist)
                                 // NOTE: this is done in an extra query since HQL does not support
                                 // left outer joins on unrelated tables in the used version
                                 // NOTE: it is only possible to execute "from ObjectNode oNode" HQL selects
-                                Long parentId = objEntity.getLong("fdLink.parentFieldId");
-                                Integer sort = objEntity.getInt("fdLink.sort");
-                                String qStringSub = "select fdExpires.data " +
+                                final Long parentId = objEntity.getLong("fdLink.parentFieldId");
+                                final Integer sort = objEntity.getInt("fdLink.sort");
+                                final String qStringSub = "select fdExpires.data " +
                                     "from ObjectNode oNode, " +
                                         " T01Object obj, " +
                                         " AdditionalFieldData fdDocs, " +
@@ -437,11 +443,12 @@ public class UploadCleanupJob extends QuartzJobBean {
                                         " and fdExpires.parentFieldId = "+parentId+
                                         " and fdExpires.sort = "+sort+
                                         " and fdExpires.fieldKey = 'expires'";
-                                IngridDocument responseSub = mdekCallerQuery.queryHQLToMap(plugId, qStringSub, null, "");
+                                final IngridDocument responseSub = mdekCallerQuery.queryHQLToMap(plugId, qStringSub, null, "");
                                 if (responseSub.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
-                                    IngridDocument resultSub = MdekUtils.getResultFromResponse(responseSub);
+                                    final IngridDocument resultSub = MdekUtils.getResultFromResponse(responseSub);
                                     if (resultSub != null) {
                                         @SuppressWarnings("unchecked")
+                                        final
                                         List<IngridDocument> objsSub = (List<IngridDocument>) resultSub.get(MdekKeys.OBJ_ENTITIES);
                                         if (objsSub != null && objsSub.size() == 1) {
                                             date = objsSub.get(0).getString("fdExpires.data");
@@ -456,11 +463,11 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 }
 
                                 // create file reference
-                                FileReference reference = new FileReference(
+                                final FileReference reference = new FileReference(
                                         file, path, (date != null && date.length() > 0) ? LocalDate.parse(date, dateFormatter) : null
                                 );
                                 if (!resultList.containsKey(file)) {
-                                    List<FileReference> references = new ArrayList<FileReference>();
+                                    final List<FileReference> references = new ArrayList<>();
                                     references.add(reference);
                                     resultList.put(file, references);
                                 }
@@ -484,7 +491,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
 
         return resultList;
-    }    
+    }
 
     /**
      * Cleanup
@@ -493,17 +500,17 @@ public class UploadCleanupJob extends QuartzJobBean {
      * @param unexpiredFiles
      */
     private void doCleanup(
-            Map<String, StorageItem> unreferencedFiles,
-            Map<String, StorageItem> expiredFiles,
-            Map<String, StorageItem> unexpiredFiles
+            final Map<String, StorageItem> unreferencedFiles,
+            final Map<String, StorageItem> expiredFiles,
+            final Map<String, StorageItem> unexpiredFiles
     ) {
         // delete unreferenced files
         log.debug("Deleting unreferenced files");
         int deleteCount = 0;
-        for (String file : unreferencedFiles.keySet()) {
-            StorageItem item = unreferencedFiles.get(file);
+        for (final String file : unreferencedFiles.keySet()) {
+            final StorageItem item = unreferencedFiles.get(file);
             // get file age
-            long age = LocalDateTime.from(item.getLastModifiedDate()).
+            final long age = LocalDateTime.from(item.getLastModifiedDate()).
                     until(this.referenceDateTime, ChronoUnit.SECONDS);
             if (this.deleteFileMinAge == null || age >= this.deleteFileMinAge) {
                 log.info("Deleting file: "+file+" (age: "+age+" seconds)");
@@ -511,7 +518,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                     this.storage.delete(item.getPath(), item.getFile());
                     deleteCount++;
                 }
-                catch (IOException e) {
+                catch (final IOException e) {
                     // log error, but keep the job running
                     this.logError("File "+file+" could not be deleted", e);
                 }
@@ -525,14 +532,14 @@ public class UploadCleanupJob extends QuartzJobBean {
         // archive not archived expired files
         log.debug("Archiving expired files");
         int archiveCount = 0;
-        for (String file : expiredFiles.keySet()) {
-            StorageItem item = expiredFiles.get(file);
+        for (final String file : expiredFiles.keySet()) {
+            final StorageItem item = expiredFiles.get(file);
             log.info("Archiving file: "+file);
             try {
                 this.storage.archive(item.getPath(), item.getFile());
                 archiveCount++;
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 // log error, but keep the job running
                 this.logError("File "+file+" could not be archived", e);
             }
@@ -542,14 +549,14 @@ public class UploadCleanupJob extends QuartzJobBean {
         // restore not expired archived files
         log.debug("Restoring archived files");
         int restoreCount = 0;
-        for (String file : unexpiredFiles.keySet()) {
-            StorageItem item = unexpiredFiles.get(file);
+        for (final String file : unexpiredFiles.keySet()) {
+            final StorageItem item = unexpiredFiles.get(file);
             log.info("Restoring file: "+file);
             try {
                 this.storage.restore(item.getPath(), item.getFile());
                 restoreCount++;
             }
-            catch (IOException e) {
+            catch (final IOException e) {
                 // log error, but keep the job running
                 this.logError("File "+file+" could not be restored", e);
             }
@@ -561,7 +568,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         try {
             this.storage.cleanup();
         }
-        catch (IOException e) {
+        catch (final IOException e) {
             // log error, but keep the job running
             this.logError("Error cleaning up the storage", e);
         }
@@ -572,7 +579,7 @@ public class UploadCleanupJob extends QuartzJobBean {
      * @param error
      * @param t
      */
-    private void logError(String error, Throwable t) {
+    private void logError(final String error, final Throwable t) {
         log.error("Error while running UploadCleanupJob: "+error, t);
     }
 }
