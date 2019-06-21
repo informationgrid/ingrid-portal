@@ -24,7 +24,6 @@ package de.ingrid.mdek.upload.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * Storage defines the interface for classes, that are responsible for storing and retrieving files.
@@ -80,11 +79,10 @@ public interface Storage {
      *
      * @param path The path
      * @param file The file
-     * @param caller Is used to notify method of end of operation
      * @return InputStream
      * @throws IOException
      */
-    InputStream read(String path, String file, CompletableFuture<Void> caller) throws IOException;
+    InputStream read(String path, String file) throws IOException;
 
     /**
      * Write data to a file in a path and extract archives contained in data

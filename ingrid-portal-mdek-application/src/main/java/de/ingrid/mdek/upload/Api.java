@@ -27,7 +27,6 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URI;
 import java.util.Arrays;
-import java.util.concurrent.CompletableFuture;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -128,17 +127,12 @@ public class Api {
         final StreamingOutput fileStream = new StreamingOutput() {
             @Override
             public void write(final java.io.OutputStream output) {
-                final CompletableFuture<Void> caller = new CompletableFuture<>();
-                try (InputStream data = Api.this.storage.read(path, file, caller)) {
+                try (InputStream data = Api.this.storage.read(path, file)) {
                     IOUtils.copy(data, output);
                     output.flush();
                 }
                 catch (final IOException ex) {
-                    caller.completeExceptionally(ex);
                     throw new UncheckedIOException(ex);
-                }
-                finally {
-                    caller.complete(null);
                 }
             }
         };
