@@ -586,6 +586,22 @@
         <artifactId>commonmark-ext-gfm-tables</artifactId>
         <version>0.12.1</version>
     </dependency>
+    
+    <!-- file handle testing -->
+    <dependency>
+      <groupId>org.kohsuke</groupId>
+      <artifactId>file-leak-detector</artifactId>
+      <version>1.13</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/file-leak-detector-1.13.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>com.sun</groupId>
+      <artifactId>tools</artifactId>
+      <version>1.6.0</version>
+      <scope>system</scope>
+      <systemPath>${basedir}/lib/tools.jar</systemPath>
+    </dependency>
 
   </dependencies>
 
