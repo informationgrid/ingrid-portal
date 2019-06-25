@@ -118,7 +118,7 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                     urlCon.setReadTimeout(15000);
                     new Thread(new InterruptThread(urlCon, 30000)).start();
                     input = new SyndFeedInput();
-                    feed = input.build(new XmlReader(urlCon.getInputStream()));
+                    feed = input.build(new XmlReader(urlCon));
 
                     if (log.isDebugEnabled()) {
                         log.debug("Resource fetched.");
