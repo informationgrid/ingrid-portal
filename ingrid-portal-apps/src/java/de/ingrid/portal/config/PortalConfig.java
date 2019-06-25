@@ -154,8 +154,6 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String COMPONENT_MONITOR_SNS_PW = "component.monitor.sns.password";
     
-    public static final String COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT = "component.monitor.update.alert.email.subject";
-    
     public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
     
     public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
