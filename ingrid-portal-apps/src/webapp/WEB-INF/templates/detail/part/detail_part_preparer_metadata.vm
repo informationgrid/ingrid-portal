@@ -125,10 +125,12 @@
                                 #set($tmp = "")
                                 #set($tmp2 = "")
                             </div>
-                            ## Zeige in Karte
-                            #set($tmp = $TOOL.getMapImage())
-                            #renderMultiLine($tmp)
-                            #set($tmp = "")
+                            #if($enableMapLink)
+                                ## Zeige in Karte
+                                #set($tmp = $TOOL.getMapImage())
+                                #renderMultiLine($tmp)
+                                #set($tmp = "")
+                            #end
                         </div>
                         ## Untergeordnete Objekte
                         #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))

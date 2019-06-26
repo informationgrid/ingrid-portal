@@ -298,7 +298,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     // add map links to data objects from services
                     if (entryId.equals("3600") && type.equals("3")) {
                         // get link from operation (unique one)
-                        if (serviceType != null && serviceType.trim().equals("view")) {
+                        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && serviceType != null && serviceType.trim().equals("view")) {
                             StringBuilder capabilityUrl;
                             if(serviceUrl != null){
                                 capabilityUrl= new StringBuilder(serviceUrl);
