@@ -148,7 +148,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if ( getUdkObjectClassType().equals("1") ) {
             // first try to get any valid WMS url from the crossReference section
             String getCapUrl = getCapabilityUrlFromCrossReference( null );
-            if ( getCapUrl != null ) {
+            if ( !getCapUrl.isEmpty() ) {
                 String url = "";
                 
                 // since this link will be going to the webmap-client, the service must be WMS!
@@ -1344,7 +1344,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     private String getCapabilityUrlFromCrossReference( String uuid ) {
-        String url = null;
+        String url = "";
         // get service url which should be in crossReference-Node, identified by uuid, serviceType and serviceOperation
         // just take the first url you can find if uuid has not been set
         Node serviceUrl = null;
