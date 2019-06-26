@@ -464,12 +464,12 @@
             <h3>Benutzer verwalten</h3>
             <div style="padding:10px; overflow: auto;">
                 Filterung nach Katalog: <div id="selectCatalogue" data-dojo-type="dijit/form/Select" data-dojo-props="labelAttr: 'name'"></div>
-                <table id="usersGrid" data-dojo-id="usersGrid" data-dojo-type="dojox/grid/DataGrid" autoHeight="10" autoWidth="true" escapeHTMLInData="false" selectable="false" selectionMode="single" style="margin-bottom: 5px;margin-top: 5px;">
+                <table id="usersGrid" data-dojo-id="usersGrid" data-dojo-type="dojox/grid/DataGrid" autoHeight="20" autoWidth="true" escapeHTMLInData="false" selectable="false" selectionMode="single" style="margin-bottom: 5px;margin-top: 5px;">
                     <thead>
                         <tr>
-                            <th field="login" width="70px;">Login</th>
-                            <th field="surname" width="100px;">Nachname</th>
-                            <th field="firstName" width="100px;">Vorname</th>
+                            <th field="login" width="150px;">Login</th>
+                            <th field="surname" width="150px;">Nachname</th>
+                            <th field="firstName" width="150px;">Vorname</th>
                             <th field="email" width="200px">E-Mail</th>
 <!--                                 <th field="connected_to" width="200px">iPlug</th> -->
                             <th field="btn_edit" width="80px;">&nbsp;</th>
