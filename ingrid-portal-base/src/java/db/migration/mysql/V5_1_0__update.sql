@@ -114,6 +114,11 @@ INSERT INTO ingrid_temp2 (temp_key, temp_value) VALUES ('titleTag-sitemap',
 DELETE FROM fragment_pref WHERE pref_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'titleTag-sitemap');
 DELETE FROM fragment_pref_value WHERE pref_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'titleTag-sitemap');
 
+-- DELETE JOB 'UpgradeClientJob'
+DELETE FROM qrtz_job_details     WHERE job_name = 'UpgradeClientJob' AND job_group = 'UPDATE';
+DELETE FROM qrtz_simple_triggers WHERE trigger_name = 'UpgradeClientJob' AND trigger_group = 'UPDATE';
+DELETE FROM qrtz_triggers        WHERE job_name = 'UpgradeClientJob' AND trigger_group = 'UPDATE';
+
 -- delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
 DROP TABLE IF EXISTS ingrid_temp2;
