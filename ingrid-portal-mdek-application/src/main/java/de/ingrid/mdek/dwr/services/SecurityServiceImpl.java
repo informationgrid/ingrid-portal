@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.dwr.services;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -389,12 +390,12 @@ public class SecurityServiceImpl implements SecurityService {
 	@Override
 	public boolean sendPasswordEmail(String email) {
 		// check if email exists in user table
-		Optional<Map<String, String>> userWithEmail = userRepoManager.getAllUsers().stream()
+		Optional<Map<String, Object>> userWithEmail = userRepoManager.getAllUsers().stream()
 				.filter( user -> email.equals(user.get("email")))
 				.findAny();
 
 		if (userWithEmail.isPresent()) {
-			String login = userWithEmail.get().get("login");
+			String login = (String) userWithEmail.get().get("login");
 			String passwordChangeId = UUID.randomUUID().toString();
 
 			// mark user entry for password change
@@ -412,12 +413,17 @@ public class SecurityServiceImpl implements SecurityService {
 	@Override
 	public boolean updatePassword(String passwordChangeId, String password) {
 
-		Optional<Map<String, String>> userWithChangeId = userRepoManager.getAllUsers().stream()
+		Optional<Map<String, Object>> userWithChangeId = userRepoManager.getAllUsers().stream()
 				.filter( user -> passwordChangeId.equals(user.get("passwordChangeId")))
+				.filter( user -> {
+					// change request must not be longer than an hour ago
+					long difference = new Date().getTime() - ((Timestamp)user.get("passwordChangeDate")).getTime();
+					return difference / 1000 <= 3600;
+				})
 				.findAny();
 
 		if (userWithChangeId.isPresent()) {
-			String login = userWithChangeId.get().get("login");
+			String login = (String) userWithChangeId.get().get("login");
 			userRepoManager.setPasswordRecoveryId(login, null, password);
 
 			return true;

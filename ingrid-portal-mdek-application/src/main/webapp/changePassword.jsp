@@ -102,7 +102,7 @@
                     </td>
                 </tr>
                 <div id="error-not-matching" class="error" style="display:none;">Passwörter leer oder stimmen nicht überein</div>
-                <div id="error-invalid" class="error" style="display:none;">Der Link zum Ändern des Passworts ist nicht gültig</div>
+                <div id="error-invalid" class="error" style="display:none;">Der Link zum Ändern des Passworts ist abgelaufen (max. 1h) oder nicht gültig</div>
                 <div id="error" class="error" style="display:none;">Das Passwort konnte nicht aktualisiert werden</div>
                 <div id="success" style="display:none;">Das Passwort wurde erfolgreich geändert. Sie werden zur Login Seite weitergeleitet.</div>
             </table>

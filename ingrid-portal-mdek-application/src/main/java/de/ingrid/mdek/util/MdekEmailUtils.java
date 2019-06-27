@@ -374,7 +374,7 @@ public class MdekEmailUtils {
 		mailData.put("link", link);
 
 		String text = mergeTemplate(templatePath, mailData, "map");
-		sendEmail("[IGE] Passwort zurücksetzen", text, mailSender, new String[] {email} );
+		sendEmail("mCLOUD Editor: neues Passwort", text, mailSender, new String[] {email} );
 
 	}
 

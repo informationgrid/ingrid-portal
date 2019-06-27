@@ -35,6 +35,7 @@
       <property name="surname" type="string" column="surname"/>
       <property name="email" type="string" column="email"/>
       <property name="passwordChangeId" type="string" column="password_change_id"/>
+      <property name="passwordChangeDate" type="timestamp" column="password_change_date"/>
    </class>
 
 </hibernate-mapping>

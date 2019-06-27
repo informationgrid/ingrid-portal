@@ -29,7 +29,7 @@ import de.ingrid.mdek.persistence.db.model.RepoUser;
 
 public interface UserRepoManager {
     
-    public List<Map<String,String>> getAllUsers();
+    public List<Map<String,Object>> getAllUsers();
     
     public List<String> getAllAvailableUsers();
 
