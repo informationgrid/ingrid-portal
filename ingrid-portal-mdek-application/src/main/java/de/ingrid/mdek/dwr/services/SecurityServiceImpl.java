@@ -24,6 +24,7 @@ package de.ingrid.mdek.dwr.services;
 
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -390,12 +391,13 @@ public class SecurityServiceImpl implements SecurityService {
 	@Override
 	public boolean sendPasswordEmail(String email) {
 		// check if email exists in user table
-		Optional<Map<String, Object>> userWithEmail = userRepoManager.getAllUsers().stream()
+		List<Map<String, Object>> userWithEmail = userRepoManager.getAllUsers().stream()
 				.filter( user -> email.equals(user.get("email")))
-				.findAny();
+				.collect(Collectors.toList());
 
-		if (userWithEmail.isPresent()) {
-			String login = (String) userWithEmail.get().get("login");
+		// check if no or more than one user with this email exists
+		if (userWithEmail.size() == 1) {
+			String login = (String) userWithEmail.get(0).get("login");
 			String passwordChangeId = UUID.randomUUID().toString();
 
 			// mark user entry for password change
@@ -403,8 +405,11 @@ public class SecurityServiceImpl implements SecurityService {
 			userRepoManager.setPasswordRecoveryId(login, passwordChangeId, null);
 
 			// send email
-			MdekEmailUtils.sendForgottenPasswordMail(email, passwordChangeId);
+			MdekEmailUtils.sendForgottenPasswordMail(email, passwordChangeId, login);
+			log.info("Password recovery link has been sent");
 			return true;
+		} else {
+			log.warn("Password recovery: No user or multiple emails (found: " + userWithEmail.size() + ")");
 		}
 
 		return false;
@@ -426,8 +431,12 @@ public class SecurityServiceImpl implements SecurityService {
 			String login = (String) userWithChangeId.get().get("login");
 			userRepoManager.setPasswordRecoveryId(login, null, password);
 
+			log.info("Password has been changed");
 			return true;
+		} else {
+			log.warn("Password recovery: No user found which requested the password change or time's up");
 		}
+
 		return false;
 	}
 

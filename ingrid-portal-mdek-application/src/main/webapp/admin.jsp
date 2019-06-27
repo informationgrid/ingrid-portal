@@ -306,18 +306,24 @@
             });
             
         }
-        
+
+        function emailExists(email) {
+            return fieldExists("email", email);
+        }
 
         function usernameExists(login) {
-            //var userBox = registry.byId("usersGrid");
-            var exists = false;
+            return fieldExists("login", login);
+        }
+
+        function fieldExists(field, content) {
+            var exists = null;
             
             // after a clean installation the store might be null!
             if (usersGrid.store) {
-                array.forEach( usersGrid.store.data, function(item) {
-                    if (item.login.toLowerCase() == login.toLowerCase()) {
-                        exists = true;
-                        return;
+                array.some( usersGrid.store.objectStore.data, function(item) {
+                    if (item[field].toLowerCase() === content.toLowerCase()) {
+                        exists = item;
+                        return true;
                     }
                 });
             }
@@ -425,6 +431,7 @@
             showContent: showContent,
             addUser: addUser,
             usernameExists: usernameExists,
+            emailExists: emailExists,
             editUser: editUser,
             removeUser: removeUser,
             loginAs: loginAs,

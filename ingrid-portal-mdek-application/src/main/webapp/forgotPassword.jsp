@@ -69,7 +69,7 @@
 
 <input onclick="gotoLoginPage()" type="submit" value="Zurück" style="float: left;">
 
-<div class="content-password" style="display: block;">
+<div class="content-password" style="display: block; padding-left: 140px;">
     <div class="contentBorder">
         <h3>Passwort vergessen</h3>
         <div style="padding: 10px;">
@@ -87,7 +87,7 @@
 
                     </td>
                 </tr>
-                <div id="error" class="error" style="display:none;">Email-Adresse ist nicht registriert!</div>
+                <div id="error" class="error" style="display:none;">Email-Adresse ist nicht registriert oder mehrfach vorhanden! Bitte setzen Sie sich unter Angabe Ihres Logins und Ihrer E-Mail mit dem mCLOUD-Team unter mcloud@itzbund.de in Verbindung</div>
                 <div id="error-send" class="error" style="display:none;">Email konnte nicht verschickt werden</div>
                 <div id="success" style="display:none;">Email zum Ändern des Passworts wurde gesendet</div>
             </table>

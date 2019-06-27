@@ -118,8 +118,9 @@
                 errors += "<p>Passwort darf nicht leer sein!</p>";
             }
             
-            if (pageAdminOnly.usernameExists(user.login))
+            if (pageAdminOnly.usernameExists(user.login)) {
                 errors += "<p>Login schon vorhanden! Bitte ein anderes auswählen.</p>";
+            }
             
             return errors;
         }
@@ -136,9 +137,23 @@
             return errors;
         }
 
+        function validateEmail() {
+            console.log(".");
+            var login = dom.byId("edit_login").value;
+            var email = dom.byId("edit_email").value;
+
+            let emailExists = pageAdminOnly.emailExists(email);
+            if (emailExists && emailExists.login !== login) {
+                style.set("multipleEmailsError", "display", "block");
+            } else {
+                style.set("multipleEmailsError", "display", "none");
+            }
+        }
+
         dialogAdminEditUser = {
             addNewUser: addNewUser,
-            updateUser: updateUser
+            updateUser: updateUser,
+            validateEmail: validateEmail
         };
 
     });
@@ -146,7 +161,7 @@
 </head>
 
 <body class="claro">
-        <div id="editUserDiv" class="" style="display: block;">
+        <div id="editUserDiv" style="display: block; width: 400px;">
             <div class="table container">
                 <div class="tr">
                     <div class="td">Login:</div><div class="td"><input id="edit_login" type="text" disabled></div>
@@ -167,7 +182,7 @@
                     <div class="td">Nachname:</div><div class="td"><input id="edit_surname" type="text"></div>
                 </div>
                 <div class="tr">
-                    <div class="td">E-Mail:</div><div class="td"><input id="edit_email" type="text"></div>
+                    <div class="td">E-Mail:</div><div class="td"><input data-dojo-type="dijit/form/ValidationTextBox" onkeyup="dialogAdminEditUser.validateEmail()" id="edit_email" type="text"></div>
                 </div>
                 <div class="tr">
                     <div class="td">
@@ -175,6 +190,9 @@
                         <button data-dojo-type="dijit/form/Button" id="btn_addUser" onclick="dialogAdminEditUser.addNewUser()">Benutzer hinzufügen</button>
                     </div>
                 </div>
+            </div>
+            <div id="multipleEmailsError" class="tr error" style="display: none;">
+                Diese Email wird bereits verwendet. Die Funktion "Passwort vergessen" geht für diese Benutzer mit der Email nicht.
             </div>
             <span id="edit_errorAddUser" class="error" style="display:none;"></span>
         </div>
