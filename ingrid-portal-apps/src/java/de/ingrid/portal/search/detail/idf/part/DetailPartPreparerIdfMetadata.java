@@ -294,11 +294,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     link.put("href", "");
                 }
                 
-                if(isCoupled){
+                if(isCoupled && entryId.equals("3600") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
                     // add map links to data objects from services
-                    if (entryId.equals("3600") && type.equals("3")) {
+                    if (type.equals("3")) {
                         // get link from operation (unique one)
-                        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && serviceType != null && serviceType.trim().equals("view")) {
+                        if (serviceType != null && serviceType.trim().equals("view")) {
                             StringBuilder capabilityUrl;
                             if(serviceUrl != null){
                                 capabilityUrl= new StringBuilder(serviceUrl);
@@ -313,7 +313,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
                         linkList.add(link);
-                    } else if (entryId.equals("3600") && type.equals("1")) {
+                    } else if (type.equals("1")) {
                         StringBuilder capUrl;
                         if(serviceUrl != null){
                             capUrl = new StringBuilder(serviceUrl);
