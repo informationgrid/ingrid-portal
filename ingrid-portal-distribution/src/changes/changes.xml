@@ -26,6 +26,9 @@
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
           </action>
+          <action type="update" dev="wemove" issue="1330">
+            Portal: Update SachsenPortalU profile.
+          </action>
           <action type="fix" dev="wemove" issue="1380">
             BAW: Fix metadata markers in map view
           </action>
