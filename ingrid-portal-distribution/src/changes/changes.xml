@@ -7,6 +7,9 @@
 
     <body>
 
+        <release version="5.0.3-SNAPSHOT" date="2019-xx-xx" description="Release 5.0.3">
+        </release>
+
         <release version="5.0.2" date="2019-06-28" description="Release 5.0.2">
           <action type="fix" dev="wemove" issue="1396">
             UVP: In Sektion "Allgemein" wird beim Ausklappen das Feld "ID des übergeordneten Datensatzes angezeigt"
