@@ -364,7 +364,7 @@ public class MdekEmailUtils {
 	}
 
 	private static String getTemplatePath(String templateRelativePath) {
-		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/spatial_references_expired_email.vm");
+		URL url = Thread.currentThread().getContextClassLoader().getResource(templateRelativePath);
 		if (url != null) {
 			return url.getPath();
 		} else {
