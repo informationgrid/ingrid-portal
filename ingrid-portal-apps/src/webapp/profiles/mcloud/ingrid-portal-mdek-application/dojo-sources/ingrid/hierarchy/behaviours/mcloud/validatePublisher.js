@@ -74,7 +74,7 @@ define([
             });
 
             if (!isValid) {
-                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit 'http:' oder 'https:' beginnt. Außerdem muss ein Typ angegeben sein."]);
+                notPublishableIDs.push(["mcloudDownloads", "Es muss ein Typ und ein gültiger Link angegeben werden, der mit einem Protokoll wie bspw. 'http:' oder 'https:' beginnt."]);
             }
         }
     })();

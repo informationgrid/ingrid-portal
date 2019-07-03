@@ -274,32 +274,6 @@ define(["dojo/_base/declare",
             additionalFields.push(dcatCategoryWidget);
 
             /*
-             * Source Type --> not needed since "Downloads" cover this
-             */
-            /*id = "mcloudSourceType";
-            var structure = [
-                {
-                    field: 'sourceType',
-                    name: 'Quellentyp',
-                    type: Editors.SelectboxEditor,
-                    editable: true,
-                    // listId: codelist,
-                    options: ["Download", "Portal", "FTP"],
-                    values: ["dl", "portal", "ftp"],
-                    formatter: Formatters.ListCellFormatter,
-                    partialSearch: true
-                }
-            ];
-            newFieldsToDirtyCheck.push(id);
-            creator.createDomDataGrid(
-                { id: id, name: message.get("mcloud.form.sourceType"), help: message.get("mcloud.form.sourceType.helpMessage"), isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
-                structure, rubric
-            );
-            var categoryWidget = registry.byId(id);
-            domClass.add(categoryWidget.domNode, "hideTableHeader");
-            additionalFields.push(categoryWidget);*/
-
-            /*
              * Downloads
              */
             id = "mcloudDownloads";
@@ -313,9 +287,14 @@ define(["dojo/_base/declare",
                 {
                     field: 'link',
                     name: 'Link*',
+                    editable: true,
+                    width: '200px'
+                    /* TODO: activate document upload
+                    field: 'link',
+                    name: 'Link*',
                     editable: false,
                     width: '200px',
-                    formatter: Formatters.LinkCellFormatter
+                    formatter: Formatters.LinkCellFormatter*/
                 },
                 {
                     field: 'sourceType',
@@ -378,7 +357,7 @@ define(["dojo/_base/declare",
                 structure, rubric
             );
             var downloadsTable = registry.byId(id);
-            this.addUploadLink(id);
+            // TODO: activate document upload: this.addUploadLink(id);
             additionalFields.push(downloadsTable);
             downloadsTable.reinitLastColumn(true);
 
