@@ -36,31 +36,35 @@
     require([
         "dojo/dom",
         "dojo/dom-style",
+        "dojo/on",
+        "dijit/registry",
         "dojo/domReady!"
-    ], function(dom, style) {
+    ], function(dom, style, on, registry) {
 
         var isNewUser = false;
         var user = _container_.customParams.user;
         var callback = _container_.customParams.callback;
         var dlgContainer = _container_;
 
-        if (user) {
-            UserRepoManager.getUser(user, function(data) {
-                dom.byId("edit_login").value = data.login;
-                dom.byId("edit_firstName").value = data.firstName;
-                dom.byId("edit_surname").value = data.surname;
-                dom.byId("edit_email").value = data.email;
-            });
-            style.set("btn_addUser", "display", "none");
+        on(_container_, "Load", function() {
+            if (user) {
+                UserRepoManager.getUser(user, function (data) {
+                    dom.byId("edit_login").value = data.login;
+                    dom.byId("edit_firstName").value = data.firstName;
+                    dom.byId("edit_surname").value = data.surname;
+                    registry.byId("edit_email").set("value", data.email);
+                });
+                registry.byId("btn_addUser").domNode.style.display = "none";
 
-        } else {
-            // new user!
-            isNewUser = true;
-            style.set("btn_updateUser", "display", "none");
-            style.set("passwordInfo", "display", "none");
-            dom.byId("edit_login").disabled = false;
-            
-        }
+            } else {
+                // new user!
+                isNewUser = true;
+                registry.byId("btn_updateUser").domNode.style.display = "none";
+                style.set("passwordInfo", "display", "none");
+                dom.byId("edit_login").disabled = false;
+
+            }
+        });
         
         function updateUser() {
             var execCallback = callback;
@@ -69,7 +73,7 @@
             user.password = dom.byId("edit_password").value;
             user.firstName = dom.byId("edit_firstName").value;
             user.surname = dom.byId("edit_surname").value;
-            user.email = dom.byId("edit_email").value;
+            user.email = registry.byId("edit_email").get("value");
             
             var errors = isValidUserData(user, dom.byId("edit_password_again").value);
             if (errors.length === 0) {
@@ -92,7 +96,7 @@
             user.password = dom.byId("edit_password").value;
             user.firstName = dom.byId("edit_firstName").value;
             user.surname = dom.byId("edit_surname").value;
-            user.email = dom.byId("edit_email").value;
+            user.email = registry.byId("edit_email").get("value");
             
             var errors = isValidUserData(user, dom.byId("edit_password_again").value);
             errors += isValidNewUserData(user);
@@ -140,7 +144,7 @@
         function validateEmail() {
             console.log(".");
             var login = dom.byId("edit_login").value;
-            var email = dom.byId("edit_email").value;
+            var email = registry.byId("edit_email").get("value");
 
             let emailExists = pageAdminOnly.emailExists(email);
             if (emailExists && emailExists.login !== login) {
@@ -182,7 +186,7 @@
                     <div class="td">Nachname:</div><div class="td"><input id="edit_surname" type="text"></div>
                 </div>
                 <div class="tr">
-                    <div class="td">E-Mail:</div><div class="td"><input data-dojo-type="dijit/form/ValidationTextBox" onkeyup="dialogAdminEditUser.validateEmail()" id="edit_email" type="text"></div>
+                    <div class="td">E-Mail:</div><div class="td"><input data-dojo-type="dijit/form/ValidationTextBox" onkeyup="dialogAdminEditUser.validateEmail()" id="edit_email" type="text" style="width: 100%;"></div>
                 </div>
                 <div class="tr">
                     <div class="td">
