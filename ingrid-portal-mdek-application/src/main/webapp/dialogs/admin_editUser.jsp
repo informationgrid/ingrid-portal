@@ -80,13 +80,12 @@
                 UserRepoManager.updateUser(user.login, user, function(success) {
                     console.debug("success updating user: " + success);
                     if (execCallback) execCallback(user);
+                    dlgContainer.hide();
                 });
             } else {
                 style.set("edit_errorAddUser", "display", "");
                 dom.byId("edit_errorAddUser").innerHTML = errors;
             }
-
-            dlgContainer.hide();
         }
         
         function addNewUser() {
@@ -190,8 +189,8 @@
                 </div>
                 <div class="tr">
                     <div class="td">
-                        <button data-dojo-type="dijit/form/Button" id="btn_updateUser" onclick="dialogAdminEditUser.updateUser()">Benutzer aktualisieren</button>
-                        <button data-dojo-type="dijit/form/Button" id="btn_addUser" onclick="dialogAdminEditUser.addNewUser()">Benutzer hinzufügen</button>
+                        <button data-dojo-type="dijit/form/Button" type="button" id="btn_updateUser" onclick="dialogAdminEditUser.updateUser()">Benutzer aktualisieren</button>
+                        <button data-dojo-type="dijit/form/Button" type="button" id="btn_addUser" onclick="dialogAdminEditUser.addNewUser()">Benutzer hinzufügen</button>
                     </div>
                 </div>
             </div>
