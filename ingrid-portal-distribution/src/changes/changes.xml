@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.0.3-SNAPSHOT" date="2019-xx-xx" description="Release 5.0.3">
+          <action type="fix" dev="wemove" issue="1431">
+            Fix wrong conformity entry
+          </action>
         </release>
 
         <release version="5.0.2" date="2019-06-28" description="Release 5.0.2">
