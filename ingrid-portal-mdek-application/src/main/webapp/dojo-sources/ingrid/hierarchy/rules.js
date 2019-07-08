@@ -281,21 +281,38 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 else if (type == 3) registry.byId("ref3ServiceVersion").columns[0].listId = 5153;
                 else if (type == 4) registry.byId("ref3ServiceVersion").columns[0].listId = 5154;
                 else registry.byId("ref3ServiceVersion").columns[0].listId = null;
-            }
+            };
 
-            // react when service type has been changed
+            // switch codelists when service type changed
             on(registry.byId("ref3ServiceType"), "Change", function(value) {
                 var objClass = registry.byId("objectClass").get("value");
                 if (objClass == "Class3") {
-                    // remove all dependent types
-                    array.forEach(typesWithBehavior, function(type) {
-                        applySpecification(type, true);
-                    });
-                    // add possibly new type
-                    applySpecification(value, false);
                     // change syslist of supported versions
                     updateSyslistServiceVersion(value);
                 }
+            });
+
+            var handleConformityValue = function(value) {
+                // remove all dependent types
+                array.forEach(typesWithBehavior, function(type) {
+                    applySpecification(type, true);
+                });
+                // add possibly new type
+                applySpecification(value, false);
+            };
+
+            // on manual service type change automatically add/remove conformity entries to the table
+            aspect.after(registry.byId("ref3ServiceType"), "closeDropDown", function() {
+                var objClass = registry.byId("objectClass").get("value");
+                if (objClass == "Class3") {
+                    handleConformityValue(this.get("value"));
+                }
+            });
+
+            // execute behaviour when a new document is created
+            topic.subscribe("/afterInitDialog/CloseWizard", function() {
+                var value = registry.byId("ref3ServiceType").get("value");
+                handleConformityValue(value);
             });
 
         },
