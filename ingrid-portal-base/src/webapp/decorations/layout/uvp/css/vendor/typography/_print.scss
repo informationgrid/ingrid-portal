@@ -14,17 +14,6 @@ $print-hrefs: true !default;
   .show-for-print { display: none !important; }
 
   @media print {
-    * {
-      @if $print-transparent-backgrounds {
-        background: transparent !important;
-      }
-
-      box-shadow: none !important;
-
-      color: black !important; // Black prints faster: h5bp.com/s
-      text-shadow: none !important;
-    }
-
     .show-for-print { display: block !important; }
     .hide-for-print { display: none !important; }
 

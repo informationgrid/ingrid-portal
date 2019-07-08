@@ -1,7 +1,7 @@
     </div>
     #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
         <footer>
-            <div class="footer-buttons-bar show-for-large">
+            <div class="footer-buttons-bar show-for-large hide-for-print">
                 <div class="social-buttons">
                     #defineUrlParams()
                     #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
