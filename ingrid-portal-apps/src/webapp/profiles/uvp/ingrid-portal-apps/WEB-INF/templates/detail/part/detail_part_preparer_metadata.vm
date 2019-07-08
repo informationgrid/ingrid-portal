@@ -322,7 +322,9 @@
 
 #macro (renderTableToTree $title $entries $tableId)
     #if($entries.get("children"))
-        #renderGroupTitle($title)
+        #if($title)
+            <h4 class="title-font">$title</h4>
+        #end
         <div class="document-list">
         #foreach($entry in $entries.get("children"))
             <div class="list-item">
