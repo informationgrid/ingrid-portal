@@ -209,13 +209,15 @@ public class QueryResultPostProcessor {
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
                         Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y");
 
-                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) &&
-                    tmpArray != null && tmpArray.length > 0 && firstResourceId != null) {
-                    String url = addCapabilitiesInformation(tmpArray[0]) + "||";
-                    // add layer information to link
-                    url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
-                    // only take the first map url, which should be the only one!
-                    hit.put(Settings.RESULT_KEY_WMS_URL, url);
+                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+                    for (String url : tmpArray) {
+                        url = addCapabilitiesInformation(url) + "||";
+                        // add layer information to link
+                        if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
+                        // only take the first map url, which should be the only one! 
+                        hit.put(Settings.RESULT_KEY_WMS_URL, url);
+                        break;
+                    }
                 }
             } else {
                 // if an old datasource is connected try to get WMS url the old way
