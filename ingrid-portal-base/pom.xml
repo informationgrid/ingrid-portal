@@ -113,6 +113,8 @@
             <exclude>**/*.sql</exclude>
             <exclude>**/*.xml</exclude>
             <exclude>**/*.xsl</exclude>
+            <exclude>**/*.svg</exclude>
+            <exclude>**/vendor/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>
