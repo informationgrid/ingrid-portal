@@ -7,7 +7,23 @@
 
     <body>
 
-        <release version="5.0.1.mCLOUD" date="2019-06-07" description="Release 5.1.0.mCLOUD">
+        <release version="5.1.0.mCLOUD" date="2019-07-10" description="Release 5.1.0.mCLOUD">
+          <action type="update" dev="wemove" issue="2149">
+            IGE: Extend IGE user table
+          </action>
+          <action type="update" dev="wemove" issue="2174">
+            IGE: Update address context help
+          </action>
+          <action type="fix" dev="wemove" issue="2161">
+            IGE: Fix codelist with correct license URLs
+          </action>
+          <action type="add" dev="wemove" issue="2004,2005">
+            IGE: Add password forgotten function
+          </action>
+
+        </release>
+
+        <release version="5.0.1.mCLOUD" date="2019-06-07" description="Release 5.0.1.mCLOUD">
           <action type="fix" dev="wemove" issue="2124">
             IGE: Fix user table not shown for standalone IGE
           </action>
