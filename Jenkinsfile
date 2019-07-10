@@ -15,11 +15,11 @@ pipeline {
         stage('Build-SNAPSHOT') {
             when {
                 not {
-                    anyOf { branch 'master'; branch 'mcloud-master' }
+                    anyOf { branch 'master'; }
                 }
                 not { 
                     allOf {
-                        branch 'support/*'
+                        anyOf { branch 'support/*'; branch 'mcloud-master' }
                         expression { return !VERSION.endsWith("-SNAPSHOT") }
                     }
                 }

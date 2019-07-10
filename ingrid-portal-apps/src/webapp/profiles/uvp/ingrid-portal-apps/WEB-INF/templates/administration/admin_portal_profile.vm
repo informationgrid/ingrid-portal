@@ -1,0 +1,20 @@
+<div class="columns">
+    #if($switchedToProfile)
+        #renderMessageSuccess("$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile")
+        #renderMessageSuccess($MESSAGES.getString('admin.portal.profile.restart'))
+    #else
+        #renderMessageInfo($MESSAGES.getString('admin.portal.profile.description'))
+        #set ($action = $renderResponse.createActionURL())
+        <h4>$MESSAGES.getString('admin.portal.profile.headline')</h4>
+        <div class="link-list">
+            $action.setParameter('action',"switchProfile")
+            #foreach($profile in $profiles)
+                $action.setParameter('profile', "$profile.id")
+                <a href="$action">
+                    <span class="ic-ic-arrow"></span>
+                    <span class="text">$MESSAGES.getString("$profile.title_key")</span>
+                </a>
+            #end
+        </div>
+    #end
+</div>

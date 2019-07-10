@@ -56,7 +56,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("objectRequestHandler")
 public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 
-	private final static Logger log = Logger.getLogger(ObjectRequestHandlerImpl.class);
+	private static final Logger log = Logger.getLogger(ObjectRequestHandlerImpl.class);
 
 	// Injected by Spring
 	@Autowired
@@ -162,7 +162,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean publishObject(MdekDataBean data, boolean forcePublicationCondition) {
-		IngridDocument obj = (IngridDocument) MdekObjectUtils.convertFromObjectRepresentation(data);
+		IngridDocument obj = MdekObjectUtils.convertFromObjectRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			obj.remove(MdekKeys.UUID);
@@ -177,7 +177,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean saveObject(MdekDataBean data) {
-		IngridDocument obj = (IngridDocument) MdekObjectUtils.convertFromObjectRepresentation(data);
+		IngridDocument obj = MdekObjectUtils.convertFromObjectRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			obj.remove(MdekKeys.UUID);
@@ -208,7 +208,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean assignObjectToQA(MdekDataBean data) {
-		IngridDocument obj = (IngridDocument) MdekObjectUtils.convertFromObjectRepresentation(data);
+		IngridDocument obj = MdekObjectUtils.convertFromObjectRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			obj.remove(MdekKeys.UUID);
@@ -228,7 +228,7 @@ public class ObjectRequestHandlerImpl implements ObjectRequestHandler {
 	}
 
 	public MdekDataBean reassignObjectToAuthor(MdekDataBean data) {
-		IngridDocument obj = (IngridDocument) MdekObjectUtils.convertFromObjectRepresentation(data);
+		IngridDocument obj = MdekObjectUtils.convertFromObjectRepresentation(data);
 
 		log.debug("Sending the following object to the author:");
 		log.debug(obj);

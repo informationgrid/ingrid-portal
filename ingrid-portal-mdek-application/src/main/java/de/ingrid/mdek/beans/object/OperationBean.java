@@ -30,11 +30,11 @@ public class OperationBean {
 
 	private String name;
 	private String description;
-	private List<Integer> platform = new ArrayList<Integer>();
+	private List<Integer> platform = new ArrayList<>();
 	private String methodCall;
-	private List<OperationParameterBean> paramList = new ArrayList<OperationParameterBean>();
-	private List<String> addressList = new ArrayList<String>();
-	private List<String> dependencies = new ArrayList<String>();
+	private List<OperationParameterBean> paramList = new ArrayList<>();
+	private List<String> addressList = new ArrayList<>();
+	private List<String> dependencies = new ArrayList<>();
 	
 	
 	

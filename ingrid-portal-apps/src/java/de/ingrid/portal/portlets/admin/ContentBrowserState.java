@@ -32,7 +32,7 @@ import java.util.Map;
  */
 public class ContentBrowserState {
 
-    //    private final static Logger log = LoggerFactory.getLogger(ContentPortlet.class);
+    //    private static final Logger log = LoggerFactory.getLogger(ContentPortlet.class);
 
     /** the first result to be retrieved, numbered from 0 */
     protected int firstRow = 0;
@@ -50,7 +50,7 @@ public class ContentBrowserState {
     protected boolean ascendingOrder = true;
     
     /** filter criteria to filter the results */
-    Map<String, String> filterCriteria = new HashMap<String, String>();
+    Map<String, String> filterCriteria = new HashMap<>();
 
     // PAGING STUFF
     // ------------
@@ -73,18 +73,20 @@ public class ContentBrowserState {
     }
 
     public boolean hasPreviousPage() {
+        boolean hasPreviousPage = true;
         if (firstRow == 0) {
-            return false;
+            hasPreviousPage = false;
         }
-        return true;
+        return hasPreviousPage;
     }
 
     public boolean hasNextPage() {
+        boolean hasNextPage = true;
         int lastRowOnPage = firstRow + maxRows;
         if (lastRowOnPage >= totalNumRows) {
-            return false;
+            hasNextPage = false;
         }
-        return true;
+        return hasNextPage;
     }
 
     public int renderFirstRowOnPage() {

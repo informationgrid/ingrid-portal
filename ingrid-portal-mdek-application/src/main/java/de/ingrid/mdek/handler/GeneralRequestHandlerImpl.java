@@ -39,7 +39,7 @@ import de.ingrid.utils.IngridDocument;
 public class GeneralRequestHandlerImpl implements GeneralRequestHandler {
 
 	@SuppressWarnings("unused")
-    private final static Logger log = Logger.getLogger(GeneralRequestHandlerImpl.class);
+    private static final Logger log = Logger.getLogger(GeneralRequestHandlerImpl.class);
 
 	// Injected by Spring
 	@Autowired

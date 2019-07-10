@@ -33,7 +33,6 @@ import javax.portlet.PortletPreferences;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.search.SearchState;
@@ -46,11 +45,13 @@ public class SearchNominatimPortlet extends GenericVelocityPortlet {
     /** our nominatim view template */
     private String defaultViewTemplate;
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
     	defaultViewTemplate = config.getInitParameter(PARAM_VIEW_PAGE);
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -106,6 +107,7 @@ public class SearchNominatimPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
     }

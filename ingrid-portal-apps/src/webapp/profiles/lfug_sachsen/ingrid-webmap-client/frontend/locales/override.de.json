@@ -1,0 +1,14 @@
+{
+"anbieter_service_link_href": "http://www.umwelt.sachsen.de/",
+"anbieter_service_link_label": "SachsenPortalU",
+"bg_bkg": "BKG",
+"bg_bkg_grau": "BKG Grau",
+"copyright_label": "Datenschutz",
+"feedback_subject": "Feedback: SachsenPortalU MapClient",
+"page_title": "SachsenPortalU MapClient",
+"search_placeholder": "z.B. Dresden, Naturschutz ...",
+"themen_service_link_href": "http://www.umwelt.sachsen.de/",
+"themen_service_link_label": "SachsenPortalU",
+"topic_themen_tooltip": "Themen aus Sachsen",
+"topic_anbieter_tooltip": "Anbieter aus Sachsen"
+}

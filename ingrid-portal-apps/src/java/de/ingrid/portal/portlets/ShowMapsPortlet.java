@@ -48,12 +48,14 @@ import de.ingrid.portal.global.UtilsMapServiceManager;
 
 public class ShowMapsPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ShowMapsPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ShowMapsPortlet.class);
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -79,7 +81,8 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
         context.put("mapParamE", request.getParameter("E") != null ? request.getParameter("E"): "");
         context.put("mapParamN", request.getParameter("N") != null ? request.getParameter("N"): "");
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
-        context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent").split(","): "");
+        context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent"): "");
+        context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
         
         // read preferences
         PortletPreferences prefs = request.getPreferences();
@@ -88,30 +91,29 @@ public class ShowMapsPortlet extends GenericVelocityPortlet {
             context.put("hKey", hKey);
         }
 
-        if (request.getParameter("action") != null) {
-            if (request.getParameter("action").equals("doTmpService")) {
-                Map<String, Object> kml = new HashMap<String, Object>();
+        if (request.getParameter("action") != null && request.getParameter("action").equals("doTmpService")) {
+            Map<String, Object> kml = new HashMap<>();
 
-                try {
-                    kml = UtilsMapServiceManager.createKmlFromIDF(request.getParameter(Settings.RESULT_KEY_PLUG_ID), request.getParameter(Settings.RESULT_KEY_DOC_ID));
+            try {
+                kml = UtilsMapServiceManager.createKmlFromIDF(request.getParameter(Settings.RESULT_KEY_PLUG_ID), request.getParameter(Settings.RESULT_KEY_DOC_ID));
 
-                    context.put("kmlUrl", kml.get("kml_url"));
-                    context.put("kmlTitle", kml.get("coord_class"));
+                context.put("kmlUrl", kml.get("kml_url"));
+                context.put("kmlTitle", kml.get("coord_class"));
 
-                } catch (NumberFormatException e) {
-                    log.error("NumberFormatException: " + e);
-                } catch (ParserConfigurationException e) {
-                    log.error("ParserConfigurationException: " + e);
-                } catch (SAXException e) {
-                    log.error("SAXException: " + e);
-                } catch (Exception e) {
-                    log.error("Exception: " + e);
-                }
+            } catch (NumberFormatException e) {
+                log.error("NumberFormatException: ", e);
+            } catch (ParserConfigurationException e) {
+                log.error("ParserConfigurationException: ", e);
+            } catch (SAXException e) {
+                log.error("SAXException: ", e);
+            } catch (Exception e) {
+                log.error("Exception: ", e);
             }
         }
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
 

@@ -42,9 +42,9 @@ public class SearchResultListMockup {
     public static SearchResultList getRankedSearchResultList() {
 
         SearchResultList srs = new SearchResultList();
-        int COUNT = 22;
+        int count = 22;
 
-        for (int i = 0; i < COUNT; i++) {
+        for (int i = 0; i < count; i++) {
             IngridDocument rsr = new IngridDocument();
             rsr.put("title", "BMVEL - Blei und Trinkwasser");
             rsr.put("type", "WEBSITE");
@@ -68,7 +68,6 @@ public class SearchResultListMockup {
             rsr.put("provider", "Bundesumweltministerium");
             rsr.put("source", "Webseiten");
             rsr.put("url", "http://www.verbraucherministerium.de/index-000068C0A9C31E01BB1301A5C0A8E066.html");
-            //            "http://www.bmu.de/gesundheit_und_umwelt/lebensmittelsicherheit/verbraucherschutz_d/doc/2429.php");
             rsr.put("ranking", "0.98");
             // for catalogue tests
             rsr.put("date", "02.01.2006");
@@ -89,7 +88,7 @@ public class SearchResultListMockup {
             rsr.put("service_rubric", "Veranstaltungen, Presse");
             srs.add(rsr);
         }
-        srs.setNumberOfHits(3 * COUNT);
+        srs.setNumberOfHits(3 * count);
 
         return srs;
     }

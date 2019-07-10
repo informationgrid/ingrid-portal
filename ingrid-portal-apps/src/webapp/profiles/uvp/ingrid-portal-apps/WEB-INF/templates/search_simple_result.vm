@@ -1,11 +1,16 @@
-<section class="block block--light block--pad-top">
-    <div class="ob-box-wide ob-box-padded ob-box-center">
-        <article class="content ob-container">
-            <div class="box box--medium">
-                <div class="box__content ob-container">
-                    #parse ('/WEB-INF/templates/search_simple.vm')
-                </div>
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+#set ($action = $renderResponse.createActionURL())
+$action.setParameter('action','doSearch')
+<div class="banner search">
+    <div class="search-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+        <div class="row align-center">
+            <div class="large-19 columns">
+                <form action="$action" class="input-search" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
+                    <input type="text" class="input-search-field" id="search-field" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if(!$actionForm.getInputHTMLEscaped('q').equals($MESSAGES.getString('searchSimple.query.initial')))#getHTMLEscapedFieldValue('q')#end">
+                    <button class="button round hide-for-medium"><span class="ic-ic-lupe"></span></button>
+                    <button class="button large show-for-medium">$MESSAGES.getString('searchSimple.query.submit')</button>
+                </form>
             </div>
-         </article>
+        </div>
     </div>
-</section>
+</div>

@@ -1,0 +1,224 @@
+#macro (getInputStyleText $fieldName)#if ($actionForm.hasErrorInField($fieldName)) inputstyleerror#else inputstyletext#end#end
+<div class="columns">
+    #set ($action = $renderResponse.createActionURL())
+    <form class="form" action="$action" method="post" name="frmEditProvider" id="frmEditProvider">
+        <input type="hidden" name="mode" value="$mode"/>
+        #if($disableSaving)
+            <input type="hidden" name="disableSaving" value="$disableSaving"/>
+        #end
+        <div class="box box--fill box--small">
+            <div class="box__title ob-container">
+                #if ($mode == 'edit')
+                    <h4>$MESSAGES.getString('component.forms.text.update.job')</h4>
+                #elseif ($mode == 'new')
+                    <h4>$MESSAGES.getString('component.forms.text.new.job')</h4>
+                #end
+            </div>
+            <div class="box__content ob-container">
+               #displayFormError()
+               <div class="form-element">
+                    <label>$MESSAGES.getString('component.forms.text.component.id')</label>
+                </div>
+                <div class="form-element">
+                    <p>#getFieldValue('id')</p>
+                    <input type="hidden" name="id" value="#getFieldValue('id')"/>
+                </div>
+                ## for default-jobs
+                #if ($disableSaving && $disableSaving == 'true')
+                    ## nothing
+                #else
+                    <div class="form-element">
+                        <label for="type">#displayFieldLabel('type' $MESSAGES.getString('component.forms.text.component.type'))</label>
+                    </div>
+                    <div class="form-element">
+                        <p>$MESSAGES.getString($actionForm.getInput('type'))</p>
+                        <input type="hidden" name="type" value="#getFieldValue('type')"/>
+                    </div>
+                    <div class="form-element">
+                        <label for="title">$MESSAGES.getString('component.forms.text.component.name')*</label>
+                    </div>
+                    <div class="form-element">
+                        <input id="title" name="title" value="#getFieldValue('title')" type="text" #addErrorFormClass('title')>
+                        #addErrorFormMessage('title')
+                    </div>
+                    
+                    ################ content according to component type ###################
+                    <div class="form-element">
+                    #set ($compType = $actionForm.getInput("type"))
+                    #if ($compType == "component.monitor.general.type.iplug")
+                        #renderTextField( "Query String*" "query" )
+                    #elseif ($compType == "component.monitor.general.type.ibus" || $compType == "component.monitor.general.type.rssfetcher")
+                        ## don't need more information
+                    #elseif ($compType == "component.monitor.general.type.rss")
+                        #renderTextField( "RSS Feed (URL)*" "serviceurl" )
+                    #elseif  ($compType == "component.monitor.general.type.csw" || $compType == "component.monitor.general.type.g2k" || $compType == "component.monitor.general.type.sns")
+                        #renderTextField( "Query String*" "query" )
+                        #renderTextField( "Service URL*" "serviceurl" )
+                    #elseif ($compType == "component.monitor.general.type.provider.check")
+                        #renderTextField( "Anbieter ausschlie&szlig;en" "excl_provider" )
+                    #end
+                    </div>
+                    
+                    ########################################################################
+                    
+                    <div class="form-element">
+                          <label for="interval">$MESSAGES.getString('component.forms.text.interval')*</label>
+                    </div>
+                    <div class="form-element">
+                        <input id="interval" name="interval" value="#getFieldValue('interval')" type="text" #addErrorFormClass('interval')>
+                        #addErrorFormMessage('interval')
+                    </div>
+                    <div class="form-element">
+                        <label for="timeout">$MESSAGES.getString('component.forms.text.timeout')*</label>
+                    </div>
+                    <div class="form-element">
+                        <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text" #addErrorFormClass('timeout')>
+                        #addErrorFormMessage('timeout')
+                    </div>
+                    <div class="form-element boxed">
+                        <div class="input-check">
+                            <div class="control-group">
+                                <label class="control control--checkbox" for="component_active">
+                                    <input id="component_active" name="active" type="checkbox" #getChecked('active' '1')>
+                                    <div class="control__indicator"></div>
+                                    #displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))
+                                </label>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="form-element">
+                        <label>$MESSAGES.getString('component.forms.text.email.addresses')</label>
+                    </div>
+                    <div class="form-element">
+                        <div class="table--striped table--sortable">
+                            <table class="boxed-table">
+                                <thead>
+                                    <tr>
+                                        <th class="table__sort-toggle js-column-sortable" >&nbsp;$MESSAGES.getString('component.forms.text.email')&nbsp;</th>
+                                        <th class="table__sort-toggle js-column-sortable" >&nbsp;$MESSAGES.getString('component.forms.text.threshold')&nbsp;</th>
+                                        <th class="table__sort-toggle js-column-sortable" >&nbsp;$MESSAGES.getString('component.forms.text.action')&nbsp;</th>
+                                    </tr>
+                                </thead>
+                                #set($thresholds = $actionForm.getInputAsArray('contact_threshold'))
+                                #foreach($email in $actionForm.getInputAsArray('contact_email'))
+                                    #set($cnt = $velocityCount - 1)
+                                    #set($threshold = $list.get($thresholds, $cnt))
+                                    <tr>
+                                    <td>
+                                        <input size="50" maxlength="255" id="contact_email$velocityCount" name="contact_email" value="$email" type="text">
+                                    </td>
+                                    <td>
+                                        <input size="3" maxlength="3" id="contact_threshhold$velocityCount" name="contact_threshold" value="$threshold" type="text">
+                                    </td>
+                                    <td>
+                                        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.delete')" "width:100%" "doDeleteContact_$velocityCount" "" "")
+                                    </td>
+                                    </tr>
+                                #end
+                                <tr>
+                                    <td>
+                                        <input class="#getInputStyleText('contact_email_new')" size="50" maxlength="255" id="contact_email_new" name="contact_email_new" value="#getFieldValue('contact_email_new')" type="text">
+                                    </td>
+                                    <td>
+                                        <input class="#getInputStyleText('contact_threshold_new')" size="3" maxlength="3" id="contact_threshold_new" name="contact_threshold_new" value="#getFieldValue('contact_threshold_new')" type="text">
+                                    </td>
+                                    <td>
+                                        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "width:100%" "doAddContact" "" "")
+                                    </td>
+                                </tr>
+                            </table>
+                         </div>
+                    </div>
+                #end
+                #if ($actionForm.getInput('last_execution') != "")
+                    <div class="form-element">
+                        <label for="">#displayFieldLabel('lastExecution' $MESSAGES.getString('component.forms.text.last.check'))</label>
+                    </div>
+                    <div class="form-element">
+                        <p>#getFieldValue('last_execution')</p>
+                    </div>
+                    <div class="form-element">
+                        <label for="">#displayFieldLabel('lastOkExecution' $MESSAGES.getString('component.forms.text.last.errorfree.run'))</label>
+                    </div>
+                    <div class="form-element">
+                        <p>#getFieldValue('last_ok_execution')</p>
+                    </div>
+                    <div class="form-element">
+                        <label for="">#displayFieldLabel('nextExecution' $MESSAGES.getString('component.forms.text.next.check'))</label>
+                    </div>
+                    <div class="form-element">
+                        <p>#getFieldValue('next_execution')</p>
+                    </div>
+                    <div class="form-element">
+                        <label for="">#displayFieldLabel('numExecutions' $MESSAGES.getString('component.forms.text.num.executions'))</label>
+                    </div>
+                    <div class="form-element">
+                        <p>#getFieldValue('num_executions')</p>
+                    </div>
+                    <div class="form-element">
+                        <label for="">#displayFieldLabel('averageExecution' $MESSAGES.getString('component.forms.text.average.exec.time'))</label>
+                    </div>
+                    <div class="form-element">
+                        <p>#getFieldValue('average_exec_time')ms</p>
+                    </div>
+                #end
+                #if($actionForm.getInput("error_msg")!="component.monitor.general.error.none" && $actionForm.getInput("error_msg")!="")
+                    <hr>
+                    #renderMessageError("$MESSAGES.getString('component.forms.text.error.messages'): $MESSAGES.getString($actionForm.getInput('error_msg'))")
+                    <hr>
+                #end
+            </div>
+        </div>
+        <hr>
+        <div class="subtext-submit">
+            #if(!$disableSaving)
+                <h6>* $MESSAGES.getString('component.forms.text.mandatory')</h6>
+            #end
+            #if ($actionForm.getInput('last_execution') != "")
+                #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset.time')" "" "doResetTime" "" "")
+            #end
+            #renderDBEditFooter("edit")
+        </div>
+    </form>
+    <span class="mq-hide-l">&nbsp;</span>
+    <hr/>
+    <div class="box box--fill box--small">
+        <a name="help"></a>
+        <div class="box__title ob-container">
+            <h4>$MESSAGES.getString('component.forms.help.header')</h4>
+        </div>
+        <div class="box__content ob-container">
+            <p>$MESSAGES.getString('component.forms.help.part1')</p>
+            <p>$MESSAGES.getString('component.forms.help.part2')
+                <table><tbody>
+                    <tr><td>$MESSAGES.getString('component.forms.help.part3')</td>
+                    <td>$MESSAGES.getString('component.forms.help.part4')</td></tr>
+                    <tr><td>$MESSAGES.getString('component.forms.help.part5')</td>
+                    <td>$MESSAGES.getString('component.forms.help.part6')</td></tr>
+                    <tr><td>$MESSAGES.getString('component.forms.help.part9')</td>
+                    <td>$MESSAGES.getString('component.forms.help.part10')</td></tr>
+                    <tr><td>$MESSAGES.getString('component.forms.help.part11')</td>
+                    <td>$MESSAGES.getString('component.forms.help.part12')</td></tr>
+                </tbody></table>
+            </p>
+            <p>$MESSAGES.getString('component.forms.help.part12_5')</p>
+                <table><tbody>
+                <tr><td>$MESSAGES.getString('component.forms.help.part13')</td>
+                <td>$MESSAGES.getString('component.forms.help.part14')</td></tr>
+                <tr><td>$MESSAGES.getString('component.forms.help.part15')</td>
+                <td>$MESSAGES.getString('component.forms.help.part16')</td></tr>
+                <tr><td>$MESSAGES.getString('component.forms.help.part17')</td>
+                <td>$MESSAGES.getString('component.forms.help.part18')</td></tr> 
+                </tbody></table>
+            </p>
+            <p>$MESSAGES.getString('component.forms.help.part19')</p>
+        </div>
+    </div>
+</div>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('frmEditProvider');
+    }
+</script>

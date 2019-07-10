@@ -102,24 +102,6 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 
 -- Show '/disclaimer.psml'
 UPDATE page SET is_hidden = 0 WHERE path = '/disclaimer.psml';
-INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('disclaimer_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/disclaimer.psml')));
-DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer_fragment_id');
-INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, decorator, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+21  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer_fragment_id'), 'ingrid-portal-apps::CMSPortlet',  'portlet', 'ingrid-teaser', 0, 0, -1, -1, -1, -1, -1);
-
-INSERT INTO ingrid_temp2 (temp_key, temp_value) VALUES ('disclaimer_cms_fragment_id',(SELECT fragment_id FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'disclaimer_fragment_id') AND name = 'ingrid-portal-apps::CMSPortlet'));
-INSERT INTO fragment_pref (pref_id, fragment_id, name, is_read_only) VALUES ((SELECT max_key    FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'), (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id'), 'infoTemplate', 0)
-INSERT INTO fragment_pref (pref_id, fragment_id, name, is_read_only) VALUES ((SELECT max_key+1  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'), (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id'), 'titleKey', 0)
-INSERT INTO fragment_pref (pref_id, fragment_id, name, is_read_only) VALUES ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'), (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id'), 'cmsKey', 0)
-INSERT INTO fragment_pref (pref_id, fragment_id, name, is_read_only) VALUES ((SELECT max_key+3  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'), (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id'), 'sectionStyle', 0)
-INSERT INTO fragment_pref (pref_id, fragment_id, name, is_read_only) VALUES ((SELECT max_key+4  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'), (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id'), 'articleStyle', 0)
-INSERT INTO fragment_pref (pref_id, fragment_id, name, is_read_only) VALUES ((SELECT max_key+5  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF'), (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id'), 'titleTag', 0)
-
-INSERT INTO fragment_pref_value (pref_value_id, pref_id, value_order, value) VALUES ((SELECT max_key    FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'), (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id') AND name = 'infoTemplate'), 0, '/WEB-INF/templates/default_cms.vm')
-INSERT INTO fragment_pref_value (pref_value_id, pref_id, value_order, value) VALUES ((SELECT max_key+1  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'), (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id') AND name = 'titleKey'), 0, 'disclaimer.title')
-INSERT INTO fragment_pref_value (pref_value_id, pref_id, value_order, value) VALUES ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'), (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id') AND name = 'cmsKey'), 0, 'ingrid.disclaimer')
-INSERT INTO fragment_pref_value (pref_value_id, pref_id, value_order, value) VALUES ((SELECT max_key+3  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'), (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id') AND name = 'sectionStyle'), 0, 'block--padded')
-INSERT INTO fragment_pref_value (pref_value_id, pref_id, value_order, value) VALUES ((SELECT max_key+4  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'), (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id') AND name = 'articleStyle'), 0, 'content ob-container ob-box-narrow ob-box-center')
-INSERT INTO fragment_pref_value (pref_value_id, pref_id, value_order, value) VALUES ((SELECT max_key+5  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT_PREF_VALUE'), (SELECT pref_id FROM fragment_pref WHERE fragment_id = (SELECT temp_value FROM ingrid_temp2 WHERE temp_key = 'disclaimer_cms_fragment_id') AND name = 'titleTag'), 0, 'h1')
 
 -- Create 'tmp_table'
 CREATE TABLE IF NOT EXISTS tmp_table (id bigint(20) NOT NULL AUTO_INCREMENT, item_key varchar(255) COLLATE latin1_general_ci DEFAULT NULL, item_value varchar(255) COLLATE latin1_general_ci DEFAULT NULL, item_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (id));
@@ -160,5 +142,3 @@ DROP TABLE IF EXISTS ingrid_temp2;
 
 -- update max keys
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT';
-UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF';
-UPDATE ojb_hl_seq SET max_key=max_key+grab_size+grab_size, version=version+1 WHERE tablename='SEQ_FRAGMENT_PREF_VALUE';

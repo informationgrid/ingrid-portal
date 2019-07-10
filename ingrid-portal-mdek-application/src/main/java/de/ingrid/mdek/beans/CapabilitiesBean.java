@@ -60,7 +60,7 @@ public class CapabilitiesBean {
     private AddressBean address;
     
     public CapabilitiesBean() {
-        timeReferences = new ArrayList<TimeReferenceBean>();
+        timeReferences = new ArrayList<>();
     }
 
 	public String getTitle() {
@@ -105,7 +105,7 @@ public class CapabilitiesBean {
 
 	public List<String> getKeywords() {
 	    if (keywords == null) {
-	        keywords = new ArrayList<String>();
+	        keywords = new ArrayList<>();
 	    }
 		return keywords;
 	}

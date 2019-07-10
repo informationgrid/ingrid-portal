@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class provides basic functionality for storing and retrieving user
@@ -57,16 +58,19 @@ public class IngridPersistencePrefs {
 
     public static final String WMC_DOCUMENT = "wmcDocument";
     
-    private final static Logger log = LoggerFactory.getLogger(IngridPersistencePrefs.class);
+    private static final Logger log = LoggerFactory.getLogger(IngridPersistencePrefs.class);
 
     private static final XStream xstream;
+
+    private IngridPersistencePrefs() {
+        throw new IllegalStateException("IngridPersistencePrefs class");
+      }
 
     static {
         try {
             // Create the SessionFactory
             xstream = new XStream();
-        } catch (Throwable ex) {
-            log.error("Initial Xstream creation failed.", ex);
+        } catch (Exception ex) {
             throw new ExceptionInInitializerError(ex);
         }
     }
@@ -93,10 +97,10 @@ public class IngridPersistencePrefs {
                     Restrictions.eq("principalName", principalName)).add(Restrictions.eq("prefName", prefName))
                     .setMaxResults(1).list();
             tx.commit();
-            if (prefs.size() > 0) {
+            if (!prefs.isEmpty()) {
                 serializedObject = ((IngridPrincipalPreference) prefs.get(0)).getPrefValue();
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }
@@ -120,12 +124,12 @@ public class IngridPersistencePrefs {
      *            The name of the principal.
      * @return an HashMap containing the deserialized preference objects.
      */
-    public static HashMap<String, String> getPrefs(String principalName) {
+    public static Map<String, String> getPrefs(String principalName) {
         // get xml from db
         Session session = HibernateUtil.currentSession();
         Transaction tx = null;
         List prefs = null;
-        HashMap<String, String> result = new HashMap<String, String>();
+        HashMap<String, String> result = new HashMap<>();
         try {
             tx = session.beginTransaction();
             prefs = session.createCriteria(IngridPrincipalPreference.class).add(
@@ -135,7 +139,7 @@ public class IngridPersistencePrefs {
                 result.put(pref.getPrefName(), pref.getPrefValue());
             }
             tx.commit();
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }
@@ -172,7 +176,7 @@ public class IngridPersistencePrefs {
             tx = session.beginTransaction();
             prefs = session.createCriteria(IngridPrincipalPreference.class).add(
                     Restrictions.eq("principalName", principalName)).add(Restrictions.eq("prefName", prefName)).list();
-            if (prefs.size() > 0) {
+            if (!prefs.isEmpty()) {
                 pref = (IngridPrincipalPreference) prefs.get(0);
             }
             if (pref != null) {
@@ -188,7 +192,7 @@ public class IngridPersistencePrefs {
                 session.save(pref);
             }
             tx.commit();
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }
@@ -218,7 +222,7 @@ public class IngridPersistencePrefs {
                             "delete IngridPrincipalPreference p where p.principalName = :principalName and p.prefName = :prefName")
                     .setString("principalName", principalName).setString("prefName", prefName).executeUpdate();
             tx.commit();
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }

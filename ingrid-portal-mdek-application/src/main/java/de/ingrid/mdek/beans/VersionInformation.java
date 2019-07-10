@@ -33,7 +33,7 @@ public class VersionInformation {
 	private Date timeStamp;
 
 	// Init Method is called by the Spring Framework on initialization
-	public void init() throws Exception {
+	public void init() {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle("general");
 
 		this.name = resourceBundle.getString("build.name");

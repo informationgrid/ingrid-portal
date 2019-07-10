@@ -56,7 +56,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("addressRequestHandler")
 public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
-	private final static Logger log = Logger.getLogger(AddressRequestHandlerImpl.class);
+	private static final Logger log = Logger.getLogger(AddressRequestHandlerImpl.class);
 
 	// Injected by Spring
 	@Autowired
@@ -67,7 +67,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	private IMdekCallerAddress mdekCallerAddress;
 
 	// Number of object references that are initially loaded from the backend
-	private final static int NUM_INITIAL_REFERENCES = 20;
+	private static final int NUM_INITIAL_REFERENCES = 20;
 
 
 	public void init() {
@@ -166,7 +166,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean publishAddress(MdekAddressBean data, boolean forcePublicationCondition) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
@@ -181,7 +181,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean assignAddressToQA(MdekAddressBean data) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
@@ -201,7 +201,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 	}
 
 	public MdekAddressBean reassignAddressToAuthor(MdekAddressBean data) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 
 		log.debug("Sending the following address to the author:");
 		log.debug(adr);
@@ -217,9 +217,7 @@ public class AddressRequestHandlerImpl implements AddressRequestHandler {
 
 	
 	public MdekAddressBean saveAddress(MdekAddressBean data) {
-		IngridDocument adr = (IngridDocument) MdekAddressUtils.convertFromAddressRepresentation(data);
-//		log.debug("saveAddress() not implemented yet.");
-
+		IngridDocument adr = MdekAddressUtils.convertFromAddressRepresentation(data);
 		if (data.getUuid().equalsIgnoreCase("newNode")) {
 			adr.remove(MdekKeys.UUID);
 			adr.remove(MdekKeys.ID);

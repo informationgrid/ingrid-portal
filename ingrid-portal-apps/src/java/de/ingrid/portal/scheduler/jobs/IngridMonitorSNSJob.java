@@ -24,14 +24,13 @@ package de.ingrid.portal.scheduler.jobs;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
 import java.net.URL;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.slb.taxi.webservice.xtm.stubs.FieldsType;
 import com.slb.taxi.webservice.xtm.stubs.SearchType;
@@ -57,7 +56,7 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 
 	public static final String COMPONENT_TYPE = "component.monitor.general.type.sns";
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorSNSJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorSNSJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -102,7 +101,7 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 			if (serviceUrl == null || serviceUrl.length() == 0) {
 				snsClient = new SNSClient(PortalConfig.getInstance().getString(
 						PortalConfig.COMPONENT_MONITOR_SNS_LOGIN, "ms"), PortalConfig.getInstance().getString(
-						PortalConfig.COMPONENT_MONITOR_SNS_PASSWORD, "m3d1asyl3"), "de");
+						PortalConfig.COMPONENT_MONITOR_SNS_PW, "m3d1asyl3"), "de");
 			} else {
 				snsClient = new SNSClient("ms", "m3d1asyl3", "de", new URL(serviceUrl));
 			}
@@ -129,19 +128,13 @@ public class IngridMonitorSNSJob extends IngridMonitorAbstractJob {
 			if (log.isDebugEnabled()) {
 				log.debug("Error checking SNS Interface.", e);
 			}
-		} catch (SocketTimeoutException e) {
-			status = STATUS_ERROR;
-			statusCode = STATUS_CODE_ERROR_TIMEOUT;
-			if (log.isDebugEnabled()) {
-				log.debug("Error checking SNS Interface.", e);
-			}
 		} catch (IOException e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_TIMEOUT;
 			if (log.isDebugEnabled()) {
 				log.debug("Error checking SNS Interface.", e);
 			}
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			status = STATUS_ERROR;
 			statusCode = STATUS_CODE_ERROR_UNSPECIFIC;
 			log.error("Error checking SNS Interface.", e);

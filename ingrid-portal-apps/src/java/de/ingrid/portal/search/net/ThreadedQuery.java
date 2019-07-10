@@ -43,7 +43,7 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class ThreadedQuery extends Thread {
 
-    private final static Logger log = LoggerFactory.getLogger(ThreadedQuery.class);
+    private static final Logger log = LoggerFactory.getLogger(ThreadedQuery.class);
 
     private String key;
 
@@ -67,6 +67,7 @@ public class ThreadedQuery extends Thread {
     /**
      * @see java.lang.Runnable#run()
      */
+    @Override
     public void run() {
 
     	IngridHits hits = null;
@@ -114,7 +115,7 @@ public class ThreadedQuery extends Thread {
                         	boolean groupLengthException = false;
                         	try {
                         		// set in backend when grouping by domain (datasource)
-                            	groupLength = new Integer(topHitWrapper.getHit().getGroupTotalHitLength()).toString();
+                            	groupLength = Integer.toString(topHitWrapper.getHit().getGroupTotalHitLength());
                         	} catch (Exception ex) {
                         		// EXCEPTION MIGHT OCCUR DEPENDENT HOW HIT WAS SET UP IN BACKEND !
                         		groupLengthException = true;
@@ -139,7 +140,6 @@ public class ThreadedQuery extends Thread {
                             // grouping by domain ? -> one sub hit is shown, we need details of first sub hit ...
                             String grouping = (String) qd.getQuery().get(Settings.QFIELD_GROUPED);
                             if (IngridQuery.GROUPED_BY_DATASOURCE.equals(grouping)) {
-                            	//IngridHit subHit = subHitArray[0];
                             	IngridHitWrapper subHitWrapper = new IngridHitWrapper(subHitArray[0]);
                             	subHitWrapper.put(Settings.RESULT_KEY_PLUG_DESCRIPTION, topHitWrapper.get(Settings.RESULT_KEY_PLUG_DESCRIPTION));
                                 IngridHitDetail subDetail = ibus.getDetail(subHitWrapper.getHit(), qd.getQuery(), qd.getRequestedFields());
@@ -147,10 +147,8 @@ public class ThreadedQuery extends Thread {
                                 topHitWrapper.put(Settings.RESULT_KEY_SUB_HIT, subHitWrapper);
                                 
                                 // 2 hits already shown, do we have more ?
-                                if (groupLengthException) {
+                                if (groupLengthException || Integer.parseInt(groupLength) > 2) {
                                 	// problems extracting group length -> assume we have more hits !
-                                	subHitWrapper.putBoolean("moreHits", true);
-                                } else if (new Integer(groupLength).intValue() > 2) {
                                 	subHitWrapper.putBoolean("moreHits", true);
                                 }
                             }
@@ -158,7 +156,7 @@ public class ThreadedQuery extends Thread {
                     }
                 }
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isDebugEnabled()) {
                 log.debug("Error while querying the ibus.", t);
             } else {

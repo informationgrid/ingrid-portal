@@ -22,22 +22,25 @@
  */
 package de.ingrid.portal.interfaces.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.commons.configuration.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.ingrid.ibus.client.BusClient;
 import de.ingrid.ibus.client.BusClientFactory;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.interfaces.IBUSInterface;
 import de.ingrid.portal.search.UtilsSearch;
-import de.ingrid.utils.*;
+import de.ingrid.utils.IBus;
+import de.ingrid.utils.IngridHit;
+import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.query.IngridQuery;
-import org.apache.commons.configuration.Configuration;
-import org.hibernate.cfg.Environment;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * This class abstracts the real iBus.
@@ -46,7 +49,7 @@ import java.util.HashMap;
  */
 public class IBUSInterfaceImpl implements IBUSInterface {
 
-    private final static Logger log = LoggerFactory.getLogger(IBUSInterfaceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(IBUSInterfaceImpl.class);
 
     private static IBUSInterfaceImpl instance = null;
 
@@ -75,7 +78,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             }
             client.shutdown();
             
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems SHUTTING DOWN IBUSInterface", t);
             }
@@ -93,7 +96,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
             // check caching properties
             // associate a bus with and without cache form the client
             PortalConfig config = PortalConfig.getInstance();
-            if (config.getBoolean("portal.enable.caching", true) == true) {
+            if (config.getBoolean("portal.enable.caching", true)) {
             	bus = client.getCacheableIBus();
             	cache = true;
             } else {
@@ -104,7 +107,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 throw new Exception("FATAL ERROR! iBus == null, FAILED to create bus instance.");
             }
 
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems Constructor IBUSInterfaceImpl Singleton", t);
             }
@@ -160,7 +163,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
                         + currentPage + ", startHit=" + startHit + "[cause:" + e.getCause().getMessage() + "]", e);
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
@@ -210,7 +213,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
                         + currentPage + ", startHit=" + startHit + "[cause:" + e.getCause().getMessage() + "]", e);
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems doing iBus search, query=" + UtilsSearch.queryToString(query) + " / timeout="
                         + timeout + ", hitsPerPage=" + hitsPerPage + ", currentPage="
@@ -231,8 +234,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         injectCache(query);
         
-        String s = DeepUtil.deepString(query, 1);
-        
         try {
             long start = 0;
             if (log.isDebugEnabled()) {
@@ -248,7 +249,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 log.debug("iBus.getDetail: finished !");
                 log.debug("in " + duration + "ms");
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isDebugEnabled()) {
                 log.debug("Problems fetching Detail of results: " + result 
                 		+ "[cause:" + t.getCause().getMessage() + "]", t);
@@ -272,8 +273,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         
         injectCache(query);
         
-        String s = DeepUtil.deepString(query, 1);
-        
         try {
             long start = 0;
             if (log.isDebugEnabled()) {
@@ -288,7 +287,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 log.debug("iBus.getDetails: finished !");
                 log.debug("in " + duration + "ms");
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isDebugEnabled()) {
                 log.debug("Problems fetching Details of results: " + results
                 		+ "[cause:" + t.getMessage() + "]", t);
@@ -322,7 +321,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 long duration = System.currentTimeMillis() - start;
                 log.debug("Got record from iplug '" + result.getPlugId() + "' within " + duration + "ms.");
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isDebugEnabled()) {
                 log.debug("Problems fetching Record of result: " + result
                 		+ "[cause:" + t.getCause() + "]", t);
@@ -336,32 +335,6 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         }
 
         return rec;
-    }
-
-    private static String getResourceAsStream(String resource) throws Exception {
-        String stripped = resource.startsWith("/") ? resource.substring(1) : resource;
-
-        String stream = null;
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        if (classLoader != null) {
-            URL url = classLoader.getResource(stripped);
-            if (url != null) {
-                stream = url.toString();
-            }
-        }
-        if (stream == null) {
-            Environment.class.getResourceAsStream(resource);
-        }
-        if (stream == null) {
-            URL url = Environment.class.getClassLoader().getResource(stripped);
-            if (url != null) {
-                stream = url.toString();
-            }
-        }
-        if (stream == null) {
-            throw new Exception(resource + " not found");
-        }
-        return stream;
     }
 
      /**
@@ -384,7 +357,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
         		long duration = System.currentTimeMillis() - start;
         		log.debug("finished in " + duration + "ms");
         	}
-	    } catch (Throwable t) {
+	    } catch (Exception t) {
 	        if (log.isWarnEnabled()) {
 	            log.warn("Problems fetching iPlug from iBus !", t);
 	        }            
@@ -409,7 +382,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 long duration = System.currentTimeMillis() - start;
                 log.debug("Got all iplug descriptions within " + duration + "ms.");
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);
             }            
@@ -422,7 +395,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
      */
     public PlugDescription[] getAllActiveIPlugs() {
         PlugDescription[] plugs = getAllIPlugs();
-        ArrayList<PlugDescription> activePlugs = new ArrayList<PlugDescription>();
+        ArrayList<PlugDescription> activePlugs = new ArrayList<>();
         
         for (PlugDescription plugDescription : plugs) {
 			if (plugDescription.isActivate()) {
@@ -446,7 +419,7 @@ public class IBUSInterfaceImpl implements IBUSInterface {
                 long duration = System.currentTimeMillis() - start;
                 log.debug("Got all iplug descriptions without time limitation within " + duration + "ms.");
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isWarnEnabled()) {
                 log.warn("Problems fetching iPlugs from iBus !", t);
             }

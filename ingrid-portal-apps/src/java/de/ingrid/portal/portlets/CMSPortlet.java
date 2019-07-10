@@ -52,15 +52,16 @@ import de.ingrid.portal.om.IngridCMSItem;
 public class CMSPortlet extends GenericVelocityPortlet {
 
     /** InfoPortlet default template if not set via PSML */
-    public final static String DEFAULT_TEMPLATE = "/WEB-INF/templates/default_cms.vm";
-    public final static String SHORTCUT_TEMPLATE = "/WEB-INF/templates/shortcut_teaser_cms.vm";
+    public static final String DEFAULT_TEMPLATE = "/WEB-INF/templates/default_cms.vm";
+    public static final String SHORTCUT_TEMPLATE = "/WEB-INF/templates/shortcut_teaser_cms.vm";
 
-    public final static String CMS_DEFAULT_KEY = "default.key";
+    public static final String CMS_DEFAULT_KEY = "default.key";
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 
         Context context = getContext(request);
@@ -90,7 +91,7 @@ public class CMSPortlet extends GenericVelocityPortlet {
         List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridCMS.class).add(
                 Restrictions.eq("itemKey", myKey)), session, null, true);
 
-        if (entities.size() > 0) {
+        if (!entities.isEmpty()) {
             IngridCMS entry = (IngridCMS) entities.get(0);
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
             IngridCMSItem localizedItem = entry.getLocalizedEntry(lang);

@@ -50,11 +50,12 @@ import java.util.HashSet;
  */
 public class AdminCMSPortlet extends ContentPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ContentPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ContentPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -80,6 +81,7 @@ public class AdminCMSPortlet extends ContentPortlet {
         try {
             id = new Long(af.getInput(AdminCMSForm.PARAM_ID));
         } catch (NumberFormatException e) {
+            log.error("Error on getDBEntities.", e);
         }
         // set up entity
         if (id != null) {
@@ -114,6 +116,7 @@ public class AdminCMSPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionUpdate(ActionRequest request) {
         AdminCMSForm af = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
         af.populate(request);
@@ -153,6 +156,7 @@ public class AdminCMSPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
 
         if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
@@ -179,6 +183,7 @@ public class AdminCMSPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewEdit(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewEdit(RenderRequest request) {
         AdminCMSForm f = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
         f.clear();
@@ -190,8 +195,9 @@ public class AdminCMSPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewAfterSave(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewAfterSave(RenderRequest request) {
-        ActionForm af = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
+        ActionForm af = Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
         setDefaultViewPage(viewNew);
         Context context = getContext(request);
         context.put("actionForm", af);
@@ -204,8 +210,9 @@ public class AdminCMSPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewAfterUpdate(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewAfterUpdate(RenderRequest request) {
-        ActionForm af = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
+        ActionForm af = Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
         setDefaultViewPage(viewEdit);
         Context context = getContext(request);
         context.put("actionForm", af);
@@ -226,6 +233,7 @@ public class AdminCMSPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewNew(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewNew(RenderRequest request) {
         try {
             AdminCMSForm f = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
@@ -259,6 +267,7 @@ public class AdminCMSPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionDelete(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionDelete(ActionRequest request) {
         Session session = HibernateUtil.currentSession();
         Long[] ids = ContentPortlet.convertIds(getIds(request));
@@ -273,6 +282,7 @@ public class AdminCMSPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionSave(ActionRequest request) {
         AdminCMSForm af = (AdminCMSForm) Utils.getActionForm(request, AdminCMSForm.SESSION_KEY, AdminCMSForm.class);
         af.populate(request);

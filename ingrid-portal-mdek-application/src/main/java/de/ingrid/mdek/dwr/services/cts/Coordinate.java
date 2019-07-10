@@ -29,7 +29,7 @@ public class Coordinate {
 	private float latitude2;
 
 	public Coordinate() {
-	};
+	}
 
 	public Coordinate(String[] coords) {
 		this.longitude1 = Float.valueOf(coords[0]);

@@ -99,7 +99,7 @@ public class IPlugHelper {
      * @param partners The partners to look for
      * @return Array containing filtered iPlugs or empty
      */
-    public static PlugDescription[] filterIPlugsByPartner(PlugDescription[] iPlugs, ArrayList partners) {
+    public static PlugDescription[] filterIPlugsByPartner(PlugDescription[] iPlugs, List partners) {
         ArrayList result = new ArrayList();
         for (int i = 0; i < iPlugs.length; i++) {
             PlugDescription plug = iPlugs[i];

@@ -55,23 +55,21 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * TODO Describe your created type (class, etc.) here.
- * 
  * @author joachim@wemove.com
  */
 public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(AdminPortalProfilePortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminPortalProfilePortlet.class);
 
     private PageManager pageManager;
 
-    private PortletRegistry portletRegistry;
-    
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
+        PortletRegistry portletRegistry;
         pageManager = (PageManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
         if (null == pageManager) {
             throw new PortletException("Failed to find the Page Manager on portlet initialization");
@@ -86,6 +84,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -97,10 +96,10 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         response.setTitle(messages.getString("admin.portal.profile.title"));
 
         String[] portalProfiles = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_PROFILES);
-        ArrayList profiles = new ArrayList();
+        ArrayList<HashMap<String, String>> profiles = new ArrayList<>();
         for (int i = 0; i < portalProfiles.length; i++) {
-            profiles.add(new HashMap());
-            HashMap map = (HashMap) profiles.get(i);
+            profiles.add(new HashMap<>());
+            HashMap<String,String> map = profiles.get(i);
             map.put("id", portalProfiles[i]);
             map.put("title_key", PortalConfig.getInstance().getString(
                     PortalConfig.PORTAL_PROFILE.concat(".").concat(portalProfiles[i]).concat(".title")));
@@ -117,6 +116,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
 
         String action = request.getParameter("action");
@@ -153,7 +153,7 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
 
                     // set page layout configuration
                     List portletNames = profile.getList("pages.page(" + i + ").portlets.portlet.name");
-                    if (portletNames != null && portletNames.size() > 0) {
+                    if (portletNames != null && !portletNames.isEmpty()) {
                         // defragmentation
                         UtilsPageLayout.defragmentLayoutColumn((Fragment) p.getRootFragment(), 0);
                         UtilsPageLayout.defragmentLayoutColumn((Fragment) p.getRootFragment(), 1);
@@ -162,10 +162,9 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                         UtilsPageLayout.removeAllFragmentsInColumn(p, (Fragment) p.getRootFragment(), 1);
                         for (int j = 0; j < portletNames.size(); j++) {
                             String portletName = (String) portletNames.get(j);
-                            //portletRegistry.getPortletDefinitionByIdentifier("IngridInformPortlet").getPreferenceSet();//portletRegistry.getAllPortletDefinitions();
                             try {
                                 List portletPrefsNames  = null;
-                                List<FragmentPreference> prefs = new ArrayList<FragmentPreference>();
+                                List<FragmentPreference> prefs = new ArrayList<>();
                                 
                                 int row = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@row]");
                                 int col = profile.getInt("pages.page(" + i + ").portlets.portlet(" + j + ")[@col]");
@@ -206,19 +205,15 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
                     }
                     String srcFileName = getPortletConfig().getPortletContext().getRealPath(
                             "/profiles/" + profileName + "/" + src);
-                    String dstContext = dst.substring(0, dst.indexOf("/"));
-                    String dstPath = dst.substring(dst.indexOf("/") + 1);
+                    String dstContext = dst.substring(0, dst.indexOf('/'));
+                    String dstPath = dst.substring(dst.indexOf('/') + 1);
                     String dstFileName = ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))
                             .getConfig().getServletContext().getContext("/" + dstContext).getRealPath(dstPath);
                     
-                    if (actionName.equalsIgnoreCase("copy")) {
-                        if (!srcFileName.equals(dstFileName)) {
-                            copy(srcFileName, dstFileName);
-                        }
-                    }else if(actionName.equalsIgnoreCase("copy-dir")){
-                        if (!srcFileName.equals(dstFileName)) {
-                            copyDir(srcFileName, dstFileName);
-                        }
+                    if (actionName.equalsIgnoreCase("copy") && !srcFileName.equals(dstFileName)) {
+                        copy(srcFileName, dstFileName);
+                    }else if(actionName.equalsIgnoreCase("copy-dir") && !srcFileName.equals(dstFileName)){
+                        copyDir(srcFileName, dstFileName);
                     }
                 }
 
@@ -260,21 +255,13 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
      * @throws IOException
      */
     private static void copy(File source, File dest) throws IOException {
-        FileChannel in = null, out = null;
-        try {
-            in = new FileInputStream(source).getChannel();
-            out = new FileOutputStream(dest).getChannel();
-
-            in = new FileInputStream(source).getChannel();
-            out = new FileOutputStream(dest).getChannel();
+        try (
+            FileChannel in = new FileInputStream(source).getChannel();
+            FileChannel out = new FileOutputStream(dest).getChannel();
+        ){
             out.transferFrom(in, 0, in.size());
         } catch (Exception e) {
             log.error("Error copy files ('" + source.getAbsolutePath() + "' -> '" + dest.getAbsolutePath() + "')", e);
-        } finally {
-            if (in != null)
-                in.close();
-            if (out != null)
-                out.close();
         }
     }
 
@@ -290,12 +277,8 @@ public class AdminPortalProfilePortlet extends GenericVelocityPortlet {
         File destDir = new File(dest);
         File[] sourceFiles = sourceDir.listFiles();
         
-        if(!destDir.exists()){
-            if(sourceDir != null){
-                if(sourceDir.isDirectory()){
-                    destDir.mkdir();
-                }
-            }
+        if(!destDir.exists() && sourceDir.isDirectory()){
+            destDir.mkdir();
         }
         
         for (int i = 0; i < sourceFiles.length; i++) {

@@ -48,7 +48,7 @@ import static de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType.PORTAL_QUICK
 
 public class UVPReport {
 
-    private final static Logger log = LogManager.getLogger(UVPReport.class);
+    private static final Logger log = LogManager.getLogger(UVPReport.class);
 
     private static final String TOTAL_GROUPED = "totalGrouped";
     private static final String TOTAL_NEGATIVE = "totalNegative";
@@ -86,7 +86,7 @@ public class UVPReport {
         while (true) {
             ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(PORTAL_QUICKLIST_ALL_USERS_PUBLISHED, DATE, true, page*pageSize, pageSize);
 
-            if (workObjects.getResultList().size() == 0) {
+            if (workObjects.getResultList().isEmpty()) {
                 break;
             }
 
@@ -153,7 +153,7 @@ public class UVPReport {
                 })
                 .collect(Collectors.toList());
 
-        if (publicationDates.size() > 0 && applicationReceipt != null) {
+        if (!publicationDates.isEmpty() && applicationReceipt != null) {
             Long applicationReceiptValue = Long.valueOf(applicationReceipt.getValue());
             Long publicationDate = Long.valueOf(publicationDates.get(0).getValue());
 
@@ -240,7 +240,7 @@ public class UVPReport {
 
         List<GenericValueBean> behaviours = catalogRequestHandler.getSysGenericValues(new String[] { "BEHAVIOURS" });
         try {
-            JSONArray json = (JSONArray) jsonParser.parse(behaviours.get(0).getValue().toString());
+            JSONArray json = (JSONArray) jsonParser.parse(behaviours.get(0).getValue());
             // get the defined category id or return default id (9000)
             return (String) json.stream()
                     .filter(item -> "uvpPhaseField".equals(((JSONObject) item).get("id")))

@@ -263,8 +263,17 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 /* .claro .dijitDialogPaneContent, .dojoxFloatingPaneContent { padding: 20px 15px; width: auto; height: auto;} */
 .claro .dijitDialogPaneContent .inputContainer { padding: 0 !important; }
 .claro .dijitDialogPaneContent .inputContainerFooter { padding: 0px !important; background: #C6C6C6; float: left; margin: 2px 0 0; width: 100%; }
-.claro #ContextHelpDlg .dijitDialogPaneContent { padding: 10px; }
-.claro #ContextHelpDlg p { margin-bottom: 10px; }
+#ContextHelpDlg .dijitDialogPaneContent { padding: 10px;}
+#ContextHelpDlg p { font-size: 100%; margin-bottom: 15px;}
+#ContextHelpDlg pre {padding: 1em}
+#ContextHelpDlg pre code {font-size: 100%; border: 0px}
+#ContextHelpDlg h1 { margin-bottom: 10px;}
+#ContextHelpDlg h2 { margin-bottom: 10px;}
+#ContextHelpDlg h3 { margin-bottom: 10px;}
+#ContextHelpDlg table, #ContextHelpDlg th, #ContextHelpDlg td { border-collapse: collapse; border: 1px solid black;}
+#ContextHelpDlg th {font-weight: bold;}
+#ContextHelpDlg th, #ContextHelpDlg td {padding: 3px;}
+
 
 #InfoDialog .dijitDialogPaneContentArea, #publishErrorDialog .dijitDialogPaneContentArea {
 	padding: 20px;	
@@ -683,3 +692,13 @@ iframe {
 }
 
 .selectEntryBtn { float: left; width:54px; margin:90px 12px -64px 8px; }
+
+
+#editUserDiv .tr {
+	display: table-row;
+}
+
+#editUserDiv .td {
+	display: table-cell;
+	padding: 5px;
+}

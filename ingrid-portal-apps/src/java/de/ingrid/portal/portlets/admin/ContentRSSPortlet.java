@@ -39,12 +39,13 @@ import java.lang.reflect.Array;
  */
 public class ContentRSSPortlet extends ContentPortlet {
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(ContentRSSPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -98,6 +99,7 @@ public class ContentRSSPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionUpdate(ActionRequest request) {
         AdminRSSForm af = (AdminRSSForm) Utils.getActionForm(request, KEY_ACTION_FORM, AdminRSSForm.class);
         af.populate(request);
@@ -114,6 +116,7 @@ public class ContentRSSPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionSave(ActionRequest request) {
         AdminRSSForm af = (AdminRSSForm) Utils.getActionForm(request, KEY_ACTION_FORM, AdminRSSForm.class);
         af.populate(request);

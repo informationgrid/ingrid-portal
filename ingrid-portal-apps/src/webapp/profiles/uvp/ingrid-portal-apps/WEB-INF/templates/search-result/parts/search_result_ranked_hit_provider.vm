@@ -1,5 +1,7 @@
 #set ($showProvider = true)
 #set ($uvp_address = "")
+#set ($uvp_steps = false)
+
 #if($grouping && $grouping == 'provider')
     #set ($showProvider = false)
 #end
@@ -7,13 +9,35 @@
     #if($rs.get("detail"))
         #set ($uvp_address = $rs.get('detail').get('uvp_address'))
         #if($uvp_address && $uvp_address != "")
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
-                #foreach($address in $uvp_address)
-                    <br>
-                    <span class="tx-light">$address.replaceAll("\n","<br>")</span>
-                #end
-            </small>
+            <h6 class="no-margin">$MESSAGES.getString('common.result.provider')</h6>
+            <p>
+            #foreach($address in $uvp_address)
+                <small>$address</small><br>
+            #end
+            </p>
         #end
+        #set($tmpCats = [])
+        #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
+            #if($tmpCats.indexOf($uvp_category) == -1)
+                #set($tmp = $tmpCats.add($uvp_category))
+                <div class="helper icon">
+                    <span class="ic-ic-$uvp_category"></span>
+                    <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
+                </div>
+            #end
+        #end
+        <!-- 
+        #set($uvp_steps = $UTIL_SEARCH.getFilteredDuplicateDetailValue($rs.get('detail'), 'uvp_steps'))
+        #if($uvp_steps)
+            #set($steps = $uvp_steps.split(","))
+            #if($steps && $steps.size() > 0)
+                <h6 class="no-margin">Letzter Verfahrensschritt</h6>
+                <p>
+                    #set($lastEntry = $steps.size() - 1)
+                    <small>$MESSAGES.getString("common.steps.uvp.$steps.get($lastEntry).trim()")</small>
+                </p>
+            #end
+        #end
+        -->
     #end
 #end

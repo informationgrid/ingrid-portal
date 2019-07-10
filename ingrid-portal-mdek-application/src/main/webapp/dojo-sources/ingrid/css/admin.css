@@ -147,6 +147,11 @@ li {
 	width: 100%;
 }
 
+.content-password {
+	width: 100%;
+	padding: 0 250px;
+}
+
 .content > div {
 	/*margin: 19px;*/
 }

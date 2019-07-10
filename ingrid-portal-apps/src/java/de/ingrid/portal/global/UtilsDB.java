@@ -45,7 +45,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class UtilsDB {
 
-    private final static Logger log = LoggerFactory.getLogger(UtilsDB.class);
+    private static final Logger log = LoggerFactory.getLogger(UtilsDB.class);
 
     /**
      * this flag controls whether Data is always fetched from Database or from
@@ -67,9 +67,6 @@ public class UtilsDB {
     /** cache for environment topics */
     private static List envTopics = null;
 
-    /** cache for environment functional categories */
-    private static List envFunctCategories = null;
-
     /** cache for service rubrics */
     private static List serviceRubrics = null;
 
@@ -79,7 +76,7 @@ public class UtilsDB {
     /** cache for chronicle eventTypes */
     private static List chronicleEventTypes = null;
 
-    public static boolean getAlwaysReloadDBData() {
+    public static synchronized boolean getAlwaysReloadDBData() {
         return alwaysReloadDBData;
     }
 
@@ -129,28 +126,28 @@ public class UtilsDB {
                 }
             }
             return cacheList;
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }
             if (log.isErrorEnabled()) {
                 log.error("Error reading from database.", t);
             }
-            return null;
+            return new ArrayList();
         } finally {
             if (closeSession) {
             	try {
-            		if(session != null){
-            			if(session.connection() != null){
-            				if(!session.connection().isClosed()){
-        						HibernateUtil.closeSession();	
-        					}
-            			}
+            		if(session != null && session.connection() != null && !session.connection().isClosed()){
+						HibernateUtil.closeSession();	
             		}
 				} catch (HibernateException e) {
-					log.error("HibernateException: "+ e);
+				    if (log.isErrorEnabled()) {
+				        log.error("HibernateException:", e);
+				    }
 				} catch (SQLException e) {
-					log.error("SQLException: While trying to close hibernate session.");
+				    if (log.isErrorEnabled()) {
+				        log.error("SQLException: While trying to close hibernate session.");
+				    }
 				}
             	
             }
@@ -226,7 +223,7 @@ public class UtilsDB {
         IngridPartner partner = null;
         for (int i = 0; i < partners.size(); i++) {
             partner = (IngridPartner) partners.get(i);
-            if (partner.getIdent().toLowerCase().equals(ident.toLowerCase())) {
+            if (partner.getIdent().equalsIgnoreCase(ident.toLowerCase())) {
                 return partner.getName();
             }
         }
@@ -282,7 +279,7 @@ public class UtilsDB {
         IngridProvider provider = null;
         for (int i = 0; i < providers.size(); i++) {
             provider = (IngridProvider) providers.get(i);
-            if (provider.getIdent().toLowerCase().equals(ident.toLowerCase())) {
+            if (provider.getIdent().equalsIgnoreCase(ident.toLowerCase())) {
                 return provider.getName();
             }
         }
@@ -301,7 +298,7 @@ public class UtilsDB {
         IngridProvider provider = null;
         for (int i = 0; i < providers.size(); i++) {
             provider = (IngridProvider) providers.get(i);
-            if (provider.getIdent().toLowerCase().equals(ident.toLowerCase())) {
+            if (provider.getIdent().equalsIgnoreCase(ident.toLowerCase())) {
                 return provider;
             }
         }
@@ -569,7 +566,7 @@ public class UtilsDB {
      *            partners are returned.
      * @return
      */
-    public static LinkedHashMap getPartnerProviderMap(ArrayList partnerFilter) {
+    public static Map getPartnerProviderMap(List partnerFilter) {
         LinkedHashMap partnerMap = new LinkedHashMap();
 
         List partnerList = UtilsDB.getPartners();
@@ -587,7 +584,7 @@ public class UtilsDB {
                     IngridProvider provider = (IngridProvider) providerIterator.next();
                     String providerIdent = provider.getIdent();
                     String partnerIdent = "";
-                    int sepPos = providerIdent.indexOf("_");
+                    int sepPos = providerIdent.indexOf('_');
                     if (providerIdent != null && providerIdent.length() > 0 && sepPos != -1) {
                         partnerIdent = providerIdent.substring(0, sepPos);
                         // hack: "bund" is coded as "bu" in provider idents
@@ -642,7 +639,9 @@ public class UtilsDB {
             if (tx != null) {
                 tx.rollback();
             }
-            log.error("Problems executing RAW-SQL:" + sqlStr, ex);
+            if (log.isErrorEnabled()) {
+                log.error("Problems executing RAW-SQL:" + sqlStr, ex);
+            }
         } finally {
             HibernateUtil.closeSession();
         }

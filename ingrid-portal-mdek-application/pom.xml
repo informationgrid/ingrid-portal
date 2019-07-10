@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
@@ -31,7 +30,7 @@
     <sonar.exclusions>
       src/main/webapp/dojo-sources/dijit/**/*,src/main/webapp/dojo-sources/dojo/**/*,src/main/webapp/dojo-sources/dojox/**/*,src/main/webapp/dojo-sources/util/**/*
     </sonar.exclusions>
-    <spring.version>4.0.0.RELEASE</spring.version>
+    <spring.version>4.3.20.RELEASE</spring.version>
   </properties>
 
   <!-- ==================== Build Configuration ==================== -->
@@ -77,7 +76,7 @@
           </packagingExcludes>
           <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED to name of .jar -->
           <attachClasses>true</attachClasses>
-          <classesClassifier/>
+          <classesClassifier />
           <!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
           <archiveClasses>false</archiveClasses>
           <webResources>
@@ -116,7 +115,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses/>
+          <toAddresses />
         </configuration>
       </plugin>
       <plugin>
@@ -149,11 +148,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>opensymphony</groupId>
-        <artifactId>quartz</artifactId>
-        <version>1.7.3</version>
-      </dependency>
-      <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
         <version>2.10.0</version>
@@ -176,6 +170,11 @@
       <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-context</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
         <version>${spring.version}</version>
       </dependency>
       <dependency>
@@ -408,15 +407,9 @@
       <version>1.1.2</version>
     </dependency>
     <dependency>
-      <groupId>opensymphony</groupId>
+      <groupId>org.quartz-scheduler</groupId>
       <artifactId>quartz</artifactId>
-      <version>1.6.5</version>
-      <exclusions>
-        <exclusion>
-          <artifactId>quartz</artifactId>
-          <groupId>org.quartz-scheduler</groupId>
-        </exclusion>
-      </exclusions>
+      <version>2.3.0</version>
     </dependency>
     <dependency>
       <groupId>javax.mail</groupId>
@@ -578,6 +571,21 @@
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
         <version>1.1.3</version> </dependency> -->
+    <dependency>
+        <groupId>com.atlassian.commonmark</groupId>
+        <artifactId>commonmark</artifactId>
+        <version>0.12.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.atlassian.commonmark</groupId>
+        <artifactId>commonmark-ext-yaml-front-matter</artifactId>
+        <version>0.12.1</version>
+    </dependency>
+    <dependency>
+        <groupId>com.atlassian.commonmark</groupId>
+        <artifactId>commonmark-ext-gfm-tables</artifactId>
+        <version>0.12.1</version>
+    </dependency>
   </dependencies>
 
   <profiles>
@@ -826,10 +834,10 @@
               </warSourceExcludes>
               <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
               <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
-              <packagingExcludes></packagingExcludes>
+              <packagingExcludes />
               <!-- ALSO CREATE JAR !!! NO WAY TO ADD NO CLASSIFIER TO NAME OF JAR, DEFAULT IS "classes" -> WILL BE ADDED to name of .jar -->
               <attachClasses>true</attachClasses>
-              <classesClassifier/>
+              <classesClassifier />
               <!-- CONFIG-FILES needed at runtime in classes-path, so keep all underneath WEB-INF/classes and DO NOT bundle as .jar in war file -->
               <archiveClasses>false</archiveClasses>
               <webResources>
@@ -938,27 +946,27 @@
                 <phase>compile</phase>
                 <configuration>
                   <target>
-                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties"/>
+                    <taskdef classpathref="maven.plugin.classpath" resource="net/sf/antcontrib/antcontrib.properties" />
                     <condition property="foundRepeatable">
                       <and>
                         <resourcecount count="0" when="greater">
                           <fileset dir="src/main/resources/db/migration">
-                            <include name="**/R*.sql"/>
+                            <include name="**/R*.sql" />
                           </fileset>
                         </resourcecount>
                         <not>
-                          <contains string="${project.version}" substring="-SNAPSHOT"/>
+                          <contains string="${project.version}" substring="-SNAPSHOT" />
                         </not>
                       </and>
                     </condition>
                     <if>
                       <!--suppress UnresolvedMavenProperty -->
-                      <equals arg1="${foundRepeatable}" arg2="true"/>
+                      <equals arg1="${foundRepeatable}" arg2="true" />
                       <then>
-                        <fail message="Flyway: You must not have repeatable SQL files during a release!"/>
+                        <fail message="Flyway: You must not have repeatable SQL files during a release!" />
                       </then>
                       <else>
-                        <echo message="Flyway: No release version or no repeatable SQL found. OK!"/>
+                        <echo message="Flyway: No release version or no repeatable SQL found. OK!" />
                       </else>
                     </if>
                   </target>

@@ -1,0 +1,14 @@
+<div id="searchResult" class="row">
+    #parse ('/WEB-INF/templates/include_search_result_filter.vm')
+    #if($enableFacete)
+       <div class="xsmall-24 large-8 xlarge-6 columns">
+            #parse ('/WEB-INF/templates/facete/facete.vm')
+        </div>
+    #end
+    <div class="xsmall-24 large-16 xlarge-18 columns">
+        #parse ('/WEB-INF/templates/include_search_result_ranked.vm')
+    </div>
+</div>
+#parse ('/WEB-INF/templates/include_search_result_admin_info.vm')
+#parse ('/WEB-INF/templates/include_search_result_map.vm')
+#parse ('/WEB-INF/templates/global/include_preview_image.vm')

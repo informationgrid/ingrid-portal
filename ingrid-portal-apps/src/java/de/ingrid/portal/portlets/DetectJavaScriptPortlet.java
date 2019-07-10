@@ -34,6 +34,7 @@ import de.ingrid.portal.global.Settings;
  */
 public class DetectJavaScriptPortlet extends GenericPortlet {
     
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws javax.portlet.PortletException, java.io.IOException {
         

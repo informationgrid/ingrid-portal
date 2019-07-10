@@ -44,18 +44,18 @@ import java.util.*;
  */
 public class IPlugHelperDscEcs extends IPlugHelper {
 
-    static private final Logger log = LoggerFactory.getLogger(IPlugHelperDscEcs.class);
+    private static final Logger log = LoggerFactory.getLogger(IPlugHelperDscEcs.class);
 
-    static private final String KEY_RELATION_FILTER = "RELATION_FILTER";
-    static private final String KEY_RELATION_FILTER_FROM_OBJ_ID = "RELATION_FILTER_FROM_OBJ_ID";
-    static private final String KEY_RELATION_FILTER_TYPE = "RELATION_FILTER_TYPE";
-    static private final String KEY_RELATION_FILTER_TO_OBJ_ID = "RELATION_FILTER_TO_OBJ_ID";
+    private static final String KEY_RELATION_FILTER = "RELATION_FILTER";
+    private static final String KEY_RELATION_FILTER_FROM_OBJ_ID = "RELATION_FILTER_FROM_OBJ_ID";
+    private static final String KEY_RELATION_FILTER_TYPE = "RELATION_FILTER_TYPE";
+    private static final String KEY_RELATION_FILTER_TO_OBJ_ID = "RELATION_FILTER_TO_OBJ_ID";
     
 	static final String FIELD_OBJECT_ROOT = "t01_object.root";
 	static final String FIELD_ADDRESS_ROOT = "T02_address.root";
 
 	/** Check whether UDK_5_0 plug description is "corrupt" so no top entities can be fetched ! */
-	static public boolean isCorrupt(PlugDescription plug) {
+	public static boolean isCorrupt(PlugDescription plug) {
 		boolean isCorrupt = true;
 
 		// check needed fields to determine top entities !
@@ -63,21 +63,14 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	if (fields != null && fields.length > 0) {
     		List fieldList = Arrays.asList(fields);
 
-    		if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-    			if (fieldList.contains(FIELD_OBJECT_ROOT)) {
-                	isCorrupt = false;
-    			}
-            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    			if (fieldList.contains(FIELD_ADDRESS_ROOT)) {
-                	isCorrupt = false;
-    			}
+    		if ((IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) && fieldList.contains(FIELD_OBJECT_ROOT)) ||
+    		    (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && fieldList.contains(FIELD_ADDRESS_ROOT))) {
+            	isCorrupt = false;
             }
     	}
 
-    	if (isCorrupt) {
-    		if (log.isDebugEnabled()) {
-    				log.debug("CORRUPT PlugDescription ! We skip this plug: " + plug);    			
-    		}
+    	if (isCorrupt && log.isDebugEnabled()) {
+			log.debug("CORRUPT PlugDescription ! We skip this plug: " + plug);
     	}
 
 		return isCorrupt;
@@ -90,13 +83,12 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param iPlugId plug id
      * @return List of IngridHit
      */
-    static public ArrayList getTopObjects(String iPlugId) {
+    public static List getTopObjects(String iPlugId) {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        ArrayList result = getHits(FIELD_OBJECT_ROOT + ":1".concat(
+        return getHits(FIELD_OBJECT_ROOT + ":1".concat(
                 " iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")), requestedMetadata, null);
-        return result;
     }
 
     /**
@@ -108,7 +100,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param maxNumber how many objects requested ? pass null if all objects !
      * @return List of IngridHit
      */
-    static private ArrayList getSubordinatedObjects(String objId, String iPlugId, Integer maxNumber) {
+    private static List getSubordinatedObjects(String objId, String iPlugId, Integer maxNumber) {
         String[] requestedMetadata = new String[5];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
@@ -122,10 +114,9 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         // we also apply filter for child relations WHEN FETCHING HITS !!!
         // SO WE ALWAYS GET REAL CHILDREN !!!
         addRelationFilter(filter, objId, "0", null);
-        ArrayList result = getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
+        return getHits("t012_obj_obj.object_from_id:".concat(objId).concat(
         	" t012_obj_obj.typ:0 iplugs:\"".concat(getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
         	requestedMetadata, filter, maxNumber);
-        return result;
     }
     
     /**
@@ -135,7 +126,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param iPlugId plug id
      * @return List of IngridHit
      */
-    static public ArrayList getSubordinatedObjects(String objId, String iPlugId) {
+    public static List getSubordinatedObjects(String objId, String iPlugId) {
     	return getSubordinatedObjects(objId, iPlugId, null);
     }
 
@@ -146,7 +137,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param iPlugId plug id
      * @return List of IngridHit
      */
-    static public ArrayList getTopAddresses(String iPlugId) {
+    public static List getTopAddresses(String iPlugId) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
         requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -155,17 +146,16 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
         requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        ArrayList result = getHits(FIELD_ADDRESS_ROOT + ":1".concat(
+        return getHits(FIELD_ADDRESS_ROOT + ":1".concat(
         	" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
             requestedMetadata, null);
-        return result;
     }
 
     /**
      * Get a restricted Number of Sub Addresses or all Sub Addresses
      * @param maxNumber how many addresses requested ? pass null if all addresses !
      */
-    static private ArrayList getAddressChildren(String addrId, String iPlugId, Integer maxNumber) {
+    private static List getAddressChildren(String addrId, String iPlugId, Integer maxNumber) {
         String[] requestedMetadata = new String[7];
         requestedMetadata[0] = Settings.HIT_KEY_WMS_URL;
         requestedMetadata[1] = Settings.HIT_KEY_ADDRESS_CLASS;
@@ -176,25 +166,24 @@ public class IPlugHelperDscEcs extends IPlugHelper {
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
         HashMap filter = new HashMap();
         filter.put(Settings.HIT_KEY_ADDRESS_ADDRID, addrId);
-        ArrayList result = getHits(
+        return getHits(
                 "T022_adr_adr.adr_from_id:".concat(addrId).concat(" iplugs:\"".concat(getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, filter, maxNumber);
-        return result;    	
     }
 
     /**
      * Get ALL Sub Addresses !
      */
-    static public ArrayList getAddressChildren(String addrId, String iPlugId) {
+    public static List getAddressChildren(String addrId, String iPlugId) {
     	return getAddressChildren(addrId, iPlugId, null);
     }
 
-    static public ArrayList getTopDocs(String plugId, String plugType) {
+    public static List getTopDocs(String plugId, String plugType) {
         ArrayList hits = new ArrayList();
     	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-    		hits = IPlugHelperDscEcs.getTopObjects(plugId);
+    		hits = (ArrayList) IPlugHelperDscEcs.getTopObjects(plugId);
     	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    		hits = IPlugHelperDscEcs.getTopAddresses(plugId);
+    		hits = (ArrayList) IPlugHelperDscEcs.getTopAddresses(plugId);
     	}
 
         return hits;
@@ -206,14 +195,14 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * one less than requested, because parentDoc is also delivered by backend and filtered !
      * If you pass 1 as maxNumber it will be set to 2 internally to guarantee at least one subHit !
      */
-    static public ArrayList getSubDocs(String docParentId, String plugId, String plugType, Integer maxNumber) {
+    public static List getSubDocs(String docParentId, String plugId, String plugType, Integer maxNumber) {
         ArrayList hits = new ArrayList();
         
     	if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-   			hits = IPlugHelperDscEcs.getSubordinatedObjects(docParentId, plugId, maxNumber);
+   			hits = (ArrayList) IPlugHelperDscEcs.getSubordinatedObjects(docParentId, plugId, maxNumber);
 
     	} else if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-    			hits = IPlugHelperDscEcs.getAddressChildren(docParentId, plugId, maxNumber);
+    			hits = (ArrayList) IPlugHelperDscEcs.getAddressChildren(docParentId, plugId, maxNumber);
     	}
 
         return hits;
@@ -233,7 +222,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param plugId
      * @return
      */
-    static public String getAddressPlugIdFromPlugId(String plugId) {
+    public static String getAddressPlugIdFromPlugId(String plugId) {
     	String correspondentIPlug = null;
     	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
     	if (cIPlugDescr != null) {
@@ -269,7 +258,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param plugId
      * @return
      */
-    static public String getPlugIdFromAddressPlugId(String plugId) {
+    public static String getPlugIdFromAddressPlugId(String plugId) {
     	String correspondentIPlug = null;
     	PlugDescription cIPlugDescr = IBUSInterfaceImpl.getInstance().getIPlug(plugId);
     	
@@ -299,7 +288,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param maxNumberOfHits how many hits requested ? pass null if all hits !
      * @return
      */
-    static public ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter, Integer maxNumberOfHits) {
+    public static List getHits(String queryStr, String[] requestedMetaData, Map filter, Integer maxNumberOfHits) {
         ArrayList result = new ArrayList();
         
         // request hits in chunks of 20 results per page, when all hits requested !
@@ -316,7 +305,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                 		PortalConfig.getInstance().getInt(PortalConfig.QUERY_TIMEOUT_RANKED, 3000), requestedMetaData);
                 for (int j = 0; j < hits.getHits().length; j++) {
                 	IngridHit hit = hits.getHits()[j];
-                    IngridHitDetail detail = (IngridHitDetail) hit.getHitDetail();
+                    IngridHitDetail detail = hit.getHitDetail();
 
                     // convert all requested detail fields into string ... -> needed for filters (relation type)
                     for (int i = 0; i < requestedMetaData.length; i++) {
@@ -356,11 +345,9 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                         result.add(hit);
                     }
                     // reduced number of hits requested and already fetched ? -> no further hits
-                    if (maxNumberOfHits != null) {
-                    	if (result.size() >= maxNumberOfHits.intValue()) {
-                    		fetchNextChunk = false;
-                    		break;
-                    	}
+                    if (maxNumberOfHits != null &&  result.size() >= maxNumberOfHits.intValue()) {
+                		fetchNextChunk = false;
+                		break;
                     }
                 }
                 // less than chunk size hits fetched ? -> there are no further hits
@@ -382,7 +369,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     /**
      * Get ALL hits
      */
-    static public ArrayList getHits(String queryStr, String[] requestedMetaData, HashMap filter) {
+    public static List getHits(String queryStr, String[] requestedMetaData, Map filter) {
     	return getHits(queryStr, requestedMetaData, filter, null);
     }
 
@@ -394,8 +381,8 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param toObjId target object of relation
      * @return the filterMap containing the added relation filter
      */
-    static public HashMap addRelationFilter(HashMap filterMap,
-    		String fromObjId, String relationType, String toObjId) {
+    public static Map addRelationFilter(Map filterMap,
+    	String fromObjId, String relationType, String toObjId) {
         HashMap relationFilter = new HashMap();
         relationFilter.put(KEY_RELATION_FILTER_FROM_OBJ_ID, fromObjId);
         relationFilter.put(KEY_RELATION_FILTER_TYPE, relationType);
@@ -416,7 +403,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
      * @param detail the hit detail to check; passed from ibus query
      * @return null if hit doesn't satisfy relation else the hit detail itself !
      */
-    static public IngridHitDetail filterRelationHit(String fromObjId, String relationType, String toObjId, IngridHitDetail detail) {
+    public static IngridHitDetail filterRelationHit(String fromObjId, String relationType, String toObjId, IngridHitDetail detail) {
 		if (detail == null) {
 			return null;
 		}
@@ -439,52 +426,48 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     	String[] types = hitTypes.split(UtilsSearch.DETAIL_VALUES_SEPARATOR);
         	
     	if (hitObjIds.length > 1) {
-    		log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
+    	    if(log.isErrorEnabled()) {
+    	        log.error("Multiple HIT Ids in ONE Hit, Ids: " + hitObjId);
+    	    }
     		return null;
     	}
     	if (fromObjIds.length != types.length ||
         	fromObjIds.length != toObjIds.length) {
-    		log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
+    	    if(log.isErrorEnabled()) {
+    	        log.error("WRONG Relation Data in HIT ! different number of \"from, to, type\" objects !");
+    	    }
     		return null;
     	}
     	if (fromObjIds.length == 0) {
-    		log.warn("NO from Relation Data in HIT !");
+    	    if(log.isWarnEnabled()) {
+    	        log.warn("NO from Relation Data in HIT !");
+    	    }
     		return null;
     	}
         	
     	// ok, start filtering
     	IngridHitDetail retHitDetail = null;
     	for (int j = 0; j < fromObjIds.length; j++) {
-    		if (fromObjId != null) {
-    			if (!fromObjIds[j].equals(fromObjId)) {
-    				continue;
-    			}
+    		if (fromObjId != null && !fromObjIds[j].equals(fromObjId)) {
+				continue;
     		}
-    		if (relationType != null) {
-    			if (!types[j].equals(relationType)) {
-    				continue;
-    			}
+    		if (relationType != null && !types[j].equals(relationType)) {
+				continue;
     		}
-    		if (toObjId != null) {
-    			if (!toObjIds[j].equals(toObjId)) {
-    				continue;
-    			}
+    		if (toObjId != null && !toObjIds[j].equals(toObjId)) {
+				continue;
     		}
 
     		// valid relation ! also valid result id ?
-    		if (fromObjId == null) {
+    		if (fromObjId == null && !fromObjIds[j].equals(hitObjId)) {
     			// searching from
-    			if (!fromObjIds[j].equals(hitObjId)) {
-            		log.warn("HIT object ID is different from found FROM object ID ! we skip hit ");
-            		continue;
-    			}
+        		log.warn("HIT object ID is different from found FROM object ID ! we skip hit ");
+        		continue;
     		}
-    		if (toObjId == null) {
+    		if (toObjId == null && !toObjIds[j].equals(hitObjId)) {
     			// searching to
-    			if (!toObjIds[j].equals(hitObjId)) {
-            		log.warn("HIT object ID is different from found TO object ID ! we skip hit ");
-            		continue;
-    			}
+        		log.warn("HIT object ID is different from found TO object ID ! we skip hit ");
+        		continue;
     		}
     		
     		// VALID HIT !
@@ -497,7 +480,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
     /**
      * Inner class: PlugComparator for ECS plugs sorting -> sorted by "Partner"/"Name"/"Type" (Object before Address ECS)
      */
-    static public class PlugComparatorECS implements Comparator {
+    public static class PlugComparatorECS implements Comparator {
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
          */
@@ -515,7 +498,7 @@ public class IPlugHelperDscEcs extends IPlugHelper {
                     // object ECS before Address ECS !
                     String type = hasDataType(plugs[i], Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) ? "0" : "1";
 
-                    StringBuffer sortString = new StringBuffer("");
+                    StringBuilder sortString = new StringBuilder("");
                     for (int j = 0; j < partners.length; j++) {
                     	sortString.append(UtilsDB.getPartnerFromKey(partners[j]));
                     }

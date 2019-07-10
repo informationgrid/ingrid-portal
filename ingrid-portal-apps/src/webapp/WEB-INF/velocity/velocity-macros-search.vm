@@ -8,7 +8,7 @@
             #set($term = $searchName)
         #end
     #end
-    #if($term.lenght() > 0)
+    #if($term.length() > 0)
         $MESSAGES.resetMsgParams()
         $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
         $MESSAGES.setMsgParam($term)
@@ -369,6 +369,91 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #parse ('/WEB-INF/templates/facete/facete.vm')
         </div>
     </aside>
+#end
+
+#macro(renderSearchResultFacetSelectionInfo $entry $resourceMsgs)
+    #if($entry.getInfo())
+        <div class="message__simple-content">
+            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+            $entry.getInfo()
+        </div>
+    #end
+#end
+
+#macro(renderSearchResultFacetSelectionInfoResult $entries $resourceMsgs)
+    #foreach($entry in $entries)
+        #if($entry.getInfoResultSelect())
+            #if($entry.getId() == 'area')
+                #if($geothesaurusSelectTopics)
+                    <div class="message message--info bx-top-s bx-bot-s">
+                        <div class="message__simple-content message-fill--info">
+                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                            $entry.getInfoResultSelect()
+                        </div>
+                    </div>
+                #end
+            #elseif($entry.getId() == 'area.map')
+                #if($selectedMap)
+                    #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
+                        <div class="message message--info bx-top-s bx-bot-s">
+                        <div class="message__simple-content message-fill--info">
+                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                            $entry.getInfoResultSelect()
+                        </div>
+                    </div>
+                    #end
+                #end
+            #elseif($entry.getId() == 'attribute')
+                #if($doAddAttribute)
+                    #if($doAddAttribute.db_title || $doAddAttribute.db_institute || $doAddAttribute.db_pm 
+                        || $doAddAttribute.db_staff || $doAddAttribute.db_org ||$doAddAttribute.term_from || $doAddAttribute.term_to)
+                        <div class="message message--info bx-top-s bx-bot-s">
+                            <div class="message__simple-content message-fill--info">
+                                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                                $entry.getInfoResultSelect()
+                            </div>
+                        </div>
+                    #end
+                #end
+            #elseif($entry.getId() == 'area.address')
+                #if($doAddAreaAddress)
+                    #if($doAddAreaAddress.street || $doAddAreaAddress.zip || $doAddAreaAddress.city)
+                        <div class="message message--info bx-top-s bx-bot-s">
+                            <div class="message__simple-content message-fill--info">
+                                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                                $entry.getInfoResultSelect()
+                            </div>
+                        </div>
+                    #end
+                #end
+            #elseif($entry.isSelect())
+                <div class="message message--info bx-top-s bx-bot-s">
+                    <div class="message__simple-content message-fill--info">
+                        <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                        $entry.getInfoResultSelect()
+                    </div>
+                </div>
+            #elseif($entry.getWildcard())
+                #set($wildcard_item = false)
+                #set($wildcard_item_term = false)
+                
+                #if($wildcardMap)
+                    #set($wildcard_item = $wildcardMap.get("$entry.getId()"))
+                    #if($wildcard_item)
+                        #set($wildcard_item_term = $wildcard_item.get("term"))
+                    #end
+                #end
+                #if($wildcard_item_term)
+                    <div class="message message--info bx-top-s bx-bot-s">
+                        <div class="message__simple-content message-fill--info">
+                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                            $entry.getInfoResultSelect()
+                        </div>
+                    </div>
+                #end
+            #end
+        #end
+    #end
 #end
 
 #macro(renderSearchResultFacetSelection $entries $resourceMsgs $cat)

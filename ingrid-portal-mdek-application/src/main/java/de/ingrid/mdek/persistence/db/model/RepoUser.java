@@ -23,6 +23,7 @@
 package de.ingrid.mdek.persistence.db.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import de.ingrid.mdek.services.persistence.db.IEntity;
 
@@ -46,6 +47,13 @@ public class RepoUser implements IEntity {
     private String email;
     
     private String password;
+
+    // this field contains an ID which was sent to a user to be able to change the password
+    private String passwordChangeId;
+
+    // this field contains the date the password reset was requested to prevent changing of the password
+    // at a later time
+    private Date passwordChangeDate;
     
     public RepoUser() {}
     
@@ -101,5 +109,20 @@ public class RepoUser implements IEntity {
     public String getEmail() {
         return email;
     }
-    
+
+    public String getPasswordChangeId() {
+        return passwordChangeId;
+    }
+
+    public void setPasswordChangeId(String passwordChangeId) {
+        this.passwordChangeId = passwordChangeId;
+    }
+
+    public Date getPasswordChangeDate() {
+        return passwordChangeDate;
+    }
+
+    public void setPasswordChangeDate(Date passwordChangeDate) {
+        this.passwordChangeDate = passwordChangeDate;
+    }
 }

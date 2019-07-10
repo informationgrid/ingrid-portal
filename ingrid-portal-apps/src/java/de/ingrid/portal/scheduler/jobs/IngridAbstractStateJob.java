@@ -36,7 +36,7 @@ import org.quartz.StatefulJob;
  */
 public abstract class IngridAbstractStateJob implements StatefulJob {
 
-	private final static Logger log = LoggerFactory.getLogger(IngridAbstractStateJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridAbstractStateJob.class);
 
 	public static final int STATUS_OK = 0;
 
@@ -60,22 +60,8 @@ public abstract class IngridAbstractStateJob implements StatefulJob {
 	
 	public static final String STATUS_CODE_ERROR_ILLEGAL_ARGUMENT = "component.monitor.general.error.illegal.argument";
 	
-	public static final String STATUS_CODE_ERROR_NOT_AVAILABLE_OR_EMPTY = "component.monitor.update.error.not.available";
-	
-	public static final String STATUS_CODE_ERROR_SENDING_EMAIL = "component.monitor.update.error.sending.email";
-	
 	public static final String STATUS_CODE_NO_ERROR = "component.monitor.general.error.none";
 	
-	public static final String STATUS_NOT_AVAILABLE = "component.update.component.not.available";
-	
-	public static final String STATUS_IS_AVAILABLE = "component.update.component.is.available";
-	
-	public static final String STATUS_IS_MANUALLY_CONNECTED = "component.update.component.manual";
-    
-    public static final String STATUS_UPDATE_AVAILABLE = "component.update.new.version";
-
-    public static final String STATUS_NO_UPDATE_AVAILABLE = "component.update.same.version";
-    
 	public static final String PARAM_STATUS = "component.monitor.general.status";
 
 	public static final String PARAM_STATUS_CODE = "component.monitor.general.status.code";

@@ -56,7 +56,7 @@ public class IngridMonitorRSSFetcherJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID = "RSS-Fetcher-Monitor";
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorRSSFetcherJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorRSSFetcherJob.class);
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)

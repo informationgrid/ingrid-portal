@@ -46,6 +46,7 @@ import javax.portlet.ResourceURL;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang.StringUtils;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
@@ -72,19 +73,20 @@ import de.ingrid.utils.query.IngridQuery;
  */
 public class SearchResultPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(SearchResultPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(SearchResultPortlet.class);
 
     /** view templates */
-    private final static String TEMPLATE_NO_QUERY_SET = "/WEB-INF/templates/empty.vm";
+    private static final String TEMPLATE_NO_QUERY_SET = "/WEB-INF/templates/empty.vm";
 
-    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/search_result.vm";
+    private static final String TEMPLATE_RESULT = "/WEB-INF/templates/search_result.vm";
 
-    private final static String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
+    private static final String TEMPLATE_RESULT_ADDRESS = "/WEB-INF/templates/search_result_address.vm";
 
     private static final String TEMPLATE_RESULT_FILTERED_ONECOLUMN = "/WEB-INF/templates/search_result_iplug.vm";
     
     private HttpClient client;
 
+    @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
         
@@ -93,21 +95,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                 String paramURL = request.getParameter( "url" );
                 if(paramURL != null){
                     URL url = new URL(paramURL);
-                    if (null != url) {
-                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                        InputStream inStreamConvert = con.getInputStream();
-                        ByteArrayOutputStream os = new ByteArrayOutputStream();
-                        if (null != con.getContentType()) {
-                            byte[] chunk = new byte[4096];
-                            int bytesRead;
-                            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                                os.write(chunk, 0, bytesRead);
-                            }
-                            os.flush();
-                            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                    Base64.getEncoder().encodeToString(os.toByteArray()));
-                            response.getWriter().write(dataUri.toString());
+                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                    InputStream inStreamConvert = con.getInputStream();
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    if (null != con.getContentType()) {
+                        byte[] chunk = new byte[4096];
+                        int bytesRead;
+                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                            os.write(chunk, 0, bytesRead);
                         }
+                        os.flush();
+                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                                Base64.getEncoder().encodeToString(os.toByteArray()));
+                        response.getWriter().write(dataUri.toString());
                     }
                 }
             }
@@ -121,12 +121,14 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
      * 
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
         client = new HttpClient();
         client.getHttpConnectionManager().getParams().setConnectionTimeout(1000);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -141,6 +143,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
+        context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
@@ -157,15 +160,14 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("mapParamE", request.getParameter("E") != null ? request.getParameter("E"): "");
         context.put("mapParamN", request.getParameter("N") != null ? request.getParameter("N"): "");
         context.put("mapParamZoom", request.getParameter("zoom") != null ? request.getParameter("zoom"): "");
-        context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent").split(","): "");
+        context.put("mapParamExtent", request.getParameter("extent") != null ? request.getParameter("extent"): "");
+        context.put("mapParamLayer", request.getParameter("layer") != null ? request.getParameter("layer"): "");
         
         // add request language, used to localize the map client
         context.put("languageCode",request.getLocale().getLanguage());
         
-        if(request.getParameter("filter") != null){
-             if(request.getParameter("filter").equals("domain")){
-                  context.put("isFilterDomain", true);
-             }
+        if(request.getParameter("filter") != null && request.getParameter("filter").equals("domain")){
+              context.put("isFilterDomain", true);
         }
         // ----------------------------------
         // check for passed RENDER PARAMETERS (for bookmarking) and
@@ -195,7 +197,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         try {
             reqParam = request.getParameter(Settings.PARAM_CURRENT_SELECTOR_PAGE);
             if (SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, reqParam)) {
-                currentSelectorPage = new Integer(reqParam).intValue();
+                currentSelectorPage = Integer.parseInt(reqParam);
             }
         } catch (Exception ex) {
             if (log.isErrorEnabled()) {
@@ -274,17 +276,15 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
 
             // default: right column IS grouped (by plugid)
              // set in context e.g. to show grouped navigation
-             context.put("grouping_right", new Boolean(true));
+             context.put("grouping_right", true);
 
-            if (filter != null) {
-                 // set one column result template if "Zeige alle ..." of plug or domain
-                 if (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) ||
-                      filter.equals(Settings.PARAMV_GROUPING_DOMAIN)) {
-                    setDefaultViewPage(TEMPLATE_RESULT_FILTERED_ONECOLUMN);
-                     // only one column to render we switch off grouping_right to show ungrouped navigation !
-                    context.put("grouping_right", new Boolean(false));
-                 }
-            }
+             // set one column result template if "Zeige alle ..." of plug or domain
+             if (filter != null && (filter.equals(Settings.PARAMV_GROUPING_PLUG_ID) ||
+                  filter.equals(Settings.PARAMV_GROUPING_DOMAIN))) {
+                setDefaultViewPage(TEMPLATE_RESULT_FILTERED_ONECOLUMN);
+                 // only one column to render we switch off grouping_right to show ungrouped navigation !
+                context.put("grouping_right", false);
+             }
         }
 
         // ----------------------------------
@@ -362,7 +362,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                          method = new GetMethod(url);
                          method.setFollowRedirects(true);
                          client.executeMethod(method);
-                     } catch (Throwable t) {
+                     } catch (Exception t) {
                          if (log.isErrorEnabled()) {
                              log.error("Cannot make connection to logger resource: ".concat(url), t);
                          }
@@ -370,7 +370,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                          if (method != null) {
                              try{
                                  method.releaseConnection();
-                             } catch (Throwable t) {
+                             } catch (Exception t) {
                                  if (log.isErrorEnabled()) {
                                      log.error("Cannot close connection to logger resource: ".concat(url), t);
                                  }
@@ -383,7 +383,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
             
             // post process ranked hits if exists
             if (results.containsKey("ranked")) {
-                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHitsWrapper) results.get("ranked"), selectedDS);
+                rankedHits = QueryResultPostProcessor.processRankedHits((IngridHitsWrapper) results.get("ranked"));
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_RESULT_RANKED, rankedHits);
                 SearchState.adaptSearchState(request, Settings.MSG_SEARCH_FINISHED_RANKED, Settings.MSGV_TRUE);
 
@@ -397,16 +397,16 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                         List<Object> groupedStartHits = 
                              (List<Object>) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
                         if (groupedStartHits == null) {
-                            groupedStartHits = new ArrayList<Object>();
+                            groupedStartHits = new ArrayList<>();
                             SearchState.adaptSearchState(request, Settings.PARAM_GROUPING_STARTHITS, groupedStartHits);
                         }
                         // set starthit of NEXT page ! ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
                          while (currentSelectorPage >= groupedStartHits.size()) {
-                              groupedStartHits.add(new Integer(0));
+                              groupedStartHits.add(0);
                          }
                         // set start hit for next page (grouping)
                          int nextStartHit = rankedHits.getGoupedHitsLength();
-                        groupedStartHits.set(currentSelectorPage, new Integer(nextStartHit));
+                        groupedStartHits.set(currentSelectorPage, nextStartHit);
 
                         // check whether there are more pages for grouped hits ! this is done due to former Bug in Backend !
                         // still necessary ? well, these former checks don't damage anything ...
@@ -464,11 +464,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("ds", request.getParameter("ds"));
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
-        if(rankedHits != null){
-             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
-                UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
-                UtilsFacete.setParamsToContext(request, context, true);
-             }
+        if(rankedHits != null && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
+            UtilsFacete.checkForExistingFacete((IngridHitsWrapper) rankedHits, request);
+            UtilsFacete.setParamsToContext(request, context);
         }
         context.put("rankedResultList", rankedHits);
         context.put("rankedSearchFinished", rankedSearchFinished);
@@ -483,7 +481,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
      * @return a map of short:long values of the provider
      */
     /*private HashMap<String, String> getProviderMap() {
-        HashMap<String, String> providerMap = new HashMap<String, String>();
+        HashMap<String, String> providerMap = new HashMap<>();
         List<IngridProvider> providers = UtilsDB.getProviders();
         
         for (IngridProvider ingridProvider : providers) {
@@ -492,6 +490,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         return providerMap;
     }*/
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         // check whether page navigation was clicked and send according message (Search state)
@@ -524,12 +523,15 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         
         if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
             String queryType = (String) SearchState.getSearchStateObject(request, Settings.MSG_QUERY_EXECUTION_TYPE);
-            if (queryType != null) {
-                if (queryType.equals(Settings.MSGV_NO_QUERY)) {
-                    SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
-                }
+            if (queryType != null && queryType.equals(Settings.MSGV_NO_QUERY)) {
+                SearchState.adaptSearchState(request, Settings.MSG_QUERY_EXECUTION_TYPE, Settings.MSGV_RANKED_QUERY);
             }
-            url = UtilsFacete.setFaceteParamsToSessionByAction(request, actionResponse);
+            url = UtilsFacete.setFaceteParamsToSessionByAction(request);
+        }
+        
+        String doRanking = request.getParameter("ranking");
+        if(doRanking != null) {
+            SearchState.adaptSearchState(request, Settings.PARAM_RANKING, doRanking);
         }
         
         boolean doRemoveFilter = Boolean.parseBoolean(request.getParameter("doRemoveFilter")); 
@@ -537,20 +539,18 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if(doRemoveFilter){
              // reset filter and grouping and page selector
              SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
-              SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
+             SearchState.adaptSearchState(request, Settings.PARAM_SUBJECT, "");
              SearchState.adaptSearchState(request, Settings.PARAM_FILTER, "");
              SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
              SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
-              actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
+             actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + ps.getAttribute("facetsURL"));
         }else{
-             if(!url.equals(ps.getAttribute("facetsURL"))){
-                 if(url != "" || (url == "" && ps.getAttribute("facetsURL") != null && ps.getAttribute("facetsURL") != "")){
-                     ps.setAttribute("facetsURL", url);
-                    // reset page and page selector by facets activity
-                    SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
-                    SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
-                    SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
-                 }
+             if(!url.equals(ps.getAttribute("facetsURL")) && (StringUtils.isNotEmpty(url) || (StringUtils.isEmpty(url) && ps.getAttribute("facetsURL") != null && ps.getAttribute("facetsURL") != ""))){
+                 ps.setAttribute("facetsURL", url);
+                // reset page and page selector by facets activity
+                SearchState.adaptSearchState(request, Settings.PARAM_GROUPING, "");
+                SearchState.adaptSearchState(request, Settings.PARAM_CURRENT_SELECTOR_PAGE, 1);
+                SearchState.adaptSearchState(request, Settings.PARAM_STARTHIT_RANKED, 0);
              }
              actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request)) + url);
         }

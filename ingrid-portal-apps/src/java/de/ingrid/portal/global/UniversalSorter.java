@@ -28,35 +28,35 @@ import java.text.Collator;
 import java.util.*;
 
 public class UniversalSorter {
-    private Locale _lang;
+    private Locale lang;
     
-    public UniversalSorter(Locale lang) {
-        _lang = lang;
+    public UniversalSorter(Locale locLang) {
+        lang = locLang;
     }
     
     @SuppressWarnings("unchecked")
     public Collection sort(List list, String property) {
         //return 
-        Collections.sort(list, new GermanLangComparator(property, _lang));
+        Collections.sort(list, new GermanLangComparator(property, lang));
         return list;
     }
     
     public class GermanLangComparator implements Comparator {
-        private String _field;
-        private Locale _lang;
+        private String field;
+        private Locale lang;
         
-        public GermanLangComparator(String field, Locale lang) {
-            _field = field;
-            _lang  = lang;
+        public GermanLangComparator(String sField, Locale locLang) {
+            field = sField;
+            lang  = locLang;
         }
 
         public final int compare(Object a, Object b) {
             try {
-                String aField = (String)PropertyUtils.getProperty(a, _field);
-                String bField = (String)PropertyUtils.getProperty(b, _field);
+                String aField = (String)PropertyUtils.getProperty(a, field);
+                String bField = (String)PropertyUtils.getProperty(b, field);
                 
                 // Get the collator for the German Locale 
-                Collator gerCollator = Collator.getInstance(_lang);
+                Collator gerCollator = Collator.getInstance(lang);
                 return gerCollator.compare(aField, bField);
             } catch (Exception e) {
                 return 0;

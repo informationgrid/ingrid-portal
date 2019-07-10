@@ -60,12 +60,14 @@ public class LogoutServlet extends HttpServlet
 {
 	private String casLogoutUrl = null; 
 
+	@Override
 	public void init(ServletConfig config) throws ServletException  
 	{
 	    super.init(config);
 	    casLogoutUrl = config.getInitParameter("casLogoutUrl"); // will return null if not existing
 	  }
 	
+	@Override
     public void doGet(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {

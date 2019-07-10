@@ -56,7 +56,7 @@ public class SNSLocationUpdateJobInfoBean extends JobInfoBean {
 	// Retrieve the entries from snsUpdateResults as list of string arrays (for
 	// CSV Export)
 	public List<String[]> getEntries() {
-		List<String[]> entries = new ArrayList<String[]>();
+		List<String[]> entries = new ArrayList<>();
 
 		entries.add(new String[] { "Titel", "Code", "Aktion", "Objekte" });
 

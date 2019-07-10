@@ -1,0 +1,26 @@
+#if($autoStartQueryString && $autoStartQueryString != "")
+<script type="text/javascript"><!--
+    window.open('/ingrid-portal-mdek-application/index.jsp?${autoStartQueryString}');
+ //--></script>
+#end
+
+#if($noBackendUser)
+    <div class="message message--error">
+        <div class="message__simple-content message-fill--error">
+            <span class="">
+                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
+            </span>
+            $MESSAGES.getString('entry.error.noBackendUser')
+        </div>
+    </div>
+#else
+    <div class="box box--fill box--small">
+        <div class="box__content ob-container">
+            <p>$MESSAGES.getString('entry.text.login')</p>
+        </div>
+    </div>
+    <div class="media__obj media__obj--right">
+        #renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "width:100%;" "Verweis" "" "" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
+    </div>
+#end
+<br/>

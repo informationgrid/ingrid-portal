@@ -22,41 +22,11 @@
  */
 package de.ingrid.portal.search;
 
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-
-import org.apache.portals.messaging.PortletMessaging;
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
-import de.ingrid.portal.global.IngridHitWrapper;
-import de.ingrid.portal.global.IngridPersistencePrefs;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsQueryString;
-import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.global.*;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
@@ -69,6 +39,22 @@ import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.tool.UrlTool;
+import de.ingrid.utils.udk.UtilsCSWDate;
+import de.ingrid.utils.udk.UtilsDate;
+import org.apache.portals.messaging.PortletMessaging;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
@@ -77,9 +63,9 @@ import de.ingrid.utils.queryparser.IDataTypes;
  */
 public class UtilsSearch {
 
-    private final static Logger log = LoggerFactory.getLogger(UtilsSearch.class);
+    private static final Logger log = LoggerFactory.getLogger(UtilsSearch.class);
 
-    public final static String DETAIL_VALUES_SEPARATOR = ", ";
+    public static final String DETAIL_VALUES_SEPARATOR = ", ";
 
     /**
      * Generate PageNavigation data for rendering
@@ -111,7 +97,7 @@ public class UtilsSearch {
             firstSelectorPage = 1;
             selectorHasPreviousPage = false;
             if (currentSelectorPage >= numSelectorPages) {
-                firstSelectorPage = currentSelectorPage - (int) (numSelectorPages / 2);
+                firstSelectorPage = currentSelectorPage - (numSelectorPages / 2);
                 selectorHasPreviousPage = true;
             }
             lastSelectorPage = firstSelectorPage + numSelectorPages - 1;
@@ -129,17 +115,17 @@ public class UtilsSearch {
         }
 
         HashMap pageSelector = new HashMap();
-        pageSelector.put("currentSelectorPage", new Integer(currentSelectorPage));
-        pageSelector.put("numberOfPages", new Integer(numberOfPages));
-        pageSelector.put("numberOfSelectorPages", new Integer(numSelectorPages));
-        pageSelector.put("firstSelectorPage", new Integer(firstSelectorPage));
-        pageSelector.put("lastSelectorPage", new Integer(lastSelectorPage));
-        pageSelector.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
-        pageSelector.put("selectorHasNextPage", new Boolean(selectorHasNextPage));
-        pageSelector.put("hitsPerPage", new Integer(hitsPerPage));
-        pageSelector.put("numberOfFirstHit", new Integer(numberOfFirstHit));
-        pageSelector.put("numberOfLastHit", new Integer(numberOfLastHit));
-        pageSelector.put("numberOfHits", new Integer(numberOfHits));
+        pageSelector.put("currentSelectorPage", currentSelectorPage);
+        pageSelector.put("numberOfPages", numberOfPages);
+        pageSelector.put("numberOfSelectorPages", numSelectorPages);
+        pageSelector.put("firstSelectorPage", firstSelectorPage);
+        pageSelector.put("lastSelectorPage", lastSelectorPage);
+        pageSelector.put("selectorHasPreviousPage", selectorHasPreviousPage);
+        pageSelector.put("selectorHasNextPage", selectorHasNextPage);
+        pageSelector.put("hitsPerPage", hitsPerPage);
+        pageSelector.put("numberOfFirstHit", numberOfFirstHit);
+        pageSelector.put("numberOfLastHit", numberOfLastHit);
+        pageSelector.put("numberOfHits", numberOfHits);
 
         return pageSelector;
     }
@@ -173,7 +159,7 @@ public class UtilsSearch {
             boolean selectorHasPreviousPage = false;
 
             if (currentPage >= Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT) {
-                firstSelectorPage = currentPage - (int) (Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT / 2);
+                firstSelectorPage = currentPage - (Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT / 2);
                 selectorHasPreviousPage = true;
             }
             // default last page
@@ -183,7 +169,7 @@ public class UtilsSearch {
             ArrayList groupedStartHits = 
             	(ArrayList) SearchState.getSearchStateObject(request, Settings.PARAM_GROUPING_STARTHITS);
         	while (lastSelectorPage > groupedStartHits.size()) {
-        		groupedStartHits.add(new Integer(0));
+        		groupedStartHits.add(0);
         	}
 
         	// fill missing starthits of pages and set whether there are further pages !
@@ -197,7 +183,7 @@ public class UtilsSearch {
             	int currStartHit = ((Integer) groupedStartHits.get(i)).intValue();
             	int updatedStartHit = prevStartHit + Settings.SEARCH_RANKED_HITS_PER_PAGE;
             	// ADAPT already calculated starthits of pages ! -> number of pages CHANGES !
-            	boolean updateCurrent = currStartHit < updatedStartHit ? true : false;
+            	boolean updateCurrent = currStartHit < updatedStartHit;
 
             	// update if not set yet or outdated !
             	if (currStartHit == 0 || updateCurrent) {
@@ -206,7 +192,7 @@ public class UtilsSearch {
             		if (updatedStartHit >= totalNumberOfHits) {
             			updatedStartHit = totalNumberOfHits - 1;
             		}
-            		groupedStartHits.set(i, new Integer(updatedStartHit));
+            		groupedStartHits.set(i, updatedStartHit);
             	}
             		
         		// if start hit of this page already "out of bounds" set former page as last page
@@ -221,13 +207,13 @@ public class UtilsSearch {
             	prevStartHit = currStartHit;
             }
             
-            pageNavi.put("firstSelectorPage", new Integer(firstSelectorPage));
-            pageNavi.put("lastSelectorPage", new Integer(lastSelectorPage));
-            pageNavi.put("selectorHasPreviousPage", new Boolean(selectorHasPreviousPage));
+            pageNavi.put("firstSelectorPage", firstSelectorPage);
+            pageNavi.put("lastSelectorPage", lastSelectorPage);
+            pageNavi.put("selectorHasPreviousPage", selectorHasPreviousPage);
         }
 
-        pageNavi.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, new Integer(currentPage));
-        pageNavi.put("selectorHasNextPage", new Boolean(hasMoreGroupedPages));
+        pageNavi.put(Settings.PARAM_CURRENT_SELECTOR_PAGE, currentPage);
+        pageNavi.put("selectorHasNextPage", hasMoreGroupedPages);
 
         return pageNavi;
     }
@@ -235,7 +221,7 @@ public class UtilsSearch {
     /**
      * Transfer commonly used detail parameters from detail object to hitobject.
      * 
-     * @param hit
+     * @param result
      * @param detail
      */
     public static void transferHitDetails(IngridHitWrapper result, IngridHitDetail detail) {
@@ -249,10 +235,10 @@ public class UtilsSearch {
 
             // also cuts title: maximum length = 2 Lines, length of first line
             // is shorter because of icon !
-            int ICON_LENGTH = 15;
+            int iconLength = 15;
             result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(), 2
-                    * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - ICON_LENGTH, Settings.SEARCH_RANKED_MAX_ROW_LENGTH
-                    - ICON_LENGTH));
+                    * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - iconLength, Settings.SEARCH_RANKED_MAX_ROW_LENGTH
+                    - iconLength));
             // strip all HTML tags from summary
             String summary = detail.getSummary();
             if (summary == null) {
@@ -282,9 +268,15 @@ public class UtilsSearch {
             String value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_URL);
             if (value.length() > 0) {
                 result.put(Settings.RESULT_KEY_URL, value);
-                result.put(Settings.RESULT_KEY_URL_STR, UtilsString.getShortURLStr(value,
+                String urlStr = null;
+                try {
+                    urlStr = UrlTool.getDecodedUnicodeUrl(value);
+                } catch (Exception e) {
+                    urlStr = value;
+                }
+                result.put(Settings.RESULT_KEY_URL_STR, UtilsString.getShortURLStr(urlStr,
                         Settings.SEARCH_RANKED_MAX_ROW_LENGTH));
-                result.put(Settings.RESULT_KEY_URL_DOMAIN, UtilsString.getURLDomain(value));
+                result.put(Settings.RESULT_KEY_URL_DOMAIN, UtilsString.getURLDomain(urlStr));
 
                 String urlLowerCase = value.toLowerCase();
                 if (urlLowerCase.indexOf(".pdf") != -1) {
@@ -311,7 +303,7 @@ public class UtilsSearch {
                 value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_PROVIDER);
                 result.put(Settings.RESULT_KEY_PROVIDER, value);
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over Hit Details into result:" + result, t);
             }
@@ -332,11 +324,9 @@ public class UtilsSearch {
                     "\\<.*?\\>", ""));
             result.put(PlugDescription.DATA_TYPE, plugDescr.getDataTypes());
             result.put(PlugDescription.ORGANISATION, plugDescr.getOrganisation());
-            // FIXME: is this correct? should be taken from the detail only?
-            //result.put(PlugDescription.PROVIDER, plugDescr.getOrganisationAbbr());
             if (plugDescr.containsKey("domainGroupingSupport"))
                 result.put("domainGroupingSupport", plugDescr.getBoolean("domainGroupingSupport"));
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems taking over PlugDescription into result:" + result, t);
             }
@@ -417,7 +407,7 @@ public class UtilsSearch {
             return "";
         }
 
-        StringBuffer values = new StringBuffer();
+        StringBuilder values = new StringBuilder();
         if (obj instanceof String[]) {
             String[] valueArray = (String[]) obj;
             for (int i = 0; i < (noOfElements == 0 ? valueArray.length : Math.min( valueArray.length, noOfElements )); i++) {
@@ -475,15 +465,15 @@ public class UtilsSearch {
      * @return
      */
     public static String getFilteredDuplicateDetailValue(IngridHit detail, String key){
-        String filteredValues = "";
+        StringBuilder filteredValues = new StringBuilder("");
         String [] values = getDetailValue( detail, key ).split(DETAIL_VALUES_SEPARATOR); 
         for (int i = 0; i < values.length; i++) {
             String v = values[i].trim();
             if(filteredValues.indexOf(v) == -1){
                 if(i != 0){
-                    filteredValues += DETAIL_VALUES_SEPARATOR;
+                    filteredValues.append(DETAIL_VALUES_SEPARATOR);
                 }
-                filteredValues += v;
+                filteredValues.append(v);
             }
         }
         if(filteredValues.length() > 0){
@@ -492,14 +482,32 @@ public class UtilsSearch {
         return null;
     }
     
-    
+    public static String getDateFormatValue (String value){
+        String result = UtilsCSWDate.mapFromIgcToIso8601(value);
+        if(result != null) {
+            value = result;
+        }
+        return UtilsSearch.convertDateString(value);
+    }
+
+    public static String convertDateString(String value){
+        if(value != null){
+            String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
+            if(content.length() > 0){
+                return content;
+            }
+        }
+        return value;
+    }
+
     /**
      * Map the given value to a "real" value, e.g. map partner id to partner
      * name. The passed key determines what kind of id the passed value is (this
      * is the key with which the value was read from result/detail)
      * 
-     * @param resultKey
-     * @param resultValue
+     * @param detailKey
+     * @param detailValue
+     * @param resources
      * @return
      */
     public static String mapResultValue(String detailKey, String detailValue, IngridResourceBundle resources) {
@@ -509,7 +517,7 @@ public class UtilsSearch {
         } else if (detailKey.equals(Settings.RESULT_KEY_PROVIDER)) {
             mappedValue = UtilsDB.getProviderFromKey(detailValue);
         } else if (detailKey.equals(Settings.RESULT_KEY_PLUG_ID)) {
-            mappedValue = ((PlugDescription) IBUSInterfaceImpl.getInstance().getIPlug(detailValue)).getDataSourceName();
+            mappedValue = (IBUSInterfaceImpl.getInstance().getIPlug(detailValue)).getDataSourceName();
         } else if (resources != null) {
             mappedValue = resources.getString(detailValue);
         }
@@ -689,18 +697,6 @@ public class UtilsSearch {
         }
 
         return qStr;
-
-        /*
-         * StringBuffer qStr = new StringBuffer(); qStr.append(query);
-         * qStr.append(", ");
-         * 
-         * FieldQuery[] fields = query.getDataTypes(); for (int i = 0; i <
-         * fields.length; i++) { qStr.append(" "); qStr.append(fields[i]);
-         * qStr.append("/required:"); qStr.append(fields[i].isRequred());
-         * qStr.append("/prohibited:"); qStr.append(fields[i].isProhibited()); }
-         * 
-         * return qStr.toString();
-         */
     }
 
     private static String buildFieldQueryStr(FieldQuery field) {
@@ -795,7 +791,7 @@ public class UtilsSearch {
         IngridQuery[] clauses = query.getAllClauses();
         for (int i = 0; i < clauses.length; i++) {
             FieldQuery[] fields = query.getFields();
-            for (int j = 0; j < fields.length; i++) {
+            for (int j = 0; j < fields.length; j++) {
                 if (fields[j].getFieldName().equalsIgnoreCase(fieldName)
                         && fields[i].getFieldValue().equalsIgnoreCase(value)) {
                     return true;
@@ -847,11 +843,9 @@ public class UtilsSearch {
             }        	
         }
 
-        if (basicDatatypeForQuery != null) {
-        	if(request.getParameter(Settings.PARAM_DATASOURCE) != null || hasDefaultDS){
-	            query.addField(new FieldQuery(true, false,
-	            		Settings.QFIELD_DATATYPE, basicDatatypeForQuery));
-        	}
+    	if(basicDatatypeForQuery != null && request.getParameter(Settings.PARAM_DATASOURCE) != null || hasDefaultDS){
+            query.addField(new FieldQuery(true, false,
+            		Settings.QFIELD_DATATYPE, basicDatatypeForQuery));
         }
     }
 
@@ -884,7 +878,7 @@ public class UtilsSearch {
     private static String getBasicDataTypeFromQuery(IngridQuery q) {
     	String ret = null;
     	if (q != null) {
-        	List basicDataTypes = Arrays.asList(Settings.QVALUES_DATATYPE_AREAS_BASIC);
+        	List basicDataTypes = Arrays.asList(Settings.getQValuesDatatypesAreaBasic());
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
@@ -904,7 +898,7 @@ public class UtilsSearch {
      */
     private static boolean isAddressQuery(IngridQuery q) {
     	if (q != null) {
-        	List addressDataTypes = Arrays.asList(Settings.QVALUES_DATATYPES_ADDRESS);
+        	List addressDataTypes = Arrays.asList(Settings.getQValuesDatatypesAddress());
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
@@ -951,7 +945,7 @@ public class UtilsSearch {
      * Add provider(s) to query
      * 
      * @param query
-     * @param partners
+     * @param providers
      */
     public static void processProvider(IngridQuery query, String[] providers) {
         boolean added  = false;
@@ -1008,7 +1002,7 @@ public class UtilsSearch {
      * Add domain to query
      * 
      * @param query
-     * @param domain
+     * @param subject
      */
     public static void processDomain(IngridQuery query, String subject) {
         boolean added = false;
@@ -1043,7 +1037,6 @@ public class UtilsSearch {
      * ( e.g. domain subject like "site:???" or "plugid:???")  
      * 
      * @param domainSubject the subject as its was passed from "Zeige alle" request
-     * @param key/value Pair for ingrid query (String[0]=key, String[1]=value)
      */
     public static String[] getDomainKeyValuePair(String domainSubject) {
     	return domainSubject.split("::");
@@ -1071,55 +1064,6 @@ public class UtilsSearch {
             }
         }
     }
-
-    /**
-     * Remove the passed data type from the query
-     * 
-     * @param query
-     */
-    /*
-     * // TODO: remove this helper method if functionality is in IngridQuery
-     * public static boolean removeDataType(IngridQuery query, String
-     * datatypeValue) { boolean removed = false; FieldQuery[] dataTypesInQuery =
-     * query.getDataTypes(); if (dataTypesInQuery.length == 0) { return removed; }
-     * 
-     * ArrayList processedDataTypes = new
-     * ArrayList(Arrays.asList(dataTypesInQuery)); for (Iterator iter =
-     * processedDataTypes.iterator(); iter.hasNext();) { FieldQuery field =
-     * (FieldQuery) iter.next(); String value = field.getFieldValue(); if (value !=
-     * null && value.equals(datatypeValue)) { iter.remove(); removed = true; } } //
-     * remove all old datatypes and set our new ones
-     * query.remove(Settings.QFIELD_DATATYPE); for (int i = 0; i <
-     * processedDataTypes.size(); i++) { query.addField((FieldQuery)
-     * processedDataTypes.get(i)); }
-     * 
-     * return removed; }
-     */
-
-    /**
-     * Remove the Basic DataTypes from the query (the ones above the Simple
-     * Search Input) to obtain a "clean" query
-     * 
-     * @param query
-     */
-    /*
-     * // TODO: remove this helper method if functionality is in IngridQuery
-     * public static void removeBasicDataTypes(IngridQuery query) { FieldQuery[]
-     * dataTypesInQuery = query.getDataTypes(); if (dataTypesInQuery.length ==
-     * 0) { return; }
-     * 
-     * ArrayList processedDataTypes = new
-     * ArrayList(Arrays.asList(dataTypesInQuery)); for (Iterator iter =
-     * processedDataTypes.iterator(); iter.hasNext();) { FieldQuery field =
-     * (FieldQuery) iter.next(); String value = field.getFieldValue(); if (value ==
-     * null || value.equals(Settings.QVALUE_DATATYPE_AREA_ENVINFO) ||
-     * value.equals(Settings.QVALUE_DATATYPE_AREA_ADDRESS) ||
-     * value.equals(Settings.QVALUE_DATATYPE_AREA_RESEARCH)) { iter.remove(); } } //
-     * remove all old datatypes and set our new ones
-     * query.remove(Settings.QFIELD_DATATYPE); for (int i = 0; i <
-     * processedDataTypes.size(); i++) { query.addField((FieldQuery)
-     * processedDataTypes.get(i)); } }
-     */
 
     /**
      * Encapsulates common doView functionality for all partner selection
@@ -1152,10 +1096,9 @@ public class UtilsSearch {
      * portlets.
      * 
      * @param request
-     * @param response
      * @throws NotSerializableException
      */
-    public static void processActionForTermPortlets(ActionRequest request, ActionResponse response)
+    public static void processActionForTermPortlets(ActionRequest request)
             throws NotSerializableException {
         String addingType = request.getParameter("adding_type");
         String searchTerm = request.getParameter("search_term");
@@ -1181,9 +1124,8 @@ public class UtilsSearch {
      * portlets
      * 
      * @param request
-     * @param context
      */
-    public static void processActionForPartnerPortlet(ActionRequest request, ActionResponse response, String page)
+    public static void processActionForPartnerPortlet(ActionRequest request)
             throws IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {
@@ -1331,7 +1273,7 @@ public class UtilsSearch {
         String queryString = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING);
         String urlStr = Settings.PAGE_SEARCH_RESULT + SearchState.getURLParamsMainSearch(request);
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+                IngridSessionPreferences.SESSION_KEY);
         QueryHistory history = (QueryHistory) sessionPrefs.getInitializedObject(IngridSessionPreferences.QUERY_HISTORY,
                 QueryHistory.class);
         String selectedDS = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_DATASOURCE);
@@ -1395,10 +1337,8 @@ public class UtilsSearch {
     }
 
     public static String processSearchSources(String queryString, String[] sources, String[] meta) {
-        if (sources == null || sources.length == 0) {
-            if (meta == null || meta.length == 0) {
-                return queryString;
-            }
+        if ((sources == null || sources.length == 0) && (meta == null || meta.length == 0)) {
+            return queryString;
         }
 
         HashMap datatypes = new LinkedHashMap();
@@ -1410,15 +1350,17 @@ public class UtilsSearch {
         String resultingQueryStr = UtilsSearch.removeSearchSources(queryString);
         resultingQueryStr = UtilsSearch.removeSearchCatalogues(resultingQueryStr);
 
-        for (int i = 0; i < sources.length; i++) {
-            if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
-                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_AREA_ENVINFO, "1");
-            }
-            if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_WWW)) {
-                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW, "1");
-            }
-            if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_FIS)) {
-                datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS, "1");
+        if(sources != null) {
+            for (int i = 0; i < sources.length; i++) {
+                if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_ALL)) {
+                    datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_AREA_ENVINFO, "1");
+                }
+                if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_WWW)) {
+                    datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_WWW, "1");
+                }
+                if (sources[i].equals(SearchExtEnvAreaSourcesForm.VALUE_SOURCE_FIS)) {
+                    datatypes.put(Settings.QFIELD_DATATYPE + ":" + Settings.QVALUE_DATATYPE_SOURCE_FIS, "1");
+                }
             }
         }
         HashMap metaclasses = new LinkedHashMap();
@@ -1524,10 +1466,10 @@ public class UtilsSearch {
         PortletSession session = request.getPortletSession();
 
         // check for personalizes wms services
-        if (Utils.getLoggedOn(request) && service.getMapbenderVersion().equals(service.MAPBENDER_VERSION_2_1)) {
+        if (Utils.getLoggedOn(request) && service.getMapbenderVersion().equals(WMSInterface.MAPBENDER_VERSION_2_1)) {
             Principal principal = request.getUserPrincipal();
             Object obj = IngridPersistencePrefs.getPref(principal.getName(), IngridPersistencePrefs.WMS_SERVICES);
-            if (obj != null && obj instanceof List) {
+            if (obj instanceof List) {
                 wmsServices = (List) obj;
             }
         }
@@ -1542,7 +1484,7 @@ public class UtilsSearch {
         }
 
         // create the wms url
-        if (wmsServices.size() > 0) {
+        if (!wmsServices.isEmpty()) {
             return service.getWMSAddedServiceURL(wmsServices, session.getId(), request.getLocale(),
                     isViewer);
         } else if (isViewer) {
@@ -1557,12 +1499,8 @@ public class UtilsSearch {
         if(paramQueryString != null && paramQueryString.length() > 0){
             String [] tmpQueries = paramQueryString.split(" ");
             for(String tmpQuery: tmpQueries) {
-                if(tmpQuery != null && tmpQuery.length() > 0) {
-                    if(!tmpQuery.equals("OR")) {
-                        if(addQueryString.indexOf(tmpQuery) > -1) {
-                            return paramQueryString;
-                        }
-                    }
+                if(tmpQuery != null && tmpQuery.length() > 0 && !tmpQuery.equals("OR") && addQueryString.indexOf(tmpQuery) > -1) {
+                    return paramQueryString;
                 }
             }
             if(paramQueryString.indexOf(" OR ") > -1) {

@@ -42,18 +42,19 @@ abstract class SearchCatalog extends GenericVelocityPortlet {
     // TAB values from action request (request parameter)
 
     /** tab param value if tab hierarchy is clicked */
-    protected final static String PARAMV_TAB_HIERARCHY = "1";
+    protected static final String PARAMV_TAB_HIERARCHY = "1";
 
     // START PAGES FOR TABS
 
     /** page for tab "hierarchy" */
-    protected final static String PAGE_HIERARCHY = "/portal/search-catalog/search-catalog-hierarchy.psml";
+    protected static final String PAGE_HIERARCHY = "/portal/search-catalog/search-catalog-hierarchy.psml";
 
     // VARIABLE NAMES FOR VELOCITY
 
     /** velocity variable name for main tab, has to be put to context, so correct tab is selected */
-    protected final static String VAR_MAIN_TAB = "tab";
+    protected static final String VAR_MAIN_TAB = "tab";
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);

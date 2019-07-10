@@ -70,7 +70,7 @@ public class WebappListener implements ServletContextListener {
             handleFlyway(ds, version);
 
         } catch (NamingException e) {
-            e.printStackTrace();
+            log.error("Error on contextInitialized.", e); 
         }
     }
 
@@ -111,7 +111,6 @@ public class WebappListener implements ServletContextListener {
                     //flyway.migrate();
                 }
             } else {
-                log.error( "Could not migrate database 'ingrid_portal'", e );
                 throw new RuntimeException( "Could not migrate database 'ingrid_portal'", e );
             }
         }
@@ -120,7 +119,7 @@ public class WebappListener implements ServletContextListener {
     private Map<String, String> getPlaceHolderValues() {
         boolean showMetadataMenu = PortalConfig.getInstance().getBoolean( "portal.showMetadataMenu" );
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         map.put( "hideMetadataMenu", showMetadataMenu ? "0" : "1" );
         
         return map;

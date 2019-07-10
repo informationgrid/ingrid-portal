@@ -27,9 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.directwebremoting.WebContextFactory;
 
 import de.ingrid.mdek.persistence.db.model.RepoUser;
 import de.ingrid.mdek.userrepo.UserRepoManager;
@@ -45,18 +42,19 @@ public class TomcatAuthenticationProvider implements AuthenticationProvider {
      */
     @Override
     public boolean authenticate(String username, String password) {
+        boolean authenticate = true;
         // first check if user is in user repository
         RepoUser user = repoManager.getUser(username);
         if (user == null || !user.getPassword().equals(MdekSecurityUtils.getHash(password))) {
-            return false;
+            authenticate = false;
         }
         
-        return true;
+        return authenticate;
     }
 
     @Override
     public List<String> getAllUserIds() {
-        List<String> userIds = new ArrayList<String>();
+        List<String> userIds = new ArrayList<>();
         for (Map info : repoManager.getAllUsers()) {
             userIds.add((String) info.get("login"));
         }
@@ -85,11 +83,6 @@ public class TomcatAuthenticationProvider implements AuthenticationProvider {
 
     }
     
-    private String getCurrentUserInSession() {
-        HttpSession session = WebContextFactory.get().getHttpServletRequest().getSession();
-        return (String) session.getAttribute("userName");
-    }
-
     public void setRepoManager(UserRepoManager repoManager) {
         this.repoManager = repoManager;
     }

@@ -41,9 +41,10 @@ else
     sed -i 's/jdbc:mysql:\/\/localhost\/mdek/'${DB_URL_MDEK}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.user=root/hibernate.user='${DB_USER}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
     sed -i 's/hibernate.password=/hibernate.password='${DB_PASSWORD}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
-    echo "communications.ibus=/ingrid-group:ibus,"${IBUS_IP}",9900" >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
-    echo "portal.enable.caching="${PORTAL_CACHE_ENABLE} >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
-    echo "csw.interface.url="${PORTAL_CSW_URL} >> webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.override.properties
+
+    sed -i 's/communications.ibus=\/ingrid-group\\:ibus-live,127.0.0.1,9900/communications.ibus=\/ingrid-group:ibus,'${IBUS_IP}',9900/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
+    sed -i 's/portal.enable.caching=true/portal.enable.caching='${PORTAL_CACHE_ENABLE}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
+    sed -i 's/csw.interface.url=https:\/\/dev.informationgrid.eu\/csw/csw.interface.url='${PORTAL_CSW_URL}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
 
     # handle portal profiles
     if [ "$PORTAL_PROFILE" ]; then
@@ -57,8 +58,6 @@ else
         # UVP-NI extends UVP
         if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
-            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
-            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
             cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
         fi
@@ -66,6 +65,7 @@ else
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-webmap-client/* webapps/ingrid-webmap-client
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-webmap-client/frontend/src/* webapps/ingrid-webmap-client/frontend/prd
@@ -115,7 +115,19 @@ else
         echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
     fi
-        
+
+    # SMTP_HOST
+    echo "workflow.mail.smtp=$SMTP_HOST" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.sender=$MAIL_SENDER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.user=$MAIL_USER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.password=$MAIL_PASSWORD" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
+    echo "mdek.directLink=$IGE_DIRECT_LINK" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
+    # Upload settings
+    echo "upload.docsdir=$UPLOAD_DOCS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "upload.partsdir=$UPLOAD_PARTS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
     touch /initialized
 fi
 

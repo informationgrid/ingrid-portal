@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -53,211 +54,207 @@ import de.ingrid.utils.dsc.Record;
  * 
  */
 public class UtilsFileHelper {
-	
-	private final static Logger	log			= LoggerFactory.getLogger(UtilsFileHelper.class);
-	
-	public static String		MIME		= "mime";
-	public static String		FILE_TITLE	= "file_title";
-	public static String		MAP			= "map";
-	public static String		GML			= "gml";
-	public static String		KML			= "kml";
-	
-	/**
-	 * Convert a byte array to file
-	 * 
-	 * @param byteFile
-	 * @param docid
-	 * @param title
-	 * @param mimetyp
-	 * @return HashMap with file details
-	 * @throws IOException
-	 */
-	public static HashMap<String, String> getByteAsFile(byte[] byteFile, String title, String mimetyp, RenderRequest request) throws IOException {
-		
-		HashMap<String, String> fileDetails = null;
-		File directory = null;
-		File file = null;
-		String typ = null;
-		String parentTyp = null;
-		
-		if (byteFile != null) {
-			
-			fileDetails = new HashMap<String, String>();
-			typ = UtilsMimeType.getFileExtensionOfMimeType(mimetyp);
-			parentTyp = UtilsMimeType.getMimeTypeParent(mimetyp);
-			
-			if (typ != null) {
-				directory = new File(System.getProperty("java.io.tmpdir") + "/ingrid-portal-apps/details/" + parentTyp + "/");
-				directory.mkdirs();
-				
-				file = new File(directory.getAbsolutePath() + "/" + generateFilename(parentTyp, title, new String(byteFile).hashCode(), typ));
-				file.createNewFile();
-				
-				try (FileOutputStream fos = new FileOutputStream(file)) {
-    				fos.write(byteFile);
-				}
-				if (log.isDebugEnabled()) {
-					log.debug("Create file: " + file.getAbsolutePath());
-				}
-				
-				fileDetails.put("mimetyp", mimetyp);
-				fileDetails.put("filename", file.getName());
-				fileDetails.put("title", title);
-				fileDetails.put("path", file.getAbsolutePath());
-				fileDetails.put("parenttyp", parentTyp);
-				
-				// Set file into servlet session
-				request.getPortletSession().setAttribute(file.getName(), file.getAbsolutePath(), PortletSession.APPLICATION_SCOPE);
-			}
-		}
-		return fileDetails;
-	}
-	
-	/**
-	 * Create mapfile and GML file for temporary map services
-	 * 
-	 * @param fileTitle
-	 * @return path of mapfile
-	 * @throws Exception
-	 * @throws ConfigurationException
-	 */
-	public static String createNewService(String fileTitle, String typ, String path) throws ConfigurationException, Exception {
-		File directory;
-		File file;
-		
-		directory = new File(path);
-		directory.mkdirs();
-		
-		file = new File(directory.getAbsolutePath() + "/" + generateFilename(Integer.toString(fileTitle.hashCode()), typ));
-		if(file.exists()){
-			if (log.isDebugEnabled()) {
-				log.debug("File: " + file.getName() + " already exist!");
-			}
-		}else{
-			file.createNewFile();
-			if (log.isDebugEnabled()) {
-				log.debug("Create " + typ + " File: " + file.getAbsolutePath());
-			}
-		}
-		return file.getName();
-	}
-	
-	/**
-	 * Write String into file
-	 * 
-	 * @param path
-	 * @param content
-	 * @throws IOException
-	 */
-	public static void writeContentIntoFile(String path, String content) throws IOException {
-		if(path != null){
-			File file = new File(path);
-			if(file.length() < 1){
-				if (content != null) {
-					try (Writer writer = new FileWriter(path)) {
-    					writer.write(content);
-					}
-				}else{
-					if (log.isErrorEnabled()) {
-						log.error("Content is null!");
-					}
-				}
-			}		
-		}
-	}
-	
-	/**
-	 * Generate a unique filename for binary data
-	 * 
-	 * @param parentTyp
-	 * @param title
-	 * @param byteHashCode
-	 * @param type
-	 * @return filename
-	 */
-	public static String generateFilename(String parentTyp, String title, int byteHashCode, String type) {
-		String filename;
-		
-		filename = parentTyp + "_" + title + "_" + byteHashCode + ".".concat(type);
-		
-		if (title == null || type == null|| parentTyp == null) {
-			if (log.isErrorEnabled()) {
-				log.error("Title: " + title + "or Type: " + type + "or parentTyp: " + parentTyp + " is null!");
-			}
-		}
-		
-		return filename;
-	}
-	
-	/**
-	 * Generate a filename with type and title
-	 * 
-	 * @param date
-	 * @param title
-	 * @param type
-	 * @return filename
-	 */
-	public static String generateFilename(String title, String type) {
-		
-		String filename;
-	
-		filename = title.concat(".").concat(type);
-		
-		if (title == null || type == null) {
-			if (log.isErrorEnabled()) {
-				log.error("Title: " + title + "or Type: " + type + " is null!");
-			}
-		}
-		return filename;
-	}
-			
-	/**
-	 * Check if record include binary data
-	 * 
-	 * @param record
-	 * @param fileList
-	 * @return a ArrayList of files
-	 * @throws IOException
-	 */
-	public static List<Object> extractBinaryData(Record record, List<Object> fileList, RenderRequest request) throws IOException {
-		
-		if (fileList == null) {
-			fileList = new ArrayList<Object>();
-		}
-		
-		Column[] columns = record.getColumns();
-		byte[] bytes = null;
-		String mime = null;
-		String fileTitle = "unknown";
-		for (Column column : columns) {
-			if (column.getType() != null && column.getType().equals(Column.BINARY)) {
-				bytes = record.getValueBytes(column);
-			} else if (column.getTargetName().equals(MIME)) {
-				mime = record.getValueAsString(column);
-			} else if (column.getTargetName().equals(FILE_TITLE)) {
-				fileTitle = record.getValueAsString(column);
-			}
-		}
-		if (bytes != null) {
-			// handle bytes with mime type and optional title
-			fileList.add(getByteAsFile(bytes, fileTitle, mime, request));
-		}
-		Record[] subRecords = record.getSubRecords();
-		for (Record record2 : subRecords) {
-			extractBinaryData(record2, fileList, request);
-		}
-		
-		return fileList;
-	}
-	
-	/**
-	 * Get bytes of file
-	 * 
-	 * @param file
-	 * @return byte array of a file
-	 * @throws IOException
-	 */
-	public static byte[] getBytesFromFile(File file) throws IOException {
+    
+    private static final Logger        log         = LoggerFactory.getLogger(UtilsFileHelper.class);
+    
+    public static final String         MIME        = "mime";
+    public static final String         FILE_TITLE  = "file_title";
+    public static final String         MAP         = "map";
+    public static final String         GML         = "gml";
+    public static final String         KML         = "kml";
+    
+    /**
+     * Convert a byte array to file
+     * 
+     * @param byteFile
+     * @param docid
+     * @param title
+     * @param mimetyp
+     * @return HashMap with file details
+     * @throws IOException
+     */
+    public static Map<String, String> getByteAsFile(byte[] byteFile, String title, String mimetyp, RenderRequest request) throws IOException {
+        
+        HashMap<String, String> fileDetails = null;
+        File directory = null;
+        File file = null;
+        String typ = null;
+        String parentTyp = null;
+        
+        if (byteFile != null) {
+            
+            fileDetails = new HashMap<>();
+            typ = UtilsMimeType.getFileExtensionOfMimeType(mimetyp);
+            parentTyp = UtilsMimeType.getMimeTypeParent(mimetyp);
+            
+            if (typ != null) {
+                directory = new File(System.getProperty("java.io.tmpdir") + "/ingrid-portal-apps/details/" + parentTyp);
+                directory.mkdirs();
+                
+                file = new File(directory.getAbsolutePath(), generateFilename(parentTyp, title, new String(byteFile).hashCode(), typ));
+                if(file.createNewFile()) {
+                    log.debug("Create new file: " + file.getAbsolutePath());
+                }
+                
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(byteFile);
+                }
+                if (log.isDebugEnabled()) {
+                    log.debug("Create file: " + file.getAbsolutePath());
+                }
+                
+                fileDetails.put("mimetyp", mimetyp);
+                fileDetails.put("filename", file.getName());
+                fileDetails.put("title", title);
+                fileDetails.put("path", file.getAbsolutePath());
+                fileDetails.put("parenttyp", parentTyp);
+                
+                // Set file into servlet session
+                request.getPortletSession().setAttribute(file.getName(), file.getAbsolutePath(), PortletSession.APPLICATION_SCOPE);
+            }
+        }
+        return fileDetails;
+    }
+    
+    /**
+     * Create mapfile and GML file for temporary map services
+     * 
+     * @param fileTitle
+     * @return path of mapfile
+     * @throws IOException 
+     * @throws Exception
+     * @throws ConfigurationException
+     */
+    public static String createNewService(String fileTitle, String typ, String path) throws IOException {
+        File directory;
+        File file;
+        
+        directory = new File(path);
+        directory.mkdirs();
+        
+        file = new File(directory.getAbsolutePath(), generateFilename(Integer.toString(fileTitle.hashCode()), typ));
+        if(file.exists() && log.isDebugEnabled()){
+            log.debug("File: " + file.getName() + " already exist!");
+        }else{
+            if(file.createNewFile() && log.isDebugEnabled()) {
+                log.debug("Create " + typ + " File: " + file.getAbsolutePath());
+            }
+        }
+        return file.getName();
+    }
+    
+    /**
+     * Write String into file
+     * 
+     * @param path
+     * @param content
+     * @throws IOException
+     */
+    public static void writeContentIntoFile(String path, String content) throws IOException {
+        if(path != null){
+            File file = new File(path);
+            if(file.length() < 1){
+                if (content != null) {
+                    try (Writer writer = new FileWriter(path)) {
+                        writer.write(content);
+                    }
+                }else{
+                    if (log.isErrorEnabled()) {
+                        log.error("Content is null!");
+                    }
+                }
+            }        
+        }
+    }
+    
+    /**
+     * Generate a unique filename for binary data
+     * 
+     * @param parentTyp
+     * @param title
+     * @param byteHashCode
+     * @param type
+     * @return filename
+     */
+    public static String generateFilename(String parentTyp, String title, int byteHashCode, String type) {
+        String filename;
+        
+        filename = parentTyp + "_" + title + "_" + byteHashCode + ".".concat(type);
+        
+        if ((title == null || type == null|| parentTyp == null) && log.isErrorEnabled()) {
+            log.error("Title: " + title + "or Type: " + type + "or parentTyp: " + parentTyp + " is null!");
+        }
+        
+        return filename;
+    }
+    
+    /**
+     * Generate a filename with type and title
+     * 
+     * @param date
+     * @param title
+     * @param type
+     * @return filename
+     */
+    public static String generateFilename(String title, String type) {
+        
+        String filename;
+    
+        filename = title.concat(".").concat(type);
+        
+        if (type == null && log.isErrorEnabled()) {
+            log.error("Title: " + title + "or Type: " + type + " is null!");
+        }
+        return filename;
+    }
+            
+    /**
+     * Check if record include binary data
+     * 
+     * @param record
+     * @param fileList
+     * @return a ArrayList of files
+     * @throws IOException
+     */
+    public static List<Object> extractBinaryData(Record record, List<Object> fileList, RenderRequest request) throws IOException {
+        
+        if (fileList == null) {
+            fileList = new ArrayList<>();
+        }
+        
+        Column[] columns = record.getColumns();
+        byte[] bytes = null;
+        String mime = null;
+        String fileTitle = "unknown";
+        for (Column column : columns) {
+            if (column.getType() != null && column.getType().equals(Column.BINARY)) {
+                bytes = record.getValueBytes(column);
+            } else if (column.getTargetName().equals(MIME)) {
+                mime = record.getValueAsString(column);
+            } else if (column.getTargetName().equals(FILE_TITLE)) {
+                fileTitle = record.getValueAsString(column);
+            }
+        }
+        if (bytes != null) {
+            // handle bytes with mime type and optional title
+            fileList.add(getByteAsFile(bytes, fileTitle, mime, request));
+        }
+        Record[] subRecords = record.getSubRecords();
+        for (Record record2 : subRecords) {
+            extractBinaryData(record2, fileList, request);
+        }
+        
+        return fileList;
+    }
+    
+    /**
+     * Get bytes of file
+     * 
+     * @param file
+     * @return byte array of a file
+     * @throws IOException
+     */
+    public static byte[] getBytesFromFile(File file) throws IOException {
 
         // Get the size of the file
         long length = file.length();
@@ -275,75 +272,77 @@ public class UtilsFileHelper {
 
         try (InputStream is = new FileInputStream(file)) {
 
-    		// Read in the bytes
-    		int offset = 0;
-    		int numRead = 0;
-    		while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
-    			offset += numRead;
-    		}
+            // Read in the bytes
+            int offset = 0;
+            int numRead = 0;
+            while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+                offset += numRead;
+            }
 
-    		// Ensure all the bytes have been read in
-    		if (offset < bytes.length) {
-    			throw new IOException("Could not completely read file " + file.getName());
-    		}
+            // Ensure all the bytes have been read in
+            if (offset < bytes.length) {
+                throw new IOException("Could not completely read file " + file.getName());
+            }
 
-		}
-		
-		return bytes;
-	}
-	
-	/**
-	 * Sort long values in ArrayList
-	 * 
-	 * @param fileArray
-	 */
-	public static void sortFileByDate(ArrayList<Long> fileArray) {
-		boolean unsort = true;
-		long temp;
-		
-		while (unsort) {
-			unsort = false;
-			for (int i = 0; i < fileArray.size() - 1; i++)
-				if (fileArray.get(i) > fileArray.get(i + 1)) {
-					temp = fileArray.get(i);
-					fileArray.set(i, fileArray.get(i + 1));
-					fileArray.set(i + 1, temp);
-					unsort = true;
-				}
-		}
-		
-	}
-	
-	public static HashMap<String, String> getInstallVersion(String path, String title){
-		HashMap<String, String> versionMap = new HashMap<String, String>();
-		try (BufferedReader bufferReader = new BufferedReader(new FileReader(path))) {
-			String input = "";
-			while((input = bufferReader.readLine()) != null) {
-				if(input.startsWith("Implementation-Build")){
-					String value = input.split(":")[1].trim();
-					if(value.length() > 0){
-						versionMap.put("svn_version", value);
-					}
-				}else if(input.startsWith("Implementation-Version")){
-					String value = input.split(":")[1].trim();
-					if(value.length() > 0){
-						versionMap.put("project_version", value);	
-					}
-				}else if(input.startsWith("Build-Timestamp")){
-					String value = input.split(":")[1].trim();
-					if(value.length() > 0){
-					    Date date = new Date(Long.valueOf(value));
-						versionMap.put("build_time", date.toString());	
-					}
-				}
-			}
-		} catch (IOException e) {
-			log.error("File not found: " + path);
-		}
-		
-		if(versionMap.size() > 0){
-			versionMap.put("title", title);
-		}
-		return versionMap;
-	}
+        }
+        
+        return bytes;
+    }
+    
+    /**
+     * Sort long values in ArrayList
+     * 
+     * @param fileArray
+     */
+    public static void sortFileByDate(List<Long> fileArray) {
+        boolean unsort = true;
+        long temp;
+        
+        while (unsort) {
+            unsort = false;
+            for (int i = 0; i < fileArray.size() - 1; i++)
+                if (fileArray.get(i) > fileArray.get(i + 1)) {
+                    temp = fileArray.get(i);
+                    fileArray.set(i, fileArray.get(i + 1));
+                    fileArray.set(i + 1, temp);
+                    unsort = true;
+                }
+        }
+        
+    }
+    
+    public static Map<String, String> getInstallVersion(String path, String title){
+        HashMap<String, String> versionMap = new HashMap<>();
+        try (BufferedReader bufferReader = new BufferedReader(new FileReader(path))) {
+            String input = "";
+            while((input = bufferReader.readLine()) != null) {
+                if(input.startsWith("Implementation-Build")){
+                    String value = input.split(":")[1].trim();
+                    if(value.length() > 0){
+                        versionMap.put("svn_version", value);
+                    }
+                }else if(input.startsWith("Implementation-Version")){
+                    String value = input.split(":")[1].trim();
+                    if(value.length() > 0){
+                        versionMap.put("project_version", value);    
+                    }
+                }else if(input.startsWith("Build-Timestamp")){
+                    String value = input.split(":")[1].trim();
+                    if(value.length() > 0){
+                        Date date = new Date(Long.valueOf(value));
+                        versionMap.put("build_time", date.toString());    
+                    }
+                }
+            }
+        } catch (IOException e) {
+            if (log.isErrorEnabled()) {
+                log.error("File not found: " + path);
+            }
+        }
+        
+        if(versionMap.size() > 0){
+            versionMap.put("title", title);
+        }
+        return versionMap;
+    }
 }

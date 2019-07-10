@@ -48,9 +48,9 @@ public class CreateAccountForm extends ActionForm {
 
     public static final String FIELD_LOGIN = "login";
     
-    public static final String FIELD_PASSWORD = "password";
+    public static final String FIELD_PW = "password";
 
-    public static final String FIELD_PASSWORD_CONFIRM = "password_confirm";
+    public static final String FIELD_PW_CONFIRM = "password_confirm";
     
     public static final String FIELD_STREET = "street";
 
@@ -77,8 +77,8 @@ public class CreateAccountForm extends ActionForm {
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL).trim());
         // Show error message if spaces exist on login input
         setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN));
-        setInput(FIELD_PASSWORD, request.getParameter(FIELD_PASSWORD).trim());
-        setInput(FIELD_PASSWORD_CONFIRM, request.getParameter(FIELD_PASSWORD_CONFIRM).trim());
+        setInput(FIELD_PW, request.getParameter(FIELD_PW).trim());
+        setInput(FIELD_PW_CONFIRM, request.getParameter(FIELD_PW_CONFIRM).trim());
         setInput(FIELD_STREET, request.getParameter(FIELD_STREET).trim());
         setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE).trim());
         setInput(FIELD_CITY, request.getParameter(FIELD_CITY).trim());
@@ -113,18 +113,18 @@ public class CreateAccountForm extends ActionForm {
                 allOk = false;
             }
         }
-        if (!hasInput(FIELD_PASSWORD)) {
-            setError(FIELD_PASSWORD, "account.create.error.noPassword");
+        if (!hasInput(FIELD_PW)) {
+            setError(FIELD_PW, "account.create.error.noPassword");
             allOk = false;
         } else {
-            String password = getInput(FIELD_PASSWORD);
+            String password = getInput(FIELD_PW);
              if (!Utils.isStrengthPassword(password)) {
-                setError(FIELD_PASSWORD, "account.create.error.worstPassword");
+                setError(FIELD_PW, "account.create.error.worstPassword");
                 allOk = false;
             }
         }
-        if (!getInput(FIELD_PASSWORD_CONFIRM).equals(getInput(FIELD_PASSWORD))) {
-            setError(FIELD_PASSWORD_CONFIRM, "account.edit.error.noPasswordConfirm");
+        if (!getInput(FIELD_PW_CONFIRM).equals(getInput(FIELD_PW))) {
+            setError(FIELD_PW_CONFIRM, "account.edit.error.noPasswordConfirm");
             allOk = false;
         } 
         if (!hasInput(FIELD_EMAIL)) {

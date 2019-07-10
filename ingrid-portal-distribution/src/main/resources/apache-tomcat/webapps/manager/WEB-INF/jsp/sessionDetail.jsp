@@ -38,11 +38,11 @@
   limitations under the License.
 --%>
 <%@page session="false" contentType="text/html; charset=ISO-8859-1" %>
+<%@page import="java.util.Enumeration" %>
+<%@page import="javax.servlet.http.HttpSession" %>
 <%@page import="org.apache.catalina.Session" %>
 <%@page import="org.apache.catalina.manager.JspHelper" %>
 <%@page import="org.apache.catalina.util.ContextName" %>
-<%@page import="javax.servlet.http.HttpSession" %>
-<%@page import="java.util.Enumeration" %>
 <!DOCTYPE html
      PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -73,7 +73,7 @@
     <meta http-equiv="expires" content="0"/><!-- 0 is an invalid value and should be treated as 'now' -->
     <meta http-equiv="content-language" content="en"/>
     <meta name="author" content="Cedrik LIME"/>
-    <meta name="copyright" content="copyright 2005-2018 the Apache Software Foundation"/>
+    <meta name="copyright" content="copyright 2005-2019 the Apache Software Foundation"/>
     <meta name="robots" content="noindex,nofollow,noarchive"/>
     <title>Sessions Administration: details for <%= currentSessionId %></title>
 </head>

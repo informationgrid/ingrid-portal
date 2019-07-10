@@ -1,0 +1,426 @@
+/*
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+a {
+  color: #407E40;
+}
+
+a:hover {
+  color: #407E40;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #407E40;
+}
+
+.field--success {
+  border: 2px solid #407E40 !important;
+}
+
+.field-toggle__label--highlight .icon {
+  fill: #407E40;
+}
+
+input:checked + .field-toggle__label--highlight .field-toggle__icon {
+  border-color: #407E40;
+  box-shadow: 0 0 0 1px #407E40;
+}
+
+thead {
+  border-bottom: 2px solid #407E40;
+}
+
+.table__sort-toggle .icon {
+  fill: #407E40;
+}
+
+.btn--primary {
+  background: #407E40;
+}
+
+.btn--secondary {
+  color: #407E40 !important;
+}
+
+.btn {
+  border: 1px solid #407E40;
+}
+
+.btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
+  text-decoration: underline;
+  background: #FFFFFF;
+  border-color: #407E40;
+  color: #407E40 !important;
+}
+
+#btn_search {
+  background: #407E40;
+  border-color: #407E40;
+}
+#btn_search:not([disabled]):hover, #btn_search:not([disabled]):focus, #btn_search:not([disabled]):active {
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+.btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  text-decoration: underline;
+  background: #407E40;
+  border-color: #407E40;
+  color: #FFFFFF !important;
+}
+
+.icon-active {
+  fill: #407E40;
+}
+
+.link--alt:hover {
+  color: #407E40;
+}
+
+.category-list a:hover {
+  color: #407E40;
+}
+
+.list--checked .icon {
+  fill: #407E40;
+}
+
+.nav__container {
+  border-bottom: 1px solid #E2E2E2;
+}
+
+.nav__container__content:active {
+  color: #407E40;
+}
+
+.nav__containter__content-item a:active {
+  color: #407E40;
+}
+
+.nav__foot a:hover {
+  background: #E2E2E2;
+}
+
+.nav-desktop {
+  background: #407E40;
+  border: 1px solid #407E40;
+}
+
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  color: #407E40;
+  background: #FFFFFF;
+}
+.nav-desktop__title:hover .icon, .nav-desktop__title.is-selected .icon, .nav-desktop__title.is-active .icon {
+  fill: #407E40;
+}
+
+.nav-desktop__dropdown {
+  border-top: 4px solid #E2E2E2;
+}
+
+.nav-desktop__dropdown a:hover, .nav-desktop__dropdown a:active {
+  color: #407E40 !important;
+}
+
+.nav__dropdown-item a:active {
+  color: #407E40 !important;
+}
+
+.dropmenu .is-active {
+  color: #407E40;
+}
+
+.metamenu__link.is-active {
+  color: #407E40;
+}
+
+.nav-overlay {
+  background: #407E40;
+}
+
+.nav-overlay__item--level1 {
+  border-bottom: 1px solid #E2E2E2;
+}
+
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+  background: #E2E2E2;
+}
+
+.no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
+.nav-overlay__item--level3:hover,
+.nav-overlay__item--level3.is-active {
+  color: #407E40;
+}
+
+.search-form input {
+  border-color: #407E40;
+}
+
+.pagination__list a[href] .icon {
+  fill: #407E40;
+}
+.pagination__list a[href]:hover .icon {
+  fill: #E2E2E2;
+}
+
+.tab__toggles {
+  color: #407E40;
+}
+
+.tab__toggles a:hover, .tab__toggles a.is-active {
+  color: #407E40;
+}
+
+.tab__select {
+  background: #407E40;
+}
+.tab__toggle.is-active a {
+  color: #407E40;
+}
+
+.message--success {
+  color: #407E40;
+}
+
+.message-fill--success .icon {
+  fill: #407E40;
+}
+
+.no-touchevents .tooltip:hover {
+  border-color: #407E40;
+}
+.no-touchevents .tooltip:hover .tooltip__icon {
+  fill: #407E40;
+}
+
+.popup__header {
+  border-bottom: 2px solid #407E40;
+}
+
+.teaser__box {
+  border-top: 4px solid #407E40;
+}
+
+.no-touchevents .filter__title:hover {
+  color: #407E40;
+}
+
+.no-touchevents .sidebar-filter-subheader:hover {
+  color: #407E40;
+}
+
+.no-touchevents .sidebar-filter-content ul a:hover {
+  color: #407E40;
+}
+
+.no-touchevents .tree__toggle:hover {
+  border-color: #407E40;
+  box-shadow: 0 1px 0 #407E40;
+}
+
+.nav-toggle {
+  color: #E2E2E2 !important;
+}
+.nav-toggle:after {
+  border-color: transparent transparent #407E40 transparent;
+  border-width: 0 0 49px 12px;
+}
+
+.nav-toggle .icon {
+  fill: #000;
+}
+
+.ob-border-brand {
+  border: 1px solid #407E40 !important;
+}
+.tx-highlight {
+  color: #407E40 !important;
+}
+
+@media screen and (min-width: 640px) {
+  .pagination__number:hover, .pagination__number.is-active {
+    color: #407E40;
+    box-shadow: inset 0 -4px 0 0 #407E40;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: inset 0 -2px 0 0 #407E40, 0 4px 0 0 #407E40;
+  }
+}
+
+@media screen and (max-width: 939px) {
+  .header {
+    background: #407E40;
+  }
+  
+  .breadcrumb {
+    border-top: 1px solid #DDD;
+  }
+}
+
+@media screen and (min-width: 940px) {
+  .no-touchevents .header__widget > a:hover {
+    color: #333;
+    text-decoration: underline;
+  }
+
+  .header__widget__icon.is-active {
+    fill: #407E40;
+  }
+  
+  .header__widget > a {
+    color: #333;
+  }
+
+  .copyright {
+    display: block;
+  }
+}
+
+.desktop-logo {
+    max-width: 85%;
+}
+
+.header__logo {
+    width: inherit;
+}
+
+.desktop__title p.main__title {
+    font-size: 27px;
+}
+
+.mobile__title {
+    padding: 0 5px;
+    color: #FFFFFF;
+}
+
+.desktop-logo {
+    width: 21.5em;
+}
+
+.mobile__logo {
+    height: 2rem;
+}
+
+.mobile__logo-x {
+  height: 8.5rem;
+}
+
+.desktop__title p {
+    margin: 0 0 10px 0px;
+}
+
+.desktop__title p.main__title {
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.desktop__title p.sub__title {
+    font-size: 16px;
+}
+
+.mobile__title {
+     font-size: 27px;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
+
+.footer__logo {
+    width: 3.125rem;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+  
+  .nav-toggle:after {
+    border-width: 0 0 65px 12px;
+  }
+}
+
+.search-result .icon {
+    fill: #407E40;
+    font-size: 1.2rem;
+    margin: -2px 0;
+    
+}
+
+.search-result h4 a {
+    margin: 0 0 0 5px;
+}
+
+.page {
+  min-height: 100%;
+  position: relative;
+}
+
+.container {
+  padding-bottom: 250px;
+}
+
+footer {
+  position: absolute !important;
+  bottom: 0;
+  width: 100%;
+}
+
+span.ueber {
+  color: #003300;
+  font-weight: bold;
+}
+
+#navFunctionsWrapper h2 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+#navFunctionsWrapper h2, #navFunctionsWrapper a {
+    font-size: 14px !important;
+}
+
+@media screen and (max-width: 64em) {
+    #navFunctionsPrint {
+      display:none;
+    }
+}
+
+body {
+  font-size: unset;
+}

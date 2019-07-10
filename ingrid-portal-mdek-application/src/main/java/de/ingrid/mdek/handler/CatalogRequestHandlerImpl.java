@@ -57,7 +57,7 @@ import de.ingrid.utils.IngridDocument;
 @Service("catalogRequestHandler")
 public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
-    private final static Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
+    private static final Logger log = Logger.getLogger(CatalogRequestHandlerImpl.class);
 
     // Injected by Spring
     @Autowired
@@ -126,7 +126,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     public String exportSysLists(Integer[] listIds) {
         if (listIds == null) {
             List<SysList> codelists = getAllSysListInfos();
-            List<Integer> listIdsTemp = new ArrayList<Integer>();
+            List<Integer> listIdsTemp = new ArrayList<>();
             for (SysList codelist : codelists) {
                 listIdsTemp.add(codelist.getId());
             }
@@ -188,8 +188,8 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
 
     public void storeSysGenericValues(List<GenericValueBean> genericValues) {
         if (genericValues != null) {
-            List<String> keyNames = new ArrayList<String>();
-            List<String> keyValues = new ArrayList<String>();
+            List<String> keyNames = new ArrayList<>();
+            List<String> keyValues = new ArrayList<>();
     
             for (GenericValueBean genericValue : genericValues) {
                 keyNames.add(genericValue.getKey());
@@ -213,7 +213,7 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     }
 
     public CatalogBean storeCatalogData(CatalogBean cat) {
-        IngridDocument catDoc = (IngridDocument) MdekCatalogUtils.convertFromCatalogRepresentation(cat);
+        IngridDocument catDoc = MdekCatalogUtils.convertFromCatalogRepresentation(cat);
 
         log.debug("Sending the following catalog for storage:");
         log.debug(catDoc);
@@ -269,16 +269,15 @@ public class CatalogRequestHandlerImpl implements CatalogRequestHandler {
     public IngridDocument analyzeImportData(UserData currentUser, byte[] importData, String targetObjectUuid, String targetAddressUuid,
             String frontendMappingProtocol, boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent, boolean startNewAnalysis) {
         IngridDocument response = mdekCallerCatalog.analyzeImportData(
-                currentUser.getPlugId(),
-                importData,
-                targetObjectUuid, targetAddressUuid,
-                publishImmediately, doSeparateImport,
-                copyNodeIfPresent,
-                frontendMappingProtocol,
-                startNewAnalysis,
-                currentUser.getAddressUuid());
-        IngridDocument result = MdekUtils.getResultFromResponse(response);
-        return result;
+            currentUser.getPlugId(),
+            importData,
+            targetObjectUuid, targetAddressUuid,
+            publishImmediately, doSeparateImport,
+            copyNodeIfPresent,
+            frontendMappingProtocol,
+            startNewAnalysis,
+            currentUser.getAddressUuid());
+        return MdekUtils.getResultFromResponse(response);
     }
 
     public void importEntities(UserData currentUser, String targetObjectUuid, String targetAddressUuid,

@@ -30,6 +30,7 @@ import java.io.SequenceInputStream;
 import java.io.UncheckedIOException;
 import java.nio.charset.Charset;
 import java.nio.file.CopyOption;
+import java.nio.file.DirectoryStream;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -184,30 +185,34 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public boolean exists(final String path, final String file) {
+        boolean result;
         final Path realPath = this.getRealPath(path, file, this.docsDir);
         try {
             final FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
-            return fileInfo.getRealPath().toFile().exists();
+            result = fileInfo.getRealPath().toFile().exists();
         }
-        catch (final Exception ex) {
-            // ignore
+        catch (Exception ex) {
+            result = false;
         }
-        return false;
+        return result;
     }
 
     @Override
     public boolean isValidName(final String path, final String file) {
         // check if names conflict with special directories
+        boolean result = true;
         final Path filePath = Paths.get(path, file);
         final Iterator<Path> it = filePath.iterator();
         while(it.hasNext()) {
             final String pathPart = it.next().toString();
             if (TRASH_PATH.equals(pathPart) || ARCHIVE_PATH.equals(pathPart)) {
-                return false;
+                result = false;
+                break;
             }
         }
         // we only reject invalid filenames, because the path will be sanitized
-        return this.isValid(file, ILLEGAL_FILE_NAME);
+        result = result && this.isValid(file, ILLEGAL_FILE_NAME);
+        return result;
     }
 
     @Override
@@ -242,7 +247,7 @@ public class FileSystemStorage implements Storage {
         try {
             Files.copy(data, realPath, copyOptions);
         }
-        catch (final FileAlreadyExistsException faex) {
+        catch (FileAlreadyExistsException faex) {
             final StorageItem[] items = { this.getFileInfo(faex.getFile()) };
             throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
@@ -256,13 +261,12 @@ public class FileSystemStorage implements Storage {
             try {
                 files = this.extract(realPath, copyOptions);
             }
-            catch (final FileAlreadyExistsException faex) {
+            catch (FileAlreadyExistsException faex) {
                 // get files from existing archive
-                final List<StorageItem> items = this.list(this.getExtractPath(realPath));
-                throw new ConflictException(faex.getMessage(),
-                        items.toArray(new StorageItem[items.size()]), this.getFileInfo(realPath.toString()).getNextName());
+                List<StorageItem> items = this.list(this.getExtractPath(realPath));
+                throw new ConflictException(faex.getMessage(), items.toArray(new StorageItem[items.size()]), this.getFileInfo(realPath.toString()).getNextName());
             }
-            catch (final Exception ex) {
+            catch (Exception ex) {
                 throw new IOException(ex);
             }
             finally {
@@ -287,7 +291,7 @@ public class FileSystemStorage implements Storage {
         try {
             Files.copy(data, realPath, StandardCopyOption.REPLACE_EXISTING);
         }
-        catch (final FileAlreadyExistsException faex) {
+        catch (FileAlreadyExistsException faex) {
             final StorageItem[] items = { this.getFileInfo(faex.getFile()) };
             throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
@@ -320,7 +324,7 @@ public class FileSystemStorage implements Storage {
         }
 
         // delete parts
-        for (final Path part : parts) {
+        for (Path part : parts) {
             Files.delete(part);
         }
         return result;
@@ -366,15 +370,17 @@ public class FileSystemStorage implements Storage {
         while (hasEmptyDirs) {
             // collect empty directories
             try (Stream<Path> stream = Files.walk(Paths.get(this.docsDir))) {
-                final List<Path> emptyDirs = stream
+                List<Path> emptyDirs = stream
                 .filter(p -> {
                     boolean isEmptyDir = false;
                     try {
-                        isEmptyDir = p.toFile().isDirectory() &&
-                                !Files.newDirectoryStream(p).iterator().hasNext() &&
-                                !(p.equals(trashPath) || p.equals(archivePath));
+                        if (p.toFile().isDirectory()) {
+                            try (DirectoryStream<Path> dirStream = Files.newDirectoryStream(p)) {
+                                isEmptyDir = !dirStream.iterator().hasNext() && !(p.equals(trashPath) || p.equals(archivePath));
+                            }
+                        }
                     }
-                    catch (final IOException ex) {
+                    catch (IOException ex) {
                         throw new UncheckedIOException(ex);
                     }
                     return isEmptyDir;
@@ -382,7 +388,7 @@ public class FileSystemStorage implements Storage {
                 .collect(Collectors.toList());
 
                 // delete directories
-                for (final Path emptyDir : emptyDirs) {
+                for (Path emptyDir : emptyDirs) {
                     Files.delete(emptyDir);
                 }
 
@@ -479,14 +485,15 @@ public class FileSystemStorage implements Storage {
      * @return String
      */
     private boolean isValid(final String path, final Pattern illegalChars) {
+        boolean isValid = true;
         // check against rules provided in https://en.m.wikipedia.org/wiki/Filename
         if (path == null || path.length() == 0 || path.length() > MAX_FILE_LENGTH) {
-            return false;
+            isValid = false;
         }
         if (illegalChars.matcher(path).matches()) {
-            return false;
+            isValid = false;
         }
-        return true;
+        return isValid;
     }
 
     /**

@@ -48,11 +48,11 @@ public class AdminUserForm extends ActionForm {
 
     public static final String FIELD_ID = "id";
 
-    public static final String FIELD_PASSWORD_OLD = "password_old";
+    public static final String FIELD_PW_OLD = "password_old";
 
-    public static final String FIELD_PASSWORD_NEW = "password_new";
+    public static final String FIELD_PW_NEW = "password_new";
 
-    public static final String FIELD_PASSWORD_NEW_CONFIRM = "password_new_confirm";
+    public static final String FIELD_PW_NEW_CONFIRM = "password_new_confirm";
 
     public static final String FIELD_STREET = "street";
 
@@ -106,11 +106,11 @@ public class AdminUserForm extends ActionForm {
                 // Show error message if spaces exist on login input
                 setInput(FIELD_ID, request.getParameter(FIELD_ID));
             }
-            if(request.getParameter(FIELD_PASSWORD_OLD) != null) {
-                setInput(FIELD_PASSWORD_OLD, request.getParameter(FIELD_PASSWORD_OLD).trim());
+            if(request.getParameter(FIELD_PW_OLD) != null) {
+                setInput(FIELD_PW_OLD, request.getParameter(FIELD_PW_OLD).trim());
             }
-            setInput(FIELD_PASSWORD_NEW, request.getParameter(FIELD_PASSWORD_NEW).trim());
-            setInput(FIELD_PASSWORD_NEW_CONFIRM, request.getParameter(FIELD_PASSWORD_NEW_CONFIRM).trim());
+            setInput(FIELD_PW_NEW, request.getParameter(FIELD_PW_NEW).trim());
+            setInput(FIELD_PW_NEW_CONFIRM, request.getParameter(FIELD_PW_NEW_CONFIRM).trim());
             setInput(FIELD_STREET, request.getParameter(FIELD_STREET).trim());
             setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE).trim());
             setInput(FIELD_CITY, request.getParameter(FIELD_CITY).trim());
@@ -165,45 +165,43 @@ public class AdminUserForm extends ActionForm {
             }
         }
         if (this.getInput(FIELD_MODE).equals("new")) {
-            if (!hasInput(FIELD_PASSWORD_NEW)) {
-                setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
+            if (!hasInput(FIELD_PW_NEW)) {
+                setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
             } else {
-                String password = getInput(FIELD_PASSWORD_NEW);
+                String password = getInput(FIELD_PW_NEW);
                 if (!Utils.isStrengthPassword(password)) {
-                   setError(FIELD_PASSWORD_NEW, "account.create.error.worstPassword");
+                   setError(FIELD_PW_NEW, "account.create.error.worstPassword");
                    allOk = false;
                }
            }
-            if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
-                setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+            if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
+                setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
             }
         } else {
-            if(!isAdmin){
-	        	if (!hasInput(FIELD_PASSWORD_OLD) && hasInput(FIELD_PASSWORD_NEW)) {
-	                setError(FIELD_PASSWORD_OLD, "account.edit.error.noPasswordOld");
-	                setInput(FIELD_TAB, "1");
-	                allOk = false;
-	            }
+            if(!isAdmin && !hasInput(FIELD_PW_OLD) && hasInput(FIELD_PW_NEW)){
+                setError(FIELD_PW_OLD, "account.edit.error.noPasswordOld");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
             }
-            if (hasInput(FIELD_PASSWORD_OLD) && !hasInput(FIELD_PASSWORD_NEW)) {
-                setError(FIELD_PASSWORD_NEW, "account.edit.error.noPasswordNew");
+            if (hasInput(FIELD_PW_OLD) && !hasInput(FIELD_PW_NEW)) {
+                setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
             }
 
-            if (hasInput(FIELD_PASSWORD_NEW)) {
-                String password = getInput(FIELD_PASSWORD_NEW);
+            if (hasInput(FIELD_PW_NEW)) {
+                String password = getInput(FIELD_PW_NEW);
                 if (!Utils.isStrengthPassword(password)) {
-                   setError(FIELD_PASSWORD_NEW, "account.create.error.worstPassword");
+                   setError(FIELD_PW_NEW, "account.create.error.worstPassword");
                    allOk = false;
                }
             }
-            if (!getInput(FIELD_PASSWORD_NEW_CONFIRM).equals(getInput(FIELD_PASSWORD_NEW))) {
-                setError(FIELD_PASSWORD_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+            if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
+                setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
             }

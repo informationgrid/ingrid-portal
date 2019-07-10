@@ -26,6 +26,16 @@ function ingrid_openWindow(url, winWidth, winHeight)
   popupWin.focus();
 }
 
+function copyToClipboard(message) {
+  var $body = document.getElementsByTagName('body')[0];
+  var $tempInput = document.createElement('INPUT');
+  $body.appendChild($tempInput);
+  $tempInput.setAttribute('value', message)
+  $tempInput.select();
+  document.execCommand('copy');
+  $body.removeChild($tempInput);
+}
+
 function ingrid_checkAll(group) {
   // NOTICE: first field in group has to be "checkAll" field
   if (group[0]) {
@@ -307,73 +317,6 @@ function goToByScroll(id, time){
 
 function openURL(url){
     window.location = url;
-}
-
-function getOSMLayer(attribution){
-    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    var osmAttrib='&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-    if(attribution){
-        osmAttrib = osmAttrib + "" + attribution;
-    }
-    var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
-
-    return osm;
-}
-
-function getWMSLayer(layerUrl, layerName, attribution){
-    var osmAttrib='';
-    if(attribution){
-        osmAttrib += attribution;
-    }
-    var osm = new L.tileLayer.wms(layerUrl, {
-        layers: layerName
-    });
-
-    return osm;
-}
-
-function addLeafletMap(baselayers, bounds, latlng, zoom){
-    var map = new L.Map('map', {
-       layers: baselayers
-    });
-    if(bounds){
-      map.fitBounds(bounds);
-    } else if(latlng) {
-      map.setView(latlng, zoom || 6);
-    } else {
-      map.setView(new L.LatLng(51.3, 10), 6);
-    }
-    return map;
-}
-
-function addLeafletHomeControl(map, title, position, icon, bounds){
- // Controls
-    var HomeControl = L.Control.extend({
-        options: {
-            position: position ? position : 'topleft'
-        },
-        onAdd: function (map) {
-            // create the control container with a particular class name
-            var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
-            var link = L.DomUtil.create('a', 'icon small ' + icon, container);
-            link.href = '#';
-            link.style.padding = '5px 0 0 0';
-            link.title = title;
-
-            // ... initialize other DOM elements, add listeners, etc.
-            L.DomEvent.addListener(link, 'click', this._homeClick, this);
-
-            return container;
-        },
-        _homeClick: function(e) {
-            L.DomEvent.stop(e);
-            if(bounds){
-                map.fitBounds(bounds);
-            }
-        }
-    });
-
-    map.addControl(new HomeControl({}));
 }
 
 function getLinkFileSize(url, element)

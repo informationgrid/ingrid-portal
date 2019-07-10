@@ -567,7 +567,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getKeywords(), hasItems(expected));
         
         // check address
-        assertThat(result.getAddress().getFirstname(), is("Manfred"));
+        assertThat(result.getAddress().getFirstname(), is("Dr. Manfred"));
         assertThat(result.getAddress().getLastname(), is("Endrullis"));
         assertThat(result.getAddress().getStreet(), is(nullValue()));
         assertThat(result.getAddress().getCity(), is("Potsdam"));
@@ -610,7 +610,7 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getKeywords(), hasItems(expected));
         
         // check address
-        assertThat(result.getAddress().getFirstname(), is("A."));
+        assertThat(result.getAddress().getFirstname(), is("Panagiotis (Peter) A."));
         assertThat(result.getAddress().getLastname(), is("Vretanos"));
         assertThat(result.getAddress().getStreet(), is("15 rue Gamelin"));
         assertThat(result.getAddress().getCity(), is("Gatineau"));
