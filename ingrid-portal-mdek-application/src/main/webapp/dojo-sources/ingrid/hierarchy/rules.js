@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -274,7 +274,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 else if (type == 3) UtilUI.updateEntryToConformityTable(40, deleteEntry);
                 else if (type == 5) UtilUI.updateEntryToConformityTable(43, deleteEntry);
             };
-            
+
             var updateSyslistServiceVersion = function(type) {
                 if (type == 1) registry.byId("ref3ServiceVersion").columns[0].listId = 5151;
                 else if (type == 2) registry.byId("ref3ServiceVersion").columns[0].listId = 5152;
@@ -311,8 +311,11 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
 
             // execute behaviour when a new document is created
             topic.subscribe("/afterInitDialog/CloseWizard", function() {
-                var value = registry.byId("ref3ServiceType").get("value");
-                handleConformityValue(value);
+                var objClass = registry.byId("objectClass").get("value");
+                if (objClass == "Class3") {
+                    var value = registry.byId("ref3ServiceType").get("value");
+                    handleConformityValue(value);
+                }
             });
 
         },
