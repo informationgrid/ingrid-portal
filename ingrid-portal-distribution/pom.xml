@@ -171,25 +171,6 @@
       <build>
         <plugins>
           <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <phase>package</phase>
-                <configuration>
-                  <tasks>
-                    <echo message="Unzipping installer for docker image" />
-                    <unzip src="target/${project.build.finalName}-installer.jar" dest="target/docker/installer-unzipped/" />
-                    <move file="target/docker/installer-unzipped/distribution/apache-tomcat/webapps/ingrid-portal-base.war" tofile="target/docker/installer-unzipped/distribution/apache-tomcat/webapps/ROOT.war" />
-                  </tasks>
-                </configuration>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
             <groupId>com.spotify</groupId>
             <artifactId>docker-maven-plugin</artifactId>
             <!-- in multi module projects version 1.1.1 does not allow POM modules for image build -->
