@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.1.0-SNAPSHOT" date="2019-xx-xx" description="Release 5.1.0">
+        <release version="5.1.0" date="2019-07-11" description="Release 5.1.0">
           <action type="fix" dev="wemove" issue="1396">
             UVP: In Sektion "Allgemein" wird beim Ausklappen das Feld "ID des übergeordneten Datensatzes angezeigt"
           </action>
@@ -38,6 +38,9 @@
           <action type="update" dev="wemove" issue="1372">
             Portal: Update tomcat to 7.0.94.
           </action>
+          <action type="update" dev="wemove" issue="1420">
+            Portal: Remove UpgradeClientJob from portal db.
+          </action>
           <action type="add" dev="wemove" issue="1200">
             Portal: Create BKG portal layout.
           </action>
@@ -59,6 +62,9 @@
           <action type="fix" dev="wemove" issue="1365">
             MapClient: Fix generate stable IDs of added layers on admin GUI.
           </action>
+          <action type="fix" dev="wemove" issue="2179">
+            MapClient: Fix IE back button
+          </action>
           <action type="add" dev="wemove" issue="">
             MapClient: Print label by draw depend on KML labelstyle scale.
           </action>
@@ -73,6 +79,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2141">
             IGE(mCLOUD/UVP): Show link from upload dialog correctly if a protocol seem to be found.
+          </action>
+          <action type="fix" dev="wemove" issue="1128">
+            IGE: Fix wrong validation of table rows
           </action>
         </release>
 
