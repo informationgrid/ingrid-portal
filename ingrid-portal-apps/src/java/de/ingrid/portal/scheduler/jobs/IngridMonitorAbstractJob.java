@@ -25,7 +25,6 @@ package de.ingrid.portal.scheduler.jobs;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,16 +32,15 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.upgradeclient.IngridComponent;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -51,7 +49,7 @@ import de.ingrid.portal.upgradeclient.IngridComponent;
  */
 public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 
-	private final static Logger log = LoggerFactory.getLogger(IngridMonitorAbstractJob.class);
+	private static final Logger log = LoggerFactory.getLogger(IngridMonitorAbstractJob.class);
 
 	protected void updateJobData(JobExecutionContext context, int status, String statusCode) {
 		JobDataMap dataMap = context.getJobDetail().getJobDataMap();
@@ -156,7 +154,7 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 		if (log.isDebugEnabled()) {
 			log.debug("Try to sent alert email to " + email);
 		}
-		HashMap<String, Object> mailData = new HashMap<String, Object>();
+		HashMap<String, Object> mailData = new HashMap<>();
 		mailData.put("JOB", job);
 		ResourceBundle resources = ResourceBundle.getBundle("de.ingrid.portal.resources.AdminPortalResources",
 				Locale.GERMAN);
@@ -190,61 +188,5 @@ public abstract class IngridMonitorAbstractJob extends IngridAbstractStateJob {
 			log.debug("Sent alert email to " + to);
 		}
 	}
-	
-	protected void sendEmailOnUpdate(List<IngridComponent> components) {
-	    boolean wasSent = true;
-	    for (IngridComponent component : components) {
-            if (component.getStatus().equals(STATUS_UPDATE_AVAILABLE) && !component.hasBeenSent()) {
-                for (String email : component.getEmails()) {
-                    wasSent = wasSent && sendUpdateEmail(email, component);
-                }
-                if (component.getEmails().size()>0) {
-                    if (wasSent) {
-                        component.setEmailSentDate(new Date());
-                        component.setHasBeenSent(true);
-                    } else {
-                        component.setEmailSentDate(null);
-                        component.setErrorStatus(STATUS_CODE_ERROR_SENDING_EMAIL);
-                    }
-                }
-            } else if (component.getStatus().equals(STATUS_NO_UPDATE_AVAILABLE)) {
-                // reset for sending an update email when an update is available again
-                component.setHasBeenSent(false);
-            }
-        }
-	}
-
-    private boolean sendUpdateEmail(String email, IngridComponent component) {
-        String from = PortalConfig.getInstance().getString(
-                PortalConfig.COMPONENT_MONITOR_ALERT_EMAIL_SENDER,
-                "foo@bar.com");
-        
-        String emailSubject = PortalConfig.getInstance().getString(
-                PortalConfig.COMPONENT_MONITOR_UPDATE_ALERT_EMAIL_SUBJECT,
-                "ingrid component monitor update alert");
-        emailSubject = emailSubject.concat(" [").concat(component.getName()).concat("]");
-
-        try {
-            emailSubject = emailSubject.concat(" on host " + InetAddress.getLocalHost().getHostName());
-        } catch (UnknownHostException e) {
-            log.error("Unable to obtain hostname of local machine.");
-        }
-        
-        URL url = Thread.currentThread().getContextClassLoader().getResource(
-                "../templates/administration/monitor_update_alert_email.vm");
-        String templatePath = url.getPath();
-        
-        HashMap<String, Object> mailData = new HashMap<String, Object>();
-        mailData.put("COMPONENT", component);
-        ResourceBundle resources = ResourceBundle.getBundle(
-                "de.ingrid.portal.resources.AdminPortalResources",
-                Locale.GERMAN);
-        mailData.put("MESSAGES", new IngridResourceBundle(resources, Locale.GERMAN));
-        
-        String text = Utils.mergeTemplate(templatePath, mailData, "map");
-        
-        return Utils.sendEmail(from, emailSubject, new String[] { email }, text, null);
-        
-    }
 
 }

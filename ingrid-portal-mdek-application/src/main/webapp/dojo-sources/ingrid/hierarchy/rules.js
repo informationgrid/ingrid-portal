@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -87,7 +87,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 var dateValue = registry.byId("timeRefDate1").get("value");
                 var date2Widget = registry.byId("timeRefDate2");
                 //date2Widget.attr("value", dateValue);
-                if (!dateValue) {
+                if (dateValue) {
                     registry.byId("timeRefDate1").constraints.max = dateValue;
                     date2Widget.constraints.min = dateValue;
                 }
@@ -274,27 +274,47 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 else if (type == 3) UtilUI.updateEntryToConformityTable(40, deleteEntry);
                 else if (type == 5) UtilUI.updateEntryToConformityTable(43, deleteEntry);
             };
-            
+
             var updateSyslistServiceVersion = function(type) {
                 if (type == 1) registry.byId("ref3ServiceVersion").columns[0].listId = 5151;
                 else if (type == 2) registry.byId("ref3ServiceVersion").columns[0].listId = 5152;
                 else if (type == 3) registry.byId("ref3ServiceVersion").columns[0].listId = 5153;
                 else if (type == 4) registry.byId("ref3ServiceVersion").columns[0].listId = 5154;
                 else registry.byId("ref3ServiceVersion").columns[0].listId = null;
-            }
+            };
 
-            // react when service type has been changed
+            // switch codelists when service type changed
             on(registry.byId("ref3ServiceType"), "Change", function(value) {
                 var objClass = registry.byId("objectClass").get("value");
                 if (objClass == "Class3") {
-                    // remove all dependent types
-                    array.forEach(typesWithBehavior, function(type) {
-                        applySpecification(type, true);
-                    });
-                    // add possibly new type
-                    applySpecification(value, false);
                     // change syslist of supported versions
                     updateSyslistServiceVersion(value);
+                }
+            });
+
+            var handleConformityValue = function(value) {
+                // remove all dependent types
+                array.forEach(typesWithBehavior, function(type) {
+                    applySpecification(type, true);
+                });
+                // add possibly new type
+                applySpecification(value, false);
+            };
+
+            // on manual service type change automatically add/remove conformity entries to the table
+            aspect.after(registry.byId("ref3ServiceType"), "closeDropDown", function() {
+                var objClass = registry.byId("objectClass").get("value");
+                if (objClass == "Class3") {
+                    handleConformityValue(this.get("value"));
+                }
+            });
+
+            // execute behaviour when a new document is created
+            topic.subscribe("/afterInitDialog/CloseWizard", function() {
+                var objClass = registry.byId("objectClass").get("value");
+                if (objClass == "Class3") {
+                    var value = registry.byId("ref3ServiceType").get("value");
+                    handleConformityValue(value);
                 }
             });
 

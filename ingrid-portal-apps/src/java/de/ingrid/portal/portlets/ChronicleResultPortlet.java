@@ -61,18 +61,19 @@ import de.ingrid.utils.udk.UtilsDate;
 
 public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ChronicleResultPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ChronicleResultPortlet.class);
 
     /** view templates */
-    private final static String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
+    private static final String TEMPLATE_NO_QUERY = "/WEB-INF/templates/empty.vm";
 
-    private final static String TEMPLATE_RESULT = "/WEB-INF/templates/chronicle_result.vm";
+    private static final String TEMPLATE_RESULT = "/WEB-INF/templates/chronicle_result.vm";
 
-    private final static String TEMPLATE_NO_RESULT = "/WEB-INF/templates/chronicle_no_result.vm";
+    private static final String TEMPLATE_NO_RESULT = "/WEB-INF/templates/chronicle_no_result.vm";
 
     /** search page for "recherche" */
-    private final static String PAGE_SEARCH = "/portal/main-search.psml";
+    private static final String PAGE_SEARCH = "/portal/main-search.psml";
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         // set our message "scope" for inter portlet messaging
         setTopic(Settings.MSG_TOPIC_CHRONICLE);
@@ -80,6 +81,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -120,13 +122,13 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         // business logic
         // ----------------------------------
 
-        int HITS_PER_PAGE = Settings.SEARCH_RANKED_HITS_PER_PAGE;
+        int hitsPerPage = Settings.SEARCH_RANKED_HITS_PER_PAGE;
 
         // do search
         IngridHits hits = null;
         int numberOfHits = 0;
         try {
-            hits = doSearch(query, startHit, HITS_PER_PAGE, request, response);
+            hits = doSearch(query, startHit, hitsPerPage, request, response);
             if (hits != null) {
                 numberOfHits = (int) hits.length();
             }
@@ -144,7 +146,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         }
 
         // adapt settings of page navigation
-        Map<String, Object> pageNavigation = UtilsSearch.getPageNavigation(startHit, HITS_PER_PAGE, numberOfHits,
+        Map<String, Object> pageNavigation = UtilsSearch.getPageNavigation(startHit, hitsPerPage, numberOfHits,
                 Settings.SEARCH_RANKED_NUM_PAGES_TO_SELECT);
 
         // ----------------------------------
@@ -157,6 +159,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
         // get our ActionForm for generating URL params from current form input
@@ -187,7 +190,7 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
         IngridHit[] results = null;
         IngridHitDetail[] details = null;
         try {
-            int currentPage = (int) (startHit / hitsPerPage) + 1;
+            int currentPage = (startHit / hitsPerPage) + 1;
             IBUSInterface ibus = IBUSInterfaceImpl.getInstance();
 
             // due to a HACK, it is not possible to use the searchAndDetail-Method
@@ -300,14 +303,14 @@ public class ChronicleResultPortlet extends AbstractVelocityMessagingPortlet {
                          topic.put("samples", Arrays.asList(tmpArray));
                          topic.put("sampleTitles", Arrays.asList(tmpArray2));
                          */
-                    } catch (Throwable t) {
+                    } catch (Exception t) {
                         if (log.isErrorEnabled()) {
                             log.error("Problems processing " + i + ". Event, hit = " + topic + ", detail = " + detail, t);
                         }
                     }
                 }                
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems performing SNS Search ! results = " + results + ", details = " + details, t);
             }

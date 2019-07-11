@@ -481,28 +481,6 @@
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
     
-    <portlet id="AdminUserMigrationPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/administration/admin_user_migration.vm</value>
-        </init-param>
-        <portlet-name>AdminUserMigrationPortlet</portlet-name>
-        <display-name>AdminUserMigrationPortlet</display-name>
-        <description>The Portlet displays the portal user migration interface.</description>
-        <portlet-class>de.ingrid.portal.portlets.admin.AdminUserMigrationPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Portal User Migration</title>
-            <short-title>Portal User Migration</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
-    </portlet>
-        
     <!-- *********************** -->
     <!-- Home                    -->
     <!-- *********************** -->
@@ -619,7 +597,6 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.EnvironmentSearchResources</resource-bundle>
         <portlet-preferences>
-            <!-- 
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -628,7 +605,6 @@
                 <name>default-vertical-position</name>
                 <value>4</value>
             </preference>
-            -->
             <preference>
                 <name>titleKey</name>
                 <value>teaser.environment.title</value>
@@ -665,7 +641,6 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.RssNewsResources</resource-bundle>
         <portlet-preferences>
-            <!-- 
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -674,7 +649,6 @@
                 <name>default-vertical-position</name>
                 <value>3</value>
             </preference>
-            -->
             <preference>
                 <name>titleKey</name>
                 <value>news.teaser.title</value>
@@ -775,6 +749,14 @@
                 <name>helpKey</name>
                 <value>about-1</value>
             </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -798,6 +780,26 @@
             <preference>
                 <name>cmsKey</name>
                 <value>ingrid.disclaimer</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>disclaimer.title</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -838,6 +840,46 @@
         </portlet-preferences>
     </portlet>
     
+    <portlet id="SitemapPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>SitemapPortlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>sitemap.title</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/sitemap.vm</value>
+            </preference>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.privacy</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="IngridInformPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -908,7 +950,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>3</value>
+                <value>5</value>
             </preference>
             <preference>
                 <name>infoTemplate</name>
@@ -1400,7 +1442,7 @@
         <portlet-name>ShowMapsPortlet</portlet-name>
         <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsBawDmqsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1505,7 +1547,7 @@
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultBawDmqsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1532,7 +1574,7 @@
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
             <name>ViewPage</name>
-            <value>/WEB-INF/templates/search_detail.vm</value>
+            <value>/WEB-INF/templates/detail/search_detail_idf_2_0.vm</value>
         </init-param>
         <portlet-name>SearchDetail</portlet-name>
         <display-name>Detailinformation</display-name>
@@ -1613,7 +1655,7 @@
             <title>SprachUmsteller</title>
             <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
     
     <portlet id="LanguageSwitchMobile">
@@ -1635,6 +1677,6 @@
             <title>SprachUmsteller</title>
             <short-title>LangSwitch</short-title>
         </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.SearchExtendedResources</resource-bundle> 
+        <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
 </portlet-app>

@@ -183,7 +183,7 @@ require([
             console.debug("parent object uuid: "+parentObjectUuid);
             console.debug("parent address uuid: "+parentAddressUuid);
         
-            ImportService.startImportThread(this.currentFile, fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, copyNodeIfPresent, {
+            ImportService.startImportThread(fileType, parentObjectUuid, parentAddressUuid, publishImportedDatasets, separateImport, copyNodeIfPresent, {
                 callback: function(res){
                     setTimeout(refreshUrlProcessInfo, 2000);
                 },

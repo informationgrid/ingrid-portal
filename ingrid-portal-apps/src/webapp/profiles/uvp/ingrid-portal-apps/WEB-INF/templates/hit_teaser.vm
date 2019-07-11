@@ -1,0 +1,100 @@
+<div class="columns">
+    <div class="teaser-data-projects">
+        <div class="row">
+            <div class="xsmall-24 medium-15 xlarge-17 columns">
+                <h2 class="projects-header">Vorhaben im &Uuml;berblick</h2>
+            </div>
+            <!--
+            <div class="xsmall-24 medium-9 xlarge-7 columns">
+                <div class="form-element">
+                    <select class="location_select" id="location_1" name="location_1" multiple="" tabindex="-1" aria-hidden="true">
+                        <optgroup label="Orte">
+                            <option value="Darmstadt">Darmstadt</option>
+                            <option value="Darscheid">Darscheid</option>
+                            <option value="Dargun">Dargun</option>
+                        </optgroup>
+                        <optgroup label="Zuletzt besuchte Orte">
+                            <option value="berlin">Berlin</option>
+                            <option value="hamburg">Hamburg</option>
+                            <option value="darmstadt">Darmstadt</option>
+                        </optgroup>
+                    </select>
+                 </div>
+             </div>
+             -->
+        </div>
+        <div class="row">
+            <div class="columns">
+                #if($hits)
+                    #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                    #foreach($hit in $hits)
+                        <div class="teaser-data" onclick="location.href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'">
+                            <div class="data" >
+                                <div class="row">
+                                    <div class="xsmall-24 large-13 columns">
+                                        <div class="text-wrapper">
+                                            <div class="helper text">
+                                                <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
+                                            </div>
+                                            #set ($date = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
+                                            <h2 class="header">
+                                                $hit.getHitDetail().getTitle()
+                                            </h2>
+                                            #if($date)
+                                            <div class="helper text date">
+                                                <span class="">$date</span>
+                                            </div>
+                                            #end
+                                            <p class="data-text">$hit.getHitDetail().getSummary()</p>
+                                            #foreach($uvp_category in $hit.getHitDetail().getArray("uvp_category"))
+                                                <div class="helper icon">
+                                                    <span class="ic-ic-$uvp_category"></span>
+                                                    <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
+                                                </div>
+                                            #end
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()">
+                                                <span class="ic-ic-arrow arrow"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="xsmall-24 large-11 columns">
+                                        <div class="map-wrapper">
+                                            <div id="map-id-$hit.getHitDetail().getId()" class="map-teaser"></div>
+                                            #set($x1 = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "x1" ))
+                                            #set($x2 = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "x2" ))
+                                            #set($y1 = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "y1" ))
+                                            #set($y2 = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "y2" ))
+                                            
+                                            <script>
+                                                var bounds = null;
+                                                var southWest = null;
+                                                var northEast = null;
+                                                if ($x1.length() > 0 && $x2.length() > 0 && $y1.length() > 0 && $y2.length() > 0) {
+                                                    southWest = L.latLng($y1, $x1);
+                                                    northEast = L.latLng($y2, $x2);
+                                                    bounds = L.latLngBounds(southWest, northEast);
+                                                }
+                                                var map = addLeafletMapWithId('map-id-$hit.getHitDetail().getId()', getOSMLayer('<br>$MESSAGES.getString("common.map.info")'), bounds, new L.LatLng($UtilsSearch.getDetailValue( $hit.getHitDetail(), "lat_center" ), $UtilsSearch.getDetailValue( $hit.getHitDetail(), "lon_center" )), 10);
+                                                map.scrollWheelZoom.disable();
+                                                addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
+                                                if(bounds) {
+                                                    L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).addTo(map);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    #end
+                #else
+                #end
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns text-center">
+                <button type="button" class="button outline" onclick="location.href='$renderResponse.encodeURL("/portal/main-search.psml?rank=date")'" >Mehr anzeigen<span class="ic-ic-angle-down"></span></button>
+            </div>
+        </div>
+    </div>
+</div>

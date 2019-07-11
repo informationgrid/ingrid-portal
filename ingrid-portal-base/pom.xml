@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-base</artifactId>
@@ -113,6 +113,8 @@
             <exclude>**/*.sql</exclude>
             <exclude>**/*.xml</exclude>
             <exclude>**/*.xsl</exclude>
+            <exclude>**/*.svg</exclude>
+            <exclude>**/vendor/**/*</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -272,8 +274,15 @@
               <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/ingrid/css
               </destination>
             </resource>
+            <resource>
+              <!-- Set source and destination dirs -->
+              <source>
+                <directory>${project.basedir}/src/webapp/decorations/layout/uvp/css</directory>
+              </source>
+              <destination>${project.build.directory}/${project.build.finalName}/decorations/layout/uvp/css
+              </destination>
+            </resource>
           </resources>
-          <outputName>styles.css</outputName>
         </configuration>
       </plugin>
       <plugin>

@@ -7,6 +7,7 @@
         </svg>
     </div>
     <div id="facet_attribute_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$doAddAttribute || $doAddAttribute.size() == 0)is-hidden#end">
+        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
         <form action="$action" method="post">
             <p>
                 <input type="text" name="db_title" id="db_title" size="35" placeholder="$MESSAGES.getString("searchResult.facete.attribute.project")"

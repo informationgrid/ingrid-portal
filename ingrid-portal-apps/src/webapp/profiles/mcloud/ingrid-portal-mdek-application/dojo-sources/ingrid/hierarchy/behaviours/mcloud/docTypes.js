@@ -56,24 +56,29 @@ define(["dojo/_base/declare",
 
             // load custom syslists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
+
                 ids.push(8002);
 
-                setTimeout(function() {
-                    // document types
-                    sysLists[8002].push(["Dokument", "20", "N", ""]);
-                    // address types (only "Herausgeber")
-                    sysLists[505] = sysLists[505].filter(function(item) {
-                        return item[1] === "10";
-                    });
-                    // time ref types
-                    sysLists[502] = sysLists[502].filter(function(item) {
-                        return item[1] !== "2";
-                    });
-                    // remove communication items "Telex" and "X.400"
-                    sysLists[4430] = sysLists[4430].filter(function(item) {
-                        return item[1] !== "5" && item[1] !== "6";
-                    });
-                }, 200);
+            });
+
+            // modify loaded syslists after they have been loaded
+            topic.subscribe("/additionalSyslistsLoaded", function() {
+
+                // document types
+                sysLists[8002].push(["Dokument", "20", "N", ""]);
+                // address types (only "Herausgeber")
+                sysLists[505] = sysLists[505].filter(function(item) {
+                    return item[1] === "10";
+                });
+                // time ref types
+                sysLists[502] = sysLists[502].filter(function(item) {
+                    return item[1] !== "2";
+                });
+                // remove communication items "Telex" and "X.400"
+                sysLists[4430] = sysLists[4430].filter(function(item) {
+                    return item[1] !== "5" && item[1] !== "6";
+                });
+
             });
 
             // get availbale object classes from codelist 8001

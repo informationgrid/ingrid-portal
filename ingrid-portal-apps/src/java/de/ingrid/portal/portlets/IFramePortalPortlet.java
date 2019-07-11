@@ -54,10 +54,11 @@ import de.ingrid.portal.global.IngridResourceBundle;
 
 public class IFramePortalPortlet extends IFrameGenericPortlet {
 
-	private final static Logger log = LoggerFactory.getLogger(IFramePortalPortlet.class);
+	private static final Logger log = LoggerFactory.getLogger(IFramePortalPortlet.class);
 	
 	private PageManager pageManager;
 	
+	@Override
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);
 		 pageManager = (PageManager)getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
@@ -70,6 +71,7 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
 	/* (non-Javadoc)
 	 * @see org.apache.jetspeed.portlet.IFrameGenericPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
 	 */
+	@Override
 	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         
 		Context context = getContext(request);
@@ -96,7 +98,7 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
 	                for (int j = 0; j < f.getPreferences().size(); j++) {
 						FragmentPreference fp = f.getPreferences().get(j);
 						prefs.setValue(fp.getName(), fp.getValueList().get(0));
-					};
+					}
 			 }
 		} catch (PageNotFoundException e) {
             log.error("Error page not found '" + pw.getPath() + "'", e);
@@ -110,6 +112,7 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
 	/* (non-Javadoc)
 	 * @see org.apache.jetspeed.portlet.IFrameGenericPortlet#doEdit(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
 	 */
+	@Override
 	public void doEdit(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 		
 		Context context = getContext(request);
@@ -131,6 +134,7 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
 	/* (non-Javadoc)
 	 * @see org.apache.jetspeed.portlet.IFrameGenericPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
 	 */
+	@Override
 	public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
 		
 		// Edit fragment_pref 
@@ -145,10 +149,10 @@ public class IFramePortalPortlet extends IFrameGenericPortlet {
 	                for (int j = 0; j < f.getPreferences().size(); j++) {
 						FragmentPreference fp = f.getPreferences().get(j);
 						Map<String, String[]> map = request.getParameterMap();
-						List<String> l = new ArrayList<String>();
+						List<String> l = new ArrayList<>();
 						l.add(map.get(fp.getName())[0]);
 						fp.setValueList(l);
-					};
+					}
 			 }
 			 pageManager.updatePage(myPage);
 		} catch (PageNotFoundException e) {

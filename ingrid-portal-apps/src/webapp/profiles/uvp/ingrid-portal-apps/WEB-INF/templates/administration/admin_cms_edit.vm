@@ -1,0 +1,80 @@
+<div class="columns">
+    #set ($action = $renderResponse.createActionURL())
+    <form class="form" action="$action" method="post" name="frmEditCMS" id="frmEditCMS">
+        <input type="hidden" name="mode" value="$mode"/>
+        
+        #if ($mode == 'edit')
+            <h2>$MESSAGES.getString('admin.cms.entry.update')</h2>
+        #elseif ($mode == 'new')
+            <h2>$MESSAGES.getString('admin.cms.entry.new')</h2>
+        #end
+        #displayFormError()
+        #displayFormMessages()
+        #foreach ($dbEntity in $dbEntities)
+            #renderDBEditId($mode $dbEntity.id)
+            <hr />
+            <div class="form-element">
+                <label for="item_key">$MESSAGES.getString('admin.cms.item.key')*</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey" #addErrorFormClass('item_key')/>
+                #addErrorFormMessage('item_key')
+            </div>
+            <div class="form-element">
+                <label for="item_description">#displayFieldLabel("item_description" "$MESSAGES.getString('admin.cms.item.description')")</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="item_description" name="item_description" value="$!dbEntity.itemDescription"/>
+            </div>
+            #set($i=0)
+            #foreach($lang in $languagesShort)
+                <hr />
+                ## first check if en entry already exists (not an empty string!)
+                #set($item = "$!dbEntity.getLocalizedEntry($lang)")
+                ## if so, then get the item as an object so that you can access the data
+                #if($item)
+                    #set($item = $dbEntity.getLocalizedEntry($lang))
+                #end
+                <div class="form-element">
+                    <label for="title_$lang">#displayFieldLabel("title_$lang" "$MESSAGES.getString('admin.cms.item.title') ($ListTool.get($languagesNames, $i))")</label>
+                </div>
+                <div class="form-element">
+                    <input type="text" id="title_$lang" name="title_$lang" value="$!UtilsString.htmlescape($item.itemTitle)"/>
+                </div>
+                <div class="form-element">
+                    <label for="value_$lang">$MESSAGES.getString('admin.cms.item.content') ($ListTool.get($languagesNames, $i))*</label>
+                </div>
+                <div class="form-element">
+                    <textarea class="custom-scrollbar" cols="125" rows="10" name="value_$lang" id="value_$lang" #addErrorFormClass("value_$lang")>$!item.itemValue</textarea>
+                    #addErrorFormMessage("value_$lang")
+                </div>
+                #if ($mode == 'edit')
+                    <div class="form-element">
+                        <label>$MESSAGES.getString('admin.cms.changed.on')</label>
+                    </div>
+                    <div class="form-element">
+                        <p>$!item.itemChanged.toString()</p>
+                    </div>
+                    <div class="form-element">
+                        <label>$MESSAGES.getString('admin.cms.changed.by')</label>
+                    </div>
+                    <div class="form-element">
+                        <p>$!item.itemChangedBy</p>
+                    </div>
+                #end
+                #set($i=$i+1)
+            #end
+        #end
+        <hr>
+        <div class="subtext-submit">
+            <h6>* Pflichtangaben</h6>
+            #renderDBEditFooter($mode)
+        </div>
+    </form>
+</div>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('frmEditCMS');
+    }
+</script>

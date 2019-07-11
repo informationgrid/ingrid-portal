@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 
@@ -52,7 +51,7 @@ import de.ingrid.mdek.util.MdekObjectUtils;
 
 public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
 
-    private final static Logger log = Logger.getLogger(ObjectServiceImpl.class);	
+    private static final Logger log = Logger.getLogger(ObjectServiceImpl.class);	
 
 	// Injected by Spring
 	private ObjectRequestHandler objectRequestHandler;
@@ -62,10 +61,10 @@ public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
     private SNSService snsService;
     private CatalogService catalogService;
 
-	private final static String OBJECT_APPTYPE = "O";
-	private final static String OBJECT_INITIAL_DOCTYPE = "Class0_B";
+	private static final String OBJECT_APPTYPE = "O";
+	private static final String OBJECT_INITIAL_DOCTYPE = "Class0_B";
 
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+    public void setBeanFactory(BeanFactory beanFactory) {
         this.beanFactory = beanFactory;
         this.snsService = (SNSService) this.beanFactory.getBean("snsService");
         this.catalogService = (CatalogService) this.beanFactory.getBean("catalogService");
@@ -214,9 +213,6 @@ public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
 			throw e;
 		}
 
-		// Return a newly created node
-		if (data == null) {;}
-
 		return data;
 	}
 
@@ -229,9 +225,6 @@ public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
 			log.error("Error while getting published node data.", e);
 			throw e;
 		}
-
-		// Return a newly created node
-		if (data == null) {;}
 
 		return data;
 	}
@@ -308,26 +301,22 @@ public class ObjectServiceImpl implements ObjectService, BeanFactoryAware {
 	 * @param data DataBean where SNSTopics (of source GEMET) will be fixed !
 	 */
 	private void fixGEMETTerms(MdekDataBean data) {
-        if (snsService.getThesaurusService() instanceof GEMETService) {
-            if (((GEMETService) snsService.getThesaurusService()).getAlternateLanguage() != null) {
+        if (snsService.getThesaurusService() instanceof GEMETService && ((GEMETService) snsService.getThesaurusService()).getAlternateLanguage() != null) {
 
-                // fetch catalog language
-                Locale catalogLocale = new Locale( catalogService.getCatalogData().getLanguageShort() );
+            // fetch catalog language
+            Locale catalogLocale = new Locale( catalogService.getCatalogData().getLanguageShort() );
 
-                // check GEMET terms for additional localization and fetch again if not set yet !
-                List<SNSTopic> topics = data.getThesaurusTermsTable();
-                for (int i=0; i<topics.size(); i++) {
-                    SNSTopic topic = topics.get( i );
-                    if (SNSTopic.Source.GEMET.equals( topic.getSource() )) {
-                        if (topic.getAlternateTitle() == null) {
-                            // fetch again from backend WITH alternate title (additional localization)
-                            // alternateTitle is always set when fetching single term via ID (in GEMET service !)
-                            topics.set( i, snsService.getPSI( topic.getTopicId(), catalogLocale ));
-                        }
-                    }
-                }               
+            // check GEMET terms for additional localization and fetch again if not set yet !
+            List<SNSTopic> topics = data.getThesaurusTermsTable();
+            for (int i=0; i<topics.size(); i++) {
+                SNSTopic topic = topics.get( i );
+                if (SNSTopic.Source.GEMET.equals( topic.getSource() ) && topic.getAlternateTitle() == null) {
+                    // fetch again from backend WITH alternate title (additional localization)
+                    // alternateTitle is always set when fetching single term via ID (in GEMET service !)
+                    topics.set( i, snsService.getPSI( topic.getTopicId(), catalogLocale ));
+                }
             }
-        }	    
+        }
 	}
 
 	public MdekDataBean saveObjectPublicationCondition(String uuid, Boolean useWorkingCopy, Integer newPublicationCondition, boolean forcePublicationCondition) {

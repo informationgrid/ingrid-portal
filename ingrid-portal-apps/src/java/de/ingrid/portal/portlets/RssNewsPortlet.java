@@ -35,7 +35,6 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 
-import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.hibernate.HibernateUtil;
@@ -46,13 +45,13 @@ import de.ingrid.portal.om.IngridRSSStore;
 public class RssNewsPortlet extends GenericVelocityPortlet
 {
 
-    public void init(PortletConfig config) throws PortletException
-    {
+    @Override
+    public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }    
     
-    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException
-    {
+    @Override
+    public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         
         Context context = getContext(request);
 
@@ -84,7 +83,7 @@ public class RssNewsPortlet extends GenericVelocityPortlet
             tx = session.beginTransaction();
             rssEntries = session.createCriteria(IngridRSSStore.class).addOrder(Order.desc("publishedDate")).list();
             tx.commit();
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (tx != null) {
                 tx.rollback();
             }

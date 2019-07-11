@@ -54,7 +54,7 @@ import edu.emory.mathcs.backport.java.util.Arrays;
 @Service
 public class MdekMapper implements DataMapperInterface {
 
-    private final static Logger log = Logger.getLogger(MdekMapper.class);
+    private static final Logger log = Logger.getLogger(MdekMapper.class);
     
     @Autowired
     private SysListCache sysListMapper;
@@ -62,7 +62,7 @@ public class MdekMapper implements DataMapperInterface {
     private ResourceBundle snsResourceBundle;
 
     // Init Method is called by the Spring Framework on initialization
-    public void init() throws Exception {
+    public void init() {
         // Fetch the sns resource bundle for location topic type mapping
         // this bundle is included in the external-service-sns lib!
         snsResourceBundle = ResourceBundle.getBundle("mapping");
@@ -77,7 +77,7 @@ public class MdekMapper implements DataMapperInterface {
 
         MdekDataBean mdekObj = new MdekDataBean();
         
-        boolean isOpenData = "Y".equals(obj.get(MdekKeys.IS_OPEN_DATA)) ? true : false;
+        boolean isOpenData = "Y".equals(obj.get(MdekKeys.IS_OPEN_DATA));
 
         // General
         mdekObj.setToBePublishedOn((Date) obj.get(MdekKeys.TO_BE_PUBLISHED_ON));
@@ -100,7 +100,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setObjectOwner(responsibleUser.getUuid());
         }
         
-        mdekObj.setAdvCompatible( "Y".equals(obj.get(MdekKeys.IS_ADV_COMPATIBLE)) ? true : false );
+        mdekObj.setAdvCompatible( "Y".equals(obj.get(MdekKeys.IS_ADV_COMPATIBLE)) );
 
         // QA Fields
         MdekAddressBean assignerUser = getDetailedAddressRepresentation((IngridDocument) obj.get(MdekKeys.ASSIGNER_USER));
@@ -156,7 +156,6 @@ public class MdekMapper implements DataMapperInterface {
         mdekObj.setSpatialRefAltMin((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MINIMUM));
         mdekObj.setSpatialRefAltMax((Double) obj.get(MdekKeys.VERTICAL_EXTENT_MAXIMUM));
         mdekObj.setSpatialRefAltMeasure((Integer) obj.get(MdekKeys.VERTICAL_EXTENT_UNIT));
-        //mdekObj.setSpatialRefAltVDate((Integer) obj.get(MdekKeys.VERTICAL_EXTENT_VDATUM));
         KeyValuePair kvp = mapToKeyValuePair(obj, MdekKeys.VERTICAL_EXTENT_VDATUM_KEY, MdekKeys.VERTICAL_EXTENT_VDATUM_VALUE);
         mdekObj.setSpatialRefAltVDate(kvp.getValue());           
 
@@ -192,7 +191,7 @@ public class MdekMapper implements DataMapperInterface {
         // Inspire field
         mdekObj.setAvailabilityAccessConstraints(mapToAvailAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.ACCESS_LIST)));
         mdekObj.setAvailabilityUseAccessConstraints(mapToAvailUseAccessConstraintsTable((List<IngridDocument>) obj.get(MdekKeys.USE_CONSTRAINTS)));
-        mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST), isOpenData));
+        mdekObj.setAvailabilityUseConstraints(mapToAvailUseConstraints((List<IngridDocument>) obj.get(MdekKeys.USE_LIST)));
         
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
         // NOTICE: always map this one (maps default value if not set), although only displayed in class 1
@@ -211,11 +210,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setThesaurusTopicsList(intList);
 
         String isCatalogStr = (String) obj.get(MdekKeys.IS_CATALOG_DATA);
-        if (isCatalogStr != null && isCatalogStr.equalsIgnoreCase("Y")) {
-            mdekObj.setThesaurusEnvExtRes(true);
-        } else {
-            mdekObj.setThesaurusEnvExtRes(false);
-        }
+        mdekObj.setThesaurusEnvExtRes(isCatalogStr != null && isCatalogStr.equalsIgnoreCase("Y"));
 
         intList = (List<Integer>) obj.get(MdekKeys.ENV_TOPICS);
         if (intList != null)
@@ -251,8 +246,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setDq126Table(mapToDqTable(126, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq127Table(mapToDqTable(127, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
-            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
-            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
+            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)));
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)));
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             
@@ -264,18 +259,18 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
             mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
             
-            mdekObj.setRef1GridFormatTransfParam("Y".equals(td1Map.get( MdekKeys.TRANSFORMATION_PARAMETER )) ? true : false);
+            mdekObj.setRef1GridFormatTransfParam("Y".equals(td1Map.get( MdekKeys.TRANSFORMATION_PARAMETER )));
             mdekObj.setRef1GridFormatNumDimensions((Integer) td1Map.get( MdekKeys.NUM_DIMENSIONS ));
             mdekObj.setRef1GridFormatAxisDimName((String) td1Map.get( MdekKeys.AXIS_DIM_NAME ));
             mdekObj.setRef1GridFormatAxisDimSize((Integer) td1Map.get( MdekKeys.AXIS_DIM_SIZE ));
             mdekObj.setRef1GridFormatCellGeometry((String) td1Map.get( MdekKeys.CELL_GEOMETRY ));
-            mdekObj.setRef1GridFormatGeoRectified("Y".equals(td1Map.get( MdekKeys.GEO_RECTIFIED )) ? true : false);
-            mdekObj.setRef1GridFormatRectCheckpoint("Y".equals(td1Map.get( MdekKeys.GEO_RECT_CHECKPOINT )) ? true : false);
+            mdekObj.setRef1GridFormatGeoRectified("Y".equals(td1Map.get( MdekKeys.GEO_RECTIFIED )));
+            mdekObj.setRef1GridFormatRectCheckpoint("Y".equals(td1Map.get( MdekKeys.GEO_RECT_CHECKPOINT )));
             mdekObj.setRef1GridFormatRectDescription((String) td1Map.get( MdekKeys.GEO_RECT_DESCRIPTION ));
             mdekObj.setRef1GridFormatRectCornerPoint((String) td1Map.get( MdekKeys.GEO_RECT_CORNER_POINT ));
             mdekObj.setRef1GridFormatRectPointInPixel((String) td1Map.get( MdekKeys.GEO_RECT_POINT_IN_PIXEL ));
-            mdekObj.setRef1GridFormatRefControlPoint("Y".equals(td1Map.get( MdekKeys.GEO_REF_CONTROL_POINT )) ? true : false);
-            mdekObj.setRef1GridFormatRefOrientationParam("Y".equals(td1Map.get( MdekKeys.GEO_REF_ORIENTATION_PARAM )) ? true : false);
+            mdekObj.setRef1GridFormatRefControlPoint("Y".equals(td1Map.get( MdekKeys.GEO_REF_CONTROL_POINT )));
+            mdekObj.setRef1GridFormatRefOrientationParam("Y".equals(td1Map.get( MdekKeys.GEO_REF_ORIENTATION_PARAM )));
             mdekObj.setRef1GridFormatRefGeoreferencedParam((String) td1Map.get( MdekKeys.GEO_REF_PARAMETER ));
             
             mdekObj.setRef1Coverage((Double) td1Map.get(MdekKeys.DEGREE_OF_RECORD));
@@ -322,8 +317,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef2Explanation((String) td2Map.get(MdekKeys.DESCRIPTION_OF_TECH_DOMAIN));
             break;
         case 3:
-            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
-            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
+            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)));
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)));
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td3Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
@@ -333,7 +328,7 @@ public class MdekMapper implements DataMapperInterface {
 
             Integer serviceType = (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY);
             mdekObj.setRef3ServiceType(serviceType);
-            mdekObj.setRef3AtomDownload("Y".equals(td3Map.get(MdekKeys.HAS_ATOM_DOWNLOAD)) ? true : false);            
+            mdekObj.setRef3AtomDownload("Y".equals(td3Map.get(MdekKeys.HAS_ATOM_DOWNLOAD)));
             mdekObj.setRef3CouplingType(td3Map.getString(MdekKeys.COUPLING_TYPE));
             mdekObj.setRef3ServiceTypeTable(mapToServiceTypeTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_TYPE2_LIST)));
 
@@ -345,11 +340,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef3Scale(mapToScaleTable((List<IngridDocument>) td3Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
             mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
             String ref3HasAccessConstraint = (String) td3Map.get(MdekKeys.HAS_ACCESS_CONSTRAINT);
-            if (ref3HasAccessConstraint != null && ref3HasAccessConstraint.equalsIgnoreCase("Y")) {
-                mdekObj.setRef3HasAccessConstraint(true);
-            } else {
-                mdekObj.setRef3HasAccessConstraint(false);
-            }
+            mdekObj.setRef3HasAccessConstraint(ref3HasAccessConstraint != null && ref3HasAccessConstraint.equalsIgnoreCase("Y"));
 
             break;
         case 4:
@@ -372,8 +363,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef5dbContent(mapToDbContentTable((List<IngridDocument>) td5Map.get(MdekKeys.PARAMETERS)));
             break;
         case 6:
-            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)) ? true : false);
-            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)) ? true : false);
+            mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)));
+            mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)));
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
             IngridDocument td6Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_SERVICE);
@@ -390,6 +381,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef6UrlList(mapToUrlList((List<IngridDocument>)td6Map.get(MdekKeys.URL_LIST)));
 
             break;
+        default:
         }
         
         
@@ -480,7 +472,7 @@ public class MdekMapper implements DataMapperInterface {
         mdekAddress.setTitleOrFunction(mapToKeyValuePair(adr, MdekKeys.TITLE_OR_FUNCTION_KEY, MdekKeys.TITLE_OR_FUNCTION).getValue());
         mdekAddress.setAdministrativeArea(mapToKeyValuePair(adr, MdekKeys.ADMINISTRATIVE_AREA_CODE, MdekKeys.ADMINISTRATIVE_AREA_NAME).getValue());
         mdekAddress.setCountryName(mapToKeyValuePair(adr, MdekKeys.COUNTRY_CODE, MdekKeys.COUNTRY_NAME).getValue());
-        mdekAddress.setHideAddress("Y".equals(adr.get(MdekKeys.HIDE_ADDRESS)) ? true : false);
+        mdekAddress.setHideAddress("Y".equals(adr.get(MdekKeys.HIDE_ADDRESS)));
 
         // Common information
         mdekAddress.setStreet((String) adr.get(MdekKeys.STREET));
@@ -536,7 +528,7 @@ public class MdekMapper implements DataMapperInterface {
     private static String getObjectDocType(IngridDocument obj) {
         String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
         String workState = (String) obj.get(MdekKeys.WORK_STATE); 
-        Boolean isPublished = (Boolean) obj.get(MdekKeys.IS_PUBLISHED) == null ? false : (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
+        Boolean isPublished = (Boolean) obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
 
         if (workState != null) {
             if (workState.equals("V") && isPublished) {
@@ -554,7 +546,7 @@ public class MdekMapper implements DataMapperInterface {
         String nodeDocType = null;
         Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
         String workState = (String) adr.get(MdekKeys.WORK_STATE); 
-        Boolean isPublished = (Boolean) adr.get(MdekKeys.IS_PUBLISHED) == null ? false : (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
+        Boolean isPublished = (Boolean) adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
 
         if (adrClass == null)
                 return "Institution_B";
@@ -622,7 +614,7 @@ public class MdekMapper implements DataMapperInterface {
         treeNode.setIsFolder((Boolean) doc.get(MdekKeys.HAS_CHILD));
         treeNode.setIsPublished((Boolean) doc.get(MdekKeys.IS_PUBLISHED));
         treeNode.setWorkState((String) doc.get(MdekKeys.WORK_STATE)); 
-        boolean markedDeleted = doc.get(MdekKeys.MARK_DELETED) == null ? false : ((String) doc.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
+        boolean markedDeleted = doc.get(MdekKeys.MARK_DELETED) != null && ((String) doc.get(MdekKeys.MARK_DELETED)).equalsIgnoreCase("Y");
         treeNode.setIsMarkedDeleted(markedDeleted);
         List<IngridDocument> idcPermissions = (List<IngridDocument>) doc.get(MdekKeysSecurity.IDC_PERMISSIONS);
         treeNode.setUserWritePermission(hasWritePermission(idcPermissions));
@@ -681,6 +673,7 @@ public class MdekMapper implements DataMapperInterface {
         case 1000:
             title = adr.getString( MdekKeys.NAME );
             break;
+        default:
         }
 
         return title;
@@ -727,7 +720,7 @@ public class MdekMapper implements DataMapperInterface {
             udkAdr.put(MdekKeys.COUNTRY_CODE, kvp.getKey());
         }
         Boolean hideAddress = data.getHideAddress();
-        if (hideAddress != null && hideAddress == true)
+        if (hideAddress != null && hideAddress)
         	udkAdr.put(MdekKeys.HIDE_ADDRESS, "Y");
         else
         	udkAdr.put(MdekKeys.HIDE_ADDRESS, "N");
@@ -773,7 +766,7 @@ public class MdekMapper implements DataMapperInterface {
         IngridDocument responsibleUser = new IngridDocument();
         responsibleUser.put(MdekKeys.UUID, data.getObjectOwner());
         udkObj.put(MdekKeys.RESPONSIBLE_USER, responsibleUser);
-        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() != null && data.getAdvCompatible() == true ? "Y" : "N");
+        udkObj.put(MdekKeys.IS_ADV_COMPATIBLE, data.getAdvCompatible() != null && data.getAdvCompatible() ? "Y" : "N");
         
         // extrahieren des int Wertes für die Objekt-Klasse
         udkObj.put(MdekKeys.CLASS, data.getObjectClass());
@@ -863,14 +856,14 @@ public class MdekMapper implements DataMapperInterface {
 
         // determine inspire relevant value
         Boolean isInspireRelevant = data.getInspireRelevant();
-        String isInspireRelevantValue = (isInspireRelevant != null && isInspireRelevant == true) ? "Y" : "N";
+        String isInspireRelevantValue = (isInspireRelevant != null && isInspireRelevant) ? "Y" : "N";
         Boolean isInspireConform = data.getInspireConform();
-        String isInspireConformValue = (isInspireConform != null && isInspireConform == true) ? "Y" : "N";
+        String isInspireConformValue = (isInspireConform != null && isInspireConform) ? "Y" : "N";
         
         // determine open data value
         Boolean isOpenData = data.getOpenData();
         String isOpenDataValue = "N";
-        if (isOpenData != null && isOpenData == true)
+        if (isOpenData != null && isOpenData)
             isOpenDataValue = "Y";
         
         int objClass = data.getObjectClass() != null ? data.getObjectClass() : 0; 
@@ -902,18 +895,18 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
             td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
             
-            td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() != null && data.getRef1GridFormatTransfParam() == true ? "Y" : "N");
+            td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() != null && data.getRef1GridFormatTransfParam() ? "Y" : "N");
             td1Map.put( MdekKeys.NUM_DIMENSIONS, data.getRef1GridFormatNumDimensions());
             td1Map.put( MdekKeys.AXIS_DIM_NAME, data.getRef1GridFormatAxisDimName() );
             td1Map.put( MdekKeys.AXIS_DIM_SIZE, data.getRef1GridFormatAxisDimSize() );
             td1Map.put( MdekKeys.CELL_GEOMETRY, data.getRef1GridFormatCellGeometry() );
-            td1Map.put( MdekKeys.GEO_RECTIFIED, data.getRef1GridFormatGeoRectified() != null && data.getRef1GridFormatGeoRectified() == true ? "Y" : "N");
-            td1Map.put( MdekKeys.GEO_RECT_CHECKPOINT, data.getRef1GridFormatRectCheckpoint() != null && data.getRef1GridFormatRectCheckpoint() == true ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECTIFIED, data.getRef1GridFormatGeoRectified() != null && data.getRef1GridFormatGeoRectified() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECT_CHECKPOINT, data.getRef1GridFormatRectCheckpoint() != null && data.getRef1GridFormatRectCheckpoint() ? "Y" : "N");
             td1Map.put( MdekKeys.GEO_RECT_DESCRIPTION, data.getRef1GridFormatRectDescription());
             td1Map.put( MdekKeys.GEO_RECT_CORNER_POINT, data.getRef1GridFormatRectCornerPoint());
             td1Map.put( MdekKeys.GEO_RECT_POINT_IN_PIXEL, data.getRef1GridFormatRectPointInPixel());
-            td1Map.put( MdekKeys.GEO_REF_CONTROL_POINT, data.getRef1GridFormatRefControlPoint() != null && data.getRef1GridFormatRefControlPoint() == true ? "Y" : "N");
-            td1Map.put( MdekKeys.GEO_REF_ORIENTATION_PARAM, data.getRef1GridFormatRefOrientationParam() != null && data.getRef1GridFormatRefOrientationParam() == true ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_REF_CONTROL_POINT, data.getRef1GridFormatRefControlPoint() != null && data.getRef1GridFormatRefControlPoint() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_REF_ORIENTATION_PARAM, data.getRef1GridFormatRefOrientationParam() != null && data.getRef1GridFormatRefOrientationParam() ? "Y" : "N");
             td1Map.put( MdekKeys.GEO_REF_PARAMETER, data.getRef1GridFormatRefGeoreferencedParam());
             
             td1Map.put(MdekKeys.DEGREE_OF_RECORD, data.getRef1Coverage());
@@ -1024,7 +1017,7 @@ public class MdekMapper implements DataMapperInterface {
             td6Map.put(MdekKeys.URL_LIST, mapFromUrlListTable(data.getRef6UrlList()));
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td6Map);
             break;
-            
+        default:
         }
 
         cleanUpHashMap(udkObj);
@@ -1052,7 +1045,7 @@ public class MdekMapper implements DataMapperInterface {
         // Set default values for a new object.
         // The default in obj will be set iff the corresponding values are null or empty lists.
 
-        if ((null == obj.getRef1SpatialSystemTable() || obj.getRef1SpatialSystemTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(100)) {
+        if ((null == obj.getRef1SpatialSystemTable() || obj.getRef1SpatialSystemTable().isEmpty()) && null != sysListMapper.getInitialKeyFromListId(100)) {
             obj.setRef1SpatialSystemTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(100) }));
         }
         
@@ -1065,16 +1058,16 @@ public class MdekMapper implements DataMapperInterface {
         if (null == obj.getRef1DataSet()) {
             obj.setRef1DataSet(sysListMapper.getInitialKeyFromListId(525));
         }
-        if ((null == obj.getRef1Representation() || obj.getRef1Representation().size() == 0) && null != sysListMapper.getInitialKeyFromListId(526)) {
+        if ((null == obj.getRef1Representation() || obj.getRef1Representation().isEmpty()) && null != sysListMapper.getInitialKeyFromListId(526)) {
             obj.setRef1Representation(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(526) }));
         }
-        if ((null == obj.getThesaurusTopicsList() || obj.getThesaurusTopicsList().size() == 0) && null != sysListMapper.getInitialKeyFromListId(527)) {
+        if ((null == obj.getThesaurusTopicsList() || obj.getThesaurusTopicsList().isEmpty()) && null != sysListMapper.getInitialKeyFromListId(527)) {
             obj.setThesaurusTopicsList(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(527) }));
         }
-        if ((null == obj.getExtraInfoLegalBasicsTable() || obj.getExtraInfoLegalBasicsTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(1350)) {
+        if ((null == obj.getExtraInfoLegalBasicsTable() || obj.getExtraInfoLegalBasicsTable().isEmpty()) && null != sysListMapper.getInitialKeyFromListId(1350)) {
             obj.setExtraInfoLegalBasicsTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(1350) }));
         }
-        if ((null == obj.getExtraInfoXMLExportTable() || obj.getExtraInfoXMLExportTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(1370)) {
+        if ((null == obj.getExtraInfoXMLExportTable() || obj.getExtraInfoXMLExportTable().isEmpty()) && null != sysListMapper.getInitialKeyFromListId(1370)) {
             obj.setExtraInfoXMLExportTable(Arrays.asList(new String[] { sysListMapper.getInitialValueFromListId(1370) }));
         }
         if (null == obj.getRef2DocumentType()) {
@@ -1083,12 +1076,12 @@ public class MdekMapper implements DataMapperInterface {
         if (null == obj.getRef3ServiceType()) {
             obj.setRef3ServiceType(sysListMapper.getInitialKeyFromListId(5100));
         }
-        if ((null == obj.getRef3ServiceTypeTable() || obj.getRef3ServiceTypeTable().size() == 0) && null != sysListMapper.getInitialKeyFromListId(5200)) {
+        if ((null == obj.getRef3ServiceTypeTable() || obj.getRef3ServiceTypeTable().isEmpty()) && null != sysListMapper.getInitialKeyFromListId(5200)) {
             obj.setRef3ServiceTypeTable(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(5200) }));
         }
 
         if (null != sysListMapper.getInitialKeyFromListId(99999999)) {
-            if ((null == obj.getExtraInfoLangDataTable() || obj.getExtraInfoLangDataTable().size() == 0)) {
+            if ((null == obj.getExtraInfoLangDataTable() || obj.getExtraInfoLangDataTable().isEmpty())) {
                 obj.setExtraInfoLangDataTable(Arrays.asList(new Integer[] { sysListMapper.getInitialKeyFromListId(99999999) }));
             }
             if (null == obj.getExtraInfoLangMetaDataCode()) {
@@ -1134,7 +1127,7 @@ public class MdekMapper implements DataMapperInterface {
             if (val != null && val.trim().length() == 0) {
                 val = null;
             }
-            return new KeyValuePair(new Integer(-1), val);
+            return new KeyValuePair(-1, val);
         } else {
             return new KeyValuePair(k, null);
         }
@@ -1157,17 +1150,17 @@ public class MdekMapper implements DataMapperInterface {
             if (key != null) {
                 // Found special address ref
                 mappedEntry.put(MdekKeys.RELATION_TYPE_ID, key);
-                mappedEntry.put(MdekKeys.RELATION_TYPE_REF, new Integer(MDEK_ADDRESS_REF_SPECIAL_ID));              
+                mappedEntry.put(MdekKeys.RELATION_TYPE_REF, MDEK_ADDRESS_REF_SPECIAL_ID);
             } else {
                 key = sysListMapper.getKeyFromListId(MDEK_ADDRESS_REF_ID, val);
                 if (key != null) {
                     // Found normal address ref
                     mappedEntry.put(MdekKeys.RELATION_TYPE_ID, key);
-                    mappedEntry.put(MdekKeys.RELATION_TYPE_REF, new Integer(MDEK_ADDRESS_REF_ID));                  
+                    mappedEntry.put(MdekKeys.RELATION_TYPE_REF, MDEK_ADDRESS_REF_ID);
                 } else {
                     // Could not resolve -> free entry
                     mappedEntry.put(MdekKeys.RELATION_TYPE_NAME, val);
-                    mappedEntry.put(MdekKeys.RELATION_TYPE_ID, new Integer(-1));                    
+                    mappedEntry.put(MdekKeys.RELATION_TYPE_ID, -1);
                 }
             }
 
@@ -1206,7 +1199,7 @@ public class MdekMapper implements DataMapperInterface {
             return resultList;
 
         for (MdekDataBean obj : objList) {
-            IngridDocument mappedEntry = (IngridDocument) convertFromObjectRepresentation(obj);
+            IngridDocument mappedEntry = convertFromObjectRepresentation(obj);
             resultList.add(mappedEntry);
         }
 
@@ -1519,7 +1512,6 @@ public class MdekMapper implements DataMapperInterface {
             for (Integer identifier : advProductGroupList) {
                 IngridDocument res = new IngridDocument();
                 res.put(MdekKeys.ADV_PRODUCT_KEY, identifier);
-                // res.put(MdekKeys.ADV_PRODUCT_VALUE, );
                 
                 resultList.add(res);
             }
@@ -1684,7 +1676,7 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument result = new IngridDocument();
             if (serviceType == 5 || serviceType == 6) {
                 result.put(MdekKeys.SERVICE_OPERATION_NAME, op.getName());
-                result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, new Integer(-1));
+                result.put(MdekKeys.SERVICE_OPERATION_NAME_KEY, -1);
             } else {
                 KeyValuePair kvp = mapFromKeyValue(MdekKeys.SERVICE_OPERATION_NAME_KEY+"."+serviceType, op.getName());
                 if (kvp.getValue() != null || kvp.getKey() != -1) {
@@ -1981,7 +1973,6 @@ public class MdekMapper implements DataMapperInterface {
             if (locationType.equals("F")) {
                 LocationBean loc = new LocationBean(); 
                 loc.setType((String) location.get(MdekKeys.LOCATION_TYPE));
-//              loc.setName((String) location.get(MdekKeys.LOCATION_NAME));
                 KeyValuePair kvp = mapToKeyValuePair(location, MdekKeys.LOCATION_NAME_KEY, MdekKeys.LOCATION_NAME);
                 loc.setName(kvp.getValue());
                 loc.setLongitude1((Double) location.get(MdekKeys.WEST_BOUNDING_COORDINATE));
@@ -2113,7 +2104,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
     /** Map only first element ! UseConstraints was a table, now a text field, see INGRID32-45 */
-    private String mapToAvailUseConstraints(List<IngridDocument> docList, boolean isOpenData) {
+    private String mapToAvailUseConstraints(List<IngridDocument> docList) {
         String result = null;
 
         if (docList != null) {
@@ -2124,7 +2115,6 @@ public class MdekMapper implements DataMapperInterface {
                 if (kvp.getValue() != null) result += kvp.getValue() + "\n";
                 // use only FIRST element, ignore rest (will be deleted on save !). was a table, now a text field, see INGRID32-45
                 // -> NO! MERGE all elements into the new text area!
-                //break;
             }
             // in case docList is empty make sure we return a null value
             if (result.isEmpty()) {
@@ -2153,7 +2143,7 @@ public class MdekMapper implements DataMapperInterface {
     /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
     private String mapToAvailDataFormatInspire(List<IngridDocument> refList) {
         String result = null;
-        if (refList != null && refList.size() > 0) {
+        if (refList != null && !refList.isEmpty()) {
             IngridDocument ref = refList.get(0);
             KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_KEY, MdekKeys.FORMAT_VALUE);
             result = kvp.getValue();
@@ -2173,7 +2163,6 @@ public class MdekMapper implements DataMapperInterface {
             DataFormatBean df = new DataFormatBean();
             KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_NAME_KEY, MdekKeys.FORMAT_NAME);
             df.setName(kvp.getValue());
-//          df.setNameKey(kvp.getKey());
             df.setCompression((String) ref.get(MdekKeys.FORMAT_FILE_DECOMPRESSION_TECHNIQUE));
             df.setPixelDepth((String) ref.get(MdekKeys.FORMAT_SPECIFICATION));
             df.setVersion((String) ref.get(MdekKeys.FORMAT_VERSION));
@@ -2480,7 +2469,7 @@ public class MdekMapper implements DataMapperInterface {
                 // name of measure is free entry (key=-1) or syslist entry !
                 // first set as free value
                 resultDoc.put(MdekKeys.NAME_OF_MEASURE_VALUE, dq.getNameOfMeasure());
-                resultDoc.put(MdekKeys.NAME_OF_MEASURE_KEY, new Integer(-1));                 
+                resultDoc.put(MdekKeys.NAME_OF_MEASURE_KEY, -1);
                 // then set key from syslist if syslist entry
                 Integer key = sysListMapper.getKeyFromListId(syslistIdNameOfMeasure, dq.getNameOfMeasure());
                 if (key != null) {
@@ -2518,14 +2507,10 @@ public class MdekMapper implements DataMapperInterface {
         return MdekUtilsSecurity.hasWriteSubTreePermission(permissionList);
     }
 
-
-    private final static SimpleDateFormat timestampFormatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-
     private static Date convertTimestampToDate(String timeStamp) {
         if (timeStamp != null && timeStamp.length() != 0) {
             try {
-                Date date = timestampFormatter.parse(timeStamp);
-                return date;
+                return new SimpleDateFormat("yyyyMMddHHmmssSSS").parse(timeStamp);
             } catch (Exception ex){
                 log.debug("Problems parsing timestamp from database: " + timeStamp, ex);
                 return null;
@@ -2544,7 +2529,7 @@ public class MdekMapper implements DataMapperInterface {
     }
 
         
-    synchronized private static String convertTimestampToDisplayDate(String timeStamp) {
+    private static synchronized String convertTimestampToDisplayDate(String timeStamp) {
         if (timeStamp != null) {
             return MdekUtils.timestampToDisplayDate(timeStamp);
         } else {

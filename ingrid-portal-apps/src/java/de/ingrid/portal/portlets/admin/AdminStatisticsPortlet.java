@@ -43,6 +43,7 @@ public class AdminStatisticsPortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 

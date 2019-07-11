@@ -27,7 +27,7 @@ Installation
 ------------
 
 Download from https://distributions.informationgrid.eu/ingrid-portal/
- 
+
 or
 
 build from source with `mvn clean package`.
@@ -48,7 +48,7 @@ Contribute
 
 - Issue Tracker: https://github.com/informationgrid/ingrid-portal/issues
 - Source Code: https://github.com/informationgrid/ingrid-portal
- 
+
 ### Setup project
 
 Import project as Maven project. There are several sub projects:
@@ -60,20 +60,75 @@ Import project as Maven project. There are several sub projects:
 - ingrid-portal-mdek: Portal integration of the InGrid Editor
 - ingrid-portal-distribution: The assembly project to gather the pieces and build an installer
 
+Alternatively use the maven plugin of you IDE.
+
 ### Development
 
-For development of the InGrid-Editor, go to the directory ingrid-portal-mdek-application and execute the following command:
+For development on the InGrid editor a special **environment** is needed. It consists of the following components:
+
+- Database server
+- InGrid backend
+- InGrid editor (this repository)
+
+To set up the environment execute the following steps:
+
+##### Database server
+
+The database server is hosted inside a *Docker* container which is set up by executing the following command inside the project's root directory:
+
+```
+docker-compose -f docker-compose.ige.yml up -d
+```
+
+The following containers will be created:
+
+- *mysql*: MySQL server containing several databases
+  - Connection parameters:
+    - User: root
+    - Password: *empty*
+- *phpmyadmin*: Web application for managing the MySQL databases
+  - Login:
+    - Server: mysql
+    - Username/Password as mentioned above
+
+##### InGrid backend
+
+The InGrid backend is provided as a git repository:
+
+```
+git clone https://github.com/informationgrid/ingrid-mdek
+```
+
+For instructions how to set up and run the application in Eclipse see https://github.com/informationgrid/ingrid-mdek/blob/master/README.md
+
+##### InGrid editor
+
+The InGrid editor is a web application that is started by executing the following command inside the `ingrid-portal-mdek-application` sub directory:
 
 ```
 run.sh [<profile>]
 ```
 
-The optional _profile_ parameter adds the sources from the profile directory (ingrid-portal-apps/src/webapp/profiles/<profile>) for the startup. A jetty server is started and the sources can be edited directly. When editing Java classes, the server is automatically restarted. If you change resource files like messages.properties, then the server also needs to be restarted.
+The comand starts a development server (Jetty), that allows for directly editing the application sources. When editing Java classes, the server is automatically restarted. Editing resource files like *messages.properties* requires the server to be restarted.
 
-There's also a corresponding windows batch file _start.bat_, which works the same.
+The optional `profile` parameter adds the sources from the profile directory (`ingrid-portal-apps/src/webapp/profiles/<profile>`) for startup. 
+
+To access the application in the browser open the URL:
+
+http://localhost:8088/ingrid-portal-mdek-application/start_dev.jsp?user=mdek
 
 For IntelliJ IDEA there's a dojo plugin for easier handling of imports:
 https://github.com/TomDevs/needsmoredojo
+
+### Troubleshooting
+
+- **Cannot connect to backend**:
+  - Error messages: 
+    - Browser: *Der Benutzer konnte nicht im Katalog gefunden werden. Bitte überprüfen Sie die mdek-Datenbank und den dazugehörigen Katalog.*
+    - Application log: *PROBLEMS CONNECTING TO: /ingrid-group:ige-iplug-test*
+  - Solution: 
+    - Make sure InGrid backend is running
+    - Make sure the user (e.g. *mdek*) exists in the database (schema `mdek`, table `user_data`) and the `plug_id` column value (e.g. */ingrid-group:ige-iplug-test*) matches the property `communications.ige.clientName` set up in the InGrid backend.
 
 ### Debugging
 

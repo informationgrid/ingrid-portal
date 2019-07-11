@@ -27,17 +27,16 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import de.ingrid.iplug.sns.utils.DetailedTopic;
-import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.hibernate.HibernateUtil;
 import de.ingrid.portal.interfaces.impl.SNSAnniversaryInterfaceImpl;
 import de.ingrid.portal.om.IngridAnniversary;
@@ -51,7 +50,7 @@ import de.ingrid.utils.udk.UtilsDate;
  */
 public class AnniversaryFetcherJob extends IngridMonitorAbstractJob {
 
-    protected final static Logger log = LoggerFactory.getLogger(AnniversaryFetcherJob.class);
+    protected static final Logger log = LoggerFactory.getLogger(AnniversaryFetcherJob.class);
 
     /**
      * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -135,9 +134,9 @@ public class AnniversaryFetcherJob extends IngridMonitorAbstractJob {
                                 anni.setDateFrom(from);
                                 Date fromDate = UtilsDate.parseDateString(from);
                                 cal.setTime(fromDate);
-                                anni.setDateFromYear(new Integer(cal.get(Calendar.YEAR)));
-                                anni.setDateFromMonth(new Integer(cal.get(Calendar.MONTH) + 1));
-                                anni.setDateFromDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                                anni.setDateFromYear(cal.get(Calendar.YEAR));
+                                anni.setDateFromMonth(cal.get(Calendar.MONTH) + 1);
+                                anni.setDateFromDay(cal.get(Calendar.DAY_OF_MONTH));
                             }
                             if (thisYear == cal.get(Calendar.YEAR)) {
                                 if (log.isDebugEnabled()) {
@@ -152,9 +151,9 @@ public class AnniversaryFetcherJob extends IngridMonitorAbstractJob {
                                     anni.setDateTo(to);
                                     Date toDate = UtilsDate.parseDateString(to);
                                     cal.setTime(toDate);
-                                    anni.setDateToYear(new Integer(cal.get(Calendar.YEAR)));
-                                    anni.setDateToMonth(new Integer(cal.get(Calendar.MONTH) + 1));
-                                    anni.setDateToDay(new Integer(cal.get(Calendar.DAY_OF_MONTH)));
+                                    anni.setDateToYear(cal.get(Calendar.YEAR));
+                                    anni.setDateToMonth(cal.get(Calendar.MONTH) + 1);
+                                    anni.setDateToDay(cal.get(Calendar.DAY_OF_MONTH));
                                 }
                                 anni.setAdministrativeId(detail.getAdministrativeID());
                                 anni.setFetched(new Date());
@@ -191,7 +190,6 @@ public class AnniversaryFetcherJob extends IngridMonitorAbstractJob {
             if (tx != null) {
                 tx.rollback();
             }
-            log.error("Error executing quartz job AnniversaryFetcherJob.", e);
             throw new JobExecutionException("Error executing quartz job AnniversaryFetcherJob.", e, false);
         } finally {
             HibernateUtil.closeSession();

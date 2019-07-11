@@ -44,14 +44,14 @@ public class SearchSimpleForm extends ActionForm {
     /**
      * initial values. initial Query not static ! can be set from outside and may differ because of Locale
      */
-    protected String INITIAL_QUERY = "";
+    protected String initialQuery = "";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
         clearInput();
-        setInput(FIELD_QUERY, INITIAL_QUERY);
+        setInput(FIELD_QUERY, initialQuery);
     }
 
     /**
@@ -74,9 +74,9 @@ public class SearchSimpleForm extends ActionForm {
 
         // check query
         if (getInput(FIELD_QUERY).trim().length() == 0) {
-            setInput(FIELD_QUERY, INITIAL_QUERY);
+            setInput(FIELD_QUERY, initialQuery);
         }
-        if (getInput(FIELD_QUERY).trim().equals(INITIAL_QUERY)) {
+        if (getInput(FIELD_QUERY).trim().equals(initialQuery)) {
             doQuery = false;
         }
 
@@ -87,14 +87,14 @@ public class SearchSimpleForm extends ActionForm {
      * Set initial query dependent from locale !
      * @param initial_query The iNITIAL_QUERY to set.
      */
-    public void setINITIAL_QUERY(String initialQuery) {
-        INITIAL_QUERY = initialQuery;
+    public void setInitialQuery(String query) {
+        initialQuery = query;
     }
 
     /**
      * Get initial query which was set from outside (dependent from locale)
      */
-    public String getINITIAL_QUERY() {
-        return INITIAL_QUERY;
+    public String getInitialQuery() {
+        return initialQuery;
     }
 }

@@ -35,6 +35,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.velocity.context.Context;
 import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
@@ -60,9 +61,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
 
     private static final Logger log = LoggerFactory.getLogger(ShowMapsUVPPortlet.class);
 
-    private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class" };
+    private static final String[] REQUESTED_FIELDS_MARKER       = new String[] { "title", "lon_center", "lat_center", "t01_object.obj_id", "uvp_category", "uvp_number", "t01_object.obj_class", "uvp_steps" };
     private static final String[] REQUESTED_FIELDS_BBOX         = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
-    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress" };
+    private static final String[] REQUESTED_FIELDS_BLP_MARKER   = new String[] { "x1", "x2", "y1", "y2", "blp_name", "blp_description", "blp_url_finished", "blp_url_in_progress", "fnp_url_finished", "fnp_url_in_progress", "bp_url_finished", "bp_url_in_progress" };
 
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
@@ -128,6 +129,9 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     try {
                         IngridHit hit = it.next();
                         IngridHitDetail detail = hit.getHitDetail();
+                        if (log.isDebugEnabled()) {
+                            log.debug("Got BLP result: " + detail.toString());
+                        }
                         String latCenter = UtilsSearch.getDetailValue( detail, "y1", 1);
                         String lonCenter = UtilsSearch.getDetailValue( detail, "x1", 1);
                         String blpName = UtilsSearch.getDetailValue( detail, "blp_name" );
@@ -176,7 +180,6 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
                     } catch (Exception e) {
                         log.error("Error get json object.", e);
                     }
-                    response.getWriter().write( "var markersDevPlan = "+ jsonData.toString() + ";");
                 }
 
                 response.setContentType( "application/javascript" );
@@ -351,6 +354,24 @@ public class ShowMapsUVPPortlet extends ShowMapsPortlet {
         if(!mapclientQuery.isEmpty() || !mapclientQuery2.isEmpty() || !mapclientQuery3.isEmpty() || !mapclientQuery4.isEmpty() || !mapclientUVPDevPlanURL.isEmpty()){
             restUrl.setResourceID( "legendCounter" );
             request.setAttribute( "restUrlLegendCounter", restUrl.toString() );
+        }
+        
+        Context context = getContext(request);
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            StringBuilder leafletBgLayerWMSName = new StringBuilder("");
+            for (int i = 1; i < leafletBgLayerWMS.length; i++) {
+                leafletBgLayerWMSName.append(leafletBgLayerWMS[i]);
+                if(i < (leafletBgLayerWMS.length - 1)) {
+                    leafletBgLayerWMSName.append(",");
+                }
+            }
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
         }
         super.doView(request, response);
     }

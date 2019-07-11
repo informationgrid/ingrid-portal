@@ -7,6 +7,7 @@
         </svg>
     </div>
     <div id="facet_area_map_content" class="sidebar__widget__content sidebar__widget__content--pushed js-accordion-content #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)is-hidden#end" >
+        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
         <div id="map" style="height:320px;"></div>
         <form action="$action" method="post" name="facete_map_form">
             <input id="x1" name="x1" type="hidden" />
@@ -32,26 +33,29 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-<script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script language="JavaScript" type="text/javascript">
     var map = new L.Map('map');
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
     var zoom = $facetMapCenter.get(2);
-    var layerUrl = '$facetMapLayerUrl';
-    var layerName = '$facetMapLayerName';
     var layer;
-    
-    if(layerUrl.length > 0 && layerName.length > 0){
-        layer = getWMSLayer(layerUrl, layerName); 
-    } else {
-        var osm = getOSMLayer();
-        osm.options.minZoom = 5;
-        osm.options.maxZoom = 20;
-        layer = osm; 
-    }
-
+</script>
+#if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
+    <script>
+    var layerUrl = '$leafletBgLayerWMSUrl';
+    var layerName = '$leafletBgLayerWMSName';
+    layer = getWMSLayer(layerUrl, layerName); 
+    </script>
+#else
+   <script>
+    var osm = getOSMLayer('');
+    osm.options.minZoom = 5;
+    osm.options.maxZoom = 20;
+    layer = osm; 
+   </script>
+#end
+<script>
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     map.setView(new L.LatLng(lat, lng),zoom);

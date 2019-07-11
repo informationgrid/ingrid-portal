@@ -52,7 +52,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class QueryPreProcessor {
 
-    private final static Logger log = LoggerFactory.getLogger(QueryPreProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(QueryPreProcessor.class);
     
     /**
      * <p>Get the list of fields to be requested from the portal configuration. This enabled the
@@ -104,7 +104,7 @@ public class QueryPreProcessor {
         </pre>
      * 
      */
-    private final static String[] REQUESTED_FIELDS = PortalConfig.getInstance().getStringArray( PortalConfig.QUERY_REQUESTED_FIELDS ); 
+    private static final String[] REQUESTED_FIELDS = PortalConfig.getInstance().getStringArray( PortalConfig.QUERY_REQUESTED_FIELDS ); 
 
     /**
      * Prepares an ranked query for submitting to the ibus. If no query should be submitted,
@@ -137,7 +137,7 @@ public class QueryPreProcessor {
             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false)){
                 UtilsFacete.facetePrepareInGridQuery(request, query);
             }
-        } catch (Throwable t) {
+        } catch (Exception t) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating separate IngridQuery for ranked search, parsed query string: "
                         + queryString, t);
@@ -155,9 +155,6 @@ public class QueryPreProcessor {
         // NOTICE: see http://jira.media-style.com/browse/INGRID-1076
         UtilsSearch.processBasicDataType(request, query, ds);
 
-        // change datasource dependent from query input
-        //ds = UtilsSearch.determineFinalPortalDatasource(ds, query);
-
         // start hit
         int startHit = 0;
         String stateStartHit = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_STARTHIT_RANKED);
@@ -165,11 +162,11 @@ public class QueryPreProcessor {
             startHit = (new Integer(stateStartHit)).intValue();
         }
 
-        int currentPage = (int) (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
+        int currentPage = (startHit / Settings.SEARCH_RANKED_HITS_PER_PAGE) + 1;
 
         // set properties according to the session preferences
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
-                IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class);
+                IngridSessionPreferences.SESSION_KEY);
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
         if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
             // adapt ranking to Search State
@@ -256,18 +253,13 @@ public class QueryPreProcessor {
             }
             // ensure correct size of Array ! Notice: currentSelectorPage is 1 for first page !
             while (currentSelectorPage >= groupedStartHits.size()) {
-                groupedStartHits.add(new Integer(0));
+                groupedStartHits.add(0);
             }
 
             currentPage = 0;
             startHit = ((Integer) groupedStartHits.get(currentSelectorPage - 1)).intValue();
         }
 
-        // set language for query
-        if (!UtilsSearch.containsFieldOrKey(query, Settings.QFIELD_LANG)) {
-            // UtilsSearch.processLanguage(query, request.getLocale());
-        }
-        
         // add partner to query if the portal is restricted to a certain partner
         UtilsSearch.processRestrictingPartners(query);
         
@@ -302,11 +294,7 @@ public class QueryPreProcessor {
                         FieldQuery[] datatypes = q.getDataTypes();
                         for (int i = 0; i < datatypes.length; i++) {
                             FieldQuery datatype = datatypes[i];
-                            // add datatype if it does not already exist in the query
-                            //                            if ((!datatype.isProhibited() && !UtilsSearch.hasPositiveDataType(query,datatype.getFieldName())) 
-                            //                                    || (datatype.isProhibited() && !UtilsSearch.hasPositiveDataType(query,datatype.getFieldName()))) {
                             query.addField(datatype);
-                            //                            }
                         }
                         // add metaclass
                         //check for field metaclass (if only one metaclass was selected)

@@ -51,11 +51,12 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 
 public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
+    private static final Logger log = LoggerFactory.getLogger( ShowMapsBawDmqsPortlet.class );
 
     private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id", "bawAuftragsnummer", "simProcess", "simModelType" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init( config );
     }
@@ -74,41 +75,47 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
                     IngridHit hit = it.next();
                     IngridHitDetail detail = hit.getHitDetail();
                     if (detail.containsKey( "bwstr-center-lat" ) && detail.containsKey( "bwstr-center-lon" )) {
-                        s.append( "[" )
-                            .append( detail.get( "bwstr-center-lat" ).toString() )
-                            .append( "," )
-                            .append( detail.get( "bwstr-center-lon" ).toString() )
-                            .append( ",'" )
-                            .append( detail.get( "title" ).toString() )
-                            .append( "','" )
-                            .append( UtilsSearch.getDetailValue( detail, "t01_object.obj_id" ) );
-                        
-                        String bawAuftragsnummer = UtilsSearch.getDetailValue( detail, "bawAuftragsnummer" );
-                        s.append( "','" );
-                        if(bawAuftragsnummer != null){
-                            s.append( bawAuftragsnummer );
-                        }else{
-                            s.append( "" );
+                        String lat = UtilsSearch.getDetailValue(detail, "bwstr-center-lat");
+                        String lon = UtilsSearch.getDetailValue(detail, "bwstr-center-lon");
+                        if (!"NaN".equals(lat) && !"NaN".equals(lon)) {
+                            s.append("[")
+                                    //.append( detail.get( "bwstr-center-lat" ).toString() )
+                                    .append(lat)
+                                    .append(",")
+                                    //.append( detail.get( "bwstr-center-lon" ).toString() )
+                                    .append(lon)
+                                    .append(",'")
+                                    .append(detail.get("title").toString())
+                                    .append("','")
+                                    .append(UtilsSearch.getDetailValue(detail, "t01_object.obj_id"));
+
+                            String bawAuftragsnummer = UtilsSearch.getDetailValue(detail, "bawAuftragsnummer");
+                            s.append("','");
+                            if (bawAuftragsnummer != null) {
+                                s.append(bawAuftragsnummer);
+                            } else {
+                                s.append("");
+                            }
+                            String simProcess = UtilsSearch.getDetailValue(detail, "simProcess");
+                            s.append("','");
+                            if (simProcess != null) {
+                                s.append(simProcess);
+                            } else {
+                                s.append("");
+                            }
+                            String simModelType = UtilsSearch.getDetailValue(detail, "simModelType");
+                            s.append("','");
+                            if (simModelType != null) {
+                                s.append(simModelType);
+                            } else {
+                                s.append("");
+                            }
+                            s.append("']");
+                            if (it.hasNext()) {
+                                s.append(",");
+                            }
+                            response.getWriter().write(s.toString());
                         }
-                        String simProcess = UtilsSearch.getDetailValue( detail, "simProcess" );
-                        s.append( "','" );
-                        if(simProcess != null){
-                            s.append( simProcess );
-                        }else{
-                            s.append( "" );
-                        }
-                        String simModelType = UtilsSearch.getDetailValue( detail, "simModelType" );
-                        s.append( "','" );
-                        if(simModelType != null){
-                            s.append( simModelType );
-                        }else{
-                            s.append( "" );
-                        }
-                        s.append( "']" );
-                        if (it.hasNext()) {
-                            s.append( "," );
-                        }
-                        response.getWriter().write( s.toString() );
                     }
                 }
                 response.getWriter().write( "];" );
@@ -138,6 +145,7 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
 
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext( request );
         IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
@@ -157,9 +165,26 @@ public class ShowMapsBawDmqsPortlet extends GenericVelocityPortlet {
         restUrl.setResourceID( "bbox" );
         request.setAttribute( "restUrlBBOX", restUrl.toString() );
 
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            StringBuilder leafletBgLayerWMSName = new StringBuilder("");
+            for (int i = 1; i < leafletBgLayerWMS.length; i++) {
+                leafletBgLayerWMSName.append(leafletBgLayerWMS[i]);
+                if(i < (leafletBgLayerWMS.length - 1)) {
+                    leafletBgLayerWMSName.append(",");
+                }
+            }
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
+        }
         super.doView( request, response );
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
 
     }

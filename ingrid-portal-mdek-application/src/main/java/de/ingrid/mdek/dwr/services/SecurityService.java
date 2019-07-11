@@ -91,4 +91,8 @@ public interface SecurityService {
     public int getUserNumForPlugId(String plugId);
     
     public boolean authenticate(String username, String password);
+
+    public boolean sendPasswordEmail(String email);
+
+    public boolean updatePassword(String passwordChangeId, String password);
 }

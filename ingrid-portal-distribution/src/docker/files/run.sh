@@ -58,8 +58,6 @@ else
         # UVP-NI extends UVP
         if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
-            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
-            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
             cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
         fi
@@ -67,6 +65,7 @@ else
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
+        cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-webmap-client/* webapps/ingrid-webmap-client
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-webmap-client/frontend/src/* webapps/ingrid-webmap-client/frontend/prd
@@ -116,7 +115,19 @@ else
         echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
     fi
-        
+
+    # SMTP_HOST
+    echo "workflow.mail.smtp=$SMTP_HOST" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.sender=$MAIL_SENDER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.user=$MAIL_USER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "workflow.mail.smtp.password=$MAIL_PASSWORD" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
+    echo "mdek.directLink=$IGE_DIRECT_LINK" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
+    # Upload settings
+    echo "upload.docsdir=$UPLOAD_DOCS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    echo "upload.partsdir=$UPLOAD_PARTS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+
     touch /initialized
 fi
 

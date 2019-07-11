@@ -51,9 +51,6 @@ public interface CatalogRequestHandler {
 	public String exportSysLists(Integer[] listIds);
 	public void importSysLists(String xmlDoc);
 
-	//public List<Map<String, String>> getSysGuis(String[] guiIds);
-	//public List<Map<String, String>> storeSysGuis(List<Map<String, String>> sysGuis, boolean refetchAfterStore);
-
 	public List<GenericValueBean> getSysGenericValues(String[] keyNames);
 	public List<GenericValueBean> getSysGenericValues(String[] keyNames, HttpServletRequest req);
 	public void storeSysGenericValues(List<GenericValueBean> genericValues);

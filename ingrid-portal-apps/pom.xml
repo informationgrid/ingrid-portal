@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -19,7 +19,7 @@
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <measurement.client.version>1.0.3</measurement.client.version>
+    <measurement.client.version>1.0.4</measurement.client.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -461,6 +461,7 @@
             <exclude>**/*.sql</exclude>
             <exclude>**/*.xml</exclude>
             <exclude>**/*.svg</exclude>
+            <exclude>**/css/bkg/*.css</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -508,6 +509,13 @@
                 <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/WEB-INF/classes">
                   <fileset dir="${project.basedir}/../ingrid-portal-base/src/java/">
                     <include name="**/PortalLayout*.properties" />
+                  </fileset>
+                </copy>
+                <echo>INGRID-PORTAL: Copy portal-mdek templates to profile 'ingrid'</echo>
+                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-mdek/WEB-INF/">
+                  <fileset dir="${project.basedir}/../ingrid-portal-mdek/src/webapp/WEB-INF">
+                    <include name="**/*.vm" />
+                    <include name="**/portlet.xml" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL-MDEK-APPLICATION: Copy portal-base localisation ingrid properties to profile

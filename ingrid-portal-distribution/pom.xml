@@ -2,7 +2,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0</version>
+    <version>5.1.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal</artifactId>
@@ -159,6 +159,22 @@
       <!-- Activate maven-assembly-plugin from release pom to build installer -->
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>**/*.properties</exclude>
+            <exclude>**/*.json</exclude>
+            <exclude>**/*.sql</exclude>
+            <exclude>**/*.xml</exclude>
+            <exclude>**/*.sh</exclude>
+            <exclude>**/*.xsl</exclude>
+            <exclude>**/*.svg</exclude>
+          </excludes>
+        </configuration>
       </plugin>
 
     </plugins>

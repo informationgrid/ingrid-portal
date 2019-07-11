@@ -1,0 +1,55 @@
+#set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
+<div class="columns">
+    <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+    #foreach( $key in $partners.keySet() ) 
+        #set($partnerHash = $partners.get($key))
+        #set($partner = $partnerHash.partner)
+        #if($partnerHash.providers)
+            <li class="accordion-item" data-accordion-item="">
+                #if($partners.size() > 1)
+                    <a href="#" class="accordion-title" aria-controls="$key-accordion" role="tab" id="$key-accordion-label" aria-expanded="false" aria-selected="false">
+                        <span class="text">$partner.name</span>
+                    </a>
+                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$key-accordion-label" aria-hidden="true" id="$key-accordion">
+                        <div class="link-list">
+                        #set($providers = $partnerHash.providers)
+                        #foreach($provider in $providers)
+                            #if($provider.provider && $provider.provider.name && !$provider.provider.name.equals(","))
+                                #if($provider.provider.url && $provider.provider.url != "")
+                                    <a href="$provider.provider.url" class="icon" target="_blank">
+                                        <span class="ic-ic-arrow"></span><span class="text">$provider.provider.name</span>
+                                    </a>
+                                #else
+                                    <a class="icon">
+                                        <span class="text">$provider.provider.name</span>
+                                    </a>
+                                #end
+                            #end
+                        #end
+                        </div>
+                    </div>
+                 #else
+                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$key-accordion-label" aria-hidden="false" id="$key-accordion" style="display:block">
+                        <div class="link-list">
+                        #set($providers = $partnerHash.providers)
+                        #foreach($provider in $providers)
+                            #if($provider.provider && $provider.provider.name && !$provider.provider.name.equals(","))
+                                #if($provider.provider.url && $provider.provider.url != "")
+                                    <a href="$provider.provider.url" class="icon" target="_blank">
+                                        <span class="ic-ic-arrow"></span><span class="text">$provider.provider.name</span>
+                                    </a>
+                                #else
+                                    <a class="icon">
+                                        <span class="text">$provider.provider.name</span>
+                                    </a>
+                                #end
+                            #end
+                        #end
+                        </div>
+                    </div>
+                 #end
+            </li>
+        #end
+    #end
+    </ul>
+</div>

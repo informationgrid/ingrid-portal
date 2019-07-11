@@ -29,7 +29,7 @@ import de.ingrid.mdek.persistence.db.model.RepoUser;
 
 public interface UserRepoManager {
     
-    public List<Map<String,String>> getAllUsers();
+    public List<Map<String,Object>> getAllUsers();
     
     public List<String> getAllAvailableUsers();
 
@@ -44,5 +44,7 @@ public interface UserRepoManager {
     public RepoUser getUser(String username);
 
     void updateUser(String login, RepoUser userData);
-    
+
+    void setPasswordRecoveryId(String login, String passwordChangeId, String newPassword);
+
 }

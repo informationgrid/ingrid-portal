@@ -10,7 +10,20 @@ html, body {
 }
 </style>
 
-<div id="map" style="width:100%;position:fixed;z-index:0;"></div>
+<div id="map" class="map-ingrid map-full" style="width:100%;position:fixed;z-index:0;">
+    <div class="map-filter">
+      <h5 class="show-for-large">Verfahrentypen</h5>
+      <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist">
+        <li class="accordion-item" data-accordion-item="">
+            <a class="accordion-title hide-for-large" aria-controls="legend-accordion" role="tab" id="legend-accordion-label" aria-expanded="false" aria-selected="false">
+                <span class="text">Verfahrentypen</span>
+            </a>
+            <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="legend-accordion-label" id="legend-accordion" aria-hidden="true" data-e="">
+            </div>
+        </li>
+      </ul>
+    </div>
+</div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
 <script language="JavaScript" type="text/javascript">
@@ -24,6 +37,8 @@ html, body {
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
 <script>
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'bottomright', 'ic-ic-center', mapBounds, '', '23px');
+    map.zoomControl.setPosition('bottomright');
     window.onresize = resizeIframe;
     resizeIframe();
     

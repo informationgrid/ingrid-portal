@@ -36,7 +36,7 @@ import de.ingrid.portal.scheduler.jobs.utils.PartnerProviderHandler;
 
 public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
 
-    private final static Logger log = Logger.getLogger(UpdateCodelistsFromPortalJob.class);
+    private static final Logger log = Logger.getLogger(UpdateCodelistsFromPortalJob.class);
     
     private static boolean isInitialExecution = true;
 
@@ -58,13 +58,13 @@ public class UpdateCodelistsFromPortalJob extends IngridMonitorAbstractJob {
             statusCode = STATUS_CODE_ERROR_NO_HITS;
         }
         
-        log.info("UpdateCodelistsFromPortalJob finished! (successful = " + (modifiedCodelists == null ? false : true) + ")");
+        log.info("UpdateCodelistsFromPortalJob finished! (successful = " + (modifiedCodelists != null) + ")");
         
         // map partner and providers from codelists into DB on startup and if codelists have been modified from the repository
         if (isInitialExecution) {
             new PartnerProviderHandler().run(codelistService.getCodeLists());
             isInitialExecution = false;
-        } else if (modifiedCodelists != null && modifiedCodelists.size() > 0) {
+        } else if (modifiedCodelists != null && !modifiedCodelists.isEmpty()) {
             new PartnerProviderHandler().run(modifiedCodelists);
         }
         

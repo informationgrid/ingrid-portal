@@ -22,20 +22,15 @@
  */
 package de.ingrid.mdek.dwr.services;
 
-import java.io.IOException;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-
 import org.apache.log4j.Logger;
 import org.directwebremoting.io.FileTransfer;
-import org.xml.sax.SAXException;
 
 import au.com.bytecode.opencsv.CSVWriter;
 import de.ingrid.codelists.CodeListService;
@@ -67,7 +62,7 @@ import de.ingrid.utils.IngridDocument;
 
 public class CatalogManagementServiceImpl {
 
-	private final static Logger log = Logger
+	private static final Logger log = Logger
 			.getLogger(CatalogManagementServiceImpl.class);
 
 	private MdekJobHandler mdekJobHandler;
@@ -99,7 +94,7 @@ public class CatalogManagementServiceImpl {
 	}
 
 	public void updateDBUrlJobInfo(List<Map<String, String>> sourceUrls, String targetUrl) {
-		List<IngridDocument> urlList = new ArrayList<IngridDocument>();
+		List<IngridDocument> urlList = new ArrayList<>();
 
 		for (Map<String, String> map : sourceUrls) {
 			IngridDocument urlDoc = new IngridDocument();
@@ -123,7 +118,7 @@ public class CatalogManagementServiceImpl {
 	}
 
 	public void replaceUrls(List<Map<String, String>> sourceUrls, String targetUrl, String type) {
-		List<IngridDocument> urlList = new ArrayList<IngridDocument>();
+		List<IngridDocument> urlList = new ArrayList<>();
 
 		for (Map<String, String> map : sourceUrls) {
 			IngridDocument urlDoc = new IngridDocument();
@@ -159,7 +154,7 @@ public class CatalogManagementServiceImpl {
 				connectionFacade.getCurrentPlugId(), qString, null, "");
 		IngridDocument result = MdekUtils.getResultFromResponse(response);
 
-		List<MdekDataBean> resultList = new ArrayList<MdekDataBean>();
+		List<MdekDataBean> resultList = new ArrayList<>();
 		if (result != null) {
 			@SuppressWarnings("unchecked")
             List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
@@ -192,7 +187,7 @@ public class CatalogManagementServiceImpl {
 		return false;
 	}
 
-	public void startSNSUpdateJob(String locale) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+	public void startSNSUpdateJob(String locale) {
 			mdekJobHandler.startSNSUpdateJob(locale);
 	}
 
@@ -204,16 +199,16 @@ public class CatalogManagementServiceImpl {
 		return (SNSUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_UPDATE);
 	}
 
-	public FileTransfer getSNSUpdateResultAsCSV() throws UnsupportedEncodingException {
+	public FileTransfer getSNSUpdateResultAsCSV() {
 		StringWriter writer = new StringWriter();
 		CSVWriter csvWriter = new CSVWriter(writer, ';');
 		csvWriter.writeAll( getSNSUpdateJobInfo().getEntries() );
 
-		return new FileTransfer("snsUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("ISO-8859-1"));
+		return new FileTransfer("snsUpdate.csv", "text/comma-separated-values", writer.toString().getBytes(StandardCharsets.ISO_8859_1));
 	}
 
 
-	public void startSNSLocationUpdateJob(String locale) throws XPathExpressionException, ParserConfigurationException, SAXException, IOException {
+	public void startSNSLocationUpdateJob(String locale) {
 		mdekJobHandler.startSNSLocationUpdateJob(locale);
 	}
 
@@ -225,12 +220,12 @@ public class CatalogManagementServiceImpl {
 		return (SNSLocationUpdateJobInfoBean) mdekJobHandler.getJobInfo(JobType.SNS_LOCATION_UPDATE);
 	}
 
-	public FileTransfer getSNSLocationUpdateResultAsCSV() throws UnsupportedEncodingException {
+	public FileTransfer getSNSLocationUpdateResultAsCSV() {
 		StringWriter writer = new StringWriter();
 		CSVWriter csvWriter = new CSVWriter(writer, ';');
 		csvWriter.writeAll( getSNSLocationUpdateJobInfo().getEntries() );
 
-		return new FileTransfer("snsLocationUpdate.csv", "text/comma-separated-values", writer.toString().getBytes("ISO-8859-1"));
+		return new FileTransfer("snsLocationUpdate.csv", "text/comma-separated-values", writer.toString().getBytes(StandardCharsets.ISO_8859_1));
 	}
 
 
@@ -317,10 +312,10 @@ public class CatalogManagementServiceImpl {
 	}
 	
     public List<Map<String, String>> getConnectedCataloguesInfo() {
-        List<Map<String, String>> result = new ArrayList<Map<String,String>>();
+        List<Map<String, String>> result = new ArrayList<>();
         List<String> iplugs = getConnectedIPlugs();
         for (String iplug : iplugs) {
-            Map<String, String> m = new HashMap<String, String>();
+            Map<String, String> m = new HashMap<>();
             m.put("iplug", iplug);
             // check if iplug is in mdek db
             String catAdminUuid = getCatAdminUuid(iplug);

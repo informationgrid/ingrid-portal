@@ -1,0 +1,149 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+/*
+    Leaflet
+*/
+.marker-cluster-10 {
+  background-color: rgba(56, 170, 220, 0.6) !important;
+  z-index: 0 !important;
+}
+
+.marker-cluster-10 div{
+  background-color: rgba(56, 170, 220, 1.0) !important;
+}
+
+.marker-cluster-10.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-10.light div{
+  background-color: rgba(56, 170, 220, 0.6) !important;
+}
+
+.marker-cluster-11 {
+  background-color: rgba(48, 48, 48, 0.6) !important;
+  z-index: -10 !important;
+}
+
+.marker-cluster-11 div{
+  background-color: rgba(48, 48, 48, 1.0) !important;
+}
+
+.marker-cluster-11.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-11.light div{
+  background-color: rgba(48, 48, 48, 0.6) !important;
+}
+
+.marker-cluster-12 {
+  background-color: rgba(227, 144, 0, 0.6) !important;
+  z-index: -10 !important;
+}
+
+.marker-cluster-12 div{
+  background-color: rgba(227, 144, 0, 1.0) !important;
+}
+
+.marker-cluster-12.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-12.light div{
+  background-color: rgba(227, 144, 0, 0.6) !important;
+}
+
+.marker-cluster-1314 {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+  z-index: -20 !important;
+}
+
+.marker-cluster-1314 div {
+  background-color: rgba(200, 60, 40, 1.0) !important;
+}
+
+.marker-cluster-1314.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-1314.light div {
+  background-color: rgba(200, 60, 40, 0.6) !important;
+}
+
+.marker-cluster-dev-plan {
+  background-color: rgba(110, 170, 40, 0.6) !important;
+  z-index: -30 !important;
+}
+
+.marker-cluster-dev-plan div {
+  background-color: rgba(110, 170, 40, 1.0) !important;
+}
+
+.marker-cluster-dev-plan.light {
+  background-color: transparent !important;
+}
+
+.marker-cluster-dev-plan.light div {
+  background-color: rgba(110, 170, 40, 0.6) !important;
+}
+
+.marker-cluster span {
+  color: #FFFFFF;
+}
+
+@media screen and (max-width: 768px) {
+  .header__widgets__section {
+    padding: 0.525rem 0;
+  }
+  
+  .sub-header{
+    padding: 1.125rem 0;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 939px) {
+  .header__widgets__section {
+      padding: 1.025rem 0;
+  }
+}
+
+.nav-overlay__item--level2:hover {
+  color:#FFF;
+  background: #2C5C91;
+}
+
+.circle {
+  border: 3px solid #2C5C91;
+}
+
+#map-legend .leaflet-control-layers {
+  float: none;
+  background: transparent !important;
+  box-shadow: unset;
+  font-size: 12px;
+}
+
+.leaflet-legend-icon {
+  background-size: 13px 16px;
+  padding: 3px 10px 0 4px !important;
+}

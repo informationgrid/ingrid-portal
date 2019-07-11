@@ -23,12 +23,9 @@
 package de.ingrid.portal;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.weta.components.communication.configuration.XPathService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,6 +41,8 @@ import com.tngtech.configbuilder.annotation.valueextractor.EnvironmentVariableVa
 import com.tngtech.configbuilder.annotation.valueextractor.PropertyValue;
 import com.tngtech.configbuilder.annotation.valueextractor.SystemPropertyValue;
 
+import net.weta.components.communication.configuration.XPathService;
+
 @PropertiesFiles({ "ingrid-portal-apps" })
 @PropertyLocations(fromClassLoader = true)
 @LoadingOrder({CommandLineValue.class, SystemPropertyValue.class, PropertyValue.class, EnvironmentVariableValue.class, DefaultValue.class})
@@ -56,7 +55,7 @@ public class Configuration {
 
         @Override
         public List<Communication> transform(String input) {
-            List<Communication> list = new ArrayList<Communication>();
+            List<Communication> list = new ArrayList<>();
             String[] split = input.split( "##" );
             for (String comm : split) {
                 String[] communication = comm.split( "," );
@@ -103,7 +102,7 @@ public class Configuration {
 
  
 
-    public void initialize() throws IOException {
+    public void initialize() {
         writeCommunication();
     }
 
@@ -111,8 +110,8 @@ public class Configuration {
         File communicationFile = new File( getClasspathDir(), this.communicationLocation );
         if (ibusses == null || ibusses.isEmpty()) {
             // do not remove communication file if no
-            if (communicationFile.exists()) {
-                communicationFile.delete();
+            if (communicationFile.exists() && communicationFile.delete()) {
+                log.debug("Create communcation file.");
             }
             return true;
         }
@@ -144,7 +143,7 @@ public class Configuration {
             communication.store( communicationFile );
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error on writeCommunication.", e);
             return false;
         }
 
@@ -167,8 +166,8 @@ public class Configuration {
     }
     
     private class Communication {
-        public String url;
-        public String port;
-        public String ip;
+        private String url;
+        private String port;
+        private String ip;
     }
 }

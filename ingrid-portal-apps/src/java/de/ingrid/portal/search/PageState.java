@@ -60,7 +60,7 @@ public class PageState extends IngridDocument {
 	 * 
 	 */
 	public PageState(String pageName) {
-		super(new Long(System.currentTimeMillis()), pageName);
+		super(System.currentTimeMillis(), pageName);
 	}
 	
     /**

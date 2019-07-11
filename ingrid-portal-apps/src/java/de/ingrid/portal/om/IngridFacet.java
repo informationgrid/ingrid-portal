@@ -23,6 +23,7 @@
 package de.ingrid.portal.om;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class IngridFacet {
 
@@ -43,6 +44,8 @@ public class IngridFacet {
     private String shortcut;
     private String url;
     private String wildcard;
+    private String info;
+    private String infoResultSelect;
     private int showOnMoreThan;
     private int colNum;
     private boolean isDependencySelect = false;
@@ -54,7 +57,6 @@ public class IngridFacet {
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
-    private boolean isOldIPlug = false;
     
     private IngridFacet parent; 
     private ArrayList<IngridFacet> facets;
@@ -71,11 +73,11 @@ public class IngridFacet {
     public void setQuery(String query) {
         this.query = query;
     }
-    public ArrayList<IngridFacet> getFacets() {
+    public List<IngridFacet> getFacets() {
         return facets;
     }
-    public void setFacets(ArrayList<IngridFacet> facets) {
-        this.facets = facets;
+    public void setFacets(List<IngridFacet> facets) {
+        this.facets = (ArrayList<IngridFacet>) facets;
     }
     public String getId() {
         return id;
@@ -136,12 +138,6 @@ public class IngridFacet {
     }
     public void setSort(String sort) {
         this.sort = sort;
-    }
-    public boolean isOldIPlug() {
-        return isOldIPlug;
-    }
-    public void setOldIPlug(boolean isOldIPlug) {
-        this.isOldIPlug = isOldIPlug;
     }
     public boolean isParentHidden() {
         return isParentHidden;
@@ -236,5 +232,17 @@ public class IngridFacet {
     }
     public void setMobileName(String mobileName) {
         this.mobileName = mobileName;
+    }
+    public String getInfo() {
+        return info;
+    }
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    public String getInfoResultSelect() {
+        return infoResultSelect;
+    }
+    public void setInfoResultSelect(String infoResultSelect) {
+        this.infoResultSelect = infoResultSelect;
     }
 }

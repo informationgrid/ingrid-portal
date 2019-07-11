@@ -6,7 +6,7 @@
                 if(img.length > 0){
                     var srcRegEx = img[0].outerHTML.match(new RegExp('<img.*?tmp=\"(.*?)\"'));
                     if(srcRegEx && srcRegEx.length > 0) {
-                        var src = srcRegEx[srcRegEx.length - 1];
+                        var src = srcRegEx[srcRegEx.length - 1].replace(/\&amp;/g,'&');
                         if(src.indexOf('https://') == -1 && location.protocol == 'https:') {
                             var respJson;
                             var http = new XMLHttpRequest();

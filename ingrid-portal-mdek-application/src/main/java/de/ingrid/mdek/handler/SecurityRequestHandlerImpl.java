@@ -40,7 +40,7 @@ import de.ingrid.utils.IngridDocument;
 public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 
 	@SuppressWarnings("unused")
-    private final static Logger log = Logger.getLogger(SecurityRequestHandlerImpl.class);
+    private static final Logger log = Logger.getLogger(SecurityRequestHandlerImpl.class);
 
 	// Injected by Spring
 	    
@@ -81,7 +81,6 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 		boolean forceDelete = false;
 		IngridDocument response = mdekCallerSecurity.deleteGroup(connectionFacade.getCurrentPlugId(), groupId, forceDelete, MdekSecurityUtils.getCurrentUserUuid());
 		MdekUtils.checkForErrors(response);
-		return;
 	}
 
 	public List<User> getSubUsers(Long userId) {
@@ -115,7 +114,6 @@ public class SecurityRequestHandlerImpl implements SecurityRequestHandler {
 	public void deleteUser(Long userId) {
 		IngridDocument response = mdekCallerSecurity.deleteUser(connectionFacade.getCurrentPlugId(), userId, MdekSecurityUtils.getCurrentUserUuid());
 		MdekUtils.extractSecurityUserFromResponse(response);
-		return;
 	}
 
 	public User getCatalogAdmin() {

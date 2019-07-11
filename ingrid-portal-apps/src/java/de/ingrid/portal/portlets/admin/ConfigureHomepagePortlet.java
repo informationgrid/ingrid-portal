@@ -52,7 +52,7 @@ import java.util.*;
  */
 public abstract class ConfigureHomepagePortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigureHomepagePortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ConfigureHomepagePortlet.class);
 
     private PageManager pageManager;
 
@@ -68,6 +68,7 @@ public abstract class ConfigureHomepagePortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
         pageManager = (PageManager) getPortletContext().getAttribute(CommonPortletServices.CPS_PAGE_MANAGER_COMPONENT);
@@ -84,6 +85,7 @@ public abstract class ConfigureHomepagePortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
 
@@ -139,6 +141,7 @@ public abstract class ConfigureHomepagePortlet extends GenericVelocityPortlet {
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         String action = request.getParameter(Settings.PARAM_ACTION);
         if (action == null) {

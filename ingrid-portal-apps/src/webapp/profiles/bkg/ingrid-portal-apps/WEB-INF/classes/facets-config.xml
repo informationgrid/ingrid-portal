@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- DOKUMENTATION
+
+Diese Datei dient zur Konfiguration der Facettierung. Hier können weitere Facetten definiert werden oder auch entfernt werden. 
+Standardmäßig sind hier die Facettierungseinstellungen von InGrid-Portal definiert.
+
+Für die Facette (<facet>) sind folgende Tags Pflicht:
+- <name>
+- <id>
+
+Eine Facette (<facet>), welches zur Auswahlt dient, müssen dazu einen Tag <query> bzw. <from>, <to> enthalten. 
+
+Struktur:
+*********
+<facets>
+    <facet> ***************************************** Neuer Facettierungsbaum (zum Ein-/Ausklappen)
+        <name></name> ******************************* Facettierungsbaum-Name (lokalisiert per Portal-Resource-Key oder nicht lokalisiert als reiner Text)
+        <id></id> *********************************** Facettierungsbaum-ID (dieser muss eindeutig sein und darf bei weiteren Facetten nicht existieren)
+        <isOpen></isOpen>**************************** Facettierungsbaum wird bei true aufgeklappt dargestellt (default: false)
+        
+        <facets> ************************************ Facettierungsbaum-Kinder (zur Auswahl)
+            <facet> ********************************* Neuer Facettierungs-Kind (kann die Eigenschaft "sort" enthalten, siehe unten)
+                <name></name> *********************** Neuer Facettierungs-Kind-Name
+                <id></id> *************************** Neuer Facettierungs-Kind-ID 
+                <query></query> ********************* Neuer Facettierungs-Kind-Abfrage
+                 
+                <facets> **************************** Facettierungsbaum-Enkeln (zur Auswahl und kann die Eigenschaft "queryType" enthalten, siehe unten)
+                    <facet> ************************* Facettierungsbaum-Enkel
+                        <name></name> *************** Facettierungsbaum-Enkel-Name
+                        <query></query> ************* Facettierungsbaum-Enkel-Abfrage
+                        <id></id> ******************* Facettierungsbaum-Enkel-ID
+                    </facet>
+                    ...
+                </facets>
+            </facet>
+            ...
+        </facets>
+    </facet>
+    ...
+</facets>
+
+Weitere Facetten-Tags/Eigenschaften:
+****************
+<dependency>"ID"</dependency>:
+ - Diese Facetten-Tag dient dazu eine Abhängigkeit zu beschreiben, d.h. wird die existierende definierte Facetten-ID ausgewählt, so wird diese Facette sichtbar. (siehe Facette "Akualität") 
+  
+<hidden>"ID"</hidden>:
+ - Dieser Facetten-Tag dient dazu eine Facette verschwinden zu lassen, sobald die existierende definierte Facetten-ID ausgewählt wird. (siehe Facette "Raumbezug")  
+
+<facet sort="">:
+Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeiten:
+ - Absteigend nach Facettenwert - "SORT_BY_VALUE_DESC"
+ - Aufsteigend nach Facettenwert - "SORT_BY_VALUE_ASC"
+ - Alphabetisch nach Facettenname - "SORT_BY_NAME"
+ - keine Sortierung
+
+Spezielle Facetten:
+*************************
+Themen:
+Bei Betätigung der Themen-Facette (<id>topic</id>) wird diese mit Unterthemen erweitert, welches als ODER-Abfrage (Mehrauswahl) ausgewählt werden können.
+Die Unterthemen werden aus der Datenbank des Portals gelesen und sind hier in der Konfiguration nicht definiert.
+ 
+Aktualität:
+Die Facette Aktualität enthält keine <query>-Tag, wie üblich, sondern hier wird die Query aus den Tags <from> sowie <to> erstellt, deren Inhalt eine Zeit-Periode beschreibt.
+Die Notation (entspricht dem Format ISO 8601) für die Zeit-Periode ist folgendermaßen: (vom aktuellen Datum aus)
+
+ - P -> Bezeichnet, das nachfolgende Zeichen die Dauer einer Periode repräsentieren
+ - Y -> Positive Zahl, Anzahl von Jahren
+ - M -> Positive Zahl, Anzahl von Monaten
+ - D -> Positive Zahl, Anzahl von Tage
+ - T -> Bezeichnet, das nachfolgende Zeichen die Dauer einer Periode repräsentieren
+ - H -> Positive Zahl, Anzahl von Stunden
+ - M -> Positive Zahl, Anzahl von Minuten
+ - S -> Positive Zahl, Anzahl von Sekunden
+Beispiel: Eine Dauer von 5 Tagen, 4 Stunden und 30,7 Minuten hat folgenden Notation: P5DT4H30.7M
+ 
+Anbieter: (Analog zu Themen)
+Die Facette Anbieter (<id>provider</id>) wird aus der Portal-Datenbank generiert. Dabei werden die Partner als UND-Abfrage (Einfachauswahl), man kann nur einen Partner auswählen, 
+und deren Anbieter als ODER-Abfrage (Mehrauswahl), man kann mehrere Anbieter gleichzeitig auswählen, durchgeführt.
+
+Raumbezug:
+Die Facette Raumbezug (<id>area</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Raumbezug-Abfrage aus der Karte
+- Raumbezug-Abfrage aus dem Geothesaurus
+
+Raumbezug Adressen:
+Die Facette Raumbezug Addressen (<id>area.address</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Adressen-Raumbezugsabfrage anhand der Eingabe von Straße, Postleitzahl und/oder Ort.
+
+Attribute:
+Die Facette Attribute (<id>Attribute</id>) ist eine spezielle Facette. Hier werden keine Facetten gesendet, sondern nur Abfragen ausgeführt.
+- Forschungsprojekte-Attributenabfrage anhand der Eingabe von Projektname, Institution, Projektleiter, Beteiligte, Projektträger und/oder Laufzeit.
+
+
+Facetten-Klassen (Nicht-indexbasierte iPlugs)
+****************
+Wird eine Facette (<facet>) erstellt, deren Query (<query>) ein Nicht-indexbasiertes iPlug (z.B. Opensearch-iPlug) abfragt, so muss diese Facette zunächst im iPlug definiert werden.
+Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "springapp-servlet.xml" (unter "<IPLUG_INSTALLATION>/webapp/WEB-INF") folgenden Eintrag hinzu:
+
+...
+<bean id="plugDescriptionFacetCounter"
+       class="de.ingrid.search.utils.facet.counter.DscPlugdescriptionFacetCounter">
+       <property name="plugDescriptionWrapper">
+           <ref bean="plugDescriptionWrapper" />
+       </property>
+       <property name="facetClassDefinitions">
+           <list>
+                   ...
+                   <value>test3:test23</value>         // Siehe Beispiel: "Test UND-Abfrage"
+                   ...
+           </list>
+    </property>
+</bean>
+....
+
+Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):  
+<value>"FACET-PARENT-ID":"FACET-ID"</value>
+
+Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 
+
+
+Beispiele:
+**********
+Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dialog)
+ -->
+ 
+<facets>
+    <!-- Ergebnistypen -->
+    <facet>
+        <name>Art der Ressource</name>
+        <id>type</id>
+        <facets>
+        <!-- Geo-Information / Karte -->
+            <facet>
+                <name>searchResult.facete.metaclass.map</name>
+                <query>datatype:metadata t01_object.obj_class:1</query>
+                <id>map</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>1</codelist-entry-id>
+            </facet>
+        <!-- Geodatendienst -->
+            <facet>
+                <name>searchResult.facete.metaclass.geoservice</name>
+                <query>datatype:metadata t01_object.obj_class:3</query>
+                <id>geoservice</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>3</codelist-entry-id>
+            </facet>
+        <!-- Sonstige -->
+             <facet>
+                <name>Sonstige</name>
+                <query>datatype:metadata -t01_object.obj_class:1 -t01_object.obj_class:3</query>
+                <id>others</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>Inspire</name>
+        <id>inspire</id>
+        <facets>
+        <!-- INSPIRE-relevant true-->
+            <facet>
+                <name>Ja</name>
+                <query>datatype:metadata inspireidentifiziert</query>
+                <id>inspire_true</id>
+            </facet>
+        <!-- INSPIRE-relevant false -->
+            <facet>
+                <name>Nein</name>
+                <query>datatype:metadata -inspireidentifiziert</query>
+                <id>inspire_false</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>Opendata</name>
+        <id>opendata</id>
+        <facets>
+        <!-- Opendata true-->
+           <facet>
+                <name>Ja</name>
+                <query>datatype:metadata (opendata OR opendataident)</query>
+                <id>opendata_true</id>
+            </facet>
+        <!-- Opendata false-->
+           <facet>
+                <name>Nein</name>
+                <query>datatype:metadata -opendata -opendataident</query>
+                <id>opendata_false</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>AdV-Produkt</name>
+        <id>adv</id>
+        <facets>
+        <!-- AdV-Produkt true-->
+           <facet>
+                <name>Ja</name>
+                <query>datatype:metadata adv</query>
+                <id>adv_true</id>
+            </facet>
+        <!-- AdV-Produkt false-->
+           <facet>
+                <name>Nein</name>
+                <query>datatype:metadata -adv</query>
+                <id>adv_false</id>
+            </facet>
+        </facets>
+    </facet>
+</facets>

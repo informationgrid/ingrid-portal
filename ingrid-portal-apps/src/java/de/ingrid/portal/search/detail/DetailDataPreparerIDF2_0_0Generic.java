@@ -63,7 +63,7 @@ import de.ingrid.utils.xml.XPathUtils;
  */
 public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 	
-	private final static Logger		log							= LoggerFactory.getLogger(DetailDataPreparerIDF2_0_0Generic.class);
+	private static final Logger		log							= LoggerFactory.getLogger(DetailDataPreparerIDF2_0_0Generic.class);
 	
 	private Context					context;
 	private String					iPlugId;

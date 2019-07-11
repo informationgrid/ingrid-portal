@@ -7,6 +7,7 @@
             <ul class="tag-group tag-group bx-top-m bx-bot-l">
                 #renderSearchResultFacetSelection($facetConfig $MESSAGES)
             </ul>
+            #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
         #end
         #parse ('/WEB-INF/templates/include_search_result_counter.vm')
         <hr class="hr-small-full">

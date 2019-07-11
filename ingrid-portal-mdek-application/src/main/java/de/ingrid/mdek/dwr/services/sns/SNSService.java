@@ -54,13 +54,13 @@ import de.ingrid.mdek.dwr.services.sns.SNSTopic.Type;
 @Qualifier("sns")
 public class SNSService {
 
-	private final static Logger log = Logger.getLogger(SNSService.class);	
+	private static final Logger log = Logger.getLogger(SNSService.class);	
 
     private static final int MAX_NUM_RESULTS = 100;
     private static final int MAX_ANALYZED_WORDS = 1000;
 
     // Error string for the frontend
-    private static String ERROR_SNS_INVALID_URL = "SNS_INVALID_URL";
+    private static final String ERROR_SNS_INVALID_URL = "SNS_INVALID_URL";
     
     protected ThesaurusService thesaurusService;
     private GazetteerService gazetteerService;
@@ -87,22 +87,21 @@ public class SNSService {
     }
     
     public List<SNSTopic> getRootTopics(String rootUrl, Locale locale) {
-    	//Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from: " + rootUrl + ", " + locale.getLanguage());
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    	List<SNSTopic> resultList = new ArrayList<>(); 
     	
     	String doc = null;
     	if (rootUrl != null) {
     		// if the rootUrl actually is a sub term then split the root url
     		// from the doc id
-    		String docId = rootUrl.substring(rootUrl.lastIndexOf("/")+1);
+    		String docId = rootUrl.substring(rootUrl.lastIndexOf('/')+1);
     		if (!docId.isEmpty()) doc = rootUrl;
-    		rootUrl = rootUrl.substring(0, rootUrl.lastIndexOf("/")); 
+    		rootUrl = rootUrl.substring(0, rootUrl.lastIndexOf('/')); 
     	}
     	
     	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(doc, locale);
 
-    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator( locale ));
+    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<>(new TermComparator( locale ));
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
 
     	for (TreeTerm treeTerm : orderedTreeTerms) {
@@ -114,26 +113,15 @@ public class SNSService {
     	return resultList;
     }
 
-    public List<SNSTopic> getSubTopics(String topicID, long depth, String direction, Locale locale) {
-    	return getSubTopics(null, topicID, depth, direction, locale);
-    }
-    
     /** This one is only called with direction "down" in JSPs !!!
      * So we call thesaurusService.getHierarchyNextLevel() 
      * @param locale */
-    public List<SNSTopic> getSubTopics(String url, String topicID, long depth, String direction, Locale locale) {
-    	//Locale sessionLocale = MdekUtils.getLocaleFromSession();
+    public List<SNSTopic> getSubTopics(String topicID, long depth, String direction, Locale locale) {
     	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyNextLevel() from "
     		+topicID+", "+depth+", "+direction+", " + locale.getLanguage());
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
-    	TreeTerm[] treeTerms = null;
-    	
-    	if (url == null)
-    		treeTerms = thesaurusService.getHierarchyNextLevel(topicID, locale);
-    	else
-    		treeTerms = thesaurusService.getHierarchyNextLevel(topicID, locale);
-
-    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<TreeTerm>(new TermComparator( locale ));
+    	List<SNSTopic> resultList = new ArrayList<>(); 
+    	TreeTerm[] treeTerms = thesaurusService.getHierarchyNextLevel(topicID, locale);
+    	TreeSet<TreeTerm> orderedTreeTerms = new TreeSet<>(new TermComparator( locale ));
     	orderedTreeTerms.addAll(Arrays.asList(treeTerms));
 
     	for (TreeTerm treeTerm : orderedTreeTerms) {
@@ -149,14 +137,9 @@ public class SNSService {
      * So we call thesaurusService.getHierarchyPathToTop() 
      * @param locale */
     public List<SNSTopic> getSubTopicsWithRoot(String topicID, long depth, String direction, Locale locale) {
-    	return getSubTopicsWithRoot(null, topicID, depth, direction, locale);
-    }
-    
-    public List<SNSTopic> getSubTopicsWithRoot(String url, String topicID, long depth, String direction, Locale locale) {
-    	//Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.getHierarchyPathToTop() from "
     		+topicID+", "+depth+", "+direction+", " + locale.getLanguage());
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>(); 
+    	List<SNSTopic> resultList = new ArrayList<>(); 
     	
     	TreeTerm lastTerm = thesaurusService.getHierarchyPathToTop(topicID, locale);
 
@@ -172,12 +155,12 @@ public class SNSService {
     			SNSTopic currentTopic = convertTermToSNSTopic(lastTerm);
 
     			// set last topic as parent in current topic (but is child in hierarchy !)
-    			List<SNSTopic> parents = new ArrayList<SNSTopic>();
+    			List<SNSTopic> parents = new ArrayList<>();
     			parents.add(lastTopic);
     			currentTopic.setParents(parents);
 
     			// set current topic as child in last topic (but is parent in hierarchy !)
-    			List<SNSTopic> children = new ArrayList<SNSTopic>();
+    			List<SNSTopic> children = new ArrayList<>();
     			children.add(currentTopic);
     			lastTopic.setChildren(children);
     			
@@ -195,8 +178,6 @@ public class SNSService {
      * @return the SNSTopic if it exists, null otherwise
      */
     public SNSTopic findTopic(String queryTerm, Locale locale) {
-    	//Locale sessionLocale = MdekUtils.getLocaleFromSession();
-    	
     	Term[] terms = serviceFindTermsFromQueryTerm(queryTerm,
     			de.ingrid.external.ThesaurusService.MatchingType.EXACT, true, locale);
 
@@ -218,8 +199,13 @@ public class SNSService {
      * @return All topics returned by the SNS, converted to SNSTopics 
      */
     public List<SNSTopic> findTopics(String queryTerm, Locale locale) {
-    	return findTopics(null, queryTerm, locale, MatchingType.EXACT);
-    }
+		try {
+			return findTopics(null, queryTerm, locale, MatchingType.EXACT);
+		} catch (Exception e) {
+			log.error("Error calling findTopics: ", e);
+			return null;
+		}
+	}
     
     /**
      * Find all topics containing the given query string. 
@@ -233,19 +219,17 @@ public class SNSService {
     }
     
     public List<SNSTopic> findTopics(String url, String queryTerm, Locale locale, MatchingType searchType) {
-    	// Locale sessionLocale = MdekUtils.getLocaleFromSession();
-
     	if (url != null) {
     		// if the rootUrl actually is a sub term then split the root url
     		// from the doc id
-    		url = url.substring(0, url.lastIndexOf("/")); 
+    		url = url.substring(0, url.lastIndexOf('/')); 
     	}
     	
     	// TODO: use "contains" here since exact only delivers one term! CHECK!!!
     	Term[] terms = serviceFindTermsFromQueryTerm(queryTerm,
     			searchType, true, locale);
 
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	List<SNSTopic> resultList = new ArrayList<>();
     	for (Term term : terms) {
     		resultList.add(convertTermToSNSTopic(term));
     	}
@@ -267,7 +251,6 @@ public class SNSService {
      * @return the SNSTopic if it exists, null otherwise
      */
     public SNSTopic getPSI(String topicId, Locale locale) {
-    	// Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.getTerm() from " + topicId + ", " + locale.getLanguage());
     	
     	Term term = thesaurusService.getTerm(topicId, locale);
@@ -297,19 +280,18 @@ public class SNSService {
 		    result = new SNSLocationTopic();
 		    // empty and marked if expired !
 		    if (location.getIsExpired()) {
-		        //result.setExpiredDate( location.getExpiredDate() );
 		        result.setExpired( true );
 		    } else {
 		        result = convertLocationToSNSLocationTopic(location);
 		    }
 		        
 		    // check for successors
-            String[] successorIds = new String[0]; //location.getSuccessorIds();
-            List<SNSLocationTopic> successorTopics = new ArrayList<SNSLocationTopic>();
+            String[] successorIds = new String[0];
+            List<SNSLocationTopic> successorTopics = new ArrayList<>();
             for (String successorId : successorIds) {
                 // call me again with the successor
                 if (addedLocations == null) {
-                    addedLocations = new ArrayList<String>();
+                    addedLocations = new ArrayList<>();
                 }
                 // check if successor was already added since cyclic dependencies can occur
                 if (addedLocations.contains( successorId )) {
@@ -324,7 +306,7 @@ public class SNSService {
             }
             
             // add found successors to the location
-            if (!successorTopics.isEmpty()) {
+            if (result != null && !successorTopics.isEmpty()) {
                 result.setSuccessors( successorTopics );
             }
 		}
@@ -339,7 +321,7 @@ public class SNSService {
     private List<SNSTopic> getSimilarTerms(String[] queryTerms, int numResults, Locale locale) {
     	log.debug("     !!!!!!!!!! thesaurusService.getSimilarTermsFromNames() from " +
     			queryTerms + ", true, " + locale.getLanguage());
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	List<SNSTopic> resultList = new ArrayList<>();
     	
     	Term[] terms = thesaurusService.getSimilarTermsFromNames(queryTerms, true, locale);
 
@@ -360,7 +342,7 @@ public class SNSService {
 
     public List<SNSTopic> getSimilarDescriptors(String queryTerm, Locale locale) {
     	String[] words = queryTerm.split(" ");
-    	List<SNSTopic> result = new ArrayList<SNSTopic>();
+    	List<SNSTopic> result = new ArrayList<>();
     	
     	for (int i = 0; i < words.length; i+=MAX_ANALYZED_WORDS) {
     		String queryStr = "";
@@ -378,7 +360,7 @@ public class SNSService {
     public List<SNSTopic> getTopicsForText(String queryTerm, int maxNum, Locale locale) {
     	log.debug("     !!!!!!!!!! thesaurusService.getTermsFromText() from " +
     			queryTerm + ", " + MAX_ANALYZED_WORDS + ", false, " + locale.getLanguage());
-    	List<SNSTopic> resultList = new ArrayList<SNSTopic>();
+    	List<SNSTopic> resultList = new ArrayList<>();
     	
     	Term[] terms = thesaurusService.getTermsFromText(queryTerm, MAX_ANALYZED_WORDS,
     			false, locale);
@@ -395,13 +377,11 @@ public class SNSService {
     		}
     	}
 
-//	    log.debug("Number of descriptors in the result: "+resultList.size());
     	return resultList;
     }
 
     /** Returns the topicID encapsulated in a SNSTopic with the parents, children and synonyms attached */
     public SNSTopic getTopicsForTopic(String topicId, Locale locale) {
-    	// Locale sessionLocale = MdekUtils.getLocaleFromSession();
     	log.debug("     !!!!!!!!!! thesaurusService.getRelatedTermsFromTerm() from "
     			+ topicId + ", " + locale.getLanguage());
     	
@@ -409,10 +389,10 @@ public class SNSService {
 
     	SNSTopic result = null;
     	if (relatedTerms.length > 0) {
-        	List<SNSTopic> synonyms = new ArrayList<SNSTopic>();
-        	List<SNSTopic> parents = new ArrayList<SNSTopic>();
-        	List<SNSTopic> children = new ArrayList<SNSTopic>();
-        	List<SNSTopic> descriptors = new ArrayList<SNSTopic>();
+        	List<SNSTopic> synonyms = new ArrayList<>();
+        	List<SNSTopic> parents = new ArrayList<>();
+        	List<SNSTopic> children = new ArrayList<>();
+        	List<SNSTopic> descriptors = new ArrayList<>();
 
         	for (RelatedTerm relatedTerm : relatedTerms) {
         		SNSTopic t = convertTermToSNSTopic(relatedTerm);
@@ -453,7 +433,7 @@ public class SNSService {
     	Location[] locations = gazetteerService.findLocationsFromQueryTerm(queryTerm, queryType,
     			matching, locale);
 
-    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	List<SNSLocationTopic> resultList = new ArrayList<>();
     	for (Location location : locations) {
         	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
         	if (t != null) {
@@ -471,7 +451,7 @@ public class SNSService {
     	
     	Location[] locations = gazetteerService.getRelatedLocationsFromLocation(topicID, true, locale);
 
-    	List<SNSLocationTopic> resultList = new ArrayList<SNSLocationTopic>();
+    	List<SNSLocationTopic> resultList = new ArrayList<>();
     	for (Location location : locations) {
         	SNSLocationTopic t = convertLocationToSNSLocationTopic(location);
         	if (t != null) {
@@ -483,8 +463,7 @@ public class SNSService {
     }
 
     /** SNS autoClassify operation for URLs */
-    public SNSTopicMap autoClassifyURL(String urlStr, int analyzeMaxWords, String filter, boolean ignoreCase, String lang,
-    		int maxNum, Locale locale) {   	
+    public SNSTopicMap autoClassifyURL(String urlStr, int analyzeMaxWords, String filter, boolean ignoreCase, int maxNum, Locale locale) {   	
     	URL url = createURL(urlStr);
     	if (url == null) {
    			throw new RuntimeException(ERROR_SNS_INVALID_URL);
@@ -499,7 +478,7 @@ public class SNSService {
 		result.setIndexedDocument(new IndexedDocument(classifyResult.getIndexedDocument()));
 
 		// terms
-    	List<SNSTopic> thesaTopics = new ArrayList<SNSTopic>();
+    	List<SNSTopic> thesaTopics = new ArrayList<>();
     	if (classifyResult.getTerms() != null) {
         	int num = 0;
         	for (Term term : classifyResult.getTerms()) {
@@ -516,7 +495,7 @@ public class SNSService {
     	result.setThesaTopics(thesaTopics);
 
     	// locations
-    	List<SNSLocationTopic> locationTopics = new ArrayList<SNSLocationTopic>();
+    	List<SNSLocationTopic> locationTopics = new ArrayList<>();
     	if (classifyResult.getLocations() != null) {
         	int num = 0;
         	for (Location location : classifyResult.getLocations()) {
@@ -537,7 +516,7 @@ public class SNSService {
     	result.setLocationTopics(locationTopics);
 
     	// events
-    	List<SNSEventTopic> eventTopics = new ArrayList<SNSEventTopic>();
+    	List<SNSEventTopic> eventTopics = new ArrayList<>();
     	if (classifyResult.getEvents() != null) {
         	for (Event event : classifyResult.getEvents()) {
         		eventTopics.add(convertEventToSNSEventTopic(event));
@@ -582,12 +561,12 @@ public class SNSService {
     	List<TreeTerm> childTerms = treeTerm.getChildren();
 		if (childTerms != null) {
 			// set up list of mapped children
-			List<SNSTopic> childTopics = new ArrayList<SNSTopic>();
+			List<SNSTopic> childTopics = new ArrayList<>();
 			for (Term childTerm : childTerms) {
 				SNSTopic childTopic = convertTermToSNSTopic(childTerm);
 
 				// set parent in child
-    			List<SNSTopic> parents = new ArrayList<SNSTopic>();
+    			List<SNSTopic> parents = new ArrayList<>();
     			parents.add(resultTopic);
     			childTopic.setParents(parents);
 				
@@ -658,20 +637,20 @@ public class SNSService {
     /** NOTICE: Type.TOP_TERM can only be determined if term is TreeTerm !!!!!! */
     private static Type getTypeFromTerm(Term term) {
     	// first check whether we have a tree term ! Only then we can determine whether top node !
-		if (TreeTerm.class.isAssignableFrom(term.getClass())) {
-	    	if (((TreeTerm)term).getParents() == null) {
-	    		return Type.TOP_TERM;
-	    	}    	
+		if (TreeTerm.class.isAssignableFrom(term.getClass()) && ((TreeTerm)term).getParents() == null) {
+    		return Type.TOP_TERM;
 		}
 
     	TermType termType = term.getType();
-    	if (termType == TermType.NODE_LABEL) 
+    	if (termType == TermType.NODE_LABEL) { 
 			return Type.NODE_LABEL;
-		if (termType == TermType.DESCRIPTOR) 
+    	} else if (termType == TermType.DESCRIPTOR) { 
 			return Type.DESCRIPTOR;
-		if (termType == TermType.NON_DESCRIPTOR) 
+    	} else if (termType == TermType.NON_DESCRIPTOR) { 
 			return Type.NON_DESCRIPTOR;
-		return Type.TOP_TERM;
+    	} else {
+    	    return Type.TOP_TERM;
+    	}
     }
 
 	/** Determine Gazetteer MatchingType from passed SNS search type string. */
@@ -727,7 +706,7 @@ public class SNSService {
     	return url;
 	}
 
-    static public class TermComparator implements Comparator<Term> {
+    public static class TermComparator implements Comparator<Term> {
         private Locale locale;
         public TermComparator( Locale locale ) {
             this.locale = locale;
@@ -743,7 +722,7 @@ public class SNSService {
             }
         }
     }
-    static public class SNSTopicComparator implements Comparator<SNSTopic> {
+    public static class SNSTopicComparator implements Comparator<SNSTopic> {
         private Locale locale;
     	public SNSTopicComparator( Locale locale ) {
             this.locale = locale;
