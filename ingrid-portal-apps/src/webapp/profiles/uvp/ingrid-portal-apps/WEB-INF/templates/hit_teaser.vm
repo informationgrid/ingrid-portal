@@ -28,8 +28,8 @@
                 #if($hits)
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     #foreach($hit in $hits)
-                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" class="data">
-                            <div class="teaser-data">
+                        <div class="teaser-data" onclick="location.href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'">
+                            <div class="data" >
                                 <div class="row">
                                     <div class="xsmall-24 large-13 columns">
                                         <div class="text-wrapper">
@@ -52,7 +52,9 @@
                                                     <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
                                                 </div>
                                             #end
-                                            <span class="ic-ic-arrow arrow"></span>
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()">
+                                                <span class="ic-ic-arrow arrow"></span>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="xsmall-24 large-11 columns">
@@ -83,7 +85,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     #end
                 #else
                 #end
