@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="4.6.6-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.6">
+        <release version="4.6.7" date="2019-07-11" description="Release 4.6.7">
           <action type="fix" dev="wemove" issue="1431">
             Fix wrong conformity entry
           </action>
