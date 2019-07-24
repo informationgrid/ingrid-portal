@@ -245,7 +245,7 @@ thead {
 }
 .nav-toggle:after {
   border-color: transparent transparent #407E40 transparent;
-  border-width: 0 0 49px 12px;
+  border-width: 0 0 60px 12px;
 }
 
 .nav-toggle .icon {
@@ -371,7 +371,7 @@ thead {
   }
   
   .nav-toggle:after {
-    border-width: 0 0 65px 12px;
+    border-width: 0 0 76px 12px;
   }
 }
 
@@ -423,4 +423,14 @@ span.ueber {
 
 body {
   font-size: unset;
+}
+
+.desktop__title {
+  color: #333;
+  top: 50px;
+  position: absolute;
+}
+
+.desktop__title:hover {
+  text-decoration: none;
 }
