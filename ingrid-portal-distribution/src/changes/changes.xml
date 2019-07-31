@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.0.3-SNAPSHOT" date="2019-xx-xx" description="Release 5.0.3">
+          <action type="fix" dev="wemove" issue="1436">
+            Fix problem not showing BLP urls for NRW specific entries.
+          </action>
           <action type="fix" dev="wemove" issue="1431">
             Fix wrong conformity entry
           </action>
