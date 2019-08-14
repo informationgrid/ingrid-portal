@@ -320,7 +320,7 @@ importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
 DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
-DOM.addNS("gml", "http://www.opengis.net/gml/3.2");
+DOM.addNS("gml", "http://www.opengis.net/gml");
 DOM.addNS("xlink", "http://www.w3.org/1999/xlink");
 
 if (!(sourceRecord instanceof DatabaseSourceRecord)) {
@@ -433,7 +433,7 @@ importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
 DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
-DOM.addNS("gml", "http://www.opengis.net/gml/3.2");
+DOM.addNS("gml", "http://www.opengis.net/gml");
 DOM.addNS("xlink", "http://www.w3.org/1999/xlink");
 
 
@@ -487,7 +487,7 @@ if (valueRecord && valueRecord.size() > 0) {
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
 DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
-DOM.addNS("gml", "http://www.opengis.net/gml/3.2");
+DOM.addNS("gml", "http://www.opengis.net/gml");
 DOM.addNS("xlink", "http://www.w3.org/1999/xlink");
 
 // import Simulation: Zeitliche Auflösung
@@ -521,7 +521,7 @@ importPackage(Packages.de.ingrid.iplug.dsc.om);
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
 DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
-DOM.addNS("gml", "http://www.opengis.net/gml/3.2");
+DOM.addNS("gml", "http://www.opengis.net/gml");
 DOM.addNS("xlink", "http://www.w3.org/1999/xlink");
 
 if (!(sourceRecord instanceof DatabaseSourceRecord)) {
@@ -591,7 +591,7 @@ log.info("path:" + path[i]);
 //add Namespaces to Utility for convenient handling of NS !
 DOM.addNS("gmd", "http://www.isotc211.org/2005/gmd");
 DOM.addNS("gco", "http://www.isotc211.org/2005/gco");
-DOM.addNS("gml", "http://www.opengis.net/gml/3.2");
+DOM.addNS("gml", "http://www.opengis.net/gml");
 DOM.addNS("xlink", "http://www.w3.org/1999/xlink");
 
 //import resourceFormat
