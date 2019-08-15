@@ -20,6 +20,11 @@
  * limitations under the Licence.
  * **************************************************#
  */
+
+// this global variable can be used to add information of an activated behaviour, e.g. it has
+// been activated, so that this information can be used in another function
+var igeOptions = {};
+
 define(["dojo/_base/declare",
         "dojo/_base/array", 
         "dojo/Deferred", 
@@ -51,10 +56,11 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
         "ingrid/hierarchy/behaviours/spatialRepresentationInfo",
-        "ingrid/hierarchy/behaviours/parentIdentifier"
+        "ingrid/hierarchy/behaviours/parentIdentifier",
+        "ingrid/hierarchy/behaviours/deleteNonEmptyFolders"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
-            spatialRepresentationInfo, parentIdentifier) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders) {
 
     return declare(null, {
         
@@ -75,6 +81,8 @@ define(["dojo/_base/declare",
         inspireConformityConnection: inspireConformityConnection,
 
         spatialRepresentationInfo: spatialRepresentationInfo,
+
+        deleteNonEmptyFolders: deleteNonEmptyFolders,
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,

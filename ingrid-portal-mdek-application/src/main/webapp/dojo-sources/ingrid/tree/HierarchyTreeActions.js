@@ -203,7 +203,10 @@ define(["dojo/_base/declare",
 
                 // check for multiple selection mode (with CTRL-key)
                 if (oEvent.ctrlKey === true || oEvent.shiftKey === true) {
-
+                    topic.publish("/selectNode", {
+                        id: "dataTree",
+                        node: this.lastFocusedNode
+                    });
                 } else {
                     if (IgeActions.hasUnsavedChanged()) {
                         // select previous selected node to 
@@ -225,7 +228,7 @@ define(["dojo/_base/declare",
             },
 
             mouseDownHandler: function(self, evt){
-                if(evt.button==2){ // right-click
+                if(evt.button === 2){ // right-click
                     var node = registry.getEnclosingWidget(evt.target);
                     self._contextMenuPreparer(node);
                     topic.publish("/onTreeContextMenu", node);
@@ -254,11 +257,11 @@ define(["dojo/_base/declare",
                 // 1) keep multi selection if clicked on one selected node
                 // 2) change selection to only clicked node if it isn't selected
                 var clickedNodeIsSelected = array.some(dataTree.selectedNodes, function(node) {
-                    return node.id == self.menu.clickedNode.id;
+                    return node.id === self.menu.clickedNode.id;
                 });
                 if (!clickedNodeIsSelected) {
                     // dataTree.resetSelection(this.menu.clickedNode);
-                    dataTree.set("selectedNodes", [clickedNode]);
+                    dataTree.dndController.setSelection([clickedNode]);
                 }
 
                 // allow/deny paste
@@ -269,27 +272,27 @@ define(["dojo/_base/declare",
                 if (dataTree.selectedNodes.length > 1)
                     multiSelection = true;
 
-                if (!multiSelection && clickedNode.item.nodeAppType == "A")
+                if (!multiSelection && clickedNode.item.nodeAppType === "A")
                     isAddressNode = true;
 
-                if (clickedNode.item.id == "objectRoot" || clickedNode.item.id == "addressRoot" || clickedNode.item.id == "addressFreeRoot") {
+                if (clickedNode.item.id === "objectRoot" || clickedNode.item.id === "addressRoot" || clickedNode.item.id === "addressFreeRoot") {
                     // contrived condition: if this tree node doesn't have any children, disable all of the menu items
                     array.forEach(this.menu.getChildren(), function(i) {
-                        if (i.id == "menuItemNew" || i.id == "menuItemPaste" ||
-                            i.id == "menuItemReload" || i.id == "menuItemSeparator") {
+                        if (i.id === "menuItemNew" || i.id === "menuItemPaste" ||
+                            i.id === "menuItemReload" || i.id === "menuItemSeparator") {
                             domClass.remove(i.domNode, "hidden");
-                            if (i.id != "menuItemSeparator") i.set("disabled", false);
+                            if (i.id !== "menuItemSeparator") i.set("disabled", false);
                         } else {
                             domClass.add(i.domNode, "hidden");
                         }
-                        if (i.id == "menuItemPaste") {
+                        if (i.id === "menuItemPaste") {
                             enablePaste ? i.set("disabled", false) : i.set("disabled", true);
                         }
                     });
                 } else { // for all child nodes of the objects and addresses
 
                     array.forEach(this.menu.getChildren(), function(i) {
-                        if (i.id == "menuItemReload" || i.id == "menuItemSeparator" || (!isAddressNode && i.id == "menuItemInheritAddress")) {
+                        if (i.id === "menuItemReload" || i.id === "menuItemSeparator" || (!isAddressNode && i.id === "menuItemInheritAddress")) {
                             domClass.add(i.domNode, "hidden");
                             return;
                         } else {
@@ -300,60 +303,74 @@ define(["dojo/_base/declare",
                         if (i.isInstanceOf(MenuSeparator)) {
                             return;
                         }
-                        if (clickedNode.item.nodeAppType == "A" && (clickedNode.item.objectClass == 2 || clickedNode.item.objectClass == 3)) {
-                            if (i.id == "menuItemNew")
+                        if (clickedNode.item.nodeAppType === "A" && (clickedNode.item.objectClass == 2 || clickedNode.item.objectClass == 3)) {
+                            if (i.id === "menuItemNew")
                                 i.set("disabled", true);
                             else
                                 i.set("disabled", false);
                         } else {
                             i.set("disabled", false);
                         }
-                        if (i.id == "menuItemPaste")
+                        if (i.id === "menuItemPaste")
                             enablePaste ? i.set("disabled", false) : i.set("disabled", true);
 
                         if (clickedNode.item.userWriteTreePermission && (clickedNode.item.userWriteTreePermission === false)) {
-                            if (i.id == "menuItemCut")
+                            if (i.id === "menuItemCut")
                                 i.set("disabled", true);
 
-                            if (!clickedNode.item.userWriteSubTreePermission && !clickedNode.item.userWriteSubNodePermission && (i.id == "menuItemNew" || i.id == "menuItemPaste")) {
+                            if (!clickedNode.item.userWriteSubTreePermission && !clickedNode.item.userWriteSubNodePermission && (i.id === "menuItemNew" || i.id === "menuItemPaste")) {
                                 console.debug(clickedNode.item);
                                 i.set("disabled", true);
                             }
                         }
 
-                        if (!clickedNode.item.userMovePermission && (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDetach")) {
+                        if (!clickedNode.item.userMovePermission && (i.id === "menuItemMove" || i.id === "menuItemCut" || i.id === "menuItemDetach")) {
                             i.set("disabled", true);
                         }
 
                         if (!isAddressNode) {
                             if (clickedNode.item.publicationCondition && clickedNode.item.publicationCondition) {
-                                if (i.id.indexOf("PublicationCondition") != -1) {
+                                if (i.id.indexOf("PublicationCondition") !== -1) {
                                     domClass.remove(i.domNode, "hidden");
                                     i.set("disabled", false);
                                 }
-                                if (i.id == "menuItemPublicationCondition" + clickedNode.item.publicationCondition) {
+                                if (i.id === "menuItemPublicationCondition" + clickedNode.item.publicationCondition) {
                                     i.set("disabled", true);
                                 }
                             } else {
-                                if (i.id.indexOf("PublicationCondition") != -1) {
+                                if (i.id.indexOf("PublicationCondition") !== -1) {
                                     domClass.add(i.domNode, "hidden");
                                 }
                             }
                         } else {
-                            if (i.id.indexOf("PublicationCondition") != -1) {
+                            if (i.id.indexOf("PublicationCondition") !== -1) {
                                 domClass.add(i.domNode, "hidden");
                             }
                         }
 
-                        if (i.id == "menuItemInheritAddress" && clickedNode.item.isFolder !== true) {
+                        if (i.id === "menuItemInheritAddress" && clickedNode.item.isFolder !== true) {
+                            i.set("disabled", true);
+                        }
+
+                        // disable delete operation for folders and documents with children, if catalog setting was not set
+                        if (i.id === "menuItemDelete" && !igeOptions.deleteNonEmptyFolders && clickedNode.item.isFolder) {
                             i.set("disabled", true);
                         }
 
                         // only enable these menu entries on multi selection
                         if (multiSelection) {
-                            if (i.id == "menuItemMove" || i.id == "menuItemCut" || i.id == "menuItemDelete" ||
-                                i.id == "menuItemCopy" || i.id == "menuItemCopySingle" || i.id == "menuItemDetach") {
+                            if (i.id === "menuItemMove" || i.id === "menuItemCut" ||
+                                i.id === "menuItemCopy" || i.id === "menuItemCopySingle" || i.id === "menuItemDetach") {
                                 // do not modify state, since they already should have the right one!
+
+                            } else if (i.id === "menuItemDelete") {
+                                var selectionContainsChildren = array.some(dataTree.selectedItems, function(node) {
+                                    return node.isFolder;
+                                });
+                                if (!igeOptions.deleteNonEmptyFolders && selectionContainsChildren) {
+                                    i.set("disabled", true);
+                                }
+
                             } else {
                                 // disable all other entries
                                 i.set("disabled", true);
