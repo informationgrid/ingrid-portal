@@ -301,21 +301,27 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 applySpecification(value, false);
             };
 
-            // on manual service type change automatically add/remove conformity entries to the table
-            aspect.after(registry.byId("ref3ServiceType"), "closeDropDown", function() {
+            var applyBehavior = function(value) {
                 var objClass = registry.byId("objectClass").get("value");
                 if (objClass == "Class3") {
-                    handleConformityValue(this.get("value"));
+                    handleConformityValue(value);
                 }
+            };
+
+            // on manual service type change automatically add/remove conformity entries to the table
+            aspect.after(registry.byId("ref3ServiceType"), "closeDropDown", function() {
+                applyBehavior(this.get("value"));
             });
 
             // execute behaviour when a new document is created
-            topic.subscribe("/afterInitDialog/CloseWizard", function() {
-                var objClass = registry.byId("objectClass").get("value");
-                if (objClass == "Class3") {
-                    var value = registry.byId("ref3ServiceType").get("value");
-                    handleConformityValue(value);
-                }
+            topic.subscribe("/afterCloseDialog/ChooseWizard", function() {
+                var value = registry.byId("ref3ServiceType").get("value");
+                applyBehavior(value);
+            });
+            // execute behaviour when a new document is created with getCapabilities or general assistant
+            topic.subscribe("/afterCloseDialog/WizardResults", function() {
+                var value = registry.byId("ref3ServiceType").get("value");
+                applyBehavior(value);
             });
 
         },

@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.1.1-SNAPSHOT" date="2019-xx-xx" description="Release 5.1.1">
+          <action type="fix" dev="wemove" issue="1446">
+            IGE: Fix adding of conformity after getCapabilities assistant.
+          </action>
+        </release>
+
         <release version="5.1.0" date="2019-07-11" description="Release 5.1.0">
           <action type="fix" dev="wemove" issue="1396">
             UVP: In Sektion "Allgemein" wird beim Ausklappen das Feld "ID des übergeordneten Datensatzes angezeigt"
