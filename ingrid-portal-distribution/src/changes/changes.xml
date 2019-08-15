@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove">
             Mapclient: Fix scale handling.
           </action>
+          <action type="fix" dev="wemove" issue="1446">
+            IGE: Fix adding of conformity after getCapabilities assistant.
+          </action>
         </release>
 
         <release version="5.1.0" date="2019-07-11" description="Release 5.1.0">
