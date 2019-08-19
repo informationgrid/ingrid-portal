@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1438">
             Portal: Fix search on maps.
           </action>
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
+          </action>
           <action type="fix" dev="wemove">
             Mapclient: Fix scale handling.
           </action>
