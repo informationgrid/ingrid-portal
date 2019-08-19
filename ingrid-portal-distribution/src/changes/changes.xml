@@ -7,15 +7,18 @@
 
     <body>
 
+        <release version="4.6.8-SNAPSHOT" date="2019-xx-xx" description="Release 4.6.8">
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
+          </action>
+        </release>
+
         <release version="4.6.7" date="2019-07-11" description="Release 4.6.7">
           <action type="fix" dev="wemove" issue="1431">
             Fix wrong conformity entry
           </action>
           <action type="fix" dev="wemove" issue="1128">
             Fix wrong validation of table rows
-          </action>
-          <action type="fix" dev="wemove" issue="1442">
-            Portal: Fix search detail link.
           </action>
           <action type="fix" dev="wemove">
             Fix preview image in portal
