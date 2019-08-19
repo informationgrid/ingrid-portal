@@ -7,6 +7,15 @@
 
     <body>
 
+        <release version="4.6.2.2" date="2019-08-19" description="Release 4.6.2.2">
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Portal: Fix preview image.
+          </action>
+        </release>
+
         <release version="4.6.2.1" date="2019-03-18" description="Release 4.6.2.1">
           <action type="fix" dev="wemove" issue="">
             Portal: Fix load favicon.
