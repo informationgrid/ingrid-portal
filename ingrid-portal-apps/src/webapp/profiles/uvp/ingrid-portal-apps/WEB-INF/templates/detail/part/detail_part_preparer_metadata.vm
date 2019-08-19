@@ -340,7 +340,7 @@
 #macro (renderTreeFolder $entry)
     #set($entryLabel = "")
     #if($entry.get('label'))
-        #set($entryLabel = "$TOOL.getDecodeValue($entry.get('label'))")
+        #set($entryLabel = "$entry.get('label')")
     #end
     #if($entryLabel && $entryLabel.length() > 0)
         #set($entryLink = "")
