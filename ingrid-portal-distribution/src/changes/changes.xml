@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1128">
             Fix wrong validation of table rows
           </action>
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
+          </action>
           <action type="fix" dev="wemove">
             Fix preview image in portal
           </action>
