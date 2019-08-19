@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="1438">
             Portal: Fix search on maps.
           </action>
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
+          </action>
         </release>
 
         <release version="5.0.2" date="2019-06-28" description="Release 5.0.2">
