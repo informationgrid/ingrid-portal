@@ -155,7 +155,9 @@ public class DetailPartPreparer {
         if (value != null){
            try {
                 value = URLDecoder.decode(value, "UTF-8");
-            } catch (UnsupportedEncodingException e) {}
+            } catch (UnsupportedEncodingException | IllegalArgumentException e) {
+                log.error("Error on getDecodeValue.", e);
+            }
         }
         return value;
     }
