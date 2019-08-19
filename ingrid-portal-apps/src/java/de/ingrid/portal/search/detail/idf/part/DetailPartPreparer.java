@@ -272,8 +272,8 @@ public class DetailPartPreparer {
         for(int i=0; i<resourceConstraintsNodes.getLength(); i++) {
             Node node = resourceConstraintsNodes.item(i);
 
-            NodeList restrictionCodeNodes = xPathUtils.getNodeList(node, restrictionCodeXpath);
-            NodeList constraintsNodes = xPathUtils.getNodeList(node, constraintsTextXpath);
+            NodeList restrictionCodeNodes = XPathUtils.getNodeList(node, restrictionCodeXpath);
+            NodeList constraintsNodes = XPathUtils.getNodeList(node, constraintsTextXpath);
             if (restrictionCodeNodes == null || (restrictionCodeNodes != null && restrictionCodeNodes.getLength() == 0) ||
                     constraintsNodes == null || (constraintsNodes != null && constraintsNodes.getLength() == 0)) {
                 continue;
