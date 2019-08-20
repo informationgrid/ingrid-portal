@@ -100,7 +100,7 @@ define(["dojo/_base/declare",
                 });
             }
         },
-        
+
         requireUseConstraints: {
             title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
             title_en: "Use Constraints - Required on INSPIRE / Open Data",
@@ -109,22 +109,13 @@ define(["dojo/_base/declare",
             issue: "https://dev.informationgrid.eu/redmine/issues/223",
             defaultActive: true,
         	run: function() {
-        		// define our useConstraints handler
-                var updateUseConstraintsBehaviour = function(isChecked) {
-		            if (isChecked) {
-		                domClass.add("uiElementN027", "required");
-		                
-		            } else {
-		                // remove required field if INSPIRE and open data checkbox not selected
-		                if (!registry.byId("isInspireRelevant").checked &&
-		                	!registry.byId("isOpenData").checked) {
-		                    domClass.remove("uiElementN027", "required");
-		                }
-		            }
-		        };
-
-		        on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
-		        on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
+                topic.subscribe("/onObjectClassChange", function(data) {
+                    if (data.objClass === "Class1" || data.objClass === "Class3") {
+                        domClass.add("uiElementN027", "required");
+                    } else {
+                        domClass.remove("uiElementN027", "required");
+                    }
+                });
             }
         },
         

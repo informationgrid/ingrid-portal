@@ -29,6 +29,9 @@
           <action type="add" dev="wemove" issue="1437">
             IGE: Folder/Datasets with children cannot be deleted by default.
           </action>
+          <action type="add" dev="wemove" issue="1362">
+            IGE: Use constraints always required for geoservice and geo dataset.
+          </action>
         </release>
 
         <release version="5.1.0" date="2019-07-11" description="Release 5.1.0">
