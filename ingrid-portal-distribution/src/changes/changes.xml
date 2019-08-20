@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="1442">
             Portal: Fix search detail link.
           </action>
+          <action type="fix" dev="wemove" issue="1458">
+            Portal: Fix list-style for Chrome and Edge.
+          </action>
           <action type="fix" dev="wemove">
             Mapclient: Fix scale handling.
           </action>
