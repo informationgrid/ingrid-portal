@@ -232,6 +232,8 @@ define(["dojo/_base/declare",
                     var node = registry.getEnclosingWidget(evt.target);
                     self._contextMenuPreparer(node);
                     topic.publish("/onTreeContextMenu", node);
+                    evt.stopImmediatePropagation();
+                    evt.preventDefault();
                 }
                 this.lastFocusedNode = this.selectedNode;
             },
