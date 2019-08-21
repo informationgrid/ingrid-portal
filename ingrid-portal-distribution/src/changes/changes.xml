@@ -23,6 +23,9 @@
           <action type="fix" dev="wemove">
             Mapclient: Fix scale handling.
           </action>
+          <action type="fix" dev="wemove" issue="1463">
+            Mapclient: Add WGS84 formats to context popup.
+          </action>
           <action type="fix" dev="wemove" issue="1446">
             IGE: Fix adding of conformity after getCapabilities assistant.
           </action>
