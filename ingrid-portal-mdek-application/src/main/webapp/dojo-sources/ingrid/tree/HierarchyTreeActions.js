@@ -232,6 +232,7 @@ define(["dojo/_base/declare",
                     var node = registry.getEnclosingWidget(evt.target);
                     self._contextMenuPreparer(node);
                     topic.publish("/onTreeContextMenu", node);
+                    // prevent further propagation of right click event to avoid deselection of tree nodes
                     evt.stopImmediatePropagation();
                     evt.preventDefault();
                 }

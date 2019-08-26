@@ -125,7 +125,7 @@ else
     sed -i 's/mdek.directLink=http:\/\/localhost:8080\/ingrid-portal-mdek-application\/index.jsp/mdek.directLink=$IGE_DIRECT_LINK/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     # Upload settings
-    sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\/=$UPLOAD_DOCS_DIR/upload.docsdir=$UPLOAD_DOCS_DIR' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\//upload.docsdir=$UPLOAD_DOCS_DIR' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/upload.partsdir=\/tmp\/ingrid\/upload\/parts\//upload.partsdir=$UPLOAD_PARTS_DIR/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     touch /initialized
