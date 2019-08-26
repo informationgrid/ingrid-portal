@@ -20,6 +20,9 @@
           <action type="fix" dev="wemove" issue="1458">
             Portal: Fix list-style for Chrome and Edge.
           </action>
+          <action type="update" dev="wemove" issue="1200">
+            Portal: Update BKG portal layout.
+          </action>
           <action type="fix" dev="wemove">
             Mapclient: Fix scale handling.
           </action>
