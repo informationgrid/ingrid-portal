@@ -225,6 +225,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_EXTEND_QUERY = "portal.search.extend.query";
 
+    public static final String PORTAL_SEARCH_RESET_QUERY = "portal.search.reset.query";
+
     public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
    
     public static final String CATEGORY_TEASER_SEARCH_FACETS_TYP = "category.teaser.search.facets.typ";
