@@ -48,7 +48,9 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.queryparser.TokenMgrError;
 
 /**
  * This portlet handles the "Simple Search" input fragment. NOTICE: This portlet
@@ -191,7 +193,11 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // that one for convenience
         // (although this state is not bookmarkable !)
         String queryString = SearchState.getSearchStateObjectAsString( request, Settings.PARAM_QUERY_STRING );
-        af.setInput( SearchSimpleForm.FIELD_QUERY, queryString );
+        if(this.getPortletName().equals("SearchSimple") && PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_SEARCH_RESET_QUERY, Boolean.FALSE )) {
+            af.setInput( SearchSimpleForm.FIELD_QUERY, "" );
+        } else {
+            af.setInput( SearchSimpleForm.FIELD_QUERY, queryString );
+        }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
         context.put( "actionForm", af );
@@ -332,7 +338,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse( queryString );
-        } catch (Exception t) {
+        } catch (ParseException | TokenMgrError t) {
             if (log.isDebugEnabled()) {
                 log.debug( "Problems creating IngridQuery, parsed query string: " + queryString, t );
             } else {

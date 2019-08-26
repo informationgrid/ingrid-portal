@@ -98,7 +98,7 @@
                     </div>
                 </div>
                 <div class="header__widgets__section">
-                    <a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+                    <a target="_new" class="header__widget header__logo" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
                         <img class="mq-hide-xxl desktop-logo" src="#GetPageResource('images/template/logo.svg')">
                         <img class="mq-show-xxl mobile__logo" >
                     </a>
@@ -117,7 +117,7 @@
           #includeMainNavigation($mainMenu)
         #end
         </header>
-        <a class="mq-show-xxl" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+        <a target="_new" class="mq-show-xxl" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
             <img class="mobile__logo-x" src="#GetPageResource('images/template/logo.svg')">
         </a>
         <div class="container">
