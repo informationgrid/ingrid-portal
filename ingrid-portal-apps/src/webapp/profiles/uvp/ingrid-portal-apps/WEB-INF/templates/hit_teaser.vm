@@ -28,7 +28,7 @@
                 #if($hits)
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     #foreach($hit in $hits)
-                        <div class="teaser-data" onclick="location.href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'">
+                        <div class="teaser-data">
                             <div class="data" >
                                 <div class="row">
                                     <div class="xsmall-24 large-13 columns">
@@ -37,9 +37,11 @@
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
                                             </div>
                                             #set ($date = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
-                                            <h2 class="header">
-                                                $hit.getHitDetail().getTitle()
-                                            </h2>
+                                            <a href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'" title="$hit.getHitDetail().getTitle()">
+                                                <h2 class="header">
+                                                    $hit.getHitDetail().getTitle()
+                                                </h2>
+                                            </a>
                                             #if($date)
                                             <div class="helper text date">
                                                 <span class="">$date</span>
