@@ -46,7 +46,7 @@
                                             </div>
                                             #end
                                             <p class="data-text">$hit.getHitDetail().getSummary()</p>
-                                            #foreach($uvp_category in $hit.getHitDetail().getArray("uvp_category"))
+                                            #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
                                                 <div class="helper icon">
                                                     <span class="ic-ic-$uvp_category"></span>
                                                     <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
