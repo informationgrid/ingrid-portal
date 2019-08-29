@@ -57,14 +57,16 @@
             <div class="form-element">
                 <label for="xx7">$MESSAGES.getString('contact.jcaptcha.title')</label>
             </div>
-            <div class="sg-gradientbox">
-            #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
-                <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
-            #else
-                <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
-            #end 
-            </div>
-            #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline")
+            <p>
+                <div class="sg-gradientbox">
+                #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
+                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
+                #else
+                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
+                #end 
+                </div>
+                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline")
+            </p>
             $action.setParameter("doRefresh",  "Refresh")
             <div class="form-element">
                 <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha')/>
