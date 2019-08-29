@@ -22,6 +22,8 @@ RUN mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
     && mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT/WEB-INF/deploy/*.war /opt/ingrid/ingrid-portal/apache-tomcat/webapps \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
     && unzip -q /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
+    && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek \
+    && unzip -q /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
     && unzip -q /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-mdek-application \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
