@@ -223,3 +223,11 @@
   background-size: 13px 16px;
   padding: 3px 10px 0 4px !important;
 }
+
+
+@media screen and (min-width: 480px) {
+  .popup {
+    left: 50%;
+    margin-left: -15rem;
+  }
+}
