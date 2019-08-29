@@ -224,10 +224,33 @@
   padding: 3px 10px 0 4px !important;
 }
 
-
 @media screen and (min-width: 480px) {
   .popup {
     left: 50%;
     margin-left: -15rem;
   }
+}
+
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    #legend-accordion-label-landscape {
+        display: block !important;
+    }
+    .is-active #legend-accordion-label-landscape {
+        border-top: 1px solid #c6cfe2 !important;
+        border-bottom: 0 !important;
+        padding: 10px 0 !important;
+    }
+    .is-active #legend-accordion-label-landscape::after {
+        top: 10px !important;
+        right: 50% !important;
+    }
+    .is-active #legend-accordion-label-landscape span {
+        display: none;
+    }
+    #legend-accordion-label {
+        display: none !important;
+    }
+    #legend-accordion {
+        margin: 0;
+    }
 }
