@@ -231,7 +231,7 @@
   }
 }
 
-@media screen and (max-height: 480px) and (max-width: 768px) and (orientation: landscape) {
+@media screen and (max-height: 34.9375em) and (max-width: 63.9375em) and (orientation: landscape) {
   #legend-accordion-label-landscape {
       display: block !important;
   }
