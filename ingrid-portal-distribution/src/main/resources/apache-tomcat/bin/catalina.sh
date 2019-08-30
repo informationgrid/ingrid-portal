@@ -129,13 +129,6 @@ if [ -f $INGRID_HOME/bin/jmx.sh ]; then
   eval `sh $INGRID_HOME/bin/jmx.sh`
 fi
 
-# include default options, i.e. debug, jmx and jvm options
-if [ -f $INGRID_HOME/bin/env.user.sh ]; then
-  eval "`sh $INGRID_HOME/bin/env.user.sh`"
-elif [ -f $INGRID_HOME/bin/env.sh ]; then
-  eval "`sh $INGRID_HOME/bin/env.sh`"
-fi
-
 # resolve links - $0 may be a softlink
 PRG="$0"
 
