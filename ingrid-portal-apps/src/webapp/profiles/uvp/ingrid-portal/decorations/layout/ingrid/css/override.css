@@ -310,4 +310,8 @@
   .leaflet-popup-content {
     min-width: 300px;
   }
+  
+  .teaser-data .helper.icon {
+    width: 85%;
+  }
 }
