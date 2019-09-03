@@ -612,7 +612,7 @@
             popUpHtml += '<div class="helper text"><small>' + procedure + '</small></div>';
         }
         
-        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank"><h5>' + title + '</h5></a>';
+        popUpHtml += '<a href="/trefferanzeige?docuuid=' + id + '" target="_blank" title="' + title + '"><h5>' + title + '</h5></a>';
         
         if(categories && categories.length > 0){
             var categoryList = [];
