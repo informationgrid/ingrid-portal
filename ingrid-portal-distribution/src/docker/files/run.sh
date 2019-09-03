@@ -112,21 +112,21 @@ else
         rm conf/Catalina/localhost/ingrid-portal-apps.xml conf/Catalina/localhost/ingrid-portal-mdek.xml conf/Catalina/localhost/ingrid-webmap-client.xml conf/Catalina/localhost/ROOT.xml
 
         # adapt configuration use standalone version of IGE
-        echo 'installation.standalone=true' >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+        sed -i 's/installation.standalone=false/installation.standalone=true/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
         echo 'admin.password=admin' > webapps/ingrid-portal-mdek-application/WEB-INF/classes/igeAdminUser.properties
     fi
 
     # SMTP_HOST
-    echo "workflow.mail.smtp=$SMTP_HOST" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
-    echo "workflow.mail.sender=$MAIL_SENDER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
-    echo "workflow.mail.smtp.user=$MAIL_USER" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
-    echo "workflow.mail.smtp.password=$MAIL_PASSWORD" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    sed -i 's/workflow.mail.smtp=localhost/workflow.mail.smtp=$SMTP_HOST/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    sed -i 's/workflow.mail.sender=test@wemove.de/workflow.mail.sender=$MAIL_SENDER/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    sed -i 's/workflow.mail.smtp.user=/workflow.mail.smtp.user=$MAIL_USER/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    sed -i 's/workflow.mail.smtp.password=/workflow.mail.smtp.password=$MAIL_PASSWORD/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
-    echo "mdek.directLink=$IGE_DIRECT_LINK" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    sed -i 's/mdek.directLink=http:\/\/localhost:8080\/ingrid-portal-mdek-application\/index.jsp/mdek.directLink=$IGE_DIRECT_LINK/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     # Upload settings
-    echo "upload.docsdir=$UPLOAD_DOCS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
-    echo "upload.partsdir=$UPLOAD_PARTS_DIR" >> webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.override.properties
+    sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\//upload.docsdir='${UPLOAD_DOCS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    sed -i 's/upload.partsdir=\/tmp\/ingrid\/upload\/parts\//upload.partsdir='${UPLOAD_PARTS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     touch /initialized
 fi
