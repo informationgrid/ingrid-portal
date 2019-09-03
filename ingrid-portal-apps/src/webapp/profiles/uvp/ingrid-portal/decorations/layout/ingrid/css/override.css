@@ -289,7 +289,14 @@
   .header-menu-open .login {
     display: none;
   }
-}
+  
+  .leaflet-popup-content a h5, .leaflet-popup-content .helper.icon{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+ }
 
 @media screen and (max-width: 34.9375em) {
   .leaflet-popup-content {
