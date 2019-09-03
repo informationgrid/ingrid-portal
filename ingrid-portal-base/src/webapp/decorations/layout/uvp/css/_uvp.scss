@@ -1154,10 +1154,10 @@ header {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
+  .header:hover, .arrow:hover { color: $green-blue; }
 }
 .teaser-data:hover {
   box-shadow: 0px 0px 8px 0px $blue-rhapsody;
-  .header, .arrow { color: $green-blue; }
 }
 a.data:hover {
   text-decoration: none;

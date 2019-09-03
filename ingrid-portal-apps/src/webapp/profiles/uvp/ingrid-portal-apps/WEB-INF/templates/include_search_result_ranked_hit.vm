@@ -1,11 +1,7 @@
 ## Renders Single Hit
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
     #if ($rs.title)
-        #if(!$rs.is_blp)
-            <a class="data"
-        #else
-            <div class="data"
-        #end
+        <div class="data">
             #if($rs.url)
                 #set($urlTitle = $MESSAGES.getString('common.tooltip.link.extern.result'))
                 #if ($rs.url_type && $rs.url_type == "pdf")
@@ -21,10 +17,15 @@
                     $MESSAGES.setMsgParam('DOC')
                     #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
                 #end
-                href="$!rs.url">
-                    <div class="teaser-data search">
-                        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                        #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                <div class="teaser-data search">
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
+                    <div>
+                        #set($detailLink ="$!rs.url")
+                        <a href="$detailLink" title="$rs.title">
+                            <h2 class="header">$rs.title</h2>
+                        </a>
+                        #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                    </div>
             #elseif($rs.type == "detail-style")
                 #if($rs.udk_class)
                     #if($rs.is_address)
@@ -43,43 +44,59 @@
                         #else
                             #set($title = "$rs.title")
                         #end
-                        #if($rs.docuuid && $rs.docuuid.length() > 0)
-                            href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">
-                        #else
-                            href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">
-                        #end
                         <div class="teaser-data search">
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                            #renderHitTitle($title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                            #if($rs.docuuid && $rs.docuuid.length() > 0)
+                                #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end")
+                            #else
+                                #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                            #end
+                            
+                            <a href="$detailLink" title="$rs.title">
+                                <h2 class="header">$rs.title</h2>
+                            </a>
+                            #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
                     #else
                         #set($udkObjClassName = $Codelists.getCodeListValue('8000', $rs.udk_class, $languageCode))
-                        #if($rs.docuuid && $rs.docuuid.length() > 0)
-                            href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end">
-                        #else
-                            href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">
-                        #end
                         <div class="teaser-data search">
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                            #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                            <div>
+                                #if($rs.docuuid && $rs.docuuid.length() > 0)
+                                    #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end#if($rs.docid)&docid=$rs.docid#end")
+                                #else
+                                    #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                                #end
+                                <a href="$detailLink" title="$rs.title">
+                                    <h2 class="header">$rs.title</h2>
+                                </a>
+                                #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                            </div>
                     #end
                 #else
-                    #if($rs.docuuid && $rs.docuuid.length() > 0)
-                        href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid">
-                    #else
-                        href="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end">
-                    #end
                     <div class="teaser-data search">
-                        #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                        <div>
+                            #if($rs.docuuid && $rs.docuuid.length() > 0)
+                                #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&docuuid=$rs.docuuid&plugid=$rs.plugid")
+                            #else
+                                #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                            #end
+                            <a href="$detailLink" title="$rs.title">
+                                <h2 class="header">$rs.title</h2>
+                            </a>
+                            #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                        </div>
                 #end
             #else
-                >
                 <div class="teaser-data search">
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                    #if(!$rs.is_blp)
-                        #renderHitTitle($rs.title $UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
-                    #else
-                        #renderHitTitle($rs.title "")
-                    #end
+                    <div>
+                        <h2 class="header">
+                            $rs.title
+                        </h2>
+                        #if(!$rs.is_blp)
+                            #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
+                        #end
+                    </div>
             #end
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_additional.vm")
             #if($rs.url)
@@ -105,27 +122,13 @@
             #if($rs.wms_coord)
                 <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
             #end
-            <!--
-            #if(!$rs.is_address)
-                #if($showHitPartnerLogo)
-                    <div class="media__obj media__obj--right">
-                        #if($rs.partnerKey != "all")
-                            #set($partnerTitleKey = "common.result.partner.${rs.partnerKey}")
-                            <span class="search_hit_icon_partner"><span class="search_hit_icon_partner_${rs.partnerKey}"><img src="/ingrid-portal-apps/images/partner/small/${rs.partnerKey}.png" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/></span></span>
-                        #end
-                    </div>
-                #end
-            #end
-            -->
             #if(!$rs.is_blp)
-              <span class="ic-ic-arrow arrow"></span>
+              <a href="$detailLink" title="$rs.title">
+                <span class="ic-ic-arrow arrow"></span>
+              </a>
             #end
             </div>
-    #if(!$rs.is_blp)
-        </a>
-    #else
         </div>
-    #end
     #else
         <div class="teaser-data search">
             <span><strong>$MESSAGES.getString('common.result.empty')</strong></span>

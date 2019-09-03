@@ -54,7 +54,7 @@
                                                     <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
                                                 </div>
                                             #end
-                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()">
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
                                                 <span class="ic-ic-arrow arrow"></span>
                                             </a>
                                         </div>
