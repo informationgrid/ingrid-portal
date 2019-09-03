@@ -296,7 +296,15 @@
     text-overflow: ellipsis;
     width: 100%;
   }
- }
+  
+  .leaflet-popup-content {
+    margin: 24px;
+  }
+  
+  .leaflet-popup-content .helper.icon:last-of-type, .leaflet-popup-content .helper.text:first-of-type { 
+    margin-bottom: 8px;
+  }
+}
 
 @media screen and (max-width: 34.9375em) {
   .leaflet-popup-content {
