@@ -53,11 +53,12 @@ import de.ingrid.portal.global.Utils;
  */
 public class HelpPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(HelpPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(HelpPortlet.class);
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         
@@ -101,8 +102,9 @@ public class HelpPortlet extends GenericVelocityPortlet {
         Object chapterObj = null;
         String myPath = "//section[@help-key='" + helpKey + "']/ancestor::chapter";
         try {
-            chapterObj = doc.selectSingleNode(myPath);
-        } catch (Throwable t) {
+            if(doc != null)
+                chapterObj = doc.selectSingleNode(myPath);
+        } catch (Exception t) {
             log.error("Error reading '" + myPath + "' from help source file: " + filePath, t);
         }
 
@@ -113,7 +115,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
             TransformerFactory factory;
             try {
                 factory = TransformerFactory.newInstance();
-            } catch (Throwable t) {
+            } catch (Exception t) {
                 System.setProperty("javax.xml.transform.TransformerFactory", "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
                 factory = TransformerFactory.newInstance();
             }
@@ -138,6 +140,7 @@ public class HelpPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }

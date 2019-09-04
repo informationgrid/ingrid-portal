@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -80,8 +80,8 @@ public class Api {
     @Path("{path : .+}/{file : [^/]+}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response head(
-            @PathParam("path") String path,
-            @PathParam("file") String file) throws Exception {
+            @PathParam("path") final String path,
+            @PathParam("file") final String file) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.READ.name())) {
             throw new NotAuthorizedException("You are not authorized to read the document.");
@@ -93,7 +93,7 @@ public class Api {
         }
 
         // build response
-        ResponseBuilder response = Response.ok(MediaType.APPLICATION_OCTET_STREAM);
+        final ResponseBuilder response = Response.ok(MediaType.APPLICATION_OCTET_STREAM);
         response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
         response.header("Content-Length", this.storage.getInfo(path, file).getSize());
         return response.build();
@@ -111,8 +111,8 @@ public class Api {
     @Path("{path : .+}/{file : [^/]+}")
     @Produces({MediaType.APPLICATION_OCTET_STREAM, MediaType.APPLICATION_JSON})
     public Response download(
-          @PathParam("path") String path,
-          @PathParam("file") String file) throws Exception {
+          @PathParam("path") final String path,
+          @PathParam("file") final String file) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.READ.name())) {
             throw new NotAuthorizedException("You are not authorized to read the document.");
@@ -124,21 +124,21 @@ public class Api {
         }
 
         // read file
-        StreamingOutput fileStream = new StreamingOutput() {
+        final StreamingOutput fileStream = new StreamingOutput() {
             @Override
-            public void write(java.io.OutputStream output) {
+            public void write(final java.io.OutputStream output) {
                 try (InputStream data = Api.this.storage.read(path, file)) {
                     IOUtils.copy(data, output);
                     output.flush();
                 }
-                catch (IOException ex) {
+                catch (final IOException ex) {
                     throw new UncheckedIOException(ex);
                 }
             }
         };
 
         // build response
-        ResponseBuilder response = Response.ok(fileStream, MediaType.APPLICATION_OCTET_STREAM);
+        final ResponseBuilder response = Response.ok(fileStream, MediaType.APPLICATION_OCTET_STREAM);
         response.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
         response.header("Content-Length", this.storage.getInfo(path, file).getSize());
         return response.build();
@@ -166,17 +166,17 @@ public class Api {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public Response upload(
-            @FormDataParam("path") String path,
-            @FormDataParam("filename") String file,
-            @FormDataParam("id") String id,
-            @FormDataParam("size") Integer size,
-            @FormDataParam("replace") boolean replace,
-            @FormDataParam("extract") boolean extract,
-            @FormDataParam("file") InputStream fileInputStream,
-            @FormDataParam("parts_total") Integer partsTotal,
-            @FormDataParam("parts_index") Integer partsIndex,
-            @FormDataParam("parts_size") Integer partsSize,
-            @FormDataParam("parts_offset") Integer partsOffset
+            @FormDataParam("path") final String path,
+            @FormDataParam("filename") final String file,
+            @FormDataParam("id") final String id,
+            @FormDataParam("size") final Integer size,
+            @FormDataParam("replace") final boolean replace,
+            @FormDataParam("extract") final boolean extract,
+            @FormDataParam("file") final InputStream fileInputStream,
+            @FormDataParam("parts_total") final Integer partsTotal,
+            @FormDataParam("parts_index") final Integer partsIndex,
+            @FormDataParam("parts_size") final Integer partsSize,
+            @FormDataParam("parts_offset") final Integer partsOffset
             ) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
@@ -190,12 +190,12 @@ public class Api {
 
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
-            StorageItem[] items = { this.storage.getInfo(path, file) };
+            final StorageItem[] items = { this.storage.getInfo(path, file) };
             throw new ConflictException("The file already exists.", items, items[0].getNextName());
         }
 
         StorageItem[] files = new StorageItem[0];
-        boolean isPartialUpload = partsTotal != null;
+        final boolean isPartialUpload = partsTotal != null;
         if (isPartialUpload) {
             // store part
             this.storage.writePart(id, partsIndex, fileInputStream, partsSize);
@@ -225,13 +225,13 @@ public class Api {
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
     public Response uploadPartsCompleted(
-            @FormParam("path") String path,
-            @FormParam("filename") String file,
-            @FormParam("id") String id,
-            @FormParam("size") Integer size,
-            @FormParam("replace") boolean replace,
-            @FormParam("extract") boolean extract,
-            @FormParam("parts_total") Integer partsTotal
+            @FormParam("path") final String path,
+            @FormParam("filename") final String file,
+            @FormParam("id") final String id,
+            @FormParam("size") final Integer size,
+            @FormParam("replace") final boolean replace,
+            @FormParam("extract") final boolean extract,
+            @FormParam("parts_total") final Integer partsTotal
             ) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
@@ -244,7 +244,7 @@ public class Api {
         }
 
         // store files
-        StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, extract);
+        final StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, extract);
         return this.createUploadResponse(files);
     }
 
@@ -260,8 +260,8 @@ public class Api {
     @Path("{path : .+}/{file : [^/]+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(
-            @PathParam("path") String path,
-            @PathParam("file") String file) throws Exception {
+            @PathParam("path") final String path,
+            @PathParam("file") final String file) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.DELETE.name())) {
             throw new NotAuthorizedException("You are not authorized to delete the document.");
@@ -286,12 +286,12 @@ public class Api {
      * @return Response
      * @throws Exception
      */
-    private Response createUploadResponse(StorageItem[] files) throws Exception {
+    private Response createUploadResponse(final StorageItem[] files) throws Exception {
         // get first URI for location header
-        String createdFile = files.length > 0 ? files[0].getUri() : "";
+        final String createdFile = files.length > 0 ? files[0].getUri() : "";
 
         // build response
-        UploadResponse uploadResponse = new UploadResponse(Arrays.asList(files));
+        final UploadResponse uploadResponse = new UploadResponse(Arrays.asList(files));
         return Response.created(new URI(createdFile)).entity(uploadResponse).build();
     }
 }

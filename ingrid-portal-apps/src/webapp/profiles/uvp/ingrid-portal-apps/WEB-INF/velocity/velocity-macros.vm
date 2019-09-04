@@ -1,0 +1,477 @@
+## ------------------------------
+## Action Form macros
+## ------------------------------
+#macro (getFieldValueByForm $form $field)
+$form.getInput($field)#end
+
+#macro (getFieldValue $field)
+#getFieldValueByForm($actionForm $field)#end
+
+#macro (getHTMLEscapedFieldValue $field)
+$actionForm.getInputHTMLEscaped($field)#end
+
+#macro (addErrorFormClass $field)
+#if ($actionForm.hasErrorInField($field))class="is-invalid-input"#end
+#end
+
+#macro (addErrorFormClassText $field)
+#if ($actionForm.hasErrorInField($field))is-invalid-input#end
+#end
+
+#macro (addErrorFormMessage $field, $param)
+#if($param)
+  #if ($actionForm.hasErrorInField($field))
+    <small class="bx-top-xs">
+      $MESSAGES.setMsgParam("$param")
+      $MESSAGES.getStringWithMsgParams($actionForm.getErrorInField($field))
+    </small>
+  #end
+#else
+  #if ($actionForm.hasErrorInField($field))<small class="bx-top-xs">$MESSAGES.getString($actionForm.getErrorInField($field))</small>#end
+#end
+#end
+
+#macro (addErrorFormMessageBox $field)
+#if ($actionForm.hasErrorInField($field))#renderMessageError($MESSAGES.getString($actionForm.getErrorInField($field)))</small>#end
+#end
+
+#macro (getChecked $field $value)
+#if ($actionForm.isCurrentInput($field, $value)) checked="checked"#end
+#end
+
+#macro (getSelectedFlag $field $value)
+#if ($actionForm.isCurrentInput($field, $value))selected="selected"#end
+#end
+
+#macro (displayFormErrorsByForm $form)
+    #if ($form.hasErrors())
+        <div>
+            #foreach ($errorMsg in $form.getAllErrors())
+                #renderMessageError($MESSAGES.getString($errorMsg))
+            #end
+        </div>
+    #end
+#end
+
+#macro (displayFormErrors)
+    #displayFormErrorsByForm($actionForm)
+#end
+
+#macro (displayFormErrorQuery)
+    #if ($actionForm.hasErrors())
+        <div>
+            #foreach ($errorMsg in $actionForm.getAllErrors())
+                #if($errorMsg.indexOf('error.queryFormat') > -1)
+                    #renderMessageError($MESSAGES.getString($errorMsg))
+                #end
+            #end
+        </div>
+    #end
+#end
+
+#macro (displayFormError $field)
+    #if($field)
+        #set($tmpField = $field)
+    #else
+        #set($tmpField = "")
+    #end
+    #if ($actionForm.hasErrors())
+        #if($actionForm.hasErrorInField($tmpField))
+            #renderMessageError($MESSAGES.getString($actionForm.getErrorInField($tmpField)))
+        #else
+            #renderMessageError($MESSAGES.getString('common.form.error'))
+        #end
+    #end
+#end
+
+#macro (displayFormMessagesByForm $form)
+    #if ($form.hasMessages())
+        #foreach ($msg in $form.getAllMessages())
+            #renderMessageSuccess($MESSAGES.getString($msg))
+        #end
+    #end
+#end
+
+#macro (displayFormMessages)
+    #displayFormMessagesByForm($actionForm) 
+#end
+
+
+#macro (displayFieldLabelByForm $form $fieldName $fieldLabel)
+    #if ($form.hasErrorInField($fieldName))
+        #renderMessageError($fieldLabel)
+    #else
+        $fieldLabel
+    #end
+#end
+
+#macro (displayFieldLabel $fieldName $fieldLabel)
+    #displayFieldLabelByForm($actionForm $fieldName $fieldLabel)
+#end
+
+
+## ------------------------------
+## display content
+## ------------------------------
+#macro (displayPartner)
+<option value="all" #getSelectedFlag('partner' 'all')>$MESSAGES.getString('common.form.selectAll')</option>
+#foreach ($partner in $partnerList)
+<option value="$partner.Ident" #getSelectedFlag('partner' "$partner.Ident") title="$partner.Name">$UtilsString.cutString($partner.Name, 50)</option>
+#end
+#end
+
+
+## ------------------------------
+## Administration macros
+## ------------------------------
+#macro (renderPaginationAndHint $browser $hint)
+    <div class="caption">
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter('doFirst', 'first')
+        <a class="icon" class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
+            <span class="ic-ic-double-arrow-left"></span>
+        </a>
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter('doPrev', 'prev')
+        <a class="icon" class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
+            <span class="ic-ic-arrow-left"></span>
+        </a>
+        
+        <span>$browser.renderFirstRowOnPage() - $browser.renderLastRowOnPage() $MESSAGES.getString('component.forms.text.of') $browser.getTotalNumRows() $MESSAGES.getString('component.forms.text.entries')</span>
+        
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter('doNext', 'next')
+        <a class="icon" class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
+            <span class="ic-ic-arrow-right"></span>
+        </a>
+        
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter('doLast', 'last')
+        <a class="icon" #if($browser.hasNextPage())href="$action"#end>
+            <span class="ic-ic-double-arrow-right"></span>
+        </a>
+    </div>
+    #if($hint != "")
+        #renderMessageInfo($hint)
+    #end
+#end
+
+#macro (renderDBBrowserHeader $colNames $colTitles $colCheckboxes)
+    <thead>
+        <tr class="dark">
+            #foreach ($colTitle in $colTitles)
+                #set ($colLink = $renderResponse.createActionURL())
+                #set ($colIndex = $velocityCount - 1)
+                $colLink.setParameter("sortColumn", $colNames.get($colIndex))
+                <th>
+                #set ($addCheckbox = false)
+                #if($colCheckboxes)
+                    #foreach ($colCheckbox in $colCheckboxes)
+                        #if($colNames.get($colIndex) == $colCheckbox)
+                            #set ($addCheckbox = true)
+                            <div class="xsmall-24 medium-6 columns">
+                                <div class="form-element boxed">
+                                    <div class="control-group">
+                                        <label class="control control--checkbox" for="chk_all">
+                                            <div class="control__indicator"></div>
+                                            <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
+                                            <a href="$colLink">$colTitle</a>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        #end
+                    #end
+                #end
+                #if(!$addCheckbox)
+                    <a href="$colLink">$colTitle</a>
+                #end
+                </th>
+            #end
+        </tr>
+    </thead>
+#end
+
+#macro (renderDBBrowserRow $rowId $rowValues)
+    <tr>
+        <td>
+            <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
+        </td>
+        <td>$rowId</td>
+        #foreach ($rowValue in $rowValues)
+            <td>$rowValue</td>
+        #end
+    </tr>
+#end
+
+#macro (renderDBBrowserRowWithEditLink $rowId $rowValues)
+<tr>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$rowId")
+    <td>
+        <div class="xsmall-24 medium-6 columns">
+            <div class="form-element boxed">
+                <div class="control-group">
+                    <label class="control control--checkbox" for="chk_$velocityCount">
+                        <input id="chk_$velocityCount" type="checkbox" name="id" value="$rowId">
+                        <div class="control__indicator"></div>
+                        <a href="$action">$rowId</a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </td>
+    #foreach ($rowValue in $rowValues)
+        <td><a href="$action">$rowValue</a></td>
+    #end
+</tr>
+#end
+
+#macro (renderDBBrowserRowWithEditLinkNoSelection $rowId $rowValues)
+<tr>
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('doEdit','Edit')
+    $action.setParameter("id", "$rowId")
+    <td>
+        <input id="chk_$velocityCount" name="id" type="hidden" value="$rowId" />
+        <a href="$action">$rowId</a>
+    </td>
+    #foreach ($rowValue in $rowValues)
+        <td><a href="$action">$rowValue</a></td>
+    #end
+    </tr>
+#end
+
+#macro (renderDBBrowserFooterButtons $buttons)
+    #renderDBBrowserFooterButtonsDisable ($buttons "false")
+#end
+
+#macro (renderDBBrowserFooterButtonDisable $button)
+    #if($button == "doDelete")
+        #renderInputButtonDisable("$MESSAGES.getString('component.forms.buttons.delete')" "" "doDelete" "" "" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')" "true")
+    #end
+#end
+
+#macro (renderDBBrowserFooterButtonsDisable $buttons $disableDeleteButton)
+    #foreach ($button in $buttons)
+        #if($button == "doEdit")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.edit')" "" "doEdit" "" "")
+        #end
+        #if($button == "doDelete")
+            #if($disableDeleteButton == "true")
+                #renderDBBrowserFooterButtonDisable ($button)
+            #else
+                #renderInputButtonOnClick("$MESSAGES.getString('component.forms.buttons.delete')" "" "doDelete" "" "" "return confirm('$MESSAGES.getString('component.forms.text.delete.marked.entries')')")
+            #end
+        #end
+        #if($button == "doRefresh")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.refresh')" "" "doRefresh" "" "outline")
+        #end
+        #if($button == "doNew")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.add')" "" "doNew" "" "")
+        #end
+        #if($button == "doClear")
+            #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.reset')" "" "doClear" "" "outline")
+        #end
+    #end
+#end
+
+#macro (renderHrefAction $buttonAction $buttontitle  $buttonclass $buttonstyle)
+    <a style="$buttonstyle" class="$buttonclass" href="$buttonAction">
+    $buttontitle
+    </a>
+#end
+
+#macro (renderDBBrowserFooter)
+    #set ($buttons = ["doEdit", "doDelete", "doRefresh", "doNew"])
+    #renderDBBrowserFooterButtons($buttons)
+#end
+
+#macro (renderDBEditId $mode $id)
+    #if ($mode == 'edit')
+        <div class="form-element">
+            <input type="hidden" name="id" value="$!{id}"/>
+            <label>Id</label>
+        </div>
+        <div class="form-element">
+            <p>$!{id}</p>
+        </div>
+    #else
+    ## new entity, but we add id so we have something to extract entity from request !
+        <input type="hidden" name="id" value="-1"/>
+    #end
+#end
+
+#macro (renderDBEditTextArea $index $colName $colLabel $colValue)
+<div class="form-element">
+    <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+</div>
+<div class="form-element">
+    <textarea class="custom-scrollbar" cols="125" rows="2" name="${colName}$!{index}" id="${colName}$!{index}">$colValue</textarea>
+</div>
+#end
+
+#macro (renderDBEditTextField $index $colName $colLabel $colValue $info)
+    #renderDBEditTextFieldDisable ($index $colName $colLabel $colValue "false" $info)
+#end
+
+#macro (renderDBEditTextFieldDisable $index $colName $colLabel $colValue $disable $info)
+    <div class="form-element">
+        <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+    </div>
+    <div class="form-element">
+    #if($disable == 'true')
+        <input type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue" disabled/>
+    #else
+        <input type="text" id="${colName}$!{index}" name="${colName}$!{index}" value="$colValue"/>
+    #end
+    #if($info)
+        <div class="helper icon">
+            <span class="ic-ic-info"></span>
+            <span class="">$info</span>
+        </div>
+    #end
+    </div>
+#end
+
+#macro (renderDBEditSelectField $index $colName $colLabel $colValue $selectValues)
+    <div class="form-element">
+        <label for="${colName}$!{index}">#displayFieldLabel("${colName}$!{index}" $colLabel)</label>
+    </div>
+    <div class="form-element">
+        <p>
+            <select class="select2" id="${colName}$!{index}" name="${colName}$!{index}">
+                #foreach ($selectValue in $selectValues)
+                <option id="$selectValue" value="$selectValue" class="selection-options #if($colValue == $selectValue) is-active" selected #else " #end >$selectValue</option>
+                #end
+            </select>
+        </p>
+    </div>
+#end
+
+#macro (renderDBEditFooter $mode)
+    #if ($mode == 'edit')
+        #set ($butAction = 'doUpdate')
+    #elseif ($mode == 'new')
+        #set ($butAction = 'doSave')
+    #end
+    #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.back')" "" "doCancel" "" "outline")
+    #if ($disableSaving && $disableSaving == 'true')
+        ## do nothing
+    #else
+        #renderInputButtonClass("$MESSAGES.getString('component.forms.buttons.save')" "" $butAction "" "")
+    #end
+#end
+
+#macro (renderTextField $label $id)
+    <div class="form-element">
+        <label for="query">$label</label>
+    </div>
+    <div class="form-element">
+        <input id="$id" name="$id" value="#getHTMLEscapedFieldValue("$id")" #addErrorFormClass($id) type="text">
+        #addErrorFormMessage($id)
+    </div>
+#end
+
+#macro (renderInputButton $buttonvalue $buttonstyle $buttonname $buttontitle)
+    #renderInputButtonClass ($buttonvalue $buttonstyle $buttonname $buttontitle "")
+#end
+
+#macro (renderInputButtonClass $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass)
+    #renderInputButtonOnClick ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass "")
+#end
+
+#macro (renderInputButtonOnClick $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
+    #renderInputButtonDisable ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick "false")
+#end
+
+#macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    <button type="submit" class="button $buttonclass" style="$buttonstyle" name="$buttonname" onclick="$buttononclick" #if($buttondisable == "true")disabled#end>$buttonvalue</button>
+#end
+
+#macro (renderPortletTitle $_title $_h $_h_class $_help $_helpStyle $_helpKey $line)
+    #if($line)<div class="teaser__box">#end
+    #if(!$_h || $_h == "")
+        #set($_h = "h1")
+    #end
+    <$_h #if($_h_class && $_h_class != "")class="$_h_class" #end>
+        $_title
+    </$_h>
+    #if($line)</div>#end
+#end
+
+#macro (renderPopUpIcon $_message $_class $_style $_title )
+    <span class="ic-ic-info js-popup #if($_class)$_class#end" #if($_title)data-title="$_title"#end data-content="$_message" #if($_style)style="$_style"#end></span>
+#end
+
+#macro (renderMessageInfo $_message)
+    <p class="caption">$_message</p>
+#end
+
+#macro (renderMessageError $_message)
+    <div class="row alert">
+        <div class="columns">
+            <p class="error no-margin">
+                <span class="alert-text">$_message</span>
+            </p>
+        </div>
+    </div>
+#end
+
+#macro (renderMessageSuccess $_message)
+    <div class="row alert">
+        <div class="columns">
+            <p class="success no-margin">
+                <span class="alert-text">$_message</span>
+            </p>
+        </div>
+    </div>
+#end
+
+#macro(renderUDKIcon $class $title)
+    #if($class && $title)
+        <svg class="icon globe__icon" title="$title">
+            #if($class == "0")
+                ## Fachaufgabe
+                <use xlink:href="#checklist">
+            #elseif($class == "1")
+                ## Geodatensatz
+                <use xlink:href="#globe">
+            #elseif($class == "2")
+                ## Literatur
+                <use xlink:href="#book">
+            #elseif($class == "3")
+                ## Geodatendienst
+                <use xlink:href="#gears">
+            #elseif($class == "4")
+                ## Projekt
+                <use xlink:href="#folder">
+            #elseif($class == "5")
+                ## Datensammlung
+                <use xlink:href="#database">
+            #elseif($class == "6")
+                ## Informationssystem
+                <use xlink:href="#molecule">
+            #end
+        </svg>
+    #end
+#end
+
+#macro(renderUDKAddressIcon $class $title)
+    <svg class="icon globe__icon" title="$title">
+        #if($class == "0")
+            ## Institution
+            <use xlink:href="#building">
+        #elseif($class == "1")
+            ## Einheit
+            <use xlink:href="#group">
+        #elseif($class == "2")
+            ## Person
+            <use xlink:href="#users">
+        #elseif($class == "3")
+            ## Freie Adresse
+            <use xlink:href="#envelope">
+        #end
+    </svg>
+#end

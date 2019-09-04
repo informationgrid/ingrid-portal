@@ -29,15 +29,15 @@ package de.ingrid.portal.global;
  */
 public class UtilsQueryString {
 
-    public final static String OP_AND = "AND";
+    public static final String OP_AND = "AND";
 
-    public final static String OP_OR = "OR";
+    public static final String OP_OR = "OR";
 
-    public final static String OP_NOT = "NOT";
+    public static final String OP_NOT = "NOT";
 
-    public final static String OP_PHRASE = "PHRASE";
+    public static final String OP_PHRASE = "PHRASE";
 
-    public final static String OP_SIMPLE = "SIMPLE";
+    public static final String OP_SIMPLE = "SIMPLE";
 
     /**
      * This method replaces a term in the query string with the new term. It also
@@ -55,7 +55,7 @@ public class UtilsQueryString {
         if (queryStr == null) {
             queryStr = "";
         }
-        StringBuffer result = new StringBuffer(queryStr);
+        StringBuilder result = new StringBuilder(queryStr);
 
         while (true) {
             termStartPos = getTermStartPos(result.toString(), termStopPos);
@@ -92,7 +92,7 @@ public class UtilsQueryString {
      * @return The query string with the term added using operator.
      */
     public static String addTerm(String queryStr, String str, String operator) {
-        StringBuffer result;
+        StringBuilder result;
 
         if (str == null || operator == null || str.length() == 0) {
             return queryStr;
@@ -100,9 +100,9 @@ public class UtilsQueryString {
 
         if (queryStr == null) {
             queryStr = "";
-            result = new StringBuffer(str.length());
+            result = new StringBuilder(str.length());
         } else {
-            result = new StringBuffer(queryStr.length() + str.length() + 1);
+            result = new StringBuilder(queryStr.length() + str.length() + 1);
             result.append(queryStr.trim());
         }
 
@@ -125,10 +125,10 @@ public class UtilsQueryString {
             }
         } else if (operator.equals(OP_AND)) {
             String[] terms = str.split(" ");
-            if (queryStr.indexOf(" ") != -1 && terms.length > 0) {
+            if (queryStr.indexOf(' ') != -1 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") ");
-            } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
+            } else if (queryStr.length() > 0 && queryStr.indexOf(' ') == -1) {
                 result.append(" ");
             }
             for (int i = 0; i < terms.length; i++) {
@@ -139,28 +139,26 @@ public class UtilsQueryString {
             }
         } else if (operator.equals(OP_NOT)) {
             String[] terms = str.split(" ");
-            if (queryStr.indexOf(" ") != -1 && terms.length > 0) {
+            if (queryStr.indexOf(' ') != -1 && terms.length > 0) {
                 result.insert(0, "(");
                 result.append(") ");
-            } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
+            } else if (queryStr.length() > 0 && queryStr.indexOf(' ') == -1) {
                 result.append(" ");
             }
             for (int i = 0; i < terms.length; i++) {
                 result.append("-").append(terms[i]);
             }
         } else if (operator.equals(OP_PHRASE)) {
-            if (queryStr.indexOf(" ") != -1) {
+            if (queryStr.indexOf(' ') != -1) {
                 result.insert(0, "(");
                 result.append(") ");
-            } else if (queryStr.length() > 0 && queryStr.indexOf(" ") == -1) {
+            } else if (queryStr.length() > 0 && queryStr.indexOf(' ') == -1) {
                 result.append(" ");
             }
             result.append("\"").append(str).append("\"");
         }
 
-        String resultStr = result.toString();
-        // strip empty brackets with operators
-        return resultStr;
+        return result.toString();
     }
 
     /**
@@ -187,7 +185,7 @@ public class UtilsQueryString {
         if (query == null || query.length() == 0) {
             return 0;
         }
-        String str = new String(query).toLowerCase();
+        String str =query.toLowerCase();
         int cursor = start;
         while (true) {
             c = str.charAt(cursor);
@@ -211,7 +209,7 @@ public class UtilsQueryString {
     private static int getTermStopPos(String query, int start) {
         char c;
         boolean isInPhrase = false;
-        String str = new String(query).toLowerCase();
+        String str = query.toLowerCase();
         int cursor = start;
         while (true) {
             c = str.charAt(cursor);
@@ -246,7 +244,7 @@ public class UtilsQueryString {
      * @return The "phrased" term.
      */
     public static String getPhrasedTerm(String term) {
-        if (term != null && term.indexOf(" ") != -1) {
+        if (term != null && term.indexOf(' ') != -1) {
             return "\"".concat(term).concat("\"");
         } else {
             return term;
@@ -264,7 +262,7 @@ public class UtilsQueryString {
         int termStartPos = 0;
         int termStopPos = 0;
         String myTerm;
-        StringBuffer result = new StringBuffer(query);
+        StringBuilder result = new StringBuilder(query);
 
         while (true) {
             termStartPos = getTermStartPos(result.toString(), termStopPos);

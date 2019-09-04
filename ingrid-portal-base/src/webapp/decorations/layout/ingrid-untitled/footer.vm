@@ -33,21 +33,7 @@
             <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
         </footer>
 #end
-        <!-- Popup -->
-        <div class="popup">
-            <header class="popup__header">
-                <div class="popup__close link--alt ob-flt-r js-popup-close">
-                    <svg class="icon"><use xlink:href="#cross" /></svg>
-                    <span class="mq-hide-m"></span>
-                </div>
-                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
-            </header>
-            <section class="popup__content ob-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p><a href="#">Read more</a></p>
-            </section>
-        </div>
+
         
         <!-- Global scripts -->
         <script src="/decorations/layout/ingrid/scripts/all.js"></script>

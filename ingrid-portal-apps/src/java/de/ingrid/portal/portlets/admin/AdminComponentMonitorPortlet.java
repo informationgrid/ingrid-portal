@@ -22,9 +22,32 @@
  */
 package de.ingrid.portal.portlets.admin;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.apache.portals.bridges.common.GenericServletPortlet;
+import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
+import org.apache.velocity.context.Context;
+import org.quartz.JobDataMap;
+import org.quartz.Trigger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.StringUtils;
+
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminComponentMonitorForm;
-import de.ingrid.portal.forms.AdminComponentUpdateForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.Utils;
@@ -34,23 +57,6 @@ import de.ingrid.portal.scheduler.jobs.IngridAbstractStateJob;
 import de.ingrid.portal.scheduler.jobs.IngridJobHandler;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorAbstractJob;
 import de.ingrid.portal.scheduler.jobs.IngridMonitorIPlugJob;
-import de.ingrid.portal.upgradeclient.IngridComponent;
-import de.ingrid.portal.upgradeclient.UpgradeClient;
-import de.ingrid.portal.upgradeclient.UpgradeTools;
-import org.apache.portals.bridges.common.GenericServletPortlet;
-import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
-import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.generic.SortTool;
-import org.quartz.JobDataMap;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.portlet.*;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 
 /**
@@ -60,7 +66,7 @@ import java.util.*;
  */
 public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
-	private final static Logger log = LoggerFactory.getLogger(AdminComponentMonitorPortlet.class);
+	private static final Logger log = LoggerFactory.getLogger(AdminComponentMonitorPortlet.class);
 
 	private static final String VIEW_DEFAULT = "/WEB-INF/templates/administration/component_monitor.vm";
 
@@ -68,21 +74,15 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 
 	private static final String VIEW_NEW = "/WEB-INF/templates/administration/component_monitor_new.vm";
 
-    private static final String VIEW_UPDATES = "/WEB-INF/templates/administration/updates.vm";
-    
-    private static final String VIEW_UPDATES_EDIT = "/WEB-INF/templates/administration/updates_edit.vm";
-    
 	private IngridJobHandler jobHandler;
 	
-	private UpgradeClient upgradeClient;
-
 	/**
 	 * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
 	 */
+	@Override
 	public void init(PortletConfig config) throws PortletException {
 		super.init(config);
 		jobHandler = new IngridJobHandler();
-		upgradeClient = new UpgradeClient(jobHandler);
 	}
 
 	/*
@@ -91,6 +91,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	 * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
 	 *      javax.portlet.RenderResponse)
 	 */
+	@Override
 	public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
 
 		IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
@@ -105,30 +106,20 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		AdminComponentMonitorForm cf = (AdminComponentMonitorForm) Utils.getActionForm(request,
 				AdminComponentMonitorForm.SESSION_KEY, AdminComponentMonitorForm.class);
 		context.put("actionForm", cf);
-		AdminComponentUpdateForm cfUpdate = (AdminComponentUpdateForm) Utils.getActionForm(request,
-                AdminComponentUpdateForm.SESSION_KEY, AdminComponentUpdateForm.class);
-		context.put("actionFormUpdate", cfUpdate);
 
 		String action = request.getParameter(Settings.PARAM_ACTION);
 		if (action == null || action.length() == 0) {
-	        // check if upgrade-job already exists, otherwise create it
-		    // do it here, so that this function isn't called so often
-		    checkForUpgradeClient();
-	        
 			request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_DEFAULT);
 			String sortColumn = request.getParameter("sortColumn");
 			boolean ascending = request.getParameter("desc") == null || !request.getParameter("desc").equals("true");
-			//if (sortColumn != null) {
-				context.put("sortColumn", sortColumn);
-				context.put("sortAsc", new Boolean(ascending));
-			//}
+			context.put("sortColumn", sortColumn);
+			context.put("sortAsc", ascending);
 			context.put("jobHandler", jobHandler);
 			context.put("filterMap", new HashMap());
-			//context.put("model", jobHandler.getJobs(sortColumn, ascending));
 			
 			// show a dialog for downloading the exported file
 			if ("exportCSV".equals(request.getParameter("mode"))) {
-			    context.put("exportLink", "/ingrid-portal-apps/filehelper/file?" + jobHandler.csvExportFile);
+			    context.put("exportLink", "/ingrid-portal-apps/filehelper/file?" + IngridJobHandler.CSV_EXPORT_DIR);
 			}
 			
 		// ------------------viewEdit-------------------------
@@ -214,48 +205,10 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		} else if (action.equals("resetTime")) {
 			
 		// ------------------showUpdates--------------------
-		} else if (action.equals("showUpdates")) {
-		    cfUpdate.clear();
-		    response.setTitle(messages.getString("component.monitor.update.title"));
-		    request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_UPDATES);
-		    context.put("components", upgradeClient.getComponents());
-		    context.put("sorter", new SortTool());
-        // ------------------updateAddComponent--------------------
-        } else if (action.equals("updateAddComponent")) {
-            response.setTitle(messages.getString("component.monitor.update.title"));
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_UPDATES_EDIT);
-            IngridComponent component = new IngridComponent("manualComponent", "");
-            cfUpdate.clear();
-            context.put("actionForm", cfUpdate);
-            
-            component.setIPlug(false);
-            context.put("component", component);
-            context.put("componentTypes", upgradeClient.getComponentTypes());
-        // ------------------updateEditComponent--------------------
-        } else if (action.equals("updateEditComponent")) {
-            response.setTitle(messages.getString("component.monitor.update.title"));
-            request.setAttribute(GenericServletPortlet.PARAM_VIEW_PAGE, VIEW_UPDATES_EDIT);
-            if (!cfUpdate.hasErrors()) {
-                cfUpdate.initialize(upgradeClient.getComponent((String)request.getParameter("id")));
-            }
-            context.put("actionForm", cfUpdate);
-            
-            context.put("component", upgradeClient.getComponent((String)request.getParameter("id")));
-            context.put("componentTypes", upgradeClient.getComponentTypes());
-        }
+		}
 		
 		super.doView(request, response);
 	}
-
-	
-	/**
-	 * 
-	 */
-	private void checkForUpgradeClient() {
-        if (!jobHandler.jobExists("UpgradeClientJob", "UPDATE")) {
-            jobHandler.addUpgradeClientJob();
-        }	    
-    }
 
     /*
 	 * (non-Javadoc)
@@ -263,12 +216,11 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	 * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest,
 	 *      javax.portlet.ActionResponse)
 	 */
+	@Override
 	public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
 		String id = "";
 		AdminComponentMonitorForm cf = (AdminComponentMonitorForm) Utils.getActionForm(request,
 				AdminComponentMonitorForm.SESSION_KEY, AdminComponentMonitorForm.class);
-		AdminComponentUpdateForm cfUpdate = (AdminComponentUpdateForm) Utils.getActionForm(request,
-		        AdminComponentUpdateForm.SESSION_KEY, AdminComponentUpdateForm.class);
 		// ------------------doDelete-------------------------
 		if (request.getParameter("doDelete") != null) {
 			jobHandler.removeJob(request.getParameterValues("id"));
@@ -290,7 +242,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 				cf.populate(request);
 				if (cf.validate()) {
 					if (mode.equals("new")) {
-						if (jobHandler.newJob(cf) == true) {
+						if (jobHandler.newJob(cf)) {
 							response.setRenderParameter("action", "");
 							response.setRenderParameter("id", id);
 							response.setRenderParameter("mode", "edit");
@@ -298,7 +250,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 							response.setRenderParameter("action", "reshow");
 						}
 					} else {
-						if (jobHandler.updateJob(id, cf) == false) {
+						if (!jobHandler.updateJob(id, cf)) {
 							response.setRenderParameter("action", "reshow");
 						} else {
 							response.setRenderParameter("action", "");
@@ -338,7 +290,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			response.setRenderParameter("mode", mode);
 			cf.populate(request);
 			cf.validate();
-			addContact(request, response, cf);
+			addContact(cf);
 			if (!mode.equals("new")) {
 				addStatusInfo(cf, jobHandler.getJobDataMap(id), id);
 			}
@@ -364,10 +316,8 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			response.setRenderParameter("action", "");
 		// ------------------doDeleteContact-------------------------
 		} else if (parameterContains(request, "doDeleteContact_")){ // the name of the form element contains the number of email entry to be removed
-			removeContact(request, response, cf);
-			if (id != null) {
-				response.setRenderParameter("id", id);
-			}
+			removeContact(request, cf);
+			response.setRenderParameter("id", id);
 			response.setRenderParameter("action", "deleteContact");
 			response.setRenderParameter("mode", request.getParameter("mode"));
 		// ------------------doResetTime-------------------------
@@ -377,60 +327,6 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 			response.setRenderParameter("action", "update");
 			response.setRenderParameter("mode", "edit");
 			response.setRenderParameter("disableSaving", request.getParameter("disableSaving"));
-		// ------------------doShowUpdates-----------------------
-		} else if (request.getParameter("doShowUpdates") != null) {
-		    response.setRenderParameter("action", "showUpdates");
-		// ------------------doUpdateRemove----------------------
-		} else if (request.getParameter("doUpdateRemove") != null) {
-            response.setRenderParameter("action", "showUpdates");
-            //response.setRenderParameter("id", "updateRemoveComponent");
-		    upgradeClient.removeComponent(request.getParameterValues("id"));
-        // ------------------doUpdateAdd-------------------------
-		} else if (request.getParameter("doUpdateAdd") != null) {
-            response.setRenderParameter("action", "updateAddComponent");
-        // ------------------doUpdateRefresh---------------------
-		} else if (request.getParameter("doUpdateImport") != null) {
-            response.setRenderParameter("action", "showUpdates");
-            // import iPlugs
-            upgradeClient.importIPlugs();
-            
-            // start UpgradeClient-Job
-        // ------------------doUpdateEdit---------------------
-        } else if (request.getParameter("doUpdateEdit") != null) {
-            response.setRenderParameter("id", request.getParameter("id"));
-            response.setRenderParameter("action", "updateEditComponent");
-        // ------------------doUpdateAddEmail---------------------
-        } else if (request.getParameter("doUpdateAddEmail") != null) {
-            response.setRenderParameter("id", request.getParameter("componentId"));
-            response.setRenderParameter("action", "updateEditComponent");
-            cfUpdate.populate(request);
-            upgradeClient.updateComponent(cfUpdate);
-            if (cfUpdate.validate())
-                upgradeClient.addEmail(request.getParameter("componentId"), request.getParameter(AdminComponentUpdateForm.FIELD_CONTACT_EMAILS_NEW));
-        // ------------------doUpdateDeleteEmail---------------------
-        } else if (request.getParameter("doUpdateDeleteEmail") != null) {
-            response.setRenderParameter("id", request.getParameter("componentId"));
-            response.setRenderParameter("action", "updateEditComponent");
-            upgradeClient.removeEmail(request.getParameter("componentId"), request.getParameterValues("contact_email_marked"));
-        // ------------------doSaveUpdates---------------------
-        } else if (request.getParameter("doSaveUpdates") != null) {
-            response.setRenderParameter("id", request.getParameter("componentId"));
-            response.setRenderParameter("action", "showUpdates");
-            cfUpdate.populate(request);
-            upgradeClient.updateComponent(cfUpdate);
-            if (!cfUpdate.validate()) {
-                response.setRenderParameter("action", "updateEditComponent");
-                response.setRenderParameter("id", cfUpdate.getInput(AdminComponentUpdateForm.FIELD_ID));
-            }
-        } else if (request.getParameter("doRestartUpgradeJob") != null) {
-            response.setRenderParameter("action", "showUpdates");
-            IngridMonitorFacade monitor = IngridMonitorFacade.instance();
-            try {
-                monitor.triggerJob(UpgradeTools.JOB_NAME, UpgradeTools.JOB_GROUP);
-            } catch (SchedulerException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } 
 		} else {
 			// unhandled action
 			log.error("Action could not be processed, because it's unknown!");
@@ -465,14 +361,13 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	 * @param response
 	 * @param cf
 	 */
-	private void addContact(ActionRequest request, ActionResponse response,
-			AdminComponentMonitorForm cf) {
+	private void addContact(AdminComponentMonitorForm cf) {
 		
-		if (cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAIL_NEW) == "") {
+		if (StringUtils.isEmpty(cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_EMAIL_NEW))) {
 			cf.setError(AdminComponentMonitorForm.FIELD_CONTACT_EMAIL_NEW,
 					"component.monitor.form.error.invalid.email");
 		}
-		if (cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLD_NEW) == "") {
+		if (StringUtils.isEmpty(cf.getInput(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLD_NEW))) {
 			cf.setError(AdminComponentMonitorForm.FIELD_CONTACT_THRESHOLD_NEW,
 					"component.monitor.form.error.invalid.threshold");
 		}
@@ -510,9 +405,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 	 * @param response
 	 * @param cf
 	 */
-	private void removeContact(ActionRequest request, ActionResponse response,
-			AdminComponentMonitorForm cf) {
-		String id = request.getParameter("id");
+	private void removeContact(ActionRequest request, AdminComponentMonitorForm cf) {
 
 		// delete contact
 		String[] emails = cf.getInputAsArray(AdminComponentMonitorForm.FIELD_CONTACT_EMAILS);
@@ -615,7 +508,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		String lastOkExec = "";
 		
 		// for jobs that never ran there's no information -> return! 
-		if (dataMap.containsKey(IngridMonitorAbstractJob.PARAM_TIMER_NUM) == false) {
+		if (!dataMap.containsKey(IngridMonitorAbstractJob.PARAM_TIMER_NUM)) {
 			// write at least the error message
 			cf.setInput(AdminComponentMonitorForm.FIELD_ERROR_MSG, dataMap.getString(IngridMonitorAbstractJob.PARAM_STATUS_CODE));
 			return;
@@ -625,8 +518,6 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
 		
 		if (trigger == null)
 			trigger = jobHandler.getTrigger(id,"DEFAULT");
-		if (trigger == null)
-            trigger = jobHandler.getTrigger(id,UpgradeTools.JOB_GROUP);
 		
 		SimpleDateFormat portalFormat = new SimpleDateFormat("yyyy-mm-dd H:mm:ss");
         
@@ -638,7 +529,7 @@ public class AdminComponentMonitorPortlet extends GenericVelocityPortlet {
     	        lastOkExec = dataMap.getString(IngridAbstractStateJob.PARAM_LAST_ERRORFREE_RUN);
             }
             
-            nextExec = portalFormat.format(trigger.getNextFireTime()); //  portalFormat.format((Date) dataMap.get(IngridMonitorAbstractJob.PARAM_NEXT_CHECK));
+            nextExec = portalFormat.format(trigger.getNextFireTime());
         }
 		
 		cf.setInput(AdminComponentMonitorForm.FIELD_LAST_EXECUTION, lastExec);

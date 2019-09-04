@@ -86,5 +86,5 @@
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 <script>
     var homeCtlBounds;
-    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10), 5)
+    addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon small icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10), 5)
 </script>

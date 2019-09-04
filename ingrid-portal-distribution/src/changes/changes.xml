@@ -7,7 +7,121 @@
 
     <body>
 
-        <release version="5.0.0" date="2019-xx-xx" description="Release 5.0.0">
+        <release version="5.2.0-SNAPSHOT" date="2019-xx-xx" description="Release 5.2.0">
+          <action type="add" dev="wemove" issue="1435">
+            Portal: DWD Wetter Warnmodul entfernt
+          </action>
+          <action type="fix" dev="wemove" issue="1438">
+            Portal: Fix search on maps.
+          </action>
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
+          </action>
+          <action type="fix" dev="wemove" issue="1458">
+            Portal: Fix list-style for Chrome and Edge.
+          </action>
+          <action type="update" dev="wemove" issue="1200">
+            Portal: Update BKG portal layout.
+          </action>
+          <action type="fix" dev="wemove">
+            Mapclient: Fix scale handling.
+          </action>
+          <action type="fix" dev="wemove" issue="1463">
+            Mapclient: Add WGS84 formats to context popup.
+          </action>
+          <action type="fix" dev="wemove" issue="1446">
+            IGE: Fix adding of conformity after getCapabilities assistant.
+          </action>
+          <action type="add" dev="wemove" issue="1437">
+            IGE: Folder/Datasets with children cannot be deleted by default.
+          </action>
+          <action type="add" dev="wemove" issue="1362">
+            IGE: Use constraints always required for geoservice and geo dataset.
+          </action>
+        </release>
+
+        <release version="5.1.0" date="2019-07-11" description="Release 5.1.0">
+          <action type="fix" dev="wemove" issue="1396">
+            UVP: In Sektion "Allgemein" wird beim Ausklappen das Feld "ID des übergeordneten Datensatzes angezeigt"
+          </action>
+          <action type="fix" dev="wemove" issue="1395">
+            UVP: Im IE11 wird das UVP Erfassungsformular nicht angezeigt
+          </action>
+          <action type="update" dev="wemove" issue="1265">
+            UVP: Update portal layout to a new design.
+          </action>
+          <action type="add" dev="wemove" issue="1113">
+            UVP: Add URL param to select layer on leaflet map.
+          </action>
+          <action type="add" dev="wemove" issue="1291">
+            UVP: Add Support for BLP iPlug results
+          </action>
+          <action type="fix" dev="wemove" issue="1373">
+            Change email address on uvp "vorschaltseite"
+          </action>
+          <action type="fix" dev="wemove" issue="1344">
+            IGE: IGE: Dienst-URLs per GetCapabilities-Assistenten nicht erreichbar.
+          </action>
+          <action type="fix" dev="wemove" issue="1389">
+            Portal: Fix data source page.
+          </action>
+          <action type="fix" dev="wemove" issue="1387">
+            Portal: Fix UVP date on detail page.
+          </action>
+          <action type="update" dev="wemove" issue="1372">
+            Portal: Update tomcat to 7.0.94.
+          </action>
+          <action type="update" dev="wemove" issue="1420">
+            Portal: Remove UpgradeClientJob from portal db.
+          </action>
+          <action type="add" dev="wemove" issue="1200">
+            Portal: Create BKG portal layout.
+          </action>
+          <action type="add" dev="wemove" issue="1178">
+            Portal: Add function to add info message to a facet accordeon or to the search result list by select a specify facet.
+          </action>
+          <action type="add" dev="wemove" issue="1392">
+            Portal: Add properties to change leaflet background layer.
+          </action>
+          <action type="add" dev="wemove" issue="1403">
+            Portal: Search input had placeholder as input value
+          </action>
+          <action type="add" dev="wemove" issue="1253">
+            MapClient: Add upload of category and background images on admin GUI.
+          </action>
+          <action type="fix" dev="wemove" issue="1354">
+            MapClient: Fix encoding of GetCapabilities request.
+          </action>
+          <action type="fix" dev="wemove" issue="1365">
+            MapClient: Fix generate stable IDs of added layers on admin GUI.
+          </action>
+          <action type="fix" dev="wemove" issue="2179">
+            MapClient: Fix IE back button
+          </action>
+          <action type="add" dev="wemove" issue="">
+            MapClient: Print label by draw depend on KML labelstyle scale.
+          </action>
+          <action type="fix" dev="wemove" issue="1380">
+            BAW: Fix metadata markers in map view
+          </action>
+          <action type="fix" dev="wemove" issue="2124">
+            IGE: Fix user table not shown for standalone IGE
+          </action>
+          <action type="fix" dev="wemove" issue="2142">
+            IGE: Fix date range input
+          </action>
+          <action type="fix" dev="wemove" issue="2141">
+            IGE(mCLOUD/UVP): Show link from upload dialog correctly if a protocol seem to be found.
+          </action>
+          <action type="fix" dev="wemove" issue="1128">
+            IGE: Fix wrong validation of table rows
+          </action>
+        </release>
+
+        <release version="5.0.0" date="2019-04-15" description="Release 5.0.0">
+          <action type="add" dev="wemove" issue="835">
+            Portal: Add central index functionality.
+          </action>
           <action type="fix" dev="wemove" issue="1304">
             Portal: Fix portal load mixed content.
           </action>
@@ -19,6 +133,12 @@
           </action>
           <action type="fix" dev="wemove" issue="1285">
              Fix problem with codelists not been able to fetch via HTTP proxy.
+          </action>
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
+          </action>
+          <action type="fix" dev="wemove" issue="1334">
+            Fix map marker with illegal characters on hit title.
           </action>
           <action type="add" dev="wemove" issue="">
             Point link to UVP portal to the search result page of Hessen for the "Hessen Vorschaltseite".
@@ -40,6 +160,12 @@
           </action>
           <action type="fix" dev="wemove" issue="1303">
             Portal: Change directory for codelists to prevent conflict with kml directory.
+          </action>
+        </release>
+
+        <release version="5.0.0.mCLOUD" date="2019-04-02" description="Release 5.0.0.mCLOUD">
+          <action type="add" dev="wemove" issue="1590">
+            IGE: Add profile for mCLOUD
           </action>
         </release>
 
@@ -69,7 +195,7 @@
             Portal: Oracle: Fix update of portal database (flyway 4_4_0, 4_4_1). Make provider URL nullable.
           </action>
           <action type="fix" dev="wemove">
-            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).  
+            Portal: Fix update of mdek database (flyway: delete before insert, also disable validation of migration files already executed).
           </action>
           <action type="add" dev="wemove" issue="880">
             IGE(UVP): Show invalid filename characters in upload dialog.

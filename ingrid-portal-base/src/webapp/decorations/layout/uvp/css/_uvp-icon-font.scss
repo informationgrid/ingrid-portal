@@ -1,0 +1,224 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?xc81ld');
+  src:  url('fonts/icomoon.eot?xc81ld#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?xc81ld') format('truetype'),
+    url('fonts/icomoon.woff?xc81ld') format('woff'),
+    url('fonts/icomoon.svg?xc81ld#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="ic-"], [class*=" ic-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ic-ic-angle-down:before {
+  content: "\e900";
+}
+.ic-ic-angle-left:before {
+  content: "\e901";
+}
+.ic-ic-angle-right:before {
+  content: "\e902";
+}
+.ic-ic-angle-up:before {
+  content: "\e903";
+}
+.ic-ic-arrow-left:before {
+  content: "\e904";
+}
+.ic-ic-arrow-long-right:before {
+  content: "\e905";
+}
+.ic-ic-arrow-right:before {
+  content: "\e906";
+}
+.ic-ic-arrow:before {
+  content: "\e907";
+}
+.ic-ic-asterisc:before {
+  content: "\e908";
+}
+.ic-ic-bullet:before {
+  content: "\e909";
+}
+.ic-ic-center:before {
+  content: "\e90a";
+}
+.ic-ic-check:before {
+  content: "\e90b";
+}
+.ic-ic-cross:before {
+  content: "\e90c";
+}
+.ic-ic-daten:before {
+  content: "\e90d";
+}
+.ic-ic-double-arrow-left:before {
+  content: "\e90e";
+}
+.ic-ic-double-arrow-right:before {
+  content: "\e90f";
+}
+.ic-ic-download:before {
+  content: "\e910";
+}
+.ic-ic-facebook:before {
+  content: "\e911";
+}
+.ic-ic-hamburger:before {
+  content: "\e912";
+}
+.ic-ic-info:before {
+  content: "\e913";
+}
+.ic-ic-karten:before {
+  content: "\e914";
+}
+.ic-ic-linkedin:before {
+  content: "\e915";
+}
+.ic-ic-location:before {
+  content: "\e916";
+}
+.ic-ic-lupe:before {
+  content: "\e917";
+}
+.ic-ic-mailto:before {
+  content: "\e918";
+}
+.ic-ic-map-pin:before {
+  content: "\e919";
+}
+.ic-ic-minus:before {
+  content: "\e91a";
+}
+.ic-ic-plus:before {
+  content: "\e91b";
+}
+.ic-ic-quote:before {
+  content: "\e91c";
+}
+.ic-ic-share:before {
+  content: "\e91d";
+}
+.ic-ic-timeline-bullet:before {
+  content: "\e91e";
+}
+.ic-ic-twitter:before {
+  content: "\e91f";
+}
+.ic-ic-whatsapp:before {
+  content: "\e920";
+}
+.ic-ic-xing:before {
+  content: "\e921";
+}
+.ic-ic-abfall:before, .ic-ic-UVPG-12:before {
+  content: "\e922";
+}
+.ic-ic-apfel:before, .ic-ic-UVPG-7:before {
+  content: "\e923";
+}
+.ic-ic-auslandische-vorhaben:before {
+  content: "\e924";
+}
+.ic-ic-baustoffe:before, .ic-ic-UVPG-2:before {
+  content: "\e925";
+}
+.ic-ic-buildings:before, .ic-ic-UVPG-18:before {
+  content: "\e926";
+}
+.ic-ic-chemie:before, .ic-ic-UVPG-4:before {
+  content: "\e927";
+}
+.ic-ic-cicle:before, .ic-ic-UVPG-8:before {
+  content: "\e928";
+}
+.ic-ic-diamond:before, .ic-ic-UVPG-15:before {
+  content: "\e929";
+}
+.ic-ic-fire:before, .ic-ic-UVPG-1:before {
+  content: "\e92a";
+}
+.ic-ic-flurbereinigung:before, .ic-ic-UVPG-16:before {
+  content: "\e92b";
+}
+.ic-ic-forst:before, .ic-ic-UVPG-17:before {
+  content: "\e92c";
+}
+.ic-ic-industrie:before, .ic-ic-UVPG-10:before {
+  content: "\e92d";
+}
+.ic-ic-lagerung:before, .ic-ic-UVPG-9:before {
+  content: "\e92e";
+}
+.ic-ic-leitung:before, .ic-ic-UVPG-19:before {
+  content: "\e92f";
+}
+.ic-ic-metall:before, .ic-ic-UVPG-3:before {
+  content: "\e930";
+}
+.ic-ic-oberflachen:before, .ic-ic-UVPG-5:before {
+  content: "\e931";
+}
+.ic-ic-radioactive:before, .ic-ic-UVPG-11:before {
+  content: "\e932";
+}
+.ic-ic-road:before, .ic-ic-UVPG-14:before {
+  content: "\e933";
+}
+.ic-ic-tree:before, .ic-ic-UVPG-6:before {
+  content: "\e934";
+}
+.ic-ic-wasser:before, .ic-ic-UVPG-13:before {
+  content: "\e935";
+}
+.ic-ic-zulassungsverfahren:before {
+  content: "\e936";
+}
+.ic-ic-A:before {
+  content: "\e937";
+}
+.ic-ic-B:before {
+  content: "\e938";
+}
+.ic-ic-L:before {
+  content: "\e939";
+}
+.ic-ic-N:before {
+  content: "\e93a";
+}
+.ic-ic-R:before {
+  content: "\e93b";
+}
+.ic-ic-Z:before {
+  content: "\e93c";
+}
+.ic-ic-user:before {
+  content: "\e941";
+}
+.ic-ic-metadaten:before {
+  content: "\e940";
+}
+.ic-ic-katalog:before {
+  content: "\e93f";
+}
+.ic-ic-administration:before {
+  content: "\e93d";
+}
+.ic-ic-hamburger-logged-user:before {
+  content: "\e93e";
+}

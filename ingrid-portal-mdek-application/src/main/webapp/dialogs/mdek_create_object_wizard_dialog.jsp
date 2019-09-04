@@ -80,7 +80,7 @@ require([
 
     function init() {
         console.debug("init");
-        registry.byId("assistantURL").setValue("http://");
+        registry.byId("assistantURL").setValue("https://");
         // registry.byId("assistantNumWords").setValue(1000);
         registry.byId("assistantHtmlContentNumWords").setValue(100);
 
@@ -222,7 +222,7 @@ require([
     function autoClassifyUrl(url, numWords) {
         var def = new Deferred();
 
-        SNSService.autoClassifyURL(url, numWords, null, false, null, 100, userLocale, {
+        SNSService.autoClassifyURL(url, numWords, null, false, 100, userLocale, {
             callback: function(topicMap) {
                 def.resolve(topicMap);
             },
@@ -284,20 +284,42 @@ require([
             </div>
             <!-- LEFT HAND SIDE CONTENT START -->
             <div class="inputContainer field grey" style="padding:10px !important;">
-                <span class="outer"><div>
-                    <span class="label"><label for="assistantURL" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8063)"><fmt:message key="dialog.wizard.create.url" /></label></span>
-                    <span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;" data-dojo-type="dijit/form/ValidationTextBox" /></span>
-                </div></span>
-                <span class="outer"><div>
-                <span>
-                 <!-- <label for="assistantNumWords" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8064)"><fmt:message key="dialog.wizard.create.numWords" /></label></span>
-                <span><input data-dojo-type="dijit/form/NumberTextBox" min="0" max="1000" maxLength="4" id="assistantNumWords" class="w038" /></span> -->
-                <div class="checkboxContainer">
-                    <span class="input"><input type="checkbox" name="assistantIncludeMetaTagCheckbox" id="assistantIncludeMetaTagCheckbox" data-dojo-type="dijit/form/CheckBox" checked /><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8065, 'Beschreibung')"><fmt:message key="dialog.wizard.create.showDescription" /></label></span>
-                    <span class="input"><input type="checkbox" name="assistantIncludeHtmlContentCheckbox" id="assistantIncludeHtmlContentCheckbox" data-dojo-type="dijit/form/CheckBox" checked /><label style="cursor:default;"><fmt:message key="dialog.wizard.create.showNumWords.1" /> <input data-dojo-type="dijit/form/NumberTextBox" min="0" max="10000" maxlength="5" id="assistantHtmlContentNumWords" /> <fmt:message key="dialog.wizard.create.showNumWords.2" /></label></span>
-                </div>
-                </div></span>
-                <div class="fill"></div>
+                <span class="outer">
+                    <div>
+                        <span class="label"><label for="assistantURL"
+                                                   onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8063)"><fmt:message
+                                key="dialog.wizard.create.url"/></label></span>
+                        <span class="input"><input type="text" id="assistantURL" name="assistantURL" style="width:100%;"
+                                                   data-dojo-type="dijit/form/ValidationTextBox"/></span>
+                    </div>
+                </span>
+                <span class="outer">
+                    <div>
+                        <span>
+
+                            <div class="checkboxContainer">
+                                <span class="input">
+                                    <input type="checkbox" name="assistantIncludeMetaTagCheckbox"
+                                           id="assistantIncludeMetaTagCheckbox" data-dojo-type="dijit/form/CheckBox" checked/>
+                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 8065, 'Beschreibung')"><fmt:message
+                                            key="dialog.wizard.create.showDescription"/></label>
+                                </span>
+                                <span class="input">
+                                    <input type="checkbox" name="assistantIncludeHtmlContentCheckbox"
+                                           id="assistantIncludeHtmlContentCheckbox" data-dojo-type="dijit/form/CheckBox"
+                                           checked/>
+                                    <label style="cursor:default;">
+                                        <fmt:message key="dialog.wizard.create.showNumWords.1"/>
+                                        <input data-dojo-type="dijit/form/NumberTextBox" min="0" max="10000" maxlength="5"
+                                               id="assistantHtmlContentNumWords"/> <fmt:message
+                                            key="dialog.wizard.create.showNumWords.2"/>
+                                    </label>
+                                </span>
+                            </div>
+                        </span>
+                    </div>
+                    <div class="fill"></div>
+                </span>
             </div>
 
             <div class="inputContainerFooter">

@@ -24,7 +24,7 @@
 
 #macro (fillTable $filterMap $inverse $running)
     #if($running)
-        #set ($model = $jobHandler.getRunningJobs($sortColumn, $sortAsc))
+        #set ($model = $jobHandler.getRunningJobs())
         #if($model && $model.size() > 0)
             <tr><td colspan=2><h3>Running</h3></td></tr>
         #end

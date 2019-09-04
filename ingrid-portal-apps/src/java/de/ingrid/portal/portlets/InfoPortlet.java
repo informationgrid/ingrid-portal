@@ -51,19 +51,20 @@ import de.ingrid.utils.udk.UtilsDate;
 public class InfoPortlet extends GenericVelocityPortlet {
 
     /** InfoPortlet default template and title if not set via PSML */
-    public final static String DEFAULT_TEMPLATE = "/WEB-INF/templates/default_info.vm";
+    public static final String DEFAULT_TEMPLATE = "/WEB-INF/templates/default_info.vm";
 
-    public final static String DEFAULT_TITLE_KEY = "info.default.title";
+    public static final String DEFAULT_TITLE_KEY = "info.default.title";
 
-    private final static String SITEMAP_TEMPLATE = "/WEB-INF/templates/sitemap.vm";
+    private static final String SITEMAP_TEMPLATE = "/WEB-INF/templates/sitemap.vm";
     
-    private final static String INFO_TEASER_TEMPLATE = "/WEB-INF/templates/info_teaser.vm";
+    private static final String INFO_TEASER_TEMPLATE = "/WEB-INF/templates/info_teaser.vm";
     
-    
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
     }
 
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         Context context = getContext(request);
@@ -100,10 +101,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
         }
         
         if(myView.equalsIgnoreCase(INFO_TEASER_TEMPLATE)){
-            // For weather teaser
-            context.put("DWD_PATH", PortalConfig.getInstance().getString(PortalConfig.TEASER_WEATHER_DWD_PATH, ""));
-            context.put("DWD_MOVIE", PortalConfig.getInstance().getString(PortalConfig.TEASER_WEATHER_DWD_MOVIE, ""));
-            
             // For chronicle teaser
             // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
@@ -134,7 +131,7 @@ public class InfoPortlet extends GenericVelocityPortlet {
                 }
                 if (topicFrom != null) {
                     int years = UtilsDate.yearsBetween(topicFrom, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                    result.put("years", new Integer(years));
+                    result.put("years", years);
                 }
                 // fetch search term
                 // TODO use longest word as sns search term ? us title if bug in iPlug is resolved, see INGRID-901 ?
@@ -172,6 +169,7 @@ public class InfoPortlet extends GenericVelocityPortlet {
         super.doView(request, response);
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
             String action = request.getParameter( "action" );

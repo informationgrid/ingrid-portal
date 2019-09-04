@@ -39,7 +39,7 @@ import java.util.ResourceBundle;
  */
 public class IngridResourceBundle {
 
-    private final static Logger log = LoggerFactory.getLogger(IngridResourceBundle.class);
+    private static final Logger log = LoggerFactory.getLogger(IngridResourceBundle.class);
 
     /** ResourceBundle may be from Jetspeed: e.g. InlinePortletResourceBundle.
      * Then getLocale returns null :(  */
@@ -82,7 +82,7 @@ public class IngridResourceBundle {
      */
     public void setMsgParam(String param) {
         if (this.parameters == null) {
-            parameters = new ArrayList<String>();
+            parameters = new ArrayList<>();
         }
         parameters.add(param);
     }

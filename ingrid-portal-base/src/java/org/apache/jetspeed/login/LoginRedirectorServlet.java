@@ -60,6 +60,7 @@ import org.apache.jetspeed.components.ComponentManager;
 public class LoginRedirectorServlet extends HttpServlet
 {
 
+    @Override
     public void doGet(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {
@@ -92,6 +93,7 @@ public class LoginRedirectorServlet extends HttpServlet
         response.sendRedirect(response.encodeURL(destination));
     }
 
+    @Override
     public final void doPost(HttpServletRequest request,
             HttpServletResponse response) throws IOException, ServletException
     {

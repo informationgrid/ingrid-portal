@@ -14,10 +14,12 @@ pipeline {
         // normal build if it's not the master branch and not the support branch, except if it's a SNAPSHOT-version
         stage('Build-SNAPSHOT') {
             when {
-                not { branch 'master' }
+                not {
+                    anyOf { branch 'master'; }
+                }
                 not { 
                     allOf {
-                        branch 'support/*'
+                        anyOf { branch 'support/*'; branch 'mcloud-master' }
                         expression { return !VERSION.endsWith("-SNAPSHOT") }
                     }
                 }
@@ -42,7 +44,7 @@ pipeline {
         // release build if it's the master or the support branch and is not a SNAPSHOT version
         stage ('Build-Release') {
             when {
-                anyOf { branch 'master'; branch 'support/*' }
+                anyOf { branch 'master'; branch 'support/*'; branch 'mcloud-master' }
                 expression { return !VERSION.endsWith("-SNAPSHOT") }
             }
             steps {
@@ -55,7 +57,8 @@ pipeline {
                     // check is release version
                     // deploy to distribution
                     // send release email
-                    sh 'mvn clean deploy -Pdocker,release'
+                    // ATTENTION: Skip Tests for mCLOUD, but DO NOT include when merged back to develop!
+                    sh 'mvn clean deploy -Pdocker,release -DskipTests'
                 }
             }
         }
@@ -66,7 +69,7 @@ pipeline {
                     mavenSettingsConfig: '2529f595-4ac5-44c6-8b4f-f79b5c3f4bae'
                 ) {
                     withSonarQubeEnv('Wemove SonarQube') {
-                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar'
+                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.6.0.1398:sonar'
                     }
                 }
             }

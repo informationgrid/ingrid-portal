@@ -45,7 +45,7 @@ import org.apache.jetspeed.security.SecurityException;
  */
 public class SecurityHelper {
 
-    private final static Log log = LogFactory.getLog(SecurityHelper.class);
+    private static final Log log = LogFactory.getLog(SecurityHelper.class);
     
     /**
      * Merge role permissions with user permissions
@@ -83,7 +83,7 @@ public class SecurityHelper {
     public static Permissions getMergedPermissions(Principal p, Collection<Role> roles, PermissionManager permissionManager) {
         
         Permissions result = null;
-        Collection<Principal> principals = new ArrayList<Principal>();
+        Collection<Principal> principals = new ArrayList<>();
         principals.add(p);
         Iterator<Role> roleIterator = roles.iterator();
         while (roleIterator.hasNext()) {

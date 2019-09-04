@@ -20,29 +20,15 @@
  * limitations under the Licence.
  * **************************************************#
  */
-/*
- * Copyright 2000-2004 The Apache Software Foundation.
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- *      http://www.apache.org/licenses/LICENSE-2.0
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package de.ingrid.portal.portlets.browser;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Types;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class for iterating over the window. The window constitutes the selection
@@ -58,7 +44,7 @@ public class DatabaseBrowserIterator implements BrowserIterator
     /**
      * Static initialization of the logger for this class
      */
-    transient protected Logger log = LoggerFactory.getLogger(DatabaseBrowserIterator.class);
+    protected transient Logger log = LoggerFactory.getLogger(DatabaseBrowserIterator.class);
 
     private static final String VELOCITY_NULL_ENTRY = "-";
 
@@ -76,11 +62,11 @@ public class DatabaseBrowserIterator implements BrowserIterator
 
     String sortColumnName = null;
 
-    List rsList;
+    transient List rsList;
 
-    List rsTitleList;
+    transient List rsTitleList;
 
-    List rsTypeList;
+    transient List rsTypeList;
 
     /**
      * Constructor for the database browser iterator
@@ -203,15 +189,18 @@ public class DatabaseBrowserIterator implements BrowserIterator
      */
     public boolean hasNext()
     {
-        if (index <= rsListSize && index < bottom) { return true; }
-        return false;
+        boolean hasNext = false;
+        if (index <= rsListSize && index < bottom) { hasNext = true; }
+        return hasNext;
     }
 
     /**
      * Returns the next element in the iteration
      */
-    public Object next()
-    {
+    public Object next() {
+        if(!hasNext()){
+            throw new NoSuchElementException();
+        }
         index = index + 1;
         return rsList.get(index - 1);
     }
@@ -219,6 +208,7 @@ public class DatabaseBrowserIterator implements BrowserIterator
     /**
      * Logs as info - since remove operation is not supported by this Iterator.
      */
+    @Override
     public void remove()
     {
         log.info("The remove operation is not supported.");
@@ -234,8 +224,6 @@ public class DatabaseBrowserIterator implements BrowserIterator
      */
     public void sort(String columnName)
     {
-        //System.out.println("current columnName="+columnName);
-        //System.out.println("old columnName="+sortColumnName);
         if (columnName != null)
         {
             if (sortColumnName != null && sortColumnName.equals(columnName))
@@ -266,109 +254,108 @@ public class DatabaseBrowserIterator implements BrowserIterator
             
             if (obj1 instanceof String)
             {
-                col1 = (String)obj1;
-                col2 = (String)obj2;                
+                col1 = obj1;
+                col2 = obj2;
             }
             else if (obj1 instanceof List)
             {
                 col1 = ((List) obj1).get(idx);
                 col2 = ((List) obj2).get(idx);
             }
-
-            if ((col1).equals(VELOCITY_NULL_ENTRY))
-            {
-                if ((col2).equals(VELOCITY_NULL_ENTRY))
+            if(col1 != null ) {
+                if ((col1).equals(VELOCITY_NULL_ENTRY))
                 {
-                    order = 0;
+                    if ((col2).equals(VELOCITY_NULL_ENTRY))
+                    {
+                        order = 0;
+                    } else
+                    {
+                        order = -1;
+                    }
+                } else if ((col2).equals(VELOCITY_NULL_ENTRY))
+                {
+                    order = 1;
                 } else
                 {
-                    order = -1;
-                }
-            } else if ((col2).equals(VELOCITY_NULL_ENTRY))
-            {
-                order = 1;
-            } else
-            {
-                int type = Integer.parseInt((String) rsTypeList.get(idx));
-                switch (type)
-                {
-
-                case Types.NUMERIC:
-                    order = (((java.math.BigDecimal) col1)
-                            .compareTo((java.math.BigDecimal) col2));
-                    break;
-
-                case Types.DECIMAL:
-                    order = (((java.math.BigDecimal) col1)
-                            .compareTo((java.math.BigDecimal) col2));
-                    break;
-
-                case Types.TINYINT:
-                    order = (((Byte) col1).compareTo((Byte) col2));
-                    break;
-
-                case Types.SMALLINT:
-                    order = (((Short) col1).compareTo((Short) col2));
-                    break;
-
-                case Types.INTEGER:
-                    order = (((Integer) col1).compareTo((Integer) col2));
-                    break;
-
-                case Types.BIGINT:
-                    order = (((Long) col1).compareTo((Long) col2));
-                    break;
-
-                case Types.REAL:
-                    order = (((Float) col1).compareTo((Float) col2));
-                    break;
-
-                case Types.FLOAT:
-                    order = (((Double) col1).compareTo((Double) col2));
-                    break;
-
-                case Types.DOUBLE:
-                    order = (((Double) col1).compareTo((Double) col2));
-                    break;
-
-                case Types.DATE:
-                    order = (((java.sql.Date) col1)
-                            .compareTo((java.sql.Date) col2));
-                    break;
-
-                case Types.TIME:
-                    order = (((java.sql.Time) col1)
-                            .compareTo((java.sql.Time) col2));
-                    break;
-
-                case Types.TIMESTAMP:
-                    order = (((java.sql.Timestamp) col1)
-                            .compareTo((java.sql.Timestamp) col2));
-                    break;
-
-                case Types.CHAR:
-                    order = (((String) col1).compareTo((String) col2));
-                    break;
-
-                case Types.VARCHAR:
-                    order = (((String) col1).compareTo((String) col2));
-                    break;
-
-                case Types.LONGVARCHAR:
-                    order = (((String) col1).compareTo((String) col2));
-                    break;
-
-                default:
-                    log
-                            .info("DatabaseBrowserIterator.compare DataType mapping not found"
-                                    + " in DatabaseBrowserIterator. "
-                                    + "Hence cannot sort based on provided column.");
-                    break;
+                    int type = Integer.parseInt((String) rsTypeList.get(idx));
+                    switch (type)
+                    {
+    
+                    case Types.NUMERIC:
+                        order = (((java.math.BigDecimal) col1)
+                                .compareTo((java.math.BigDecimal) col2));
+                        break;
+    
+                    case Types.DECIMAL:
+                        order = (((java.math.BigDecimal) col1)
+                                .compareTo((java.math.BigDecimal) col2));
+                        break;
+    
+                    case Types.TINYINT:
+                        order = (((Byte) col1).compareTo((Byte) col2));
+                        break;
+    
+                    case Types.SMALLINT:
+                        order = (((Short) col1).compareTo((Short) col2));
+                        break;
+    
+                    case Types.INTEGER:
+                        order = (((Integer) col1).compareTo((Integer) col2));
+                        break;
+    
+                    case Types.BIGINT:
+                        order = (((Long) col1).compareTo((Long) col2));
+                        break;
+    
+                    case Types.REAL:
+                        order = (((Float) col1).compareTo((Float) col2));
+                        break;
+    
+                    case Types.FLOAT:
+                        order = (((Double) col1).compareTo((Double) col2));
+                        break;
+    
+                    case Types.DOUBLE:
+                        order = (((Double) col1).compareTo((Double) col2));
+                        break;
+    
+                    case Types.DATE:
+                        order = (((java.sql.Date) col1)
+                                .compareTo((java.sql.Date) col2));
+                        break;
+    
+                    case Types.TIME:
+                        order = (((java.sql.Time) col1)
+                                .compareTo((java.sql.Time) col2));
+                        break;
+    
+                    case Types.TIMESTAMP:
+                        order = (((java.sql.Timestamp) col1)
+                                .compareTo((java.sql.Timestamp) col2));
+                        break;
+    
+                    case Types.CHAR:
+                        order = (((String) col1).compareTo((String) col2));
+                        break;
+    
+                    case Types.VARCHAR:
+                        order = (((String) col1).compareTo((String) col2));
+                        break;
+    
+                    case Types.LONGVARCHAR:
+                        order = (((String) col1).compareTo((String) col2));
+                        break;
+    
+                    default:
+                        log
+                                .info("DatabaseBrowserIterator.compare DataType mapping not found"
+                                        + " in DatabaseBrowserIterator. "
+                                        + "Hence cannot sort based on provided column.");
+                        break;
+                    }
                 }
             }
         }
-        //System.out.println("index of type= "+idx +", order= "+order+",
-        // ascending= "+ascendingOrder);
         if (!ascendingOrder)
         {
             order = 0 - order;

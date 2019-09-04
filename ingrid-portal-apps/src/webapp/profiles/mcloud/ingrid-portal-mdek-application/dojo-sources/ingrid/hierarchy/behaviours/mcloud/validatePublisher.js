@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -67,12 +67,14 @@ define([
 
             var isValid = array.every(data, function(item) {
                 return item.link && item.link.length > 0
-                    && (item.link.indexOf("http:") === 0 || item.link.indexOf("https:") === 0)
+                    // an external link must start with http or https
+                    // an uploaded document however consists of at least two slashes
+                    && ((item.link.indexOf("://") <= 5 && item.link.indexOf("://") !== -1) || item.link.split("/").length > 2)
                     && item.sourceType && item.sourceType.trim().length > 0;
             });
 
             if (!isValid) {
-                notPublishableIDs.push(["mcloudDownloads", "Es muss ein gültiger Link angegeben werden, der mit 'http:' oder 'https:' beginnt. Außerdem muss ein Typ angegeben sein."]);
+                notPublishableIDs.push(["mcloudDownloads", "Es muss ein Typ und ein gültiger Link angegeben werden, der mit einem Protokoll wie bspw. 'http:' oder 'https:' beginnt."]);
             }
         }
     })();

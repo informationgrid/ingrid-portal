@@ -61,7 +61,7 @@ public class SNSTopic {
 		this.parents 		= null;
 		this.synonyms 		= null;
 		this.descriptors	= null;
-		this.inspireList 	= new ArrayList<String>();
+		this.inspireList 	= new ArrayList<>();
 		this.setExpired( false );
 	}
 
@@ -73,11 +73,11 @@ public class SNSTopic {
 		this.title 			= title;
 		this.alternateTitle = alternateTitle;
 		this.gemetId 		= gemetId;
-		this.children 		= new ArrayList<SNSTopic>();
-		this.parents 		= new ArrayList<SNSTopic>();
-		this.synonyms 		= new ArrayList<SNSTopic>();
-		this.descriptors	= new ArrayList<SNSTopic>();
-		this.inspireList 	= new ArrayList<String>();
+		this.children 		= new ArrayList<>();
+		this.parents 		= new ArrayList<>();
+		this.synonyms 		= new ArrayList<>();
+		this.descriptors	= new ArrayList<>();
+		this.inspireList 	= new ArrayList<>();
 		this.setExpired( false );
 	}
 

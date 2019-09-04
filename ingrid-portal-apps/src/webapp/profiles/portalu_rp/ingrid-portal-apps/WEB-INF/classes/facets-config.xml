@@ -232,12 +232,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>map</id>
             </facet>
         <!-- Themen -->
-        <!-- Kann nicht erweitert werden -->
+        <!-- Kann nicht erweitert werden 
             <facet sort="SORT_BY_VALUE_DESC">
                 <name>searchResult.facete.title.topic</name>
                 <query>datatype:topics</query>
                 <id>topic</id>
             </facet>
+        -->
         <!-- Rechtsvorschriften -->
             <facet>
                 <name>searchResult.facete.datatype.law</name>

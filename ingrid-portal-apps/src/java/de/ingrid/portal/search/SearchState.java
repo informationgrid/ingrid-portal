@@ -39,7 +39,7 @@ import de.ingrid.portal.global.Utils;
  */
 public class SearchState {
 
-    private final static Logger log = LoggerFactory.getLogger(SearchState.class);
+    private static final Logger log = LoggerFactory.getLogger(SearchState.class);
 
     /**
      * Returns the current state of a Catalogue page as URL Parameters, which can be concatenated
@@ -53,7 +53,7 @@ public class SearchState {
      * @return
      */
     public static String getURLParamsCatalogueSearch(PortletRequest request, ActionForm af) {
-        StringBuffer result = new StringBuffer("?");
+        StringBuilder result = new StringBuilder("?");
 
         result.append(Utils.getURLParams(request));
 
@@ -88,7 +88,7 @@ public class SearchState {
      * @return
      */
     public static String getURLParamsMainSearch(PortletRequest request, String msgTopic) {
-        StringBuffer result = new StringBuffer("?");
+        StringBuilder result = new StringBuilder("?");
 
         try {
             // Action parameter, determines what to do (important for bookmarking, to react in view method)
@@ -142,7 +142,7 @@ public class SearchState {
             if (log.isErrorEnabled()) {
                 log.error("Problems generating URL search parameters, WE DON'T PASS SEARCH PARAMETERS IN URL !", ex);
             }
-            result = new StringBuffer("");
+            result = new StringBuilder("");
         }
 
         if (log.isDebugEnabled()) {

@@ -1824,20 +1824,20 @@ define([
                     var def = new Deferred();
                     var data = [
                         [
-                            [message.get("dialog.research.ext.obj.content.time.at")],
-                            ["am"]
+                            message.get("dialog.research.ext.obj.content.time.at"),
+                            "am"
                         ],
                         [
-                            [message.get("dialog.research.ext.obj.content.time.since")],
-                            ["seit"]
+                            message.get("dialog.research.ext.obj.content.time.since"),
+                            "seit"
                         ],
                         [
-                            [message.get("dialog.research.ext.obj.content.time.until")],
-                            ["bis"]
+                            message.get("dialog.research.ext.obj.content.time.until"),
+                            "bis"
                         ],
                         [
-                            [message.get("dialog.research.ext.obj.content.time.fromto")],
-                            ["von"]
+                            message.get("dialog.research.ext.obj.content.time.fromto"),
+                            "von"
                         ]
                     ];
 
@@ -1845,13 +1845,7 @@ define([
                     return def;
                 };
 
-                var storePropsTimeType = {
-                    data: {
-                        identifier: '1',
-                        label: '0'
-                    }
-                };
-                layoutCreator.createFilteringSelect("timeRefType", null, storePropsTimeType, timeTypeData);
+                layoutCreator.createFilteringSelect("timeRefType", null, lang.clone(storeProps), timeTypeData);
                 new DateTextBox({
                     style: "width: 100%;",
                     onChange: function() {
@@ -1865,12 +1859,6 @@ define([
                     }
                 }, "timeRefDate2");
 
-                storeProps = {
-                    data: {
-                        identifier: '1',
-                        label: '0'
-                    }
-                };
                 layoutCreator.createFilteringSelect("timeRefStatus", null, lang.clone(storeProps), function() {
                     return UtilSyslist.getSyslistEntry(523);
                 });

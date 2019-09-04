@@ -59,7 +59,7 @@ import de.ingrid.utils.IngridDocument;
 @Service
 public class ImportServiceImpl {
 
-	private final static Logger log = Logger.getLogger(ImportServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(ImportServiceImpl.class);	
 
 	private enum FileType { GZIP, ZIP, XML, UNKNOWN }
     
@@ -72,14 +72,14 @@ public class ImportServiceImpl {
     @Autowired
 	private ProtocolFactory protocolFactory;
 	
-	private static Map<String,ProtocolInfoBean> controlMap = new ConcurrentHashMap<String, ProtocolInfoBean>();
+	private static Map<String,ProtocolInfoBean> controlMap = new ConcurrentHashMap<>();
 	
 	public void analyzeImportData(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
             boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent) {
 
 	    String userId = getCurrentUserId();
 	    boolean startNewAnalysis = true;
-	    List<Map<Type, List<String>>> allProtocols = new ArrayList<Map<Type,List<String>>>();
+	    List<Map<Type, List<String>>> allProtocols = new ArrayList<>();
 	    
 		// Define bean for protocol
 		ProtocolInfoBean protocolBean = new ProtocolInfoBean(protocolFactory.getProtocolHandler());
@@ -90,38 +90,38 @@ public class ImportServiceImpl {
 		protocolBean.getProtocolHandler().startProtocol();
 		protocolBean.setDataProcessed(0);
 		
-		List<byte[]> importData = new ArrayList<byte[]>();
-        try {
+		List<byte[]> importData = new ArrayList<>();
+        try (InputStream importDataStream = fileTransfer.getInputStream()){
             // map source file into icg-target format
-            InputStream importDataStream;
             
             switch (getFileType(fileTransfer.getMimeType())) {
             case GZIP:
                 File dirGZIP = createFileDirectory("gzip/" + userId);
                 String rootDirGZIP = dirGZIP.getAbsolutePath();
                 
-                importDataStream = fileTransfer.getInputStream();
+                
 
                 // Extract GZIP file
-                GZIPInputStream gzipInXML = new GZIPInputStream(importDataStream);//inXML);
+                GZIPInputStream gzipInXML = new GZIPInputStream(importDataStream);
                 
                 File outXML = createFilebyInputStream(gzipInXML, rootDirGZIP + "/" + fileTransfer.getFilename()+".xml");
                 gzipInXML.close();
                 
                 // Import file data
-                try {
-                    IngridDocument result = analyzeXMLData( new FileInputStream(outXML), outXML.getName(), targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
-                    allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
+                try (FileInputStream fis = new FileInputStream(outXML)){
+                    IngridDocument result = analyzeXMLData(fis , targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+                    if(result != null) {
+                        allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
+                    }
                 } catch (Exception ex) {
                 	throw ex;
                 } finally {
-                    deleteUserImportDirectory(dirGZIP);                	
+                    deleteUserImportDirectory(dirGZIP);
                 }
 
                 break;
 
             case ZIP:
-                importDataStream = fileTransfer.getInputStream();
                 File dirZIP = createFileDirectory("zip/" + userId);
                 String rootDirZIP = dirZIP.getAbsolutePath();
 
@@ -138,13 +138,13 @@ public class ImportServiceImpl {
                     File file = createFilebyInputStream(zipIn, rootDirZIP + "/" + entry.getName());
                     zipIn.closeEntry();
                     
-                    try {
-                       	//addImportData(importData, new FileInputStream(file), file.getName(), fileType, protocolBean.getProtocolHandler());
-                       	IngridDocument result = analyzeXMLData( new FileInputStream(file), file.getName(), targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+                    try (FileInputStream fis = new FileInputStream(file)){
+                       	IngridDocument result = analyzeXMLData( fis, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
                        	// since we analyse more than one file we have to set the flag to false, to remember all converted files in the backend (stored in job store)
                        	startNewAnalysis = false;
-                       	
-                       	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
+                       	if(result != null) {
+                       	    allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
+                       	}
                     } catch (Exception ex) {
                     	// DO NOTHING -> CONTINUE with next file, errors already logged in protocol
                     }
@@ -158,9 +158,10 @@ public class ImportServiceImpl {
             case UNKNOWN:
                 log.debug("Unknown file type. Assuming uncompressed xml data.");
                 // Fall through
+                break;
             case XML:
                 
-            	IngridDocument result = analyzeXMLData( fileTransfer.getInputStream(), fileTransfer.getFilename(), targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+            	IngridDocument result = analyzeXMLData( importDataStream, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
             	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
                 break;
 
@@ -184,7 +185,7 @@ public class ImportServiceImpl {
 	}
         
         
-    public void startImportThread(FileTransfer fileTransfer, String fileType, String targetObjectUuid, String targetAddressUuid,
+    public void startImportThread(String fileType, String targetObjectUuid, String targetAddressUuid,
                 boolean publishImmediately, boolean doSeparateImport, boolean copyNodeIfPresent){
         // Start the import process in a separate thread
         // After the thread is started, we wait on it for three seconds and check if it has finished afterwards
@@ -193,13 +194,13 @@ public class ImportServiceImpl {
         UserData currentUser = MdekSecurityUtils.getCurrentPortalUserData();
         
         ImportEntitiesThread importThread;
-        ProtocolInfoBean infoBean = controlMap.get(getCurrentUserId());
         importThread = new ImportEntitiesThread(catalogRequestHandler, currentUser, fileType, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent);
         importThread.start();
         try {
             importThread.join(3000);
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            log.error("Error on startImportThread.", ex);
+            ImportEntitiesThread.currentThread().interrupt();
         }
         if (!importThread.isAlive() && importThread.getException() != null) {
             throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(importThread.getException()));
@@ -212,10 +213,10 @@ public class ImportServiceImpl {
 
 	public FileTransfer getLastImportLog() {
 		JobInfoBean jobInfo = catalogRequestHandler.getImportInfo();
-		String log = jobInfo.getDescription();
-		log += "\n\n" + jobInfo.getFrontendMessages();
+		String importLog = jobInfo.getDescription();
+		importLog += "\n\n" + jobInfo.getFrontendMessages();
 
-		return new FileTransfer("log.txt", "text/plain", log.getBytes()); 
+		return new FileTransfer("log.txt", "text/plain", importLog.getBytes()); 
 	}
 
 	public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
@@ -258,14 +259,13 @@ public class ImportServiceImpl {
         }
     }
 
-    private IngridDocument analyzeXMLData(InputStream inputFileStream, String inputFileName, String targetObjectUuid, String targetAddressUuid, Boolean publishImmediately, Boolean doSeparateImport, Boolean copyNodeIfPresent, String frontendProtocol, boolean startNewAnalysis) throws MdekException {
+    private IngridDocument analyzeXMLData(InputStream inputFileStream, String targetObjectUuid, String targetAddressUuid, Boolean publishImmediately, Boolean doSeparateImport, Boolean copyNodeIfPresent, String frontendProtocol, boolean startNewAnalysis) {
         IngridDocument result = null;
         try {
             result = catalogRequestHandler.analyzeImportData( MdekSecurityUtils.getCurrentPortalUserData(), compress( inputFileStream ).toByteArray(), targetObjectUuid, targetAddressUuid, frontendProtocol, publishImmediately, doSeparateImport, copyNodeIfPresent, startNewAnalysis );
             
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error on analyzeXMLData.", e);
         }
         
         return result;
@@ -284,24 +284,23 @@ public class ImportServiceImpl {
             if(listFiles[i].listFiles() != null && listFiles[i].listFiles().length > 1){
                 deleteUserImportDirectory(listFiles[i]);
             }else{
-                listFiles[i].delete();  
+                if(listFiles[i].delete()) {
+                    log.debug(String.format("Delete file: %s", listFiles[i].getName()));
+                }
             }
         }
-        file.delete();
+        if(file.delete()) {
+            log.debug(String.format("Delete file: %s", file.getName()));
+        }
     }
     
     private File createFilebyInputStream(InputStream input, String filePath) throws IOException{
         File file = new File(filePath);
-        FileOutputStream output = null;
-        try {
-            output = new FileOutputStream(file);
+        try (FileOutputStream output = new FileOutputStream(file)){
             int len = 0;
             while ((len = input.read(buffer)) > 0) {
                 output.write(buffer, 0, len);
             }
-        } finally {
-            // we must always close the output file
-            if(output!=null) output.close();
         }
         
         return file;
@@ -315,7 +314,7 @@ public class ImportServiceImpl {
 
         final int BUFFER = 2048;
         int count;
-        byte data[] = new byte[BUFFER];
+        byte[] data = new byte[BUFFER];
         while((count = bin.read(data, 0, BUFFER)) != -1) {
            gzout.write(data, 0, count);
         }
@@ -328,7 +327,7 @@ public class ImportServiceImpl {
 // Helper thread which starts an import process
 class ImportEntitiesThread extends Thread {
 
-	private final static Logger log = Logger.getLogger(ImportEntitiesThread.class);	
+	private static final Logger log = Logger.getLogger(ImportEntitiesThread.class);	
 
 	private final CatalogRequestHandler catalogRequestHandler;
 	private final UserData currentUser;
@@ -338,7 +337,7 @@ class ImportEntitiesThread extends Thread {
 	private final boolean doSeparateImport;
 	private final String fileDataType;
 
-	private volatile MdekException exception;
+	private MdekException exception;
 
     private final boolean copyNodeIfPresent;
 	

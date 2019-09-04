@@ -1,0 +1,18 @@
+#set ($action = $renderResponse.createActionURL())
+<form class="columns" action="$action" method="post" name="create_account" id="create_account">
+    <input type="hidden" name="cmd" value="form_sent" />
+    #set ($formType = 'create')
+    #parse ('/WEB-INF/templates/myportal/include_account_form.vm')
+    <div class="subtext-submit">
+        <h6>* $MESSAGES.getString('account.edit.required.fields')</h6>
+        #renderInputButtonClass("$MESSAGES.getString('account.create.submit')" "" "" "" "")
+    </div>
+</form>
+<br/>
+<br/>
+<script >
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('create_account');
+    }
+</script>

@@ -46,11 +46,12 @@ import java.util.List;
  */
 public class ContentPartnerPortlet extends ContentPortlet {
 
-	private final static Logger log = LoggerFactory.getLogger(ContentPartnerPortlet.class);
+	private static final Logger log = LoggerFactory.getLogger(ContentPartnerPortlet.class);
 
     /**
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+	@Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -85,12 +86,14 @@ public class ContentPartnerPortlet extends ContentPortlet {
                     try {
                         dbEntities[i - nullCount].setIdent(request.getParameter("ident" + i).toLowerCase());
                     } catch (Exception ex) {
+                        log.error("Error on getDBEntities.", ex);
                     }
                     dbEntities[i - nullCount].setName(request.getParameter("name" + i));
                     try {
-                        int sortKey = new Integer(request.getParameter("sortkey" + i)).intValue();
+                        int sortKey = Integer.parseInt(request.getParameter("sortkey" + i));
                         dbEntities[i - nullCount].setSortkey(sortKey);
                     } catch (Exception ex) {
+                        log.error("Error on getDBEntities.", ex);
                     }
                 }else{
                     nullCount = nullCount + 1;
@@ -105,6 +108,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
      * Redefine method, we have to check stuff.
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionUpdate(ActionRequest request) {
         AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
                 AdminContentPartnerForm.class);
@@ -121,6 +125,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
      * Redefine method, we have to check stuff.
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionSave(ActionRequest request) {
         AdminContentPartnerForm af = (AdminContentPartnerForm) Utils.getActionForm(request, KEY_ACTION_FORM,
                 AdminContentPartnerForm.class);
@@ -133,6 +138,7 @@ public class ContentPartnerPortlet extends ContentPortlet {
         super.doActionSave(request);
     }
     
+    @Override
     protected boolean doViewDefault(RenderRequest request) {
         try {
             // always refresh !

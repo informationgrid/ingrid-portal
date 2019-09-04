@@ -49,7 +49,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(SearchResultBawDmqsPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(SearchResultBawDmqsPortlet.class);
 
     private static final String[] REQUESTED_FIELDS_MARKER = new String[] { "bwstr-center-lon", "bwstr-center-lat", "t01_object.obj_id" };
     private static final String[] REQUESTED_FIELDS_BBOX = new String[] { "x1", "x2", "y1", "y2", "t01_object.obj_id" };
@@ -111,6 +111,7 @@ public class SearchResultBawDmqsPortlet extends SearchResultPortlet {
 
     }
     
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
         // define an REST URL to get the map data dynamically

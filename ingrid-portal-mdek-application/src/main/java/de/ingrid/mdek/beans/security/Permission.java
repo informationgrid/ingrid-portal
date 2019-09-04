@@ -28,7 +28,7 @@ import de.ingrid.mdek.beans.object.MdekDataBean;
 
 public class Permission {
 	private String uuid;
-	private IdcPermission permission;
+	private IdcPermission idcPermission;
 
 	// Optional references to the obj, adr
 	private MdekDataBean object;
@@ -43,11 +43,11 @@ public class Permission {
 	}
 
 	public IdcPermission getPermission() {
-		return permission;
+		return idcPermission;
 	}
 
 	public void setPermission(IdcPermission permission) {
-		this.permission = permission;
+		this.idcPermission = permission;
 	}
 
 	public MdekDataBean getObject() {

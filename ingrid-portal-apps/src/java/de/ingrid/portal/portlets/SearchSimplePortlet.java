@@ -48,7 +48,9 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.search.SearchState;
 import de.ingrid.utils.query.IngridQuery;
+import de.ingrid.utils.queryparser.ParseException;
 import de.ingrid.utils.queryparser.QueryStringParser;
+import de.ingrid.utils.queryparser.TokenMgrError;
 
 /**
  * This portlet handles the "Simple Search" input fragment. NOTICE: This portlet
@@ -63,7 +65,7 @@ import de.ingrid.utils.queryparser.QueryStringParser;
  */
 public class SearchSimplePortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger( SearchSimplePortlet.class );
+    private static final Logger log = LoggerFactory.getLogger( SearchSimplePortlet.class );
 
     // TITLE KEYS
 
@@ -71,19 +73,20 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      * key of title for default-page (start page) and main-search page, if no
      * search is performed, passed from default-page per Preferences
      */
-    private final static String TITLE_KEY_SEARCH = "searchSimple.title.search";
+    private static final String TITLE_KEY_SEARCH = "searchSimple.title.search";
 
     /**
      * key of title for main-search page if results are displayed, passed from
      * page per Preferences
      */
-    private final static String TITLE_KEY_RESULT = "searchSimple.title.result";
+    private static final String TITLE_KEY_RESULT = "searchSimple.title.result";
 
     /*
      * (non-Javadoc)
      * 
      * @see javax.portlet.Portlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init( config );
     }
@@ -94,6 +97,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      * @see javax.portlet.GenericPortlet#doView(javax.portlet.RenderRequest,
      * javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response) throws PortletException, IOException {
         Context context = getContext( request );
         IngridResourceBundle messages = new IngridResourceBundle( getPortletConfig().getResourceBundle( request.getLocale() ), request.getLocale() );
@@ -117,10 +121,8 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // ----------------------------------
         String[] actions = request.getParameterValues( Settings.PARAM_ACTION );
         String action = null;
-        if (actions != null) {
-            if (actions.length > 1) {
-                action = actions[actions.length - 1];
-            }
+        if (actions != null && actions.length > 1) {
+            action = actions[actions.length - 1];
         }
         if (action == null) {
             action = request.getParameter( Settings.PARAM_ACTION );
@@ -177,21 +179,25 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         SearchSimpleForm af = (SearchSimpleForm) Utils.getActionForm( request, SearchSimpleForm.SESSION_KEY, PortletSession.APPLICATION_SCOPE );
         if (af == null) {
             af = (SearchSimpleForm) Utils.addActionForm( request, SearchSimpleForm.SESSION_KEY, SearchSimpleForm.class, PortletSession.APPLICATION_SCOPE );
-            af.setINITIAL_QUERY( messages.getString( "searchSimple.query.initial" ) );
+            af.setInitialQuery( messages.getString( "searchSimple.query.initial" ) );
             af.init();
         }
 
         // handle change of locale for initial string !
-        if (af.getInput( SearchSimpleForm.FIELD_QUERY ).equals( af.getINITIAL_QUERY() )) {
-            af.setINITIAL_QUERY( messages.getString( "searchSimple.query.initial" ) );
-            af.setInput( SearchSimpleForm.FIELD_QUERY, af.getINITIAL_QUERY() );
+        if (af.getInput( SearchSimpleForm.FIELD_QUERY ).equals( af.getInitialQuery() )) {
+            af.setInitialQuery( messages.getString( "searchSimple.query.initial" ) );
+            af.setInput( SearchSimpleForm.FIELD_QUERY, af.getInitialQuery() );
         }
 
         // NOTICE: this may be former query, if no query in request ! we keep
         // that one for convenience
         // (although this state is not bookmarkable !)
         String queryString = SearchState.getSearchStateObjectAsString( request, Settings.PARAM_QUERY_STRING );
-        af.setInput( SearchSimpleForm.FIELD_QUERY, queryString );
+        if(this.getPortletName().equals("SearchSimple") && PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_SEARCH_RESET_QUERY, Boolean.FALSE )) {
+            af.setInput( SearchSimpleForm.FIELD_QUERY, "" );
+        } else {
+            af.setInput( SearchSimpleForm.FIELD_QUERY, queryString );
+        }
         // put ActionForm to context. use variable name "actionForm" so velocity
         // macros work !
         context.put( "actionForm", af );
@@ -225,12 +231,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         // main-search, search-settings ...)
         // title also depends on search state (query submitted or not ...)
         // ----------------------------------
-        if (titleKey.equals( TITLE_KEY_RESULT )) {
+        if (titleKey.equals( TITLE_KEY_RESULT ) && SearchState.getSearchStateObject( request, Settings.MSG_QUERY ) == null) {
             // we're on main search page, check whether there's a query and
             // adapt title
-            if (SearchState.getSearchStateObject( request, Settings.MSG_QUERY ) == null) {
-                titleKey = TITLE_KEY_SEARCH;
-            }
+            titleKey = TITLE_KEY_SEARCH;
         }
         response.setTitle( messages.getString( titleKey ) );
 
@@ -240,19 +244,16 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         ContentPage page = (ContentPage) request.getAttribute( "org.apache.jetspeed.Page" );
         boolean setQuery = false;
         Map<String, String[]> params = request.getParameterMap();
-        if (page != null && (params != null && params.size() == 0)) {
-            if (Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > 0 && queryString != null && queryString.length() > 0) {
-                if (af != null) {
-                    if (!queryString.equals( af.getINITIAL_QUERY() )) {
-                        response.setTitle( messages.getString( TITLE_KEY_RESULT ) );
-                        UtilsFacete.setAttributeToSession( request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true );
-                        setUpQuery( request, queryString, false );
-                        setQuery = true;
-                    }
-                }
-            }
+        if (page != null && (params != null && params.size() == 0) &&
+            Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && queryString != null && queryString.length() > 0 &&
+            af != null &&
+            !queryString.equals( af.getInitialQuery() )) {
+            response.setTitle( messages.getString( TITLE_KEY_RESULT ) );
+            UtilsFacete.setAttributeToSession( request, UtilsFacete.SESSION_PARAMS_READ_FACET_FROM_SESSION, true );
+            setUpQuery( request, queryString, false );
+            setQuery = true;
         }
-        if(setQuery == false){
+        if(!setQuery && page != null) {
             if(Settings.PAGE_SEARCH_RESULT.indexOf( page.getPath() ) > -1 && request.getParameter("ct") != null){
                 String initalQuery = PortalConfig.getInstance().getString( PortalConfig.CATEGORY_TEASER_SEARCH_QUERY, "" ).trim();
                 if(initalQuery.length() > 0){
@@ -263,7 +264,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
                 if(initalQuery.length() > 0){
                     setUpQuery(request, initalQuery, true);
                 }
-            }  
+            }
         }
         if(page != null){
             context.put( "page", page.getPath());
@@ -277,6 +278,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
      * @see javax.portlet.Portlet#processAction(javax.portlet.ActionRequest,
      * javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException, IOException {
         String action = request.getParameter( Settings.PARAM_ACTION );
         if (action == null) {
@@ -312,7 +314,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
             // Adapt search state to settings of IngridSessionPreferences !!!
             // On new search, no temporary stuff from bookmarks etc. should be
             // used !
-            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences( request, IngridSessionPreferences.SESSION_KEY, IngridSessionPreferences.class );
+            IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences( request, IngridSessionPreferences.SESSION_KEY );
             sessionPrefs.adaptSearchState( request );
 
             // check if submit or requery or delete query
@@ -336,7 +338,7 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse( queryString );
-        } catch (Throwable t) {
+        } catch (ParseException | TokenMgrError t) {
             if (log.isDebugEnabled()) {
                 log.debug( "Problems creating IngridQuery, parsed query string: " + queryString, t );
             } else {

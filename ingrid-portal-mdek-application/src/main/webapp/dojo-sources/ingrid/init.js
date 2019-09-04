@@ -80,109 +80,124 @@ define([
                 .then(this.initCurrentGroups)
                 .then(function() {
 
-                var deferred2 = self.initCatalogData()
-                    .then(lang.hitch(self, self.fetchSysLists));
+                    var deferred2 = self.initCatalogData()
+                        .then(lang.hitch(self, self.fetchSysLists));
 
 
 
-                // get guiIds that are going to be configured for visibility
-                self.initGeneralEventListener(); // for release activate!
+                    // get guiIds that are going to be configured for visibility
+                    self.initGeneralEventListener(); // for release activate!
 
-                // wait for page rendered before
-                require(["dojo/domReady!"], function() {
-                    // create the main layout with toolbar, splitter, tree, ...
-                    self.createBaseLayout();
+                    // wait for page rendered before
+                    require(["dojo/domReady!"], function() {
+                        // create the main layout with toolbar, splitter, tree, ...
+                        self.createBaseLayout();
 
-                    // create the containers where external pages shall be loaded into
-                    self.createMenuPages();
+                        // create the containers where external pages shall be loaded into
+                        self.createMenuPages();
 
-                    self.initSessionKeepalive();
+                        self.addUpdateUserLink();
 
-                    // select a page initially
-                    deferred2.then(function() {
-                        layoutCreator.createSelectBox("languageBox", null, {
-                            data: {
-                                identifier: 'id',
-                                label: 'label'
-                            }
-                        }, null, "js/data/languageCode.json");
+                        self.initSessionKeepalive();
 
-                        // execute additional system behaviours
-                        UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+                        // select a page initially
+                        deferred2.then(function() {
+                            layoutCreator.createSelectBox("languageBox", null, {
+                                data: {
+                                    identifier: 'id',
+                                    label: 'label'
+                                }
+                            }, null, "js/data/languageCode.json");
 
-                            // mark behaviours with override values
-                            array.forEach(data, function(item) {
-                                if (behaviours[item.id]) {
-                                    behaviours[item.id].override = item.active;
-                                    if (item.params) {
-                                        array.forEach(item.params, function(p) {
-                                            var behaviourParam = array.filter(behaviours[item.id].params, function(param) { return param.id === p.id; })[0];
-                                            lang.mixin(behaviourParam, p);
-                                        });
+                            // execute additional system behaviours
+                            UtilCatalog.getOverrideBehavioursDef().then(function(data) {
+
+                                // mark behaviours with override values
+                                array.forEach(data, function(item) {
+                                    if (behaviours[item.id]) {
+                                        behaviours[item.id].override = item.active;
+                                        if (item.params) {
+                                            array.forEach(item.params, function(p) {
+                                                var behaviourParam = array.filter(behaviours[item.id].params, function(param) { return param.id === p.id; })[0];
+                                                lang.mixin(behaviourParam, p);
+                                            });
+                                        }
+                                    }
+                                });
+                                for (var behave in behaviours) {
+                                    if (!behaviours[behave] || !behaviours[behave].title) continue;
+                                    // run behaviour if
+                                    // 1) it's a system behaviour
+                                    // 2) activated by default and not overridden
+                                    // 3) activate if explicitly overridden
+                                    if (behaviours[behave].type === "SYSTEM" &&
+                                            (
+                                                (behaviours[behave].defaultActive && behaviours[behave].override === undefined)
+                                                || behaviours[behave].override === true
+                                            )) {
+                                        console.debug("execute system behaviour: " + behave);
+                                        behaviours[behave].run();
                                     }
                                 }
+
+                                // create the menu bar after system behaviours are run, so that they can have an influence
+                                // on the menu structure
+                                igeMenuBar.create(registry.byId("menubarPane"));
+
+                                var ids = [];
+                                topic.publish("/collectAdditionalSyslistsToLoad", ids);
+                                self.fetchSysListsByIds(ids)
+                                    .then(function() {
+                                        topic.publish("/additionalSyslistsLoaded");
+                                    });
+
+                            }, function(error) {
+                                console.error("Error executing behvaiour:", error);
                             });
-                            for (var behave in behaviours) {
-                                if (!behaviours[behave] || !behaviours[behave].title) continue;
-                                // run behaviour if
-                                // 1) it's a system behaviour
-                                // 2) activated by default and not overridden
-                                // 3) activate if explicitly overridden
-                                if (behaviours[behave].type === "SYSTEM" &&
-                                        (
-                                            (behaviours[behave].defaultActive && behaviours[behave].override === undefined)
-                                            || behaviours[behave].override === true
-                                        )) {
-                                    console.debug("execute system behaviour: " + behave);
-                                    behaviours[behave].run();
+
+
+                            // the connect has to be called delayed, otherwise onChange will be
+                            // triggered immediately and the page would be switching always
+                            // -> not when set initially?! (see declaration of selectbox!)
+                            setTimeout(function() {
+                                on(registry.byId("languageBox"), "Change", menuEventHandler.switchLanguage);
+                            }, 2000);
+                            registry.byId("stackContainer").selectChild(registry.byId("pageDashboard"), false);
+                            self.jumpToNodeOnInit();
+
+                            // create an iframe which will be used for printing
+                            DomConstruct.create("iframe", {
+                                id: 'printFrame',
+                                name: 'printFrame',
+                                style: {
+                                    position: "absolute",
+                                    left: "-1000px",
+                                    height: "0",
+                                    border: "0",
+                                    zoom: "2"
                                 }
-                            }
-
-                            // create the menu bar after system behaviours are run, so that they can have an influence
-                            // on the menu structure
-                            igeMenuBar.create(registry.byId("menubarPane"));
-
-                            var ids = [];
-                            topic.publish("/collectAdditionalSyslistsToLoad", ids);
-                            self.fetchSysListsByIds(ids)
-                                .then(function() {
-                                    topic.publish("/additionalSyslistsLoaded");
-                                });
-
-                        }, function(error) {
-                            console.error("Error executing behvaiour:", error);
+                            }, wnd.body());
+                            setTimeout(self.initPrintFrame, 4000);
+                        })
+                        .then(null, function(err) {
+                            console.error(err);
+                            dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err ? err.stack : null);
                         });
-
-
-                        // the connect has to be called delayed, otherwise onChange will be
-                        // triggered immediately and the page would be switching always
-                        // -> not when set initially?! (see declaration of selectbox!)
-                        setTimeout(function() {
-                            on(registry.byId("languageBox"), "Change", menuEventHandler.switchLanguage);
-                        }, 2000);
-                        registry.byId("stackContainer").selectChild(registry.byId("pageDashboard"), false);
-                        self.jumpToNodeOnInit();
-
-                        // create an iframe which will be used for printing
-                        DomConstruct.create("iframe", {
-                            id: 'printFrame',
-                            name: 'printFrame',
-                            style: {
-                                position: "absolute",
-                                left: "-1000px",
-                                height: "0",
-                                border: "0",
-                                zoom: "2"
-                            }
-                        }, wnd.body());
-                        setTimeout(self.initPrintFrame, 4000);
-                    })
-                    .then(null, function(err) {
-                        console.error(err);
-                        dialog.show(message.get("general.error"), message.get("init.loadError"), dialog.WARNING, null, null, null, err ? err.stack : null);
                     });
                 });
+        },
+
+        addUpdateUserLink: function() {
+
+            SecurityService.isPortalConnected(function(isConnectedToPortal) {
+                if (!isConnectedToPortal) {
+                    var accountLink = DomConstruct.toDom("<a href='#' style='float: right;' onclick='require(\"ingrid/dialog\").showPage(\"Benutzer bearbeiten\", \"dialogs/admin_editUser.jsp\", null, null, true, { user: \"" + UtilSecurity.currentUser.userData.portalLogin + "\"})'>Account bearbeiten</a>");
+                    var separator = DomConstruct.toDom("<span style=\"float:right; padding:0 5px 0 5px;\">|</span>");
+                    DomConstruct.place(accountLink, "logout", "after");
+                    DomConstruct.place(separator, "logout", "after");
+                }
             });
+
         },
 
         initCatalogData: function() {

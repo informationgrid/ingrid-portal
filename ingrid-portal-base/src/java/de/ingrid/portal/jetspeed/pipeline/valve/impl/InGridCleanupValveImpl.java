@@ -56,6 +56,7 @@ public class InGridCleanupValveImpl extends CleanupValveImpl {
 	/* (non-Javadoc)
 	 * @see org.apache.jetspeed.pipeline.valve.impl.CleanupValveImpl#invoke(org.apache.jetspeed.request.RequestContext, org.apache.jetspeed.pipeline.valve.ValveContext)
 	 */
+    @Override
 	public void invoke(RequestContext request, ValveContext context) throws PipelineException {
 		super.invoke(request, context);
 		ContentPage page = request.getPage();
@@ -73,7 +74,7 @@ public class InGridCleanupValveImpl extends CleanupValveImpl {
 	private void cleanFragmentsTree(ContentFragment f) {
 		if (f != null) {
 			List<ContentFragment> fragments = f.getFragments();
-			if (fragments != null && fragments.size() > 0) {
+			if (fragments != null && !fragments.isEmpty()) {
 				//Process child fragments
 				for (ContentFragment child : fragments) {
 					cleanFragmentsTree(child);

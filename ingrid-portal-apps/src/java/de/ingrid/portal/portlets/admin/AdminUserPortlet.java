@@ -25,6 +25,52 @@
  */
 package de.ingrid.portal.portlets.admin;
 
+import java.io.File;
+import java.io.IOException;
+import java.security.PrivilegedAction;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.apache.jetspeed.CommonPortletServices;
+import org.apache.jetspeed.administration.PortalAdministration;
+import org.apache.jetspeed.exception.JetspeedException;
+import org.apache.jetspeed.om.folder.Folder;
+import org.apache.jetspeed.om.folder.FolderNotFoundException;
+import org.apache.jetspeed.page.PageManager;
+import org.apache.jetspeed.page.document.NodeException;
+import org.apache.jetspeed.profiler.Profiler;
+import org.apache.jetspeed.security.JSSubject;
+import org.apache.jetspeed.security.JetspeedPrincipalQueryContext;
+import org.apache.jetspeed.security.PasswordAlreadyUsedException;
+import org.apache.jetspeed.security.PasswordCredential;
+import org.apache.jetspeed.security.Role;
+import org.apache.jetspeed.security.RoleManager;
+import org.apache.jetspeed.security.SecurityException;
+import org.apache.jetspeed.security.User;
+import org.apache.jetspeed.security.UserManager;
+import org.apache.jetspeed.security.UserResultList;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.ActionForm;
 import de.ingrid.portal.forms.AdminUserForm;
@@ -34,28 +80,6 @@ import de.ingrid.portal.global.Utils;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.portlets.security.SecurityResources;
 import de.ingrid.portal.security.role.IngridRole;
-import org.apache.jetspeed.CommonPortletServices;
-import org.apache.jetspeed.administration.PortalAdministration;
-import org.apache.jetspeed.exception.JetspeedException;
-import org.apache.jetspeed.om.folder.Folder;
-import org.apache.jetspeed.om.folder.FolderNotFoundException;
-import org.apache.jetspeed.om.folder.InvalidFolderException;
-import org.apache.jetspeed.page.PageManager;
-import org.apache.jetspeed.page.document.NodeException;
-import org.apache.jetspeed.profiler.Profiler;
-import org.apache.jetspeed.security.SecurityException;
-import org.apache.jetspeed.security.*;
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.portlet.*;
-import java.io.File;
-import java.io.IOException;
-import java.security.PrivilegedAction;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.*;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -64,7 +88,7 @@ import java.util.*;
  */
 public class AdminUserPortlet extends ContentPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(AdminUserPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(AdminUserPortlet.class);
 
     private static final String KEY_ENTITIES = "entities";
     
@@ -87,8 +111,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
     private PageManager pageManager;
 
-    private Profiler profiler;
-
     /** email template to use for merging */
     private String emailTemplate;
 
@@ -104,6 +126,7 @@ public class AdminUserPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#refreshBrowserState(javax.portlet.PortletRequest)
      */
+    @Override
     protected void refreshBrowserState(PortletRequest request) {
         ContentBrowserState state = getBrowserState(request);
         state.setTotalNumRows(getEntitiesFromSession(request).size());
@@ -116,7 +139,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * @param request
      * @return
      */
-    static protected ContentBrowserState getBrowserState(PortletRequest request) {
+    protected static ContentBrowserState getBrowserState(PortletRequest request) {
         ContentBrowserState state = (ContentBrowserState) request.getPortletSession().getAttribute(KEY_BROWSER_STATE,
                 PortletSession.APPLICATION_SCOPE);
         if (state == null) {
@@ -130,10 +153,11 @@ public class AdminUserPortlet extends ContentPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
      */
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
-        profiler = (Profiler) getPortletContext().getAttribute(CommonPortletServices.CPS_PROFILER_COMPONENT);
+        Profiler profiler = (Profiler) getPortletContext().getAttribute(CommonPortletServices.CPS_PROFILER_COMPONENT);
         if (null == profiler) {
             throw new PortletException("Failed to find the Portal Profiler on portlet initialization");
         }
@@ -164,7 +188,7 @@ public class AdminUserPortlet extends ContentPortlet {
         // rules (name,value pairs)
         List<String> names = getInitParameterList(config, IP_RULES_NAMES);
         List<String> values = getInitParameterList(config, IP_RULES_VALUES);
-        rules = new HashMap<String, String>();
+        rules = new HashMap<>();
         for (int ix = 0; ix < ((names.size() < values.size()) ? names.size() : values.size()); ix++) {
         // jetspeed 2.3 reads rule key/values vice versa than Jetspeed 2.1 !!!
         // see PortalAdministrationImpl.registerUser
@@ -188,6 +212,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doView(javax.portlet.RenderRequest,
      *      javax.portlet.RenderResponse)
      */
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         super.doView(request, response);
     }
@@ -195,6 +220,7 @@ public class AdminUserPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewDefault(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewDefault(RenderRequest request) {
         try {
 
@@ -266,14 +292,14 @@ public class AdminUserPortlet extends ContentPortlet {
             if (val1 == null && val2 == null) {
                 return 0;
             }
-            if ((val1 == null && val2 != null)) {
+            if (val1 == null) {
                 if (ascendingOrder) {
                     return -1;
                 } else {
                     return 1;
                 }
             }
-            if ((val1 != null && val2 == null)) {
+            if (val2 == null) {
                 if (ascendingOrder) {
                     return 1;
                 } else {
@@ -300,7 +326,7 @@ public class AdminUserPortlet extends ContentPortlet {
     }
 
     protected List<UserInfo> getEntities(RenderRequest request) {
-        List<UserInfo> rows = new ArrayList<UserInfo>();
+        List<UserInfo> rows = new ArrayList<>();
 
         try {
             long start = 0;
@@ -317,7 +343,7 @@ public class AdminUserPortlet extends ContentPortlet {
 
             String userId = filterCriteria.get("filterCriteriaId");
 
-            Map<String, String> attributeMap = new HashMap<String, String>();
+            Map<String, String> attributeMap = new HashMap<>();
             if (filterCriteria.get("filterCriteriaFirstName") != null && filterCriteria.get("filterCriteriaFirstName").length() > 0) {
                 attributeMap.put(SecurityResources.USER_NAME_GIVEN, filterCriteria.get("filterCriteriaFirstName"));
             }
@@ -328,7 +354,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 attributeMap.put(SecurityResources.USER_EMAIL, filterCriteria.get("filterCriteriaEmail"));
             }
 
-            List<String> roles = new ArrayList<String>();
+            List<String> roles = new ArrayList<>();
             if (filterCriteria.get("filterCriteriaRole") != null && filterCriteria.get("filterCriteriaRole").length() > 0) {
                 roles.add(filterCriteria.get("filterCriteriaRole").replaceAll("\\*", "\\%"));
             }
@@ -400,7 +426,7 @@ public class AdminUserPortlet extends ContentPortlet {
     public class UserInfo extends HashMap<String, String> {
         private static final long serialVersionUID = -7920936432515328718L;
 
-        List<String> rolesList = new ArrayList<String>();
+        List<String> rolesList = new ArrayList<>();
         
         public UserInfo() {
             super();
@@ -415,7 +441,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getFirstName() {
-            return (String) this.get("firstName");
+            return this.get("firstName");
         }
         
         public void setFirstName(String firstName) {
@@ -426,7 +452,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getLastName() {
-            return (String) this.get("lastName");
+            return this.get("lastName");
         }
         
         public void setLastName(String lastName) {
@@ -437,7 +463,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         public String getEmail() {
-            return (String) this.get("email");
+            return this.get("email");
         }
         
         public void setEmail(String email) {
@@ -448,7 +474,7 @@ public class AdminUserPortlet extends ContentPortlet {
         }
         
         public String getLastLogin() {
-            return (String) this.get("lastLogin");
+            return this.get("lastLogin");
         }
         
         public void setLastLogin(String lastLogin) {
@@ -457,7 +483,7 @@ public class AdminUserPortlet extends ContentPortlet {
 
         
         public String getRoles() {
-            return (String) this.get("roles");
+            return this.get("roles");
         }
 
         public void setRoles(String roles) {
@@ -492,6 +518,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * Create a 'normal' portal user with the role "user".
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionSave(ActionRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
@@ -504,7 +531,7 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
 
             String userName = f.getInput(AdminUserForm.FIELD_ID);
-            String password = f.getInput(AdminUserForm.FIELD_PASSWORD_NEW);
+            String password = f.getInput(AdminUserForm.FIELD_PW_NEW);
 
             // check if the user name exists
             boolean userIdExistsFlag = true;
@@ -518,7 +545,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 return;
             }
 
-            Map<String, String> userAttributes = new HashMap<String, String>();
+            Map<String, String> userAttributes = new HashMap<>();
             // we'll assume that these map back to PLT.D values
             userAttributes.put("user.name.prefix", f.getInput(AdminUserForm.FIELD_SALUTATION));
             userAttributes.put("user.name.given", f.getInput(AdminUserForm.FIELD_FIRSTNAME));
@@ -562,7 +589,7 @@ public class AdminUserPortlet extends ContentPortlet {
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                     request.getLocale()), request.getLocale());
 
-            HashMap<String, String> userInfo = new HashMap<String, String>(userAttributes);
+            HashMap<String, String> userInfo = new HashMap<>(userAttributes);
             // map coded stuff
             String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
                     .get("user.name.prefix"));
@@ -578,7 +605,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 f.setError("nofield", "account.created.problems.email");
                 return;
             }
-            int period = localizedTemplatePath.lastIndexOf(".");
+            int period = localizedTemplatePath.lastIndexOf('.');
             if (period > 0) {
                 String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
                         + localizedTemplatePath.substring(period + 1);
@@ -598,13 +625,12 @@ public class AdminUserPortlet extends ContentPortlet {
 
             String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
                     "foo@bar.com");
-            String to = (String) userInfo.get("user.business-info.online.email");
+            String to = userInfo.get("user.business-info.online.email");
             String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
             if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
                 f.addMessage("account.created.title");
             } else {
                 f.setError("", "account.created.problems.email");
-                return;
             }
 
         } catch (Exception e) {
@@ -621,6 +647,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionUpdate(ActionRequest request) {
         // is super admin ?
         boolean isAdmin = "admin".equals(request.getUserPrincipal().getName());
@@ -658,8 +685,8 @@ public class AdminUserPortlet extends ContentPortlet {
 
                 try {
                     // update password only if a old password was provided
-                    String oldPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_OLD);
-                    String newPassword = f.getInput(AdminUserForm.FIELD_PASSWORD_NEW);
+                    String oldPassword = f.getInput(AdminUserForm.FIELD_PW_OLD);
+                    String newPassword = f.getInput(AdminUserForm.FIELD_PW_NEW);
                     if(newPassword != null && newPassword.length() > 0){
                         PasswordCredential credential = userManager.getPasswordCredential(user);
                         if(isAdmin){
@@ -672,13 +699,10 @@ public class AdminUserPortlet extends ContentPortlet {
                         userManager.storePasswordCredential(credential);
                     }
                 } catch (PasswordAlreadyUsedException e) {
-                    f.setError(AdminUserForm.FIELD_PASSWORD_NEW, "account.edit.error.password.in.use");
-                    return;
-                } catch (InvalidPasswordException e) {
-                    f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
+                    f.setError(AdminUserForm.FIELD_PW_NEW, "account.edit.error.password.in.use");
                     return;
                 } catch (SecurityException e) {
-                    f.setError(AdminUserForm.FIELD_PASSWORD_OLD, "account.edit.error.wrong.password");
+                    f.setError(AdminUserForm.FIELD_PW_OLD, "account.edit.error.wrong.password");
                     return;
                 }
             // also check for superadmin to be sure !
@@ -703,6 +727,7 @@ public class AdminUserPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionDelete(javax.portlet.ActionRequest)
      */
+    @Override
     protected void doActionDelete(ActionRequest request) {
 
         String[] ids = (String[]) getDBEntities(request);
@@ -725,11 +750,7 @@ public class AdminUserPortlet extends ContentPortlet {
                                     innerPageManager.removeFolder(f);
 
                                     return null;
-                                } catch (FolderNotFoundException e1) {
-                                    return e1;
-                                } catch (InvalidFolderException e1) {
-                                    return e1;
-                                } catch (NodeException e1) {
+                                } catch (FolderNotFoundException | NodeException e1) {
                                     return e1;
                                 }
                             }
@@ -759,6 +780,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#processAction(javax.portlet.ActionRequest,
      *      javax.portlet.ActionResponse)
      */
+    @Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
 
         String action = getAction(request);
@@ -794,7 +816,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
         } else if (request.getParameter(PARAMV_ACTION_DB_DO_CANCEL) != null) {
             response.setRenderParameter(PARAM_NOT_INITIAL, Settings.MSGV_TRUE);
-            return;
         } else if (action != null && action.equals("doChangeTab")) {
             AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
                     AdminUserForm.class);
@@ -816,6 +837,7 @@ public class AdminUserPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewEdit(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewEdit(RenderRequest request) {
 
         try {
@@ -849,6 +871,7 @@ public class AdminUserPortlet extends ContentPortlet {
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doViewNew(javax.portlet.RenderRequest)
      */
+    @Override
     protected boolean doViewNew(RenderRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
 
@@ -867,6 +890,7 @@ public class AdminUserPortlet extends ContentPortlet {
         return true;
     }
 
+    @Override
     protected boolean doRefresh(RenderRequest request) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         if (f.hasInput(AdminUserForm.FIELD_TAB) && f.getInput(AdminUserForm.FIELD_TAB).equals("2")) {
@@ -887,7 +911,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * @param request
      * @return
      */
-    static protected List getEntitiesFromSession(PortletRequest request) {
+    protected static List getEntitiesFromSession(PortletRequest request) {
         List entities = (List) request.getPortletSession().getAttribute(KEY_ENTITIES, PortletSession.PORTLET_SCOPE);
         if (entities == null) {
             entities = new ArrayList();
@@ -902,7 +926,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * @param request
      * @param state
      */
-    static protected void setEntitiesInSession(PortletRequest request, List entities) {
+    protected static void setEntitiesInSession(PortletRequest request, List entities) {
         request.getPortletSession().setAttribute(KEY_ENTITIES, entities, PortletSession.PORTLET_SCOPE);
     }
 
@@ -972,7 +996,7 @@ public class AdminUserPortlet extends ContentPortlet {
     protected List<String> getInitParameterList(PortletConfig config, String ipName) {
         String temp = config.getInitParameter(ipName);
         if (temp == null)
-            return new ArrayList<String>();
+            return new ArrayList<>();
 
         String[] temps = temp.split("\\,");
         for (int ix = 0; ix < temps.length; ix++)

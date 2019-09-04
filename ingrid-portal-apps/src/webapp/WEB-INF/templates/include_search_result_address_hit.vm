@@ -60,20 +60,8 @@
         </p>
 ##        #if($topHit)
         <p>
-            #set ($showProvider = true)
-            #if($grouping == 'provider')
-                #set ($showProvider = false)
-            #end
-            #if($showProvider)
-                <small>
-                    <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.provider'):</strong></span>
-                    <span class="tx-light">$!rs.provider</span>
-                </small>
-            #end
-            <small>
-                <span class="tx-darkest"><strong>$MESSAGES.getString('common.result.source'):</strong></span>
-                <span class="tx-light">$!rs.source</span>
-            </small>
+            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
+            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
         </p>
 ##        #end
         #if($rs.wms_url)

@@ -23,10 +23,7 @@
 package de.ingrid.mdek;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-
-import net.weta.components.communication.configuration.XPathService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,6 +36,8 @@ import com.tngtech.configbuilder.annotation.valueextractor.DefaultValue;
 import com.tngtech.configbuilder.annotation.valueextractor.EnvironmentVariableValue;
 import com.tngtech.configbuilder.annotation.valueextractor.PropertyValue;
 import com.tngtech.configbuilder.annotation.valueextractor.SystemPropertyValue;
+
+import net.weta.components.communication.configuration.XPathService;
 
 @PropertiesFiles({ "mdek" })
 @PropertyLocations(fromClassLoader = true)
@@ -169,7 +168,7 @@ public class Config {
     public String mdekDirectLink;
 
 
-    public void initialize() throws IOException {
+    public void initialize() {
         System.setProperty( "spring.profiles.active", "http" );
         writeCommunication();
     }
@@ -178,8 +177,8 @@ public class Config {
         File communicationFile = new File( this.communicationLocation );
         if (ibusName.isEmpty() || ibusPort.isEmpty()) {
             // do not remove communication file if no
-            if (communicationFile.exists()) {
-                communicationFile.delete();
+            if(communicationFile.exists() && communicationFile.delete()) {
+                log.debug("Delete communication.");
             }
             return true;
         }
@@ -211,7 +210,7 @@ public class Config {
             communication.store( communicationFile );
 
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Error on writeCommunication.", e);
             return false;
         }
 

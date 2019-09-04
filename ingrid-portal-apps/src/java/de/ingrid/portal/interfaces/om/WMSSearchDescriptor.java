@@ -30,9 +30,9 @@ package de.ingrid.portal.interfaces.om;
  */
 public class WMSSearchDescriptor {
 
-    public final static int WMS_SEARCH_BBOX = 1;
+    public static final int WMS_SEARCH_BBOX = 1;
 
-    public final static int WMS_SEARCH_COMMUNITY_CODE = 2;
+    public static final int WMS_SEARCH_COMMUNITY_CODE = 2;
 
     private int type;
 

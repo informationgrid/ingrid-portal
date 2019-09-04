@@ -221,7 +221,7 @@ define([
                     selectedNode = dataTree.selectedNode ? dataTree.selectedNode.item : null;
                 }
 
-                if (selectedNode) {
+                if (dataTree.selectedItems.length === 1 && selectedNode) {
                     self._handleSingleSelection(selectedNode);
                 } else {
                     self._handleMultiSelection();
@@ -263,7 +263,7 @@ define([
             if (selectedNodes.length === 0) return;
 
             var containsRoot = array.some(selectedNodes, function(node) {
-                if (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot")
+                if (node.id === "objectRoot" || node.id === "addressRoot" || node.id === "addressFreeRoot")
                     return true;
             });
 
@@ -287,13 +287,22 @@ define([
             if (allHaveMovePermission) {
                 // add delete Button here as well, because move permission means
                 // write-tree, which is exactly the condition for hasDeletePermission
-                enableList = enableList.concat([buttons.DelSubTree, buttons.Cut, buttons.markDeleted]);
+                enableList = enableList.concat([buttons.Cut, buttons.markDeleted]);
+
+                // only if there's no node having children allow delete button to be active
+                var selectionContainsChildren = array.some(selectedNodes, function(node) {
+                    return node.isFolder;
+                });
+                if (igeOptions.deleteNonEmptyFolders || !selectionContainsChildren) {
+                    enableList.push(buttons.DelSubTree);
+                }
+
             }
 
 
             // enable all possible toolbar buttons
             array.forEach(enableList, function(item) {
-                if (item !== null) {
+                if (item) {
                     item.set("disabled", false);
                 }
             });
@@ -318,10 +327,6 @@ define([
             if (node.id == "objectRoot" || node.id == "addressRoot" || node.id == "addressFreeRoot") {
                 if (canCreateRootNodes) {
                     enableList.push(buttons.NewDoc);
-                }
-                // if at least one node is selected and none of them is a special node (objectRoot, addressRoot, addressFreeRoot)
-                if (node.id != "objectRoot" && node.id != "addressRoot" && node.id != "addressFreeRoot") {
-                    enableList.push(buttons.DelSubTree);
                 }
 
             } else if (node.id == "newNode") {
@@ -353,11 +358,13 @@ define([
                 if (hasMovePermission == "true") {
                     // add delete Button here as well, because move permission means
                     // write-tree, which is exactly the condition for hasDeletePermission
-                    enableList = enableList.concat([buttons.DelSubTree, buttons.Cut, buttons.markDeleted]);
+                    enableList = enableList.concat([buttons.Cut, buttons.markDeleted]);
+                    if (igeOptions.deleteNonEmptyFolders || !node.isFolder) {
+                        enableList.push(buttons.DelSubTree);
+                    }
                 }
                 // If the the user has write tree permission (tree), he can delete, move and create new nodes
                 if (hasWriteTreePermission == "true") {
-                    //enableList = enableList.concat([buttons.DelSubTree, buttons.Cut]);
                     if (node.nodeAppType == "O") {
                         enableList.push(buttons.NewDoc);
 

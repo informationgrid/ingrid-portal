@@ -20,6 +20,11 @@
  * limitations under the Licence.
  * **************************************************#
  */
+
+// this global variable can be used to add information of an activated behaviour, e.g. it has
+// been activated, so that this information can be used in another function
+var igeOptions = {};
+
 define(["dojo/_base/declare",
         "dojo/_base/array", 
         "dojo/Deferred", 
@@ -51,10 +56,11 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
         "ingrid/hierarchy/behaviours/spatialRepresentationInfo",
-        "ingrid/hierarchy/behaviours/parentIdentifier"
+        "ingrid/hierarchy/behaviours/parentIdentifier",
+        "ingrid/hierarchy/behaviours/deleteNonEmptyFolders"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
-            spatialRepresentationInfo, parentIdentifier) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders) {
 
     return declare(null, {
         
@@ -76,6 +82,8 @@ define(["dojo/_base/declare",
 
         spatialRepresentationInfo: spatialRepresentationInfo,
 
+        deleteNonEmptyFolders: deleteNonEmptyFolders,
+
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
         
@@ -92,7 +100,7 @@ define(["dojo/_base/declare",
                 });
             }
         },
-        
+
         requireUseConstraints: {
             title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
             title_en: "Use Constraints - Required on INSPIRE / Open Data",
@@ -101,22 +109,13 @@ define(["dojo/_base/declare",
             issue: "https://dev.informationgrid.eu/redmine/issues/223",
             defaultActive: true,
         	run: function() {
-        		// define our useConstraints handler
-                var updateUseConstraintsBehaviour = function(isChecked) {
-		            if (isChecked) {
-		                domClass.add("uiElementN027", "required");
-		                
-		            } else {
-		                // remove required field if INSPIRE and open data checkbox not selected
-		                if (!registry.byId("isInspireRelevant").checked &&
-		                	!registry.byId("isOpenData").checked) {
-		                    domClass.remove("uiElementN027", "required");
-		                }
-		            }
-		        };
-
-		        on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
-		        on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
+                topic.subscribe("/onObjectClassChange", function(data) {
+                    if (data.objClass === "Class1" || data.objClass === "Class3") {
+                        domClass.add("uiElementN027", "required");
+                    } else {
+                        domClass.remove("uiElementN027", "required");
+                    }
+                });
             }
         },
 

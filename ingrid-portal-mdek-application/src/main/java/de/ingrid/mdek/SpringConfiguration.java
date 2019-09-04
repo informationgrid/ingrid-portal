@@ -22,10 +22,8 @@
  */
 package de.ingrid.mdek;
 
-import java.io.IOException;
 import java.util.List;
 
-import de.ingrid.mdek.userrepo.UserRepoManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,6 +45,7 @@ import de.ingrid.mdek.upload.auth.PortalAuthService;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
+import de.ingrid.mdek.userrepo.UserRepoManager;
 
 @Configuration
 public class SpringConfiguration {
@@ -69,19 +68,14 @@ public class SpringConfiguration {
 
 		@Bean
 		public ICodeListCommunication httpCommunication() {
-			IngridCLCommunication communication = new IngridCLCommunication();
-			return communication;
+		    return new IngridCLCommunication();
 		}
 	}
 
 	@Bean
 	public Config globalConfig() {
 		Config config = new ConfigBuilder<Config>(Config.class).build();
-		try {
-			config.initialize();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		config.initialize();
 		return config;
 	}
 
@@ -109,12 +103,10 @@ public class SpringConfiguration {
 
 	@Bean
 	public UserRepoManager userRepoManager(Config config, @Value("#{daoFactory}") DaoFactory dao) {
-		if (config.noPortal) {
-			DbUserRepoManager manager = new DbUserRepoManager();
-			manager.setDaoFactory(dao);
-			return manager;
-		}
-		return null;
+		// always create manager to prevent NullPointerException
+		DbUserRepoManager manager = new DbUserRepoManager();
+		manager.setDaoFactory(dao);
+		return manager;
 	}
 
 	/**
@@ -123,8 +115,7 @@ public class SpringConfiguration {
 
 	@Bean
 	public AuthService authService(Config config) {
-		AuthService instance = new PortalAuthService();
-		return instance;
+	    return new PortalAuthService();
 	}
 
 	@Bean

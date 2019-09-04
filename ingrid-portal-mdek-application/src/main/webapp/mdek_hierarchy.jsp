@@ -2227,7 +2227,7 @@
                                     </div>
 									</div>
                                 </span>
-                                <span id="uiElementN027" class="outer">
+                                <span id="uiElementN027" class="outer required">
                                     <div><span id="availabilityUseAccessConstraintsLabel" class="label">
                                         <label for="availabilityUseAccessConstraints" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10027)">
                                             <fmt:message key="ui.obj.availability.useAccessConstraints" />

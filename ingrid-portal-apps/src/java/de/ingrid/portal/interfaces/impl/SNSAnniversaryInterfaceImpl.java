@@ -48,7 +48,7 @@ import java.util.Date;
  */
 public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
 
-    private final static Logger log = LoggerFactory.getLogger(SNSAnniversaryInterfaceImpl.class);
+    private static final Logger log = LoggerFactory.getLogger(SNSAnniversaryInterfaceImpl.class);
 
     private static AnniversaryInterface instance = null;
 
@@ -57,14 +57,13 @@ public class SNSAnniversaryInterfaceImpl implements AnniversaryInterface {
             try {
                 instance = new SNSAnniversaryInterfaceImpl();
             } catch (Exception e) {
-                log.error("Error initiating the WMS interface.");
-                e.printStackTrace();
+                log.error("Error initiating the WMS interface.", e);
             }
         }
         return instance;
     }
 
-    private SNSAnniversaryInterfaceImpl() throws Exception {
+    private SNSAnniversaryInterfaceImpl() {
         super();
     }
 

@@ -62,11 +62,11 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	
 	public static final String JOB_ID 			= "ProviderCheck";
 
-	private final static Logger log 				= LoggerFactory.getLogger(IngridMonitorProviderCheckJob.class);
+	private static final Logger log 				= LoggerFactory.getLogger(IngridMonitorProviderCheckJob.class);
 	
-	private final String NEW_LINE_PLAIN			= "\r\n";
+	private static final String NEW_LINE_PLAIN			= "\r\n";
 	
-	private final String NEW_LINE_WEB			= "<br>";
+	private static final String NEW_LINE_WEB			= "<br>";
 
 	/**
 	 * @see org.quartz.Job#execute(org.quartz.JobExecutionContext)
@@ -102,8 +102,8 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 
 		int status 						= 0;
 		String statusCode 				= null;
-		List<String> exclude			= new ArrayList<String>();
-		Map<String,String> resultsProvider	= new HashMap<String,String>();
+		List<String> exclude			= new ArrayList<>();
+		Map<String,String> resultsProvider	= new HashMap<>();
 		Session session 				= HibernateUtil.currentSession();
 		String errorMessage				= "";
         
@@ -121,7 +121,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 				exclude = Arrays.asList(dataMap.getString(PARAM_EXCLUDED_PROVIDER).split(","));
 			}
 			
-			List<String> allProviderInDB = new ArrayList<String>();
+			List<String> allProviderInDB = new ArrayList<>();
 			
 			// get the short names of all providers of all iPlugs
 			for (IngridProvider ip : allIngridProviderInDB) {
@@ -135,7 +135,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 				Map<String, List> iPlugProvider = getProvider(hits[i]);
 				
 				for (Map.Entry<String, List> entry : iPlugProvider.entrySet()) {
-					String partner = (String)entry.getKey();
+					String partner = entry.getKey();
 					List<Provider> providers = (List)entry.getValue();
 					for (Provider provider : providers) {
 						if (!allProviderInDB.contains(provider.getShortName()) && !exclude.contains(provider.getShortName())) {
@@ -168,10 +168,10 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 				status = STATUS_OK;
 				statusCode = STATUS_CODE_NO_ERROR;
 			}
-		} catch (Throwable e) {
+		} catch (Exception e) {
 			status = STATUS_ERROR;
 			statusCode = e.getClass().getName() + ":" + e.getMessage();
-			e.printStackTrace();
+			log.error("Error on execute.", e);
 		}
 		
 		// make the errorMessage more readable in the browser
@@ -203,7 +203,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	 * @return
 	 */
 	private Map getProvider( PlugDescription plugDescripton ) {
-		Map<String,List> allIPlugProvider	= new HashMap<String,List>();
+		Map<String,List> allIPlugProvider	= new HashMap<>();
 		Metadata metadata 					= null;
 		IPlugOperator plugOperator 			= null;
 		
@@ -213,8 +213,8 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			if (log.isDebugEnabled()) {
 				log.debug("Error getting MetaData from bus for iPlug: " + plugDescripton.getPlugId() + 
 					". Does the method exist? (" + e.getLocalizedMessage() + ")");
-				e.printStackTrace();
 			}
+            log.error("Error on getProvider.", e);
 		}
 				
 		if (metadata != null) {
@@ -237,7 +237,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 			for (String p : provider) {
 				Provider newProvider = new Provider();
 				newProvider.setShortName(p);
-				List<Provider> provList = new ArrayList<Provider>();
+				List<Provider> provList = new ArrayList<>();
 				provList.add(newProvider);
 				allIPlugProvider.put("unknown", provList);
 			}
@@ -286,7 +286,7 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 	 */
 	private void addProviderToLocalDB(Map<String, List> missingProvider, Map<String, String> result) {
 		for (Map.Entry<String, List> entry : missingProvider.entrySet()) {
-			String partner = (String)entry.getKey();
+			String partner = entry.getKey();
 			List<Provider> providers = (List)entry.getValue();
 			
 	        for (Provider provider : providers) {
@@ -327,8 +327,8 @@ public class IngridMonitorProviderCheckJob extends IngridMonitorAbstractJob {
 		
 		// prepare and distinguish between added and not added provider to the DB
 		for (Map.Entry<String,String> entry : resultsProvider.entrySet()) {
-			String shortName = (String)entry.getKey();
-			String longName  = (String)entry.getValue();
+			String shortName = entry.getKey();
+			String longName  = entry.getValue();
 			
 			if (longName == null) {
 				nullProvider += shortName + ", ";

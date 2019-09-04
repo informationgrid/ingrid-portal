@@ -73,20 +73,21 @@ import de.ingrid.portal.om.IngridCMSItem;
 
 public class ContactPortlet extends GenericVelocityPortlet {
 
-    private final static Logger log = LoggerFactory.getLogger(ContactPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ContactPortlet.class);
     
-    private final static String TEMPLATE_FORM_INPUT = "/WEB-INF/templates/contact.vm";
+    private static final String TEMPLATE_FORM_INPUT = "/WEB-INF/templates/contact.vm";
 
-    private final static String TEMPLATE_SUCCESS = "/WEB-INF/templates/contact_success.vm";
+    private static final String TEMPLATE_SUCCESS = "/WEB-INF/templates/contact_success.vm";
 
     private static final String EMAIL_TEMPLATE = "/WEB-INF/templates/contact_email.vm";
 
-    public final static String PARAMV_ACTION_SUCCESS = "doSuccess";
+    public static final String PARAMV_ACTION_SUCCESS = "doSuccess";
 
-    private final static String PARAMV_ACTION_DB_DO_REFRESH = "doRefresh";
+    private static final String PARAMV_ACTION_DB_DO_REFRESH = "doRefresh";
 
     private UserManager userManager;
 
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -96,6 +97,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
         }
     }
 
+    @Override
     public void doView(RenderRequest request, RenderResponse response) throws PortletException, IOException {
         Context context = getContext(request);
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
@@ -124,17 +126,16 @@ public class ContactPortlet extends GenericVelocityPortlet {
         Session session = HibernateUtil.currentSession();
         List entities = UtilsDB.getValuesFromDB(session.createCriteria(IngridCMS.class).add(
                 Restrictions.eq("itemKey", "ingrid.contact.intro.postEmail")), session, null, true);
-        if (entities.size() > 0) {
+        if (!entities.isEmpty()) {
             IngridCMS entry = (IngridCMS) entities.get(0);
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
             IngridCMSItem localizedItem = entry.getLocalizedEntry(lang);
             
             if(localizedItem == null){
-            	localizedItem = entry.getLocalizedEntry(Locale.getDefault().getLanguage());
+                localizedItem = entry.getLocalizedEntry(Locale.getDefault().getLanguage());
             }
-        	context.put("contactIntroPostEmail", localizedItem.getItemValue());
+            context.put("contactIntroPostEmail", localizedItem.getItemValue());
         }
-        
 
         // ----------------------------------
         // check for passed RENDER PARAMETERS and react
@@ -161,69 +162,69 @@ public class ContactPortlet extends GenericVelocityPortlet {
             try {
                 user = userManager.getUser(userPrincipal.getName());
             } catch (SecurityException e) {
-                e.printStackTrace();
-            }            
+                log.error("Error on populateWithLoggedInUser.", e);
+            }
         }
         if (user != null) {
             Map<String, String> userInfo = user.getInfoMap();
-            if (!cf.hasInput( cf.FIELD_FIRSTNAME ))
-                cf.setInput( cf.FIELD_FIRSTNAME, userInfo.get( "user.name.given" ));
-            if (!cf.hasInput( cf.FIELD_LASTNAME ))
-                cf.setInput( cf.FIELD_LASTNAME, userInfo.get( "user.name.family" ));
-            if (!cf.hasInput( cf.FIELD_EMAIL ))
-                cf.setInput( cf.FIELD_EMAIL, userInfo.get( "user.business-info.online.email" ));
+            if (!cf.hasInput( ContactForm.FIELD_FIRSTNAME ))
+                cf.setInput( ContactForm.FIELD_FIRSTNAME, userInfo.get( "user.name.given" ));
+            if (!cf.hasInput( ContactForm.FIELD_LASTNAME ))
+                cf.setInput( ContactForm.FIELD_LASTNAME, userInfo.get( "user.name.family" ));
+            if (!cf.hasInput( ContactForm.FIELD_EMAIL ))
+                cf.setInput( ContactForm.FIELD_EMAIL, userInfo.get( "user.business-info.online.email" ));
         }        
     }
 
+    @Override
     public void processAction(ActionRequest request, ActionResponse actionResponse) throws PortletException,
             IOException {
-    	List<FileItem> items = null;
-    	File uploadFile = null;
-    	boolean uploadEnable = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_CONTACT_UPLOAD_ENABLE, Boolean.FALSE);
+        List<FileItem> items = null;
+        File uploadFile = null;
+        boolean uploadEnable = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_CONTACT_UPLOAD_ENABLE, Boolean.FALSE);
         int uploadSize = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_CONTACT_UPLOAD_SIZE, 10); 
         
         RequestContext requestContext = (RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV);
         HttpServletRequest servletRequest = requestContext.getRequest();
         if(ServletFileUpload.isMultipartContent(servletRequest)){
-    		DiskFileItemFactory factory = new DiskFileItemFactory();
+            DiskFileItemFactory factory = new DiskFileItemFactory();
 
-    		// Set factory constraints
-    		factory.setSizeThreshold(uploadSize * 1000 * 1000);
-    		File file = new File(".");
-    		factory.setRepository(file);
-    		ServletFileUpload.isMultipartContent(servletRequest);
-    		// Create a new file upload handler
-    		ServletFileUpload upload = new ServletFileUpload(factory);
+            // Set factory constraints
+            factory.setSizeThreshold(uploadSize * 1000 * 1000);
+            File file = new File(".");
+            factory.setRepository(file);
+            ServletFileUpload.isMultipartContent(servletRequest);
+            // Create a new file upload handler
+            ServletFileUpload upload = new ServletFileUpload(factory);
 
-    		// Set overall request size constraint
-    		upload.setSizeMax(uploadSize * 1000 * 1000);
+            // Set overall request size constraint
+            upload.setSizeMax(uploadSize * 1000L * 1000L);
 
-    		// Parse the request
-    		try {
-				items = upload.parseRequest(servletRequest);
-			} catch (FileUploadException e) {
-				// TODO Auto-generated catch block
-			}
+            // Parse the request
+            try {
+                items = upload.parseRequest(servletRequest);
+            } catch (FileUploadException e) {
+                log.error("Error on upload file.", e);
+            }
         }
-    	if(items != null){
-    		 // check form input
-        	if (request.getParameter(PARAMV_ACTION_DB_DO_REFRESH) != null) {
-        		 
-        		ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
+        if(items != null){
+             // check form input
+            if (request.getParameter(PARAMV_ACTION_DB_DO_REFRESH) != null) {
+                 
+                ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
                 cf.populate(items);
                 
-        		String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
+                String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
                 actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
-                return;
-        	}else{
-        		Boolean isResponseCorrect = false;
+            }else{
+                Boolean isResponseCorrect = false;
                 
-            	ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
+                ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
                 cf.populate(items);
                 if (!cf.validate()) {
                     // add URL parameter indicating that portlet action was called
                     // before render request
-                	 	
+                         
                     String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
                     actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
                     
@@ -236,26 +237,24 @@ public class ContactPortlet extends GenericVelocityPortlet {
                 boolean enableCaptcha = PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE);
                 
                 if(enableCaptcha){
-                	String response = request.getParameter("jcaptcha");
-                	for(FileItem item : items){
-	           			if(item.getFieldName() != null){
-	           				if(item.getFieldName().equals("jcaptcha")){
-	           					response = item.getString();
-	           					break;
-	           				}
-	           			}
-                	}
-                	// Call the Service method
-    				try {
-    				    isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(sessionId,
-    				            response);
-    				} catch (CaptchaServiceException e) {
-    				     //should not happen, may be thrown if the id is not valid
-    				}
+                    String response = request.getParameter("jcaptcha");
+                    for(FileItem item : items){
+                           if(item.getFieldName() != null && item.getFieldName().equals("jcaptcha")){
+                               response = item.getString();
+                               break;
+                           }
+                    }
+                    // Call the Service method
+                    try {
+                        isResponseCorrect = CaptchaServiceSingleton.getInstance().validateResponseForID(sessionId,
+                                response);
+                    } catch (CaptchaServiceException e) {
+                         //should not happen, may be thrown if the id is not valid
+                    }
                 }
                  
                 if (isResponseCorrect || !enableCaptcha){
-                	 try {
+                     try {
                          IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                                  request.getLocale()), request.getLocale());
 
@@ -273,7 +272,7 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                          String language = locale.getLanguage();
                          String localizedTemplatePath = EMAIL_TEMPLATE;
-                         int period = localizedTemplatePath.lastIndexOf(".");
+                         int period = localizedTemplatePath.lastIndexOf('.');
                          if (period > 0) {
                              String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
                                      + localizedTemplatePath.substring(period + 1);
@@ -284,10 +283,9 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                          String emailSubject = messages.getString("contact.report.email.subject");
 
-                         if(PortalConfig.getInstance().getBoolean("email.contact.subject.add.topic", Boolean.FALSE)){
-                        	if(cf.getInput(ContactForm.FIELD_ACTIVITY) != null && !cf.getInput(ContactForm.FIELD_ACTIVITY).equals("none")){
-                        		emailSubject = emailSubject + " - " + messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY));
-                        	}
+                         if(PortalConfig.getInstance().getBoolean("email.contact.subject.add.topic", Boolean.FALSE) && 
+                             cf.getInput(ContactForm.FIELD_ACTIVITY) != null && !cf.getInput(ContactForm.FIELD_ACTIVITY).equals("none")){
+                             emailSubject = emailSubject + " - " + messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY));
                          }
                          
                          String from = cf.getInput(ContactForm.FIELD_EMAIL);
@@ -295,58 +293,52 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                          String text = Utils.mergeTemplate(getPortletConfig(), mailData, "map", localizedTemplatePath);
                          if(uploadEnable){
-                        	if(uploadEnable){
-                        		for(FileItem item : items){
-                        			if(item.getName() != null && !item.getName().isEmpty()) {
-		                    			 if(item.getFieldName() != null){
-		                    				if(item.getFieldName().equals("upload")){
-		                    					uploadFile = new File(sessionId + "_" + item.getName());
-		                    					// read this file into InputStream
-		                    					InputStream inputStream = item.getInputStream();
-		
-		                    					// write the inputStream to a FileOutputStream
-		                    					OutputStream out = new FileOutputStream(uploadFile);
-		                    					int read = 0;
-		                    					byte[] bytes = new byte[1024];
-		
-		                    					while ((read = inputStream.read(bytes)) != -1) {
-		                    						out.write(bytes, 0, read);
-		                    					 }
-		
-		                    					inputStream.close();
-		                    					out.flush();
-		                    					out.close();
-		                    					break;
-		                    				}
-		                    			}
-                        			}
-                        		}
-                        	}
-                        	Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile);
+                            if(uploadEnable){
+                                for(FileItem item : items){
+                                    if(item.getName() != null && !item.getName().isEmpty() && item.getFieldName() != null && item.getFieldName().equals("upload")) {
+                                        uploadFile = new File(sessionId + "_" + item.getName());
+                                        // read this file into InputStream
+                                        try(
+                                            InputStream inputStream = item.getInputStream();
+                                            // write the inputStream to a FileOutputStream
+                                            OutputStream out = new FileOutputStream(uploadFile);
+                                        ){
+                                            int read = 0;
+                                            byte[] bytes = new byte[1024];
+    
+                                            while ((read = inputStream.read(bytes)) != -1) {
+                                                out.write(bytes, 0, read);
+                                             }
+                                        } catch (Exception e) {
+                                            log.error("Error loading stream.", e);
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile);
                         }else{
-                        	Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
+                            Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
                         }
-                     } catch (Throwable t) {
+                     } catch (Exception e) {
                          cf.setError("", "Error sending mail from contact form.");
-                         log.error("Error sending mail from contact form.", t);
+                         log.error("Error sending mail from contact form.", e);
                      }
 
                      // temporarily show same page with content
                      String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, PARAMV_ACTION_SUCCESS);
                      actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
                 }else{
-               		cf.setErrorCaptcha();
-               		String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
+                       cf.setErrorCaptcha();
+                       String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
                     actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
-                    return;
                 }
-        	}
-    	}else{
-    		ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
+            }
+        }else{
+            ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
             cf.setErrorUpload();
-       		String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
+               String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
             actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
-            return;
-    	}
+        }
     }
 }

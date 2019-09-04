@@ -48,10 +48,10 @@ public class ProfileServlet extends HttpServlet {
      */
     private static final long serialVersionUID = 2186538892678490988L;
 
-    private PrintWriter out;
-
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+        PrintWriter out;
         try {
             // type and encoding has to be set BEFORE writer is fetched!!!
             response.setContentType("text/javascript");
@@ -62,7 +62,6 @@ public class ProfileServlet extends HttpServlet {
             response.setDateHeader("Expires", 0); // Proxies.
             out = response.getWriter();
         } catch (IOException e) {
-            // log.error("Could not open PrintWriter.", e);
             throw new ServletException(e);
         }
 
@@ -80,13 +79,11 @@ public class ProfileServlet extends HttpServlet {
         	ProfileMapper pM = new ProfileMapper();
         	InputStream fis = ProfileServlet.class.getResourceAsStream("/profileXmlAdditionalFields.xml");
             profileBean = pM.mapStreamToBean(new InputSource(fis));
-        } else
+        } else {
         	profileBean = catalog.getProfileData(request);
-        
+        }
         out.println("function createAdditionalFieldsDynamically() {");
-        //ProfileMapper pM = new ProfileMapper();
         converter.convertProfileBeanToJS(profileBean);
-        //out.println("addEmptySpan(\"contentDiv2\");");
         out.println("}");
         
         converter.printVisibilityJSCode(profileBean);

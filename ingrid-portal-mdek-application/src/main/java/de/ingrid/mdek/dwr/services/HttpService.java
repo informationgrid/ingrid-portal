@@ -42,7 +42,7 @@ import org.htmlparser.util.SimpleNodeIterator;
 
 public class HttpService {
 
-	private final static Logger log = Logger.getLogger(HttpService.class);	
+	private static final Logger log = Logger.getLogger(HttpService.class);	
 
     public String getHtmlTitle(String url) {
     	try {
@@ -71,24 +71,6 @@ public class HttpService {
     	sb.setURL(url);
     	String str = sb.getStrings();	// fetch url contents to str
 
-/*
-		// NOTE: First approach was trying to use a regexp to find the first n words in a string.
-		// Surprisingly, this is way too slow for n > 15.
-		// We now use a more simple regexp and just match it n times.
-
-    	// Extract the first n words from str
-    	// Pattern consists of '(word+word_boundary...)*maxWords'
-    	// The flag DOTALL is required so newlines are also matched by '.'
-    	Pattern expression = Pattern.compile("^(\\w+\\b.*?){"+maxWords+"}", Pattern.DOTALL);
-    	Pattern expression = Pattern.compile("^(\\w+\\b\\s*?){"+maxWords+"}");
-    	Matcher matcher = expression.matcher(str);
-    	// If the first n words are found, return the match. Otherwise just return str.
-    	if (matcher.lookingAt()) {
-    		return matcher.group();
-    	} else {
-    		return str;
-    	}
-*/
 		// regexp for 'word+word_boundary+{whitespace}'
     	Pattern expression = Pattern.compile("\\w+\\b\\s*?");
 		Matcher matcher = expression.matcher(str);

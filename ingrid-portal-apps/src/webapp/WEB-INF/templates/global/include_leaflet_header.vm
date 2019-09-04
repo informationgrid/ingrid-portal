@@ -7,3 +7,72 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/spin.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>
+
+<script>
+    function getOSMLayer(attribution){
+        var osmUrl='$leafletBgLayerWMTS';
+        var osmAttrib='$leafletBgLayerAttribution';
+        if(attribution){
+            osmAttrib = osmAttrib + "" + attribution;
+        }
+        return new L.TileLayer(osmUrl, {attribution: osmAttrib});
+    }
+
+    function getWMSLayer(layerUrl, layerName, attribution){
+        var osmAttrib='$leafletBgLayerAttribution';
+        if(attribution){
+            osmAttrib += attribution;
+        }
+        return new L.tileLayer.wms(layerUrl, {
+            layers: layerName,
+            attribution: osmAttrib
+        });
+    }
+
+    function addLeafletMap(baselayers, bounds, latlng, zoom){
+        return addLeafletMapWithId('map', baselayers, bounds, latlng, zoom);
+    }
+
+    function addLeafletMapWithId(mapId, baselayers, bounds, latlng, zoom){
+        var map = new L.Map(mapId, {
+           layers: baselayers
+        });
+        if(bounds){
+          map.fitBounds(bounds);
+        } else if(latlng) {
+          map.setView(latlng, zoom || 6);
+        } else {
+          map.setView(new L.LatLng(51.3, 10), 6);
+        }
+        return map;
+    }
+
+    function addLeafletHomeControl(map, title, position, icon, bounds, padding, fontSize){
+        var HomeControl = L.Control.extend({
+            options: {
+                position: position ? position : 'topleft'
+            },
+            onAdd: function (map) {
+                var container = L.DomUtil.create('div', 'leaflet-control-home leaflet-bar');
+                var link = L.DomUtil.create('a', icon, container);
+                link.href = '#';
+                if(padding){
+                  link.style.padding = padding;
+                }
+                if(fontSize){
+                  link.style.fontSize = fontSize;
+                }
+                link.title = title;
+                L.DomEvent.addListener(link, 'click', this._homeClick, this);
+                return container;
+            },
+            _homeClick: function(e) {
+                L.DomEvent.stop(e);
+                if(bounds){
+                    map.fitBounds(bounds);
+                }
+            }
+        });
+        map.addControl(new HomeControl({}));
+    }
+</script>

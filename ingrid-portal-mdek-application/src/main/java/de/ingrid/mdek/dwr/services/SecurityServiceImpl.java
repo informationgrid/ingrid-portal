@@ -22,16 +22,15 @@
  */
 package de.ingrid.mdek.dwr.services;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.sql.Timestamp;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import javax.security.auth.Subject;
 import javax.servlet.http.HttpSession;
 
+import de.ingrid.mdek.persistence.db.model.RepoUser;
+import de.ingrid.mdek.userrepo.UserRepoManager;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContextFactory;
 
@@ -53,13 +52,16 @@ import de.ingrid.utils.IngridDocument;
 
 public class SecurityServiceImpl implements SecurityService {
 
-	private final static Logger log = Logger.getLogger(SecurityServiceImpl.class);	
+	private static final Logger log = Logger.getLogger(SecurityServiceImpl.class);	
 
 	// Injected by Spring
 	private SecurityRequestHandler securityRequestHandler;
 	
 	// Injected by Spring
 	private AuthenticationProvider authProvider;
+
+	// Injected by Spring
+	private UserRepoManager userRepoManager;
 
 	
 	/* (non-Javadoc)
@@ -147,7 +149,7 @@ public class SecurityServiceImpl implements SecurityService {
 	public List<User> getSubUsers(Long userId) {
 		try {
 			List<User> users = securityRequestHandler.getSubUsers(userId);		
-			List<User> resultList = new ArrayList<User>();
+			List<User> resultList = new ArrayList<>();
 			for (User user : users) {
 				User detailedUser = getUserDetails(user.getAddressUuid());
 				detailedUser.setUserData(MdekSecurityUtils.getUserDataForAddress(user.getAddressUuid()));
@@ -356,22 +358,6 @@ public class SecurityServiceImpl implements SecurityService {
 		this.securityRequestHandler = securityRequestHandler;
 	}
 
-    private static Principal getPrincipal(Subject subject, Class classe)
-    {
-        Principal principal = null;
-        Iterator principals = subject.getPrincipals().iterator();
-        while (principals.hasNext())
-        {
-            Principal p = (Principal) principals.next();
-            if (classe.isInstance(p))
-            {
-                principal = p;
-                break;
-            }
-        }
-        return principal;
-    }
-
     public void setAuthProvider(AuthenticationProvider authProvider) {
         this.authProvider = authProvider;
     }
@@ -390,12 +376,10 @@ public class SecurityServiceImpl implements SecurityService {
             }
         } else {
             isValid = authProvider.authenticate(username, password);
-            if (isValid) {
-                // next check if user also is known in mdek database and therefore an IGE user
-                // admin user does not have to be in mdek db
-                if (MdekSecurityUtils.portalLoginExists(username)) {
-                    isValid = true;
-                }
+            // next check if user also is known in mdek database and therefore an IGE user
+            // admin user does not have to be in mdek db
+            if (isValid && MdekSecurityUtils.portalLoginExists(username)) {
+                isValid = true;
             }
         }
         if (isValid) {
@@ -404,7 +388,59 @@ public class SecurityServiceImpl implements SecurityService {
         return isValid;
     }
 
-    private void setSessionAttribute(String key, String value) {
+	@Override
+	public boolean sendPasswordEmail(String email) {
+		// check if email exists in user table
+		List<Map<String, Object>> userWithEmail = userRepoManager.getAllUsers().stream()
+				.filter( user -> email.equals(user.get("email")))
+				.collect(Collectors.toList());
+
+		// check if no or more than one user with this email exists
+		if (userWithEmail.size() == 1) {
+			String login = (String) userWithEmail.get(0).get("login");
+			String passwordChangeId = UUID.randomUUID().toString();
+
+			// mark user entry for password change
+			// we just add a generated ID to the user and send this ID to the users email address
+			userRepoManager.setPasswordRecoveryId(login, passwordChangeId, null);
+
+			// send email
+			MdekEmailUtils.sendForgottenPasswordMail(email, passwordChangeId, login);
+			log.info("Password recovery link has been sent");
+			return true;
+		} else {
+			log.warn("Password recovery: No user or multiple emails (found: " + userWithEmail.size() + ")");
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean updatePassword(String passwordChangeId, String password) {
+
+		Optional<Map<String, Object>> userWithChangeId = userRepoManager.getAllUsers().stream()
+				.filter( user -> passwordChangeId.equals(user.get("passwordChangeId")))
+				.filter( user -> {
+					// change request must not be longer than an hour ago
+					long difference = new Date().getTime() - ((Timestamp)user.get("passwordChangeDate")).getTime();
+					return difference / 1000 <= 3600;
+				})
+				.findAny();
+
+		if (userWithChangeId.isPresent()) {
+			String login = (String) userWithChangeId.get().get("login");
+			userRepoManager.setPasswordRecoveryId(login, null, password);
+
+			log.info("Password has been changed");
+			return true;
+		} else {
+			log.warn("Password recovery: No user found which requested the password change or time's up");
+		}
+
+		return false;
+	}
+
+	private void setSessionAttribute(String key, String value) {
         HttpSession session = WebContextFactory.get().getHttpServletRequest().getSession();
         session.setAttribute(key, value);
     }
@@ -439,7 +475,7 @@ public class SecurityServiceImpl implements SecurityService {
         }
     }
     
-    public boolean removeCatAdmin(String plugId, String login) {
+    public boolean removeCatAdmin(String login) {
         UserData user = MdekSecurityUtils.getUserDataFromLogin(login);
         if (user != null)
             MdekSecurityUtils.deleteUserDataForAddress(user.getAddressUuid());
@@ -477,9 +513,14 @@ public class SecurityServiceImpl implements SecurityService {
     }
     
     public boolean isPortalConnected() {
+        boolean isPortalConnected = false;
         if (authProvider instanceof PortalAuthenticationProvider) {
-            return true;
+            isPortalConnected = true;
         }
-        return false;
+        return isPortalConnected;
     }
+
+	public void setUserRepoManager(UserRepoManager userRepoManager) {
+		this.userRepoManager = userRepoManager;
+	}
 }

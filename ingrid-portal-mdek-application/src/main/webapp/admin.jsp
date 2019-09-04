@@ -296,24 +296,34 @@
         }
 
         function addUser() {
+            var reloadPage = function() {
+                window.location.search = "?section=user&rnd="+Math.random();
+            };
             
             dialog.showPage("Benutzer hinzufügen", "dialogs/admin_editUser.jsp", null, null, true, {
-                user: null
+                user: null,
+                callback: reloadPage
             });
             
         }
-        
+
+        function emailExists(email) {
+            return fieldExists("email", email);
+        }
 
         function usernameExists(login) {
-            //var userBox = registry.byId("usersGrid");
-            var exists = false;
+            return fieldExists("login", login);
+        }
+
+        function fieldExists(field, content) {
+            var exists = null;
             
             // after a clean installation the store might be null!
             if (usersGrid.store) {
-                array.forEach( usersGrid.store.data, function(item) {
-                    if (item.login.toLowerCase() == login.toLowerCase()) {
-                        exists = true;
-                        return;
+                array.some( usersGrid.store.objectStore.data, function(item) {
+                    if (item[field].toLowerCase() === content.toLowerCase()) {
+                        exists = item;
+                        return true;
                     }
                 });
             }
@@ -321,10 +331,13 @@
         }
         
         function editUser(userLogin) {
-            var user = getUserInfo(userLogin);
+            var reloadPage = function() {
+                window.location.search = "?section=user&rnd="+Math.random();
+            };
             
             dialog.showPage("Benutzer bearbeiten", "dialogs/admin_editUser.jsp", null, null, true, {
-                user: user
+                user: userLogin,
+                callback: reloadPage
             });
         }
         
@@ -366,7 +379,7 @@
         function removeCatalogue(catalogue, login) {
             dialog.show("Katalog entfernen", "Möchten Sie die Verbindung wirklich entfernen: <br />" + catalogue +" <-> " + login, dialog.INFO,
                     [{caption:"OK", action:function(){
-                        SecurityService.removeCatAdmin(catalogue, login, {
+                        SecurityService.removeCatAdmin(login, {
                             callback: function(result) {
                                 console.debug(result);
                                 if (result === true) {
@@ -382,7 +395,6 @@
         }
         
         function loginAs(login) {
-            console.debug("Not yet implemented!");
             SecurityService.forceUserLogin(login, function() {
                 window.location.reload();
                 //window.open("start.jsp", "_blank");
@@ -396,6 +408,10 @@
             if (previousContent) style.set(previousContent, "display", "");
             previousContent = divId;
             usersGrid.resize();
+            // the sort method will call _refresh function, which makes sure that
+            // the table is correctly rendered, since it happened that the table
+            // wasn't shown after making div-container visible
+            usersGrid.sort();
             connectedCataloguesGrid.resize();
             availableCataloguesGrid.resize();
         }
@@ -415,6 +431,7 @@
             showContent: showContent,
             addUser: addUser,
             usernameExists: usernameExists,
+            emailExists: emailExists,
             editUser: editUser,
             removeUser: removeUser,
             loginAs: loginAs,
@@ -454,12 +471,12 @@
             <h3>Benutzer verwalten</h3>
             <div style="padding:10px; overflow: auto;">
                 Filterung nach Katalog: <div id="selectCatalogue" data-dojo-type="dijit/form/Select" data-dojo-props="labelAttr: 'name'"></div>
-                <table id="usersGrid" data-dojo-id="usersGrid" data-dojo-type="dojox/grid/DataGrid" autoHeight="10" autoWidth="true" escapeHTMLInData="false" selectable="false" selectionMode="single" style="margin-bottom: 5px;margin-top: 5px;">
+                <table id="usersGrid" data-dojo-id="usersGrid" data-dojo-type="dojox/grid/DataGrid" autoHeight="20" autoWidth="true" escapeHTMLInData="false" selectable="false" selectionMode="single" style="margin-bottom: 5px;margin-top: 5px;">
                     <thead>
                         <tr>
-                            <th field="login" width="70px;">Login</th>
-                            <th field="surname" width="100px;">Nachname</th>
-                            <th field="firstName" width="100px;">Vorname</th>
+                            <th field="login" width="150px;">Login</th>
+                            <th field="surname" width="150px;">Nachname</th>
+                            <th field="firstName" width="150px;">Vorname</th>
                             <th field="email" width="200px">E-Mail</th>
 <!--                                 <th field="connected_to" width="200px">iPlug</th> -->
                             <th field="btn_edit" width="80px;">&nbsp;</th>

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.0.0.1236-SNAPSHOT</version>
+    <version>5.2.0.1236-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-layout</artifactId>
@@ -40,7 +39,7 @@
         <configuration>
           <runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
           <smtpHost>localhost</smtpHost>
-          <toAddresses/>
+          <toAddresses />
         </configuration>
       </plugin>
     </plugins>

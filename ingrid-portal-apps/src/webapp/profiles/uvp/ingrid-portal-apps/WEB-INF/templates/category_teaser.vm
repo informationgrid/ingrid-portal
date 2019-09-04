@@ -1,0 +1,179 @@
+#set ($action = $renderResponse.createActionURL())
+    #if($facetsTyp.size() > 1)
+        <ul class="tabs" data-tabs="" id="uvp-tabs" role="tablist" data-e="">
+        #set($isActive = "")
+        #foreach ($cf in $config)
+            #set($facetParent = $cf.getId())
+            #set($facetParentName = $cf.getName())
+            #foreach ($typ in $facetsTyp)
+                #if($facetParent == $typ)
+                    #if($isActive == "")
+                        #set($isActive = true)
+                    #else
+                        #set($isActive = false)
+                    #end
+                    #if($cf.getFacets())
+                        #getTabs($facetParentName $cf.getFacets() $facetParent $isActive)
+                    #end
+                #end
+            #end
+        #end
+        </ul>
+    #end
+    #set($isActive = "")
+    <div class="tabs-content" data-tabs-content="uvp-tabs">
+    #foreach ($cf in $config)
+        #set($facetParent = $cf.getId())
+        #set($facetParentName = $cf.getName())
+        #foreach ($typ in $facetsTyp)
+            #if($facetParent == $typ)
+                #if($isActive == "")
+                    #set($isActive = true)
+                #else
+                    #set($isActive = false)
+                #end
+                #if($cf.getFacets())
+                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $cf.getColNum() $isActive)
+                #end
+            #end
+        #end
+    #end
+    </div>
+
+#macro (getTabs $facetName $facetList $parentFacet $isActive)
+    <li class="tabs-title #if($isActive)is-active#end" role="presentation">
+        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" aria-controls="panel-${parentFacet}" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
+    </li>
+#end
+
+#macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
+    <div class="tabs-panel #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel" aria-labelledby="panel-${parentFacet}-label">
+        <div class="row align-center text-center">
+            #if($parentFacet == "provider")
+                #set($facetId = "partner")
+            #else
+                #set($facetId = $parentFacet)
+            #end
+            #getContent($facetList $facetId $parentFacet $colNum)
+        </div>
+    </div>
+#end
+
+#macro (getContent $facetList $facetId $parentFacet $colNum $parentFacetParam)
+    #set ($count = 0)
+    #set ($pf = $parentFacet)
+    #set ($facetListSize = $facetList.size())
+    #set($list = [])
+    #foreach ($facet in $facetList)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") == 0)))
+            #if(!$facet.isDisplay())
+                #set ($facetListSize = $facetListSize - 1)
+            #else
+                #set($bar = $list.add($facet))
+            #end
+        #else
+            #set($bar = $list.add($facet))
+        #end
+    #end
+    #if($colNum > 0)
+        #set($maxColumn = $colNum)
+    #end
+    
+    #if($facetListSize > $maxColumn || $facetListSize < 0)
+        #if($facetListSize % 5 == 0 && $maxColumn >= 5)
+            #set ($facetListSize = 5)
+        #elseif($facetListSize % 4 == 0 && $maxColumn >= 4)
+            #set ($facetListSize = 4)
+        #elseif($facetListSize % 3 == 0 && $maxColumn >= 3)
+            #set ($facetListSize = 3)
+        #else
+            #set ($facetListSize = $maxColumn)
+        #end
+    #end
+    #foreach ($facet in $list)
+        #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
+            <div class="xsmall-24 small-12 medium-8 large-6 xlarge-4 columns">
+                <div class="teaser">
+                    <div class="blue-border"></div>
+                    #set($facetParam = "$pf:$facet.getId();")
+                    #if($facet.getParentId())
+                        #set($facetParam = "$facet.getParentId():$facet.getId();")
+                    #end
+                    #if($parentFacetParam)
+                        #set($facetParam = "$parentFacetParam:$pf;$pf:$facet.getId();")
+                    #end
+                    #if($facet.getUrl())
+                        <a class="teaser-link" href="$facet.getUrl()">
+                    #else
+                        <a class="teaser-link" href="$renderResponse.encodeURL('/portal/main-search.psml')?&q=&ct=true&rstart=0&currentSelectorPage=1&f=$facetParam">
+                    #end
+                    #if($facet.getIcon() && $facet.getIcon().length() > 0)
+                        #getIcon($facet)
+                    #end
+                    #if($facet.getCodelistId())
+                        $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
+                    #else
+                        #if($hasMobileName)
+                            $MESSAGES.getString($facet.getMobileName())
+                        #elseif($hasShortName)
+                            $MESSAGES.getString($facet.getShortName())
+                        #else
+                            $MESSAGES.getString($facet.getName())
+                        #end
+                    #end
+                        <span class="teaser-number">
+                        #if($facet.getQuery())
+                            #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
+                                $hits.get("FACETS").get("$facetId:$facet.getId()")
+                            #else
+                                0
+                            #end
+                        #end
+                        </span>
+                    </a>
+                </div>
+            </div>
+        #end
+    #end
+#end
+
+#macro (getIcon $facet)
+    #getIconImage($facet)
+#end
+
+#macro (getIconImage $facet $facetClass $facetStyle)
+    #if($facet.getIcon())
+        #set($icon = $facet.getIcon())
+        #if($icon.startsWith("#"))
+            <svg class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
+        #elseif($icon.startsWith("/"))
+            <img style="margin: auto;" class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" src="$icon"></img>
+        #else
+            <span class="$icon"></span>
+        #end
+    #else
+       <i class="bx-top-s icon-question-mark #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"></i>
+    #end
+#end
+
+<script>
+$( ".tab__content" ).each(function( i ) {
+    var tabContent = $( this );
+    var height = 0;
+    // Get highest height of flex-row
+    tabContent.find( ".flex-row" ).each(function( index ) {
+      var elemHeight = $( this ).height();
+      if(elemHeight > height){
+        height = elemHeight;
+      }
+    });
+    
+    // Set highest height to all flex-rows
+    tabContent.find( ".flex-row" ).each(function( index ) {
+      var elem = $( this );
+      if(height != 0){
+        elem.height(height);
+      }
+    });
+});
+</script>

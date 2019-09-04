@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -121,6 +121,10 @@ define(["dojo/_base/declare",
                 1240: { helpText: message.get("help.mcloud.form.periodicity.text"), name: message.get("help.mcloud.form.periodicity.title"), sample: message.get("help.mcloud.form.periodicity.example") },
                 3000: { helpText: message.get("help.mcloud.form.title.text"), name: message.get("help.mcloud.form.title.title"), sample: message.get("help.mcloud.form.title.example") },
                 3500: { helpText: message.get("help.mcloud.form.crs.text"), name: message.get("help.mcloud.form.crs.title"), sample: message.get("help.mcloud.form.crs.example") },
+                4100: { helpText: message.get("help.mcloud.form.address.institution.text"), name: message.get("help.mcloud.form.address.institution.title") },
+                4400: { helpText: message.get("help.mcloud.form.address.street.text"), name: message.get("help.mcloud.form.address.street.title") },
+                4415: { helpText: message.get("help.mcloud.form.address.city.text"), name: message.get("help.mcloud.form.address.city.title") },
+                4430: { helpText: message.get("help.mcloud.form.address.communication.text"), name: message.get("help.mcloud.form.address.communication.title") },
                 5030: { helpText: message.get("help.mcloud.form.resourceDate.text"), name: message.get("help.mcloud.form.resourceDate.title"), sample: message.get("help.mcloud.form.resourceDate.example") },
                 7001: { helpText: message.get("help.mcloud.form.crsSection.text"), name: message.get("help.mcloud.form.crsSection.title") },
                 7002: { helpText: message.get("help.mcloud.form.timeSection.text"), name: message.get("help.mcloud.form.timeSection.title") },

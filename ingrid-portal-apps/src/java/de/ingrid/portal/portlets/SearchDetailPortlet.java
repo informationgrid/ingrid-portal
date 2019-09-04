@@ -79,17 +79,18 @@ import de.ingrid.utils.queryparser.QueryStringParser;
 import de.ingrid.utils.udk.UtilsLanguageCodelist;
 
 public class SearchDetailPortlet extends GenericVelocityPortlet {
-    private final static Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
+    private static final Logger log = LoggerFactory.getLogger(SearchDetailPortlet.class);
 
-    private final static String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/detail/search_detail_generic.vm";
+    private static final String TEMPLATE_DETAIL_GENERIC = "/WEB-INF/templates/detail/search_detail_generic.vm";
 
-    private final static String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
+    private static final String TEMPLATE_DETAIL_IDF_2_0_0 = "/WEB-INF/templates/detail/search_detail_idf_2_0.vm";
     
     // ecs fields that represent a date, used for date parsing and formating
     private List dateFields = null;
     
     private HashMap replacementFields = new HashMap();
 
+    @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
         
@@ -116,21 +117,19 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 String paramURL = request.getParameter( "url" );
                 if(paramURL != null){
                     URL url = new URL(paramURL);
-                    if (null != url) {
-                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                        InputStream inStreamConvert = con.getInputStream();
-                        ByteArrayOutputStream os = new ByteArrayOutputStream();
-                        if (null != con.getContentType()) {
-                            byte[] chunk = new byte[4096];
-                            int bytesRead;
-                            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                                os.write(chunk, 0, bytesRead);
-                            }
-                            os.flush();
-                            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                    Base64.getEncoder().encodeToString(os.toByteArray()));
-                            response.getWriter().write(dataUri.toString());
+                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                    InputStream inStreamConvert = con.getInputStream();
+                    ByteArrayOutputStream os = new ByteArrayOutputStream();
+                    if (null != con.getContentType()) {
+                        byte[] chunk = new byte[4096];
+                        int bytesRead;
+                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                            os.write(chunk, 0, bytesRead);
                         }
+                        os.flush();
+                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                                Base64.getEncoder().encodeToString(os.toByteArray()));
+                        response.getWriter().write(dataUri.toString());
                     }
                 }
             }
@@ -140,6 +139,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         }
     }
     
+    @Override
     public void init(PortletConfig config) throws PortletException {
         super.init(config);
 
@@ -171,6 +171,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     	}		
 	}
 
+    @Override
 	public void doView(javax.portlet.RenderRequest request, javax.portlet.RenderResponse response)
             throws PortletException, IOException {
 	    long startTimer = 0;
@@ -185,13 +186,32 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
-        context.put("lang", "de".equals(request.getLocale().getLanguage().toLowerCase()) ? "" : "en");
+        context.put("lang", "de".equalsIgnoreCase(request.getLocale().getLanguage().toLowerCase()) ? "" : "en");
         context.put("Codelists", CodeListServiceFactory.instance());
 
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
+
+        context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
+        
+        context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));
+        context.put( "leafletBgLayerAttribution", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_ATTRIBUTION));
+        
+        String [] leafletBgLayerWMS = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMS);
+        String leafletBgLayerWMSURL = leafletBgLayerWMS[0];
+        if(leafletBgLayerWMSURL.length() > 0 && leafletBgLayerWMS.length > 1){
+            context.put( "leafletBgLayerWMSUrl", leafletBgLayerWMSURL);
+            StringBuilder leafletBgLayerWMSName = new StringBuilder("");
+            for (int i = 1; i < leafletBgLayerWMS.length; i++) {
+                leafletBgLayerWMSName.append(leafletBgLayerWMS[i]);
+                if(i < (leafletBgLayerWMS.length - 1)) {
+                    leafletBgLayerWMSName.append(",");
+                }
+            }
+            context.put( "leafletBgLayerWMSName", leafletBgLayerWMSName.toString());
+        }
 
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURL" );
@@ -210,9 +230,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     		if (ingridPrefs == null) {
             	noIngridSession = true;    			
     		}
-            context.put("noIngridSession", new Boolean(noIngridSession));
+            context.put("noIngridSession", noIngridSession);
             	
-            // TODO: Path of testing IDF xml file 
             String testIDF = request.getParameter("testIDF");
             
             String docUuid = request.getParameter("docuuid");
@@ -501,10 +520,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#processAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
      */
+	@Override
     public void processAction(ActionRequest request, ActionResponse response) throws PortletException, IOException {
         String cmd = request.getParameter("cmd");
         if (cmd == null) {
-            return;
         } else if (cmd.equals("doShowAddressDetail")) {
             String addrId = request.getParameter("addrId");
             String plugId = DetailDataPreparerHelper.getAddressPlugIdFromPlugId(request.getParameter("plugid"));
@@ -514,13 +533,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
             try {
                 IngridHit hit = getAddressHit(addrId, plugId);
-                response.setRenderParameter("docuuid", addrId);
-                response.setRenderParameter("plugid", hit.getPlugId());
-                if(log.isDebugEnabled()){
-                	log.debug("doShowAddressDetail hit.getPlugId(): " + hit.getPlugId());
-                }
-                if (hit.get(".alt_document_id") != null) {
-                    response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
+                if(hit != null) {
+                    response.setRenderParameter("docuuid", addrId);
+                    response.setRenderParameter("plugid", hit.getPlugId());
+                    if(log.isDebugEnabled()){
+                    	log.debug("doShowAddressDetail hit.getPlugId(): " + hit.getPlugId());
+                    }
+                    if (hit.get(".alt_document_id") != null) {
+                        response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
+                    }
                 }
             } catch (Exception e) {
                 if (log.isDebugEnabled()) {
@@ -538,13 +559,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             }
             try {
                 IngridHit hit = getObjectHit(objId, plugId);
-                response.setRenderParameter("docuuid", objId);
-                response.setRenderParameter("plugid", hit.getPlugId());
-                if(log.isDebugEnabled()){
-                	log.debug("doShowObjectDetail hit.getPlugId(): " + hit.getPlugId());
-                }
-                if (hit.get(".alt_document_id") != null) {
-                    response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
+                if(hit != null) {
+                    response.setRenderParameter("docuuid", objId);
+                    response.setRenderParameter("plugid", hit.getPlugId());
+                    if(log.isDebugEnabled()){
+                    	log.debug("doShowObjectDetail hit.getPlugId(): " + hit.getPlugId());
+                    }
+                    if (hit.get(".alt_document_id") != null) {
+                        response.setRenderParameter("altdocid", (String) hit.get("alt_document_id"));
+                    }
                 }
             } catch (Exception e) {
                 if (log.isDebugEnabled()) {
@@ -584,9 +607,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         requestedMetadata[4] = Settings.HIT_KEY_ADDRESS_TITLE;
         requestedMetadata[5] = Settings.HIT_KEY_ADDRESS_ADDRESS;
         requestedMetadata[6] = Settings.HIT_KEY_ADDRESS_ADDRID;
-        ArrayList result = DetailDataPreparerHelper.getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
+        ArrayList result = (ArrayList) DetailDataPreparerHelper.getHits("T02_address.adr_id:".concat(addrId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getAddressPlugIdFromPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, null);
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return (IngridHit) result.get(0);
         } else {
             return null;
@@ -597,9 +620,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         String[] requestedMetadata = new String[2];
         requestedMetadata[0] = Settings.HIT_KEY_OBJ_ID;
         requestedMetadata[1] = Settings.HIT_KEY_UDK_CLASS;
-        ArrayList result = DetailDataPreparerHelper.getHits("T01_object.obj_id:".concat(objId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
+        ArrayList result = (ArrayList) DetailDataPreparerHelper.getHits("T01_object.obj_id:".concat(objId).concat(" iplugs:\"".concat(DetailDataPreparerHelper.getPlugIdFromAddressPlugId(iPlugId)).concat("\"")),
                 requestedMetadata, null);
-        if (result.size() > 0) {
+        if (!result.isEmpty()) {
             return (IngridHit) result.get(0);
         } else {
             return null;

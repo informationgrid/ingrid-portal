@@ -440,28 +440,6 @@
         </portlet-preferences>
     </portlet>
     
-    <portlet id="AdminUserMigrationPortlet">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/administration/admin_user_migration.vm</value>
-        </init-param>
-        <portlet-name>AdminUserMigrationPortlet</portlet-name>
-        <display-name>AdminUserMigrationPortlet</display-name>
-        <description>The Portlet displays the portal user migration interface.</description>
-        <portlet-class>de.ingrid.portal.portlets.admin.AdminUserMigrationPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <portlet-info>
-            <title>Portal User Migration</title>
-            <short-title>Portal User Migration</short-title>
-        </portlet-info>
-        <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>            
-    </portlet>
-        
     <!-- *********************** -->
     <!-- Home                    -->
     <!-- *********************** -->
@@ -816,38 +794,6 @@
             <preference>
                 <name>helpKey</name>
                 <value>search-chronicle-1</value>
-            </preference>
-        </portlet-preferences>
-    </portlet>
-
-	<portlet id="WeatherTeaser">
-        <init-param>
-            <description>This parameter sets the template used in view mode.</description>
-            <name>ViewPage</name>
-            <value>/WEB-INF/templates/weather_teaser.vm</value>
-        </init-param>
-        <portlet-name>WeatherTeaser</portlet-name>
-        <display-name>WeatherTeaser</display-name>
-        <description>This portlet displays the weather.</description>
-        <portlet-class>de.ingrid.portal.portlets.WeatherTeaserPortlet</portlet-class>
-        <expiration-cache>0</expiration-cache>
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>VIEW</portlet-mode>
-        </supports>
-        <resource-bundle>de.ingrid.portal.resources.WeatherTeaserResources</resource-bundle>            
-        <portlet-preferences>
-            <preference>
-                <name>portlet-type</name>
-                <value>ingrid-home-marginal</value>
-            </preference>
-            <preference>
-                <name>default-vertical-position</name>
-                <value>4</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>teaser.weather.title</value>
             </preference>
         </portlet-preferences>
     </portlet>

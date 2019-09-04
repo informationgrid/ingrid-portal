@@ -62,13 +62,12 @@
             </content>
         </section>
         <section>
-            <header>Datenerfassung und Verwaltungsfunktionen</header>
+            <header>Datenerfassung</header>
             <content>
-			<p>Der Editor (InGrid Editor - IGE) besteht aus zwei Komponenten, die Metadatenerfassungskomponente und die
-			Verwaltungskomponente. Der IGE wird aus dem InGrid-Portal heraus 
-			über die Schaltflächen "Login IGE" gestartet. </p>
+			<p>Der Editor (InGrid Editor - IGE) ist die Metadatenerfassungskomponente der InGrid Software und wird für die Erfassung von Metadaten für die mCLOUD eingesetzt.
+			Der IGE wird über eine vorgeschaltete Login-Maske gestartet. </p>
 			<p>Das Hauptmenü unterscheidet sich, abhängig von der Rolle des eingeloggten Benutzers.
-            So steht einem Katalog-Administrator mehr Funktionen zur Verfügung als einem Autor.</p>
+            So stehen einem Katalog-Administrator mehr Funktionen zur Verfügung als einem Autor.</p>
 			<p>Jedes <a href="?hkey=editor-design-2">Hauptmenü</a> kann weitere 
 			<a href="?hkey=editor-design-3">Untermenüs</a> enthalten. Bei
 			einzelnen Menüpunkten kann zudem zusätzlich eine 
@@ -87,6 +86,7 @@
 				 • Rolle des Nutzers • Name des Metadaten-Katalogs</li>
 			<li> <u>Hilfe</u>: Verweis auf die Hilfetexte zum InGridEditor</li>
 			<li> <u>Info</u>: Verweis auf Informationen zum Editor (z.B. die Versionsnummer der Anwendung)</li>
+			<li> <u>Datenschutz</u>: Verweis auf die Datenschutzbestimmungen</li>
 			<li> <u>Schliessen</u>: Schließt die Anwendung</li>
 			</ul>
             </content>
@@ -94,7 +94,7 @@
         <section help-key="editor-design-2">
             <header>Das Hauptmenü</header>
             <content>
-			<p>Das Hauptmenü unterscheidet sich in das für die Metadatenerfassung und das für die Verwaltungsfunktionen.</p>
+			<p>Das Hauptmenü bietet für den Erfasser ausschließlich die Menüpunkte für die Metadatenerfassung.</p>
 			<p>Die Menüpunkte für die <b>Metadatenerfassung</b> sind:</p>
 
                 <ul>
@@ -108,14 +108,8 @@
                         <a href="?hkey=search-1">Recherche</a>
                     </li>
                 </ul>
-			<p>Die Menüpunkte für die <b>Verwaltung</b> sind:</p>
-                <ul>
-                    <li>
-                        <a href="?hkey=user-administration-1">Nutzerverwaltung</a>
-                    </li>
-                </ul>
                 <p>Das Dashboard ist die Einstiegseite für den InGrid-Editor und zeigt eine Zusammenfassung der gerade
-                in Bearbeitung befindlichen Datensätze und Adressen, abhängig vom eingeloggten Benutzer.</p>
+                in Bearbeitung befindlichen Datensätze, abhängig vom eingeloggten Benutzer.</p>
             </content>
         </section>
         <section help-key="editor-design-3">
@@ -239,18 +233,8 @@
          <p><b>Ordner anlegen</b></p>
          <p>Ein neuer Ordner wird hierarchisch immer unter dem aktuellen, 
          mit roter Schrift darstellten Element angelegt. Ordner können nur unterhalb von Ordnern angelegt werden.</p>
-				 <p><b>Vorschau und Druckansicht</b></p>
-				 <p>Im Fenster Detailansicht können Sie die Anordnung der Datensatz- bzw. 
-				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
-				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
-				 des Betriebssystems.</p>
-				 <p>Neben der Anzeige der Detailansicht einer Adresse, ist es auch möglich die Detailinformationen des gesamten Unterbaumes anzeigen zu lassen. Sind die Auswahlboxen <i>Detailansicht</i> und <i>Untergeordnete Adressen mit einbeziehen</i> beide ausgewählt, so werden alle Adressen des Teilbaumes untereinander ausgegeben. Beachten Sie, dass die Ausgabe bei sehr vieler Daten eine Weile dauern kann. Deshalb ist es jederzeit möglich die Anzeige abzubrechen.</p>
-				 <p>Wird die Auswahlbox <i>Detailansicht</i> entfernt, so wird anstatt einer Detailansicht, nur eine gekürzte Version der Adresse angezeigt. Der Baum wird hierbei jedoch in einer hierarchischen Darstellung angezeigt.</p>				 
-				 <p>Die Druckansicht kann mit dem Kreuz oben rechts in der Fensterecke verlassen werden.</p>
-				 <p>Diese Funktion steht für Ordner und 
-				 <i>freie Adressen</i> nicht zur Verfügung.</p>
 				 <p><b>Objekt/Adresse/Teilbaum ausschneiden</b></p>
-				 <p>Um einem DAtensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
+				 <p>Um einem Datensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
 				 Hierarchie des aktuellen Kataloges zuzuweisen, schneiden Sie diese zuerst aus, 
 				 um sie unter einem anderes Ordner bzw. eine andere Adresse mittels der 
 				 Funktion <i><b>Einfügen</b></i> einzufügen. </p>
@@ -326,9 +310,6 @@
                     <li>
                         <a href="?hkey=maintanance-of-objects-1">Pflegen von Datensätzen</a>
                     </li>
-                    <li>
-                        <a href="?hkey=maintanance-of-adresses-1">Erfassen von Adressen</a>
-                    </li>
                 </ul>
             </content>
         </section>
@@ -344,12 +325,6 @@
                  <p><b>Ordner anlegen</b></p>
                  <p>Ein neuer Ordner wird hierarchisch immer unter dem aktuellen, 
                  mit roter Schrift darstellten Element angelegt. Ordner können nur unterhalb von Ordnern angelegt werden.</p>
-				 <p><b>Vorschau und Druckansicht</b></p>
-				 <p>Im Fenster Detailansicht können Sie die Anordnung der Datensatz- bzw. 
-				 Adressinformation im Ausdruck ansehen. Die Anordnung der Information ist nicht 
-				 veränderbar. Mit einem Klick auf <i>[Drucken]</i> gelangen Sie in das Druckmenü 
-				 des Betriebssystems. 
-				 Verlassen Sie die Druckansicht mit dem Kreuz oben rechts in der Fensterecke.</p>
 				 <p><b>Datensatz/Adresse/Teilbaum ausschneiden</b></p>
 				 <p>Um einem Datensatz, einer Adresse oder einem Teilbaum einen anderen Platz in der 
 				 Hierarchie des aktuellen Kataloges zuzuweisen, schneiden Sie diese zuerst aus, 
@@ -438,7 +413,6 @@
 				 in der Funktionsleiste oder über das Kontextmenü der rechten Maustaste im Strukturbaum
 				 angelegt werden. Es wird in der Hierarchie immer unterhalb des aktuellen Elementes 
 				 platziert.</p>                  
-				 <p>Standardmäßig werden für ein leeres Objekt die Ansprechpartneradresse.</p>
             </content>
         </section>
     </chapter>
