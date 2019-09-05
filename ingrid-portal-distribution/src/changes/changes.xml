@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="1442">
             Portal: Fix search detail link.
           </action>
+          <action type="update" dev="wemove" issue="1200">
+            Portal: Update BKG profile.
+          </action>
         </release>
 
         <release version="4.6.7" date="2019-07-11" description="Release 4.6.7">
