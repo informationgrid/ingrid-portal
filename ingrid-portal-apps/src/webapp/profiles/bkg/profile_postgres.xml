@@ -1,13 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
     <name>BKG</name>
-    <description>Portal-ProfileBKG</description>
+    <description>Portal-Profile für BKG</description>
     <pages>
+        <page>
+            <name>main-measures.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-chronicle.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-maps.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>service-sitemap.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>help.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>search-catalog/search-catalog-hierarchy.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_role/user/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+            </portlets>
+        </page>
+        <page>
+            <name>_user/template/default-page.psml</name>
+            <hidden>false</hidden>
+            <portlets>
+                <portlet col="0" row="0">
+                    <name>ingrid-portal-apps::SearchSimple</name>
+                </portlet>
+            </portlets>
+        </page>
     </pages>
     <files>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-apps/</src>
+        </file>
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-mdek-application/</src>
         </file>
     </files>
+    <sql>
+        <!-- Disable language switcher -->
+        <execute>
+            <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
+        </execute>
+    </sql>
 </profile>
