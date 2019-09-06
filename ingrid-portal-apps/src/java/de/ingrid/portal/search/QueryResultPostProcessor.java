@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -69,7 +69,7 @@ public class QueryResultPostProcessor {
                     detail = (IngridHitDetail) hit.get(Settings.RESULT_KEY_DETAIL);
 
                     processRankedHit(hit, detail);
-                    
+
                     // also process group sub hits !
                     hit = (IngridHitWrapper) hit.get(Settings.RESULT_KEY_SUB_HIT);
                     if (hit != null) {
@@ -119,7 +119,7 @@ public class QueryResultPostProcessor {
         tmpString = tmpString.toLowerCase();
 
         // THIS IS THE iPlugClass from PD !!! :(
-        if (tmpString.contains("igesearchplug") || (tmpString.contains("dsc") && tmpString.contains("search"))) {
+        if (tmpString.contains("igesearchplug") || (tmpString.contains("dsc") && tmpString.contains("search") && !tmpString.contains("blp"))) {
             processDSCHit(hit, detail);
         } else if (tmpString.equals("de.ingrid.iplug.se.nutchsearcher") || tmpString.equals("de.ingrid.iplug.se.seiplug")) {
             hit.put(Settings.RESULT_KEY_TYPE, "www-style");
@@ -128,6 +128,10 @@ public class QueryResultPostProcessor {
             hit.put(Settings.RESULT_KEY_TYPE, "detail-style");
         } else if (tmpString.equals("de.ingrid.iplug.opensearch.opensearchplug")) {
             hit.put(Settings.RESULT_KEY_URL_TYPE, "opensearch");
+        } else if (tmpString.equals("de.ingrid.iplug.dsc.blpsearchplug")){
+            hit.put(Settings.RESULT_KEY_TYPE, "www-style");
+            hit.put(Settings.RESULT_KEY_ADDITIONAL_HTML_1, UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_ADDITIONAL_HTML_1));
+            hit.put(Settings.RESULT_KEY_IS_BLP, true);
         } else {
             hit.put(Settings.RESULT_KEY_TYPE, "unknown-style");
         }
@@ -136,7 +140,7 @@ public class QueryResultPostProcessor {
     /**
      * Process DSC Hit (Data Source Client).
      * NOTICE: Also called from non DSC iPlugs which behave like a DSC ! (UDKPlug, CSWPlug ...)
-     * 
+     *
      * @param hit
      * @param detail
      * @param ds
@@ -166,11 +170,11 @@ public class QueryResultPostProcessor {
             }
             boolean doNotShowMaps = false;
             String firstResourceId = null;
-            
+
             // Service Links
             String[] tmpArray = getStringArrayFromKey(detail, Settings.RESULT_KEY_SERVICE_UUID);
             if (tmpArray != null && tmpArray.length > 0) {
-                // make valid wms urls from capabilities url 
+                // make valid wms urls from capabilities url
                 String[] tmpArray2 = new String[tmpArray.length];
                 int i = 0;
                 for (String entry : tmpArray) {
@@ -193,33 +197,35 @@ public class QueryResultPostProcessor {
 					default:
 						break;
 					}
-                    
+
                 }
                 hit.put(Settings.RESULT_KEY_SERVICE_UUID, tmpArray2);
             }
-            
+
             // Capabilities Url
             tmpArray = getStringArrayFromKey( detail, Settings.RESULT_KEY_CAPABILITIES_URL );
             if (!doNotShowMaps && tmpArray != null && tmpArray.length > 0) {
                 // check for protected access setting
                 boolean objServHasAccessConstraint = UtilsSearch.getDetailValue(detail,
                         Settings.HIT_KEY_OBJ_SERV_HAS_ACCESS_CONSTRAINT).equals("Y");
-                
-                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) &&
-                    tmpArray != null && tmpArray.length > 0 && firstResourceId != null) {
-                    String url = addCapabilitiesInformation(tmpArray[0]) + "||";
-                    // add layer information to link
-                    url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
-                    // only take the first map url, which should be the only one! 
-                    hit.put(Settings.RESULT_KEY_WMS_URL, url);
+
+                if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+                    for (String url : tmpArray) {
+                        url = addCapabilitiesInformation(url) + "||";
+                        // add layer information to link
+                        if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
+                        // only take the first map url, which should be the only one! 
+                        hit.put(Settings.RESULT_KEY_WMS_URL, url);
+                        break;
+                    }
                 }
             } else {
                 // if an old datasource is connected try to get WMS url the old way
                 addLegacyWMS(hit, detail);
             }
-            
+
             PlugDescription plugDescr = (PlugDescription) hit.get(Settings.RESULT_KEY_PLUG_DESCRIPTION);
-            
+
               if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && UtilsSearch.getDetailValue(detail, "kml").length() > 0){
             	  hit.put(Settings.RESULT_KEY_WMS_COORD, "action=doTmpService&" + Settings.RESULT_KEY_PLUG_ID + "=" + hit.getPlugId() + "&" + Settings.RESULT_KEY_DOC_ID + "=" + hit.getDocumentId());
               }
@@ -232,7 +238,7 @@ public class QueryResultPostProcessor {
                 if ( "address".equals( type )) {
                     isObject = false;
                 }
-            // if we have an old iplug connected then we check the plug description's datatypes    
+            // if we have an old iplug connected then we check the plug description's datatypes
             } else if (plugDescr != null) {
             	List<String> typesPlug = Arrays.asList(plugDescr.getDataTypes());
             	for (int i=0; i < Settings.getQValuesDatatypesAddress().length; i++) {
@@ -257,13 +263,13 @@ public class QueryResultPostProcessor {
                         hit.put(Settings.RESULT_KEY_UDK_CLASS, tmpString);
                     }
                 }
-                
+
                 tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ORG_OBJ_ID);
-                
+
                 if(tmpString.length() == 0){
                 	tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_OBJ_ID);
                 }
-                
+
                 if (tmpString.length() > 0) {
                     hit.put(Settings.RESULT_KEY_DOC_UUID, tmpString);
                 } else {
@@ -283,9 +289,9 @@ public class QueryResultPostProcessor {
                     addrClass = addrClass.substring(0, addrClass.indexOf(','));
                 }
                 hit.put(Settings.RESULT_KEY_UDK_CLASS, addrClass);
-                
+
                 if (addrClass.equals("2") || addrClass.equals("3")) {
-                    // person and free person entry 
+                    // person and free person entry
                 	hit.put(Settings.RESULT_KEY_UDK_ADDRESS_FIRSTNAME, UtilsSearch.getDetailValue(detail,
                             Settings.HIT_KEY_ADDRESS_FIRSTNAME));
                     hit.put(Settings.RESULT_KEY_UDK_ADDRESS_LASTNAME, UtilsSearch.getDetailValue(detail,
@@ -294,14 +300,14 @@ public class QueryResultPostProcessor {
                             Settings.HIT_KEY_ADDRESS_TITLE));
                     hit.put(Settings.RESULT_KEY_UDK_ADDRESS_SALUTATION, UtilsSearch.getDetailValue(detail,
                             Settings.HIT_KEY_ADDRESS_ADDRESS));
-                } 
-                
+                }
+
                 if (addrClass.equals("1") || addrClass.equals("0") || addrClass.equals("2")) {
                     // person, unit, institution
                 	String currentAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID);
                     String newAddressId = null;
                     boolean skipSearch = false;
-                    
+
                     String tmpAddressInstitution = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_INSTITUTION2);
                     String tmpAddrClass = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_CLASS2);
                     String tmpAddressId = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_ADDRESS_ADDRID2);
@@ -313,7 +319,7 @@ public class QueryResultPostProcessor {
                     if (addrClass.equals("2") && tmpAddressId != null) {
                     	tmpTitle = " ";
                     }
-                    
+
                     if (tmpAddressId != null && tmpAddressId.length()>0) {
         	            // we do have parent addresses included in the original result
                     	for (int i=0; i<2; i++) {
@@ -347,8 +353,8 @@ public class QueryResultPostProcessor {
                         if (tmpAddressFromId == null || tmpAddressFromId.length() == 0 ||  tmpAddressFromId.equals(currentAddressId)) {
                         	skipSearch = true;
                         }
-                    }                    
-                    
+                    }
+
     	            // if a parent address id was included in orinal request, use this for further querying
                 	if (tmpAddressId != null && tmpAddressId.length() > 0) {
     	            	currentAddressId = tmpAddressId;
@@ -403,7 +409,7 @@ public class QueryResultPostProcessor {
                 if(hit.get( "is_address" ) != null){
                     isMetadata = !Boolean.parseBoolean( hit.get( "is_address" ).toString() );
                 }
-            	
+
         		if (isMetadata && !cswUrl.isEmpty()) {
                     String parameter = "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id="+id+"&iplug="+hit.getPlugId()+"&elementSetName=full";
                     hit.put(Settings.RESULT_KEY_CSW_INTERFACE_URL, cswUrl + parameter);
@@ -429,7 +435,7 @@ public class QueryResultPostProcessor {
         url = URLEncoder.encode(url.trim(), "UTF-8");
         return url;
     }
-    
+
     private static String[] getStringArrayFromKey(IngridHitDetail detail, String key) {
         Object potentialList = detail.get( key );
         String[] servicesArray = null;
@@ -440,7 +446,7 @@ public class QueryResultPostProcessor {
         }
         return servicesArray;
     }
-    
+
     private static void addLegacyWMS(IngridHitWrapper hit, IngridHitDetail detail) {
         // WMS, only process if Viewer is specified !
         String[] servicesArray = getStringArrayFromKey(detail, Settings.HIT_KEY_WMS_URL);
@@ -483,7 +489,7 @@ public class QueryResultPostProcessor {
                 } else {
                     // TODO: check if this part is ever reached!!!
                     tmpString = UtilsSearch.getDetailValue(detail, Settings.HIT_KEY_WMS_URL);
-                    
+
                     // only show WMS getCapabilities URL
                     if (serviceType.indexOf("wms") != -1
                             || serviceType.indexOf("view") != -1

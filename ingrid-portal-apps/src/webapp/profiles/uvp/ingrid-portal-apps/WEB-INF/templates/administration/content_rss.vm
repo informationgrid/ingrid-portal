@@ -1,0 +1,56 @@
+<div class="columns">
+    #set ($action = $renderResponse.createActionURL())
+    <form class="form" action="$action" method="post" name="frmContentRSS" id="frmContentRSS">
+        #renderPaginationAndHint($browser "")
+        <table class="boxed-table">
+            #set ($colNames = ["id", "provider", "description", "language", "categories", "numLastCount", "lastUpdate", "error"])
+            #set ($colTitles = [$MESSAGES.getString('component.forms.rss.text.id'), $MESSAGES.getString('component.forms.rss.text.provider'), $MESSAGES.getString('component.forms.rss.text.description'), $MESSAGES.getString('component.forms.rss.text.lang'), $MESSAGES.getString('component.forms.rss.text.category'), $MESSAGES.getString('component.forms.rss.text.new.messages'), $MESSAGES.getString('component.forms.rss.text.last.update'), $MESSAGES.getString('component.forms.rss.text.error')])
+            ##set ($colCheckboxes = ["id"])
+            #renderDBBrowserHeader($colNames $colTitles $colCheckboxes)
+            #foreach ($dbEntity in $dbEntities)
+                #set ($rowId = $dbEntity.Id)
+                #set ($error = "")
+                #if ($dbEntity.Error && $dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none")
+                    #set ($error = "ERROR")
+                #else
+                    #set ($error = "OK")
+                #end
+                #set ($rowValues = [$UtilsString.cutString($dbEntity.Provider, 20, 20), $UtilsString.cutString($dbEntity.Description, 85, 85), "$!dbEntity.Language", $UtilsString.cutString($dbEntity.Categories, 20,20), "$!dbEntity.NumLastCount", $date.format('yyyy-MM-dd H:mm:ss',$dbEntity.LastUpdate), $error])
+                <tr #if($error == "ERROR")class="contentRowEven"#end>
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter('doEdit','Edit')
+                    $action.setParameter("id", "$rowId")
+                    <td>
+                        <div class="form-element boxed">
+                            <div class="input-check">
+                                <div class="control-group">
+                                    <label class="control control--checkbox" for="chk_$velocityCount">
+                                        <input id="chk_$velocityCount" type="checkbox" name="id" type="checkbox" value="$rowId">
+                                        <div class="control__indicator"></div>$rowId
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    #foreach ($rowValue in $rowValues)
+                        #if ($velocityCount == 2)
+                            <td><a href="$action">$rowValue</a> (<a href="$dbEntity.Url">link</a>)</td>
+                        ##elseif ($velocityCount == 7)
+                        ##  <td><a href="$action">$MESSAGES.getString($rowValue)</a></td>
+                        #else
+                            <td><a href="$action">$rowValue</a></td>
+                        #end
+                    #end
+                </tr>
+            #end
+        </table>
+        <div class="subtext-submit">
+            #set ($buttons = ["doNew", "doRefresh", "doClear", "doDelete"])
+            #renderDBBrowserFooterButtonsDisable($buttons true)
+        </div>
+    </form>
+</div>
+
+<script>
+ingrid_enableButtonByCheckbox('id', 'doDelete');
+</script>

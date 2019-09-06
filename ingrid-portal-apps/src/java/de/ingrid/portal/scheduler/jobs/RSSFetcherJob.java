@@ -47,6 +47,7 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndPerson;
 import com.sun.syndication.feed.synd.SyndPersonImpl;
+import com.sun.syndication.io.ParsingFeedException;
 import com.sun.syndication.io.SyndFeedInput;
 import com.sun.syndication.io.XmlReader;
 
@@ -278,6 +279,10 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                             + "). Probable timeouted by watch dog thread.", e);
                     status = STATUS_ERROR;
                     statusCode = STATUS_CODE_ERROR_TIMEOUT;
+                } catch (ParsingFeedException e) {
+                    log.error("Error building RSS feed (" + rssSource.getUrl() + ").", e);
+                    status = STATUS_ERROR;
+                    statusCode = STATUS_CODE_ERROR_XML_PARSE;
                 } catch (Exception t) {
                     log.error("Error building RSS feed (" + rssSource.getUrl() + ").", t);
                     status = STATUS_ERROR;

@@ -14,10 +14,13 @@ ENV IGE_DIRECT_LINK=http://localhost:8080/ingrid-portal-mdek-application/index.j
 ENV UPLOAD_DOCS_DIR=/tmp/ingrid/upload/documents/
 ENV UPLOAD_PARTS_DIR=/tmp/ingrid/upload/parts/
 
-COPY ./files /
-COPY installer-unzipped/distribution /opt/ingrid/ingrid-portal/
+ADD ingrid-portal*-installer.jar /
 
-RUN mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
+RUN unzip ingrid-portal*-installer.jar -d /tmp \
+    && mkdir -p /opt/ingrid/ingrid-portal \
+    && cp -R /tmp/distribution/* /opt/ingrid/ingrid-portal/ \
+    && mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-base.war /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT.war \
+    && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
     && unzip -q /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
     && mv /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT/WEB-INF/deploy/*.war /opt/ingrid/ingrid-portal/apache-tomcat/webapps \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps \
@@ -30,9 +33,13 @@ RUN mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ROOT \
     && unzip -q /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client.war -d /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-webmap-client \
     && sed -i 's/portal.logger.resource=.*$/portal.logger.resource=http:\/\/localhost:8080\/logger.html/' /opt/ingrid/ingrid-portal/apache-tomcat/webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties \
     && mkdir -p /opt/ingrid/ingrid-portal/apache-tomcat/logs \
+    # && chgrp -R ingrid /opt/ingrid \
+    # && chown -R ingrid /opt/ingrid \
     && chmod 755 /opt/ingrid/ingrid-portal/apache-tomcat/bin/*.sh \
     && rm -Rf /tmp/* \
-    && rm -f ingrid-*.jar
+    && rm ingrid-*.jar
+
+COPY ./files /
 
 WORKDIR /opt/ingrid/ingrid-portal/apache-tomcat
 EXPOSE 8000

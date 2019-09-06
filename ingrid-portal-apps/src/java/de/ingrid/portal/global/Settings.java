@@ -207,6 +207,8 @@ public class Settings {
     public static final String RESULT_KEY_WMS_TMP_COORD_TITLE = "coord_title";
     public static final String RESULT_KEY_WMS_TMP_COORD_DESCR = "coord_descr";
 
+    public static final Object RESULT_KEY_IS_BLP = "is_blp";
+    
     public static final String RESULT_KEY_UDK_IS_ADDRESS = "is_address";
     public static final String RESULT_KEY_UDK_CLASS = "udk_class";
     public static final String RESULT_KEY_UDK_ADDRESS_FIRSTNAME = "address_firstname";

@@ -1,0 +1,439 @@
+## ------------------------------
+## search macros
+## ------------------------------
+#macro (renderResultCounterCatalogue $pageSelector $catalogueName $searchName)
+    #set($term = "")
+    #if($searchName)
+        #if($searchName.length() > 0)
+            #set($term = $searchName)
+        #end
+    #end
+    #if($term.length() > 0)
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam($term)
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.catalog.withsearchvalue')
+    #else
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+        $MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam($catalogueName)
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.catalog')
+    #end
+#end
+
+#macro (renderResultCounterCatalogueGrouping $pageSelector $catalogueName)
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam($catalogueName)
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+$MESSAGES.getStringWithMsgParams('common.result.counter.catalog.grouped')
+#end
+
+
+#macro (renderRankedResultCounter $pageSelector)
+$MESSAGES.resetMsgParams()
+$MESSAGES.setMsgParam("$pageSelector.numberOfFirstHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfLastHit")
+$MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+$MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+$MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
+#end
+
+#macro (renderRankedResultCounterGrouping $pageSelector)
+    #set($term = "")
+    #if($searchTerm)
+        #if($searchTerm.trim().length() > 0)
+            #set($term = $searchTerm)
+        #end
+    #end
+    #if($term.length() > 0)
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam("$term")
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.withsearchvalue')
+    #else
+        $MESSAGES.resetMsgParams()
+        $MESSAGES.setMsgParam("$pageSelector.numberOfHits")
+        $MESSAGES.setMsgParam("$pageSelector.currentSelectorPage")
+        $MESSAGES.getStringWithMsgParams('common.result.counter.ranked.grouped')
+    #end
+#end
+
+#macro (renderRankedPageNavigation $pageSelector $isBottom)
+<div class="caption">
+    #if($isBottom)
+        <p>#renderRankedResultCounter($pageSelector)</p>
+    #end
+    
+    ## Default
+    #set ($pstart = 0)
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('rstart', $pstart.toString())
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+        <span class="ic-ic-double-arrow-left"></span>
+    </a>
+    
+    #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+        <span class="ic-ic-arrow-left"></span>
+    </a>
+    
+    #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+        #if($pageId == $pageSelector.currentSelectorPage)
+            <a class="icon small-button"><span>$pageId</span></a>
+        #else
+            #set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon small-button" href="$action"><span>$pageId</span></a>
+        #end
+    #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+        <span class="ic-ic-arrow-right"></span>
+    </a>
+    
+    #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+    $action.setParameter('rstart', $pstart.toString())
+    <a class="icon small-button" style="margin:0;" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+        <span class="ic-ic-double-arrow-right"></span>
+    </a>
+    
+    <div class="show-for-xsmall-only">
+        <p>
+            #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+                <a class="icon"
+                #if($pageId == $pageSelector.lastSelectorPage)
+                    style="margin:0;"
+                #end
+                #if($pageId == $pageSelector.currentSelectorPage)
+                    >
+                #else
+                    #set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
+                    $action.setParameter('rstart', $pstart.toString())
+                    href="$action">
+                #end
+                <span>$pageId</span></a>
+            #end
+        </p>
+        <p>
+            ## Default
+            #set ($pstart = 0)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+                <span class="ic-ic-double-arrow-left"></span>
+            </a>
+            
+            #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+                <span class="ic-ic-arrow-left"></span>
+            </a>
+            #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+                <span class="ic-ic-arrow-right"></span>
+            </a>
+            
+            #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" style="margin: 0;" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+                <span class="ic-ic-double-arrow-right"></span>
+            </a>
+        </p>
+    </div>
+</div>
+#end
+
+## this navigation is used when "grouping by domain"
+## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
+#macro (renderRankedPageNavigationGroupingWithPages $pageSelector $isBottom)
+<div class="caption">
+    #if($isBottom)
+        <p>#renderRankedResultCounterGrouping($pageSelector)</p>
+    #end
+    
+    ## Default
+    #set ($action = $renderResponse.createActionURL())
+    #set ($pstart = 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+        <span class="ic-ic-double-arrow-left"></span>
+    </a>
+    
+    #set ($pstart = $pageSelector.currentSelectorPage - 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+        <span class="ic-ic-arrow-left"></span>
+    </a>
+    
+    #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+        #if($pageId == $pageSelector.currentSelectorPage)
+            <a class="icon"><span>$pageId<span></a>
+        #else
+            $action.setParameter('currentSelectorPage', $pageId.toString())
+            <a class="icon" href="$action"><span>$pageId<span></a>
+        #end
+    #end
+    
+    #set ($pstart = $pageSelector.currentSelectorPage + 1)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <a class="icon" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+        <span class="ic-ic-arrow-right"></span>
+    </a>
+    
+    #set ($pstart = $pageSelector.lastSelectorPage)
+    $action.setParameter('currentSelectorPage', $pstart.toString())
+    <a class="icon" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
+        <span class="ic-ic-double-arrow-right"></span>
+    </a>
+</div>
+#end
+
+## this navigation is used when grouping is active and is not "grouping by domain" (then see above) 
+## -> renders only current page with ">>" to next page
+#macro (renderRankedPageNavigationGrouping $pageSelector $isBottom)
+    #if($isBottom)
+        <p>#renderRankedResultCounter($pageSelector)</p>
+    #end
+    
+    ## Default
+    <ul class="pagination__list tx-right mq-hide-m">
+        <li style="display:none">
+            <a class="pagination__left">
+                <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            </a>
+        </li>
+        #set ($action = $renderResponse.createActionURL()) 
+        #set ($pstart = $pageSelector.currentSelectorPage - 1)
+        $action.setParameter('currentSelectorPage', $pstart.toString())
+        <li>
+            <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+                <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            </a>
+        </li>
+        #if($pageSelector.currentSelectorPage > 1)
+            $action.setParameter('currentSelectorPage', "1")
+            <li>
+                  <a class="pagination__number" href="$action"> 1 </a>
+           </li>
+           <li>...</li>
+        #end
+        <li>
+            <a class="pagination__number is-active"> $pstart</a>
+        </li>
+        
+        #if($pageSelector.selectorHasNextPage)
+           #if($pageSelector.currentSelectorPage == 1)
+               <li>...</li>
+           #end
+           #set ($pstart = $pageSelector.currentSelectorPage + 1)
+            $action.setParameter('currentSelectorPage', $pstart.toString())
+            <li>
+                  <a class="pagination__number" href="$action">$pstart</a>
+           </li>
+        #end
+        
+        #set ($pstart = $pageSelector.currentSelectorPage + 1)
+        $action.setParameter('currentSelectorPage', $pstart.toString())
+        <li>
+            <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
+                <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            </a>
+        </li>
+        <li style="display:none">
+            <a class="pagination__right is-hidden">
+                <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            </a>
+        </li>
+    </ul>
+#end
+
+#macro (renderTitle $title)
+#if ($title && $title != "")$title#else $MESSAGES.getString('common.result.noTitle')#end
+#end
+
+#macro(renderSearchResultFacetFilter $classes)
+#end
+
+#macro(renderSearchResultFacetSelectionInfo $entry $resourceMsgs)
+    #if($entry.getInfo())
+    <div class="caption">
+        <div class="icon check">
+            <span class="ic-ic-info"></span>
+            <span>$entry.getInfo()</span>
+        </div>
+    </div>
+    #end
+#end
+
+#macro(renderSearchResultFacetSelectionInfoResult $entries $resourceMsgs)
+    #foreach($entry in $entries)
+        #if($entry.isSelect() && $entry.getInfoResultSelect())
+        <div class="caption">
+            <div class="icon check">
+                <span class="ic-ic-info"></span>
+                <span>$entry.getInfoResultSelect()</span>
+            </div>
+        </div>
+        #end
+    #end
+#end
+
+#macro(renderSearchResultFacetSelection $entries $resourceMsgs $cat)
+    #foreach($entry in $entries)
+        #if(!$entry.getQuery())
+            #if($entry.getId() == 'area')
+                #foreach ($geothesaurus in $geothesaurusSelectTopics)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("doRemoveGeothesaurus",  $geothesaurus.topicId)
+                    #set($title = "$geothesaurus.topicTitle")
+                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $title")
+                #end
+            #elseif($entry.getId() == 'area.map')
+                #if($selectedMap)
+                    #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveMap",  "inside")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $selectedMap.doMapCoords.inside")
+                    #end
+                #end
+            #elseif($entry.getId() == 'attribute')
+                #if($doAddAttribute)
+                    ##Projektname
+                    #if($doAddAttribute.db_title)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_title")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_title")
+                    #end
+                    ##Institution
+                    #if($doAddAttribute.db_institute)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_institute")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_institute")
+                    #end
+                    ##Projektleiter
+                    #if($doAddAttribute.db_pm)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_pm")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_pm")
+                    #end
+                    ##Beteiligte
+                    #if($doAddAttribute.db_staff)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_staff")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_staff")
+                    #end
+                    ##Projektträger
+                    #if($doAddAttribute.db_org)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "db_org")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.db_org")
+                    #end
+                    ##Laufzeit
+                    #if($doAddAttribute.term_from)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "term_from")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.term_from")
+                    #end
+                    #if($doAddAttribute.term_to)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAttribute",  "term_to")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAttribute.term_to")
+                    #end
+                #end
+            #elseif($entry.getId() == 'area.address')
+                #if($doAddAreaAddress)
+                    ## Strasse
+                    #if($doAddAreaAddress.street)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAreaAddress",  "street")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.street")
+                    #end
+                    ## PLZ
+                    #if($doAddAreaAddress.zip)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAreaAddress",  "zip")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.zip")
+                    #end
+                    ## Ort
+                    #if($doAddAreaAddress.city)
+                        #set ($action = $renderResponse.createActionURL())
+                        $action.setParameter("doRemoveAreaAddress",  "city")
+                        #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $doAddAreaAddress.city")
+                    #end
+                #end
+            #elseif($entry.isSelect())
+                #if($entry.getFacets())
+                    #set($catNameKey = "$entry.getName()" + ".single")
+                    #set($catName = $resourceMsgs.getString($catNameKey))
+                    #if($catName.indexOf(".single") > -1)
+                        #set($catName = $resourceMsgs.getString($entry.getName()))
+                    #end
+                    #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catName)
+                #end
+            #elseif($entry.getWildcard())
+                #set($wildcard_item = false)
+                #set($wildcard_item_term = false)
+                
+                #if($wildcardMap)
+                    #set($wildcard_item = $wildcardMap.get("$entry.getId()"))
+                    #if($wildcard_item)
+                        #set($wildcard_item_term = $wildcard_item.get("term"))
+                    #end
+                #end
+                #if($wildcard_item_term)
+                    #set ($action = $renderResponse.createActionURL())
+                    $action.setParameter("wildcard_id", "$entry.getId()")
+                    $action.setParameter("doClearSearchWildcard", "$entry.getId()")
+                    #renderSearchResultFacetSelectionItem($entry $action "$resourceMsgs.getString($entry.getName()): $wildcard_item_term")
+                #end
+            #elseif($entry.isOpen())
+                #foreach($facet in $entry.getFacets())
+                    #if($facet.getWildcard())
+                        #set($wildcard_item = false)
+                        #set($wildcard_item_term = false)
+
+                        #if($wildcardMap)
+                            #set($wildcard_item = $wildcardMap.get("$facet.getId()"))
+                            #if($wildcard_item)
+                                #set($wildcard_item_term = $wildcard_item.get("term"))
+                            #end
+                        #end
+                        #if($wildcard_item_term)
+                            #set ($action = $renderResponse.createActionURL())
+                            $action.setParameter("wildcard_id", "$facet.getId()")
+                            $action.setParameter("doClearSearchWildcard", "$facet.getId()")
+                            #renderSearchResultFacetSelectionItem($facet $action "$resourceMsgs.getString($facet.getName()): $wildcard_item_term")
+                        #end
+                    #end
+                #end
+            #end
+        #else
+            #if($entry.isSelect())
+                #set ($action = $renderResponse.createActionURL())
+                $action.setParameter("$entry.getParent().getId()", "$entry.getId()")
+                #renderSearchResultFacetSelectionItem($entry $action "$cat: $resourceMsgs.getString($entry.getName())")
+            #end
+            #if($entry.getFacets())
+                #set($catNameSub = $resourceMsgs.getString($entry.getName()))
+                #renderSearchResultFacetSelection ($entry.getFacets() $resourceMsgs $catNameSub)
+            #end
+        #end
+    #end
+#end
+
+#macro(renderSearchResultFacetSelectionItem $entry $action $title)
+    <a id="chk_fs_$entry.getId()" href="$action" class="button pill">
+        $title
+        <span class="ic-ic-cross"></span>
+    </a>
+#end

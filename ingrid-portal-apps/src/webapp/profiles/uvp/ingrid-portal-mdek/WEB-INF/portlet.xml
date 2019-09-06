@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portlet-app id="ingrid-portal-mdek" version="1.0">
+
+    <portlet id="MdekEntryPortlet">
+        <init-param>
+            <description>Entry point to the mdek application</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/mdek/mdek_entry.vm</value>
+        </init-param>
+        <portlet-name>MdekEntryPortlet</portlet-name>
+        <display-name>Entry to Mdek App</display-name>
+        <portlet-class>de.ingrid.portal.portlets.mdek.MdekEntryPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.entry</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+    <portlet id="MdekPortalAdminPortlet">
+        <init-param>
+            <description>Catalog administration portlet for the portal admin</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/mdek/mdek_portal_admin.vm</value>
+        </init-param>
+        <portlet-name>MdekPortalAdminPortlet</portlet-name>
+        <display-name>Kataloge administrieren</display-name>
+        <portlet-class>de.ingrid.portal.portlets.mdek.MdekPortalAdminPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.portaladmin</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+    
+    <portlet id="MdekAdminLoginPortlet">
+        <init-param>
+            <description>SuperAdmin-Login to each Catalog with each User</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/mdek/mdek_admin_login.vm</value>
+        </init-param>
+        <portlet-name>MdekAdminLoginPortlet</portlet-name>
+        <display-name>SuperAdmin-Login</display-name>
+        <portlet-class>de.ingrid.portal.portlets.mdek.MdekAdminLoginPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.MdekResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>mdek.title.adminlogin</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
+</portlet-app>

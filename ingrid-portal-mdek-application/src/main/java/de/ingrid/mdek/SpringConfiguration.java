@@ -103,12 +103,10 @@ public class SpringConfiguration {
 
 	@Bean
 	public UserRepoManager userRepoManager(Config config, @Value("#{daoFactory}") DaoFactory dao) {
-		if (config.noPortal) {
-			DbUserRepoManager manager = new DbUserRepoManager();
-			manager.setDaoFactory(dao);
-			return manager;
-		}
-		return null;
+		// always create manager to prevent NullPointerException
+		DbUserRepoManager manager = new DbUserRepoManager();
+		manager.setDaoFactory(dao);
+		return manager;
 	}
 
 	/**

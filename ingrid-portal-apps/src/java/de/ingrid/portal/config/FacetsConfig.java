@@ -311,6 +311,20 @@ public class FacetsConfig {
                     }
                 }
 
+                if (!facetNode.getChildren( "info" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "info" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setInfo( node.getValue().toString() );
+                    }
+                }
+
+                if (!facetNode.getChildren( "infoResultSelect" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "infoResultSelect" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setInfoResultSelect( node.getValue().toString() );
+                    }
+                }
+
                 ingridFacets.add( ingridFacet );
             }
         }

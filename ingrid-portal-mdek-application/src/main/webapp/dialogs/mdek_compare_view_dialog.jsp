@@ -539,11 +539,15 @@ require([
             }
             if (domClass.contains(element, "dijitCheckBox")) {
                 element = element.nextSibling;
+			} else if (element.children.length > 0 && domClass.contains(element.childNodes[0], "label")) {
+				element = element.childNodes[0];
             } else {
                 element = element.previousSibling;
-                while (!domClass.contains(element, "label")) {
-                    element = element.previousSibling;
-                }
+                if (element !== null) {
+					while (!domClass.contains(element, "label")) {
+						element = element.previousSibling;
+					}
+				}
             }
 
             if (element !== null) {

@@ -101,10 +101,6 @@ public class InfoPortlet extends GenericVelocityPortlet {
         }
         
         if(myView.equalsIgnoreCase(INFO_TEASER_TEMPLATE)){
-            // For weather teaser
-            context.put("DWD_PATH", PortalConfig.getInstance().getString(PortalConfig.TEASER_WEATHER_DWD_PATH, ""));
-            context.put("DWD_MOVIE", PortalConfig.getInstance().getString(PortalConfig.TEASER_WEATHER_DWD_MOVIE, ""));
-            
             // For chronicle teaser
             // NOTICE: WE FETCH FROM DATABASE AND DON'T HAVE ALL DETAILS !!!
             String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());

@@ -15,6 +15,7 @@
         </svg>
     </div>
     <div id="facet_wildcard_content_$node.getId()" class="sidebar__widget__content--pushed js-accordion-content #if(!$wildcard_item_term)is-hidden#end">
+        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
         <br>
         #set ($action = $renderResponse.createActionURL())
         $action.setParameter("wildcard_id", "$node.getId()")

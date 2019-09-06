@@ -56,7 +56,6 @@ import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.om.IngridRSSSource;
 import de.ingrid.portal.portlets.admin.AdminComponentMonitorPortlet;
 import de.ingrid.portal.scheduler.IngridMonitorFacade;
-import de.ingrid.portal.upgradeclient.UpgradeTools;
 import de.ingrid.utils.PlugDescription;
 
 /**
@@ -91,10 +90,7 @@ public class IngridJobHandler {
 	 * @return the JobDataMap object
 	 */
 	public JobDataMap getJobDataMap(String id) {
-	    if (getJobDetail(id)!=null)
-	        return getJobDetail(id).getJobDataMap();
-	    else
-	        return getJobDetail(id, UpgradeTools.JOB_GROUP).getJobDataMap();
+        return getJobDetail(id).getJobDataMap();
 	}
 	
 	public JobDetail getJobDetail( String id ) {
@@ -120,10 +116,7 @@ public class IngridJobHandler {
 	 * @return the string of the job name
 	 */
 	public String getJobName( String id ) {
-	    if (getJobDetail(id) != null)
-	        return getJobDetail(id).getName();
-	    else
-	        return getJobDetail(id, UpgradeTools.JOB_GROUP).getName();
+        return getJobDetail(id).getName();
 	}
 	
 	/**
@@ -219,23 +212,6 @@ public class IngridJobHandler {
 		}
 		return true;
 	}
-	
-	public void addUpgradeClientJob() {
-	    try {
-	        JobDetail jobDetail = new JobDetail(UpgradeTools.JOB_NAME, UpgradeTools.JOB_GROUP, UpgradeClientJob.class);
-	        
-	        JobDataMap datamap = jobDetail.getJobDataMap();
-	        datamap.put(UpgradeTools.INSTALLED_COMPONENTS, new ArrayList<>());
-	        
-            monitor.getScheduler().addJob(jobDetail, true);
-            monitor.getScheduler().getJobNames(UpgradeTools.JOB_GROUP);
-    	    int interval = 86400; // one day in seconds
-            createTrigger(UpgradeTools.JOB_NAME, UpgradeTools.JOB_GROUP, interval);
-        } catch (SchedulerException e) {
-            log.error("Couldn't create UpgradeClientJob! ", e);
-        }
-	}
-	
 	
 	/**
 	 * Create a new job that must have an unique id. If it was set to active a trigger will
@@ -846,9 +822,6 @@ public class IngridJobHandler {
 		JobDetail jobDetail = null;
 		try {
 			jobDetail = monitor.getScheduler().getJobDetail(id, "DEFAULT");
-			if (jobDetail == null)
-			    jobDetail = monitor.getScheduler().getJobDetail(id, UpgradeTools.JOB_GROUP);
-			    
 		} catch (SchedulerException e) {
 			//
 		}

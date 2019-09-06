@@ -274,32 +274,6 @@ define(["dojo/_base/declare",
             additionalFields.push(dcatCategoryWidget);
 
             /*
-             * Source Type --> not needed since "Downloads" cover this
-             */
-            /*id = "mcloudSourceType";
-            var structure = [
-                {
-                    field: 'sourceType',
-                    name: 'Quellentyp',
-                    type: Editors.SelectboxEditor,
-                    editable: true,
-                    // listId: codelist,
-                    options: ["Download", "Portal", "FTP"],
-                    values: ["dl", "portal", "ftp"],
-                    formatter: Formatters.ListCellFormatter,
-                    partialSearch: true
-                }
-            ];
-            newFieldsToDirtyCheck.push(id);
-            creator.createDomDataGrid(
-                { id: id, name: message.get("mcloud.form.sourceType"), help: message.get("mcloud.form.sourceType.helpMessage"), isMandatory: true, visible: "optional", rows: "4", forceGridHeight: false, style: "width:100%" },
-                structure, rubric
-            );
-            var categoryWidget = registry.byId(id);
-            domClass.add(categoryWidget.domNode, "hideTableHeader");
-            additionalFields.push(categoryWidget);*/
-
-            /*
              * Downloads
              */
             id = "mcloudDownloads";

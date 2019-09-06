@@ -97,10 +97,13 @@ public class IngridSysCodeList {
                         if(data != null && data.startsWith("{") && data.endsWith("}")) {
                             try {
                                 JSONObject json = new JSONObject(data);
-                                String jsonId = json.getString("id");
-                                if(jsonId.equals(domainValue)) {
-                                    return getName(codeListId, entry.getId());
+                                if(json.has("id")) {
+                                    String jsonId = json.getString("id");
+                                    if(jsonId.equals(domainValue)) {
+                                        return getName(codeListId, entry.getId());
+                                    }
                                 }
+                                return domainValue;
                             } catch (JSONException e) {
                                 if(log.isErrorEnabled()) {
                                     log.error("Error on getNameByCodeListValue.", e);

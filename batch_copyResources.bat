@@ -41,7 +41,6 @@ copy ingrid-portal-base\src\webapp\decorations\portlet\ingrid-teaser\css\styles.
 copy ingrid-portal-base\src\java\de\ingrid\portal\resources\PortalLayoutResources*.properties ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal\WEB-INF\classes\de\ingrid\portal\resources
 
 REM ============= APPS ================
-copy ingrid-portal-apps\src\webapp\dwd_warnmodul\wmDWDconfig.cfg ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\dwd_warnmodul
 copy ingrid-portal-apps\src\webapp\WEB-INF\portlet.xml ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF
 copy ingrid-portal-apps\src\java\ingrid-portal-apps.properties ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes
 copy ingrid-portal-apps\src\java\ingrid-portal-help*.xml ingrid-portal-apps\src\webapp\profiles\portalu\ingrid-portal-apps\WEB-INF\classes

@@ -749,6 +749,14 @@
                 <name>helpKey</name>
                 <value>about-1</value>
             </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -772,6 +780,26 @@
             <preference>
                 <name>cmsKey</name>
                 <value>ingrid.disclaimer</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>disclaimer.title</value>
+            </preference>
+            <preference>
+                <name>articleStyle</name>
+                <value>content ob-container ob-box-narrow ob-box-center</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -812,6 +840,46 @@
         </portlet-preferences>
     </portlet>
     
+    <portlet id="SitemapPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>SitemapPortlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>sitemap.title</value>
+            </preference>
+            <preference>
+                <name>titleTag</name>
+                <value>h1</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/sitemap.vm</value>
+            </preference>
+            <preference>
+                <name>cmsKey</name>
+                <value>ingrid.privacy</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>block--padded</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="IngridInformPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

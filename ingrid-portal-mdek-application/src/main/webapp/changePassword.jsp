@@ -1,3 +1,25 @@
+<%--
+  **************************************************-
+  InGrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  --%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -102,7 +124,7 @@
                     </td>
                 </tr>
                 <div id="error-not-matching" class="error" style="display:none;">Passwörter leer oder stimmen nicht überein</div>
-                <div id="error-invalid" class="error" style="display:none;">Der Link zum Ändern des Passworts ist nicht gültig</div>
+                <div id="error-invalid" class="error" style="display:none;">Der Link zum Ändern des Passworts ist abgelaufen (max. 1h) oder nicht gültig</div>
                 <div id="error" class="error" style="display:none;">Das Passwort konnte nicht aktualisiert werden</div>
                 <div id="success" style="display:none;">Das Passwort wurde erfolgreich geändert. Sie werden zur Login Seite weitergeleitet.</div>
             </table>

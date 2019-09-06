@@ -22,40 +22,11 @@
  */
 package de.ingrid.portal.search;
 
-import java.io.IOException;
-import java.io.NotSerializableException;
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.RenderRequest;
-
-import org.apache.portals.messaging.PortletMessaging;
-import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.IngridSessionPreferences;
 import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.forms.SearchExtEnvAreaSourcesForm;
-import de.ingrid.portal.global.IngridHitWrapper;
-import de.ingrid.portal.global.IngridPersistencePrefs;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.global.UtilsDB;
-import de.ingrid.portal.global.UtilsQueryString;
-import de.ingrid.portal.global.UtilsString;
+import de.ingrid.portal.global.*;
 import de.ingrid.portal.interfaces.WMSInterface;
 import de.ingrid.portal.interfaces.impl.IBUSInterfaceImpl;
 import de.ingrid.portal.interfaces.impl.WMSInterfaceImpl;
@@ -68,6 +39,22 @@ import de.ingrid.utils.query.FieldQuery;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
 import de.ingrid.utils.queryparser.IDataTypes;
+import de.ingrid.utils.tool.UrlTool;
+import de.ingrid.utils.udk.UtilsCSWDate;
+import de.ingrid.utils.udk.UtilsDate;
+import org.apache.portals.messaging.PortletMessaging;
+import org.apache.velocity.context.Context;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.security.Principal;
+import java.util.*;
 
 /**
  * Global STATIC data and utility methods for SEARCH !
@@ -234,7 +221,7 @@ public class UtilsSearch {
     /**
      * Transfer commonly used detail parameters from detail object to hitobject.
      * 
-     * @param hit
+     * @param result
      * @param detail
      */
     public static void transferHitDetails(IngridHitWrapper result, IngridHitDetail detail) {
@@ -281,9 +268,15 @@ public class UtilsSearch {
             String value = UtilsSearch.getDetailValue(detail, Settings.RESULT_KEY_URL);
             if (value.length() > 0) {
                 result.put(Settings.RESULT_KEY_URL, value);
-                result.put(Settings.RESULT_KEY_URL_STR, UtilsString.getShortURLStr(value,
+                String urlStr = null;
+                try {
+                    urlStr = UrlTool.getDecodedUnicodeUrl(value);
+                } catch (Exception e) {
+                    urlStr = value;
+                }
+                result.put(Settings.RESULT_KEY_URL_STR, UtilsString.getShortURLStr(urlStr,
                         Settings.SEARCH_RANKED_MAX_ROW_LENGTH));
-                result.put(Settings.RESULT_KEY_URL_DOMAIN, UtilsString.getURLDomain(value));
+                result.put(Settings.RESULT_KEY_URL_DOMAIN, UtilsString.getURLDomain(urlStr));
 
                 String urlLowerCase = value.toLowerCase();
                 if (urlLowerCase.indexOf(".pdf") != -1) {
@@ -489,14 +482,32 @@ public class UtilsSearch {
         return null;
     }
     
-    
+    public static String getDateFormatValue (String value){
+        String result = UtilsCSWDate.mapFromIgcToIso8601(value);
+        if(result != null) {
+            value = result;
+        }
+        return UtilsSearch.convertDateString(value);
+    }
+
+    public static String convertDateString(String value){
+        if(value != null){
+            String content = UtilsDate.convertDateString(value, "yyyy-MM-dd", "dd.MM.yyyy");
+            if(content.length() > 0){
+                return content;
+            }
+        }
+        return value;
+    }
+
     /**
      * Map the given value to a "real" value, e.g. map partner id to partner
      * name. The passed key determines what kind of id the passed value is (this
      * is the key with which the value was read from result/detail)
      * 
-     * @param resultKey
-     * @param resultValue
+     * @param detailKey
+     * @param detailValue
+     * @param resources
      * @return
      */
     public static String mapResultValue(String detailKey, String detailValue, IngridResourceBundle resources) {
@@ -934,7 +945,7 @@ public class UtilsSearch {
      * Add provider(s) to query
      * 
      * @param query
-     * @param partners
+     * @param providers
      */
     public static void processProvider(IngridQuery query, String[] providers) {
         boolean added  = false;
@@ -991,7 +1002,7 @@ public class UtilsSearch {
      * Add domain to query
      * 
      * @param query
-     * @param domain
+     * @param subject
      */
     public static void processDomain(IngridQuery query, String subject) {
         boolean added = false;
@@ -1026,7 +1037,6 @@ public class UtilsSearch {
      * ( e.g. domain subject like "site:???" or "plugid:???")  
      * 
      * @param domainSubject the subject as its was passed from "Zeige alle" request
-     * @param key/value Pair for ingrid query (String[0]=key, String[1]=value)
      */
     public static String[] getDomainKeyValuePair(String domainSubject) {
     	return domainSubject.split("::");
@@ -1086,7 +1096,6 @@ public class UtilsSearch {
      * portlets.
      * 
      * @param request
-     * @param response
      * @throws NotSerializableException
      */
     public static void processActionForTermPortlets(ActionRequest request)
@@ -1115,7 +1124,6 @@ public class UtilsSearch {
      * portlets
      * 
      * @param request
-     * @param context
      */
     public static void processActionForPartnerPortlet(ActionRequest request)
             throws IOException {
@@ -1491,7 +1499,7 @@ public class UtilsSearch {
         if(paramQueryString != null && paramQueryString.length() > 0){
             String [] tmpQueries = paramQueryString.split(" ");
             for(String tmpQuery: tmpQueries) {
-                if(tmpQuery != null && tmpQuery.length() > 0 && !tmpQuery.equals("OR") && addQueryString.indexOf(tmpQuery) > -1) {
+                if(tmpQuery != null && tmpQuery.length() > 0 && !tmpQuery.equals("OR") && tmpQuery.indexOf(':') > -1 && addQueryString.indexOf(tmpQuery) > -1) {
                     return paramQueryString;
                 }
             }

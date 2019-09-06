@@ -1,0 +1,19 @@
+## ------------------------------
+## macros
+## ------------------------------
+
+#macro (renderInputButton $buttonvalue $buttonstyle $buttonname $buttontitle)
+    #renderInputButtonClass ($buttonvalue $buttonstyle $buttonname $buttontitle "")
+#end
+
+#macro (renderInputButtonClass $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass)
+    #renderInputButtonOnClick ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass "")
+#end
+
+#macro (renderInputButtonOnClick $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick)
+    #renderInputButtonDisable ($buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick "false")
+#end
+
+#macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    <input type="submit" class="button $buttonclass #if($buttondisable == "true")sg_nine#end" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")disabled#end />
+#end

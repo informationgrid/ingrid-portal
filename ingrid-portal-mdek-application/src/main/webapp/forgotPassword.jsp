@@ -1,3 +1,25 @@
+<%--
+  **************************************************-
+  InGrid Portal MDEK Application
+  ==================================================
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+  
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+  
+  http://ec.europa.eu/idabc/eupl5
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  --%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -69,7 +91,7 @@
 
 <input onclick="gotoLoginPage()" type="submit" value="Zurück" style="float: left;">
 
-<div class="content-password" style="display: block;">
+<div class="content-password" style="display: block; padding-left: 140px;">
     <div class="contentBorder">
         <h3>Passwort vergessen</h3>
         <div style="padding: 10px;">
@@ -87,7 +109,7 @@
 
                     </td>
                 </tr>
-                <div id="error" class="error" style="display:none;">Email-Adresse ist nicht registriert!</div>
+                <div id="error" class="error" style="display:none;">Email-Adresse ist nicht registriert oder mehrfach vorhanden! Bitte setzen Sie sich unter Angabe Ihres Logins und Ihrer E-Mail mit dem mCLOUD-Team unter mcloud@itzbund.de in Verbindung</div>
                 <div id="error-send" class="error" style="display:none;">Email konnte nicht verschickt werden</div>
                 <div id="success" style="display:none;">Email zum Ändern des Passworts wurde gesendet</div>
             </table>

@@ -148,7 +148,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if ( getUdkObjectClassType().equals("1") ) {
             // first try to get any valid WMS url from the crossReference section
             String getCapUrl = getCapabilityUrlFromCrossReference( null );
-            if ( getCapUrl != null ) {
+            if ( !getCapUrl.isEmpty() ) {
                 String url = "";
                 
                 // since this link will be going to the webmap-client, the service must be WMS!
@@ -294,9 +294,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     link.put("href", "");
                 }
                 
-                if(isCoupled){
+                if(isCoupled && entryId.equals("3600") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
                     // add map links to data objects from services
-                    if (entryId.equals("3600") && type.equals("3")) {
+                    if (type.equals("3")) {
                         // get link from operation (unique one)
                         if (serviceType != null && serviceType.trim().equals("view")) {
                             StringBuilder capabilityUrl;
@@ -313,7 +313,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
                         linkList.add(link);
-                    } else if (entryId.equals("3600") && type.equals("1")) {
+                    } else if (type.equals("1")) {
                         StringBuilder capUrl;
                         if(serviceUrl != null){
                             capUrl = new StringBuilder(serviceUrl);
@@ -1344,7 +1344,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     private String getCapabilityUrlFromCrossReference( String uuid ) {
-        String url = null;
+        String url = "";
         // get service url which should be in crossReference-Node, identified by uuid, serviceType and serviceOperation
         // just take the first url you can find if uuid has not been set
         Node serviceUrl = null;

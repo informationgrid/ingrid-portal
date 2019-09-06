@@ -560,7 +560,7 @@ require([
         for ( var i in locationList) {
             // If checkbox is selected
             if (applyAll || locationList[i].selection == 1) {
-                var topic = locationList[i];
+                var topicItem = locationList[i];
                 var topicId = locationList[i].topicId;
                 var type = locationList[i].type;
                 var targetGrid = "spatialRefAdminUnit";
@@ -581,47 +581,47 @@ require([
                 // If the topic was found, update the bounding box and continue
                 if (storedTopic) {
                     UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "label",
-                            topic.type ? topic.name + ", " + topic.type : topic.name );
-                    if (topic.boundingBox) {
+                            topicItem.type ? topicItem.name + ", " + topicItem.type : topicItem.name );
+                    if (topicItem.boundingBox) {
                         UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "longitude1",
-                                topic.boundingBox[1] );
+                                topicItem.boundingBox[1] );
                         UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "latitude1",
-                                topic.boundingBox[0] );
+                                topicItem.boundingBox[0] );
                         UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "longitude2",
-                                topic.boundingBox[3] );
+                                topicItem.boundingBox[3] );
                         UtilGrid.updateTableDataRowAttr( targetGrid, storedTopicIdx, "latitude2",
-                                topic.boundingBox[2] );
+                                topicItem.boundingBox[2] );
                     }
                     // Update elements that aren't displayed in the table
-                    storedTopic.nativeKey = topic.nativeKey;
-                    storedTopic.name = topic.name;
-                    storedTopic.topicType = topic.type;
-                    storedTopic.topicTypeId = topic.typeId;
+                    storedTopic.nativeKey = topicItem.nativeKey;
+                    storedTopic.name = topicItem.name;
+                    storedTopic.topicType = topicItem.type;
+                    storedTopic.topicTypeId = topicItem.typeId;
                 } else {
                     // The topic was not found in the result list. Create a new key and
                     // add the topic to the list
                     //var key = UtilStore.getNewKey(spatialStore);
-                    if (topic.boundingBox) {
+                    if (topicItem.boundingBox) {
                         UtilGrid.addTableDataRow( targetGrid, {
-                            topicId: topic.topicId,
-                            label: topic.type ? topic.name + ", " + topic.type : topic.name,
-                            name: topic.name,
-                            longitude1: topic.boundingBox[1],
-                            latitude1: topic.boundingBox[0],
-                            longitude2: topic.boundingBox[3],
-                            latitude2: topic.boundingBox[2],
-                            nativeKey: topic.nativeKey,
-                            topicType: topic.type,
-                            topicTypeId: topic.typeId
+                            topicId: topicItem.topicId,
+                            label: topicItem.type ? topicItem.name + ", " + topicItem.type : topicItem.name,
+                            name: topicItem.name,
+                            longitude1: topicItem.boundingBox[1],
+                            latitude1: topicItem.boundingBox[0],
+                            longitude2: topicItem.boundingBox[3],
+                            latitude2: topicItem.boundingBox[2],
+                            nativeKey: topicItem.nativeKey,
+                            topicType: topicItem.type,
+                            topicTypeId: topicItem.typeId
                         } );
                     } else {
                         UtilGrid.addTableDataRow( targetGrid, {
-                            topicId: topic.topicId,
-                            label: topic.type ? topic.name + ", " + topic.type : topic.name,
-                            name: topic.name,
-                            nativeKey: topic.nativeKey,
-                            topicType: topic.type,
-                            topicTypeId: topic.typeId
+                            topicId: topicItem.topicId,
+                            label: topicItem.type ? topicItem.name + ", " + topicItem.type : topicItem.name,
+                            name: topicItem.name,
+                            nativeKey: topicItem.nativeKey,
+                            topicType: topicItem.type,
+                            topicTypeId: topicItem.typeId
                         } );
                     }
                 }
@@ -866,7 +866,7 @@ require([
             UtilList.addUrlLinkLabels( allLinks );
             UtilStore.updateWriteStore( "linksTo", allLinks );
         }
-        
+
         // wait for adding keywords AND addresses to be finished
         defKeywords.then( function() {
             defAddresses.then( function() {
@@ -934,6 +934,8 @@ require([
                     igeEvents.refreshTabContainers();
 
                     UtilUI.exitLoadingState();
+
+                    topic.publish("/afterCloseDialog/WizardResults");
 
                     closeThisDialog();
                 } );

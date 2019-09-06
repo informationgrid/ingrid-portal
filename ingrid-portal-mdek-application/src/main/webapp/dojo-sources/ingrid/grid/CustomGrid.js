@@ -2740,7 +2740,7 @@ define([
                 array.forEach(data, function(row) {
                     var rowValid = false;
                     array.some(this.columns, function(col) {
-                        if (row[col.field] && lang.trim(row[col.field] + "") !== "") {
+                        if (row[col.field] !== null && row[col.field] !== undefined && lang.trim(row[col.field] + "") !== "") {
                             rowValid = true;
                             return true;
                         }

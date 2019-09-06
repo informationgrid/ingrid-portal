@@ -22,10 +22,7 @@
  */
 package de.ingrid.mdek.userrepo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import de.ingrid.mdek.persistence.db.model.RepoUser;
 import de.ingrid.mdek.services.persistence.db.IDaoFactory;
@@ -44,14 +41,14 @@ public class DbUserRepoManager implements UserRepoManager {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
-    public List<Map<String,String>> getAllUsers() {
+    public List<Map<String,Object>> getAllUsers() {
         IGenericDao<IEntity> dao = daoFactory.getDao(RepoUser.class);
 
         dao.beginTransaction();
         List<RepoUser> userList = (List) dao.findAll();  // Can't cast to List<RepoUser>
         dao.commitTransaction();
         
-        List<Map<String,String>> users = new ArrayList<>();
+        List<Map<String,Object>> users = new ArrayList<>();
         for (RepoUser repoUser : userList) {
             Map info = new HashMap<String, String>();
             info.put("surname", repoUser.getSurname());
@@ -59,6 +56,7 @@ public class DbUserRepoManager implements UserRepoManager {
             info.put("email", repoUser.getEmail());
             info.put("login", repoUser.getLogin());
             info.put("passwordChangeId", repoUser.getPasswordChangeId());
+            info.put("passwordChangeDate", repoUser.getPasswordChangeDate());
             users.add(info);
         }
 
@@ -175,6 +173,8 @@ public class DbUserRepoManager implements UserRepoManager {
         RepoUser user = (RepoUser) dao.getById(login);
 
         user.setPasswordChangeId(passwordChangeId);
+        user.setPasswordChangeDate(new Date());
+
         if (newPassword != null && !newPassword.isEmpty()) {
             user.setPassword(MdekSecurityUtils.getHash(newPassword));
         }

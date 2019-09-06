@@ -320,8 +320,7 @@ public class MdekEmailUtils {
 			String recipient = mapEntry.getKey();
 			List<ExpiredDataset> expDatasets = mapEntry.getValue();
 
-			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/datasets_will_expire_email.vm");
-			String templatePath = url.getPath();
+			String templatePath = getTemplatePath("../templates/administration/datasets_will_expire_email.vm");
 			Map<String, Object> mailData = new HashMap<>();
 			mailData.put("expiredDatasetList", expDatasets);
 			String text = mergeTemplate(templatePath, mailData, "map");
@@ -338,8 +337,7 @@ public class MdekEmailUtils {
 			String recipient = mapEntry.getKey();
 			List<ExpiredDataset> expDatasets = mapEntry.getValue();
 
-			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/datasets_expired_email.vm");
-			String templatePath = url.getPath();
+			String templatePath = getTemplatePath("../templates/administration/datasets_expired_email.vm");
 			Map<String, Object> mailData = new HashMap<>();
 			mailData.put("expiredDatasetList", expDatasets);
 			String text = mergeTemplate(templatePath, mailData, "map");
@@ -356,8 +354,8 @@ public class MdekEmailUtils {
 			Map.Entry<String, List<MdekDataBean>> mapEntry = it.next();
 			String recipient = mapEntry.getKey();
 			List<MdekDataBean> expDatasets = mapEntry.getValue();
-			URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/spatial_references_expired_email.vm");
-			String templatePath = url.getPath();
+
+			String templatePath = getTemplatePath("../templates/administration/spatial_references_expired_email.vm");
 			Map<String, Object> mailData = new HashMap<>();
 			mailData.put("expiredDatasets", expDatasets);
 			String text = mergeTemplate(templatePath, mailData, "map");
@@ -365,16 +363,26 @@ public class MdekEmailUtils {
 		}
 	}
 
-	public static void sendForgottenPasswordMail(String email, String passwordChangeId) {
+	private static String getTemplatePath(String templateRelativePath) {
+		URL url = Thread.currentThread().getContextClassLoader().getResource(templateRelativePath);
+		if (url != null) {
+			return url.getPath();
+		} else {
+			log.error("Could not find template: " + templateRelativePath);
+			throw new RuntimeException("Could not find template");
+		}
+	}
 
-		URL url = Thread.currentThread().getContextClassLoader().getResource("../templates/administration/password_forgotten_email.vm");
-		String templatePath = url.getPath();
+	public static void sendForgottenPasswordMail(String email, String passwordChangeId, String login) {
+
+		String templatePath = getTemplatePath("../templates/administration/password_forgotten_email.vm");
 		Map<String, Object> mailData = new HashMap<>();
 		String link = mdekDirectLink.substring(0, mdekDirectLink.lastIndexOf('/')) + "/changePassword.jsp?id=" + passwordChangeId;
 		mailData.put("link", link);
+		mailData.put("login", login);
 
 		String text = mergeTemplate(templatePath, mailData, "map");
-		sendEmail("[IGE] Passwort zurücksetzen", text, mailSender, new String[] {email} );
+		sendEmail("mCLOUD Editor: neues Passwort", text, mailSender, new String[] {email} );
 
 	}
 
