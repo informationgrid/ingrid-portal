@@ -101,6 +101,7 @@
             <exclude>**/*.sql</exclude>
             <exclude>**/*.xml</exclude>
             <exclude>**/*.svg</exclude>
+            <exclude>**/ingrid/css/bkg/*.css</exclude>
           </excludes>
         </configuration>
       </plugin>
