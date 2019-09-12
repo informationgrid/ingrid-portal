@@ -8,17 +8,23 @@
     <body>
 
         <release version="5.0.3" date="2019-09-12" description="Release 5.0.3">
-          <action type="fix" dev="wemove" issue="1436">
-            Fix problem not showing BLP urls for NRW specific entries.
-          </action>
-          <action type="fix" dev="wemove" issue="1431">
-            Fix wrong conformity entry
+          <action type="fix" dev="wemove" issue="1442">
+            Portal: Fix search detail link.
           </action>
           <action type="fix" dev="wemove" issue="1438">
             Portal: Fix search on maps.
           </action>
-          <action type="fix" dev="wemove" issue="1442">
-            Portal: Fix search detail link.
+          <action type="fix" dev="wemove" issue="1436">
+            Fix problem not showing BLP urls for NRW specific entries.
+          </action>
+          <action type="fix" dev="wemove" issue="1433">
+            UVP: Vergleichsansicht wirft JavaScript Fehler
+          </action>
+          <action type="fix" dev="wemove" issue="1431">
+            Fix wrong conformity entry
+          </action>
+          <action type="fix" dev="wemove" issue="1128">
+            IGE: Auswahl von "Digitale Orthophotos" bei "AdV-Produktgruppe" führt zu Fehlern beim Veröffentlichen
           </action>
         </release>
 
