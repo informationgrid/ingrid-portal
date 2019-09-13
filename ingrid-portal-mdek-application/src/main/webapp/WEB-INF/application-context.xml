@@ -64,11 +64,6 @@
         </property>
     </bean>
     
-    <bean id="uploadStorage" class="de.ingrid.mdek.upload.storage.impl.FileSystemStorage">
-        <property name="docsDir" value="${upload.docsdir}" />
-        <property name="partsDir" value="${upload.partsdir}" />
-    </bean>
-    
     <!-- Quartz Beans -->
 	<!-- Jobs -->
     <bean name="checkForExpiredDatasetsJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -104,7 +99,10 @@
                     <ref bean="connectionFacade"/>
                 </entry>
                 <entry key="storage">
-                    <ref bean="uploadStorage"/>
+                    <bean class="de.ingrid.mdek.upload.storage.impl.FileSystemStorage">
+                        <property name="docsDir" value="${upload.docsdir}" />
+                        <property name="partsDir" value="${upload.partsdir}" />
+                    </bean>
                 </entry>
                 <entry key="deleteFileMinAge">
                     <value>${upload.cleanup.file.minAge}</value>

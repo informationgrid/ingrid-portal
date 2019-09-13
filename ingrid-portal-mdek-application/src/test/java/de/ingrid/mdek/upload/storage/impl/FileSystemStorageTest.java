@@ -40,6 +40,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -50,7 +51,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 
-import de.ingrid.mdek.upload.IllegalFileException;
+import de.ingrid.mdek.upload.ValidationException;
 
 public class FileSystemStorageTest {
 
@@ -70,6 +71,7 @@ public class FileSystemStorageTest {
 
         // setup storage
         storage.setDocsDir(DOCS_PATH.toString());
+        storage.setValidators(Arrays.asList(new FileSystemStorage.NameValidator()));
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         Files.createDirectories(DOCS_PATH);
         FileUtils.deleteDirectory(TEMP_PATH.toFile());
@@ -274,18 +276,18 @@ public class FileSystemStorageTest {
         try {
             final String file = "_trash_";
             this.storageWriteTestFile(path, file);
-            fail("Expected an IllegalFileException to be thrown");
+            fail("Expected an ValidationException to be thrown");
         }
-        catch (final IllegalFileException ex) {
+        catch (final ValidationException ex) {
             assertEquals("The file name is invalid.", ex.getMessage());
         }
 
         try {
             final String file = "_archive_";
             this.storageWriteTestFile(path, file);
-            fail("Expected an IllegalFileException to be thrown");
+            fail("Expected an ValidationException to be thrown");
         }
-        catch (final IllegalFileException ex) {
+        catch (final ValidationException ex) {
             assertEquals("The file name is invalid.", ex.getMessage());
         }
     }

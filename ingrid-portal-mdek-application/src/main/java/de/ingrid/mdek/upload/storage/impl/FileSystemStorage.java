@@ -41,6 +41,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.Vector;
 import java.util.regex.Pattern;
@@ -56,9 +57,11 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MediaType;
 
 import de.ingrid.mdek.upload.ConflictException;
-import de.ingrid.mdek.upload.IllegalFileException;
+import de.ingrid.mdek.upload.ValidationException;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.StorageItem;
+import de.ingrid.mdek.upload.storage.validate.IllegalNameException;
+import de.ingrid.mdek.upload.storage.validate.Validator;
 
 /**
  * FileSystemStorage manages files in the server file system
@@ -88,6 +91,8 @@ public class FileSystemStorage implements Storage {
     private static final Pattern ILLEGAL_PATH_CHARS = Pattern.compile("[<>?\":|\\*]");
     private static final Pattern ILLEGAL_FILE_NAME = Pattern.compile(".*"+ILLEGAL_FILE_CHARS.pattern()+".*");
 
+    private static final String TMP_FILE_PREFIX = "upload";
+
     private static final Logger log = Logger.getLogger(FileSystemStorage.class);
 
     private static final TikaConfig tika;
@@ -106,6 +111,54 @@ public class FileSystemStorage implements Storage {
 
     private String docsDir = null;
     private String partsDir = null;
+    private List<Validator> validators = new ArrayList<>();
+
+    /**
+     * Filename validator class
+     */
+    public static class NameValidator implements Validator {
+        @Override
+        public void initialize(final Map<String, String> configuration) throws IllegalArgumentException {}
+
+        @Override
+        public void validate(final String path, final String file, final Path data) throws ValidationException {
+            // check if names conflict with special directories
+            boolean result = true;
+            final Path filePath = Paths.get(path, file);
+            final Iterator<Path> it = filePath.iterator();
+            while(it.hasNext()) {
+                final String pathPart = it.next().toString();
+                if (TRASH_PATH.equals(pathPart) || ARCHIVE_PATH.equals(pathPart)) {
+                    result = false;
+                    break;
+                }
+            }
+            // we only reject invalid filenames, because the path will be sanitized
+            result = result && this.isValidName(file, ILLEGAL_FILE_NAME);
+            if (!result) {
+                throw new IllegalNameException("The file name is invalid.", path+"/"+file);
+            }
+        }
+
+        /**
+         * Check if a path is valid
+         *
+         * @param path
+         * @param illegalChars
+         * @return String
+         */
+        private boolean isValidName(final String path, final Pattern illegalChars) {
+            boolean isValid = true;
+            // check against rules provided in https://en.m.wikipedia.org/wiki/Filename
+            if (path == null || path.length() == 0 || path.length() > MAX_FILE_LENGTH) {
+                isValid = false;
+            }
+            if (illegalChars.matcher(path).matches()) {
+                isValid = false;
+            }
+            return isValid;
+        }
+    }
 
    /**
     * Set the document directory
@@ -123,6 +176,15 @@ public class FileSystemStorage implements Storage {
      */
     public void setPartsDir(final String partsDir) {
         this.partsDir = partsDir;
+    }
+
+    /**
+     * Set the validators
+     *
+     * @param validators
+     */
+    public void setValidators(final List<Validator> validators) {
+        this.validators = validators;
     }
 
     @Override
@@ -191,28 +253,17 @@ public class FileSystemStorage implements Storage {
             final FileSystemItem fileInfo = this.getFileInfo(realPath.toString());
             result = fileInfo.getRealPath().toFile().exists();
         }
-        catch (Exception ex) {
+        catch (final Exception ex) {
             result = false;
         }
         return result;
     }
 
     @Override
-    public boolean isValidName(final String path, final String file) {
-        // check if names conflict with special directories
-        boolean result = true;
-        final Path filePath = Paths.get(path, file);
-        final Iterator<Path> it = filePath.iterator();
-        while(it.hasNext()) {
-            final String pathPart = it.next().toString();
-            if (TRASH_PATH.equals(pathPart) || ARCHIVE_PATH.equals(pathPart)) {
-                result = false;
-                break;
-            }
+    public void validate(final String path, final String file) {
+        for (final Validator validator : this.validators) {
+            validator.validate(path, file, null);
         }
-        // we only reject invalid filenames, because the path will be sanitized
-        result = result && this.isValid(file, ILLEGAL_FILE_NAME);
-        return result;
     }
 
     @Override
@@ -229,15 +280,20 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public FileSystemItem[] write(final String path, final String file, final InputStream data, final Integer size, final boolean replace, final boolean extract)
-            throws IOException {
-        if (!this.isValidName(path, file)) {
-            throw new IllegalFileException("The file name is invalid.", path+"/"+file);
+    public FileSystemItem[] write(final String path, final String file, final InputStream data, final Integer size, final boolean replace, final boolean extract) throws IOException {
+        // validate
+        // NOTE: we write the data to a temporary file before calling the validators
+        // in order to allow multiple access to the streamed data
+        final Path tmpFile = Files.createTempFile(TMP_FILE_PREFIX, null);
+        Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
+        for (final Validator validator : this.validators) {
+            validator.validate(path, file, tmpFile);
         }
+
+        // copy file
         final Path realPath = this.getRealPath(path, file, this.docsDir);
         Files.createDirectories(realPath.getParent());
 
-        // copy file
         final List<CopyOption> copyOptionList = new ArrayList<>();
         if (replace) {
             copyOptionList.add(StandardCopyOption.REPLACE_EXISTING);
@@ -245,9 +301,9 @@ public class FileSystemStorage implements Storage {
         final CopyOption[] copyOptions = copyOptionList.toArray(new CopyOption[copyOptionList.size()]);
 
         try {
-            Files.copy(data, realPath, copyOptions);
+            Files.move(tmpFile, realPath, copyOptions);
         }
-        catch (FileAlreadyExistsException faex) {
+        catch (final FileAlreadyExistsException faex) {
             final StorageItem[] items = { this.getFileInfo(faex.getFile()) };
             throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
@@ -261,12 +317,12 @@ public class FileSystemStorage implements Storage {
             try {
                 files = this.extract(realPath, copyOptions);
             }
-            catch (FileAlreadyExistsException faex) {
+            catch (final FileAlreadyExistsException faex) {
                 // get files from existing archive
-                List<StorageItem> items = this.list(this.getExtractPath(realPath));
+                final List<StorageItem> items = this.list(this.getExtractPath(realPath));
                 throw new ConflictException(faex.getMessage(), items.toArray(new StorageItem[items.size()]), this.getFileInfo(realPath.toString()).getNextName());
             }
-            catch (Exception ex) {
+            catch (final Exception ex) {
                 throw new IOException(ex);
             }
             finally {
@@ -291,7 +347,7 @@ public class FileSystemStorage implements Storage {
         try {
             Files.copy(data, realPath, StandardCopyOption.REPLACE_EXISTING);
         }
-        catch (FileAlreadyExistsException faex) {
+        catch (final FileAlreadyExistsException faex) {
             final StorageItem[] items = { this.getFileInfo(faex.getFile()) };
             throw new ConflictException(faex.getMessage(), items, items[0].getNextName());
         }
@@ -301,10 +357,9 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public FileSystemItem[] combineParts(final String path, final String file, final String id, final Integer totalParts, final Integer size, final boolean replace, final boolean extract)
-            throws IOException {
-        if (!this.isValidName(path, file)) {
-            throw new IllegalFileException("The file name is invalid.", path+"/"+file);
+    public FileSystemItem[] combineParts(final String path, final String file, final String id, final Integer totalParts, final Integer size, final boolean replace, final boolean extract) throws IOException {
+        for (final Validator validator : this.validators) {
+            validator.validate(path, file, null);
         }
         // combine parts into stream
         final Vector<InputStream> streams = new Vector<>();
@@ -324,7 +379,7 @@ public class FileSystemStorage implements Storage {
         }
 
         // delete parts
-        for (Path part : parts) {
+        for (final Path part : parts) {
             Files.delete(part);
         }
         return result;
@@ -370,7 +425,7 @@ public class FileSystemStorage implements Storage {
         while (hasEmptyDirs) {
             // collect empty directories
             try (Stream<Path> stream = Files.walk(Paths.get(this.docsDir))) {
-                List<Path> emptyDirs = stream
+                final List<Path> emptyDirs = stream
                 .filter(p -> {
                     boolean isEmptyDir = false;
                     try {
@@ -380,7 +435,7 @@ public class FileSystemStorage implements Storage {
                             }
                         }
                     }
-                    catch (IOException ex) {
+                    catch (final IOException ex) {
                         throw new UncheckedIOException(ex);
                     }
                     return isEmptyDir;
@@ -388,7 +443,7 @@ public class FileSystemStorage implements Storage {
                 .collect(Collectors.toList());
 
                 // delete directories
-                for (Path emptyDir : emptyDirs) {
+                for (final Path emptyDir : emptyDirs) {
                     Files.delete(emptyDir);
                 }
 
@@ -475,25 +530,6 @@ public class FileSystemStorage implements Storage {
             filename = filename.substring(0, filename.lastIndexOf('.'));
         }
         return Paths.get(path.getParent().toString(), this.sanitize(filename, ILLEGAL_PATH_CHARS));
-    }
-
-    /**
-     * Check if a path is valid
-     *
-     * @param path
-     * @param illegalChars
-     * @return String
-     */
-    private boolean isValid(final String path, final Pattern illegalChars) {
-        boolean isValid = true;
-        // check against rules provided in https://en.m.wikipedia.org/wiki/Filename
-        if (path == null || path.length() == 0 || path.length() > MAX_FILE_LENGTH) {
-            isValid = false;
-        }
-        if (illegalChars.matcher(path).matches()) {
-            isValid = false;
-        }
-        return isValid;
     }
 
     /**

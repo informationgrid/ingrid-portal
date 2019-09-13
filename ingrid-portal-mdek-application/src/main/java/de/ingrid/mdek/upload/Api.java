@@ -184,9 +184,7 @@ public class Api {
         }
 
         // check filename
-        if (!this.storage.isValidName(path, file)) {
-            throw new IllegalFileException("The file is invalid.", path+"/"+file);
-        }
+        this.storage.validate(path, file);
 
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
@@ -239,9 +237,7 @@ public class Api {
         }
 
         // check filename
-        if (!this.storage.isValidName(path, file)) {
-            throw new IllegalFileException("The file is invalid.", path+"/"+file);
-        }
+        this.storage.validate(path, file);
 
         // store files
         final StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, extract);
