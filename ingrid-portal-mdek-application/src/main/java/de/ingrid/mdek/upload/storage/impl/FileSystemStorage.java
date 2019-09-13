@@ -286,8 +286,15 @@ public class FileSystemStorage implements Storage {
         // in order to allow multiple access to the streamed data
         final Path tmpFile = Files.createTempFile(TMP_FILE_PREFIX, null);
         Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
-        for (final Validator validator : this.validators) {
-            validator.validate(path, file, tmpFile);
+        try {
+            for (final Validator validator : this.validators) {
+                validator.validate(path, file, tmpFile);
+            }
+        }
+        catch (final ValidationException ex) {
+            // remove temporary file, if validation failed
+            Files.delete(tmpFile);
+            throw ex;
         }
 
         // copy file
