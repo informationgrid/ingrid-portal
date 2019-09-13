@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,21 +26,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Response;
 
-public class IllegalFileException extends WebApplicationException implements UploadException {
+public class ValidationException extends WebApplicationException implements UploadException {
 
     private static final long serialVersionUID = 1L;
 
-    private Map<String, Object> data = new HashMap<>();
+    private final Map<String, Object> data = new HashMap<>();
 
     /**
      * Constructor
      * @param message
      * @param file
+     * @param status
      */
-    public IllegalFileException(String message, String file) {
-        super(message, Response.Status.BAD_REQUEST.getStatusCode());
+    public ValidationException(final String message, final String file, final int statusCode) {
+        super(message, statusCode);
         this.data.put("file", file);
     }
 

@@ -129,6 +129,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         log.info("Reference time: "+this.referenceDateTime);
         log.info("Reference date: "+referenceDate);
         log.info("Minimum file age: "+this.deleteFileMinAge+" seconds");
+        log.info("Storage implementation: "+(this.storage != null ? this.storage.getClass().getCanonicalName() : null));
 
         try {
             final IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();

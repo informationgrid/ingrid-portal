@@ -25,6 +25,8 @@ package de.ingrid.mdek.upload.storage;
 import java.io.IOException;
 import java.io.InputStream;
 
+import de.ingrid.mdek.upload.ValidationException;
+
 /**
  * Storage defines the interface for classes, that are responsible for storing and retrieving files.
  */
@@ -60,9 +62,9 @@ public interface Storage {
      *
      * @param path The path
      * @param file The file
-     * @return boolean
+     * @throws ValidationException
      */
-    boolean isValidName(String path, String file);
+    void validate(String path, String file) throws ValidationException;
 
     /**
      * Get information about a file
@@ -122,8 +124,7 @@ public interface Storage {
      * @return StorageItem[] The list of created files
      * @throws IOException
      */
-    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
-            throws IOException;
+    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract) throws IOException;
 
     /**
      * Delete a file
