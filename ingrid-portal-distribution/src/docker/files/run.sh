@@ -34,7 +34,7 @@ else
     if [ ! -z "${DB_DRIVERCLASS}" ]; then
         # common substution scripts for sed
         substitution_catalina_db_user="s@username=\"root\"@username=\"${DB_USER}\"@"
-        substitution_catalina_db_pass="s@password=\"\"@password=\"${DB_PASSWORD}\"@"
+        substitution_catalina_db_pass='s@password=""@password="${DB_PASSWORD}"@' # No variable substitution in shell/sed. Database password will be set in the JAVA_OPTS environment variable.
         substitution_catalina_db_driver="s@driverClassName=\"com.mysql.jdbc.Driver\"@driverClassName=\"${DB_DRIVERCLASS}\"@"
         substitution_catalina_db_url_portal="s@url=\"jdbc:mysql://localhost/ingrid-portal[^\"]*\"@url=\"${DB_URL_PORTAL}\"@"
         substitution_catalina_db_url_mdek="s@url=\"jdbc:mysql://localhost/mdek[^\"]*\"@url=\"${DB_URL_MDEK}\"@"
