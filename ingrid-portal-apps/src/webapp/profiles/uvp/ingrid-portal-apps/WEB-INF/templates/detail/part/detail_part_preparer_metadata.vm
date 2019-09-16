@@ -54,49 +54,51 @@
     ## Raumbezug
     #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
     #if($spatialValue)
-    <div class="row content-small">
-        <div class="columns">
-        #set($spatialValueSplit = $spatialValue.split(":"))
-        #if($spatialValueSplit.size() == 2)
-            #set($spatial = $spatialValueSplit.get(1))
-            #set($spatialEntries = $spatial.split(","))
-            #if($spatialEntries.size() == 4)
-                #set($west = "$spatialEntries.get(0).trim()")
-                #set($south = "$spatialEntries.get(1).trim()")
-                #set($east = "$spatialEntries.get(2).trim()")
-                #set($north = "$spatialEntries.get(3).trim()")
-                #if($west.toLowerCase() != "nan" && $west.length() > 0
-                    && $north.toLowerCase() != "nan" && $north.length() > 0
-                    && $south.toLowerCase() != "nan" && $south.length() > 0
-                    && $east.toLowerCase() != "nan" && $east.length() > 0)
-                    <h3 class="title-font">Raumbezug</h3>
+    <div class="unbreak">
+        <div class="row content-small">
+            <div class="columns">
+            #set($spatialValueSplit = $spatialValue.split(":"))
+            #if($spatialValueSplit.size() == 2)
+                #set($spatial = $spatialValueSplit.get(1))
+                #set($spatialEntries = $spatial.split(","))
+                #if($spatialEntries.size() == 4)
+                    #set($west = "$spatialEntries.get(0).trim()")
+                    #set($south = "$spatialEntries.get(1).trim()")
+                    #set($east = "$spatialEntries.get(2).trim()")
+                    #set($north = "$spatialEntries.get(3).trim()")
+                    #if($west.toLowerCase() != "nan" && $west.length() > 0
+                        && $north.toLowerCase() != "nan" && $north.length() > 0
+                        && $south.toLowerCase() != "nan" && $south.length() > 0
+                        && $east.toLowerCase() != "nan" && $east.length() > 0)
+                        <h3 class="title-font">Raumbezug</h3>
+            </div>
         </div>
-    </div>
-    <div class="row no-padding">
-        <div class="columns form">
-                    #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-                    <div id="map" style="height: 400px; width:100%;"></div>
-                    <script language="JavaScript" type="text/javascript">
-                        var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
-                        northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
-                        bounds = L.latLngBounds(southWest, northEast);
-                        
-                        var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
-                        var map = addLeafletMap([osm], bounds);
-                        map.scrollWheelZoom.disable();
-                        var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
-                            var popLocation= e.latlng;
-                            var popup = L.popup()
-                            .setLatLng(popLocation)
-                            .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
-                            .openOn(map);
-                        }).addTo(map);
-                        
-                        addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
-                    </script>
+        <div class="row no-padding">
+            <div class="columns form">
+                        #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                        <div id="map" style="height: 400px; width:100%;"></div>
+                        <script language="JavaScript" type="text/javascript">
+                            var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
+                            northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
+                            bounds = L.latLngBounds(southWest, northEast);
+                            
+                            var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
+                            var map = addLeafletMap([osm], bounds);
+                            map.scrollWheelZoom.disable();
+                            var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
+                                var popLocation= e.latlng;
+                                var popup = L.popup()
+                                .setLatLng(popLocation)
+                                .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                                .openOn(map);
+                            }).addTo(map);
+                            
+                            addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
+                        </script>
+                    #end
                 #end
             #end
-        #end
+            </div>
         </div>
     </div>
     #end

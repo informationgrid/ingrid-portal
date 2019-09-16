@@ -158,7 +158,7 @@
                 setTimeout(function () {
                     registry.byId("objectClass").set("value", "Class" + type);
                     setTreeIcon(type);
-                    topic.publish("/afterInitDialog/CloseWizard");
+                    topic.publish("/afterCloseDialog/ChooseWizard");
                 }, 300);
 
             }

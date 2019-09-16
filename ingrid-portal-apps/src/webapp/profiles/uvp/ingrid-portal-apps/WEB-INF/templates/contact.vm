@@ -9,22 +9,19 @@
                 <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
             </div>
             <div class="form-element">
-                <textarea class="custom-scrollbar" name="message" id="bemerkungen" #addErrorFormClass('message') rows="10">#getFieldValue('message')</textarea>
-                #addErrorFormMessage('message')
+                <textarea class="custom-scrollbar #addErrorFormClassText('message')" name="message" id="bemerkungen"  rows="10" placeholder="$MESSAGES.getString('contact.error.noMessage')">#getFieldValue('message')</textarea>
             </div>
             <div class="form-element">
                 <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
             </div>
             <div class="form-element">
-                <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') />
-                #addErrorFormMessage('firstname')
+                <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') placeholder="$MESSAGES.getString('contact.error.noFirstName')"/>
             </div>
         <div class="form-element">
             <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
-            #addErrorFormMessage('lastname')
+            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname') placeholder="$MESSAGES.getString('contact.error.noLastName')"/>
         </div>
         <div class="form-element">
             <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
@@ -42,8 +39,7 @@
             <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
-            #addErrorFormMessage('email')
+            <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') placeholder="$MESSAGES.getString('contact.error.noEmail')"/>
         </div>
         #if ($uploadEnable)
             <div class="form-element">
@@ -57,18 +53,20 @@
             <div class="form-element">
                 <label for="xx7">$MESSAGES.getString('contact.jcaptcha.title')</label>
             </div>
-            <div class="sg-gradientbox">
-            #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
-                <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
-            #else
-                <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
-            #end 
-            </div>
-            #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline")
+            <p>
+                <div class="sg-gradientbox">
+                #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
+                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
+                #else
+                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
+                #end 
+                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline xsmall-button")
+                </div>
+                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline small-button")
+            </p>
             $action.setParameter("doRefresh",  "Refresh")
             <div class="form-element">
-                <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha')/>
-                #addErrorFormMessage('jcaptcha')
+                <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha') placeholder="$MESSAGES.getString('contact.error.noJCapture')"/>
             </div>
         #end
         <hr>

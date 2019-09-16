@@ -223,3 +223,95 @@
   background-size: 13px 16px;
   padding: 3px 10px 0 4px !important;
 }
+
+@media screen and (min-width: 480px) {
+  .popup {
+    left: 50%;
+    margin-left: -15rem;
+  }
+}
+
+@media screen and (max-height: 34.9375em) and (max-width: 63.9375em) and (orientation: landscape) {
+  #legend-accordion-label-landscape {
+      display: block !important;
+  }
+  .is-active #legend-accordion-label-landscape {
+      border-top: 1px solid #c6cfe2 !important;
+      border-bottom: 0 !important;
+      padding: 10px 0 !important;
+  }
+  .is-active #legend-accordion-label-landscape::after {
+      top: 10px !important;
+      right: 50% !important;
+  }
+  .is-active #legend-accordion-label-landscape span {
+      display: none;
+  }
+  #legend-accordion-label {
+      display: none !important;
+  }
+  #legend-accordion {
+      margin: 0;
+  }
+  
+  .leaflet-popup-content {
+      min-width: 400px;
+  }
+
+  header {
+    height: 80px;
+  }
+
+  header .menu-tab-row .menu-tab {
+    height: 76px;
+    width: 66px;
+    font-size: 14px;
+  }
+  header .menu-tab-row .menu-tab .link-menu-tab {
+    top: 32px;
+    padding: 8px 0;
+  }
+  header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
+    font-size: 22px;
+    top: -18px;
+    left: 22px;
+  }
+
+  .header-menu-open {
+    text-align: right;
+    right: 12px;
+  }
+  
+  .header-menu-open button {
+    margin: 13px 0 0 0;
+  }
+
+  .header-menu-open .login {
+    display: none;
+  }
+  
+  .leaflet-popup-content a h5, .leaflet-popup-content .helper.icon{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+  
+  .leaflet-popup-content {
+    margin: 24px;
+  }
+  
+  .leaflet-popup-content .helper.icon:last-of-type, .leaflet-popup-content .helper.text:first-of-type { 
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 34.9375em) {
+  .leaflet-popup-content {
+    min-width: 300px;
+  }
+  
+  .teaser-data .helper.icon {
+    width: 85%;
+  }
+}

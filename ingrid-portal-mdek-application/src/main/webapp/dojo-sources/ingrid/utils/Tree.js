@@ -88,7 +88,7 @@ define([
             // set the selected node
             // do not call setSelected only on the node, since it will not be registered
             // by the tree itself and won't put it on the selected nodes list!!!
-            tree.set("selectedNodes", [node]);
+            tree.dndController.setSelection([node]);
 
             if (active) {
                 tree._markLoadedNode(node);

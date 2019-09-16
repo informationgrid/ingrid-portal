@@ -74,37 +74,82 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #set ($pstart = 0)
     #set ($action = $renderResponse.createActionURL())
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
         <span class="ic-ic-double-arrow-left"></span>
     </a>
     
     #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
         <span class="ic-ic-arrow-left"></span>
     </a>
     
     #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
         #if($pageId == $pageSelector.currentSelectorPage)
-            <a class="icon"><span>$pageId</span></a>
+            <a class="icon small-button"><span>$pageId</span></a>
         #else
             #set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
             $action.setParameter('rstart', $pstart.toString())
-            <a class="icon" href="$action"><span>$pageId</span></a>
+            <a class="icon small-button" href="$action"><span>$pageId</span></a>
         #end
     #end
     
     #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+    <a class="icon small-button" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
         <span class="ic-ic-arrow-right"></span>
     </a>
     
     #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
     $action.setParameter('rstart', $pstart.toString())
-    <a class="icon" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+    <a class="icon small-button" style="margin:0;" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
         <span class="ic-ic-double-arrow-right"></span>
     </a>
+    
+    <div class="show-for-xsmall-only">
+        <p>
+            #foreach($pageId in [$pageSelector.firstSelectorPage..$pageSelector.lastSelectorPage])
+                <a class="icon"
+                #if($pageId == $pageSelector.lastSelectorPage)
+                    style="margin:0;"
+                #end
+                #if($pageId == $pageSelector.currentSelectorPage)
+                    >
+                #else
+                    #set ($pstart = ($pageId - 1) * $pageSelector.hitsPerPage)
+                    $action.setParameter('rstart', $pstart.toString())
+                    href="$action">
+                #end
+                <span>$pageId</span></a>
+            #end
+        </p>
+        <p>
+            ## Default
+            #set ($pstart = 0)
+            #set ($action = $renderResponse.createActionURL())
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+                <span class="ic-ic-double-arrow-left"></span>
+            </a>
+            
+            #set ($pstart = ($pageSelector.currentSelectorPage - 2) * $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
+                <span class="ic-ic-arrow-left"></span>
+            </a>
+            #set ($pstart = $pageSelector.currentSelectorPage * $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+                <span class="ic-ic-arrow-right"></span>
+            </a>
+            
+            #set ($pstart =($pageSelector.numberOfPages - 1)* $pageSelector.hitsPerPage)
+            $action.setParameter('rstart', $pstart.toString())
+            <a class="icon" style="margin: 0;" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
+                <span class="ic-ic-double-arrow-right"></span>
+            </a>
+        </p>
+    </div>
 </div>
 #end
 

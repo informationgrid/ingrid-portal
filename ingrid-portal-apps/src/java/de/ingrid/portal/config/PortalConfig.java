@@ -154,10 +154,6 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String COMPONENT_MONITOR_SNS_PW = "component.monitor.sns.password";
     
-    public static final String TEASER_WEATHER_DWD_PATH = "teaser.weather.dwd.path";
-    
-    public static final String TEASER_WEATHER_DWD_MOVIE = "teaser.weather.dwd.movie";
-    
     // contains the short version of all supported languages
     public static final String LANGUAGES_SHORT = "languages.short";
     
@@ -218,6 +214,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 
     public static final String PORTAL_SEARCH_EXTEND_QUERY = "portal.search.extend.query";
+
+    public static final String PORTAL_SEARCH_RESET_QUERY = "portal.search.reset.query";
 
     public static final String CATEGORY_TEASER_SEARCH_QUERY = "category.teaser.search.query";
     

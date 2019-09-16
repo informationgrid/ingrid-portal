@@ -488,12 +488,6 @@
                     <exclude name="hibernate.cfg.xml" />
                   </fileset>
                 </copy>
-                <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
-                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
-                  <fileset dir="${project.basedir}/src/webapp/dwd_warnmodul/">
-                    <include name="*.cfg" />
-                  </fileset>
-                </copy>
                 <echo>INGRID-PORTAL: Copy portal-base layout ingrid properties to profile 'ingrid'</echo>
                 <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal/">
                   <fileset dir="${project.basedir}/../ingrid-portal-base/src/webapp/">

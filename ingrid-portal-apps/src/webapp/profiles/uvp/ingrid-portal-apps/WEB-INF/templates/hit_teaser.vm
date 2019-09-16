@@ -28,8 +28,8 @@
                 #if($hits)
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     #foreach($hit in $hits)
-                        <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" class="data">
-                            <div class="teaser-data">
+                        <div class="teaser-data">
+                            <div class="data" >
                                 <div class="row">
                                     <div class="xsmall-24 large-13 columns">
                                         <div class="text-wrapper">
@@ -37,22 +37,26 @@
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
                                             </div>
                                             #set ($date = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
-                                            <h2 class="header">
-                                                $hit.getHitDetail().getTitle()
-                                            </h2>
+                                            <a href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'" title="$hit.getHitDetail().getTitle()">
+                                                <h2 class="header">
+                                                    $hit.getHitDetail().getTitle()
+                                                </h2>
+                                            </a>
                                             #if($date)
                                             <div class="helper text date">
                                                 <span class="">$date</span>
                                             </div>
                                             #end
                                             <p class="data-text">$hit.getHitDetail().getSummary()</p>
-                                            #foreach($uvp_category in $hit.getHitDetail().getArray("uvp_category"))
+                                            #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
                                                 <div class="helper icon">
                                                     <span class="ic-ic-$uvp_category"></span>
                                                     <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
                                                 </div>
                                             #end
-                                            <span class="ic-ic-arrow arrow"></span>
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
+                                                <span class="ic-ic-arrow arrow"></span>
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="xsmall-24 large-11 columns">
@@ -83,7 +87,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     #end
                 #else
                 #end

@@ -21,6 +21,7 @@
         </ul>
     #end
     #set($isActive = "")
+    <div class="tabs-content" data-tabs-content="uvp-tabs">
     #foreach ($cf in $config)
         #set($facetParent = $cf.getId())
         #set($facetParentName = $cf.getName())
@@ -32,14 +33,12 @@
                     #set($isActive = false)
                 #end
                 #if($cf.getFacets())
-                    <div class="tabs-content" data-tabs-content="uvp-tabs">
-                        #getTabsContent($facetParentName $cf.getFacets() $facetParent $cf.getColNum() $isActive)
-                    </div>
+                    #getTabsContent($facetParentName $cf.getFacets() $facetParent $cf.getColNum() $isActive)
                 #end
             #end
         #end
     #end
-</ul>
+    </div>
 
 #macro (getTabs $facetName $facetList $parentFacet $isActive)
     <li class="tabs-title #if($isActive)is-active#end" role="presentation">

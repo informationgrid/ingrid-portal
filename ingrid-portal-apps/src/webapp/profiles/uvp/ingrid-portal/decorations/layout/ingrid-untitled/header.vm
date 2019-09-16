@@ -60,9 +60,6 @@
         
         <!-- zxcvbn -->
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
-        
-        <!-- Toybox -->
-        <script src="https://d16ahjtmf9d1au.cloudfront.net/inject.bundle.js" async data-id="ToyboxSnippet" data-token="TwsyHJoLBiPw" ></script>
     </head>
     <body>
         <div class="container">
