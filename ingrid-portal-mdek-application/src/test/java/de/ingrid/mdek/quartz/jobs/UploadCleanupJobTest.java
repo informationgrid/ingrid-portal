@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,6 +37,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,11 +45,17 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Core;
 import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Layout;
 import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.layout.PatternLayout;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.apache.logging.log4j.core.config.plugins.Plugin;
+import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
+import org.apache.logging.log4j.core.config.plugins.PluginElement;
+import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -92,25 +98,26 @@ public class UploadCleanupJobTest {
     private UploadCleanupJob job;
     private FileSystemStorage storage;
 
-    private final Logger jobLogger = LogManager.getLogger(UploadCleanupJob.class);
-    private final TestAppender testAppender = new TestAppender("test", null, PatternLayout.createDefaultLayout());
+    private TestAppender testAppender;
 
-    public class TestAppender extends AbstractAppender {
 
-        public boolean hasIssues() {
-            return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 ||
-                this.getEvents(Level.WARN).size() > 0;
+    @Plugin(
+        name = "TestAppender",
+        category = Core.CATEGORY_NAME,
+        elementType = Appender.ELEMENT_TYPE)
+    public static class TestAppender extends AbstractAppender {
+
+        private final List<LogEvent> events = new CopyOnWriteArrayList<>();
+
+        protected TestAppender(final String name, final Filter filter) {
+            super(name, filter, null);
         }
 
-        public List<LogEvent> getEvents(final Level level) {
-            return this.events.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
-        }
-
-        //for verifying.
-        List<LogEvent> events = new ArrayList<>();
-
-        public TestAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout) {
-            super(name, filter, layout);
+        @PluginFactory
+        public static TestAppender createAppender(
+                @PluginAttribute("name") final String name,
+                @PluginElement("Filter") final Filter filter) {
+            return new TestAppender(name, filter);
         }
 
         @Override
@@ -118,8 +125,16 @@ public class UploadCleanupJobTest {
             events.add(event);
         }
 
-        public List<LogEvent> getEvents() {
-            return events;
+        public boolean hasIssues() {
+            return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 || this.getEvents(Level.WARN).size() > 0;
+        }
+
+        public List<LogEvent> getEvents(final Level level) {
+            return events.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
+        }
+
+        public void clear() {
+            events.clear();
         }
     }
 
@@ -147,16 +162,27 @@ public class UploadCleanupJobTest {
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
 
         // setup logging
-        final org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
+        final Logger jobLogger = LogManager.getLogger(UploadCleanupJob.class);
+        final LoggerContext lc = (LoggerContext) LogManager.getContext(false);
+        lc.reconfigure();
+        final Configuration configuration = lc.getConfiguration();
+        testAppender = TestAppender.createAppender("test", null);
         testAppender.start();
-        coreLogger.addAppender(testAppender);
+        configuration.addAppender(testAppender);
+        configuration.addLoggerAppender(lc.getLogger(jobLogger.getName()), testAppender);
+        configuration.getLoggerConfig(jobLogger.getName()).setLevel(Level.DEBUG);
+        lc.updateLoggers();
+
+        // check logging setup
+        assertTrue(jobLogger.isDebugEnabled());
+        jobLogger.debug("Test log entry");
+        assertEquals(1, testAppender.getEvents(Level.DEBUG).size());
+        testAppender.clear();
     }
 
     @After
     public void tearDown() throws Exception {
-        testAppender.stop();
-        final org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
-        coreLogger.removeAppender(this.testAppender);
+        testAppender.clear();
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
     }
 
@@ -338,13 +364,13 @@ public class UploadCleanupJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);

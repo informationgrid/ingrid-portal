@@ -34,7 +34,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -63,9 +64,9 @@ public class UploadCleanupJob extends QuartzJobBean {
      * - {UUID}/{//location}:      Link without protocol
      * - {UUID}/{http://location}: Link with HTTP or any other protocol
      */
-    private static final Pattern LINK_PATTERN = Pattern.compile(".*/(//|[^:/]+://).*");
+    private static final Pattern LINK_PATTERN = Pattern.compile("^(//|[^:/]+://).*");
 
-    private static final Logger log = Logger.getLogger(UploadCleanupJob.class);
+    private static final Logger log = LogManager.getLogger(UploadCleanupJob.class);
 
     public class FileReference {
         public String file;

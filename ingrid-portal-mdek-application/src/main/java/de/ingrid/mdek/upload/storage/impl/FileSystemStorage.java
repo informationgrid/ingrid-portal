@@ -50,7 +50,8 @@ import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tika.config.TikaConfig;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
@@ -93,7 +94,7 @@ public class FileSystemStorage implements Storage {
 
     private static final String TMP_FILE_PREFIX = "upload";
 
-    private static final Logger log = Logger.getLogger(FileSystemStorage.class);
+    private static final Logger log = LogManager.getLogger(FileSystemStorage.class);
 
     private static final TikaConfig tika;
     static {

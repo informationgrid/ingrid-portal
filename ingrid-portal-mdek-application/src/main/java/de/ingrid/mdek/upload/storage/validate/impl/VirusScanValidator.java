@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import de.ingrid.mdek.upload.ValidationException;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
@@ -36,7 +37,7 @@ public class VirusScanValidator implements Validator {
     private Pattern infectedPattern;
     private Pattern cleanPattern;
 
-    private static final Logger log = Logger.getLogger(FileSystemStorage.class);
+    private static final Logger log = LogManager.getLogger(FileSystemStorage.class);
 
     /**
      */
