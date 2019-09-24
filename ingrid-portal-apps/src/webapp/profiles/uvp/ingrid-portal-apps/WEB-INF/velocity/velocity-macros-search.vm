@@ -67,9 +67,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
 <div class="caption">
     #if($isBottom)
-        <p>#renderRankedResultCounter($pageSelector)</p>
+        #renderRankedResultCounter($pageSelector)
     #end
-    
+    <br>
     ## Default
     #set ($pstart = 0)
     #set ($action = $renderResponse.createActionURL())
@@ -150,6 +150,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             </a>
         </p>
     </div>
+    <br><br><br>
 </div>
 #end
 
