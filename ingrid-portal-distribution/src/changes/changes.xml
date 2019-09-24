@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.0.4" date="2019-xx-xx" description="Release 5.0.4">
+          <action type="update" dev="wemove" issue="1473">
+            Wrong reference to UVP-18 instead of UVPG-18, resulting in display problems in the portal.
+          </action>
+        </release>
+
         <release version="5.0.3" date="2019-09-12" description="Release 5.0.3">
           <action type="fix" dev="wemove" issue="1442">
             Portal: Fix search detail link.
