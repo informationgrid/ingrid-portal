@@ -267,10 +267,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 
 #macro(renderSearchResultFacetSelectionInfo $entry $resourceMsgs)
     #if($entry.getInfo())
-    <div class="caption">
-        <div class="icon check">
-            <span class="ic-ic-info"></span>
-            <span>$entry.getInfo()</span>
+    <div class="form-element boxed">
+        <div class="input-check caption" style="text-align:left;">
+            <div class="icon check">
+                <span class="ic-ic-info"></span>
+                <span>$entry.getInfo()</span>
+            </div>
         </div>
     </div>
     #end
