@@ -113,6 +113,12 @@ img { width: 100%; }
   span:first-child {
     font-size: 14px;
     margin-right: 5px;
+    float: left;
+  }
+  span.text {
+    position: relative;
+    display: block;
+    margin-left: 28px;
   }
 }
 .helper.icon.check .ic-ic-check {
@@ -1557,6 +1563,9 @@ footer {
     font-size: 14px;
     line-height: 20px;
     margin: 0 0 16px 0;
+  }
+  .helper.icon span.text {
+    margin-left: 20px;
   }
 }
 .leaflet-popup-tip-container {

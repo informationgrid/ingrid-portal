@@ -329,7 +329,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     #if($info)
         <div class="helper icon">
             <span class="ic-ic-info"></span>
-            <span class="">$info</span>
+            <span class="text">$info</span>
         </div>
     #end
     </div>
