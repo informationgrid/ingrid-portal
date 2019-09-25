@@ -591,6 +591,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
   background: $blue-midnight;
 }
 .tabs-panel { padding: 36px 0; }
+.tabs-panel.midnight { padding: 72px 0; }
 
 /* form elements */
 .form-element {
