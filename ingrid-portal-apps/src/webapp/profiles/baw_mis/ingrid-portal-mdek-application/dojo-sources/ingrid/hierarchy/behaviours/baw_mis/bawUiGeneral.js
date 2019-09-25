@@ -21,12 +21,25 @@
  * **************************************************#
  */
 define([
+    "dijit/MenuItem",
+    "dijit/MenuSeparator",
     "dijit/registry",
+    "dojo/_base/array",
     "dojo/_base/declare",
+    "dojo/_base/lang",
+    "dojo/dom",
     "dojo/dom-class",
+    "dojo/dom-construct",
     "dojo/topic",
+    "ingrid/dialog",
+    "ingrid/grid/CustomGridEditors",
+    "ingrid/grid/CustomGridFormatters",
+    "ingrid/hierarchy/dirty",
+    "ingrid/layoutCreator",
+    "ingrid/menu",
+    "ingrid/message",
     "ingrid/utils/Store"
-], function(registry, declare, domClass, topic, UtilStore) {
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -34,10 +47,15 @@ define([
         defaultActive: true,
         category: "BAW-MIS",
         run: function() {
+            var promise = this._createCustomFields();
 
             topic.subscribe("/onObjectClassChange", function(data) {
 
                 var isNewItem = "newNode" === currentUdk.uuid;
+
+                // ========================================
+                // Modifications to existing fields
+                // ========================================
 
                 // ----------------------------------------
                 // Allgemeines
@@ -207,6 +225,264 @@ define([
                 domClass.add("uiElement5052", "hidden");
 
             });
-        }})();
+
+            return promise;
+        },
+
+        _createCustomFields: function () {
+            var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
+            var newFieldsToDirtyCheck = [];
+
+            // TODO mark fields as "required" if not Auftrag
+
+            var id;
+            // Create elements in the reverse order instead of deriving ids
+            // of the wrapped DOM elements.
+            id = "bawAuftragsnummer";
+            construct.place(
+                creator.createDomTextbox({
+                    id: id,
+                    name: message.get("ui.obj.baw.auftragsnummer.title"),
+                    help: message.get("ui.obj.baw.auftragsnummer.help"),
+                    visible: "optional",
+                    style: "width: 100%"
+                }),
+                "uiElement1000", "after");
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            id = "bawAuftragstitel";
+            construct.place(
+                creator.createDomTextbox({
+                    id: id,
+                    name: message.get("ui.obj.baw.auftragstitel.title"),
+                    help: message.get("ui.obj.baw.auftragstitel.help"),
+                    visible: "optional",
+                    style: "width: 100%"
+                }),
+                "uiElement1000", "after");
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            id = "simModelTypeTable";
+            var structure;
+            structure = [
+                {
+                    field: "simModelType",
+                    name: message.get("ui.obj.baw.simulation.model.type.table.title"),
+                    editable: true,
+                    type: Editors.SelectboxEditor,
+                    options: [],
+                    values: [],
+                    listId: 3950003,
+                    isMandatory: true,
+                    formatter: lang.partial(Formatters.SyslistCellFormatter, 3950003),
+                    partialSearch: true,
+                    style: "width: auto"
+                }
+            ];
+            creator.createDomDataGrid({
+                id: id,
+                name: message.get("ui.obj.baw.simulation.model.type.table.title"),
+                help: message.get("ui.obj.baw.simulation.model.type.table.help"),
+                //isMandatory: true,
+                style: "width: 100%"
+            }, structure, "refClass1");
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            id = "simProcess";
+            construct.place(
+                creator.createDomSelectBox({
+                    id: id,
+                    name: message.get("ui.obj.baw.simulation.process.title"),
+                    help: message.get("ui.obj.baw.simulation.process.help"),
+                    visible: "optional",
+                    useSyslist: 3950001,
+                    style: "width: 50%"
+                }),
+                "uiElement3520", "before"
+            );
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            id = "simSpatialDimension";
+            construct.place(
+                creator.createDomSelectBox({
+                    id: id,
+                    name: message.get("ui.obj.baw.simulation.spatial.dimensionality.title"),
+                    help: message.get("ui.obj.baw.simulation.spatial.dimensionality.help"),
+                    visible: "optional",
+                    useSyslist: "3950000",
+                    style: "width: 50%"
+                }),
+                "uiElement3520", "before"
+            );
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            id = "dqAccTimeMeas";
+            construct.place(
+                creator.createDomNumberTextbox({
+                    id: id,
+                    name: message.get("ui.obj.baw.simulation.timestep.title") + " [s]",
+                    help: message.get("ui.obj.baw.simulation.timestep.help"),
+                    visible: "optional",
+                    formatter: Formatters.LocalizedNumberFormatter,
+                    style: "width: 50%"
+                }),
+                "uiElement3520", "before"
+            );
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+
+            // Create context menu for the simulation parameter table
+            this._createBawSimulationParameterTableContextMenu();
+
+            // Define structure for the simulation parameter table
+            id = "simParamTable";
+            structure = [
+                {
+                    field: "simParamName",
+                    name: message.get("ui.obj.baw.simulation.parameter.table.column.name"),
+                    editable: false,
+                    isMandatory: true,
+                    width: "300px"
+                },
+                {
+                    field: "simParamType",
+                    name: message.get("ui.obj.baw.simulation.parameter.table.column.role"),
+                    editable: false,
+                    isMandatory: true,
+                    formatter: lang.partial(Formatters.SyslistCellFormatter, 3950004),
+                    partialSearch: false,
+                    width: "150px"
+                },
+                {
+                    field: "simParamValue",
+                    name: message.get("ui.obj.baw.simulation.parameter.table.column.value"),
+                    editable: false,
+                    isMandatory: true,
+                    width: "150px"
+                    // Also see comment below
+                },
+                {
+                    field: "simParamUnit",
+                    name: message.get("ui.obj.baw.simulation.parameter.table.column.units"),
+                    editable: false,
+                    //isMandatory: true,
+                    width: "auto"
+                }
+                /*
+                 * Besides the visible columns listed above, the table contains
+                 * data entered using the dialog box, which isn't directly
+                 * visible in this table. This data is:
+                 * - hasDiscreteValues -> Depends on which checkbox is selected
+                 *                        in the dialog box. True means that
+                 *                        discrete values option is active
+                 * - values -> Array containing:
+                 *             - row data from discrete values table
+                 *             - two entries: one each from the minimum and
+                 *               maximum value text fields.
+                 *
+                 * Additionally, the value displayed in the simParamValue column
+                 * is derived using the simulationParameterValueArrayToString
+                 * function below. Since this value is a derived one, it can be
+                 * recreated every time to avoid inconsistency with the actual
+                 * values.
+                 */
+            ];
+
+            // Create the simulation table parameter
+            creator.createDomDataGrid({
+                id: id,
+                name: message.get("ui.obj.baw.simulation.parameter.table.title"),
+                help: message.get("ui.obj.baw.simulation.parameter.table.help"),
+                contextMenu: "BAW_SIMULATION_PARAMETER",
+                style: "width: 100%"
+            }, structure, "refClass1");
+            newFieldsToDirtyCheck.push(id);
+
+            additionalFields.push(registry.byId(id));
+
+            // Add link for creating a new entry to the simulation parameter table
+            this._createAppendSimulationParameterLink();
+
+            array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+            return registry.byId(id).promiseInit;
+        },
+
+        _createBawSimulationParameterTableContextMenu: function () {
+            var type = "BAW_SIMULATION_PARAMETER";
+            var contextMenu = menu.initContextMenu({contextMenu: type});
+            contextMenu.addChild(new MenuSeparator());
+            contextMenu.addChild(new MenuItem({
+                id: "menuEditClicked_" + type,
+                label: message.get('contextmenu.table.editClicked'),
+                onClick: function () {
+                    var rowData = clickedSlickGrid.getData()[clickedRow];
+                    var dialogData = {
+                        gridId: clickedSlickGridProperties.id,
+                        selectedRow: rowData
+                    };
+                    dialog.showPage(message.get("dialog.simulation.parameter.title"), 'dialogs/mdek_baw_simulation_parameter_dialog.jsp?c=' + userLocale, 600, 300, true, dialogData);
+                }
+            }));
+        },
+
+        _createAppendSimulationParameterLink: function () {
+            var linkId = "simParamTableLink";
+            var linkText = message.get("ui.obj.baw.simulation.parameter.table.new.row");
+            var linkOnClick = "require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('simParamValue'), 'dialogs/mdek_baw_simulation_parameter_dialog.jsp?c=' + userLocale, 600, 300, true, {});";
+
+            var span = document.createElement("span");
+            span.setAttribute("class", "functionalLink");
+
+            var img = document.createElement("img");
+            img.setAttribute("src", "img/ic_fl_popup.gif");
+            img.setAttribute("width", "10");
+            img.setAttribute("height", "9");
+            img.setAttribute("alt", "Popup");
+
+            var link = document.createElement("a");
+            link.setAttribute("id", linkId);
+            link.setAttribute("href", "javascript:void(0);");
+            link.setAttribute("onclick", linkOnClick);
+            link.setAttribute("title", linkText + " [Popup]");
+            link.textContent = linkText;
+
+            span.appendChild(img);
+            span.appendChild(link);
+
+            var node = dom.byId("simParamTable").parentElement;
+            construct.place(span, node, 'before');
+        },
+
+        /*
+         * Create a string representation for the simulation parameters as
+         * follows:
+         * - A single discrete value is displayed as is,
+         * - Multiple discrete values are displayed as the stringified
+         *   form of the "values" array e.g. [ 1, 2, 3 ], and
+         * - Min and max values (not discrete) are displayed in square brackets
+         *   and delimited by two dots e.g. [ 0 .. 5 ]
+         */
+        simulationParameterValueArrayToString: function (values, hasDiscreteValues) {
+            var valuesString = "";
+            if (hasDiscreteValues) {
+                if (values.length == 1) {
+                    valuesString += values[0];
+                } else {
+                    valuesString = JSON.stringify(values);
+                }
+            } else {
+                var min = values[0];
+                var max = values[1];
+                valuesString = "[" + min + " .. " + max + "]";
+            }
+            return valuesString;
+        }
+
+    })();
 });
 

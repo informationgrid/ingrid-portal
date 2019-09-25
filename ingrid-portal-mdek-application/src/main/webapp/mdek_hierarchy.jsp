@@ -40,9 +40,9 @@
         <script type="text/javascript">
             var pageHierachy = _container_;
             require(["dojo/Deferred", "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/registry", "dojo/_base/lang", "dojo/dom-construct", "dojo/topic",
-                    "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "ingrid/utils/Catalog", "dojo/ready"
+                    "ingrid/message", "ingrid/tree/MetadataTree", "ingrid/IgeToolbar", "ingrid/IgeActions", "ingrid/tree/HierarchyTreeActions", "ingrid/utils/Catalog", "dojo/ready"
                 ],
-                function(Deferred, BorderContainer, ContentPane, registry, lang, construct, topic, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
+                function(Deferred, BorderContainer, ContentPane, registry, lang, construct, topic, message, MetadataTree, IgeToolbar, igeActions, TreeActions, UtilCatalog, ready) {
 
                     pageHierachy.dataTreePromise = new Deferred();
 
@@ -192,6 +192,9 @@
                                 break;
                             case "conformity":
                                 localizedTitle = "<fmt:message key='dialog.conformity.title' />";
+                                break;
+                            case "simParamValue":
+                                localizedTitle = message.get('dialog.simulation.parameter.title');
                                 break;
                         }
                         return localizedTitle;
