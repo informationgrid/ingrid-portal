@@ -21,30 +21,23 @@
  * **************************************************#
  */
 define([
-    "dojo/_base/lang",
-    "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/baw_mis/bawSystemBehaviours",
-    "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
-    "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
+    "dojo/_base/declare",
+    "dojo/topic"
+], function(declare, topic) {
 
-    return lang.mixin(behaviours, {
+    return declare(null, {
+        title: "Systemanpassungen",
+        description: "Anpassungen für die BAW, die beim erstem Laden des IGE laufen.",
+        defaultActive: true,
+        type: "SYSTEM",
+        category: "BAW-MIS",
+        run: function() {
 
-        /**
-         * System-level changes for BAW-MIS profile
-         */
-        bawSystemBehaviours: bawSystemBehaviours,
-
-        /**
-         * UI changes for BAW-MIS profile
-         */
-        bawUiGeneral: bawUiGeneral,
-
-        /**
-         * Extra validation rules for BAW-MIS
-         */
-        bawValidationRules: bawValidationRules
-
-    });
+            // load custom syslists
+            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
+                ids.push(3950000, 3950001, 3950003, 3950004);
+            });
+        }
+    })();
 });
 
