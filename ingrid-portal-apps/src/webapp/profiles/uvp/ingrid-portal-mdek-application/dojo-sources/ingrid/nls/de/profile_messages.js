@@ -128,7 +128,7 @@ define({
     "uvp.form.negative.address": "Kontaktdaten der federführenden Dienststelle",
     "uvp.form.negative.approvalDate": "Datum der Entscheidung",
     "uvp.form.negative.approvalDate.helpMessage": "Eintragung des Datums der Entscheidung - Pflichtfeld.<br><br>Beispiel:<br><br>TT.MM.JJJJ",
-    "uvp.form.negative.relevantDocs": "Relevante Dokumente",
+    "uvp.form.negative.relevantDocs": "Ergebnis der UVP-Vorprüfung",
     "uvp.form.negative.relevantDocs.helpMessage": "...",
 
     "ui.toolbar.CutCaption": "Verfahren/Adressen/Teilbaum ausschneiden",
