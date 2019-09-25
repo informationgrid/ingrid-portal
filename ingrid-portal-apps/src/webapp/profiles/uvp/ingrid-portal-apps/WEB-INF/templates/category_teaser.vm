@@ -47,7 +47,7 @@
 #end
 
 #macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
-    <div class="tabs-panel #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel" aria-labelledby="panel-${parentFacet}-label">
+    <div class="tabs-panel midnight #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel" aria-labelledby="panel-${parentFacet}-label">
         <div class="row align-center text-center">
             #if($parentFacet == "provider")
                 #set($facetId = "partner")
