@@ -1342,6 +1342,9 @@ footer {
 }
 
 /* timeline */
+#timeline .columns {
+  padding-bottom: 0px;
+}
 .timeline {
 
   h1 { margin-left: 3rem; }
@@ -1357,6 +1360,7 @@ footer {
     display: inline-block;
     vertical-align: top;
     width: 82%;
+    padding-bottom: 3rem;
 
     h4 span {
       color: $blue-light;
