@@ -2028,6 +2028,7 @@ define([
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
 
+            topic.publish("beforeFinishApplyingObjectNodeData", nodeData);
         },
         
         prepareBackendDataForGrid: function(currentField) {
@@ -2658,6 +2659,8 @@ define([
                     console.debug("Error in _getObjectData - Object Class must be 0...7!");
                     break;
             }
+
+            topic.publish("beforeFinishGettingObjectNodeData", nodeData);
 
             console.debug("------ OBJECT DATA ------");
             console.debug(nodeData);

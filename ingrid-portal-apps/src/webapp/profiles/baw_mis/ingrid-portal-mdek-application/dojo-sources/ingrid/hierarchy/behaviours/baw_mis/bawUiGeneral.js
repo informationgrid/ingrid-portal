@@ -38,8 +38,8 @@ define([
     "ingrid/layoutCreator",
     "ingrid/menu",
     "ingrid/message",
-    "ingrid/utils/Store"
-], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore) {
+    "ingrid/utils/Store",
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore, module) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -230,6 +230,7 @@ define([
         },
 
         _createCustomFields: function () {
+            var self = require(module.id);
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
@@ -407,6 +408,98 @@ define([
 
             // Add link for creating a new entry to the simulation parameter table
             this._createAppendSimulationParameterLink();
+
+            // Special handling of nested table data originating from the dialog box
+            topic.subscribe("beforeFinishGettingObjectNodeData", function (nodeData) {
+                /*
+                 * We manipulate the additional field data to add another nested
+                 * level of values for storing the simulation parameter values
+                 * that have been entered in the dialog box.
+                 * See also the comment in the structure of this table.
+                 */
+                var simParamTableData = registry.byId(id).data;
+                var simParamNodeAdditionalValues = nodeData.additionalFields.find(function (row) {
+                    return row.identifier === id;
+                });
+
+                var newTableRows = [];
+
+                if (simParamTableData.length > 0) {
+                    simParamNodeAdditionalValues.tableRows.forEach(function (row, idx) {
+                        // Remove existing simParamValue entry
+                        var rowToEdit = row.filter(function (r) {
+                            return r.identifier !== "simParamValue"
+                        });
+
+                        // Prepare values to add to the new nested level
+                        var values = simParamTableData[idx].values;
+                        var valueTableRows = array.map(values, function (valueItem) {
+                            return [{
+                                identifier: "simParamValue",
+                                listId: "-1",
+                                tableRows: null,
+                                value: valueItem
+                            }];
+                        });
+
+                        // Add additional rows
+                        var hasDiscreteValues = simParamTableData[idx].hasDiscreteValues;
+                        rowToEdit.push({
+                            identifier: "simParamHasDiscreteValues",
+                            listId: "-1",
+                            tableRows: null,
+                            value: JSON.stringify(hasDiscreteValues)
+                            //value: hasDiscreteValues
+                        });
+                        rowToEdit.push({
+                            identifier: "simParamValueArray",
+                            listId: -1,
+                            tableRows: valueTableRows,
+                            value: null
+                        });
+                        newTableRows.push(rowToEdit);
+                    });
+                }
+
+                simParamNodeAdditionalValues.tableRows = newTableRows;
+            });
+
+            topic.subscribe("beforeFinishApplyingObjectNodeData", function (nodeData) {
+                /*
+                 * Since values are stored as additional fields, some columns
+                 * have been automatically handled by this point. We just need
+                 * to handle two hidden fields here. See also the comment on the
+                 * structure for the table above.
+                 */
+                var simParamTableData = registry.byId(id).data;
+                var nodeAdditionalFieldData = nodeData.additionalFields.find(function (row) {
+                    return row.identifier === id;
+                });
+
+                // If no additional values for the desired id are found then there is nothing to do
+                if (!nodeAdditionalFieldData || !nodeAdditionalFieldData.tableRows) return;
+
+                nodeAdditionalFieldData.tableRows.forEach(function (additionalFieldRow, idx) {
+                    var simParamTableRow = simParamTableData[idx];
+
+                    // We can use the value that has already been set wrongly
+                    var hasDiscreteValues = JSON.parse(simParamTableRow.simParamHasDiscreteValues);
+                    simParamTableRow["hasDiscreteValues"] = hasDiscreteValues;
+                    delete simParamTableRow["simParamHasDiscreteValues"];
+                    delete simParamTableRow["simParamValueArray"];
+
+                    var valuesEntry = additionalFieldRow.find(function (row) {
+                        return row.identifier === "simParamValueArray";
+                    });
+
+                    var values = array.map(valuesEntry.tableRows, function (entry) {
+                        return entry[0].value;
+                    });
+                    simParamTableRow["values"] = values;
+                    simParamTableRow["simParamValue"] = self.simulationParameterValueArrayToString(values, hasDiscreteValues);
+                });
+                UtilStore.updateWriteStore(id, simParamTableData);
+            });
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             return registry.byId(id).promiseInit;
