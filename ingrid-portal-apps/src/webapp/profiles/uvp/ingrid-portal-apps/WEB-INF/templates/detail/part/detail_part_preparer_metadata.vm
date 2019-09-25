@@ -295,7 +295,7 @@
             #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
             #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
             #if($uvpNegativeRelevantDocs.size() > 0)
-                #renderTableToTree("Ergebnis der UVP-Vorprüfung" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+                #renderTableToTree("Ergebnis der UVP-Vorpr&uuml;fung" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
             #end
         #end
         </div>
