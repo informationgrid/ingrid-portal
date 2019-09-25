@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.2.0-SNAPSHOT" date="2019-xx-xx" description="Release 5.2.0">
+          <action type="update" dev="wemove" issue="1519">
+            UVP: Umbenennung Tabelle "Relevante Dokumente"
+          </action>
           <action type="add" dev="wemove" issue="1435">
             Portal: DWD Wetter Warnmodul entfernt
           </action>
