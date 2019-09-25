@@ -53,17 +53,15 @@
             <div class="form-element">
                 <label for="xx7">$MESSAGES.getString('contact.jcaptcha.title')</label>
             </div>
-            <p>
-                <div class="sg-gradientbox">
-                #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
-                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
-                #else
-                    <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
-                #end 
-                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline xsmall-button")
-                </div>
-                #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline small-button")
-            </p>
+            <div class="sg-gradientbox" style="height:100%;">
+            #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
+                <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha?keep">
+            #else
+                <image width=210px height=70px src="/ingrid-portal-apps/jcaptcha">
+            #end 
+            #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline xsmall-button")
+            </div>
+            #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline small-button")
             $action.setParameter("doRefresh",  "Refresh")
             <div class="form-element">
                 <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha') placeholder="$MESSAGES.getString('contact.error.noJCapture')"/>
