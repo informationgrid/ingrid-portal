@@ -41,7 +41,7 @@ define([
         run: function() {
             domClass.remove( "uiElementN025", "required" );
             domClass.add( "uiElementN025", "show" );
-            query("label[for=availabilityAccessConstraints]").addContent("Zugriffsbeschränkungen (INSPIRE-Liste)<span class='requiredSign'>*</span>", "only");
+            // query("label[for=availabilityAccessConstraints]").addContent("Zugriffsbeschränkungen (INSPIRE-Liste)<span class='requiredSign'>*</span>", "only");
             registry.byId("availabilityAccessConstraints").columns[0].editor = GridEditors.SelectboxEditor;
 
             // since the editor became a Selectbox, we need to map the output from the field to the previous format
