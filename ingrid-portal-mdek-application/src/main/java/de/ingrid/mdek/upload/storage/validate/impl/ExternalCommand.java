@@ -1,5 +1,6 @@
 package de.ingrid.mdek.upload.storage.validate.impl;
 
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -37,11 +38,11 @@ public class ExternalCommand {
      * @return String
      * @throws CommandExecutionException
      */
-    public String execute(final String... command) throws CommandExecutionException {
+    public String execute(final String command) throws CommandExecutionException {
         try {
             final ProcessBuilder builder = new ProcessBuilder();
-
-            final Process process = builder.command(command).redirectErrorStream(true).start();
+            final String[] commands = Arrays.stream(command.split("\\s+")).map(String::trim).toArray(String[]::new);
+            final Process process = builder.command(commands).redirectErrorStream(true).start();
 
             // capture output
             final ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(1);

@@ -1,7 +1,6 @@
 package de.ingrid.mdek.upload.storage.validate.impl;
 
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -9,7 +8,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import de.ingrid.mdek.upload.ValidationException;
-import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
 
@@ -37,10 +35,10 @@ public class VirusScanValidator implements Validator {
     private Pattern infectedPattern;
     private Pattern cleanPattern;
 
-    private static final Logger log = LogManager.getLogger(FileSystemStorage.class);
+    private ExternalCommand scanner = new ExternalCommand();
 
-    /**
-     */
+    private static final Logger log = LogManager.getLogger(VirusScanValidator.class);
+
     @Override
     public void initialize(final Map<String, String> configuration) throws IllegalArgumentException {
         // check required configuration parameters
@@ -71,10 +69,9 @@ public class VirusScanValidator implements Validator {
         }
         try {
             // scan file
-            final String command = this.command.replace(PLACEHOLDER_FILE, data.toString());
+            final String result = runScan(data);
 
             // analyze result
-            final String result = new ExternalCommand().execute(Arrays.stream(command.split("\\s+")).map(String::trim).toArray(String[]::new));
             if (infectedPattern.matcher(result).matches()) {
                 log.warn("Virus found: "+result);
                 throw new VirusFoundException("Virus found.", path+"/"+file);
@@ -86,5 +83,24 @@ public class VirusScanValidator implements Validator {
         catch (final CommandExecutionException e) {
             log.error("Virus scan failed: ", e);
         }
+    }
+
+    /**
+     * Set the scanner
+     * @param scanner
+     */
+    public void setScanner(final ExternalCommand scanner) {
+        this.scanner = scanner;
+    }
+
+    /**
+     * Scan the given file
+     * @param file
+     * @return String
+     * @throws CommandExecutionException
+     */
+    private String runScan(final Path file) throws CommandExecutionException {
+        final String command = this.command.replace(PLACEHOLDER_FILE, file.toString());
+        return scanner.execute(command);
     }
 }

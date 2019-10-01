@@ -111,6 +111,29 @@
         </property>
     </bean>
 
+    <bean name="uploadVirusScanJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UploadVirusScanJob"/>
+        <property name="durability" value="true"/>
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="validatorFactory">
+                    <bean class="de.ingrid.mdek.upload.storage.validate.ValidatorFactory">
+                        <constructor-arg value="${upload.validators.config}" />
+                    </bean>
+                </entry>
+                <entry key="scanDirs">
+                    <list>
+                        <value>${upload.docsdir}</value>
+                        <value>${upload.partsdir}</value>
+                    </list>
+                </entry>
+                <entry key="quarantineDir">
+                    <value>${upload.virusscan.quarantinedir}</value>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
     <!-- Trigger -->
     <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
         <property name="jobDetail" ref="checkForExpiredDatasetsJob"/>
@@ -122,6 +145,11 @@
         <property name="jobDetail" ref="uploadCleanupJob"/>
         <property name="cronExpression" value="${upload.cleanup.schedule}"/>
     </bean>
+
+    <bean id="simpleTriggerUploadVirusScan" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="uploadVirusScanJob"/>
+        <property name="cronExpression" value="${upload.virusscan.schedule}"/>
+    </bean>
     <!-- Scheduler Factory -->
 
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -130,6 +158,7 @@
                 <ref bean="simpleTrigger" />
                 <ref bean="simpleTriggerCodeLists"/>
                 <ref bean="simpleTriggerUploadCleanup" />
+                <ref bean="simpleTriggerUploadVirusScan" />
             </list>
         </property>
         <property name="applicationContextSchedulerContextKey">
