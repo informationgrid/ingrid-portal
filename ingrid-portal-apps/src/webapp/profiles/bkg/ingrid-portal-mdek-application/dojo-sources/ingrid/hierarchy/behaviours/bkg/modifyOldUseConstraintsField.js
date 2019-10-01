@@ -52,7 +52,8 @@ define([
                 var mapped = [];
                 array.forEach(items, function(item) {
                     mapped.push( { 
-                        title: UtilSyslist.getSyslistEntryName(6500, item.title) 
+                        title: UtilSyslist.getSyslistEntryName(6500, item.title) ,
+                        source: item.source
                     });
                 });
                 return mapped;
@@ -61,7 +62,8 @@ define([
                 var mapped = [];
                 array.forEach(newData, function(item) {
                     mapped.push( { 
-                        title: UtilSyslist.getSyslistEntryKey(6500, item.title) 
+                        title: UtilSyslist.getSyslistEntryKey(6500, item.title),
+                        source: item.source
                     });
                 });
                 return [mapped, scrollToTop, noRender];
