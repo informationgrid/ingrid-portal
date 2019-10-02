@@ -114,6 +114,10 @@ public class Config {
     /**
      * MAIL
      */
+    @PropertyValue("system.mail.receiver")
+    @DefaultValue("")
+    public String systemMailReceiver;
+
     @PropertyValue("workflow.mail.sender")
     @DefaultValue("")
     public String workflowMailSender;
