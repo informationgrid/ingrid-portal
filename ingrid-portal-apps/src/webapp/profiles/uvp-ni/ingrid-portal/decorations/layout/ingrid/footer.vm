@@ -1,83 +1,100 @@
-#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
-        <footer class="footer">
-            <div class="ob-box-padded ob-box-center ob-clear">
-                <div class="footer__top">
-                    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
-                        <img class="footer__logo" src="#GetPageResource("images/template/mobile-logo.png")"></img>
-                    </a>
-                    <p class="copyright">$MESSAGES.getString('ingrid.page.copyright')</p>
-                </div>
+    #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
+        <div class="row">
+            <div class="columns">
+                <p class="result-text no-margin">
+                    <span>
+                        <b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:
+                    </span>
+                    <span>
+                        <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+                    </span>
+                #if($currentPage)
+                    #if($currentPage == "/search-detail.psml")
+                        <span class="ic-ic-angle-right"></span>
+                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                    #end
+                    #if($currentPage != "/default-page.psml")
+                        <span class="ic-ic-angle-right"></span>
+                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                    #end
+                #end
             </div>
-            <hr class="bx-top-0 bx-bot-0">
-            <div class="grid">
-                <div class="column column--3-4-xl">
-                    <div class="ob-box-padded ob-box-center ob-clear">
-                        <div class="footer__section">
-                        #set($footerMenu = $site.getMenu("footer-menu"))
-                        #if(!$footerMenu.empty)
-                          #includeFooterNavigation($footerMenu)
-                        #end
-                        </div>
-                    </div>
-                </div>
-                <div class="column column--1-4-xl">
-                    <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
-                    <div class="ob-box-padded ob-box-center ob-clear">
-                        <div class="footer__section">
-                            <div class="footer__bottom"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
-        </footer>
-#end
-        <!-- Popup -->
-        <div class="popup">
-            <header class="popup__header">
-                <div class="popup__close link--alt ob-flt-r js-popup-close">
-                    <svg class="icon"><use xlink:href="#cross" /></svg>
-                    <span class="mq-hide-m"></span>
-                </div>
-                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
-            </header>
-            <section class="popup__content ob-container">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.</p>
-                <p><a href="#">Read more</a></p>
-            </section>
         </div>
-        
+      </div>
+          <footer>
+            <div class="footer-buttons-bar show-for-large hide-for-print">
+                <div class="social-buttons">
+                    #defineUrlParams()
+                    #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
+                    #set($shareUrl = "${shareUrl}${urlParams}")
+                    #set($shareUrlEncode = $esc.url("${shareUrl}"))
+                    <a href="https://twitter.com/intent/tweet?url=$shareUrlEncode" class="button round social" target="_blank" title="Twitter">
+                      <span class="ic-ic-twitter"></span><span class="text"></span>
+                    </a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=$shareUrlEncode" class="button round social" target="_blank" title="Facebook">
+                      <span class="ic-ic-facebook"></span><span class="text"></span>
+                    </a>
+                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=$shareUrlEncode" class="button round social" target="_blank" title="LinkedIn">
+                      <span class="ic-ic-linkedin"></span><span class="text"></span>
+                    </a>
+                    <a href="whatsapp://send?text=$shareUrl" class="button round social" target="_blank" title="WhatsApp">
+                      <span class="ic-ic-whatsapp"></span><span class="text"></span>
+                    </a>
+                    <a href="https://www.xing.com/social_plugins/share?url=$shareUrlEncode" class="button round social" target="_blank" title="XING">
+                      <span class="ic-ic-xing"></span><span class="text"></span>
+                    </a>
+                    <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
+                      <span class="ic-ic-mailto"></span><span class="text"></span>
+                    </a>
+                    <button id="share-buttons" class="button round social share" title="Seite teilen">
+                      <span class="ic-ic-share"></span>
+                      <span class="text"></span>
+                    </button>
+                </div>
+                <div class="button-up">
+                    <button type="button" class="button round social js-top" title="Nach oben">
+                        <span class="ic-ic-angle-up"></span>
+                    </button>
+                </div>
+          </div>
+          <div class="footer">
+              <div class="row">
+                  <div class="xsmall-24 large-17 xlarge-18 columns">
+                      <div class="copyright">
+                          <p>$MESSAGES.getString("ingrid.page.copyright")</p>
+                      </div>
+                  </div>
+                  <div class="xsmall-24 large-7 xlarge-6 columns">
+                      #set($footerMenu = $site.getMenu("footer-menu"))
+                      #if(!$footerMenu.empty)
+                          #includeFooterNavigation($footerMenu)
+                      #end
+                  </div>
+              </div>
+          </div>
+        </footer>
+    #else
+    </div>
+    #end
+       <!-- Popup -->
+        <div class="popup">
+            <div class="headline popup__header">
+                <p class="popup__title medium">$MESSAGES.getString("ingrid.page.help")</p>
+                <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span>
+            </div>
+            <div class="popup__content text-box">
+                <p></p>
+            </div>
+        </div>
         <!-- Global scripts -->
         <script src="#GetPageResource("scripts/all.js")"></script>
-        
+
         <!-- Popup -->
         <script src="#GetPageResource("scripts/popup.js")"></script>
-        <script src="#GetPageResource("scripts/expander.js")"></script>
-        
-        <!-- Accordion -->
-        <script src="#GetPageResource("scripts/accordion.js")"></script>
-        <script>
-        $('.js-accordion').accordion();
-        $('.js-accordion-multi').accordion({
-            multi: true
-        });
-        </script>
-        <!-- Tabs -->
-        <script src="#GetPageResource("scripts/tabs.js")"></script>
-        <script>
-            $('.js-tabs').tabs();
-        </script>
-        <!-- Selection -->
-        <script src="#GetPageResource("scripts/selection.js")"></script>
-        <script>
-            $('.js-selection').selection();
-        </script>
-        <!-- Table Sort -->
-        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
-        <script>
-            $('.js-table-sortable').sortable();
-        </script>
+
+        <!-- Expand -->
+        <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+    </div>
 
         <!-- Piwik -->
         <script type="text/javascript">
