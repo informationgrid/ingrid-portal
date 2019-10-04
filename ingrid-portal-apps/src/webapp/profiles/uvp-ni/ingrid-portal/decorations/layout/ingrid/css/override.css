@@ -310,6 +310,9 @@
 }
 
 /* UVP-NI */
+.body {
+    padding-bottom: 175px;
+}
 a {
   color: #256394;
 }
@@ -459,4 +462,9 @@ footer .footer {
 footer .footer .copyright p {
   color: #5E788D;
   text-transform: none;
+  margin-left: -3em;
+}
+
+footer .footer .logo {
+  width: 75%;
 }
