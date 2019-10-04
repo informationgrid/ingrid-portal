@@ -1,27 +1,27 @@
+    </div>
     #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
-        <div class="row">
-            <div class="columns">
-                <p class="result-text no-margin">
-                    <span>
-                        <b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:
-                    </span>
-                    <span>
-                        <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                    </span>
-                #if($currentPage)
-                    #if($currentPage == "/search-detail.psml")
-                        <span class="ic-ic-angle-right"></span>
-                        <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                    #end
-                    #if($currentPage != "/default-page.psml")
-                        <span class="ic-ic-angle-right"></span>
-                        <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
-                    #end
-                #end
-            </div>
-        </div>
-      </div>
           <footer>
+            <div class="row">
+                <div class="columns">
+                    <p class="result-text no-margin">
+                        <span>
+                            <b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:
+                        </span>
+                        <span>
+                            <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+                        </span>
+                    #if($currentPage)
+                        #if($currentPage == "/search-detail.psml")
+                            <span class="ic-ic-angle-right"></span>
+                            <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                        #end
+                        #if($currentPage != "/default-page.psml")
+                            <span class="ic-ic-angle-right"></span>
+                            <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                        #end
+                    #end
+                </div>
+            </div>
             <div class="footer-buttons-bar show-for-large hide-for-print">
                 <div class="social-buttons">
                     #defineUrlParams()
@@ -59,12 +59,17 @@
           </div>
           <div class="footer">
               <div class="row">
-                  <div class="xsmall-24 large-17 xlarge-18 columns">
+                  <div class="xlarge-2 columns">
+                      <div class="logo">
+                          <a href="/startseite"><img src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="NUMIS"></a>
+                      </div>
+                  </div>
+                  <div class="columns">
                       <div class="copyright">
                           <p>$MESSAGES.getString("ingrid.page.copyright")</p>
                       </div>
                   </div>
-                  <div class="xsmall-24 large-7 xlarge-6 columns">
+                  <div class="columns">
                       #set($footerMenu = $site.getMenu("footer-menu"))
                       #if(!$footerMenu.empty)
                           #includeFooterNavigation($footerMenu)
@@ -73,10 +78,8 @@
               </div>
           </div>
         </footer>
-    #else
-    </div>
     #end
-       <!-- Popup -->
+        <!-- Popup -->
         <div class="popup">
             <div class="headline popup__header">
                 <p class="popup__title medium">$MESSAGES.getString("ingrid.page.help")</p>
