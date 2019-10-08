@@ -1167,7 +1167,7 @@ define([
                     values: [],
                     editable: true,
                     listId: 5152,
-                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 5152)
                 }];
                 layoutCreator.createDataGrid("ref3ServiceVersion", null, ref3ServiceVersionStructure, null);
 
@@ -1970,6 +1970,13 @@ define([
                     values: [],
                     editable: true,
                     listId: 6500,
+                    sort: function(data) {
+                        var filtered = array.filter(data, function(item) {
+                            return item[1] != "26";
+                        });
+                        filtered.unshift(["Es gelten keine Bedingungen", 26, "N"]);
+                        return filtered;
+                    },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
                 }, {
                     field: 'source',
