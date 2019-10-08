@@ -219,7 +219,7 @@ define([
 
                 var store = new dojo.data.ItemFileWriteStore({
                     data: {
-                        items: data
+                        items: args.column.sort ? args.column.sort(data) : data
                     }
                 });
                 box = new dijit.form.FilteringSelect({
