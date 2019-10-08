@@ -150,7 +150,7 @@ define([
                 .then(igeEvents.selectUDKClass) // update view according to initial chosen class
                 .then(function() {
                     // add a '*' to all labels and display them if an element is required 
-                    query(".outer label", "contentFrameBodyObject").forEach(function(item) {
+                    query(".outer label:not(.forceOptional)", "contentFrameBodyObject").forEach(function(item) {
                         item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
                     });
                     

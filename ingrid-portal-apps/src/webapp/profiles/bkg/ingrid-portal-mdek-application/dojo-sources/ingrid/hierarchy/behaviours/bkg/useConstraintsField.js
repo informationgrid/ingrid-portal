@@ -46,7 +46,7 @@ define([
             registry.byId("availabilityUseAccessConstraints").reinitLastColumn(true);
 
             // create div element to insert new field at correct place
-            var insertNode = construct.create("div");
+            var insertNode = construct.create("span", { class: 'outer' });
             targetNode.parentNode.insertBefore(insertNode, targetNode);
 
             var multiInputInfoFieldWidget = new MultiInputInfoField({
