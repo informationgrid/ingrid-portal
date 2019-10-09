@@ -44,6 +44,9 @@
           <action type="update" dev="wemove" issue="1274">
             IGE: Update rules for conformity behaviour.
           </action>
+          <action type="add" dev="wemove" issue="1272">
+            IGE: Add behaviour for dataformat.
+          </action>
         </release>
 
         <release version="5.1.0" date="2019-07-11" description="Release 5.1.0">

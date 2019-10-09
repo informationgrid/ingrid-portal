@@ -48,6 +48,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/opendata",
         "ingrid/hierarchy/behaviours/folders",
         "ingrid/hierarchy/behaviours/inspireRelevant/conformFields",
+        "ingrid/hierarchy/behaviours/inspireRelevant/dataformat",
         "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
@@ -59,7 +60,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/parentIdentifier",
         "ingrid/hierarchy/behaviours/deleteNonEmptyFolders"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
-            openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
+            openData, foldersInHierarchy, conformityFields, dataformat, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
             spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders) {
 
     return declare(null, {
@@ -71,6 +72,8 @@ define(["dojo/_base/declare",
         administrativeArea: adminitrativeArea,
         
         conformityFields: conformityFields,
+
+        dataformat: dataformat,
 
         inspireGeoservice: inspireGeoservice,
         

@@ -1081,6 +1081,7 @@ define({
         "validation.specification.added": "The specification '${0}' was added as well.",
         "validation.encoding.added": "The encoding scheme '${0}' was changed as well.",
         "validation.spatial.system.inspire.missing": "There must be at least one INSPIRE-spatial reference chosen.",
+        "validation.dataformat.missing.gml": "There must be at least one 'GML' entry with a version",
 
         "init.error.userNotFound": "The user could not be found in the catalog. Please check the mdek-database and the used catalog.",
 
