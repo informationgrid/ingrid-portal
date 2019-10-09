@@ -107,6 +107,8 @@ define([
         unregister: function() {
            utils.removeEvents(this.events);
            utils.removeEvents([this.publishEvent]);
+           this.publishEvent = null;
+           domClass.remove("uiElementN024", "required");
         }
     })();
 });
