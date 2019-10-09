@@ -350,21 +350,27 @@ public class DetailPartPreparer {
             }
 
             String value;
+            String restrictionInfo = "";
+            if (restrictionCode != null && restrictionCode.trim().length() > 0) {
+                restrictionInfo = restrictionCode + ": ";
+            }
+
             if (url != null && !url.trim().isEmpty()) {
                 // we have a URL from JSON
+
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
                     // we have a different license name from JSON, render it with link
-                    value = String.format("%s: <a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, url, name, finalValue);
+                    value = String.format("%s<a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionInfo, url, name, finalValue);
                 } else {
                     // no license name, render whole text with link
-                    value = String.format("%s: <a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, url, finalValue);
+                    value = String.format("%s<a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionInfo, url, finalValue);
                 }
             } else {
                 // NO URL
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
-                    value = String.format("%s: %s<br>%s", restrictionCode, name, finalValue);
+                    value = String.format("%s%s<br>%s", restrictionInfo, name, finalValue);
                 } else if (restrictionCode != null){
-                    value = String.format("%s: %s", restrictionCode, finalValue);
+                    value = String.format("%s%s", restrictionInfo, finalValue);
                 } else {
                     value = finalValue;
                 }
