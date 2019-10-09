@@ -61,6 +61,8 @@ define([
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
+            inspireRelevantWidget.checked ? domClass.add("uiElement1320", "required") : domClass.add("uiElement1320", "show");
+
             this.events.push(
                 on(inspireRelevantWidget, "Change", function (isChecked) {
                     if (isChecked) {
@@ -78,10 +80,12 @@ define([
 
                         });
                         domClass.add("uiElement1320", "required");
+                        domClass.remove("uiElement1320", "show");
                     } else {
                         utils.removeEvents([self.publishEvent]);
                         self.publishEvent = null;
                         domClass.remove("uiElement1320", "required");
+                        domClass.add("uiElement1320", "show");
                     }
                 })
             );
@@ -92,6 +96,7 @@ define([
             utils.removeEvents([this.publishEvent]);
             this.publishEvent = null;
             domClass.remove("uiElement1320", "required");
+            domClass.remove("uiElement1320", "show");
         }
     })();
 });
