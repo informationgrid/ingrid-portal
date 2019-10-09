@@ -258,6 +258,7 @@ public class DetailPartPreparer {
         final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
         final String restrictionCodeXpath = "./gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
         final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
+        final String constraintsTextXpathAnchor = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor";
         List<String> result = new ArrayList<>();
 
         NodeList resourceConstraintsNodes = xPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
@@ -270,23 +271,27 @@ public class DetailPartPreparer {
             Node node = resourceConstraintsNodes.item(i);
 
             NodeList restrictionCodeNodes = xPathUtils.getNodeList(node, restrictionCodeXpath);
-            NodeList constraintsNodes = xPathUtils.getNodeList(node, constraintsTextXpath);
-            if (restrictionCodeNodes == null || (restrictionCodeNodes != null && restrictionCodeNodes.getLength() == 0) ||
-                    constraintsNodes == null || (constraintsNodes != null && constraintsNodes.getLength() == 0)) {
-                continue;
+            NodeList constraintsNodes = xPathUtils.getNodeList(node, constraintsTextXpath + "|" + constraintsTextXpathAnchor);
+
+            String restrictionCode = null;
+            if (restrictionCodeNodes != null && restrictionCodeNodes.getLength() != 0) {
+
+                NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
+                Node n = attrs.getNamedItem("codeListValue");
+                if (n != null) {
+                    restrictionCode = n.getTextContent();
+                    if (log.isDebugEnabled()) {
+                        log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+                    }
+                    if (restrictionCode != null) {
+                        restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
+                    }
+                }
             }
 
-            NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
-            Node n = attrs.getNamedItem("codeListValue");
-            if (n == null) {
+            if (constraintsNodes == null || constraintsNodes.getLength() == 0) {
                 continue;
             }
-            String restrictionCode = n.getTextContent();
-            if(log.isDebugEnabled()) {
-                log.debug(String.format("Discovered restriction code: %s", restrictionCode));
-            }
-            if (restrictionCode == null) continue;
-            restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
 
             String constraints = constraintsNodes.item(0).getTextContent();
             if(log.isDebugEnabled()) {
@@ -358,8 +363,10 @@ public class DetailPartPreparer {
                 // NO URL
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
                     value = String.format("%s: %s<br>%s", restrictionCode, name, finalValue);
-                } else {
+                } else if (restrictionCode != null){
                     value = String.format("%s: %s", restrictionCode, finalValue);
+                } else {
+                    value = finalValue;
                 }
             }
 
