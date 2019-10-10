@@ -30,6 +30,7 @@ define([
     "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-construct",
+    "dojo/on",
     "dojo/topic",
     "ingrid/dialog",
     "ingrid/grid/CustomGridEditors",
@@ -39,7 +40,9 @@ define([
     "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/Store",
-], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore, module) {
+    "ingrid/utils/Syslist",
+    "module"
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, on, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore, UtilSyslist, module) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -237,6 +240,32 @@ define([
             // TODO mark fields as "required" if not Auftrag
 
             var id;
+
+            id = "bawHierarchyLevelName";
+            construct.place(
+                creator.createDomSelectBox({
+                    id: id,
+                    name: message.get("ui.obj.baw.hierarchy.level.name.title"),
+                    help: message.get("ui.obj.baw.hierarchy.level.name.help"),
+                    isMandatory: true,
+                    useSyslist: 3950002,
+                    style: "width: 100%"
+                }),
+                "uiElement5100", "before"
+            );
+            newFieldsToDirtyCheck.push(id);
+            additionalFields.push(registry.byId(id));
+            on(registry.byId(id), "Change", function (newVal) {
+                //self._handleHierarchyLevelChange(newVal);
+                var key = UtilSyslist.getSyslistEntryKey(3950002, newVal);
+                var isSimulationRelated = key === "6" // datei
+                    || key === "18"  // simulationslauf
+                    || key === "19"  // simulationsmodell
+                    || key === "22"  // szenario
+                    || key === "24";  // variante
+                topic.publish("onBawHierarchyLevelNameChange", { isSimulationRelated: isSimulationRelated })
+            });
+
             // Create elements in the reverse order instead of deriving ids
             // of the wrapped DOM elements.
             id = "bawAuftragsnummer";
@@ -251,6 +280,10 @@ define([
                 "uiElement1000", "after");
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("bawAuftragsnummer", isMandatory);
+            });
 
             id = "bawAuftragstitel";
             construct.place(
@@ -264,6 +297,10 @@ define([
                 "uiElement1000", "after");
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("bawAuftragstitel", isMandatory);
+            });
 
             id = "simModelTypeTable";
             var structure;
@@ -291,6 +328,10 @@ define([
             }, structure, "refClass1");
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("simModelTypeTable", isMandatory);
+            });
 
             id = "simProcess";
             construct.place(
@@ -306,6 +347,10 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("simProcess", isMandatory);
+            });
 
             id = "simSpatialDimension";
             construct.place(
@@ -321,6 +366,10 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("simSpatialDimension", isMandatory);
+            });
 
             id = "dqAccTimeMeas";
             construct.place(
@@ -336,6 +385,10 @@ define([
             );
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("dqAccTimeMeas", isMandatory);
+            });
 
             // Create context menu for the simulation parameter table
             this._createBawSimulationParameterTableContextMenu();
@@ -403,8 +456,11 @@ define([
                 style: "width: 100%"
             }, structure, "refClass1");
             newFieldsToDirtyCheck.push(id);
-
             additionalFields.push(registry.byId(id));
+            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
+                var isMandatory = args.isSimulationRelated;
+                self._setMandatory("simParamTable", isMandatory);
+            });
 
             // Add link for creating a new entry to the simulation parameter table
             this._createAppendSimulationParameterLink();
@@ -551,15 +607,34 @@ define([
             construct.place(span, node, 'before');
         },
 
-        /*
-         * Create a string representation for the simulation parameters as
-         * follows:
-         * - A single discrete value is displayed as is,
-         * - Multiple discrete values are displayed as the stringified
-         *   form of the "values" array e.g. [ 1, 2, 3 ], and
-         * - Min and max values (not discrete) are displayed in square brackets
-         *   and delimited by two dots e.g. [ 0 .. 5 ]
+        /**
+         * Mark or unmark a widget's DOM wrapper as required.
+         *
+         * @param widgetId widget to mark or unmark as required
+         * @param isMandatory true if an entry is mandatory, false if not
+         * @private
          */
+        _setMandatory: function (widgetId, isMandatory) {
+            var domPrefix = "uiElementAdd";
+            var domElementId = domPrefix + widgetId;
+            if (isMandatory) {
+                domClass.add(domElementId, "required");
+                domClass.remove(domElementId, "optional");
+            } else {
+                domClass.remove(domElementId, "required");
+                domClass.add(domElementId, "optional");
+            }
+    },
+
+    /*
+     * Create a string representation for the simulation parameters as
+     * follows:
+     * - A single discrete value is displayed as is,
+     * - Multiple discrete values are displayed as the stringified
+     *   form of the "values" array e.g. [ 1, 2, 3 ], and
+     * - Min and max values (not discrete) are displayed in square brackets
+     *   and delimited by two dots e.g. [ 0 .. 5 ]
+     */
         simulationParameterValueArrayToString: function (values, hasDiscreteValues) {
             var valuesString = "";
             if (hasDiscreteValues) {

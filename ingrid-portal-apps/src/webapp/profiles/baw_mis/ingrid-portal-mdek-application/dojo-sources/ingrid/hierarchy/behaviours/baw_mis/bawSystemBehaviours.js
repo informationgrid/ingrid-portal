@@ -22,8 +22,9 @@
  */
 define([
     "dojo/_base/declare",
-    "dojo/topic"
-], function(declare, topic) {
+    "dojo/topic",
+    "ingrid/utils/Syslist"
+], function(declare, topic, UtilSyslist) {
 
     return declare(null, {
         title: "Systemanpassungen",
@@ -35,7 +36,15 @@ define([
 
             // load custom syslists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
-                ids.push(3950000, 3950001, 3950003, 3950004);
+                ids.push(3950000, 3950001, 3950002, 3950003, 3950004);
+            });
+
+            topic.subscribe("/additionalSyslistsLoaded", function() {
+                // Keep only Geodatensatz and Geodatendienst for new object type
+                sysLists[UtilSyslist.listIdObjectClass] = sysLists[UtilSyslist.listIdObjectClass].filter(function(item) {
+                    return item[1] === "1" || item[1] === "3";
+                });
+
             });
         }
     })();
