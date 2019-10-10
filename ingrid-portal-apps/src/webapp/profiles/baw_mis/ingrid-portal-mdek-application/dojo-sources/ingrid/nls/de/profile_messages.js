@@ -27,6 +27,8 @@ define({
     "ui.obj.baw.auftragsnummer.help": "PSP-Element",
     "ui.obj.baw.auftragstitel.title": "Auftragstitel",
     "ui.obj.baw.auftragstitel.help": "Titel des BAW/WSV Auftrags",
+    "ui.obj.baw.hierarchy.level.name.title": "Bezeichnung der Hierarchieebene",
+    "ui.obj.baw.hierarchy.level.name.help": "Bezeichnung der Hierarchieebene",
     "ui.obj.baw.simulation.model.type.table.title": "Simulationsmodellart",
     "ui.obj.baw.simulation.model.type.table.help": "Art des Simulationsmodells",
     "ui.obj.baw.simulation.parameter.dialog.table.column.value": "Wert",
@@ -46,6 +48,7 @@ define({
 
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",
+    "ui.sysList.3950002": "BAW - Bezeichnung der Hierarchieebene",
     "ui.sysList.3950003": "BAW - Modellart",
     "ui.sysList.3950004": "BAW - Simulationsparameter/-Größe Rolle",
     "ui.sysList.3950099": "BAW - Datenformat",
