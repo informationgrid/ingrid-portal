@@ -289,14 +289,6 @@ define([
                         }
                     });
 
-                    // check that an INSPIRE CRS was added
-                    var hasInspireCrs = UtilGrid.getTableData("ref1SpatialSystem")
-                        .filter(function(item) { return item.title.toLowerCase().indexOf("(inspire)") !== -1; });
-
-                    if (hasInspireCrs.length === 0) {
-                        notPublishableIDs.push( ["ref1SpatialSystem", message.get("validation.spatial.system.inspire.missing")] );
-                    }
-
                 })
             );
         },
