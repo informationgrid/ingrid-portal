@@ -53,7 +53,6 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
-        "ingrid/hierarchy/behaviours/inspireRelevant/inspireConformityConnection",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
@@ -61,7 +60,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/parentIdentifier",
         "ingrid/hierarchy/behaviours/deleteNonEmptyFolders"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
-            openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
+            openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection,advCompatible, adminitrativeArea, advProductGroup,
             spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders) {
 
     return declare(null, {
@@ -84,7 +83,8 @@ define(["dojo/_base/declare",
 
         inspireEncodingConnection: inspireEncodingConnection,
 
-        inspireConformityConnection: inspireConformityConnection,
+        // Not needed anymore since specifications have been removed and cannot be mapped
+        // inspireConformityConnection: inspireConformityConnection,
 
         spatialRepresentationInfo: spatialRepresentationInfo,
 
@@ -201,7 +201,7 @@ define(["dojo/_base/declare",
             description : "Wenn aktiviert, muss jeder Eintrag in der Tabelle \"Datenformat\" mind. einen Namen enthalten.",
             defaultActive : true,
             run : function() {
-                var subscription = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
                         if (array.some(UtilGrid.getTableData("availabilityDataFormat"), function(dataFormat) {
                             return (typeof(dataFormat.name) == "undefined" ||
                             	dataFormat.name === null ||

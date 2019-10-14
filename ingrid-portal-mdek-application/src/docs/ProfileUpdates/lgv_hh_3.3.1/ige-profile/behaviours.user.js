@@ -600,7 +600,6 @@ openDataLGV : {
                 registry.byId("ref1BasisText").set("value", "keine Angabe");
                 registry.byId("ref1DataSet").set("value", "5"); // "Datensatz"
                 UtilGrid.setTableData("thesaurusInspire", [{title: 99999}]); // "Kein INSPIRE-Thema"
-                UtilGrid.setTableData("extraInfoConformityTable", [{specification:"INSPIRE-Richtlinie", level:3}]); // "nicht evaluiert"
                 UtilGrid.setTableData("ref1SpatialSystem", [{title:"EPSG 25832: ETRS89 / UTM Zone 32N"}]);
                 registry.byId("availabilityDataFormatInspire").set("value", "Geographic Markup Language (GML)");
             }
