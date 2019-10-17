@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="758.905724px" height="592px" viewBox="0 0 758.905724 592" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>assets/images/uvp-n/svg-raw/backgrounds/home-banner/desktop</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="-502" y="0" width="1261" height="591"></rect>
+    </defs>
+    <g id="assets/images/uvp-n/svg-raw/backgrounds/home-banner/desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <g id="Rectangle" fill-rule="nonzero"></g>
+        <rect id="Rectangle" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)" x="0.0942755867" y="-102.003688" width="1189.73385" height="693.282503" rx="346.641252"></rect>
+        <rect id="Rectangle-Copy" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)" x="330.994595" y="-1.7908181" width="743.341343" height="478.175022" rx="239.087511"></rect>
+        <rect id="Rectangle-Copy-2" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)" x="135.221157" y="0.881056898" width="827.856968" height="285.383876" rx="142.691938"></rect>
+    </g>
+</svg>
