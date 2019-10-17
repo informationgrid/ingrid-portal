@@ -2,7 +2,7 @@
 #defineLayoutObjects()
 
 #* Loads our custom macros *#
-#parse($layoutDecoration.getResource("decorator-macros.vm"))
+#parse("/decorations/layout/ingrid/decorator-macros.vm")
 
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
@@ -19,7 +19,7 @@
             #end
         #end
         -->
-        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
+        <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
         <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "$MESSAGES.getString('ingrid.header.title.main')")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
