@@ -54,7 +54,8 @@
                     #end
                 </div>
               </div>
-              <div class="row footer-content">
+              <hr>
+              <div class="row">
                   <div class="xsmall-24 medium-2 large-2 xlarge-2 columns">
                       <div class="logo">
                           <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"></a>
@@ -106,10 +107,10 @@
             </div>
         </div>
         <!-- Global scripts -->
-        <script src="#GetPageResource("scripts/all.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
 
         <!-- Popup -->
-        <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
 
         <!-- Expand -->
         <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
