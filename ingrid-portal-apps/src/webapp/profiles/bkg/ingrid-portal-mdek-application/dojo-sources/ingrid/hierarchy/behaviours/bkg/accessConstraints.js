@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,31 +21,29 @@
  * **************************************************#
  */
 define([
-    "dojo/_base/lang",
-    "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/bkg/general",
-    "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/accessConstraints"
-], function(lang, behaviours, general, useConstraintsField, oldUseField, accessConstraints) {
+    "dojo/_base/array",
+    "dojo/_base/declare",
+    "dojo/on",
+    "dojo/dom-class",
+    "dijit/registry"
+], function(array, declare, on, domClass, registry) {
 
-    return lang.mixin(behaviours, {
+    // issue: 556
+    return declare(null, {
+        title: "Zugriffsbeschränkungen",
+        description: "Wird nur zum Pflichtfeld, wenn INSPIRE-relevant.",
+        defaultActive: true,
+        category: "BKG",
+        run: function() {
+            var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
-        /**
-         * 
-         */
-        bkgGeneral: general,
-
-        /**
-         * 
-         */
-        bkgNewUseConstraintsField: useConstraintsField,
-
-        /**
-         * 
-         */
-        bkgOldUseConstraintsField: oldUseField,
-
-        bkgAccessContraintsField: accessConstraints
-    });
+            on(inspireRelevantWidget, "Change", function(isChecked) {
+                if (isChecked) {
+                    domClass.add("uiElementN025", "required");
+                } else {
+                    domClass.remove("uiElementN025", "required");
+                }
+            });
+        }
+    })();
 });
