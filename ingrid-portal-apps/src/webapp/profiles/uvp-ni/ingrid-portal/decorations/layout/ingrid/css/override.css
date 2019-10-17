@@ -352,7 +352,7 @@ a.icon:hover {
 .button.round {
   color: #0089C6;
 }
-.button.round:hover {
+.button.round:hover, .button.round:focus {
   color: #1D4B7B;
   background-color: #eaf6ff;
 }
