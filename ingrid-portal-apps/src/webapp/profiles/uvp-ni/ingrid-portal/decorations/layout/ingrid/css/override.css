@@ -763,13 +763,13 @@ footer hr {
   padding: 12px 24px 0 0;
 }
 .switch-popup a.switch-link.uvp img {
-    width: 10em;
+  width: 10em;
 }
 .switch-popup a.switch-link.numis span{
   padding: 0 28px 0;
 }
 .switch-popup a.switch-link.numis img {
-   width: 15em;
+  width: 15em;
 }
 .select2-container--default .select2-selection--single::after {
   color: #0089C6;
@@ -786,6 +786,10 @@ footer hr {
 #timeline .timeline .timeline-text .icon-dot-small .icon {
   left: -2.25rem;
   font-size: 16px;
+}
+path.leaflet-interactive {
+  stroke: #0089C6;
+  fill: #0089C6;
 }
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
