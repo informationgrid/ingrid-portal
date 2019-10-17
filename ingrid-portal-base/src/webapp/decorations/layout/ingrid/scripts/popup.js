@@ -26,24 +26,25 @@ var popup = (function () {
 
     var is_open = false;
 
-    var box = $('.popup');
+    var box = $('.help-popup');
     var title = $('.popup__title');
     var content = $('.popup__content');
 
-    function open(messageTitle, message) {
-
-        if (message === "" || message === undefined) {
-            return;
+    function open(messageTitle, message, boxId) {
+        if (boxId) {
+          box = $(boxId);
+        } else {
+          update(messageTitle, message);
         }
-
-        update(messageTitle, message);
 
         box.addClass('is-open');
 
     }
 
-    function close() {
-
+    function close(boxId) {
+        if (boxId) {
+          box = $(boxId);
+        }
         is_open = false;
 
         box.removeClass('is-open');
@@ -65,10 +66,10 @@ var popup = (function () {
 
 $('.js-popup').on('click', function (event) {
     event.preventDefault();
-    popup.open($(this).data('title'), $(this).data('content'));
+    popup.open($(this).data('title'), $(this).data('content'), $(this).data('box'));
 });
 
 $('.js-popup-close').on('click', function (event) {
     event.preventDefault();
-    popup.close();
+    popup.close($(this).data('box'));
 });
