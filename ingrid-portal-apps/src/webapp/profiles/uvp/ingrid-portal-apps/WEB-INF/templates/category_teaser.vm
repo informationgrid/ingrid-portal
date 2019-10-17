@@ -121,15 +121,15 @@
                             $MESSAGES.getString($facet.getName())
                         #end
                     #end
-                        <span class="teaser-number">
                         #if($facet.getQuery())
+                        <span class="teaser-number">
                             #if($hits.get("FACETS").get("$facetId:$facet.getId()") && $hits.get("FACETS").get("$facetId:$facet.getId()") != "0")
                                 $hits.get("FACETS").get("$facetId:$facet.getId()")
                             #else
                                 0
                             #end
-                        #end
                         </span>
+                        #end
                     </a>
                 </div>
             </div>
