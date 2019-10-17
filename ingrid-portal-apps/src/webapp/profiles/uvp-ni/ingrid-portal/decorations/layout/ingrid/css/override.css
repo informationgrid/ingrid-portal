@@ -698,12 +698,14 @@ footer .breadcrumb span, footer .breadcrumb a {
   padding: 0 10px 0 0;
   text-transform: none;
 }
-footer .breadcrumb a {
+footer .breadcrumb a:last-of-type {
   font-weight: bold;
   color: #5E788D;
 }
 footer .breadcrumb span[class^="ic-"] {
   font-size: 12px;
+  font-weight: bold;
+  color: #5E788D;
 }
 .switch {
   position: relative;
