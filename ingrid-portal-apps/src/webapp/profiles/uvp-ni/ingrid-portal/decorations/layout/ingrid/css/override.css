@@ -394,6 +394,9 @@ header {
   position: absolute;
   right: 0;
 }
+.header-menu-close {
+    text-align: left;
+}
 .menu-main-links a:hover, .menu-main-links .button.logout:hover {
   background-color: #012D47;
   color: #FFFFFF;
