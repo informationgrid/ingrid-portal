@@ -282,6 +282,9 @@
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
                                 #renderTableToTree("Entscheidung" $nodelist "designDocs")
                         #end
+                            <h2 class="icon-dot icon-dot-small">
+                                <span class="ic-ic-bullet icon"></span>
+                            </h2>
                         </div>
                     </div>
                 </div>
