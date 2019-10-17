@@ -1,27 +1,6 @@
     </div>
     #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
           <footer>
-            <div class="row">
-                <div class="columns">
-                    <p class="result-text no-margin">
-                        <span>
-                            <b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:
-                        </span>
-                        <span>
-                            <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                        </span>
-                    #if($currentPage)
-                        #if($currentPage == "/search-detail.psml")
-                            <span class="ic-ic-angle-right"></span>
-                            <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                        #end
-                        #if($currentPage != "/default-page.psml")
-                            <span class="ic-ic-angle-right"></span>
-                            <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
-                        #end
-                    #end
-                </div>
-            </div>
             <div class="footer-buttons-bar show-for-large hide-for-print">
                 <div class="social-buttons">
                     #defineUrlParams()
@@ -59,17 +38,34 @@
           </div>
           <div class="footer">
               <div class="row">
-                  <div class="xlarge-2 columns">
+                <div class="columns">
+                    <p class="result-text no-margin breadcrumb show-for-medium">
+                        <span><b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:</span>
+                        <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+                    #if($currentPage)
+                        #if($currentPage == "/search-detail.psml")
+                            <span class="ic-ic-angle-right"></span>
+                            <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+                        #end
+                        #if($currentPage != "/default-page.psml")
+                            <span class="ic-ic-angle-right"></span>
+                            <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+                        #end
+                    #end
+                </div>
+              </div>
+              <div class="row footer-content">
+                  <div class="xsmall-24 medium-2 large-2 xlarge-2 columns">
                       <div class="logo">
-                          <a href="/startseite"><img src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="NUMIS"></a>
+                          <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"></a>
                       </div>
                   </div>
-                  <div class="columns">
+                  <div class="xsmall-24 medium-22 large-14 xlarge-15 columns">
                       <div class="copyright">
                           <p>$MESSAGES.getString("ingrid.page.copyright")</p>
                       </div>
                   </div>
-                  <div class="columns">
+                  <div class="xsmall-24 small-24 large-8 xlarge-7 columns">
                       #set($footerMenu = $site.getMenu("footer-menu"))
                       #if(!$footerMenu.empty)
                           #includeFooterNavigation($footerMenu)
@@ -80,13 +76,33 @@
         </footer>
     #end
         <!-- Popup -->
-        <div class="popup">
+        <div class="popup help-popup">
             <div class="headline popup__header">
                 <p class="popup__title medium">$MESSAGES.getString("ingrid.page.help")</p>
                 <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span>
             </div>
             <div class="popup__content text-box">
                 <p></p>
+            </div>
+        </div>
+        <!-- Popup -->
+        <div class="popup switch-popup">
+            <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span></button>
+            <div class="popup__content text-box">
+                <div class="list-item">
+                  <a class="switch-link uvp">
+                    <span class="ic-ic-check"></span>
+                    <img class="hide-for-large" src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP">
+                    <img class="show-for-large" src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP">
+                  </a>
+                </div>
+                <div class="list-item">
+                  <a class="switch-link numis" href="https://numis.niedersachsen.de">
+                    <span class=""></span>
+                    <img class="hide-for-large" src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS">
+                    <img class="show-for-large" src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS">
+                  </a>
+                </div>
             </div>
         </div>
         <!-- Global scripts -->

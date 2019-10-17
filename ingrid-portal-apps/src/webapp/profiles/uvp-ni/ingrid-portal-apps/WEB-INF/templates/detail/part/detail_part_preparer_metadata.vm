@@ -1,0 +1,457 @@
+#set ($lang = $TOOL.getLanguage())
+#set($list = [])
+#set($bar = $list.add('link'))
+#set($bar = $list.add('type'))
+#set($bar = $list.add('label'))
+#set($bar = $list.add('size'))
+<div class="detail">
+#if($TOOL.getValueFromXPath("./name"))
+    <div class="banner-noimage">
+      <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+        <div class="row align-center">
+          <div class="large-20 columns">
+            <div class="helper text">
+                <!-- <span>TODO: Verfahren</span> -->
+            </div>
+            <h2>
+                $TOOL.getValueFromXPath("./name")
+            </h2>
+            ## Set title to context because other xPath expression (DEFAULT: "./idf:title")
+            ## used to get title.
+            ## Title will be read from context and set to page head title tag.
+            $TOOL.setValueToContext("title", $TOOL.getValueFromXPath("./name"))
+            <div class="helper text date">
+                <span>Zuletzt ge&auml;ndert: $TOOL.getTimeStamp("./date")</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row content-small">
+        <div class="columns">
+            ## Allgemeine Vorhabenbeschreibung
+            #renderTextLabelAbove("Allgemeine Vorhabenbeschreibung" $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./descr")))
+        </div>
+    </div>
+    <div class="row content-small">
+        <div class="columns">
+            ## UVP Kategorien
+            #set($uvpCats = [])
+            #set($tmpCats = [])
+            #foreach($tmpCat in $TOOL.getListOfValuesFromXPath("./uvpgs/uvpg", "./@category"))
+                #if($tmpCats.indexOf($tmpCat) == -1)
+                    #set($tmp = $tmpCats.add($tmpCat))
+                    #set($uvpCatValue = $MESSAGES.getString("searchResult.categories.uvp.$tmpCat"))
+                    #set($uvpCat = {})
+                    #set($tmp = $uvpCat.put('key', $tmpCat))
+                    #set($tmp = $uvpCat.put('text', $uvpCatValue))
+                    #set($tmp = $uvpCats.add($uvpCat))
+                #end
+            #end
+            #renderIconTextList("UVP-Kategorie" $uvpCats)
+        </div>
+    </div>
+    ## Raumbezug
+    #set($spatialValue = $TOOL.getValueFromXPath("./spatialValue"))
+    #if($spatialValue)
+    <div class="unbreak">
+        <div class="row content-small">
+            <div class="columns">
+            #set($spatialValueSplit = $spatialValue.split(":"))
+            #if($spatialValueSplit.size() == 2)
+                #set($spatial = $spatialValueSplit.get(1))
+                #set($spatialEntries = $spatial.split(","))
+                #if($spatialEntries.size() == 4)
+                    #set($west = "$spatialEntries.get(0).trim()")
+                    #set($south = "$spatialEntries.get(1).trim()")
+                    #set($east = "$spatialEntries.get(2).trim()")
+                    #set($north = "$spatialEntries.get(3).trim()")
+                    #if($west.toLowerCase() != "nan" && $west.length() > 0
+                        && $north.toLowerCase() != "nan" && $north.length() > 0
+                        && $south.toLowerCase() != "nan" && $south.length() > 0
+                        && $east.toLowerCase() != "nan" && $east.length() > 0)
+                        <h3 class="title-font">Raumbezug</h3>
+            </div>
+        </div>
+        <div class="row no-padding">
+            <div class="columns form">
+                        #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                        <div id="map" style="height: 400px; width:100%;"></div>
+                        <script language="JavaScript" type="text/javascript">
+                            var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
+                            northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
+                            bounds = L.latLngBounds(southWest, northEast);
+                            
+                            var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
+                            var map = addLeafletMap([osm], bounds);
+                            map.gestureHandling.enable();
+                            var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
+                                var popLocation= e.latlng;
+                                var popup = L.popup()
+                                .setLatLng(popLocation)
+                                .setContent('<p>Koordinaten:<br />$spatialEntries.get(1)\, $spatialEntries.get(0)<br/>$spatialEntries.get(3), $spatialEntries.get(2)</p>')
+                                .openOn(map);
+                            }).addTo(map);
+                            
+                            addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
+                        </script>
+                    #end
+                #end
+            #end
+            </div>
+        </div>
+    </div>
+    #end
+    <div class="row content-small">
+        <div class="columns form">
+        ## Addressen
+            <h3>Adressen</h3>
+            #set($nodelist = $TOOL.getNodeListFromXPath("./addresses/address"))
+            #set($entryLength = $nodelist.getLength())
+            #if($entryLength > 0)
+                #foreach($number in [1..$entryLength])
+                    #set($id = $TOOL.getValueFromXPath("./addresses/address[$number]/@id"))
+                    #set($name = $TOOL.getValueFromXPath("./addresses/address[$number]/name"))
+                    #set($firstName = $TOOL.getValueFromXPath("./addresses/address[$number]/firstName"))
+                    #set($title = $TOOL.getValueFromXPath("./addresses/address[$number]/title"))
+                    #set($phone = $TOOL.getValueFromXPath("./addresses/address[$number]/phone"))
+                    #set($fax = $TOOL.getValueFromXPath("./addresses/address[$number]/fax"))
+                    #set($mail = $TOOL.getValueFromXPath("./addresses/address[$number]/mail"))
+                    #set($url = $TOOL.getValueFromXPath("./addresses/address[$number]/url"))
+                    #set($street = $TOOL.getValueFromXPath("./addresses/address[$number]/street"))
+                    #set($city = $TOOL.getValueFromXPath("./addresses/address[$number]/city"))
+                    #set($postalcode = $TOOL.getValueFromXPath("./addresses/address[$number]/postalcode"))
+                    #set($country = $TOOL.getValueFromXPath("./addresses/address[$number]/country"))
+                    #set($postbox = $TOOL.getValueFromXPath("./addresses/address[$number]/postbox"))
+                    <h4 class="no-margin">Ansprechpartner</h4>
+                    <p>
+                    #set($nodelistParent = $TOOL.getNodeListFromXPath("./addresses/address[$number]/parent"))
+                    #set($entryLengthParent = $nodelistParent.getLength())
+                    #if($entryLengthParent > 0)
+                        #foreach($numberParent in [$entryLengthParent..1])
+                            #set($idParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/@id"))
+                            #set($nameParent = $TOOL.getValueFromXPath("./addresses/address[$number]/parent[$numberParent]/name"))
+                                $nameParent
+                                <br>
+                        #end
+                    #end
+                        $name
+                    </p>
+                    <p>
+                        #if($street && $street.length() > 0)
+                            $street
+                            <br>
+                            #set($street = "")
+                        #end
+                        #if($postalcode && $postalcode.length() > 0)
+                            $postalcode
+                        #end
+                        #if($city && $city.length() > 0)
+                            $city
+                        #end
+                        #if($city && $city.length() > 0 || $postalcode && $postalcode.length() > 0)
+                            #set($postalcode = "")
+                            #set($city = "")
+                            <br>
+                        #end
+                        #if($postbox && $postbox.length() > 0)
+                            $postbox
+                            <br>
+                            #set($postbox = "")
+                        #end
+                        #if($country && $country.length() > 0)
+                            $country
+                            #set($country = "")
+                        #end
+                    </p>
+                    <table>
+                        #if($mail)
+                        <tr>
+                            <td>E-Mail:</td>
+                            <td>
+                                <a href="mailto:$mail">$mail</a>
+                            </td>
+                        <tr>
+                        #end
+                        #if($phone)
+                        <tr>
+                            <td>Telefon:</td>
+                            <td>
+                                $phone
+                            </td>
+                        <tr>
+                        #end
+                        #if($fax)
+                        <tr>
+                            <td>Fax:</td>
+                            <td>
+                                $fax
+                            </td>
+                        <tr>
+                        #end
+                        #if($url)
+                        <tr>
+                            <td>URL:</td>
+                            <td>
+                                <a href="$url">$url</a>
+                            </td>
+                        <tr>
+                        #end
+                    </table>
+                #end
+            #end
+            #set($nodelist = $TOOL.getNodeListFromXPath("./steps/step"))
+            #if($nodelist.getLength() > 0)
+        </div>
+    </div>
+    <div id="timeline" class="row content-small">
+        <div class="columns">
+            <h1>Verfahrensschritte</h1>
+            <div class="timeline"> 
+                <div class="row">
+                    <div class="columns">
+                        <div class="timeline-graph"></div>
+                        <div class="timeline-text">
+                        #set($nodelistLength = $nodelist.getLength())
+                        #foreach($number in [$nodelistLength..1])
+                            #set($step = $TOOL.getValueFromXPath("./steps/step[$number]/@type"))
+                            #if($step == "phase1")
+                                #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase1')")
+                            #elseif($step == "phase2")
+                                #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase2')")
+                            #elseif($step == "phase3")
+                                #set($step_title = "$MESSAGES.getString('common.steps.uvp.phase3')")
+                            #end
+                            #if($number == $nodelistLength)
+                            <h2 class="icon-dot">
+                                $step_title
+                                <span class="ic-ic-timeline-bullet icon"></span>
+                            #else
+                            <h2 class="icon-check">
+                                $step_title
+                                <span class="ic-ic-check icon"></span>
+                            #end
+                            </h2>
+                            ## Zeitraum der Auslegung
+                                #if($step == "phase1")
+                                    #set($from1 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                    #set($to1 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                    #renderDate ("Zeitraum der Auslegung" $from1 $to1 "N&auml;here Informationen entnehmen Sie bitte den Auslegungsinformationen.")
+                                #end
+                            ## Auslegungsinformationen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='technicalDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Auslegungsinformationen" $nodelist "technicalDocs")
+                            ## UVP-Bericht, ggf. Antragsunterlagen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='applicationDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("UVP-Bericht, ggf. Antragsunterlagen" $nodelist "applicationDocs")
+                            ## Berichte und Empfehlungen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='reportsRecommendationsDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Berichte und Empfehlungen" $nodelist "reportsRecommendationsDocs")
+                            ## Weitere Unterlagen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='moreDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Weitere Unterlagen" $nodelist "moreDocs")
+                            ## Bekanntmachung
+                                ##set($xpathExpression = "./steps/step[$number]/docs[@type='publicationDocs']/doc")
+                                ##set($nodelist = $TOOL.getNodeListFromXPath("$xpathExpression"))
+                                ##renderTableToList("Bekanntmachung" $nodelist "publicationDocs")
+                            ## Zeitraum der Erörterung
+                                #if($step == "phase2")
+                                    #set($from2 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/from"))
+                                    #set($to2 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/datePeriod/to"))
+                                    #renderDate ("Zeitraum der Er&ouml;rterung " $from2 $to2 "N&auml;here Informationen entnehmen Sie bitte den Informationen zum Er&ouml;rterungstermin.")
+                                #end
+                            ## Informationen zum Erörterungstermin
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='considerationDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Informationen zum Er&ouml;rterungstermin" $nodelist "considerationDocs")
+                            ## Datum der Entscheidung
+                                #if($step == "phase3")
+                                    #set($from3 = $TOOL.getDateValueFromXPath("./steps/step[$number][@type='$step']/date/from"))
+                                    #renderDate ("Datum der Entscheidung" $from3)
+                                #end
+                            ## Auslegungsinformationen
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='approvalDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Auslegungsinformationen" $nodelist "approvalDocs")
+                            ## Entscheidung
+                                #set($xpathExpression = "./steps/step[$number]/docs[@type='designDocs']/doc")
+                                #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+                                #renderTableToTree("Entscheidung" $nodelist "designDocs")
+                        #end
+                        </div>
+                    </div>
+                </div>
+            </div>
+        #else
+            ## Negative Vorprüfung
+            #set($uvpNegativeApprovalDate = $TOOL.getDateValueFromXPath("./datePeriod[@type='uvpNegativeApprovalDate']/from"))
+            #if($uvpNegativeApprovalDate)
+                #renderDate ("Datum der Entscheidung" $uvpNegativeApprovalDate)
+            #end
+            #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
+            #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
+            #if($uvpNegativeRelevantDocs.size() > 0)
+                #renderTableToTree("Ergebnis der UVP-Vorpr&uuml;fung" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+            #end
+        #end
+        </div>
+    </div>
+#end
+</div>
+
+#macro (renderDate $dateTitle $dateFrom $dateTo $info)
+    #if($dateFrom || $dateTo)
+        <h4 class="no-margin">
+            $dateTitle
+            #if($info)
+                <span class="ic-ic-info js-popup" data-title="Hinweis" data-content="$info"></span>
+            #end
+        </h4>
+        <p>
+        #if($dateFrom)
+            $dateFrom
+        #end
+        #if($dateTo)
+            - $dateTo
+        #end
+        </p>
+    #end
+#end
+
+#macro (renderTableToTree $title $entries $tableId)
+    #if($entries.get("children"))
+        #if($title)
+            <h4 class="title-font">$title</h4>
+        #end
+        <div class="document-list">
+        #foreach($entry in $entries.get("children"))
+            <div class="list-item">
+                #renderTreeFolder($entry)
+            </div>
+        #end
+        </div>
+    #end
+#end
+
+#macro (renderTreeFolder $entry)
+    #set($entryLabel = "")
+    #if($entry.get('label'))
+        #set($entryLabel = "$TOOL.getDecodeValue($entry.get('label'))")
+    #end
+    #if($entryLabel && $entryLabel.length() > 0)
+        #set($entryLink = "")
+        #if($entry.get('link'))
+            #set($entryLink = "$entry.get('link')")
+        #end
+        #if($entryLink && $entryLink.length() > 0)
+            <a target="_new" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
+            <span class="text">
+            (
+            #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
+            #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
+            $entryLinkSplit.get($entryLinkSplitSize)
+            <span class="downloadText"></span>
+            )
+            </span>
+        #else
+            <span>$entryLabel</span>
+        #end
+    #end
+    #if($entry.get('children'))
+        #foreach($subEntry in $entry.get('children'))
+        <li class="folder__content js-accordion-content">
+            <ul class="js-accordion-multi">
+                <li class="folder__item">
+                    #renderTreeFolder($subEntry)
+                </li>
+            </ul>
+        </li>
+        #end
+    #end
+#end
+
+#macro (renderTableToList $title $entryLength $xpathExpression $entryNumber $tableId)
+    #if($entryLength > 0)
+        #renderGroupTitle($title)
+        #foreach($entryNumber in [1..$entryLength])
+            #set($entryType = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/type"))
+            #set($entryLink = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/link"))
+            
+            #set($entrySize = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/size"))
+            #set($entryLabel = $TOOL.getValueFromXPath("$xpathExpression[$entryNumber]/label"))
+            #if($entryLabel && $entryLabel.length() > 0 || $entryLink && $entryLink.length() > 0)
+                <p>
+                #if($entryLink && $entryLink.length() > 0)
+                    <a class="link download" href="$entryLink">
+                        <svg class="icon">
+                            <use xlink:href="#internal-link">
+                        </svg>
+                        #if($entryLabel && $entryLabel.length() > 0)
+                            $entryLabel
+                        #else
+                            $entryLink
+                        #end
+                    </a>
+                #else
+                    $entryLabel
+                #end
+                #if($entryLink && $entryLink.length() > 0)
+                    <span class="tx-light">
+                    (
+                    #if($entryLink)
+                        #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
+                        #set ($entryLinkSplitSize = $entryLinkSplit.size() - 1)
+                        $entryLinkSplit.get($entryLinkSplitSize)
+                    #end
+                    <span class="downloadText"></span>
+                    )
+                    </span>
+                #end
+                </p>
+            #end
+            #set($entryType = "")
+            #set($entrySize = "")
+            #set($entryLink = "")
+            #set($entryLabel = "")
+        #end
+    #end
+#end
+
+#macro (renderAccordionTitle $title)
+    <h2 class="mq-hide-xxl">
+        $title
+        <svg class="filter__title__icon icon">
+            <use xlink:href="#arrow-thick"></use>
+        </svg>
+    </h2>
+    <h3 class="mq-show-xxl">
+        $title
+        <svg class="filter__title__icon icon">
+            <use xlink:href="#arrow-thick"></use>
+        </svg>
+    </h3>
+#end
+<script>
+    $( document ).ready(function() {
+        $('a.download').each(function(index) {
+            var a = $(this);
+            var aParent = a.parent(); 
+            if(a){
+                if(a.length > 0){
+                    var href = a[0].href;
+                    var spanParent = aParent.find('span.text');
+                    if(spanParent){
+                        var span = spanParent.find('span.downloadText');
+                        if(href && span){
+                            getLinkFileSize('$restUrlHttpGet?url=' + encodeURIComponent(href), span);
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
