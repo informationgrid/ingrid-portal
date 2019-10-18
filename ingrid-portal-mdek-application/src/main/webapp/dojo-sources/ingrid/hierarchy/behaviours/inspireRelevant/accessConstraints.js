@@ -28,12 +28,11 @@ define([
     "dijit/registry"
 ], function(array, declare, on, domClass, registry) {
 
-    // issue: 556
+    // issue: 1529
     return declare(null, {
         title: "Zugriffsbeschränkungen",
         description: "Wird nur zum Pflichtfeld, wenn INSPIRE-relevant.",
         defaultActive: true,
-        category: "BKG",
         run: function() {
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 

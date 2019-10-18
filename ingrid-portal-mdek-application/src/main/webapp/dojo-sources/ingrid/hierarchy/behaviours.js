@@ -58,10 +58,11 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/advProductGroup",
         "ingrid/hierarchy/behaviours/spatialRepresentationInfo",
         "ingrid/hierarchy/behaviours/parentIdentifier",
-        "ingrid/hierarchy/behaviours/deleteNonEmptyFolders"
+        "ingrid/hierarchy/behaviours/deleteNonEmptyFolders",
+        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection,advCompatible, adminitrativeArea, advProductGroup,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints) {
 
     return declare(null, {
         
@@ -90,6 +91,8 @@ define(["dojo/_base/declare",
 
         deleteNonEmptyFolders: deleteNonEmptyFolders,
 
+        accessContraintsField: accessConstraints,
+
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
         
@@ -108,11 +111,9 @@ define(["dojo/_base/declare",
         },
 
         requireUseConstraints: {
-            title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
-            title_en: "Use Constraints - Required on INSPIRE / Open Data",
-            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
-            description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
-            issue: "https://dev.informationgrid.eu/redmine/issues/223",
+            title: "Nutzungsbedingungen - Pflichtfeld für Geodatensatz und -dienst",
+            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die die Objektklasse 1 oder 3 ausgewählt wurde.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/223,1362",
             defaultActive: true,
         	run: function() {
                 topic.subscribe("/onObjectClassChange", function(data) {
