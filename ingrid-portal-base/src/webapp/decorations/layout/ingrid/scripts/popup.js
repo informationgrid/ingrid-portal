@@ -24,17 +24,12 @@ var popup = (function () {
 
     "use strict";
 
-    var is_open = false;
-
-    var box = $('.help-popup');
-    var title = $('.popup__title');
-    var content = $('.popup__content');
-
     function open(messageTitle, message, boxId) {
+        var box = $('.help-popup');
         if (boxId) {
           box = $(boxId);
         } else {
-          update(messageTitle, message);
+          update(box, messageTitle, message);
         }
 
         box.addClass('is-open');
@@ -42,18 +37,17 @@ var popup = (function () {
     }
 
     function close(boxId) {
+        var box = $('.help-popup');
         if (boxId) {
           box = $(boxId);
         }
-        is_open = false;
-
         box.removeClass('is-open');
 
     }
 
-    function update(messageTitle, message) {
-        title.html(messageTitle);
-        content.html(message);
+    function update(box, messageTitle, message) {
+        box.find('.popup__title').html(messageTitle);
+        box.find('.popup__content').html(message);
     }
 
     return {
