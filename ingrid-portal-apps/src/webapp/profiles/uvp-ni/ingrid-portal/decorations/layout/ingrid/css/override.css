@@ -791,6 +791,9 @@ path.leaflet-interactive {
   stroke: #0089C6;
   fill: #0089C6;
 }
+.accordion-content {
+  color: #0089C6;
+}
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
     margin: 0;
