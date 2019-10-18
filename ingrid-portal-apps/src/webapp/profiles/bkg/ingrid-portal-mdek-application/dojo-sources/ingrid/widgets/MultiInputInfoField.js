@@ -53,6 +53,8 @@ define([
 
         codelistForText: null,
 
+        sortCodelist: null,
+
         selectRequired: false,
 
         freeTextRequired: false,
@@ -256,6 +258,9 @@ define([
             var self = this;
             
             UtilSyslist.getSyslistEntry(codelist).then(function(entries) {
+                if (self.sortCodelist) {
+                    entries = self.sortCodelist(entries);
+                }
                 UtilStore.updateWriteStore(self.selectInput.id, entries, {
                     identifier: "1",
                     label: "0",

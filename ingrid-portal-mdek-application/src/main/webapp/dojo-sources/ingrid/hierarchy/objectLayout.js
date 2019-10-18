@@ -1961,11 +1961,16 @@ define([
                         var entry = array.filter(data, function(item) {
                             return item[1] === "1";
                         });
+                        if (entry.length === 0) {
+                            console.warn("No sorting of codelist 6010, since entry was not found: 1");
+                            return data;
+                        }
+
                         var filtered = array.filter(data, function(item) {
                             return item[1] !== "1";
                         });
 
-                        filtered.unshift(entry);
+                        filtered.unshift(entry[0]);
                         return filtered;
                     },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6010)
@@ -1982,10 +1987,17 @@ define([
                     editable: true,
                     listId: 6500,
                     sort: function(data) {
+                        var entry = array.filter(data, function(item) {
+                            return item[1] === "26";
+                        });
+                        if (entry.length === 0) {
+                            console.warn("No sorting of codelist 6500, since entry was not found: 26");
+                            return data;
+                        }
                         var filtered = array.filter(data, function(item) {
                             return item[1] != "26";
                         });
-                        filtered.unshift(["Es gelten keine Bedingungen", 26, "N"]);
+                        filtered.unshift(entry[0]);
                         return filtered;
                     },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
