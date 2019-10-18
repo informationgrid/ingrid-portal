@@ -1957,6 +1957,17 @@ define([
                     values: [],
                     editable: true,
                     listId: 6010,
+                    sort: function(data) {
+                        var entry = array.filter(data, function(item) {
+                            return item[1] === "1";
+                        });
+                        var filtered = array.filter(data, function(item) {
+                            return item[1] !== "1";
+                        });
+
+                        filtered.unshift(entry);
+                        return filtered;
+                    },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6010)
                 }];
                 layoutCreator.createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
