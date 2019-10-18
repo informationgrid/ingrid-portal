@@ -449,10 +449,10 @@ header {
   background-color: #F6F6F6;
 }
 .accordion-title {
-  color: #256394;
+  color: #0089C6;
   background-color: #F6F6F6;
 }
-.accordion-title:hover {
+.accordion-title:hover, .accordion-title:focus {
   background-color: #F6F6F6;
 }
 .teaser-data .header {
@@ -460,6 +460,10 @@ header {
 }
 .teaser-data .header:hover, .teaser-data .arrow:hover {
   color: #1D4B7B;
+}
+.teaser-data path.leaflet-interactive, .detail path.leaflet-interactive {
+  stroke: #0089C6;
+  fill: #0089C6;
 }
 .teaser:hover .teaser-link, .tabs-content .tabs-panel .teaser:hover .teaser-link {
   color: #1D4B7B;
@@ -786,10 +790,6 @@ footer hr {
 #timeline .timeline .timeline-text .icon-dot-small .icon {
   left: -2.25rem;
   font-size: 16px;
-}
-path.leaflet-interactive {
-  stroke: #0089C6;
-  fill: #0089C6;
 }
 .accordion-content {
   color: #0089C6;
