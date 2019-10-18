@@ -10,6 +10,10 @@
       <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
         <div class="row align-center">
           <div class="large-20 columns">
+            <a class="icon small-button" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                <span class="ic-ic-arrow-left"></span>
+                <span class="text">Alle Suchergebnisse</span>
+            </a>
             <div class="helper text">
                 <!-- <span>TODO: Verfahren</span> -->
             </div>
