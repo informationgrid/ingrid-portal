@@ -91,6 +91,8 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         this.job.setValidatorFactory(this.validatorFactory);
         this.job.setScanDirs(Stream.of(DOCS_PATH.toString()).collect(Collectors.toList()));
         this.job.setQuarantineDir(QUARANTINE_PATH.toString());
+        // static method call on MdekEmailUtils cannot be mocked by mockito
+        this.job.setEmailReports(false);
     }
 
     @Override

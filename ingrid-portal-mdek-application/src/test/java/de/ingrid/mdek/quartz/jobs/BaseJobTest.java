@@ -78,17 +78,19 @@ public abstract class BaseJobTest {
         final LoggerContext lc = (LoggerContext) LogManager.getContext(false);
         lc.reconfigure();
         final Configuration configuration = lc.getConfiguration();
-        testAppender = TestAppender.createAppender("test", null);
-        testAppender.start();
-        final Appender consoleAppender = ConsoleAppender.createDefaultAppenderForLayout(
-                PatternLayout.newBuilder().withPattern("%d{HH:mm:ss.SSS} %-5level %c{-4} - %msg%n").build());
-        consoleAppender.start();
-        configuration.addAppender(testAppender);
-        configuration.addAppender(consoleAppender);
-        configuration.addLoggerAppender(lc.getLogger(jobLogger.getName()), testAppender);
-        configuration.addLoggerAppender(lc.getLogger(jobLogger.getName()), consoleAppender);
-        configuration.getLoggerConfig(jobLogger.getName()).setLevel(Level.DEBUG);
-        lc.updateLoggers();
+        if (!configuration.getAppenders().containsKey("test")) {
+            testAppender = TestAppender.createAppender("test", null);
+            testAppender.start();
+            final Appender consoleAppender = ConsoleAppender.createDefaultAppenderForLayout(
+                    PatternLayout.newBuilder().withPattern("%d{HH:mm:ss.SSS} %-5level %c{-4} - %msg%n").build());
+            consoleAppender.start();
+            configuration.addAppender(testAppender);
+            configuration.addAppender(consoleAppender);
+            configuration.addLoggerAppender(lc.getLogger(jobLogger.getName()), testAppender);
+            configuration.addLoggerAppender(lc.getLogger(jobLogger.getName()), consoleAppender);
+            configuration.getLoggerConfig(jobLogger.getName()).setLevel(Level.DEBUG);
+            lc.updateLoggers();
+        }
 
         // check logging setup
         assertTrue(jobLogger.isDebugEnabled());

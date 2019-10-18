@@ -51,6 +51,8 @@
                 #renderUDKIcon($entry.objectClass)
                 $entry.title
             </a>
+        #elseif($entry.noLink)
+            $entry.title
         #elseif(!$entry.isMapLink)
             <a class="link" href="$entry.href">
                 <svg class="icon"><use xlink:href="#internal-link"></use></svg>
@@ -609,7 +611,7 @@
 #macro (renderLinkList $title $linkList $titleAsSection)
     #renderLinkListSpace ($title $linkList $titleAsSection "")
 #end
-#macro (renderLinkListSpace $title $linkList $titleAsSection $space)
+#macro (renderLinkListSpace $title $linkList $titleAsSection $space $asList)
     #if($tool.hasContent($linkList))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
@@ -622,10 +624,22 @@
                     <h4 class="title-font">$title</h4>
                 #end
             #end
-            #foreach($link in $sorter.sort($linkList,"title"))
-                <p>
-                    #renderLinkLine($link)
-                </p>
+            #if($asList == "true")
+                <ul class="list list--bullets bx-top-s">
+                    #foreach($link in $sorter.sort($linkList,"title"))
+                        <li>
+                            <p>
+                                #renderLinkLine($link)
+                            </p>
+                        </li>
+                    #end
+                </ul>
+            #else
+                #foreach($link in $sorter.sort($linkList,"title"))
+                    <p>
+                        #renderLinkLine($link)
+                    </p>
+                #end
             #end
         </div>
     #else
