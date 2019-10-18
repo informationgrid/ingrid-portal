@@ -1193,6 +1193,12 @@ a.data:hover {
     right: 16px;
     bottom: 16px;
   }
+  
+  ul {
+    margin-left: 0;
+  
+    li:before { content: none }
+  }
 }
 
 /* teaser-data Vorhaben */
