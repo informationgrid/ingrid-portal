@@ -150,7 +150,6 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             </a>
         </p>
     </div>
-    <br><br><br><br><br>
 </div>
 #end
 
