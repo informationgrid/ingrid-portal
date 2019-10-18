@@ -5,8 +5,8 @@ html { overflow-y: scroll; }
 
 html, body { height:100%; }
 
-.body > :last-child:not(.about) {
-  margin-bottom: 4rem;
+.body > div:last-child {
+  padding-bottom: 13rem;
 }
 
 :focus { outline: none; }
@@ -1317,7 +1317,6 @@ a.data:hover {
 }
 
 footer {
-  display: contents;
   position: absolute;
   bottom: 0;
   width: 100%;
