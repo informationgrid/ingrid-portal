@@ -325,6 +325,15 @@
 }
 
 /* UVP-NI */
+.body > div:last-child {
+  padding-bottom: 13rem;
+}
+.body div.about {
+  padding-bottom: 8rem;
+}
+.body div.detail {
+  padding-bottom: 12rem;
+}
 a {
   color: #0089C6;
 }
@@ -434,6 +443,9 @@ header {
 }
 .about {
   background-image: linear-gradient(to right, #246293, #0089C6);
+}
+.about .about-wrapper .button.outline:hover {
+  background-color: #1D4B7B;
 }
 .banner.home h1.green {
   color: #40B9EC;
