@@ -6,7 +6,11 @@ html { overflow-y: scroll; }
 html, body { height:100%; }
 
 .body > div:last-child {
-  padding-bottom: 13rem;
+  padding-bottom: 10rem;
+}
+
+.body > div.about, .body > div.detail {
+  padding-bottom: 6rem;
 }
 
 :focus { outline: none; }
