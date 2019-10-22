@@ -736,11 +736,6 @@ footer hr {
   top: 30px;
   margin: 0 10px;
 }
-.switch {
-  position: relative;
-  top: 30px;
-  margin: 0 10px;
-}
 .switch .ic-ic-angle-down {
   font-size: 16px;
   background: #F6F6F6;
