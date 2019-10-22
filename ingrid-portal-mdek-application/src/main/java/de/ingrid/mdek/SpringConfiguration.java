@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,8 +22,11 @@
  */
 package de.ingrid.mdek;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +47,7 @@ import de.ingrid.mdek.upload.auth.AuthService;
 import de.ingrid.mdek.upload.auth.PortalAuthService;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
+import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
 import de.ingrid.mdek.userrepo.UserRepoManager;
 
@@ -103,12 +107,10 @@ public class SpringConfiguration {
 
 	@Bean
 	public UserRepoManager userRepoManager(Config config, @Value("#{daoFactory}") DaoFactory dao) {
-		if (config.noPortal) {
-			DbUserRepoManager manager = new DbUserRepoManager();
-			manager.setDaoFactory(dao);
-			return manager;
-		}
-		return null;
+		// always create manager to prevent NullPointerException
+		DbUserRepoManager manager = new DbUserRepoManager();
+		manager.setDaoFactory(dao);
+		return manager;
 	}
 
 	/**
@@ -125,9 +127,23 @@ public class SpringConfiguration {
 		switch (config.uploadImpl) {
 		case "de.ingrid.mdek.upload.storage.impl.FileSystemStorage":
 		default:
-			FileSystemStorage instance = new FileSystemStorage();
-			instance.setDocsDir(config.docsdir);
-			instance.setPartsDir(config.partsdir);
+			final FileSystemStorage instance = new FileSystemStorage();
+			instance.setDocsDir(config.uploadDocsDir);
+			instance.setPartsDir(config.uploadPartsDir);
+
+			// validators
+			final List<Validator> validators = new ArrayList<Validator>();
+			final Map<String, Validator> uploadValidatorMap = config.uploadValidatorMap;
+			for (final String validatorName : config.uploadValidators) {
+				if (uploadValidatorMap.containsKey(validatorName)) {
+	 				validators.add(uploadValidatorMap.get(validatorName));
+				}
+				else {
+					throw new BeanCreationException("Error creating upload instance: A validator with name '"+validatorName+"' is not defined in 'upload.validators.config'.");
+				}
+			}
+			instance.setValidators(validators);
+
 			return instance;
 		}
 	}

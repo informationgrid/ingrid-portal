@@ -1082,6 +1082,7 @@ define({
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
     "validation.encoding.added": "Das Kodierungsschema '${0}' wurde ebenfalls geändert.",
     "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
+    "validation.dataformat.missing.gml": "Es muss mindestens ein 'GML' Eintrag mit einer Version eingetragen sein",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 
@@ -1090,6 +1091,7 @@ define({
     "hint.noEntriesFromParent": "Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!",
     "hint.addressFromParentAdded": "Adressdaten von übergeordneter Adresse übernommen!",
     "hint.selectOpenData": "Wird diese Auswahl gewählt, so werden alle Zugriffsbeschränkungen entfernt und durch 'keine' ersetzt. Möchten Sie fortfahren?",
+    "hint.inspireConformity": "ACHTUNG: Grad der Konformität zur Spezifikation wird geändert.",
 
     "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
     "warning.address.inherit.to.children": "Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",

@@ -5,8 +5,12 @@ html { overflow-y: scroll; }
 
 html, body { height:100%; }
 
-.body {
-  padding-bottom: 160px;
+.body > div:last-child {
+  padding-bottom: 10rem;
+}
+
+.body > div.about, .body > div.detail {
+  padding-bottom: 6rem;
 }
 
 :focus { outline: none; }
@@ -113,6 +117,12 @@ img { width: 100%; }
   span:first-child {
     font-size: 14px;
     margin-right: 5px;
+    float: left;
+  }
+  span.text {
+    position: relative;
+    display: block;
+    margin-left: 28px;
   }
 }
 .helper.icon.check .ic-ic-check {
@@ -264,7 +274,8 @@ img { width: 100%; }
   color: $green-jelly;
   text-transform: none;
   background-color: $blue-sky;
-  padding: 8px 8px 8px 16px;
+  padding: 8px 36px 8px 16px;
+  position: relative;
 
   .ic-ic-cross { font-size: 12px; }
 }
@@ -272,6 +283,16 @@ img { width: 100%; }
   span { color: $green-blue; }
 }
 .button.pill[type="reset"] { background-color: $white; }
+
+.button.pill.pill-del:after {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  content: '\e90c';
+  font-family: 'icomoon';
+  font-size: 12px;
+  margin-top: -0.275rem;
+}
 
 /* links */
 a.icon {
@@ -580,6 +601,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
   background: $blue-midnight;
 }
 .tabs-panel { padding: 36px 0; }
+.tabs-panel.midnight { padding: 72px 0; }
 
 /* form elements */
 .form-element {
@@ -654,7 +676,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
 .popup {
   border-radius: 24px;
   box-shadow: 0px 0px 17px 1px rgba(0,0,0,0.3);
-  left: 50%;
+  left: 0;
   max-height: 100%;
   max-width: 100%;
   position: fixed;
@@ -664,7 +686,6 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
   transition: transform .2s;
   z-index: 5;
   width: 30rem;
-  margin-left: -15rem;
   .headline {
     position: relative;
     background-color: $green-jelly;
@@ -745,6 +766,7 @@ header {
       position: absolute;
       top: 14px;
       left: 8px;
+      right: 0px;
     }
   }
   .nav-tabs { text-align: right; }
@@ -1123,6 +1145,7 @@ header {
   .helper.icon {
     font-size: 18px;
     line-height: 20px;
+    max-width: 85%;
    
     span:first-child {
         font-size: 20px;
@@ -1131,14 +1154,13 @@ header {
   .helper.text.date {
     font-size: 14px;
     font-weight: normal;
-    margin-top: -24px;
+    margin-top: -20px;
   }
   .header {
     color: $green-jelly;
     overflow: hidden;
   }
   .data-text {
-    height: 82px;
     overflow: hidden;
   }
   .helper, p { color: $blue-prov; }
@@ -1155,10 +1177,10 @@ header {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
+  .header:hover, .arrow:hover { color: $green-blue; }
 }
 .teaser-data:hover {
   box-shadow: 0px 0px 8px 0px $blue-rhapsody;
-  .header, .arrow { color: $green-blue; }
 }
 a.data:hover {
   text-decoration: none;
@@ -1167,13 +1189,19 @@ a.data:hover {
 .teaser-data.search {
   position: relative;
   height: auto;
-  padding: 24px;
+  padding: 16px;
   margin-bottom: 24px;
 
   .arrow {
     position: absolute;
-    right: 40px;
-    bottom: 40px;
+    right: 16px;
+    bottom: 16px;
+  }
+  
+  ul {
+    margin-left: 0;
+  
+    li:before { content: none }
   }
 }
 
@@ -1311,7 +1339,6 @@ footer {
     text-transform: uppercase;
     background-color: $blue-rhapsody;
     padding: 32px 0;
-    margin-top: 48px;
 
     .footer-menu-entries {
       text-align: center;
@@ -1332,6 +1359,9 @@ footer {
 }
 
 /* timeline */
+#timeline .columns {
+  padding-bottom: 0px;
+}
 .timeline {
 
   h1 { margin-left: 3rem; }
@@ -1347,6 +1377,7 @@ footer {
     display: inline-block;
     vertical-align: top;
     width: 82%;
+    padding-bottom: 3rem;
 
     h4 span {
       color: $blue-light;
@@ -1537,12 +1568,15 @@ footer {
   margin: 32px 24px;
   min-width: 400px;
 
-  .helper { margin-bottom: 16px; }
+  .helper.icon:last-of-type, .helper.text:first-of-type { margin-bottom: 16px; }
   .helper, p { color: $blue-prov; }
   p {
     font-size: 14px;
     line-height: 20px;
     margin: 0 0 16px 0;
+  }
+  .helper.icon span.text {
+    margin-left: 20px;
   }
 }
 .leaflet-popup-tip-container {

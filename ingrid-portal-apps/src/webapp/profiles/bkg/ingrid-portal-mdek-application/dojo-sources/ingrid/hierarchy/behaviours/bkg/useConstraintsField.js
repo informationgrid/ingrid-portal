@@ -21,6 +21,7 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/on",
     "dojo/dom",
@@ -28,7 +29,7 @@ define([
     "dojo/dom-construct",
     "dijit/registry",
     "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, dom, domClass, construct, registry, MultiInputInfoField) {
+], function(array, declare, on, dom, domClass, construct, registry, MultiInputInfoField) {
 
     // issue: 556
     return declare(null, {
@@ -46,7 +47,7 @@ define([
             registry.byId("availabilityUseAccessConstraints").reinitLastColumn(true);
 
             // create div element to insert new field at correct place
-            var insertNode = construct.create("div");
+            var insertNode = construct.create("span", { class: 'outer' });
             targetNode.parentNode.insertBefore(insertNode, targetNode);
 
             var multiInputInfoFieldWidget = new MultiInputInfoField({
@@ -54,7 +55,22 @@ define([
                 label: "Nutzungsbedingungen",
                 selectRequired: true,
                 codelist: 10003,
-                codelistForText: 10004
+                codelistForText: 10004,
+                sortCodelist: function(entries) {
+                    var entry = array.filter(entries, function(item) {
+                        return item[1] === "99";
+                    });
+                    if (entry.length === 0) {
+                        console.warn("No sorting of codelist 10003, since entry was not found: 99");
+                        return data;
+                    }
+                    var filtered = array.filter(entries, function(item) {
+                        return item[1] !== "99";
+                    });
+
+                    filtered.unshift(entry[0]);
+                    return filtered;
+                }
             }).placeAt(insertNode);
 
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;

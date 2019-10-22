@@ -40,7 +40,7 @@
 
 .list--bullets {
     padding-left: rem(32px);
-    list-style: outside none disc;
+    list-style: disc outside none;
     
     li {
         &:before {

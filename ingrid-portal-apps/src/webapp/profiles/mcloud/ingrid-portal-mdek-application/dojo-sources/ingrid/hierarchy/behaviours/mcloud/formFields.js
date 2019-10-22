@@ -287,14 +287,9 @@ define(["dojo/_base/declare",
                 {
                     field: 'link',
                     name: 'Link*',
-                    editable: true,
-                    width: '200px'
-                    /* TODO: activate document upload
-                    field: 'link',
-                    name: 'Link*',
                     editable: false,
                     width: '200px',
-                    formatter: Formatters.LinkCellFormatter*/
+                    formatter: Formatters.LinkCellFormatter
                 },
                 {
                     field: 'sourceType',
@@ -357,7 +352,7 @@ define(["dojo/_base/declare",
                 structure, rubric
             );
             var downloadsTable = registry.byId(id);
-            // TODO: activate document upload: this.addUploadLink(id);
+            this.addUploadLink(id);
             additionalFields.push(downloadsTable);
             downloadsTable.reinitLastColumn(true);
 

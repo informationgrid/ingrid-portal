@@ -34,8 +34,8 @@
 define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/lang", "dojo/dom-style", "dojo/topic", "dojo/query", "dojo/on", "dojo/aspect", "dojo/dom", "dojo/dom-class",
     "dijit/registry", "dojo/cookie",
     "ingrid/message", "ingrid/dialog",
-    "ingrid/utils/Grid", "ingrid/utils/UI", "ingrid/utils/List", "ingrid/utils/Syslist"
-], function(declare, array, Deferred, lang, style, topic, query, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist) {
+    "ingrid/utils/Grid", "ingrid/utils/UI", "ingrid/utils/List"
+], function(declare, array, Deferred, lang, style, topic, query, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList) {
 
     var Rules = declare(null, {
 
@@ -267,13 +267,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
         applyRuleThesaurusInspire: function() {},
 
         applyRuleServiceType: function() {
-            var typesWithBehavior = [1, 2, 3, 5];
-            var applySpecification = function(type, deleteEntry) {
-                if (type == 1) UtilUI.updateEntryToConformityTable(38, deleteEntry);
-                else if (type == 2) UtilUI.updateEntryToConformityTable(39, deleteEntry);
-                else if (type == 3) UtilUI.updateEntryToConformityTable(40, deleteEntry);
-                else if (type == 5) UtilUI.updateEntryToConformityTable(43, deleteEntry);
-            };
 
             var updateSyslistServiceVersion = function(type) {
                 if (type == 1) registry.byId("ref3ServiceVersion").columns[0].listId = 5151;
@@ -289,32 +282,6 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
                 if (objClass == "Class3") {
                     // change syslist of supported versions
                     updateSyslistServiceVersion(value);
-                }
-            });
-
-            var handleConformityValue = function(value) {
-                // remove all dependent types
-                array.forEach(typesWithBehavior, function(type) {
-                    applySpecification(type, true);
-                });
-                // add possibly new type
-                applySpecification(value, false);
-            };
-
-            // on manual service type change automatically add/remove conformity entries to the table
-            aspect.after(registry.byId("ref3ServiceType"), "closeDropDown", function() {
-                var objClass = registry.byId("objectClass").get("value");
-                if (objClass == "Class3") {
-                    handleConformityValue(this.get("value"));
-                }
-            });
-
-            // execute behaviour when a new document is created
-            topic.subscribe("/afterInitDialog/CloseWizard", function() {
-                var objClass = registry.byId("objectClass").get("value");
-                if (objClass == "Class3") {
-                    var value = registry.byId("ref3ServiceType").get("value");
-                    handleConformityValue(value);
                 }
             });
 

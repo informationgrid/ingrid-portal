@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.1.0</version>
+    <version>5.2.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -486,12 +486,6 @@
                     <include name="*.xml" />
                     <include name="**/wms*.properties" />
                     <exclude name="hibernate.cfg.xml" />
-                  </fileset>
-                </copy>
-                <echo>INGRID-PORTAL-APPS: Copy default dwd properties to profile 'ingrid'</echo>
-                <copy todir="${project.build.directory}/${project.build.finalName}/profiles/ingrid/ingrid-portal-apps/dwd_warnmodul">
-                  <fileset dir="${project.basedir}/src/webapp/dwd_warnmodul/">
-                    <include name="*.cfg" />
                   </fileset>
                 </copy>
                 <echo>INGRID-PORTAL: Copy portal-base layout ingrid properties to profile 'ingrid'</echo>

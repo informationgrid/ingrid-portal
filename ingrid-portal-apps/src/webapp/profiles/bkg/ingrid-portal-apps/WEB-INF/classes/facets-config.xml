@@ -129,6 +129,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>Art der Ressource</name>
         <id>type</id>
+        <isOpen>true</isOpen>
         <facets>
         <!-- Geo-Information / Karte -->
             <facet>
@@ -155,8 +156,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         </facets>
     </facet>
     <facet>
-        <name>Inspire</name>
+        <name>INSPIRE</name>
         <id>inspire</id>
+        <isOpen>true</isOpen>
         <facets>
         <!-- INSPIRE-relevant true-->
             <facet>
@@ -175,6 +177,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>Opendata</name>
         <id>opendata</id>
+        <isOpen>true</isOpen>
         <facets>
         <!-- Opendata true-->
            <facet>
@@ -193,6 +196,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>AdV-Produkt</name>
         <id>adv</id>
+        <isOpen>true</isOpen>
         <facets>
         <!-- AdV-Produkt true-->
            <facet>

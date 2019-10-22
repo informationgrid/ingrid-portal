@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,13 +42,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,7 +60,7 @@ import de.ingrid.mdek.quartz.jobs.UploadCleanupJob.FileReference;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.utils.IngridDocument;
 
-public class UploadCleanupJobTest {
+public class UploadCleanupJobTest extends BaseJobTest {
 
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
     private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
@@ -92,39 +84,11 @@ public class UploadCleanupJobTest {
     private UploadCleanupJob job;
     private FileSystemStorage storage;
 
-    private final Logger jobLogger = LogManager.getLogger(UploadCleanupJob.class);
-    private final TestAppender testAppender = new TestAppender("test", null, PatternLayout.createDefaultLayout());
-
-    public class TestAppender extends AbstractAppender {
-
-        public boolean hasIssues() {
-            return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 ||
-                this.getEvents(Level.WARN).size() > 0;
-        }
-
-        public List<LogEvent> getEvents(final Level level) {
-            return this.events.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
-        }
-
-        //for verifying.
-        List<LogEvent> events = new ArrayList<>();
-
-        public TestAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout) {
-            super(name, filter, layout);
-        }
-
-        @Override
-        public void append(final LogEvent event) {
-            events.add(event);
-        }
-
-        public List<LogEvent> getEvents() {
-            return events;
-        }
-    }
-
+    @Override
     @Before
     public void setUp() throws Exception {
+        super.setUp();
+
         MockitoAnnotations.initMocks(this);
 
         // setup mdek client
@@ -145,19 +109,19 @@ public class UploadCleanupJobTest {
         this.job.setStorage(this.storage);
         this.job.setReferenceDate(JOB_REFERENCE_TIME);
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
-
-        // setup logging
-        final org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
-        testAppender.start();
-        coreLogger.addAppender(testAppender);
     }
 
+    @Override
     @After
     public void tearDown() throws Exception {
-        testAppender.stop();
-        final org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
-        coreLogger.removeAppender(this.testAppender);
+        super.tearDown();
+
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
+    }
+
+    @Override
+    protected Class<?> getJobClassUnderTest() {
+        return UploadCleanupJob.class;
     }
 
     /**
@@ -189,7 +153,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         // exception is logged
-        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
+        assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
     }
 
     /**
@@ -218,7 +182,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(this.getFilePath(FAILING_PLUG_ID), unreferencedFile1));
         assertTrue(this.fileExists(this.getFilePath(FAILING_PLUG_ID), unreferencedFile2));
         // exception is logged
-        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
+        assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
     }
 
     /**
@@ -261,7 +225,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFileB1));
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFileB2));
         // exception is logged
-        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
+        assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
     }
 
     /**
@@ -290,7 +254,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -314,7 +278,7 @@ public class UploadCleanupJobTest {
 
         // test
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), deletedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -338,13 +302,13 @@ public class UploadCleanupJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -353,7 +317,7 @@ public class UploadCleanupJobTest {
         this.job.executeInternal(this.context);
 
         // test
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -382,7 +346,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -411,7 +375,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertFalse(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -439,7 +403,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -467,7 +431,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -495,7 +459,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -523,7 +487,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -554,7 +518,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -582,7 +546,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -610,7 +574,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -638,7 +602,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -666,7 +630,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -694,7 +658,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -722,7 +686,7 @@ public class UploadCleanupJobTest {
         // test
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertTrue(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -762,7 +726,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.dirExists(unreferencedDir));
         assertTrue(this.dirExists(TRASH_PATH));
         assertTrue(this.dirExists(ARCHIVE_PATH));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**

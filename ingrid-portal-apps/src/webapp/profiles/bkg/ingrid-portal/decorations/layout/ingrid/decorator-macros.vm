@@ -131,7 +131,7 @@
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
         #if($element.url == "/privacy.psml")
-          <li><a href="https://www.bkg.bund.de/DE/Service/Datenschutz/datenschutz.html" title="$linkTitle">$linkName</a></li>
+          <li><a target="_new" href="https://www.bkg.bund.de/DE/Service/Datenschutz/datenschutz.html" title="$linkTitle">$linkName</a></li>
         #else 
             #if($element.isSelected($site))
               <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>

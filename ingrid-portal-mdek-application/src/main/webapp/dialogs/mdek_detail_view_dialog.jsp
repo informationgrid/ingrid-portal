@@ -707,7 +707,7 @@ require([
 
                 // NOTICE: moved from class 1 to general "Raumbezug"
                 //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
-                renderList(nodeData.ref1SpatialSystemTable, "<fmt:message key='ui.obj.type1.spatialSystem' />");
+                renderLinkList(prepareSpatialSystemLinks(nodeData.ref1SpatialSystemTable), "<fmt:message key='ui.obj.type1.spatialSystem' />", true);
 
                 // create cell render functions
                 function lookupSpatialRefAltMeasure(val) {
@@ -1134,7 +1134,7 @@ require([
                 var valList = "";
                 var val = null;
                 for (var i = 0; i < list.length; i++) {
-                    if (isUrl) {
+                    if (isUrl && list[i].url) {
                         val = "<a href=\"" + list[i].url + "\" target=\"new\">" + list[i].name + "</a>";
                     } else {
                         val = "" + list[i].title;
@@ -1279,6 +1279,22 @@ require([
                 retVal = val[0];
             }
             return retVal;
+        }
+
+        function prepareSpatialSystemLinks(data) {
+            var result = [];
+            array.forEach(data, function(item) {
+                var entry = {};
+                if (item.indexOf("EPSG") === 0) {
+                    var code = item.substring(5, item.indexOf(":"));
+                    entry.url = "https://epsg.io/" + code;
+                    entry.name = item;
+                } else {
+                    entry.title = item;
+                }
+                result.push(entry);
+            });
+            return result;
         }
 
         // function findNodeInSubTree(uuid) {

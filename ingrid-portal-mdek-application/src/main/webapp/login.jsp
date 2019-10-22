@@ -71,8 +71,10 @@
 	                // check if login is registered IGE-user
 	                SecurityService.authenticate(username, password, function(result) {
 	                    if (result == true) {
-	                        //window.location.href = "start.jsp";
-	                        window.location.reload();
+	                        // window.location.href = "start.jsp";
+	                        // window.location.reload();
+                            // reload page and remove conflicting slashes that were generated somehow
+                            window.location.href = window.location.href.replace("///", "/");
 	                    } else {
 	                        showLoginError();
 	                    }
