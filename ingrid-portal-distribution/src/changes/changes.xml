@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.2.0-SNAPSHOT" date="2019-xx-xx" description="Release 5.2.0">
+        <release version="5.2.0" date="2019-10-22" description="Release 5.2.0">
           <action type="update" dev="wemove" issue="1532">
             Deaktivierung von Benutzerregistrierung im BKG Profil.
           </action>
@@ -49,6 +49,27 @@
           </action>
           <action type="add" dev="wemove" issue="1272">
             IGE: Add behaviour for dataformat.
+          </action>
+          <action type="update" dev="wemove" issue="1363">
+            IGE(BKG): Fix special sorting of use constraints.
+          </action>
+          <action type="update" dev="wemove" issue="1219">
+            IGE: Special sort for access constraints.
+          </action>
+          <action type="add" dev="wemove" issue="1221">
+            Show links for INSPIRE spatial reference systems.
+          </action>
+          <action type="update" dev="wemove" issue="1409">
+            BKG: Behaviour for access constraints.
+          </action>
+          <action type="update" dev="wemove" issue="1272">
+            IGE: Make dataformat visible certain document types.
+          </action>
+          <action type="fix" dev="wemove" issue="1218">
+            Fix issue when displaying use constraints.
+          </action>
+          <action type="add" dev="wemove" issue="1293">
+            Add virus scan in upload process.
           </action>
         </release>
 
