@@ -212,88 +212,6 @@ define(["dojo/_base/declare",
             return grid.validateNonEmptyRows();
         },
 
-        titleDateValidation: function(gridId) {
-            var error = false;
-            var data = this.getData();
-
-            array.forEach(data, function(item, row) {
-                var rowError = false;
-                if (((item.title === undefined || item.title == "") && (item.date !== undefined || item.date != "")) ||
-                    ((item.title !== undefined || item.title != "") && (item.date === undefined || item.date == "")))
-                    rowError = true;
-
-                if (((item.title === undefined || item.title == "") && (item.date === undefined || item.date == "")))
-                    rowError = false;
-
-                if (item.title === null)
-                    rowError = true;
-
-                if (rowError) {
-                    error = true;
-                    if (item.date === undefined || item.date == "") {
-                        UtilUI.markCells("ERROR", gridId, row, [1]);
-                        UtilUI.markCells("VALID", gridId, row, [0]);
-                    } else {
-                        UtilUI.markCells("ERROR", gridId, row, [0]);
-                        UtilUI.markCells("VALID", gridId, row, [1]);
-                    }
-                    var msg = string.substitute(message.get("validation.titleDate"), [message.get("ui.obj.type1.symbolCatTable.header.title"), message.get("ui.obj.type1.symbolCatTable.header.date")]);
-                    UtilUI.showToolTip(gridId, msg);
-                } else {
-                    UtilUI.markCells("VALID", gridId, row, [0, 1]);
-                }
-
-            });
-
-            return !error;
-        },
-
-        addressValidation: function() {
-            aspect.after(UtilGrid.getTable("generalAddress"), "onDataChanged", function(result, params) {
-                var msg = params[0];
-                if (msg.type != "deleted")
-                    return;
-
-                // just any address needed (not "Verwalter" anymore), see INGRID32-46
-                // if it's the last address then revert store state since
-                // at least one address must exist
-                var anyAddress = UtilGrid.getTableData("generalAddress").length > 0;
-                if (!anyAddress) {
-                    array.forEach(msg.items, function(itemRow) {
-                        UtilGrid.addTableDataRow("generalAddress", itemRow);
-                        // show tooltip
-                        var toolTip = message.get("validation.addressInfoRequired");
-                        UtilUI.showToolTip("generalAddress", toolTip);
-                    });
-                }
-            });
-
-            // only complete entries are allowed
-            UtilGrid.getTable("generalAddress").validate = function(forPublish) {
-                var result = true;
-                var data = this.getData();
-                var cell;
-                array.forEach(data, function(item, i) {
-                    if (typeof(item.uuid) == "undefined") {
-                        this.scrollRowIntoView(i);
-                        cell = query(".slick-row[row$=" + i + "] .c2", "generalAddress")[0];
-                        domClass.add(cell, "importantBackground");
-                        result = false;
-                    }
-                    if (forPublish) {
-                        if (typeof(item.nameOfRelation) == "undefined" || item.nameOfRelation == "") {
-                            this.scrollRowIntoView(i);
-                            cell = query(".slick-row[row$=" + i + "] .c0", "generalAddress")[0];
-                            domClass.add(cell, "importantBackground");
-                            result = false;
-                        }
-                    }
-                }, this);
-                return result;
-            };
-
-        },
-
         communicationValidation: function() {
             //on(registry.byId("addressCom").store, "onNew", function(item) {
             aspect.after(UtilGrid.getTable("addressCom"), "onDataChanged", function(msg) {
@@ -453,41 +371,6 @@ define(["dojo/_base/declare",
             }
         },
 
-        // Attention: this is already validated by the general check for empty table rows!
-        availabilityAccessPublishable: function(notPublishableIDs) {
-            /*var objClass = registry.byId("objectClass").get("value").substr(5, 1);
-            if (objClass != "0") {
-                if (array.some(UtilGrid.getTableData("availabilityAccessConstraints"), function(ad) {
-                    return (typeof(ad.title) == "undefined" || ad.title === null || lang.trim(ad.title + "").length === 0);
-                })) {
-                    notPublishableIDs.push( ["availabilityAccessConstraints", "validation.error.availability.access.constraints"] );
-                    console.debug("All entries in the availabilityAccessConstraints table must contain data.");
-                }
-            }*/
-        },
-
-        generalAddressPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
-            var addressData = UtilGrid.getTableData("generalAddress");
-            // Check if all entries in the address table have valid reference types
-            if (array.some(addressData, function(addressRef) {
-                return (typeof(addressRef.uuid) == "undefined" || addressRef.nameOfRelation === null || lang.trim(addressRef.nameOfRelation + "").length === 0);
-            })) {
-                console.debug("All entries in the address table must have valid references.");
-                registry.byId("generalAddress").invalidMessage = "All entries in the address table must have valid references.";
-                notPublishableIDs.push( ["generalAddress", message.get("validation.error.missing.address.user")] );
-            }
-
-            // Check if at least one entry exists
-            // just any address needed (not "Verwalter" anymore), see INGRID32-46
-            var anyAddress = addressData.length > 0;
-            if (!anyAddress) {
-                console.debug("At least one referenced address has to be set");
-                registry.byId("generalAddress").invalidMessage = message.get("validation.error.addressType");
-                notPublishableIDs.push( ["generalAddress", message.get("validation.error.missing.address")] );
-            }
-        },
-
         extraInfoConformityPublishable: function(notPublishableIDs) {
             var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if ((objClass == "1") || (objClass == "3")) {
@@ -498,25 +381,6 @@ define(["dojo/_base/declare",
                     console.debug("All entries in the conformity table must have a valid level and specification.");
                     notPublishableIDs.push( ["extraInfoConformityTable", message.get("validation.error.conformity.table")] );
                 }
-            }
-        },
-
-        dqTablesPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
-            if (objClass == "1") {
-                var dqUiTableElements = query("#ref1ContentDQTables span:not(.hide) .ui-widget", "contentFrameBodyObject").map(function(item) {
-                    return item.id;
-                });
-                // Check dq rows whether complete !
-                array.forEach(dqUiTableElements, function(dqTableId) {
-                    var dqRows = UtilGrid.getTableData(dqTableId);
-                    array.forEach(dqRows, function(dqRow) {
-                        if (!UtilGeneral.hasValue(dqRow.nameOfMeasure) || !UtilGeneral.hasValue(dqRow.resultValue)) {
-                            console.debug("NameOfMeasure + ResultValue needs to be filled.");
-                            notPublishableIDs.push( [dqTableId, message.get("validation.error.dq.table")] );
-                        }
-                    });
-                });
             }
         },
 
@@ -537,65 +401,6 @@ define(["dojo/_base/declare",
                 console.debug("The spatial reference table must not contain expired entries.");
                 notPublishableIDs.push( ["spatialRefAdminUnit", message.get("validation.error.spatial.no.expired")] );
             }
-        },
-
-        ref3OperationPublishable: function(notPublishableIDs) {
-            var objClass = registry.byId("objectClass").get("value").substr(5, 1);
-            if (objClass == "3") {
-                // Check if the operation table contains valid input (name has to be set)
-                // NOTICE: Name may be reset to "" if serviceType is changed !!!
-                var invalid = false;
-                var grid = UtilGrid.getTable("ref3Operation");
-                grid.resetInvalidRows();
-                var newInvalidRows = [];
-                var hasCapabilitiesOperation = false;
-                var serviceType = registry.byId("ref3ServiceType").get("value");
-
-                array.forEach(UtilGrid.getTableData("ref3Operation"), function(op, row) {
-                    if (!UtilGeneral.hasValue(op.name) || !UtilGeneral.hasValue(op.addressList) || !UtilGeneral.hasValue(op.platform)) {
-                        newInvalidRows.push(row);
-                    }
-                    if (op.name === "GetCapabilities")
-                        hasCapabilitiesOperation = true;
-                });
-                if (newInvalidRows.length > 0) {
-                    grid.setInvalidRows(newInvalidRows);
-                    console.debug("All entries in the operation table must have a valid name.");
-                    notPublishableIDs.push( ["ref3Operation", message.get( "validation.error.invalid.operation.name" )] );
-                }
-
-                // at least one GetCapabilities entry has been entered
-                // only check for certain serviceTypes (2==Darstellungsdienste)!
-                // see email AW: Operationen zum Pflichtfeld (03.04.2013 14:48)
-                if ((serviceType === "2") && !hasCapabilitiesOperation)
-                    notPublishableIDs.push( ["ref3Operation", message.get( "validation.error.missing.capabilities.entry" )]);
-
-            }
-        },
-
-        applyBeforeObjectPublishValidation: function() {
-            var self = this;
-            topic.subscribe("/onBeforeObjectPublish", function( /*Array*/ notPublishableIDs) {
-                var objClass = registry.byId("objectClass").get("value").substr(5, 1);
-                var addressData = UtilGrid.getTableData("generalAddress");
-
-                // Check if the timeRef table contains valid input (both date and type must contain data)
-                self.timeRefTablePublishable(notPublishableIDs);
-
-                // Check if the availability access and useConstraints contains valid input (both fields contain data)
-                self.availabilityAccessPublishable(notPublishableIDs);
-
-                self.availabilityUsePublishable(notPublishableIDs);
-
-                // Check if at least one entry exists with the correct relation type
-                self.generalAddressPublishable(notPublishableIDs);
-
-                self.spatialRefAdminUnitPublishable(notPublishableIDs);
-
-                self.extraInfoConformityPublishable(notPublishableIDs);
-
-                self.dqTablesPublishable(notPublishableIDs);
-            });
         },
 
         applyBeforeAddressPublishValidation: function() {
@@ -718,8 +523,6 @@ define(["dojo/_base/declare",
     })();
 
     // add global function objects for backward compatibility
-    addressValidation = Validators.addressValidation;
-    titleDateValidation = Validators.titleDateValidation;
     emptyRowValidation = Validators.emptyRowValidation;
     applyRef6UrlListValidation = Validators.applyRef6UrlListValidation;
     addServiceUrlValidation = Validators.addServiceUrlValidation;
@@ -728,13 +531,10 @@ define(["dojo/_base/declare",
     spatialRefLocationValidation = Validators.spatialRefLocationValidation;
     applyTimeRefIntervalValidation = Validators.applyTimeRefIntervalValidation;
 
-    generalAddressPublishable = Validators.generalAddressPublishable;
     timeRefTablePublishable = Validators.timeRefTablePublishable;
     dqTablesPublishable = Validators.dqTablesPublishable;
-    ref3OperationPublishable = Validators.ref3OperationPublishable;
     spatialRefAdminUnitPublishable = Validators.spatialRefAdminUnitPublishable;
     extraInfoConformityPublishable = Validators.extraInfoConformityPublishable;
-    availabilityAccessPublishable = Validators.availabilityAccessPublishable;
 
     return Validators;
 });

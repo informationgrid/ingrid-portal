@@ -53,9 +53,7 @@ define([
         eventsNotConform: [],
         run : function() {
 
-            var changeEvent = null,
-                clickEvent = null,
-                self = this;
+            var self = this;
 
             this.specificationName = UtilSyslist.getSyslistEntryName(6005, 12);
             this.specificationNameInspireRichtlinie = UtilSyslist.getSyslistEntryName(6005, 13);
@@ -69,6 +67,11 @@ define([
                     // don't forget to hide the element
                     domClass.add("uiElement6001", "hidden");
                 }
+            });
+
+            // general validation
+            topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
+                extraInfoConformityPublishable(notPublishableIDs);
             });
         },
 
@@ -89,11 +92,6 @@ define([
                     if (isChecked) {
                         domClass.remove("uiElement6001", "hidden");
 
-                        // Make inspire themes required
-                        domClass.add("uiElement5064", "required");
-                        domClass.remove("uiElement5064", "optional");
-                        registry.byId("thesaurusInspire").reinitLastColumn();
-
                         // Also make conformity a required field
                         domClass.add("uiElementN024", "required");
 
@@ -107,11 +105,6 @@ define([
                         }
                     } else {
                         domClass.add("uiElement6001", "hidden");
-
-                        // Make inspire themes optional
-                        domClass.remove("uiElement5064", "required");
-                        domClass.add("uiElement5064", "optional");
-                        domClass.remove("uiElement5064", "show");
 
                         // Conformity is optional for non-INSPIRE fields
                         domClass.remove("uiElementN024", "required");

@@ -178,6 +178,7 @@ define([
 
             createInfoHeader: function() {
                 var objectName = new ValidationTextBox({
+                    required: true,
                     maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
