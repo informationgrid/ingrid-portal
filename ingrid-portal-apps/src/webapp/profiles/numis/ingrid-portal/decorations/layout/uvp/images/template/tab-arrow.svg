@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="297px" height="19px" viewBox="0 0 297 19" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>assets/images/general/svg-raw/graphics/uvp-n/tab-arrow</title>
+    <desc>Created with Sketch.</desc>
+    <g id="assets/images/general/svg-raw/graphics/uvp-n/tab-arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="Path" fill="#006EC5" points="0 0 297 0 297 8 0 8"></polygon>
+        <path d="M149.512821,17.2773723 C149.43679,17.3703915 149.352672,17.456208 149.261494,17.5337738 C148.425986,18.2445458 147.183883,18.1297509 146.487179,17.2773723 L134,2 L162,2 L149.512821,17.2773723 L149.512821,17.2773723 Z" id="Triangle" fill="#006EC5"></path>
+    </g>
+</svg>

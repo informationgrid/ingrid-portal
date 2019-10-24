@@ -1,0 +1,12 @@
+#set ($action = $renderResponse.createActionURL())
+#if($helpKey && $helpKey != "index")
+    <div class="row search-filtered">
+        <div class="columns">
+            <a class="helper icon" href="$renderResponse.encodeURL('/portal/help.psml?hkey=index')">
+                <span class="ic-ic-arrow-left"></span>
+                <span class="text">$MESSAGES.getString('help.startpage')</span>
+            </a>
+        </div>
+    </div>
+#end
+$help_content

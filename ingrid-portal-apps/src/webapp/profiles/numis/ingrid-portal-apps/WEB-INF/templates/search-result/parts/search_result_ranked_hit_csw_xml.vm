@@ -1,0 +1,4 @@
+## render "Get XML"-link displayed next to the title
+#if ($rs.csw_link)
+    <a class="button" href='$rs.csw_link' title='$MESSAGES.getString('common.result.show.xml')'>XML</a>
+#end

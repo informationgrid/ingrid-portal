@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="24px" viewBox="0 0 12 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>assets/images/general/svg-raw/graphics/uvp-n/tab-arrow-vertical</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M9.72901461,12.5402931 L4,17 L4,7 L9.72901461,11.4597069 C10.0486566,11.7085297 10.0917047,12.1521379 9.82516518,12.4505336 C9.79607799,12.4830972 9.76389682,12.5131393 9.72901461,12.5402931 Z" id="path-1"></path>
+    </defs>
+    <g id="assets/images/general/svg-raw/graphics/uvp-n/tab-arrow-vertical" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Triangle" fill="#006EC5" xlink:href="#path-1"></use>
+        <g id="color/fill/default/indigo-carmine" mask="url(#mask-2)" fill="#006EC5">
+            <g transform="translate(4.000000, 0.000000)" id="Rectangle-2-Copy">
+                <polygon points="0 0 8.078125 0 8.078125 24.078125 0 24.078125"></polygon>
+            </g>
+        </g>
+        <g id="color/fill/default/indigo-carmine" mask="url(#mask-2)" fill="#006EC5">
+            <polygon id="Rectangle-2-Copy" points="0 0 4.078125 0 4.078125 24.078125 0 24.078125"></polygon>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,65 @@
+#if(!$closeSimilarSection)
+    <div class="search-filtered">
+        <div class="row">
+            <div class="columns">
+                <ul class="accordion nested-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                    <li id="similar_header" class="accordion-item #if($ps.isSimilarOpen)is-active#end" data-accordion-item="">
+                        #set ($action = $renderResponse.createActionURL())
+                        #if($ps.isSimilarOpen)
+                            $action.setParameter('action','doCloseSimilar')
+                        #else
+                            $action.setParameter('action','doOpenSimilar')
+                        #end
+                        <a href="$action" class="accordion-title" id="similar-accordion-label" aria-expanded="true" aria-selected="true">
+                            <span class="text">$MESSAGES.getString('searchSimilar.headline')</span>
+                        </a>
+                        <div class="accordion-content" id="similar-accordion" #if($ps.isSimilarOpen)aria-hidden="true" style="display:block"#end>
+                            #set ($action = $renderResponse.createActionURL())
+                            <form action="$action" method="get" name="frmSimilar" id="frmSimilar">
+                                #foreach($similarNode in $ps.similarRoot.getChildren())
+                                    <ul class="accordion nested-group-sub">
+                                        #set ($action = $renderResponse.createActionURL())
+                                        $action.setParameter('nodeId',$similarNode.id)
+                                        #if($similarNode.isOpen())
+                                            $action.setParameter('action','doCloseNode')
+                                        #else
+                                            $action.setParameter('action','doOpenNode')
+                                        #end
+                                        <li class="accordion-item  #if($similarNode.isOpen())is-active#end">
+                                            <a href="$action" class="accordion-title" #if($similarNode.isOpen())aria-expanded="true" aria-selected="true"#end>
+                                                $similarNode.getName() ($similarNode.getChildren().size())
+                                            </a>
+                                            <div class="accordion-content" #if($similarNode.isOpen())aria-hidden="true" style="display:block"#end>
+                                            #if($similarNode.getChildren().size() > 0)
+                                                #foreach($tokenNode in $similarNode.getChildren())
+                                                    #if($tokenNode.type == 4)
+                                                        <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
+                                                    #else
+                                                        <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
+                                                        <label class="field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
+                                                        <div class="field-toggle__icon">
+                                                            <svg class="icon"><use xlink:href="#tick"></use></svg>
+                                                        </div>
+                                                            $tokenNode.name
+                                                    #end
+                                                    </label>
+                                                #end
+                                            #else
+                                                <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
+                                            #end
+                                            </div>
+                                        </li>
+                                    </ul>
+                                #end
+                                <div class="columns text-center">
+                                    <button class="button">$MESSAGES.getString('searchSimilar.add.to.query')</button>
+                                    <input type="hidden" name="action" value="doAddSimilar" />
+                                </div>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+#end

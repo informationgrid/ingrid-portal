@@ -55,6 +55,14 @@ else
             exit 1
         fi
 
+        # NUMIS extends UVP layout
+        if [ "$PORTAL_PROFILE" == "numis" ]; then
+            echo "Copying profile files from parent (uvp) into portal directories ..."
+            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
+        fi
+
         # UVP-NI extends UVP
         if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."

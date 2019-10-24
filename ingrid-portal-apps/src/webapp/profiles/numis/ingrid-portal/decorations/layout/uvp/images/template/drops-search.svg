@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="774px" height="394.437842px" viewBox="0 0 774 394.437842" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <title>assets/images/numis/svg-raw/backgrounds/drops-suche</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="774" height="394.437842"></rect>
+    </defs>
+    <g id="assets/images/numis/svg-raw/backgrounds/drops-suche" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <g id="Rectangle" fill-rule="nonzero"></g>
+        <path d="M638.44737,137.27956 C584.876302,190.850628 498.020439,190.850628 444.449371,137.27956 C390.878303,83.7084913 390.878303,-3.1473713 444.449371,-56.7184395 L909.55263,-521.821699 C963.123698,-575.392767 1049.97956,-575.392767 1103.55063,-521.821699 C1157.1217,-468.250631 1157.1217,-381.394768 1103.55063,-327.8237 L638.44737,137.27956 Z" id="Rectangle-Copy-4" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)"></path>
+        <path d="M359.890925,342.469975 C290.600435,411.760464 178.258356,411.760464 108.967867,342.469975 C39.6773777,273.179486 39.6773777,160.837406 108.967867,91.5469173 L710.546917,-510.032133 C779.837406,-579.322622 892.179486,-579.322622 961.469975,-510.032133 C1030.76046,-440.741644 1030.76046,-328.399565 961.469975,-259.109075 L359.890925,342.469975 Z" id="Rectangle-Copy-2" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)"></path>
+        <path d="M333.755469,299.758383 C283.53208,349.981773 202.103877,349.981773 151.880488,299.758383 C101.657099,249.534994 101.657099,168.106791 151.880488,117.883402 L587.919246,-318.155356 C638.142635,-368.378745 719.570838,-368.378745 769.794227,-318.155356 C820.017617,-267.931967 820.017617,-186.503764 769.794227,-136.280375 L333.755469,299.758383 Z" id="Rectangle-Copy-3" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)"></path>
+    </g>
+</svg>
