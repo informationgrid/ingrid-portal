@@ -46,22 +46,15 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
         applyRule1: function() {
             console.debug("apply rule 1");
             var tableData = UtilGrid.getTableData("ref1Representation");
-            //var labelNode = dom.byId("ref1VFormatLabel");
-            //var containerNode = labelNode.parentNode;
 
             if (array.some(tableData, function(item) {
                 return (item.title == "1");
             })) {
-                //		UtilUI.setRequiredState(labelNode, containerNode, true);
                 registry.byId("ref1VFormatTopology").set("disabled", false);
-                //registry.byId("ref1VFormatDetails").set('_canEdit', true);
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", true);
             } else {
-                //	    UtilUI.setRequiredState(labelNode, containerNode, false);
                 registry.byId("ref1VFormatTopology").set("value", null);
                 registry.byId("ref1VFormatTopology").set("disabled", true);
-                //registry.byId("ref1VFormatDetails").clear();
-                //registry.byId("ref1VFormatDetails").set('_canEdit', false);
                 UtilGrid.setTableData("ref1VFormatDetails", []);
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", false);
             }
@@ -70,7 +63,7 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
         applyRule2: function() {
             console.debug("apply rule 2");
             if (!domClass.contains("uiElementN014", "hide")) {
-                if (registry.byId("thesaurusEnvExtRes").checked || UtilGrid.getTableData("thesaurusEnvTopics").length !== 0) {
+                if (registry.byId("thesaurusEnvExtRes").checked) {
                     UtilUI.setMandatory(dom.byId("uiElementN014"));
                     UtilUI.setMandatory(dom.byId("uiElementN015"));
                 } else {
@@ -184,84 +177,84 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             var termsList = UtilList.tableDataToList(UtilGrid.getTableData("thesaurusInspire"));
 
             // show/remove DQ tables in class 1 dependent from themes
-            if (objectClass == "1") {
-                // hide all spans underneath ref1ContentDQTables div -> DQ tables
-                query("#ref1ContentDQTables > span").forEach(this.hideDiv);
 
-                // then show table dependent from theme
+            // hide all spans underneath ref1ContentDQTables div -> DQ tables
+            query("#ref1ContentDQTables > span").forEach(this.hideDiv);
 
-                // Coordinate reference systems (101)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 101);
-                })) {
-                    // ???
-                }
-                // Geographical grid systems (102)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 102);
-                })) {
-                    // ???
-                }
-                // Geographical names (103)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 103);
-                })) {
-                    // ???
-                }
-                // Administrative units (104)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 104);
-                })) {
-                    this.displayDiv(dom.byId("uiElement7509"));
-                    this.displayDiv(dom.byId("uiElement7512"));
-                    this.displayDiv(dom.byId("uiElement7515"));
-                }
-                // Addresses (105)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 105);
-                })) {
-                    this.displayDiv(dom.byId("uiElement7509"));
-                    this.displayDiv(dom.byId("uiElement7512"));
-                    this.displayDiv(dom.byId("uiElement7513"));
-                    this.displayDiv(dom.byId("uiElement7520"));
-                    this.displayDiv(dom.byId("uiElement7526"));
-                }
-                // Cadastral parcels (106)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 106);
-                })) {
-                    // ???
-                }
-                // Transport networks (107)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 107);
-                })) {
-                    this.displayDiv(dom.byId("uiElement7509"));
-                    this.displayDiv(dom.byId("uiElement7512"));
-                    this.displayDiv(dom.byId("uiElement7513"));
-                    this.displayDiv(dom.byId("uiElement7514"));
-                    this.displayDiv(dom.byId("uiElement7515"));
-                    this.displayDiv(dom.byId("uiElement7525"));
-                    this.displayDiv(dom.byId("uiElement7526"));
-                }
-                // Hydrography (108)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 108);
-                })) {
-                    this.displayDiv(dom.byId("uiElement7509"));
-                    this.displayDiv(dom.byId("uiElement7512"));
-                    this.displayDiv(dom.byId("uiElement7513"));
-                    this.displayDiv(dom.byId("uiElement7515"));
-                    this.displayDiv(dom.byId("uiElement7526"));
-                    this.displayDiv(dom.byId("uiElement7527"));
-                }
-                // Protected sites (109)
-                if (array.some(termsList, function(iTermKey) {
-                    return (iTermKey == 109);
-                })) {
-                    this.displayDiv(dom.byId("uiElement7509"));
-                }
+            // then show table dependent from theme
+
+            // Coordinate reference systems (101)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 101);
+            })) {
+                // ???
             }
+            // Geographical grid systems (102)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 102);
+            })) {
+                // ???
+            }
+            // Geographical names (103)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 103);
+            })) {
+                // ???
+            }
+            // Administrative units (104)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 104);
+            })) {
+                this.displayDiv(dom.byId("uiElement7509"));
+                this.displayDiv(dom.byId("uiElement7512"));
+                this.displayDiv(dom.byId("uiElement7515"));
+            }
+            // Addresses (105)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 105);
+            })) {
+                this.displayDiv(dom.byId("uiElement7509"));
+                this.displayDiv(dom.byId("uiElement7512"));
+                this.displayDiv(dom.byId("uiElement7513"));
+                this.displayDiv(dom.byId("uiElement7520"));
+                this.displayDiv(dom.byId("uiElement7526"));
+            }
+            // Cadastral parcels (106)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 106);
+            })) {
+                // ???
+            }
+            // Transport networks (107)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 107);
+            })) {
+                this.displayDiv(dom.byId("uiElement7509"));
+                this.displayDiv(dom.byId("uiElement7512"));
+                this.displayDiv(dom.byId("uiElement7513"));
+                this.displayDiv(dom.byId("uiElement7514"));
+                this.displayDiv(dom.byId("uiElement7515"));
+                this.displayDiv(dom.byId("uiElement7525"));
+                this.displayDiv(dom.byId("uiElement7526"));
+            }
+            // Hydrography (108)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 108);
+            })) {
+                this.displayDiv(dom.byId("uiElement7509"));
+                this.displayDiv(dom.byId("uiElement7512"));
+                this.displayDiv(dom.byId("uiElement7513"));
+                this.displayDiv(dom.byId("uiElement7515"));
+                this.displayDiv(dom.byId("uiElement7526"));
+                this.displayDiv(dom.byId("uiElement7527"));
+            }
+            // Protected sites (109)
+            if (array.some(termsList, function(iTermKey) {
+                return (iTermKey == 109);
+            })) {
+                this.displayDiv(dom.byId("uiElement7509"));
+            }
+
         },
 
         applyRuleThesaurusInspire: function() {},
