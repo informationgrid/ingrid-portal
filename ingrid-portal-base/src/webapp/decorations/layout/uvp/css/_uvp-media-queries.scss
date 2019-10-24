@@ -252,15 +252,18 @@
   }
 
   .teaser-data {
-    height: 420px;
+    min-height: 420px;
 
     .data-text {
       height: 110px;
       max-height: none;
     }
-    .map-wrapper { border-left: 2px solid $blue-light; }
+    .map-wrapper {
+      border-left: 2px solid $blue-light;
+      height: 100%;
+    }
     .map-teaser {
-      height: 416px;
+      height: 100%;
       border-top-right-radius: 8px;
       border-bottom-left-radius: initial;
     }
