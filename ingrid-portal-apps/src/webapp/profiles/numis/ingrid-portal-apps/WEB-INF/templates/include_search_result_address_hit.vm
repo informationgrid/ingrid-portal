@@ -1,0 +1,81 @@
+## Renders Single Hit
+## different margins dependent from grouping
+#set($title = "")
+#if($rs.udk_class == "2")
+    #if($rs.title)#set($title = "$rs.title")#end
+    #if($rs.address_salutation)#set($title = "$title$rs.address_salutation ")#end
+    #if($rs.address_firstname)#set($title = "$title$rs.address_firstname")#end
+    #if($rs.address_lastname)#set($title = "$title $rs.address_lastname")#end
+#elseif($rs.udk_class == "3")
+    #if($rs.title && $rs.title != "")#set($title = "$rs.title ")#end
+    #if($rs.address_salutation && $rs.address_salutation != "")#set($title = "$title, $rs.address_salutation ")#end
+    #if($rs.address_firstname && $rs.address_firstname != "")#set($title = "$title$rs.address_firstname")#end
+    #if($rs.address_lastname && $rs.address_lastname != "")#set($title = "$title $rs.address_lastname")#end
+#else
+    #set($title = "$rs.title")
+#end
+###if($showHitPartnerLogo)
+    ###if($rs.partnerKey != "all")
+    ###set($partnerTitleKey = "common.result.partner.${rs.partnerKey}")
+    ##<span class="search_hit_icon_partner"><span class="search_hit_icon_partner_${rs.partnerKey}"><img src="/ingrid-portal-apps/images/partner/small/${rs.partnerKey}.png" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/></span></span></span>
+    ###end
+###end
+#if ($title)
+    <div class="data">
+        <div class="teaser-data search">
+        #if($rs.type == "detail-style")
+            #if($rs.udk_class)
+                #set($udkAdrClassNameKey = "udk_adr_class_name_$rs.udk_class")
+                #set($udkAdrClassName = $MESSAGES.getString($udkAdrClassNameKey))
+                <div class="helper icon">
+                    #renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
+                </div>
+                #if($rs.docuuid)
+                    #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                #else
+                    #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                #end
+                <a href="$detailLink">
+                    <h2 class="header">#renderTitle($title)</h2>
+                </a>
+                #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))
+            #else
+                ##renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
+                #if($rs.docuuid)
+                    #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                #else
+                    #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
+                #end
+                <a href="$detailLink">
+                    <h2 class="header">#renderTitle($title)</h2>
+                </a>
+                #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))
+            #end
+        #else
+            <h2 class="header">
+                #renderTitle($title)
+            </h2>
+        #end
+        #if($!rs.abstract != "")
+        <p class="data-text">
+            $!rs.abstract 
+        </p>
+        #end
+        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
+        #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
+        #if($rs.wms_url)
+            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
+        #end
+        #if($rs.url)
+            <a href="$rs.url" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
+        #end
+            <a href="$detailLink" title="$rs.title">
+                <span class="ic-ic-arrow arrow"></span>
+            </a>
+        </div>
+    </div>
+#else
+    <div class="teaser-data search">
+        <span><strong>$MESSAGES.getString('common.result.empty')</strong></span>
+    </div>
+#end

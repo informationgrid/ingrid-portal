@@ -1,0 +1,138 @@
+#set($type = $TOOL.getAddressClassType())
+#set($title = $TOOL.getAddressClassTitle($type))
+#set($lang = $TOOL.getLanguage())
+#set($modTime = $TOOL.getDateValueFromXPath("./idf:last-modified"))
+<div class="detail">
+    <div class="banner-noimage">
+      <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+        <div class="row align-center detail-header">
+          <div class="large-20 columns">
+            <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                <span class="ic-ic-arrow-left"></span>
+                <span class="text">Alle Suchergebnisse</span>
+            </a>
+            <h2>$title</h2>
+            <div class="helper icon">
+                #renderUDKAddressIcon($type $MESSAGES.getString("udk_adr_class_name_$type"))
+            </div>
+            <div class="helper text date">
+                <span>$MESSAGES.getString("t02_address.mod_time"): $modTime</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row detail-content">
+        <div class="xlarge-7 columns">
+            <nav>
+                ## Allgemeines
+                <a href="#detail-1" class="nav-item">$MESSAGES.getString("general_tab")</a>
+                ## Verweise
+                #set($xpathList = ["./idf:objectReference"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    <a href="#detail-2" class="nav-item">$MESSAGES.getString("references_tab")</a>
+                #end
+                ## Raum/Zeit
+                #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    <a href="#detail-3" class="nav-item">$MESSAGES.getString("spacial_reference_tab")</a>
+                #end
+                ## Fachbezug
+                #if($type == "1")
+                    #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
+                    #if($TOOL.aNodeOfListExist($xpathList))
+                        <a href="#detail-4" class="nav-item">$MESSAGES.getString("subject_reference_tab")</a>
+                    #end
+                #elseif($type == "2")
+                    #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:individualName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:contactInstructions","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:city","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty/organisationName","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:name","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:editionDate","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:issueIdentification","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:series/gmd:CI_Series/gmd:page","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:ISBN","./gmd:identificationInfo/*/gmd:resourceFormat/gmd:MD_Format/gmd:name","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:otherCitationDetails","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                    #if($TOOL.aNodeOfListExist($xpathList))
+                        <a href="#detail-4" class="nav-item">$MESSAGES.getString("subject_reference_tab")</a>
+                    #end
+                #elseif($type == "3")
+                    #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+                    #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/gmd:supplementalInformation/gmd:abstract","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata","./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:connectPoint"])
+                    #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
+                        <a href="#detail-4" class="nav-item">$MESSAGES.getString("subject_reference_tab")</a>
+                    #end
+                #elseif($type == "4")
+                    #set($xpathList = ["./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:citedResponsibleParty/gmd:CI_ResponsibleParty","./gmd:individualName","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                    #if($TOOL.aNodeOfListExist($xpathList))
+                        <a href="#detail-4" class="nav-item">$MESSAGES.getString("subject_reference_tab")</a>
+                    #end
+                #elseif($type == "5")
+                    #set($xpathList = ["./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:includedWithDataset","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation"])
+                    #if($TOOL.aNodeOfListExist($xpathList))
+                        <a href="#detail-4" class="nav-item">$MESSAGES.getString("subject_reference_tab")</a>
+                    #end
+                #elseif($type == "6")
+                    #set($serviceClassification =  $TOOL.getServiceClassification("./gmd:identificationInfo/*/gmd:descriptiveKeywords"))
+                    #set($xpathList = ["./gmd:identificationInfo/*/srv:serviceType","./gmd:identificationInfo/*/srv:serviceTypeVersion","./gmd:identificationInfo/*/gmd:environmentDescription","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:identificationInfo/*/gmd:supplementalInformation","./gmd:identificationInfo/*/srv:containsOperations"])
+                    #if($TOOL.aNodeOfListExist($xpathList) || $serviceClassification.size() > 0)
+                        <a href="#detail-4" class="nav-item">$MESSAGES.getString("subject_reference_tab")</a>
+                    #end
+                #end
+                ## Datenqualität
+                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    <a href="#detail-5" class="nav-item">$MESSAGES.getString("data_quality")</a>
+                #end
+                ## Verfügbarkeit
+                #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    <a href="#detail-6" class="nav-item">$MESSAGES.getString("availability_tab")</a>
+                #end
+                ## Zusätzliche Info
+                #set($xpathList = ["./gmd:identificationInfo//gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:language/gmd:LanguageCode/@codeListValue"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    <a href="#detail-7" class="nav-item">$MESSAGES.getString("additional_information_tab")</a>
+                #end
+                ## Zusatzfelder
+                #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+                #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+                #if($tabtitle)
+                    <a href="#detail-8" class="nav-item">$tabtitle</a>
+                #end
+            </nav>
+        </div>
+        <div class="xlarge-17 columns">
+## Allgemeines
+        #set($xpathList = ["./gmd:positionName"])
+        #if($TOOL.aNodeOfListExist($xpathList))
+<a name="detail-1"></a>
+<h2>$MESSAGES.getString("general_tab")</h2>
+            ## Beschreibung
+            <div class="row columns">
+            #renderSectionTitle($MESSAGES.getString("detail_description"))
+            ## Beschreibung
+            #set($tmp = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
+            #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName")))
+            #renderTextLabelAbove($tmp $tmp2)
+            #set($tmp = "")
+            #set($tmp2 = "")
+            </div>
+        #end
+        ## Adressen
+        #set($tmp = $TOOL.getNodeListFromXPath("."))
+        #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp)
+        #set($tmp = "")
+        ## Übergeordnete Adressen 
+        #set($tmp = $TOOL.getReference("./idf:superiorParty", false))
+        #renderLinkList($MESSAGES.getString("superior_address") $tmp "true")
+        #set($tmp = "")
+        ## Untergeordnete Adressen 
+        #set($tmp = $TOOL.getReference("./idf:subordinatedParty", false))
+        #renderLinkList($MESSAGES.getString("subordinated_addresses") $tmp "true")
+        #set($tmp = "")
+        #set($xpathList = ["./idf:objectReference"])
+        #if($TOOL.aNodeOfListExist($xpathList))
+## Verweis
+<a name="detail-2"></a>
+<h2>$MESSAGES.getString("references_tab")<h2>
+            ## Datenbezüge
+            #set($tmp = $TOOL.getReference("./idf:objectReference", true))
+            #renderLinkList($MESSAGES.getString("search.detail.dataRelations") $tmp "true")
+            #set($tmp = "")
+        #end
+      </div>
+    </div>
+</div>

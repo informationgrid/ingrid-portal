@@ -6,38 +6,48 @@
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
-                <ul>
-                    <li>
-                        <a href="?hkey=about-1">Über NUMIS</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-1">Suche</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-measure-1">Messwerte</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-catalog-1">Kataloge</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=maps-1">Karten</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-chronicle-1">Chronik</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ingrid-inform-1">NUMIS informiert</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-category-1">Kategorien</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=rss-news-1">Aktuelles</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=myingrid-1">Mein NUMIS</a>
-                    </li>
-                </ul>
+                <div class="link-list">
+                    <a class="icon" href="?hkey=about-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Über NUMIS</span>
+                    </a>
+                    <a class="icon" href="?hkey=search-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Suche</span>
+                    </a>
+                    <a class="icon" href="?hkey=search-measure-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Messwerte</span>
+                    </a>
+                    <a class="icon" href="?hkey=search-catalog-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Kataloge</span>
+                    </a>
+                    <a class="icon" href="?hkey=maps-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Karten</span>
+                    </a>
+                    <a class="icon" href="?hkey=search-chronicle-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Chronik</span>
+                    </a>
+                    <a class="icon" href="?hkey=ingrid-inform-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">NUMIS informiert</span>
+                    </a>
+                    <a class="icon" href="?hkey=search-category-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Kategorien</span>
+                    </a>
+                    <a class="icon" href="?hkey=rss-news-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Aktuelles</span>
+                    </a>
+                    <a class="icon" href="?hkey=myingrid-1">
+                        <span class="ic-ic-arrow"> </span>
+                        <span class="text">Mein NUMIS</span>
+                    </a>
+                </div>
             </content>
         </section>
     </chapter>
