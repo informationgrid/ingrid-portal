@@ -1123,7 +1123,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     link.put("hasLinkIcon", true);
 
                     if (value.startsWith("EPSG")) {
-                        String epsgCode = value.substring(5, value.indexOf(':'));
+                        int endIndex = value.indexOf(':', 5);
+                        String epsgCode = value.substring(5, endIndex == -1 ? value.length() : endIndex);
+
                         link.put("isExtern", true);
                         link.put("href", "https://epsg.io/" + epsgCode);
                     } else {
