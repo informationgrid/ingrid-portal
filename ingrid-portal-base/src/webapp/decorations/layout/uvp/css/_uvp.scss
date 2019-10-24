@@ -1140,7 +1140,10 @@ header {
   -webkit-transition: box-shadow .5s; /* Safari */
   transition: box-shadow .5s;
 
-  .text-wrapper { padding: 24px 24px 40px; }
+  .text-wrapper {
+    padding: 24px 24px 40px;
+    position: relative;
+   }
   .helper.text, .header { margin-bottom: 24px; }
   .helper.icon {
     font-size: 18px;
@@ -1167,6 +1170,9 @@ header {
   .arrow {
     font-size: 33px;
     float: right;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
   }
   .header, .arrow {
     -webkit-transition: color .5s; /* Safari */
