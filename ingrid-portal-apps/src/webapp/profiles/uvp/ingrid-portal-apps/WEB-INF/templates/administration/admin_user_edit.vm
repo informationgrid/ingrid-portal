@@ -53,22 +53,22 @@
                     <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*</label>
                 </div>
                 <div class="form-element">
-                    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
                     #addErrorFormMessage('firstname')
+                    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
                 </div>
                 <div class="form-element">
                     <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*</label>
                 </div>
                 <div class="form-element">
-                    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
                     #addErrorFormMessage('lastname')
+                    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
                 </div>
                 <div class="form-element">
                      <label for="email">$MESSAGES.getString('account.edit.label.email')*</label>
                 </div>
                 <div class="form-element">
-                    <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
                     #addErrorFormMessage('email')
+                    <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
                 </div>
                    <hr/>
                 <div class="form-element">
@@ -81,14 +81,15 @@
                      <label for="password_old">$MESSAGES.getString('account.edit.label.password_old')</label>
                 </div>
                 <div class="form-element">
-                    <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
                     #addErrorFormMessage('password_old')
+                    <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
                 </div>
                 <hr/>
                 <div class="form-element">
                      <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')</label>
                 </div>
                 <div class="form-element">
+                    #addErrorFormMessage('password_new')
                     <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
                     <b><small class="media__obj--right" id="password-strength-text"></small></b>
                     <meter max="4" id="password-strength-meter">
@@ -96,14 +97,13 @@
                           <p style="width: 0.0%;">Meterfallback</p>
                       </div>
                     </meter>
-                    #addErrorFormMessage('password_new')
                 </div>
                 <div class="form-element">
                      <label for="password_new_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')</label>
                 </div>
                 <div class="form-element">
-                    <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
                     #addErrorFormMessage('password_new_confirm')
+                    <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
                  </div>
                 <hr />
                 <h3>$MESSAGES.getString('account.edit.address.information')</h3>
