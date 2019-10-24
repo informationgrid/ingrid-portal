@@ -231,7 +231,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                     }
                 }
         
-                if (!localizedTemplatePath.isEmpty()) {
+                if (localizedTemplatePath.isEmpty()) {
                     log.error("email template not available");
                     actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
                     return;
