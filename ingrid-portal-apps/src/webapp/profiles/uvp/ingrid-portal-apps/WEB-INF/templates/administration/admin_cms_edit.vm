@@ -17,8 +17,8 @@
                 <label for="item_key">$MESSAGES.getString('admin.cms.item.key')*</label>
             </div>
             <div class="form-element">
-                <input type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey" #addErrorFormClass('item_key')/>
                 #addErrorFormMessage('item_key')
+                <input type="text" id="item_key" name="item_key" value="$!dbEntity.itemKey" #addErrorFormClass('item_key')/>
             </div>
             <div class="form-element">
                 <label for="item_description">#displayFieldLabel("item_description" "$MESSAGES.getString('admin.cms.item.description')")</label>
@@ -45,8 +45,8 @@
                     <label for="value_$lang">$MESSAGES.getString('admin.cms.item.content') ($ListTool.get($languagesNames, $i))*</label>
                 </div>
                 <div class="form-element">
-                    <textarea class="custom-scrollbar" cols="125" rows="10" name="value_$lang" id="value_$lang" #addErrorFormClass("value_$lang")>$!item.itemValue</textarea>
                     #addErrorFormMessage("value_$lang")
+                    <textarea class="custom-scrollbar" cols="125" rows="10" name="value_$lang" id="value_$lang" #addErrorFormClass("value_$lang")>$!item.itemValue</textarea>
                 </div>
                 #if ($mode == 'edit')
                     <div class="form-element">
