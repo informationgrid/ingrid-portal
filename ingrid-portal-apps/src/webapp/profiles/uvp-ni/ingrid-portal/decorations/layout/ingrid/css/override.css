@@ -642,6 +642,51 @@ header {
 .teaser:hover .teaser-link .ic-Z, .tabs-content .tabs-panel .teaser:hover .teaser-link .ic-Z {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='24' height='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='0%25' y1='0%25' y2='100%25' id='a'%3E%3Cstop stop-color='%231D4B7B' offset='0%25'/%3E%3Cstop stop-color='%23246293' offset='100%25'/%3E%3Cstop stop-color='%23429321' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M12 0c6.617 0 12 5.383 12 12s-5.383 12-12 12S0 18.617 0 12 5.383 0 12 0zm5.603 5H7.228L7.01 8.856h2.212l.228-1.693h4.592L7 17.538V19h10.782L18 15.154h-2.202l-.238 1.692h-5.029l7.072-10.442V5z' fill='url(%23a)' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
+.ic-ic-hilfe:before {
+  content: "\e942";
+}
+.ic-ic-filter:before {
+  content: "\e943";
+}
+.ic-ic-external:before {
+  content: "\e944";
+}
+.ic-ic-check-circle:before {
+  content: "\e945";
+}
+.ic-ic-calendar:before {
+  content: "\e946";
+}
+.ic-ic-user-circle:before {
+  content: "\e947";
+}
+.ic-ic-projekt:before {
+  content: "\e948";
+}
+.ic-ic-opendata:before {
+  content: "\e949";
+}
+.ic-ic-karte:before {
+  content: "\e94a";
+}
+.ic-ic-intituition:before {
+  content: "\e94b";
+}
+.ic-ic-inspire:before {
+  content: "\e94c";
+}
+.ic-ic-dienste:before {
+  content: "\e94d";
+}
+.ic-ic-datenkataloge:before {
+  content: "\e94e";
+}
+.ic-ic-aktuelles:before {
+  content: "\e94f";
+}
+.ic-ic-webseiten:before {
+  content: "\e950";
+}
 .filter-group .accordion-item .accordion-title {
   color: #0089C6;
 }
@@ -673,6 +718,13 @@ header {
 .boxed-table thead {
   background-color: #FFFFFF;
   border-bottom: 1px solid #256394;
+}
+.dark a:hover {
+  color: #FFF;
+  text-decoration: underline;
+}
+.dark a:focus {
+  color: #FFF;
 }
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr {
   color: #256394;
