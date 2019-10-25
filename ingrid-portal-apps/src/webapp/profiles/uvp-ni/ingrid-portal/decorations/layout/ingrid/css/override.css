@@ -428,6 +428,7 @@ header {
 }
 .banner.home .home-wrapper {
   background-position: right bottom;
+  background-size: contain;
 }
 .banner.home .home-wrapper .dark {
   padding-top: 3.5rem;
@@ -923,6 +924,9 @@ footer hr {
   }
   .header-menu-open {
     left: 12px;
+  }
+  .banner.home .home-wrapper {
+    background-size: cover;
   }
 }
 @media print, screen and (min-width: 64em) {
