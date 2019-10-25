@@ -192,19 +192,15 @@
 #end
 
 #macro (renderTree $treeFacet $treeParentId)
-    <div class="js-accordion-multi">
-        #set ($action = $renderResponse.createActionURL())
-        $action.setParameter("$treeParentId", "$treeFacet.getId()")
-        <div class="js-accordion-toggle sidebar-filter-subheader is-active" onclick="location.href='$action'">
-        #set ($action = $renderResponse.createActionURL())
-            <svg class="sidebar-subheader-icon icon">
-                <use xlink:href="#select-arrow">
-            </svg>
-            $MESSAGES.getString("$treeFacet.getName()")
-            <strong>($treeFacet.getFacetValue())</strong>
-        </div>
-    </div>
-    <div id="$treeFacet.getId()" class="sidebar-filter-content">
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter("$treeParentId", "$treeFacet.getId()")
+    <a class="icon" href="$action">
+    #set ($action = $renderResponse.createActionURL())
+        <span class="ic-ic-cross"></span>
+        <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
+        <span class="nr-results">($treeFacet.getFacetValue())</span>
+    </a>
+    <div class="boxes">
     #set($isSelectedTree = false)
     #foreach ($treeSubFacet in $treeFacet.getFacets())
         #if($treeSubFacet.isSelect())
@@ -213,7 +209,6 @@
     #end
     
     #foreach ($treeSubFacet in $treeFacet.getFacets())
-        <ul>
         #if($treeSubFacet.getFacetValue() && !$treeSubFacet.isCategoryOnly())
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
@@ -222,18 +217,8 @@
             #else
                #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
             #end
-            <li>
-                <svg class="icon sidebar-filter-content-icon">
-                #if($treeSubFacet.isSelect())
-                    <use xlink:href="#cross">
-                #else
-                    <use xlink:href="#select-arrow"/>
-                #end
-                </svg>
-                <a href="$action">$name <strong>($treeSubFacet.getFacetValue())</strong></a>
-            </li>
+            #renderFaceteSelectedAttributeNumber($action $treeSubFacet $name $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
         #end
-        </ul>
     #end
     </div>
 #end

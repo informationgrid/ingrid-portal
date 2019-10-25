@@ -434,7 +434,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderSearchResultFacetSelectionItem $entry $action $title)
-    <a id="chk_fs_$entry.getId()" href="$action" class="button pill pill-del">
-        <span class="text">$title</span>
+    <a id="chk_fs_$entry.getId()" href="$action" class="button pill">
+        $title
+        <span class="ic-ic-cross"></span>
     </a>
 #end

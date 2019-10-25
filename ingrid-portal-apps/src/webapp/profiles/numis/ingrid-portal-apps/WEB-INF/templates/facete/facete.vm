@@ -196,6 +196,7 @@
     $action.setParameter("$treeParentId", "$treeFacet.getId()")
     <a class="icon" href="$action">
     #set ($action = $renderResponse.createActionURL())
+        <span class="ic-ic-cross"></span>
         <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
         <span class="nr-results">($treeFacet.getFacetValue())</span>
     </a>
