@@ -499,6 +499,25 @@ header a.icon.is-selected {
 .accordion-title:hover, .accordion-title:focus {
   background-color: #F6F6F6;
 }
+.accordion-content a.icon {
+  border-bottom: 1px dotted #c6cfe2;
+  display: block;
+  padding: 15px 0;
+  margin: -8px 0 8px;
+  line-height: 1;
+}
+.accordion-content a.icon span[class^="ic-"] {
+  font-size: 14px;
+  margin-right: 8px;
+}
+.accordion-content button.button.round {
+  width: 35px;
+  height: 35px;
+}
+.accordion-content button.button.round  span[class^="ic-"] {
+  top: 7px;
+  left: 1px;
+}
 .teaser-data .header {
   color: #0089C6;
 }
@@ -620,7 +639,7 @@ header a.icon.is-selected {
 }
 .button.pill {
   color: #0089C6;
-  background-color: #eaf6ff !important;
+  background-color: #eaf6ff;
 }
 .button.pill:hover span {
   color: #256394;

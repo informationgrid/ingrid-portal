@@ -274,8 +274,7 @@ img { width: 100%; }
   color: $green-jelly;
   text-transform: none;
   background-color: $blue-sky;
-  padding: 8px 36px 8px 16px;
-  position: relative;
+  padding: 8px 16px 8px 16px;
 
   .ic-ic-cross { font-size: 12px; }
 }
@@ -283,16 +282,6 @@ img { width: 100%; }
   span { color: $green-blue; }
 }
 .button.pill[type="reset"] { background-color: $white; }
-
-.button.pill.pill-del:after {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  content: '\e90c';
-  font-family: 'icomoon';
-  font-size: 12px;
-  margin-top: -0.275rem;
-}
 
 /* links */
 a.icon {

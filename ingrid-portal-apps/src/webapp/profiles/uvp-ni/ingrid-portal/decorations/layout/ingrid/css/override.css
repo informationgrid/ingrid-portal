@@ -710,7 +710,7 @@ header {
 }
 .button.pill {
   color: #0089C6;
-  background-color: #eaf6ff !important;
+  background-color: #eaf6ff;
 }
 .button.pill:hover span {
   color: #256394;
