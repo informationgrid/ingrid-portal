@@ -1,18 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="758.905724px" height="592px" viewBox="0 0 758.905724 592" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
-    <title>assets/images/uvp-n/svg-raw/backgrounds/home-banner/desktop</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <rect id="path-1" x="-502" y="0" width="1261" height="591"></rect>
-    </defs>
-    <g id="assets/images/uvp-n/svg-raw/backgrounds/home-banner/desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <mask id="mask-2" fill="white">
-            <use xlink:href="#path-1"></use>
-        </mask>
-        <g id="Rectangle" fill-rule="nonzero"></g>
-        <rect id="Rectangle" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)" x="0.0942755867" y="-102.003688" width="1189.73385" height="693.282503" rx="346.641252"></rect>
-        <rect id="Rectangle-Copy" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)" x="330.994595" y="-1.7908181" width="743.341343" height="478.175022" rx="239.087511"></rect>
-        <rect id="Rectangle-Copy-2" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)" x="135.221157" y="0.881056898" width="827.856968" height="285.383876" rx="142.691938"></rect>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 758.9 592" style="enable-background:new 0 0 758.9 592;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.25;fill-rule:evenodd;clip-rule:evenodd;fill:#133268;enable-background:new    ;}
+</style>
+<path class="st0" d="M0.1,244.6c0,191.4,155.2,346.6,346.6,346.6h412.2V0H101.2C38.7,62.7,0.1,149.2,0.1,244.6z"/>
+<path class="st0" d="M758.9,0.9h-481c-78.8,0-142.7,63.9-142.7,142.7s63.9,142.7,142.7,142.7h481V0.9z"/>
+<path class="st0" d="M331,237.3c0,132,107,239.1,239.1,239.1h188.8V0H540.8C422.6,14.5,331,115.2,331,237.3z"/>
 </svg>
