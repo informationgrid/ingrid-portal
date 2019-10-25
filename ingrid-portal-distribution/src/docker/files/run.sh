@@ -62,8 +62,8 @@ else
             cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
             if [ "$NI_SWITCH_PORTAL" ]; then
-                sed -i 's/uvp.niedersachsen.de/${NI_SWITCH_PORTAL}/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
-                sed -i 's/uvp.niedersachsen.de/${NI_SWITCH_PORTAL}/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
+                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
+                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
             fi
         fi
 
@@ -76,8 +76,8 @@ else
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
             cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
             if [ "$NI_SWITCH_PORTAL" ]; then
-                sed -i 's/numis.niedersachsen.de/${NI_SWITCH_PORTAL}/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
-                sed -i 's/numis.niedersachsen.de/${NI_SWITCH_PORTAL}/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
+                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
+                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
             fi
         fi
 
