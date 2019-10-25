@@ -2067,15 +2067,14 @@ define([
                     "class": "textAreaFull"
                 }, "availabilityOrderInfo");
 
-                var storeProps = {
-                    data: {
-                        identifier: '1',
-                        label: '0'
-                    }
-                };
-                layoutCreator.createComboBox("availabilityDataFormatInspire", null, lang.clone(storeProps), function() {
-                    return UtilSyslist.getSyslistEntry(6300);
-                });
+                new ValidationTextBox({
+                    maxLength: 255,
+                    style: "width:100%;"
+                }, "availabilityDataFormatInspire");
+
+                new DateTextBox({
+                    style: "width: 100%;"
+                }, "availabilityDataFormatInspireDate");
 
             },
 

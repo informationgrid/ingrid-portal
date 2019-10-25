@@ -119,6 +119,7 @@ public class MdekDataBean {
 	private List<UseAccessConstraintsBean> availabilityUseAccessConstraints;
 	private String availabilityUseConstraints;
 	private String availabilityDataFormatInspire;
+	private Date availabilityDataFormatInspireDate;
 	private List<DataFormatBean> availabilityDataFormatTable;
 	private List<MediaOptionBean> availabilityMediaOptionsTable;
 	private String availabilityOrderInfo;
@@ -2229,5 +2230,13 @@ public class MdekDataBean {
 
 	public void setParentIdentifier(String parentIdentifier) {
 		this.parentIdentifier = parentIdentifier;
+	}
+
+	public Date getAvailabilityDataFormatInspireDate() {
+		return availabilityDataFormatInspireDate;
+	}
+
+	public void setAvailabilityDataFormatInspireDate(Date availabilityDataFormatInspireDate) {
+		this.availabilityDataFormatInspireDate = availabilityDataFormatInspireDate;
 	}
 }

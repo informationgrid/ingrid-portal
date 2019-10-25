@@ -112,9 +112,6 @@ define([
                         // make digital representation optional
                         domClass.remove( "uiElement5062", "required" );
 
-                        // make encoding schema optional
-                        domClass.remove( "uiElement1315", "required" );
-
                         // remove all conform/not conform events
                         utils.removeEvents(self.eventsConform);
                         utils.removeEvents(self.eventsNotConform);
@@ -216,9 +213,6 @@ define([
             // make digital representation required
             domClass.add( "uiElement5062", "required" );
 
-            // make encoding schema required
-            domClass.add( "uiElement1315", "required" );
-
             this.eventsConform.push(
                 // added conformity must not be modified or deleted
                 self.addEventSpecificationDelete(),
@@ -266,7 +260,7 @@ define([
                 // onPublish: Validierung entsprechend den Voreinstellungen:
                 //      Spezifikation - inhalt. Prüfung
                 //      Grad der Spezifikation - inhalt. Prüfung
-                //      Kodierungsschema - Prüfung, ob Eintrag erfolgt
+                //      Anwendungsschema - Prüfung, ob Eintrag erfolgt
                 topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
                     var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
                         .filter(function(item) { return item.specification === self.specificationName; });
@@ -293,9 +287,6 @@ define([
 
             // make digital representation optional
             domClass.remove( "uiElement5062", "required" );
-
-            // make encoding schema optional
-            domClass.remove( "uiElement1315", "required" );
 
             var self = this;
             var missingMessage = string.substitute(message.get("validation.specification.missing"), [self.specificationName]);
@@ -333,7 +324,7 @@ define([
                 // the specification must not be deleted
                 self.addEventSpecificationDelete(),
 
-                // INSPIRE-Thema-abhängige Voreinstellung des Kodierungsschemas entfernen
+                // INSPIRE-Thema-abhängige Voreinstellung des Anwendungsschema entfernen
                 // => via behaviour!
 
 

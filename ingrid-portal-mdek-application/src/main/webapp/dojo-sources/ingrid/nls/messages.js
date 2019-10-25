@@ -813,7 +813,8 @@ define({
         "ui.1240.description": "Periodicity",
         "ui.1250.description": "Descriptions",
         "ui.1310.description": "Media Option",
-        "ui.1315.description": "Encoding Scheme Geographical Data",
+        "ui.1315.description": "Application Scheme Geographical Data",
+        "ui.1316.description": "Date (Application Scheme Geographical Data)",
         "ui.1320.description": "Data Format",
         "ui.1350.description": "Legal Basis",
         "ui.1409.description": "Thesaurus Search Terms",
@@ -1079,7 +1080,6 @@ define({
         "validation.specification.deleted": "The specification <ul><li>${0}</li></ul> may not be deleted for INSPIRE-relevant datasets.",
         "validation.specification.delete.depend": "The depending  specification(s) <ul>${0}</ul> was/were deleted as well.",
         "validation.specification.added": "The specification '${0}' was added as well.",
-        "validation.encoding.added": "The encoding scheme '${0}' was changed as well.",
         "validation.spatial.system.inspire.missing": "There must be at least one INSPIRE-spatial reference chosen.",
         "validation.dataformat.missing.gml": "There must be at least one 'GML' entry with a version",
 

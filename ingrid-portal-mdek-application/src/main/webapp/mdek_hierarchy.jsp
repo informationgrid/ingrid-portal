@@ -2235,19 +2235,7 @@
                                     </div>
                                 </span>
                             </div>
-                            <span id="uiElement1315" class="outer">
-                                <div>
-                                <span id="availabilityDataFormatInspireLabel" class="label">
-                                    <label for="availabilityDataFormatInspire" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1315)">
-                                        <fmt:message key="ui.obj.availability.dataFormatInspire" />
-                                    </label>
-                                </span>
-                                <span class="input spaceBelow">
-                                    <div id="availabilityDataFormatInspire" style="width:100%;" listId="6300">
-                                    </div>
-                                </span>
-                                </div>
-                            </span>
+
                             <div class="inputContainer">
                                 <span id="uiElement1320" class="outer">
                                 	<div><span class="label" id="availabilityDataFormatLabel">
@@ -2262,6 +2250,36 @@
 									</div>
                                 </span>
                             </div>
+
+                            <div id="uiElement1314">
+                                <span id="uiElement1315" class="outer threeQuarterWidth">
+                                    <div>
+                                    <span id="availabilityDataFormatInspireLabel" class="label">
+                                        <label for="availabilityDataFormatInspire" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1315)">
+                                            <fmt:message key="ui.obj.availability.dataFormatInspire" />
+                                        </label>
+                                    </span>
+                                    <span class="input spaceBelow">
+                                        <div id="availabilityDataFormatInspire">
+                                        </div>
+                                    </span>
+                                    </div>
+                                </span>
+                                <span id="uiElement1316" class="outer quarterWidth">
+                                    <div>
+                                    <span id="availabilityDataFormatInspireDateLabel" class="label">
+                                        <label for="availabilityDataFormatInspire" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1316)">
+                                            <fmt:message key="ui.obj.availability.dataFormatInspireDate" />
+                                        </label>
+                                    </span>
+                                    <span class="input spaceBelow">
+                                        <div id="availabilityDataFormatInspireDate">
+                                        </div>
+                                    </span>
+                                    </div>
+                                </span>
+                            </div>
+
                             <div class="inputContainer">
                                 <span id="uiElement1310" class="outer">
                                 	<div><span class="label">

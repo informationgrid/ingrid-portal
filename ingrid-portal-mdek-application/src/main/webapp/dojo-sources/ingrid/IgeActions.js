@@ -2158,6 +2158,7 @@ define([
             });
 
             registry.byId("availabilityDataFormatInspire").attr("value", nodeData.availabilityDataFormatInspire, true);
+            registry.byId("availabilityDataFormatInspireDate").attr("value", nodeData.availabilityDataFormatInspireDate, true);
 
         },
 
@@ -2772,6 +2773,7 @@ define([
             }, this);
 
             nodeData.availabilityDataFormatInspire = registry.byId("availabilityDataFormatInspire").get("value");
+            nodeData.availabilityDataFormatInspireDate = registry.byId("availabilityDataFormatInspireDate").get("value");
         },
 
         _getObjectDataClass2: function(nodeData) {

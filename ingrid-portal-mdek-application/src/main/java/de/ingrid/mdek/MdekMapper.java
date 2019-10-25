@@ -114,7 +114,7 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         String workStateStr = (String) obj.get(MdekKeys.WORK_STATE); 
-        WorkState workState = null;
+        WorkState workState;
         if (workStateStr != null) {
             workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workStateStr);
         } else {
@@ -196,7 +196,9 @@ public class MdekMapper implements DataMapperInterface {
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
         // NOTICE: always map this one (maps default value if not set), although only displayed in class 1
         // Then the default value is shown if switched to class 1
-        mdekObj.setAvailabilityDataFormatInspire(mapToAvailDataFormatInspire((List<IngridDocument>) obj.get(MdekKeys.FORMAT_INSPIRE_LIST)));
+        Object[] availDataFormatInspire = mapToAvailDataFormatInspire((List<IngridDocument>) obj.get(MdekKeys.FORMAT_INSPIRE_LIST));
+        mdekObj.setAvailabilityDataFormatInspire((String) availDataFormatInspire[0]);
+        mdekObj.setAvailabilityDataFormatInspireDate((Date) availDataFormatInspire[1]);
         mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<IngridDocument>) obj.get(MdekKeys.DATA_FORMATS)));
         mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<IngridDocument>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
         
@@ -450,7 +452,7 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         String workStateStr = (String) adr.get(MdekKeys.WORK_STATE); 
-        WorkState workState = null;
+        WorkState workState;
         if (workStateStr != null) {
             workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workStateStr);
         } else {
@@ -526,9 +528,9 @@ public class MdekMapper implements DataMapperInterface {
     }
         
     private static String getObjectDocType(IngridDocument obj) {
-        String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
+        String nodeDocType = "Class" + obj.get(MdekKeys.CLASS);
         String workState = (String) obj.get(MdekKeys.WORK_STATE); 
-        Boolean isPublished = (Boolean) obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
+        boolean isPublished = obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
 
         if (workState != null) {
             if (workState.equals("V") && isPublished) {
@@ -543,10 +545,10 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private static String getAddressDocType(IngridDocument adr) {
-        String nodeDocType = null;
+        String nodeDocType;
         Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
         String workState = (String) adr.get(MdekKeys.WORK_STATE); 
-        Boolean isPublished = (Boolean) adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
+        boolean isPublished = adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
 
         if (adrClass == null)
                 return "Institution_B";
@@ -828,7 +830,7 @@ public class MdekMapper implements DataMapperInterface {
         udkObj.put(MdekKeys.TOPIC_CATEGORIES, data.getThesaurusTopicsList());
         udkObj.put(MdekKeys.ENV_TOPICS, data.getThesaurusEnvTopicsList());
         if (data.getThesaurusEnvExtRes() != null) {
-            if (data.getThesaurusEnvExtRes().booleanValue()) {
+            if (data.getThesaurusEnvExtRes()) {
                 udkObj.put(MdekKeys.IS_CATALOG_DATA, "Y");
             } else {
                 udkObj.put(MdekKeys.IS_CATALOG_DATA, "N");
@@ -888,7 +890,7 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
 
-            udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire()));
+            udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire(), data.getAvailabilityDataFormatInspireDate()));
 
             IngridDocument td1Map = new IngridDocument();
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
@@ -953,7 +955,7 @@ public class MdekMapper implements DataMapperInterface {
             Integer serviceType = data.getRef3ServiceType();
             td3Map.put(MdekKeys.SERVICE_TYPE_KEY, serviceType);
             if (data.getRef3AtomDownload() != null) {
-                if (data.getRef3AtomDownload().booleanValue()) {
+                if (data.getRef3AtomDownload()) {
                     td3Map.put(MdekKeys.HAS_ATOM_DOWNLOAD, "Y");
                 } else {
                     td3Map.put(MdekKeys.HAS_ATOM_DOWNLOAD, "N");
@@ -975,7 +977,7 @@ public class MdekMapper implements DataMapperInterface {
             td3Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef3Scale()));
             td3Map.put(MdekKeys.SERVICE_OPERATION_LIST, mapFromOperationTable(data.getRef3Operation(), data.getRef3ServiceType()));
             if (data.getRef3HasAccessConstraint() != null) {
-                if (data.getRef3HasAccessConstraint().booleanValue()) {
+                if (data.getRef3HasAccessConstraint()) {
                     td3Map.put(MdekKeys.HAS_ACCESS_CONSTRAINT, "Y");
                 } else {
                     td3Map.put(MdekKeys.HAS_ACCESS_CONSTRAINT, "N");
@@ -1454,7 +1456,7 @@ public class MdekMapper implements DataMapperInterface {
     }
     
     /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
-    private List<IngridDocument> mapFromAvailDataFormatInspire(String inspireDataFormat) {
+    private List<IngridDocument> mapFromAvailDataFormatInspire(String inspireDataFormat, Date inspireDataFormatDate) {
         List<IngridDocument> resultList = new ArrayList<>();
         if (inspireDataFormat == null)
             return resultList;
@@ -1464,6 +1466,7 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument result = new IngridDocument();
             result.put(MdekKeys.FORMAT_VALUE, kvp.getValue());
             result.put(MdekKeys.FORMAT_KEY, kvp.getKey());
+            result.put(MdekKeys.FORMAT_DATE, inspireDataFormatDate);
             resultList.add(result);
         }
 
@@ -2141,18 +2144,20 @@ public class MdekMapper implements DataMapperInterface {
     
     
     /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
-    private String mapToAvailDataFormatInspire(List<IngridDocument> refList) {
-        String result = null;
+    private Object[] mapToAvailDataFormatInspire(List<IngridDocument> refList) {
+        String result;
+        Date date = null;
         if (refList != null && !refList.isEmpty()) {
             IngridDocument ref = refList.get(0);
             KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_KEY, MdekKeys.FORMAT_VALUE);
             result = kvp.getValue();
+            date = (Date) ref.get(MdekKeys.FORMAT_DATE);
         } else {
             // return default value !
             result = sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue());
         }
 
-        return result;
+        return new Object[] {result, date};
     }
 
     private List<DataFormatBean> mapToAvailDataFormatTable(List<IngridDocument> refList) {
@@ -2307,7 +2312,7 @@ public class MdekMapper implements DataMapperInterface {
             LinkDataBean l = new LinkDataBean();
             l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.SYMBOL_DATE)));
             KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SYMBOL_CAT_KEY, MdekKeys.SYMBOL_CAT);
-            l.setTitle((String) kvp.getValue());
+            l.setTitle(kvp.getValue());
             l.setVersion((String) topic.get(MdekKeys.SYMBOL_EDITION));
             resultList.add(l);
         }
@@ -2322,7 +2327,7 @@ public class MdekMapper implements DataMapperInterface {
             LinkDataBean l = new LinkDataBean();
             l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.KEY_DATE)));
             KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SUBJECT_CAT_KEY, MdekKeys.SUBJECT_CAT);
-            l.setTitle((String) kvp.getValue());
+            l.setTitle(kvp.getValue());
             l.setVersion((String) topic.get(MdekKeys.EDITION));
             resultList.add(l);
         }
@@ -2435,7 +2440,7 @@ public class MdekMapper implements DataMapperInterface {
         int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(dqElementId);
 
         for (IngridDocument dqDoc : dqList) {
-            if (dqElementId.equals((Integer) dqDoc.get(MdekKeys.DQ_ELEMENT_ID))) {
+            if (dqElementId.equals(dqDoc.get(MdekKeys.DQ_ELEMENT_ID))) {
                 DQBean dq = new DQBean();
                 dq.setDqElementId(dqElementId);
                 

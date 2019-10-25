@@ -53,7 +53,6 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/inspireRelevant/spatialSystems",
         "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
-        "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
@@ -85,7 +84,7 @@ define(["dojo/_base/declare",
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
-            inspireEncodingConnection,advCompatible, adminitrativeArea, advProductGroup, inspireRelevant, thesaurusInspire, thesaurusTopics,
+            advCompatible, adminitrativeArea, advProductGroup, inspireRelevant, thesaurusInspire, thesaurusTopics,
             thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, dataQualitySection,
             ref3BaseDataLink, ref3Operations, ref3CouplingType, ref5KeysText,
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
@@ -154,8 +153,6 @@ define(["dojo/_base/declare",
         inspireGeoservice: inspireGeoservice,
         
         inspireIsoConnection: inspireIsoConnection,
-
-        inspireEncodingConnection: inspireEncodingConnection,
 
         // Not needed anymore since specifications have been removed and cannot be mapped
         // inspireConformityConnection: inspireConformityConnection,
@@ -228,19 +225,18 @@ define(["dojo/_base/declare",
         },
         
         encodingSchemeForGeodatasets: {
-            title: "Kodierungsschema nur für Geodatensätze",
-            description: "Für Geodatensätze wird das Feld \"Kodierungsschema der geographischen Daten\" angezeigt, für andere Klassen ist es ausgeblendet.",
+            title: "Anwendungsschema der geographischen Daten",
+            description: "Für Geodatensätze wird das Feld \"Anwendungsschema der geographischen Daten\" angezeigt, für andere Klassen ist es ausgeblendet.",
             defaultActive: true,
             run: function() {
                 topic.subscribe("/onObjectClassChange", function(data) {
                     if (data.objClass === "Class1") {
-                        // set field initially hidden
-                        // "Kodierungsschema der geographischen Daten" 
-                        domClass.remove("uiElement1315", "hide");
+                        // "Anwendungsschema der geographischen Daten"
+                        domClass.remove("uiElement1314", "hide");
     
                     } else {
-                        // "Kodierungsschema der geographischen Daten" only in class 1
-                        domClass.add("uiElement1315", "hide");
+                        // "Anwendungsschema der geographischen Daten" only in class 1
+                        domClass.add("uiElement1314", "hide");
                         // remove any previous value from now hidden field
                         registry.byId("availabilityDataFormatInspire").set("value", "");
                     }
