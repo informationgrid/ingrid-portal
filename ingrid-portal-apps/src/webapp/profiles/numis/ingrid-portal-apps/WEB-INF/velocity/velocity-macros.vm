@@ -432,25 +432,25 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro(renderUDKIcon $class $title)
     #if($class == "0")
         ## Fachaufgabe
-        <span class="ic-ic-"></span>
+        <span class="ic-ic-zulassungsverfahren"></span>
     #elseif($class == "1")
         ## Geodatensatz
-        <span class="ic-ic-"></span>
+        <span class="ic-ic-inspire"></span>
     #elseif($class == "2")
         ## Literatur
-        <span class="ic-ic-"></span>
+        <span class="ic-ic-katalog"></span>
     #elseif($class == "3")
         ## Geodatendienst
-        <span class="ic-ic-karte"></span>
+        <span class="ic-ic-dienste"></span>
     #elseif($class == "4")
         ## Projekt
         <span class="ic-ic-projekt"></span>
     #elseif($class == "5")
         ## Datensammlung
-        <span class="ic-ic-"></span>
+        <span class="ic-ic-metadaten"></span>
     #elseif($class == "6")
         ## Informationssystem
-        <span class="ic-ic-"></span>
+        <span class="ic-ic-chemie"></span>
     #end
     <span class="text">$title</span>
 #end
@@ -458,16 +458,16 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro(renderUDKAddressIcon $class $title)
     #if($class == "0")
         ## Institution
-        <span class="ic-ic-institution"></span>
+        <span class="ic-ic-intituition"></span>
     #elseif($class == "1")
         ## Einheit
-        <span class="ic-ic-einheit"></span>
+        <span class="ic-ic-"></span>
     #elseif($class == "2")
         ## Person
-        <span class="ic-ic-user"></span>
+        <span class="ic-ic-"></span>
     #elseif($class == "3")
         ## Freie Adresse
-        <span class="ic-ic-freie-adresse"></span>
+        <span class="ic-ic-mailto"></span>
     #end
     <span class="text">$title</span>
 #end
