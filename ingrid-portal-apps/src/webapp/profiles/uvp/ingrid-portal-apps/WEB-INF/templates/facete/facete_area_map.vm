@@ -1,10 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
 <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li id="facet_area_map_header" class="accordion-item is-active" data-accordion-item="" onclick="resizeMap()">
-        <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap)aria-expanded="true" aria-selected="true"#end>
+    <li id="facet_area_map_header" class="accordion-item #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)is-active#end" data-accordion-item="" onclick="resizeMap()">
+        <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
-        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if($selectedMap)aria-hidden="true"#end style="display:block;">
+        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)aria-hidden="true"#else style="display:block;"#end>
             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <div id="map" class="map-ingrid" style="height:320px;">
             </div>
@@ -30,33 +30,16 @@
     var enablePopUp = false;
     var smallIcons = true;
     
-    if('$selectedMap.webmapclientCoords'.indexOf("y1") === -1){
-        $( document ).ready(function() {
-            $('#facet_area_map_header').each(function(index) {
-                var div = $(this);
-                div.removeClass('is-active');
-            });
-            $('#facet_area_map_header .accordion-content').each(function(index) {
-                var div = $(this);
-                div.css('display', 'none');
-            });
-            $('#facet_area_map_content').each(function(index) {
-                var div = $(this);
-                div.addClass('is-hidden');
-            });
-        });
-    }
-    
     window.onresize = function(event) {
         resizeMap();
     };
 
     function getMapBounds(){
         if(map.getBounds().isValid()) {
-            $('#x1').prop("value", map.getBounds().getWest());
-            $('#x2').prop("value", map.getBounds().getEast());
-            $('#y1').prop("value", map.getBounds().getSouth());
-            $('#y2').prop("value", map.getBounds().getNorth());
+            $('#x1').prop("value", Math.round(map.getBounds().getWest() * 10000)/10000);
+            $('#x2').prop("value", Math.round(map.getBounds().getEast() * 10000)/10000);
+            $('#y1').prop("value", Math.round(map.getBounds().getSouth() * 10000)/10000);
+            $('#y2').prop("value", Math.round(map.getBounds().getNorth() * 10000)/10000);
         }
     }
 

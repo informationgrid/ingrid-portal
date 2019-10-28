@@ -1,10 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
 <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li id="facet_area_map_header" class="accordion-item is-active" data-accordion-item="" onclick="resizeMap()">
-        <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap)aria-expanded="true" aria-selected="true"#end>
+    <li id="facet_area_map_header" class="accordion-item #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)is-active#end" data-accordion-item="" onclick="resizeMap()">
+        <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
-        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if($selectedMap)aria-hidden="true"#end style="display:block;">
+        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)aria-hidden="true"#else style="display:block;"#end>
             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <div id="map" class="map-ingrid" style="height:320px;">
             </div>

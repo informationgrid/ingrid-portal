@@ -510,6 +510,15 @@ header a.icon.is-selected {
   font-size: 14px;
   margin-right: 8px;
 }
+.accordion-content a.icon.button-up {
+  padding: 10px 0;
+  line-height: 1;
+  font-size: 14px;
+}
+.accordion-content a.icon.button-up span[class^="ic-"] {
+  font-size: 12px;
+  margin-right: 8px;
+}
 .accordion-content button.button.round {
   width: 35px;
   height: 35px;
