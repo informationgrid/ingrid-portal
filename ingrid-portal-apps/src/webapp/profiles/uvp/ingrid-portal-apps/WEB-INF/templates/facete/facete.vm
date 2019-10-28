@@ -231,7 +231,7 @@
     <div class="form-element boxed">
         <div class="input-check">
             <div class="control-group">
-                <label class="control control--checkbox" for="facet-$facet.getId()">
+                <label class="control control--radio" for="facet-$facet.getId()">
                     #set ($hasShortName = false)
                     #if($facet.getShortName())
                       #set ($hasShortName = true)
@@ -318,25 +318,17 @@
 #end
 
 #macro(renderCheckLink $doAction $title $onclick)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
-                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                $title
-            </a>
-        </small>
-    </p>
+    <a href=#if($doAction)"$doAction" #else "#" #end class="icon button-up" #if($onclick)onclick="$onclick" #end>
+        <span class="ic-ic-check"></span>
+        $title
+    </a>
 #end
 
 #macro(renderCrossLink $doAction $title $onclick)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
-                <svg class="icon link__icon icon-xs"><use xlink:href="#cross"/></svg>
-                $title
-            </a>
-        </small>
-    </p>
+    <a href=#if($doAction)"$doAction" #else "#" #end class="icon button-up" #if($onclick)onclick="$onclick" #end>
+        <span class="ic-ic-cross"></span>
+        $title
+    </a>
 #end
 
 #macro(renderSubfacetWildcardContent $node)
