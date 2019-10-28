@@ -566,51 +566,6 @@ header a.icon.is-selected {
 .teaser:hover .teaser-link .ic-map, .tabs-content .tabs-panel .teaser:hover .teaser-link .ic-map {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg width='24' height='23' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient x1='0%25' y1='6.216%25' y2='93.784%25' id='a'%3E%3Cstop stop-color='%231D4B7B' offset='0%25'/%3E%3Cstop stop-color='%23246293' offset='100%25'/%3E%3Cstop stop-color='%23429321' offset='100%25'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M21.1,4.2c-0.5,1.3-1.4,3.5-2.9,4.2c-0.1,0.1-0.2,0.1-0.3,0c-1.1-0.3-2.1,0.1-2.7,0.4c0.2,0.3,0.5,0.8,0.7,1.8c0.2,0.1,0.6,0,0.8-0.1c0.2-0.1,0.4-0.1,0.6,0.1c1.2,1.2-0.4,2.8-1.3,3.8c-0.2,0.2-0.4,0.4-0.5,0.5c0,0,0.1,0.1,0.1,0.1c0.2,0.2,0.5,0.5,0.6,0.9c0,0.3-0.1,0.6-0.4,0.8c-0.5,0.5-1,0.8-1.4,1c-0.1,1.7-1.4,2.7-3.5,2.7c-1,0-2-2.5-2-3c0-0.4,0.2-0.7,0.3-1c0.1-0.2,0.2-0.4,0.2-0.5c0-0.2-0.4-0.7-0.9-1.1c-0.1-0.1-0.1-0.2-0.1-0.4c0-0.4-0.1-0.7-0.2-0.9c-0.3-0.2-0.8-0.2-1.5-0.2c-0.3,0-0.5,0-0.8,0c-1.6,0-2-1.6-2-2.5c0-0.2,0-3.9,2.9-4.5c1.3-0.3,2.2-0.2,2.7,0.2C9.8,6.9,9.9,7.1,10,7.2c0.5,0.4,1.5,0.2,2.3,0c0.3-0.1,0.5-0.1,0.8-0.2c0.1-0.8,0.1-1.7,0-2c-0.6,0.3-1.2,0.3-1.7,0c-0.5-0.3-0.8-0.8-0.9-1.5C10.4,2.1,13.1,1,15,0.4c-1-0.3-2-0.4-3-0.4C5.4,0,0,5.4,0,12c0,6.6,5.4,12,12,12s12-5.4,12-12C24,9,22.9,6.3,21.1,4.2' transform='translate(0 -1)' fill='url(%23a)' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
-.ic-ic-hilfe:before {
-  content: "\e942";
-}
-.ic-ic-filter:before {
-  content: "\e943";
-}
-.ic-ic-external:before {
-  content: "\e944";
-}
-.ic-ic-check-circle:before {
-  content: "\e945";
-}
-.ic-ic-calendar:before {
-  content: "\e946";
-}
-.ic-ic-user-circle:before {
-  content: "\e947";
-}
-.ic-ic-projekt:before {
-  content: "\e948";
-}
-.ic-ic-opendata:before {
-  content: "\e949";
-}
-.ic-ic-karte:before {
-  content: "\e94a";
-}
-.ic-ic-intituition:before {
-  content: "\e94b";
-}
-.ic-ic-inspire:before {
-  content: "\e94c";
-}
-.ic-ic-dienste:before {
-  content: "\e94d";
-}
-.ic-ic-datenkataloge:before {
-  content: "\e94e";
-}
-.ic-ic-aktuelles:before {
-  content: "\e94f";
-}
-.ic-ic-webseiten:before {
-  content: "\e950";
-}
 .filter-group .accordion-item .accordion-title {
   color: #0089C6;
 }
