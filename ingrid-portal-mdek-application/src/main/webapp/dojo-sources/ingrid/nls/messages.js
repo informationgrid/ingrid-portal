@@ -1070,6 +1070,7 @@ define({
         "validation.error.spatial.no.entry": "At least one spatial reference must be entered as thesaurus or free entry.",
         "validation.error.spatial.no.expired": "A spatial reference must not be expired.",
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
+        "validation.error.date.without.title": "No date allowed without title.",
 
         "validation.levelOfSpecification.notConform":"For non conform INSPIRE-relevant datasets this specification must be 'not evaluated' or 'not conform'.",
         "validation.levelOfSpecification.conform":"For conform INSPIRE-relevant datasets this specification must be 'conform'.",
