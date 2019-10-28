@@ -1,23 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="811.124474px" height="274.251253px" viewBox="0 0 811.124474 274.251253" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
-    <title>assets/images/uvp-n/svg-raw/backgrounds/drops</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <rect id="path-1" x="0" y="0" width="1347" height="367"></rect>
-        <rect id="path-3" x="0" y="0" width="1347" height="367"></rect>
-    </defs>
-    <g id="assets/images/uvp-n/svg-raw/backgrounds/drops" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <mask id="mask-2" fill="white">
-            <use xlink:href="#path-1"></use>
-        </mask>
-        <g id="Rectangle" fill-rule="nonzero"></g>
-        <mask id="mask-4" fill="white">
-            <use xlink:href="#path-3"></use>
-        </mask>
-        <g id="Rectangle-Copy-3" fill-rule="nonzero"></g>
-        <rect id="Rectangle" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-4)" x="-790.617188" y="-419.03125" width="1423.35104" height="693.282503" rx="346.641252"></rect>
-        <rect id="Rectangle-Copy" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-4)" x="-210.646556" y="-267.419942" width="743.341343" height="478.175022" rx="239.087511"></rect>
-        <rect id="Rectangle-Copy-2" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-4)" x="-158.457031" y="-129.728536" width="969.581506" height="285.383876" rx="142.691938"></rect>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 811.1 274.3" style="enable-background:new 0 0 811.1 274.3;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.25;fill-rule:evenodd;clip-rule:evenodd;fill:#133268;enable-background:new    ;}
+</style>
+<path class="st0" d="M625.2,0H0v274.3h286.1C452.7,274.3,591.9,156.7,625.2,0z"/>
+<path class="st0" d="M0,0v155.7h668.4c78.8,0,142.7-63.9,142.7-142.7c0-4.4-0.2-8.7-0.6-13H0z"/>
+<path class="st0" d="M0,0v209.1c9.3,1.1,18.8,1.7,28.4,1.7h265.2C416.1,210.8,517,118.7,531,0H0z"/>
 </svg>

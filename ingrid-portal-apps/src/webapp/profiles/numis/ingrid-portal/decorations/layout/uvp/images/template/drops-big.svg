@@ -1,18 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="1080px" height="592px" viewBox="0 0 1080 592" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
-    <title>assets/images/numis/svg-raw/backgrounds/home-banner/desktop</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <rect id="path-1" x="0" y="0" width="1900" height="591"></rect>
-    </defs>
-    <g id="assets/images/numis/svg-raw/backgrounds/home-banner/desktop" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <mask id="mask-2" fill="white">
-            <use xlink:href="#path-1"></use>
-        </mask>
-        <g id="Rectangle" fill-rule="nonzero"></g>
-        <path d="M354.845336,108.948537 L745.611901,-281.818027 C806.031614,-342.237741 903.991325,-342.237741 964.411038,-281.818027 C1024.83075,-221.398314 1024.83075,-123.438603 964.411038,-63.0188894 L573.644474,327.747675 C513.22476,388.167389 415.26505,388.167389 354.845336,327.747675 C294.425622,267.327962 294.425622,169.368251 354.845336,108.948537 Z" id="Rectangle" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)"></path>
-        <path d="M264.992676,28.9349094 L964.841005,-670.913419 C1073.05046,-779.12287 1248.49264,-779.12287 1356.70209,-670.913419 C1464.91154,-562.703967 1464.91154,-387.261783 1356.70209,-279.052331 L656.853764,420.795997 C548.644312,529.005448 373.202128,529.005448 264.992676,420.795997 C156.783225,312.586545 156.783225,137.144361 264.992676,28.9349094 Z" id="Rectangle-Copy" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)"></path>
-        <path d="M-195.909718,141.526082 L465.705615,-520.089251 C568.00354,-622.387176 733.861248,-622.387176 836.159174,-520.089251 C938.457099,-417.791325 938.457099,-251.933617 836.159174,-149.635692 L174.543841,511.979641 C72.2459153,614.277567 -93.6117924,614.277567 -195.909718,511.979641 C-298.207643,409.681716 -298.207643,243.824008 -195.909718,141.526082 Z" id="Rectangle-Copy-2" fill="#133268" style="mix-blend-mode: multiply;" opacity="0.25" mask="url(#mask-2)"></path>
-    </g>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Ebene_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1080 592" style="enable-background:new 0 0 1080 592;" xml:space="preserve">
+<style type="text/css">
+	.st0{opacity:0.25;fill:#133268;enable-background:new    ;}
+</style>
+<path class="st0" d="M463.8,0L354.8,108.9c-60.4,60.4-60.4,158.4,0,218.8c60.4,60.4,158.4,60.4,218.8,0L901.4,0H463.8z"/>
+<path class="st0" d="M293.9,0L265,28.9c-108.2,108.2-108.2,283.7,0,391.9s283.7,108.2,391.9,0L1077.6,0H293.9z"/>
+<path class="st0" d="M0,588.5c63.4-2.6,126.1-28.1,174.5-76.5l512-512H0V588.5z"/>
 </svg>
