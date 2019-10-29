@@ -499,23 +499,23 @@ header a.icon.is-selected {
 .accordion-title:hover, .accordion-title:focus {
   background-color: #F6F6F6;
 }
-.accordion-content a.icon {
+.accordion-content .boxes a.icon {
   border-bottom: 1px dotted #c6cfe2;
   display: block;
   padding: 15px 0;
   margin: -8px 0 8px;
   line-height: 1;
 }
-.accordion-content a.icon span[class^="ic-"] {
+.accordion-content .boxes a.icon span[class^="ic-"] {
   font-size: 14px;
   margin-right: 8px;
 }
-.accordion-content a.icon.button-up {
+.accordion-content .boxes a.icon.button-up {
   padding: 10px 0;
   line-height: 1;
   font-size: 14px;
 }
-.accordion-content a.icon.button-up span[class^="ic-"] {
+.accordion-content .boxes a.icon.button-up span[class^="ic-"] {
   font-size: 12px;
   margin-right: 8px;
 }
@@ -808,11 +808,17 @@ header .button-up {
   margin-top: 4em
 }
 
-.catalog a.icon, .catalog span.icon {
+.catalog a.icon {
   display: block;
   padding: 10px 0;
   font-family: 'Roboto-Bold';
-  margin-right: 24px;
+  margin: 0 24px 0 10px;
+}
+.catalog span.icon {
+  display: block;
+  padding: 10px 0;
+  font-family: 'Roboto-Bold';
+  margin: 0 24px 0 6px;
 }
 .catalog span.icon [class^="ic-"] {
   font-size: 12px;
@@ -841,6 +847,9 @@ header .button-up {
   border-bottom: 1px solid #C6CFE2;
   padding: 5px 0;
   border-radius: 0 !important;
+}
+.accordion-content .accordion-item-sub:last-child {
+  border-bottom: 0;
 }
 .catalog .accordion .accordion .accordion-title {
   background: transparent;
