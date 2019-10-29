@@ -32,12 +32,12 @@
                 #if($nodeUrl != '')
                     <div class="accordion-item-sub">
                         <span class="icon">
-                            <a href="$action" class="ic-ic-minus"></a>
-                            <a class="" id="$node.id" href="$action" onclick="makeScrollTopLink('$action')" aria-controls="${node.id}-accordion" role="tab" id="${node.id}-accordion-label" aria-expanded="true" aria-selected="true">$nodeTitle</a>
+                            <a id="${node.id}-accordion-label" href="$action" class="ic-ic-minus" onclick="makeScrollTopLink(this)"></a>
+                            <a href="$nodeUrl">$nodeTitle</a>
                         </span>
                     </div>
                 #else
-                    <a class="accordion-title" id="$node.id" href="$action" onclick="makeScrollTopLink('$action')" aria-controls="${node.id}-accordion" role="tab" id="${node.id}-accordion-label" aria-expanded="true" aria-selected="true">$nodeTitle</a>
+                    <a class="accordion-title" id="${node.id}-accordion-label" href="$action" onclick="makeScrollTopLink(this)" aria-controls="${node.id}-accordion" role="tab" aria-expanded="true" aria-selected="true">$nodeTitle</a>
                 #end
                 
                 ## render sub nodes
@@ -53,22 +53,21 @@
     #else
         #set ($renderSubNodes = false)
         #if ($node.expandable)
-            ## render "+" and icon WITH ACTION -> node not opened yet and can be expanded 
-               $action.setParameter('action','doOpenNode')
-                #if($nodeUrl != '')
-                    <div class="accordion-item-sub">
-                        <span class="icon">
-                            <a href="$action" class="ic-ic-plus"></a>
-                            <a class="" id="$node.id" href="$action" onclick="makeScrollTopLink('$action')" aria-controls="${node.id}-accordion" role="tab" id="${node.id}-accordion-label" aria-expanded="true" aria-selected="true">$nodeTitle</a>
-                        </span>
-                    </div>
-                #else
+            $action.setParameter('action','doOpenNode')
+            #if($nodeUrl != '')
+                <div class="accordion-item-sub">
+                    <span class="icon">
+                        <a id="${node.id}-accordion-label" href="$action" class="ic-ic-plus" onclick="makeScrollTopLink(this)"></a>
+                        <a href="$nodeUrl">$nodeTitle</a>
+                    </span>
+                </div>
+            #else
                 <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-                  <li class="accordion-item">
-                    <a class="accordion-title" id="$action" href="$action" onclick="makeScrollTopLink('$action')">$nodeTitle</a>
-                  </li>
+                    <li class="accordion-item">
+                        <a class="accordion-title" id="${node.id}-accordion-label" href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
+                    </li>
                 </ul>
-                #end
+            #end
         #else
             #if($nodeUrl != '')
                 <a href="$nodeUrl" class="icon">
@@ -89,9 +88,7 @@
     #end
     #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
-        <p class="media__obj">
-            #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
-        </p>
+        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
     </form>
 </div>
 <script type="text/javascript">
@@ -104,16 +101,17 @@
                     document.documentElement.scrollTop = $scrollTop;
         }
     }
-    function makeScrollTopLink(url){
+    function makeScrollTopLink(element){
         var browser = whichBrowser();
         
         if(browser.indexOf("Chrome") != -1)
             var top = document.body.scrollTop;
         else
             var top = document.documentElement.scrollTop;
+        var url = element.href;
         url = url.replace(/\s/g, "%20")
         urlNew = url + "?scrollTop="+top;
-        document.getElementById(url).href = urlNew;
+        element.href = urlNew;
     }
     
     whichBrowser = function(){
