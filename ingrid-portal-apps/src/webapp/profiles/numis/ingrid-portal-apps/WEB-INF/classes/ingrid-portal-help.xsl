@@ -27,24 +27,46 @@
 <xsl:output method="xml"/>
 
 <xsl:template match="/">
-    <help>
+    <div class="row search-filtered">
     <xsl:for-each select="chapter">
-		<div class="row search-filtered">
-		  <div class="xlarge-7 columns">
-              <nav>
-                  <xsl:for-each select="section">
-                      <a class="nav-item">
-                          <xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>
-                          <xsl:value-of select="header"/>
-                      </a>
-                  </xsl:for-each>
-              </nav>
-         </div>
-         <div class="xlarge-17 columns">
+        <div class="xsmall-24 large-8 xlarge-6 columns">
+            <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="5rmu1i-e">
+                <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+                    <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" aria-expanded="false" aria-selected="false"><xsl:value-of select="header"/></a>
+                    <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="" aria-hidden="true" id="">
+                        <div class="boxes">
+	                        <ul class="accordion filter-group help-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+	                            <li class="accordion-item is-active" data-accordion-item="">
+	                                <a class="accordion-title" aria-controls="type-accordion" role="tab" id="type-accordion-label" aria-expanded="false" aria-selected="false">
+	                                    <span class="text"><xsl:value-of select="header"/></span>
+	                                </a>
+	                                <div class="accordion-content" data-tab-content="" role="tabpanel"  aria-hidden="true">
+	                                    <div class="boxes">
+	                                         <xsl:for-each select="section">
+	                                             <div class="form-element boxed">
+	                                                 <a class="nav-item">
+	                                                     <xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>
+	                                                     <xsl:value-of select="header"/>
+	                                                 </a>
+	                                             </div>
+	                                         </xsl:for-each>
+	                                     </div>
+	                                 </div>
+	                             </li>
+	                        </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </xsl:for-each>
+    <xsl:for-each select="chapter">
+        <div class="xsmall-24 large-16 xlarge-18 columns" style="padding-left: 50px;">
+           <h2><xsl:value-of select="header"/></h2>
            <xsl:for-each select="section">
-               <a><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><a/></a>
+               <a class="anchor"><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><span class="ic-ic-arrow"></span><a/></a>
                <xsl:if test="header/@display != 'false' or not(header/@display)">
-                   <h2><xsl:value-of select="header"/></h2>
+                   <h3><xsl:value-of select="header"/></h3>
                </xsl:if>
                <xsl:apply-templates select="content"/>
                <xsl:for-each select="section">
@@ -54,9 +76,8 @@
                </xsl:for-each>
            </xsl:for-each>
          </div>
-        </div>
     </xsl:for-each>
-    </help>
+    </div>
 </xsl:template>
 
 <xsl:template match="content">

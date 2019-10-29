@@ -6,47 +6,57 @@
         <section help-key="index">
             <header>Hilfethemen</header>
             <content>
-                <div class="link-list">
-                    <a class="icon" href="?hkey=about-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Über NUMIS</span>
-                    </a>
-                    <a class="icon" href="?hkey=search-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Suche</span>
-                    </a>
-                    <a class="icon" href="?hkey=search-measure-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Messwerte</span>
-                    </a>
-                    <a class="icon" href="?hkey=search-catalog-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Kataloge</span>
-                    </a>
-                    <a class="icon" href="?hkey=maps-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Karten</span>
-                    </a>
-                    <a class="icon" href="?hkey=search-chronicle-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Chronik</span>
-                    </a>
-                    <a class="icon" href="?hkey=ingrid-inform-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">NUMIS informiert</span>
-                    </a>
-                    <a class="icon" href="?hkey=search-category-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Kategorien</span>
-                    </a>
-                    <a class="icon" href="?hkey=rss-news-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Aktuelles</span>
-                    </a>
-                    <a class="icon" href="?hkey=myingrid-1">
-                        <span class="ic-ic-arrow"> </span>
-                        <span class="text">Mein NUMIS</span>
-                    </a>
+                <div class="document-list">
+                    <div class="list-item">
+                        <a href="?hkey=about-1">
+                            <span class="text">Über NUMIS</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=search-1">
+                            <span class="text">Suche</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=search-measure-1">
+                            <span class="text">Messwerte</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=search-catalog-1">
+                            <span class="text">Kataloge</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=maps-1">
+                            <span class="text">Karten</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=search-chronicle-1">
+                            <span class="text">Chronik</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=ingrid-inform-1">
+                            <span class="text">NUMIS informiert</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=search-category-1">
+                            <span class="text">Kategorien</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=rss-news-1">
+                            <span class="text">Aktuelles</span>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a href="?hkey=myingrid-1">
+                            <span class="text">Mein NUMIS</span>
+                        </a>
+                    </div>
                 </div>
             </content>
         </section>
