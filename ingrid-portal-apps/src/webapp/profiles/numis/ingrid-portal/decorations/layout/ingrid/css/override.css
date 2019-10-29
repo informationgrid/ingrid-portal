@@ -970,18 +970,46 @@ header .button-up {
   padding: 8px;
   max-width: 300px;
 }
-nav .nav-item {
-    font-size: 16px;
-    text-transform: uppercase;
-    color: #0089C6;
-    background-color: #FFFFFF;
-    padding: 16px 16px;
-    display: block;
-    font-weight: bold;
+.help-group .accordion-item .accordion-title {
+  background-color: #0089C6;
+  padding: 16px 16px;
 }
-nav .nav-item.is-active {
+.help-group .accordion-item .accordion-title::after {
+  content: "";
+}
+.help-group .accordion-item.is-active .accordion-title::after {
+  content: "";
+}
+.help-group .accordion-item .accordion-title span {
+  color: #FFFFFF;
+}
+.help-group .accordion-item .accordion-content {
+  background-color: #F6F6F6;
+  margin: 0 0 24px;
+  border-radius: 0;
+}
+.help-group .accordion-item .nav-item {
+  font-size: 16px;
+  color:#0089C6;
+  padding: 12px 32px;
+  display: block;
+  font-weight: normal;
+}
+.help-group .accordion-item .nav-item.is-active {
   color: #FFFFFF;
   background-color: #0089C6;
+}
+.anchor {
+  display: none;
+}
+.anchor span{
+  position: relative;
+  left: -35px;
+  top: 28px;
+  font-size: 20px;
+}
+.anchor:target {
+  display: block;
 }
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
