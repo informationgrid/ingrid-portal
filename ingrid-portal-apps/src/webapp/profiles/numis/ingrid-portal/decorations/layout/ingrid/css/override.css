@@ -382,9 +382,10 @@ header {
   border-image: linear-gradient(to left, #1D4B7B, #256394) 0 1 100%;
 }
 header a.icon {
-  padding: 10px 8px;
+  padding: 16px 16px;
   border-radius: 5px;
   margin: 0;
+  font-size: 16px;
 }
 header a.icon [class^="ic-"] {
   font-size: 12px;
@@ -394,8 +395,6 @@ header a.icon:hover {
 }
 header a.icon.is-selected {
   background: #F6F6F6;
-  text-transform: uppercase;
-  color: #1D4B7B;
 }
 .menu-tab-row .menu-tab .link-menu-tab {
   color: #0089C6;
