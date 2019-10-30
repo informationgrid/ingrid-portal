@@ -148,6 +148,9 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
   width: 45px;
   height: 45px;
 }
+.theme-toggle .topic-modal-toggle {
+  color: #0089C6;
+}
 @media (max-width: 480px) {
   .search-focused #search-container {
     background: transparent;

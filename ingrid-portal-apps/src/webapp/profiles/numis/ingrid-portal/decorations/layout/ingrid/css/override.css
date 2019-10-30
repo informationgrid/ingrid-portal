@@ -297,6 +297,7 @@
   }
   .header-menu-open button {
     margin: 13px 0 0 0;
+    top: 12px !important;
   }
   .header-menu-open .login {
     display: none;
@@ -377,9 +378,9 @@ a.icon:hover {
   background-color: #E50046;
 }
 header {
-  -webkit-border-image: -webkit-linear-gradient(to left, #1D4B7B, #256394) 0 1 100%;
-  -moz-border-image: -moz-linear-gradient(to left, #1D4B7B, #256394) 0 1 100%;
-  border-image: linear-gradient(to left, #1D4B7B, #256394) 0 1 100%;
+  -webkit-border-image: -webkit-linear-gradient(to left, #246293, #0089C6) 0 1 100%;
+  -moz-border-image: -moz-linear-gradient(to left, #246293, #0089C6) 0 1 100%;
+  border-image: linear-gradient(to left, #246293, #0089C6) 0 1 100%;
 }
 header a.icon {
   padding: 16px 16px;
