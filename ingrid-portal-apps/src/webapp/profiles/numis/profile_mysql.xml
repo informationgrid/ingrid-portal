@@ -123,9 +123,25 @@
         </file>
     </files>
     <sql>
+        <execute>
+            <![CDATA[CREATE TABLE IF NOT EXISTS tmp_table (id bigint(20) NOT NULL AUTO_INCREMENT\, item_key varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, item_value varchar(255) COLLATE latin1_general_ci DEFAULT NULL\, item_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP\, PRIMARY KEY (id));]]>
+        </execute>
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>
+        </execute>
+        <!-- Change main menu order -->
+        <execute>
+            <![CDATA[INSERT INTO tmp_table (item_key\, item_value) VALUES ('main_menu_id'\,(SELECT menu_id FROM folder_menu WHERE name = 'main-menu'));]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';]]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml';]]>
+        </execute>
+        <execute>
+            <![CDATA[DROP TABLE tmp_table;]]>
         </execute>
     </sql>
 </profile>

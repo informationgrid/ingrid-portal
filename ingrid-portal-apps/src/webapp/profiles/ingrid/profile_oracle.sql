@@ -121,6 +121,9 @@ DELETE FROM ingrid_lookup WHERE item_key = 'tmp_layout_fragment_id';
 -- Revert of replacing main-menu option "main-search" with "default-page" (BAW)
 INSERT INTO tmp_table (item_key, item_value) values ('main-menu_id',  (SELECT menu_id FROM folder_menu WHERE name = 'main-menu')); 
 UPDATE folder_menu SET options = '/main-search.psml' WHERE options = '/default-page.psml' AND parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main-menu_id');
+UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';
+UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml';
+
 -- DONE with tmp_table
 DROP TABLE tmp_table;
 
@@ -135,7 +138,6 @@ UPDATE link   SET is_hidden = 0 WHERE path = '/language.link';
 
 -- Hide '/home.link'
 UPDATE link   SET is_hidden = 1 WHERE path = '/home.link';
-
 
 -- Delete temporary table
 DROP TABLE ingrid_temp;
