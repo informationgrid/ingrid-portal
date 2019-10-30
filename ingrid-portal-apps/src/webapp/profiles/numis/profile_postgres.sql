@@ -35,6 +35,11 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 -- Hide '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 
+-- Change main menu order
+INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_menu_id',(SELECT menu_id FROM folder_menu WHERE name = 'main-menu'));
+UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';
+UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-measures.psml';
+
 -- Delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
 
