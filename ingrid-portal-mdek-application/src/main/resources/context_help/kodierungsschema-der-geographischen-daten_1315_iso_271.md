@@ -2,7 +2,7 @@
 # ID des GUI Elements
 guid: 1315
 # title, used as window title
-title: KodierAnwendungsschemaungsschema der geographischen Daten
+title: Anwendungsschema der geographischen Daten
 ---
 
 # Anwendungsschema der geographischen Daten
@@ -17,4 +17,4 @@ Spezifikation des Anwendungsschemas: D2.8.II.2 Data Specification on Land Cover 
 
 Abgabeformat: Beschreibung des Formats, in dem die Daten bereitgestellt werden
 
-Domain: ??? (gmd:applicationSchemaInfo)
+Domain: 21 (gmd:applicationSchemaInfo)

@@ -2264,7 +2264,7 @@
                                     <span id="uiElement1315" class="outer threeQuarterWidth">
                                         <div>
                                         <span id="availabilityDataFormatInspireLabel" class="label">
-                                            <label for="availabilityDataFormatInspire" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1315)">
+                                            <label for="availabilityDataFormatInspire" class="inActive">
                                                 <fmt:message key="ui.obj.availability.dataFormatInspireTitle" />
                                             </label>
                                         </span>
@@ -2277,7 +2277,7 @@
                                     <span id="uiElement1316" class="outer quarterWidth">
                                         <div>
                                         <span id="availabilityDataFormatInspireDateLabel" class="label">
-                                            <label for="availabilityDataFormatInspire" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1316)">
+                                            <label for="availabilityDataFormatInspire" class="inActive">
                                                 <fmt:message key="ui.obj.availability.dataFormatInspireDate" />
                                             </label>
                                         </span>
