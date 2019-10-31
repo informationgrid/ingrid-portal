@@ -6,7 +6,7 @@ $action.setParameter('action','doSearch')
 #end
 <div class="home-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-big.svg');">
     <div class="row align-center">
-        <div class="large-19 columns dark">
+        <div class="large-20 columns dark">
             <h1>$MESSAGES.getString('searchSimple.portlet.title.1')</h1>
             <h1 class="green">$MESSAGES.getString('searchSimple.portlet.title.2')<span class="ic-ic-asterisc"></span></h1>
             <div class="indent">
