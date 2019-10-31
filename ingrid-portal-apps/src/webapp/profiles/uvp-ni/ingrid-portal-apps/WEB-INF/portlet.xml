@@ -57,20 +57,8 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
-            <preference>
-                <name>titleKey</name>
-                <value>searchSimple.title.search</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>no-row</value>
+                <name>disableTitle</name>
+                <value>1</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
@@ -102,11 +90,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -134,16 +118,8 @@
         <portlet-info>
             <title>RSS Feeds administrieren</title>
             <short-title>RSS Feeds administrieren</short-title>
-        </portlet-info>
+        </portlet-info>      
         <portlet-preferences>
-            <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
             <preference>
                 <name>sectionStyle</name>
                 <value>search-filtered row</value>
@@ -225,14 +201,6 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
-            <preference>
                 <name>sectionStyle</name>
                 <value>search-filtered row</value>
             </preference>
@@ -250,7 +218,7 @@
             <description>This option defines the roles a new user will be registered with</description>
             <name>roles</name>
             <value>user</value>
-        </init-param>
+        </init-param>   
         <init-param>
             <description>This option defines the groups a new user will be registered with</description>
             <name>groups</name>
@@ -260,7 +228,7 @@
             <description>This option defines the rule names a new user will be registered with</description>
             <name>rulesNames</name>
             <value>user-role-fallback</value>
-        </init-param>
+        </init-param>   
         <init-param>
             <description>This option defines the rule values a new user will be registered with</description>
             <name>rulesValues</name>
@@ -289,16 +257,8 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
-            <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -326,11 +286,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -386,11 +342,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -423,11 +375,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -459,11 +407,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -655,10 +599,6 @@
                 <name>noOfEntriesDisplayed</name>
                 <value>4</value>
             </preference>
-            <preference>
-                <name>disableTitle</name>
-                <value>1</value>
-            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -686,14 +626,6 @@
                 <name>startWithEntry</name>
                 <value>0</value>
             </preference>
-            <preference>
-                <name>bannerStyle</name>
-                <value>row content-small</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
-            </preference>
         </portlet-preferences>
         
     </portlet>
@@ -715,18 +647,6 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
-            <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
-            </preference>
             <preference>
                 <name>cmsKey</name>
                 <value>ingrid.cms.default</value>
@@ -761,11 +681,7 @@
             </preference>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -805,11 +721,7 @@
             </preference>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -841,11 +753,7 @@
             </preference>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -881,15 +789,11 @@
             </preference>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
+                <value>row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -1010,11 +914,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1050,11 +950,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-xsmall</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1081,11 +977,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1150,11 +1042,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1186,11 +1074,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1226,11 +1110,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1265,11 +1145,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1300,11 +1176,7 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
@@ -1347,7 +1219,7 @@
         <portlet-name>ShowMapsPortlet</portlet-name>
         <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsUVPPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1355,7 +1227,7 @@
         </supports>
         <portlet-info>
             <title>Karten</title>
-            <short-title>ShowMapsPortlet</short-title>
+            <short-title>ShowMapsUVPPortlet</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
@@ -1449,7 +1321,7 @@
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultUVPPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1520,16 +1392,12 @@
         <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
+                <name>helpKey</name>
+                <value>search-catalog-1</value>
             </preference>
             <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>search-filtered row content-small</value>
+                <name>disableTitle</name>
+                <value>1</value>
             </preference>
         </portlet-preferences>
     </portlet>
