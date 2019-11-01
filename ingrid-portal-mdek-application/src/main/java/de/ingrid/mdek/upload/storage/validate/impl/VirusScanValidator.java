@@ -100,6 +100,10 @@ public class VirusScanValidator implements Validator {
             }
             else if (!cleanPattern.matcher(result).matches()) {
                 log.error("Virus scan failed: "+result);
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("Scan result: " + result);
+                }
             }
         }
         catch (final CommandExecutionException e) {
@@ -123,6 +127,9 @@ public class VirusScanValidator implements Validator {
      */
     private String runScan(final Path file) throws CommandExecutionException {
         final String command = this.command.replace(PLACEHOLDER_FILE, file.toString());
+        if (log.isDebugEnabled()) {
+            log.debug("Run command: " + command);
+        }
         return scanner.execute(command);
     }
 }
