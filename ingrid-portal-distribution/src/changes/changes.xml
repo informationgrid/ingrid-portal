@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.2.1-SNAPSHOT" date="2019-xx-xx" description="Release 5.2.1">
+          <action type="update" dev="wemove" issue="1553">
+            IGE: Verlinkung von hochgeladenen Dokumenten im Editor funktioniert nicht.
+          </action>
+        </release>
+
         <release version="5.2.0" date="2019-10-22" description="Release 5.2.0">
           <action type="update" dev="wemove" issue="1532">
             Deaktivierung von Benutzerregistrierung im BKG Profil.
