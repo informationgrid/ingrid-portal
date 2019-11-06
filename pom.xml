@@ -8,7 +8,7 @@
   <groupId>de.ingrid.portal</groupId>
   <artifactId>ingrid-portal-project</artifactId>
   <packaging>pom</packaging>
-  <version>5.1.2-SNAPSHOT</version>
+  <version>5.1.2</version>
   <name>InGrid Portal</name>
   <description>This is the portal where documents can be searched through the iBus and new documents can be managed by
     the InGrid Editor.
