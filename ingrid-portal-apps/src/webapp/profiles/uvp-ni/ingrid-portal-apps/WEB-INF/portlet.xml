@@ -66,7 +66,7 @@
             </preference>
             <preference>
                 <name>titleKey</name>
-                <value>searchSimple.title.search</value>
+                <value>help.portlet.title</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>

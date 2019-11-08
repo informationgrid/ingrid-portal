@@ -26,6 +26,7 @@ import java.io.IOException;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.xml.transform.Transformer;
@@ -65,6 +66,10 @@ public class HelpPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
+
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", "help.portlet.title");
+        response.setTitle(messages.getString(titleKey));
 
         // find help file according to the language
         String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());

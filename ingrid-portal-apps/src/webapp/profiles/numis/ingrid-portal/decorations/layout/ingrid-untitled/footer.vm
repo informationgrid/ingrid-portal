@@ -61,12 +61,12 @@
                           <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"></a>
                       </div>
                   </div>
-                  <div class="xsmall-24 medium-22 large-14 xlarge-10 columns">
+                  <div class="xsmall-24 medium-22 large-9 xlarge-10 columns">
                       <div class="copyright">
                           <p>$MESSAGES.getString("ingrid.page.copyright")</p>
                       </div>
                   </div>
-                  <div class="xsmall-24 small-24 large-8 xlarge-12 columns button-up">
+                  <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">
                       #set($footerMenu = $site.getMenu("footer-menu"))
                       #if(!$footerMenu.empty)
                           #includeFooterNavigation($footerMenu)
@@ -93,15 +93,13 @@
                 <div class="list-item">
                   <a class="switch-link numis">
                     <span class="ic-ic-check"></span>
-                    <img class="hide-for-large" src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS">
-                    <img class="show-for-large" src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS">
+                    <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS">
                   </a>
                 </div>
                 <div class="list-item">
                   <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
                     <span class=""></span>
-                    <img class="hide-for-large" src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP">
-                    <img class="show-for-large" src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP">
+                    <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP">
                   </a>
                 </div>
             </div>
@@ -114,6 +112,12 @@
 
         <!-- Expand -->
         <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+
+        <!-- Anchor target -->
+        <script src="/decorations/layout/ingrid/scripts/anchor-target.js"></script>
+        <script>
+            $('.js-anchor-target').anchorTarget();
+        </script>
     </div>
 
         <!-- Piwik -->
