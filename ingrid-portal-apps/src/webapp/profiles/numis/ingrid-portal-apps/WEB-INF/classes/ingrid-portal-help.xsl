@@ -27,46 +27,42 @@
 <xsl:output method="xml"/>
 
 <xsl:template match="/">
-    <div class="row search-filtered">
+    <div class="row nav-content search-filtered">
     <xsl:for-each select="chapter">
-        <div class="xsmall-24 large-8 xlarge-6 columns">
-            <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="5rmu1i-e">
+        <div class="xsmall-24 large-6 xlarge-6 columns">
+            <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
                 <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
-                    <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" aria-expanded="false" aria-selected="false"><xsl:value-of select="header"/></a>
-                    <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="" aria-hidden="true" id="">
+                    <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="help-accordion" role="tab" aria-expanded="false" aria-selected="false"><xsl:value-of select="header"/></a>
+                    <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="help-content-accordion-label" aria-hidden="true" id="help-content-accordion">
                         <div class="boxes">
-	                        <ul class="accordion filter-group help-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-	                            <li class="accordion-item is-active" data-accordion-item="">
-	                                <a class="accordion-title" aria-controls="type-accordion" role="tab" id="type-accordion-label" aria-expanded="false" aria-selected="false">
-	                                    <span class="text"><xsl:value-of select="header"/></span>
-	                                </a>
-	                                <div class="accordion-content" data-tab-content="" role="tabpanel"  aria-hidden="true">
-	                                    <div class="boxes">
-	                                         <xsl:for-each select="section">
-	                                             <div class="form-element boxed">
-	                                                 <a class="nav-item">
-	                                                     <xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>
-	                                                     <xsl:value-of select="header"/>
-	                                                 </a>
-	                                             </div>
-	                                         </xsl:for-each>
-	                                     </div>
-	                                 </div>
-	                             </li>
-	                        </ul>
+                            <ul class="accordion filter-group help-group">
+                                <li class="accordion-item" data-accordion-item="">
+                                    <xsl:for-each select="section">
+                                        <a class="accordion-title js-anchor-target">
+                                            <xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>
+                                            <span class="text"><xsl:value-of select="header"/></span>
+                                        </a>
+                                    </xsl:for-each>
+                                 </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </xsl:for-each>
+        <div class="large-2 xlarge-2">
+        <span></span>
+        </div>
     <xsl:for-each select="chapter">
-        <div class="xsmall-24 large-16 xlarge-18 columns" style="padding-left: 50px;">
+        <div class="xsmall-24 large-16 xlarge-16 columns">
            <h2><xsl:value-of select="header"/></h2>
            <xsl:for-each select="section">
-               <a class="anchor"><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><span class="ic-ic-arrow"></span><a/></a>
                <xsl:if test="header/@display != 'false' or not(header/@display)">
-                   <h3><xsl:value-of select="header"/></h3>
+                   <h3>
+                       <a class="anchor"><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><span class="ic-ic-check-circle"></span><a/></a>
+                       <span><xsl:value-of select="header"/></span>
+                   </h3>
                </xsl:if>
                <xsl:apply-templates select="content"/>
                <xsl:for-each select="section">

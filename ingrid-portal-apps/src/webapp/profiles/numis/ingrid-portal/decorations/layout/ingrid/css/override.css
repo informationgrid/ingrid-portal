@@ -489,8 +489,17 @@ header a.icon.is-selected {
 .detail .list-item div {
   padding: 0;
 }
-.detail .detail-content h2 {
+.detail.nav-content {
+  margin-top: -54px;
+}
+.nav-content {
+  margin-top: 0;
+}
+.nav-content h2 {
   margin-bottom: 48px;
+}
+.nav-content .columns:last-of-type {
+  padding-left: 58px;
 }
 .accordion-title {
   color: #0089C6;
@@ -713,7 +722,7 @@ footer hr {
   padding: 12px 24px 0 0;
 }
 .switch-popup a.switch-link.numis img {
-  width: 10em;
+  width: 18em;
 }
 .switch-popup a.switch-link.uvp span{
   padding: 0 28px 0;
@@ -807,7 +816,9 @@ footer hr {
 header .button-up {
   margin-top: 4em
 }
-
+header .logo {
+  width: 12.525em;
+}
 .catalog a.icon {
   display: block;
   padding: 10px 0;
@@ -891,7 +902,6 @@ header .button-up {
 .nav-desktop__list a, .nav-desktop__list span {
   display: block;
 }
-
 .nav-desktop__item {
   flex-grow: 1;
   display: inline-block;
@@ -900,7 +910,6 @@ header .button-up {
   left: auto;
   right: 0;
 }
-
 .nav-desktop__title.is-active + .nav-desktop__dropdown {
   display: block;
   left: auto;
@@ -980,6 +989,14 @@ header .button-up {
   max-width: 300px;
 }
 .help-group .accordion-item .accordion-title {
+  background-color: transparent;
+  padding: 16px 16px;
+  border-bottom: 0 !important;
+}
+.help-group .accordion-item .accordion-title:hover {
+  border-bottom: 0 !important;
+}
+.help-group .accordion-item.is-active .accordion-title, .help-group .accordion-item .accordion-title.is-active {
   background-color: #0089C6;
   padding: 16px 16px;
 }
@@ -989,7 +1006,7 @@ header .button-up {
 .help-group .accordion-item.is-active .accordion-title::after {
   content: "";
 }
-.help-group .accordion-item .accordion-title span {
+.help-group .accordion-item.is-active .accordion-title span, .help-group .accordion-item .accordion-title.is-active span {
   color: #FFFFFF;
 }
 .help-group .accordion-item .accordion-content {
@@ -1011,14 +1028,28 @@ header .button-up {
 .anchor {
   display: none;
 }
-.anchor span{
+.anchor:hover {
+  text-decoration: none;
+  color: #0089C6;
+  cursor: default;
+}
+.anchor span {
   position: relative;
   left: -35px;
-  top: 28px;
-  font-size: 20px;
+  top: 4px;
+  font-size: 24px;
 }
 .anchor:target {
   display: block;
+  float: left;
+  left: -6px;
+  position: relative;
+}
+.anchor:target ~ span {
+  margin-left: -24px;
+}
+h2 .anchor:target {
+  left: 0;
 }
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
@@ -1041,6 +1072,9 @@ header .button-up {
   }
 }
 @media print, screen and (min-width: 48em) {
+  header .logo {
+    width: 22em;
+  }
   footer .footer .copyright p {
     width: 300px;
     margin-left: -30px;
@@ -1057,14 +1091,12 @@ header .button-up {
   footer .footer .columns div {
     margin: 10px 0;
   }
-  .switch-popup a.switch-link.uvp img {
-    width: 20em;
-  }
-  .switch-popup a.switch-link.numis img {
-     width: 25em;
-  }
   footer .footer .footer-menu-entries {
     text-align: left;
+  }
+  h2 .anchor span {
+    top: 10px;
+    font-size: 24px;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
@@ -1073,10 +1105,25 @@ header .button-up {
     margin: 18px 18px 0 0px;
   }
   .search-filtered .accordion.accordion-filter-group {
-    background-color: #1D4B7B;
+    background-color: #0089C6;
   }
   .search-filtered .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group {
-    background-color: #1D4B7B;
+    background-color: #0089C6;
+  }
+  .nav-content div.columns:first-child {
+    padding: 0;
+  }
+  .nav-content .accordion.accordion-filter-group {
+    border-radius: 0;
+  }
+  .nav-content .accordion.accordion-filter-group .accordion-title-filter-group::after {
+    content: '\e900';
+  }
+  .nav-content .accordion.accordion-filter-group .is-active .accordion-title-filter-group::after {
+    content: '\e903';
+  }
+  .nav-content .accordion.accordion-filter-group .accordion-content.filter-wrapper {
+    padding: 16px;
   }
 }
 @media screen and (max-width: 559px) {
@@ -1091,7 +1138,21 @@ header .button-up {
   }
 }
 @media print, screen and (min-width: 64em) {
-  
+  .nav-content {
+    margin-top: 4rem !important;
+  }
+  .detail .nav-content {
+    margin-top: 0 !important;
+  }
+  .nav-content .columns:last-of-type {
+    padding-left: 0;
+  }
+  .switch-popup a.switch-link.uvp img {
+    width: 20em;
+  }
+  .switch-popup a.switch-link.numis img {
+     width: 24em;
+  }
 }
 @media print, screen and (min-width: 78em) {
   footer .footer .footer-menu-entries, footer .footer .copyright {
