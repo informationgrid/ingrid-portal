@@ -501,6 +501,9 @@ header a.icon.is-selected {
 .nav-content .columns:last-of-type {
   padding-left: 58px;
 }
+.nav-content .accordion-title span {
+  text-transform: none;
+}
 .accordion-title {
   color: #0089C6;
   background-color: #F6F6F6;
@@ -817,7 +820,11 @@ header .button-up {
   margin-top: 4em
 }
 header .logo {
-  width: 12.525em;
+  width: 12.25em;
+}
+header .row .columns:last-of-type {
+  padding-left: 0;
+  padding-right: 0;
 }
 .catalog a.icon {
   display: block;
@@ -878,13 +885,16 @@ header .logo {
 }
 .dropmenu__box {
   position: relative;
-  display: inline-block;
+  display: inline;
 }
 .dropmenu__box .menu-main-links {
   padding: 8px;
 }
 .dropmenu a.is-active {
   background-color: #256394;
+}
+.dropmenu__box a span:last-of-type[class^="ic-"] {
+  margin-right: 0;
 }
 .nav-desktop {
   background: #4EAD46;
@@ -1073,7 +1083,7 @@ h2 .anchor:target {
 }
 @media print, screen and (min-width: 48em) {
   header .logo {
-    width: 22em;
+    width: 22.725em;
   }
   footer .footer .copyright p {
     width: 300px;
