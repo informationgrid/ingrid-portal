@@ -323,6 +323,19 @@ define([
                 }];
                 layoutCreator.createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
 
+                var priorityDatasetStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '708px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 6350,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6350)
+                }];
+                layoutCreator.createDataGrid("priorityDataset", null, priorityDatasetStructure, null);
+
                 new CheckBox({}, "isInspireRelevant");
                 new RadioButton({
                     checked: true,
