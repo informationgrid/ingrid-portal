@@ -94,9 +94,6 @@ require([
             UtilAddress.addAddressTitles(nodeDataOld.generalAddressTable);
             UtilList.addAddressLinkLabels(nodeDataOld.generalAddressTable);
             renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], ["<fmt:message key='dialog.compare.object.addressLink.type' />", "<fmt:message key='dialog.compare.object.addressLink.title' />"], message.get("ui.obj.general.addressTable.title"));
-            renderList(nodeDataOld.thesaurusInspireTermsList, nodeDataNew.thesaurusInspireTermsList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function(val) {
-                return UtilSyslist.getSyslistEntryName(6100, val);
-            });
 
             // preview image
             var previewImageUrlOld = IgeEvents._filterPreviewImage(nodeDataOld.linksToUrlTable);
@@ -412,6 +409,12 @@ require([
             renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.category' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(527, val);
             });
+			renderList(nodeDataOld.thesaurusInspireTermsList, nodeDataNew.thesaurusInspireTermsList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function(val) {
+				return UtilSyslist.getSyslistEntryName(6100, val);
+			});
+			renderList(nodeDataOld.priorityDataset, nodeDataNew.priorityDataset, "<fmt:message key='ui.obj.priority.dataset' />", null, function(val) {
+				return UtilSyslist.getSyslistEntryName(6350, val);
+			});
             renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
             renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(1410, val);

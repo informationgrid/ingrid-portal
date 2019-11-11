@@ -31,7 +31,7 @@ define([
     return declare(null, {
         
         title : "INSPIRE - priority data set",
-        description : "",
+        description : "Zeige das Feld für Geodatensätze und -dienste an.",
         defaultActive : true,
         category: "Felder",
         events: [],
