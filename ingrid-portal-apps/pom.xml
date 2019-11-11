@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.2.0.1236-SNAPSHOT</version>
+    <version>5.3.0.1236-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -19,7 +19,7 @@
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <measurement.client.version>1.0.3</measurement.client.version>
+    <measurement.client.version>1.0.4</measurement.client.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->

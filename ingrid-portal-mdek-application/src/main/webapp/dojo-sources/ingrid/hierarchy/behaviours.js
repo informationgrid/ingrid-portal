@@ -45,32 +45,111 @@ define(["dojo/_base/declare",
         "ingrid/utils/UI", 
         "ingrid/utils/List", 
         "ingrid/utils/Syslist",
+        "ingrid/hierarchy/behaviours/addresses",
         "ingrid/hierarchy/behaviours/opendata",
         "ingrid/hierarchy/behaviours/folders",
         "ingrid/hierarchy/behaviours/inspireRelevant/conformFields",
+        "ingrid/hierarchy/behaviours/inspireRelevant/dataformat",
+        "ingrid/hierarchy/behaviours/inspireRelevant/spatialSystems",
         "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
-        "ingrid/hierarchy/behaviours/inspireRelevant/inspireConformityConnection",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
+        "ingrid/hierarchy/behaviours/inspireRelevant",
+        "ingrid/hierarchy/behaviours/thesaurusInspire",
+        "ingrid/hierarchy/behaviours/thesaurusTopics",
+        "ingrid/hierarchy/behaviours/thesaurusEnvironment",
+        "ingrid/hierarchy/behaviours/ref1Representation",
+        "ingrid/hierarchy/behaviours/ref1SymbolsText",
+        "ingrid/hierarchy/behaviours/ref1KeysText",
+        "ingrid/hierarchy/behaviours/dataQualitySection",
+        "ingrid/hierarchy/behaviours/ref3BaseDataLink",
+        "ingrid/hierarchy/behaviours/ref3Operations",
+        "ingrid/hierarchy/behaviours/ref3CouplingType",
+        "ingrid/hierarchy/behaviours/ref5KeysText",
+        "ingrid/hierarchy/behaviours/serviceUrls",
+        "ingrid/hierarchy/behaviours/spatialRefAdminUnit",
+        "ingrid/hierarchy/behaviours/spatialRefLocation",
+        "ingrid/hierarchy/behaviours/spatialRefHeight",
         "ingrid/hierarchy/behaviours/spatialRepresentationInfo",
+        "ingrid/hierarchy/behaviours/timeRefTable",
+        "ingrid/hierarchy/behaviours/timeRefDate",
+        "ingrid/hierarchy/behaviours/timeRefIntervalUnit",
+        "ingrid/hierarchy/behaviours/extraInfoLangData",
+        "ingrid/hierarchy/behaviours/extraInfoCharSetData",
         "ingrid/hierarchy/behaviours/parentIdentifier",
-        "ingrid/hierarchy/behaviours/deleteNonEmptyFolders"
-], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message, dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
-            openData, foldersInHierarchy, conformityFields, inspireGeoservice, inspireIsoConnection, inspireEncodingConnection, inspireConformityConnection, advCompatible, adminitrativeArea, advProductGroup,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders) {
+        "ingrid/hierarchy/behaviours/deleteNonEmptyFolders",
+        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints"
+], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
+            dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
+            addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
+            inspireEncodingConnection,advCompatible, adminitrativeArea, advProductGroup, inspireRelevant, thesaurusInspire, thesaurusTopics,
+            thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, dataQualitySection,
+            ref3BaseDataLink, ref3Operations, ref3CouplingType, ref5KeysText,
+            serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
+            timeRefTable, timeRefDate, timeRefIntervalUnit,
+            extraInfoLangData, extraInfoCharSetData,
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints) {
 
     return declare(null, {
         
+        addresses : addresses,
+
         advCompatible : advCompatible,
 
         advProductGroup : advProductGroup,
-        
+
+        inspireRelevant : inspireRelevant,
+
+        thesaurusInspire : thesaurusInspire,
+
+        thesaurusTopics: thesaurusTopics,
+
+        thesaurusEnvironment: thesaurusEnvironment,
+
+        ref1Representation: ref1Representation,
+
+        ref1SymbolsText: ref1SymbolsText,
+
+        ref1KeysText: ref1KeysText,
+
+        dataQualitySection: dataQualitySection,
+
+        ref3BaseDataLink: ref3BaseDataLink,
+
+        ref3Operations: ref3Operations,
+
+        ref3CouplingType: ref3CouplingType,
+
+        ref5KeysText: ref5KeysText,
+
+        serviceUrls: serviceUrls,
+
+        spatialRefAdminUnit: spatialRefAdminUnit,
+
+        spatialRefLocation: spatialRefLocation,
+
+        spatialRefHeight: spatialRefHeight,
+
+        timeRefTable: timeRefTable,
+
+        timeRefDate: timeRefDate,
+
+        timeRefIntervalUnit: timeRefIntervalUnit,
+
+        extraInfoLangData: extraInfoLangData,
+
+        extraInfoCharSetData: extraInfoCharSetData,
+
         administrativeArea: adminitrativeArea,
         
         conformityFields: conformityFields,
+
+        dataformat: dataformat,
+
+        spatialSystems: spatialSystems,
 
         inspireGeoservice: inspireGeoservice,
         
@@ -78,11 +157,14 @@ define(["dojo/_base/declare",
 
         inspireEncodingConnection: inspireEncodingConnection,
 
-        inspireConformityConnection: inspireConformityConnection,
+        // Not needed anymore since specifications have been removed and cannot be mapped
+        // inspireConformityConnection: inspireConformityConnection,
 
         spatialRepresentationInfo: spatialRepresentationInfo,
 
         deleteNonEmptyFolders: deleteNonEmptyFolders,
+
+        accessContraintsField: accessConstraints,
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
@@ -102,11 +184,9 @@ define(["dojo/_base/declare",
         },
 
         requireUseConstraints: {
-            title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
-            title_en: "Use Constraints - Required on INSPIRE / Open Data",
-            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
-            description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
-            issue: "https://dev.informationgrid.eu/redmine/issues/223",
+            title: "Nutzungsbedingungen - Pflichtfeld für Geodatensatz und -dienst",
+            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die die Objektklasse 1 oder 3 ausgewählt wurde.",
+            issue: "https://dev.informationgrid.eu/redmine/issues/223,1362",
             defaultActive: true,
         	run: function() {
                 topic.subscribe("/onObjectClassChange", function(data) {
@@ -191,7 +271,7 @@ define(["dojo/_base/declare",
             description : "Wenn aktiviert, muss jeder Eintrag in der Tabelle \"Datenformat\" mind. einen Namen enthalten.",
             defaultActive : true,
             run : function() {
-                var subscription = topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
                         if (array.some(UtilGrid.getTableData("availabilityDataFormat"), function(dataFormat) {
                             return (typeof(dataFormat.name) == "undefined" ||
                             	dataFormat.name === null ||

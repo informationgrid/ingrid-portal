@@ -137,7 +137,7 @@ define(["dojo/_base/declare",
                 var docName = value;
 
                 var link = null;
-                if (value.indexOf("://") <= 5) {
+                if (UtilGeneral.isUrlAbsolute(value)) {
                     link = value;
                 } else {
                     // determine base url

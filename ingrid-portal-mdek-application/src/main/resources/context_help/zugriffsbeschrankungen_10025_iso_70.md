@@ -7,7 +7,7 @@ title: Zugriffsbeschränkungen
 
 # Zugriffsbeschränkungen
 
-Das Feld „Zugriffsbeschränkungen“ beschreibt, die Art der Zugriffsbeschränkung. Bei frei nutzbaren Daten bzw. Services soll der Eintrag „keine“ ausgewählt werden (ISO: accessConstraints).
+Das Feld „Zugriffsbeschränkungen“ beschreibt, die Art der Zugriffsbeschränkung entsprechend Artikel 13(1) der INSPIRE Richtlinie. Bei frei nutzbaren Daten bzw. Services soll der Eintrag „Es gelten keine Zugriffsbeschränkungen“ ausgewählt werden (ISO: accessConstraints).
 
 
 # ISO Abbildung

@@ -51,7 +51,7 @@
                                             #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
                                                 <div class="helper icon">
                                                     <span class="ic-ic-$uvp_category"></span>
-                                                    <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
+                                                    <span class="text">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
                                                 </div>
                                             #end
                                             <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
@@ -77,7 +77,7 @@
                                                     bounds = L.latLngBounds(southWest, northEast);
                                                 }
                                                 var map = addLeafletMapWithId('map-id-$hit.getHitDetail().getId()', getOSMLayer('<br>$MESSAGES.getString("common.map.info")'), bounds, new L.LatLng($UtilsSearch.getDetailValue( $hit.getHitDetail(), "lat_center" ), $UtilsSearch.getDetailValue( $hit.getHitDetail(), "lon_center" )), 10);
-                                                map.scrollWheelZoom.disable();
+                                                map.gestureHandling.enable();
                                                 addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
                                                 if(bounds) {
                                                     L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).addTo(map);

@@ -22,6 +22,8 @@ Requirements
 -------------
 
 - a running InGrid Software System
+- java 8
+- maven 3.5.x (The build does not work with mavane 3.6.x, see https://github.com/fhoeben/hsac-fitnesse-fixtures/issues/238 for a work around.)
 
 Installation
 ------------

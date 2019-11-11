@@ -150,7 +150,7 @@ define([
                 .then(igeEvents.selectUDKClass) // update view according to initial chosen class
                 .then(function() {
                     // add a '*' to all labels and display them if an element is required 
-                    query(".outer label", "contentFrameBodyObject").forEach(function(item) {
+                    query(".outer label:not(.forceOptional)", "contentFrameBodyObject").forEach(function(item) {
                         item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
                     });
                     
@@ -178,6 +178,7 @@ define([
 
             createInfoHeader: function() {
                 var objectName = new ValidationTextBox({
+                    required: true,
                     maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
@@ -1197,7 +1198,7 @@ define([
                     values: [],
                     editable: true,
                     listId: 5152,
-                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 5152)
                 }];
                 layoutCreator.createDataGrid("ref3ServiceVersion", null, ref3ServiceVersionStructure, null);
 
@@ -1987,6 +1988,22 @@ define([
                     values: [],
                     editable: true,
                     listId: 6010,
+                    sort: function(data) {
+                        var entry = array.filter(data, function(item) {
+                            return item[1] === "1";
+                        });
+                        if (entry.length === 0) {
+                            console.warn("No sorting of codelist 6010, since entry was not found: 1");
+                            return data;
+                        }
+
+                        var filtered = array.filter(data, function(item) {
+                            return item[1] !== "1";
+                        });
+
+                        filtered.unshift(entry[0]);
+                        return filtered;
+                    },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6010)
                 }];
                 layoutCreator.createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
@@ -2000,6 +2017,20 @@ define([
                     values: [],
                     editable: true,
                     listId: 6500,
+                    sort: function(data) {
+                        var entry = array.filter(data, function(item) {
+                            return item[1] === "26";
+                        });
+                        if (entry.length === 0) {
+                            console.warn("No sorting of codelist 6500, since entry was not found: 26");
+                            return data;
+                        }
+                        var filtered = array.filter(data, function(item) {
+                            return item[1] != "26";
+                        });
+                        filtered.unshift(entry[0]);
+                        return filtered;
+                    },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
                 }, {
                     field: 'source',

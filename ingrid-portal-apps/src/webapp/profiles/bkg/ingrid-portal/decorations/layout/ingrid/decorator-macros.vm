@@ -68,11 +68,7 @@
         #end
         
         <li class="nav-desktop__item">
-            #if($elemSelected)
-                <span class="nav-desktop__title #if($elemSelected)is-selected#end">$tabName</a>
-            #else
-                <a class="nav-desktop__title #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">$tabName</a>
-            #end
+            <a class="nav-desktop__title #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">$tabName</a>
         </li>
       #end
     #end

@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,35 +21,28 @@
  * **************************************************#
  */
 define([
+    "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/on",
     "dojo/dom-class",
-    "dijit/registry",
-    "ingrid/widgets/MultiInputInfoField"
-], function(declare, on, domClass, registry, MultiInputInfoField) {
+    "dijit/registry"
+], function(array, declare, on, domClass, registry) {
 
-    // issue: 556
+    // issue: 1529
     return declare(null, {
         title: "Zugriffsbeschränkungen",
-        description: "Fügt ein neues Feld zur Eingabe von BKG spezifischen Zugriffsbeschränkungen hinzu.",
+        description: "Wird nur zum Pflichtfeld, wenn INSPIRE-relevant.",
         defaultActive: true,
-        category: "BKG",
         run: function() {
-            var rubric = "availabilityContent";
+            var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
-            // make old access constraints full width
-            domClass.remove("uiElementN025", "halfWidth");
-            registry.byId("availabilityAccessConstraints").reinitLastColumn(true);
-
-            var multiInputInfoFieldWidget = new MultiInputInfoField({
-                id: "bkg_accessConstraints",
-                label: "Zugriffsbeschränkungen",
-                codelist: 10001,
-                codelistForText: 10002
-            }).placeAt(rubric, "first");
-
-            var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
-            additionalFields.push(multiInputInfoFieldWidget);
+            on(inspireRelevantWidget, "Change", function(isChecked) {
+                if (isChecked) {
+                    domClass.add("uiElementN025", "required");
+                } else {
+                    domClass.remove("uiElementN025", "required");
+                }
+            });
         }
     })();
 });

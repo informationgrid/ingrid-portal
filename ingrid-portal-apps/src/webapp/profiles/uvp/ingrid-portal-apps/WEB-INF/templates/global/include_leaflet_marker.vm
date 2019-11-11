@@ -622,7 +622,7 @@
                 if(categoryList.indexOf(value) === -1){
                     popUpHtml += '<div class="helper icon">';
                     popUpHtml += '<span class="ic-ic-' + id + '"></span>';
-                    popUpHtml += '<span>' + value + '</span>';
+                    popUpHtml += '<span class="text">' + value + '</span>';
                     popUpHtml += '</div>';
                     categoryList.push(value);
                 }

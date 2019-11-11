@@ -21,13 +21,15 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro (addErrorFormMessage $field, $param)
 #if($param)
   #if ($actionForm.hasErrorInField($field))
-    <small class="bx-top-xs">
-      $MESSAGES.setMsgParam("$param")
-      $MESSAGES.getStringWithMsgParams($actionForm.getErrorInField($field))
-    </small>
+    <p>
+        <small>
+          $MESSAGES.setMsgParam("$param")
+          $MESSAGES.getStringWithMsgParams($actionForm.getErrorInField($field))
+        </small>
+    </p>
   #end
 #else
-  #if ($actionForm.hasErrorInField($field))<small class="bx-top-xs">$MESSAGES.getString($actionForm.getErrorInField($field))</small>#end
+  #if ($actionForm.hasErrorInField($field))<p><small>$MESSAGES.getString($actionForm.getErrorInField($field))</small></p>#end
 #end
 #end
 
@@ -329,7 +331,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     #if($info)
         <div class="helper icon">
             <span class="ic-ic-info"></span>
-            <span class="">$info</span>
+            <span class="text">$info</span>
         </div>
     #end
     </div>
@@ -412,7 +414,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro (renderMessageError $_message)
     <div class="row alert">
         <div class="columns">
-            <p class="error no-margin">
+            <p class="error">
                 <span class="alert-text">$_message</span>
             </p>
         </div>
@@ -422,7 +424,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro (renderMessageSuccess $_message)
     <div class="row alert">
         <div class="columns">
-            <p class="success no-margin">
+            <p class="success">
                 <span class="alert-text">$_message</span>
             </p>
         </div>

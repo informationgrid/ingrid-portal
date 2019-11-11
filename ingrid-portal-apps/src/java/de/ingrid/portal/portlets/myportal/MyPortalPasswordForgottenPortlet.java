@@ -231,7 +231,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                     }
                 }
         
-                if (!localizedTemplatePath.isEmpty()) {
+                if (localizedTemplatePath.isEmpty()) {
                     log.error("email template not available");
                     actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
                     return;
@@ -248,7 +248,9 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                 } else {
                     actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
                 }
-        
+                if(!login.isEmpty()) {
+                    f.clearInput(PasswordForgottenForm.FIELD_LOGIN);
+                }
             } catch (Exception e) {
                 log.error("error sending new password.", e);
                 actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);

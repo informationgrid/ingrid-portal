@@ -1085,6 +1085,7 @@ define({
         "validation.encoding.added": "The encoding scheme '${0}' was changed as well.",
         "validation.spatial.system.inspire.missing": "There must be at least one INSPIRE-spatial reference chosen.",
         "validation.previewImage.table.missingUrl": "A file name must be defined for each entry",
+        "validation.dataformat.missing.gml": "There must be at least one 'GML' entry with a version",
 
         "init.error.userNotFound": "The user could not be found in the catalog. Please check the mdek-database and the used catalog.",
 
@@ -1093,6 +1094,8 @@ define({
         "hint.noEntriesFromParent": "No new entries from parent object!",
         "hint.addressFromParentAdded": "Addressdata written from parent address!",
         "hint.selectOpenData": "If this choice is selected, all access constraints will be removed and replaced by 'none'. Do you want to continue?",
+        "hint.inspireConformity": "Attention: Degree of conformity of the specification will be changed.",
+        "hint.advProductGroupCleared": "The AdV-Product Group has been cleared automatically.",
 
         "warning.address.inherit": "Do you really want to replace your data with the one from the parent address? The following fields will be replaced: <ul><li>Street</li><li>Post code</li><li>City</li><li>P.O. Box</li><li>Post code (POB)</li><li>Administrative Area</li><li>Country</li></ul>",
         "warning.address.inherit.to.children": "Shall the address data from '${0}' be copied to all sub-addresses?",

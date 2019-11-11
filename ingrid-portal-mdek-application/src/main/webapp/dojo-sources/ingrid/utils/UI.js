@@ -246,17 +246,6 @@ define([
             // we can show tooltip
             pos.h += 50;
             wnd.scrollIntoView( id, pos );
-            if (message)
-                this.showToolTip( id, message );
-            else {
-                message = registry.byId( id ).invalidMessage;
-                if (message && message !== "$_unset_$") {
-                    this.showToolTip( id, message );
-                } else {
-                    this.showToolTip( id, "Error" );
-                }
-            }
-
         },
 
         changeLabel: function(uiElementId, text) {

@@ -5,8 +5,12 @@ html { overflow-y: scroll; }
 
 html, body { height:100%; }
 
-.body {
-  padding-bottom: 160px;
+.body > div:last-child {
+  padding-bottom: 10rem;
+}
+
+.body > div.about, .body > div.detail {
+  padding-bottom: 6rem;
 }
 
 :focus { outline: none; }
@@ -113,6 +117,12 @@ img { width: 100%; }
   span:first-child {
     font-size: 14px;
     margin-right: 5px;
+    float: left;
+  }
+  span.text {
+    position: relative;
+    display: block;
+    margin-left: 28px;
   }
 }
 .helper.icon.check .ic-ic-check {
@@ -264,7 +274,8 @@ img { width: 100%; }
   color: $green-jelly;
   text-transform: none;
   background-color: $blue-sky;
-  padding: 8px 8px 8px 16px;
+  padding: 8px 36px 8px 16px;
+  position: relative;
 
   .ic-ic-cross { font-size: 12px; }
 }
@@ -272,6 +283,16 @@ img { width: 100%; }
   span { color: $green-blue; }
 }
 .button.pill[type="reset"] { background-color: $white; }
+
+.button.pill.pill-del:after {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  content: '\e90c';
+  font-family: 'icomoon';
+  font-size: 12px;
+  margin-top: -0.275rem;
+}
 
 /* links */
 a.icon {
@@ -580,6 +601,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
   background: $blue-midnight;
 }
 .tabs-panel { padding: 36px 0; }
+.tabs-panel.midnight { padding: 72px 0; }
 
 /* form elements */
 .form-element {
@@ -744,6 +766,7 @@ header {
       position: absolute;
       top: 14px;
       left: 8px;
+      right: 0px;
     }
   }
   .nav-tabs { text-align: right; }
@@ -1117,11 +1140,15 @@ header {
   -webkit-transition: box-shadow .5s; /* Safari */
   transition: box-shadow .5s;
 
-  .text-wrapper { padding: 24px 24px 40px; }
+  .text-wrapper {
+    padding: 24px 24px 40px;
+    position: relative;
+   }
   .helper.text, .header { margin-bottom: 24px; }
   .helper.icon {
     font-size: 18px;
     line-height: 20px;
+    max-width: 85%;
    
     span:first-child {
         font-size: 20px;
@@ -1130,20 +1157,22 @@ header {
   .helper.text.date {
     font-size: 14px;
     font-weight: normal;
-    margin-top: -24px;
+    margin-top: -20px;
   }
   .header {
     color: $green-jelly;
     overflow: hidden;
   }
   .data-text {
-    height: 82px;
     overflow: hidden;
   }
   .helper, p { color: $blue-prov; }
   .arrow {
     font-size: 33px;
     float: right;
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
   }
   .header, .arrow {
     -webkit-transition: color .5s; /* Safari */
@@ -1166,13 +1195,20 @@ a.data:hover {
 .teaser-data.search {
   position: relative;
   height: auto;
-  padding: 24px;
+  padding: 16px;
   margin-bottom: 24px;
+  min-height: auto;
 
   .arrow {
     position: absolute;
-    right: 40px;
-    bottom: 40px;
+    right: 16px;
+    bottom: 16px;
+  }
+  
+  ul {
+    margin-left: 0;
+  
+    li:before { content: none }
   }
 }
 
@@ -1330,6 +1366,9 @@ footer {
 }
 
 /* timeline */
+#timeline .columns {
+  padding-bottom: 0px;
+}
 .timeline {
 
   h1 { margin-left: 3rem; }
@@ -1345,6 +1384,7 @@ footer {
     display: inline-block;
     vertical-align: top;
     width: 82%;
+    padding-bottom: 3rem;
 
     h4 span {
       color: $blue-light;
@@ -1479,6 +1519,9 @@ footer {
     text-transform: uppercase;
   }
 }
+.map-filter-xs {
+  padding-top: 8px;
+}
 
 /* map */
 .map-ingrid {
@@ -1541,6 +1584,9 @@ footer {
     font-size: 14px;
     line-height: 20px;
     margin: 0 0 16px 0;
+  }
+  .helper.icon span.text {
+    margin-left: 20px;
   }
 }
 .leaflet-popup-tip-container {

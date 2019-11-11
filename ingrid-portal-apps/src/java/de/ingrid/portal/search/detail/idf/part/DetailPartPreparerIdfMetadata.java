@@ -1088,7 +1088,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     public List getNodeListValueReferenceSystem(String xpathExpression) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Map> list = new ArrayList<>();
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength(); i++){
@@ -1117,8 +1117,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     value = code;
                 }
                 
-                if(value.length() > 0){
-                    list.add(value);
+                if (value.length() > 0) {
+                    Map link = new HashMap();
+                    link.put("title", value);
+                    link.put("hasLinkIcon", true);
+
+                    if (value.startsWith("EPSG")) {
+                        int endIndex = value.indexOf(':', 5);
+                        String epsgCode = value.substring(5, endIndex == -1 ? value.length() : endIndex);
+
+                        link.put("isExtern", true);
+                        link.put("href", "https://epsg.io/" + epsgCode);
+                    } else {
+                        link.put("noLink", true);
+                    }
+                    list.add(link);
                 }
             }
         }
