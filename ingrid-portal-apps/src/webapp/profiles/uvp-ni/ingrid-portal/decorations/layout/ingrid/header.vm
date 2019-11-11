@@ -76,7 +76,7 @@
                 <div class="columns xsmall-2 small-2 medium-2 large-1 xlarge-1 switch">
                     <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                 </div>
-                <div class="columns xsmall-10 small-7 medium-11 large-7 xlarge-7">
+                <div class="columns xsmall-10 small-7 medium-11 large-8 xlarge-7">
                     <div class="logo">
                         <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"></a>
                         <a href="/startseite" class="show-for-medium"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"></a>

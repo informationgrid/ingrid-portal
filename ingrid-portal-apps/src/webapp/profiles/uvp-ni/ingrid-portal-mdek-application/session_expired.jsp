@@ -73,8 +73,8 @@
             <div class="body">
                 <div class="banner subpage">
                     <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
-                        <div class="row content-small">
-                            <div class="columns dark">
+                        <div class="row align-center">
+                            <div class="large-20 columns dark">
                                 <h1><fmt:message key="ui.entry.session.expired" /></h1>
                             </div>
                         </div>
@@ -123,15 +123,13 @@
                     <div class="list-item">
                       <a class="switch-link uvp">
                         <span class="ic-ic-check"></span>
-                        <img class="hide-for-large" src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP">
-                        <img class="show-for-large" src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP">
+                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP">
                       </a>
                     </div>
                     <div class="list-item">
                       <a class="switch-link numis" href="https://numis.niedersachsen.de">
                         <span class=""></span>
-                        <img class="hide-for-large" src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS">
-                        <img class="show-for-large" src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS">
+                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS">
                       </a>
                     </div>
                 </div>
