@@ -35,7 +35,7 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="shortcut icon" href="#" />
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
