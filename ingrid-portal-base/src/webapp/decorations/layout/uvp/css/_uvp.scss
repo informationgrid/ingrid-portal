@@ -903,7 +903,7 @@ header {
   display: inline-block;
   width: 100%;
   // max-width: 250px;
-  height: 226px;
+  height: 250px;
   text-align: center;
   background-color: $white;
   border-radius: 8px;
@@ -927,7 +927,7 @@ header {
     top: 0px;
     left: 0;
     display: block;
-    max-height: 220px;
+    height: 100%;
     overflow: hidden;
     font-family: 'Roboto-Medium';
     font-size: 15px;
@@ -1038,6 +1038,10 @@ header {
       padding: 3px 12px;
       border-radius: 50px;
       margin: 5px auto 0;
+      position: absolute;
+      bottom: 1.25em;
+      left: 0;
+      right: 0;
     }
   }
 }
