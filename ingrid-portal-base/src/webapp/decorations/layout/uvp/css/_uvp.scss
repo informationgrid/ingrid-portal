@@ -750,6 +750,7 @@ header {
     }
   }
   .logo {
+    width: 14.5em;
     position: relative;
     a {
       position: absolute;
@@ -892,7 +893,7 @@ header {
   display: inline-block;
   width: 100%;
   // max-width: 250px;
-  height: 250px;
+  height: 240px;
   text-align: center;
   background-color: $white;
   border-radius: 8px;
