@@ -81,7 +81,8 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/extraInfoCharSetData",
         "ingrid/hierarchy/behaviours/parentIdentifier",
         "ingrid/hierarchy/behaviours/deleteNonEmptyFolders",
-        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints"
+        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints",
+        "ingrid/hierarchy/behaviours/priorityDataset"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
@@ -91,7 +92,7 @@ define(["dojo/_base/declare",
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
             extraInfoLangData, extraInfoCharSetData,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset) {
 
     return declare(null, {
         
@@ -165,6 +166,8 @@ define(["dojo/_base/declare",
         deleteNonEmptyFolders: deleteNonEmptyFolders,
 
         accessContraintsField: accessConstraints,
+
+        priorityDataset: priorityDataset,
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,

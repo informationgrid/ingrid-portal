@@ -250,6 +250,8 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)));
             mdekObj.setOpenData(isOpenData);
             mdekObj.setOpenDataCategories(mapToCategoriesOpenDataTable((List<IngridDocument>) obj.get(MdekKeys.OPEN_DATA_CATEGORY_LIST)));
+
+            mdekObj.setPriorityDataset(mapToPriorityDatasetTable((List<IngridDocument>) obj.get(MdekKeys.PRIORITY_DATASET_LIST)));
             
             IngridDocument td1Map = (IngridDocument) obj.get(MdekKeys.TECHNICAL_DOMAIN_MAP);
             if (td1Map == null)
@@ -326,6 +328,8 @@ public class MdekMapper implements DataMapperInterface {
             if (td3Map == null)
                 break;
 
+            mdekObj.setPriorityDataset(mapToPriorityDatasetTable((List<IngridDocument>) obj.get(MdekKeys.PRIORITY_DATASET_LIST)));
+
             Integer serviceType = (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY);
             mdekObj.setRef3ServiceType(serviceType);
             mdekObj.setRef3AtomDownload("Y".equals(td3Map.get(MdekKeys.HAS_ATOM_DOWNLOAD)));
@@ -392,7 +396,7 @@ public class MdekMapper implements DataMapperInterface {
 
         return mdekObj;
     }
-    
+
     @SuppressWarnings("unchecked")
     public MdekAddressBean getDetailedAddressRepresentation(IngridDocument adr) {
         if (adr == null) {
@@ -890,6 +894,8 @@ public class MdekMapper implements DataMapperInterface {
 
             udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire()));
 
+            udkObj.put(MdekKeys.PRIORITY_DATASET_LIST, mapFromPriorityDataset(data.getPriorityDataset()));
+
             IngridDocument td1Map = new IngridDocument();
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
@@ -965,6 +971,8 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.IS_INSPIRE_CONFORM, isInspireConformValue);
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
+
+            udkObj.put(MdekKeys.PRIORITY_DATASET_LIST, mapFromPriorityDataset(data.getPriorityDataset()));
             
             td3Map.put(MdekKeys.SERVICE_TYPE2_LIST, mapFromServiceTypeTable(data.getRef3ServiceTypeTable()));
             td3Map.put(MdekKeys.SYSTEM_ENVIRONMENT, data.getRef3SystemEnv());
@@ -1513,6 +1521,19 @@ public class MdekMapper implements DataMapperInterface {
                 IngridDocument res = new IngridDocument();
                 res.put(MdekKeys.ADV_PRODUCT_KEY, identifier);
                 
+                resultList.add(res);
+            }
+        }
+        return resultList;
+    }
+
+    private List<IngridDocument> mapFromPriorityDataset(List<Integer> priorityDatasetList) {
+        List<IngridDocument> resultList = new ArrayList<>();
+        if (priorityDatasetList != null) {
+            for (Integer identifier : priorityDatasetList) {
+                IngridDocument res = new IngridDocument();
+                res.put(MdekKeys.PRIORITY_DATASET_KEY, identifier);
+
                 resultList.add(res);
             }
         }
@@ -2100,6 +2121,18 @@ public class MdekMapper implements DataMapperInterface {
             }
         }
         
+        return resultList;
+    }
+
+    private List<Integer> mapToPriorityDatasetTable(List<IngridDocument> docList) {
+        List<Integer> resultList = new ArrayList<>();
+
+        if (docList != null) {
+            for (IngridDocument topic : docList) {
+                resultList.add((Integer) topic.get(MdekKeys.PRIORITY_DATASET_KEY));
+            }
+        }
+
         return resultList;
     }
 
