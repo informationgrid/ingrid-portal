@@ -1,6 +1,5 @@
 <div class="columns">
     <h3>$MESSAGES.getString('news.archive.header')</h3>
-    <div class="row">
     #foreach($rssEntry in $rssEntries)
         <div class="teaser-data">
             <div class="text-wrapper">
@@ -28,7 +27,6 @@
             </div>
         </div>
     #end
-    </div>
     <a class="icon" href="$renderResponse.encodeURL('/portal/default-page.psml')">
         <span class="ic-ic-arrow-left"></span>
         <span class="text">$MESSAGES.getString('news.archive.back')</span>

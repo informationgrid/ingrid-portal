@@ -7,7 +7,7 @@
         </div>
         <div class="row">
         #foreach($rssEntry in $rssEntries)
-            <div class="xsmall-24 small-12 medium-8 large-6 xlarge-12 columns">
+            <div class="xsmall-24 small-24 medium-12 large-12 xlarge-12 columns">
                 <div class="teaser-data">
                     <div class="text-wrapper">
                         <small class="bx-bot-0">
