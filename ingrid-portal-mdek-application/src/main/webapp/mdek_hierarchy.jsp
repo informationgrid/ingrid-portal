@@ -427,7 +427,7 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
-                                <span id="uiElement5090" class="outer halfWidth optional">
+                                <span id="uiElement5090" class="outer optional">
                                     <div>
                                         <span class="label">
                                             <label for="priorityDataset" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5065);" >
@@ -435,7 +435,7 @@
                                             </label>
                                         </span>
                                         <div class="input tableContainer">
-                                            <div id="priorityDataset" autoHeight="2" interactive="true" class="hideTableHeader">
+                                            <div id="priorityDataset" autoHeight="4" interactive="true" class="hideTableHeader">
                                             </div>
                                         </div>
                                     </div>

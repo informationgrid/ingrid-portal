@@ -52,7 +52,10 @@ define([
 
             // when registering the event handler then the change might already has happened
             // so that we have to set here manually
-            if (inspireRelevantWidget.checked) UtilUI.setShow("uiElement5090");
+            if (inspireRelevantWidget.checked) {
+                UtilUI.setShow("uiElement5090");
+                registry.byId("priorityDataset").reinitLastColumn();
+            }
 
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
