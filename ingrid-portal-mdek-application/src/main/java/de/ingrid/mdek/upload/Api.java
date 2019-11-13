@@ -288,7 +288,7 @@ public class Api {
      */
     private Response createUploadResponse(final StorageItem[] files) throws Exception {
         // get first URI for location header
-        final String createdFile = files.length > 0 ? files[0].getUri() : "";
+        final String createdFile = files.length > 0 ? files[0].getUri(true) : "";
 
         // build response
         final UploadResponse uploadResponse = new UploadResponse(Arrays.asList(files));

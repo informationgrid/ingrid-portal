@@ -155,7 +155,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                     if (fileItems.length > 0) {
                          // initialize file maps
                         for (final StorageItem item : fileItems) {
-                            final String uri = item.getUri();
+                            final String uri = item.getUri(false);
                             allFiles.put(uri, item);
 
                             // put all files in the unreferenced map first
