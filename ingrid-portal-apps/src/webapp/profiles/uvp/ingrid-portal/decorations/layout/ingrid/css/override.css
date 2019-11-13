@@ -232,18 +232,6 @@
 }
 
 @media screen and (max-height: 34.9375em) and (max-width: 63.9375em) and (orientation: landscape) {
-  header .logo {
-    width: 14.5em;
-  }
-  header .logo a {
-    top: 14px;
-  }
-  .show-for-small-header {
-    display: block !important;
-  }
-  .hide-for-small-header {
-    display: none !important;
-  }
   #legend-accordion-label-landscape {
       display: block !important;
   }
@@ -267,36 +255,6 @@
   }
   .leaflet-popup-content {
       min-width: 400px;
-  }
-  header {
-    height: 80px;
-  }
-  header .menu-tab-row .menu-tab {
-    height: 76px;
-    width: 66px;
-    font-size: 14px;
-  }
-  header .menu-tab-row .menu-tab .link-menu-tab {
-    top: 32px;
-    padding: 8px 0;
-  }
-  header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
-    font-size: 22px;
-    top: -18px;
-    left: 22px;
-  }
-  header .logo .hide-for-large {
-    top: 14px;
-  }
-  .header-menu-open {
-    text-align: right;
-    right: 12px;
-  }
-  .header-menu-open button {
-    margin: 13px 0 0 0;
-  }
-  .header-menu-open .login {
-    display: none;
   }
   .leaflet-popup-content a h5, .leaflet-popup-content .helper.icon{
     white-space: nowrap;
