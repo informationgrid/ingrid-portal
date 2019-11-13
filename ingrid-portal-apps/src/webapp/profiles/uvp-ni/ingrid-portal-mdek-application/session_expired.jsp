@@ -49,16 +49,17 @@
         <div class="container">
             <header>
                 <div class="row">
-                    <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
+                    <div class="columns small-7 medium-13 large-9 xlarge-8">
                         <div class="logo">
                             <div class="switch">
                                <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"/></a>
-                            <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="UVP"/></a>
                         </div>
                     </div>
-                    <div class="columns xsmall-10 small-15 medium-9 large-7 xlarge-6 nav-tabs">
+                    <div class="columns xsmall-16 small-15 medium-9 large-7 xlarge-6 nav-tabs">
                         <div class="menu-tab-row">
                             <a class="menu-tab is-selected" href="/log-in" title="Login">
                                 <div class="link-menu-tab">
