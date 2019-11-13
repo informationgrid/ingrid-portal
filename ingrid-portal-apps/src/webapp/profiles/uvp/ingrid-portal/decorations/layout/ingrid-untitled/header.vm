@@ -72,13 +72,14 @@
         #end
         <header>
             <div class="row">
-                <div class="columns xsmall-10 small-7 medium-9 large-7 xlarge-6">
+                <div class="columns small-7 medium-9 large-7 xlarge-6">
                     <div class="logo">
-                        <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"></a>
-                        <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-mit-tag.svg" alt="UVP"></a>
+                        <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"/></a>
+                        <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-mit-tag.svg" alt="UVP"/></a>
+                        <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="UVP"/></a>
                     </div>
                 </div>
-                <div class="columns xsmall-10 small-15 medium-9 large-7 xlarge-6 nav-tabs hide-for-print">
+                <div class="columns xsmall-16 small-15 medium-9 large-7 xlarge-6 nav-tabs hide-for-print">
                 #if(!$mainMenu.empty)
                     #includeMainNavigation($mainMenu)
                 #end
