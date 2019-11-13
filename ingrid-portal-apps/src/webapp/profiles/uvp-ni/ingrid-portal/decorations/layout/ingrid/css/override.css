@@ -30,7 +30,7 @@
 
 @media print, screen and (min-width: 35em) {
   header .logo a {
-    top: 40px;
+    top: 36px;
   }
 }
 
@@ -265,6 +265,9 @@
   header {
     height: 80px;
   }
+  header .logo {
+    height: 80px !important;
+  }
   header .menu-tab-row .menu-tab {
     height: 76px;
     width: 120px;
@@ -283,20 +286,10 @@
     top: 14px;
   }
   header .logo .hide-for-medium {
-    top: 12px !important;
+    top: 14px !important;
   }
   header .logo .show-for-medium {
-    top: 12px !important;
-  }
-  .switch {
-    top: 30px !important;
-  }
-  .header-menu-open {
-    text-align: right;
-    right: 0;
-  }
-  .header-menu-open button {
-    margin: 13px 0 0 0;
+    top: 14px !important;
   }
   .header-menu-open .login {
     display: none;
@@ -392,16 +385,6 @@ header {
 }
 .header-menu a.is-active {
   background-color: #256394;
-}
-.header-menu-open {
-  position: relative;
-}
-.header-menu-open .login {
-  position: absolute;
-  right: 0;
-}
-.header-menu-close {
-  text-align: left;
 }
 .header-menu-close .button {
   background-color: #1D4B7B;
@@ -740,9 +723,12 @@ footer hr {
   margin: 0 0 16px;
 }
 .switch {
-  position: relative;
-  top: 30px;
-  margin: 0 10px;
+  position: absolute;
+  bottom: 0;
+  top: 0px;
+  margin-top: auto;
+  margin-bottom: auto;
+  left: 0.44444rem;
 }
 .switch .ic-ic-angle-down {
   font-size: 16px;
@@ -751,6 +737,7 @@ footer hr {
   border-radius: 32px;
   padding: 12px;
   border: 1px solid #C6CFE2;
+  position: absolute;
 }
 .switch-popup {
   left: 0;
@@ -810,31 +797,25 @@ footer hr {
   color: #0089C6;
 }
 header .logo {
-  width: 9.5em;
+  width: 13.125em;
+  height: 80px;
+}
+header .logo a {
+  left: 70px;
 }
 @media print, screen and (min-width: 35em) {
-  .header-menu-open button {
-    margin: 0;
-    position: absolute;
-    right: 0;
-    top: 48px;
-  }
-  .switch {
-    top: 56px;
-    margin: 0 10px 0 0;
-  }
   .header-menu-open button.xsmall-button {
     margin: 25px 0 0 0;
     position: relative;
     top: 0;
   }
-  .header-menu-open {
-    right: 0;
+  header .logo {
+    height: 120px;
   }
 }
 @media print, screen and (min-width: 48em) {
   header .logo {
-    width: 18.925em
+    width: 22.625em;
   }
   footer .footer .copyright p {
     width: 300px;
@@ -877,9 +858,6 @@ header .logo {
   header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
     left: 22px;
   }
-  .header-menu-open {
-    left: 12px;
-  }
   .banner.home .home-wrapper {
     background-size: cover;
   }
@@ -902,10 +880,5 @@ header .logo {
   }
   .banner.home .home-wrapper h1 .ic-ic-asterisc {
     font-size: 29px;
-  }
-}
-@media screen and (min-width: 1800px) {
-  .header-menu-close {
-    padding: 48px 12px 0 34px;
   }
 }
