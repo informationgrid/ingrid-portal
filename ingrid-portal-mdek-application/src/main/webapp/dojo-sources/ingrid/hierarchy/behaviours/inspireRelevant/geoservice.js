@@ -75,7 +75,7 @@ define([
 
                     }, function () {
                         // reset checkbox state
-                        checkboxContext.set("checked", false);
+                        checkboxContext.set("checked", !checkboxContext.checked);
                     });
                 }),
 
