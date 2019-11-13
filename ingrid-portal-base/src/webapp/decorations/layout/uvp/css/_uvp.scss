@@ -686,6 +686,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
   transition: transform .2s;
   z-index: 5;
   width: 30rem;
+  display: none;
   .headline {
     position: relative;
     background-color: $green-jelly;
@@ -714,6 +715,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
   -ms-transform: translateY(0);
   transform: translateY(0);
   z-index: 999999;
+  display: block;
 }
 
 .js-popup {
