@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,8 +24,9 @@ package de.ingrid.mdek.upload.storage.impl;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -38,6 +39,9 @@ import de.ingrid.mdek.upload.storage.StorageItem;
  * FileSystemItem represents an item in the server file system
  */
 public class FileSystemItem implements StorageItem {
+
+    // separator used in URI paths
+    public static final String URI_PATH_SEPARATOR = "/";
 
     private Storage storage;
     private String path;
@@ -64,8 +68,8 @@ public class FileSystemItem implements StorageItem {
      * @param isArchived
      * @param realPath
      */
-    public FileSystemItem(Storage storage, String path, String file, String type, long size,
-            LocalDateTime lastModifiedTime, boolean isArchived, Path realPath) {
+    public FileSystemItem(final Storage storage, final String path, final String file, final String type, final long size,
+            final LocalDateTime lastModifiedTime, final boolean isArchived, final Path realPath) {
         this.storage = storage;
         this.path = path;
         this.file = file;
@@ -87,20 +91,25 @@ public class FileSystemItem implements StorageItem {
     }
 
     @Override
-    public String getUri() {
-        String uri = Paths.get(this.path, this.file).toString();
-        try {
-            uri = URLEncoder.encode(uri, "UTF-8")
-                    .replaceAll("\\+", "%20")
-                    .replaceAll("\\%21", "!")
-                    .replaceAll("\\%27", "'")
-                    .replaceAll("\\%28", "(")
-                    .replaceAll("\\%29", ")")
-                    .replaceAll("\\%7E", "~")
-                    .replaceAll("\\%2F", "/")
-                    .replaceAll("\\%5C", "/");
+    public String getUri(final boolean urlencode) {
+        final FileSystem fileSystem = FileSystems.getDefault();
+        final String separator = fileSystem.getSeparator();
+
+        String uri = fileSystem.getPath(this.path, this.file).toString().replace(separator, URI_PATH_SEPARATOR);
+        if (urlencode) {
+            try {
+                uri = URLEncoder.encode(uri, "UTF-8")
+                        .replaceAll("\\+", "%20")
+                        .replaceAll("\\%21", "!")
+                        .replaceAll("\\%27", "'")
+                        .replaceAll("\\%28", "(")
+                        .replaceAll("\\%29", ")")
+                        .replaceAll("\\%7E", "~")
+                        .replaceAll("\\%2F", "/")
+                        .replaceAll("\\%5C", "/");
+            }
+            catch (final UnsupportedEncodingException e) {}
         }
-        catch (UnsupportedEncodingException e) {}
         return uri;
     }
 
@@ -127,9 +136,9 @@ public class FileSystemItem implements StorageItem {
     @Override
     public String getNextName() {
         if (this.storage.exists(this.path, this.file)) {
-            List<String> parts = new LinkedList<>(Arrays.asList(this.file.split("\\.")));
-            String extension = parts.size() > 1 ? parts.remove(parts.size()-1) : "";
-            String filename = String.join(".", parts);
+            final List<String> parts = new LinkedList<>(Arrays.asList(this.file.split("\\.")));
+            final String extension = parts.size() > 1 ? parts.remove(parts.size()-1) : "";
+            final String filename = String.join(".", parts);
             String tmpFile = this.file;
             int i = 0;
             while (this.storage.exists(this.path, tmpFile)) {
