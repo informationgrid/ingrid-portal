@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.1.3-SNAPSHOT" date="2019-xx-xx" description="Release 5.1.3">
+          <action type="fix" dev="wemove" issue="1555">
+            UVP: Verbesserung der Handhabung von Leerzeichen und Sonderzeichen in Dokumentennamen.
+          </action>
+        </release>
+
         <release version="5.1.2" date="2019-11-06" description="Release 5.1.2">
           <action type="update" dev="wemove" issue="1553">
             IGE: Verlinkung von hochgeladenen Dokumenten im Editor funktioniert nicht.
