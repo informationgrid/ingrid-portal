@@ -162,6 +162,9 @@ public class ImportServiceImpl {
             case XML:
                 
             	IngridDocument result = analyzeXMLData( importDataStream, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+            	if (result.get("error") != null) {
+                    throw new IllegalArgumentException("Error analyzing input file: " + result.getString("error"));
+                }
             	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
                 break;
 
@@ -177,6 +180,7 @@ public class ImportServiceImpl {
             throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(ex));
         } catch (Exception ex) {
             log.error("Error creating input data.", ex);
+            throw new RuntimeException(ex);
         } finally {
             protocolBean.setProtocol( allProtocols );
             protocolBean.setImportData(importData);
