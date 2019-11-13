@@ -73,16 +73,16 @@
         #end
         <header>
             <div class="row">
-                <div class="columns xsmall-2 small-2 medium-2 large-1 xlarge-1 switch">
-                    <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
-                </div>
-                <div class="columns xsmall-10 small-7 medium-11 large-8 xlarge-7">
+                <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
                     <div class="logo">
-                        <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"></a>
-                        <a href="/startseite" class="show-for-medium"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"></a>
+                        <div class="switch">
+                            <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
+                        </div>
+                        <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"/></a>
+                        <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"/></a>
                     </div>
                 </div>
-                <div class="columns xsmall-8 small-12 medium-9 large-7 xlarge-6 nav-tabs">
+                <div class="columns xsmall-10 small-15 medium-9 large-7 xlarge-6 nav-tabs">
                 #if(!$mainMenu.empty)
                     #includeMainNavigation($mainMenu)
                 #end

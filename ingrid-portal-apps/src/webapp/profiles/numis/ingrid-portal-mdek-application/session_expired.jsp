@@ -80,18 +80,18 @@
             </div>
             <header>
                 <div class="row">
-                    <div class="columns xsmall-2 small-2 medium-2 large-1 xlarge-1 switch">
-                        <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
-                    </div>
-                    <div class="columns xsmall-12 small-10 medium-12 large-11 xlarge-8">
+                    <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
                         <div class="logo">
-                            <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"></a>
-                            <a href="/startseite" class="show-for-medium"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"></a>
+                            <div class="switch">
+                                <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
+                            </div>
+                            <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
                         </div>
                     </div>
                     <div class="columns button-up show-for-xlarge">
-                           <a class="icon" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
-                               <span class="text">Suche</span>
+                           <a class="icon" href="/log-in" title="Freitextsuche nach Umweltinformationen">
+                               <span class="text">Login</span>
                            </a>
                            <a class="icon " href="/datenkataloge" title="Eingebundene Umweltdatenkataloge, Objekte und Metadaten">
                                <span class="text">Kataloge</span>
@@ -135,9 +135,7 @@
                     <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
                         <div class="row align-center">
                             <div class="large-20 columns dark">
-                        <h1>
-                            <fmt:message key="ui.entry.session.expired" />
-                        </h1>
+                                <h1><fmt:message key="ui.entry.session.expired" /></h1>
                             </div>
                         </div>
                     </div>
@@ -145,10 +143,16 @@
                 <div id="76__763" class="row content-small">
                     <div class="columns">
                         <div class="form">
-                        <p>
-                            <fmt:message key="ui.entry.session.expired.text" />
-                        </p>
-                        <br />
+                           <p>
+                               <fmt:message key="ui.entry.session.expired.text" />
+                           </p>
+                           <div class="link-list">
+                                <a class="icon" href="/log-in">
+                                    <span class="ic-ic-arrow"></span>
+                                    <span class="text">Login</span>
+                                </a> 
+                           </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -158,7 +162,7 @@
                     <div class="row">
                         <div class="xsmall-24 medium-2 large-2 xlarge-2 columns">
                             <div class="logo">
-                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="NUMIS"></a>
+                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="NUMIS"/></a>
                             </div>
                         </div>
                         <div class="xsmall-24 medium-22 large-9 xlarge-10 columns">
@@ -184,13 +188,13 @@
                     <div class="list-item">
                       <a class="switch-link numis">
                         <span class="ic-ic-check"></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS">
+                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" />
                       </a>
                     </div>
                     <div class="list-item">
                       <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
                         <span class=""></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP">
+                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" />
                       </a>
                     </div>
                 </div>
