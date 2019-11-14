@@ -262,6 +262,9 @@
   .leaflet-popup-content {
       min-width: 400px;
   }
+  .header-menu-open .login {
+    display: none;
+  }
   .leaflet-popup-content a h5, .leaflet-popup-content .helper.icon{
     white-space: nowrap;
     overflow: hidden;
@@ -353,6 +356,14 @@ header {
 }
 .header-menu a.is-active {
   background-color: #256394;
+}
+.header-menu-open {
+  position: relative;
+}
+.header-menu-open .login {
+  position: absolute;
+  right: 0;
+  min-width: 150px;
 }
 .header-menu-close .button {
   background-color: #1D4B7B;
@@ -662,14 +673,14 @@ footer .footer .columns div {
 footer .footer .copyright p {
   color: #5E788D;
   text-transform: none;
-  width: 300px;
+  max-width: 350px;
   line-height: 1.25;
   margin-left: auto;
   margin-right: auto;
 }
 footer .footer .logo {
-  margin: 0 auto;
-  width: 5%;
+  width: 2.25em;
+  display: none;
 }
 footer .breadcrumb span, footer .breadcrumb a {
   padding: 0 10px 0 0;
@@ -772,9 +783,8 @@ header .logo a {
   left: 70px;
 }
 @media print, screen and (min-width: 35em) {
-  .header-menu-open button.xsmall-button {
-    position: relative;
-    top: 0;
+  .header-menu-open button {
+    margin: 33px 0;
   }
   header .logo {
     height: 120px;
@@ -785,14 +795,13 @@ header .logo a {
     width: 22.625em;
   }
   footer .footer .copyright p {
-    width: 300px;
-    margin-left: -30px;
+    margin-left: 58px;
     margin-right: 0;
     text-align: left;
   }
   footer .footer .logo {
-    margin: 0;
-    width: 50%;
+    float: left;
+    display: block;
   }
   footer .footer .footer-menu-entries {
     text-align: right;
@@ -859,5 +868,10 @@ header .logo a {
   }
   .banner.home .home-wrapper h1 .ic-ic-asterisc {
     font-size: 29px;
+  }
+  .header-menu-open button {
+    margin: 4.5em 0 0;
+    padding: 8px 16px;
+    font-size: 14px;
   }
 }
