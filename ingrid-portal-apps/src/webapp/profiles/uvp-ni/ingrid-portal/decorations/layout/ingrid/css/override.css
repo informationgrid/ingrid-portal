@@ -357,9 +357,6 @@ header {
 .header-menu a.is-active {
   background-color: #256394;
 }
-.header-menu-open {
-  position: relative;
-}
 .header-menu-open .login {
   position: absolute;
   right: 0;
@@ -814,12 +811,6 @@ header .logo a {
   }
 }
 @media print, screen and (max-width: 63.9375em) {
-  .header-menu-open {
-    right: auto;
-  }
-  .header-menu-open button {
-    margin: 38px 0 0 0;
-  }
   .header-menu-open .xsmall-button {
     display: block;
   }
@@ -868,10 +859,5 @@ header .logo a {
   }
   .banner.home .home-wrapper h1 .ic-ic-asterisc {
     font-size: 29px;
-  }
-  .header-menu-open button {
-    margin: 4.5em 0 0;
-    padding: 8px 16px;
-    font-size: 14px;
   }
 }
