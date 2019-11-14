@@ -41,6 +41,7 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import de.ingrid.mdek.upload.storage.impl.FileSystemItem;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -428,9 +429,11 @@ public class UploadCleanupJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -456,9 +459,11 @@ public class UploadCleanupJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -484,9 +489,11 @@ public class UploadCleanupJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -512,9 +519,11 @@ public class UploadCleanupJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", null
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -540,12 +549,14 @@ public class UploadCleanupJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -571,10 +582,12 @@ public class UploadCleanupJobTest {
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
@@ -599,9 +612,11 @@ public class UploadCleanupJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -627,9 +642,11 @@ public class UploadCleanupJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -655,9 +672,11 @@ public class UploadCleanupJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", null
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -683,10 +702,12 @@ public class UploadCleanupJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", null
         ));
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
@@ -711,9 +732,11 @@ public class UploadCleanupJobTest {
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -747,9 +770,11 @@ public class UploadCleanupJobTest {
         Files.createDirectories(Paths.get(DOCS_PATH.toString(), ARCHIVE_PATH));
 
         // setup file references
+        FileSystemItem fsi = new FileSystemItem(null, "", referencedFile, "", 0, null, false, null);
+        final String referencedFileEncoded = fsi.getUri(true);
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                referencedDir+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                referencedDir+PATH_SEPARATOR+referencedFileEncoded, "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
