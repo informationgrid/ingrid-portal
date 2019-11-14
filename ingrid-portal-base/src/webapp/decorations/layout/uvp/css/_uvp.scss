@@ -1171,6 +1171,7 @@ header {
     overflow: hidden;
   }
   .data-text {
+    max-height: 140px;
     overflow: hidden;
   }
   .helper, p { color: $blue-prov; }
