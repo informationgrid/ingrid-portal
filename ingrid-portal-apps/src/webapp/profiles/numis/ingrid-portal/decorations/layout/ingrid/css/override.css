@@ -1147,6 +1147,12 @@ h2 .anchor:target {
   header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
     left: 22px;
   }
+  .switch-popup a.switch-link.numis img {
+    width: 13.725em;
+  }
+  .switch-popup a.switch-link.uvp img {
+    width: 9.725em;
+  }
 }
 @media print, screen and (min-width: 64em) {
   .nav-content {
