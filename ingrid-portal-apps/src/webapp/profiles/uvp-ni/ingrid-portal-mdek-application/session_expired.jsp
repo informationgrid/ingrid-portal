@@ -122,18 +122,18 @@
                 <button type="button" class="button round popup__close js-popup-close" data-box=".switch-popup"><span class="ic-ic-cross"></span></button>
                 <div class="popup__content text-box">
                     <div class="list-item">
-                      <a class="switch-link uvp">
-                        <span class="ic-ic-check"></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only"/>
-                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only"/>
-                      </a>
+                        <a class="switch-link uvp">
+                            <span class="ic-ic-check"></span>
+                            <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only"/>
+                            <img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only"/>
+                        </a>
                     </div>
                     <div class="list-item">
-                      <a class="switch-link numis" href="https://numis.niedersachsen.de">
-                        <span class=""></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only"/>
-                        <img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only"/>
-                      </a>
+                        <a class="switch-link numis" href="https://numis.niedersachsen.de">
+                            <span class=""></span>
+                            <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only"/>
+                            <img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only"/>
+                        </a>
                     </div>
                 </div>
             </div>
