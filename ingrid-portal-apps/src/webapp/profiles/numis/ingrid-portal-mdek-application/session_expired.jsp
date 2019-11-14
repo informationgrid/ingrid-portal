@@ -85,42 +85,15 @@
                             <div class="switch">
                                 <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
                         </div>
                     </div>
                     <div class="columns button-up show-for-xlarge">
-                           <a class="icon" href="/log-in" title="Freitextsuche nach Umweltinformationen">
-                               <span class="text">Login</span>
-                           </a>
-                           <a class="icon " href="/datenkataloge" title="Eingebundene Umweltdatenkataloge, Objekte und Metadaten">
-                               <span class="text">Kataloge</span>
-                           </a>
-                           <a class="icon " href="/messwertsuche" title="Suche nach Umweltmessdaten">
-                               <span class="text">Messwerte</span>
-                           </a>
-                           <a class="icon " href="/kartendienste" title="Interaktive thematische Karten von Bund, Ländern und Kommunen">
-                               <span class="text">Karten</span>
-                           </a>
-                           <div class="dropmenu__box">
-                               <a class="icon nav-desktop__title js-nav-desktop-toggle " href="#" title="Hintergrundinformationen zu NUMIS">
-                                   <span class="text">Über NUMIS</span>
-                                   <span class="ic-ic-angle-down"></span>
-                               </a>
-                            <div class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
-                                <div class="menu-main-links">
-                                    <a class="header-menu-entry " href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">
-                                         <span class="text">Porträt</span>
-                                    </a>
-                                    <a class="header-menu-entry " href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">
-                                        <span class="text">Anbieter</span>
-                                    </a>
-                                    <a class="header-menu-entry " href="/datenquellen" title="Angeschlossene Datenbanken">
-                                        <span class="text">Datenquellen</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <a class="icon" href="/log-in" title="Freitextsuche nach Umweltinformationen">
+                            <span class="text">Login</span>
+                        </a>
                     </div>
                     <div class="columns xlarge-2">
                         <div class="header-menu-open">
@@ -188,13 +161,15 @@
                     <div class="list-item">
                       <a class="switch-link numis">
                         <span class="ic-ic-check"></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" />
+                        <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only"/>
+                        <img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only"/>
                       </a>
                     </div>
                     <div class="list-item">
                       <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
                         <span class=""></span>
-                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" />
+                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only"/>
+                        <img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only"/>
                       </a>
                     </div>
                 </div>

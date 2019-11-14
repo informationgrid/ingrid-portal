@@ -37,6 +37,8 @@
         <link rel="shortcut icon" href="/error/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/error/decorations/layout/uvp/css/main.css" />
         <link rel="stylesheet" href="/error/decorations/layout/ingrid/css/override.css" />
+        <script src="/error/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/error/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
     </head>
     <body>
         <div class="container">
@@ -47,8 +49,9 @@
                             <div class="switch">
                                 <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/error/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/error/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/error/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/error/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="show-for-xsmall-only"><img src="/error/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="UVP"/></a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +66,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="76__763" class="row content-small">
+                <div class="row content-small">
                     <div class="columns">
                         <div class="form">
                             <p>
@@ -96,6 +99,27 @@
                     </div>
                 </div>
             </footer>
+            <div class="popup switch-popup">
+                <button type="button" class="button round popup__close js-popup-close" data-box=".switch-popup"><span class="ic-ic-cross"></span></button>
+                <div class="popup__content text-box">
+                    <div class="list-item">
+                      <a class="switch-link numis">
+                        <span class="ic-ic-check"></span>
+                        <img src="/error/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only"/>
+                        <img src="/error/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only"/>
+                      </a>
+                    </div>
+                    <div class="list-item">
+                      <a class="switch-link uvp" href="https://uvp.niedersachsen.de">
+                        <span class=""></span>
+                        <img src="/error/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only"/>
+                        <img src="/error/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only"/>
+                      </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
+    <script src="/error/decorations/layout/ingrid/scripts/all.js"></script>
+    <script src="/error/decorations/layout/ingrid/scripts/popup.js"></script>
 </html>
