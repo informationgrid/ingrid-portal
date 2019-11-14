@@ -64,53 +64,54 @@
     </head>
     <body>
         <div class="container">
-    #set($mainMenu = $site.getMenu("main-menu"))
-    #set($serviceMenu = $site.getMenu("service-menu"))
-    #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
-    #set($footerMenu = $site.getMenu("footer-menu"))
-        #if($serviceMenu && !$serviceMenu.empty)
-            #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
-        #end
-        <header>
-            <div class="row">
-                <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
-                    <div class="logo">
-                        <div class="switch">
-                            <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
-                        </div>
-                        <a href="/startseite" class="hide-for-medium show-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
-                        <a href="/startseite" class="show-for-medium hide-for-small-header"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
-                    </div>
-                </div>
-                <div class="columns button-up show-for-xlarge">
-                #if(!$mainMenu.empty)
-                    #includeMainNavigation($mainMenu)
-                #end
-                </div>
-                <div class="columns xlarge-2">
-                    <div class="header-menu-open">
-                        #if($jetspeed.getLoggedOn())
-                            #set($userAttributes = $jetspeed.getUserProperties())
-                            #set($userNameGiven = $userAttributes.get("user.name.given"))
-                            #set($userNameFamily = $userAttributes.get("user.name.family"))
-                            
-                            #if($userNameGiven)
-                                #set ($salutation = " $userNameGiven")
-                            #end
-                            #if($userNameFamily)
-                                #set ($salutation = "$!{salutation} $userNameFamily")
-                            #end
-                            <div class="login">
-                                <span class="ic-ic-user"></span>
-                                <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
+            #set($mainMenu = $site.getMenu("main-menu"))
+            #set($serviceMenu = $site.getMenu("service-menu"))
+            #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
+            #set($footerMenu = $site.getMenu("footer-menu"))
+            #if($serviceMenu && !$serviceMenu.empty)
+                #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
+            #end
+            <header>
+                <div class="row">
+                    <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
+                        <div class="logo">
+                            <div class="switch">
+                                <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
-                        #else
-                            <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
-                        #end
-                        <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
+                        </div>
+                    </div>
+                    <div class="columns button-up show-for-xlarge">
+                    #if(!$mainMenu.empty)
+                        #includeMainNavigation($mainMenu)
+                    #end
+                    </div>
+                    <div class="columns xlarge-2">
+                        <div class="header-menu-open">
+                            #if($jetspeed.getLoggedOn())
+                                #set($userAttributes = $jetspeed.getUserProperties())
+                                #set($userNameGiven = $userAttributes.get("user.name.given"))
+                                #set($userNameFamily = $userAttributes.get("user.name.family"))
+                                
+                                #if($userNameGiven)
+                                    #set ($salutation = " $userNameGiven")
+                                #end
+                                #if($userNameFamily)
+                                    #set ($salutation = "$!{salutation} $userNameFamily")
+                                #end
+                                <div class="login">
+                                    <span class="ic-ic-user"></span>
+                                    <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
+                                </div>
+                                <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
+                            #else
+                                <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
+                            #end
+                            <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </header>
-        <div class="body">
+            </header>
+            <div class="body">
