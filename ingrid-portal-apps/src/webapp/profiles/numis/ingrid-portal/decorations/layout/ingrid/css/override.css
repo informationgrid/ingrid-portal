@@ -262,42 +262,6 @@
   .leaflet-popup-content {
       min-width: 400px;
   }
-  header {
-    height: 80px;
-  }
-  header .logo {
-    height: 80px !important;
-  }
-  header .menu-tab-row .menu-tab {
-    height: 76px;
-    width: 120px;
-    font-size: 14px;
-  }
-  header .menu-tab-row .menu-tab .link-menu-tab {
-    top: 32px;
-    padding: 8px 0;
-  }
-  header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
-    font-size: 22px;
-    top: -18px;
-    left: 48px;
-  }
-  header .logo .hide-for-large {
-    top: 14px;
-  }
-  header .logo .hide-for-medium {
-    top: 14px !important;
-  }
-  header .logo .show-for-medium {
-    top: 14px !important;
-  }
-  .header-menu-open {
-    text-align: right;
-    right: 12px;
-  }
-  .header-menu-open button {
-    margin: 13px 0 !important;
-  }
   .header-menu-open .login {
     display: none;
   }
@@ -415,9 +379,6 @@ header a.icon.is-selected {
   position: absolute;
   right: 0;
   min-width: 150px;
-}
-.header-menu-close {
-  text-align: left;
 }
 .header-menu-close .button {
   background-color: #1D4B7B;
@@ -653,14 +614,14 @@ footer .footer .columns div {
 footer .footer .copyright p {
   color: #5E788D;
   text-transform: none;
-  width: 300px;
+  max-width: 350px;
   line-height: 1.25;
   margin-left: auto;
   margin-right: auto;
 }
 footer .footer .logo {
-  margin: 0 auto;
-  width: 5%;
+  width: 2.25em;
+  display: none;
 }
 footer .breadcrumb span, footer .breadcrumb a {
   padding: 0 10px 0 0;
@@ -1072,11 +1033,6 @@ h2 .anchor:target {
   .header-menu-open button {
     margin: 33px 0;
   }
-  .header-menu-open button.xsmall-button {
-    margin: 48px 0 0 0;
-    position: relative;
-    top: 0;
-  }
   header .logo {
     height: 120px;
   }
@@ -1086,14 +1042,13 @@ h2 .anchor:target {
     width: 26.725em;
   }
   footer .footer .copyright p {
-    width: 300px;
-    margin-left: -30px;
+    margin-left: 58px;
     margin-right: 0;
     text-align: left;
   }
   footer .footer .logo {
-    margin: 0;
-    width: 50%;
+    float: left;
+    display: block;
   }
   footer .footer .footer-menu-entries {
     text-align: right;
@@ -1175,7 +1130,7 @@ h2 .anchor:target {
     font-size: 29px;
   }
   .header-menu-open button {
-    margin: 4.5em 0 0 !important;
+    margin: 4.5em 0 0;
     padding: 8px 16px;
     font-size: 14px;
   }
