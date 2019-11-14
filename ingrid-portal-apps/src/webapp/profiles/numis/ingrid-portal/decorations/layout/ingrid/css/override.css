@@ -296,8 +296,7 @@
     right: 12px;
   }
   .header-menu-open button {
-    margin: 13px 0 0 0;
-    top: 12px !important;
+    margin: 13px 0 !important;
   }
   .header-menu-open .login {
     display: none;
@@ -1071,10 +1070,7 @@ h2 .anchor:target {
 }
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
-    margin: 0;
-    position: absolute;
-    right: 0;
-    top: 48px;
+    margin: 33px 0;
   }
   .header-menu-open button.xsmall-button {
     margin: 48px 0 0 0;
@@ -1114,10 +1110,6 @@ h2 .anchor:target {
   }
 }
 @media print, screen and (max-width: 63.9375em) {
-  .header-menu-open .xsmall-button {
-    float: right;
-    margin: 18px 18px 0 0px;
-  }
   .search-filtered .accordion.accordion-filter-group {
     background-color: #0089C6;
   }
@@ -1183,7 +1175,7 @@ h2 .anchor:target {
     font-size: 29px;
   }
   .header-menu-open button {
-    top: 65px;
+    margin: 4.5em 0 0 !important;
     padding: 8px 16px;
     font-size: 14px;
   }
