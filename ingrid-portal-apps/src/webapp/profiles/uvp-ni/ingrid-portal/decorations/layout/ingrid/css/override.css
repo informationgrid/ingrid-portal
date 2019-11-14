@@ -773,7 +773,6 @@ header .logo a {
 }
 @media print, screen and (min-width: 35em) {
   .header-menu-open button.xsmall-button {
-    margin: 25px 0 0 0;
     position: relative;
     top: 0;
   }
@@ -806,6 +805,12 @@ header .logo a {
   }
 }
 @media print, screen and (max-width: 63.9375em) {
+  .header-menu-open {
+    right: auto;
+  }
+  .header-menu-open button {
+    margin: 38px 0 0 0;
+  }
   .header-menu-open .xsmall-button {
     display: block;
   }
