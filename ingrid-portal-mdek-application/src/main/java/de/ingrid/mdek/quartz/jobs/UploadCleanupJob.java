@@ -197,7 +197,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                             // get the storage item for the reference
                             final StorageItem item = allFiles.get(uploadUri);
                             if (item == null) {
-                                log.warn("File "+uploadUri+" does not exist in the storage");
+                                log.warn("File "+item.getUri(false)+" does not exist in the storage");
                                 continue;
                             }
 
