@@ -826,6 +826,12 @@ header .logo a {
   header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
     left: 22px;
   }
+  .switch-popup a.switch-link.numis img {
+    width: 13.725em;
+  }
+  .switch-popup a.switch-link.uvp img {
+    width: 9.725em;
+  }
   .banner.home .home-wrapper {
     background-size: cover;
   }
