@@ -22,6 +22,7 @@
     right: 12px;
     .login {
       display: none;
+      ~ .button { margin: 18px 0; }
     }
   }
 }
@@ -45,7 +46,7 @@
   .header-menu-open {
     text-align: right;
     right: 12px;
-    button { margin: 25px 0 0 0; }
+    button { margin: 33px 0 0 0; }
   }
   .header-menu {
     width: 450px;

@@ -793,6 +793,7 @@ header {
   .login {
     font-size: 12px;
     margin: 1rem 0 -1rem;
+    ~ .button { margin: 42px 0; }
   }
 }
 
