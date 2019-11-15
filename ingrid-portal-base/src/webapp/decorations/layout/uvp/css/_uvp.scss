@@ -1329,7 +1329,13 @@ a.data:hover {
   }
 }
 
+.container {
+  min-height: 100%;
+  position: relative;
+}
+
 footer {
+  margin-top: 48px;
   .footer-buttons-bar {
     position: fixed;
     right: 2rem;
