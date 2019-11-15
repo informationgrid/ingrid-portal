@@ -784,6 +784,9 @@ header {
     span { margin: 0; }
   }
   .login {
+    position: absolute;
+    right: 0;
+    min-width: 150px;
     font-size: 12px;
     margin: 1rem 0 -1rem;
     ~ .button { margin: 42px 0; }
