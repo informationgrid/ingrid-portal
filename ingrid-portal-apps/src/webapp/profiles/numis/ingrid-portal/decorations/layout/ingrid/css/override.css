@@ -375,11 +375,6 @@ header a.icon.is-selected {
 .header-menu-open {
   position: relative;
 }
-.header-menu-open .login {
-  position: absolute;
-  right: 0;
-  min-width: 150px;
-}
 .header-menu-close .button {
   background-color: #1D4B7B;
 }
@@ -434,7 +429,7 @@ header a.icon.is-selected {
   margin-bottom: 48px;
 }
 .detail p + h4 {
-    margin-top: 48px;
+  margin-top: 48px;
 }
 .detail .banner-noimage {
   padding: 0 0 54px 0;
