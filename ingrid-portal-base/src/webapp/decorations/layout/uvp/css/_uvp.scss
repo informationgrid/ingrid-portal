@@ -3,16 +3,6 @@
 
 html { }
 
-html, body { height:100%; }
-
-.body > div:last-child {
-  padding-bottom: 10rem;
-}
-
-.body > div.about, .body > div.detail {
-  padding-bottom: 6rem;
-}
-
 :focus { outline: none; }
 
 .slab-bold { font-family: 'RobotoSlab-Bold'; }
@@ -338,6 +328,7 @@ a.icon:not([href]):hover {
 
     a + span.text {
       font-size: 14px;
+      display: block;
     }
   }
 }
@@ -1327,15 +1318,7 @@ a.data:hover {
   }
 }
 
-.container {
-  min-height: 100%;
-  position: relative;
-}
-
 footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   .footer-buttons-bar {
     position: fixed;
     right: 2rem;
