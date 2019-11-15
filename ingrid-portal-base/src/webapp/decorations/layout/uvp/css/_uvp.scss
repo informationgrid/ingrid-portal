@@ -1299,6 +1299,8 @@ a.data:hover {
 
 /* about */
 .about {
+  margin-bottom: -48px;
+
   .about-wrapper {
     background-position: top left;
     padding: 48px 0;
@@ -1325,6 +1327,7 @@ a.data:hover {
 
 footer {
   margin-top: 48px;
+
   .footer-buttons-bar {
     position: fixed;
     right: 2rem;
