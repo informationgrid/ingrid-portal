@@ -759,16 +759,6 @@ footer hr {
 .form-element .control {
   color: #0089C6;
 }
-#timeline .columns {
-  padding-bottom: 24px;
-}
-#timeline .timeline .timeline-text {
-  padding: 0;
-}
-#timeline .timeline .timeline-text .icon-dot-small .icon {
-  left: -2.25rem;
-  font-size: 16px;
-}
 .accordion-content {
   color: #0089C6;
 }
