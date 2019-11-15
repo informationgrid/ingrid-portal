@@ -289,15 +289,6 @@
 }
 
 /* NUMIS */
-.body > div:last-child {
-  padding-bottom: 13rem;
-}
-.body div.about {
-  padding-bottom: 8rem;
-}
-.body div.detail {
-  padding-bottom: 12rem;
-}
 a {
   color: #0089C6;
 }
