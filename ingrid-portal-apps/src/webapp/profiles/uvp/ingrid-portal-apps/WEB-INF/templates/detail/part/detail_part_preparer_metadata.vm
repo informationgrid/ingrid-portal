@@ -282,6 +282,9 @@
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
                                 #renderTableToTree("Entscheidung" $nodelist "designDocs")
                         #end
+                            <h2 class="icon-dot icon-dot-small">
+                                <span class="ic-ic-bullet icon"></span>
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -362,15 +365,13 @@
         #end
     #end
     #if($entry.get('children'))
-        #foreach($subEntry in $entry.get('children'))
-        <li class="folder__content js-accordion-content">
-            <ul class="js-accordion-multi">
-                <li class="folder__item">
-                    #renderTreeFolder($subEntry)
-                </li>
-            </ul>
-        </li>
+       <div class="folder__content">
+       #foreach($subEntry in $entry.get('children'))
+            <div class="list-item">
+                #renderTreeFolder($subEntry)
+            </div>
         #end
+        </div>
     #end
 #end
 

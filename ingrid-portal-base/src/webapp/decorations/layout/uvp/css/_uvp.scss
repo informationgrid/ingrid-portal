@@ -346,6 +346,10 @@ a.icon:not([href]):hover {
 .download-list, .document-list {
   .list-item {
     margin-bottom: 24px;
+
+    a + span.text {
+      font-size: 14px;
+    }
   }
 }
 .download-list {
@@ -1375,9 +1379,6 @@ footer {
 }
 
 /* timeline */
-#timeline .columns {
-  padding-bottom: 0px;
-}
 .timeline {
 
   h1 { margin-left: 3rem; }
@@ -1393,7 +1394,6 @@ footer {
     display: inline-block;
     vertical-align: top;
     width: 82%;
-    padding-bottom: 3rem;
 
     h4 span {
       color: $blue-light;
@@ -1410,6 +1410,12 @@ footer {
         left: -2.9rem;
         font-size: 38px;
         color: $blue-light;
+      }
+    }
+    .icon-dot-small {
+      .icon {
+        left: -2.25rem;
+        font-size: 16px;
       }
     }
     .icon-check {
@@ -1616,35 +1622,16 @@ footer {
   span { color: $white; }
 }
 
+.folder__content {
+  padding-left: 1.5rem !important;
+  margin-top: 1.5rem;
 
+  .list-item {
+    padding: 0;
 
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    div {
+      padding: 0;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
