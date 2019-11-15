@@ -228,8 +228,12 @@
 /* LARGE 1024px  */
 @include breakpoint(large) {
 
-  footer .footer {
-    .footer-menu-entries, .copyright { text-align: left; }
+  footer {
+    margin-top: 4rem;
+
+    .footer {
+      .footer-menu-entries, .copyright { text-align: left; }
+    }
   }
 
   blockquote p {
