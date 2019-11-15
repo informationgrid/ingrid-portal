@@ -357,11 +357,6 @@ header {
 .header-menu a.is-active {
   background-color: #256394;
 }
-.header-menu-open .login {
-  position: absolute;
-  right: 0;
-  min-width: 150px;
-}
 .header-menu-close .button {
   background-color: #1D4B7B;
 }
