@@ -427,6 +427,21 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
+                                <span id="uiElement5090" class="outer optional">
+                                    <div>
+                                        <span class="label">
+                                            <label for="priorityDataset" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5065);" >
+                                                <fmt:message key="ui.obj.priority.dataset" />
+                                            </label>
+                                        </span>
+                                        <div class="input tableContainer">
+                                            <div id="priorityDataset" autoHeight="4" interactive="true" class="hideTableHeader">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
                                 <span id="uiElement5060" class="outer">
                                     <div>
                                         <span id="thesaurusTopicsLabel" class="label">

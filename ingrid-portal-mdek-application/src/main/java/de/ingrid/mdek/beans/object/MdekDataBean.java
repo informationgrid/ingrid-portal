@@ -132,6 +132,7 @@ public class MdekDataBean {
 	private List<Integer> thesaurusTopicsList;
 	private Boolean thesaurusEnvExtRes;
 	private List<Integer> thesaurusEnvTopicsList;
+	private List<Integer> priorityDataset;
 
 
 	// Links
@@ -2229,5 +2230,13 @@ public class MdekDataBean {
 
 	public void setParentIdentifier(String parentIdentifier) {
 		this.parentIdentifier = parentIdentifier;
+	}
+
+	public List<Integer> getPriorityDataset() {
+		return priorityDataset;
+	}
+
+	public void setPriorityDataset(List<Integer> priorityDataset) {
+		this.priorityDataset = priorityDataset;
 	}
 }
