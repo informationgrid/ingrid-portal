@@ -21,6 +21,7 @@
  * **************************************************#
  */
 define([
+    "dijit/form/NumberTextBox",
     "dijit/MenuItem",
     "dijit/MenuSeparator",
     "dijit/registry",
@@ -39,10 +40,11 @@ define([
     "ingrid/layoutCreator",
     "ingrid/menu",
     "ingrid/message",
+    "ingrid/utils/Grid",
     "ingrid/utils/Store",
     "ingrid/utils/Syslist",
     "module"
-], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, on, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore, UtilSyslist, module) {
+], function(NumberTextBox, MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, on, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilGrid, UtilStore, UtilSyslist, module) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -394,7 +396,7 @@ define([
             this._createBawSimulationParameterTableContextMenu();
 
             // Define structure for the simulation parameter table
-            id = "simParamTable";
+            var simParamTableId = "simParamTable";
             structure = [
                 {
                     field: "simParamName",
@@ -449,14 +451,15 @@ define([
 
             // Create the simulation table parameter
             creator.createDomDataGrid({
-                id: id,
+                id: simParamTableId,
                 name: message.get("ui.obj.baw.simulation.parameter.table.title"),
                 help: message.get("ui.obj.baw.simulation.parameter.table.help"),
                 contextMenu: "BAW_SIMULATION_PARAMETER",
                 style: "width: 100%"
             }, structure, "refClass1");
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
+            newFieldsToDirtyCheck.push(simParamTableId);
+            additionalFields.push(registry.byId(simParamTableId));
+
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
                 var isMandatory = args.isSimulationRelated;
                 self._setMandatory("simParamTable", isMandatory);
@@ -473,9 +476,9 @@ define([
                  * that have been entered in the dialog box.
                  * See also the comment in the structure of this table.
                  */
-                var simParamTableData = registry.byId(id).data;
+                var simParamTableData = registry.byId(simParamTableId).data;
                 var simParamNodeAdditionalValues = nodeData.additionalFields.find(function (row) {
-                    return row.identifier === id;
+                    return row.identifier === simParamTableId;
                 });
 
                 var newTableRows = [];
@@ -527,9 +530,9 @@ define([
                  * to handle two hidden fields here. See also the comment on the
                  * structure for the table above.
                  */
-                var simParamTableData = registry.byId(id).data;
+                var simParamTableData = registry.byId(simParamTableId).data;
                 var nodeAdditionalFieldData = nodeData.additionalFields.find(function (row) {
-                    return row.identifier === id;
+                    return row.identifier === simParamTableId;
                 });
 
                 // If no additional values for the desired id are found then there is nothing to do
@@ -554,7 +557,72 @@ define([
                     simParamTableRow["values"] = values;
                     simParamTableRow["simParamValue"] = self.simulationParameterValueArrayToString(values, hasDiscreteValues);
                 });
-                UtilStore.updateWriteStore(id, simParamTableData);
+                UtilStore.updateWriteStore(simParamTableId, simParamTableData);
+            });
+
+
+            var bwastrTableId = "bwastrTable";
+            structure = [
+                {
+                    field: "bwastr_name",
+                    name: message.get("ui.obj.baw.bwastr.table.column.name"),
+                    type: Editors.SelectboxEditor,
+                    options: [],
+                    values: [],
+                    listId: 3950010,
+                    editable: true,
+                    isMandatory: true,
+                    formatter: lang.partial(Formatters.SyslistCellFormatter, 3950010),
+                    partialSearch: true,
+                    width: "450px"
+                },
+                {
+                    field: "bwastr_km_start",
+                    name: message.get("ui.obj.baw.bwastr.table.column.km_start"),
+                    editable: true,
+                    isMandatory: false,
+                    type: Editors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: Formatters.LocalizedNumberFormatter,
+                    partialSearch: false,
+                    width: "150px"
+                },
+                {
+                    field: "bwastr_km_end",
+                    name: message.get("ui.obj.baw.bwastr.table.column.km_end"),
+                    editable: true,
+                    isMandatory: false,
+                    type: Editors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: Formatters.LocalizedNumberFormatter,
+                    partialSearch: false,
+                    width: "150px"
+                }
+            ];
+
+            creator.createDomDataGrid({
+                id: bwastrTableId,
+                name: message.get("ui.obj.baw.bwastr.table.title"),
+                help: message.get("ui.obj.baw.bwastr.table.help"),
+                //contextMenu: "BAW_SIMULATION_PARAMETER",
+                isMandatory: true,
+                style: "width: 100%"
+            }, structure, "spatialRef");
+            newFieldsToDirtyCheck.push(bwastrTableId);
+            additionalFields.push(registry.byId(bwastrTableId));
+
+            topic.subscribe("/onBeforeObjectPublish", function (notPublishableIDs) {
+                array.forEach(UtilGrid.getTableData(bwastrTableId), function (row) {
+                    if (!row.bwastr_name) {
+                        notPublishableIDs.push([bwastrTableId, message.get("validation.baw.bwastr_name.missing")]);
+                    }
+
+                    var kmStart = row.bwastr_km_start;
+                    var kmEnd = row.bwastr_km_end;
+                    if ((kmStart && !kmEnd) || (!kmStart && kmEnd)) {
+                        notPublishableIDs.push([bwastrTableId, message.get("validation.baw.bwastr_km.entry.missing")]);
+                    }
+                });
             });
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));

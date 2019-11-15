@@ -27,6 +27,11 @@ define({
     "ui.obj.baw.auftragsnummer.help": "PSP-Element",
     "ui.obj.baw.auftragstitel.title": "Auftragstitel",
     "ui.obj.baw.auftragstitel.help": "Titel des BAW/WSV Auftrags",
+    "ui.obj.baw.bwastr.table.column.km_end": "Km-bis",
+    "ui.obj.baw.bwastr.table.column.km_start": "Km-von",
+    "ui.obj.baw.bwastr.table.column.name": "BWaStr.-Streckenname",
+    "ui.obj.baw.bwastr.table.help": "Streckenabschnitte der Bundeswasserstrassen nach VV/WSV 1103",
+    "ui.obj.baw.bwastr.table.title": "Streckenabschnitte",
     "ui.obj.baw.hierarchy.level.name.title": "Bezeichnung der Hierarchieebene",
     "ui.obj.baw.hierarchy.level.name.help": "Bezeichnung der Hierarchieebene",
     "ui.obj.baw.simulation.model.type.table.title": "Simulationsmodellart",
@@ -51,8 +56,11 @@ define({
     "ui.sysList.3950002": "BAW - Bezeichnung der Hierarchieebene",
     "ui.sysList.3950003": "BAW - Modellart",
     "ui.sysList.3950004": "BAW - Simulationsparameter/-Größe Rolle",
+    "ui.sysList.3950010": "BAW - VV-WSV 1103",
     "ui.sysList.3950099": "BAW - Datenformat",
 
-    "validation.baw.address.role.owner": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Eigentümer' muss vorhanden sein."
+    "validation.baw.address.role.owner": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Eigentümer' muss vorhanden sein.",
+    "validation.baw.bwastr_km.entry.missing": "Km-von und Km-bis müssen entweder beide definiert sein oder sollen beide fehlen.",
+    "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden."
 });
 
