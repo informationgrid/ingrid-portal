@@ -113,9 +113,9 @@ define([
                 return result;
             },
 
-            readSysListData: function(listId) {
+            readSysListData: function(listId, language) {
                 var def = new Deferred();
-                var languageCode = UtilCatalog.getCatalogLanguage();
+                var languageCode = language || UtilCatalog.getCatalogLanguage();
                 CatalogService.getSysLists([listId], languageCode, {
                     callback: function(res) {
                         def.resolve(res[listId]);

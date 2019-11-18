@@ -243,6 +243,8 @@ define([
             },
 
             createGeneralInfo: function() {
+                var self = this;
+
                 new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
@@ -331,10 +333,24 @@ define([
                     options: [], // will be filled later, when syslists are loaded
                     values: [],
                     editable: true,
-                    listId: 6350,
-                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6350)
+                    init: function() { return self.initializedPriorityDatasetList; },
+                    partialSearch: true,
+                    formatter: function(row, cell, value) {
+                        var found = null;
+                        array.some(self.initializedPriorityDatasetList, function(item) {
+                            if (item[1] == value) {
+                                found = item[0];
+                                return true;
+                            }
+                            return false;
+                        });
+                        return found;
+                    }
                 }];
                 layoutCreator.createDataGrid("priorityDataset", null, priorityDatasetStructure, null);
+                this.preparePriorityDatasetList().then(function(data) {
+                    self.initializedPriorityDatasetList = data;
+                });
 
                 new CheckBox({}, "isInspireRelevant");
                 new RadioButton({
@@ -363,6 +379,21 @@ define([
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
                 }];
                 layoutCreator.createDataGrid("categoriesOpenData", null, categoriesStructure, null);
+            },
+
+            preparePriorityDatasetList: function() {
+                var self = this;
+                var germanList = UtilSyslist.readSysListData(6350, 'de');
+                var englishList = UtilSyslist.readSysListData(6350, 'en');
+                return all([germanList, englishList]).then(function(results) {
+                    var list = [];
+                    for (var i=0; i < results[0].length; i++) {
+                        var german = results[0][i];
+                        var english = results[1][i];
+                        list.push([german[0] + " {en: " + english[0] + "}", german[1]])
+                    }
+                    return list;
+                });
             },
 
             createFachBezugClass1: function() {
