@@ -44,11 +44,10 @@ public interface StorageItem {
 
     /**
      * Get the URI as combination of path and file
-     * NOTE: URIs use the forward slash as separator for path parts
-     * @param urlencode
+     * NOTE: URIs are URL-encoded and use the forward slash as separator for path parts
      * @return String
      */
-    String getUri(boolean urlencode);
+    String getUri();
 
     /**
      * Get the type
