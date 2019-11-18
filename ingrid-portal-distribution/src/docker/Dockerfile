@@ -13,6 +13,7 @@ ENV MAIL_SENDER=test@wemove.de
 ENV IGE_DIRECT_LINK=http://localhost:8080/ingrid-portal-mdek-application/index.jsp
 ENV UPLOAD_DOCS_DIR=/tmp/ingrid/upload/documents/
 ENV UPLOAD_PARTS_DIR=/tmp/ingrid/upload/parts/
+ENV TOYBOX_SRC=https://d16ahjtmf9d1au.cloudfront.net/inject.bundle.js
 
 ADD ingrid-portal*-installer.jar /
 
