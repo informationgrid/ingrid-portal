@@ -416,7 +416,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         ArrayList<String> listSearch = new ArrayList<>();
         ArrayList<String> listGemet = new ArrayList<>();
         ArrayList<String> listInspire = new ArrayList<>();
-        
+        ArrayList<String> listPriorityDataset = new ArrayList<>();
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             
@@ -474,6 +475,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     }
                                     listGemet.add(tmpValue);
                                     // "GEMET - INSPIRE themes, version 1.0"
+                                } else if (thesaurusName.indexOf("priority") > -1) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
+                                    if(tmpValue.length() < 1){
+                                        tmpValue = value;
+                                    }
+                                    listPriorityDataset.add(tmpValue);
                                 } else if (thesaurusName.indexOf("INSPIRE") > -1) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
                                     if(tmpValue.length() < 1){
@@ -501,6 +508,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }else if(keywordType.equals("inspire")){
             sortList(listInspire);
             return listInspire;
+        }else if(keywordType.equals("priority")){
+            sortList(listPriorityDataset);
+            return listPriorityDataset;
         }else {
             sortList(listSearch);
             return listSearch;

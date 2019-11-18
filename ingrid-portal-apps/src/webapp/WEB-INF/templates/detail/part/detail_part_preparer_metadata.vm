@@ -194,6 +194,7 @@
                                 ## Verschlagwortung
                                 #renderTextList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
                                 #renderTextList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "inspire"))
+                                #renderTextList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "priority"))
                                 #renderTextList("GEMET - Concepts" $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "gemet"))
                                 ## ISO-Themenkategorien
                                 #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
