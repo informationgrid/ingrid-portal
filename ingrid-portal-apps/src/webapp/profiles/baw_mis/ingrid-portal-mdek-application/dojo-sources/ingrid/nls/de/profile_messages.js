@@ -34,6 +34,9 @@ define({
     "ui.obj.baw.bwastr.table.title": "Streckenabschnitte",
     "ui.obj.baw.hierarchy.level.name.title": "Bezeichnung der Hierarchieebene",
     "ui.obj.baw.hierarchy.level.name.help": "Bezeichnung der Hierarchieebene",
+    "ui.obj.baw.keyword.catalogue.row.title": "Schlagwort",
+    "ui.obj.baw.keyword.catalogue.table.help": "BAW-Schlagwortkatalog 2012",
+    "ui.obj.baw.keyword.catalogue.table.title": "BAW-Schlagwortkatalog 2012",
     "ui.obj.baw.simulation.model.type.table.title": "Simulationsmodellart",
     "ui.obj.baw.simulation.model.type.table.help": "Art des Simulationsmodells",
     "ui.obj.baw.simulation.parameter.dialog.table.column.value": "Wert",
@@ -56,6 +59,7 @@ define({
     "ui.sysList.3950002": "BAW - Bezeichnung der Hierarchieebene",
     "ui.sysList.3950003": "BAW - Modellart",
     "ui.sysList.3950004": "BAW - Simulationsparameter/-Größe Rolle",
+    "ui.sysList.3950005": "BAW - Schlagwortkatalog 2012",
     "ui.sysList.3950010": "BAW - VV-WSV 1103",
     "ui.sysList.3950099": "BAW - Datenformat",
 

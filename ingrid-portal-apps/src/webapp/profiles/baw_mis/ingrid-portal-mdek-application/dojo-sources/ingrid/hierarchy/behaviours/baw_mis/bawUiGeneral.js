@@ -304,8 +304,35 @@ define([
                 self._setMandatory("bawAuftragstitel", isMandatory);
             });
 
-            id = "simModelTypeTable";
             var structure;
+
+            var bawKeywordCatalogueTableId = "bawKeywordCatalogueTable";
+            structure = [
+                {
+                    field: "bawKeywordCatalogueEntry",
+                    name: message.get("ui.obj.baw.keyword.catalogue.row.title"),
+                    editable: true,
+                    type: Editors.SelectboxEditor,
+                    options: [],
+                    values: [],
+                    listId: 3950005,
+                    isMandatory: true,
+                    formatter: lang.partial(Formatters.SyslistCellFormatter, 3950005),
+                    partialSearch: false,
+                    style: "width: auto"
+                }
+            ];
+            creator.createDomDataGrid({
+                id: bawKeywordCatalogueTableId,
+                name: message.get("ui.obj.baw.keyword.catalogue.table.title"),
+                help: message.get("ui.obj.baw.keyword.catalogue.table.help"),
+                //isMandatory: true,
+                style: "width: 100%"
+            }, structure, "thesaurus");
+            newFieldsToDirtyCheck.push(bawKeywordCatalogueTableId);
+            additionalFields.push(registry.byId(bawKeywordCatalogueTableId));
+
+            id = "simModelTypeTable";
             structure = [
                 {
                     field: "simModelType",

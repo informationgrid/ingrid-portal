@@ -36,7 +36,7 @@ define([
 
             // load custom syslists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
-                ids.push(3950000, 3950001, 3950002, 3950003, 3950004, 3950010);
+                ids.push(3950000, 3950001, 3950002, 3950003, 3950004, 3950005, 3950010);
             });
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
