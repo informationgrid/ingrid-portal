@@ -2049,7 +2049,8 @@ define([
                 }, {
                     field: 'source',
                     name: message.get("ui.obj.availability.useAccessConstraintsTable.header.source"),
-                    editable: true
+                    editable: true,
+                    formatter: gridFormatters.EscapeFormatter
                 }];
                 layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
                 

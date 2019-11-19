@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1553">
             IGE: Verlinkung von hochgeladenen Dokumenten im Editor funktioniert nicht.
           </action>
+          <action type="fix" dev="wemove" issue="1530">
+            IGE: Encode strings in source note of use constraints.
+          </action>
           <action type="update" dev="wemove" issue="1528">
             Portal: Remove "Ähnliche Begriffe" on BKG profile.
           </action>
