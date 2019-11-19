@@ -35,6 +35,7 @@ define([
         defaultActive: true,
         run: function() {
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
+            domClass.remove("uiElementN025", "optional");
 
             on(inspireRelevantWidget, "Change", function(isChecked) {
                 if (isChecked) {
