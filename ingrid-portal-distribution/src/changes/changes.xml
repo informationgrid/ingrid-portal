@@ -26,6 +26,9 @@
           <action type="fix" dev="wemove" issue="1545">
             Portal: Fix contact form title.
           </action>
+          <action type="fix" dev="wemove" issue="661">
+            UVP: Fix facet state.
+          </action>
         </release>
 
         <release version="5.2.0" date="2019-10-22" description="Release 5.2.0">
