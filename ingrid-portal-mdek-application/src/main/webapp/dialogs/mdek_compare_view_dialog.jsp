@@ -412,9 +412,11 @@ require([
 			renderList(nodeDataOld.thesaurusInspireTermsList, nodeDataNew.thesaurusInspireTermsList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function(val) {
 				return UtilSyslist.getSyslistEntryName(6100, val);
 			});
-			renderList(nodeDataOld.priorityDataset, nodeDataNew.priorityDataset, "<fmt:message key='ui.obj.priority.dataset' />", null, function(val) {
-				return UtilSyslist.getSyslistEntryName(6350, val);
-			});
+			if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
+				renderList(nodeDataOld.priorityDataset, nodeDataNew.priorityDataset, "<fmt:message key='ui.obj.priority.dataset' />", null, function (val) {
+					return UtilSyslist.getSyslistEntryName(6350, val);
+				});
+			}
             renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
             renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(1410, val);
