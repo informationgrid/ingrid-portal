@@ -118,7 +118,9 @@
         <script>
             $('.js-anchor-target').anchorTarget();
         </script>
+#if($currentPage != "/main-measures.psml")
     </div>
+#end
 
         <!-- Piwik -->
         <script type="text/javascript">
