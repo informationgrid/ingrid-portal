@@ -128,7 +128,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  
 <facets>
     <!-- Bundesländer -->
-    <facet sort="SORT_BY_NAME" show-on-more-than="1">
+    <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.states</name>
         <id>state</id>
         <facets>
