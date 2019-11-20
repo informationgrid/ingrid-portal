@@ -1,7 +1,7 @@
 <div class="columns">
     <div>$contactIntroPostEmail</div>
     <div class="search-filtered">
-        <h2>Kontaktformular</h2>
+        <h2>$MESSAGES.getString('contact.form')</h2>
         #set ($action = $renderResponse.createActionURL())
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
             #displayFormError()
