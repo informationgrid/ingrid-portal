@@ -133,6 +133,7 @@ public class MdekDataBean {
 	private Boolean thesaurusEnvExtRes;
 	private List<Integer> thesaurusEnvTopicsList;
 	private List<Integer> priorityDataset;
+	private Integer spatialScope;
 
 
 	// Links
@@ -2238,5 +2239,13 @@ public class MdekDataBean {
 
 	public void setPriorityDataset(List<Integer> priorityDataset) {
 		this.priorityDataset = priorityDataset;
+	}
+
+	public Integer getSpatialScope() {
+		return spatialScope;
+	}
+
+	public void setSpatialScope(Integer spatialScope) {
+		this.spatialScope = spatialScope;
 	}
 }

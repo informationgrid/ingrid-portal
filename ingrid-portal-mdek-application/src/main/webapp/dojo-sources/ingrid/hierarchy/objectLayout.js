@@ -352,6 +352,20 @@ define([
                     self.initializedPriorityDatasetList = data;
                 });
 
+                var storeProps = {
+                    data: {
+                        identifier: '1',
+                        label: '0'
+                    }
+                };
+                layoutCreator.createSelectBox("spatialScope", null, storeProps, function() {
+                    return UtilSyslist.getSyslistEntry(6360)
+                        .then(function(items) {
+                            items.unshift(["&nbsp;", ""]);
+                            return items;
+                        });
+                });
+
                 new CheckBox({}, "isInspireRelevant");
                 new RadioButton({
                     checked: true,

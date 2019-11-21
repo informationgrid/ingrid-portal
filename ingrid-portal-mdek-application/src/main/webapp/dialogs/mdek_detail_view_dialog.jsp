@@ -845,6 +845,7 @@ require([
                     renderList(sortedList, "<fmt:message key='ui.obj.priority.dataset' />", null, function(val) {
                         return UtilSyslist.getSyslistEntryName(6350, val);
                     });
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(6360, nodeData.spatialScope), "<fmt:message key='ui.obj.spatial.scope' />");
                 }
                 renderTextWithTitle(nodeData.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
                 renderList(nodeData.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {

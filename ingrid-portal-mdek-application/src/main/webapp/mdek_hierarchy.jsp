@@ -442,6 +442,21 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
+                                <span id="uiElement5095" class="outer optional">
+                                    <div>
+                                        <span class="label">
+                                            <label for="spatialScope" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5066);" >
+                                                <fmt:message key="ui.obj.spatial.scope" />
+                                            </label>
+                                        </span>
+                                        <div class="input">
+                                            <div id="spatialScope" style="width:100%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
                                 <span id="uiElement5060" class="outer">
                                     <div>
                                         <span id="thesaurusTopicsLabel" class="label">

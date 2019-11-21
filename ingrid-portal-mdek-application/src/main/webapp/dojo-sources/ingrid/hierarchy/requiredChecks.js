@@ -97,7 +97,8 @@ define(["dojo/_base/declare",
             var grids = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
 
             array.forEach(widgets, function(w) {
-                if (lang.trim(registry.byId(w).get("displayedValue")).length === 0) {
+                var displayedValue = registry.byId(w).get("displayedValue");
+                if (lang.trim(displayedValue).length === 0 || displayedValue === "&nbsp;") {
                     notPublishableIDs.push( [w, message.get( "validation.error.empty.field" )] );
                 }
             });

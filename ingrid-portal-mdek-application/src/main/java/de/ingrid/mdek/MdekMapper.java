@@ -295,6 +295,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<IngridDocument>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
             mdekObj.setRef1KeysText(mapToKeyLinkDataTable((List<IngridDocument>) td1Map.get(MdekKeys.KEY_CATALOG_LIST)));
             mdekObj.setRef1ProcessText((String) td1Map.get(MdekKeys.METHOD_OF_PRODUCTION));
+            mdekObj.setSpatialScope((Integer) obj.get(MdekKeys.SPATIAL_SCOPE));
             break;
         case 2:
             mdekObj.setOpenData(isOpenData);
@@ -345,6 +346,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef3Operation(mapToOperationTable((List<IngridDocument>) td3Map.get(MdekKeys.SERVICE_OPERATION_LIST), (Integer) td3Map.get(MdekKeys.SERVICE_TYPE_KEY)));
             String ref3HasAccessConstraint = (String) td3Map.get(MdekKeys.HAS_ACCESS_CONSTRAINT);
             mdekObj.setRef3HasAccessConstraint(ref3HasAccessConstraint != null && ref3HasAccessConstraint.equalsIgnoreCase("Y"));
+            mdekObj.setSpatialScope((Integer) obj.get(MdekKeys.SPATIAL_SCOPE));
 
             break;
         case 4:
@@ -454,7 +456,7 @@ public class MdekMapper implements DataMapperInterface {
         }
 
         String workStateStr = (String) adr.get(MdekKeys.WORK_STATE); 
-        WorkState workState = null;
+        WorkState workState;
         if (workStateStr != null) {
             workState = EnumUtil.mapDatabaseToEnumConst(WorkState.class, workStateStr);
         } else {
@@ -530,9 +532,9 @@ public class MdekMapper implements DataMapperInterface {
     }
         
     private static String getObjectDocType(IngridDocument obj) {
-        String nodeDocType = "Class" + ((Integer) obj.get(MdekKeys.CLASS));
+        String nodeDocType = "Class" + obj.get(MdekKeys.CLASS);
         String workState = (String) obj.get(MdekKeys.WORK_STATE); 
-        Boolean isPublished = (Boolean) obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
+        Boolean isPublished = obj.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) obj.get(MdekKeys.IS_PUBLISHED);
 
         if (workState != null) {
             if (workState.equals("V") && isPublished) {
@@ -547,10 +549,10 @@ public class MdekMapper implements DataMapperInterface {
 
 
     private static String getAddressDocType(IngridDocument adr) {
-        String nodeDocType = null;
+        String nodeDocType;
         Integer adrClass = (Integer) adr.get(MdekKeys.CLASS);
         String workState = (String) adr.get(MdekKeys.WORK_STATE); 
-        Boolean isPublished = (Boolean) adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
+        Boolean isPublished = adr.get(MdekKeys.IS_PUBLISHED) != null && (Boolean) adr.get(MdekKeys.IS_PUBLISHED);
 
         if (adrClass == null)
                 return "Institution_B";
@@ -929,6 +931,7 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.SPATIAL_REPRESENTATION_TYPE_LIST, data.getRef1Representation());
             td1Map.put(MdekKeys.GEO_VECTOR_LIST, mapFromVFormatDetailsTable(data.getRef1VFormatDetails()));
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_MAP, td1Map);
+            udkObj.put(MdekKeys.SPATIAL_SCOPE, data.getSpatialScope());
             break;
         case 2:
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
@@ -990,6 +993,7 @@ public class MdekMapper implements DataMapperInterface {
                 }
             }
             udkObj.put(MdekKeys.TECHNICAL_DOMAIN_SERVICE, td3Map);
+            udkObj.put(MdekKeys.SPATIAL_SCOPE, data.getSpatialScope());
             break;
         case 4:
             IngridDocument td4Map = new IngridDocument();           
@@ -2340,7 +2344,7 @@ public class MdekMapper implements DataMapperInterface {
             LinkDataBean l = new LinkDataBean();
             l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.SYMBOL_DATE)));
             KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SYMBOL_CAT_KEY, MdekKeys.SYMBOL_CAT);
-            l.setTitle((String) kvp.getValue());
+            l.setTitle(kvp.getValue());
             l.setVersion((String) topic.get(MdekKeys.SYMBOL_EDITION));
             resultList.add(l);
         }
@@ -2355,7 +2359,7 @@ public class MdekMapper implements DataMapperInterface {
             LinkDataBean l = new LinkDataBean();
             l.setDate(convertTimestampToDate((String) topic.get(MdekKeys.KEY_DATE)));
             KeyValuePair kvp = mapToKeyValuePair(topic, MdekKeys.SUBJECT_CAT_KEY, MdekKeys.SUBJECT_CAT);
-            l.setTitle((String) kvp.getValue());
+            l.setTitle(kvp.getValue());
             l.setVersion((String) topic.get(MdekKeys.EDITION));
             resultList.add(l);
         }
@@ -2468,7 +2472,7 @@ public class MdekMapper implements DataMapperInterface {
         int syslistIdNameOfMeasure = MdekUtils.MdekSysList.getSyslistIdFromDqElementId(dqElementId);
 
         for (IngridDocument dqDoc : dqList) {
-            if (dqElementId.equals((Integer) dqDoc.get(MdekKeys.DQ_ELEMENT_ID))) {
+            if (dqElementId.equals(dqDoc.get(MdekKeys.DQ_ELEMENT_ID))) {
                 DQBean dq = new DQBean();
                 dq.setDqElementId(dqElementId);
                 

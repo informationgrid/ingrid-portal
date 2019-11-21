@@ -419,6 +419,7 @@ require([
 				renderList(nodeDataOld.priorityDataset, nodeDataNew.priorityDataset, "<fmt:message key='ui.obj.priority.dataset' />", null, function (val) {
 					return UtilSyslist.getSyslistEntryName(6350, val);
 				});
+				renderTextWithTitle(UtilSyslist.getSyslistEntryName(6360, nodeDataOld.spatialScope), UtilSyslist.getSyslistEntryName(6360, nodeDataNew.spatialScope), "<fmt:message key='ui.obj.spatial.scope' />");
 			}
             renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
             renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {
