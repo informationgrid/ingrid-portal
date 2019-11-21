@@ -72,6 +72,10 @@
                 <name>sectionStyle</name>
                 <value>no-row</value>
             </preference>
+            <preference>
+                <name>default</name>
+                <value>about-1</value>
+            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
     </portlet>
