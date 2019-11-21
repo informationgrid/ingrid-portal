@@ -118,9 +118,13 @@
         <script>
             $('.js-anchor-target').anchorTarget();
         </script>
-#if($currentPage != "/main-measures.psml")
+
+        <!-- Anchor navigation -->
+        <script src="/decorations/layout/ingrid/scripts/anchor-navigation.js"></script>
+        <script>
+            $('.js-anchor-navigation').anchorNavigation();
+        </script>
     </div>
-#end
 
         <!-- Piwik -->
         <script type="text/javascript">

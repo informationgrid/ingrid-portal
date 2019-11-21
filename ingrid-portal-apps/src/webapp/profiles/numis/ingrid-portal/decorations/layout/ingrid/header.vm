@@ -63,9 +63,7 @@
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
     </head>
     <body>
-#if($currentPage != "/main-measures.psml")
         <div class="container">
-#end
             #set($mainMenu = $site.getMenu("main-menu"))
             #set($serviceMenu = $site.getMenu("service-menu"))
             #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
