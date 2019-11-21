@@ -541,7 +541,7 @@ header a.icon.is-selected {
 }
 .filter-group .accordion-item .accordion-title:hover {
   color: #1D4B7B;
-  border-bottom: 1px solid #1D4B7B !important;
+  border-color: #1D4B7B !important;
 }
 .filter-group .accordion-item .accordion-title:hover::after {
   color: #1D4B7B;
@@ -942,69 +942,6 @@ header .row .columns:last-of-type {
   padding: 8px;
   max-width: 300px;
 }
-.help-group .accordion-item .accordion-title {
-  background-color: transparent;
-  padding: 16px 16px;
-  border-bottom: 0 !important;
-}
-.help-group .accordion-item .accordion-title:hover {
-  border-bottom: 0 !important;
-}
-.help-group .accordion-item.is-active .accordion-title, .help-group .accordion-item .accordion-title.is-active {
-  background-color: #0089C6;
-  padding: 16px 16px;
-}
-.help-group .accordion-item .accordion-title::after {
-  content: "";
-}
-.help-group .accordion-item.is-active .accordion-title::after {
-  content: "";
-}
-.help-group .accordion-item.is-active .accordion-title span, .help-group .accordion-item .accordion-title.is-active span {
-  color: #FFFFFF;
-}
-.help-group .accordion-item .accordion-content {
-  background-color: #F6F6F6;
-  margin: 0 0 24px;
-  border-radius: 0;
-}
-.help-group .accordion-item .nav-item {
-  font-size: 16px;
-  color:#0089C6;
-  padding: 12px 32px;
-  display: block;
-  font-weight: normal;
-}
-.help-group .accordion-item .nav-item.is-active {
-  color: #FFFFFF;
-  background-color: #0089C6;
-}
-.anchor {
-  display: none;
-}
-.anchor:hover {
-  text-decoration: none;
-  color: #0089C6;
-  cursor: default;
-}
-.anchor span {
-  position: relative;
-  left: -35px;
-  top: 4px;
-  font-size: 24px;
-}
-.anchor:target {
-  display: block;
-  float: left;
-  left: -6px;
-  position: relative;
-}
-.anchor:target ~ span {
-  margin-left: -24px;
-}
-h2 .anchor:target {
-  left: 0;
-}
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
     margin: 33px 0;
@@ -1034,10 +971,6 @@ h2 .anchor:target {
   }
   footer .footer .footer-menu-entries {
     text-align: left;
-  }
-  h2 .anchor span {
-    top: 10px;
-    font-size: 24px;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
@@ -1106,7 +1039,7 @@ h2 .anchor:target {
     font-size: 29px;
   }
   .header-menu-open button {
-    margin: 4.5em 0 0 !important;
+    margin: 4.5em 0 0;
     padding: 8px 16px;
     font-size: 14px;
   }

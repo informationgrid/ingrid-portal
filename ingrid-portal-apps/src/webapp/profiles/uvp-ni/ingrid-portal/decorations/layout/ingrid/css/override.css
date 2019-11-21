@@ -596,7 +596,7 @@ header {
 }
 .filter-group .accordion-item .accordion-title:hover {
   color: #1D4B7B;
-  border-bottom: 1px solid #1D4B7B !important;
+  border-color: #1D4B7B !important;
 }
 .filter-group .accordion-item .accordion-title:hover::after {
   color: #1D4B7B;

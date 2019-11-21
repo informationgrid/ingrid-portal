@@ -29,7 +29,7 @@
                     <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="detail-accordion" role="tab" id="detail-accordion-label" aria-expanded="false" aria-selected="false">Inhalt</a>
                     <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="detail-content-accordion-label" aria-hidden="true" id="detail-content-accordion">
                         <div class="boxes">
-                            <ul class="accordion filter-group help-group">
+                            <ul class="accordion filter-group nav-group">
                                 <li class="accordion-item">
                                     ## Allgemeines
                                     <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("general_tab")</span></a>
