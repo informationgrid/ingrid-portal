@@ -1619,8 +1619,8 @@ footer {
     }
   }
 }
-/* help group */
-.help-group {
+/* nav group */
+.nav-group {
   .accordion-item {
     .accordion-title {
       background-color: transparent;
@@ -1701,55 +1701,4 @@ footer {
 }
 h2 .anchor:target {
   left: 0;
-}
-/* detail group */
-.detail-group {
-  .accordion-item {
-    .accordion-title {
-      background-color: transparent;
-      padding: 16px 16px;
-      border-bottom: 0 !important;
-    }
-    .accordion-title:hover {
-      border-bottom: 0 !important;
-    }
-    .accordion-title.is-active {
-      background-color: #0089C6;
-      padding: 16px 16px;
-      span {
-        color: #FFFFFF;
-      }
-    }
-    .accordion-title::after {
-      content: "";
-    }
-    .accordion-content {
-      background-color: #F6F6F6;
-      margin: 0 0 24px;
-      border-radius: 0;
-    }
-    .nav-item {
-      font-size: 16px;
-      color:#0089C6;
-      padding: 12px 32px;
-      display: block;
-      font-weight: normal;
-    }
-    .nav-item.is-active {
-      color: #FFFFFF;
-      background-color: #0089C6;
-    }
-  }
-  .accordion-item.is-active {
-    .accordion-title {
-      background-color: #0089C6;
-      padding: 16px 16px;
-      span {
-        color: #FFFFFF;
-      }
-    }
-    .accordion-title::after {
-      content: "";
-    }
-  }
 }
