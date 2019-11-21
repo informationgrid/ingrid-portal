@@ -118,6 +118,12 @@
         <script>
             $('.js-anchor-target').anchorTarget();
         </script>
+
+        <!-- Anchor navigation -->
+        <script src="/decorations/layout/ingrid/scripts/anchor-navigation.js"></script>
+        <script>
+            $('.js-anchor-navigation').anchorNavigation();
+        </script>
 #if($currentPage != "/main-measures.psml")
     </div>
 #end
