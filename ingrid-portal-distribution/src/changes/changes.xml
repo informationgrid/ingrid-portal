@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="1530">
             IGE: Encode strings in source note of use constraints.
           </action>
+          <action type="fix" dev="wemove" issue="1560">
+            IGE: Show AdV product group in detail and compare view.
+          </action>
           <action type="update" dev="wemove" issue="1528">
             Portal: Remove "Ähnliche Begriffe" on BKG profile.
           </action>

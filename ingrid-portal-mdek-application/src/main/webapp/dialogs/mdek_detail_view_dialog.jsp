@@ -817,6 +817,11 @@ require([
 
                 // indexing
                 renderSectionTitel("<fmt:message key='ui.obj.thesaurus.title' />");
+
+                renderList(nodeData.advProductGroupList, "<fmt:message key='ui.obj.thesaurus.advProductGroup' />", null, function(val) {
+                    return UtilSyslist.getSyslistEntryName(8010, val);
+                });
+
                 var sortedList = nodeData.thesaurusTermsTable.sort(function(a, b) {
                     return UtilString.compareIgnoreCase(a.title, b.title);
                 });

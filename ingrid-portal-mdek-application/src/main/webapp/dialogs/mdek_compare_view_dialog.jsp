@@ -405,6 +405,9 @@ require([
 
             // indexing
             renderSectionTitel("<fmt:message key='ui.obj.thesaurus.title' />");
+            renderList(nodeDataOld.advProductGroupList, nodeDataNew.advProductGroupList, "<fmt:message key='ui.obj.thesaurus.advProductGroup' />", null, function(val) {
+				return UtilSyslist.getSyslistEntryName(8010, val);
+			});
             renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "<fmt:message key='ui.adr.thesaurus.terms' />", "title");
             renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.category' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(527, val);
