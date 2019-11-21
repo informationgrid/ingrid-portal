@@ -942,107 +942,6 @@ header .row .columns:last-of-type {
   padding: 8px;
   max-width: 300px;
 }
-.detail-group .accordion-item .accordion-title {
-  background-color: transparent;
-  padding: 16px 16px;
-  border-bottom: 0 !important;
-}
-.detail-group .accordion-item .accordion-title:hover {
-  border-bottom: 0 !important;
-}
-.detail-group .accordion-item.is-active .accordion-title, .detail-group .accordion-item .accordion-title.is-active {
-  background-color: #0089C6;
-  padding: 16px 16px;
-}
-.detail-group .accordion-item .accordion-title::after {
-  content: "";
-}
-.detail-group .accordion-item.is-active .accordion-title::after {
-  content: "";
-}
-.detail-group .accordion-item.is-active .accordion-title span, .detail-group .accordion-item .accordion-title.is-active span {
-  color: #FFFFFF;
-}
-.detail-group .accordion-item .accordion-content {
-  background-color: #F6F6F6;
-  margin: 0 0 24px;
-  border-radius: 0;
-}
-.detail-group .accordion-item .nav-item {
-  font-size: 16px;
-  color:#0089C6;
-  padding: 12px 32px;
-  display: block;
-  font-weight: normal;
-}
-.detail-group .accordion-item .nav-item.is-active {
-  color: #FFFFFF;
-  background-color: #0089C6;
-}
-.help-group .accordion-item .accordion-title {
-  background-color: transparent;
-  padding: 16px 16px;
-  border-bottom: 0 !important;
-  font-size: 18px;
-}
-.help-group .accordion-item .accordion-title:hover {
-  border-bottom: 0 solid transparent !important;
-}
-.help-group .accordion-item .accordion-title::after, .help-group .accordion-item.is-active .accordion-title::after {
-  content: "";
-}
-.help-group .accordion-item.is-active .accordion-title span, .help-group .accordion-item .accordion-title.is-active span {
-  color: #FFFFFF;
-}
-.help-group .accordion-item.is-active .accordion-title, .help-group .accordion-item .accordion-title.is-active {
-  background-color: #0089C6;
-  padding: 16px 16px 16px 32px;
-}
-.help-group .accordion-content {
-  background-color: #F6F6F6;
-  padding: 16px 0 !important;
-  border-radius: 0 !important;
-  margin: 0 !important;
-}
-.help-group .accordion-content a {
-  display: block;
-  margin: 0 16px 16px 48px;
-  font-size: 15px;
-}
-.help-group .accordion-content a [class^="ic-"] {
-  display: none;
-}
-.help-group .accordion-content a.is-active [class^="ic-"] {
-  display: inline-block;
-  margin: 0 8px 0 -18px;
-  font-size: 10px;
-}
-.anchor {
-  display: none;
-}
-.anchor:hover {
-  text-decoration: none;
-  color: #0089C6;
-  cursor: default;
-}
-.anchor span {
-  position: relative;
-  left: -35px;
-  top: 4px;
-  font-size: 24px;
-}
-.anchor:target {
-  display: block;
-  float: left;
-  left: -6px;
-  position: relative;
-}
-.anchor:target ~ span {
-  margin-left: -24px;
-}
-h2 .anchor:target {
-  left: 0;
-}
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
     margin: 33px 0;
@@ -1072,10 +971,6 @@ h2 .anchor:target {
   }
   footer .footer .footer-menu-entries {
     text-align: left;
-  }
-  h2 .anchor span {
-    top: 10px;
-    font-size: 24px;
   }
 }
 @media print, screen and (max-width: 63.9375em) {

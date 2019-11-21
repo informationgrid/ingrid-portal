@@ -1619,3 +1619,137 @@ footer {
     }
   }
 }
+/* help group */
+.help-group {
+  .accordion-item {
+    .accordion-title {
+      background-color: transparent;
+      padding: 16px 16px 16px 32px;
+      border-bottom: 0 !important;
+      font-size: 18px;
+    }
+    .accordion-title:hover {
+      border-bottom: 0 solid transparent !important;
+    }
+    .accordion-title::after {
+      content: "";
+    }
+    .accordion-title.is-active {
+      background-color: #0089C6;
+      padding: 16px 16px 16px 32px;
+      span {
+        color: #FFFFFF;
+      }
+    }
+  }
+  .accordion-item.is-active {
+    .accordion-title {
+      background-color: #0089C6;
+      span {
+        color: #FFFFFF;
+      }
+    }
+    .accordion-title::after {
+      content: "";
+    }
+  }
+  .accordion-content {
+    background-color: #F6F6F6;
+    padding: 16px 0 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    a {
+      display: block;
+      margin: 0 16px 16px 48px;
+      font-size: 15px;
+      [class^="ic-"] {
+        display: none;
+      }
+    }
+    a.is-active {
+      [class^="ic-"] {
+        display: inline-block;
+        margin: 0 8px 0 -18px;
+        font-size: 10px;
+      }
+    }
+  }
+}
+.anchor {
+  display: none;
+  span {
+    position: relative;
+    left: -35px;
+    top: 4px;
+    font-size: 24px;
+  }
+}
+.anchor:hover {
+  text-decoration: none;
+  color: #0089C6;
+  cursor: default;
+}
+.anchor:target {
+  display: block;
+  float: left;
+  left: -6px;
+  position: relative;
+  
+  ~ span {
+   margin-left: -24px;
+  }
+}
+h2 .anchor:target {
+  left: 0;
+}
+/* detail group */
+.detail-group {
+  .accordion-item {
+    .accordion-title {
+      background-color: transparent;
+      padding: 16px 16px;
+      border-bottom: 0 !important;
+    }
+    .accordion-title:hover {
+      border-bottom: 0 !important;
+    }
+    .accordion-title.is-active {
+      background-color: #0089C6;
+      padding: 16px 16px;
+      span {
+        color: #FFFFFF;
+      }
+    }
+    .accordion-title::after {
+      content: "";
+    }
+    .accordion-content {
+      background-color: #F6F6F6;
+      margin: 0 0 24px;
+      border-radius: 0;
+    }
+    .nav-item {
+      font-size: 16px;
+      color:#0089C6;
+      padding: 12px 32px;
+      display: block;
+      font-weight: normal;
+    }
+    .nav-item.is-active {
+      color: #FFFFFF;
+      background-color: #0089C6;
+    }
+  }
+  .accordion-item.is-active {
+    .accordion-title {
+      background-color: #0089C6;
+      padding: 16px 16px;
+      span {
+        color: #FFFFFF;
+      }
+    }
+    .accordion-title::after {
+      content: "";
+    }
+  }
+}
