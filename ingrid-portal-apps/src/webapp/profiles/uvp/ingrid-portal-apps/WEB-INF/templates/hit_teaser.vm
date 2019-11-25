@@ -36,15 +36,15 @@
                                             <div class="helper text">
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
                                             </div>
-                                            #set ($date = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
+                                            #set ($mode_time = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
                                             <a href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'" title="$hit.getHitDetail().getTitle()">
                                                 <h2 class="header">
                                                     $hit.getHitDetail().getTitle()
                                                 </h2>
                                             </a>
-                                            #if($date)
+                                            #if($mode_time)
                                             <div class="helper text date">
-                                                <span class="">$date</span>
+                                                <span class="">$mode_time</span>
                                             </div>
                                             #end
                                             <p class="data-text">$hit.getHitDetail().getSummary()</p>
