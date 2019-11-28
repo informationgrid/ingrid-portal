@@ -1,4 +1,4 @@
-<!--
+<%--
   **************************************************-
   Ingrid Portal Base
   ==================================================
@@ -19,9 +19,13 @@
   See the Licence for the specific language governing permissions and
   limitations under the Licence.
   **************************************************#
-  -->
+  --%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Decorator  ingrid  ${decoTop} - ${decoBottom}-->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <title>HMDK - Metadaten der Freien und Hansestadt Hamburg</title>
@@ -45,23 +49,6 @@
     </head>
     <body>
         <div class="nav-overlay">
-            <a title="Freitextsuche nach Informationen" class="nav-overlay__item nav-overlay__item--level1" href="/freitextsuche">Suche</a>
-            <a title="Eingebundene Datenkataloge und Metadaten" class="nav-overlay__item nav-overlay__item--level1" href="/datenkataloge">Kataloge</a>
-            <a class="nav-overlay__item nav-overlay__item--level1" href="/kartendienste" title="Interaktive thematische Karten">Karte</a>
-            <div class="js-accordion-multi">
-                <div title="Hintergrundinformationen zu InGrid-Portal" class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle">
-                    <svg class="nav-overlay__icon icon"><use xlink:href="#plus"/></svg>
-                    <svg class="nav-overlay__icon icon"><use xlink:href="#minus"/></svg>
-                    Über InGrid-Portal
-                </div>
-                <div class="nav-overlay__level2 js-accordion-content is-hidden">
-                    <div class="nav-overlay__level2__content">
-                        <a title="Kurzbeschreibung und Hintergrund" class="nav-overlay__item nav-overlay__item--level2" href="/hintergrundinformationen">Porträt</a>
-                        <a title="Kooperationspartner und Informationsanbieter" class="nav-overlay__item nav-overlay__item--level2" href="/informationsanbieter">Informationsanbieter</a>
-                        <a title="Angeschlossene Datenbanken" class="nav-overlay__item nav-overlay__item--level2" href="/datenquellen">Datenquellen</a>
-                    </div>
-                </div>
-            </div>
             <ul class="nav__mobile nav__foot">
                 <li>
                     <a title="Erläuterungen zur Nutzung von InGrid-Portal" href="/hilfe">Hilfe</a>
@@ -103,30 +90,7 @@
                 <nav class="nav-desktop mq-hide-xxl">
                     <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
                         <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
-                        </li>
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/datenkataloge" title="Eingebundene Datenkataloge und Metadaten">Kataloge</a>
-                        </li>
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/kartendienste" title="Interaktive thematische Karten">Karte</a>
-                        </li>
-                        <li class="nav-desktop__item dropmenu__box">
-                            <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="Hintergrundinformationen zu InGrid-Portal">
-                                Über InGrid
-                                <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
-                            </a>
-                            <ul class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
-                                <li>
-                                    <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Porträt</a>
-                                </li>
-                                <li>
-                                    <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Informationsanbieter</a>
-                                </li>
-                                <li>
-                                    <a href="/datenquellen" title="Angeschlossene Datenbanken">Datenquellen</a>
-                                </li>
-                            </ul>
+                          &nbsp;
                         </li>
                     </ul>
                 </nav>
@@ -135,50 +99,9 @@
             <section class="block block--padded">
                 <div class="ob-box-wide ob-box-padded ob-box-center">
                     <article class="content ob-container">
-                        <h1 id="errorTitle">FEHLER 404: SEITE ODER DATEI NICHT GEFUNDEN</h1>
-                        <p>
-                            Die gew&uuml;nschte Seite scheint nicht mehr zu existieren. Sie wurde umbenannt, gel&ouml;scht oder existiert nicht.
-                        </p>
-                        <ul class="list list--bullets">
-                            <li>
-                                Falls Sie &uuml;ber ein altes Lesezeichen gekommen sind, bitte aktualisieren Sie Ihr Lesezeichen oder Ihre Favoriten
-                            </li>
-                            <li>
-                                Falls Sie die Adresse (URL) selbst eingetippt haben, &uuml;berpr&uuml;fen Sie bitte die Schreibweise
-                            </li>
-                            <li>
-                                Versuchen Sie &uuml;ber die <a href="/startseite">Startseite</a>
-                                oder die <a href="/inhaltsverzeichnis">Inhalts&uuml;bersicht</a>
-                                die gew&uuml;nschte Seite zu finden
-                            </li>
-                            <li>
-                                St&ouml;bern Sie in den verschiedenen Such-Kategorien von InGrid-Portal:
-                            </li>
-                        </ul>
-                        <ul class="link-list">
-                            <li>
-                                <a href="/freitextsuche">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Suche
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/datenkataloge">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Kataloge
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/kartendienste">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Karte
-                                </a>
-                            </li>
-                        </ul>
+                        <h1><fmt:message key="ui.entry.not.supported.browser" /></h1>
+                        <p><fmt:message key="ui.entry.not.supported.browser.text" /></p>
                         <br />
-                        <p>
-                            Danke f&uuml;r Ihr Verst&auml;ndnis.
-                        </p>
                     </article>
                 </div>
             </section>
@@ -223,35 +146,5 @@
         <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
         <script src="/decorations/layout/ingrid/scripts/all.js"></script>
         
-        <!-- Popup -->
-        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-        
-        <!-- Accordion -->
-        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
-        <script>
-          $('.js-accordion').accordion();
-        
-          $('.js-accordion-multi').accordion({
-              multi: true
-          });
-        </script>
-        
-        <!-- Tabs -->
-        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
-        <script>
-          $('.js-tabs').tabs();
-        </script>
-        
-        <!-- Selection -->
-        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
-        <script>
-          $('.js-selection').selection();
-        </script>
-        
-        <!-- Table Sort -->
-        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
-        <script>
-          $('.js-table-sortable').sortable();
-        </script>
     </body>
 </html>
