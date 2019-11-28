@@ -386,11 +386,6 @@ require([
             });
             renderTextWithTitle(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
 
-            // only show "availabilityDataFormatInspire" in class 1 ... by default a default value is mapped to 
-            // this field which shall not be shown here
-            if (nodeDataOld.objectClass == 1 || nodeDataNew.objectClass == 1) {
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(6300, nodeDataOld.availabilityDataFormatInspire), UtilSyslist.getSyslistEntryName(6300, nodeDataNew.availabilityDataFormatInspire), "<fmt:message key='ui.obj.availability.dataFormatInspire' />");
-            }
             renderTable(nodeDataOld.availabilityDataFormatTable, nodeDataNew.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], ["<fmt:message key='ui.obj.availability.dataFormatTable.header.name' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.version' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.compression' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.depth' />"], "<fmt:message key='ui.obj.availability.dataFormatTable.title' />");
             renderTable(nodeDataOld.availabilityMediaOptionsTable, nodeDataNew.availabilityMediaOptionsTable, ["name", "transferSize", "location"], ["<fmt:message key='ui.obj.availability.mediaOptionTable.header.type' />", "<fmt:message key='ui.obj.availability.mediaOptionTable.header.amount' />", "<fmt:message key='ui.obj.availability.mediaOptionTable.header.location' />"], "<fmt:message key='ui.obj.availability.mediaOptionTable.title' />", [
 

@@ -30,12 +30,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <meta http-equiv="X-UA-Compatible" content="chrome=1" />
- 
+
         <!-- <script type="text/javascript" src="js/objectLayout.js"></script>
         <script type="text/javascript" src="js/addressLayout.js"></script> -->
 
 		<script type="text/javascript" src="js/diff.js"></script>
-        
+
         <script type="text/javascript" src="generated/dynamicJS.js?lang=<%=currLang%>&c=<%=java.lang.Math.random()%>"></script>
         <script type="text/javascript">
             var pageHierachy = _container_;
@@ -74,7 +74,7 @@
                             style: "height: 29px;"
                         }).placeAt(contentBorderContainer.domNode);
 
-                        // left pane - TreeContainer 
+                        // left pane - TreeContainer
                         var leftPane = new ContentPane({
                             id: "treePane",
                             splitter: true,
@@ -328,7 +328,7 @@
                                 </span>
 								<span class="input"><input type="text" id="generalDesc" name="generalDesc" /></span>
 								</div>
-                            </span>									
+                            </span>
                             <span id="uiElement1000" class="outer">
                             	<div><span id="generalAddressTableLabel" class="label left">
                                     <label for="generalAddressTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1000)">
@@ -655,7 +655,7 @@
                                                 </div>
                                             </div></div>
                                         </span>
-									<span>&nbsp;</span>
+									    <div class="clear"></div>
                                     </div>
                                 </span>
                             </div>
@@ -1509,7 +1509,7 @@
                                         <div>
                                             <span id="ref3CouplingTypeLabel" class="label"> 
                                                 <label for="ref3CouplingType" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3221)">
-                                                    <fmt:message key="ui.obj.type3.couplingType" /> 
+                                                    <fmt:message key="ui.obj.type3.couplingType" />
                                                 </label> 
                                             </span>
                                             <span class="input">
@@ -2265,19 +2265,7 @@
                                     </div>
                                 </span>
                             </div>
-                            <span id="uiElement1315" class="outer">
-                                <div>
-                                <span id="availabilityDataFormatInspireLabel" class="label">
-                                    <label for="availabilityDataFormatInspire" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1315)">
-                                        <fmt:message key="ui.obj.availability.dataFormatInspire" />
-                                    </label>
-                                </span>
-                                <span class="input spaceBelow">
-                                    <div id="availabilityDataFormatInspire" style="width:100%;" listId="6300">
-                                    </div>
-                                </span>
-                                </div>
-                            </span>
+
                             <div class="inputContainer">
                                 <span id="uiElement1320" class="outer">
                                 	<div><span class="label" id="availabilityDataFormatLabel">
@@ -2292,6 +2280,7 @@
 									</div>
                                 </span>
                             </div>
+
                             <div class="inputContainer">
                                 <span id="uiElement1310" class="outer">
                                 	<div><span class="label">
@@ -2469,7 +2458,7 @@
                         </div>
                         <div class="fill"></div>
                     </div>
-                    <!-- ADDRESS TYPE 1 - Unit //-->                    
+                    <!-- ADDRESS TYPE 1 - Unit //-->
                     <div id="headerAddressType1" class="rubric contentBlock firstBlock">
                         <div id="headerAddressType1Content" class="content">
                             <div class="inputContainer">
@@ -2507,7 +2496,7 @@
                         </div>
                         <div class="fill"></div>
                     </div>
-                    <!-- ADDRESS TYPE 2 - Person //-->                    
+                    <!-- ADDRESS TYPE 2 - Person //-->
                     <div id="headerAddressType2" class="rubric contentBlock firstBlock">
                         <div id="headerAddressType2Content" class="content">
                             <div class="inputContainer">

@@ -813,7 +813,8 @@ define({
         "ui.1240.description": "Periodicity",
         "ui.1250.description": "Descriptions",
         "ui.1310.description": "Media Option",
-        "ui.1315.description": "Encoding Scheme Geographical Data",
+        "ui.1315.description": "Application Scheme Geographical Data",
+        "ui.1316.description": "Date (Application Scheme Geographical Data)",
         "ui.1320.description": "Data Format",
         "ui.1350.description": "Legal Basis",
         "ui.1409.description": "Thesaurus Search Terms",
@@ -1069,6 +1070,7 @@ define({
         "validation.error.spatial.no.entry": "At least one spatial reference must be entered as thesaurus or free entry.",
         "validation.error.spatial.no.expired": "A spatial reference must not be expired.",
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
+        "validation.error.date.without.title": "No date allowed without title.",
 
         "validation.levelOfSpecification.notConform":"For non conform INSPIRE-relevant datasets this specification must be 'not evaluated' or 'not conform'.",
         "validation.levelOfSpecification.conform":"For conform INSPIRE-relevant datasets this specification must be 'conform'.",
@@ -1079,7 +1081,6 @@ define({
         "validation.specification.deleted": "The specification <ul><li>${0}</li></ul> may not be deleted for INSPIRE-relevant datasets.",
         "validation.specification.delete.depend": "The depending  specification(s) <ul>${0}</ul> was/were deleted as well.",
         "validation.specification.added": "The specification '${0}' was added as well.",
-        "validation.encoding.added": "The encoding scheme '${0}' was changed as well.",
         "validation.spatial.system.inspire.missing": "There must be at least one INSPIRE-spatial reference chosen.",
         "validation.dataformat.missing.gml": "There must be at least one 'GML' entry with a version",
 
