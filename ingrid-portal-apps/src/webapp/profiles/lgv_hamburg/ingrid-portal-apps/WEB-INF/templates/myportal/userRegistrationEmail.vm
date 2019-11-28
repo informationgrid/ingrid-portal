@@ -1,0 +1,14 @@
+Hallo $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
+
+Willkommen bei HMDK! 
+Vielen Dank für Ihre Anmeldung.
+
+Bitte verifizieren Sie Ihre Anmeldung durch den nachfolgenden Link.
+
+$!{map.get("returnURL")}
+
+Danach schreiben Sie eine E-Mail an das LGV Metadaten Funktionspostfach: lgvmetadaten@gv.hamburg.de 
+Wir weisen Ihnen dann die Berechtigung für den InGrid-Editor zu. Erst danach können Sie mit dem Erfassen oder Bearbeiten der Metadaten beginnen.
+
+Mit freundlichen Grüßen,
+Ihr HMDK-Team

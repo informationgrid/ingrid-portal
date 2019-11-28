@@ -20,7 +20,6 @@
         #end
         -->
         <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
-        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "HMDK - Metadaten der Freien und Hansestadt Hamburg")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
