@@ -2067,15 +2067,6 @@ define([
                     "class": "textAreaFull"
                 }, "availabilityOrderInfo");
 
-                new ValidationTextBox({
-                    maxLength: 255,
-                    style: "width:100%;"
-                }, "availabilityDataFormatInspire");
-
-                new DateTextBox({
-                    style: "width: 100%;"
-                }, "availabilityDataFormatInspireDate");
-
             },
 
 

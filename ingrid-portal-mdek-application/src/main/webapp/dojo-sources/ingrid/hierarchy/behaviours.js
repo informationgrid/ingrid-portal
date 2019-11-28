@@ -80,8 +80,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/extraInfoCharSetData",
         "ingrid/hierarchy/behaviours/parentIdentifier",
         "ingrid/hierarchy/behaviours/deleteNonEmptyFolders",
-        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints",
-        "ingrid/hierarchy/behaviours/availabilityDataFormatInspireDate"
+        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
@@ -91,7 +90,7 @@ define(["dojo/_base/declare",
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
             extraInfoLangData, extraInfoCharSetData,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, availabilityDataFormatInspireDate) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints) {
 
     return declare(null, {
         
@@ -164,8 +163,6 @@ define(["dojo/_base/declare",
 
         accessContraintsField: accessConstraints,
 
-        availabilityDataFormatInspireDate: availabilityDataFormatInspireDate,
-
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
         
@@ -222,26 +219,6 @@ define(["dojo/_base/declare",
                         domClass.add("uiElement5105", "hidden");
                     } else {
                         domClass.remove("uiElement5105", "hidden");
-                    }
-                });
-            }
-        },
-        
-        encodingSchemeForGeodatasets: {
-            title: "Anwendungsschema der geographischen Daten",
-            description: "Für Geodatensätze wird das Feld \"Anwendungsschema der geographischen Daten\" angezeigt, für andere Klassen ist es ausgeblendet.",
-            defaultActive: true,
-            run: function() {
-                topic.subscribe("/onObjectClassChange", function(data) {
-                    if (data.objClass === "Class1") {
-                        // "Anwendungsschema der geographischen Daten"
-                        domClass.remove("uiElement1314", "hide");
-    
-                    } else {
-                        // "Anwendungsschema der geographischen Daten" only in class 1
-                        domClass.add("uiElement1314", "hide");
-                        // remove any previous value from now hidden field
-                        registry.byId("availabilityDataFormatInspire").set("value", "");
                     }
                 });
             }

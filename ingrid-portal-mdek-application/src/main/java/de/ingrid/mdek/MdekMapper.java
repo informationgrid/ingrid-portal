@@ -35,7 +35,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.MdekUtils.PublishType;
 import de.ingrid.mdek.MdekUtils.SearchtermType;
 import de.ingrid.mdek.MdekUtils.UserOperation;
@@ -196,9 +195,6 @@ public class MdekMapper implements DataMapperInterface {
         mdekObj.setAvailabilityOrderInfo((String) obj.get(MdekKeys.ORDERING_INSTRUCTIONS));
         // NOTICE: always map this one (maps default value if not set), although only displayed in class 1
         // Then the default value is shown if switched to class 1
-        Object[] availDataFormatInspire = mapToAvailDataFormatInspire((List<IngridDocument>) obj.get(MdekKeys.FORMAT_INSPIRE_LIST));
-        mdekObj.setAvailabilityDataFormatInspire((String) availDataFormatInspire[0]);
-        mdekObj.setAvailabilityDataFormatInspireDate((Date) availDataFormatInspire[1]);
         mdekObj.setAvailabilityDataFormatTable(mapToAvailDataFormatTable((List<IngridDocument>) obj.get(MdekKeys.DATA_FORMATS)));
         mdekObj.setAvailabilityMediaOptionsTable(mapToAvailMediaOptionsTable((List<IngridDocument>) obj.get(MdekKeys.MEDIUM_OPTIONS)));
         
@@ -890,7 +886,6 @@ public class MdekMapper implements DataMapperInterface {
             udkObj.put(MdekKeys.IS_OPEN_DATA, isOpenDataValue);
             udkObj.put(MdekKeys.OPEN_DATA_CATEGORY_LIST, mapFromCategoriesOpenDataTable(data.getOpenDataCategories()));
 
-            udkObj.put(MdekKeys.FORMAT_INSPIRE_LIST, mapFromAvailDataFormatInspire(data.getAvailabilityDataFormatInspire(), data.getAvailabilityDataFormatInspireDate()));
 
             IngridDocument td1Map = new IngridDocument();
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
@@ -1108,10 +1103,6 @@ public class MdekMapper implements DataMapperInterface {
         if (null == obj.getExtraInfoCharSetDataCode()) {
             obj.setExtraInfoCharSetDataCode(sysListMapper.getInitialKeyFromListId(510));
         }
-        if (null == obj.getAvailabilityDataFormatInspire()) {
-            obj.setAvailabilityDataFormatInspire(sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue()));
-        }
-
 
     }
 
@@ -1455,24 +1446,6 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
-    /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
-    private List<IngridDocument> mapFromAvailDataFormatInspire(String inspireDataFormat, Date inspireDataFormatDate) {
-        List<IngridDocument> resultList = new ArrayList<>();
-        if (inspireDataFormat == null)
-            return resultList;
-
-        KeyValuePair kvp = mapFromKeyValue(MdekKeys.FORMAT_KEY, inspireDataFormat);
-        if (kvp.getValue() != null || kvp.getKey() != -1) {
-            IngridDocument result = new IngridDocument();
-            result.put(MdekKeys.FORMAT_VALUE, kvp.getValue());
-            result.put(MdekKeys.FORMAT_KEY, kvp.getKey());
-            result.put(MdekKeys.FORMAT_DATE, inspireDataFormatDate);
-            resultList.add(result);
-        }
-
-        return resultList;
-    }
-
     private List<IngridDocument> mapFromAvailDataFormatTable(List<DataFormatBean> refList) {
         List<IngridDocument> resultList = new ArrayList<>();
         if (refList == null)
@@ -2140,24 +2113,6 @@ public class MdekMapper implements DataMapperInterface {
             resultList.add(kvp.getValue());
         }
         return resultList;
-    }
-    
-    
-    /** NOTICE: in backend inspireDataFormat is Table/List (1:N) in frontend it's a combobox (1:1)! */
-    private Object[] mapToAvailDataFormatInspire(List<IngridDocument> refList) {
-        String result;
-        Date date = null;
-        if (refList != null && !refList.isEmpty()) {
-            IngridDocument ref = refList.get(0);
-            KeyValuePair kvp = mapToKeyValuePair(ref, MdekKeys.FORMAT_KEY, MdekKeys.FORMAT_VALUE);
-            result = kvp.getValue();
-            date = (Date) ref.get(MdekKeys.FORMAT_DATE);
-        } else {
-            // return default value !
-            result = sysListMapper.getInitialValueFromListId(MdekSysList.OBJ_FORMAT_INSPIRE.getDbValue());
-        }
-
-        return new Object[] {result, date};
     }
 
     private List<DataFormatBean> mapToAvailDataFormatTable(List<IngridDocument> refList) {

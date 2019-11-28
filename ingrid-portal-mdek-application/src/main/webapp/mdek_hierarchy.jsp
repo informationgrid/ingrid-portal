@@ -2251,46 +2251,6 @@
                                 </span>
                             </div>
 
-                            <div id="uiElement1314" class="inputContainer optional" style="padding: 5px;">
-                                <span>
-                                    <span class="label">
-                                    <label for="availabilityDataFormatInspire"
-                                           onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1315)">
-                                        <fmt:message key="ui.obj.availability.dataFormatInspire"/>
-                                    </label>
-                                </span>
-                                </span>
-                                <div class="outlined">
-                                    <span id="uiElement1315" class="outer threeQuarterWidth">
-                                        <div>
-                                        <span id="availabilityDataFormatInspireLabel" class="label">
-                                            <label for="availabilityDataFormatInspire" class="inActive">
-                                                <fmt:message key="ui.obj.availability.dataFormatInspireTitle" />
-                                            </label>
-                                        </span>
-                                        <span class="input spaceBelow">
-                                            <div id="availabilityDataFormatInspire">
-                                            </div>
-                                        </span>
-                                        </div>
-                                    </span>
-                                    <span id="uiElement1316" class="outer quarterWidth">
-                                        <div>
-                                        <span id="availabilityDataFormatInspireDateLabel" class="label">
-                                            <label for="availabilityDataFormatInspire" class="inActive">
-                                                <fmt:message key="ui.obj.availability.dataFormatInspireDate" />
-                                            </label>
-                                        </span>
-                                        <span class="input spaceBelow">
-                                            <div id="availabilityDataFormatInspireDate">
-                                            </div>
-                                        </span>
-                                        </div>
-                                    </span>
-                                    <div class="clear"></div>
-                                </div>
-                            </div>
-
                             <div class="inputContainer">
                                 <span id="uiElement1310" class="outer">
                                 	<div><span class="label">

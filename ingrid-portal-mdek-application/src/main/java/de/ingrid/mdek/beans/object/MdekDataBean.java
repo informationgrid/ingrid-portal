@@ -118,8 +118,6 @@ public class MdekDataBean {
 	private List<String> availabilityAccessConstraints;
 	private List<UseAccessConstraintsBean> availabilityUseAccessConstraints;
 	private String availabilityUseConstraints;
-	private String availabilityDataFormatInspire;
-	private Date availabilityDataFormatInspireDate;
 	private List<DataFormatBean> availabilityDataFormatTable;
 	private List<MediaOptionBean> availabilityMediaOptionsTable;
 	private String availabilityOrderInfo;
@@ -1129,30 +1127,9 @@ public class MdekDataBean {
 		this.timeRefTable = timeRefTable;
 	}
 
-
-
-
-	public String getAvailabilityDataFormatInspire() {
-		return availabilityDataFormatInspire;
-	}
-
-
-
-
-	public void setAvailabilityDataFormatInspire(
-			String availabilityDataFormatInspire) {
-		this.availabilityDataFormatInspire = availabilityDataFormatInspire;
-	}
-
-
-
-
 	public List<DataFormatBean> getAvailabilityDataFormatTable() {
 		return availabilityDataFormatTable;
 	}
-
-
-
 
 	public void setAvailabilityDataFormatTable(
 			List<DataFormatBean> availabilityDataFormatTable) {
@@ -2232,11 +2209,4 @@ public class MdekDataBean {
 		this.parentIdentifier = parentIdentifier;
 	}
 
-	public Date getAvailabilityDataFormatInspireDate() {
-		return availabilityDataFormatInspireDate;
-	}
-
-	public void setAvailabilityDataFormatInspireDate(Date availabilityDataFormatInspireDate) {
-		this.availabilityDataFormatInspireDate = availabilityDataFormatInspireDate;
-	}
 }
