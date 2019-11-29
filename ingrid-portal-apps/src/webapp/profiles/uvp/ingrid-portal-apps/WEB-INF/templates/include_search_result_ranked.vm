@@ -26,14 +26,7 @@
             $action.setParameter("doRemoveAll", "true")
             #renderResetLink($action $MESSAGES.getString('searchResult.facet.delete.selection'))
         #end
-        #if($ranking == "date")
-            <div class="caption">
-                <div class="icon check">
-                    <span class="ic-ic-info"></span>
-                    <span>Bauleitpl&auml;ne k&ouml;nnen bei der Sortierung nach "Aktualit&auml;t" leider nicht ber&uuml;cksichtigt werden.</span>
-                </div>
-            </div>
-        #end
+        #parse ('/WEB-INF/templates/search-result/parts/include_search_result_header_info.vm')
         #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
     </div>
 #end

@@ -143,7 +143,6 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory11", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_11_CHECKED, false ));
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
-        context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
@@ -460,7 +459,11 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (request.getUserPrincipal() != null) {
              showAdminContent = request.getUserPrincipal().getName().equals("admin");
         }
-        
+        String ranking = request.getParameter(Settings.PARAM_RANKING);
+        if(UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
+            ranking = query.getRankingType();
+        }
+        context.put("ranking", ranking);
         context.put("ds", request.getParameter("ds"));
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);
