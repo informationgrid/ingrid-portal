@@ -29,6 +29,12 @@
           <action type="fix" dev="wemove" issue="1545">
             Portal: Fix contact form title.
           </action>
+          <action type="fix" dev="wemove" issue="1465">
+            Portal: Umsetzung Layout NUMIS/UVP Niedersachsen.
+          </action>
+          <action type="fix" dev="wemove" issue="602">
+            UVP: Sortierung der Trefferliste.
+          </action>
           <action type="fix" dev="wemove" issue="661">
             UVP: Fix facet state.
           </action>
