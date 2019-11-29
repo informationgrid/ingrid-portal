@@ -299,11 +299,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (type.equals("3")) {
                         // get link from operation (unique one)
                         if (serviceType != null && serviceType.trim().equals("view")) {
-                            StringBuilder capabilityUrl;
+                            StringBuilder capabilityUrl = null;
                             if(serviceUrl != null){
                                 capabilityUrl= new StringBuilder(serviceUrl);
                             } else {
-                                capabilityUrl =  new StringBuilder(getCapabilityUrl());
+                                String tmpUrl = getCapabilityUrl();
+                                if(tmpUrl != null) {
+                                    capabilityUrl =  new StringBuilder(getCapabilityUrl());
+                                }
                             }
                             if ( capabilityUrl != null ) {
                                 capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
