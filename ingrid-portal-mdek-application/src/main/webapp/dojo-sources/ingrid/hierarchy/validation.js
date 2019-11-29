@@ -264,7 +264,8 @@ define(["dojo/_base/declare",
             return !error;
         },
 
-        addServiceUrlValidation: function(val) {
+        addServiceUrlValidation: function(other, data) {
+            var val = data[0];
             console.debug("validate addServiceUrlValidation");
             var error = false;
             var gridId = "ref6UrlList";

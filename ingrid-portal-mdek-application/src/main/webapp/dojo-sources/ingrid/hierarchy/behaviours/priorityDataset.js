@@ -62,6 +62,7 @@ define([
                 on(inspireRelevantWidget, "Change", function(isChecked) {
                     if (isChecked) {
                         UtilUI.setShow("uiElement5090");
+                        registry.byId("priorityDataset").reinitLastColumn();
                     } else {
                         UtilUI.setOptional("uiElement5090");
                     }

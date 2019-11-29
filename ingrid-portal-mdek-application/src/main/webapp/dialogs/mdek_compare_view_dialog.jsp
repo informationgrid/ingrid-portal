@@ -386,11 +386,6 @@ require([
             });
             renderTextWithTitle(nodeDataOld.availabilityUseConstraints, nodeDataNew.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
 
-            // only show "availabilityDataFormatInspire" in class 1 ... by default a default value is mapped to 
-            // this field which shall not be shown here
-            if (nodeDataOld.objectClass == 1 || nodeDataNew.objectClass == 1) {
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(6300, nodeDataOld.availabilityDataFormatInspire), UtilSyslist.getSyslistEntryName(6300, nodeDataNew.availabilityDataFormatInspire), "<fmt:message key='ui.obj.availability.dataFormatInspire' />");
-            }
             renderTable(nodeDataOld.availabilityDataFormatTable, nodeDataNew.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], ["<fmt:message key='ui.obj.availability.dataFormatTable.header.name' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.version' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.compression' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.depth' />"], "<fmt:message key='ui.obj.availability.dataFormatTable.title' />");
             renderTable(nodeDataOld.availabilityMediaOptionsTable, nodeDataNew.availabilityMediaOptionsTable, ["name", "transferSize", "location"], ["<fmt:message key='ui.obj.availability.mediaOptionTable.header.type' />", "<fmt:message key='ui.obj.availability.mediaOptionTable.header.amount' />", "<fmt:message key='ui.obj.availability.mediaOptionTable.header.location' />"], "<fmt:message key='ui.obj.availability.mediaOptionTable.title' />", [
 
@@ -405,6 +400,9 @@ require([
 
             // indexing
             renderSectionTitel("<fmt:message key='ui.obj.thesaurus.title' />");
+            renderList(nodeDataOld.advProductGroupList, nodeDataNew.advProductGroupList, "<fmt:message key='ui.obj.thesaurus.advProductGroup' />", null, function(val) {
+				return UtilSyslist.getSyslistEntryName(8010, val);
+			});
             renderList(nodeDataOld.thesaurusTermsTable, nodeDataNew.thesaurusTermsTable, "<fmt:message key='ui.adr.thesaurus.terms' />", "title");
             renderList(nodeDataOld.thesaurusTopicsList, nodeDataNew.thesaurusTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.category' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(527, val);
@@ -412,9 +410,12 @@ require([
 			renderList(nodeDataOld.thesaurusInspireTermsList, nodeDataNew.thesaurusInspireTermsList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function(val) {
 				return UtilSyslist.getSyslistEntryName(6100, val);
 			});
-			renderList(nodeDataOld.priorityDataset, nodeDataNew.priorityDataset, "<fmt:message key='ui.obj.priority.dataset' />", null, function(val) {
-				return UtilSyslist.getSyslistEntryName(6350, val);
-			});
+			if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
+				renderList(nodeDataOld.priorityDataset, nodeDataNew.priorityDataset, "<fmt:message key='ui.obj.priority.dataset' />", null, function (val) {
+					return UtilSyslist.getSyslistEntryName(6350, val);
+				});
+				renderTextWithTitle(UtilSyslist.getSyslistEntryName(6360, nodeDataOld.spatialScope), UtilSyslist.getSyslistEntryName(6360, nodeDataNew.spatialScope), "<fmt:message key='ui.obj.spatial.scope' />");
+			}
             renderTextWithTitle(nodeDataOld.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", nodeDataNew.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
             renderList(nodeDataOld.thesaurusEnvTopicsList, nodeDataNew.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {
                 return UtilSyslist.getSyslistEntryName(1410, val);

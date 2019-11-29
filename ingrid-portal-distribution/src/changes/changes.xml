@@ -14,11 +14,23 @@
           <action type="fix" dev="wemove" issue="1553">
             IGE: Verlinkung von hochgeladenen Dokumenten im Editor funktioniert nicht.
           </action>
+          <action type="fix" dev="wemove" issue="1530">
+            IGE: Encode strings in source note of use constraints.
+          </action>
+          <action type="fix" dev="wemove" issue="1560">
+            IGE: Show AdV product group in detail and compare view.
+          </action>
           <action type="update" dev="wemove" issue="1528">
             Portal: Remove "Ähnliche Begriffe" on BKG profile.
           </action>
           <action type="fix" dev="wemove" issue="1543">
             Portal: Fix password forgotten function.
+          </action>
+          <action type="fix" dev="wemove" issue="1545">
+            Portal: Fix contact form title.
+          </action>
+          <action type="fix" dev="wemove" issue="661">
+            UVP: Fix facet state.
           </action>
         </release>
 

@@ -91,25 +91,23 @@ public class FileSystemItem implements StorageItem {
     }
 
     @Override
-    public String getUri(final boolean urlencode) {
+    public String getUri() {
         final FileSystem fileSystem = FileSystems.getDefault();
         final String separator = fileSystem.getSeparator();
 
         String uri = fileSystem.getPath(this.path, this.file).toString().replace(separator, URI_PATH_SEPARATOR);
-        if (urlencode) {
-            try {
-                uri = URLEncoder.encode(uri, "UTF-8")
-                        .replaceAll("\\+", "%20")
-                        .replaceAll("\\%21", "!")
-                        .replaceAll("\\%27", "'")
-                        .replaceAll("\\%28", "(")
-                        .replaceAll("\\%29", ")")
-                        .replaceAll("\\%7E", "~")
-                        .replaceAll("\\%2F", "/")
-                        .replaceAll("\\%5C", "/");
-            }
-            catch (final UnsupportedEncodingException e) {}
+        try {
+            uri = URLEncoder.encode(uri, "UTF-8")
+                    .replaceAll("\\+", "%20")
+                    .replaceAll("\\%21", "!")
+                    .replaceAll("\\%27", "'")
+                    .replaceAll("\\%28", "(")
+                    .replaceAll("\\%29", ")")
+                    .replaceAll("\\%7E", "~")
+                    .replaceAll("\\%2F", "/")
+                    .replaceAll("\\%5C", "/");
         }
+        catch (final UnsupportedEncodingException e) {}
         return uri;
     }
 

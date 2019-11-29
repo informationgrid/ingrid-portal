@@ -57,6 +57,7 @@ import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
 import de.ingrid.mdek.quartz.jobs.UploadCleanupJob.FileReference;
+import de.ingrid.mdek.upload.storage.impl.FileSystemItem;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.utils.IngridDocument;
 
@@ -394,7 +395,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -422,7 +423,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -450,7 +451,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -478,7 +479,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -506,10 +507,10 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -538,7 +539,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
@@ -565,7 +566,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -593,7 +594,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -621,7 +622,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -650,7 +651,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
@@ -677,7 +678,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -713,7 +714,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                referencedDir+PATH_SEPARATOR+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                referencedDir+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -831,6 +832,15 @@ public class UploadCleanupJobTest extends BaseJobTest {
      */
     private String getFilePath(final String plugId) {
         return plugId+PATH_SEPARATOR+OBJ_UUID;
+    }
+
+    /**
+     * Get the encoded filename
+     * @param file
+     * @return String
+     */
+    private String encodeFilename(final String file) {
+        return (new FileSystemItem(null, "", file, "", 0, null, false, null)).getUri();
     }
 
     /**

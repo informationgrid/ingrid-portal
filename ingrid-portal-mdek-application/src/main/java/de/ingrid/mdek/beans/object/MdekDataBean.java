@@ -118,7 +118,6 @@ public class MdekDataBean {
 	private List<String> availabilityAccessConstraints;
 	private List<UseAccessConstraintsBean> availabilityUseAccessConstraints;
 	private String availabilityUseConstraints;
-	private String availabilityDataFormatInspire;
 	private List<DataFormatBean> availabilityDataFormatTable;
 	private List<MediaOptionBean> availabilityMediaOptionsTable;
 	private String availabilityOrderInfo;
@@ -133,6 +132,7 @@ public class MdekDataBean {
 	private Boolean thesaurusEnvExtRes;
 	private List<Integer> thesaurusEnvTopicsList;
 	private List<Integer> priorityDataset;
+	private Integer spatialScope;
 
 
 	// Links
@@ -1129,30 +1129,9 @@ public class MdekDataBean {
 		this.timeRefTable = timeRefTable;
 	}
 
-
-
-
-	public String getAvailabilityDataFormatInspire() {
-		return availabilityDataFormatInspire;
-	}
-
-
-
-
-	public void setAvailabilityDataFormatInspire(
-			String availabilityDataFormatInspire) {
-		this.availabilityDataFormatInspire = availabilityDataFormatInspire;
-	}
-
-
-
-
 	public List<DataFormatBean> getAvailabilityDataFormatTable() {
 		return availabilityDataFormatTable;
 	}
-
-
-
 
 	public void setAvailabilityDataFormatTable(
 			List<DataFormatBean> availabilityDataFormatTable) {
@@ -2238,5 +2217,13 @@ public class MdekDataBean {
 
 	public void setPriorityDataset(List<Integer> priorityDataset) {
 		this.priorityDataset = priorityDataset;
+	}
+
+	public Integer getSpatialScope() {
+		return spatialScope;
+	}
+
+	public void setSpatialScope(Integer spatialScope) {
+		this.spatialScope = spatialScope;
 	}
 }

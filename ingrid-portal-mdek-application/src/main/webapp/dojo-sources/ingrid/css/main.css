@@ -534,7 +534,14 @@ iframe {
 
 .halfWidth {
     width: 50% !important;
-    /*width: 360px !important;*/
+}
+
+.threeQuarterWidth {
+    width: 75% !important;
+}
+
+.quarterWidth {
+    width: 25% !important;
 }
 
 .titleBar .titleIcon {

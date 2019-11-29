@@ -417,7 +417,7 @@ openDataLGV : {
                 domClass.add("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.add("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.add("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.add("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+                domClass.add("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
                 
             } else {
                 
@@ -458,7 +458,7 @@ openDataLGV : {
                 domClass.remove("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.remove("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.remove("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.remove("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+                domClass.remove("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
 
                 // Tab containers may be rendered for the first time and needs to be layouted
                 igeEvents.refreshTabContainers();
