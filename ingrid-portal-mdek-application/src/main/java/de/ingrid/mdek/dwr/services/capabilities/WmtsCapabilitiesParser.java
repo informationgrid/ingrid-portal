@@ -32,7 +32,6 @@ import de.ingrid.mdek.beans.CapabilitiesBean;
 import de.ingrid.mdek.beans.object.*;
 import de.ingrid.utils.xml.WmtsNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
-import org.apache.commons.lang.ArrayUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -66,7 +65,9 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
 
     private static final String XPATH_EXP_WMTS_OP_GET_FEATURE_INFO_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeatureInfo']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
 
-    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF1 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF2 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[2]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF3 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[3]/@xlink:href";
 
     private static final String XPATH_EXT_WMTS_SERVICECONTACT = "/wmts:Capabilities/ows11:ServiceProvider/ows11:ServiceContact";
 
@@ -157,8 +158,16 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
 
         // Operation - GetTile
         OperationBean getTileOp = mapToOperationBean(doc,
-                new String[]{ XPATH_EXP_WMTS_OP_GET_TILE_HREF },
-                new Integer[]{ ID_OP_PLATFORM_HTTP_GET });
+                new String[]{
+                        XPATH_EXP_WMTS_OP_GET_TILE_HREF1,
+                        XPATH_EXP_WMTS_OP_GET_TILE_HREF2,
+                        XPATH_EXP_WMTS_OP_GET_TILE_HREF3
+                },
+                new Integer[]{
+                        ID_OP_PLATFORM_HTTP_GET,
+                        ID_OP_PLATFORM_HTTP_GET,
+                        ID_OP_PLATFORM_HTTP_GET
+                });
         if (!getTileOp.getAddressList().isEmpty()) {
             getTileOp.setName("GetTile");
             getTileOp.setMethodCall("GetTile");
