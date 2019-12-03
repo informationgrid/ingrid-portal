@@ -22,12 +22,21 @@
  */
 package de.ingrid.portal.portlets.myportal;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.LoginForm;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.Utils;
-import de.ingrid.portal.security.role.IngridRole;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.PortalAdministration;
@@ -36,6 +45,7 @@ import org.apache.jetspeed.components.portletregistry.PortletRegistry;
 import org.apache.jetspeed.login.LoginConstants;
 import org.apache.jetspeed.om.portlet.InitParam;
 import org.apache.jetspeed.request.RequestContext;
+import org.apache.jetspeed.security.PasswordCredential;
 import org.apache.jetspeed.security.RoleManager;
 import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
@@ -47,10 +57,14 @@ import org.apache.velocity.context.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.portlet.*;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.*;
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.forms.AdminUserForm;
+import de.ingrid.portal.forms.LoginForm;
+import de.ingrid.portal.forms.PasswordUpdateRequiredForm;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.Settings;
+import de.ingrid.portal.global.Utils;
+import de.ingrid.portal.security.role.IngridRole;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -63,12 +77,40 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 	
 	private static final String VIEW_SHIB = "/WEB-INF/templates/myportal/myportal_shib.vm";
 
+    private static final String PARAM_USER_NAME = "userName";
+
+    private static final String PARAM_USER_GUID = "userGUID";
+
+    private static final String CMD_PASSWORD_UPDATE_REQUIRED = "password_update";
+
+    private PortalAdministration admin;
+
+    private UserManager userManager;
+
     /**
      * The separator used to create a unique portlet name as
      * {portletApplication}::{portlet}
      * Taken from org.apache.jetspeed.components.portletregistry.PersistenceBrokerPortletRegistry
      */
     public static final String PORTLET_UNIQUE_NAME_SEPARATOR = "::";
+
+    /**
+     * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#init(javax.portlet.PortletConfig)
+     */
+    @Override
+    public void init(PortletConfig config) throws PortletException {
+        super.init(config);
+
+        admin = (PortalAdministration) getPortletContext()
+                .getAttribute(CommonPortletServices.CPS_PORTAL_ADMINISTRATION);
+        if (null == admin) {
+            throw new PortletException("Failed to find the Portal Administration on portlet initialization");
+        }
+        userManager = (UserManager) getPortletContext().getAttribute(CommonPortletServices.CPS_USER_MANAGER_COMPONENT);
+        if (null == userManager) {
+            throw new PortletException("Failed to find the User Manager on portlet initialization");
+        }
+    }
 
     /**
      * @see org.apache.portals.bridges.velocity.GenericVelocityPortlet#doView(javax.portlet.RenderRequest,
@@ -92,6 +134,33 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         
+        String userName = request.getParameter(PARAM_USER_NAME);
+        String userGUID = request.getParameter(PARAM_USER_GUID);
+
+        if(userName != null && !userName.isEmpty() && userGUID != null && !userGUID.isEmpty()) {
+            try {
+                User user = userManager.getUser(userName);
+                if (user != null) {
+                    Map<String, String> pref = user.getInfoMap();
+                    String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
+                    userConfirmId = (userConfirmId == null ? "invalid" : userConfirmId);
+                    if (userConfirmId.equals(userGUID)) {
+                        response.setTitle(messages.getString("login.password.update.required.title"));
+                        context.put("isPasswordUpdateRequired", true);
+                        context.put(PARAM_USER_NAME, userName);
+                        context.put(PARAM_USER_GUID, userGUID);
+                        context.put("cmd", CMD_PASSWORD_UPDATE_REQUIRED);
+                        PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
+                                PasswordUpdateRequiredForm.class);
+                        context.put("actionForm", f);
+                        super.doView(request, response);
+                        return;
+                    }
+                }
+            } catch (SecurityException e) {
+                return;
+            }
+        }
         // when using shibboleth authentication just show a page to create a profile
         // for the new user
         if (isLoggedInExternally && isCreateAccount) {
@@ -111,6 +180,8 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 frm.setError(LoginForm.FIELD_PW, "login.error.invalidPassword");
             } else if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_DISABLED.toString())) {
                 frm.setError(LoginForm.FIELD_PW, "login.error.userDisabled");
+            } else if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_EXPIRED.toString())) {
+                frm.setError(LoginForm.FIELD_PW, "login.error.userExpired");
             } else {
                 frm.setError("", "login.error.general");
             }
@@ -242,6 +313,47 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 				log.error("RegistrationException." , e);
 			} catch (SecurityException e) {
 			    log.error("SecurityException." , e);
+            }
+        } else if (cmd != null && cmd.equals(CMD_PASSWORD_UPDATE_REQUIRED)) {
+            String userName = request.getParameter(PARAM_USER_NAME);
+            String userGUID = request.getParameter(PARAM_USER_GUID);
+            
+            response.setRenderParameter("cmd", request.getParameter("cmd"));
+
+            PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
+                    PasswordUpdateRequiredForm.class);
+            f.clearErrors();
+            f.populate(request);
+            if (!f.validate()) {
+                response.setRenderParameter(PARAM_USER_NAME, userName);
+                response.setRenderParameter(PARAM_USER_GUID, userGUID);
+                return;
+            }
+            
+            if(userName != null && !userName.isEmpty() && userGUID != null && !userGUID.isEmpty()) {
+                try {
+                    User user = userManager.getUser(userName);
+                    if (user != null) {
+                        Map<String, String> pref = user.getInfoMap();
+                        String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
+                        userConfirmId = (userConfirmId == null ? "invalid" : userConfirmId);
+                        if (userConfirmId.equals(userGUID)) {
+                            String pw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW);
+                            if(!pw.isEmpty()) {
+                                PasswordCredential credential = userManager.getPasswordCredential(user);
+                                credential.setPassword(credential.getOldPassword(), pw);
+                                // generate login id
+                                String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
+                                        Long.toString(System.currentTimeMillis())));
+                                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                                userManager.storePasswordCredential(credential);
+                                userManager.updateUser(user);
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    log.error("Error update password for user: " + userName, e);
+                }
             }
         } else {
             Integer errorCode = (Integer) ((RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV))

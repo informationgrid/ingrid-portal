@@ -531,7 +531,7 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
 
             String userName = f.getInput(AdminUserForm.FIELD_ID);
-            String password = f.getInput(AdminUserForm.FIELD_PW_NEW);
+            String password = admin.generatePassword();
 
             // check if the user name exists
             boolean userIdExistsFlag = true;
