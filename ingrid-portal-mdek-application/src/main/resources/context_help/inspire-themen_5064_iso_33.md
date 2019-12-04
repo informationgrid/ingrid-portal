@@ -7,7 +7,7 @@ title: INSPIRE-Themen
 
 # INSPIRE-Themen
 
-Auswahl eines INSPIRE Themengebiets zur Verschlagwortung des Datensatzes (INSPIRE-Pflichtfeld).<br/><br/>Bei Eintragung oder Löschen eines INSPIRE-Themas werden in den Pflichtfeldern Konformität/Spezifikation und Kodierungsschema automatisch Einträge vorgenommen bzw. entfernt. 
+Auswahl eines INSPIRE Themengebiets zur Verschlagwortung des Datensatzes (INSPIRE-Pflichtfeld).<br/><br/>Bei Eintragung oder Löschen eines INSPIRE-Themas werden in den Pflichtfeldern Konformität/Spezifikation und Anwendungsschema automatisch Einträge vorgenommen bzw. entfernt. 
 
 ## Beispiel:
 

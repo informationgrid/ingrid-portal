@@ -2158,8 +2158,9 @@ define([
                 UtilStore.updateWriteStore(dqTableId, nodeData[dqTableId]);
             });
 
-            registry.byId("availabilityDataFormatInspire").attr("value", nodeData.availabilityDataFormatInspire, true);
+            registry.byId("spatialScope").attr("value", nodeData.spatialScope === null ? "" : nodeData.spatialScope, true);
 
+            UtilStore.updateWriteStore("priorityDataset", UtilList.listToTableData(nodeData.priorityDataset));
         },
 
         _setObjectDataClass2: function(nodeData) {
@@ -2222,6 +2223,9 @@ define([
 
             UtilStore.updateWriteStore("ref3Operation", nodeData.ref3Operation);
             registry.byId("ref3HasAccessConstraint").attr("value", nodeData.ref3HasAccessConstraint, true);
+            registry.byId("spatialScope").attr("value", nodeData.spatialScope === null ? "" : nodeData.spatialScope, true);
+
+            UtilStore.updateWriteStore("priorityDataset", UtilList.listToTableData(nodeData.priorityDataset));
         },
 
         _setObjectDataClass4: function(nodeData) {
@@ -2774,7 +2778,8 @@ define([
                 //}
             }, this);
 
-            nodeData.availabilityDataFormatInspire = registry.byId("availabilityDataFormatInspire").get("value");
+            nodeData.priorityDataset = UtilList.tableDataToList(this._getTableData("priorityDataset"));
+            nodeData.spatialScope = registry.byId("spatialScope").get("value");
         },
 
         _getObjectDataClass2: function(nodeData) {
@@ -2836,6 +2841,8 @@ define([
             }
             nodeData.ref3Explanation = registry.byId("ref3Explanation").get("value");
             nodeData.ref3HasAccessConstraint = registry.byId("ref3HasAccessConstraint").checked;
+            nodeData.priorityDataset = UtilList.tableDataToList(this._getTableData("priorityDataset"));
+            nodeData.spatialScope = registry.byId("spatialScope").get("value");
         },
 
         _getObjectDataClass4: function(nodeData) {

@@ -1,0 +1,45 @@
+<div class="columns">
+    <div class="teaser-data-projects">
+        <div class="row">
+            <div class="columns text-center">
+                <h2>$MESSAGES.getString('news.teaser.title')</h2>
+            </div>
+        </div>
+        <div class="row">
+        #foreach($rssEntry in $rssEntries)
+            <div class="xsmall-24 small-24 medium-12 large-12 xlarge-12 columns">
+                <div class="teaser-data">
+                    <div class="text-wrapper">
+                        <small class="bx-bot-0">
+                            <span class="tx-darker"><strong>$date.format('d.M.yyyy',$rssEntry.publishedDate)</strong></span>
+                            <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
+                        </small>
+                        <a href="$!rssEntry.link" title="$!rssEntry.title">
+                            <h2 class="header">
+                                $!rssEntry.title
+                            </h2>
+                        </a>
+                        <p class="data-text">
+                            #if ($rssEntry && $rssEntry.description)
+                                $strutils.cutString($rssEntry.description, 350)
+                            #end  
+                        </p>
+                        #if($rssEntry.author && $rssEntry.author != "")
+                        <h6 class="no-margin">$MESSAGES.getString('news.author')</h6>
+                        <p>$rssEntry.author</p>
+                        #end
+                        <a href="$!rssEntry.link" title="$!rssEntry.title">
+                            <span class="ic-ic-arrow arrow"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        #end
+        </div>
+        <div class="row">
+            <div class="columns text-center">
+                <button type="button" class="button outline" onclick="location.href='$renderResponse.encodeURL('/portal/rss-news.psml')'" title="$MESSAGES.getString('news.teaser.more.tooltip')" >$MESSAGES.getString('news.teaser.more')<span class="ic-ic-angle-down"></span></button>
+            </div>
+        </div>
+    </div>
+</div>

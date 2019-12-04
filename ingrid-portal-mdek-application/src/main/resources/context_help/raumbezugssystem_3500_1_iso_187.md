@@ -9,7 +9,9 @@ title: Raumbezugssystem
 
 # Raumbezugssystem
 
-Angabe des Raumbezugssystems
+Angabe des Raumbezugssystems.
+
+Für INSPIRE-interoperable Datensätze muss mindestens ein Eintrag mit einem EPSG-Code eingetragen sein.
 
 ## Beispiel:
 

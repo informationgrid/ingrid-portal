@@ -210,6 +210,13 @@ define([
                             } );
                         });
                     }
+                } else if (args.column.init) {
+                    setTimeout(function() {
+                        UtilStore.updateWriteStore("activeCell_" + args.grid.id, args.column.init(), {
+                            identifier: '1',
+                            label: '0'
+                        });
+                    }, 100)
                 } else {
                     data = [];
                     for (var i = 0; i < args.column.options.length; i++) {
@@ -219,7 +226,7 @@ define([
 
                 var store = new dojo.data.ItemFileWriteStore({
                     data: {
-                        items: data
+                        items: args.column.sort ? args.column.sort(data) : data
                     }
                 });
                 box = new dijit.form.FilteringSelect({
@@ -348,7 +355,7 @@ define([
                 }
                 var store = new dojo.data.ItemFileWriteStore({
                     data: {
-                        items: data
+                        items: args.column.sort ? args.column.sort(data) : data
                     }
                 });
                 box = new dijit.form.ComboBox({

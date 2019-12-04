@@ -54,6 +54,7 @@
                     dialog = this;
                     if (this.customParams) {
                         caller = this.customParams;
+                        dialogConformity.caller = caller;
                     }
                     createDOMElements()
                     .then(init);
@@ -255,6 +256,9 @@
                 }
 
                 function isInspireConformityInconsistent(specification, level) {
+                    // Compare with previous row if we should be able to modify it
+                    // dialogConformity.caller.selectedRow
+
                     // Validation has been peformed before this method is called, so don't check nulls
                     var isInspireRelevant = registry.byId("isInspireRelevant").get("value");
                     if (isInspireRelevant !== "on") return false;

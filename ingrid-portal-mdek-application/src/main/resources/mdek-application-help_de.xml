@@ -1290,7 +1290,7 @@
 				 ganz spezielle Informationen aus der Datenbank abgerufen werden. Änderungen an 
 				 Datenbankinhalten sind nicht möglich.</p>
 				 <p>Die Datenbank-Suche beruht auf  Anfragen an die IGC-Datenbank auf Grundlage der 
-				 <a href="http://docs.jboss.org/hibernate/stable/core/reference/en/html/queryhql.html" 
+				 <a href="https://docs.jboss.org/hibernate/core/3.2/reference/en/html/queryhql.html"
 				 target="SNS">Hibernate Query Language (HQL)</a>.</p>
 				 <p>Die angezeigte Trefferliste kann im CSV-Datenformat gespeichert werden.</p>
 				 <p>Spezialisten sollten für die Datenbank-Suche folgende Punkt berücksichtigen:</p>

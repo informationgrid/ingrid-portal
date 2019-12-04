@@ -25,15 +25,16 @@
  */
 package de.ingrid.mdek.dwr.services.capabilities;
 
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.MdekUtils.MdekSysList;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
-import de.ingrid.mdek.beans.object.AddressBean;
-import de.ingrid.mdek.beans.object.OperationBean;
-import de.ingrid.mdek.beans.object.OperationParameterBean;
+import de.ingrid.mdek.beans.object.*;
 import de.ingrid.utils.xml.WmtsNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.util.ArrayList;
@@ -55,12 +56,18 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
     private static final String XPATH_EXP_WMTS_ABSTRACT = "/wmts:Capabilities/ows11:ServiceIdentification[1]/ows11:Abstract[1]";
     private static final String XPATH_EXP_WMTS_VERSION = "/wmts:Capabilities/@version";
 
-    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
-    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF1 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF2 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[2]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF3 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[3]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF1 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF2 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[2]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF3 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetCapabilities']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Post[3]/@xlink:href";
 
     private static final String XPATH_EXP_WMTS_OP_GET_FEATURE_INFO_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetFeatureInfo']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
 
-    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF1 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[1]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF2 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[2]/@xlink:href";
+    private static final String XPATH_EXP_WMTS_OP_GET_TILE_HREF3 = "/wmts:Capabilities/ows11:OperationsMetadata[1]/ows11:Operation[@name='GetTile']/ows11:DCP[1]/ows11:HTTP[1]/ows11:Get[3]/@xlink:href";
 
     private static final String XPATH_EXT_WMTS_SERVICECONTACT = "/wmts:Capabilities/ows11:ServiceProvider/ows11:ServiceContact";
 
@@ -114,10 +121,26 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
         // Operation List
         List<OperationBean> operations = new ArrayList<>();
 
+        // Spatial reference
+        List<LocationBean> boundingBoxesFromLayers = getBoundingBoxesFromLayers(doc);
+        result.setBoundingBoxes( boundingBoxesFromLayers );
+
+        // Spatial reference system
+        List<SpatialReferenceSystemBean> spatialReferenceSystems = getSpatialReferenceSystems(doc);
+        result.setSpatialReferenceSystems(spatialReferenceSystems);
+
         // Operation - GetCapabilities
         OperationBean getCapabilitiesOp = mapToOperationBean(doc,
-                new String[]{ XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF, XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF },
-                new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_POST });
+                new String[]{
+                        XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF1,
+                        XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF2,
+                        XPATH_EXP_WMTS_OP_GET_CAPABILITIES_GET_HREF3,
+                        XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF1,
+                        XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF2,
+                        XPATH_EXP_WMTS_OP_GET_CAPABILITIES_POST_HREF3
+                },
+                new Integer[]{ ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_GET, ID_OP_PLATFORM_HTTP_GET,
+                        ID_OP_PLATFORM_HTTP_POST, ID_OP_PLATFORM_HTTP_POST, ID_OP_PLATFORM_HTTP_POST });
         if (!getCapabilitiesOp.getAddressList().isEmpty()) {
             getCapabilitiesOp.setName("GetCapabilities");
             getCapabilitiesOp.setMethodCall("GetCapabilities");
@@ -135,8 +158,16 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
 
         // Operation - GetTile
         OperationBean getTileOp = mapToOperationBean(doc,
-                new String[]{ XPATH_EXP_WMTS_OP_GET_TILE_HREF },
-                new Integer[]{ ID_OP_PLATFORM_HTTP_GET });
+                new String[]{
+                        XPATH_EXP_WMTS_OP_GET_TILE_HREF1,
+                        XPATH_EXP_WMTS_OP_GET_TILE_HREF2,
+                        XPATH_EXP_WMTS_OP_GET_TILE_HREF3
+                },
+                new Integer[]{
+                        ID_OP_PLATFORM_HTTP_GET,
+                        ID_OP_PLATFORM_HTTP_GET,
+                        ID_OP_PLATFORM_HTTP_GET
+                });
         if (!getTileOp.getAddressList().isEmpty()) {
             getTileOp.setName("GetTile");
             getTileOp.setMethodCall("GetTile");
@@ -211,6 +242,64 @@ public class WmtsCapabilitiesParser extends GeneralCapabilitiesParser implements
         address.setPhone(xPathUtils.getString(doc, XPATH_EXT_WMTS_SERVICECONTACT + "/ows11:ContactInfo/ows11:Phone/ows11:Voice"));
         
         return address;
+    }
+
+    private List<LocationBean> getBoundingBoxesFromLayers(Document doc) {
+        List<LocationBean> bboxes = new ArrayList<>();
+        NodeList layers = xPathUtils.getNodeList(doc, "/wmts:Capabilities/wmts:Contents/wmts:Layer");
+        for (int i = 0; i < layers.getLength(); i++) {
+            Node layer = layers.item(i);
+
+            String[] lower = xPathUtils.getString( layer, "ows11:WGS84BoundingBox/ows11:LowerCorner" ).split( " " );
+            String[] upper = xPathUtils.getString( layer, "ows11:WGS84BoundingBox/ows11:UpperCorner" ).split( " " );
+
+            LocationBean box = new LocationBean();
+            box.setLatitude1(Double.valueOf( lower[0] ));
+            box.setLongitude1(Double.valueOf( lower[1] ));
+            box.setLatitude2(Double.valueOf( upper[0] ));
+            box.setLongitude2(Double.valueOf( upper[1] ));
+
+            // add a fallback for the name, since it's mandatory
+            String title = xPathUtils.getString(layer, "ows11:Title");
+
+            box.setName(title);
+            // shall be a free spatial reference, but needs an ID to check for duplications!
+            box.setTopicId(box.getName());
+            box.setType( MdekUtils.SpatialReferenceType.FREI.getDbValue() );
+
+            bboxes.add(box);
+        }
+        return bboxes;
+    }
+
+    private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
+        List<SpatialReferenceSystemBean> result = new ArrayList<>();
+        String[] crs = xPathUtils.getStringArray(doc, "/wmts:Capabilities/wmts:Contents/wmts:TileMatrixSet/ows11:SupportedCRS");
+
+        List<String> uniqueCrs = new ArrayList<>();
+
+        // check codelists for matching entryIds
+        for (String item : crs) {
+            SpatialReferenceSystemBean srsBean = new SpatialReferenceSystemBean();
+
+            String[] splittedItem = item.split(":");
+            Integer itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+
+            String value = syslistCache.getValueFromListId(100, itemId, false);
+            if (value == null || value.isEmpty()) {
+                srsBean.setId(-1);
+                srsBean.setName(item);
+            } else {
+                srsBean.setId(itemId);
+                srsBean.setName(value);
+            }
+            if (!uniqueCrs.contains( srsBean.getName() )) {
+                result.add(srsBean);
+                uniqueCrs.add( srsBean.getName() );
+            }
+        }
+
+        return result;
     }
 
 }

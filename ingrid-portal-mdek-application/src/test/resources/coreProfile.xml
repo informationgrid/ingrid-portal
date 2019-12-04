@@ -633,7 +633,7 @@
                 <scriptedProperties><![CDATA[]]></scriptedProperties>
             </legacyControl>
             <legacyControl>
-                <id>uiElement1315</id><!-- Kodierungsschema der geographischen Daten* -->
+                <id>uiElement1315</id><!-- Anwendungsschema der geographischen Daten* -->
                 <isMandatory>true</isMandatory>
                 <isVisible>optional</isVisible>
                 <scriptedProperties><![CDATA[]]></scriptedProperties>

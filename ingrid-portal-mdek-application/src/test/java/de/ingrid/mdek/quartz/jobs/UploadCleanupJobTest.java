@@ -28,7 +28,6 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -43,13 +42,6 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.Layout;
-import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.layout.PatternLayout;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -65,13 +57,16 @@ import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
 import de.ingrid.mdek.quartz.jobs.UploadCleanupJob.FileReference;
+import de.ingrid.mdek.upload.storage.impl.FileSystemItem;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
 import de.ingrid.utils.IngridDocument;
 
-public class UploadCleanupJobTest {
+public class UploadCleanupJobTest extends BaseJobTest {
 
     private static final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
     private static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+    private static final String PATH_SEPARATOR = UploadCleanupJob.PATH_SEPARATOR;
 
     private static final Path DOCS_PATH = Paths.get("target", "ingrid-upload-test");
     private static final String OBJ_UUID = "5F1AF722-D767-4980-8403-A432173D5684";
@@ -92,39 +87,11 @@ public class UploadCleanupJobTest {
     private UploadCleanupJob job;
     private FileSystemStorage storage;
 
-    private final Logger jobLogger = LogManager.getLogger(UploadCleanupJob.class);
-    private final TestAppender testAppender = new TestAppender("test", null, PatternLayout.createDefaultLayout());
-
-    public class TestAppender extends AbstractAppender {
-
-        public boolean hasIssues() {
-            return this.getEvents(Level.FATAL).size() > 0 || this.getEvents(Level.ERROR).size() > 0 ||
-                this.getEvents(Level.WARN).size() > 0;
-        }
-
-        public List<LogEvent> getEvents(final Level level) {
-            return this.events.stream().filter(e -> e.getLevel().equals(level)).collect(Collectors.toList());
-        }
-
-        //for verifying.
-        List<LogEvent> events = new ArrayList<>();
-
-        public TestAppender(final String name, final Filter filter, final Layout<? extends Serializable> layout) {
-            super(name, filter, layout);
-        }
-
-        @Override
-        public void append(final LogEvent event) {
-            events.add(event);
-        }
-
-        public List<LogEvent> getEvents() {
-            return events;
-        }
-    }
-
+    @Override
     @Before
     public void setUp() throws Exception {
+        super.setUp();
+
         MockitoAnnotations.initMocks(this);
 
         // setup mdek client
@@ -145,19 +112,19 @@ public class UploadCleanupJobTest {
         this.job.setStorage(this.storage);
         this.job.setReferenceDate(JOB_REFERENCE_TIME);
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
-
-        // setup logging
-        final org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
-        testAppender.start();
-        coreLogger.addAppender(testAppender);
     }
 
+    @Override
     @After
     public void tearDown() throws Exception {
-        testAppender.stop();
-        final org.apache.logging.log4j.core.Logger coreLogger = (org.apache.logging.log4j.core.Logger)jobLogger;
-        coreLogger.removeAppender(this.testAppender);
+        super.tearDown();
+
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
+    }
+
+    @Override
+    protected Class<?> getJobClassUnderTest() {
+        return UploadCleanupJob.class;
     }
 
     /**
@@ -172,9 +139,9 @@ public class UploadCleanupJobTest {
         when(this.mdekClientCaller.getRegisteredIPlugs()).thenReturn(null);
 
         // set up files
-        final String unreferencedFile1 = "UnreferencedFile1";
+        final String unreferencedFile1 = "Unreferenced File1 Ä";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile1, DEFAULT_FILE_AGE);
-        final String unreferencedFile2 = "UnreferencedFile2";
+        final String unreferencedFile2 = "Unreferenced File2 Ö";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -189,7 +156,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         // exception is logged
-        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
+        assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
     }
 
     /**
@@ -201,9 +168,9 @@ public class UploadCleanupJobTest {
     public void testQueryReturnsNoResults() throws Exception {
 
         // set up files
-        final String unreferencedFile1 = "UnreferencedFile1";
+        final String unreferencedFile1 = "Unreferenced File1 Ä";
         this.createFile(this.getFilePath(FAILING_PLUG_ID), unreferencedFile1, DEFAULT_FILE_AGE);
-        final String unreferencedFile2 = "UnreferencedFile2";
+        final String unreferencedFile2 = "Unreferenced File2 Ö";
         this.createFile(this.getFilePath(FAILING_PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -218,7 +185,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(this.getFilePath(FAILING_PLUG_ID), unreferencedFile1));
         assertTrue(this.fileExists(this.getFilePath(FAILING_PLUG_ID), unreferencedFile2));
         // exception is logged
-        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
+        assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
     }
 
     /**
@@ -232,7 +199,7 @@ public class UploadCleanupJobTest {
         // set up failing iplug
 
         // set up files
-        final String unreferencedFileA1 = "UnreferencedFileA1";
+        final String unreferencedFileA1 = "Unreferenced FileA1 Ä";
         this.createFile(this.getFilePath(FAILING_PLUG_ID), unreferencedFileA1, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -243,9 +210,9 @@ public class UploadCleanupJobTest {
         // set up working iplug
 
         // set up files
-        final String unreferencedFileB1 = "UnreferencedFileB1";
+        final String unreferencedFileB1 = "Unreferenced FileB1 Ö";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFileB1, DEFAULT_FILE_AGE);
-        final String unreferencedFileB2 = "UnreferencedFileB2";
+        final String unreferencedFileB2 = "Unreferenced FileB2 Ü";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFileB2, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -261,7 +228,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFileB1));
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFileB2));
         // exception is logged
-        assertEquals(1, this.testAppender.getEvents(Level.ERROR).size());
+        assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
     }
 
     /**
@@ -272,9 +239,9 @@ public class UploadCleanupJobTest {
     @Test
     public void testDelete() throws Exception {
         // set up files
-        final String unreferencedFile1 = "UnreferencedFile1";
+        final String unreferencedFile1 = "Unreferenced File1 Ä";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile1, DEFAULT_FILE_AGE);
-        final String unreferencedFile2 = "UnreferencedFile2";
+        final String unreferencedFile2 = "Unreferenced File2 Ö";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -290,7 +257,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -301,7 +268,7 @@ public class UploadCleanupJobTest {
     @Test
     public void testIgnoreDeleted() throws Exception {
         // set up files
-        final String deletedFile = "DeletedFile1";
+        final String deletedFile = "Deleted File1 Ä";
         this.createDeletedFile(this.getFilePath(PLUG_ID), deletedFile, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -314,7 +281,7 @@ public class UploadCleanupJobTest {
 
         // test
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), deletedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -327,7 +294,7 @@ public class UploadCleanupJobTest {
         // NOTE: The test needs at least one file to make the job iterate the references
 
         // set up files
-        final String unreferencedFile1 = "UnreferencedFile1";
+        final String unreferencedFile1 = "Unreferenced File1 Ä";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile1, DEFAULT_FILE_AGE);
 
         // set up links
@@ -338,13 +305,13 @@ public class UploadCleanupJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link1, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link2, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                link3, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -353,7 +320,7 @@ public class UploadCleanupJobTest {
         this.job.executeInternal(this.context);
 
         // test
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -364,9 +331,9 @@ public class UploadCleanupJobTest {
     @Test
     public void testDeleteArchived() throws Exception {
         // set up files
-        final String unreferencedFile1 = "UnreferencedFile1";
+        final String unreferencedFile1 = "Unreferenced File1 Ä";
         this.createArchivedFile(this.getFilePath(PLUG_ID), unreferencedFile1, DEFAULT_FILE_AGE);
-        final String unreferencedFile2 = "UnreferencedFile2";
+        final String unreferencedFile2 = "Unreferenced File2 Ö";
         this.createArchivedFile(this.getFilePath(PLUG_ID), unreferencedFile2, DEFAULT_FILE_AGE);
 
         // setup file references
@@ -382,7 +349,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -393,9 +360,9 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepRecent() throws Exception {
         // set up files
-        final String unreferencedFile1 = "UnreferencedFile1";
+        final String unreferencedFile1 = "Unreferenced File1 Ä";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile1, JOB_MIN_FILE_AGE);
-        final String unreferencedFile2 = "UnreferencedFile2";
+        final String unreferencedFile2 = "Unreferenced File2 Ö";
         this.createFile(this.getFilePath(PLUG_ID), unreferencedFile2, JOB_MIN_FILE_AGE-1);
 
         // setup file references
@@ -411,7 +378,7 @@ public class UploadCleanupJobTest {
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         assertTrue(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile1));
         assertFalse(this.deletedFileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -422,13 +389,13 @@ public class UploadCleanupJobTest {
     @Test
     public void testArchivePublishedExpired() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -439,7 +406,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -450,13 +417,13 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepPublishedSameDate() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -467,7 +434,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -478,13 +445,13 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepPublishedFuture() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -495,7 +462,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -506,13 +473,13 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepPublishedNoDate() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -523,7 +490,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -534,16 +501,16 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepPublishedFutureMultipleReferences() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -554,7 +521,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -565,14 +532,14 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepUnpublishedFuture() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
@@ -582,7 +549,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -593,13 +560,13 @@ public class UploadCleanupJobTest {
     @Test
     public void testRestorePublishedArchivedSameDate() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -610,24 +577,24 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
      * Test:
-     * - Keep a published, archived file with expiry date in the future
+     * - Restore a published, archived file with expiry date in the future
      * @throws Exception
      */
     @Test
     public void testRestorePublishedArchivedFuture() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().plusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -638,24 +605,24 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
      * Test:
-     * - Keep a published, archived file with no date
+     * - Restore a published, archived file with no date
      * @throws Exception
      */
     @Test
     public void testRestorePublishedArchivedNoDate() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -666,25 +633,25 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
      * Test:
-     * - Keep an unpublished, archived file with no date
+     * - Restore an unpublished, archived file with no date
      * @throws Exception
      */
     @Test
     public void testRestoreUnpublishedArchivedNoDate() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         unpublishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", null
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
         ));
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
 
@@ -694,7 +661,7 @@ public class UploadCleanupJobTest {
         // test
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -705,13 +672,13 @@ public class UploadCleanupJobTest {
     @Test
     public void testKeepPublishedArchivedExpired() throws Exception {
         // set up files
-        final String referencedFile = "ReferencedFile";
+        final String referencedFile = "Referenced File Ä";
         this.createArchivedFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
 
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                this.getFilePath(PLUG_ID)+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -722,7 +689,7 @@ public class UploadCleanupJobTest {
         // test
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
         assertTrue(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -733,11 +700,11 @@ public class UploadCleanupJobTest {
     @Test
     public void testDeleteEmptyDirectory() throws Exception {
         // set up files
-        final String unreferencedFile = "UnreferencedFile";
-        final String unreferencedDir = this.getFilePath(PLUG_ID) + UploadCleanupJob.PATH_SEPARATOR + "UnreferencedDir";
+        final String unreferencedFile = "Unreferenced File Ä";
+        final String unreferencedDir = this.getFilePath(PLUG_ID)+PATH_SEPARATOR+"UnreferencedDir";
         this.createFile(unreferencedDir, unreferencedFile, DEFAULT_FILE_AGE);
-        final String referencedFile = "ReferencedFile";
-        final String referencedDir = this.getFilePath(PLUG_ID) + UploadCleanupJob.PATH_SEPARATOR + "ReferencedDir";
+        final String referencedFile = "Referenced File Ö";
+        final String referencedDir = this.getFilePath(PLUG_ID)+PATH_SEPARATOR+"ReferencedDir";
         this.createFile(referencedDir, referencedFile, DEFAULT_FILE_AGE);
 
         // create special directories
@@ -747,7 +714,7 @@ public class UploadCleanupJobTest {
         // setup file references
         final List<FileReference> publishedRefs = new ArrayList<FileReference>();
         publishedRefs.add(this.job.new FileReference(
-                referencedDir+"/"+referencedFile, "", JOB_REFERENCE_TIME.toLocalDate()
+                referencedDir+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate()
         ));
         final List<FileReference> unpublishedRefs = new ArrayList<FileReference>();
         this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
@@ -762,7 +729,7 @@ public class UploadCleanupJobTest {
         assertFalse(this.dirExists(unreferencedDir));
         assertTrue(this.dirExists(TRASH_PATH));
         assertTrue(this.dirExists(ARCHIVE_PATH));
-        assertFalse(this.testAppender.hasIssues());
+        assertFalse(this.getTestAppender().hasIssues());
     }
 
     /**
@@ -864,7 +831,16 @@ public class UploadCleanupJobTest {
      * @return String
      */
     private String getFilePath(final String plugId) {
-        return plugId+"/"+OBJ_UUID;
+        return plugId+PATH_SEPARATOR+OBJ_UUID;
+    }
+
+    /**
+     * Get the encoded filename
+     * @param file
+     * @return String
+     */
+    private String encodeFilename(final String file) {
+        return (new FileSystemItem(null, "", file, "", 0, null, false, null)).getUri();
     }
 
     /**

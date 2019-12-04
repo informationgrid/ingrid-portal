@@ -102,11 +102,30 @@ else
             exit 1
         fi
 
+        # NUMIS extends UVP layout
+        if [ "$PORTAL_PROFILE" == "numis" ]; then
+            echo "Copying profile files from parent (uvp) into portal directories ..."
+            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
+            if [ "$NI_SWITCH_PORTAL" ]; then
+                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
+                sed -i 's/uvp.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
+            fi
+        fi
+
         # UVP-NI extends UVP
         if [ "$PORTAL_PROFILE" == "uvp-ni" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
+            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek-application/* webapps/ingrid-portal-mdek-application
             cp -R $PROFILES_DIR/uvp/ingrid-webmap-client/* webapps/ingrid-webmap-client
+            if [ "$NI_SWITCH_PORTAL" ]; then
+                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid/footer.vm
+                sed -i 's/numis.niedersachsen.de/'${NI_SWITCH_PORTAL}'/' $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/decorations/layout/ingrid-untitled/footer.vm
+            fi
         fi
 
         echo "Copying profile files into portal directories ..."
@@ -125,8 +144,8 @@ else
         # specific options for UVP
         if [ "$PORTAL_PROFILE" == "uvp" ]; then
             # deactivate behaviours
-            find $HIERARCHY_DIR -not -path 'webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy/behaviours/uvp/*' -type f -name '*.js' -not -name 'folder*' -exec sed -i 's/defaultActive \?: \?true/defaultActive: false/' {} \;
-            find $HIERARCHY_DIR -not -path 'webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy/behaviours/uvp/*' -type f -name '*.js' -not -name 'folder*' -exec sed -i 's/defaultActive \?: \?!0/defaultActive:0/' {} \;
+            find $HIERARCHY_DIR -not -path 'webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy/behaviours/uvp/*' -type f -name '*.js' -not -name 'folder*' -not -name 'addresses.js*' -exec sed -i 's/defaultActive \?: \?true/defaultActive: false/' {} \;
+            find $HIERARCHY_DIR -not -path 'webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy/behaviours/uvp/*' -type f -name '*.js' -not -name 'folder*' -not -name 'addresses.js*' -exec sed -i 's/defaultActive \?: \?!0/defaultActive:0/' {} \;
 
             # increase session timeout to 120 minutes
             sed -i 's/<session-timeout>30<\/session-timeout>/<session-timeout>120<\/session-timeout>/' conf/web.xml
@@ -174,6 +193,12 @@ else
     # Upload settings
     sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\//upload.docsdir='${UPLOAD_DOCS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/upload.partsdir=\/tmp\/ingrid\/upload\/parts\//upload.partsdir='${UPLOAD_PARTS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+
+    # Add toybox script if TOYBOX_TOKEN is define
+    if [ "$TOYBOX_TOKEN" ]; then
+        cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid/header.vm
+        cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
+    fi
 
     touch /initialized
 fi

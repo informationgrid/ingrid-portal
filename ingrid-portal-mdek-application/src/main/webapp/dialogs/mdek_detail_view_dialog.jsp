@@ -707,7 +707,7 @@ require([
 
                 // NOTICE: moved from class 1 to general "Raumbezug"
                 //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
-                renderList(nodeData.ref1SpatialSystemTable, "<fmt:message key='ui.obj.type1.spatialSystem' />");
+                renderLinkList(prepareSpatialSystemLinks(nodeData.ref1SpatialSystemTable), "<fmt:message key='ui.obj.type1.spatialSystem' />", true);
 
                 // create cell render functions
                 function lookupSpatialRefAltMeasure(val) {
@@ -798,7 +798,6 @@ require([
                     return UtilSyslist.getSyslistEntryName(6500, val);
                 });
                 renderTextWithTitle(nodeData.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(6300, nodeData.availabilityDataFormatInspire), "<fmt:message key='ui.obj.availability.dataFormatInspire' />");
                 renderTable(nodeData.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], ["<fmt:message key='ui.obj.availability.dataFormatTable.header.name' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.version' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.compression' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.depth' />"], "<fmt:message key='ui.obj.availability.dataFormatTable.title' />", [
                     function(val) {
                         return UtilSyslist.getSyslistEntryName(1320, val);
@@ -817,6 +816,11 @@ require([
 
                 // indexing
                 renderSectionTitel("<fmt:message key='ui.obj.thesaurus.title' />");
+
+                renderList(nodeData.advProductGroupList, "<fmt:message key='ui.obj.thesaurus.advProductGroup' />", null, function(val) {
+                    return UtilSyslist.getSyslistEntryName(8010, val);
+                });
+
                 var sortedList = nodeData.thesaurusTermsTable.sort(function(a, b) {
                     return UtilString.compareIgnoreCase(a.title, b.title);
                 });
@@ -833,6 +837,15 @@ require([
                 renderList(sortedList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(6100, val);
                 });
+                if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
+                    sortedList = nodeData.priorityDataset.sort(function (a, b) {
+                        return UtilString.compareIgnoreCase(UtilSyslist.getSyslistEntryName(6350, a), UtilSyslist.getSyslistEntryName(6350, b));
+                    });
+                    renderList(sortedList, "<fmt:message key='ui.obj.priority.dataset' />", null, function(val) {
+                        return UtilSyslist.getSyslistEntryName(6350, val);
+                    });
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(6360, nodeData.spatialScope), "<fmt:message key='ui.obj.spatial.scope' />");
+                }
                 renderTextWithTitle(nodeData.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
                 renderList(nodeData.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(1410, val);
@@ -1134,7 +1147,7 @@ require([
                 var valList = "";
                 var val = null;
                 for (var i = 0; i < list.length; i++) {
-                    if (isUrl) {
+                    if (isUrl && list[i].url) {
                         val = "<a href=\"" + list[i].url + "\" target=\"new\">" + list[i].name + "</a>";
                     } else {
                         val = "" + list[i].title;
@@ -1279,6 +1292,22 @@ require([
                 retVal = val[0];
             }
             return retVal;
+        }
+
+        function prepareSpatialSystemLinks(data) {
+            var result = [];
+            array.forEach(data, function(item) {
+                var entry = {};
+                if (item.indexOf("EPSG") === 0) {
+                    var code = item.substring(5, item.indexOf(":"));
+                    entry.url = "https://epsg.io/" + code;
+                    entry.name = item;
+                } else {
+                    entry.title = item;
+                }
+                result.push(entry);
+            });
+            return result;
         }
 
         // function findNodeInSubTree(uuid) {

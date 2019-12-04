@@ -9,8 +9,8 @@
             <label for="id">$MESSAGES.getString('component.forms.text.component.id')*</label>
         </div>
         <div class="form-element">
-           <input id="id" name="id" value="#getFieldValue('id')" type="text" #addErrorFormClass('id')>
             #addErrorFormMessage('id')
+           <input id="id" name="id" value="#getFieldValue('id')" type="text" #addErrorFormClass('id')>
         </div>
         <div class="form-element">
             <label for="type">$MESSAGES.getString('component.forms.text.component.type')*</label>

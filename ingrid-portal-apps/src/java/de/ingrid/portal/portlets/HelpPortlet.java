@@ -23,9 +23,11 @@
 package de.ingrid.portal.portlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.xml.transform.Transformer;
@@ -66,6 +68,10 @@ public class HelpPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
 
+        PortletPreferences prefs = request.getPreferences();
+        String titleKey = prefs.getValue("titleKey", "help.portlet.title");
+        response.setTitle(messages.getString(titleKey));
+
         // find help file according to the language
         String lang = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
         String fileName = "ingrid-portal-help_" + lang + ".xml";
@@ -95,15 +101,18 @@ public class HelpPortlet extends GenericVelocityPortlet {
         // get the help chapter
         String helpKey = request.getParameter("hkey");
         if (helpKey == null) {
-            helpKey = "index";
+            helpKey = prefs.getValue("default", "index");
         }
         context.put( "helpKey", helpKey );
         // read help chapter
         Object chapterObj = null;
+        ArrayList<DefaultElement> menuObj = null;
         String myPath = "//section[@help-key='" + helpKey + "']/ancestor::chapter";
         try {
-            if(doc != null)
+            if(doc != null) {
                 chapterObj = doc.selectSingleNode(myPath);
+                menuObj = (ArrayList<DefaultElement>) doc.selectNodes("//chapter");
+            }
         } catch (Exception t) {
             log.error("Error reading '" + myPath + "' from help source file: " + filePath, t);
         }
@@ -130,6 +139,22 @@ public class HelpPortlet extends GenericVelocityPortlet {
                 transformer.transform(source, result);
                 String helpContent = result.getDocument().asXML();
                 context.put("help_content", helpContent);
+                
+                if(menuObj != null) {
+                    stylesheet = new StreamSource(Utils.getResourceAsStream("ingrid-portal-help-menu.xsl"));
+                    transformer = factory.newTransformer(stylesheet);
+                    result = new DocumentResult();
+                    String menuContent = "";
+                    for (int i=0; i < menuObj.size(); i++) {
+                        DefaultElement obj = menuObj.get(i);
+                        subtree = obj.asXML();
+                        source = new DocumentSource( DocumentHelper.parseText(subtree) );
+                        transformer.transform(source, result);
+                        menuContent += result.getDocument().asXML();
+                    }
+                    context.put("menu_content", menuContent);
+                }
+                
             } catch (Exception e) {
                 log.error("Error processing help entry!", e);
             }

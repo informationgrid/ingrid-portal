@@ -22,6 +22,7 @@
     right: 12px;
     .login {
       display: none;
+      ~ .button { margin: 18px 0; }
     }
   }
 }
@@ -45,7 +46,7 @@
   .header-menu-open {
     text-align: right;
     right: 12px;
-    button { margin: 25px 0 0 0; }
+    button { margin: 33px 0 0 0; }
   }
   .header-menu {
     width: 450px;
@@ -60,7 +61,12 @@
   .tabs .tabs-title>a { padding: 24px 60px 16px; }
 
   .teaser-data {
-    .data-text { height: 112px; }
+    .data-text { max-height: 112px; }
+  }
+
+  h2 .anchor span {
+    top: 10px;
+    font-size: 24px;
   }
 
 }
@@ -84,6 +90,9 @@
         padding-left: .6666666667rem;
         padding-right: .6666666667rem;
       }
+    }
+    .logo {
+      width: 16.5em;
     }
   }
   
@@ -152,7 +161,7 @@
       line-height: 30px;
       max-height: 60px;
     }
-    .data-text { height: 82px; }
+    .data-text { max-height: 82px; }
   }
   .teaser-data-projects {
     margin: 64px 0;
@@ -224,8 +233,12 @@
 /* LARGE 1024px  */
 @include breakpoint(large) {
 
-  footer .footer {
-    .footer-menu-entries, .copyright { text-align: left; }
+  footer {
+    margin-top: 4rem;
+
+    .footer {
+      .footer-menu-entries, .copyright { text-align: left; }
+    }
   }
 
   blockquote p {
@@ -244,12 +257,18 @@
   }
 
   .teaser-data {
-    height: 420px;
+    min-height: 420px;
 
-    .data-text { height: 110px; }
-    .map-wrapper { border-left: 2px solid $blue-light; }
+    .data-text {
+      height: 110px;
+      max-height: none;
+    }
+    .map-wrapper {
+      border-left: 2px solid $blue-light;
+      height: 100%;
+    }
     .map-teaser {
-      height: 416px;
+      height: 100%;
       border-top-right-radius: 8px;
       border-bottom-left-radius: initial;
     }
@@ -266,6 +285,8 @@
   .portlet-margin-bottom { margin-bottom: 72px;}
 
   .about {
+    margin-bottom: -4rem;
+
     .about-wrapper {
       padding: 80px 0;
 
@@ -316,7 +337,10 @@
   }
 
   .teaser-data {
-    .data-text { height: 140px; }
+    .data-text {
+     height: 140px;
+     max-height: none;
+    }
   }
 }
 
@@ -324,7 +348,6 @@
 @media screen and (min-width: 1800px) {
 
     .header-menu {
-      width: 400px;
     }
     .header-menu-close {
       padding: 25px 12px 0 34px;

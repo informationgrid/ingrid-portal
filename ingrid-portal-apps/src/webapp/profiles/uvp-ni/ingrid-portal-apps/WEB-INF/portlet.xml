@@ -37,7 +37,7 @@
         <portlet-info>
             <title>javascript detection portlet</title>
             <short-title>javascript detection portlet</short-title>
-        </portlet-info>        
+        </portlet-info>
     </portlet>
 
     <portlet id="HelpPortlet">
@@ -57,16 +57,20 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>disableTitle</name>
-                <value>1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>help.portlet.title</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>no-row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
@@ -97,12 +101,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -126,15 +134,19 @@
         <portlet-info>
             <title>RSS Feeds administrieren</title>
             <short-title>RSS Feeds administrieren</short-title>
-        </portlet-info>      
+        </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -161,12 +173,8 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -192,14 +200,6 @@
             <short-title>Anbieter administrieren</short-title>
         </portlet-info>
         <portlet-preferences>
-            <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -225,16 +225,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>divStyle</name>
-                <value>ob-box-padded-more ob-box-center</value>
+                <value>search-filtered row</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -250,7 +250,7 @@
             <description>This option defines the roles a new user will be registered with</description>
             <name>roles</name>
             <value>user</value>
-        </init-param>   
+        </init-param>
         <init-param>
             <description>This option defines the groups a new user will be registered with</description>
             <name>groups</name>
@@ -260,7 +260,7 @@
             <description>This option defines the rule names a new user will be registered with</description>
             <name>rulesNames</name>
             <value>user-role-fallback</value>
-        </init-param>   
+        </init-param>
         <init-param>
             <description>This option defines the rule values a new user will be registered with</description>
             <name>rulesValues</name>
@@ -289,16 +289,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -325,12 +325,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -356,18 +360,6 @@
             <short-title>WMS Administration</short-title>
         </portlet-info>
         <portlet-preferences>
-            <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
-            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
     </portlet>
@@ -393,16 +385,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -430,16 +422,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -466,16 +458,16 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.AdminPortalResources</resource-bundle>
@@ -521,6 +513,10 @@
             <preference>
                 <name>disableTitle</name>
                 <value>1</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>banner home</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -574,11 +570,50 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top</value>
+                <value>category</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
             </preference>
         </portlet-preferences>
     </portlet>
 
+    <portlet id="HitTeaser">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/hit_teaser.vm</value>
+        </init-param>
+        <portlet-name>HitTeaser</portlet-name>
+        <display-name>Ergebnisliste</display-name>
+        <description>This portlet displayes a search box for the home AND main search page.</description>
+        <portlet-class>de.ingrid.portal.portlets.HitTeaserPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>portlet-type</name>
+                <value>ingrid-home</value>
+            </preference>
+            <preference>
+                <name>default-vertical-position</name>
+                <value>2</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>search.teaser.portlet.title</value>
+            </preference>
+            <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
     <portlet id="RssNewsTeaser">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -621,11 +656,7 @@
                 <value>4</value>
             </preference>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
-            </preference>
-            <preference>
-                <name>extendSpace</name>
+                <name>disableTitle</name>
                 <value>1</value>
             </preference>
         </portlet-preferences>
@@ -656,8 +687,12 @@
                 <value>0</value>
             </preference>
             <preference>
+                <name>bannerStyle</name>
+                <value>row content-small</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         
@@ -680,6 +715,18 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
             <preference>
                 <name>cmsKey</name>
                 <value>ingrid.cms.default</value>
@@ -712,6 +759,18 @@
                 <name>helpKey</name>
                 <value>about-1</value>
             </preference>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
         </portlet-preferences>
     </portlet>
 
@@ -736,6 +795,26 @@
                 <name>cmsKey</name>
                 <value>ingrid.disclaimer</value>
             </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/default_cms.vm</value>
+            </preference>
+            <preference>
+                <name>titleKey</name>
+                <value>disclaimer.title</value>
+            </preference>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
         </portlet-preferences>
     </portlet>
     
@@ -757,24 +836,64 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
                 <name>cmsKey</name>
                 <value>ingrid.privacy</value>
             </preference>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
             </preference>
             <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>
     
+    <portlet id="SitemapPortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_info.vm</value>
+        </init-param>
+        <portlet-name>SitemapPortlet</portlet-name>
+        <display-name>Generisches Informationsportlet</display-name>
+        <description>The Info Portlet displays useful information to the user. The Information template and title can be set via preferences.</description>
+        <portlet-class>de.ingrid.portal.portlets.InfoPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>titleKey</name>
+                <value>sitemap.title</value>
+            </preference>
+            <preference>
+                <name>infoTemplate</name>
+                <value>/WEB-INF/templates/sitemap.vm</value>
+            </preference>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="IngridInformPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -794,7 +913,7 @@
         <portlet-preferences>
             <preference>
                 <name>infoTemplate</name>
-                <value>/WEB-INF/templates/default_cms.vm</value>
+                <value>/WEB-INF/templates/info_cms.vm</value>
             </preference>
             <preference>
                 <name>helpKey</name>
@@ -817,12 +936,15 @@
                 <value>1</value>
             </preference>
             <preference>
+                <name>disableTitle</name>
+                <value>1</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
+                <value>about</value>
             </preference>
         </portlet-preferences>
     </portlet>
-    
 
     <portlet id="IngridWelcomePortlet">
         <init-param>
@@ -887,16 +1009,16 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
 
@@ -927,11 +1049,18 @@
         <supported-locale>en</supported-locale>
         <portlet-preferences>
             <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row content-xsmall</value>
             </preference>
         </portlet-preferences>
-        
     </portlet>
 
     <portlet id="MyPortalOverviewPortlet">
@@ -951,12 +1080,16 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1016,16 +1149,16 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1052,16 +1185,16 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1092,16 +1225,16 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.MyPortalResources</resource-bundle>
@@ -1131,16 +1264,16 @@
         </supports>
         <portlet-preferences>
             <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ShowPartnerPortletResources</resource-bundle>
@@ -1166,16 +1299,16 @@
         </supports>
         <portlet-preferences>
             <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.ShowDataSourcePortletResources</resource-bundle>
@@ -1214,7 +1347,7 @@
         <portlet-name>ShowMapsPortlet</portlet-name>
         <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsUVPPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1222,7 +1355,7 @@
         </supports>
         <portlet-info>
             <title>Karten</title>
-            <short-title>ShowMapsUVPPortlet</short-title>
+            <short-title>ShowMapsPortlet</short-title>
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.CommonResources</resource-bundle> 
     </portlet>
@@ -1274,10 +1407,6 @@
         </supports>
         <portlet-preferences>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
                 <name>disableTitle</name>
                 <value>1</value>
             </preference>
@@ -1310,6 +1439,7 @@
         </portlet-info>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle> 
     </portlet>
+
     <portlet id="SearchResult">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>
@@ -1319,7 +1449,7 @@
         <portlet-name>SearchResult</portlet-name>
         <display-name>Suchergebnis</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.SearchResultUVPPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.SearchResultPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
@@ -1331,8 +1461,8 @@
         </portlet-info>
         <portlet-preferences>
             <preference>
-                <name>divStyle</name>
-                <value>ob-box-wide ob-box-padded ob-box-center ob-rel</value>
+                <name>sectionStyle</name>
+                <value>search-filtered</value>
             </preference>
             <preference>
                 <name>disableTitle</name>
@@ -1390,20 +1520,16 @@
         <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>helpKey</name>
-                <value>search-catalog-1</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
             </preference>
             <preference>
-                <name>disableTitle</name>
-                <value>1</value>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>block--padded</value>
-            </preference>
-            <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>

@@ -179,6 +179,12 @@ define([
 
         addNode: function(treeId, /*TreeNode*/parentNode, item) {
             var def = new Deferred();
+
+            if (!parentNode) {
+                def.resolve();
+                return def.promise;
+            }
+
             var tree = registry.byId( treeId );
 
             // make sure the parent node is expandable

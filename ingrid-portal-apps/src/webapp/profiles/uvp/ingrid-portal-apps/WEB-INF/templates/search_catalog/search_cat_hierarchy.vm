@@ -1,0 +1,124 @@
+#macro (renderNode $node)
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter('nodeId',$node.id)
+    ## UDK Object/Address render params
+    #set($nodeTitle = $MESSAGES.getString($node.getName()))
+    #if($tool.hasContent(${node.udk_class}))
+        #if ($node.plugType == 'dsc_ecs')
+            ## objects
+            #set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
+        #else
+            ## addresses
+            #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
+        #end
+        #if($node.origDocId)
+            #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}&docuuid=${node.origDocId}#if(${node.docId})&docid=${node.docId}#end")
+        #else
+            #if($node.udk_docId)
+                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
+            #else
+                #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
+            #end
+        #end
+    #else
+        #set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
+        #set($nodeUrl = '')
+    #end
+    #if($node.isOpen())
+        <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+            #set ($renderSubNodes = true)
+            $action.setParameter('action','doCloseNode')
+            <li class="accordion-item is-active" data-accordion-item="">
+                #if($nodeUrl != '')
+                    <div class="accordion-item-sub">
+                        <span class="icon">
+                            <a id="${node.id}-accordion-label" href="$action" class="ic-ic-minus" onclick="makeScrollTopLink(this)"></a>
+                            <a href="$nodeUrl">$nodeTitle</a>
+                        </span>
+                    </div>
+                #else
+                    <a class="accordion-title" id="${node.id}-accordion-label" href="$action" onclick="makeScrollTopLink(this)" aria-controls="${node.id}-accordion" role="tab" aria-expanded="true" aria-selected="true">$nodeTitle</a>
+                #end
+                
+                ## render sub nodes
+                #if ($renderSubNodes)
+                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="${node.id}-accordion-label" aria-hidden="false" id="${node.id}-accordion">
+                    #foreach($childNode in $node.getChildren())
+                        #renderNode($childNode)
+                    #end
+                    </div>
+                #end
+            </li>
+        </ul>
+    #else
+        #set ($renderSubNodes = false)
+        #if ($node.expandable)
+            $action.setParameter('action','doOpenNode')
+            #if($nodeUrl != '')
+                <div class="accordion-item-sub">
+                    <span class="icon">
+                        <a id="${node.id}-accordion-label" href="$action" class="ic-ic-plus" onclick="makeScrollTopLink(this)"></a>
+                        <a href="$nodeUrl">$nodeTitle</a>
+                    </span>
+                </div>
+            #else
+                <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                    <li class="accordion-item">
+                        <a class="accordion-title" id="${node.id}-accordion-label" href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
+                    </li>
+                </ul>
+            #end
+        #else
+            #if($nodeUrl != '')
+                <a href="$nodeUrl" class="icon">
+                    #if ($node.plugType == 'dsc_ecs')
+                        #renderUDKIcon(${node.udk_class} $nodeTitle)
+                    #else
+                        #renderUDKAddressIcon(${node.udk_class} $nodeTitle)
+                    #end
+                </a>
+            #end
+        #end
+    #end
+#end
+
+<div class="columns catalog">
+    #foreach($plugNode in $ps.plugsRoot.getChildren())
+        #renderNode($plugNode)
+    #end
+    #set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
+    </form>
+</div>
+<script type="text/javascript">
+    document.onreadystatechange = function () {
+        if (document.readyState == "complete") {
+                var browser = whichBrowser();
+                if(browser.indexOf("Chrome") != -1)
+                    document.body.scrollTop = $scrollTop;
+                else
+                    document.documentElement.scrollTop = $scrollTop;
+        }
+    }
+    function makeScrollTopLink(element){
+        var browser = whichBrowser();
+        
+        if(browser.indexOf("Chrome") != -1)
+            var top = document.body.scrollTop;
+        else
+            var top = document.documentElement.scrollTop;
+        var url = element.href;
+        url = url.replace(/\s/g, "%20")
+        urlNew = url + "?scrollTop="+top;
+        element.href = urlNew;
+    }
+    
+    whichBrowser = function(){
+        var N= navigator.appName, ua= navigator.userAgent, tem;
+        var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
+        if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
+        M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
+        return M;
+    };
+</script>

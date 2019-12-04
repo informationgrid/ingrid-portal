@@ -22,13 +22,14 @@
  */
 define(["dojo/_base/declare",
     "dojo/_base/array",
+    "dojox/html/entities",
     "dojo/dom-class",
     "ingrid/utils/General",
     "ingrid/utils/String",
     "ingrid/utils/Grid",
     "ingrid/utils/Syslist",
     "ingrid/message"
-], function(declare, array, domClass, UtilGeneral, UtilString, UtilGrid, Syslist, message) {
+], function(declare, array, entities, domClass, UtilGeneral, UtilString, UtilGrid, Syslist, message) {
 
         return declare(null, {
 
@@ -137,7 +138,7 @@ define(["dojo/_base/declare",
                 var docName = value;
 
                 var link = null;
-                if (value.indexOf("://") <= 5) {
+                if (UtilGeneral.isUrlAbsolute(value)) {
                     link = value;
                 } else {
                     // determine base url
@@ -148,6 +149,10 @@ define(["dojo/_base/declare",
                     link = baseUrl + value;
                 }
                 return "<span><a href=\"" + link + "\" title=\"" + link + "\" target=\"_blank\"><img src=\"img/ic_fl_popup.gif\" width=\"10\" height=\"9\" alt=\"Popup\"></a> </span><span>"+docName+"</span>";
+            },
+
+            EscapeFormatter: function(row, cell, value, columnDef, dataContext) {
+                return entities.encode(value);
             },
 
             BytesCellFormatter: function(row, cell, value, columnDef, dataContext) {

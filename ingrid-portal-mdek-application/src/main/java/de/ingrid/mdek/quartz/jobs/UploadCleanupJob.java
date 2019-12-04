@@ -34,7 +34,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -63,9 +64,9 @@ public class UploadCleanupJob extends QuartzJobBean {
      * - {UUID}/{//location}:      Link without protocol
      * - {UUID}/{http://location}: Link with HTTP or any other protocol
      */
-    private static final Pattern LINK_PATTERN = Pattern.compile(".*/(//|[^:/]+://).*");
+    private static final Pattern LINK_PATTERN = Pattern.compile("^(//|[^:/]+://).*");
 
-    private static final Logger log = Logger.getLogger(UploadCleanupJob.class);
+    private static final Logger log = LogManager.getLogger(UploadCleanupJob.class);
 
     public class FileReference {
         public String file;
@@ -129,6 +130,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         log.info("Reference time: "+this.referenceDateTime);
         log.info("Reference date: "+referenceDate);
         log.info("Minimum file age: "+this.deleteFileMinAge+" seconds");
+        log.info("Storage implementation: "+(this.storage != null ? this.storage.getClass().getCanonicalName() : null));
 
         try {
             final IMdekClientCaller caller = this.connectionFacade.getMdekClientCaller();
@@ -197,7 +199,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                             // get the storage item for the reference
                             final StorageItem item = allFiles.get(uploadUri);
                             if (item == null) {
-                                log.warn("File "+uploadUri+" does not exist in the storage");
+                                log.warn("File with URI '"+uploadUri+"' does not exist in the storage");
                                 continue;
                             }
 
@@ -513,18 +515,18 @@ public class UploadCleanupJob extends QuartzJobBean {
             final long age = LocalDateTime.from(item.getLastModifiedDate()).
                     until(this.referenceDateTime, ChronoUnit.SECONDS);
             if (this.deleteFileMinAge == null || age >= this.deleteFileMinAge) {
-                log.info("Deleting file: "+file+" (age: "+age+" seconds)");
+                log.info("Deleting file: "+this.formatItem(item)+" (age: "+age+" seconds)");
                 try {
                     this.storage.delete(item.getPath(), item.getFile());
                     deleteCount++;
                 }
                 catch (final IOException e) {
                     // log error, but keep the job running
-                    this.logError("File "+file+" could not be deleted", e);
+                    this.logError("File "+this.formatItem(item)+" could not be deleted", e);
                 }
             }
             else {
-                 log.debug("Keeping file: "+file+" (age: "+age+" seconds)");
+                 log.debug("Keeping file: "+this.formatItem(item)+" (age: "+age+" seconds)");
             }
         }
         log.debug("Number of deleted files: "+deleteCount);
@@ -534,14 +536,14 @@ public class UploadCleanupJob extends QuartzJobBean {
         int archiveCount = 0;
         for (final String file : expiredFiles.keySet()) {
             final StorageItem item = expiredFiles.get(file);
-            log.info("Archiving file: "+file);
+            log.info("Archiving file: "+this.formatItem(item));
             try {
                 this.storage.archive(item.getPath(), item.getFile());
                 archiveCount++;
             }
             catch (final IOException e) {
                 // log error, but keep the job running
-                this.logError("File "+file+" could not be archived", e);
+                this.logError("File "+this.formatItem(item)+" could not be archived", e);
             }
         }
         log.debug("Number of archived files: "+archiveCount);
@@ -551,14 +553,14 @@ public class UploadCleanupJob extends QuartzJobBean {
         int restoreCount = 0;
         for (final String file : unexpiredFiles.keySet()) {
             final StorageItem item = unexpiredFiles.get(file);
-            log.info("Restoring file: "+file);
+            log.info("Restoring file: "+this.formatItem(item));
             try {
                 this.storage.restore(item.getPath(), item.getFile());
                 restoreCount++;
             }
             catch (final IOException e) {
                 // log error, but keep the job running
-                this.logError("File "+file+" could not be restored", e);
+                this.logError("File "+this.formatItem(item)+" could not be restored", e);
             }
         }
         log.debug("Number of restored files: "+restoreCount);
@@ -574,6 +576,14 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
     }
 
+    /**
+     * Get a string representation of a storage item
+     * @param item
+     * @return String
+     */
+    private String formatItem(final StorageItem item) {
+        return item.getPath()+PATH_SEPARATOR+item.getFile();
+    }
     /**
      * Log an error
      * @param error

@@ -1,0 +1,74 @@
+#set ($action = $renderResponse.createActionURL())
+<ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+    <li id="facet_area_map_header" class="accordion-item #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)is-active#end" data-accordion-item="" onclick="resizeMap()">
+        <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)aria-expanded="true" aria-selected="true"#end>
+            <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
+        </a>
+        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)aria-hidden="true"#else style="display:block;"#end>
+            #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
+            <div id="map" class="map-ingrid" style="height:320px;">
+            </div>
+            <div class="map-filter-xs"></div>
+            <form action="$action" method="post" name="facete_map_form">
+                <input id="x1" name="x1" type="hidden" />
+                <input id="x2" name="x2" type="hidden" />
+                <input id="y1" name="y1" type="hidden" />
+                <input id="y2" name="y2" type="hidden" />
+                <input id="areaid" name="areaid" type="hidden" />
+                #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "width:100%;" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button filter_submit" "getMapBounds()")
+            </form>
+        </div>
+    </li>
+</ul>
+
+#parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+<script language="JavaScript" type="text/javascript">
+    var map = new L.Map('map');
+    var lat = $facetMapCenter.get(0);
+    var lng = $facetMapCenter.get(1);
+    var zoom = $facetMapCenter.get(2);
+    var layer;
+</script>
+#if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
+    <script>
+    var layerUrl = '$leafletBgLayerWMSUrl';
+    var layerName = '$leafletBgLayerWMSName';
+    layer = getWMSLayer(layerUrl, layerName); 
+    </script>
+#else
+   <script>
+    var osm = getOSMLayer('');
+    osm.options.minZoom = 5;
+    osm.options.maxZoom = 20;
+    layer = osm; 
+   </script>
+#end
+<script>
+    var selectedMap = '$selectedMap.webmapclientCoords';
+    
+    map.setView(new L.LatLng(lat, lng),zoom);
+    
+    if(selectedMap.indexOf("y1") > -1){
+        map.fitBounds([[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]]);
+    }
+    map.addLayer(layer);
+    
+    window.onresize = function(event) {
+        resizeMap();
+    };
+
+    function getMapBounds(){
+        if(map.getBounds().isValid()) {
+            $('#x1').prop("value", Math.round(map.getBounds().getWest() * 10000)/10000);
+            $('#x2').prop("value", Math.round(map.getBounds().getEast() * 10000)/10000);
+            $('#y1').prop("value", Math.round(map.getBounds().getSouth() * 10000)/10000);
+            $('#y2').prop("value", Math.round(map.getBounds().getNorth() * 10000)/10000);
+        }
+    }
+
+    function resizeMap(){
+        if(map){
+            map._onResize();
+        }
+    }
+</script>

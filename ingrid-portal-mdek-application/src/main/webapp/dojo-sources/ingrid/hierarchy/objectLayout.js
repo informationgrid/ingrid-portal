@@ -150,7 +150,7 @@ define([
                 .then(igeEvents.selectUDKClass) // update view according to initial chosen class
                 .then(function() {
                     // add a '*' to all labels and display them if an element is required 
-                    query(".outer label", "contentFrameBodyObject").forEach(function(item) {
+                    query(".outer label:not(.forceOptional)", "contentFrameBodyObject").forEach(function(item) {
                         item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
                     });
                     
@@ -178,6 +178,7 @@ define([
 
             createInfoHeader: function() {
                 var objectName = new ValidationTextBox({
+                    required: true,
                     maxLength: 255,
                     style: "width:100%;"
                 }, "objectName");
@@ -242,6 +243,8 @@ define([
             },
 
             createGeneralInfo: function() {
+                var self = this;
+
                 new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
@@ -322,6 +325,47 @@ define([
                 }];
                 layoutCreator.createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
 
+                var priorityDatasetStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '708px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    init: function() { return self.initializedPriorityDatasetList; },
+                    partialSearch: true,
+                    formatter: function(row, cell, value) {
+                        var found = null;
+                        array.some(self.initializedPriorityDatasetList, function(item) {
+                            if (item[1] == value) {
+                                found = item[0];
+                                return true;
+                            }
+                            return false;
+                        });
+                        return found;
+                    }
+                }];
+                layoutCreator.createDataGrid("priorityDataset", null, priorityDatasetStructure, null);
+                this.preparePriorityDatasetList().then(function(data) {
+                    self.initializedPriorityDatasetList = data;
+                });
+
+                var storeProps = {
+                    data: {
+                        identifier: '1',
+                        label: '0'
+                    }
+                };
+                layoutCreator.createSelectBox("spatialScope", null, storeProps, function() {
+                    return UtilSyslist.getSyslistEntry(6360)
+                        .then(function(items) {
+                            items.unshift(["&nbsp;", ""]);
+                            return items;
+                        });
+                });
+
                 new CheckBox({}, "isInspireRelevant");
                 new RadioButton({
                     checked: true,
@@ -349,6 +393,21 @@ define([
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
                 }];
                 layoutCreator.createDataGrid("categoriesOpenData", null, categoriesStructure, null);
+            },
+
+            preparePriorityDatasetList: function() {
+                var self = this;
+                var germanList = UtilSyslist.readSysListData(6350, 'de');
+                var englishList = UtilSyslist.readSysListData(6350, 'en');
+                return all([germanList, englishList]).then(function(results) {
+                    var list = [];
+                    for (var i=0; i < results[0].length; i++) {
+                        var german = results[0][i];
+                        var english = results[1][i];
+                        list.push([german[0] + " {en: " + english[0] + "}", german[1]])
+                    }
+                    return list;
+                });
             },
 
             createFachBezugClass1: function() {
@@ -1167,7 +1226,7 @@ define([
                     values: [],
                     editable: true,
                     listId: 5152,
-                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 5152)
                 }];
                 layoutCreator.createDataGrid("ref3ServiceVersion", null, ref3ServiceVersionStructure, null);
 
@@ -1957,6 +2016,22 @@ define([
                     values: [],
                     editable: true,
                     listId: 6010,
+                    sort: function(data) {
+                        var entry = array.filter(data, function(item) {
+                            return item[1] === "1";
+                        });
+                        if (entry.length === 0) {
+                            console.warn("No sorting of codelist 6010, since entry was not found: 1");
+                            return data;
+                        }
+
+                        var filtered = array.filter(data, function(item) {
+                            return item[1] !== "1";
+                        });
+
+                        filtered.unshift(entry[0]);
+                        return filtered;
+                    },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6010)
                 }];
                 layoutCreator.createDataGrid("availabilityAccessConstraints", null, availabilityAccessConstraintsStructure, null);
@@ -1970,11 +2045,26 @@ define([
                     values: [],
                     editable: true,
                     listId: 6500,
+                    sort: function(data) {
+                        var entry = array.filter(data, function(item) {
+                            return item[1] === "26";
+                        });
+                        if (entry.length === 0) {
+                            console.warn("No sorting of codelist 6500, since entry was not found: 26");
+                            return data;
+                        }
+                        var filtered = array.filter(data, function(item) {
+                            return item[1] != "26";
+                        });
+                        filtered.unshift(entry[0]);
+                        return filtered;
+                    },
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6500)
                 }, {
                     field: 'source',
                     name: message.get("ui.obj.availability.useAccessConstraintsTable.header.source"),
-                    editable: true
+                    editable: true,
+                    formatter: gridFormatters.EscapeFormatter
                 }];
                 layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
                 
@@ -2035,16 +2125,6 @@ define([
                 new SimpleTextarea({
                     "class": "textAreaFull"
                 }, "availabilityOrderInfo");
-
-                var storeProps = {
-                    data: {
-                        identifier: '1',
-                        label: '0'
-                    }
-                };
-                layoutCreator.createComboBox("availabilityDataFormatInspire", null, lang.clone(storeProps), function() {
-                    return UtilSyslist.getSyslistEntry(6300);
-                });
 
             },
 

@@ -153,6 +153,10 @@ input, textarea, .dijitInputInner {font: normal 11px/12px Verdana,Helvetica,Aria
 	font-weight:bold;
 }
 
+.required .label .forceOptional {
+	font-weight: normal;
+}
+
 .required {
 	display: block !important;
 }
@@ -530,7 +534,14 @@ iframe {
 
 .halfWidth {
     width: 50% !important;
-    /*width: 360px !important;*/
+}
+
+.threeQuarterWidth {
+    width: 75% !important;
+}
+
+.quarterWidth {
+    width: 25% !important;
 }
 
 .titleBar .titleIcon {

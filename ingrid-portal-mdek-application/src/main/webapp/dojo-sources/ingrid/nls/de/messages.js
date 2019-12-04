@@ -596,7 +596,7 @@ define({
     "ui.obj.availability.accessConstraints": "Zugriffsbeschr&auml;nkungen",
     "ui.obj.availability.useConstraints": "Anwendungseinschr&auml;nkungen",
     "ui.obj.availability.useConstraints.link": "Text aus Liste w&auml;hlen",
-    "ui.obj.availability.dataFormatInspire": "Kodierungsschema der geographischen Daten",
+    "ui.obj.availability.dataFormatInspire": "Anwendungsschema der geographischen Daten",
     "ui.obj.availability.dataFormatTable.title": "Datenformat",
     "ui.obj.availability.dataFormatTable.header.name": "Name",
     "ui.obj.availability.dataFormatTable.header.version": "Version",
@@ -814,7 +814,8 @@ define({
     "ui.1240.description": "Periodizit&auml;t",
     "ui.1250.description": "Erl&auml;uterungen",
     "ui.1310.description": "Medienoption",
-    "ui.1315.description": "Kodierungsschema der geographischen Daten",
+    "ui.1315.description": "Anwendungsschema der geographischen Daten",
+    "ui.1316.description": "Datum (Anwendungsschema der geographischen Daten)",
     "ui.1320.description": "Datenformat",
     "ui.1350.description": "Rechtliche Grundlagen",
     "ui.1409.description": "Thesaurus Suchbegriffe",
@@ -1070,6 +1071,7 @@ define({
     "validation.error.spatial.no.entry": "Es muss mindestens ein Raumbezug als Geothesaurus oder Freier eingetragen werden.",
     "validation.error.spatial.no.expired": "Der Raumbezug darf nicht abgelaufen sein.",
     "validation.error.missing.download.link": "Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
+    "validation.error.date.without.title": "Ohne Titel darf kein Datum gesetzt sein.",
 
     "validation.levelOfSpecification.notConform":"Bei nicht konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'nicht evaluiert' oder 'nicht konform' sein.",
     "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",
@@ -1080,8 +1082,8 @@ define({
     "validation.specification.deleted": "Die Spezifikation <ul><li>${0}</li></ul> darf bei INSPIRE-relevanten Datensätzen nicht gelöscht werden.",
     "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
-    "validation.encoding.added": "Das Kodierungsschema '${0}' wurde ebenfalls geändert.",
     "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
+    "validation.dataformat.missing.gml": "Es muss mindestens ein 'GML' Eintrag mit einer Version eingetragen sein",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 
@@ -1090,6 +1092,8 @@ define({
     "hint.noEntriesFromParent": "Keine neuen Eintr&auml;ge vom &uuml;bergeordneten Objekt!",
     "hint.addressFromParentAdded": "Adressdaten von übergeordneter Adresse übernommen!",
     "hint.selectOpenData": "Wird diese Auswahl gewählt, so werden alle Zugriffsbeschränkungen entfernt und durch 'keine' ersetzt. Möchten Sie fortfahren?",
+    "hint.inspireConformity": "ACHTUNG: Grad der Konformität zur Spezifikation wird geändert.",
+    "hint.advProductGroupCleared": "Die AdV-Produktgruppe wurde automatisch geleert.",
 
     "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
     "warning.address.inherit.to.children": "Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",

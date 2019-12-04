@@ -24,35 +24,30 @@ var popup = (function () {
 
     "use strict";
 
-    var is_open = false;
-
-    var box = $('.popup');
-    var title = $('.popup__title');
-    var content = $('.popup__content');
-
-    function open(messageTitle, message) {
-
-        if (message === "" || message === undefined) {
-            return;
+    function open(messageTitle, message, boxId) {
+        var box = $('.help-popup');
+        if (boxId) {
+          box = $(boxId);
+        } else {
+          update(box, messageTitle, message);
         }
-
-        update(messageTitle, message);
 
         box.addClass('is-open');
 
     }
 
-    function close() {
-
-        is_open = false;
-
+    function close(boxId) {
+        var box = $('.help-popup');
+        if (boxId) {
+          box = $(boxId);
+        }
         box.removeClass('is-open');
 
     }
 
-    function update(messageTitle, message) {
-        title.html(messageTitle);
-        content.html(message);
+    function update(box, messageTitle, message) {
+        box.find('.popup__title').html(messageTitle);
+        box.find('.popup__content').html(message);
     }
 
     return {
@@ -65,10 +60,10 @@ var popup = (function () {
 
 $('.js-popup').on('click', function (event) {
     event.preventDefault();
-    popup.open($(this).data('title'), $(this).data('content'));
+    popup.open($(this).data('title'), $(this).data('content'), $(this).data('box'));
 });
 
 $('.js-popup-close').on('click', function (event) {
     event.preventDefault();
-    popup.close();
+    popup.close($(this).data('box'));
 });
