@@ -79,8 +79,14 @@ public class AdminUserForm extends ActionForm {
     public static final String FIELD_PROVIDER = "provider";
 
     public static final String FIELD_LAYOUT_PERMISSION = "layoutPermission";
-    
-    /**
+
+    public static final String FIELD_CHK_ENABLED = "enabled";
+
+    public static final String FIELD_CHK_PW_UPDATE_REQUIRED = "password_update_required";
+
+    public static final String FIELD_CHK_SEND_INFO = "send_info";
+
+/**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
     public void init() {
@@ -114,6 +120,9 @@ public class AdminUserForm extends ActionForm {
             setInput(FIELD_STREET, request.getParameter(FIELD_STREET).trim());
             setInput(FIELD_POSTALCODE, request.getParameter(FIELD_POSTALCODE).trim());
             setInput(FIELD_CITY, request.getParameter(FIELD_CITY).trim());
+            setInput(FIELD_CHK_ENABLED, request.getParameter(FIELD_CHK_ENABLED));
+            setInput(FIELD_CHK_PW_UPDATE_REQUIRED, request.getParameter(FIELD_CHK_PW_UPDATE_REQUIRED));
+            setInput(FIELD_CHK_SEND_INFO, request.getParameter(FIELD_CHK_SEND_INFO));
             // if tab 2 was selected onle populate fields from tab2
         } else if (this.getInput(FIELD_TAB).equals("2")) {
             setInput(FIELD_CHK_ADMIN_PORTAL, request.getParameter(FIELD_CHK_ADMIN_PORTAL));
@@ -202,6 +211,12 @@ public class AdminUserForm extends ActionForm {
             }
             if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
                 setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+                setInput(FIELD_TAB, "1");
+                allOk = false;
+            }
+            if (hasInput(FIELD_CHK_SEND_INFO) && !hasInput(FIELD_PW_NEW)) {
+                setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
+                setError(FIELD_CHK_SEND_INFO, "account.edit.error.send.info");
                 setInput(FIELD_TAB, "1");
                 allOk = false;
             }

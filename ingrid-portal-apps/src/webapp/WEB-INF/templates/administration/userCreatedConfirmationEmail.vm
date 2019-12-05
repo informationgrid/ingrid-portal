@@ -5,9 +5,15 @@ Willkommen bei InGrid-Portal!
 Für Sie wurde ein Zugang angelegt:
 
 Benutzername: $!{map.get("login")}
+#if($!{map.get("password")})
 Passwort: $!{map.get("password")}
+#end
 
+#if($!{map.get("returnURL")})
+Bitte ändern Sie ihr Passwort:
+$!{map.get("returnURL")}
 
+#end
 Mit freundlichen Grüßen,
 
 Ihr InGrid-Portal Team

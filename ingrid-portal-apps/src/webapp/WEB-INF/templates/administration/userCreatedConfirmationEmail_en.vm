@@ -5,9 +5,15 @@ Welcome to InGrid-Portal!
 An account has been created for you:
 
 Login: $!{map.get("login")}
+#if($!{map.get("password")})
 Password: $!{map.get("password")}
+#end
 
+#if($!{map.get("returnURL")})
+Please change your password:
+$!{map.get("returnURL")}
 
+#end
 Best regards,
 
 The InGrid-Portal Team.
