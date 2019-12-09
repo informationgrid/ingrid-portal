@@ -139,6 +139,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         String userGUID = request.getParameter(PARAM_USER_GUID);
 
         if(userName != null && !userName.isEmpty() && userGUID != null && !userGUID.isEmpty()) {
+            // User get link to change password
             try {
                 User user = userManager.getUser(userName);
                 if (user != null) {
@@ -156,12 +157,15 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                         context.put("actionForm", f);
                         super.doView(request, response);
                         return;
+                    } else {
+                        throw new SecurityException();
                     }
                 }
             } catch (SecurityException e) {
-                return;
+                context.put("urlNotExists", true);
             }
         } else if(userName != null && !userName.isEmpty()) {
+            // User login and password is update require
             try {
                 User user = userManager.getUser(userName);
                 if (user != null) {
@@ -176,10 +180,14 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                         context.put("actionForm", f);
                         super.doView(request, response);
                         return;
+                    } else {
+                        throw new SecurityException();
                     }
+                } else {
+                    throw new SecurityException();
                 }
             } catch (SecurityException e) {
-                return;
+                context.put("urlNotExists", true);
             }
         }
         // when using shibboleth authentication just show a page to create a profile
@@ -381,6 +389,7 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                                 if(!pw.isEmpty()) {
                                     PasswordCredential credential = userManager.getPasswordCredential(user);
                                     credential.setPassword(credential.getOldPassword(), pw);
+                                    credential.setUpdateRequired(false);
                                     // generate login id
                                     String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
                                             Long.toString(System.currentTimeMillis())));
@@ -396,10 +405,12 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                                 try {
                                     PasswordCredential credential = userManager.getPasswordCredential(user);
                                     credential.setPassword(oldPw, pw);
+                                    credential.setUpdateRequired(false);
                                     // generate login id
                                     String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
                                             Long.toString(System.currentTimeMillis())));
                                     user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                                    
                                     userManager.storePasswordCredential(credential);
                                     userManager.updateUser(user);
                                 } catch (PasswordAlreadyUsedException e) {

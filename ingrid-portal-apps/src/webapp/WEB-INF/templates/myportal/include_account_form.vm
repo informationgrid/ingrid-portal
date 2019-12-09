@@ -47,9 +47,21 @@
     </div>
 #end
 #if ($formType == 'edit')
+    #if($isPasswordUpdateRequired)
+        #if($userName)
+        <div class="media">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                 <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
+            </div>
+            <div class="media__body">
+                 <input type="text" id="login" name="login" value="$userName" disabled/>
+            </div>
+        </div>
+        #end
+    #end
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="login">$MESSAGES.getString('account.edit.label.password_old')*:</label>
+            <label for="password_old">$MESSAGES.getString('account.edit.label.password_old')*:</label>
         </div>
         <div class="media__body">
             <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
@@ -59,7 +71,7 @@
     <hr />
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="password">$MESSAGES.getString('account.edit.label.password_new')*:</label>
+            <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')*:</label>
         </div>
         <div class="media__body">
             <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
@@ -70,7 +82,7 @@
     </div>
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-            <label for="password_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>
+            <label for="password_new_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>
         </div>
         <div class="media__body">
             <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
@@ -88,8 +100,19 @@
                 #addErrorFormMessage('login', $loginLength)
             </div>
         </div>
-    <hr />
+    #else
+        #if($userName)
+        <div class="media">
+            <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                 <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
+            </div>
+            <div class="media__body">
+                 <input type="text" id="login" name="login" value="$userName" disabled/>
+            </div>
+        </div>
+        #end
     #end
+   <hr />
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="password">$MESSAGES.getString('account.create.label.password')*:</label>
