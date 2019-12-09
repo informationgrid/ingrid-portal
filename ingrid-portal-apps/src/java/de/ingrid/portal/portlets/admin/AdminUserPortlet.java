@@ -715,6 +715,7 @@ public class AdminUserPortlet extends ContentPortlet {
                         if (isUserPwUpdateRequired) {
                             userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId));
                         }
+                        userInfo.put("isUpdate", "true");
                         sendMail(request, f, messages, userInfo);
                     }
                 } catch (PasswordAlreadyUsedException e) {
@@ -863,8 +864,6 @@ public class AdminUserPortlet extends ContentPortlet {
 
             AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
                 AdminUserForm.class);
-            f.clearInput(AdminUserForm.FIELD_CHK_SEND_INFO);
-            f.clearInput(AdminUserForm.FIELD_CHK_PW_UPDATE_REQUIRED);
 
             Context context = getContext(request);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
@@ -1048,14 +1047,11 @@ public class AdminUserPortlet extends ContentPortlet {
             }
         }
 
-        if (localizedTemplatePath == null) {
-            log.error("email template not available");
-            f.setError("nofield", "account.created.problems.email");
-            return;
-        }
-
         String emailSubject = messages.getString("account.create.confirmation.email.subject");
 
+        if(!isCreateUser) {
+            emailSubject = messages.getString("account.edit.confirmation.email.subject");
+        }
         String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
             "foo@bar.com");
         String to = userInfo.get("user.business-info.online.email");

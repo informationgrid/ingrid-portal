@@ -1,8 +1,16 @@
 Dear $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
+#if($!{map.get("isUpdate")})
+Your account has been updated!
+
+#if($!{map.get("password")})
+Your new account information:
+#end
+#else
 Welcome to InGrid-Portal! 
 
 An account has been created for you:
+#end
 
 Login: $!{map.get("login")}
 #if($!{map.get("password")})
@@ -10,7 +18,7 @@ Password: $!{map.get("password")}
 #end
 
 #if($!{map.get("returnURL")})
-Please change your password:
+Please change your password before log in:
 $!{map.get("returnURL")}
 
 #end

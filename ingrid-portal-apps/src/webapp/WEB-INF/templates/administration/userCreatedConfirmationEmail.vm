@@ -1,8 +1,16 @@
 Sehr geehrte(r) $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
 
+#if($!{map.get("isUpdate")})
+Ihre Zugangsdaten wurden geändert!
+
+#if($!{map.get("password")})
+Ihre neuen Login-Daten finden Sie hier:
+#end
+#else
 Willkommen bei InGrid-Portal! 
 
 Für Sie wurde ein Zugang angelegt:
+#end
 
 Benutzername: $!{map.get("login")}
 #if($!{map.get("password")})
@@ -10,7 +18,7 @@ Passwort: $!{map.get("password")}
 #end
 
 #if($!{map.get("returnURL")})
-Bitte ändern Sie ihr Passwort:
+Bitte ändern Sie Ihr Passwort bevor Sie sich anmelden:
 $!{map.get("returnURL")}
 
 #end

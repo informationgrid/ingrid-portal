@@ -42,6 +42,12 @@ public class PasswordUpdateRequiredForm extends ActionForm {
 
     public static final String FIELD_PW_CONFIRM = "password_confirm";
 
+    public static final String FIELD_PW_OLD = "password_old";
+
+    public static final String FIELD_PW_NEW = "password_new";
+
+    public static final String FIELD_PW_NEW_CONFIRM = "password_new_confirm";
+
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
      */
@@ -57,28 +63,57 @@ public class PasswordUpdateRequiredForm extends ActionForm {
         
         setInput(FIELD_PW, request.getParameter(FIELD_PW));
         setInput(FIELD_PW_CONFIRM, request.getParameter(FIELD_PW_CONFIRM));
+        setInput(FIELD_PW_OLD, request.getParameter(FIELD_PW_OLD));
+        setInput(FIELD_PW_NEW, request.getParameter(FIELD_PW_NEW));
+        setInput(FIELD_PW_NEW_CONFIRM, request.getParameter(FIELD_PW_NEW_CONFIRM));
     }
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
     public boolean validate() {
+        return validate(null);
+    }
+
+    public boolean validate(String userGUID) {
         boolean allOk = true;
         clearErrors();
 
-        if (hasInput(FIELD_PW)) {
-            String password = getInput(FIELD_PW);
-            if (!Utils.isStrengthPassword(password)) {
-               setError(FIELD_PW, "account.create.error.worstPassword");
-               allOk = false;
-           }
+        if (userGUID != null) {
+            if (hasInput(FIELD_PW)) {
+                String password = getInput(FIELD_PW);
+                if (!Utils.isStrengthPassword(password)) {
+                   setError(FIELD_PW, "account.create.error.worstPassword");
+                   allOk = false;
+               }
+            } else {
+                setError(FIELD_PW, "account.create.error.worstPassword");
+                allOk = false;
+            }
+            if (!getInput(FIELD_PW_CONFIRM).equals(getInput(FIELD_PW))) {
+                setError(FIELD_PW_CONFIRM, "account.edit.error.noPasswordConfirm");
+                allOk = false;
+            }
         } else {
-            setError(FIELD_PW, "account.create.error.worstPassword");
-            allOk = false;
-        }
-        if (!getInput(FIELD_PW_CONFIRM).equals(getInput(FIELD_PW))) {
-            setError(FIELD_PW_CONFIRM, "account.edit.error.noPasswordConfirm");
-            allOk = false;
+            if (!hasInput(FIELD_PW_OLD) && hasInput(FIELD_PW_NEW)) {
+                setError(FIELD_PW_OLD, "account.edit.error.noPasswordOld");
+                allOk = false;
+            } 
+            if (hasInput(FIELD_PW_OLD) && !hasInput(FIELD_PW_NEW)) {
+                setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
+                allOk = false;
+            }
+            if (hasInput(FIELD_PW_NEW)) {
+                String password = getInput(FIELD_PW_NEW);
+                if (!Utils.isStrengthPassword(password)) {
+                   setError(FIELD_PW_NEW, "account.create.error.worstPassword");
+                   allOk = false;
+               }
+            }
+            if (!getInput(FIELD_PW_NEW_CONFIRM).equals(getInput(FIELD_PW_NEW))) {
+                setError(FIELD_PW_NEW_CONFIRM, "account.edit.error.noPasswordConfirm");
+                allOk = false;
+            } 
         }
         return allOk;
     }
