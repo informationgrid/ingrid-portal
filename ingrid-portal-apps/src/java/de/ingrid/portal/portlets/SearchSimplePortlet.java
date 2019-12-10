@@ -338,6 +338,10 @@ public class SearchSimplePortlet extends GenericVelocityPortlet {
         IngridQuery query = null;
         try {
             query = QueryStringParser.parse( queryString );
+            String paramRank = request.getParameter(Settings.PARAM_RANKING);
+            if (paramRank != null && !paramRank.isEmpty()) {
+                query.remove(IngridQuery.RANKED);
+            }
         } catch (ParseException | TokenMgrError t) {
             if (log.isDebugEnabled()) {
                 log.debug( "Problems creating IngridQuery, parsed query string: " + queryString, t );
