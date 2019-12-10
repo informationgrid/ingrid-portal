@@ -118,7 +118,7 @@
         <portlet-info>
             <title>RSS Feeds administrieren</title>
             <short-title>RSS Feeds administrieren</short-title>
-        </portlet-info>      
+        </portlet-info>
         <portlet-preferences>
             <preference>
                 <name>sectionStyle</name>
