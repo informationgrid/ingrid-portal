@@ -609,22 +609,6 @@ footer .footer .logo {
   width: 2.25em;
   display: none;
 }
-footer .breadcrumb span, footer .breadcrumb a {
-  padding: 0 10px 0 0;
-  text-transform: none;
-}
-footer .breadcrumb a {
-  color: #5E788D;
-}
-footer .breadcrumb a:last-of-type {
-  font-weight: bold;
-  color: #5E788D;
-}
-footer .breadcrumb span[class^="ic-"] {
-  font-size: 12px;
-  font-weight: bold;
-  color: #5E788D;
-}
 footer hr {
   margin: 0 0 16px;
 }

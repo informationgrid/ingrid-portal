@@ -37,23 +37,6 @@
                 </div>
           </div>
           <div class="footer">
-              <div class="row">
-                <div class="columns">
-                    <p class="result-text no-margin breadcrumb show-for-medium">
-                        <span><b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:</span>
-                        <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                    #if($currentPage)
-                        #if($currentPage == "/search-detail.psml")
-                            <span class="ic-ic-angle-right"></span>
-                            <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                        #end
-                        #if($currentPage != "/default-page.psml")
-                            <span class="ic-ic-angle-right"></span>
-                            <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
-                        #end
-                    #end
-                </div>
-              </div>
               <hr>
               <div class="row">
                   <div class="xsmall-24 medium-24 large-16 xlarge-17 columns">
