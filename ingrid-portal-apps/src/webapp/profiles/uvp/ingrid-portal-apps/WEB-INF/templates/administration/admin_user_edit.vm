@@ -72,21 +72,25 @@
                 </div>
                    <hr/>
                 <div class="form-element">
-                     <label for="login">$MESSAGES.getString('account.create.label.username')</label>
+                    <label for="login">$MESSAGES.getString('account.create.label.username')</label>
                 </div>
                 <div class="form-element">
-                     <p>#getFieldValue('id')</p>
-                 </div>
-                <div class="form-element">
-                     <label for="password_old">$MESSAGES.getString('account.edit.label.password_old')</label>
+                    <p>#getFieldValue('id')</p>
                 </div>
-                <div class="form-element">
-                    #addErrorFormMessage('password_old')
-                    <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
+                <div class="xsmall-24 medium-6 columns">
+                    <div class="form-element boxed">
+                        <div class="control-group">
+                            <label class="field-toggle__label field-toggle__label--boxed" for="enabled">
+                                <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') onchange="adapt()">
+                                <div class="control__indicator"></div>
+                                $MESSAGES.getString('account.edit.enable')
+                            </label>
+                        </div>
+                    </div>
                 </div>
                 <hr/>
                 <div class="form-element">
-                     <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')</label>
+                    <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')</label>
                 </div>
                 <div class="form-element">
                     #addErrorFormMessage('password_new')
@@ -99,12 +103,35 @@
                     </meter>
                 </div>
                 <div class="form-element">
-                     <label for="password_new_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')</label>
+                    <label for="password_new_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')</label>
                 </div>
                 <div class="form-element">
                     #addErrorFormMessage('password_new_confirm')
                     <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
-                 </div>
+                </div>
+                <div class="xsmall-24 columns">
+                    <div class="form-element boxed">
+                        <div class="control-group">
+                            #addErrorFormMessage('send_info')
+                            <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassLabelText('send_info')" for="send_info">
+                                <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
+                                <div class="control__indicator"></div>
+                                $MESSAGES.getString('account.edit.send.information')
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="xsmall-24 columns">
+                    <div class="form-element boxed">
+                        <div class="control-group">
+                            <label class="field-toggle__label field-toggle__label--boxed" for="send_info">
+                                <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
+                                <div class="control__indicator"></div>
+                                $MESSAGES.getString('account.edit.password.update.required')
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <hr />
                 <h3>$MESSAGES.getString('account.edit.address.information')</h3>
                 <div class="form-element">
