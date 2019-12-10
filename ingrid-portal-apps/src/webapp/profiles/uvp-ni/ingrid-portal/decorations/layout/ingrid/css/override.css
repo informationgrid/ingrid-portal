@@ -653,7 +653,7 @@ footer .footer .row:last-of-type {
 footer .footer .columns div {
   margin: 10px auto;
 }
-footer .footer .copyright p {
+footer .footer .copyright span {
   color: #5E788D;
   text-transform: none;
   max-width: 350px;
@@ -739,6 +739,9 @@ header .logo {
 header .logo a {
   left: 70px;
 }
+.control--radio .control__indicator::after {
+  background: #1D4B7B;
+}
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
     margin: 33px 0;
@@ -751,10 +754,16 @@ header .logo a {
   header .logo {
     width: 22.625em;
   }
-  footer .footer .copyright p {
-    margin-left: 58px;
+  footer .footer .copyright span.icon:before {
+    content: '\00a9';
+    float: left;
+    margin-left: 8px;
+  }
+  footer .footer .copyright span.text {
     margin-right: 0;
     text-align: left;
+    float: left;
+    margin-left: 8px;
   }
   footer .footer .logo {
     float: left;

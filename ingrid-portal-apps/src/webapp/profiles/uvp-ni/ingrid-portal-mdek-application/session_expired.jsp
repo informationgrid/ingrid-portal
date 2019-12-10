@@ -100,7 +100,8 @@
                                 <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"/></a>
                             </div>
                             <div class="copyright">
-                                <p>© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
+                                <span class="icon"></span>
+                                <span class="text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-8 xlarge-7 columns">
