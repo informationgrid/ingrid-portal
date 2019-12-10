@@ -597,7 +597,7 @@ footer .footer .row:last-of-type {
 footer .footer .columns div {
   margin: 10px auto;
 }
-footer .footer .copyright p {
+footer .footer .copyright span {
   color: #5E788D;
   text-transform: none;
   max-width: 350px;
@@ -938,10 +938,16 @@ header .row .columns:last-of-type {
   header .logo {
     width: 26.725em;
   }
-  footer .footer .copyright p {
-    margin-left: 58px;
+  footer .footer .copyright span.icon:before {
+    content: '\00a9';
+    float: left;
+    margin-left: 8px;
+  }
+  footer .footer .copyright span.text {
     margin-right: 0;
     text-align: left;
+    float: left;
+    margin-left: 8px;
   }
   footer .footer .logo {
     float: left;
