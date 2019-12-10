@@ -1062,7 +1062,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered row content-xsmall</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>
