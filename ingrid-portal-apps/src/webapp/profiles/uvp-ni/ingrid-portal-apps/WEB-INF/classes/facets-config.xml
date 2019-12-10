@@ -127,6 +127,54 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  -->
  
 <facets>
+    <!-- Verfahrenstypen -->
+    <facet>
+        <name>searchResult.facete.title.procedures</name>
+        <id>procedure</id>
+        <facets>
+        <!-- Zulassungsverfahren -->
+            <facet>
+                <name>Zulassungsverfahren</name>
+                <query>t01_object.obj_class:10</query>
+                <id>procedure_10</id>
+                <display>true</display>
+            </facet>
+        <!-- Raumordnungsverfahren -->
+            <facet>
+                <name>Raumordnungsverfahren</name>
+                <query>t01_object.obj_class:13</query>
+                <id>procedure_13</id>
+                <display>true</display>
+            </facet>
+        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
+            <facet>
+                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
+                <query>t01_object.obj_class:14</query>
+                <id>procedure_14</id>
+            </facet>
+        <!-- Ausländische Vorhaben -->
+            <facet>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <id>procedure_11</id>
+                <display>true</display>
+            </facet>
+        <!-- Bauleitplanung -->
+            <facet>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <display>true</display>
+            </facet>
+            <!-- Zulassungsverfahren -->
+            <facet>
+                <name>Negative Vorprüfungen</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
+                <display>true</display>
+            </facet>
+        </facets>
+    </facet>
     <!-- Kategorien -->
     <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.types</name>
@@ -267,55 +315,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Verfahrenstypen -->
-    <facet>
-        <name>searchResult.facete.title.procedures</name>
-        <id>procedure</id>
-        <facets>
-        <!-- Zulassungsverfahren -->
-            <facet>
-                <name>Zulassungsverfahren</name>
-                <query>t01_object.obj_class:10</query>
-                <id>procedure_10</id>
-                <display>true</display>
-            </facet>
-        <!-- Raumordnungsverfahren -->
-            <facet>
-                <name>Raumordnungsverfahren</name>
-                <query>t01_object.obj_class:13</query>
-                <id>procedure_13</id>
-                <display>true</display>
-            </facet>
-        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
-            <facet>
-                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
-                <query>t01_object.obj_class:14</query>
-                <id>procedure_14</id>
-            </facet>
-        <!-- Ausländische Vorhaben -->
-            <facet>
-                <name>Ausländische Vorhaben</name>
-                <query>t01_object.obj_class:11</query>
-                <id>procedure_11</id>
-                <display>true</display>
-            </facet>
-        <!-- Bauleitplanung -->
-            <facet>
-                <name>Bauleitplanung</name>
-                <query>procedure:dev_plan</query>
-                <id>procedure_dev_plan</id>
-                <display>true</display>
-            </facet>
-            <!-- Zulassungsverfahren -->
-            <facet>
-                <name>Negative Vorprüfungen</name>
-                <query>t01_object.obj_class:12</query>
-                <id>procedure_12</id>
-                <display>true</display>
-            </facet>
-        </facets>
-    </facet>
-
     <!-- Aktualität -->
     <facet>
         <name>searchResult.facete.title.time</name>
