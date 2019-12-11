@@ -1,9 +1,9 @@
-#if ($formType == 'edit' && !$isPasswordUpdateRequired)
+#if ($formType == 'edit' && !$isPasswordUpdate)
     <h2>$MESSAGES.getString('account.edit.profile.edit.from') #getFieldValue('firstname') #getFieldValue('lastname')</h2>
 #end
 #renderMessageInfo("* $MESSAGES.getString('account.edit.required.fields')")
 #displayFormError()
-#if(!$isPasswordUpdateRequired)
+#if(!$isPasswordUpdate)
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
             <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation')):</label>
@@ -47,17 +47,16 @@
     </div>
 #end
 #if ($formType == 'edit')
-    #if($isPasswordUpdateRequired)
-        #if($userName)
+    #if($isPasswordUpdate)
         <div class="media">
             <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                 <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
+                 <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
             </div>
             <div class="media__body">
-                 <input type="text" id="login" name="login" value="$userName" disabled/>
+                 <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
+                 #addErrorFormMessage('login', $loginLength)
             </div>
         </div>
-        #end
     #end
     <div class="media">
         <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
@@ -90,7 +89,7 @@
         </div>
     </div>
 #elseif($formType == 'create')
-    #if(!$isPasswordUpdateRequired)
+    #if(!$isPasswordUpdate)
         <div class="media">
             <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
                 <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
@@ -101,16 +100,15 @@
             </div>
         </div>
     #else
-        #if($userName)
         <div class="media">
             <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                 <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
+                 <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
             </div>
             <div class="media__body">
-                 <input type="text" id="login" name="login" value="$userName" disabled/>
+                 <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
+                 #addErrorFormMessage('login', $loginLength)
             </div>
         </div>
-        #end
     #end
    <hr />
     <div class="media">
@@ -138,7 +136,7 @@
         </div>
     </div>
 #end
-#if(!$isPasswordUpdateRequired)
+#if(!$isPasswordUpdate)
     <hr />
     <h4>$MESSAGES.getString('account.edit.address.information')</h4>
     <div class="media">

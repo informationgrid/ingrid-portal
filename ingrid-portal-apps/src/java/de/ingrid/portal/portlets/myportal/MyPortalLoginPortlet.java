@@ -25,6 +25,7 @@ package de.ingrid.portal.portlets.myportal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.forms.EditAccountForm;
 import de.ingrid.portal.forms.LoginForm;
 import de.ingrid.portal.forms.PasswordUpdateRequiredForm;
 import de.ingrid.portal.global.IngridResourceBundle;
@@ -80,9 +80,11 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
 
     private static final String PARAM_USER_NAME = "userName";
 
-    private static final String PARAM_USER_GUID = "userGUID";
+    private static final String PARAM_USER_CHANGE_ID = "userChangeId";
 
-    private static final String CMD_PASSWORD_UPDATE_REQUIRED = "password_update";
+    private static final String PARAM_USER_EMAIL = "userEmail";
+
+    private static final String CMD_PW_UPDATE_REQUIRED = "password_update";
 
     private PortalAdministration admin;
 
@@ -135,55 +137,43 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
         
-        String userName = request.getParameter(PARAM_USER_NAME);
-        String userGUID = request.getParameter(PARAM_USER_GUID);
+        String userChangeId = request.getParameter(PARAM_USER_CHANGE_ID);
+        String userEmail = request.getParameter(PARAM_USER_EMAIL);
 
-        if(userName != null && !userName.isEmpty() && userGUID != null && !userGUID.isEmpty()) {
+        if(userChangeId != null && !userChangeId.isEmpty() && userEmail != null && !userEmail.isEmpty()) {
             // User get link to change password
             try {
-                User user = userManager.getUser(userName);
-                if (user != null) {
-                    Map<String, String> pref = user.getInfoMap();
-                    String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
-                    userConfirmId = (userConfirmId == null ? "invalid" : userConfirmId);
-                    if (userConfirmId.equals(userGUID)) {
-                        context.put(PARAM_USER_GUID, userGUID);
-                        response.setTitle(messages.getString("login.password.update.required.title"));
-                        context.put("isPasswordUpdateRequired", true);
-                        context.put(PARAM_USER_NAME, userName);
-                        context.put("cmd", CMD_PASSWORD_UPDATE_REQUIRED);
-                        PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
-                            PasswordUpdateRequiredForm.class);
-                        context.put("actionForm", f);
-                        super.doView(request, response);
-                        return;
-                    } else {
-                        throw new SecurityException();
-                    }
-                }
-            } catch (SecurityException e) {
-                context.put("urlNotExists", true);
-            }
-        } else if(userName != null && !userName.isEmpty()) {
-            // User login and password is update require
-            try {
-                User user = userManager.getUser(userName);
-                if (user != null) {
-                    PasswordCredential credential = userManager.getPasswordCredential(user);
-                    if(credential.isUpdateRequired()) {
-                        response.setTitle(messages.getString("login.password.update.required.title"));
-                        context.put("isPasswordUpdateRequired", true);
-                        context.put(PARAM_USER_NAME, userName);
-                        context.put("cmd", CMD_PASSWORD_UPDATE_REQUIRED);
-                        PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
-                                PasswordUpdateRequiredForm.class);
-                        context.put("actionForm", f);
-                        super.doView(request, response);
-                        return;
-                    } else {
-                        throw new SecurityException();
-                    }
+                Collection<User> users = userManager.lookupUsers("user.business-info.online.email", userEmail);
+                if (users.isEmpty()) {
+                    throw new SecurityException();
                 } else {
+                    for (User user : users) {
+                        Map<String, String> pref = user.getInfoMap();
+                        String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
+                        if (userConfirmId != null && !userConfirmId.isEmpty()) {
+                            String userName = user.getName();
+                            if(userName != null) {
+                                String userChangeConfirmId = Utils.getMD5Hash(userName.concat(userEmail).concat(userConfirmId));
+                                userChangeConfirmId = (userChangeConfirmId == null ? "invalid" : userChangeConfirmId);
+                                if (userChangeConfirmId.equals(userChangeId)) {
+                                    response.setTitle(messages.getString("login.password.update.required.title"));
+                                    context.put(PARAM_USER_EMAIL, userEmail);
+                                    context.put(PARAM_USER_CHANGE_ID, userChangeId);
+                                    context.put("isPasswordUpdate", true);
+                                    PasswordCredential credential = userManager.getPasswordCredential(user);
+                                    if(credential.isUpdateRequired()) {
+                                        context.put("isPasswordUpdateRequired", true);
+                                    }
+                                    context.put("cmd", CMD_PW_UPDATE_REQUIRED);
+                                    PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
+                                        PasswordUpdateRequiredForm.class);
+                                    context.put("actionForm", f);
+                                    super.doView(request, response);
+                                    return;
+                                }
+                            }
+                        }
+                    }
                     throw new SecurityException();
                 }
             } catch (SecurityException e) {
@@ -271,9 +261,15 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                 if(user != null) {
                     PasswordCredential credential = userManager.getPasswordCredential(user);
                     if (credential.isUpdateRequired()) {
+                        String userName = user.getName();
+                        String userEmail = user.getInfoMap().get("user.business-info.online.email");
+                        String userConfirmId = user.getInfoMap().get("user.custom.ingrid.user.confirmid");
+                        String userChangeConfirmId = Utils.getMD5Hash(userName.concat(userEmail).concat(userConfirmId));
                         response.sendRedirect(response.encodeURL(((RequestContext) request
                                 .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
-                                + "/portal/service-myportal.psml") + "?userName=" + user.getName());
+                                + "/portal/service-myportal.psml") + "?"
+                                + PARAM_USER_CHANGE_ID  + "=" + userChangeConfirmId + "&" 
+                                + PARAM_USER_EMAIL + "=" + userEmail);
                     } else {
                         // signalize that the user is about to log in
                         // see MyPortalOverviewPortlet::doView()
@@ -356,26 +352,27 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
             } catch (SecurityException e) {
                 log.error("SecurityException." , e);
             }
-        } else if (cmd != null && cmd.equals(CMD_PASSWORD_UPDATE_REQUIRED)) {
-            String userName = request.getParameter(PARAM_USER_NAME);
-            String userGUID = request.getParameter(PARAM_USER_GUID);
-            
+        } else if (cmd != null && cmd.equals(CMD_PW_UPDATE_REQUIRED)) {
             response.setRenderParameter("cmd", request.getParameter("cmd"));
 
             PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
                     PasswordUpdateRequiredForm.class);
             f.clearErrors();
             f.populate(request);
-            if (!f.validate(userGUID)) {
-                if (userName != null) {
-                    response.setRenderParameter(PARAM_USER_NAME, userName);
+            String userEmail = request.getParameter(PARAM_USER_EMAIL);
+            String userChangeId = request.getParameter(PARAM_USER_CHANGE_ID);
+            
+            if (!f.validate()) {
+                if (userEmail != null) {
+                    response.setRenderParameter(PARAM_USER_EMAIL, userEmail);
                 }
-                if (userGUID != null) {
-                    response.setRenderParameter(PARAM_USER_GUID, userGUID);
+                if (userChangeId != null) {
+                    response.setRenderParameter(PARAM_USER_CHANGE_ID, userChangeId);
                 }
                 return;
             }
             
+            String userName = f.getInput(PasswordUpdateRequiredForm.FIELD_LOGIN);
             if(userName != null && !userName.isEmpty()) {
                 try {
                     User user = userManager.getUser(userName);
@@ -383,52 +380,86 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                         Map<String, String> pref = user.getInfoMap();
                         String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
                         userConfirmId = (userConfirmId == null ? "invalid" : userConfirmId);
-                        if (userGUID != null && !userGUID.isEmpty()) {
-                            if (userConfirmId.equals(userGUID)) {
-                                String pw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW);
-                                if(!pw.isEmpty()) {
-                                    PasswordCredential credential = userManager.getPasswordCredential(user);
-                                    credential.setPassword(credential.getOldPassword(), pw);
-                                    credential.setUpdateRequired(false);
-                                    // generate login id
-                                    String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
-                                            Long.toString(System.currentTimeMillis())));
-                                    user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
-                                    userManager.storePasswordCredential(credential);
-                                    userManager.updateUser(user);
+                        if (userChangeId != null && !userChangeId.isEmpty()) {
+                            String userChangeConfirmId = Utils.getMD5Hash(userName.concat(userEmail).concat(userConfirmId));
+                            userChangeConfirmId = (userChangeConfirmId == null ? "invalid" : userChangeConfirmId);
+                            if (userChangeConfirmId.equals(userChangeId)) {
+                                PasswordCredential credential = userManager.getPasswordCredential(user);
+                                boolean isUpdateRequired = credential.isUpdateRequired();
+                                if (!f.validate(isUpdateRequired)) {
+                                    if (userEmail != null) {
+                                        response.setRenderParameter(PARAM_USER_EMAIL, userEmail);
+                                    }
+                                    if (userChangeId != null) {
+                                        response.setRenderParameter(PARAM_USER_CHANGE_ID, userChangeId);
+                                    }
+                                    return;
                                 }
-                            }
-                        } else {
-                            String pw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW_NEW);
-                            String oldPw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW_OLD);
-                            if(!pw.isEmpty()) {
-                                try {
-                                    PasswordCredential credential = userManager.getPasswordCredential(user);
-                                    credential.setPassword(oldPw, pw);
-                                    credential.setUpdateRequired(false);
-                                    // generate login id
-                                    String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
-                                            Long.toString(System.currentTimeMillis())));
-                                    user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
-                                    
-                                    userManager.storePasswordCredential(credential);
-                                    userManager.updateUser(user);
-                                } catch (PasswordAlreadyUsedException e) {
-                                    f.setError(EditAccountForm.FIELD_PW_NEW, "account.edit.error.password.in.use");
-                                    if (userName != null) {
-                                        response.setRenderParameter(PARAM_USER_NAME, userName);
+                                if(!isUpdateRequired) {
+                                String pw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW);
+                                    if(!pw.isEmpty()) {
+                                        credential.setPassword(credential.getOldPassword(), pw);
+                                        credential.setUpdateRequired(false);
+                                        // generate login id
+                                        String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
+                                                Long.toString(System.currentTimeMillis())));
+                                        user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                                        userManager.storePasswordCredential(credential);
+                                        userManager.updateUser(user);
                                     }
-                                } catch (SecurityException e) {
-                                    f.setError(EditAccountForm.FIELD_PW_OLD, "account.edit.error.wrong.password");
-                                    if (userName != null) {
-                                        response.setRenderParameter(PARAM_USER_NAME, userName);
+                                } else {
+                                    String pw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW_NEW);
+                                    String oldPw = f.getInput(PasswordUpdateRequiredForm.FIELD_PW_OLD);
+                                    if(!pw.isEmpty()) {
+                                        try {
+                                            credential.setPassword(oldPw, pw);
+                                            credential.setUpdateRequired(false);
+                                            // generate login id
+                                            String confirmId = Utils.getMD5Hash(userName.concat(pw).concat(
+                                                    Long.toString(System.currentTimeMillis())));
+                                            user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                                            
+                                            userManager.storePasswordCredential(credential);
+                                            userManager.updateUser(user);
+                                        } catch (PasswordAlreadyUsedException e) {
+                                            f.setError(PasswordUpdateRequiredForm.FIELD_PW_NEW, "account.edit.error.password.in.use");
+                                            if (userName != null) {
+                                                response.setRenderParameter(PARAM_USER_NAME, userName);
+                                            }
+                                        } catch (SecurityException e) {
+                                            f.setError(PasswordUpdateRequiredForm.FIELD_PW_OLD, "account.edit.error.wrong.password");
+                                            if (userName != null) {
+                                                response.setRenderParameter(PARAM_USER_NAME, userName);
+                                            }
+                                        }
                                     }
+                                }
+                            } else {
+                                f.setError(PasswordUpdateRequiredForm.FIELD_LOGIN, "account.create.error.isWrongLogin");
+                                if (userName != null) {
+                                    response.setRenderParameter(PARAM_USER_EMAIL, userName);
+                                }
+                                if (userEmail != null) {
+                                    response.setRenderParameter(PARAM_USER_EMAIL, userEmail);
+                                }
+                                if (userChangeId != null) {
+                                    response.setRenderParameter(PARAM_USER_CHANGE_ID, userChangeId);
                                 }
                             }
                         }
                     }
                 } catch (Exception e) {
                     log.error("Error update password for user: " + userName, e);
+                    f.setError(PasswordUpdateRequiredForm.FIELD_LOGIN, "account.create.error.isWrongLogin");
+                    if (userName != null) {
+                        response.setRenderParameter(PARAM_USER_EMAIL, userName);
+                    }
+                    if (userEmail != null) {
+                        response.setRenderParameter(PARAM_USER_EMAIL, userEmail);
+                    }
+                    if (userChangeId != null) {
+                        response.setRenderParameter(PARAM_USER_CHANGE_ID, userChangeId);
+                    }
                 }
             }
         } else {

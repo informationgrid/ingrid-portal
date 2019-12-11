@@ -1,8 +1,8 @@
-#if ($formType == 'edit' && !$isPasswordUpdateRequired)
+#if ($formType == 'edit' && !$isPasswordUpdate)
     <h2>$MESSAGES.getString('account.edit.profile.edit.from') #getFieldValue('firstname') #getFieldValue('lastname')</h2>
 #end
 #displayFormError()
-#if(!$isPasswordUpdateRequired)
+#if(!$isPasswordUpdate)
     <div class="form-element">
         <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation')):</label>
     </div>
@@ -40,10 +40,10 @@
     </div>
 #end
 #if ($formType == 'edit')
-    #if($isPasswordUpdateRequired)
+    #if($isPasswordUpdate)
         #if($userName)
         <div class="form-element">
-            <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
+            <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
         </div>
         <div class="form-element">
             <input type="text" id="login" name="login" value="$userName" disabled/>
@@ -75,7 +75,7 @@
         <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
     </div>
 #elseif($formType == 'create')
-    #if(!$isPasswordUpdateRequired)
+    #if(!$isPasswordUpdate)
         <div class="form-element">
             <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
         </div>
@@ -115,7 +115,7 @@
         <input type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" #addErrorFormClass('password_confirm')/>
     </div>
 #end
-#if(!$isPasswordUpdateRequired)
+#if(!$isPasswordUpdate)
     <hr />
     <h4>$MESSAGES.getString('account.edit.address.information')</h4>
     <div class="form-element">

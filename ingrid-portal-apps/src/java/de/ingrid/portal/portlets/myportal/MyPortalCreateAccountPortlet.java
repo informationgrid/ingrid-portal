@@ -253,7 +253,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
-                    Long.toString(System.currentTimeMillis())));
+                Long.toString(System.currentTimeMillis())));
             userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
 
             if (log.isInfoEnabled()) {

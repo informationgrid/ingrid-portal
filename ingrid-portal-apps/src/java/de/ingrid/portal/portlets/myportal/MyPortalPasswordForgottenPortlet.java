@@ -204,7 +204,8 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         } else {
             try {
                 String userName = user.getName();
-                String returnUrl = generateReturnURL(request, actionResponse, userName, user.getInfoMap().get("user.custom.ingrid.user.confirmid"));
+                String returnUrl = generateReturnURL(request, actionResponse, userName, user.getInfoMap().get("user.custom.ingrid.user.confirmid"),
+                    email);
 
                 Map<String, String> userAttributes = new HashMap<>();
                 userAttributes.putAll(user.getInfoMap());
@@ -258,8 +259,9 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         }
     }
     
-    protected String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID) {
-        String fullPath = this.returnURL + "?userName=" + userName + "&userGUID=" + urlGUID;
+    protected String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID, String userEmail) {
+        String userId = Utils.getMD5Hash(userName.concat(userEmail).concat(urlGUID));
+        String fullPath = this.returnURL + "?userChangeId=" + userId + "&userEmail=" + userEmail;
         
         String hostname = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_URL);
         // NOTE: getPortalURL will encode the fullPath for us

@@ -38,6 +38,8 @@ public class PasswordUpdateRequiredForm extends ActionForm {
     /** attribute name of action form in session */
     public static final String SESSION_KEY = PasswordUpdateRequiredForm.class.getName();
 
+    public static final String FIELD_LOGIN = "login";
+
     public static final String FIELD_PW = "password";
 
     public static final String FIELD_PW_CONFIRM = "password_confirm";
@@ -61,6 +63,7 @@ public class PasswordUpdateRequiredForm extends ActionForm {
     public void populate(PortletRequest request) {
         clearInput();
         
+        setInput(FIELD_LOGIN, request.getParameter(FIELD_LOGIN));
         setInput(FIELD_PW, request.getParameter(FIELD_PW));
         setInput(FIELD_PW_CONFIRM, request.getParameter(FIELD_PW_CONFIRM));
         setInput(FIELD_PW_OLD, request.getParameter(FIELD_PW_OLD));
@@ -72,14 +75,27 @@ public class PasswordUpdateRequiredForm extends ActionForm {
      * @see de.ingrid.portal.forms.ActionForm#validate()
      */
     public boolean validate() {
-        return validate(null);
+        boolean allOk = true;
+        clearErrors();
+        
+        if (!hasInput(FIELD_LOGIN)) {
+            setError(FIELD_LOGIN, "account.create.error.noLogin");
+            allOk = false;
+        } else {
+            String login = getInput(FIELD_LOGIN);
+            if (!Utils.isValidLogin(login)) {
+                setError(FIELD_LOGIN, "account.create.error.invalidLogin");
+                allOk = false;
+            }
+        }
+        return allOk;
     }
 
-    public boolean validate(String userGUID) {
+    public boolean validate(boolean isPasswordRequired) {
         boolean allOk = true;
         clearErrors();
 
-        if (userGUID != null) {
+        if (!isPasswordRequired) {
             if (hasInput(FIELD_PW)) {
                 String password = getInput(FIELD_PW);
                 if (!Utils.isStrengthPassword(password)) {
@@ -95,15 +111,14 @@ public class PasswordUpdateRequiredForm extends ActionForm {
                 allOk = false;
             }
         } else {
-            if (!hasInput(FIELD_PW_OLD) && hasInput(FIELD_PW_NEW)) {
+            if (!hasInput(FIELD_PW_OLD)) {
                 setError(FIELD_PW_OLD, "account.edit.error.noPasswordOld");
                 allOk = false;
             } 
-            if (hasInput(FIELD_PW_OLD) && !hasInput(FIELD_PW_NEW)) {
+            if (!hasInput(FIELD_PW_NEW)) {
                 setError(FIELD_PW_NEW, "account.edit.error.noPasswordNew");
                 allOk = false;
-            }
-            if (hasInput(FIELD_PW_NEW)) {
+            } else {
                 String password = getInput(FIELD_PW_NEW);
                 if (!Utils.isStrengthPassword(password)) {
                    setError(FIELD_PW_NEW, "account.create.error.worstPassword");

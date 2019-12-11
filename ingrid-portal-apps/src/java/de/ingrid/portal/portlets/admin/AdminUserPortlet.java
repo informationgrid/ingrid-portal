@@ -613,7 +613,7 @@ public class AdminUserPortlet extends ContentPortlet {
                     userInfo.put("password", password);
                 }
                 if (isUserPwUpdateRequired) {
-                    userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId));
+                    userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId, userAttributes.get("user.business-info.online.email")));
                 }
                 sendMail(request, f, messages, userInfo, true);
             }
@@ -713,7 +713,7 @@ public class AdminUserPortlet extends ContentPortlet {
                             userInfo.put("password", newPassword);
                         }
                         if (isUserPwUpdateRequired) {
-                            userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId));
+                            userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId, user.getInfoMap().get("user.business-info.online.email")));
                         }
                         userInfo.put("isUpdate", "true");
                         sendMail(request, f, messages, userInfo);
@@ -1065,8 +1065,9 @@ public class AdminUserPortlet extends ContentPortlet {
         }
     }
 
-    private String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID) {
-        String fullPath = this.returnURL + "?userName=" + userName + "&userGUID=" + urlGUID;
+    private String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID, String userEmail) {
+        String userId = Utils.getMD5Hash(userName.concat(userEmail).concat(urlGUID));
+        String fullPath = this.returnURL + "?userChangeId=" + userId + "&userEmail=" + userEmail;
         
         String hostname = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_URL);
         // NOTE: getPortalURL will encode the fullPath for us
