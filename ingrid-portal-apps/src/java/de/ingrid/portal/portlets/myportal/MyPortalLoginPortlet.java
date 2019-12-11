@@ -139,45 +139,47 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         
         String userChangeId = request.getParameter(PARAM_USER_CHANGE_ID);
         String userEmail = request.getParameter(PARAM_USER_EMAIL);
-
-        if(userChangeId != null && !userChangeId.isEmpty() && userEmail != null && !userEmail.isEmpty()) {
-            // User get link to change password
-            try {
-                Collection<User> users = userManager.lookupUsers("user.business-info.online.email", userEmail);
-                if (users.isEmpty()) {
-                    throw new SecurityException();
-                } else {
-                    for (User user : users) {
-                        Map<String, String> pref = user.getInfoMap();
-                        String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
-                        if (userConfirmId != null && !userConfirmId.isEmpty()) {
-                            String userName = user.getName();
-                            if(userName != null) {
-                                String userChangeConfirmId = Utils.getMD5Hash(userName.concat(userEmail).concat(userConfirmId));
-                                userChangeConfirmId = (userChangeConfirmId == null ? "invalid" : userChangeConfirmId);
-                                if (userChangeConfirmId.equals(userChangeId)) {
-                                    response.setTitle(messages.getString("login.password.update.required.title"));
-                                    context.put(PARAM_USER_EMAIL, userEmail);
-                                    context.put(PARAM_USER_CHANGE_ID, userChangeId);
-                                    context.put("isPasswordUpdate", true);
-                                    PasswordCredential credential = userManager.getPasswordCredential(user);
-                                    if(credential.isUpdateRequired()) {
-                                        context.put("isPasswordUpdateRequired", true);
+        
+        if(request.getWindowID() != null && !request.getWindowID().equals("MyPortalLoginPortlet")) {
+            if(userChangeId != null && !userChangeId.isEmpty() && userEmail != null && !userEmail.isEmpty()) {
+                // User get link to change password
+                try {
+                    Collection<User> users = userManager.lookupUsers("user.business-info.online.email", userEmail);
+                    if (users.isEmpty()) {
+                        throw new SecurityException();
+                    } else {
+                        for (User user : users) {
+                            Map<String, String> pref = user.getInfoMap();
+                            String userConfirmId = pref.get("user.custom.ingrid.user.confirmid");
+                            if (userConfirmId != null && !userConfirmId.isEmpty()) {
+                                String userName = user.getName();
+                                if(userName != null) {
+                                    String userChangeConfirmId = Utils.getMD5Hash(userName.concat(userEmail).concat(userConfirmId));
+                                    userChangeConfirmId = (userChangeConfirmId == null ? "invalid" : userChangeConfirmId);
+                                    if (userChangeConfirmId.equals(userChangeId)) {
+                                        response.setTitle(messages.getString("login.password.update.required.title"));
+                                        context.put(PARAM_USER_EMAIL, userEmail);
+                                        context.put(PARAM_USER_CHANGE_ID, userChangeId);
+                                        context.put("isPasswordUpdate", true);
+                                        PasswordCredential credential = userManager.getPasswordCredential(user);
+                                        if(credential.isUpdateRequired()) {
+                                            context.put("isPasswordUpdateRequired", true);
+                                        }
+                                        context.put("cmd", CMD_PW_UPDATE_REQUIRED);
+                                        PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
+                                            PasswordUpdateRequiredForm.class);
+                                        context.put("actionForm", f);
+                                        super.doView(request, response);
+                                        return;
                                     }
-                                    context.put("cmd", CMD_PW_UPDATE_REQUIRED);
-                                    PasswordUpdateRequiredForm f = (PasswordUpdateRequiredForm) Utils.getActionForm(request, PasswordUpdateRequiredForm.SESSION_KEY,
-                                        PasswordUpdateRequiredForm.class);
-                                    context.put("actionForm", f);
-                                    super.doView(request, response);
-                                    return;
                                 }
                             }
                         }
+                        throw new SecurityException();
                     }
-                    throw new SecurityException();
+                } catch (SecurityException e) {
+                    context.put("urlNotExists", true);
                 }
-            } catch (SecurityException e) {
-                context.put("urlNotExists", true);
             }
         }
         // when using shibboleth authentication just show a page to create a profile
