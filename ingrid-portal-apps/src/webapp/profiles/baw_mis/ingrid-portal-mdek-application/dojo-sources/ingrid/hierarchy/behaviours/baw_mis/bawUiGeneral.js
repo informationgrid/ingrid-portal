@@ -46,6 +46,10 @@ define([
     "module"
 ], function(NumberTextBox, MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, on, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilGrid, UtilStore, UtilSyslist, module) {
 
+    const DISCRETE_NUMERIC = "DISCRETE_NUMERIC";
+    const DISCRETE_STRING = "DISCRETE_STRING";
+    const RANGE_NUMERIC = "RANGE_NUMERIC";
+
     return declare(null, {
         title: "BAW-Allgemein",
         description: "Allgemeine UI Anpassungen für die BAW",
@@ -222,8 +226,6 @@ define([
                 // ----------------------------------------
                 // Kodierungsschema der geografischen Daten
                 // Not necessarily a required field. See #1273
-                domClass.remove("uiElement1315", "required");
-                domClass.add("uiElement1315", "hidden");
                 // Medienoption
                 domClass.add("uiElement1310", "hidden");
                 // Bestellinformation
@@ -306,7 +308,7 @@ define([
 
             var structure;
 
-            var bawKeywordCatalogueTableId = "bawKeywordCatalogueTable";
+            const bawKeywordCatalogueTableId = "bawKeywordCatalogueTable";
             structure = [
                 {
                     field: "bawKeywordCatalogueEntry",
@@ -460,9 +462,8 @@ define([
                  * Besides the visible columns listed above, the table contains
                  * data entered using the dialog box, which isn't directly
                  * visible in this table. This data is:
-                 * - hasDiscreteValues -> Depends on which checkbox is selected
-                 *                        in the dialog box. True means that
-                 *                        discrete values option is active
+                 * - simParamValueType -> Depends on which checkbox is selected
+                 *                        in the dialog box.
                  * - values -> Array containing:
                  *             - row data from discrete values table
                  *             - two entries: one each from the minimum and
@@ -498,9 +499,13 @@ define([
             // Special handling of nested table data originating from the dialog box
             topic.subscribe("beforeFinishGettingObjectNodeData", function (nodeData) {
                 /*
-                 * We manipulate the additional field data to add another nested
-                 * level of values for storing the simulation parameter values
-                 * that have been entered in the dialog box.
+                 * We manipulate the additional field data to add values that
+                 * have been added in the dialog box. Ideally one would add
+                 * another nested level. However, that doesn't work perfectly
+                 * right now at the IGC level because if multiple rows at the
+                 * intermediate level have the same key, then it is impossible
+                 * to map the nested values to the correct row.
+                 *
                  * See also the comment in the structure of this table.
                  */
                 var simParamTableData = registry.byId(simParamTableId).data;
@@ -513,36 +518,28 @@ define([
                 if (simParamTableData.length > 0) {
                     simParamNodeAdditionalValues.tableRows.forEach(function (row, idx) {
                         // Remove existing simParamValue entry
-                        var rowToEdit = row.filter(function (r) {
+                        const rowToEdit = row.filter(function (r) {
                             return r.identifier !== "simParamValue"
                         });
 
-                        // Prepare values to add to the new nested level
-                        var values = simParamTableData[idx].values;
-                        var valueTableRows = array.map(values, function (valueItem) {
-                            return [{
-                                identifier: "simParamValue",
-                                listId: "-1",
-                                tableRows: null,
-                                value: valueItem
-                            }];
-                        });
-
-                        // Add additional rows
-                        var hasDiscreteValues = simParamTableData[idx].hasDiscreteValues;
+                        const simParamValueType = simParamTableData[idx].simParamValueType;
                         rowToEdit.push({
-                            identifier: "simParamHasDiscreteValues",
+                            identifier: "simParamValueType",
                             listId: "-1",
                             tableRows: null,
-                            value: JSON.stringify(hasDiscreteValues)
-                            //value: hasDiscreteValues
+                            value: simParamValueType
                         });
-                        rowToEdit.push({
-                            identifier: "simParamValueArray",
-                            listId: -1,
-                            tableRows: valueTableRows,
-                            value: null
+
+                        // Add values to the additional values object
+                        simParamTableData[idx].values.forEach(function (value, validx) {
+                            rowToEdit.push({
+                                identifier: "simParamValue." + (validx + 1), // Start count at 1 instead of 0
+                                listId: "-1",
+                                tableRows: null,
+                                value: value
+                            });
                         });
+
                         newTableRows.push(rowToEdit);
                     });
                 }
@@ -566,23 +563,32 @@ define([
                 if (!nodeAdditionalFieldData || !nodeAdditionalFieldData.tableRows) return;
 
                 nodeAdditionalFieldData.tableRows.forEach(function (additionalFieldRow, idx) {
-                    var simParamTableRow = simParamTableData[idx];
+                    const simParamTableRow = simParamTableData[idx];
 
-                    // We can use the value that has already been set wrongly
-                    var hasDiscreteValues = JSON.parse(simParamTableRow.simParamHasDiscreteValues);
-                    simParamTableRow["hasDiscreteValues"] = hasDiscreteValues;
-                    delete simParamTableRow["simParamHasDiscreteValues"];
-                    delete simParamTableRow["simParamValueArray"];
-
-                    var valuesEntry = additionalFieldRow.find(function (row) {
-                        return row.identifier === "simParamValueArray";
+                    const valuesEntries = additionalFieldRow.filter(function (row) {
+                        return row.identifier.startsWith("simParamValue.");
                     });
 
-                    var values = array.map(valuesEntry.tableRows, function (entry) {
-                        return entry[0].value;
-                    });
-                    simParamTableRow["values"] = values;
-                    simParamTableRow["simParamValue"] = self.simulationParameterValueArrayToString(values, hasDiscreteValues);
+                    if (valuesEntries) {
+                        var simParamValueType = simParamTableRow.simParamValueType;
+                        const hasNumericValues = self.hasNumericValues(simParamValueType);
+                        var values = [];
+                        for (var i = 0; i < valuesEntries.length; i++) {
+                            const identifier = "simParamValue." + (i + 1);
+                            const row = valuesEntries.find(function (row) {
+                                return row.identifier === identifier;
+                            });
+
+                            if (row) {
+                                const v = hasNumericValues ? JSON.parse(row.value) : row.value;
+                                values.push(v);
+                            }
+                            delete simParamTableRow[identifier];
+                        }
+
+                        simParamTableRow["values"] = values;
+                        simParamTableRow["simParamValue"] = self.simulationParameterValueArrayToString(values, simParamValueType);
+                    }
                 });
                 UtilStore.updateWriteStore(simParamTableId, simParamTableData);
             });
@@ -730,20 +736,34 @@ define([
      * - Min and max values (not discrete) are displayed in square brackets
      *   and delimited by two dots e.g. [ 0 .. 5 ]
      */
-        simulationParameterValueArrayToString: function (values, hasDiscreteValues) {
+        simulationParameterValueArrayToString: function (values, simParamValueType) {
+            const hasDiscreteValues = this.hasDiscreteValues(simParamValueType);
+            const formatted = values.map(function (val) {
+                var v = dojo.number.format(val);
+                return v ? v : val;
+            });
+
             var valuesString = "";
             if (hasDiscreteValues) {
-                if (values.length == 1) {
-                    valuesString += values[0];
+                if (formatted.length === 1) {
+                    valuesString += formatted[0];
                 } else {
-                    valuesString = JSON.stringify(values);
+                    valuesString = JSON.stringify(formatted);
                 }
             } else {
-                var min = values[0];
-                var max = values[1];
+                const min = formatted[0];
+                const max = formatted[1];
                 valuesString = "[" + min + " .. " + max + "]";
             }
             return valuesString;
+        },
+
+        hasNumericValues(simParamValueType) {
+            return simParamValueType === DISCRETE_NUMERIC || simParamValueType === RANGE_NUMERIC;
+        },
+
+        hasDiscreteValues(simParamValueType) {
+            return simParamValueType === DISCRETE_NUMERIC || simParamValueType === DISCRETE_STRING;
         }
 
     })();

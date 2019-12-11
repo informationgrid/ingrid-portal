@@ -34,21 +34,30 @@
     var dialogBawSimulationParam = null;
 
     require([
+        "dijit/form/NumberTextBox",
         "dijit/registry",
         "dojo/dom-class",
         "dojo/on",
         "dojo/query",
         "ingrid/dialog",
         "ingrid/hierarchy/requiredChecks",
+        "ingrid/grid/CustomGridEditors",
+        "ingrid/grid/CustomGridFormatters",
         "ingrid/layoutCreator",
         "ingrid/message",
         "ingrid/utils/Store"
-    ], function (registry, domClass, on, query, warnDialog, checks, layoutCreator, message, UtilStore) {
+    ], function (NumberTextBox, registry, domClass, on, query, warnDialog, checks, Editors, Formatters, layoutCreator, message, UtilStore) {
+
+        // TODO duplicate code from bawUiGeneral.js
+        const DISCRETE_NUMERIC = "DISCRETE_NUMERIC";
+        const DISCRETE_STRING = "DISCRETE_STRING";
+        const RANGE_NUMERIC = "RANGE_NUMERIC";
+        const bawUiGeneralModule = require("ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral");
 
         var caller = {};
         var dialog = null;
         var isRowBeingEdited = false;
-        var hasDiscreteValues = true;
+        var simParamValueType = DISCRETE_NUMERIC;
 
         on(_container_, "Load", function () {
             dialog = this;
@@ -65,15 +74,26 @@
                 isRowBeingEdited = true;
 
                 var row = caller.selectedRow;
-                hasDiscreteValues = row.hasDiscreteValues;
+                simParamValueType = row.simParamValueType;
 
-                registry.byId("simParamNameInDialog").set("value", row.simParamName);
-                registry.byId("simParamTypeInDialog").set("value", row.simParamType);
-                registry.byId("simParamUnitsInDialog").set("value", row.simParamUnit);
+                registry.byId("spName").set("value", row.simParamName);
+                registry.byId("spType").set("value", row.simParamType);
+                registry.byId("spUnits").set("value", row.simParamUnit);
 
                 var values = row.values;
-                if (hasDiscreteValues) {
-                    var tableId = "simParamDiscreteValuesTable";
+                if (simParamValueType === RANGE_NUMERIC) {
+                    registry.byId("spRangeValsRadio").set("value", "on");
+                    registry.byId("spValueMinInput").set("value", values[0]);
+                    registry.byId("spValueMaxInput").set("value", values[1]);
+                } else {
+                    var tableId;
+                    if (simParamValueType === DISCRETE_NUMERIC) {
+                        tableId = "spDiscreteNumValsTable";
+                        registry.byId("spDiscreteNumValsRadio").set("value", "on");
+                    } else {
+                        tableId = "spDiscreteStrValsTable";
+                        registry.byId("spDiscreteStrValsRadio").set("value", "on");
+                    }
                     var tableData = registry.byId(tableId).data;
 
                     if (values instanceof Array) {
@@ -84,10 +104,6 @@
                         tableData.push({paramValue: values});
                     }
                     UtilStore.updateWriteStore(tableId, tableData);
-                } else {
-                    registry.byId("simParamValueRangeRadio").set("value", "on");
-                    registry.byId("simParamValueMinInput").set("value", values[0]);
-                    registry.byId("simParamValueMaxInput").set("value", values[1]);
                 }
             }
         }
@@ -100,7 +116,23 @@
                 }
             };
 
-            layoutCreator.createSelectBox("simParamTypeInDialog", null, storeProps, function() {
+            var formatter = function (value, constraints) {
+                var displayedValue = this.get('displayedValue');
+                if (Math.abs(dojo.number.parse(value) - dojo.number.parse(displayedValue)) < 1.0e-6) {
+                    return displayedValue;
+                } else {
+                    return dojo.number.format(value);
+                }
+            };
+            var parser = function (value, constraints) {
+                return dojo.number.parse(value);
+            };
+            registry.byId("spValueMinInput").parse = parser;
+            registry.byId("spValueMaxInput").format = formatter;
+            registry.byId("spValueMaxInput").parse = parser;
+            registry.byId("spValueMinInput").format = formatter;
+
+            layoutCreator.createSelectBox("spType", null, storeProps, function() {
                 return UtilSyslist.getSyslistEntry(3950004);
             });
 
@@ -110,36 +142,64 @@
                     name: message.get("ui.obj.baw.simulation.parameter.dialog.table.column.value"),
                     editable: true,
                     isMandatory: true,
+                    type: Editors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: Formatters.LocalizedNumberFormatter,
                     style: "width: auto"
                 }
             ];
 
-            var deferred = layoutCreator.createDataGrid("simParamDiscreteValuesTable", null, structure, null);
+            layoutCreator.createDataGrid("spDiscreteNumValsTable", null, structure, null);
 
-            on(registry.byId("simParamDiscreteValuesRadio"), "Change", function (newVal) {
+            structure = [
+                {
+                    field: "paramValue",
+                    name: message.get("ui.obj.baw.simulation.parameter.dialog.table.column.value"),
+                    editable: true,
+                    isMandatory: true,
+                    style: "width: auto"
+                }
+            ];
+
+            var deferred = layoutCreator.createDataGrid("spDiscreteStrValsTable", null, structure, null);
+
+            on(registry.byId("spDiscreteNumValsRadio"), "Change", function (newVal) {
                 if (newVal) {
-                    hasDiscreteValues = true;
+                    simParamValueType = DISCRETE_NUMERIC;
 
-                    domClass.add("uiElementSimParamDiscreteValues", "required");
-                    domClass.remove("uiElementSimParamDiscreteValues", "hide");
-
+                    domClass.add("uiElementSpDiscreteVals", "required");
+                    domClass.remove("uiElementSpDiscreteVals", "hidden");
                 } else {
-                    hasDiscreteValues = false;
-
-                    domClass.remove("uiElementSimParamDiscreteValues", "required");
-                    domClass.add("uiElementSimParamDiscreteValues", "hide");
+                    domClass.remove("uiElementSpDiscreteVals", "required");
+                    domClass.add("uiElementSpDiscreteVals", "hidden");
                 }
             });
-
-            on(registry.byId("simParamValueRangeRadio"), "Change", function (newVal) {
+            on(registry.byId("spDiscreteStrValsRadio"), "Change", function (newVal) {
                 if (newVal) {
-                    domClass.remove("uiElementSimParamValueRange", "hide");
-                    domClass.add("simParamValueMin", "required");
-                    domClass.add("simParamValueMax", "required");
+                    simParamValueType = DISCRETE_STRING;
+
+                    domClass.add("uiElementSpDiscreteStrVals", "required");
+                    domClass.remove("uiElementSpDiscreteStrVals", "hidden");
+                    domClass.add("uiElementSpUnits", "hidden");
+
+                    registry.byId("spDiscreteStrValsTable").reinitLastColumn(true);
                 } else {
-                    domClass.add("uiElementSimParamValueRange", "hide");
-                    domClass.remove("simParamValueMin", "required");
-                    domClass.remove("simParamValueMax", "required");
+                    domClass.remove("uiElementSpDiscreteStrVals", "required");
+                    domClass.add("uiElementSpDiscreteStrVals", "hidden");
+                    domClass.remove("uiElementSpUnits", "hidden");
+                }
+            });
+            on(registry.byId("spRangeValsRadio"), "Change", function (newVal) {
+                if (newVal) {
+                    simParamValueType = RANGE_NUMERIC;
+
+                    domClass.remove("uiElementSpRangeVals", "hidden");
+                    domClass.add("spValueMin", "required");
+                    domClass.add("spValueMax", "required");
+                } else {
+                    domClass.add("uiElementSpRangeVals", "hidden");
+                    domClass.remove("spValueMin", "required");
+                    domClass.remove("spValueMax", "required");
                 }
             });
 
@@ -165,11 +225,17 @@
             });
 
             // Also check the table for values
-            if (hasDiscreteValues) {
-                var valuesTable = registry.byId("simParamDiscreteValuesTable");
+            if (simParamValueType === DISCRETE_NUMERIC) {
+                var valuesTable = registry.byId("spDiscreteNumValsTable");
                 if (valuesTable.data.length === 0) {
                     valid = false;
-                    checks.setErrorLabel("simParamDiscreteValuesTable");
+                    checks.setErrorLabel("spDiscreteNumValsTable");
+                }
+            } else if (simParamValueType === DISCRETE_STRING) {
+                var valuesTable = registry.byId("spDiscreteStrValsTable");
+                if (valuesTable.data.length === 0) {
+                    valid = false;
+                    checks.setErrorLabel("spDiscreteStrValsTable");
                 }
             }
             return valid;
@@ -188,40 +254,41 @@
                 return;
             }
 
-            var tableId = "simParamTable";
-            var tableData = registry.byId(tableId).data;
+            const tableId = "simParamTable";
+            const tableData = registry.byId(tableId).data;
 
-            var simParamName = registry.byId("simParamNameInDialog").get("value");
-            var simParamType = registry.byId("simParamTypeInDialog").get("value");
-            var simParamUnit = registry.byId("simParamUnitsInDialog").get("value");
+            const simParamName = registry.byId("spName").get("value");
+            const simParamType = registry.byId("spType").get("value");
+            const simParamUnits = registry.byId("spUnits").get("value");
             var values = [];
-            if (hasDiscreteValues) {
-                values = registry.byId("simParamDiscreteValuesTable").data.map(function (row) {
+            if (simParamValueType === DISCRETE_NUMERIC || simParamValueType === DISCRETE_STRING) {
+                const valuesTableId = simParamValueType === DISCRETE_NUMERIC ? "spDiscreteNumValsTable" : "spDiscreteStrValsTable";
+                values = registry.byId(valuesTableId).data.map(function (row) {
                     return row.paramValue;
                 });
             } else {
-                var min = registry.byId("simParamValueMinInput").get("value");
-                var max = registry.byId("simParamValueMaxInput").get("value");
+                const min = registry.byId("spValueMinInput").get("value");
+                const max = registry.byId("spValueMaxInput").get("value");
                 values.push(min);
                 values.push(max);
             }
-            var valuesString = require("ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral").simulationParameterValueArrayToString(values, hasDiscreteValues);
+            var valuesString = bawUiGeneralModule.simulationParameterValueArrayToString(values, simParamValueType);
 
             if (isRowBeingEdited) {
-                var row = caller.selectedRow;
+                const row = caller.selectedRow;
                 row["simParamName"] = simParamName;
                 row["simParamType"] = simParamType;
-                row["simParamUnit"] = simParamUnit;
+                row["simParamUnit"] = simParamUnits;
                 row["simParamValue"] = valuesString;
-                row["hasDiscreteValues"] = hasDiscreteValues;
+                row["simParamValueType"] = simParamValueType;
                 row["values"] = values;
             } else {
                 tableData.push({
                     simParamName: simParamName,
                     simParamType: simParamType,
-                    simParamUnit: simParamUnit,
+                    simParamUnit: simParamUnits,
                     simParamValue: valuesString,
-                    hasDiscreteValues: hasDiscreteValues,
+                    simParamValueType: simParamValueType,
                     values: values
                 });
             }
@@ -248,94 +315,114 @@
         <span class="outer required">
             <div>
                 <span class="label">
-                    <label for="simParamNameInDialog">
+                    <label for="spName">
                         <fmt:message key="ui.obj.baw.simulation.parameter.name" />*
                     </label>
                 </span>
                 <span class="input">
-                    <input id="simParamNameInDialog" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/ValidationTextBox">
+                    <input id="spName" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/ValidationTextBox">
                 </span>
             </div>
         </span>
         <span class="outer required">
             <div>
                 <span class="label">
-                    <label for="simParamTypeInDialog">
+                    <label for="spType">
                         <fmt:message key="ui.obj.baw.simulation.parameter.role" />*
                     </label>
                 </span>
                 <span class="input">
-                    <input autoComplete="false" style="width:100%;" listId="3950004" id="simParamTypeInDialog" />
+                    <input autoComplete="false" style="width:100%;" listId="3950004" id="spType" />
                 </span>
             </div>
         </span>
         <span class="outer required">
             <div class="checkboxContainer input">
                 <span>
-                    <input type="radio" id="simParamDiscreteValuesRadio" name="simParamValuesDiscreteOrRange" class="radio" checked="checked" data-dojo-type="dijit/form/RadioButton" />
-                    <label class="inactive" for="simParamDiscreteValuesRadio">
-                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />
+                    <input type="radio" id="spDiscreteNumValsRadio" name="simParamValuesDiscreteOrRange" class="radio" checked="checked" data-dojo-type="dijit/form/RadioButton" />
+                    <label class="inactive" for="spDiscreteNumValsRadio">
+                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete.numbers" />
                     </label>
                 </span>
                 <span>
-                    <input type="radio" id="simParamValueRangeRadio" name="simParamValuesDiscreteOrRange" class="radio" data-dojo-type="dijit/form/RadioButton" />
-                    <label class="inactive" for="simParamValueRangeRadio">
+                    <input type="radio" id="spDiscreteStrValsRadio" name="simParamValuesDiscreteOrRange" class="radio" data-dojo-type="dijit/form/RadioButton" />
+                    <label class="inactive" for="spDiscreteStrValsRadio">
+                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete.strings" />
+                    </label>
+                </span>
+                <span>
+                    <input type="radio" id="spRangeValsRadio" name="simParamValuesDiscreteOrRange" class="radio" data-dojo-type="dijit/form/RadioButton" />
+                    <label class="inactive" for="spRangeValsRadio">
                         <fmt:message key="ui.obj.baw.simulation.parameter.value.range" />
                     </label>
                 </span>
             </div>
         </span>
-        <!-- Discrete values table start -->
-        <span id="uiElementSimParamDiscreteValues" class="outer required">
+        <!-- Discrete numerical values table start -->
+        <span id="uiElementSpDiscreteVals" class="outer required">
             <div>
                 <span class="label">
-                    <label for="simParamDiscreteValuesTable">
+                    <label for="spDiscreteNumValsTable">
                         <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />*
                     </label>
                 </span>
                 <span class="input">
-                    <div id="simParamDiscreteValuesTable" interactive="true" autoHeight="3"></div>
+                    <div id="spDiscreteNumValsTable" interactive="true" autoHeight="3"></div>
                 </span>
             </div>
         </span>
-        <!-- Discrete values table end -->
+        <!-- Discrete numerical values table end -->
+        <!-- Discrete string values table start -->
+        <span id="uiElementSpDiscreteStrVals" class="outer hidden">
+            <div>
+                <span class="label">
+                    <label for="spDiscreteStrValsTable">
+                        <fmt:message key="ui.obj.baw.simulation.parameter.value.discrete" />*
+                    </label>
+                </span>
+                <span class="input">
+                    <div id="spDiscreteStrValsTable" interactive="true" autoHeight="3"></div>
+                </span>
+            </div>
+        </span>
+        <!-- Discrete string values table end -->
         <!-- Value range start -->
-        <span id="uiElementSimParamValueRange" class="hide">
-            <span id="simParamValueMin" class="outer">
+        <span id="uiElementSpRangeVals" class="hidden">
+            <span id="spValueMin" class="outer">
                 <div>
                     <span class="label">
-                        <label for="simParamValueMin">
+                        <label for="spValueMinInput">
                             <fmt:message key="ui.obj.baw.simulation.parameter.value.min" />*
                         </label>
                     </span>
                     <span class="input">
-                        <input id="simParamValueMinInput" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/NumberTextBox">
+                        <input id="spValueMinInput" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/NumberTextBox">
                     </span>
                 </div>
             </span>
-            <span id="simParamValueMax" class="outer">
+            <span id="spValueMax" class="outer">
                 <div>
                     <span class="label">
-                        <label for="simParamValueMax">
+                        <label for="spValueMaxInput">
                             <fmt:message key="ui.obj.baw.simulation.parameter.value.max" />*
                         </label>
                     </span>
                     <span class="input">
-                        <input id="simParamValueMaxInput" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/NumberTextBox">
+                        <input id="spValueMaxInput" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/NumberTextBox">
                     </span>
                 </div>
             </span>
         </span>
         <!-- Value range end -->
-        <span class="outer">
+        <span id="uiElementSpUnits" class="outer">
             <div>
                 <span class="label">
-                    <label for="simParamUnits">
+                    <label for="spUnits">
                         <fmt:message key="ui.obj.baw.simulation.parameter.units" />
                     </label>
                 </span>
                 <span class="input">
-                    <input id="simParamUnitsInDialog" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/ValidationTextBox">
+                    <input id="spUnits" style="width: 100%;" maxLength="255" required="true" data-dojo-type="dijit/form/ValidationTextBox">
                 </span>
             </div>
         </span>
