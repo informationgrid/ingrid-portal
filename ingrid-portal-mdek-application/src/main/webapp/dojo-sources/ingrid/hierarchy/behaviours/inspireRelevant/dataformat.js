@@ -36,7 +36,7 @@ define([
 
     return declare(null, {
         title: "Datenformat",
-        description: "Wenn aktiviert dann wird die Tabelle Datenformat abhängig von INSPIRE relevant zum Pflichtfeld und benötigt ein Format mit dem Namen \"GML\"",
+        description: "Wenn aktiviert dann wird die Tabelle Datenformat für Geodatensätze abhängig von INSPIRE relevant + konform zum Pflichtfeld und benötigt ein Format mit dem Namen \"GML\"",
         defaultActive: true,
         category: "INSPIRE relevant",
         events: [],
@@ -52,6 +52,9 @@ define([
                     if (self.events.length === 0) {
                         self.register();
                     }
+                } else if (msg.objClass === "Class3") {
+                    domClass.remove("uiElement1320", "required");
+                    domClass.add("uiElement1320", "show");
                 } else {
                     self.unregister();
                 }
