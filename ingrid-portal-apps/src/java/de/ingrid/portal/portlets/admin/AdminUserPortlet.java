@@ -668,7 +668,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
-                if(!isAdmin) {
+                if(!user.getName().equals("admin")) {
                     user.setEnabled(isUserEnabled);
                 }
                 userManager.updateUser(user);
