@@ -181,6 +181,14 @@ public class QueryPreProcessor {
             query.put(IngridQuery.RANKED, ranking);
         }
 
+        if(query.isRanked(IngridQuery.DATE_RANKED)) {
+            for (ClauseQuery cq : query.getClauses()) {
+                query.removeClause(cq);
+            }
+            ClauseQuery cq = new ClauseQuery(true, false);
+            cq.addField(new FieldQuery(true, false, "datatype", "metadata"));
+            query.addClause(cq);
+        }
         // set filter params. If no filter is set, process GROUPING
         // FILTERING AND GROUPING are mutually exclusive 
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);
