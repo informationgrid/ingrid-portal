@@ -12,7 +12,7 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
 UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
 
 -- Hide 'search-catalog/search-catalog-hierarchy.psml'
-UPDATE page SET is_hidden = 1 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
+-- UPDATE page SET is_hidden = 1 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
 
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
