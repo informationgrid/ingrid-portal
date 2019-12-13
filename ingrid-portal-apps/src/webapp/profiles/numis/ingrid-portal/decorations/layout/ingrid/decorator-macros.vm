@@ -341,11 +341,6 @@
           #end
         #end
     #end
-    #if(!$jetspeed.getLoggedOn())
-        <!--
-        <a class="button logout" href="/log-in"><span class="text">Anmelden</span><span class="ic-ic-user"></span></a>
-        -->
-    #end
     </div>
     <div class="menu-sub-links">
     #if($jetspeed.getLoggedOn())
@@ -387,8 +382,6 @@
             #end
         #end
         <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
-    #else
-        <a class="button logout" href="/log-in"><span class="text">$MESSAGES.getString('ingrid.page.myportal')</span><span class="ic-ic-arrow"></span></a> 
     #end
     </div>
 </div> 
