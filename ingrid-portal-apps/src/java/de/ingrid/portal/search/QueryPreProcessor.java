@@ -179,6 +179,11 @@ public class QueryPreProcessor {
                 }
             }
             query.put(IngridQuery.RANKED, ranking);
+        } else {
+            String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+            if (stateRanking != null) {
+                query.put(IngridQuery.RANKED, stateRanking);
+            }
         }
 
         if(query.isRanked(IngridQuery.DATE_RANKED)) {
