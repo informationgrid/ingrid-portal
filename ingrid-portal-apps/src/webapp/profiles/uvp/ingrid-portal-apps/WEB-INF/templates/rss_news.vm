@@ -4,8 +4,8 @@
         <div class="teaser-data">
             <div class="text-wrapper">
                 <small class="bx-bot-0">
-                    <span class="tx-darker"><strong>$date.format('d.M.yyyy',$rssEntry.publishedDate)</strong></span>
-                    <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
+                    <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
+                    <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
                 </small>
                 <a href="$!rssEntry.link" title="$!rssEntry.title">
                     <h2 class="header">
