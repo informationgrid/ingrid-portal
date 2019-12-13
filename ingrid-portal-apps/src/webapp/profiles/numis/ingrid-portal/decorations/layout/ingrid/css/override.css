@@ -563,10 +563,13 @@ header a.icon.is-selected {
   color: #0089C6;
   background-color: #eaf6ff;
 }
-.button.pill:hover span {
-  color: #256394;
+.button.pill:hover {
+  color: #eaf6ff;
+  background-color: #256394;
 }
-
+.button.pill:hover span {
+  color: #eaf6ff;
+}
 .boxed-table thead {
   background-color: #FFFFFF;
   border-bottom: 1px solid #256394;
