@@ -1,5 +1,12 @@
+<style>
+    @media print, screen and (min-width: 48em) {
+        .teaser-data .header {
+            max-height: none;
+        }
+    }
+</style>
 <div class="columns">
-    <div class="teaser-data-projects">
+    <div class="teaser-data-projects" id="rss_news_teaser">
         <div class="row">
             <div class="columns text-center">
                 <h2>$MESSAGES.getString('news.teaser.title')</h2>
@@ -43,3 +50,6 @@
         </div>
     </div>
 </div>
+
+#set($teaserDataId = "#rss_news_teaser")
+#parse("/WEB-INF/templates/scripts/include_resize_teaser_data.vm")
