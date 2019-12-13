@@ -599,11 +599,15 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
     padding: .8rem 1.3rem;
     margin-bottom: 40px;
   }
+  input:focus:-ms-input-placeholder { color: $blue-rhapsody !important; }
+  input:focus::-ms-input-placeholder { color: $blue-rhapsody; }
   input:focus::placeholder { color: $blue-rhapsody; }
   .is-invalid-input {
     background-color: $bg-color;
     border-color: $red;
   }
+  .is-invalid-input:-ms-input-placeholder { color: $red !important; }
+  .is-invalid-input::-ms-input-placeholder { color: $red; }
   .is-invalid-input::placeholder { color: $red; }
   .is-invalid-input:focus { border-color: $blue-light; }
   .is-invalid-label { color: $red; }
