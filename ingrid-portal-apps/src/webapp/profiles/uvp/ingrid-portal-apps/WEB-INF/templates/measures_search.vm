@@ -36,7 +36,7 @@
   // var excludeNetworks = ['luen_new'];
   
   // define initial network on init
-  // var initialNetworks = ['odl'];
+  var initialNetworks = ['luen_new'];
 
   // Add iFrame 'src'
   iframe.src = '/ingrid-portal-apps/measures/index.html' + urlParams;
