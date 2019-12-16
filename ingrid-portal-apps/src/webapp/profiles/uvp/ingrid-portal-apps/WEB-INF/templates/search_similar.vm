@@ -3,7 +3,7 @@
         <div class="row">
             <div class="columns">
                 <ul class="accordion nested-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-                    <li id="similar_header" class="accordion-item #if($ps.isSimilarOpen)is-active#end" data-accordion-item="">
+                    <li class="accordion-item #if($ps.isSimilarOpen)is-active#end" data-accordion-item="">
                         #set ($action = $renderResponse.createActionURL())
                         #if($ps.isSimilarOpen)
                             $action.setParameter('action','doCloseSimilar')
@@ -13,7 +13,7 @@
                         <a href="$action" class="accordion-title" id="similar-accordion-label" aria-expanded="true" aria-selected="true">
                             <span class="text">$MESSAGES.getString('searchSimilar.headline')</span>
                         </a>
-                        <div class="accordion-content" id="similar-accordion" #if($ps.isSimilarOpen)aria-hidden="true" style="display:block"#end>
+                        <div class="accordion-content similar-accordion" data-tab-content="" #if($ps.isSimilarOpen)aria-hidden="true" style="display:block"#end>
                             #set ($action = $renderResponse.createActionURL())
                             <form action="$action" method="get" name="frmSimilar" id="frmSimilar">
                                 #foreach($similarNode in $ps.similarRoot.getChildren())
@@ -26,23 +26,26 @@
                                             $action.setParameter('action','doOpenNode')
                                         #end
                                         <li class="accordion-item  #if($similarNode.isOpen())is-active#end">
-                                            <a href="$action" class="accordion-title" #if($similarNode.isOpen())aria-expanded="true" aria-selected="true"#end>
-                                                $similarNode.getName() ($similarNode.getChildren().size())
+                                            <a href="$action" class="accordion-title icon" #if($ps.isSimilarOpen)aria-expanded="true" aria-selected="true"#end>
+                                                #if($similarNode.isOpen())
+                                                    <span class="ic-ic-minus"></span>
+                                                #else
+                                                    <span class="ic-ic-plus"></span>
+                                                #end
+                                                <span class="text">$similarNode.getName() ($similarNode.getChildren().size())</span>
                                             </a>
                                             <div class="accordion-content" #if($similarNode.isOpen())aria-hidden="true" style="display:block"#end>
                                             #if($similarNode.getChildren().size() > 0)
                                                 #foreach($tokenNode in $similarNode.getChildren())
-                                                    #if($tokenNode.type == 4)
-                                                        <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
-                                                    #else
-                                                        <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
                                                         <label class="field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
-                                                        <div class="field-toggle__icon">
-                                                            <svg class="icon"><use xlink:href="#tick"></use></svg>
-                                                        </div>
+                                                        #if($tokenNode.type == 4)
+                                                            <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
+                                                        #else
+                                                            <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
+                                                            <div class="control__indicator"></div>
                                                             $tokenNode.name
-                                                    #end
-                                                    </label>
+                                                        #end
+                                                        </label>
                                                 #end
                                             #else
                                                 <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
