@@ -1702,7 +1702,7 @@ footer {
   color: #0089C6;
   cursor: default;
 }
-.anchor:target {
+.anchor.is-active {
   display: block;
   float: left;
   left: -6px;
