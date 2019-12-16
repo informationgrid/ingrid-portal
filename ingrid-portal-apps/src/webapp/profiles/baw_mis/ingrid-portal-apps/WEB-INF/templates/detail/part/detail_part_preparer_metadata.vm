@@ -83,8 +83,10 @@
                             #set($tmp = "")
                         </div>
                         ## BAW Auftragsnummer
-                        #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[./gmd:thesaurusName/*/gmd:title/gco:CharacterString='DEBUNDBAWAUFTRAGNR']/gmd:keyword/gco:CharacterString"))
+                        #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
                         #renderTextLabelAbove("BAW Auftragsnummer" $tmp)
+                        #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+                        #renderTextLabelAbove("BAW Auftragstitel" $tmp)
                         #set($tmp = "")
                         ## Addressen
                         #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact"))
