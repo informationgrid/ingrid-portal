@@ -215,24 +215,26 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 	}
 	
 	private void renderGenericTag(List<RenderElement> renderElements, Node node){
-		RenderElement renderElement = new RenderElement();
-        renderElement.setType("html");
-        String body="";
-        if (node.getNodeType() == Node.TEXT_NODE) {
-        	body = node.getNodeValue().trim();
-        	renderElement.setBody(body);
-        } else {
-            body = "<" + node.getLocalName().trim();
-            for (int i=0; i<node.getAttributes().getLength(); i++) {
-                body += " " + node.getAttributes().item(i).getNodeName().trim() + "=\"" + node.getAttributes().item(i).getNodeValue().trim() + "\"";
+        if (!node.getNodeName().equals("html") && !node.getNodeName().equals("body")) {
+            RenderElement renderElement = new RenderElement();
+            renderElement.setType("html");
+            String body="";
+            if (node.getNodeType() == Node.TEXT_NODE) {
+                body = node.getNodeValue().trim();
+                renderElement.setBody(body);
+            } else {
+                body = "<" + node.getLocalName().trim();
+                for (int i=0; i<node.getAttributes().getLength(); i++) {
+                    body += " " + node.getAttributes().item(i).getNodeName().trim() + "=\"" + node.getAttributes().item(i).getNodeValue().trim() + "\"";
+                }
+                body += ">";
+                renderElement.setBody(body);
             }
-            body += ">";
-            renderElement.setBody(body);
+            if(body.length() > 0){
+                renderElements.add(renderElement);
+            }
         }
-        if(body.length() > 0){
-        	renderElements.add(renderElement);
-        }
-	}
+    }
 	
 	private void renderHtmlTag(List<RenderElement> renderElements, Node node, boolean isGenericIdfNode){
 		renderGenericTag(renderElements, node);
@@ -244,18 +246,20 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
         }
         
         if (isGenericIdfNode && node.getNodeType() != Node.TEXT_NODE) {
-        	RenderElement renderElement = new RenderElement();
-        	renderElement.setType("html");
-            String body="";
-            if (node.getNodeType() == Node.TEXT_NODE) {
-            	body = node.getNodeValue().trim();
-            	renderElement.setBody(body);
-            } else {
-            	body = node.getLocalName().trim();
-            	renderElement.setBody("</" + body + ">");
-            }
-            if(body.length() > 0){
-            	renderElements.add(renderElement);
+            if (!node.getNodeName().equals("html") && !node.getNodeName().equals("body")) {
+                RenderElement renderElement = new RenderElement();
+                renderElement.setType("html");
+                String body="";
+                if (node.getNodeType() == Node.TEXT_NODE) {
+                    body = node.getNodeValue().trim();
+                    renderElement.setBody(body);
+                } else {
+                    body = node.getLocalName().trim();
+                    renderElement.setBody("</" + body + ">");
+                }
+                if(body.length() > 0){
+                    renderElements.add(renderElement);
+                }
             }
         }
 	}
