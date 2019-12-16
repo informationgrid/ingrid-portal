@@ -42,13 +42,6 @@ define([
             var self = this;
             var defaultValue = this.determineDefaultValue();
 
-            topic.subscribe("/afterCloseDialog/ChooseWizard", function() {
-                var clazz = registry.byId("objectClass").get("value");
-                if (clazz === "Class1" || clazz === "Class3") {
-                    registry.byId("spatialScope").set("value", defaultValue);
-                }
-            });
-
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1" || msg.objClass === "Class3") {
@@ -75,6 +68,13 @@ define([
             }
         },
 
+        handleInspireRelevantClick: function(isChecked, defaultValue) {
+            var clazz = registry.byId("objectClass").get("value");
+            if (isChecked && clazz === "Class1") {
+                registry.byId("spatialScope").set("value", defaultValue);
+            }
+        },
+
         register: function(defaultValue) {
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
@@ -87,6 +87,9 @@ define([
                 // show/hide radio boxes when inspire relevant was checked
                 on(inspireRelevantWidget, "Change", function(isChecked) {
                     self.handleInspireRelevantState(isChecked);
+                }),
+                on(inspireRelevantWidget, "Click", function() {
+                    self.handleInspireRelevantClick(inspireRelevantWidget.checked, defaultValue);
                 })
             )
         },
