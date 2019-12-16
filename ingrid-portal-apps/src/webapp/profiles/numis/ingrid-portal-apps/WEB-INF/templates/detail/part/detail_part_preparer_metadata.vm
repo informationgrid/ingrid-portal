@@ -604,7 +604,6 @@
             #if($TOOL.aNodeOfListExist($xpathList))
 <h2><a class="anchor" name="detail-5"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("data_quality")</span></h2>
                 <div class="row columns">
-                #renderSectionTitle($MESSAGES.getString("data_quality"))
         ## Datendefizit
                 #set($tmp = $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission", "completeness omission (rec_grade)", "Rate of missing items"))
                 #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.coverage") $tmp)
