@@ -724,6 +724,13 @@ footer hr {
 .nested-group .accordion-item:last-child > :last-child {
     border-radius: 0 0 12px 12px;
 }
+.nested-group .accordion-content {
+  background: #F6F6F6
+}
+.nested-group-sub {
+  background: transparent;
+  margin-top: 8px;
+}
 .nested-group-sub li.accordion-item .accordion-title::after {
   content: "";
 }
@@ -738,12 +745,10 @@ footer hr {
  color: #1D4B7B;
  cursor: pointer;
 }
-.nested-group .accordion-content {
-  background: #F6F6F6
-}
-.nested-group-sub {
-  background: transparent;
-  margin-top: 8px;
+.nested-group-sub .accordion-title {
+  border-top: 1px solid;
+  border-left: 1px solid;
+  border-right: 1px solid;
 }
 .nested-group-sub .accordion-title {
   background: #FFFFFF;
