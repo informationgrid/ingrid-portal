@@ -711,23 +711,50 @@ footer hr {
   background: #F6F6F6;
   border-radius: 32px 32px;
 }
+.nested-group .accordion-title {
+  font-size: 18px;
+  padding: 24px 24px 24px 24px;
+}
 .nested-group > .accordion-title {
   border-radius: 32px !important;
 }
 .nested-group .is-active > .accordion-title {
-  border-radius: 32px 32px 0 0 !important;
+  border-radius: 12px 12px 0 0 !important;
+}
+.nested-group .accordion-item:last-child > :last-child {
+    border-radius: 0 0 12px 12px;
+}
+.nested-group-sub li.accordion-item .accordion-title::after {
+  content: "";
+}
+.nested-group-sub li.accordion-item.is-active .accordion-title::after {
+  content: "";
+}
+.nested-group-sub label {
+  color: #0089C6;
+  font-weight: normal;
+}
+.nested-group-sub label:hover {
+ color: #1D4B7B;
+ cursor: pointer;
 }
 .nested-group .accordion-content {
   background: #F6F6F6
 }
 .nested-group-sub {
   background: transparent;
+  margin-top: 8px;
 }
 .nested-group-sub .accordion-title {
   background: #FFFFFF;
 }
 .nested-group-sub .accordion-title {
   background: #FFFFFF;
+  padding: 12px 12px 12px 20px;
+  margin-right: 0px;
+}
+.nested-group-sub .accordion-title.icon [class^="ic-"]{
+  font-size: 12px;
 }
 .nested-group-sub .accordion-content {
   background: #FFFFFF
@@ -928,6 +955,16 @@ header .row .columns:last-of-type {
 .table table tr th, .table table tr td{
   padding: 8px;
   max-width: 300px;
+}
+.similar-accordion {
+  padding: 0px 32px 32px;
+}
+#frmSimilar .accordion-content {
+  padding: 8px 36px 24px;
+}
+#frmSimilar .accordion-content label {
+  display: inline-block;
+  margin-right: 16px;
 }
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
