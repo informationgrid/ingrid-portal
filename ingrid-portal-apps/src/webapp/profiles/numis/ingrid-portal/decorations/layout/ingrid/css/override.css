@@ -746,23 +746,24 @@ footer hr {
  cursor: pointer;
 }
 .nested-group-sub .accordion-title {
-  border-top: 1px solid;
-  border-left: 1px solid;
-  border-right: 1px solid;
-}
-.nested-group-sub .accordion-title {
-  background: #FFFFFF;
-}
-.nested-group-sub .accordion-title {
   background: #FFFFFF;
   padding: 12px 12px 12px 20px;
   margin-right: 0px;
+  border-top: 1px solid #C6CFE2;
+  border-left: 1px solid #C6CFE2;
+  border-right: 1px solid #C6CFE2;
+}
+.nested-group-sub :not(.is-active) .accordion-title {
+  border-bottom: 1px solid #C6CFE2 !important;
 }
 .nested-group-sub .accordion-title.icon [class^="ic-"]{
   font-size: 12px;
 }
 .nested-group-sub .accordion-content {
-  background: #FFFFFF
+  background: #FFFFFF;
+  border-bottom: 1px solid #C6CFE2 !important;
+  border-left: 1px solid #C6CFE2;
+  border-right: 1px solid #C6CFE2;
 }
 #iframe_map {
   width: 100%;
