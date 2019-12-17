@@ -168,7 +168,7 @@ public class QueryPreProcessor {
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                 IngridSessionPreferences.SESSION_KEY);
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
-        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
+        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED) && request.getParameter(Settings.PARAM_RANKING) == null) {
             // adapt ranking to Search State
             String ranking = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_RANKING);
             if (ranking == null || ranking.length() == 0) {
@@ -183,6 +183,8 @@ public class QueryPreProcessor {
             String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
             if (stateRanking != null) {
                 query.put(IngridQuery.RANKED, stateRanking);
+            } else if(request.getParameter(Settings.PARAM_RANKING) != null) {
+                query.put(IngridQuery.RANKED, request.getParameter(Settings.PARAM_RANKING));
             }
         }
 
