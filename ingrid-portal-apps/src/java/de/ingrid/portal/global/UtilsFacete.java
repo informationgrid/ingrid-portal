@@ -2302,12 +2302,14 @@ public class UtilsFacete {
                 for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("partner")){
                     query.addField(tmp);
                 }
-                    
             }
             if(tmpQuery.get("provider") != null){
                 for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("provider")){
                     query.addField(tmp);
                 }
+            }
+            if(tmpQuery.getRankingType() != null) {
+                query.put( IngridQuery.RANKED, tmpQuery.getRankingType() );
             }
         }
     } 
