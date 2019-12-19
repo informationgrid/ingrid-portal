@@ -311,7 +311,6 @@ public class DetailPartPreparer {
             }
 
             // try to get the license source from other constraints (#1066)
-            String source = null;
             String url = null;
             String name = null;
             // also remember further otherConstraints may be used in BKG profile (#1194)
@@ -327,7 +326,6 @@ public class DetailPartPreparer {
                 boolean isJSON = false;
                 try {
                     IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
-                    source = (String) json.get("quelle");
                     url = (String) json.get("url");
                     name = (String) json.get("name");
                     isJSON = true;
@@ -374,13 +372,6 @@ public class DetailPartPreparer {
                 } else {
                     value = finalValue;
                 }
-            }
-
-            if (!result.contains(value)) {
-                if (source != null && !source.isEmpty()) {
-                    value += "<br>Quellenvermerk: " + source;
-                }
-                result.add(value);
             }
             
             // also add other constraints if present !
