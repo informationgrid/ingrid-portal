@@ -102,6 +102,7 @@
                     <bean class="de.ingrid.mdek.upload.storage.impl.FileSystemStorage">
                         <property name="docsDir" value="${upload.docsdir}" />
                         <property name="partsDir" value="${upload.partsdir}" />
+                        <property name="tempDir" value="${upload.tempdir}" />
                     </bean>
                 </entry>
                 <entry key="deleteFileMinAge">

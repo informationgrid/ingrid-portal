@@ -165,6 +165,10 @@ public class Config {
     @DefaultValue("")
     public String uploadPartsDir;
 
+    @PropertyValue("upload.tempdir")
+    @DefaultValue("")
+    public String uploadTempDir;
+
     @PropertyValue("upload.validators")
     @TypeTransformers(CharacterSeparatedStringToStringListTransformer.class)
     public List<String> uploadValidators;

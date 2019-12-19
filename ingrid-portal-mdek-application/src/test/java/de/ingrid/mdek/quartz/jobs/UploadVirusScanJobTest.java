@@ -34,6 +34,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -63,7 +64,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         private static final long serialVersionUID = 1L;
     {
         put("command", "savscan -f -archive %FILE%");
-        put("infectedPattern", "(?m)^1 file out of 1 was infected.$");
+        put("virusPattern", "(?m)^>>> Virus '([^']+)' found in file (.+)$");
         put("cleanPattern", "(?m)^No viruses were discovered.$");
     }};
 
@@ -110,7 +111,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
     /**
      * Test:
-     * - Virus contained in file, must be moved to quarantine
+     * - Virus contained in files, must be moved to quarantine
      * @throws Exception
      */
     @Test
@@ -118,25 +119,54 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir2", "File2"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir2", "File3"), VIRUS_CONTENT);
 
         // set up scan report expectations
-        final String scanCommand1 = VIRUSSCAN_VALIDATOR_CONFIG.get("command").replace("%FILE%", file1.toString());
-        when(this.scanner.execute(scanCommand1)).thenReturn(this.getScanReportClean(file1));
-
-        final String scanCommand2 = VIRUSSCAN_VALIDATOR_CONFIG.get("command").replace("%FILE%", file2.toString());
-        when(this.scanner.execute(scanCommand2)).thenReturn(this.getScanReportInfected(file2));
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportInfected(3, file2, file3));
 
         // run job
         this.job.executeInternal(this.context);
 
         // test
         final Path file2InQuarantine = Paths.get(QUARANTINE_PATH.toString(), file2.toString());
+        final Path file3InQuarantine = Paths.get(QUARANTINE_PATH.toString(), file3.toString());
 
-        Mockito.verify(this.scanner, times(2)).execute(any());
+        Mockito.verify(this.scanner, times(1)).execute(any());
 
         assertTrue(this.fileExists(file1));
         assertTrue(!this.fileExists(file2));
         assertTrue(this.fileExists(file2InQuarantine));
+        assertTrue(!this.fileExists(file3));
+        assertTrue(this.fileExists(file3InQuarantine));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
+     * Test:
+     * - No virus contained in files, all files stay in place
+     * @throws Exception
+     */
+    @Test
+    public void testNoVirusFound() throws Exception {
+        // set up files
+        final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
+        final Path file2 = this.createFile(Paths.get("dir2", "File2"), "");
+        final Path file3 = this.createFile(Paths.get("dir2", "File3"), "");
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportClean(3));
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+
+        assertTrue(this.fileExists(file1));
+        assertTrue(this.fileExists(file2));
+        assertTrue(this.fileExists(file3));
         assertFalse(this.getTestAppender().hasIssues());
     }
 
@@ -171,34 +201,37 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
     /**
      * Get the scan report in case of infection
-     * @param file
+     * @param numFiles
+     * @param files
      * @return String
      */
-    private String getScanReportInfected(final Path file) {
-        return String.join(System.getProperty("line.separator"),
-                "Full Scanning",
-                "",
-                ">>> Virus 'EICAR-AV-Test' found in file "+file.toString(),
-                "",
-                "1 file scanned in 5 seconds.",
-                "1 virus was discovered.",
-                "1 file out of 1 was infected.",
-                "End of Scan."
-        );
+    private String getScanReportInfected(final int numFiles, final Path... infected) {
+        final StringJoiner joiner = new StringJoiner(System.getProperty("line.separator"));
+        joiner.add("Full Scanning");
+        joiner.add("");
+        for (final Path file : infected) {
+            joiner.add(">>> Virus 'EICAR-AV-Test' found in file "+file.toString());
+        }
+        joiner.add("");
+        joiner.add(numFiles+" files scanned in 5 seconds.");
+        joiner.add(infected.length+" viruses were discovered.");
+        joiner.add(infected.length+" files out of "+numFiles+" were infected.");
+        joiner.add("End of Scan.");
+        return joiner.toString();
     }
 
     /**
      * Get the scan report in case of no infection
-     * @param file
+     * @param numFiles
      * @return String
      */
-    private String getScanReportClean(final Path file) {
+    private String getScanReportClean(final int numFiles) {
         return String.join(System.getProperty("line.separator"),
                 "Full Scanning",
                 "",
                 "",
                 "",
-                "1 file scanned in 5 seconds.",
+                numFiles+" files scanned in 5 seconds.",
                 "No viruses were discovered.",
                 "End of Scan."
         );

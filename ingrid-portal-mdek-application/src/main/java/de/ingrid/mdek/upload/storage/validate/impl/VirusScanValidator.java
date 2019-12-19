@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,10 @@
 package de.ingrid.mdek.upload.storage.validate.impl;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.LogManager;
@@ -40,21 +43,22 @@ import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
  *
  * Required configuration
  *   - command: External command to be executed. The string *must* contain a %FILE% parameter that will be replaced with the file to scan.
- *   - infectedPattern: Regular expression pattern applied to the command result that matches, if a virus infection is found
+ *   - virusPattern: Regular expression pattern that matches infections reported in the scan command result
+ *                   The pattern must contain a capturing group for the virus name (#1) and one for the infected resource (#2)
  *   - cleanPattern: Regular expression pattern applied to the command result that matches, if no virus infection is found
  *
  *   NOTE: If neither infectedPattern nor cleanPattern match, an error is assumed and will be logged. Validation does NOT fail in this case.
  */
 public class VirusScanValidator implements Validator {
 
-    private static final String CONFIG_KEY_COMMAND          = "command";
-    private static final String CONFIG_KEY_INFECTED_PATTERN = "infectedPattern";
-    private static final String CONFIG_KEY_CLEAN_PATTERN    = "cleanPattern";
+    private static final String CONFIG_KEY_COMMAND       = "command";
+    private static final String CONFIG_KEY_VIRUS_PATTERN = "virusPattern";
+    private static final String CONFIG_KEY_CLEAN_PATTERN = "cleanPattern";
 
     private static final String PLACEHOLDER_FILE = "%FILE%";
 
     private String command;
-    private Pattern infectedPattern;
+    private Pattern virusPattern;
     private Pattern cleanPattern;
 
     private ExternalCommand scanner = new ExternalCommand();
@@ -64,7 +68,7 @@ public class VirusScanValidator implements Validator {
     @Override
     public void initialize(final Map<String, String> configuration) throws IllegalArgumentException {
         // check required configuration parameters
-        for (final String parameter : new String[] {CONFIG_KEY_COMMAND, CONFIG_KEY_INFECTED_PATTERN, CONFIG_KEY_CLEAN_PATTERN}) {
+        for (final String parameter : new String[] {CONFIG_KEY_COMMAND, CONFIG_KEY_VIRUS_PATTERN, CONFIG_KEY_CLEAN_PATTERN}) {
             if (!configuration.containsKey(parameter)) {
                 throw new IllegalArgumentException("Configuration value '"+parameter+"' is required.");
             }
@@ -78,10 +82,10 @@ public class VirusScanValidator implements Validator {
         this.command = command;
 
         // pattern parameters
-        final String infectedPattern = configuration.get(CONFIG_KEY_INFECTED_PATTERN);
-        this.infectedPattern = Pattern.compile(".*"+infectedPattern+".*", Pattern.DOTALL);
+        final String virusPattern = configuration.get(CONFIG_KEY_VIRUS_PATTERN);
+        this.virusPattern = Pattern.compile(virusPattern);
         final String cleanPattern = configuration.get(CONFIG_KEY_CLEAN_PATTERN);
-        this.cleanPattern = Pattern.compile(".*"+cleanPattern+".*", Pattern.DOTALL);
+        this.cleanPattern = Pattern.compile(cleanPattern);
     }
 
     @Override
@@ -90,17 +94,26 @@ public class VirusScanValidator implements Validator {
             return;
         }
         try {
-            // scan file
+            // scan file or directory
             final String result = runScan(data);
+            if (result == null) {
+                throw new CommandExecutionException("Scan returned null");
+            }
 
             // analyze result
-            if (infectedPattern.matcher(result).matches()) {
-                log.warn("Virus found: "+result);
-                throw new VirusFoundException("Virus found.", path+"/"+file);
+            final Matcher virusMatcher = virusPattern.matcher(result);
+            final Map<Path, String> virusList = new HashMap<>();
+            while (virusMatcher.find()) {
+                virusList.put(Paths.get(virusMatcher.group(2)), virusMatcher.group(1));
             }
-            else if (!cleanPattern.matcher(result).matches()) {
+            if (!virusList.isEmpty()) {
+                log.warn("Virus found: "+result);
+                throw new VirusFoundException("Virus found.", path+"/"+file, virusList);
+            }
+            else if (!cleanPattern.matcher(result).lookingAt()) {
                 log.error("Virus scan failed: "+result);
-            } else {
+            }
+            else {
                 if (log.isDebugEnabled()) {
                     log.debug("Scan result: " + result);
                 }
