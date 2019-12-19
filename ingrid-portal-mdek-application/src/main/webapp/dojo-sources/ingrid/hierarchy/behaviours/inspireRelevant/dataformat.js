@@ -53,6 +53,7 @@ define([
                         self.register();
                     }
                 } else if (msg.objClass === "Class3") {
+                    self.unregister();
                     domClass.remove("uiElement1320", "required");
                     domClass.add("uiElement1320", "show");
                 } else {
