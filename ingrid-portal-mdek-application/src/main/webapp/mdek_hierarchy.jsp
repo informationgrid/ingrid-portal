@@ -1895,6 +1895,22 @@
                                 </span>
                             </div>
                             <div class="inputContainer">
+                                <span id="uiElement3572" class="outer">
+                                    <div>
+                                        <span id="boundingPolygonLabel" class="label">
+                                            <label for="boundingPolygon"><!-- TODO: Help message onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1410)"> -->
+                                                <fmt:message key="ui.obj.bounding_polygon.label" />
+                                            </label>
+                                        </span>
+                                        <div class="input">
+                                            <input type="text" id="boundingPolygon" />
+                                        </div>
+                                        <div class="fill">
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
                                 <span id="uiElement3500" class="outer">
                                     <div><span class="label">
                                         <label for="ref1SpatialSystem" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3500)">

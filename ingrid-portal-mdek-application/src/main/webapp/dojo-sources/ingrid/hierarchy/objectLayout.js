@@ -507,6 +507,10 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1VFormatDetails", null, ref1VFormatDetailsStructure, null);
 
+                new SimpleTextarea({
+                    style: "width: 100%;"
+                }, "boundingPolygon");
+
                 var ref1SpatialSystemStructure = [{
                     field: 'title',
                     name: 'System',
