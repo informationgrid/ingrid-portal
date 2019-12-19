@@ -214,24 +214,28 @@ define([
         },
 
         getDisplayedValue: function() {
+            var value;
             var comment = this.infoText[0].textContent;
             if (comment === "") {
-            	var s = this.selectInput.get("displayedValue");
-            	if (s) {
+            	value = this.selectInput.get("displayedValue");
+            	if (value) {
             		if (this.freeTextInput.get("value")) {
-                		s = s + ", " + this.freeTextInput.get("value");
+                		value = value + ", " + this.freeTextInput.get("value");
             		}
             	} else if (this.freeTextInput.get("value")) {
-            		s = this.freeTextInput.get("value");
+            		value = this.freeTextInput.get("value");
             	}
-                return s;
             } else {
-            	var s = comment;
+            	value = comment;
             	if (this.freeTextInput.get("value")) {
-            		s = s + ", " + this.freeTextInput.get("value")
+            		value = value + ", " + this.freeTextInput.get("value")
             	}
-            	return s;
             }
+
+            if (this.sourceNote) {
+                value += "<br>Quellenvermerk: " + this.sourceNote.get("value");
+            }
+            return value;
         },
 
         addTextareaValidator: function() {
