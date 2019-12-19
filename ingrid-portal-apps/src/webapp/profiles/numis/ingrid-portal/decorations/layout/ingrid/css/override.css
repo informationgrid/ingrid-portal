@@ -298,6 +298,9 @@ a:hover, a:focus {
 a:focus {
   text-decoration: none;
 }
+a.icon [class^='ic-'] {
+  font-size: 16px;
+}
 a.icon:hover {
   color: #1D4B7B;
 }
@@ -953,6 +956,9 @@ header .row .columns:last-of-type {
 .document-list {
   margin-bottom: 48px;
 }
+.document-list a {
+  font-family: "Roboto-Regular", sans-serif;
+}
 .text-list {
   margin-bottom: 48px;
 }
@@ -1015,6 +1021,10 @@ header .row .columns:last-of-type {
   footer .footer .footer-menu-entries {
     text-align: left;
   }
+  h4, .h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
 }
 @media print, screen and (max-width: 63.9375em) {
   .search-filtered .accordion.accordion-filter-group {
@@ -1069,6 +1079,13 @@ header .row .columns:last-of-type {
   .switch-popup a.switch-link.numis img {
      width: 24em;
   }
+  h3, .h3 {
+    font-size: 1.33rem;
+  }
+  h4, .h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
 }
 @media print, screen and (min-width: 78em) {
   footer .footer .footer-menu-entries, footer .footer .copyright {
@@ -1085,6 +1102,9 @@ header .row .columns:last-of-type {
     margin: 4.5em 0 0 !important;
     padding: 8px 16px;
     font-size: 14px;
+  }
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
+    padding: 64px 0 16px;
   }
 }
 @media screen and (min-width: 1800px) {

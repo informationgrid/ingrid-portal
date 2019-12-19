@@ -644,7 +644,7 @@
         #end
         <div class="text-list">
         #foreach($text in $sorter.sort($textList,"body"))
-            <p class="list-item">$text.replaceAll("<svg.*svg>", "<span class=\"ic-ic-external\"></span>")</p>
+            <p class="list-item">$text.replaceAll("<svg.*svg>", "")</p>
         #end
         </div>
     #else
