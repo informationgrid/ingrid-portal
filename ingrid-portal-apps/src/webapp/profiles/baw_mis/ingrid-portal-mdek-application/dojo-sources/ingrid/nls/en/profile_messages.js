@@ -21,6 +21,6 @@
  * **************************************************#
  */
 define({
-    "validation.baw.address.role.owner": "An entry for 'Bundesanstalt für Wasserbau' as 'Owner' must be present."
+    "validation.baw.address.role.pointOfContact": "An entry for 'Bundesanstalt für Wasserbau' as 'pointOfContact' must be present."
 });
 

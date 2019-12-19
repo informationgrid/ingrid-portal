@@ -37,7 +37,7 @@ define([
 
             topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
                 var roleCodeSyslistId = 505;
-                var ownerSyslistKey = 3;
+                var ownerSyslistKey = 7;
                 var ownerSyslistName = UtilSyslist.getSyslistEntryName(roleCodeSyslistId, ownerSyslistKey);
 
                 var addressTableIsValid = true;
@@ -59,7 +59,7 @@ define([
                 if (!bawRow) addressTableIsValid = false;
 
                 if (!addressTableIsValid) {
-                    notPublishableIDs.push([addressTableId, message.get("validation.baw.address.role.owner")]);
+                    notPublishableIDs.push([addressTableId, message.get("validation.baw.address.role.pointOfContact")]);
                 }
             });
         }

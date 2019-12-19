@@ -63,7 +63,7 @@ define({
     "ui.sysList.3950010": "BAW - VV-WSV 1103",
     "ui.sysList.3950099": "BAW - Datenformat",
 
-    "validation.baw.address.role.owner": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Eigentümer' muss vorhanden sein.",
+    "validation.baw.address.role.pointOfContact": "Ein Eintrag für die Institution 'Bundesanstalt für Wasserbau' als 'Ansprechpartner' muss vorhanden sein.",
     "validation.baw.bwastr_km.entry.missing": "Km-von und Km-bis müssen entweder beide definiert sein oder sollen beide fehlen.",
     "validation.baw.bwastr_name.missing": "Für jeden Streckenabschnitt muss mindestens den Streckenname angegeben werden."
 });
