@@ -1898,7 +1898,7 @@
                                 <span id="uiElement3572" class="outer">
                                     <div>
                                         <span id="boundingPolygonLabel" class="label">
-                                            <label for="boundingPolygon"><!-- TODO: Help message onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1410)"> -->
+                                            <label for="boundingPolygon" onclick="require('ingrid/dialog').showContextHelp(arguments[0], '<fmt:message key="ui.obj.spatial.boundingPolygon.help" />')">
                                                 <fmt:message key="ui.obj.bounding_polygon.label" />
                                             </label>
                                         </span>
