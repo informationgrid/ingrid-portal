@@ -1,8 +1,8 @@
 #if(!$closeSimilarSection)
-    <div class="search-filtered">
+    <div>
         <div class="row">
             <div class="columns">
-                <ul class="accordion nested-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                <ul class="accordion nested-group">
                     <li class="accordion-item #if($ps.isSimilarOpen)is-active#end" data-accordion-item="">
                         #set ($action = $renderResponse.createActionURL())
                         #if($ps.isSimilarOpen)
@@ -10,10 +10,10 @@
                         #else
                             $action.setParameter('action','doOpenSimilar')
                         #end
-                        <a href="$action" class="accordion-title" id="similar-accordion-label" aria-expanded="true" aria-selected="true">
+                        <a href="$action" class="accordion-title" id="similar-accordion-label">
                             <span class="text">$MESSAGES.getString('searchSimilar.headline')</span>
                         </a>
-                        <div class="accordion-content similar-accordion" data-tab-content="" #if($ps.isSimilarOpen)aria-hidden="true" style="display:block"#end>
+                        <div class="accordion-content similar-accordion" #if($ps.isSimilarOpen)style="display:block"#end>
                             #set ($action = $renderResponse.createActionURL())
                             <form action="$action" method="get" name="frmSimilar" id="frmSimilar">
                                 #foreach($similarNode in $ps.similarRoot.getChildren())
