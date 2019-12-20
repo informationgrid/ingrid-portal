@@ -45,6 +45,13 @@ define([
                     return item[1] === "1" || item[1] === "3";
                 });
 
+                // Add vertical CRSes to the list of horizontal CRSes
+                var crsSyslist = sysLists[100];
+                if (crsSyslist) {
+                    crsSyslist.push([ "EPSG 7837: DHHN2016 Höhe", "7837", "N", null ]);
+                    crsSyslist.push([ "EPSG 5783: DHHN92 Höhe", "5783", "N", null ]);
+                    crsSyslist.push([ "EPSG 7699: DHHN12 Höhe", "7699", "N", null ]);
+                }
             });
         }
     })();
