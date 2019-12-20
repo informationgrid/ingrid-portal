@@ -10,8 +10,12 @@
       <div class="page-wrapper">
         <div class="row content-small">
           <div class="columns">
+            <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                <span class="ic-ic-arrow-left"></span>
+                <span class="text">Alle Suchergebnisse</span>
+            </a>
             <div class="helper text">
-                <!-- <span>TODO: Verfahren</span> -->
+                <span>$TOOL.getValueFromXPath("./type", "8001")</span>
             </div>
             <h1>
                 $TOOL.getValueFromXPath("./name")

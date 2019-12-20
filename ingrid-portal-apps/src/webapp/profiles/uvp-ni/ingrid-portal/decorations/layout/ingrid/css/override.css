@@ -402,10 +402,6 @@ header {
 .detail .banner-noimage {
   padding: 0 0 54px 0;
 }
-.detail .banner-noimage .page-wrapper {
-  background-repeat: no-repeat;
-  background-color: #F6F6F6;
-}
 .accordion-title {
   color: #0089C6;
   background-color: #F6F6F6;
