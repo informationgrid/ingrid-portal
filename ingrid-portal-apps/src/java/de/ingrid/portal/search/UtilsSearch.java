@@ -236,9 +236,13 @@ public class UtilsSearch {
             // also cuts title: maximum length = 2 Lines, length of first line
             // is shorter because of icon !
             int iconLength = 15;
-            result.put(Settings.RESULT_KEY_TITLE, UtilsString.cutString(detail.getTitle(), 2
-                    * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - iconLength, Settings.SEARCH_RANKED_MAX_ROW_LENGTH
-                    - iconLength));
+            String title = detail.getTitle();
+            boolean isCutTitle = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUT_TITLE, true);
+            if(isCutTitle) {
+                title = UtilsString.cutString(detail.getTitle(), 2 * Settings.SEARCH_RANKED_MAX_ROW_LENGTH - iconLength,
+                    Settings.SEARCH_RANKED_MAX_ROW_LENGTH - iconLength);
+            }
+            result.put(Settings.RESULT_KEY_TITLE, title);
             // strip all HTML tags from summary
             String summary = detail.getSummary();
             if (summary == null) {
