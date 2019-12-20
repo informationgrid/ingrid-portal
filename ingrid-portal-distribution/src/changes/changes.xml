@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="1118">
             Portal: Vermeidung von Klartext Passwörtern in E-Mails.
           </action>
+          <action type="add" dev="wemove" issue="1554">
+            Change codelist namespace to http://standards.iso.org/iso/19139/resources/gmxCodelists.xml
+          </action>
           <action type="fix" dev="wemove" issue="1555">
             UVP: Verbesserung der Handhabung von Leerzeichen und Sonderzeichen in Dokumentennamen.
           </action>
