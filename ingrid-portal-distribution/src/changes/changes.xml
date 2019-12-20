@@ -38,6 +38,9 @@
           <action type="fix" dev="wemove" issue="602">
             UVP: Sortierung der Trefferliste.
           </action>
+          <action type="fix" dev="wemove" issue="1590">
+            UVP: Verfahrenstyp soll in Detaildarstellung angezeigt werden
+          </action>
           <action type="fix" dev="wemove" issue="661">
             UVP: Fix facet state.
           </action>
