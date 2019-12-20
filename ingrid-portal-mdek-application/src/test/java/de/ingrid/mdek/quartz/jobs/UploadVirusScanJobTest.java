@@ -39,6 +39,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,10 +48,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.internal.util.reflection.FieldSetter;
 import org.quartz.JobExecutionContext;
 
+import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
 import de.ingrid.mdek.upload.storage.validate.impl.ExternalCommand;
+import de.ingrid.mdek.upload.storage.validate.impl.RemoteServiceVirusScanValidator;
 import de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator;
 
 public class UploadVirusScanJobTest extends BaseJobTest {
@@ -60,18 +65,29 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     private static final String VIRUS_CONTENT = "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*";
 
     private static final String VIRUSSCAN_VALIDATOR_NAME = "virusscan";
-    private static final Map<String, String> VIRUSSCAN_VALIDATOR_CONFIG = new HashMap<String, String>() {
+    private static final Map<String, String> VIRUSSCAN_VALIDATOR_CONFIG_LOCAL = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
     {
         put("command", "savscan -f -archive %FILE%");
         put("virusPattern", "(?m)^>>> Virus '([^']+)' found in file (.+)$");
         put("cleanPattern", "(?m)^No viruses were discovered.$");
     }};
+    private static final Map<String, String> VIRUSSCAN_VALIDATOR_CONFIG_REMOTE = new HashMap<String, String>() {
+        private static final long serialVersionUID = 1L;
+    {
+        put("url", "http://localhost:3000/v1/");
+    }};
 
-    @InjectMocks private VirusScanValidator virusScanValidator;
+    @InjectMocks private static VirusScanValidator localVirusScanValidator;
     @Mock private ExternalCommand scanner;
+
+    @InjectMocks private static RemoteServiceVirusScanValidator remoteVirusScanValidator;
+    @Mock private CloseableHttpResponse response;
+    @Mock private HttpEntity entity;
+
     @Mock private ValidatorFactory validatorFactory;
     @Mock private JobExecutionContext context;
+
 
     private UploadVirusScanJob job;
 
@@ -81,19 +97,10 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         super.setUp();
 
         MockitoAnnotations.initMocks(this);
+        new FieldSetter(localVirusScanValidator, localVirusScanValidator.getClass().getDeclaredField("scanner")).set(scanner);
 
-        // setup virus scan validation
-        this.virusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG);
-        when(this.validatorFactory.getValidatorNames()).thenReturn(Stream.of(VIRUSSCAN_VALIDATOR_NAME).collect(Collectors.toSet()));
-        when(this.validatorFactory.getValidator(VIRUSSCAN_VALIDATOR_NAME)).thenReturn(this.virusScanValidator);
-
-        // set up job
-        this.job = new UploadVirusScanJob();
-        this.job.setValidatorFactory(this.validatorFactory);
-        this.job.setScanDirs(Stream.of(DOCS_PATH.toString()).collect(Collectors.toList()));
-        this.job.setQuarantineDir(QUARANTINE_PATH.toString());
-        // static method call on MdekEmailUtils cannot be mocked by mockito
-        this.job.setEmailReports(false);
+        localVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_LOCAL);
+        remoteVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_REMOTE);
     }
 
     @Override
@@ -111,18 +118,52 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
     /**
      * Test:
-     * - Virus contained in files, must be moved to quarantine
+     * - Local scanner setup, no virus contained in files, all files stay in place
      * @throws Exception
      */
     @Test
-    public void testVirusFound() throws Exception {
+    public void testLocalNoVirusFound() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
+        // set up files
+        final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
+        final Path file2 = this.createFile(Paths.get("dir2", "File2"), "");
+        final Path file3 = this.createFile(Paths.get("dir2", "File3"), "");
+
+        // set up scan report expectations
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
+        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportClean(3));
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+
+        assertTrue(this.fileExists(file1));
+        assertTrue(this.fileExists(file2));
+        assertTrue(this.fileExists(file3));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
+     * Test:
+     * - Local scanner setup, virus contained in files, must be moved to quarantine
+     * @throws Exception
+     */
+    @Test
+    public void testLocalVirusFound() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir2", "File2"), VIRUS_CONTENT);
         final Path file3 = this.createFile(Paths.get("dir2", "File3"), VIRUS_CONTENT);
 
         // set up scan report expectations
-        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG.get("command").replace("%FILE%", DOCS_PATH.toString());
+        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
         when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportInfected(3, file2, file3));
 
         // run job
@@ -144,26 +185,30 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
     /**
      * Test:
-     * - No virus contained in files, all files stay in place
+     * - Remote scanner setup, no virus contained in files, all files stay in place
      * @throws Exception
      */
-    @Test
-    public void testNoVirusFound() throws Exception {
+    //@Test
+    public void testRemoteNoVirusFound() throws Exception {
+        // set up job
+        setupJob(remoteVirusScanValidator);
+
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
         final Path file2 = this.createFile(Paths.get("dir2", "File2"), "");
         final Path file3 = this.createFile(Paths.get("dir2", "File3"), "");
 
-        // set up scan report expectations
-        final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG.get("command").replace("%FILE%", DOCS_PATH.toString());
-        when(this.scanner.execute(scanCommand)).thenReturn(this.getScanReportClean(3));
+        // set up scan response expectations
+        /*
+        when(response.getStatusLine()).thenReturn(new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), HttpStatus.SC_OK, "OK!"));
+        when(entity.getContent()).thenReturn(getClass().getClassLoader().getResourceAsStream("result.txt"));
+        when(response.getEntity()).thenReturn(entity);
+        */
 
         // run job
         this.job.executeInternal(this.context);
 
         // test
-        Mockito.verify(this.scanner, times(1)).execute(any());
-
         assertTrue(this.fileExists(file1));
         assertTrue(this.fileExists(file2));
         assertTrue(this.fileExists(file3));
@@ -171,8 +216,63 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     }
 
     /**
+     * Test:
+     * - Remote scanner setup, virus contained in files, must be moved to quarantine
+     * @throws Exception
+     */
+    //@Test
+    public void testRemoteVirusFound() throws Exception {
+        // set up job
+        setupJob(remoteVirusScanValidator);
+
+        // set up files
+        final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
+        final Path file2 = this.createFile(Paths.get("dir2", "File2"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir2", "File3"), VIRUS_CONTENT);
+
+        // set up scan response expectations
+        /*
+        when(response.getStatusLine()).thenReturn(new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), HttpStatus.SC_OK, "OK!"));
+        when(entity.getContent()).thenReturn(getClass().getClassLoader().getResourceAsStream("result.txt"));
+        when(response.getEntity()).thenReturn(entity);
+        */
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        final Path file2InQuarantine = Paths.get(QUARANTINE_PATH.toString(), file2.toString());
+        final Path file3InQuarantine = Paths.get(QUARANTINE_PATH.toString(), file3.toString());
+
+        assertTrue(this.fileExists(file1));
+        assertTrue(!this.fileExists(file2));
+        assertTrue(this.fileExists(file2InQuarantine));
+        assertTrue(!this.fileExists(file3));
+        assertTrue(this.fileExists(file3InQuarantine));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
      * Helper methods
      */
+
+    /**
+     * Set up virus scan job with the given virus scan validator instance
+     * @param validator
+     */
+    private void setupJob(final Validator validator) {
+        // setup virus scan validation
+        when(this.validatorFactory.getValidatorNames()).thenReturn(Stream.of(VIRUSSCAN_VALIDATOR_NAME).collect(Collectors.toSet()));
+        when(this.validatorFactory.getValidator(VIRUSSCAN_VALIDATOR_NAME)).thenReturn(validator);
+
+        // set up job
+        this.job = new UploadVirusScanJob();
+        this.job.setValidatorFactory(this.validatorFactory);
+        this.job.setScanDirs(Stream.of(DOCS_PATH.toString()).collect(Collectors.toList()));
+        this.job.setQuarantineDir(QUARANTINE_PATH.toString());
+        // static method call on MdekEmailUtils cannot be mocked by mockito
+        this.job.setEmailReports(false);
+    }
 
     /**
      * Create a test file

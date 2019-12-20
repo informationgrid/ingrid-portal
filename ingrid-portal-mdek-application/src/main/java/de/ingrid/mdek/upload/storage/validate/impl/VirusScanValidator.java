@@ -47,7 +47,7 @@ import de.ingrid.mdek.upload.storage.validate.VirusFoundException;
  *                   The pattern must contain a capturing group for the virus name (#1) and one for the infected resource (#2)
  *   - cleanPattern: Regular expression pattern applied to the command result that matches, if no virus infection is found
  *
- *   NOTE: If neither infectedPattern nor cleanPattern match, an error is assumed and will be logged. Validation does NOT fail in this case.
+ *   NOTE: If neither virusPattern nor cleanPattern match, an error is assumed and will be logged. Validation does NOT fail in this case.
  */
 public class VirusScanValidator implements Validator {
 
@@ -61,7 +61,7 @@ public class VirusScanValidator implements Validator {
     private Pattern virusPattern;
     private Pattern cleanPattern;
 
-    private ExternalCommand scanner = new ExternalCommand();
+    private final ExternalCommand scanner = new ExternalCommand();
 
     private static final Logger log = LogManager.getLogger(VirusScanValidator.class);
 
@@ -107,11 +107,11 @@ public class VirusScanValidator implements Validator {
                 virusList.put(Paths.get(virusMatcher.group(2)), virusMatcher.group(1));
             }
             if (!virusList.isEmpty()) {
-                log.warn("Virus found: "+result);
+                log.warn("Virus found: " + result);
                 throw new VirusFoundException("Virus found.", path+"/"+file, virusList);
             }
             else if (!cleanPattern.matcher(result).lookingAt()) {
-                log.error("Virus scan failed: "+result);
+                log.error("Virus scan failed: " + result);
             }
             else {
                 if (log.isDebugEnabled()) {
@@ -122,14 +122,6 @@ public class VirusScanValidator implements Validator {
         catch (final CommandExecutionException e) {
             log.error("Virus scan failed: ", e);
         }
-    }
-
-    /**
-     * Set the scanner
-     * @param scanner
-     */
-    public void setScanner(final ExternalCommand scanner) {
-        this.scanner = scanner;
     }
 
     /**
