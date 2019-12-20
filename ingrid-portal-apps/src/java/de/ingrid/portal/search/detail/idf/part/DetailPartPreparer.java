@@ -373,6 +373,10 @@ public class DetailPartPreparer {
                     value = finalValue;
                 }
             }
+
+            if (!result.contains(value)) {
+                result.add(value);
+            }
             
             // also add other constraints if present !
             for (String furtherConstraint : furtherOtherConstraints) {
