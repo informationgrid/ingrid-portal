@@ -319,10 +319,10 @@
                                 #renderTextLabelAbove("R&aumlumliche Dimensionalit&auml;t" $tmp)
                                 #set($tmp = "")
                                 ## Daten / Größen / Parameter
-                                #set($headTitles = ["Rolle","Name","Einheit","Wert", "Online-Ressource", "Metadatenverweis"])
-                                #set($headTypes = ["text","text","text", "text", "link","link"])
-                                #set($headXpathExpressions = ["./gmd:lineage//gmd:LI_Source/gmd:description/gco:CharacterString",".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType", ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol", ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record",".//gmd:DQ_QuantitativeAttributeAccuracy/gmd:result/@xlink:href", ".//gmd:LI_Lineage/gmd:source/@xlink:href"])
-                                #set($tmp = $TOOL.getNodeListTable("Daten / Gr&ouml;&szlig;en / Parameter", "//gmd:DQ_DataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
+                                #set($headTitles = ["Rolle","Name","Einheit","Wert"])
+                                #set($headTypes = ["text","text","text", "text"])
+                                #set($headXpathExpressions = ["./gmd:lineage//gmd:LI_Source/gmd:description/gco:CharacterString",".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType", ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol", ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record"])
+                                #set($tmp = $TOOL.getNodeListTable("Parameter und Zustandsgr&ouml;&szlig;en", "//gmd:DQ_DataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
                                 #renderTable($tmp)
                             </div>
                         </div>
