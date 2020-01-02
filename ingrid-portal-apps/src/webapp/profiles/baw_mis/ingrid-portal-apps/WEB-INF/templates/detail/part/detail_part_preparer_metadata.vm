@@ -81,6 +81,14 @@
                             #set($tmp = $TOOL.getMapImage())
                             #renderMultiLine($tmp)
                             #set($tmp = "")
+                            ## Untergeordnete Objekte
+                            #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))
+                            #renderLinkList($MESSAGES.getString("subordinated_references") $tmp "false")
+                            #set($tmp = "")
+                            ## Übergeordnetet Objekte
+                            #set($tmp = $TOOL.getReference("./idf:superiorReference"))
+                            #renderLinkList($MESSAGES.getString("superior_references") $tmp "false")
+                            #set($tmp = "")
                         </div>
                         ## BAW Auftragsnummer
                         #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
