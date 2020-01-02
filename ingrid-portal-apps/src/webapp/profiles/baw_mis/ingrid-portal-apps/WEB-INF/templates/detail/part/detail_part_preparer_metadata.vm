@@ -279,12 +279,12 @@
                             <hr>
                         #end
                         ## Verschlagwortung
-                        #set($xpathList = ["./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString != 'DEBUNDBAWAUFTRAGNR' and .//gmd:thesaurusName//gmd:title//gco:CharacterString != 'BAW-DMQS Spatial Dimensions' and .//gmd:thesaurusName//gmd:title//gco:CharacterString != 'BAW-DMQS Modelling Method' and .//gmd:thesaurusName//gmd:title//gco:CharacterString != 'BAW-DMQS Modelling Type']","./gmd:identificationInfo/*/gmd:topicCategory"])
+                        #set($xpathList = ["./gmd:identificationInfo//gmd:descriptiveKeywords[not(contains(.//gmd:thesaurusName//gmd:title//gco:CharacterString/text(), 'de.baw.codelist.'))]","./gmd:identificationInfo/*/gmd:topicCategory"])
                         #if($TOOL.aNodeOfListExist($xpathList))
                             #renderSectionTitle($MESSAGES.getString("thesaurus"))
                             <div class="search-result--nested">
                                 ## Verschlagwortung
-                                #renderTextList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString != 'DEBUNDBAWAUFTRAGNR' and .//gmd:thesaurusName//gmd:title//gco:CharacterString != 'BAW-DMQS Spatial Dimensions' and .//gmd:thesaurusName//gmd:title//gco:CharacterString != 'BAW-DMQS Modelling Method' and .//gmd:thesaurusName//gmd:title//gco:CharacterString != 'BAW-DMQS Modelling Type']", "search"))
+                                #renderTextList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords[not(contains(.//gmd:thesaurusName//gmd:title//gco:CharacterString/text(), 'de.baw.codelist.'))]", "search"))
                                 #renderTextList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords", "inspire"))
                                 #renderTextList("GEMET - Concepts" $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords", "gemet"))
                                 ## ISO-Themenkategorien
@@ -315,15 +315,15 @@
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ##Verfahren
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'BAW-DMQS Modelling Method']//gmd:keyword/gco:CharacterString"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.method']//gmd:keyword/gco:CharacterString"))
                                 #renderTextLabelAbove("Verfahren" $tmp)
                                 #set($tmp = "")
                                 ## Modellart
-                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'BAW-DMQS Modelling Type']//gmd:keyword/gco:CharacterString", "."))
+                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.type']//gmd:keyword/gco:CharacterString", "."))
                                 #renderTextList("Modellart" $tmp)
                                 #set($tmp = "")
                                 ##Raeumliche Dimensionalitaet
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'BAW-DMQS Spatial Dimensions']//gmd:keyword/gco:CharacterString"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.dimensionality']//gmd:keyword/gco:CharacterString"))
                                 #renderTextLabelAbove("R&aumlumliche Dimensionalit&auml;t" $tmp)
                                 #set($tmp = "")
                                 ## Daten / Größen / Parameter
