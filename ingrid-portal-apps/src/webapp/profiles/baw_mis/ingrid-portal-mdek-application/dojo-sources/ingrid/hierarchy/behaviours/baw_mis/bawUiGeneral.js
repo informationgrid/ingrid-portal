@@ -71,6 +71,8 @@ define([
                 // ----------------------------------------
                 // Kurzbezeichnung
                 domClass.add("uiElement5000", "hide");
+                // Inspire relevant
+                domClass.add("uiElement6000", "hidden");
                 // AdV kompatibel checkbox
                 domClass.add("uiElement6005", "hide");
                 // Open Data checkbox
@@ -107,6 +109,10 @@ define([
                 // ----------------------------------------
                 // Verschlagwortung
                 // ----------------------------------------
+                // Inspire priority data set
+                domClass.add("uiElement5090", "hidden");
+                // Inspire räumlicher Anwendungsbereich
+                domClass.add("uiElement5095", "hidden");
                 // AdV-Produktgruppe
                 domClass.add("uiElement5170", "hide");
 
@@ -117,18 +123,30 @@ define([
                 var inspireThemeTable = registry.byId(inspireThemeTableId);
                 if (isNewItem && data.objClass !== "Class0") {
                     var inspireThemeTableData = inspireThemeTable.data;
-                    inspireThemeTableData.push({ title: "108" }); // Gewässernetz
-                    UtilStore.updateWriteStore(inspireThemeTableId, inspireThemeTableData);
+                    // title 108 is for Gewässernetz
+                    var existing = inspireThemeTableData.find(function (row) {
+                        return row.title === "108";
+                    });
+                    if (!existing) {
+                        inspireThemeTableData.push({title: "108"});
+                        UtilStore.updateWriteStore(inspireThemeTableId, inspireThemeTableData);
+                    }
                 }
 
                 // ISO-Themenkategorie
                 // For new items, add "transportation" as category automatically
                 var topicsTableId = "thesaurusTopics";
                 var topicsTableNodeId = "uiElement5060";
-                if (isNewItem && !domClass.contains(topicsTableNodeId, "hide")) {
+                if (isNewItem && data.objClass !== "Class0") {
                     var topicsTableData = registry.byId(topicsTableId).data;
-                    topicsTableData.push({title: "18"});
-                    UtilStore.updateWriteStore(topicsTableId, topicsTableData);
+                    // title 18 is for transportation
+                    var existing = topicsTableData.find(function (row) {
+                        return row.title === "18";
+                    });
+                    if (!existing) {
+                        topicsTableData.push({title: "18"});
+                        UtilStore.updateWriteStore(topicsTableId, topicsTableData);
+                    }
                 }
 
                 // Umweltthemen
@@ -158,7 +176,7 @@ define([
                 // Datenqualität
                 // ----------------------------------------
                 // Hide the entire category
-                domClass.add("refClass1DQ", "hide");
+                domClass.add("refClass1DQ", "hidden");
 
                 // ----------------------------------------
                 // Raumbezugssystem
@@ -354,7 +372,7 @@ define([
                 id: id,
                 name: message.get("ui.obj.baw.simulation.model.type.table.title"),
                 help: message.get("ui.obj.baw.simulation.model.type.table.help"),
-                //isMandatory: true,
+                visible: "optional",
                 style: "width: 100%"
             }, structure, "refClass1");
             newFieldsToDirtyCheck.push(id);
@@ -483,6 +501,7 @@ define([
                 name: message.get("ui.obj.baw.simulation.parameter.table.title"),
                 help: message.get("ui.obj.baw.simulation.parameter.table.help"),
                 contextMenu: "BAW_SIMULATION_PARAMETER",
+                visible: "optional",
                 style: "width: 100%"
             }, structure, "refClass1");
             newFieldsToDirtyCheck.push(simParamTableId);
