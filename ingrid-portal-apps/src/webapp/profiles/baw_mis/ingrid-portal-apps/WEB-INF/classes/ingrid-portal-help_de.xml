@@ -14,7 +14,7 @@
                         <a href="?hkey=maps-1">Karte</a>
                     </li>
                     <li>
-                        <a href="?hkey=about-1">Über DMQS</a>
+                        <a href="?hkey=about-1">Über BAW-MIS</a>
                     </li>
                     <li>
                         <a href="?hkey=search-category-1">Kategorien</a>
@@ -27,7 +27,7 @@
         </section>
     </chapter>
     <chapter>
-        <header>Über DMQS</header>
+        <header>Über BAW-MIS</header>
         <section help-key="about-1">
             <header>Porträt</header>
             <content>

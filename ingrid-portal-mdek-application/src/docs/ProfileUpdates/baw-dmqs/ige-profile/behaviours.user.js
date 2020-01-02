@@ -30,7 +30,7 @@ define("ingrid/hierarchy/behaviours.user", ["dojo/_base/lang", "dojo/dom",
 
     return lang.mixin(behaviours, {
         bawDmqsBehaviour: {
-            title: "BAW DMQS spezifisches Verhalten",
+            title: "BAW-MIS spezifisches Verhalten",
             description: "Beschreibung des Verhaltens",
             defaultActive: true,
             run: function() {
