@@ -1446,7 +1446,7 @@
         <portlet-name>ShowMapsPortlet</portlet-name>
         <display-name>Karten</display-name>
         <description>This portlet displays the search results.</description>
-        <portlet-class>de.ingrid.portal.portlets.ShowMapsBawDmqsPortlet</portlet-class>
+        <portlet-class>de.ingrid.portal.portlets.ShowMapsPortlet</portlet-class>
         <expiration-cache>0</expiration-cache>
         <supports>
             <mime-type>text/html</mime-type>
