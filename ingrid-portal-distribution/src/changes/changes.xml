@@ -35,6 +35,9 @@
           <action type="update" dev="wemove" issue="1577">
             UVP: Änderung des Slogans "Vorhaben im Rahmen von Umweltprüfungen" zu "Umweltverträglichkeitsprüfungen der Länder"
           </action>
+          <action type="update" dev="wemove" issue="1570">
+            UVP: Anpassung der länderspezifischen Vorschaltseiten an das neue UVP Layout
+          </action>
         </release>
 
         <release version="5.2.0" date="2019-10-22" description="Release 5.2.0">
