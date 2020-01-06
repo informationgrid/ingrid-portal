@@ -1,0 +1,38 @@
+header .logo {
+   width: 100%;
+}
+header .logo .hide-for-xsmall-only {
+  float: left;
+}
+header .logo .show-for-medium, header .logo .show-for-medium-only, header .logo .show-for-large {
+  float: left;
+  margin-top: -4px;
+  line-height: 1.125;
+}
+header .logo img {
+  width: unset;
+  padding-right: 12px;
+}
+header .logo > span {
+  position: absolute;
+  top: 14px;
+  left: 8px;
+  right: 0px;
+}
+header .logo > span {
+  position: absolute;
+  top: 14px;
+  left: 8px;
+  right: 0px;
+  font-size: 36px;
+}
+footer {
+  margin-top: 0;
+}
+
+@media print, screen and (min-width: 35em) {
+  header .logo > span {
+    top: 22px;
+    left: 0;
+  }
+}

@@ -30,190 +30,144 @@
         <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <meta name="description" content="UVP bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="description" content="UVP bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
         <meta name="keywords" lang="de" content="UVP, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css"></link>
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css"></link>
         <link rel="shortcut icon" href="#" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/uvp/css/main.css" />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/html/default.css" />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/html/bb/css/style.css" />
-        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/print.css" media="print">
+        
+        <!-- Global scripts -->
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/uvp/scripts/main.js"></script>
     </head>
     <body>
-        <div class="nav-overlay">
-            <ul class="nav__mobile nav__foot">
-                <li>
-                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                </li>
-                <li>
-                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                </li>
-            </ul>
-        </div>
-        <div class="page">
-            <header class="header">
-                <div class="ob-box-padded-more ob-box-center">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-l js-nav-mobile-toggle">
-                            <svg class="icon">
-                                <use xlink:href="#burger"></use>
-                            </svg>
-                            <svg class="icon ob-fade">
-                                <use xlink:href="#cross"></use>
-                            </svg>
+        <div class="container">
+            <header>
+                <div class="row">
+                    <div class="columns">
+                        <div class="logo">
+                            <span>
+                                <img class="hide-for-xsmall-only" src="/ingrid-portal-apps/images/partner/big/bb.png" alt="UVP"/>
+                                <span class="show-for-medium-only">Umweltverträglichkeitsprüfungen<br>Brandenburg</span>
+                                <span class="show-for-large">Portal zu Umweltverträglichkeitsprüfungen und<br>der Bauleitplanung im Land Brandenburg</span>
+                                <img class="show-for-xsmall-only" src="/ingrid-portal-apps/images/partner/middle/bb.png" alt="UVP"/>
+                                <span class="hide-for-medium">UVP <br class="show-for-xsmall-only">Brandenburg</span>
+                            </span>
                         </div>
                     </div>
-                    <div class="header__widgets__section">
-                        <span class="header__widget header__logo">
-                            <img class="mq-hide-xxl desktop-logo" src="/ingrid-portal-apps/images/partner/big/bb.png" alt="bb.png"></img>
-                            <img class="mq-show-xxl mobile__logo" src="/ingrid-portal-apps/images/partner/middle/bb.png" alt="bb.png"></img>
-                        </span>
-                    </div>
-                    <div class="header__widgets__section">
-                        <span class="mq-hide-xxl desktop__title">
-                            <p class="main__title"><span>Portal zu Umweltverträglichkeitsprüfungen </span><br><span>und der Bauleitplanung im Land Brandenburg</span></p>
-                        </span>
-                        <span class="mq-show-xxl mobile__title"><span class="mq-show-l">UVP </span><span class="mq-hide-l">Umweltvertr&auml;glichkeitspr&uuml;fungen </span>Brandenburg</span>
-                    </div>
-                
-                </div> 
-                <nav class="nav-desktop mq-hide-xxl" style="height:56px">
-                </nav>
+                </div>
             </header>
-            <!-- CONTENT BLOCK -->
-            <section class="block block--padded">
-                <div class="ob-box-wide ob-box-padded ob-box-center">
-                    <article class="content ob-container">
-                        <h2>INFORMATION</h2>
-                        <p>
-                            Die Informationen zu Umweltverträglichkeitsprüfungen (UVP) und der Bauleitplanung (BLP) stehen Ihnen in einem - vorläufig - länderübergreifenden Portal zur Verfügung.
-                            Sie können Ihre Suche auf das Land Brandenburg einschränken, indem Sie unter "Suche" in der Kategorie "Bundesländer" das Land "Brandenburg" auswählen.
-                        </p>
-                        <br>
-                        <ul class="link-list">
-                            <li>
-                                <a href="/startseite" style="font-weight:bold;">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Umweltverträglichkeitsprüfungen
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="link-img-content">
-                            <a href="/startseite">
-                                <img class="link-img" src="/html/bb/images/uvp.jpg" alt="uvp.jpg"></img>
-                            </a>
-                            <small class="link-img-text tx-light">@ MLUL</small>
-                        </div>
-                        <p>
-                            Im Portal werden Sie über die laufenden UVP-pflichtigen Zulassungsverfahren der unterschiedlichen Behörden des Landes Brandenburg unterrichtet (Verfahrensstand, Auslegungs- und Erörterungstermine, UVP-Bericht, ggf. weitere Berichte, Empfehlungen und die anschließende Entscheidung).
-                        </p>
-                        <p>
-                            Sollten Sie Fragen zu den einzelnen UVP-pflichtigen Verfahren haben, so wenden Sie sich bitte an diejenige Behörde, die das jeweilige Trägerverfahren führt. Diese zuständigen Behörden und weitere Informationen finden Sie auf der <a target="_new" href="https://mlul.brandenburg.de/cms/detail.php/bb1.c.527702.de">Internetseite</a> des für Umweltverträglichkeitsprüfungen zuständigen Ministeriums.
-                        </p>
-                        <p>
-                            Bei darüber hinausgehenden Fragen und Hinweisen wenden Sie sich an <a href="mailto:uvp-portal@mlul.brandenburg.de">uvp-portal@mlul.brandenburg.de</a>.
-                        </p>
-                        <br />
-                        <ul class="link-list">
-                            <li>
-                                <a href="/freitextsuche?rstart=0&currentSelectorPage=1&f=state:bb;procedure:procedure_dev_plan" style="font-weight:bold;">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Bauleitplanung
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="link-img-content">
-                            <a href="/freitextsuche?rstart=0&currentSelectorPage=1&f=state:bb;procedure:procedure_dev_plan">
-                                <img class="link-img" src="/html/bb/images/blp.jpg" alt="uvp.jpg"></img>
-                            </a>
-                            <small class="link-img-text tx-light">@ MIL</small>
-                        </div>
-                        <p>
-                            Die Bauleitplanung ist im Rahmen der kommunalen Planungshoheit (Artikel 28 Grundgesetz) eine Aufgabe der Städte und Gemeinden im Land Brandenburg.
-                            Das Portal bündelt diese Informationen als Servicedienstleistung auf Landesebene.
-                        </p>
-                        <p>
-                            Sollten Sie Fragen zu den konkreten Bauleitplanungen vor Ort haben, so wenden Sie sich bitte an die jeweiligen Ansprechpartner in der Kommunalverwaltung.
-                        </p>
-                        <p>
-                            Bei darüber hinausgehenden Fragen und Hinweisen wenden Sie sich an <a href="mailto:referat23@mil.brandenburg.de">referat23@mil.brandenburg.de</a>.
-                        </p>
-                    </article>
-                </div>
-                <br>
-                <br>
-            </section>
-            <footer class="footer">
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__top">
-                        <a href="/startseite">
-                        </a>
-                        <p class="copyright">Copyright © Landesbetrieb Geoinformation und Vermessung</p>
-                    </div>
-                </div>
-                <hr class="bx-top-0 bx-bot-0"></hr>
-                <div class="grid">
-                    <div class="column column--3-4-xl">
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <nav class="footer__middle mq-hide-l">
-                                    <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
-                                    <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen">Datenschutz</a>
-                                </nav>
+            <div class="body">
+                <div class="row">
+                    <div class="columns">
+                        <div class="teaser-data-projects">
+                            <div class="row">
+                                <div class="xsmall-24 medium-15 xlarge-17 columns">
+                                    <h2 class="projects-header">Information</h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="columns">
+                                    <p>
+                                        Die Informationen zu Umweltverträglichkeitsprüfungen (UVP) und der Bauleitplanung (BLP) stehen Ihnen in einem - vorläufig - länderübergreifenden Portal zur Verfügung. Sie können Ihre Suche auf das Land Brandenburg einschränken, indem Sie unter "Suche" in der Kategorie "Bundesländer" das Land "<b>Brandenburg</b>" auswählen.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                               <div class="columns">
+                                    <div class="teaser-data search">
+                                        <div class="data">
+                                            <a href="/startseite" title="Zum UVP-Portal">
+                                                <h2 class="header">Umweltverträglichkeitsprüfungen</h2>
+                                            </a>
+                                            <div class="img">
+	                                            <a href="/startseite">
+	                                                <img class="link-img" src="/html/bb/images/uvp.jpg" alt="uvp.jpg">
+	                                            </a>
+	                                            <div class="helper text">
+	                                                <span>&copy; MLUL</span>
+	                                            </div>
+                                            </div>
+                                            <p>
+                                                Im Portal werden Sie über die laufenden UVP-pflichtigen Zulassungsverfahren der unterschiedlichen Behörden des Landes Brandenburg unterrichtet (Verfahrensstand, Auslegungs- und Erörterungstermine, UVP-Bericht, ggf. weitere Berichte, Empfehlungen und die anschließende Entscheidung).
+                                            </p>
+                                            <p>
+                                                Sollten Sie Fragen zu den einzelnen UVP-pflichtigen Verfahren haben, so wenden Sie sich bitte an diejenige Behörde, die das jeweilige Trägerverfahren führt. Diese zuständigen Behörden und weitere Informationen finden Sie auf der <a target="_new" href="https://mluk.brandenburg.de/mluk/de/umwelt/fach%C3%BCbergreifendes-umweltrecht/umweltpr%C3%BCfung/umweltvertraeglichkeitspruefung/uvp-portal/">Internetseite</a> des für Umweltverträglichkeitsprüfungen zuständigen Ministeriums.
+                                            </p>
+                                            <p>
+                                                Bei darüber hinausgehenden Fragen und Hinweisen wenden Sie sich an <a href="mailto:uvp-portal@mluk.brandenburg.de">uvp-portal@mluk.brandenburg.de</a>.
+                                            </p>
+                                            <a href="/startseite" title="Zum UVP-Portal">
+                                                <span class="ic-ic-arrow arrow"></span>
+                                            </a>
+                                       </div>
+                                    </div>
+                                    <div class="teaser-data search">
+                                        <div class="data">
+                                            <a href="/freitextsuche?rstart=0&amp;currentSelectorPage=1&amp;f=state:bb;procedure:procedure_dev_plan" title="Bauleitplanung">
+                                                <h2 class="header">Bauleitplanung</h2>
+                                            </a>
+                                            <div class="img">
+                                                <a href="/freitextsuche?rstart=0&amp;currentSelectorPage=1&amp;f=state:bb;procedure:procedure_dev_plan">
+                                                    <img class="link-img" src="/html/bb/images/blp.jpg" alt="uvp.jpg">
+                                                </a>
+                                                <div class="helper text">
+                                                    <span>&copy; MIL</span>
+                                                </div>
+                                            </div>
+                                            <p>
+                                                Die Bauleitplanung ist im Rahmen der kommunalen Planungshoheit (Artikel 28 Grundgesetz) eine Aufgabe der Städte und Gemeinden im Land Brandenburg.
+                                                Das Portal bündelt diese Informationen als Servicedienstleistung auf Landesebene.
+                                            </p>
+                                            <p>
+                                                Sollten Sie Fragen zu den konkreten Bauleitplanungen vor Ort haben, so wenden Sie sich bitte an die jeweiligen Ansprechpartner in der Kommunalverwaltung.
+                                            </p>
+                                            <p>
+                                                Bei darüber hinausgehenden Fragen und Hinweisen wenden Sie sich an <a href="mailto:referat23@mil.brandenburg.de">referat23@mil.brandenburg.de</a>.
+                                            </p>
+                                            <a href="/freitextsuche?rstart=0&amp;currentSelectorPage=1&amp;f=state:bb;procedure:procedure_dev_plan" title="Zu den Bebauungs- und Flächennutzungsplänen">
+                                                <span class="ic-ic-arrow arrow"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="column column--1-4-xl">
-                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <div class="footer__bottom"> </div>
+                </div>
+            </div>
+            <footer>
+                <div class="footer">
+                    <div class="row">
+                        <div class="xsmall-24 large-7 xlarge-6 columns">
+                            <div class="footer-menu-entries">
+                                <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="entry">
+                                    <span class="text">Impressum</span>
+                                </a>
+                                <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="entry">
+                                    <span class="text">Datenschutz</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="xsmall-24 large-17 xlarge-18 columns">
+                            <div class="copyright">
+                                <p>© 2019 Landesbetrieb Geoinformation und Vermessung</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
         </div>
-        <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
-        
-        <!-- Popup -->
-        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-        
-        <!-- Accordion -->
-        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
-        <script>
-          $('.js-accordion').accordion();
-        
-          $('.js-accordion-multi').accordion({
-              multi: true
-          });
-        </script>
-        
-        <!-- Tabs -->
-        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
-        <script>
-          $('.js-tabs').tabs();
-        </script>
-        
-        <!-- Selection -->
-        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
-        <script>
-          $('.js-selection').selection();
-        </script>
-        
-        <!-- Table Sort -->
-        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
-        <script>
-          $('.js-table-sortable').sortable();
-        </script>
     </body>
 </html>

@@ -20,72 +20,60 @@
  * limitations under the Licence.
  * **************************************************#
  */
-.nav-desktop {
-    background: #871d33;
+header {
+  border-image: linear-gradient(to left, #871d33, #871d33) 0 1 100%;
+  -webkit-border-image: linear-gradient(to left, #871d33, #871d33) 0 1 100%;
+}
+header .logo > span {
+  color: #333333;
+}
+h2 {
+  color: #333333 !important;
+}
+a,a h2.header {
+  color: #666666 !important;
+}
+a:hover, a h2.header:hover {
+  color: #333333 !important;
+}
+footer .footer {
+  background-color: #E5E6E6;
+}
+footer .footer a {
+  color: #666666 !important;
+}
+footer .footer .copyright p {
+  color: #222222 !important;
+}
+.teaser-data .header:hover, .teaser-data .arrow:hover {
+  color: #333333;
 }
 
-a {
-    color: #666666;
-}
-
-.desktop__title p, h2{
-    color: #333333;
-}
-
-.mobile__title, .mobile__title:hover {
-    color: #333333;
-}
-
-@media screen and (max-width: 939px) {
-  .header {
-    background: #FFF;
-    border-bottom: solid 1px #871d33;
+@media print, screen and (min-height: 35em) {
+  html, body { height:100%; }
+  .body {
+    padding-bottom: 7rem !important;
+  }
+  .container {
+    min-height: 100%;
+    position: relative;
+  }
+  footer {
+    position: absolute !important;
+    bottom: 0;
+    width: 100%;
+    margin-top: 48px;
   }
 }
 
-.nav-toggle {
-    background: #871d33;
-}
-
-.nav-toggle:after {
-    border-color: transparent transparent #FFF transparent;
-}
-
-.nav-toggle .icon {
-    fill: #FFF;
-}
-
-.nav-overlay {
-    background: #FFF;
-}
-
-.nav__foot a {
-    color: #666666;
-}
-
-.footer {
-    color: #666666;
-}
-
-.desktop-logo {
-    height: 60px;
-    max-width: 100%;
-    padding: 0 10px 0 0;
-}
-
-.mobile__logo {
-    height: 40px !important;
-    padding: 0 10px 0 0;
-}
-
-@media screen and (max-width: 375px) {
-    .mobile__title {
-        font-size: 21px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .header__logo {
-        margin-left: 0;
-    }
+@media print, screen and (max-width: 559px) {
+  header .logo img.show-for-xsmall-only {
+    float: left;
+  }
+  header .logo span.hide-for-medium {
+    float: left;
+    margin-top: -4px;
+    line-height: 1.125;
+    font-size: 25px;
+  }
 }
