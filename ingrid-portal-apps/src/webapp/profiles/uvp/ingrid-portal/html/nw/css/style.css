@@ -20,82 +20,49 @@
  * limitations under the Licence.
  * **************************************************#
  */
-.nav-desktop {
-    background: #3c506e;
+header {
+  border-image: linear-gradient(to left, #3c506e, #3c506e) 0 1 100%;
+  -webkit-border-image: linear-gradient(to left, #3c506e, #3c506e) 0 1 100%;
+}
+header .logo > span {
+  color: #3c506e;
+}
+h2 {
+  color: #3c506e !important;
+}
+a,a h2 {
+  color: #3c506e !important;
+}
+a:hover, a h2:hover {
+  color: #666666 !important;
+}
+footer .footer {
+  background-color: #3c506e;
+}
+footer .footer a {
+  color: #FFFFFF !important;
+}
+footer .footer .copyright p {
+  color: #FFFFFF !important;
+}
+.teaser-data .header:hover, .teaser-data .arrow:hover {
+  color: #333333;
 }
 
-a {
-    color: #3c506e;
-}
-
-.desktop__title p, h2 {
-    color: #3c506e;
-}
-
-.mobile__title, .mobile__title:hover {
-    color: #3c506e;
-}
-
-@media screen and (max-width: 939px) {
-  .header {
-    background: #FFF;
-    border-bottom: solid 1px #3c506e;
+@media print, screen and (max-width: 559px) {
+  header .logo img.show-for-xsmall-only {
+    float: left;
+  }
+  header .logo span.hide-for-medium {
+    float: left;
+    margin-top: -4px;
+    line-height: 1.125;
+    font-size: 25px;
   }
 }
 
-.nav-toggle {
-    background: #3c506e;
-}
-
-.nav-toggle:after {
-    border-color: transparent transparent #FFF transparent;
-}
-
-.nav-toggle .icon {
-    fill: #FFF;
-}
-
-.nav-overlay {
-    background: #FFF;
-}
-
-.nav__foot a {
-    color: #3c506e;
-}
-
-.footer {
-    color: #3c506e;
-}
-
-.desktop-logo {
-    height: 60px;
-    max-width: 100%;
-    padding: 0 10px 0 0;
-}
-
-.mobile__logo {
-    height: 40px !important;
-    padding: 0 10px 0 0;
-}
-
-@media screen and (max-width: 375px) {
-    .mobile__title {
-        font-size: 18px;
-    }
-}
-
-@media screen and (min-width: 376px) and (max-width: 479px) {
-    .mobile__title {
-        font-size: 19px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .header__logo {
-        margin-left: 0;
-    }
-}
-
-p .icon {
-    height: 0.7em;
+@media print, screen and (max-width: 369px) {
+ header .logo span.hide-for-medium {
+    font-size: 24px;
+  }
 }

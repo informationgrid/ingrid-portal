@@ -20,31 +20,60 @@
  * limitations under the Licence.
  * **************************************************#
  */
-.desktop-logo {
-    height: 60px;
-    max-width: 100%;
-    padding: 0 10px 0 0;
+header {
+  border-image: linear-gradient(to left, #1d4b7b, #1d4b7b) 0 1 100%;
+  -webkit-border-image: linear-gradient(to left, #1d4b7b, #1d4b7b) 0 1 100%;
+}
+header .logo > span {
+  color: #1d4b7b;
+}
+h2 {
+  color: #1d4b7b;
+}
+a,a h2.header {
+  color: #0089C6 !important;
+}
+a:hover, a h2.header:hover {
+  color: #1d4b7b !important;
+}
+footer .footer {
+  background-color: #1d4b7b;
+}
+footer .footer a {
+  color: #FFFFFF !important;
+}
+footer .footer .copyright p {
+  color: #FFFFFF !important;
+}
+.teaser-data .header:hover, .teaser-data .arrow:hover {
+  color: #1d4b7b !important;
 }
 
-.mobile__logo {
-    height: 40px !important;
-    padding: 0 10px 0 0;
+@media print, screen and (min-height: 35em) {
+  html, body { height:100%; }
+  .body {
+    padding-bottom: 7rem !important;
+  }
+  .container {
+    min-height: 100%;
+    position: relative;
+  }
+  footer {
+    position: absolute !important;
+    bottom: 0;
+    width: 100%;
+    margin-top: 48px;
+  }
 }
 
-@media screen and (max-width: 375px) {
-    .mobile__title {
-        font-size: 23px;
-    }
-}
-
-@media screen and (min-width: 376px) and (max-width: 479px) {
-    .mobile__title {
-        font-size: 25px;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .header__logo {
-        margin-left: 0;
-    }
+@media print, screen and (max-width: 559px) {
+  header .logo img.show-for-xsmall-only {
+    float: left;
+  }
+  header .logo span.hide-for-medium {
+    float: left;
+    margin-top: -4px;
+    line-height: 1.125;
+    font-size: 25px;
+  }
 }
