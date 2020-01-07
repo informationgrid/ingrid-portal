@@ -63,7 +63,13 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
     public void invoke(RequestContext request, ValveContext context) throws PipelineException {
 
         try {
-            String language = request.getRequestParameter(INGRID_LOCALE_REQUEST_KEY);
+            // Check if jvm properties is set for lang
+            String language = System.getProperty("lang");
+            String paramlanguage = request.getRequestParameter(INGRID_LOCALE_REQUEST_KEY);
+            
+            if(paramlanguage != null) {
+                language = paramlanguage;
+            }
             
             if (language != null && language.length() > 0) {
             	
