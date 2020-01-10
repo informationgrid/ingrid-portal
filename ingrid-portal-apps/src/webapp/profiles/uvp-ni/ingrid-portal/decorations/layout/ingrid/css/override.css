@@ -336,8 +336,15 @@ header {
   -moz-border-image: -moz-linear-gradient(to left, #246293, #0089C6) 0 1 100%;
   border-image: linear-gradient(to left, #246293, #0089C6) 0 1 100%;
 }
+.menu-tab-row .menu-tab.is-selected {
+  background-color: #f6f6f6;
+  text-decoration: none;
+}
 .menu-tab-row .menu-tab .link-menu-tab {
   color: #0089C6;
+}
+.menu-tab-row .menu-tab.is-selected .link-menu-tab {
+  color: #1D4B7B;
 }
 .menu-tab-row .menu-tab:hover .link-menu-tab {
   color: #1D4B7B;
