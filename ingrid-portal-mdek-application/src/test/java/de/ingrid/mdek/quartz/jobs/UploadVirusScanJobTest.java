@@ -32,7 +32,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -40,7 +44,14 @@ import java.util.stream.Stream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpStatus;
+import org.apache.http.ProtocolVersion;
+import org.apache.http.client.entity.EntityBuilder;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.message.BasicStatusLine;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,6 +60,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.FieldSetter;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.quartz.JobExecutionContext;
 
 import de.ingrid.mdek.upload.storage.validate.Validator;
@@ -78,18 +91,54 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         put("url", "http://localhost:3000/v1/");
     }};
 
+    private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
     @InjectMocks private static VirusScanValidator localVirusScanValidator;
     @Mock private ExternalCommand scanner;
 
     @InjectMocks private static RemoteServiceVirusScanValidator remoteVirusScanValidator;
-    @Mock private CloseableHttpResponse response;
-    @Mock private HttpEntity entity;
+    @Mock CloseableHttpClient serviceClient;
 
     @Mock private ValidatorFactory validatorFactory;
     @Mock private JobExecutionContext context;
 
-
     private UploadVirusScanJob job;
+
+    private class MockedServiceExecution implements Answer<CloseableHttpResponse> {
+        private final int numFiles;
+        private final Path[] infected;
+
+        public MockedServiceExecution(final int numFiles, final Path... infected) {
+            this.numFiles = numFiles;
+            this.infected = infected;
+        }
+
+        @Override
+        public CloseableHttpResponse answer(final InvocationOnMock invocation) throws Throwable {
+            final CloseableHttpResponse httpResponse = Mockito.mock(CloseableHttpResponse.class);
+
+            // status
+            Mockito.when(httpResponse.getStatusLine()).thenReturn(new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), HttpStatus.SC_OK, "OK!"));
+
+            // response entity
+            HttpEntity entity = Mockito.mock(HttpEntity.class);
+            final Object[] args = invocation.getArguments();
+            final String method = ((HttpUriRequest) args[0]).getMethod();
+            String serviceResponse = "";
+            if (HttpPost.METHOD_NAME.equals(method)) {
+                // first post request (initiate)
+                serviceResponse = getServiceResponse(false, numFiles, new Path[] {});
+            }
+            else {
+                // second get request (finished)
+                serviceResponse = getServiceResponse(true, numFiles, infected);
+            }
+            entity = EntityBuilder.create().setText(serviceResponse).build();
+            Mockito.when(httpResponse.getEntity()).thenReturn(entity);
+
+            return httpResponse;
+        }
+    }
 
     @Override
     @Before
@@ -98,6 +147,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         MockitoAnnotations.initMocks(this);
         new FieldSetter(localVirusScanValidator, localVirusScanValidator.getClass().getDeclaredField("scanner")).set(scanner);
+        new FieldSetter(remoteVirusScanValidator, remoteVirusScanValidator.getClass().getDeclaredField("serviceClient")).set(serviceClient);
 
         localVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_LOCAL);
         remoteVirusScanValidator.initialize(VIRUSSCAN_VALIDATOR_CONFIG_REMOTE);
@@ -128,8 +178,8 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
-        final Path file2 = this.createFile(Paths.get("dir2", "File2"), "");
-        final Path file3 = this.createFile(Paths.get("dir2", "File3"), "");
+        final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -150,6 +200,11 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Test:
      * - Local scanner setup, virus contained in files, must be moved to quarantine
+     *
+     * CAUTION: This test will create a local file containing the test virus string.
+     *          If you are running a On-Access scanner that prevents creating this file,
+     *          the test will fail.
+     *
      * @throws Exception
      */
     @Test
@@ -159,8 +214,8 @@ public class UploadVirusScanJobTest extends BaseJobTest {
 
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
-        final Path file2 = this.createFile(Paths.get("dir2", "File2"), VIRUS_CONTENT);
-        final Path file3 = this.createFile(Paths.get("dir2", "File3"), VIRUS_CONTENT);
+        final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), VIRUS_CONTENT);
 
         // set up scan report expectations
         final String scanCommand = VIRUSSCAN_VALIDATOR_CONFIG_LOCAL.get("command").replace("%FILE%", DOCS_PATH.toString());
@@ -188,22 +243,18 @@ public class UploadVirusScanJobTest extends BaseJobTest {
      * - Remote scanner setup, no virus contained in files, all files stay in place
      * @throws Exception
      */
-    //@Test
+    @Test
     public void testRemoteNoVirusFound() throws Exception {
         // set up job
         setupJob(remoteVirusScanValidator);
 
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
-        final Path file2 = this.createFile(Paths.get("dir2", "File2"), "");
-        final Path file3 = this.createFile(Paths.get("dir2", "File3"), "");
+        final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), "");
+        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), "");
 
         // set up scan response expectations
-        /*
-        when(response.getStatusLine()).thenReturn(new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), HttpStatus.SC_OK, "OK!"));
-        when(entity.getContent()).thenReturn(getClass().getClassLoader().getResourceAsStream("result.txt"));
-        when(response.getEntity()).thenReturn(entity);
-        */
+        Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
 
         // run job
         this.job.executeInternal(this.context);
@@ -218,24 +269,25 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     /**
      * Test:
      * - Remote scanner setup, virus contained in files, must be moved to quarantine
+     *
+     * CAUTION: This test will create a local file containing the test virus string.
+     *          If you are running a On-Access scanner that prevents creating this file,
+     *          the test will fail.
+     *
      * @throws Exception
      */
-    //@Test
+    @Test
     public void testRemoteVirusFound() throws Exception {
         // set up job
         setupJob(remoteVirusScanValidator);
 
         // set up files
         final Path file1 = this.createFile(Paths.get("dir1", "File1"), "");
-        final Path file2 = this.createFile(Paths.get("dir2", "File2"), VIRUS_CONTENT);
-        final Path file3 = this.createFile(Paths.get("dir2", "File3"), VIRUS_CONTENT);
+        final Path file2 = this.createFile(Paths.get("dir 2", "File2Ä"), VIRUS_CONTENT);
+        final Path file3 = this.createFile(Paths.get("dir 2", "File,3Ö"), VIRUS_CONTENT);
 
         // set up scan response expectations
-        /*
-        when(response.getStatusLine()).thenReturn(new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), HttpStatus.SC_OK, "OK!"));
-        when(entity.getContent()).thenReturn(getClass().getClassLoader().getResourceAsStream("result.txt"));
-        when(response.getEntity()).thenReturn(entity);
-        */
+        Mockito.doAnswer(new MockedServiceExecution(3, new Path[] {file2, file3})).when(serviceClient).execute(Mockito.any(HttpUriRequest.class));
 
         // run job
         this.job.executeInternal(this.context);
@@ -335,5 +387,33 @@ public class UploadVirusScanJobTest extends BaseJobTest {
                 "No viruses were discovered.",
                 "End of Scan."
         );
+    }
+
+    /**
+     * Get the response of the remote service
+     * @param finished
+     * @param numFiles
+     * @param infected
+     * @return String
+     */
+    private String getServiceResponse(final boolean finished, final int numFiles, final Path... infected) {
+        final boolean isInfected = infected.length > 0;
+        final String id = "03970ddd-a8dd-4428-bbca-ee7578558ede";
+        final String date = LocalDateTime.now().format(dateFormatter);
+        final String result = finished ? (isInfected ? "infected" : "ok") : "undefined";
+        final String report = (finished ? (isInfected ? getScanReportInfected(numFiles, infected) : getScanReportClean(numFiles)) : "").replace(System.getProperty("file.separator"), "/");
+
+        final List<String> infectionDetails = new ArrayList<>();
+        for (final Path infection : infected) {
+            infectionDetails.add("{\"location\":\"" + infection.toString().replace(System.getProperty("file.separator"), "/") + "\",\"virus\":\"EICAR-AV-Test\"}");
+        }
+        final String infections = "[" +  (isInfected ? infectionDetails.stream().collect(Collectors.joining(",")) : "") + "]";
+        return "{" + String.join(",",
+                "\"id\":\"" + id + "\"",
+                "\"date\":\"" + date + "\"",
+                "\"resource\":\"" + "/"+DOCS_PATH.toString().replace("\\", "/") + "\"",
+                "\"type\":\"async\"",
+                "\"scan\":{\"status\":\"" + (finished ? "finished" : "running") + "\",\"result\":\"" + result + "\",\"report\":\"" + report.replace("\n", "\\n").replace("\r", "") + "\",\"infections\":" + infections + "},\"complete\":" + (finished ? "true" : "false")
+        ) + "}";
     }
 }
