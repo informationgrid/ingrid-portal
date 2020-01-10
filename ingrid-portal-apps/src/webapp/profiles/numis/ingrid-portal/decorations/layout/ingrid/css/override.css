@@ -354,8 +354,15 @@ header a.icon:hover {
 header a.icon.is-selected {
   background: #EFEFEF;
 }
+.menu-tab-row .menu-tab.is-selected {
+  background-color: #f6f6f6;
+  text-decoration: none;
+}
 .menu-tab-row .menu-tab .link-menu-tab {
   color: #0089C6;
+}
+.menu-tab-row .menu-tab.is-selected .link-menu-tab {
+  color: #1D4B7B;
 }
 .menu-tab-row .menu-tab:hover .link-menu-tab {
   color: #1D4B7B;
