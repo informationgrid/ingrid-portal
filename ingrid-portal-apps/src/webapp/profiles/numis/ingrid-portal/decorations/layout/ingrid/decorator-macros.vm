@@ -34,6 +34,7 @@
 
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
+<div class="menu-tab-row">
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #set($elemSelected = false)
@@ -64,24 +65,38 @@
         #if($currentPage == "/search-detail.psml" && $element.url=="/main-search.psml")
             #set($elemSelected = true)
         #end
-        #if ($element.url.startsWith('/main-about'))
-            #set($subMenu = $site.getMenu("sub-menu-about"))
-            <div class="dropmenu__box">
-                <a class="icon nav-desktop__title js-nav-desktop-toggle #if($elemSelected)is-selected#end" href="#" title="$tabTitle">
+        #if($element.url == "/main-maps.psml")
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
+                    <span class="ic-ic-karten"></span>
                     <span class="text">$tabName</span>
-                    <span class="ic-ic-angle-down"></span>
-                </a>
-                #if($subMenu && !$subMenu.empty)
-                    #includeSubNavigation($subMenu true)
-                #end
-            </div>
-        #else
-            <a class="icon #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
-                <span class="text">$tabName</span>
+                </div>
+            </a>
+        #elseif($element.url == "/main-search.psml")
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
+                    <span class="ic-ic-daten"></span>
+                    <span class="text">$tabName</span>
+                </div>
+            </a>
+        #elseif($element.url == "/main-measures.psml")
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
+                    <span class="ic-ic-chemie"></span>
+                    <span class="text">$tabName</span>
+                </div>
+            </a>
+        #elseif($element.url == "/search-catalog/search-catalog-hierarchy.psml")
+            <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
+                <div class="link-menu-tab">
+                    <span class="ic-ic-datenkataloge"></span>
+                    <span class="text">$tabName</span>
+                </div>
             </a>
         #end
       #end
     #end
+</div>
 #end
 
 #* include sub navigation component *#

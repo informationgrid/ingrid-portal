@@ -74,22 +74,22 @@
             #end
             <header>
                 <div class="row">
-                    <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
+                    <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
                         <div class="logo">
                             <div class="switch">
                                 <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
                         </div>
                     </div>
-                    <div class="columns button-up show-for-xlarge">
+                    <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
                     #if(!$mainMenu.empty)
                         #includeMainNavigation($mainMenu)
                     #end
                     </div>
-                    <div class="columns large-15 xlarge-2">
+                    <div class="columns">
                         <div class="header-menu-open">
                             #if($jetspeed.getLoggedOn())
                                 #set($userAttributes = $jetspeed.getUserProperties())
