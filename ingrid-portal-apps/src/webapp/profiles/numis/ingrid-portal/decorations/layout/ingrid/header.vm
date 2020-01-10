@@ -90,7 +90,7 @@
                         #includeMainNavigation($mainMenu)
                     #end
                     </div>
-                    <div class="columns xlarge-2">
+                    <div class="columns large-15 xlarge-2">
                         <div class="header-menu-open">
                             #if($jetspeed.getLoggedOn())
                                 #set($userAttributes = $jetspeed.getUserProperties())
