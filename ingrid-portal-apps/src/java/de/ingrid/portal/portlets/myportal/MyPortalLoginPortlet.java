@@ -250,7 +250,11 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                     session.removeAttribute(LoginConstants.DESTINATION);
 
                 if (frm.getInput(LoginConstants.USERNAME) != null) {
-                    user = this.userManager.getUser(frm.getInput(LoginConstants.USERNAME));
+                    try {
+                        user = this.userManager.getUser(frm.getInput(LoginConstants.USERNAME));
+                    } catch (Exception e) {
+                        log.error("Error on login: ", e);
+                    }
                     session.setAttribute(LoginConstants.USERNAME, frm.getInput(LoginConstants.USERNAME));
                 } else {
                     session.removeAttribute(LoginConstants.USERNAME);
@@ -268,21 +272,21 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
                         String userConfirmId = user.getInfoMap().get("user.custom.ingrid.user.confirmid");
                         String userChangeConfirmId = Utils.getMD5Hash(userName.concat(userEmail).concat(userConfirmId));
                         response.sendRedirect(response.encodeURL(((RequestContext) request
-                                .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
-                                + "/portal/service-myportal.psml") + "?"
-                                + PARAM_USER_CHANGE_ID  + "=" + userChangeConfirmId + "&" 
-                                + PARAM_USER_EMAIL + "=" + userEmail);
-                    } else {
-                        // signalize that the user is about to log in
-                        // see MyPortalOverviewPortlet::doView()
-                        session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
-                        response.sendRedirect(response.encodeURL(((RequestContext) request
-                                .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
-                                + "/login/redirector"));
+                            .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
+                            + "/portal/service-myportal.psml") + "?"
+                            + PARAM_USER_CHANGE_ID  + "=" + userChangeConfirmId + "&" 
+                            + PARAM_USER_EMAIL + "=" + userEmail);
+                        return;
                     }
                 }
+                // signalize that the user is about to log in
+                // see MyPortalOverviewPortlet::doView()
+                session.setAttribute(Settings.SESSION_LOGIN_STARTED, "1");
+                response.sendRedirect(response.encodeURL(((RequestContext) request
+                    .getAttribute(RequestContext.REQUEST_PORTALENV)).getRequest().getContextPath()
+                    + "/login/redirector"));
             } catch (Exception e) {
-                // TODO: handle exception
+                log.error("Error on login: ", e);
             }
         } else if (cmd != null && cmd.equals("doCreateProfile") && isLoggedInExternally) {
             if (log.isDebugEnabled()) {
