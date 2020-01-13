@@ -737,6 +737,13 @@ footer hr {
 .nested-group .accordion-item:last-child > :last-child {
     border-radius: 0 0 12px 12px;
 }
+.nested-group .accordion-item.is-active:hover {
+  box-shadow: 0px 2px 15px #c6cfe2;
+  border-radius: 12px 12px 12px 12px !important;
+}
+.nested-group .accordion-item .accordion-title:hover {
+  box-shadow: unset;
+}
 .nested-group .accordion-content {
   background: #F6F6F6
 }
