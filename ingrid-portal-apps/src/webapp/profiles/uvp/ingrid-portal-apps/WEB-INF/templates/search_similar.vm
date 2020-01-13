@@ -36,17 +36,23 @@
                                             </a>
                                             <div class="accordion-content" #if($similarNode.isOpen())aria-hidden="true" style="display:block"#end>
                                             #if($similarNode.getChildren().size() > 0)
-                                                #foreach($tokenNode in $similarNode.getChildren())
-                                                        <label class="field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
-                                                        #if($tokenNode.type == 4)
-                                                            <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
-                                                        #else
-                                                            <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
-                                                            <div class="control__indicator"></div>
-                                                            $tokenNode.name
+                                                <div class="form-element boxed">
+                                                    <div class="input-check">
+                                                        <div class="control-group">
+                                                        #foreach($tokenNode in $similarNode.getChildren())
+                                                            <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
+                                                            #if($tokenNode.type == 4)
+                                                                <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
+                                                            #else
+                                                                <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
+                                                                <div class="control__indicator"></div>
+                                                                $tokenNode.name
+                                                            #end
+                                                            </label>
                                                         #end
-                                                        </label>
-                                                #end
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             #else
                                                 <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
                                             #end
