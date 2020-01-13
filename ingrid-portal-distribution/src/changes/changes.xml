@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.3.0-SNAPSHOT" date="2019-xx-xx" description="Release 5.3.0">
+          <action type="add" dev="wemove" issue="1523">
+            Portal: Aktualisierung Portal Profil HMDK
+          </action>
           <action type="add" dev="wemove" issue="1593">
             Portal: Erstellung Portal Profil EBA
           </action>
