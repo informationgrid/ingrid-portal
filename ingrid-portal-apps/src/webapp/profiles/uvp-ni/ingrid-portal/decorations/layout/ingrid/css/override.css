@@ -745,12 +745,18 @@ header .logo a {
 .control--radio .control__indicator::after {
   background: #1D4B7B;
 }
+header .menu-tab-row .menu-tab {
+  display: none;
+}
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
     margin: 33px 0;
   }
   header .logo {
     height: 120px;
+  }
+  header .menu-tab-row .menu-tab {
+    display: inline-block;
   }
 }
 @media print, screen and (min-width: 48em) {
