@@ -235,7 +235,7 @@
 /* LARGE 1024px  */
 @include breakpoint(large) {
 
-  .header-menu-close { padding: 33px 14px 0 0; }
+  .header-menu-close { padding: 33px 14px 0 0 !important; }
   footer {
     margin-top: 4rem;
 
