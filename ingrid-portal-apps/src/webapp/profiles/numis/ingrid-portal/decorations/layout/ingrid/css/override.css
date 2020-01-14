@@ -1000,9 +1000,6 @@ header .menu-tab-row .menu-tab {
   display: none;
 }
 @media print, screen and (min-width: 35em) {
-  .header-menu-open button {
-    margin: 33px 0;
-  }
   header .logo {
     height: 120px;
   }
@@ -1014,6 +1011,7 @@ header .menu-tab-row .menu-tab {
   header .logo {
     width: 17.125em;
   }
+  .header-menu-close { padding: 28px 0px 0 0; }
   footer .footer .copyright span.icon:before {
     content: '\00a9';
     float: left;
@@ -1163,10 +1161,5 @@ header .menu-tab-row .menu-tab {
   }
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     padding: 64px 0 16px;
-  }
-}
-@media screen and (min-width: 1800px) {
-  .header-menu-close {
-    padding: 48px 12px 0 34px;
   }
 }
