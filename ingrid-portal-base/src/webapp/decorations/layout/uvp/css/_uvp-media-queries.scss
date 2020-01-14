@@ -25,6 +25,9 @@
       ~ .button { margin: 18px 0; }
     }
   }
+  .header-menu-close {
+    padding: 15px 0px 0 0;
+  }
 }
 
 /* SMALL 560px  */
@@ -53,7 +56,7 @@
     z-index: 1100;
   }
   .header-menu-close {
-    padding: 25px 8px 0 0;
+    padding: 15px 0px 0 0;
 
     button { padding: 14px 24px; }
   }
@@ -96,7 +99,7 @@
     }
   }
   
-  .header-menu-close { padding: 25px 12px 0 0; }
+  .header-menu-close { padding: 33px 14px 0 0; }
   .menu-main-links, .menu-sub-links { padding: 25px 12px 25px 38px; }
 
   .social-buttons {
@@ -232,6 +235,7 @@
 /* LARGE 1024px  */
 @include breakpoint(large) {
 
+  .header-menu-close { padding: 33px 14px 0 0; }
   footer {
     margin-top: 4rem;
 
