@@ -30,7 +30,7 @@ The following sections show typically configurations for some free virus scanner
         "virusscan":{\
             "impl":"de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator",\
             "properties":{\
-                "command":"\\\\path\\\\to\\\\sophos\\\\savscan -f -archive %FILE%",\
+                "command":"\\\\path\\\\to\\\\sophos\\\\savscan -f -all -archive -mime %FILE%",\
                 "virusPattern":"(?m)^>>> Virus '([^']+)' found in file (.+)$",\
                 "cleanPattern":"(?m)^No viruses were discovered.$"\
             }\
@@ -124,7 +124,7 @@ https://en.wikipedia.org/wiki/EICAR_test_file
 7. To scan a `<File>` call
 
    ```
-   docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/<File>
+   docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/<File>
    ```
 
 # Example scan reports 
@@ -134,7 +134,7 @@ https://en.wikipedia.org/wiki/EICAR_test_file
 ### Virus detected
 
 ```
-> docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/virus.bat
+> docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/virus.bat
 SAVScan virus detection utility
 Version 5.53.0 [Linux/AMD64]
 Virus data version 5.55, September 2018
@@ -161,7 +161,7 @@ End of Scan.
 ### No virus detected
 
 ```
-> docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/ok.txt
+> docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/ok.txt
 SAVScan virus detection utility
 Version 5.53.0 [Linux/AMD64]
 Virus data version 5.55, September 2018
@@ -184,7 +184,7 @@ End of Scan.
 ### File not existing
 
 ```
-> docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/not-existing.txt
+> docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/not-existing.txt
 SAVScan virus detection utility
 Version 5.53.0 [Linux/AMD64]
 Virus data version 5.55, September 2018

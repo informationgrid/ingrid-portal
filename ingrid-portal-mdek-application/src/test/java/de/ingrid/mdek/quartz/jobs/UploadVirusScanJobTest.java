@@ -81,7 +81,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     private static final Map<String, String> VIRUSSCAN_VALIDATOR_CONFIG_LOCAL = new HashMap<String, String>() {
         private static final long serialVersionUID = 1L;
     {
-        put("command", "savscan -f -archive %FILE%");
+        put("command", "savscan -f -all -archive -mime %FILE%");
         put("virusPattern", "(?m)^>>> Virus '([^']+)' found in file (.+)$");
         put("cleanPattern", "(?m)^No viruses were discovered.$");
     }};
