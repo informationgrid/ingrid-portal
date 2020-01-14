@@ -62,6 +62,9 @@
           <action type="update" dev="wemove" issue="1562">
             UVP: Rewrite statistic using HQL to improve speed.
           </action>
+          <action type="fix" dev="wemove" issue="2466">
+            mCLOUD: Fix upload under wrong UUID
+          </action>
         </release>
 
         <release version="5.2.0" date="2019-10-22" description="Release 5.2.0">

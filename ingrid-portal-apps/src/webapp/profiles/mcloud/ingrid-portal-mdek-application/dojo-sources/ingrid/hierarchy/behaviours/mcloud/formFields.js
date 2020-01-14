@@ -460,8 +460,6 @@ define(["dojo/_base/declare",
             var table = registry.byId(tableId);
 
             if (table) {
-                // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
-                var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_")+"/"+currentUdk.uuid;
 
                 // create uploader instance
                 var uploader = new UploadWidget({
@@ -600,6 +598,9 @@ define(["dojo/_base/declare",
                         cursor: "pointer"
                     },
                     onclick: lang.hitch(this, function() {
+                        // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
+                        var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_") + "/" + currentUdk.uuid;
+
                         var files = getFiles(this.phases, true);
                         uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
                             handleUploads(uploads, basePath);
