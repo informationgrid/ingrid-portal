@@ -249,7 +249,7 @@ thead {
 }
 
 .footer__logo {
-  width: unset;
+  width: auto;
   fill: #1b5768;
 }
 
