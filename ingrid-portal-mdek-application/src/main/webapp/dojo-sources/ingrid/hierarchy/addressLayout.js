@@ -319,7 +319,9 @@ define([
             UtilCatalog.getOverrideBehavioursDef().then(function(data) {
                 // mark behaviours with override values
                 array.forEach(data, function(item) {
-                    behaviour[item.id].override = item.active;
+                    if (behaviour[item.id]) {
+                        behaviour[item.id].override = item.active;
+                    }
                 });
                 for (var behave in behaviour) {
                     // check if behaviour is defined
