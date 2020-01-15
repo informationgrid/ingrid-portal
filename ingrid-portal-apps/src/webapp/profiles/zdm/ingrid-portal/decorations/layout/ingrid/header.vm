@@ -19,7 +19,7 @@
             #end
         #end
         -->
-        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
+        <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
         <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
         <meta http-equiv="Content-style-type" content="text/css" />   
@@ -36,10 +36,10 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="stylesheet" href="#GetPageResource('css/google/robotocondensed/v13/css/fonts.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
-        <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
@@ -54,19 +54,19 @@
         #* our decorator macros, see ./decorator-macros.vm *#
         #decoratorIncludeJavaScriptForHead()
         <!-- Global scripts -->
-        <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
-        <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
-        <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
         <!-- Pickadate -->
-        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
-        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
-        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
         #set($lang = $renderRequest.Locale.getLanguage())
         #if($lang && $lang != "en")
-            <script src='#GetPageResource("scripts/pickadate/lib/translations/${lang}.js")'></script>
+            <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/${lang}.js"></script>
         #end
         <!-- zxcvbn -->
-        <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
         <!-- ZDM -->
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
