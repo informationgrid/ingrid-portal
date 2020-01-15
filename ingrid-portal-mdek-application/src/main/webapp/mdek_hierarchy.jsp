@@ -445,7 +445,7 @@
                                 <span id="uiElement5095" class="outer optional">
                                     <div>
                                         <span class="label">
-                                            <label for="spatialScope" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5066);" >
+                                            <label for="spatialScope" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5067);" >
                                                 <fmt:message key="ui.obj.spatial.scope" />
                                             </label>
                                         </span>

@@ -1,6 +1,6 @@
 ---
 # ID des GUI Elements
-guid: 5066
+guid: 5067
 # title, used as window title
 title: INSPIRE - Räumlicher Anwendungsbereich
 ---
