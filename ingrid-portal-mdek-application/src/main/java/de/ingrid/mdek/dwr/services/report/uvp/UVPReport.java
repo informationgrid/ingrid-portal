@@ -91,7 +91,7 @@ public class UVPReport {
         ArrayList<Map<String, Long>> list = new ArrayList<>();
 
         String csv = gzipFileToString(fileTransfer.getInputStream());
-        String[] lines = csv.split("\r\n");
+        String[] lines = splitByNewline(csv);
         for (int i = 1; i < lines.length; i++) {
             String[] dateLine = lines[i].split(";");
             Map<String, Long> result = new HashMap<>();
@@ -135,7 +135,7 @@ public class UVPReport {
     private Map<String, Object> getMapFromCSV(FileTransfer fileTransfer) throws IOException {
         Map<String, Object> result = new HashMap<>();
         String csv = gzipFileToString(fileTransfer.getInputStream());
-        String[] lines = csv.split("\r\n");
+        String[] lines = splitByNewline(csv);
         for (int i = 1; i < lines.length; i++) {
             String[] catIdAndCount = lines[i].split(";");
             result.put(catIdAndCount[0], Integer.valueOf(catIdAndCount[1]));
@@ -143,9 +143,17 @@ public class UVPReport {
         return result;
     }
 
+    private String[] splitByNewline(String text) {
+        if (text.contains("\r\n")) {
+            return text.split("\r\n");
+        } else {
+            return text.split("\n");
+        }
+    }
+
     private Integer getCountFromCSV(FileTransfer fileTransfer) throws IOException {
         String csv = gzipFileToString(fileTransfer.getInputStream());
-        String[] lines = csv.split("\r\n");
+        String[] lines = splitByNewline(csv);
         if (lines.length > 1) {
             String[] catIdAndCount = lines[1].split(";");
             return Integer.parseInt(catIdAndCount[1]);
