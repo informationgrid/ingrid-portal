@@ -1,80 +1,104 @@
-#if ($formType == 'edit')
+#if ($formType == 'edit' && !$isPasswordUpdate)
     <h2>$MESSAGES.getString('account.edit.profile.edit.from') #getFieldValue('firstname') #getFieldValue('lastname')</h2>
 #end
 #displayFormError()
-<div class="form-element">
-    <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation')):</label>
-</div>
- <div class="form-element">
-    <p>
-        <select name="salutation" id="salutation" size="1" class="select2" aria-hidden="true">
-            <option value="0" #getSelectedFlag('salutation' '0')>---</option>
-            <option value="1" #getSelectedFlag('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
-            <option value="2" #getSelectedFlag('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
-            <option value="3" #getSelectedFlag('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
-            <option value="4" #getSelectedFlag('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
-        </select>
-    </p>
-</div>
-<div class="form-element">
-    <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*:</label>
-</div>
-<div class="form-element">
-    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
-    #addErrorFormMessage('firstname')
-</div>
-<div class="form-element">
-    <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*:</label>
-</div>
-<div class="form-element">
-    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
-    #addErrorFormMessage('lastname')
-</div>
-<div class="form-element">
-    <label for="email">$MESSAGES.getString('account.edit.label.email')*:</label>
-</div>
-<div class="form-element">
-    <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
-    #addErrorFormMessage('email')
-</div>
-#if ($formType == 'edit')
-	<div class="form-element">
-        <label for="login">$MESSAGES.getString('account.edit.label.password_old')*:</label>
+#if(!$isPasswordUpdate)
+    <div class="form-element">
+        <label for="salutation">#displayFieldLabel('salutation' $MESSAGES.getString('account.edit.label.salutation')):</label>
     </div>
     <div class="form-element">
-        <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
+        <p>
+            <select name="salutation" id="salutation" size="1" class="select2" aria-hidden="true">
+                <option value="0" #getSelectedFlag('salutation' '0')>---</option>
+                <option value="1" #getSelectedFlag('salutation' '1')>$MESSAGES.getString('account.edit.salutation.option1')</option>
+                <option value="2" #getSelectedFlag('salutation' '2')>$MESSAGES.getString('account.edit.salutation.option2')</option>
+                <option value="3" #getSelectedFlag('salutation' '3')>$MESSAGES.getString('account.edit.salutation.option3')</option>
+                <option value="4" #getSelectedFlag('salutation' '4')>$MESSAGES.getString('account.edit.salutation.option4')</option>
+            </select>
+        </p>
+    </div>
+    <div class="form-element">
+        <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*:</label>
+    </div>
+    <div class="form-element">
+        #addErrorFormMessage('firstname')
+        <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
+    </div>
+    <div class="form-element">
+        <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*:</label>
+    </div>
+    <div class="form-element">
+        #addErrorFormMessage('lastname')
+        <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
+    </div>
+    <div class="form-element">
+        <label for="email">$MESSAGES.getString('account.edit.label.email')*:</label>
+    </div>
+    <div class="form-element">
+        #addErrorFormMessage('email')
+        <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
+    </div>
+#end
+#if ($formType == 'edit')
+    #if($isPasswordUpdate)
+        #if($userName)
+        <div class="form-element">
+            <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="login" name="login" value="$userName" disabled/>
+        </div>
+        #end
+    #end
+    <div class="form-element">
+        <label for="password_old">$MESSAGES.getString('account.edit.label.password_old')*:</label>
+    </div>
+    <div class="form-element">
         #addErrorFormMessage('password_old')
+        <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old')/>
     </div>
     <hr />
     <div class="form-element">
-        <label for="password">$MESSAGES.getString('account.edit.label.password_new')*:</label>
+        <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')*:</label>
     </div>
     <div class="form-element">
+        #addErrorFormMessage('password_new')
         <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
         <b><small class="media__obj--right" id="password-strength-text"></small></b>
         <meter max="4" id="password-strength-meter" name="password-strength-meter"></meter>
-        #addErrorFormMessage('password_new')
     </div>
     <div class="form-element">
         <label for="password_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>
     </div>
     <div class="form-element">
-        <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
         #addErrorFormMessage('password_new_confirm')
+        <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
     </div>
 #elseif($formType == 'create')
-    <div class="form-element">
-        <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
-    </div>
-    <div class="form-element">
-        <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
-        #addErrorFormMessage('login', $loginLength)
-    </div>
+    #if(!$isPasswordUpdate)
+        <div class="form-element">
+            <label for="login">$MESSAGES.getString('account.create.label.username')*:</label>
+        </div>
+        <div class="form-element">
+            #addErrorFormMessage('login', $loginLength)
+            <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
+        </div>
+    #else
+        #if($userName)
+        <div class="form-element">
+            <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="login" name="login" value="$userName" disabled/>
+        </div>
+        #end
+    #end
     <hr />
     <div class="form-element">
         <label for="password">$MESSAGES.getString('account.create.label.password')*:</label>
     </div>
     <div class="form-element">
+        #addErrorFormMessage('password')
         <input type="password" id="password" name="password" value="#getFieldValue('password')" #addErrorFormClass('password') onchange="checkPassword(document.getElementById('password').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
         <b><small class="media__obj--right" id="password-strength-text"></small></b>
         <meter max="4" id="password-strength-meter">
@@ -82,36 +106,37 @@
               <span style="width: 0.0%;">Meterfallback</span>
           </div>
         </meter>
-        #addErrorFormMessage('password')
     </div>
     <div class="form-element">
         <label for="password_confirm">$MESSAGES.getString('account.create.label.password_confirm')*:</label>
     </div>
     <div class="form-element">
-        <input type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" #addErrorFormClass('password_confirm')/>
         #addErrorFormMessage('password_confirm')
+        <input type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" #addErrorFormClass('password_confirm')/>
     </div>
 #end
-<hr />
-<h4>$MESSAGES.getString('account.edit.address.information')</h4>
-<div class="form-element">
-    <label for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street')):</label>
-</div>
-<div class="form-element">
-    <input type="text" id="street" name="street" value="#getFieldValue('street')" />
-</div>
-<div class="form-element">
-    <label for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode')):</label>
-</div>
-<div class="form-element">
-    <input type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
-</div>
-<div class="form-element">
-    <label for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city')):</label>
-</div>
-<div class="form-element">
-    <input type="text" id="city" name="city" value="#getFieldValue('city')" />
-</div>
+#if(!$isPasswordUpdate)
+    <hr />
+    <h4>$MESSAGES.getString('account.edit.address.information')</h4>
+    <div class="form-element">
+        <label for="street">#displayFieldLabel('street' $MESSAGES.getString('account.edit.label.street')):</label>
+    </div>
+    <div class="form-element">
+        <input type="text" id="street" name="street" value="#getFieldValue('street')" />
+    </div>
+    <div class="form-element">
+        <label for="postalcode">#displayFieldLabel('postalcode' $MESSAGES.getString('account.edit.label.postalcode')):</label>
+    </div>
+    <div class="form-element">
+        <input type="text" id="postalcode" name="postalcode" value="#getFieldValue('postalcode')" />
+    </div>
+    <div class="form-element">
+        <label for="city">#displayFieldLabel('city' $MESSAGES.getString('account.edit.label.city')):</label>
+    </div>
+    <div class="form-element">
+        <input type="text" id="city" name="city" value="#getFieldValue('city')" />
+    </div>
+#end
 <hr />
 
 #parse ('/WEB-INF/templates/global/include_passwort_meter.vm')

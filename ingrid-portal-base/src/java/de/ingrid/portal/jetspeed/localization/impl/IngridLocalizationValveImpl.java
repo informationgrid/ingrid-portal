@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -63,7 +63,13 @@ public class IngridLocalizationValveImpl extends AbstractValve implements Locali
     public void invoke(RequestContext request, ValveContext context) throws PipelineException {
 
         try {
-            String language = request.getRequestParameter(INGRID_LOCALE_REQUEST_KEY);
+            // Check if jvm properties is set for lang
+            String language = System.getProperty("lang");
+            String paramlanguage = request.getRequestParameter(INGRID_LOCALE_REQUEST_KEY);
+            
+            if(paramlanguage != null) {
+                language = paramlanguage;
+            }
             
             if (language != null && language.length() > 0) {
             	

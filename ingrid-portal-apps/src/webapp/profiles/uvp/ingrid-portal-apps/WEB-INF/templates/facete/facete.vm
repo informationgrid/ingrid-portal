@@ -2,10 +2,10 @@
 #set ($rankedHitslenght = $rankedResultList.get("length"))
 
 #if($rankedHitslenght > 0)
-    <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="5rmu1i-e">
+    <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
         <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
-            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="imwclr-accordion" role="tab" id="imwclr-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
-            <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="brgaav-accordion-label" aria-hidden="true" id="brgaav-accordion">
+            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="facet-accordion" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
+            <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
                 <div class="boxes">
                     #renderFacetCategory($facetConfig)
                 </div>
@@ -192,19 +192,15 @@
 #end
 
 #macro (renderTree $treeFacet $treeParentId)
-    <div class="js-accordion-multi">
-        #set ($action = $renderResponse.createActionURL())
-        $action.setParameter("$treeParentId", "$treeFacet.getId()")
-        <div class="js-accordion-toggle sidebar-filter-subheader is-active" onclick="location.href='$action'">
-        #set ($action = $renderResponse.createActionURL())
-            <svg class="sidebar-subheader-icon icon">
-                <use xlink:href="#select-arrow">
-            </svg>
-            $MESSAGES.getString("$treeFacet.getName()")
-            <strong>($treeFacet.getFacetValue())</strong>
-        </div>
-    </div>
-    <div id="$treeFacet.getId()" class="sidebar-filter-content">
+    #set ($action = $renderResponse.createActionURL())
+    $action.setParameter("$treeParentId", "$treeFacet.getId()")
+    <a class="icon" href="$action">
+    #set ($action = $renderResponse.createActionURL())
+        <span class="ic-ic-cross"></span>
+        <span class="text">$MESSAGES.getString("$treeFacet.getName()")</span>
+        <span class="nr-results">($treeFacet.getFacetValue())</span>
+    </a>
+    <div class="boxes">
     #set($isSelectedTree = false)
     #foreach ($treeSubFacet in $treeFacet.getFacets())
         #if($treeSubFacet.isSelect())
@@ -213,7 +209,6 @@
     #end
     
     #foreach ($treeSubFacet in $treeFacet.getFacets())
-        <ul>
         #if($treeSubFacet.getFacetValue() && !$treeSubFacet.isCategoryOnly())
             #set ($action = $renderResponse.createActionURL())
             $action.setParameter("$treeFacet.getId()", "$treeSubFacet.getId()")
@@ -222,18 +217,8 @@
             #else
                #set ($name = $MESSAGES.getString("$treeSubFacet.getName()"))
             #end
-            <li>
-                <svg class="icon sidebar-filter-content-icon">
-                #if($treeSubFacet.isSelect())
-                    <use xlink:href="#cross">
-                #else
-                    <use xlink:href="#select-arrow"/>
-                #end
-                </svg>
-                <a href="$action">$name <strong>($treeSubFacet.getFacetValue())</strong></a>
-            </li>
+            #renderFaceteSelectedAttributeNumber($action $treeSubFacet $name $treeSubFacet.getFacetValue() $treeSubFacet.isSelect())
         #end
-        </ul>
     #end
     </div>
 #end
@@ -246,7 +231,7 @@
     <div class="form-element boxed">
         <div class="input-check">
             <div class="control-group">
-                <label class="control control--checkbox" for="facet-$facet.getId()">
+                <label class="control control--radio" for="facet-$facet.getId()">
                     #set ($hasShortName = false)
                     #if($facet.getShortName())
                       #set ($hasShortName = true)
@@ -256,7 +241,8 @@
                       #set ($hasMobileName = true)
                     #end
                     <input id="facet-$facet.getId()" name="" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
-                    <div class="control__indicator"></div>$MESSAGES.getString("$facet.getName()")</span>
+                    <div class="control__indicator"></div>
+                    $MESSAGES.getString("$facet.getName()")
                     <span class="nr-results">
                     #if($number)
                         ($number)
@@ -333,25 +319,17 @@
 #end
 
 #macro(renderCheckLink $doAction $title $onclick)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
-                <svg class="icon link__icon icon-xs"><use xlink:href="#check"/></svg>
-                $title
-            </a>
-        </small>
-    </p>
+    <a href=#if($doAction)"$doAction" #else "#" #end class="icon button-up" #if($onclick)onclick="$onclick" #end>
+        <span class="ic-ic-check"></span>
+        $title
+    </a>
 #end
 
 #macro(renderCrossLink $doAction $title $onclick)
-    <p class="bx-top-xs bx-bot-0 tx-right">
-        <small>
-            <a href=#if($doAction)"$doAction" #else "#" #end class="link" #if($onclick)onclick="$onclick" #end>
-                <svg class="icon link__icon icon-xs"><use xlink:href="#cross"/></svg>
-                $title
-            </a>
-        </small>
-    </p>
+    <a href=#if($doAction)"$doAction" #else "#" #end class="icon button-up" #if($onclick)onclick="$onclick" #end>
+        <span class="ic-ic-cross"></span>
+        $title
+    </a>
 #end
 
 #macro(renderSubfacetWildcardContent $node)

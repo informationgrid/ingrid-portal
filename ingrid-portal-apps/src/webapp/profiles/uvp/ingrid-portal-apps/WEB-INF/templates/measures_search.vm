@@ -1,0 +1,53 @@
+<style>
+  #iframe_measure { 
+    height: 100%;
+    width: 100%;
+    border: 0;
+  }
+  .embed-container {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    top: 80px;
+  }
+  
+  @media print, screen and (min-width: 35em) {
+    .embed-container {
+      top: 120px;
+    }
+  }
+</style>
+
+<div class="embed-container">
+  <iframe id="iframe_measure" allowfullscreen></iframe>
+</div>
+
+<script>
+  var buffer = 0; //scroll bar buffer
+  var iframe = document.getElementById('iframe_measure');
+  var urlParams = location.hash;
+  // define the URL for the elastic search requests
+  var elasticSearchUrl = 'https://numis.niedersachsen.de/elastic-measure/';
+
+  var bgTileLayerUrl = '$leafletBgLayerWMTS';
+  var bgTileLayerAttribution = '$leafletBgLayerAttribution';
+
+  // exclude networks which shall not be shown
+  // var excludeNetworks = ['luen_new'];
+  
+  // define initial network on init
+  var initialNetworks = ['luen_new'];
+
+  // Add iFrame 'src'
+  iframe.src = '/ingrid-portal-apps/measures/index.html' + urlParams;
+
+  // Change params
+  function onParamChange(params) {
+    window.history.pushState('', '', '#' + params );
+  }
+  
+  $('iframe').load( function() {
+    $('iframe').contents().find("head")
+      .append($("<link rel='stylesheet' href='/decorations/layout/ingrid/css/measure.css'>"));
+  });
+</script>

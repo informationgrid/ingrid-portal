@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,26 +25,23 @@ package de.ingrid.mdek.dwr.services.report.uvp;
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.codelists.model.CodeListEntry;
 import de.ingrid.mdek.beans.GenericValueBean;
-import de.ingrid.mdek.beans.object.AdditionalFieldBean;
-import de.ingrid.mdek.beans.object.MdekDataBean;
-import de.ingrid.mdek.beans.query.ObjectSearchResultBean;
+import de.ingrid.mdek.dwr.services.QueryService;
 import de.ingrid.mdek.dwr.services.report.Report;
 import de.ingrid.mdek.dwr.services.report.ReportType;
 import de.ingrid.mdek.handler.CatalogRequestHandler;
-import de.ingrid.mdek.handler.ObjectRequestHandler;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.directwebremoting.io.FileTransfer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static de.ingrid.mdek.MdekUtils.IdcEntityOrderBy.DATE;
-import static de.ingrid.mdek.MdekUtils.IdcWorkEntitiesSelectionType.PORTAL_QUICKLIST_ALL_USERS_PUBLISHED;
+import java.util.zip.GZIPInputStream;
 
 public class UVPReport {
 
@@ -55,153 +52,207 @@ public class UVPReport {
     private static final String TOTAL_POSITIVE = "totalPositive";
     private static final String AVERAGE_DURATION = "averageDuration";
 
-    private final ObjectRequestHandler objectRequestHandler;
     private final CatalogRequestHandler catalogRequestHandler;
 
     private final long startDate;
     private final long endDate;
     private final CodeListService codelistService;
+    private final QueryService queryService;
 
-    public UVPReport(ObjectRequestHandler objectRequestHandler, CatalogRequestHandler catalogRequestHandler, CodeListService codelistService, Map parameter) {
-        this.objectRequestHandler = objectRequestHandler;
+    public UVPReport(CatalogRequestHandler catalogRequestHandler, QueryService queryService, CodeListService codelistService, Map parameter) {
         this.catalogRequestHandler = catalogRequestHandler;
+        this.queryService = queryService;
         this.codelistService = codelistService;
-        this.startDate = Long.valueOf((String) parameter.get("startDate"));
-        this.endDate = Long.valueOf((String) parameter.get("endDate"));
+        this.startDate = Long.parseLong((String) parameter.get("startDate"));
+        this.endDate = Long.parseLong((String) parameter.get("endDate"));
     }
 
-    public Report create() {
+    public Report create() throws IOException {
         Report report = new Report(ReportType.UVP);
         Map<String, Object> values = new HashMap<>();
 
-        // initialize report data
-        values.put(TOTAL_GROUPED, new HashMap<>());
-        values.put(TOTAL_NEGATIVE, 0);
-        values.put(TOTAL_POSITIVE, 0);
-
-        List<Long> durations = new ArrayList<>();
-
-        int pageSize = 10;
-        int page = 0;
-        while (true) {
-            ObjectSearchResultBean workObjects = objectRequestHandler.getWorkObjects(PORTAL_QUICKLIST_ALL_USERS_PUBLISHED, DATE, true, page*pageSize, pageSize);
-
-            if (workObjects.getResultList().isEmpty()) {
-                break;
-            }
-
-            for (MdekDataBean doc : workObjects.getResultList()) {
-                MdekDataBean docDetail = objectRequestHandler.getObjectDetail(doc.getUuid());
-
-                // check if document is not older than given date
-                if (datasetIsInDateRange(docDetail)) {
-                    // categorize datasets by their UVP number and count them
-                    handleTotalCountGroupedByUvpNumber(docDetail, values);
-
-                    // count all positive pre-examinations
-                    handlePositiveCount(docDetail, values);
-
-                    // count all negative pre-examinations
-                    handleNegativeCount(docDetail, values);
-
-                    // get duration of this dataset
-                    Long duration = getDuration(docDetail);
-                    if (duration != null) {
-                        durations.add(duration);
-                    }
-                }
-
-            }
-
-            page++;
-        }
-
-        mapUvpNumbers((Map) values.get(TOTAL_GROUPED));
-
-        Optional<Float> avgDuration = calculateAverageValue(durations);
-        values.put(AVERAGE_DURATION, avgDuration.orElse(null));
+        values.put(TOTAL_GROUPED, getTotalCountGroupedByUvpNumber());
+        values.put(TOTAL_NEGATIVE, getNegativCount());
+        values.put(TOTAL_POSITIVE, getPositiveCount());
+        values.put(AVERAGE_DURATION, getAverageDuration());
 
         report.setValues(values);
 
         return report;
     }
 
-    private Long getDuration(MdekDataBean docDetail) {
-        AdditionalFieldBean applicationReceipt = docDetail.getAdditionalFields().stream()
-                .filter(field -> "uvpApplicationReceipt".equals(field.getIdentifier()))
-                .findFirst().orElse(null);
+    private Float getAverageDuration() throws IOException {
+        FileTransfer fileTransfer = queryService.queryHQLToCSV(getAverageDurationQuery());
+        List<Map<String, Long>> dateList = getDatesFromCSV(fileTransfer);
+        return calculateAverageDuration(dateList);
+    }
 
-        List<AdditionalFieldBean> publicationDates = docDetail.getAdditionalFields().stream()
-                .filter(field -> "UVPPhases".equals(field.getIdentifier()))
-                .flatMap(phases -> {
-                    if (phases.getTableRows() == null) return Stream.empty();
-                    return phases.getTableRows().stream()
-                            .filter(p -> "phase3".equals(p.get(0).getIdentifier()))
-                            .map(i -> i.get(0));
-                })
-                .flatMap(p1 -> p1.getTableRows().stream()
-                        .filter(f -> "approvalDate".equals(f.get(0).getIdentifier()))
-                        .map(i -> i.get(0)))
-                .sorted((a,b) -> {
-                    if (a == null) return 1;
-                    if (b == null) return -1;
-                    if (Long.valueOf(a.getValue()) < Long.valueOf(b.getValue())) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                })
-                .collect(Collectors.toList());
+    private List<Map<String, Long>> getDatesFromCSV(FileTransfer fileTransfer) throws IOException {
+        ArrayList<Map<String, Long>> list = new ArrayList<>();
 
-        if (!publicationDates.isEmpty() && applicationReceipt != null) {
-            Long applicationReceiptValue = Long.valueOf(applicationReceipt.getValue());
-            Long publicationDate = Long.valueOf(publicationDates.get(0).getValue());
-
-            return publicationDate - applicationReceiptValue;
+        String csv = gzipFileToString(fileTransfer.getInputStream());
+        String[] lines = splitByNewline(csv);
+        for (int i = 1; i < lines.length; i++) {
+            String[] dateLine = lines[i].split(";");
+            Map<String, Long> result = new HashMap<>();
+            result.put("start", Long.valueOf(dateLine[1]));
+            result.put("end", Long.valueOf(dateLine[2]));
+            list.add(result);
         }
+        return list;
+    }
 
+    private Float calculateAverageDuration(List<Map<String, Long>> dateList) {
+        return dateList.stream()
+                .map(item -> item.get("end") - item.get("start"))
+                .reduce(Long::sum)
+                .map(val -> (float) val / dateList.size()) //calculate average value
+                .map(val -> val / 1000 / 60 / 60 / 24)
+                .orElse(null);
+    }
+
+    private int getPositiveCount() throws IOException {
+        FileTransfer fileTransfer = queryService.queryHQLToCSV(getPositiveCountQuery());
+        Integer catIdAndCount = getCountFromCSV(fileTransfer);
+        if (catIdAndCount != null) return catIdAndCount;
+        return 0;
+    }
+
+    private int getNegativCount() throws IOException {
+        FileTransfer fileTransfer = queryService.queryHQLToCSV(getNegativCountQuery());
+        Integer catIdAndCount = getCountFromCSV(fileTransfer);
+        if (catIdAndCount != null) return catIdAndCount;
+        return 0;
+    }
+
+    private Map<String, Object> getTotalCountGroupedByUvpNumber() throws IOException {
+        FileTransfer fileTransfer = queryService.queryHQLToCSV(getCategoryQuery());
+        Map<String, Object> mapFromCSV = getMapFromCSV(fileTransfer);
+        mapUvpNumbers(mapFromCSV);
+        return mapFromCSV;
+    }
+
+    private Map<String, Object> getMapFromCSV(FileTransfer fileTransfer) throws IOException {
+        Map<String, Object> result = new HashMap<>();
+        String csv = gzipFileToString(fileTransfer.getInputStream());
+        String[] lines = splitByNewline(csv);
+        for (int i = 1; i < lines.length; i++) {
+            String[] catIdAndCount = lines[i].split(";");
+            result.put(catIdAndCount[0], Integer.valueOf(catIdAndCount[1]));
+        }
+        return result;
+    }
+
+    private String[] splitByNewline(String text) {
+        if (text.contains("\r\n")) {
+            return text.split("\r\n");
+        } else {
+            return text.split("\n");
+        }
+    }
+
+    private Integer getCountFromCSV(FileTransfer fileTransfer) throws IOException {
+        String csv = gzipFileToString(fileTransfer.getInputStream());
+        String[] lines = splitByNewline(csv);
+        if (lines.length > 1) {
+            String[] catIdAndCount = lines[1].split(";");
+            return Integer.parseInt(catIdAndCount[1]);
+        }
         return null;
     }
 
-    private Optional<Float> calculateAverageValue(List<Long> list) {
-        return list.stream()
-                .reduce(Long::sum)
-                .map(val -> (float)val / list.size()) //calculate average value
-                .map(val -> val/1000/60/60/24); // convert to days
+    public static String gzipFileToString(InputStream inputStream) throws IOException {
+        try (GZIPInputStream gzipIn = new GZIPInputStream(inputStream)) {
+            String result = IOUtils.toString(gzipIn);
+            if (log.isDebugEnabled()) {
+                log.debug("STATISTIC: " + result);
+            }
+            return result;
+        }
     }
 
-    private boolean datasetIsInDateRange(MdekDataBean doc) {
+    /**
+     * Get Categories grouped by the total number in the given time interval.
+     * Since multiple decision phases are possible we need to specify the maximum date in the given interval, which we
+     * do here by sub querying.
+     */
+    private String getCategoryQuery() {
+        return "select CATEGORYITEMS.data as Category, count(CATEGORYITEMS.data)\n" +
+                "FROM ObjectNode oNode \n" +
+                "JOIN oNode.t01ObjectPublished PUB \n" +
+                "JOIN PUB.additionalFieldDatas CATEGORY \n" +
+                "JOIN CATEGORY.additionalFieldDatas CATEGORYITEMS\n" +
+                "JOIN PUB.additionalFieldDatas ADDITIONAL \n" +
+                "JOIN ADDITIONAL.additionalFieldDatas ADDITIONAL2  \n" +
+                "JOIN ADDITIONAL2.additionalFieldDatas DATE\n" +
+                "WHERE\n" +
+                "(PUB.objClass=10 OR PUB.objClass=13 OR PUB.objClass=14)\n" +
+                "AND ADDITIONAL.fieldKey ='UVPPhases'\n" +
+                "AND CATEGORY.fieldKey = 'uvpgCategory'\n" +
+                "AND ADDITIONAL2.fieldKey = 'phase3'\n" +
+                "AND DATE.fieldKey = 'approvalDate'\n" +
+                "AND DATE.data >= " + this.startDate + "\n" +
+                "AND DATE.data <= " + this.endDate + "\n" +
+                "AND DATE.data = (SELECT max(add3.data) FROM AdditionalFieldData add1 JOIN add1.additionalFieldDatas add2 JOIN add2.additionalFieldDatas add3 WHERE ADDITIONAL.id=add1.id AND add3.fieldKey = 'approvalDate' AND add3.data <= " + this.endDate + ")\n" +
+                "GROUP BY CATEGORYITEMS.data";
+    }
 
-        // collect all approval dates from repeatable phase 3 ("Entscheidung über die Zulassung")
-        List<AdditionalFieldBean> approvalDates = doc.getAdditionalFields().stream()
-                .filter(field -> "UVPPhases".equals(field.getIdentifier()))
-                .flatMap(phases -> {
-                    if (phases.getTableRows() == null) return Stream.empty();
-                    return phases.getTableRows().stream()
-                            .filter(p -> "phase3".equals(p.get(0).getIdentifier()))
-                            .map(i -> i.get(0));
-                })
-                .flatMap(p3 -> {
-                    return p3.getTableRows().stream()
-                            .filter(f -> "approvalDate".equals(f.get(0).getIdentifier()))
-                            .map(i -> i.get(0));
-                })
-                .collect(Collectors.toList());
+    /**
+     * Get number of negativ documents in the given time interval.
+     */
+    private String getNegativCountQuery() {
+        return "select PUB.objName, count(distinct NEGATIV.id)\n" +
+                "FROM ObjectNode oNode \n" +
+                "JOIN oNode.t01ObjectPublished PUB \n" +
+                "JOIN PUB.additionalFieldDatas NEGATIV\n" +
+                "WHERE\n" +
+                "(PUB.objClass=12)\n" +
+                "AND NEGATIV.fieldKey = 'uvpNegativeApprovalDate'\n" +
+                "AND NEGATIV.data >= " + this.startDate + "\n" +
+                "AND NEGATIV.data <= " + this.endDate;
+    }
 
-        // add approval date from negative examinations
-        doc.getAdditionalFields().stream()
-                .filter(field -> "uvpNegativeApprovalDate".equals(field.getIdentifier()))
-                .findFirst()
-                .ifPresent(approvalDates::add);
+    /**
+     * Get number of all documents which have "uvpPreExaminationAccomplished" set to true in the given time interval.
+     */
+    private String getPositiveCountQuery() {
+        return "select PUB.objName, count(distinct POSITIV.id)\n" +
+                "FROM ObjectNode oNode \n" +
+                "JOIN oNode.t01ObjectPublished PUB\n" +
+                "JOIN PUB.additionalFieldDatas ADDITIONAL\n" +
+                "JOIN PUB.additionalFieldDatas POSITIV\n" +
+                "JOIN ADDITIONAL.additionalFieldDatas PHASE\n" +
+                "JOIN PHASE.additionalFieldDatas DATE\n" +
+                "WHERE\n" +
+                "ADDITIONAL.fieldKey = 'UVPPhases'\n" +
+                "AND POSITIV.fieldKey = 'uvpPreExaminationAccomplished'\n" +
+                "AND POSITIV.data= 'true'\n" +
+                "AND PHASE.fieldKey = 'phase3'\n" +
+                "AND DATE.fieldKey = 'approvalDate'\n" +
+                "AND DATE.data >= " + this.startDate + "\n" +
+                "AND DATE.data <= " + this.endDate;
+    }
 
-        // check if one of the approval dates is in the given date range
-        for (AdditionalFieldBean approvalDate : approvalDates) {
-            Long approvalDateLong = Long.valueOf(approvalDate.getValue());
-            if (approvalDateLong >= startDate && approvalDateLong <= endDate) {
-                return true;
-            }
-        }
-        return false;
+    /**
+     * Get start and end date from a document in the given time interval. Use latest end date if there are more
+     * than one.
+     */
+    private String getAverageDurationQuery() {
+        return "select PUB.objName, ADDITIONALROOT.data, max(DATE.data)\n" +
+                "FROM ObjectNode oNode \n" +
+                "JOIN oNode.t01ObjectPublished PUB\n" +
+                "JOIN PUB.additionalFieldDatas ADDITIONAL\n" +
+                "JOIN PUB.additionalFieldDatas ADDITIONALROOT\n" +
+                "JOIN ADDITIONAL.additionalFieldDatas PHASE\n" +
+                "JOIN PHASE.additionalFieldDatas DATE\n" +
+                "WHERE\n" +
+                "ADDITIONAL.fieldKey = 'UVPPhases'\n" +
+                "AND ADDITIONALROOT.fieldKey = 'uvpApplicationReceipt'\n" +
+                "AND PHASE.fieldKey = 'phase3'\n" +
+                "AND DATE.fieldKey = 'approvalDate'\n" +
+                "AND DATE.data >= " + this.startDate + "\n" +
+                "AND DATE.data <= " + this.endDate + "\n" +
+                "GROUP BY PUB.id";
     }
 
     private void mapUvpNumbers(Map<String, Object> grouped) {
@@ -229,7 +280,7 @@ public class UVPReport {
                 }
             }
 
-            mappedNumberResults.put(keyValue, new Object[] { grouped.get(key), uvpCategory });
+            mappedNumberResults.put(keyValue, new Object[]{grouped.get(key), uvpCategory});
         }
         grouped.clear();
         grouped.putAll(mappedNumberResults);
@@ -238,7 +289,7 @@ public class UVPReport {
     @SuppressWarnings("unchecked")
     private String getUvpCodelistId(JSONParser jsonParser) {
 
-        List<GenericValueBean> behaviours = catalogRequestHandler.getSysGenericValues(new String[] { "BEHAVIOURS" });
+        List<GenericValueBean> behaviours = catalogRequestHandler.getSysGenericValues(new String[]{"BEHAVIOURS"});
         try {
             JSONArray json = (JSONArray) jsonParser.parse(behaviours.get(0).getValue());
             // get the defined category id or return default id (9000)
@@ -276,58 +327,4 @@ public class UVPReport {
         return null;
     }
 
-
-    private void handleTotalCountGroupedByUvpNumber(MdekDataBean doc, Map<String, Object> values) {
-
-        // only count for datasets of type "Zulassungsverfahren" and "Vorgelagerte Verfahren"
-        if (doc.getObjectClass() == 10 || doc.getObjectClass() == 13 || doc.getObjectClass() == 14) {
-
-            Map grouped = (Map) values.get(TOTAL_GROUPED);
-
-            // get all UVP numbers
-            AdditionalFieldBean uvpCategory = doc.getAdditionalFields().stream()
-                    .filter(addField -> "uvpgCategory".equals(addField.getIdentifier()))
-                    .findFirst()
-                    .orElse(null);
-
-            if (uvpCategory != null && uvpCategory.getTableRows() != null) {
-                List<AdditionalFieldBean> uvpNumvbers = new ArrayList<>();
-
-                for (List<AdditionalFieldBean> catTable : uvpCategory.getTableRows()) {
-                    catTable.stream()
-                            .filter(cat -> "categoryId".equals(cat.getIdentifier()))
-                            .findFirst()
-                            .ifPresent(uvpNumvbers::add);
-                }
-
-                for (AdditionalFieldBean uvpNumber : uvpNumvbers) {
-
-                    String categoryValue = uvpNumber.getValue();
-
-                    // count numbers according to their category
-                    if (grouped.containsKey(categoryValue)) {
-                        int num = (int) grouped.get(categoryValue);
-                        grouped.put(categoryValue, ++num);
-                    } else {
-                        grouped.put(categoryValue, 1);
-                    }
-                }
-            }
-        }
-    }
-
-    private void handlePositiveCount(MdekDataBean doc, Map<String, Object> values) {
-        // only count those who have checked "Vorprüfung durchgeführt"
-        doc.getAdditionalFields().stream()
-                .filter(field -> "uvpPreExaminationAccomplished".equals(field.getIdentifier()) && "true".equals(field.getValue()))
-                .findFirst()
-                .ifPresent(item -> values.put(TOTAL_POSITIVE, (int) values.get(TOTAL_POSITIVE) + 1));
-    }
-
-    private void handleNegativeCount(MdekDataBean doc, Map<String, Object> values) {
-        // only count those of type "negative Vorprüfung"
-        if (doc.getObjectClass() == 12) {
-            values.put(TOTAL_NEGATIVE, (int) values.get(TOTAL_NEGATIVE) + 1);
-        }
-    }
 }

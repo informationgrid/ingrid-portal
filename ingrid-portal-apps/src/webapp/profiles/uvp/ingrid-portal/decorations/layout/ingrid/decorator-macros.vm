@@ -69,14 +69,14 @@
             <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
                     <span class="ic-ic-karten"></span>
-                    <span>$tabName</span>
+                    <span class="text">$tabName</span>
                 </div>
             </a>
         #elseif($element.url == "/main-search.psml")
             <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
                     <span class="ic-ic-daten"></span>
-                    <span>$tabName</span>
+                    <span class="text">$tabName</span>
                 </div>
             </a>
         #end

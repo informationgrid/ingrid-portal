@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -113,9 +113,9 @@ define([
                 return result;
             },
 
-            readSysListData: function(listId) {
+            readSysListData: function(listId, language) {
                 var def = new Deferred();
-                var languageCode = UtilCatalog.getCatalogLanguage();
+                var languageCode = language || UtilCatalog.getCatalogLanguage();
                 CatalogService.getSysLists([listId], languageCode, {
                     callback: function(res) {
                         def.resolve(res[listId]);

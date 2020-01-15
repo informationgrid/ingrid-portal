@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -53,9 +53,7 @@ define([
         eventsNotConform: [],
         run : function() {
 
-            var changeEvent = null,
-                clickEvent = null,
-                self = this;
+            var self = this;
 
             this.specificationName = UtilSyslist.getSyslistEntryName(6005, 12);
             this.specificationNameInspireRichtlinie = UtilSyslist.getSyslistEntryName(6005, 13);
@@ -69,6 +67,11 @@ define([
                     // don't forget to hide the element
                     domClass.add("uiElement6001", "hidden");
                 }
+            });
+
+            // general validation
+            topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
+                extraInfoConformityPublishable(notPublishableIDs);
             });
         },
 
@@ -89,11 +92,6 @@ define([
                     if (isChecked) {
                         domClass.remove("uiElement6001", "hidden");
 
-                        // Make inspire themes required
-                        domClass.add("uiElement5064", "required");
-                        domClass.remove("uiElement5064", "optional");
-                        registry.byId("thesaurusInspire").reinitLastColumn();
-
                         // Also make conformity a required field
                         domClass.add("uiElementN024", "required");
 
@@ -108,19 +106,11 @@ define([
                     } else {
                         domClass.add("uiElement6001", "hidden");
 
-                        // Make inspire themes optional
-                        domClass.remove("uiElement5064", "required");
-                        domClass.add("uiElement5064", "optional");
-                        domClass.remove("uiElement5064", "show");
-
                         // Conformity is optional for non-INSPIRE fields
                         domClass.remove("uiElementN024", "required");
 
                         // make digital representation optional
                         domClass.remove( "uiElement5062", "required" );
-
-                        // make encoding schema optional
-                        domClass.remove( "uiElement1315", "required" );
 
                         // remove all conform/not conform events
                         utils.removeEvents(self.eventsConform);
@@ -223,9 +213,6 @@ define([
             // make digital representation required
             domClass.add( "uiElement5062", "required" );
 
-            // make encoding schema required
-            domClass.add( "uiElement1315", "required" );
-
             this.eventsConform.push(
                 // added conformity must not be modified or deleted
                 self.addEventSpecificationDelete(),
@@ -273,7 +260,7 @@ define([
                 // onPublish: Validierung entsprechend den Voreinstellungen:
                 //      Spezifikation - inhalt. Prüfung
                 //      Grad der Spezifikation - inhalt. Prüfung
-                //      Kodierungsschema - Prüfung, ob Eintrag erfolgt
+                //      Anwendungsschema - Prüfung, ob Eintrag erfolgt
                 topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
                     var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
                         .filter(function(item) { return item.specification === self.specificationName; });
@@ -300,9 +287,6 @@ define([
 
             // make digital representation optional
             domClass.remove( "uiElement5062", "required" );
-
-            // make encoding schema optional
-            domClass.remove( "uiElement1315", "required" );
 
             var self = this;
             var missingMessage = string.substitute(message.get("validation.specification.missing"), [self.specificationName]);
@@ -340,7 +324,7 @@ define([
                 // the specification must not be deleted
                 self.addEventSpecificationDelete(),
 
-                // INSPIRE-Thema-abhängige Voreinstellung des Kodierungsschemas entfernen
+                // INSPIRE-Thema-abhängige Voreinstellung des Anwendungsschema entfernen
                 // => via behaviour!
 
 

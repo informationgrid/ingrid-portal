@@ -1,0 +1,147 @@
+/*-
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+#toptools {
+  background-color: #485f88;
+  padding: 0.25em 0 0.25em 1.25em;color: #FFFFFF;
+  border-radius: 25px;
+}
+
+#toptools a {
+   color: #FFFFFF !important;
+   font-size: .85em;
+ }
+
+@media (max-width: 768px) {
+  [ga-background-selector] .ga-wmts_topplus_web_grau {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkggrau.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-wmts_osm {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-osmde.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-wmts_dop_rgb {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-doprgb.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector] .ga-wmts_topplus_web {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkgfarbig.png");
+    background-size: 38px 38px;
+  }
+  [ga-background-selector].ga-open .ga-bg-layer {
+    -webkit-transform: translate3d(0, -245px, 0);
+            transform: translate3d(0, -245px, 0);
+    -ms-transform: translateY(-245px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-voidLayer {
+    -webkit-transform: translate3d(0, -49px, 0);
+            transform: translate3d(0, -49px, 0);
+    -ms-transform: translateY(-49px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_topplus_web_grau {
+    -webkit-transform: translate3d(0, -245px, 0);
+            transform: translate3d(0, -245px, 0);
+    -ms-transform: translateY(-245px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_osm {
+    -webkit-transform: translate3d(0, -196px, 0);
+            transform: translate3d(0, -196px, 0);
+    -ms-transform: translateY(-196px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_dop_rgb {
+    -webkit-transform: translate3d(0, -147px, 0);
+            transform: translate3d(0, -147px, 0);
+    -ms-transform: translateY(-147px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_topplus_web {
+    -webkit-transform: translate3d(0, -98px, 0);
+            transform: translate3d(0, -98px, 0);
+    -ms-transform: translateY(-98px);
+    /* IE 9*/
+  }
+}
+@media (min-width: 769px) {
+  [ga-background-selector] .ga-wmts_topplus_web_grau {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkggrau.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-wmts_osm {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-osmde.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-wmts_dop_rgb {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-doprgb.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector] .ga-wmts_topplus_web {
+    background-image: url("/ingrid-webmap-client/frontend/prd/img/ga-bkgfarbig.png");
+    background-size: 90px 58px;
+  }
+  [ga-background-selector].ga-open .ga-bg-layer {
+    -webkit-transform: translate3d(-429px, 0, 0);
+            transform: translate3d(-429px, 0, 0);
+    -ms-transform: translateX(-429px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-voidLayer {
+    -webkit-transform: translate3d(-25px, 0, 0);
+            transform: translate3d(-25px, 0, 0);
+    -ms-transform: translateX(-25px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_topplus_web_grau {
+    -webkit-transform: translate3d(-439px, 0, 0);
+            transform: translate3d(-439px, 0, 0);
+    -ms-transform: translateX(-439px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_osm {
+    -webkit-transform: translate3d(-328px, 0, 0);
+            transform: translate3d(-328px, 0, 0);
+    -ms-transform: translateX(-328px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_dop_rgb {
+    -webkit-transform: translate3d(-227px, 0, 0);
+            transform: translate3d(-227px, 0, 0);
+    -ms-transform: translateX(-227px);
+    /* IE 9*/
+  }
+  [ga-background-selector].ga-open .ga-wmts_topplus_web {
+    -webkit-transform: translate3d(-126px, 0, 0);
+            transform: translate3d(-126px, 0, 0);
+    -ms-transform: translateX(-126px);
+    /* IE 9*/
+  }
+}
+
+.htmlpopup-container .htmlpopup-header {
+    background-color: #156570;
+    color: white;
+    font-size: 12pt;
+}

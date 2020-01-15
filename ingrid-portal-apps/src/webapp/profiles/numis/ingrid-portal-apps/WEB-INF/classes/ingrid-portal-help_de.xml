@@ -2,46 +2,6 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Hilfe zu NUMIS</header>
-        <section help-key="index">
-            <header>Hilfethemen</header>
-            <content>
-                <ul>
-                    <li>
-                        <a href="?hkey=about-1">Über NUMIS</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-1">Suche</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-measure-1">Messwerte</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-catalog-1">Kataloge</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=maps-1">Karten</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-chronicle-1">Chronik</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=ingrid-inform-1">NUMIS informiert</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=search-category-1">Kategorien</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=rss-news-1">Aktuelles</a>
-                    </li>
-                    <li>
-                        <a href="?hkey=myingrid-1">Mein NUMIS</a>
-                    </li>
-                </ul>
-            </content>
-        </section>
-    </chapter>
-    <chapter>
         <header>Über NUMIS</header>
         <section help-key="about-1">
             <header>Konzept und Aufgabe von NUMIS</header>
@@ -116,7 +76,7 @@
                    Mit Klick auf die Schaltfläche <b>Auswahl anwenden</b>
                    werden die Koordinaten der Suche hinzugefügt.</p>
             </content>
-        </section>                
+        </section>
         <section help-key="search-5">
             <header>Suche verfeinern</header>
             <content>
@@ -135,9 +95,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Experteneingabe</header>
+        <header display="false">Experteneingabe</header>
         <section help-key="search-expert-1">
-            <header display="false">Experteneingabe</header>
+            <header>Experteneingabe</header>
             <content>
                 <p>Alle Einstellungen der Such-Oberfläche und  
                     spezielle Einstellungen darüber hinaus lassen sich auch
@@ -337,7 +297,6 @@
                     <td>law</td>  
                     <td> Es wird nach Dokumenten aus dem Bereich 'Rechtsvorschriften' gesucht.</td>
                     </tr>
-                                                                    
                     
                      <tr>
                     <td>research</td>  
@@ -547,9 +506,9 @@
         </section>
     </chapter>
     <chapter>
-        <header>Suchergebnisliste</header>
+        <header  display="false">Suchergebnisliste</header>
         <section help-key="search-results-1">
-            <header display="false">Suchergebnisliste</header>
+            <header>Suchergebnisliste</header>
             <content>
                 <p>Nach dem Absenden einer Suchanfrage erhalten Sie die
                     Ergebnisliste. Sie gliedert sich in die Hauptergebnisliste

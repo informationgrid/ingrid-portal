@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -20,89 +20,37 @@
  * limitations under the Licence.
  * **************************************************#
  */
-.header {
-    background: #bfd3ff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d9ff), to(#b2caff));
-    background: -moz-linear-gradient(top, #c7d9ff, #b2caff);
-    background: -ms-linear-gradient(top, #c7d9ff, #b2caff);
-    background: -o-linear-gradient(top, #c7d9ff, #b2caff);
-    background: linear-gradient(to bottom, #c7d9ff, #b2caff);
+header {
+  border-image: linear-gradient(to left, #253276,#253276) 0 1 100%;
+  -webkit-border-image: linear-gradient(to left, #253276, #253276) 0 1 100%;
 }
-
-.nav-desktop {
-    background: #253276;
+header .logo img.hide-for-xsmall-only {
+  width: 1.525em;
 }
-
-a {
-    color: #003684;
+header .logo img.show-for-xsmall-only {
+  width: 1.25em;
 }
-
-.desktop__title p, h2 {
-    color: #253276;
+header .logo > span {
+  color: #253276;
 }
-
-.mobile__title, .mobile__title:hover {
-    color: #253276;
+h2 {
+  color: #253276 !important;
 }
-
-@media screen and (max-width: 939px) {
-  .header {
-    background: #bfd3ff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d9ff), to(#b2caff));
-    background: -moz-linear-gradient(top, #c7d9ff, #b2caff);
-    background: -ms-linear-gradient(top, #c7d9ff, #b2caff);
-    background: -o-linear-gradient(top, #c7d9ff, #b2caff);
-    background: linear-gradient(to bottom, #c7d9ff, #b2caff);
-    border-bottom: solid 1px #253276;
-  }
+a,a h2.header {
+  color: #253276 !important;
 }
-
-.nav-toggle {
-    background: #253276;
+a:hover, a h2.header:hover {
+  color: #000 !important;
 }
-
-.nav-toggle:after {
-    border-color: transparent transparent #bfd3ff transparent;
+footer .footer {
+  background: #253276;
 }
-
-.nav-toggle .icon {
-    fill: #FFF;
+footer .footer a {
+  color: #FFFFFF !important;
 }
-
-.nav-overlay {
-    background: #bfd3ff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#c7d9ff), to(#b2caff));
-    background: -moz-linear-gradient(top, #c7d9ff, #b2caff);
-    background: -ms-linear-gradient(top, #c7d9ff, #b2caff);
-    background: -o-linear-gradient(top, #c7d9ff, #b2caff);
-    background: linear-gradient(to bottom, #c7d9ff, #b2caff);
+footer .footer .copyright p {
+  color: #FFFFFF !important;
 }
-
-.nav__foot a {
-    color: #003684;
-}
-
-.footer {
-    color: #777;
-}
-
-.footer a {
-    color: #003684;
-}
-
-.desktop-logo {
-    height: 60px;
-    max-width: 100%;
-    padding: 0 10px 0 0;
-}
-
-.mobile__logo {
-    height: 40px !important;
-    padding: 0 10px 0 0;
-}
-
-@media screen and (min-width: 768px) {
-    .header__logo {
-        margin-left: 0;
-    }
+.teaser-data .header:hover, .teaser-data .arrow:hover {
+  color: #000 !important;
 }

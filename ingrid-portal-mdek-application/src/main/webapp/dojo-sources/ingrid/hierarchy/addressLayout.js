@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -319,7 +319,9 @@ define([
             UtilCatalog.getOverrideBehavioursDef().then(function(data) {
                 // mark behaviours with override values
                 array.forEach(data, function(item) {
-                    behaviour[item.id].override = item.active;
+                    if (behaviour[item.id]) {
+                        behaviour[item.id].override = item.active;
+                    }
                 });
                 for (var behave in behaviour) {
                     // check if behaviour is defined

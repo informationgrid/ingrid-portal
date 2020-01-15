@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -179,6 +179,12 @@ define([
 
         addNode: function(treeId, /*TreeNode*/parentNode, item) {
             var def = new Deferred();
+
+            if (!parentNode) {
+                def.resolve();
+                return def.promise;
+            }
+
             var tree = registry.byId( treeId );
 
             // make sure the parent node is expandable

@@ -10,8 +10,14 @@
       <div class="page-wrapper">
         <div class="row content-small">
           <div class="columns">
+            <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                <span class="ic-ic-arrow-left"></span>
+                <span class="text">Alle Suchergebnisse</span>
+            </a>
+            <br>
+            <br>
             <div class="helper text">
-                <!-- <span>TODO: Verfahren</span> -->
+                <span>$Codelists.getCodeListValue("8001", $TOOL.getValueFromXPath("./type"), $lang)</span>
             </div>
             <h1>
                 $TOOL.getValueFromXPath("./name")
@@ -282,6 +288,9 @@
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
                                 #renderTableToTree("Entscheidung" $nodelist "designDocs")
                         #end
+                            <h2 class="icon-dot icon-dot-small">
+                                <span class="ic-ic-bullet icon"></span>
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -362,15 +371,13 @@
         #end
     #end
     #if($entry.get('children'))
-        #foreach($subEntry in $entry.get('children'))
-        <li class="folder__content js-accordion-content">
-            <ul class="js-accordion-multi">
-                <li class="folder__item">
-                    #renderTreeFolder($subEntry)
-                </li>
-            </ul>
-        </li>
+       <div class="folder__content">
+       #foreach($subEntry in $entry.get('children'))
+            <div class="list-item">
+                #renderTreeFolder($subEntry)
+            </div>
         #end
+        </div>
     #end
 #end
 

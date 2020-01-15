@@ -17,7 +17,8 @@ Struktur:
         <name></name> ******************************* Facettierungsbaum-Name (lokalisiert per Portal-Resource-Key oder nicht lokalisiert als reiner Text)
         <id></id> *********************************** Facettierungsbaum-ID (dieser muss eindeutig sein und darf bei weiteren Facetten nicht existieren)
         <isOpen></isOpen>**************************** Facettierungsbaum wird bei true aufgeklappt dargestellt (default: false)
-        
+        <info></info>******************************** Facettierungsbaum zeigt im aufgeklapptem Zustand den eingetragenen Info-Text an
+        <infoResultSelect></infoResultSelect>******** Wird ein Element (Kind) unterhalb des Facettierungsbaums selektiert, so wird der eingetragene Info-Text über der Ergebnisliste im Portal angezeigt
         <facets> ************************************ Facettierungsbaum-Kinder (zur Auswahl)
             <facet> ********************************* Neuer Facettierungs-Kind (kann die Eigenschaft "sort" enthalten, siehe unten)
                 <name></name> *********************** Neuer Facettierungs-Kind-Name
@@ -126,90 +127,51 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
  -->
  
 <facets>
-    <!-- Bundesländer -->
-    <facet sort="SORT_BY_NAME" show-on-more-than="1">
-        <name>searchResult.facete.title.states</name>
-        <id>state</id>
+    <!-- Verfahrenstypen -->
+    <facet>
+        <name>searchResult.facete.title.procedures</name>
+        <id>procedure</id>
         <facets>
+        <!-- Zulassungsverfahren -->
             <facet>
-                <id>bw</id>
-                <name>Baden-Württemberg</name>
-                <query>partner:bw</query>
+                <name>Zulassungsverfahren</name>
+                <query>t01_object.obj_class:10</query>
+                <id>procedure_10</id>
+                <display>true</display>
             </facet>
+        <!-- Raumordnungsverfahren -->
             <facet>
-                <id>by</id>
-                <name>Bayern</name>
-                <query>partner:by</query>
+                <name>Raumordnungsverfahren</name>
+                <query>t01_object.obj_class:13</query>
+                <id>procedure_13</id>
+                <display>true</display>
             </facet>
+        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
             <facet>
-                <id>be</id>
-                <name>Berlin</name>
-                <query>partner:be</query>
+                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
+                <query>t01_object.obj_class:14</query>
+                <id>procedure_14</id>
             </facet>
+        <!-- Ausländische Vorhaben -->
             <facet>
-                <id>bb</id>
-                <name>Brandenburg</name>
-                <query>partner:bb</query>
+                <name>Ausländische Vorhaben</name>
+                <query>t01_object.obj_class:11</query>
+                <id>procedure_11</id>
+                <display>true</display>
             </facet>
+        <!-- Bauleitplanung -->
             <facet>
-                <id>hb</id>
-                <name>Bremen</name>
-                <query>partner:hb</query>
+                <name>Bauleitplanung</name>
+                <query>procedure:dev_plan</query>
+                <id>procedure_dev_plan</id>
+                <display>true</display>
             </facet>
+            <!-- Zulassungsverfahren -->
             <facet>
-                <id>hh</id>
-                <name>Hamburg</name>
-                <query>partner:hh</query>
-            </facet>
-            <facet>
-                <id>he</id>
-                <name>Hessen</name>
-                <query>partner:he</query>
-            </facet>
-            <facet>
-                <id>mv</id>
-                <name>Mecklenburg-Vorpommern</name>
-                <query>partner:mv</query>
-            </facet>
-            <facet>
-                <id>ni</id>
-                <name>Niedersachsen</name>
-                <query>partner:ni</query>
-            </facet>
-            <facet>
-                <id>nw</id>
-                <name>Nordrhein-Westfalen</name>
-                <query>partner:nw</query>
-            </facet>
-            <facet>
-                <id>rp</id>
-                <name>Rheinland-Pfalz</name>
-                <query>partner:rp</query>
-            </facet>
-            <facet>
-                <id>sl</id>
-                <name>Saarland</name>
-                <query>partner:sl</query>
-            </facet>
-            <facet>
-                <id>sn</id>
-                <name>Sachsen</name>
-                <query>partner:sn</query>
-            </facet>
-            <facet>
-                <id>st</id>
-                <name>Sachsen-Anhalt</name>
-                <query>partner:st</query>
-            </facet>
-            <facet>
-                <id>sh</id>
-                <name>Schleswig-Holstein</name>
-                <query>partner:sh</query>
-            </facet>
-            <facet>
-                <id>th</id>
-                <name>Thüringen</name>
-                <query>partner:th</query>
+                <name>Negative Vorprüfungen</name>
+                <query>t01_object.obj_class:12</query>
+                <id>procedure_12</id>
+                <display>true</display>
             </facet>
         </facets>
     </facet>
@@ -353,59 +315,11 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             </facet>
         </facets>
     </facet>
-    <!-- Verfahrenstypen -->
-    <facet>
-        <name>searchResult.facete.title.procedures</name>
-        <id>procedure</id>
-        <facets>
-        <!-- Zulassungsverfahren -->
-            <facet>
-                <name>Zulassungsverfahren</name>
-                <query>t01_object.obj_class:10</query>
-                <id>procedure_10</id>
-                <display>true</display>
-            </facet>
-        <!-- Raumordnungsverfahren -->
-            <facet>
-                <name>Raumordnungsverfahren</name>
-                <query>t01_object.obj_class:13</query>
-                <id>procedure_13</id>
-                <display>true</display>
-            </facet>
-        <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
-            <facet>
-                <name>Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht</name>
-                <query>t01_object.obj_class:14</query>
-                <id>procedure_14</id>
-            </facet>
-        <!-- Ausländische Vorhaben -->
-            <facet>
-                <name>Ausländische Vorhaben</name>
-                <query>t01_object.obj_class:11</query>
-                <id>procedure_11</id>
-                <display>true</display>
-            </facet>
-        <!-- Bauleitplanung -->
-            <facet>
-                <name>Bauleitplanung</name>
-                <query>procedure:dev_plan</query>
-                <id>procedure_dev_plan</id>
-                <display>true</display>
-            </facet>
-            <!-- Zulassungsverfahren -->
-            <facet>
-                <name>Negative Vorprüfungen</name>
-                <query>t01_object.obj_class:12</query>
-                <id>procedure_12</id>
-                <display>true</display>
-            </facet>
-        </facets>
-    </facet>
-
     <!-- Aktualität -->
     <facet>
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
+        <infoResultSelect>Bauleitpläne können im Filter "Aktualität" leider nicht berücksichtigt werden.</infoResultSelect>
         <facets>
             <!-- letzter Monat -->
             <facet>
@@ -413,7 +327,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime1</id>
                 <from>P1MT</from>
                 <to>PT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- letzte 3 Monate -->
             <facet>
@@ -421,7 +335,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime2</id>
                 <from>P3MT</from>
                 <to>P1M1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- letztes Jahr -->
             <facet>
@@ -429,7 +343,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime3</id>
                 <from>P1YT</from>
                 <to>P3M1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- letzte 5 Jahre -->
             <facet>
@@ -437,7 +351,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime4</id>
                 <from>P5YT</from>
                 <to>P1Y1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- Älter als 5 Jahre -->
             <facet>
@@ -445,7 +359,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime5</id>
                 <from></from>
                 <to>P5Y1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
         </facets>
     </facet>
@@ -467,7 +381,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-1"</query>
                 <id>energie</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-1</icon>
+                <icon>ic-UVPG-1</icon>
                 <display>true</display>
             </facet>
         <!-- Steine und Erden, Glas, Keramik, Baustoffe -->
@@ -476,7 +390,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-2"</query>
                 <id>baustoffe</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-2</icon>
+                <icon>ic-UVPG-2</icon>
                 <display>true</display>
             </facet>
         <!-- Stahl, Eisen und sonstige Metalle einschließlich Verarbeitung -->
@@ -485,7 +399,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-3"</query>
                 <id>verarbeitung</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-3</icon>
+                <icon>ic-UVPG-3</icon>
                 <display>true</display>
             </facet>
         <!-- Chemische Erzeugnisse, Arzneimittel, Mineralölraffination und Weiterverarbeitung -->
@@ -494,7 +408,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-4"</query>
                 <id>chemie</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-4</icon>
+                <icon>ic-UVPG-4</icon>
                 <display>true</display>
             </facet>
        <!-- Oberflächenbehandlung von Kunststoffen -->
@@ -503,7 +417,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-5"</query>
                 <id>kunststoff</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-5</icon>
+                <icon>ic-UVPG-5</icon>
                 <display>true</display>
             </facet>
         <!-- Holz, Zellstoff -->
@@ -512,7 +426,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-6"</query>
                 <id>holzzellstoff</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-6</icon>
+                <icon>ic-UVPG-6</icon>
                 <display>true</display>
             </facet>
         <!-- Nahrungs-, Genuss- und Futtermittel, landwirtschaftliche Erzeugnisse -->
@@ -521,7 +435,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-7"</query>
                 <id>erzeugnisse</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-7</icon>
+                <icon>ic-UVPG-7</icon>
                 <display>true</display>
             </facet>
         <!-- Verwertung und Beseitigung von Abfällen und sonstigen Stoffen -->
@@ -530,7 +444,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-8"</query>
                 <id>verwertungbeseitigungabfaellen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-8</icon>
+                <icon>ic-UVPG-8</icon>
                 <display>true</display>
             </facet>
         <!-- Lagerung von Stoffen und Gemischen -->
@@ -539,7 +453,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-9"</query>
                 <id>lagerungstoffengemischen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-9</icon>
+                <icon>ic-UVPG-9</icon>
                 <display>true</display>
             </facet>
         <!-- Sonstige Industrieanlagen -->
@@ -548,7 +462,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-10"</query>
                 <id>industrieanlagen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-10</icon>
+                <icon>ic-UVPG-10</icon>
                 <display>true</display>
             </facet>
         <!-- Kernenergie -->
@@ -557,7 +471,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-11"</query>
                 <id>kernenergie</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-11</icon>
+                <icon>ic-UVPG-11</icon>
                 <display>true</display>
             </facet>
         <!-- Abfalldeponien -->
@@ -566,7 +480,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-12"</query>
                 <id>abfalldeponien</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-12</icon>
+                <icon>ic-UVPG-12</icon>
                 <display>true</display>
             </facet>
         <!-- Wasserwirtschafltiche Vorhaben mit Benutzung oder Ausbau eines Gewässers -->
@@ -575,7 +489,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-13"</query>
                 <id>wasservorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-13</icon>
+                <icon>ic-UVPG-13</icon>
                 <display>true</display>
             </facet>
         <!-- Verkehrsvorhaben -->
@@ -584,7 +498,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-14"</query>
                 <id>verkehrsvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-14</icon>
+                <icon>ic-UVPG-14</icon>
                 <display>true</display>
             </facet>
         <!-- Bergbau und dauerhafte Speicherung von Kohlendioxid -->
@@ -593,7 +507,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-15"</query>
                 <id>bergbaukohlendioxid</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-15</icon>
+                <icon>ic-UVPG-15</icon>
                 <display>true</display>
             </facet>
         <!-- Flurbereinigung -->
@@ -602,7 +516,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-16"</query>
                 <id>flurbereinigung</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-16</icon>
+                <icon>ic-UVPG-16</icon>
                 <display>true</display>
             </facet>
         <!-- Forstliche und landwirtschaftliche Vorhaben -->
@@ -611,7 +525,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-17"</query>
                 <id>forstlandvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-17</icon>
+                <icon>ic-UVPG-17</icon>
                 <display>true</display>
             </facet>
         <!-- Bauvorhaben -->
@@ -620,7 +534,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-18"</query>
                 <id>bauvorhaben</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-18</icon>
+                <icon>ic-UVPG-18</icon>
                 <display>true</display>
             </facet>
         <!-- Leitungsanlagen und andere Anlagen -->
@@ -629,7 +543,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>uvp_category:"UVPG-19"</query>
                 <id>anlagen</id>
                 <parentId>type</parentId>
-                <icon>icon-UVPG-19</icon>
+                <icon>ic-UVPG-19</icon>
                 <display>true</display>
             </facet>
         </facets>
@@ -646,7 +560,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:10</query>
                 <parentId>procedure</parentId>
                 <id>procedure_10</id>
-                <shortcut>Z</shortcut>
+                <icon>ic-Z</icon>
                 <display>true</display>
             </facet>
         <!-- Raumordnungsverfahren -->
@@ -655,7 +569,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:13</query>
                 <parentId>procedure</parentId>
                 <id>procedure_13</id>
-                <shortcut>R</shortcut>
+                <icon>ic-R</icon>
                 <display>true</display>
             </facet>
         <!-- Linienbestimmung nach Bundesfernstraßengesetz oder Landesstraßenrecht -->
@@ -664,7 +578,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:14</query>
                 <parentId>procedure</parentId>
                 <id>procedure_14</id>
-                <shortcut>L</shortcut>
+                <icon>ic-L</icon>
                 <display>true</display>
             </facet>
         <!-- Ausländische Vorhaben -->
@@ -673,7 +587,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:11</query>
                 <parentId>procedure</parentId>
                 <id>procedure_11</id>
-                <shortcut>A</shortcut>
+                <icon>ic-A</icon>
                 <display>true</display>
             </facet>
         <!-- Bauleitplanung -->
@@ -681,7 +595,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Bauleitplanung</name>
                 <query>procedure:dev_plan</query>
                 <id>procedure_dev_plan</id>
-                <shortcut>B</shortcut>
+                <icon>ic-B</icon>
                 <display>true</display>
             </facet>
         <!-- Negative Vorprüfungen -->
@@ -690,7 +604,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>t01_object.obj_class:12</query>
                 <parentId>procedure</parentId>
                 <id>procedure_12</id>
-                <shortcut>N</shortcut>
+                <icon>ic-N</icon>
                 <display>true</display>
             </facet>
         </facets>

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -311,7 +311,6 @@ public class DetailPartPreparer {
             }
 
             // try to get the license source from other constraints (#1066)
-            String source = null;
             String url = null;
             String name = null;
             // also remember further otherConstraints may be used in BKG profile (#1194)
@@ -327,7 +326,6 @@ public class DetailPartPreparer {
                 boolean isJSON = false;
                 try {
                     IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
-                    source = (String) json.get("quelle");
                     url = (String) json.get("url");
                     name = (String) json.get("name");
                     isJSON = true;
@@ -377,9 +375,6 @@ public class DetailPartPreparer {
             }
 
             if (!result.contains(value)) {
-                if (source != null && !source.isEmpty()) {
-                    value += "<br>Quellenvermerk: " + source;
-                }
                 result.add(value);
             }
             

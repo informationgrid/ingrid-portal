@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,8 +25,9 @@ define([
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/bkg/general",
     "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField"
-], function(lang, behaviours, general, useConstraintsField, oldUseField) {
+    "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField",
+    "ingrid/hierarchy/behaviours/bkg/opendata"
+], function(lang, behaviours, general, useConstraintsField, oldUseField, openData) {
 
     return lang.mixin(behaviours, {
 
@@ -43,6 +44,11 @@ define([
         /**
          * 
          */
-        bkgOldUseConstraintsField: oldUseField
+        bkgOldUseConstraintsField: oldUseField,
+
+        /**
+         *
+         */
+        openData: openData
     });
 });

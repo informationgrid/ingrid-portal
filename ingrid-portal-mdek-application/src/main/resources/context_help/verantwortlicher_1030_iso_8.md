@@ -43,7 +43,7 @@ Domain: 8 (gmd:contact)
         </CI_Contact>
       </contactInfo>
       <role>
-        <CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
+        <CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="pointOfContact"/>
       </role>
     </CI_ResponsibleParty>
   </contact>

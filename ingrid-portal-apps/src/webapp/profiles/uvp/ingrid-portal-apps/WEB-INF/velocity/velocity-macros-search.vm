@@ -278,6 +278,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderSearchResultFacetSelectionInfoResult $entries $resourceMsgs)
+    #set ($hasInfo = false)
     #foreach($entry in $entries)
         #if($entry.isSelect() && $entry.getInfoResultSelect())
         <div class="caption">
@@ -286,7 +287,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 <span>$entry.getInfoResultSelect()</span>
             </div>
         </div>
+        #set ($hasInfo = true)
         #end
+    #end
+    #if(!$hasInfo)
+        #parse ('/WEB-INF/templates/search-result/parts/include_search_result_header_info.vm')
     #end
 #end
 
@@ -434,7 +439,8 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderSearchResultFacetSelectionItem $entry $action $title)
-    <a id="chk_fs_$entry.getId()" href="$action" class="button pill pill-del">
-        <span class="text">$title</span>
+    <a id="chk_fs_$entry.getId()" href="$action" class="button pill">
+        $title
+        <span class="ic-ic-cross"></span>
     </a>
 #end

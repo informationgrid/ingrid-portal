@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -100,6 +100,10 @@ public class VirusScanValidator implements Validator {
             }
             else if (!cleanPattern.matcher(result).matches()) {
                 log.error("Virus scan failed: "+result);
+            } else {
+                if (log.isDebugEnabled()) {
+                    log.debug("Scan result: " + result);
+                }
             }
         }
         catch (final CommandExecutionException e) {
@@ -123,6 +127,9 @@ public class VirusScanValidator implements Validator {
      */
     private String runScan(final Path file) throws CommandExecutionException {
         final String command = this.command.replace(PLACEHOLDER_FILE, file.toString());
+        if (log.isDebugEnabled()) {
+            log.debug("Run command: " + command);
+        }
         return scanner.execute(command);
     }
 }

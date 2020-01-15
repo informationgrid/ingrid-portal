@@ -14,13 +14,15 @@
         </div>
     </div>
 #else
-    <div class="box box--fill box--small">
-        <div class="box__content ob-container">
-            <p>$MESSAGES.getString('entry.text.login')</p>
+    <div class="columns search-filtered">
+        <div class="content-small">
+            <div class="box__content ob-container">
+                <p>$MESSAGES.getString('entry.text.login')</p>
+            </div>
         </div>
-    </div>
-    <div class="media__obj media__obj--right">
-        #renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "width:100%;" "Verweis" "" "btn btn--primary btn--medium" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
+        <div class="content-small">
+            #renderInputButtonOnClick("$MESSAGES.getString('entry.button.ige')" "" "Verweis" "" "btn btn--primary btn--medium" "javaScript:void(window.open('/ingrid-portal-mdek-application/start.jsp?lang=$language', '_erfassung'));")
+        </div>
     </div>
 #end
 <br/>
