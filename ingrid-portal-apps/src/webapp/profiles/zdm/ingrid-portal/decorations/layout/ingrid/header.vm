@@ -68,15 +68,15 @@
         <!-- zxcvbn -->
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
         <!-- ZDM -->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/medium.css?v=4" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/large.css?v=11" type="text/css">
-        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/css/gsb/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
-        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_iefix.css?v=1" type="text/css" /><![endif]-->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_print.css?v=3" type="text/css" media="print">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_preview.css?v=1" type="text/css">
-        <script type="text/javascript" src="/decorations/layout/ingrid/scripts/gsb/global.js?v=29"></script>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/libs.css?v=7" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/small.css?v=25" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/medium.css?v=4" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/large.css?v=11" type="text/css">
+        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/gsb/css/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_iefix.css?v=1" type="text/css" /><![endif]-->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_print.css?v=3" type="text/css" media="print">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_preview.css?v=1" type="text/css">
+        <script type="text/javascript" src="/decorations/layout/ingrid/gsb/scripts/global.js?v=29"></script>
     </head>
     <body class="gsb lang-de fixed js-on">
     
@@ -102,14 +102,14 @@
                       <li id="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html" title="Tideelbe">Ti&shy;de&shy;el&shy;be</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html" title="Nord-Ostsee-Kanal">Nord-Ost&shy;see-Ka&shy;nal</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html" title="Ostseek&uuml;ste">Ost&shy;see&shy;k&uuml;s&shy;te</a></li>
-                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/images/template/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
-                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/images/template/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
+                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="row mod">
                   <div class="large-3 small-6 logo columns">
-                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/images/template/logo.png" alt="WSVPageAltLink"></a></p>
+                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png" alt="WSVPageAltLink"></a></p>
                   </div>
                   <div class="right large-5 small-6 addlogo columns subheadline">
                     <p>

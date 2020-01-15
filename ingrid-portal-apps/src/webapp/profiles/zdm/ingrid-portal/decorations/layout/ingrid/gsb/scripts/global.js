@@ -47,8 +47,8 @@
     var image_url_gallery_supplement_back = '/SiteGlobals/Frontend/Images/icons/slideshow-gallery-supplement-left.png?__blob=normal';
     var image_url_gallery_supplement_back_g = '/SiteGlobals/Frontend/Images/icons/slideshow-gallery-supplement-left-inactive.png?__blob=normal';
     var image_url_map_marker = '/SiteGlobals/Frontend/Images/icons/map-marker.png?__blob=normal';
-    var image_url_wsv_logo = '/decorations/layout/ingrid/images/template/logo.png?__blob=normal';
-    var image_url_shrinkheader_wsv_logo = '/decorations/layout/ingrid/images/template/additionalLogoShrinkheader.jpg?__blob=normal';
+    var image_url_wsv_logo = '/decorations/layout/ingrid/gsb/icons/logo.png?__blob=normal';
+    var image_url_shrinkheader_wsv_logo = '/decorations/layout/ingrid/gsb/icons/additionalLogoShrinkheader.jpg?__blob=normal';
    /* Ende variables_IMG */
    /* Start custom.modernizr */
    /*! Modernizr 2.6.2 (Custom Build) | MIT & BSD
@@ -211,7 +211,7 @@ var mejs=mejs||{};mejs.version="2.15.1";mejs.meIndex=0;mejs.plugins={silverlight
  * @params
  *  - exports - CommonJS, window ..
  */
-(function(exports,undefined){if(typeof exports.zh==="undefined"){exports.zh={"Fullscreen":"全螢幕","Go Fullscreen":"全�?模�?","Turn off Fullscreen":"退出全�?模�?","Close":"關閉"};}}(mejs.i18n.locale.strings));
+(function(exports,undefined){if(typeof exports.zh==="undefined"){exports.zh={"Fullscreen":"全螢幕","Go Fullscreen":"全�?模�?","Turn off Fullscreen":"退出全�?模�?","Close":"關閉"};}}(mejs.i18n.locale.strings));
    /* Ende mediaelement */
    /* Start mediaelement_i18n_de */
    (function(exports,undefined){exports.de={"None":"Entfällt","Unmute":"Lautstärke einschalten","Fullscreen":"Vollbild","Download File":"Download der Datei","Mute Toggle":"Stummschalten","Play/Pause":"Abspielen/Pause","Captions/Subtitles":"Unterschriften/Untertitel","Download Video":"Video herunterladen","Turn off Fullscreen":"Vollbild abschalten","Go Fullscreen":"Vollbild einschalten","Close":"Schließen"};}(mejs.i18n.locale.strings));
