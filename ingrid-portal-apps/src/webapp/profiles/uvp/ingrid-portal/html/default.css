@@ -10,7 +10,7 @@ header .logo .show-for-medium, header .logo .show-for-medium-only, header .logo 
   line-height: 1.125;
 }
 header .logo img {
-  width: unset;
+  width: auto;
   padding-right: 12px;
 }
 header .logo > span {
