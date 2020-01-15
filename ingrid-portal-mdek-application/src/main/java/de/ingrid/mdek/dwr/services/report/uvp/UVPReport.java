@@ -185,7 +185,7 @@ public class UVPReport {
                 "AND DATE.fieldKey = 'approvalDate'\n" +
                 "AND DATE.data >= " + this.startDate + "\n" +
                 "AND DATE.data <= " + this.endDate + "\n" +
-                "AND DATE.data = (SELECT max(add3.data) FROM AdditionalFieldData add1 JOIN add1.additionalFieldDatas add2 JOIN add2.additionalFieldDatas add3 WHERE ADDITIONAL.id=add1.id AND add3.data <= " + this.endDate + ")\n" +
+                "AND DATE.data = (SELECT max(add3.data) FROM AdditionalFieldData add1 JOIN add1.additionalFieldDatas add2 JOIN add2.additionalFieldDatas add3 WHERE ADDITIONAL.id=add1.id AND add3.fieldKey = 'approvalDate' AND add3.data <= " + this.endDate + ")\n" +
                 "GROUP BY CATEGORYITEMS.data";
     }
 
