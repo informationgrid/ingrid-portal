@@ -102,8 +102,8 @@
                       <li id="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html" title="Tideelbe">Ti&shy;de&shy;el&shy;be</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html" title="Nord-Ostsee-Kanal">Nord-Ost&shy;see-Ka&shy;nal</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html" title="Ostseek&uuml;ste">Ost&shy;see&shy;k&uuml;s&shy;te</a></li>
-                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
-                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icons/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
+                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icons/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
                     </ul>
                   </div>
                 </div>
