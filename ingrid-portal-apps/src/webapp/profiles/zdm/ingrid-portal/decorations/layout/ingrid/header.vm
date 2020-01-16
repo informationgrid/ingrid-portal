@@ -39,7 +39,7 @@
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css" />
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/icons/favicon.ico?__blob=normal&v=1" />
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/gsb/icons/favicon.ico?__blob=normal&v=1" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
