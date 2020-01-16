@@ -21,7 +21,7 @@
         -->
         <link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
         <meta http-equiv="Content-type" content="#ContentType()" />
-        <meta http-equiv="Content-style-type" content="text/css" />   
+        <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
@@ -35,7 +35,7 @@
         #else
             <meta name="robots" content="index,follow" />
         #end
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/icons/favicon.ico?__blob=normal&v=1" />
         #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
             <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
         #end
@@ -64,7 +64,7 @@
         <!-- zxcvbn -->
         <script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>
         <!-- ZDM -->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/libs.css?v=7" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/_libs.css?v=7" type="text/css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/small.css?v=25" type="text/css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/medium.css?v=4" type="text/css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/large.css?v=11" type="text/css">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="row mod">
                   <div class="large-3 small-6 logo columns">
-                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png" alt="WSVPageAltLink"></a></p>
+                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png?__blob=normal&v=2" alt="WSVPageAltLink"></a></p>
                   </div>
                   <div class="right large-5 small-6 addlogo columns subheadline">
                     <p>
