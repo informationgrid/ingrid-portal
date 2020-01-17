@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -20,33 +20,16 @@
  * limitations under the Licence.
  * **************************************************#
  */
-package de.ingrid.mdek.upload;
+package de.ingrid.mdek.upload.storage.validate.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.ws.rs.WebApplicationException;
-
-public class ValidationException extends WebApplicationException implements UploadException {
-
+public class RemoteServiceExecutionException extends Exception {
     private static final long serialVersionUID = 1L;
-    private static final String FILE_KEY = "file";
 
-    protected final Map<String, Object> data = new HashMap<>();
-
-    /**
-     * Constructor
-     * @param message
-     * @param file
-     * @param status
-     */
-    public ValidationException(final String message, final String file, final int statusCode) {
-        super(message, statusCode);
-        this.data.put(FILE_KEY, file);
+    public RemoteServiceExecutionException(final String msg) {
+        super(msg);
     }
 
-    @Override
-    public Map<String, Object> getData() {
-        return this.data;
+    public RemoteServiceExecutionException(final String msg, final Exception e) {
+        super(msg, e);
     }
 }

@@ -112,6 +112,7 @@ public class FileSystemStorage implements Storage {
 
     private String docsDir = null;
     private String partsDir = null;
+    private String tempDir = null;
     private List<Validator> validators = new ArrayList<>();
 
     /**
@@ -177,6 +178,15 @@ public class FileSystemStorage implements Storage {
      */
     public void setPartsDir(final String partsDir) {
         this.partsDir = partsDir;
+    }
+
+    /**
+     * Set the temporary upload directory
+     *
+     * @param tempDir
+     */
+    public void setTempDir(final String tempDir) {
+        this.tempDir = tempDir;
     }
 
     /**
@@ -282,10 +292,10 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public FileSystemItem[] write(final String path, final String file, final InputStream data, final Integer size, final boolean replace, final boolean extract) throws IOException {
-        // validate
+        // file name and content validation
         // NOTE: we write the data to a temporary file before calling the validators
         // in order to allow multiple access to the streamed data
-        final Path tmpFile = Files.createTempFile(TMP_FILE_PREFIX, null);
+        final Path tmpFile = Files.createTempFile(Paths.get(this.tempDir), TMP_FILE_PREFIX, null);
         Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
         try {
             for (final Validator validator : this.validators) {
@@ -366,6 +376,7 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public FileSystemItem[] combineParts(final String path, final String file, final String id, final Integer totalParts, final Integer size, final boolean replace, final boolean extract) throws IOException {
+        // file name validation (content validation is done in write() method)
         for (final Validator validator : this.validators) {
             validator.validate(path, file, null);
         }
