@@ -320,19 +320,20 @@ public class RemoteServiceVirusScanValidator implements Validator {
         if (log.isDebugEnabled()) {
             log.debug("Service request: " + request.toString() + " - " + (request instanceof HttpEntityEnclosingRequest ? EntityUtils.toString(((HttpEntityEnclosingRequest)request).getEntity()) : ""));
         }
-        final CloseableHttpResponse response = serviceClient.execute(request);
-        final int status = response.getStatusLine().getStatusCode();
-        if (status != 200) {
-            log.error("Virus scan service invocation failed: ", response);
-            throw new RemoteServiceExecutionException("Virus scan service invocation on '" + request.getURI() + "' failed with code: " + status);
-        }
+        try (final CloseableHttpResponse response = serviceClient.execute(request)) {
+            final int status = response.getStatusLine().getStatusCode();
+            if (status != 200) {
+                log.error("Virus scan service invocation failed: ", response);
+                throw new RemoteServiceExecutionException("Virus scan service invocation on '" + request.getURI() + "' failed with code: " + status);
+            }
 
-        final HttpEntity responseEntity = response.getEntity();
-        final String responseBody = EntityUtils.toString(responseEntity);
-        if (log.isDebugEnabled()) {
-            log.debug("Service response: " + responseBody);
+            final HttpEntity responseEntity = response.getEntity();
+            final String responseBody = EntityUtils.toString(responseEntity);
+            if (log.isDebugEnabled()) {
+                log.debug("Service response: " + responseBody);
+            }
+            return responseBody;
         }
-        return responseBody;
     }
 
     private static ObjectMapper getObjectMapper() {
