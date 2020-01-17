@@ -72,6 +72,7 @@ public class FileSystemStorageTest {
 
         // setup storage
         storage.setDocsDir(DOCS_PATH.toString());
+        storage.setTempDir(TEMP_PATH.toString());
         storage.setValidators(Arrays.asList(new FileSystemStorage.NameValidator()));
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         Files.createDirectories(DOCS_PATH);
