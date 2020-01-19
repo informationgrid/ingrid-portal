@@ -112,6 +112,7 @@
         </property>
     </bean>
 
+    <!-- virusscan job bean
     <bean name="uploadVirusScanJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
         <property name="jobClass" value="de.ingrid.mdek.quartz.jobs.UploadVirusScanJob"/>
         <property name="durability" value="true"/>
@@ -134,6 +135,7 @@
             </map>
         </property>
     </bean>
+    -->
 
     <!-- Trigger -->
     <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
@@ -147,10 +149,13 @@
         <property name="cronExpression" value="${upload.cleanup.schedule}"/>
     </bean>
 
+    <!-- Virusscan job trigger
     <bean id="simpleTriggerUploadVirusScan" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="uploadVirusScanJob"/>
         <property name="cronExpression" value="${upload.virusscan.schedule}"/>
     </bean>
+    -->
+
     <!-- Scheduler Factory -->
 
     <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
