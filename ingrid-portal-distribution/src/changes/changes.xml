@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.3.1" date="2020-xx-xx" description="Release 5.3.1">
+          <action type="fix" dev="wemove" issue="1604">
+            IGE: Fix spatial scope field.
+          </action>
+        </release>
+
         <release version="5.3.0" date="2020-01-15" description="Release 5.3.0">
           <action type="add" dev="wemove" issue="1465">
             Portal: Umsetzung Layout NUMIS/UVP Niedersachsen.
