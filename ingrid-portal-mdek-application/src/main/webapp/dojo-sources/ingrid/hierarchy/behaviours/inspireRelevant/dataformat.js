@@ -50,7 +50,8 @@ define([
                 // only register if class 1 and if not already registered
                 if (msg.objClass === "Class1") {
                     if (self.events.length === 0) {
-                        self.register();
+                        // delayed register to perform other unregister functions
+                        setTimeout(function () { self.register() });
                     }
                 } else if (msg.objClass === "Class3") {
                     self.unregister();
@@ -67,7 +68,11 @@ define([
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
             var isConformWidget = registry.byId("isInspireConform");
 
-            inspireRelevantWidget.checked ? domClass.add("uiElement1320", "required") : domClass.add("uiElement1320", "show");
+            if (inspireRelevantWidget.checked && isConformWidget.checked) {
+                this.activateValidation();
+            } else {
+                this.deactivateValidation();
+            }
 
             this.events.push(
                 // if conform was changed

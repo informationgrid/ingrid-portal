@@ -49,7 +49,8 @@ define([
                 // only register if class 1 and if not already registered
                 if (msg.objClass === "Class1") {
                     if (self.events.length === 0) {
-                        self.register();
+                        // delayed register to perform other unregister functions
+                        setTimeout(function () { self.register() });
                     }
                 } else {
                     self.unregister();
@@ -60,22 +61,24 @@ define([
         register: function () {
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
-            if (inspireRelevantWidget.checked) {
-                self.publishEvent = self.handlePublishValidation();
-            }
+            this.handleInspireChange(inspireRelevantWidget.checked);
 
             this.events.push(
                 on(inspireRelevantWidget, "Change", function (isChecked) {
-                    if (isChecked) {
-                        if (self.publishEvent === null) {
-                            self.publishEvent = self.handlePublishValidation();
-                        }
-                    } else {
-                        utils.removeEvents([self.publishEvent]);
-                        self.publishEvent = null;
-                    }
+                    self.handleInspireChange(isChecked);
                 })
             );
+        },
+
+        handleInspireChange: function (isChecked, self) {
+            if (isChecked) {
+                if (this.publishEvent === null) {
+                    this.publishEvent = this.handlePublishValidation();
+                }
+            } else {
+                utils.removeEvents([this.publishEvent]);
+                this.publishEvent = null;
+            }
         },
 
         handlePublishValidation: function() {

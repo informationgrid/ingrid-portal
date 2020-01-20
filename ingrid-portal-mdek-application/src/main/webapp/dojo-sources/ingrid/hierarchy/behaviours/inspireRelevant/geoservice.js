@@ -50,7 +50,8 @@ define([
             // only for geo services
             topic.subscribe("/onObjectClassChange", function(msg) {
                 if (msg.objClass === "Class3") {
-                    self.register();
+                    // delayed register to perform other unregister functions
+                    setTimeout(function () { self.register() });
                 } else {
                     self.unregister();
                 }
@@ -60,6 +61,8 @@ define([
         register: function() {
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
+
+            this.handleInspireChange(inspireRelevantWidget.checked);
 
             this.events.push(
                 on(inspireRelevantWidget, "Click", function () {
@@ -80,24 +83,30 @@ define([
                 }),
 
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    if (isChecked) {
-                        var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [self.specificationName]);
-                        self.publishEvent = topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
-                            var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
-                                .filter(function(item) { return item.specification === self.specificationName; });
-
-                            if (requiredSpecification.length === 0) {
-                                notPublishableIDs.push( ["extraInfoConformityTable", missingMessage] );
-                            }
-
-                        });
-                        domClass.add("uiElementN024", "required");
-                    } else {
-                        utils.removeEvents([self.publishEvent]);
-                        domClass.remove("uiElementN024", "required");
-                    }
+                    this.handleInspireChange(isChecked);
                 })
             );
+        },
+
+        handleInspireChange: function (isChecked) {
+            if (isChecked) {
+                var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [this.specificationName]);
+                this.publishEvent = topic.subscribe("/onBeforeObjectPublish", function (/*Array*/ notPublishableIDs) {
+                    var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
+                        .filter(function (item) {
+                            return item.specification === this.specificationName;
+                        });
+
+                    if (requiredSpecification.length === 0) {
+                        notPublishableIDs.push(["extraInfoConformityTable", missingMessage]);
+                    }
+
+                });
+                domClass.add("uiElementN024", "required");
+            } else {
+                utils.removeEvents([this.publishEvent]);
+                domClass.remove("uiElementN024", "required");
+            }
         },
 
         updateToNotConform: function() {

@@ -183,11 +183,6 @@
                             specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
                             level = registry.byId("conformityLevelInspireFieldName").get("value");
                             publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
-
-                            if (isInspireConformityInconsistent(specification, level)) {
-                                warnDialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", warnDialog.WARNING);
-                                return;
-                            }
                         } else if (isNotInCodelist) {
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("value");
                             level = registry.byId("conformityLevelFreeFieldName").get("value");

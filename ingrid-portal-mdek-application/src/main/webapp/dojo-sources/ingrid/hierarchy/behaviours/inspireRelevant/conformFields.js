@@ -61,7 +61,8 @@ define([
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1") {
-                    self.register();
+                    // delayed register to perform other unregister functions
+                    setTimeout(function () { self.register() });
                 } else {
                     self.unregister();
                     // don't forget to hide the element
@@ -84,38 +85,12 @@ define([
 
             // when registering the event handler then the change might already has happened
             // so that we have to set here manually
-            if (inspireRelevantWidget.checked) domClass.remove("uiElement6001", "hidden");
+            this.handleInspireChange(inspireRelevantWidget.checked);
 
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    if (isChecked) {
-                        domClass.remove("uiElement6001", "hidden");
-
-                        // Also make conformity a required field
-                        domClass.add("uiElementN024", "required");
-
-                        // add events implicitly
-                        var isConform = registry.byId("isInspireConform").checked;
-                        if (isConform) {
-                            self.handleInspireConform();
-                        } else {
-                            // do not call this handler here since it's called because of the change event
-                            // self.handleNotInspireConform();
-                        }
-                    } else {
-                        domClass.add("uiElement6001", "hidden");
-
-                        // Conformity is optional for non-INSPIRE fields
-                        domClass.remove("uiElementN024", "required");
-
-                        // make digital representation optional
-                        domClass.remove( "uiElement5062", "required" );
-
-                        // remove all conform/not conform events
-                        utils.removeEvents(self.eventsConform);
-                        utils.removeEvents(self.eventsNotConform);
-                    }
+                    self.handleInspireChange(isChecked, self);
                 }),
 
                 // set conform option and handle modifications when conform was checked implicitly
@@ -186,6 +161,36 @@ define([
                     }
                 })
             );
+        },
+
+        handleInspireChange: function (isChecked, self) {
+            if (isChecked) {
+                domClass.remove("uiElement6001", "hidden");
+
+                // Also make conformity a required field
+                domClass.add("uiElementN024", "required");
+
+                // add events implicitly
+                var isConform = registry.byId("isInspireConform").checked;
+                if (isConform) {
+                    this.handleInspireConform();
+                } else {
+                    // do not call this handler here since it's called because of the change event
+                    // self.handleNotInspireConform();
+                }
+            } else {
+                domClass.add("uiElement6001", "hidden");
+
+                // Conformity is optional for non-INSPIRE fields
+                domClass.remove("uiElementN024", "required");
+
+                // make digital representation optional
+                domClass.remove("uiElement5062", "required");
+
+                // remove all conform/not conform events
+                utils.removeEvents(self.eventsConform);
+                utils.removeEvents(self.eventsNotConform);
+            }
         },
 
         handleClickConform: function() {
