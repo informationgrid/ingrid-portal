@@ -83,18 +83,19 @@ define([
                 }),
 
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    this.handleInspireChange(isChecked);
+                    self.handleInspireChange(isChecked);
                 })
             );
         },
 
         handleInspireChange: function (isChecked) {
+            var self = this;
             if (isChecked) {
                 var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [this.specificationName]);
                 this.publishEvent = topic.subscribe("/onBeforeObjectPublish", function (/*Array*/ notPublishableIDs) {
                     var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
                         .filter(function (item) {
-                            return item.specification === this.specificationName;
+                            return item.specification === self.specificationName;
                         });
 
                     if (requiredSpecification.length === 0) {
