@@ -255,10 +255,10 @@ public class DetailPartPreparer {
     public List<String> getUseConstraints() {
         final String restrictionCodeList = "524";
         final String licenceList = "6500";
-        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
-        final String restrictionCodeXpath = "./gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
-        final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
-        final String constraintsTextXpathAnchor = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor";
+        final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints[gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
+        final String restrictionCodeXpath = "./gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
+        final String constraintsTextXpath = "./gmd:otherConstraints/gco:CharacterString";
+        final String constraintsTextXpathAnchor = "./gmd:otherConstraints/gmx:Anchor";
         List<String> result = new ArrayList<>();
 
         NodeList resourceConstraintsNodes = xPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
@@ -315,7 +315,7 @@ public class DetailPartPreparer {
             String name = null;
             // also remember further otherConstraints may be used in BKG profile (#1194)
             List<String> furtherOtherConstraints = new ArrayList<>();
-            for (int indexConstraint=1; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
+            for (int indexConstraint = 0; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
                 String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
                 if (constraintSource == null || constraintSource.trim().isEmpty()) {
                     log.warn("Empty otherConstraints ! We skip this one");
@@ -344,7 +344,9 @@ public class DetailPartPreparer {
 
             String finalValue = getValueFromCodeList(licenceList, constraints);
             if (finalValue == null || finalValue.trim().isEmpty()) {
-                finalValue = constraints;
+                if (!constraints.startsWith("{") && !constraints.endsWith("}")) {
+                    finalValue = constraints;
+                }
             }
 
             String value;
@@ -356,12 +358,12 @@ public class DetailPartPreparer {
             if (url != null && !url.trim().isEmpty()) {
                 // we have a URL from JSON
 
-                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() ) ) {
                     // we have a different license name from JSON, render it with link
-                    value = String.format("%s<a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionInfo, url, name, finalValue);
+                    value = String.format(messages.getString("constraints.use.link"), restrictionInfo, url, name, finalValue);
                 } else {
                     // no license name, render whole text with link
-                    value = String.format("%s<a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionInfo, url, finalValue);
+                    value = String.format(messages.getString("constraints.use.link.noname"), restrictionInfo, url, finalValue);
                 }
             } else {
                 // NO URL
@@ -380,8 +382,15 @@ public class DetailPartPreparer {
             
             // also add other constraints if present !
             for (String furtherConstraint : furtherOtherConstraints) {
-                if (!result.contains(furtherConstraint)) {
-                    result.add(furtherConstraint);                    
+                boolean exist = false;
+                for (String resultItem : result) {
+                    if(resultItem.indexOf(furtherConstraint) > -1) {
+                        exist = true;
+                        break;
+                    }
+                }
+                if (!exist) {
+                    result.add(furtherConstraint);
                 }
             }
         }
@@ -410,17 +419,17 @@ public class DetailPartPreparer {
                 log.debug(String.format("Discovered use limitations: %s", constraints));
             }
 
-            int index = constraints.indexOf(':');
-            if (index >= 0) {
-                constraints = constraints.substring(index+1).trim();
-            }
+            constraints = removePraefix(constraints);
+
             if(log.isDebugEnabled()) {
                 log.debug(String.format("Use limitations are now: %s", constraints));
             }
             // <<< End of temporary solution <<<
 
             if (constraints != null && !constraints.trim().isEmpty()) {
-                result.add(constraints);
+                if (!result.contains(constraints)) {
+                    result.add(constraints);
+                }
             }
         }
 
