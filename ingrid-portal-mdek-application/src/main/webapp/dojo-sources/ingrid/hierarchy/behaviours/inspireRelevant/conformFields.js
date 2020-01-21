@@ -90,7 +90,7 @@ define([
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    self.handleInspireChange(isChecked, self);
+                    self.handleInspireChange(isChecked);
                 }),
 
                 // set conform option and handle modifications when conform was checked implicitly
@@ -163,7 +163,7 @@ define([
             );
         },
 
-        handleInspireChange: function (isChecked, self) {
+        handleInspireChange: function (isChecked) {
             if (isChecked) {
                 domClass.remove("uiElement6001", "hidden");
 
@@ -188,8 +188,8 @@ define([
                 domClass.remove("uiElement5062", "required");
 
                 // remove all conform/not conform events
-                utils.removeEvents(self.eventsConform);
-                utils.removeEvents(self.eventsNotConform);
+                utils.removeEvents(this.eventsConform);
+                utils.removeEvents(this.eventsNotConform);
             }
         },
 

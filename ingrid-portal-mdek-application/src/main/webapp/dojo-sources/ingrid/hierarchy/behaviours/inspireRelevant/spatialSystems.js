@@ -70,7 +70,7 @@ define([
             );
         },
 
-        handleInspireChange: function (isChecked, self) {
+        handleInspireChange: function (isChecked) {
             if (isChecked) {
                 if (this.publishEvent === null) {
                     this.publishEvent = this.handlePublishValidation();
