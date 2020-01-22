@@ -14,6 +14,9 @@
           <action type="add" dev="wemove" issue="1656">
             MapClient: Update attribution displaying and handling of imported services.
           </action>
+          <action type="add" dev="wemove" issue="1664">
+            MapClient: Update handling coordination search.
+          </action>
           <action type="fix" dev="wemove" issue="1604">
             IGE: Fix spatial scope field.
           </action>
