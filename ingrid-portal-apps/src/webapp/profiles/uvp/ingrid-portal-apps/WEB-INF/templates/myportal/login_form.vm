@@ -1,4 +1,7 @@
 <div class="columns">
+    #if($urlNotExists)
+        #renderMessageError($MESSAGES.getString('login.error.url.not.exists'))
+    #end
     #set ($action = $renderResponse.createActionURL())
     <form action="$action" method="post" id="frm_login">
         #set($name = "#getFieldValue($loginConstants.USERNAME)")
