@@ -83,14 +83,13 @@
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
         </div>
     #else
-        #if($userName)
         <div class="form-element">
             <label for="login">$MESSAGES.getString('account.create.label.username'):</label>
         </div>
         <div class="form-element">
-            <input type="text" id="login" name="login" value="$userName" disabled/>
+            #addErrorFormMessage('login', $loginLength)
+            <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login')/>
         </div>
-        #end
     #end
     <hr />
     <div class="form-element">
