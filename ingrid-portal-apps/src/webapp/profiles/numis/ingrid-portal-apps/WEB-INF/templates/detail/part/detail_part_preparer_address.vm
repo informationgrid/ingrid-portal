@@ -4,7 +4,7 @@
 #set($modTime = $TOOL.getDateValueFromXPath("./idf:last-modified"))
 <div class="detail">
     <div class="banner-noimage">
-      <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+      <div class="page-wrapper">
         <div class="row align-center detail-header">
           <div class="large-20 columns">
             <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
