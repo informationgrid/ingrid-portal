@@ -81,7 +81,7 @@
                     <div class="xsmall-24 medium-6 columns">
                         <div class="form-element boxed">
                             <div class="control-group">
-                                <label class="field-toggle__label field-toggle__label--boxed" for="enabled">
+                                <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="enabled">
                                     <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') onchange="adapt()">
                                     <div class="control__indicator"></div>
                                     $MESSAGES.getString('account.edit.enable')
@@ -116,7 +116,7 @@
                         <div class="form-element boxed">
                             <div class="control-group">
                                 #addErrorFormMessage('send_info')
-                                <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassLabelText('send_info')" for="send_info">
+                                <label class="control control--checkbox field-toggle__label field-toggle__label--boxed #addErrorFormClassLabelText('send_info')" for="send_info">
                                     <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
                                     <div class="control__indicator"></div>
                                     $MESSAGES.getString('account.edit.send.information')
@@ -127,7 +127,7 @@
                     <div class="xsmall-24 columns">
                         <div class="form-element boxed">
                             <div class="control-group">
-                                <label class="field-toggle__label field-toggle__label--boxed" for="send_info">
+                                <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="send_info">
                                     <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
                                     <div class="control__indicator"></div>
                                     $MESSAGES.getString('account.edit.password.update.required')
