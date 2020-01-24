@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -246,17 +246,6 @@ define([
             // we can show tooltip
             pos.h += 50;
             wnd.scrollIntoView( id, pos );
-            if (message)
-                this.showToolTip( id, message );
-            else {
-                message = registry.byId( id ).invalidMessage;
-                if (message && message !== "$_unset_$") {
-                    this.showToolTip( id, message );
-                } else {
-                    this.showToolTip( id, "Error" );
-                }
-            }
-
         },
 
         changeLabel: function(uiElementId, text) {

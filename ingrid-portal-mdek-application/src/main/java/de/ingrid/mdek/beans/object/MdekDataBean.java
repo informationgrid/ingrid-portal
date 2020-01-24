@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -118,7 +118,6 @@ public class MdekDataBean {
 	private List<String> availabilityAccessConstraints;
 	private List<UseAccessConstraintsBean> availabilityUseAccessConstraints;
 	private String availabilityUseConstraints;
-	private String availabilityDataFormatInspire;
 	private List<DataFormatBean> availabilityDataFormatTable;
 	private List<MediaOptionBean> availabilityMediaOptionsTable;
 	private String availabilityOrderInfo;
@@ -132,6 +131,8 @@ public class MdekDataBean {
 	private List<Integer> thesaurusTopicsList;
 	private Boolean thesaurusEnvExtRes;
 	private List<Integer> thesaurusEnvTopicsList;
+	private List<Integer> priorityDataset;
+	private Integer spatialScope;
 
 
 	// Links
@@ -1128,30 +1129,9 @@ public class MdekDataBean {
 		this.timeRefTable = timeRefTable;
 	}
 
-
-
-
-	public String getAvailabilityDataFormatInspire() {
-		return availabilityDataFormatInspire;
-	}
-
-
-
-
-	public void setAvailabilityDataFormatInspire(
-			String availabilityDataFormatInspire) {
-		this.availabilityDataFormatInspire = availabilityDataFormatInspire;
-	}
-
-
-
-
 	public List<DataFormatBean> getAvailabilityDataFormatTable() {
 		return availabilityDataFormatTable;
 	}
-
-
-
 
 	public void setAvailabilityDataFormatTable(
 			List<DataFormatBean> availabilityDataFormatTable) {
@@ -2229,5 +2209,21 @@ public class MdekDataBean {
 
 	public void setParentIdentifier(String parentIdentifier) {
 		this.parentIdentifier = parentIdentifier;
+	}
+
+	public List<Integer> getPriorityDataset() {
+		return priorityDataset;
+	}
+
+	public void setPriorityDataset(List<Integer> priorityDataset) {
+		this.priorityDataset = priorityDataset;
+	}
+
+	public Integer getSpatialScope() {
+		return spatialScope;
+	}
+
+	public void setSpatialScope(Integer spatialScope) {
+		this.spatialScope = spatialScope;
 	}
 }

@@ -24,6 +24,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>service-sitemap.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
@@ -31,6 +35,9 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::HitTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="2">
@@ -46,6 +53,9 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::HitTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="2">
@@ -61,6 +71,9 @@
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
                 <portlet col="0" row="1">
+                    <name>ingrid-portal-apps::HitTeaser</name>
+                </portlet>
+                <portlet col="0" row="3">
                     <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
                 <portlet col="0" row="2">
@@ -80,9 +93,24 @@
                 </portlet>
             </portlets>
         </page>
-      </pages>
+    </pages>
     <files>
         <!-- COPY GENERAL UVP FILES -->
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal/</src>
+            <dst>ingrid-portal/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-apps/</src>
+            <dst>ingrid-portal-apps/</dst>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>../uvp/ingrid-portal-mdek/</src>
+            <dst>ingrid-portal-mdek/</dst>
+        </file>
         <file>
             <action>copy-dir</action>
             <src>../uvp/ingrid-portal-mdek-application/</src>

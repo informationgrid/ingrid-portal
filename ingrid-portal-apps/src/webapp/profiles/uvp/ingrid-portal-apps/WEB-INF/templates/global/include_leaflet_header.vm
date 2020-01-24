@@ -4,6 +4,8 @@
 <script src="/decorations/layout/ingrid/scripts/leaflet.awesome-markers/leaflet.awesome-markers.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/spin.min.js"></script>
 <script src="/decorations/layout/ingrid/scripts/leaflet.spin/leaflet.spin.min.js"></script>
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.css" />
+<script src="/decorations/layout/ingrid/scripts/leaflet.gesture-handling/leaflet-gesture-handling.min.js"></script>
 
 <script>
     function getOSMLayer(attribution){

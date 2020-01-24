@@ -1,0 +1,12 @@
+Hello $!{map.get("user.custom.ingrid.user.salutation.full")} $!{map.get("user.name.given")} $!{map.get("user.name.family")}:
+
+You have requested a new password for your account.
+
+The account username: $!{map.get("username")}
+
+Follow the URL to change your password:
+$!{map.get("returnURL")}
+
+Thanks,
+
+The HMDK-Team.

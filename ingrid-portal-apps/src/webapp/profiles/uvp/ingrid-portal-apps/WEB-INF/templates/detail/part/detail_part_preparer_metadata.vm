@@ -10,8 +10,14 @@
       <div class="page-wrapper">
         <div class="row content-small">
           <div class="columns">
+            <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                <span class="ic-ic-arrow-left"></span>
+                <span class="text">Alle Suchergebnisse</span>
+            </a>
+            <br>
+            <br>
             <div class="helper text">
-                <!-- <span>TODO: Verfahren</span> -->
+                <span>$Codelists.getCodeListValue("8001", $TOOL.getValueFromXPath("./type"), $lang)</span>
             </div>
             <h1>
                 $TOOL.getValueFromXPath("./name")
@@ -84,7 +90,7 @@
                             
                             var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
                             var map = addLeafletMap([osm], bounds);
-                            map.scrollWheelZoom.disable();
+                            map.gestureHandling.enable();
                             var rect = L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).on('click', function (e) {
                                 var popLocation= e.latlng;
                                 var popup = L.popup()
@@ -204,7 +210,7 @@
             #if($nodelist.getLength() > 0)
         </div>
     </div>
-    <div class="row content-small">
+    <div id="timeline" class="row content-small">
         <div class="columns">
             <h1>Verfahrensschritte</h1>
             <div class="timeline"> 
@@ -282,6 +288,9 @@
                                 #set($nodelist = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
                                 #renderTableToTree("Entscheidung" $nodelist "designDocs")
                         #end
+                            <h2 class="icon-dot icon-dot-small">
+                                <span class="ic-ic-bullet icon"></span>
+                            </h2>
                         </div>
                     </div>
                 </div>
@@ -295,7 +304,7 @@
             #set($xpathExpression = "./docs[@type='uvpNegativeRelevantDocs']/doc")
             #set($uvpNegativeRelevantDocs = $TOOL.getTreeFromXPathBy("$xpathExpression", "link", $list))
             #if($uvpNegativeRelevantDocs.size() > 0)
-                #renderTableToTree("Relevante Dokumente" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
+                #renderTableToTree("Ergebnis der UVP-Vorpr&uuml;fung" $uvpNegativeRelevantDocs "uvpNegativeRelevantDocs")
             #end
         #end
         </div>
@@ -362,15 +371,13 @@
         #end
     #end
     #if($entry.get('children'))
-        #foreach($subEntry in $entry.get('children'))
-        <li class="folder__content js-accordion-content">
-            <ul class="js-accordion-multi">
-                <li class="folder__item">
-                    #renderTreeFolder($subEntry)
-                </li>
-            </ul>
-        </li>
+       <div class="folder__content">
+       #foreach($subEntry in $entry.get('children'))
+            <div class="list-item">
+                #renderTreeFolder($subEntry)
+            </div>
         #end
+        </div>
     #end
 #end
 

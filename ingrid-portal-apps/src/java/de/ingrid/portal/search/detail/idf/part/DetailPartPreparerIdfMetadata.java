@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -299,11 +299,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (type.equals("3")) {
                         // get link from operation (unique one)
                         if (serviceType != null && serviceType.trim().equals("view")) {
-                            StringBuilder capabilityUrl;
+                            StringBuilder capabilityUrl = null;
                             if(serviceUrl != null){
                                 capabilityUrl= new StringBuilder(serviceUrl);
                             } else {
-                                capabilityUrl =  new StringBuilder(getCapabilityUrl());
+                                String tmpUrl = getCapabilityUrl();
+                                if(tmpUrl != null) {
+                                    capabilityUrl =  new StringBuilder(getCapabilityUrl());
+                                }
                             }
                             if ( capabilityUrl != null ) {
                                 capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
@@ -413,10 +416,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     public List<String> getIndexInformationKeywords(String xpathExpression, String keywordType) {
-        ArrayList<String> listSearch = new ArrayList<>();
-        ArrayList<String> listGemet = new ArrayList<>();
-        ArrayList<String> listInspire = new ArrayList<>();
-        
+        List<String> listSearch = new ArrayList<>();
+        List<String> listGemet = new ArrayList<>();
+        List<String> listInspire = new ArrayList<>();
+        List<String> listPriorityDataset = new ArrayList<>();
+        List<String> listSpatialScope = new ArrayList<>();
+
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             
@@ -462,26 +467,38 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
                             
                             // "Service Classification, version 1.0"
-                            if (!isHidden && thesaurusName.indexOf("Service") < 0) {
+                            if (!isHidden && !thesaurusName.contains("Service")) {
                                 // "UMTHES Thesaurus"
-                                if (thesaurusName.indexOf("UMTHES") > -1) {
+                                if (thesaurusName.contains("UMTHES")) {
                                     listSearch.add(value);
                                 // "GEMET - Concepts, version 2.1"
-                                } else if (thesaurusName.indexOf("Concepts") > -1) {
+                                } else if (thesaurusName.contains("Concepts")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                                     if(tmpValue.length() < 1){
                                         tmpValue = value;
                                     }
                                     listGemet.add(tmpValue);
                                     // "GEMET - INSPIRE themes, version 1.0"
-                                } else if (thesaurusName.indexOf("INSPIRE") > -1) {
+                                } else if (thesaurusName.contains("priority")) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
+                                    if(tmpValue.length() < 1){
+                                        tmpValue = value;
+                                    }
+                                    listPriorityDataset.add(tmpValue);
+                                } else if (thesaurusName.contains("Spatial scope")) {
+                                    String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
+                                    if(tmpValue.length() < 1){
+                                        tmpValue = value;
+                                    }
+                                    listSpatialScope.add(tmpValue);
+                                } else if (thesaurusName.contains("INSPIRE")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
                                     if(tmpValue.length() < 1){
                                         tmpValue = value;
                                     }
                                     listInspire.add(tmpValue);
                                     // "German Environmental Classification - Category, version 1.0"
-                                } else if (thesaurusName.indexOf("German Environmental Classification") > -1) {
+                                } else if (thesaurusName.contains("German Environmental Classification")) {
                                     // do not used in detail view.
                                     
                                 } else if (thesaurusName.length() < 1 && type.length() < 1) {
@@ -495,15 +512,23 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
             }
         }
-        if(keywordType.equals("gemet")){
-            sortList(listGemet);
-            return listGemet;
-        }else if(keywordType.equals("inspire")){
-            sortList(listInspire);
-            return listInspire;
-        }else {
-            sortList(listSearch);
-            return listSearch;
+
+        switch (keywordType) {
+            case "gemet":
+                sortList(listGemet);
+                return listGemet;
+            case "inspire":
+                sortList(listInspire);
+                return listInspire;
+            case "priority":
+                sortList(listPriorityDataset);
+                return listPriorityDataset;
+            case "spatial_scope":
+                sortList(listSpatialScope);
+                return listSpatialScope;
+            default:
+                sortList(listSearch);
+                return listSearch;
         }
     }
     
@@ -739,7 +764,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         
                         // "Service Classification, version 1.0"
-                        if (thesaurusName.indexOf("Service") > -1) {
+                        if (thesaurusName.contains("Service")) {
                             String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
                             if(tmpValue.length() > 0){
                                 value = tmpValue;
@@ -1088,7 +1113,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     public List getNodeListValueReferenceSystem(String xpathExpression) {
-        ArrayList<String> list = new ArrayList<>();
+        ArrayList<Map> list = new ArrayList<>();
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             for (int i=0; i<nodeList.getLength(); i++){
@@ -1106,7 +1131,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 
                 String value = "";
                 if(code.length() > 0 && codeSpace.length() > 0){
-                    if(code.indexOf("EPSG") > -1){
+                    if(code.contains("EPSG")){
                         value = code;
                     }else{
                         value = codeSpace.concat(": " + code);
@@ -1117,8 +1142,21 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     value = code;
                 }
                 
-                if(value.length() > 0){
-                    list.add(value);
+                if (value.length() > 0) {
+                    Map link = new HashMap();
+                    link.put("title", value);
+                    link.put("hasLinkIcon", true);
+
+                    if (value.startsWith("EPSG")) {
+                        int endIndex = value.indexOf(':', 5);
+                        String epsgCode = value.substring(5, endIndex == -1 ? value.length() : endIndex);
+
+                        link.put("isExtern", true);
+                        link.put("href", "https://epsg.io/" + epsgCode);
+                    } else {
+                        link.put("noLink", true);
+                    }
+                    list.add(link);
                 }
             }
         }
@@ -1211,7 +1249,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if (urlValue == null || urlValue.length() == 0) {
                         continue;
                     }
-                    if (urlValue.toLowerCase().indexOf("request=getcapabilities") != -1) {
+                    if (urlValue.toLowerCase().contains("request=getcapabilities")) {
                         // also add an identifier to select the correct layer in the map client 
                         map = addBigMapLink(UtilsVelocity.urlencode(urlValue) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(null)), true);
                         // ADD FIRST ONE FOUND !!!

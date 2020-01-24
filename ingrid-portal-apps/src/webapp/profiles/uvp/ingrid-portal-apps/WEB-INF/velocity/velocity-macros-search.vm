@@ -67,9 +67,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
 <div class="caption">
     #if($isBottom)
-        <p>#renderRankedResultCounter($pageSelector)</p>
+        #renderRankedResultCounter($pageSelector)
     #end
-    
+    <br>
     ## Default
     #set ($pstart = 0)
     #set ($action = $renderResponse.createActionURL())
@@ -266,16 +266,19 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 
 #macro(renderSearchResultFacetSelectionInfo $entry $resourceMsgs)
     #if($entry.getInfo())
-    <div class="caption">
-        <div class="icon check">
-            <span class="ic-ic-info"></span>
-            <span>$entry.getInfo()</span>
+    <div class="form-element boxed">
+        <div class="input-check caption" style="text-align:left;">
+            <div class="icon check">
+                <span class="ic-ic-info"></span>
+                <span>$entry.getInfo()</span>
+            </div>
         </div>
     </div>
     #end
 #end
 
 #macro(renderSearchResultFacetSelectionInfoResult $entries $resourceMsgs)
+    #set ($hasInfo = false)
     #foreach($entry in $entries)
         #if($entry.isSelect() && $entry.getInfoResultSelect())
         <div class="caption">
@@ -284,7 +287,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 <span>$entry.getInfoResultSelect()</span>
             </div>
         </div>
+        #set ($hasInfo = true)
         #end
+    #end
+    #if(!$hasInfo)
+        #parse ('/WEB-INF/templates/search-result/parts/include_search_result_header_info.vm')
     #end
 #end
 

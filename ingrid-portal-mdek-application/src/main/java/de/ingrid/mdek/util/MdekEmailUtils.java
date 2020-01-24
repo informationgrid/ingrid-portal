@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -78,6 +78,8 @@ public class MdekEmailUtils {
 	private SpringConfiguration springConfig;
 	
 	// Set in the init method
+	private static String systemMailReceiver;
+
 	private static String mailSender;
 	private static String mailReceiver;
 	private static String mailSmtpHost;
@@ -112,6 +114,8 @@ public class MdekEmailUtils {
 
 		// read global config from spring config, also taking *.override.props into account
 		Config globalConfig = springConfig.globalConfig();
+
+		systemMailReceiver = globalConfig.systemMailReceiver;
 
 		mailSender = globalConfig.workflowMailSender;
 		mailSmtpHost = globalConfig.workflowMailSmtpHost;
@@ -388,6 +392,10 @@ public class MdekEmailUtils {
 
 	public static void sendEmail(String content, String from, String[] to) {
 		sendEmail(MAIL_SUBJECT, content, from, to);
+	}
+
+	public static void sendSystemEmail(String subject, String content) {
+		sendEmail(subject, content, mailSender, new String[] {systemMailReceiver});
 	}
 
 	public static void sendEmail(String subject, String content, String from, String[] to) {

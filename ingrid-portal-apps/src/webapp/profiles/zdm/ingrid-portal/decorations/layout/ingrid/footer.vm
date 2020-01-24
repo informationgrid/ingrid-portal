@@ -56,14 +56,14 @@
         </div>
         
         <!-- Global scripts -->
-        <script src="#GetPageResource("scripts/all.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
         
         <!-- Popup -->
-        <script src="#GetPageResource("scripts/popup.js")"></script>
-        <script src="#GetPageResource("scripts/expander.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/expander.js"></script>
         
         <!-- Accordion -->
-        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
         <script>
         $('.js-accordion').accordion();
         $('.js-accordion-multi').accordion({
@@ -71,17 +71,17 @@
         });
         </script>
         <!-- Tabs -->
-        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
         <script>
             $('.js-tabs').tabs();
         </script>
         <!-- Selection -->
-        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
         <script>
             $('.js-selection').selection();
         </script>
         <!-- Table Sort -->
-        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
+        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
         <script>
             $('.js-table-sortable').sortable();
         </script>

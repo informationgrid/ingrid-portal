@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -162,6 +162,9 @@ public class ImportServiceImpl {
             case XML:
                 
             	IngridDocument result = analyzeXMLData( importDataStream, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
+            	if (result.get("error") != null) {
+                    throw new IllegalArgumentException("Error analyzing input file: " + result.getString("error"));
+                }
             	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
                 break;
 
@@ -177,6 +180,7 @@ public class ImportServiceImpl {
             throw new RuntimeException(MdekErrorUtils.convertToRuntimeException(ex));
         } catch (Exception ex) {
             log.error("Error creating input data.", ex);
+            throw new RuntimeException(ex);
         } finally {
             protocolBean.setProtocol( allProtocols );
             protocolBean.setImportData(importData);

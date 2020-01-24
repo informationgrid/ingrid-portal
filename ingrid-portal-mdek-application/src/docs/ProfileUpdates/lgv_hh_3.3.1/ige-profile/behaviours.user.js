@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -417,7 +417,7 @@ openDataLGV : {
                 domClass.add("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.add("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.add("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.add("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+                domClass.add("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
                 
             } else {
                 
@@ -458,7 +458,7 @@ openDataLGV : {
                 domClass.remove("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.remove("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.remove("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.remove("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
+                domClass.remove("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
 
                 // Tab containers may be rendered for the first time and needs to be layouted
                 igeEvents.refreshTabContainers();
@@ -600,7 +600,6 @@ openDataLGV : {
                 registry.byId("ref1BasisText").set("value", "keine Angabe");
                 registry.byId("ref1DataSet").set("value", "5"); // "Datensatz"
                 UtilGrid.setTableData("thesaurusInspire", [{title: 99999}]); // "Kein INSPIRE-Thema"
-                UtilGrid.setTableData("extraInfoConformityTable", [{specification:"INSPIRE-Richtlinie", level:3}]); // "nicht evaluiert"
                 UtilGrid.setTableData("ref1SpatialSystem", [{title:"EPSG 25832: ETRS89 / UTM Zone 32N"}]);
                 registry.byId("availabilityDataFormatInspire").set("value", "Geographic Markup Language (GML)");
             }

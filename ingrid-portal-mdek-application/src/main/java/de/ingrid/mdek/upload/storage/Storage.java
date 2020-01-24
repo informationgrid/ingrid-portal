@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,6 +24,8 @@ package de.ingrid.mdek.upload.storage;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import de.ingrid.mdek.upload.ValidationException;
 
 /**
  * Storage defines the interface for classes, that are responsible for storing and retrieving files.
@@ -60,9 +62,9 @@ public interface Storage {
      *
      * @param path The path
      * @param file The file
-     * @return boolean
+     * @throws ValidationException
      */
-    boolean isValidName(String path, String file);
+    void validate(String path, String file) throws ValidationException;
 
     /**
      * Get information about a file
@@ -122,8 +124,7 @@ public interface Storage {
      * @return StorageItem[] The list of created files
      * @throws IOException
      */
-    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract)
-            throws IOException;
+    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract) throws IOException;
 
     /**
      * Delete a file

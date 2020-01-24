@@ -7,10 +7,10 @@
         #if($partnerHash.providers)
             <li class="accordion-item" data-accordion-item="">
                 #if($partners.size() > 1)
-                    <a href="#" class="accordion-title" aria-controls="$key-accordion" role="tab" id="$key-accordion-label" aria-expanded="false" aria-selected="false">
+                    <a href="#" class="accordion-title" aria-controls="${key}-accordion" role="tab" id="${key}-accordion-label" aria-expanded="false" aria-selected="false">
                         <span class="text">$partner.name</span>
                     </a>
-                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$key-accordion-label" aria-hidden="true" id="$key-accordion">
+                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="${key}-accordion-label" aria-hidden="true" id="${key}-accordion">
                         <div class="link-list">
                         #set($providers = $partnerHash.providers)
                         #foreach($provider in $providers)

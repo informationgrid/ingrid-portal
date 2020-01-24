@@ -18,6 +18,14 @@ $actionForm.getInputHTMLEscaped($field)#end
 #if ($actionForm.hasErrorInField($field))is-invalid-input#end
 #end
 
+#macro (addErrorFormClassLabel $field)
+#if ($actionForm.hasErrorInField($field))class="is-invalid-label"#end
+#end
+
+#macro (addErrorFormClassLabelText $field)
+#if ($actionForm.hasErrorInField($field))is-invalid-label#end
+#end
+
 #macro (addErrorFormMessage $field, $param)
 #if($param)
   #if ($actionForm.hasErrorInField($field))
@@ -329,7 +337,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     #if($info)
         <div class="helper icon">
             <span class="ic-ic-info"></span>
-            <span class="">$info</span>
+            <span class="text">$info</span>
         </div>
     #end
     </div>
@@ -430,48 +438,44 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro(renderUDKIcon $class $title)
-    #if($class && $title)
-        <svg class="icon globe__icon" title="$title">
-            #if($class == "0")
-                ## Fachaufgabe
-                <use xlink:href="#checklist">
-            #elseif($class == "1")
-                ## Geodatensatz
-                <use xlink:href="#globe">
-            #elseif($class == "2")
-                ## Literatur
-                <use xlink:href="#book">
-            #elseif($class == "3")
-                ## Geodatendienst
-                <use xlink:href="#gears">
-            #elseif($class == "4")
-                ## Projekt
-                <use xlink:href="#folder">
-            #elseif($class == "5")
-                ## Datensammlung
-                <use xlink:href="#database">
-            #elseif($class == "6")
-                ## Informationssystem
-                <use xlink:href="#molecule">
-            #end
-        </svg>
+    #if($class == "0")
+        ## Fachaufgabe
+        <span class="ic-ic-zulassungsverfahren"></span>
+    #elseif($class == "1")
+        ## Geodatensatz
+        <span class="ic-ic-inspire"></span>
+    #elseif($class == "2")
+        ## Literatur
+        <span class="ic-ic-katalog"></span>
+    #elseif($class == "3")
+        ## Geodatendienst
+        <span class="ic-ic-dienste"></span>
+    #elseif($class == "4")
+        ## Projekt
+        <span class="ic-ic-projekt"></span>
+    #elseif($class == "5")
+        ## Datensammlung
+        <span class="ic-ic-metadaten"></span>
+    #elseif($class == "6")
+        ## Informationssystem
+        <span class="ic-ic-chemie"></span>
     #end
+    <span class="text">$title</span>
 #end
 
 #macro(renderUDKAddressIcon $class $title)
-    <svg class="icon globe__icon" title="$title">
-        #if($class == "0")
-            ## Institution
-            <use xlink:href="#building">
-        #elseif($class == "1")
-            ## Einheit
-            <use xlink:href="#group">
-        #elseif($class == "2")
-            ## Person
-            <use xlink:href="#users">
-        #elseif($class == "3")
-            ## Freie Adresse
-            <use xlink:href="#envelope">
-        #end
-    </svg>
+    #if($class == "0")
+        ## Institution
+        <span class="ic-ic-intituition"></span>
+    #elseif($class == "1")
+        ## Einheit
+        <span class="ic-ic-einheit"></span>
+    #elseif($class == "2")
+        ## Person
+        <span class="ic-ic-people"></span>
+    #elseif($class == "3")
+        ## Freie Adresse
+        <span class="ic-ic-mailto"></span>
+    #end
+    <span class="text">$title</span>
 #end

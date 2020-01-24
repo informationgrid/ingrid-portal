@@ -140,6 +140,12 @@ $form-button-radius: $global-radius !default;
   input,
   textarea {
     // Placeholder text
+    &:-ms-input-placeholder {
+      color: $input-placeholder-color !important;
+    }
+    &::-ms-input-placeholder {
+      color: $input-placeholder-color;
+    }
     &::placeholder {
       color: $input-placeholder-color;
     }

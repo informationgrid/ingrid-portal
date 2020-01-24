@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -33,8 +33,8 @@ define([
 ], function(declare, array, on, string, registry, message, UtilGrid, UtilUI, UtilSyslist) {
     
     return declare(null, {
-        title: "Inspire / Conformity - Connection",
-        description: "Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Konformität hinzugefügt, sofern es sich um ein Geodatensatz handelt, welches INSPIRE relevant (konform) ist.",
+        title: "DEPRECATED: Inspire / Conformity - Connection",
+        description: "Spezifikationen wurden entfernt. Laut der GDI_DE Konventionen, wird eine ISO Kategorie automatisch zu einem dazugehörigen INSPIRE-Konformität hinzugefügt, sofern es sich um ein Geodatensatz handelt, welches INSPIRE relevant (konform) ist.",
         defaultActive: true,
         category: "INSPIRE relevant",
         run: function() {

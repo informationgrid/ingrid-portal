@@ -38,8 +38,8 @@
                         <label for="title">$MESSAGES.getString('component.forms.text.component.name')*</label>
                     </div>
                     <div class="form-element">
-                        <input id="title" name="title" value="#getFieldValue('title')" type="text" #addErrorFormClass('title')>
                         #addErrorFormMessage('title')
+                        <input id="title" name="title" value="#getFieldValue('title')" type="text" #addErrorFormClass('title')>
                     </div>
                     
                     ################ content according to component type ###################
@@ -65,16 +65,16 @@
                           <label for="interval">$MESSAGES.getString('component.forms.text.interval')*</label>
                     </div>
                     <div class="form-element">
-                        <input id="interval" name="interval" value="#getFieldValue('interval')" type="text" #addErrorFormClass('interval')>
                         #addErrorFormMessage('interval')
+                        <input id="interval" name="interval" value="#getFieldValue('interval')" type="text" #addErrorFormClass('interval')>
                     </div>
                     <div class="form-element">
                         <label for="timeout">$MESSAGES.getString('component.forms.text.timeout')*</label>
                     </div>
                     <div class="form-element">
-                        <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text" #addErrorFormClass('timeout')>
-                        #addErrorFormMessage('timeout')
-                    </div>
+                         #addErrorFormMessage('timeout')
+                         <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text" #addErrorFormClass('timeout')>
+                   </div>
                     <div class="form-element boxed">
                         <div class="input-check">
                             <div class="control-group">

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -53,40 +53,58 @@ define([
 
         codelistForText: null,
 
+        sortCodelist: null,
+
         selectRequired: false,
 
         freeTextRequired: false,
 
         templateString:
-        "<span>" +
+        "<div>" +
         "  <span class='multi-input outer'>" +
         "    <div>" +
         "      <span class='label'>" +
-        "        <label>${label}<span class='requiredSign'>*</span></label>" +
+        "        <label>${label}</label>" +
         "      </span>" +
         "      <div class='outlined'>" +
         "        <!--<span class='functionalLink'>" +
         "          <img src='img/ic_fl_popup.gif' width='10' height='9' alt='Popup' />" +
         "          <a id='spatialRefAdminUnitLink' href='javascript:void(0);'>Freitext Vorlagen</a>" +
         "        </span>-->" +
-        "        <div class='clear'>" +
-        "          <span class='outer halfWidth'>" +
+        "        <div>" +
+        "          <span class='outer'>" +
         "            <div>" +
         "              <select data-dojo-type='dijit/form/FilteringSelect' data-dojo-attach-point='selectInput' class='noValidate' style='width:100%;'></select>" +
-        "              <div class='comment' style='width:100%; height:52px; overflow:auto; padding-left: 0;'></div>" +
         "            </div>" +
         "          </span>" +
-        "          <span class='outer halfWidth '>" +
+        "          <span class='outer halfWidth'>" +
         "            <div>" +
-        "              <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='freeTextInput' rows='5' class='noValidate' style='width:100%;'></textarea>" +
+        "              <div class='comment' style='width:100%; height:95px; overflow:auto; padding-left: 0;'></div>" +
         "            </div>" +
         "          </span>" +
-        "          <div class='clear'></div>" +
+        "          <span class='outer halfWidth'>" +
+        "            <div>" +
+        "              <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='freeTextInput' rows='6' class='noValidate' style='width:100%; resize: vertical; height: 95px;'></textarea>" +
+        "            </div>" +
+        "          </span>" +
         "        </div>" +
-        "      </  div>" +
+        "        <div>" +
+        "          <span class='outer'>" +
+        "            <div>" +
+        "              <span class='label'>" +
+        "                <label class='forceOptional'>Quellenvermerk</label>" +
+        "              </span>" +
+        "              <div class='input'>" +
+        "                <textarea data-dojo-type='dijit/form/SimpleTextarea' data-dojo-attach-point='sourceNote' rows='3' class='noValidate' style='width:100%; resize: vertical;'></textarea>" +
+        "              </div>" +
+        "            </div>" +
+        "          </span>" +
+        "        </div>" +
+        "        <div class='clear'></div>" +
+        "      </div>" +
         "    </div>" +
         "  </span>" +
-        "</span>",
+        "</div>",
 
         widgetsInTemplate: true,
 
@@ -154,6 +172,8 @@ define([
                             self.selectInput.set("value", entry.listId);
                         } else if (entry.identifier === self.id + "_freeText") {
                             self.freeTextInput.set("value", entry.value);
+                        } else if (entry.identifier === self.id + "_sourceNote") {
+                            self.sourceNote.set("value", entry.value);
                         }
                     });
                 }
@@ -179,7 +199,14 @@ define([
                 tableRows: null
             };
 
-            return [[entrySelect, entryFreeText]];
+            entrySourceNote = {
+                identifier: this.id + "_sourceNote",
+                value: this.sourceNote.get("value"),
+                listId: null,
+                tableRows: null
+            };
+
+            return [[entrySelect, entryFreeText, entrySourceNote]];
         },
 
         getDisplayedLabel: function() {
@@ -187,24 +214,28 @@ define([
         },
 
         getDisplayedValue: function() {
+            var value;
             var comment = this.infoText[0].textContent;
             if (comment === "") {
-            	var s = this.selectInput.get("displayedValue");
-            	if (s) {
+            	value = this.selectInput.get("displayedValue");
+            	if (value) {
             		if (this.freeTextInput.get("value")) {
-                		s = s + ", " + this.freeTextInput.get("value");
+                		value = value + ", " + this.freeTextInput.get("value");
             		}
             	} else if (this.freeTextInput.get("value")) {
-            		s = this.freeTextInput.get("value");
+            		value = this.freeTextInput.get("value");
             	}
-                return s;
             } else {
-            	var s = comment;
+            	value = comment;
             	if (this.freeTextInput.get("value")) {
-            		s = s + ", " + this.freeTextInput.get("value")
+            		value = value + ", " + this.freeTextInput.get("value")
             	}
-            	return s;
             }
+
+            if (this.sourceNote) {
+                value += "<br>Quellenvermerk: " + this.sourceNote.get("value");
+            }
+            return value;
         },
 
         addTextareaValidator: function() {
@@ -220,12 +251,20 @@ define([
             this.freeTextInput.validate = function() {
                 return this.validator();
             };
+
+            this.sourceNote.validator = this.freeTextInput.validator;
+            this.sourceNote.validate = function() {
+                return this.validator();
+            };
         },
 
         setCodelist: function(codelist) {
             var self = this;
             
             UtilSyslist.getSyslistEntry(codelist).then(function(entries) {
+                if (self.sortCodelist) {
+                    entries = self.sortCodelist(entries);
+                }
                 UtilStore.updateWriteStore(self.selectInput.id, entries, {
                     identifier: "1",
                     label: "0",
@@ -238,6 +277,7 @@ define([
             this.selectInput.set("value", null);
             this.selectInput.reset();
             this.freeTextInput.set("value", "");
+            this.sourceNote.set("value", "");
         }
 
     });

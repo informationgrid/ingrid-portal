@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -62,10 +62,21 @@ define([
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
             this.events.push(
-                on(inspireRelevantWidget, "Click", function(isChecked) {
-                    if (this.checked) {
-                        utils.addConformity(true, self.specificationName, "1");
-                    }
+                on(inspireRelevantWidget, "Click", function () {
+                    var checkboxContext = this;
+
+                    utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
+
+                        if (checkboxContext.checked) {
+                            utils.addConformity(true, self.specificationName, "1");
+                        } else {
+                            self.updateToNotConform();
+                        }
+
+                    }, function () {
+                        // reset checkbox state
+                        checkboxContext.set("checked", !checkboxContext.checked);
+                    });
                 }),
 
                 on(inspireRelevantWidget, "Change", function(isChecked) {
@@ -89,9 +100,15 @@ define([
             );
         },
 
+        updateToNotConform: function() {
+            utils.addConformity(true, this.specificationName, "2");
+        },
+
         unregister: function() {
            utils.removeEvents(this.events);
            utils.removeEvents([this.publishEvent]);
+           this.publishEvent = null;
+           domClass.remove("uiElementN024", "required");
         }
     })();
 });

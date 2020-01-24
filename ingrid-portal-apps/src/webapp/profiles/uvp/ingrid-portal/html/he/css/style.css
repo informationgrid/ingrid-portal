@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -20,71 +20,48 @@
  * limitations under the Licence.
  * **************************************************#
  */
-.nav-desktop {
-    background: #3654BC;
-    border-top: 4px solid #D62029;
+header {
+  border-image: linear-gradient(to left, #D62029,#D62029) 0 1 100%;
+  -webkit-border-image: linear-gradient(to left, #D62029, #D62029) 0 1 100%;
+}
+header .logo > span {
+  color: #3654BC;
+}
+h2 {
+  color: #3654BC !important;
+}
+a,a h2.header {
+  color: #3654BC !important;
+}
+a:hover, a h2.header:hover {
+  color: #D62029 !important;
+}
+footer .footer {
+  background-color: #3654BC;
+}
+footer .footer a {
+  color: #FFFFFF !important;
+}
+footer .footer .copyright p {
+  color: #FFFFFF !important;
+}
+.teaser-data .header:hover, .teaser-data .arrow:hover {
+  color: #D62029 !important;
 }
 
-a {
-    color: #3654BC;
-}
-
-.desktop__title p, h2 {
-    color: #3654BC;
-}
-
-.mobile__title, .mobile__title:hover {
-    color: #3654BC;
-}
-
-@media screen and (max-width: 939px) {
-  .header {
-    background: #FFF;
-    border-bottom: solid 1px #3654BC;
+@media print, screen and (min-height: 35em) {
+  html, body { height:100%; }
+  .body {
+    padding-bottom: 7rem !important;
   }
-}
-
-.nav-toggle {
-    background: #3654BC;
-}
-
-.nav-toggle:after {
-    border-color: transparent transparent #FFF transparent;
-}
-
-.nav-toggle .icon {
-    fill: #FFF;
-}
-
-.nav-overlay {
-    background: #FFF;
-}
-
-.nav__foot a {
-    color: #3654BC;
-}
-
-.footer {
-    color: #777;
-}
-
-.footer a {
-    color: #3654BC;
-}
-
-.desktop-logo {
-    height: 60px;
-    max-width: 100%;
-    padding: 0 10px 0 0;
-}
-
-.mobile__logo {
-    height: 40px !important;
-    padding: 0 10px 0 0;
-}
-
-@media screen and (min-width: 768px) {
-    .header__logo {
-        margin-left: 0;
-    }
+  .container {
+    min-height: 100%;
+    position: relative;
+  }
+  footer {
+    position: absolute !important;
+    bottom: 0;
+    width: 100%;
+    margin-top: 48px;
+  }
 }

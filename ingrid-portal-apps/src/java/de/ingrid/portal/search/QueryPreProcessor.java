@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -168,7 +168,7 @@ public class QueryPreProcessor {
         IngridSessionPreferences sessionPrefs = Utils.getSessionPreferences(request,
                 IngridSessionPreferences.SESSION_KEY);
         // set ranking ! ONLY IF NO RANKING IN Query String Input !
-        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
+        if (!UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED) && request.getParameter(Settings.PARAM_RANKING) == null) {
             // adapt ranking to Search State
             String ranking = (String) sessionPrefs.get(IngridSessionPreferences.SEARCH_SETTING_RANKING);
             if (ranking == null || ranking.length() == 0) {
@@ -179,8 +179,23 @@ public class QueryPreProcessor {
                 }
             }
             query.put(IngridQuery.RANKED, ranking);
+        } else {
+            String stateRanking = (String) SearchState.getSearchStateObject(request, Settings.PARAM_RANKING);
+            if (stateRanking != null) {
+                query.put(IngridQuery.RANKED, stateRanking);
+            } else if(request.getParameter(Settings.PARAM_RANKING) != null) {
+                query.put(IngridQuery.RANKED, request.getParameter(Settings.PARAM_RANKING));
+            }
         }
 
+        if(query.isRanked(IngridQuery.DATE_RANKED)) {
+            for (ClauseQuery cq : query.getClauses()) {
+                query.removeClause(cq);
+            }
+            ClauseQuery cq = new ClauseQuery(true, false);
+            cq.addField(new FieldQuery(true, false, "datatype", "metadata"));
+            query.addClause(cq);
+        }
         // set filter params. If no filter is set, process GROUPING
         // FILTERING AND GROUPING are mutually exclusive 
         String filter = SearchState.getSearchStateObjectAsString(request, Settings.PARAM_FILTER);

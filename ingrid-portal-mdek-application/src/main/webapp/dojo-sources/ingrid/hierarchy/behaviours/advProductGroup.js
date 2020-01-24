@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,8 +26,9 @@ define([
     "dojo/dom-class",
     "dojo/topic",
     "dijit/registry",
-    "ingrid/utils/Grid"
-], function(declare, on, domClass, topic, registry, UtilGrid) {
+    "ingrid/message",
+    "ingrid/utils/UI"
+], function(declare, on, domClass, topic, registry, message, UtilUI) {
     return declare(null, {
         
         title : "Produktgruppe",
@@ -37,7 +38,8 @@ define([
         run : function() {
             // show table for the product group
             domClass.remove("uiElement5170", "hidden");
-            registry.byId("advProductGroup").reinitLastColumn();
+            var advProductGroup = registry.byId("advProductGroup");
+            advProductGroup.reinitLastColumn();
 
             on(registry.byId("isAdvCompatible"), "change", function(checked) {
                 if (checked) {
@@ -47,6 +49,13 @@ define([
                     domClass.remove("uiElement5170", "required");
                 }
             } );
+
+            on(registry.byId("isAdvCompatible"), "click", function() {
+                if (!this.checked) {
+                    advProductGroup.setData([]);
+                    UtilUI.showToolTip("isAdvCompatible", message.get('hint.advProductGroupCleared'));
+                }
+            });
         }
     })();
 });

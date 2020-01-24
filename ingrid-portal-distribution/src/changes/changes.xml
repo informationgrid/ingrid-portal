@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.3.0.mCLOUD" date="2020-01-24" description="Release 5.3.0.mCLOUD">
+            <action type="fix" dev="wemove">
+                IGE: Fix upload of documents
+            </action>
+        </release>
+
         <release version="5.1.1.mCLOUD" date="2019-09-16" description="Release 5.1.1.mCLOUD">
             <action type="add" dev="wemove" issue="2105">
                 IGE: Add upload function

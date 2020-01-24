@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -71,8 +71,10 @@
 	                // check if login is registered IGE-user
 	                SecurityService.authenticate(username, password, function(result) {
 	                    if (result == true) {
-	                        //window.location.href = "start.jsp";
-	                        window.location.reload();
+	                        // window.location.href = "start.jsp";
+	                        // window.location.reload();
+                            // reload page and remove conflicting slashes that were generated somehow
+                            window.location.href = window.location.href.replace("///", "/");
 	                    } else {
 	                        showLoginError();
 	                    }

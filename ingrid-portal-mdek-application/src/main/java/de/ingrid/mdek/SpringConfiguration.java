@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Management iPlug
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,8 +22,11 @@
  */
 package de.ingrid.mdek;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,6 +47,7 @@ import de.ingrid.mdek.upload.auth.AuthService;
 import de.ingrid.mdek.upload.auth.PortalAuthService;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.impl.FileSystemStorage;
+import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.userrepo.DbUserRepoManager;
 import de.ingrid.mdek.userrepo.UserRepoManager;
 
@@ -123,9 +127,23 @@ public class SpringConfiguration {
 		switch (config.uploadImpl) {
 		case "de.ingrid.mdek.upload.storage.impl.FileSystemStorage":
 		default:
-			FileSystemStorage instance = new FileSystemStorage();
-			instance.setDocsDir(config.docsdir);
-			instance.setPartsDir(config.partsdir);
+			final FileSystemStorage instance = new FileSystemStorage();
+			instance.setDocsDir(config.uploadDocsDir);
+			instance.setPartsDir(config.uploadPartsDir);
+
+			// validators
+			final List<Validator> validators = new ArrayList<Validator>();
+			final Map<String, Validator> uploadValidatorMap = config.uploadValidatorMap;
+			for (final String validatorName : config.uploadValidators) {
+				if (uploadValidatorMap.containsKey(validatorName)) {
+	 				validators.add(uploadValidatorMap.get(validatorName));
+				}
+				else {
+					throw new BeanCreationException("Error creating upload instance: A validator with name '"+validatorName+"' is not defined in 'upload.validators.config'.");
+				}
+			}
+			instance.setValidators(validators);
+
 			return instance;
 		}
 	}

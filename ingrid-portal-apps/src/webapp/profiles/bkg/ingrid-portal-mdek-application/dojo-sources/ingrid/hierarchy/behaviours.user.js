@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,12 +24,10 @@ define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/bkg/general",
-    "ingrid/hierarchy/behaviours/bkg/opendata",
-    "ingrid/hierarchy/behaviours/bkg/accessConstraintsField",
     "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/modifyOldAccessConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField"
-], function(lang, behaviours, general, opendata, useConstraintsField, accessConstraintsField, oldAccessField, oldUseField) {
+    "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField",
+    "ingrid/hierarchy/behaviours/bkg/opendata"
+], function(lang, behaviours, general, useConstraintsField, oldUseField, openData) {
 
     return lang.mixin(behaviours, {
 
@@ -39,16 +37,6 @@ define([
         bkgGeneral: general,
 
         /**
-         * BKG specific open data behaviour.overrides default behaviour completely
-         */
-        bkgOpenData: opendata,
-
-        /**
-         * 
-         */
-        bkgNewAccessConstraintsField: accessConstraintsField,
-
-        /**
          * 
          */
         bkgNewUseConstraintsField: useConstraintsField,
@@ -56,12 +44,11 @@ define([
         /**
          * 
          */
-        bkgOldAccessConstraintsField: oldAccessField,
+        bkgOldUseConstraintsField: oldUseField,
 
         /**
-         * 
+         *
          */
-        bkgOldUseConstraintsField: oldUseField
-
+        openData: openData
     });
 });

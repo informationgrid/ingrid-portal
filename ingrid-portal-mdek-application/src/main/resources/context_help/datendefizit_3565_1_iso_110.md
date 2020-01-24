@@ -30,7 +30,7 @@ Domain: 110 (gmd:DQ_CompletenessOmission)
       <scope>
         <DQ_Scope>
           <level>
-            <MD_ScopeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset"/>
+            <MD_ScopeCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#MD_ScopeCode" codeListValue="dataset"/>
           </level>
         </DQ_Scope>
       </scope>

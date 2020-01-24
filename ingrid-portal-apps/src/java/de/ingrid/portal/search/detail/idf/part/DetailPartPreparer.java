@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -258,6 +258,7 @@ public class DetailPartPreparer {
         final String resourceConstraintsXpath = "//gmd:identificationInfo/*/gmd:resourceConstraints[gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue='otherRestrictions']";
         final String restrictionCodeXpath = "./gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode[not(@codeListValue='otherRestrictions')]";
         final String constraintsTextXpath = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gco:CharacterString";
+        final String constraintsTextXpathAnchor = "./gmd:MD_LegalConstraints/gmd:otherConstraints/gmx:Anchor";
         List<String> result = new ArrayList<>();
 
         NodeList resourceConstraintsNodes = xPathUtils.getNodeList(this.rootNode, resourceConstraintsXpath);
@@ -270,23 +271,27 @@ public class DetailPartPreparer {
             Node node = resourceConstraintsNodes.item(i);
 
             NodeList restrictionCodeNodes = xPathUtils.getNodeList(node, restrictionCodeXpath);
-            NodeList constraintsNodes = xPathUtils.getNodeList(node, constraintsTextXpath);
-            if (restrictionCodeNodes == null || (restrictionCodeNodes != null && restrictionCodeNodes.getLength() == 0) ||
-                    constraintsNodes == null || (constraintsNodes != null && constraintsNodes.getLength() == 0)) {
-                continue;
+            NodeList constraintsNodes = xPathUtils.getNodeList(node, constraintsTextXpath + "|" + constraintsTextXpathAnchor);
+
+            String restrictionCode = null;
+            if (restrictionCodeNodes != null && restrictionCodeNodes.getLength() != 0) {
+
+                NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
+                Node n = attrs.getNamedItem("codeListValue");
+                if (n != null) {
+                    restrictionCode = n.getTextContent();
+                    if (log.isDebugEnabled()) {
+                        log.debug(String.format("Discovered restriction code: %s", restrictionCode));
+                    }
+                    if (restrictionCode != null) {
+                        restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
+                    }
+                }
             }
 
-            NamedNodeMap attrs = restrictionCodeNodes.item(0).getAttributes();
-            Node n = attrs.getNamedItem("codeListValue");
-            if (n == null) {
+            if (constraintsNodes == null || constraintsNodes.getLength() == 0) {
                 continue;
             }
-            String restrictionCode = n.getTextContent();
-            if(log.isDebugEnabled()) {
-                log.debug(String.format("Discovered restriction code: %s", restrictionCode));
-            }
-            if (restrictionCode == null) continue;
-            restrictionCode = getValueFromCodeList(restrictionCodeList, restrictionCode);
 
             String constraints = constraintsNodes.item(0).getTextContent();
             if(log.isDebugEnabled()) {
@@ -306,7 +311,6 @@ public class DetailPartPreparer {
             }
 
             // try to get the license source from other constraints (#1066)
-            String source = null;
             String url = null;
             String name = null;
             // also remember further otherConstraints may be used in BKG profile (#1194)
@@ -322,7 +326,6 @@ public class DetailPartPreparer {
                 boolean isJSON = false;
                 try {
                     IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
-                    source = (String) json.get("quelle");
                     url = (String) json.get("url");
                     name = (String) json.get("name");
                     isJSON = true;
@@ -345,28 +348,33 @@ public class DetailPartPreparer {
             }
 
             String value;
+            String restrictionInfo = "";
+            if (restrictionCode != null && restrictionCode.trim().length() > 0) {
+                restrictionInfo = restrictionCode + ": ";
+            }
+
             if (url != null && !url.trim().isEmpty()) {
                 // we have a URL from JSON
+
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
                     // we have a different license name from JSON, render it with link
-                    value = String.format("%s: <a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionCode, url, name, finalValue);
+                    value = String.format("%s<a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a><br>%s", restrictionInfo, url, name, finalValue);
                 } else {
                     // no license name, render whole text with link
-                    value = String.format("%s: <a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionCode, url, finalValue);
+                    value = String.format("%s<a target='_blank' href='%s'><svg class='icon'><use xlink:href='#external-link'></svg> %s</a>", restrictionInfo, url, finalValue);
                 }
             } else {
                 // NO URL
                 if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
-                    value = String.format("%s: %s<br>%s", restrictionCode, name, finalValue);
+                    value = String.format("%s%s<br>%s", restrictionInfo, name, finalValue);
+                } else if (restrictionCode != null){
+                    value = String.format("%s%s", restrictionInfo, finalValue);
                 } else {
-                    value = String.format("%s: %s", restrictionCode, finalValue);
+                    value = finalValue;
                 }
             }
 
             if (!result.contains(value)) {
-                if (source != null && !source.isEmpty()) {
-                    value += "<br>Quellenvermerk: " + source;
-                }
                 result.add(value);
             }
             

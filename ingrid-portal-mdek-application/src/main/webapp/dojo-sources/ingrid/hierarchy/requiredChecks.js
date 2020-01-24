@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -97,7 +97,8 @@ define(["dojo/_base/declare",
             var grids = query(".rubric:not(.hide) .required:not(.hide):not(.alwaysHidden) .ui-widget:not(.noValidate)", "contentFrameBodyObject").map(function(item) {return item.id;});
 
             array.forEach(widgets, function(w) {
-                if (lang.trim(registry.byId(w).get("displayedValue")).length === 0) {
+                var displayedValue = registry.byId(w).get("displayedValue");
+                if (lang.trim(displayedValue).length === 0 || displayedValue === "&nbsp;") {
                     notPublishableIDs.push( [w, message.get( "validation.error.empty.field" )] );
                 }
             });

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -144,7 +144,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory12", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_12_CHECKED, false ));
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
         context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
-        
+
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
@@ -460,7 +460,13 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         if (request.getUserPrincipal() != null) {
              showAdminContent = request.getUserPrincipal().getName().equals("admin");
         }
-        
+        String ranking = request.getParameter(Settings.PARAM_RANKING);
+        if(UtilsSearch.containsFieldOrKey(query, IngridQuery.RANKED)) {
+            ranking = query.getRankingType();
+        } else if (qd != null && qd.getQuery() != null && UtilsSearch.containsFieldOrKey(qd.getQuery(), IngridQuery.RANKED)) {
+            ranking = qd.getQuery().getRankingType();
+        }
+        context.put("ranking", ranking);
         context.put("ds", request.getParameter("ds"));
         context.put("adminContent", showAdminContent);
         context.put("rankedPageSelector", rankedPageNavigation);

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -128,7 +128,7 @@ define({
     "uvp.form.negative.address": "Kontaktdaten der federführenden Dienststelle",
     "uvp.form.negative.approvalDate": "Datum der Entscheidung",
     "uvp.form.negative.approvalDate.helpMessage": "Eintragung des Datums der Entscheidung - Pflichtfeld.<br><br>Beispiel:<br><br>TT.MM.JJJJ",
-    "uvp.form.negative.relevantDocs": "Relevante Dokumente",
+    "uvp.form.negative.relevantDocs": "Ergebnis der UVP-Vorprüfung",
     "uvp.form.negative.relevantDocs.helpMessage": "...",
 
     "ui.toolbar.CutCaption": "Verfahren/Adressen/Teilbaum ausschneiden",

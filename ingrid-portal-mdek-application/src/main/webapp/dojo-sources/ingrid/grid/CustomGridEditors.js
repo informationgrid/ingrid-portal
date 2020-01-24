@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -210,6 +210,13 @@ define([
                             } );
                         });
                     }
+                } else if (args.column.init) {
+                    setTimeout(function() {
+                        UtilStore.updateWriteStore("activeCell_" + args.grid.id, args.column.init(), {
+                            identifier: '1',
+                            label: '0'
+                        });
+                    }, 100)
                 } else {
                     data = [];
                     for (var i = 0; i < args.column.options.length; i++) {
@@ -219,7 +226,7 @@ define([
 
                 var store = new dojo.data.ItemFileWriteStore({
                     data: {
-                        items: data
+                        items: args.column.sort ? args.column.sort(data) : data
                     }
                 });
                 box = new dijit.form.FilteringSelect({
@@ -348,7 +355,7 @@ define([
                 }
                 var store = new dojo.data.ItemFileWriteStore({
                     data: {
-                        items: data
+                        items: args.column.sort ? args.column.sort(data) : data
                     }
                 });
                 box = new dijit.form.ComboBox({

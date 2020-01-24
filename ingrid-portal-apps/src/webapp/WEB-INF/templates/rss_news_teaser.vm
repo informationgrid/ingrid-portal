@@ -3,8 +3,8 @@
     <div class="column column--1-2-m">
         <article class="teaser news-teaser ob-container">
             <small class="bx-bot-0">
-                <span class="tx-darker"><strong>$date.format('d.M.yyyy',$rssEntry.publishedDate)</strong></span>
-                <span class="tx-light">$date.format('H:mm',$rssEntry.publishedDate)</span>
+                <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
+                <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
             </small>
             <h4 class="bx-top-0">
                 <a href="$!rssEntry.link">$!rssEntry.title</a>

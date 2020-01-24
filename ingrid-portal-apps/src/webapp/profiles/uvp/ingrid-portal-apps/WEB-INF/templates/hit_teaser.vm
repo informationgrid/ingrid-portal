@@ -36,22 +36,22 @@
                                             <div class="helper text">
                                                 <span>$Codelists.getCodeListValue("8001", $UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.obj_class" ), $languageCode)</span>
                                             </div>
-                                            #set ($date = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
-                                            <a href='/trefferanzeige?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()'" title="$hit.getHitDetail().getTitle()">
+                                            #set ($mode_time = $UtilsSearch.getDateFormatValue($UtilsSearch.getDetailValue( $hit.getHitDetail(), "t01_object.mod_time" )))
+                                            <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
                                                 <h2 class="header">
                                                     $hit.getHitDetail().getTitle()
                                                 </h2>
                                             </a>
-                                            #if($date)
+                                            #if($mode_time)
                                             <div class="helper text date">
-                                                <span class="">$date</span>
+                                                <span class="">$mode_time</span>
                                             </div>
                                             #end
                                             <p class="data-text">$hit.getHitDetail().getSummary()</p>
                                             #foreach($uvp_category in $hit.getHitDetail().get("uvp_category"))
                                                 <div class="helper icon">
                                                     <span class="ic-ic-$uvp_category"></span>
-                                                    <span class="">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
+                                                    <span class="text">$MESSAGES.getString("searchResult.categories.uvp.$uvp_category")</span>
                                                 </div>
                                             #end
                                             <a href="$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$hit.getHitDetail().getId()&plugid=$hit.getHitDetail().getPlugId()" title="$hit.getHitDetail().getTitle()">
@@ -77,7 +77,7 @@
                                                     bounds = L.latLngBounds(southWest, northEast);
                                                 }
                                                 var map = addLeafletMapWithId('map-id-$hit.getHitDetail().getId()', getOSMLayer('<br>$MESSAGES.getString("common.map.info")'), bounds, new L.LatLng($UtilsSearch.getDetailValue( $hit.getHitDetail(), "lat_center" ), $UtilsSearch.getDetailValue( $hit.getHitDetail(), "lon_center" )), 10);
-                                                map.scrollWheelZoom.disable();
+                                                map.gestureHandling.enable();
                                                 addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds, '', '23px');
                                                 if(bounds) {
                                                     L.rectangle(bounds, {color: 'green', weight: 3, fill: true}).addTo(map);
@@ -95,7 +95,7 @@
         </div>
         <div class="row">
             <div class="columns text-center">
-                <button type="button" class="button outline" onclick="location.href='$renderResponse.encodeURL("/portal/main-search.psml?rank=date")'" >Mehr anzeigen<span class="ic-ic-angle-down"></span></button>
+                <a type="button" class="button outline" href="$renderResponse.encodeURL("/portal/main-search.psml")?rank=date" >Mehr anzeigen<span class="ic-ic-angle-down"></span></a>
             </div>
         </div>
     </div>

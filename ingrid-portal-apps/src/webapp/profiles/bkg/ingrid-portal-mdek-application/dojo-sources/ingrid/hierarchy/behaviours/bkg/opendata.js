@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -20,57 +20,108 @@
  * limitations under the Licence.
  * **************************************************#
  */
-define([
-    "dojo/_base/declare",
-    "dojo/on",
-    "dojo/dom-class",
-    "dijit/registry"
-], function(declare, on, domClass, registry) {
+define(["dojo/_base/declare",
+  "dojo/_base/array",
+  "dojo/Deferred",
+  "dojo/cookie",
+  "dojo/dom",
+  "dojo/dom-class",
+  "dojo/on",
+  "dojo/topic",
+  "dijit/registry",
+  "ingrid/message",
+  "ingrid/dialog",
+  "ingrid/utils/Grid",
+  "ingrid/utils/Syslist"
+], function (declare, array, Deferred, cookie, dom, domClass, on, topic, registry, message, dialog, UtilGrid, UtilSyslist) {
 
-    // issue: 339
-    return declare(null, {
-        title: "Open Data",
-        description: "BKG spezifisches Verhalten zu Open Data",
-        defaultActive: true,
-        category: "BKG",
-        run: function() {
-            // 1) open data categories shall not be displayed
-            // 2) link of type download is optional
-            // (3) add "Es gelten keine Zugriffsbeschränkungen" into BKG specific field "Zugriffsbeschränkungen" (#556)
-            // (4) use BKG specific codelist for "Nutzungsbedingungen" (#393)
-            // (5) add "opendata" keyword to ISO -> mapping script (default)
-            // (6) remove keyword information from ISO? How to distinguish when importing?
-            // (7) add json to ISO for "Nutzungsbedingungen"
-
-
-            // delay registration so that this behaviour is called at the end
-            on(registry.byId("isOpenData"), "click", function() {
-                var bkgUseConstraintsWidget = registry.byId("bkg_useConstraints");
-                var isChecked = this.checked;
-
-                if (isChecked) {
-
-                    // automatically replace access constraint with "keine"
-                    var access = registry.byId("bkg_accessConstraints");
-                    access.selectInput.set("value", "1");
-
-                }
-
-                // reset use constraints since codelist has changed explicitly
-                bkgUseConstraintsWidget.selectInput.set("value", "");
-            });
-
-
-            on(registry.byId("isOpenData"), "change", function(isChecked) {
-                var bkgUseConstraintsWidget = registry.byId("bkg_useConstraints");
-                if (isChecked) {
-                    bkgUseConstraintsWidget.setCodelist(10005);
-                    bkgUseConstraintsWidget.codelistForText = 10006;
-                } else {
-                    bkgUseConstraintsWidget.setCodelist(10003);
-                    bkgUseConstraintsWidget.codelistForText = 10004;
-                }
-            });
+  return declare(null, {
+    title: "Open Data",
+    description: "Bei der Aktivierung der Checkbox \"Open Data\" werden folgende Verhalten hinzugefügt. Anzeige der Kategorien als Pflichtfeld.",
+    category: "BKG",
+    defaultActive: true,
+    COOKIE_HIDE_OPEN_DATA_HINT: "ingrid.open.data.hint",
+    run: function () {
+      // hide open-data checkbox for classes 0 and 4
+      topic.subscribe("/onObjectClassChange", function (data) {
+        if (data.objClass === "Class0" || data.objClass === "Class4") {
+          domClass.add(dom.byId("uiElement6010"), "hide");
+          // also uncheck openData checkbox, so that categories table must not be
+          // displayed according to the state
+          registry.byId("isOpenData").set("checked", false);
+        } else {
+          domClass.remove(dom.byId("uiElement6010"), "hide");
         }
-    })();
+      });
+
+      // this event will also execute when object is loaded
+      // here we have to make sure the categories table is shown/removed correctly
+      on(registry.byId("isOpenData"), "Change", function (isChecked) {
+
+        if (isChecked) {
+
+          // show categories
+          domClass.remove("uiElement6020", "hide");
+
+          // make field mandatory
+          domClass.add("uiElement6020", "required");
+
+        } else {
+          // hide categories
+          domClass.add("uiElement6020", "hide");
+
+          // revert field mandatory
+          domClass.remove("uiElement6020", "required");
+
+        }
+      });
+
+      // behavior when the checkbox is actively clicked by a user
+      // only actions that shall modify data once and has nothing to do with the view!
+      var thisBehaviour = this;
+      on(registry.byId("isOpenData"), "Click", function (/*evnt*/) {
+        var isChecked = this.checked;
+        if (isChecked) {
+          var def = new Deferred();
+          var self = this;
+          if (cookie(thisBehaviour.COOKIE_HIDE_OPEN_DATA_HINT) !== "true") {
+            dialog.show(message.get("dialog.general.info"), message.get("hint.selectOpenData"), dialog.INFO,
+              [
+                {
+                  caption: message.get("general.ok.hide.next.time"), type: "checkbox",
+                  action: function (newValue) {
+                    cookie(thisBehaviour.COOKIE_HIDE_OPEN_DATA_HINT, newValue, { expires: 730 });
+                  }
+                },
+                {
+                  caption: message.get("general.cancel"),
+                  action: function () {
+                    // reset checkbox state
+                    self.set("checked", false);
+                  }
+                },
+                {
+                  caption: message.get("general.ok"),
+                  action: function () {
+                    def.resolve();
+                  }
+                }
+              ]);
+          } else {
+            def.resolve();
+          }
+
+          def.then(function () {
+            // automatically replace access constraint with "keine"
+            var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
+            UtilGrid.setTableData('availabilityAccessConstraints', data);
+          });
+
+        } else {
+          // remove all categories
+          UtilGrid.setTableData("categoriesOpenData", []);
+        }
+      });
+    }
+  })();
 });
