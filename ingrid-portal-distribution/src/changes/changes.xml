@@ -8,6 +8,15 @@
     <body>
 
         <release version="5.3.1" date="2020-xx-xx" description="Release 5.3.1">
+          <action type="fix" dev="wemove" issue="1671">
+            Portal: Fix display message after create user as portal admin.
+          </action>
+          <action type="fix" dev="wemove" issue="1672">
+            Portal: Fix NUMIS and UVP-NI layout.
+          </action>
+          <action type="fix" dev="wemove" issue="1673">
+            Portal: Fix change password function.
+          </action>
           <action type="fix" dev="wemove" issue="1595">
             Portal: Fix display constraints on portal detail view.
           </action>
