@@ -154,7 +154,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 // since this link will be going to the webmap-client, the service must be WMS!
                 getCapUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( getCapUrl, ServiceType.WMS );
                 
-                url = UtilsVelocity.urlencode( getCapUrl ) + "||";
+                url = UtilsVelocity.urlencode( getCapUrl ) + "%7C%7C";
                 
                 if(!getLayerIdentifier(null).equals("NOT_FOUND")) {
                     url = url + "" + UtilsVelocity.urlencode(getLayerIdentifier(null));
@@ -177,7 +177,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS );
                 if (capabilitiesUrl != null) {
                     // get it directly from the operation
-                    map = addBigMapLink(capabilitiesUrl + "||", true);
+                    map = addBigMapLink(capabilitiesUrl + "%7C%7C", true);
                 }                
             }
         } else {
@@ -310,7 +310,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
                             if ( capabilityUrl != null ) {
                                 capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
-                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString()) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
+                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString()) + "%7C%7C" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
                             }
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
@@ -326,7 +326,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if ( capUrl != null ) {
                             // add possible missing parameters
                             capUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl.toString() ));
-                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString()) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
+                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString()) + "%7C%7C" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
@@ -907,7 +907,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS||" + UtilsVelocity.urlencode(urlValue.toString()) + "||");
+                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS%7C%7C" + UtilsVelocity.urlencode(urlValue.toString()) + "%7C%7C");
                                   element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
@@ -1251,7 +1251,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (urlValue.toLowerCase().contains("request=getcapabilities")) {
                         // also add an identifier to select the correct layer in the map client 
-                        map = addBigMapLink(UtilsVelocity.urlencode(urlValue) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(null)), true);
+                        map = addBigMapLink(UtilsVelocity.urlencode(urlValue) + "%7C%7C" + UtilsVelocity.urlencode(getLayerIdentifier(null)), true);
                         // ADD FIRST ONE FOUND !!!
                         mapLinkAdded = true;
                         break;

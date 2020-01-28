@@ -22,7 +22,7 @@
                     <p class="caption">$entry.title</p>
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <p class="caption">
-                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${entry.get("href")}">
+                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}">
                             $entry.title
                             <span class="ic-ic-angle-right">
                         </a>
@@ -69,7 +69,7 @@
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
-            <a class="button pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+            <a class="button pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
                 $MESSAGES.getString('common.result.showMap')
             </a>
         #end
