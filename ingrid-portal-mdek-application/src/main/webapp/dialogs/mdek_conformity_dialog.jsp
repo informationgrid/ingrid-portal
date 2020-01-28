@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -183,11 +183,6 @@
                             specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
                             level = registry.byId("conformityLevelInspireFieldName").get("value");
                             publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
-
-                            if (isInspireConformityInconsistent(specification, level)) {
-                                warnDialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", warnDialog.WARNING);
-                                return;
-                            }
                         } else if (isNotInCodelist) {
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("value");
                             level = registry.byId("conformityLevelFreeFieldName").get("value");

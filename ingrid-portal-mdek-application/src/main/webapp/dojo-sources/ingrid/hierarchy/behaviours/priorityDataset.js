@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -40,7 +40,8 @@ define([
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1" || msg.objClass === "Class3") {
-                    self.register();
+                    // delayed register to perform other unregister functions
+                    setTimeout(function () { self.register() });
                 } else {
                     self.unregister();
                 }
@@ -48,26 +49,28 @@ define([
         },
 
         register: function() {
+            var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
             // when registering the event handler then the change might already has happened
             // so that we have to set here manually
-            if (inspireRelevantWidget.checked) {
-                UtilUI.setShow("uiElement5090");
-                registry.byId("priorityDataset").reinitLastColumn();
-            }
+            self.handleInspireChange(inspireRelevantWidget.checked);
 
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    if (isChecked) {
-                        UtilUI.setShow("uiElement5090");
-                        registry.byId("priorityDataset").reinitLastColumn();
-                    } else {
-                        UtilUI.setOptional("uiElement5090");
-                    }
+                    self.handleInspireChange(isChecked);
                 })
             )
+        },
+
+        handleInspireChange: function (isChecked) {
+            if (isChecked) {
+                UtilUI.setShow("uiElement5090");
+                registry.byId("priorityDataset").reinitLastColumn();
+            } else {
+                UtilUI.setOptional("uiElement5090");
+            }
         },
 
         unregister: function() {

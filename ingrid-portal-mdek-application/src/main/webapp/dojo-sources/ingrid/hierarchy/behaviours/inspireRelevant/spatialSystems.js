@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -49,7 +49,8 @@ define([
                 // only register if class 1 and if not already registered
                 if (msg.objClass === "Class1") {
                     if (self.events.length === 0) {
-                        self.register();
+                        // delayed register to perform other unregister functions
+                        setTimeout(function () { self.register() });
                     }
                 } else {
                     self.unregister();
@@ -60,22 +61,24 @@ define([
         register: function () {
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
-            if (inspireRelevantWidget.checked) {
-                self.publishEvent = self.handlePublishValidation();
-            }
+            this.handleInspireChange(inspireRelevantWidget.checked);
 
             this.events.push(
                 on(inspireRelevantWidget, "Change", function (isChecked) {
-                    if (isChecked) {
-                        if (self.publishEvent === null) {
-                            self.publishEvent = self.handlePublishValidation();
-                        }
-                    } else {
-                        utils.removeEvents([self.publishEvent]);
-                        self.publishEvent = null;
-                    }
+                    self.handleInspireChange(isChecked);
                 })
             );
+        },
+
+        handleInspireChange: function (isChecked) {
+            if (isChecked) {
+                if (this.publishEvent === null) {
+                    this.publishEvent = this.handlePublishValidation();
+                }
+            } else {
+                utils.removeEvents([this.publishEvent]);
+                this.publishEvent = null;
+            }
         },
 
         handlePublishValidation: function() {

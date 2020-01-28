@@ -30,7 +30,7 @@ Domain: 29 (gmd:pointOfContact)
         <CI_ResponsibleParty uuid="UUID OF CONTACT">
           CONTACT INFOS
           <role>
-            <CI_RoleCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="ROLE CODE"/>
+            <CI_RoleCode codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_RoleCode" codeListValue="ROLE CODE"/>
           </role>
         </CI_ResponsibleParty>
     </MD_DataIdentification>

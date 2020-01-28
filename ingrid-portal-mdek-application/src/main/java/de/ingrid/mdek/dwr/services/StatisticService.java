@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -40,18 +40,18 @@ public class StatisticService {
     private static final Logger log = LogManager.getLogger(StatisticService.class);
 
     // Injected by Spring
-    private ObjectRequestHandler objectRequestHandler;
-
     private CatalogRequestHandler catalogRequestHandler;
 
     private CodeListService codelistService;
+
+    private QueryService queryService;
 
     public Report createReport(ReportType type, Map parameter) {
 
         try {
             if (type == ReportType.UVP) {
 
-                return new UVPReport(objectRequestHandler, catalogRequestHandler, codelistService, parameter).create();
+                return new UVPReport(catalogRequestHandler, queryService, codelistService, parameter).create();
 
             } else {
                 log.error("No such report type: " + type);
@@ -64,15 +64,15 @@ public class StatisticService {
         return null;
     }
 
-    public void setObjectRequestHandler(ObjectRequestHandler objectRequestHandler) {
-        this.objectRequestHandler = objectRequestHandler;
-    }
-
     public void setCodelistService(CodeListService codelistService) {
         this.codelistService = codelistService;
     }
 
     public void setCatalogRequestHandler(CatalogRequestHandler catalogRequestHandler) {
         this.catalogRequestHandler = catalogRequestHandler;
+    }
+
+    public void setQueryService(QueryService queryService) {
+        this.queryService = queryService;
     }
 }

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -42,6 +42,7 @@
             deactivate($(this));
             if (locationHash === elemHash) {
               activate($(this));
+              $('a[name=' + elemHash + ']').addClass('is-active');
             }
         });
     }
@@ -49,13 +50,16 @@
 })();
 
 $('.js-anchor-target').on('click', function (event) {
-  var parent = event.currentTarget.parentNode;
+  var parent = $(this).parent();
   if(parent) {
-    var children = parent.children;
+    var children = parent.children();
     for (var i = 0; i < children.length; i++) {
-      var child = children[i];
-      child.classList.remove('is-active');
+      var child = $(children[i]);
+      child.removeClass('is-active');
+      
+      $('a[name=' + child.context.hash.replace('#', '') + ']').removeClass('is-active');
     }
   }
-  event.currentTarget.classList.add('is-active');
+  $(this).addClass('is-active');
+  $('a[name=' + $(this).context.hash.replace('#', '') + ']').addClass('is-active');
 });

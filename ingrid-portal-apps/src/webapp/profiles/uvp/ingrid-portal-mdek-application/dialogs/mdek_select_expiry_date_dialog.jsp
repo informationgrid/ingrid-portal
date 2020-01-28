@@ -2,7 +2,7 @@
   **************************************************-
   InGrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -65,11 +65,11 @@
 </head>
 <body>
     <div style="padding: 5px; margin-bottom: 10px; border: 1px solid #ccc;">
-        Das hier gesetzte Datum wird in allen ausgewählten Zeilen als "Gültig bis"-Datum gesetzt. Ist kein Datum gesetzt, so werden die Datumsangaben aus den ausgewählten Zeilen entfernt.
+        Das hier gesetzte Datum wird in allen ausgewï¿½hlten Zeilen als "Gï¿½ltig bis"-Datum gesetzt. Ist kein Datum gesetzt, so werden die Datumsangaben aus den ausgewï¿½hlten Zeilen entfernt.
     </div>
-    <label for="expiryDate">Gültig bis:</label>
+    <label for="expiryDate">Gï¿½ltig bis:</label>
     <input type="text" name="expiryDate" id="expiryDate"
         data-dojo-type="dijit/form/DateTextBox" />
-        <button id="btnAddExpiryDate" type="button">Übernehmen</button>
+        <button id="btnAddExpiryDate" type="button">ï¿½bernehmen</button>
 </body>
 </html>

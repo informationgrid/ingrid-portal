@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
     <name>baw_wsv</name>
-    <description>Portal-Profile Geoportal.WSV</description>
+    <description>Portal-Profile GeoPortal.WSV</description>
     <pages>
         <page>
             <name>main-chronicle.psml</name>

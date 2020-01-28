@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -2302,12 +2302,14 @@ public class UtilsFacete {
                 for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("partner")){
                     query.addField(tmp);
                 }
-                    
             }
             if(tmpQuery.get("provider") != null){
                 for(FieldQuery tmp : (ArrayList<FieldQuery>)tmpQuery.get("provider")){
                     query.addField(tmp);
                 }
+            }
+            if(tmpQuery.getRankingType() != null) {
+                query.put( IngridQuery.RANKED, tmpQuery.getRankingType() );
             }
         }
     } 

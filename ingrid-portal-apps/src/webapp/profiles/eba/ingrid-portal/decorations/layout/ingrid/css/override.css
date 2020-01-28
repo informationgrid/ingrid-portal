@@ -1,0 +1,323 @@
+/*
+ * **************************************************-
+ * InGrid Portal Apps
+ * ==================================================
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * ==================================================
+ * Licensed under the EUPL, Version 1.1 or – as soon they will be
+ * approved by the European Commission - subsequent versions of the
+ * EUPL (the "Licence");
+ * 
+ * You may not use this work except in compliance with the Licence.
+ * You may obtain a copy of the Licence at:
+ * 
+ * http://ec.europa.eu/idabc/eupl5
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the Licence is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the Licence for the specific language governing permissions and
+ * limitations under the Licence.
+ * **************************************************#
+ */
+.footer__logo {
+    width: auto;
+}
+
+.header__logo {
+    height: auto;
+    margin: -18px 0.25rem -18px 46px;
+}
+
+@media screen and (min-width: 768px) {
+    .header__logo {
+        margin: -18px 0.25rem -18px 65px;
+    }
+}
+
+.mobile__title {
+    color: #FFFFFF;
+    font-size: 25px;
+}
+
+.mobile__title:hover {
+    color: #FFFFFF;
+}
+
+.header__widgets__section {
+    padding: 1.125rem 0;
+}
+
+@media screen and (max-width: 640px) {
+  .column--2-3 {
+    width: 100%;
+  }
+}
+
+.block--light .tab__content {
+  background: transparent;
+}
+
+.block--light .tag{
+  background: #FFF;
+}
+
+.nav-toggle:after {
+  border-width: 0 0 76px 20px;
+  border-color: transparent transparent #FFF transparent;
+}
+
+.mobile__logo{
+  height: 4.75rem;
+}
+
+.header__logo:after {
+  border-style: solid;
+  border-width: 0 0 76px 20px;
+  border-color: transparent transparent #485f88 transparent;
+  content: '';
+  height: 0;
+  position: absolute;
+  right: 0;
+  width: 0;
+  top: 0;
+  left: 113px;
+}
+
+@media screen and (max-width: 479px) {
+  .nav-toggle:after {
+    border-width: 0 0 75px 20px;
+  }
+  .header__logo {
+    height: auto;
+    margin: -19px 0.25rem -19px 46px;
+  }
+  .header__logo:after {
+    border-width: 0 0 75px 20px;
+  }
+}
+
+.header__widget__icon {
+  fill: #FFF;
+}
+
+.header__widget__icon.is-active {
+  fill: #28225B;
+}
+
+.service_in_main {
+  padding: 18px 10px 0; 
+}
+
+.service_in_main .header__widget__text {
+  color:#FFF;
+}
+
+.desktop__title {
+  color:#FFF;
+  padding: 15px 0 0;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.desktop__header__logo:after {
+  border-style: solid;
+  border-width: 0 0 58px 20px;
+  border-color: transparent transparent transparent #FFFFFF ;
+  content: '';
+  height: 0;
+  position: absolute;
+  right: 0;
+  width: 0;
+  top: 0;
+  left: 99px;
+}
+
+.metamenu {
+  right: 0px;
+}
+
+.btn--primary:not([disabled]):hover, .btn--primary:not([disabled]):focus, .btn--primary:not([disabled]):active {
+  background: #2a4268;
+  border-color: #2a4268;
+}
+.nav__container {
+  border-bottom: 1px solid #2a4268;
+}
+.nav__foot a:hover {
+  background: #2a4268;
+}
+.nav-desktop__title:hover, .nav-desktop__title.is-selected, .nav-desktop__title.is-active {
+  background: #2a4268;
+}
+.nav-desktop__dropdown {
+  border-top: 4px solid #2a4268;
+}
+.nav-overlay__item--level1 {
+  border-bottom: 1px solid #2a4268;
+}
+.no-touchevents .nav-overlay__item--level1:hover, .nav-overlay__item--level1.is-active {
+  background: #2a4268;
+}
+.pagination__list a[href]:hover .icon {
+  fill: #2a4268;
+}
+.tab__select:hover, .tab__select.is-active {
+  background: #2a4268;
+}
+.nav-toggle {
+  color: #2a4268 !important;
+}
+
+a {
+  color: #485f88;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #485f88;
+}
+.field--success {
+  border: 2px solid #485f88 !important;
+}
+.field-toggle__label--highlight .icon {
+  fill: #485f88;
+}
+input:checked + .field-toggle__label--highlight .field-toggle__icon {
+  border-color: #485f88;
+  box-shadow: 0 0 0 1px #485f88;
+}
+input:checked + .field-toggle__label--highlight .field-toggle__icon {
+  border-color: #485f88;
+  box-shadow: 0 0 0 1px #485f88;
+}
+.table__sort-toggle .icon {
+  fill: #485f88;
+}
+.btn--primary {
+  background: #485f88;
+}
+.btn--secondary {
+  color: #485f88 !important;
+}
+.btn {
+  border: 1px solid #485f88;
+}
+.btn--secondary:not([disabled]):hover, .btn--secondary:not([disabled]):focus, .btn--secondary:not([disabled]):active {
+  background: #485f88;
+}
+.icon-active {
+  fill: #485f88;
+}
+.link--alt:hover {
+  color: #485f88;
+}
+.category-list a:hover {
+  color: #485f88;
+}
+.list--checked .icon {
+  fill: #485f88;
+}
+.list--checked .icon {
+  fill: #485f88;
+}
+.nav__container__content:active {
+  color: #485f88;
+}
+.nav__containter__content-item a:active {
+  color: #485f88;
+}
+.nav-desktop {
+  background: #485f88;
+}
+.nav-desktop__dropdown a:hover, .nav-desktop__dropdown a:active {
+  color: #485f88 !important;
+}
+.dropmenu .is-active {
+  color: #485f88;
+}
+.metamenu__link.is-active {
+  color: #485f88;
+}
+.nav-overlay {
+  background: #485f88;
+}
+.no-touchevents .nav-overlay__item--level2:hover, .nav-overlay__item--level2.is-active, .no-touchevents
+.nav-overlay__item--level3:hover,
+.nav-overlay__item--level3.is-active {
+  color: #485f88;
+}
+.search-form input {
+  border-color: #485f88;
+}
+.pagination__list a[href] .icon {
+  fill: #485f88;
+}
+.tab__toggles {
+  color: #485f88;
+}
+.tab__toggle.is-active a {
+  color: #485f88;
+}
+.message--success {
+  color: #485f88;
+}
+.message-fill--success .icon {
+  fill: #485f88;
+}
+.no-touchevents .tooltip:hover {
+  border-color: #485f88;
+}
+.no-touchevents .tooltip:hover .tooltip__icon {
+  fill: #485f88;
+}
+.popup__header {
+  border-bottom: 2px solid #485f88;
+}
+.teaser__box {
+  border-top: 4px solid #485f88;
+}
+.no-touchevents .filter__title:hover {
+  color: #485f88;
+}
+.no-touchevents .sidebar-filter-subheader:hover {
+  color: #485f88;
+}
+.no-touchevents .sidebar-filter-content ul a:hover {
+  color: #485f88;
+}
+.no-touchevents .tree__toggle:hover {
+  border-color: #485f88;
+  box-shadow: 0 1px 0 #485f88;
+}
+.ob-border-brand {
+  border: 1px solid #485f88 !important;
+}
+.tx-highlight {
+  color: #485f88 !important;
+}
+@media screen and (min-width: 640px) {
+  .pagination__number:hover, .pagination__number.is-active {
+    color: #485f88;
+    box-shadow: inset 0 -4px 0 0 #485f88;
+  }
+}
+@media screen and (min-width: 768px) {
+  .tab__toggles a:hover, .tab__toggles .is-active a {
+    box-shadow: inset 0 -2px 0 0 #485f88, 0 4px 0 0 #485f88;
+  }
+}
+@media screen and (max-width: 939px) {
+  .header {
+    background: #485f88;
+  }
+}
+@media screen and (min-width: 940px) {
+  .no-touchevents .header__widget > a:hover {
+    color: #485f88;
+  }
+  .header__widget__icon.is-active {
+    fill: #485f88;
+  }
+}

@@ -599,14 +599,18 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
     padding: .8rem 1.3rem;
     margin-bottom: 40px;
   }
+  input:focus:-ms-input-placeholder { color: $blue-rhapsody !important; }
+  input:focus::-ms-input-placeholder { color: $blue-rhapsody; }
   input:focus::placeholder { color: $blue-rhapsody; }
   .is-invalid-input {
     background-color: $bg-color;
     border-color: $red;
   }
+  .is-invalid-input:-ms-input-placeholder { color: $red !important; }
+  .is-invalid-input::-ms-input-placeholder { color: $red; }
   .is-invalid-input::placeholder { color: $red; }
   .is-invalid-input:focus { border-color: $blue-light; }
-  .is-invalid-label { color: $blue-rhapsody; }
+  .is-invalid-label { color: $red; }
   .input-check, .input-radio {
     background-color: $white;
     border-radius: 7px;
@@ -623,6 +627,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
 .row.alert {
   max-width: 100%;
   text-align: center;
+  margin: 8px 0 16px;
 
   .columns { padding: 0; }
   p {
@@ -632,7 +637,6 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
       position: relative;
       top: 35%;
       font-family: 'Roboto-Medium';
-      color: $white;
     }
   }
   .button.round {
@@ -640,9 +644,18 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
     margin-top: 12px;
     margin-right: 32px;
   }
-  .error { background-color: $red; }
-  .success { background-color: $green; }
-  .warning { background-color: $orange; }
+  .error { 
+    border: 1px solid $red;
+    color: $red;
+   }
+  .success {
+    border: 1px solid $green;
+    color: $green;
+  }
+  .warning {
+    border: 1px solid $orange;
+    color: $orange;
+  }
 }
 .row.alert, .popup {
   .button.round {
@@ -1689,7 +1702,7 @@ footer {
   color: #0089C6;
   cursor: default;
 }
-.anchor:target {
+.anchor.is-active {
   display: block;
   float: left;
   left: -6px;

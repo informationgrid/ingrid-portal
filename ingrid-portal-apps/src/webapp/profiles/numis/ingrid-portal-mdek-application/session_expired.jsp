@@ -2,7 +2,7 @@
   **************************************************-
   InGrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -61,9 +61,9 @@
                 <div class="menu-main-links">
                     <div class="highlighted">
                         <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Umweltinformationen"><span class="text">Suche</span></a>
-                        <a href="/datenkataloge" class="header-menu-entry " title="Eingebundene Umweltdatenkataloge, Objekte und Metadaten"><span class="text">Kataloge</span></a>
-                        <a href="/messwertsuche" class="header-menu-entry " title="Suche nach Umweltmessdaten"><span class="text">Messwerte</span></a>
-                        <a href="/kartendienste" class="header-menu-entry " title="Interaktive thematische Karten von Bund, Ländern und Kommunen"><span class="text">Karten</span></a>
+                        <a href="/kartendienste" class="header-menu-entry " title="Interaktive thematische Karten"><span class="text">Karten</span></a>
+                        <a href="/messwertsuche" class="header-menu-entry " title="Umweltmessdaten"><span class="text">Messwerte</span></a>
+                        <a href="/datenkataloge" class="header-menu-entry " title="Datenkataloge"><span class="text">Kataloge</span></a>
                         <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu NUMIS"><span class="text">Über NUMIS</span></a>
                         <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Anbieter</span></a>
                         <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
@@ -80,22 +80,45 @@
             </div>
             <header>
                 <div class="row">
-                    <div class="columns xsmall-11 small-7 medium-13 large-9 xlarge-8">
+                    <div class="columns xsmall-7 small-7 medium-8 large-7 xlarge-9">
                         <div class="logo">
                             <div class="switch">
                                 <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
                             </div>
-                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
-                            <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-xlarge hide-for-xsmall-only hide-for-small-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="show-for-xlarge hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS"/></a>
+                            <a href="/startseite" class="hide-for-medium"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="NUMIS"/></a>
                         </div>
                     </div>
-                    <div class="columns button-up show-for-xlarge">
-                        <a class="icon" href="/log-in" title="Freitextsuche nach Umweltinformationen">
-                            <span class="text">Login</span>
-                        </a>
+                    <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
+                        <div class="menu-tab-row">
+                            <a class="menu-tab is-selected" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-daten"></span>
+                                    <span class="text">Suche</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="/kartendienste" title="Interaktive thematische Karten">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-karten"></span>
+                                    <span class="text">Karten</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="/messwertsuche" title="Umweltmessdaten">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-chemie"></span>
+                                    <span class="text">Messwerte</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="/datenkataloge" title="Datenkataloge">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-datenkataloge"></span>
+                                    <span class="text">Kataloge</span>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                    <div class="columns xlarge-2">
+                    <div class="columns">
                         <div class="header-menu-open">
                             <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
                             <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
@@ -138,7 +161,8 @@
                                 <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="NUMIS"/></a>
                             </div>
                             <div class="copyright">
-                                <p>© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz </p>
+                                <span class="icon"></span>
+                                <span class="text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">

@@ -334,7 +334,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime1</id>
                 <from>P1MT</from>
                 <to>PT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- letzte 3 Monate -->
             <facet>
@@ -342,7 +342,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime2</id>
                 <from>P3MT</from>
                 <to>P1M1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- letztes Jahr -->
             <facet>
@@ -350,7 +350,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime3</id>
                 <from>P1YT</from>
                 <to>P3M1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- letzte 5 Jahre -->
             <facet>
@@ -358,7 +358,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime4</id>
                 <from>P5YT</from>
                 <to>P1Y1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
             <!-- Älter als 5 Jahre -->
             <facet>
@@ -366,7 +366,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>modtime5</id>
                 <from></from>
                 <to>P5Y1DT</to>
-                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*]</query>
+                <query>t01_object.mod_time:[{FROM}0* TO {TO}9*] ranking:date</query>
             </facet>
         </facets>
     </facet>

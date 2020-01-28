@@ -44,9 +44,6 @@
                 <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
-                <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
             </portlets>
         </page>
         <page>
@@ -62,9 +59,6 @@
                 <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
-                <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
-                </portlet>
             </portlets>
         </page>
         <page>
@@ -79,9 +73,6 @@
                 </portlet>
                 <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
-                </portlet>
-                <portlet col="0" row="3">
-                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
             </portlets>
         </page>
@@ -135,10 +126,13 @@
             <![CDATA[INSERT INTO tmp_table (item_key\, item_value) VALUES ('main_menu_id'\,(SELECT menu_id FROM folder_menu WHERE name = 'main-menu'))]]>
         </execute>
         <execute>
-            <![CDATA[UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml']]>
+            <![CDATA[UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-maps.psml']]>
         </execute>
         <execute>
             <![CDATA[UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/main-measures.psml']]>
+        </execute>
+        <execute>
+            <![CDATA[UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT item_value FROM tmp_table WHERE item_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml']]>
         </execute>
         <execute>
             <![CDATA[DROP TABLE tmp_table]]>

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -253,7 +253,7 @@ public class MyPortalCreateAccountPortlet extends GenericVelocityPortlet {
 
             // generate login id
             String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
-                    Long.toString(System.currentTimeMillis())));
+                Long.toString(System.currentTimeMillis())));
             userAttributes.put("user.custom.ingrid.user.confirmid", confirmId);
 
             if (log.isInfoEnabled()) {

@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,13 +23,10 @@
 package de.ingrid.mdek.quartz.jobs;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.SimpleFileVisitor;
 import java.nio.file.StandardCopyOption;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,27 +114,17 @@ public class UploadVirusScanJob extends QuartzJobBean {
             // scan files
             for (final String scanDir : scanDirs) {
                 log(Level.DEBUG, "Scanning directory \""+scanDir+"\"...", null);
-                Files.walkFileTree(Paths.get(scanDir), new SimpleFileVisitor<Path>() {
-                    @Override
-                    public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
-                        if (Files.isDirectory(file)) {
-                            log(Level.DEBUG, "Scanning directory \""+file+"\"...", null);
-                        }
-                        else {
-                            log(Level.DEBUG, "Testing file \""+file+"\"...", null);
-                            try {
-                                virusScanValidator.validate(file.getParent().toString(), file.getFileName().toString(), file);
-                            }
-                            catch (final VirusFoundException vfex) {
-                                infectedFiles.add(file);
-                            }
-                            catch (final Exception ex) {
-                                log(Level.ERROR, "Error scanning file \""+file+"\"", ex);
-                            }
-                        }
-                        return FileVisitResult.CONTINUE;
+                try {
+                    virusScanValidator.validate(scanDir, null, Paths.get(scanDir));
+                }
+                catch (final VirusFoundException vfex) {
+                    for (final Path file : vfex.getInfections().keySet()) {
+                        infectedFiles.add(file);
                     }
-                });
+                }
+                catch (final Exception ex) {
+                    log(Level.ERROR, "Error scanning directory \""+scanDir+"\"", ex);
+                }
             }
             log(Level.INFO, "Found "+infectedFiles.size()+" infected file(s)", null);
 

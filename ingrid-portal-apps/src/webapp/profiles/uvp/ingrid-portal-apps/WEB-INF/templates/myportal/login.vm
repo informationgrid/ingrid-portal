@@ -1,34 +1,5 @@
-<div class="columns">
-    #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" id="frm_login">
-        #set($name = "#getFieldValue($loginConstants.USERNAME)")
-        #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
-        
-        <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
-        <input type="hidden" name="cmd" value="doLogin" />
-        <div class="form-element">
-            <label for="login">$MESSAGES.getString('login.form.username')</label>
-        </div>
-        <div class="form-element">
-            #addErrorFormMessage('org.apache.jetspeed.login.username')
-        <input type="text" id="login" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" class="field bx-bot-s">
-        </div>
-        <div class="form-element">
-            <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
-        </div>
-        <div class="form-element">
-            #addErrorFormMessage('org.apache.jetspeed.login.password')
-            <input type="password" id="passwd" #addErrorFormClass('org.apache.jetspeed.login.password') name="${loginConstants.PASSWORD}" placeholder="$MESSAGES.getString('login.form.passwd.initialValue')" value="#if($pw != $MESSAGES.getString('login.form.passwd.initialValue'))#getFieldValue($loginConstants.PASSWORD)#end" class="field bx-bot-0">
-        </div>
-        <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>
-        #renderInputButtonClass($MESSAGES.getString('login.form.button.subscribe') "width:100%" "doLogin" "" "")
-    </form>
-    #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
-    <br>
-    #end
-    #if($enableNewUser)
-    <div class="metamenu__box ob-container">
-        #renderInputButtonOnClick($MESSAGES.getString('login.form.newUser') "width:100%" "" "" "outline" "location.href='$renderResponse.encodeURL('/portal/myportal-create-account.psml')'")
-    </div>
-    #end
-</div>
+#if($isPasswordUpdate)
+    #parse ('/WEB-INF/templates/myportal/myportal_password_update_required.vm')
+#else
+    #parse ('/WEB-INF/templates/myportal/login_form.vm')
+#end

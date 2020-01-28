@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -30,7 +30,7 @@ Code:    http://en.wikipedia.org/wiki/User:Cacycle/diff.js
 JavaScript diff algorithm by [[en:User:Cacycle]] (http://en.wikipedia.org/wiki/User_talk:Cacycle).
 Outputs html/css-formatted new text with highlighted deletions, inserts, and block moves.
 For newline highlighting the following style rules have to be added to the document:
-	.wDiffParagraph:before { content: "¶"; };
+	.wDiffParagraph:before { content: "ï¿½"; };
  
 The program uses cross-browser code and should work with all modern browsers. It has been tested with:
 * Mozilla Firefox 1.5.0.1
@@ -161,7 +161,7 @@ if (typeof(wDiffCharsAfter)     == 'undefined') { window.wDiffCharsAfter     =  
  
 // maximal fragment distance to join close fragments
 if (typeof(wDiffFragmentJoin)  == 'undefined') { window.wDiffFragmentJoin = 1000; }
-if (typeof(wDiffOmittedChars)  == 'undefined') { window.wDiffOmittedChars = '…'; }
+if (typeof(wDiffOmittedChars)  == 'undefined') { window.wDiffOmittedChars = 'ï¿½'; }
 if (typeof(wDiffOmittedLines)  == 'undefined') { window.wDiffOmittedLines = '<hr style="height: 2px; margin: 1em 10%;">'; }
 if (typeof(wDiffNoChange)      == 'undefined') { window.wDiffNoChange     = '<hr style="height: 2px; margin: 1em 20%;">'; }
  

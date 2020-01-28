@@ -1062,7 +1062,7 @@
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered row content-xsmall</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>
@@ -1524,12 +1524,8 @@
         <resource-bundle>de.ingrid.portal.resources.SearchCatalogResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>bannerStyle</name>
-                <value>row align-center</value>
-            </preference>
-            <preference>
-                <name>bannerHeaderStyle</name>
-                <value>large-20 columns dark</value>
+                <name>disableTitle</name>
+                <value>1</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>

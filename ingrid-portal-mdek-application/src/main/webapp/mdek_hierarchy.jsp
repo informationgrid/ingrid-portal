@@ -4,7 +4,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -448,7 +448,7 @@
                                 <span id="uiElement5095" class="outer optional">
                                     <div>
                                         <span class="label">
-                                            <label for="spatialScope" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5066);" >
+                                            <label for="spatialScope" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5067);" >
                                                 <fmt:message key="ui.obj.spatial.scope" />
                                             </label>
                                         </span>

@@ -37,23 +37,6 @@
                 </div>
           </div>
           <div class="footer">
-              <div class="row">
-                <div class="columns">
-                    <p class="result-text no-margin breadcrumb show-for-medium">
-                        <span><b>$MESSAGES.getString('ingrid.page.navigation.title')</b>:</span>
-                        <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
-                    #if($currentPage)
-                        #if($currentPage == "/search-detail.psml")
-                            <span class="ic-ic-angle-right"></span>
-                            <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
-                        #end
-                        #if($currentPage != "/default-page.psml")
-                            <span class="ic-ic-angle-right"></span>
-                            <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
-                        #end
-                    #end
-                </div>
-              </div>
               <hr>
               <div class="row">
                   <div class="xsmall-24 medium-24 large-11 xlarge-12 columns">
@@ -61,7 +44,8 @@
                           <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="NUMIS"/></a>
                       </div>
                       <div class="copyright">
-                          <p>$MESSAGES.getString("ingrid.page.copyright")</p>
+                          <span class="icon"></span>
+                          <span class="text">$MESSAGES.getString("ingrid.page.copyright")</span>
                       </div>
                   </div>
                   <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">
@@ -78,7 +62,7 @@
         <div class="popup help-popup">
             <div class="headline popup__header">
                 <p class="popup__title medium">$MESSAGES.getString("ingrid.page.help")</p>
-                <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span>
+                <button type="button" class="button round popup__close js-popup-close"><span class="ic-ic-cross"></span></button>
             </div>
             <div class="popup__content text-box">
                 <p></p>

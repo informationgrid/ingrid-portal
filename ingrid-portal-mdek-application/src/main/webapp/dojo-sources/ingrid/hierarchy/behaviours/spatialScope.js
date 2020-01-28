@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -42,17 +42,19 @@ define([
             var self = this;
             var defaultValue = this.determineDefaultValue();
 
-            topic.subscribe("/afterCloseDialog/ChooseWizard", function() {
-                var clazz = registry.byId("objectClass").get("value");
-                if (clazz === "Class1" || clazz === "Class3") {
-                    registry.byId("spatialScope").set("value", defaultValue);
-                }
-            });
-
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1" || msg.objClass === "Class3") {
-                    self.register(defaultValue);
+                    // only register events if we aren't already
+                    if (self.events.length === 0) {
+                        self.register(defaultValue);
+                    }
+
+                    // when registering the event handler then the change might already has happened
+                    // so that we have to set here manually
+                    var inspireRelevantWidget = registry.byId("isInspireRelevant");
+                    self.handleInspireRelevantState(inspireRelevantWidget.checked);
+
                 } else {
                     self.unregister();
                 }
@@ -62,16 +64,20 @@ define([
         handleInspireRelevantState: function (isChecked) {
             var clazz = registry.byId("objectClass").get("value");
 
-            if (isChecked) {
-                if (clazz === "Class1") {
-                    UtilUI.setMandatory("uiElement5095");
-                }
-            } else {
-                if (clazz === "Class1") {
-                    UtilUI.setShow("uiElement5095");
-                } else {
-                    UtilUI.setOptional("uiElement5095");
-                }
+            if (clazz === "Class3") {
+                UtilUI.setOptional("uiElement5095");
+            } else if (isChecked) { // CLASS1
+                UtilUI.setMandatory("uiElement5095");
+            } else { // CLASS1
+                UtilUI.setShow("uiElement5095");
+            }
+
+        },
+
+        handleInspireRelevantClick: function(isChecked, defaultValue) {
+            var clazz = registry.byId("objectClass").get("value");
+            if (isChecked && clazz === "Class1") {
+                registry.byId("spatialScope").set("value", defaultValue);
             }
         },
 
@@ -79,14 +85,13 @@ define([
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
-            // when registering the event handler then the change might already has happened
-            // so that we have to set here manually
-            this.handleInspireRelevantState(inspireRelevantWidget.checked);
-
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
                 on(inspireRelevantWidget, "Change", function(isChecked) {
                     self.handleInspireRelevantState(isChecked);
+                }),
+                on(inspireRelevantWidget, "Click", function() {
+                    self.handleInspireRelevantClick(inspireRelevantWidget.checked, defaultValue);
                 })
             )
         },

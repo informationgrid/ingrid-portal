@@ -120,8 +120,15 @@ OS400*) os400=true;;
 HP-UX*) hpux=true;;
 esac
 
+# include default options, i.e. debug, jmx and jvm options
+if [ -f $INGRID_HOME/bin/env.user.sh ]; then
+  eval "`sh $INGRID_HOME/bin/env.user.sh`"
+elif [ -f $INGRID_HOME/bin/env.sh ]; then
+  eval "`sh $INGRID_HOME/bin/env.sh`"
+fi
+
 # needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
-JAVA_OPTS="$JAVA_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Duser.language=de"
+JAVA_OPTS="$JAVA_OPTS $INGRID_OPTS -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING=false -Duser.language=de"
 
 # include a jmx script, if available, i.e. to specify jmx port, etc.
 # caution: the jmx script must echo the actual command to be able to work in the current environment

@@ -18,6 +18,14 @@ $actionForm.getInputHTMLEscaped($field)#end
 #if ($actionForm.hasErrorInField($field))is-invalid-input#end
 #end
 
+#macro (addErrorFormClassLabel $field)
+#if ($actionForm.hasErrorInField($field))class="is-invalid-label"#end
+#end
+
+#macro (addErrorFormClassLabelText $field)
+#if ($actionForm.hasErrorInField($field))is-invalid-label#end
+#end
+
 #macro (addErrorFormMessage $field, $param)
 #if($param)
   #if ($actionForm.hasErrorInField($field))
