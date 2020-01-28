@@ -211,7 +211,7 @@ public class QueryResultPostProcessor {
 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
-                        url = addCapabilitiesInformation(url) + "%7C%7C";
+                        url = addCapabilitiesInformation(url) + URLEncoder.encode("||", "UTF-8");
                         // add layer information to link
                         if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
                         // only take the first map url, which should be the only one! 
@@ -515,7 +515,7 @@ public class QueryResultPostProcessor {
                             }
                             tmpString = tmpString + "VERSION=1.1.1";
                         }
-                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8") + "%7C%7C");
+                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim() + "||", "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         log.error("Error url encoding wms URL!", e);
                     }
