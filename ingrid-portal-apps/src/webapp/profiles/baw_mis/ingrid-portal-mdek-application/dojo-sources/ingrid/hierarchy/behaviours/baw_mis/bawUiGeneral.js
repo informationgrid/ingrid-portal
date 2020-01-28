@@ -352,7 +352,7 @@ define([
             newFieldsToDirtyCheck.push(bawKeywordCatalogueTableId);
             additionalFields.push(registry.byId(bawKeywordCatalogueTableId));
 
-            id = "simModelTypeTable";
+            var simModelTypeTableId = "simModelTypeTable";
             structure = [
                 {
                     field: "simModelType",
@@ -369,17 +369,18 @@ define([
                 }
             ];
             creator.createDomDataGrid({
-                id: id,
+                id: simModelTypeTableId,
                 name: message.get("ui.obj.baw.simulation.model.type.table.title"),
                 help: message.get("ui.obj.baw.simulation.model.type.table.help"),
                 visible: "optional",
                 style: "width: 100%"
             }, structure, "refClass1");
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
+            newFieldsToDirtyCheck.push(simModelTypeTableId);
+            additionalFields.push(registry.byId(simModelTypeTableId));
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
                 var isMandatory = args.isSimulationRelated;
                 self._setMandatory("simModelTypeTable", isMandatory);
+                registry.byId(simModelTypeTableId).reinitLastColumn(true);
             });
 
             id = "simProcess";
@@ -509,7 +510,8 @@ define([
 
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
                 var isMandatory = args.isSimulationRelated;
-                self._setMandatory("simParamTable", isMandatory);
+                self._setMandatory(simParamTableId, isMandatory);
+                registry.byId(simParamTableId).reinitLastColumn(true);
             });
 
             // Add link for creating a new entry to the simulation parameter table
