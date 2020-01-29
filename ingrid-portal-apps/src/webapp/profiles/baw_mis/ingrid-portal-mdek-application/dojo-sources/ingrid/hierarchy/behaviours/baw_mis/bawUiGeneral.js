@@ -285,7 +285,12 @@ define([
                     || key === "19"  // simulationsmodell
                     || key === "22"  // szenario
                     || key === "24";  // variante
-                topic.publish("onBawHierarchyLevelNameChange", { isSimulationRelated: isSimulationRelated })
+                var isSimulationRunOrFile = key === "6" // datei
+                    || key === "18";  // simulationslauf
+                topic.publish("onBawHierarchyLevelNameChange", {
+                    isSimulationRelated: isSimulationRelated,
+                    isSimulationRunOrFile: isSimulationRunOrFile
+                })
             });
 
             // Create elements in the reverse order instead of deriving ids
@@ -398,7 +403,7 @@ define([
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
+                var isMandatory = args.isSimulationRunOrFile;
                 self._setMandatory("simProcess", isMandatory);
             });
 
@@ -417,7 +422,7 @@ define([
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
+                var isMandatory = args.isSimulationRunOrFile;
                 self._setMandatory("simSpatialDimension", isMandatory);
             });
 
@@ -436,7 +441,7 @@ define([
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
+                var isMandatory = args.isSimulationRunOrFile;
                 self._setMandatory("dqAccTimeMeas", isMandatory);
             });
 
@@ -509,7 +514,7 @@ define([
             additionalFields.push(registry.byId(simParamTableId));
 
             topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
+                var isMandatory = args.isSimulationRunOrFile;
                 self._setMandatory(simParamTableId, isMandatory);
                 registry.byId(simParamTableId).reinitLastColumn(true);
             });
