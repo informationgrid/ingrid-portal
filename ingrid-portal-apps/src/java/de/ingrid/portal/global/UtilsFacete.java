@@ -442,6 +442,7 @@ public class UtilsFacete {
         Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
         if(facets != null && !facets.isEmpty()){
             ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
+            config = cleanupFieldFacets(config);
             for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
                 String key = iterator.next();
                 Long value = (Long) facets.get(key);
@@ -518,6 +519,15 @@ public class UtilsFacete {
                 removeAttributeFromSession(request, ELEMENTS_MAP);
             }
         }
+    }
+
+    private static ArrayList<IngridFacet> cleanupFieldFacets(ArrayList<IngridFacet> config) {
+        for (IngridFacet ingridFacet : config) {
+            if(ingridFacet.getField() != null && ingridFacet.getFacets() != null) {
+                ingridFacet.setFacets(null);
+            }
+        }
+        return config;
     }
 
     /***************************** WILDCARD ***********************************************/
