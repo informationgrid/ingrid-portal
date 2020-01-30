@@ -134,31 +134,31 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Daten -->
             <facet>
                 <name>Daten</name>
-                <query>datatype:metadata t01_object.obj_class:1</query>
+                <query>hierarchylevel: dataset OR hierarchylevel: series OR hierarchylevel: featureType OR hierarchylevel: tile</query>
                 <id>data</id>
             </facet>
         <!-- Dienste -->
             <facet>
                 <name>Dienste</name>
-                <query>datatype:metadata t01_object.obj_class:3</query>
+                <query>hierarchylevel: service</query>
                 <id>service</id>
             </facet>
         <!-- Anwendungen -->
              <facet>
                 <name>Anwendungen</name>
-                <query>datatype:metadata -t01_object.obj_class:1 -t01_object.obj_class:3</query>
+                <query>hierarchylevel: application</query>
                 <id>others</id>
             </facet>
         <!-- INSPIRE-identifiziert -->
             <facet>
                 <name>INSPIRE-identifiziert</name>
-                <query>datatype:metadata inspireidentifiziert</query>
+                <query>t04_search.searchterm: inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
         <!-- Opendata-->
            <facet>
                 <name>Opendata</name>
-                <query>datatype:metadata (opendata OR opendataident)</query>
+                <query>t04_search.searchterm: opendata</query>
                 <id>opendata</id>
             </facet>
         </facets>
@@ -170,40 +170,137 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Werte aus der Liste für Produktgruppe (ISO Element alternateTitle), Liste siehe unten -->
         <facets>
         <!-- Digitale Orthophotos -->
+            <facet>
+                <name>Digitale Orthophotos</name>
+                <query>alternatetitle:"Digitale Orthophotos"</query>
+                <id>at1</id>
+            </facet>
         <!-- Digitale Landschaftsmodelle -->
+            <facet>
+                <name>Digitale Landschaftsmodelle</name>
+                <query>alternatetitle:"Digitale Landschaftsmodelle"</query>
+                <id>at2</id>
+            </facet>
         <!-- Digitale Geländemodelle -->
+            <facet>
+                <name>Digitale Geländemodelle</name>
+                <query>alternatetitle:"Digitale Geländemodelle"</query>
+                <id>at3</id>
+            </facet>
         <!-- Digitale Oberflächenmodelle -->
+            <facet>
+                <name>Digitale Oberflächenmodelle</name>
+                <query>alternatetitle:"Digitale Oberflächenmodelle"</query>
+                <id>at4</id>
+            </facet>
         <!-- Digitale Topographische Karten -->
+            <facet>
+                <name>Digitale Topographische Karten</name>
+                <query>alternatetitle:"Digitale Topographische Karten"</query>
+                <id>at5</id>
+            </facet>
         <!-- 3D-Gebäudemodelle -->
+            <facet>
+                <name>3D-Gebäudemodelle</name>
+                <query>alternatetitle:"3D-Gebäudemodelle"</query>
+                <id>at6</id>
+            </facet>
         <!-- Topographische Sonderkarten -->
+            <facet>
+                <name>Topographische Sonderkarten</name>
+                <query>alternatetitle:"Topographische Sonderkarten"</query>
+                <id>at7</id>
+            </facet>
         <!-- Luftbilder -->
+            <facet>
+                <name>Luftbilder</name>
+                <query>alternatetitle:"Luftbilder"</query>
+                <id>at8</id>
+            </facet>
         <!-- Anwendungen -->
+            <facet>
+                <name>Anwendungen</name>
+                <query>alternatetitle:"Anwendungen"</query>
+                <id>at9</id>
+            </facet>
         <!-- Sonstige Produkte Geotopographie -->
+            <facet>
+                <name>Sonstige Produkte Geotopographie</name>
+                <query>alternatetitle:"Sonstige Produkte Geotopographie"</query>
+                <id>at10</id>
+            </facet>
         <!-- ALKIS -->
+            <facet>
+                <name>ALKIS</name>
+                <query>alternatetitle:"ALKIS"</query>
+                <id>at11</id>
+            </facet>
         <!-- Hauskoordinaten -->
+            <facet>
+                <name>Hauskoordinaten</name>
+                <query>alternatetitle:"Hauskoordinaten"</query>
+                <id>at12</id>
+            </facet>
         <!-- Hausumringe -->
+            <facet>
+                <name>Hausumringe</name>
+                <query>alternatetitle:"Hausumringe"</query>
+                <id>at13</id>
+            </facet>
         <!-- Verwaltungsgrenzen -->
+            <facet>
+                <name>Verwaltungsgrenzen</name>
+                <query>alternatetitle:"Verwaltungsgrenzen"</query>
+                <id>at14</id>
+            </facet>
         <!-- Festpunkte -->
+            <facet>
+                <name>Festpunkte</name>
+                <query>alternatetitle:"Festpunkte"</query>
+                <id>at15</id>
+            </facet>
         <!-- INSPIRE Adressen -->
+            <facet>
+                <name>INSPIRE Adressen</name>
+                <query>alternatetitle:"INSPIRE Adressen"</query>
+                <id>at16</id>
+            </facet>
         <!-- INSPIRE Flurstücke/Grundstücke -->
+            <facet>
+                <name>INSPIRE Flurstücke/Grundstücke</name>
+                <query>alternatetitle:"INSPIRE Flurstücke/Grundstücke"</query>
+                <id>at17</id>
+            </facet>
         <!-- INSPIRE Geografische Bezeichnungen -->
+            <facet>
+                <name>INSPIRE Geografische Bezeichnungen</name>
+                <query>alternatetitle:"INSPIRE Geografische Bezeichnungen"</query>
+                <id>at18</id>
+            </facet>
         <!-- INSPIRE Gewässernetz -->
+            <facet>
+                <name>INSPIRE Gewässernetz</name>
+                <query>alternatetitle:"INSPIRE Gewässernetz"</query>
+                <id>at19</id>
+            </facet>
+        <!-- Sonstige -->
+            <facet>
+                <name>Sonstige</name>
+                <query>-alternatetitle:"Digitale Orthophotos" -alternatetitle:"Digitale Landschaftsmodelle" -alternatetitle:"Digitale Geländemodelle" -alternatetitle:"Digitale Oberflächenmodelle" -alternatetitle:"Digitale Topographische Karten" -alternatetitle:"3D-Gebäudemodelle" -alternatetitle:"Topographische Sonderkarten" -alternatetitle:"Luftbilder" -alternatetitle:"Anwendungen" -alternatetitle:"Sonstige Produkte Geotopographie" -alternatetitle:"ALKIS" -alternatetitle:"Hauskoordinaten" -alternatetitle:"Hausumringe" -alternatetitle:"Verwaltungsgrenzen" -alternatetitle:"Festpunkte" -alternatetitle:"INSPIRE Adressen" -alternatetitle:"INSPIRE Flurstücke/Grundstücke" -alternatetitle:"INSPIRE Geografische Bezeichnungen" -alternatetitle:"INSPIRE Gewässernetz"</query>
+                <id>at20</id>
+            </facet>
         </facets>
     </facet>
-    <facet>
+    <facet sort="SORT_BY_NAME">
         <name>Verwaltet von</name>
         <id>maintain</id>
+        <field>t02_address.administrativearea</field>
         <isOpen>true</isOpen>
-        <!-- Werte ergeben sich aus den eingetragenen administrativen Einheiten (Bundesländer) -->
-        <facets>
-        </facets>
     </facet>
-    <facet>
+    <facet  sort="SORT_BY_VALUE_DESC">
         <name>INSPIRE-Themen</name>
         <id>inspire_topics</id>
+        <field>thesaurusname</field>
         <isOpen>true</isOpen>
-        <!-- Dynamische Zusammensetzung anhand der Feldinhalte. Schlüsselwerte aus Thesaurus „GEMET -INSPIRE themes“ -->
-        <facets>
-        </facets>
     </facet>
 </facets>
