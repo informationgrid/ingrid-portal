@@ -105,6 +105,13 @@ public class FacetsConfig {
                     }
                 }
 
+                if (!facetNode.getChildren( "field" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "field" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setField( (String) node.getValue() );
+                    }
+                }
+
                 if (!facetNode.getChildren( "shortName" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "shortName" ).get( 0 );
                     if (node != null) {

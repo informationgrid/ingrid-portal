@@ -34,6 +34,7 @@ public class IngridFacet {
     private String mobileName;
     private String query;
     private String queryType;
+    private String field;
     private String codelistId;
     private String codelistEntryId; 
     private String dependency;
@@ -244,5 +245,11 @@ public class IngridFacet {
     }
     public void setInfoResultSelect(String infoResultSelect) {
         this.infoResultSelect = infoResultSelect;
+    }
+    public String getField() {
+        return field;
+    }
+    public void setField(String field) {
+        this.field = field;
     }
 }
