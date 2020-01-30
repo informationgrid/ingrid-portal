@@ -524,7 +524,13 @@ public class UtilsFacete {
     private static ArrayList<IngridFacet> cleanupFieldFacets(ArrayList<IngridFacet> config) {
         for (IngridFacet ingridFacet : config) {
             if(ingridFacet.getField() != null && ingridFacet.getFacets() != null) {
-                ingridFacet.setFacets(null);
+                for (int i=0; i < ingridFacet.getFacets().size(); i++) {
+                    IngridFacet ingridFacetChild = ingridFacet.getFacets().get(i);
+                    if(!ingridFacetChild.isSelect()) {
+                        ingridFacet.getFacets().remove(i);
+                        i--;
+                    }
+                }
             }
         }
         return config;
