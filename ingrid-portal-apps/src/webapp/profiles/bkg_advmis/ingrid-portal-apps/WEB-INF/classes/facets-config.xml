@@ -294,7 +294,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_NAME">
         <name>Verwaltet von</name>
         <id>maintain</id>
-        <field>t02_address.administrativearea</field>
+        <field>t02_address.administrative_area_value</field>
         <isOpen>true</isOpen>
     </facet>
     <facet  sort="SORT_BY_VALUE_DESC">
