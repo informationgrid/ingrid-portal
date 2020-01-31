@@ -42,9 +42,8 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 
+import org.apache.log4j.Logger;
 import org.apache.velocity.context.Context;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import de.ingrid.codelists.CodeListService;
 import de.ingrid.iplug.sns.utils.Topic;
@@ -86,7 +85,7 @@ import de.ingrid.utils.udk.UtilsUDKCodeLists;
 @SuppressWarnings("unchecked")
 public class UtilsFacete {
 
-    private static final Logger log = LoggerFactory.getLogger(UtilsFacete.class);
+    private static final Logger log = Logger.getLogger(UtilsFacete.class);
 
     private static final String GEOTHESAURUS_CURRENT_TOPIC = "facete_current_topic_geothesaurus";
     private static final String GEOTHESAURUS_TOPICS = "facete_topics_geothesaurus";
@@ -183,7 +182,7 @@ public class UtilsFacete {
                 setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
-        
+        logConfig(config);
         // Get all existing selection keys
         if(keys == null){
             keys = getExistingSelectionKeys(request);
@@ -234,6 +233,7 @@ public class UtilsFacete {
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
         selectedFacet(config);
+        logConfig(config);
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
         context.put("searchTerm", SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING));
@@ -440,6 +440,9 @@ public class UtilsFacete {
         HashMap<String, Long> elementsGeothesaurus = null;
         HashMap<String, Long> elementsMap = null;
         Map<String, Object> facets = (Map<String, Object>) hits.get("FACETS");
+        if(log.isDebugEnabled()) {
+            log.debug("Facets from hits: " + facets);
+        }
         if(facets != null && !facets.isEmpty()){
             ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
             config = cleanupFieldFacets(config);
@@ -512,7 +515,7 @@ public class UtilsFacete {
                     }
                 }
             }
-            
+            logConfig(config);
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
             } else{
@@ -1711,6 +1714,7 @@ public class UtilsFacete {
                 addDefaultIngridFacets(request, config);
                 setAttributeToSession(request, FACET_CONFIG, config);
             }
+            logConfig(config);
             if(config != null){
                 String[] paramsSplits = paramsFacet.split(";");
                 resetFacetConfigSelect(config);
@@ -2553,6 +2557,23 @@ public class UtilsFacete {
                 if(facet.getFacets() != null){
                     resetFacetConfigSelect(facet.getFacets());
                 }
+            }
+        }
+    }
+    
+    private static void logConfig (ArrayList<IngridFacet> config) {
+        if(log.isDebugEnabled()) {
+            if(config != null) {
+                for (IngridFacet ingridFacet : config) {
+                    log.debug("Facet id: " + ingridFacet.getId());
+                    if(ingridFacet.getFacets() != null) {
+                        for (IngridFacet ingridFacetChild : ingridFacet.getFacets()) {
+                            log.debug("Child facet id: " + ingridFacetChild.getId() + "::" + ingridFacetChild.getFacetValue());
+                        }
+                    }
+                }
+            } else {
+                log.debug("Facet config is null!");
             }
         }
     }
