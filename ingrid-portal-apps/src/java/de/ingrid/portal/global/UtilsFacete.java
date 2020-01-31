@@ -449,7 +449,9 @@ public class UtilsFacete {
             for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
                 String key = iterator.next();
                 Long value = (Long) facets.get(key);
-                
+                if(log.isDebugEnabled()) {
+                    log.debug("Facet key: '" + key + "'" + " value: " + value);
+                }
                 if(value > 0){
                     // Default facet
                     if(key.startsWith("geothesaurus:")){
