@@ -183,7 +183,7 @@ public class UtilsFacete {
                 setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
-        logConfig(config);
+        logConfig(config, "facetePrepareInGridQuery");
         // Get all existing selection keys
         if(keys == null){
             keys = getExistingSelectionKeys(request);
@@ -234,7 +234,7 @@ public class UtilsFacete {
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
         selectedFacet(config);
-        logConfig(config);
+        logConfig(config, "setParamsToContext");
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
         context.put("searchTerm", SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING));
@@ -492,7 +492,7 @@ public class UtilsFacete {
                     }
                 }
             }
-            logConfig(config);
+            logConfig(config, "checkForExistingFacete");
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
             } else{
@@ -1676,7 +1676,7 @@ public class UtilsFacete {
                 addDefaultIngridFacets(request, config);
                 setAttributeToSession(request, FACET_CONFIG, config);
             }
-            logConfig(config);
+            logConfig(config, "getFacetAttributsParamsFromUrl");
             if(config != null){
                 String[] paramsSplits = paramsFacet.split(";");
                 resetFacetConfigSelect(config);
@@ -2486,8 +2486,9 @@ public class UtilsFacete {
         }
     }
     
-    private static void logConfig (ArrayList<IngridFacet> config) {
+    private static void logConfig (ArrayList<IngridFacet> config, String title) {
         if(log.isDebugEnabled()) {
+            log.debug("Log message for: " + title);
             if(config != null) {
                 for (IngridFacet ingridFacet : config) {
                     log.debug("Facet id: " + ingridFacet.getId());
