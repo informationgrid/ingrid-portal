@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.3.1" date="2020-xx-xx" description="Release 5.3.1">
+          <action type="add" dev="wemove" issue="1699">
+            Portal: Create facets by index field or codelist id.
+          </action>
           <action type="fix" dev="wemove" issue="1671">
             Portal: Fix display message after create user as portal admin.
           </action>
