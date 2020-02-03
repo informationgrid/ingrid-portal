@@ -35,6 +35,8 @@ public class IngridFacet {
     private String query;
     private String queryType;
     private String field;
+    private String codelist;
+    private String codelistField;
     private String codelistId;
     private String codelistEntryId; 
     private String dependency;
@@ -251,5 +253,17 @@ public class IngridFacet {
     }
     public void setField(String field) {
         this.field = field;
+    }
+    public String getCodelist() {
+        return codelist;
+    }
+    public void setCodelist(String codelist) {
+        this.codelist = codelist;
+    }
+    public String getCodelistField() {
+        return codelistField;
+    }
+    public void setCodelistField(String codelistField) {
+        this.codelistField = codelistField;
     }
 }

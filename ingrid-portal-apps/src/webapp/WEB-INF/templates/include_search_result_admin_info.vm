@@ -1,5 +1,3 @@
-#if($adminContent)
-    <!--
     #if($rankedResultList.get("FACETS"))
         Facets:
         $rankedResultList.get("FACETS")
@@ -16,5 +14,3 @@
         Search Query:
         $searchQuery
     #end
-    -->
-#end

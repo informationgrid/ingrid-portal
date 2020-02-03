@@ -300,7 +300,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet  sort="SORT_BY_VALUE_DESC">
         <name>INSPIRE-Themen</name>
         <id>inspire_topics</id>
-        <field>thesaurusname</field>
+        <field>t04_search.searchterm</field>
+        <codelist>6100</codelist>
+        <codelist-field>de</codelist-field>
         <isOpen>true</isOpen>
     </facet>
 </facets>

@@ -46,6 +46,8 @@ import org.apache.log4j.Logger;
 import org.apache.velocity.context.Context;
 
 import de.ingrid.codelists.CodeListService;
+import de.ingrid.codelists.model.CodeList;
+import de.ingrid.codelists.model.CodeListEntry;
 import de.ingrid.iplug.sns.utils.Topic;
 import de.ingrid.portal.config.FacetsConfig;
 import de.ingrid.portal.config.PortalConfig;
@@ -303,73 +305,33 @@ public class UtilsFacete {
                 for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
                     String key = iterator.next();
                     String value = request.getParameter(key);
-                    
-                    if(key.startsWith("addFromDialog_")){
-                        // Reset dialog facets
-                        String dialogId = key.replace("addFromDialog_", "");
-                        IngridFacet tmpFacet = getFacetById(config, dialogId);
-                        if(tmpFacet != null && tmpFacet.getFacets() != null){
-                            for(IngridFacet tmpSubFacet : tmpFacet.getFacets()){
-                                tmpSubFacet.setSelect(false);
-                            }
-                        }
-                    }else if (key.indexOf("_box_") > -1){
-                        // Dialog checkbox selection
-                        String[] split = key.split("_box_");
-                        if(split.length > 1){
-                            resetFacetConfigValues(config, split[1]);
-                            IngridFacet tmpFacetKey = getFacetById(config, split[1]);
-                            if(tmpFacetKey != null){
-                                IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
-                                if(tmpFacetValue != null){
-                                    if(tmpFacetValue.isSelect()){
-                                        tmpFacetValue.setSelect(false);
-                                        if(tmpFacetValue.getFacets() != null){
-                                            for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
-                                                tmpSubFacet.setSelect(false);
-                                            }
+                    // Set facet selection
+                    if(value != null){
+                        resetFacetConfigValues(config, null);
+                        IngridFacet tmpFacetKey = getFacetById(config, key);
+                        if(tmpFacetKey != null){
+                            IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
+                            if(tmpFacetValue != null){
+                                if(tmpFacetValue.isSelect()){
+                                    tmpFacetValue.setSelect(false);
+                                    if(tmpFacetValue.getFacets() != null){
+                                        for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
+                                            tmpSubFacet.setSelect(false);
                                         }
-                                    }else{
-                                        tmpFacetValue.setSelect(true);
-                                        facetIsSelect = true;
-                                        // Set last selection
-                                        if(lastSelection == null){
-                                            lastSelection = new HashMap<>();
-                                        }
-                                        lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
                                     }
+                                }else{
+                                    tmpFacetValue.setSelect(true);
+                                    facetIsSelect = true;
+                                    // Set last selection
+                                    if(lastSelection == null){
+                                        lastSelection = new HashMap<>();
+                                    }
+                                    lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
                                 }
-                            }
-                        }
-                    }else{
-                        // Set facet selection
-                        if(value != null){
-                            resetFacetConfigValues(config, null);
-                            IngridFacet tmpFacetKey = getFacetById(config, key);
-                            if(tmpFacetKey != null){
-                                IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), value);
-                                if(tmpFacetValue != null){
-                                    if(tmpFacetValue.isSelect()){
-                                        tmpFacetValue.setSelect(false);
-                                        if(tmpFacetValue.getFacets() != null){
-                                            for(IngridFacet tmpSubFacet : tmpFacetValue.getFacets()){
-                                                tmpSubFacet.setSelect(false);
-                                            }
-                                        }
-                                    }else{
-                                        tmpFacetValue.setSelect(true);
-                                        facetIsSelect = true;
-                                        // Set last selection
-                                        if(lastSelection == null){
-                                            lastSelection = new HashMap<>();
-                                        }
-                                        lastSelection.put(tmpFacetKey.getId() + ":" + tmpFacetValue.getId(), tmpFacetValue.getId());
-                                    }
-                                    if(isFacetConfigSelect(tmpFacetKey.getFacets())){
-                                        tmpFacetKey.setSelect(facetIsSelect);
-                                    }
-                                    resetFacetConfigValues(config, null);
+                                if(isFacetConfigSelect(tmpFacetKey.getFacets())){
+                                    tmpFacetKey.setSelect(facetIsSelect);
                                 }
+                                resetFacetConfigValues(config, null);
                             }
                         }
                     }
@@ -445,7 +407,7 @@ public class UtilsFacete {
         }
         if(facets != null && !facets.isEmpty()){
             ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-            config = cleanupFieldFacets(config);
+            config = (ArrayList<IngridFacet>) cleanupFieldFacets(config);
             for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
                 String key = iterator.next();
                 Long value = (Long) facets.get(key);
@@ -499,10 +461,27 @@ public class UtilsFacete {
                                             newFieldFacet= new IngridFacet();
                                             isNewFacet = true;
                                         }
-                                        String query = ingridFacet.getField().concat(":\"").concat(facetSubkey).concat("\"");
-                                        newFieldFacet.setId(facetSubkey);
-                                        newFieldFacet.setName(facetSubkey);
-                                        newFieldFacet.setQuery(query);
+                                        
+                                        if(ingridFacet.getCodelist() != null && ingridFacet.getCodelistField() != null) {
+                                            CodeListService codelistService = CodeListServiceFactory.instance();
+                                            String codelistId = ingridFacet.getCodelist();
+                                            String codelistField = ingridFacet.getCodelistField();
+                                            CodeList codelist = codelistService.getCodeList(codelistId);
+                                            List<CodeListEntry> codelistEntries = codelist.getEntries();
+                                            String[] splitKey = facetSubkey.split("_");
+                                            for (CodeListEntry codeListEntry : codelistEntries) {
+                                                if(codeListEntry.getId().equals(splitKey[splitKey.length -1])) {
+                                                    newFieldFacet.setId(codelistId + "_" + codeListEntry.getId());
+                                                    newFieldFacet.setName(codeListEntry.getField(codelistField));
+                                                    newFieldFacet.setQuery(ingridFacet.getField() + ":\"" + codeListEntry.getField(codelistField) + "\"");
+                                                }
+                                            }
+                                        } else {
+                                            String query = ingridFacet.getField().concat(":\"").concat(facetSubkey).concat("\"");
+                                            newFieldFacet.setId(facetSubkey);
+                                            newFieldFacet.setName(facetSubkey);
+                                            newFieldFacet.setQuery(query);
+                                        }
                                         newFieldFacet.setParent(ingridFacet);
                                         newFieldFacet.setFacetValue(value.toString());
                                         if(isNewFacet) {
@@ -526,7 +505,7 @@ public class UtilsFacete {
         }
     }
 
-    private static ArrayList<IngridFacet> cleanupFieldFacets(ArrayList<IngridFacet> config) {
+    private static List<IngridFacet> cleanupFieldFacets(List<IngridFacet> config) {
         for (IngridFacet ingridFacet : config) {
             if(ingridFacet.getField() != null && ingridFacet.getFacets() != null) {
                 for (int i=0; i < ingridFacet.getFacets().size(); i++) {
@@ -1735,7 +1714,7 @@ public class UtilsFacete {
                         tmpFacetKey = getFacetById(config, split[0]);
                         //Set facet parent isSelect
                         if(tmpFacetKey != null) { 
-                            if(tmpFacetKey.getFacets() != null){
+                            if(tmpFacetKey.getFacets() != null && tmpFacetKey.getField() == null){
                                 //Set facet isSelect
                                 IngridFacet tmpFacetValue = getFacetById(tmpFacetKey.getFacets(), split[1]);
                                 if(tmpFacetValue != null) {
@@ -1767,15 +1746,28 @@ public class UtilsFacete {
                                 }
                                 List<IngridFacet> newFieldFacets = tmpFacetKey.getFacets();
                                 boolean isNewFacet = false; 
-                                IngridFacet newFieldFacet = getFacetById(newFieldFacets, split[0]);
+                                String newFieldId = split[split.length - 1];
+                                IngridFacet newFieldFacet = getFacetById(newFieldFacets, newFieldId);
                                 if(newFieldFacet == null) {
                                     newFieldFacet= new IngridFacet();
                                     isNewFacet = true;
                                 }
-                                String name = split[split.length - 1];
-                                String query = tmpFacetKey.getField().concat(":\"").concat(name).concat("\"");
-                                newFieldFacet.setId(name);
-                                newFieldFacet.setName(name);
+                                newFieldFacet.setId(newFieldId);
+                                if(tmpFacetKey.getCodelist() != null) {
+                                    CodeListService codelistService = CodeListServiceFactory.instance();
+                                    CodeList codelist = codelistService.getCodeList(tmpFacetKey.getCodelist());
+                                    List<CodeListEntry> codelistEntries = codelist.getEntries();
+                                    String facetCodelistEntryId = newFieldId.replace(tmpFacetKey.getCodelist() + "_", "");
+                                    for (CodeListEntry codeListEntry : codelistEntries) {
+                                        if(codeListEntry.getId().equals(facetCodelistEntryId)) {
+                                            newFieldFacet.setName(codeListEntry.getField(tmpFacetKey.getCodelistField()));
+                                            break;
+                                        }
+                                    }
+                                } else {
+                                    newFieldFacet.setName(newFieldId);
+                                }
+                                String query = tmpFacetKey.getField().concat(":\"").concat(newFieldFacet.getName()).concat("\"");
                                 newFieldFacet.setQuery(query);
                                 newFieldFacet.setParent(tmpFacetKey);
                                 newFieldFacet.setSelect(true);
@@ -2223,14 +2215,17 @@ public class UtilsFacete {
         getConfigFacetQuery( configNode, facetQueries, isDefault, mainFacetId, false);
     }
     
-    public static void getConfigFacetQuery(List<IngridFacet> configNode, List<IngridDocument> facetQueries, boolean isDefault, String mainFacetId, boolean isAll){
+    public static void getConfigFacetQuery(List<IngridFacet> config, List<IngridDocument> facetQueries, boolean isDefault, String mainFacetId, boolean isAll){
         IngridDocument facet = null;
-        if(configNode != null){
+        if(config != null){
+            config = cleanupFieldFacets(config);
             ArrayList<HashMap<String, String>> facetList = new ArrayList<> ();
-            for(IngridFacet ingridFacet : configNode){
+            for(IngridFacet ingridFacet : config){
                 String facetId = ingridFacet.getId();
                 String facetQuery = ingridFacet.getQuery();
                 String facetField = ingridFacet.getField();
+                String facetCodeList = ingridFacet.getCodelist();
+                String facetCodelistField = ingridFacet.getCodelistField();
                 if(facetId != null) {
                     if(ingridFacet.getParent() != null){
                         if((!ingridFacet.getParent().getId().equals("topic") || isAll) && !ingridFacet.getParent().getId().equals("partner") && !ingridFacet.getParent().getId().equals("provider")){
@@ -2257,21 +2252,35 @@ public class UtilsFacete {
                             }
                         }
                     }else{
-                        IngridDocument tmpFacet = null;
                         if(facetQuery != null){
-                            tmpFacet = new IngridDocument();
+                            IngridDocument tmpFacet = new IngridDocument();
                             tmpFacet.put("id", facetId);
                             tmpFacet.put("query", facetQuery);
+                            facetQueries.add(tmpFacet);
                         }else if(facetField != null) {
-                            tmpFacet = new IngridDocument();
+                            IngridDocument tmpFacet = new IngridDocument();
                             tmpFacet.put("id", facetId);
-                            tmpFacet.put("field", facetField);
-                        }
-                        if(tmpFacet != null) {
+                            if(facetCodeList != null && facetCodelistField != null){
+                                CodeListService codelistService = CodeListServiceFactory.instance();
+                                CodeList codelist = codelistService.getCodeList(facetCodeList);
+                                List<CodeListEntry> codelistEntries = codelist.getEntries();
+                                ArrayList<IngridDocument> tmpFacetEntries = new ArrayList<> ();
+                                for (CodeListEntry codeListEntry : codelistEntries) {
+                                    IngridDocument tmpFacetEntry = new IngridDocument();
+                                    tmpFacetEntry.put("id", facetCodeList+ "_" + codeListEntry.getId());
+                                    tmpFacetEntry.put("query",ingridFacet.getField() + ":\"" + codeListEntry.getField(facetCodelistField) + "\"");
+                                    tmpFacetEntries.add(tmpFacetEntry);
+                                }
+                                tmpFacet.put("classes", tmpFacetEntries);
+                            } else {
+                                tmpFacet.put("field", facetField);
+                            }
                             facetQueries.add(tmpFacet);
                         }
                         if(ingridFacet.getFacets() != null){
-                              getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);
+                              if(ingridFacet.getField() == null) {
+                                  getConfigFacetQuery(ingridFacet.getFacets(), facetQueries, false, facetId, isAll);
+                              }
                         }
                     }
                 }
@@ -2300,7 +2309,7 @@ public class UtilsFacete {
                 faceteEntry.put("query", "partner:" + restrictPartner);
                 facetQueries.add(faceteEntry);
             }else{
-                IngridFacet tmpFacets = getFacetById(configNode, "provider");
+                IngridFacet tmpFacets = getFacetById(config, "provider");
                 IngridFacet tmpFacet = null;
                 if(tmpFacets != null){
                     for(IngridFacet tmpFacetEntry : tmpFacets.getFacets()){
@@ -2324,7 +2333,7 @@ public class UtilsFacete {
             }
             
             // Set facet topic
-            IngridFacet tmpFacets = getFacetById(configNode, "topic");
+            IngridFacet tmpFacets = getFacetById(config, "topic");
             if(tmpFacets != null && tmpFacets.isSelect()){
                 faceteEntry = new IngridDocument();
                 faceteEntry.put("id", "topic");
