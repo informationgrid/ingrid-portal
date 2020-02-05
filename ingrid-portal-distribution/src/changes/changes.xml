@@ -7,6 +7,15 @@
 
     <body>
 
+        <release version="5.3.3-SNAPSHOT" date="2020-xx-xx" description="Release 5.3.3">
+          <action type="update" dev="wemove" issue="1274">
+            IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
+          </action>
+          <action type="update" dev="wemove" issue="1589">
+            Migration von Sachsen nach METAVER: Aktualisierung METAVER Logo ("Sachsen" als Partner hinzugefügt)
+          </action>
+        </release>
+
         <release version="5.3.2" date="2020-01-24" description="Release 5.3.2">
           <action type="fix" dev="wemove" issue="1671">
             Portal: Fix display message after create user as portal admin.
