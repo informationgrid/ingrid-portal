@@ -37,6 +37,8 @@ define([
 
         inspireConformityHint: message.get("hint.inspireConformity"),
 
+        inspireConformityHintDeleted: message.get("hint.inspireConformity.deleted"),
+
         addConformity: function(isFromInspireList, name, level) {
             console.log("Add conformity");
             var listId = 6005;
