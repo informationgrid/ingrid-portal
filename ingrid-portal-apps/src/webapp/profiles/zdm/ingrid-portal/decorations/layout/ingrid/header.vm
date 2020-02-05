@@ -95,7 +95,7 @@
                                 <input id="f10950d16094" name="templateQueryString" value="" title="Suchtext" type="text" placeholder="Suchbegriff" size="26" maxlength="100" autocomplete="off">
                                 <p id="searchAutoSuggestBox1" class="searchAutoSuggestBox" style="width: 178px; top: 24px; left: 12px; display: none;"></p>
                             </span>
-                            <input class="image" type="image" src="/SiteGlobals/Forms/_components/Buttons/Servicesuche_Submit.png?__blob=image&amp;v=1" id="f10950d18056" name="submit" alt="Suchen" title="Suchen">
+                            <input class="image" type="image" src="/decorations/layout/ingrid/gsb/Forms/_components/Buttons/Servicesuche_Submit.png?__blob=image&amp;v=1" id="f10950d18056" name="submit" alt="Suchen" title="Suchen">
                           </p>
                       </fieldset>
                     </form>
