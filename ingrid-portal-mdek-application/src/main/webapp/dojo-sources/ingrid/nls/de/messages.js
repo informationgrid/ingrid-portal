@@ -1093,7 +1093,7 @@ define({
     "hint.addressFromParentAdded": "Adressdaten von übergeordneter Adresse übernommen!",
     "hint.selectOpenData": "Wird diese Auswahl gewählt, so werden alle Zugriffsbeschränkungen entfernt und durch 'keine' ersetzt. Möchten Sie fortfahren?",
     "hint.inspireConformity": "ACHTUNG: Grad der Konformität zur INSPIRE-Spezifikation im Bereich 'Zusatzinformationen' wird geändert.",
-    "hint.inspireConformity.deleted": "ACHTUNG: Grad der Konformität zur INSPIRE-Spezifikation im Bereich 'Zusatzinformationen' wird gelöscht.",
+    "hint.inspireConformity.deleted": "ACHTUNG: Der Eintrag in Konformität zur INSPIRE-Spezifikation im Bereich 'Zusatzinformationen' wird gelöscht.",
     "hint.advProductGroupCleared": "Die AdV-Produktgruppe wurde automatisch geleert.",
 
     "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
