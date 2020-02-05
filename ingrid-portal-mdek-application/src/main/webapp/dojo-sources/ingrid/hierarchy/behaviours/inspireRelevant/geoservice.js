@@ -68,18 +68,21 @@ define([
                 on(inspireRelevantWidget, "Click", function () {
                     var checkboxContext = this;
 
-                    utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
-
-                        if (checkboxContext.checked) {
+                    if (checkboxContext.checked) {
+                        utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
                             utils.addConformity(true, self.specificationName, "1");
-                        } else {
-                            self.updateToNotConform();
-                        }
-
-                    }, function () {
-                        // reset checkbox state
-                        checkboxContext.set("checked", !checkboxContext.checked);
-                    });
+                        }, function () {
+                            // toggle checkbox state
+                            checkboxContext.set("checked", !checkboxContext.checked);
+                        });
+                    } else {
+                        utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
+                            utils.removeConformity(self .specificationName);
+                        }, function () {
+                            // toggle checkbox state
+                            checkboxContext.set("checked", !checkboxContext.checked);
+                        });
+                    }
                 }),
 
                 on(inspireRelevantWidget, "Change", function(isChecked) {
