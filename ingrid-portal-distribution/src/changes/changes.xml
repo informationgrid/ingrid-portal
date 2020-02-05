@@ -7,6 +7,15 @@
 
     <body>
 
+        <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="update" dev="wemove" issue="1274">
+            IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
+          </action>
+          <action type="update" dev="wemove" issue="1589">
+            Migration von Sachsen nach METAVER: Aktualisierung METAVER Logo ("Sachsen" als Partner hinzugefügt)
+          </action>
+        </release>
+
         <release version="5.3.1" date="2020-xx-xx" description="Release 5.3.1">
           <action type="add" dev="wemove" issue="1699">
             Portal: Create facets by index field or codelist id.
