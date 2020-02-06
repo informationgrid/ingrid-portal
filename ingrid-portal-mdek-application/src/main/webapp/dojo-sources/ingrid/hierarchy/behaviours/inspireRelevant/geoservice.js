@@ -77,7 +77,7 @@ define([
                         });
                     } else {
                         utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
-                            utils.removeConformity(self .specificationName);
+                            utils.removeConformity(self.specificationName);
                         }, function () {
                             // toggle checkbox state
                             checkboxContext.set("checked", !checkboxContext.checked);

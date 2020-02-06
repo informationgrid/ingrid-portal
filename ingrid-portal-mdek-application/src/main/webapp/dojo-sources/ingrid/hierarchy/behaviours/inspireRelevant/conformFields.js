@@ -361,7 +361,7 @@ define([
         },
 
         updateToNotConform: function() {
-            utils.removeConformity(self.specificationNameInspireRichtlinie);
+            utils.removeConformity(this.specificationName);
         },
 
         addEventSpecificationDelete: function() {
