@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.3.3-SNAPSHOT" date="2020-xx-xx" description="Release 5.3.3">
+        <release version="5.3.4-SNAPSHOT" date="2020-xx-xx" description="Release 5.3.3">
           <action type="update" dev="wemove" issue="1274">
             IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
           </action>
