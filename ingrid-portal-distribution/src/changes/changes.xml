@@ -14,6 +14,9 @@
           <action type="update" dev="wemove" issue="1589">
             Migration von Sachsen nach METAVER: Aktualisierung METAVER Logo ("Sachsen" als Partner hinzugefügt)
           </action>
+          <action type="update" dev="wemove" issue="1727">
+            Portal: Indikator für Passwortstärke wird im IE11 nicht angezeigt (commit 809df8e)
+          </action>
         </release>
 
         <release version="5.3.2" date="2020-01-24" description="Release 5.3.2">
