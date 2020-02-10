@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -44,6 +44,7 @@ public interface StorageItem {
 
     /**
      * Get the URI as combination of path and file
+     * NOTE: URIs are URL-encoded and use the forward slash as separator for path parts
      * @return String
      */
     String getUri();

@@ -95,7 +95,9 @@
         <convert converter="bean" match="de.ingrid.mdek.beans.CapabilitiesBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.Record"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.CatalogBean"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.CommentBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.CommentBean">
+            <param name="exclude" value="title, displayDate"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.mdek.beans.SysList"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.ExportJobInfoBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.GenericValueBean"/>
@@ -111,7 +113,9 @@
         <convert converter="bean" match="de.ingrid.mdek.beans.URLJobInfoBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.VersionInformation"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.address.CommunicationBean"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.address.MdekAddressBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.address.MdekAddressBean">
+            <param name="exclude" value="linkLabel, icon, title"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.mdek.beans.address.MdekAddressSimpleBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.AdditionalFieldBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ConformityBean"/>
@@ -120,14 +124,20 @@
         <convert converter="bean" match="de.ingrid.mdek.beans.object.DBContentBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.DQBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.LinkDataBean"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.object.LocationBean"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.object.MdekDataBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.LocationBean">
+            <param name="exclude" value="boundingBox, label, selection"/>
+        </convert>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.MdekDataBean">
+            <param name="exclude" value="action, selection, actionId"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.MdekDataSimpleBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.MediaOptionBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.OperationBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.OperationParameterBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ScaleBean"/>
-        <convert converter="bean" match="de.ingrid.mdek.beans.object.TimeReferenceBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.TimeReferenceBean">
+            <param name="exclude" value="selection"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.UrlBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.VectorFormatDetailsBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ApplicationUrlBean"/>
@@ -150,12 +160,16 @@
         <convert converter="bean" match="de.ingrid.mdek.beans.security.Group"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.security.Permission"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.security.User"/>
-        <convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate"/>
+        <convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.Coordinate">
+            <param name="exclude" value="name, topicType, nativeKey, type, label, locationExpiredAt, topicTypeId, topicId"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.mdek.dwr.services.cts.CTSResponse"/>
         <convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.IndexedDocument"/>
         <convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSEventTopic"/>
         <convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSLocationTopic"/>
-        <convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic"/>
+        <convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopic">
+            <param name="exclude" value="sourceString, label"/>
+        </convert>
         <convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Type"/>
         <convert converter="enum" match="de.ingrid.mdek.dwr.services.sns.SNSTopic$Source"/>
         <convert converter="bean" match="de.ingrid.mdek.dwr.services.sns.SNSTopicMap"/>
@@ -169,9 +183,13 @@
         
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.ProfileBean" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.Rubric" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.OptionEntry" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.OptionEntry" javascript="*">
+            <param name="exclude" value="lang"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.SelectControl" javascript="*"/>
-        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.Controls" javascript="*"/>
+        <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.Controls" javascript="*">
+            <param name="exclude" value="thesaurusUrl, unit, options, numLines, linkLabel"/>
+        </convert>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TextControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.ThesaurusControl" javascript="*"/>
         <convert converter="bean" match="de.ingrid.utils.ige.profile.beans.controls.TableControl" javascript="*"/>

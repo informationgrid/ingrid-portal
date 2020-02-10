@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -211,7 +211,7 @@ public class QueryResultPostProcessor {
 
                 if (!objServHasAccessConstraint && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                     for (String url : tmpArray) {
-                        url = addCapabilitiesInformation(url) + "||";
+                        url = addCapabilitiesInformation(url) + URLEncoder.encode("||", "UTF-8");
                         // add layer information to link
                         if (firstResourceId != null) url += "" + URLEncoder.encode(firstResourceId, "UTF-8");
                         // only take the first map url, which should be the only one! 
@@ -515,7 +515,7 @@ public class QueryResultPostProcessor {
                             }
                             tmpString = tmpString + "VERSION=1.1.1";
                         }
-                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim(), "UTF-8") + "||");
+                        hit.put(Settings.RESULT_KEY_WMS_URL, URLEncoder.encode(tmpString.trim() + "||", "UTF-8"));
                     } catch (UnsupportedEncodingException e) {
                         log.error("Error url encoding wms URL!", e);
                     }

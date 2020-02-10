@@ -9,20 +9,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
     <head>
-        #* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
-        #includeHeaderResource()
         #set($currentPage = $site.getPageOrTemplate().url)
-        <!--
-        #if($currentPage)
-            #if($currentPage != "/help.psml")
-                <base href="#BaseHref()" />
-            #end
-        #end
-        -->
-        <link rel="prefetch" href="#GetPageResource('images/template/icons.svg')" />
-        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "InGrid-Portal")</title>
+        <base href="/" />
+        <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "ZDM-Küstendaten")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
-        <meta http-equiv="Content-style-type" content="text/css" />   
+        <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
@@ -30,65 +21,47 @@
         <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
         <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
         <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+        <meta name="robots" content="index,follow" />
 
-        #if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
-            <meta name="robots" content="noindex,follow" />
-        #else
-            <meta name="robots" content="index,follow" />
-        #end
-        <link rel="stylesheet" href="#GetPageResource('css/google/robotocondensed/v13/css/fonts.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.css')" />
-        <link rel="stylesheet" href="#GetPageResource('css/datepicker/classic.date.css')" />
-        <link rel="shortcut icon" href="#GetPageResource('images/favicon.ico')" />
-        #if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
-            <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
-        #end
-
-        #* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
-        ##includeJavaScriptForHead()
-        ##IncludeStylesheets()
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/gsb/icons/favicon.ico?__blob=normal&v=1" />
+ 
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print"/>
-        #* our decorator macros, see ./decorator-macros.vm *#
-        #decoratorIncludeJavaScriptForHead()
-        <!-- Global scripts -->
-        <script src="#GetPageResource("scripts/modernizr.custom.min.js")"></script>
-        <script src="#GetPageResource("scripts/jquery-2.1.4.min.js")"></script>
-        <script src="#GetPageResource("scripts/fastclick.min.js")"></script>
-        <!-- Pickadate -->
-        <script src="#GetPageResource("scripts/pickadate/lib/picker.js")"></script>
-        <script src="#GetPageResource("scripts/pickadate/lib/picker.date.js")"></script>
-        <script src="#GetPageResource("scripts/pickadate/lib/legacy.js")"></script>
-        #set($lang = $renderRequest.Locale.getLanguage())
-        #if($lang && $lang != "en")
-            <script src='#GetPageResource("scripts/pickadate/lib/translations/${lang}.js")'></script>
-        #end
-        <!-- zxcvbn -->
-        <script src="#GetPageResource("scripts/zxcvbn/zxcvbn.js")"></script>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print">
+
+        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
         <!-- ZDM -->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/libs.css?v=7" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/small.css?v=25" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/medium.css?v=4" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/large.css?v=11" type="text/css">
-        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/css/gsb/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
-        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_iefix.css?v=1" type="text/css" /><![endif]-->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_print.css?v=3" type="text/css" media="print">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/gsb/addon_preview.css?v=1" type="text/css">
-        <script type="text/javascript" src="/decorations/layout/ingrid/scripts/gsb/global.js?v=29"></script>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/_libs.css?v=7" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/small.css?v=25" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/medium.css?v=4" type="text/css">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/large.css?v=11" type="text/css">
+        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/gsb/css/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
+        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_iefix.css?v=1" type="text/css" /><![endif]-->
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_print.css?v=3" type="text/css" media="print">
+        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_preview.css?v=1" type="text/css">
+        <script type="text/javascript" src="/decorations/layout/ingrid/gsb/scripts/global.js?v=29"></script>
+        <meta class="foundation-data-attribute-namespace">
+        <meta class="foundation-mq-xxlarge">
+        <meta class="foundation-mq-xlarge">
+        <meta class="foundation-mq-large">
+        <meta class="foundation-mq-medium">
+        <meta class="foundation-mq-small">
+        <style></style>
     </head>
     <body class="gsb lang-de fixed js-on">
-    
-    #set($mainMenu = $site.getMenu("main-menu"))
-    #set($serviceMenu = $site.getMenu("service-menu"))
-    #set($footerMenu = $site.getMenu("footer-menu"))
-    #if(!$mainMenu.empty)
-        #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
-    #end
         <div id="wrapperOuter" class="page" >
           <div id="wrapperInner">
             <a id="Start"></a>
+            <h1 class="aural">Generaldirektion Wasserstraßen und Schifffahrt</h1>
+            <p class="navSkip">
+              <em>Springe direkt zu:</em>
+            </p>
+            <ul class="navSkip">
+              <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#content">Inhalt</a></li>
+              <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#navPrimary">Hauptmenü</a></li>
+              <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#search">Suche</a></li>
+            </ul>
             <div id="wrapperDivisions">
               <div id="header">
                 <div class="wrapperBranding row mod">
@@ -102,15 +75,39 @@
                       <li id="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html" title="Tideelbe">Ti&shy;de&shy;el&shy;be</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html" title="Nord-Ostsee-Kanal">Nord-Ost&shy;see-Ka&shy;nal</a></li>
                       <li id="Bar"><a href="https://www.kuestendaten.de/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html" title="Ostseek&uuml;ste">Ost&shy;see&shy;k&uuml;s&shy;te</a></li>
-                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/images/template/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
-                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/images/template/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
+                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icons/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
+                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icons/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
                     </ul>
+                  </div>
+                  <div id="search" class="large-3 columns">
+                    <h2 class="aural">Suche</h2>
+                    <form name="searchService" action="/SiteGlobals/Forms/Suche/Servicesuche_Formular.html" method="get" enctype="application/x-www-form-urlencoded">
+                      <input type="hidden" name="nn" value="523912">
+                      <input type="hidden" name="resourceId" value="10950">
+                      <input type="hidden" name="input_" value="17684">
+                      <input type="hidden" name="pageLocale" value="de">
+                      <fieldset>
+                          <p>
+                            <span class="formLabel aural">
+                                <label for="f10950d16094">Suchtext </label>
+                            </span>
+                            <span class="formField">
+                                <input id="f10950d16094" name="templateQueryString" value="" title="Suchtext" type="text" placeholder="Suchbegriff" size="26" maxlength="100" autocomplete="off">
+                                <p id="searchAutoSuggestBox1" class="searchAutoSuggestBox" style="width: 178px; top: 24px; left: 12px; display: none;"></p>
+                            </span>
+                            <input class="image" type="image" src="/decorations/layout/ingrid/gsb/Forms/_components/Buttons/Servicesuche_Submit.png?__blob=image&amp;v=1" id="f10950d18056" name="submit" alt="Suchen" title="Suchen">
+                          </p>
+                      </fieldset>
+                    </form>
                   </div>
                 </div>
                 <div class="row mod">
-                  <div class="large-3 small-6 logo columns">
-                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/images/template/logo.png" alt="WSVPageAltLink"></a></p>
+                  <div class="large-3 logo columns show-for-large-up">
+                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png?__blob=normal&v=2" alt="WSVPageAltLink"></a></p>
                   </div>
+                  <div class="small-6 logo columns hide-for-large-up">
+                       <p><a href="https://www.wsv.de" title="Wasserstraßen- und Schifffahrtsverwaltung des Bundes" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/additionalLogoShrinkheader.jpg?__blob=normal&amp;v=2" alt="Weitere Informationen unter Wasserstraßen- und Schifffahrtsverwaltung des Bundes"></a></p>
+                    </div>
                   <div class="right large-5 small-6 addlogo columns subheadline">
                     <p>
                       <span>Zentrales Datenmanagement (ZDM)<br> K&uuml;stendaten</span>
@@ -118,15 +115,70 @@
                   </div>
                 </div>
                 <div id="navPrimary">
-                  <h2 class="aural">Hauptmen&uuml;</h2>
+                  <ul>
+                    <li tabindex="0" class="">
+                      <div class="" id="n-1">
+                        <h3><a href="/DE/Wir-ueber-uns/Wir-ueber-uns-node.html" title="Wir über uns">Wir über uns</a></h3>
+                        <h4 class="aural">Unternavigationspunkte</h4>
+                        <div class="menu fl-1">
+                          <div class="menu-box" style="display: none; opacity: 1;">
+                            <ul>
+                              <li class=""><a href="/DE/Wir-ueber-uns/Beteiligte-Institutionen/Beteiligte-Institutionen-node.html" title="Beteiligte Institutionen">Be­tei­lig­te In­sti­tu­tio­nen</a></li>
+                              <li class=""><a href="/DE/Wir-ueber-uns/Leitfaden-fuer-Projekte-und-Daten/Leitfaden-fuer-Projekte-und-Daten-node.html" title="Leitfaden für Projekte und Daten">Leit­fa­den für Pro­jek­te und Da­ten</a></li>
+                              <li class=""><a href="/DE/Wir-ueber-uns/ZDM-Faltblatt/ZDM-Faltblatt-node.html" title="ZDM-Faltblatt">ZDM-Falt­blatt</a></li>
+                              <li class="last "><a href="/DE/Wir-ueber-uns/Vorlage-Teaser/teaser-node.html">teaser-no­de</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li tabindex="0">
+                      <div class="" id="n-2">
+                        <h3><a href="/DE/Portalsystem/Portalsystem_node.html" title="Portalsystem">Por­tal­sys­tem</a></h3>
+                        <h4 class="aural">Unternavigationspunkte</h4>
+                      </div>
+                    </li>
+                    <li tabindex="0">
+                      <div class="" id="n-3">
+                        <h3><a href="/DE/Aktuelle_Massnahmen/Aktuelle_Massnahmen_node.html" title="Aktuelle Maßnahmen">Ak­tu­el­le Maß­nah­men</a></h3>
+                        <h4 class="aural">Unternavigationspunkte</h4>
+                      </div>
+                    </li>
+                    <li tabindex="0">
+                      <div class="" id="n-4">
+                        <h3><a href="/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portalübergreifend-Alt-Text">Pu­bli­ka­tio­nen</a></h3>
+                        <h4 class="aural">Unternavigationspunkte</h4>
+                      </div>
+                    </li>
+                    <li tabindex="0">
+                      <div class="mod" id="n-5">
+                        <h3><a href="/DE/Services/services-node.html" title="Portalübergreifende Services">Ser­vice</a></h3>
+                        <h4 class="aural">Unternavigationspunkte</h4>
+                        <div class="menu fl-1">
+                          <div class="menu-box">
+                            <ul>
+                              <li class="Bar"><a href="/Tideelbe/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow­n­load Geo­da­ten</a></li>
+                              <li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow­n­load Zeitrei­hen</a></li>
+                              <li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In­fo­brie­fe</a></li>
+                              <li class=""><a href="/DE/Services/Infobrief-NEU/infobrief_node.html">In­fo­brief NEU</a></li>
+                              <li class=""><a href="/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portalübergreifend-Alt-Text">Pu­bli­ka­tio­nen</a></li>
+                              <li class=""><a href="/DE/Services/Webcams/Webcams-node.html" title="Webcams">Web­cams</a></li>
+                              <li class="last "><a href="/DE/Services/WMS/WMS_node.html" title="Web Services">Web Ser­vices</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
                 <div id="wrapperBreadcrumbs">
                   <div id="navBreadcrumbsVertical">
                   </div>
                 </div>
                 <div id="navBreadcrumbs">
-                   &nbsp;
+                  <p class="aural">Sie sind hier:</p>
+                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>HTTP Status 404</strong></li></ol>
                 </div>
               </div>
-              <div id="main" class="row wide">
-                <div id="content" class="large-12 medium-12 small-12 columns">
+              <div id="main" class="row">
+                <div id="content" class="large-8 medium-12 small-12 columns">

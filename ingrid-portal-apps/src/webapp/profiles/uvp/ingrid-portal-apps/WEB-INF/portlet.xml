@@ -118,7 +118,7 @@
         <portlet-info>
             <title>RSS Feeds administrieren</title>
             <short-title>RSS Feeds administrieren</short-title>
-        </portlet-info>      
+        </portlet-info>
         <portlet-preferences>
             <preference>
                 <name>sectionStyle</name>
@@ -950,11 +950,11 @@
         <portlet-preferences>
             <preference>
                 <name>bannerStyle</name>
-                <value>row content-xsmall</value>
+                <value>row content-small</value>
             </preference>
             <preference>
                 <name>sectionStyle</name>
-                <value>search-filtered row content-xsmall</value>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>

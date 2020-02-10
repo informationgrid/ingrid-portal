@@ -2,7 +2,7 @@
   **************************************************-
   InGrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -28,126 +28,116 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        <title>UVP</title>
+        <title>Das nieders&auml;chsische UVP-Portal</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="UVP bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
-        <meta name="author" content="wemove digital solutions" />
+        <meta name="author" content="© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="keywords" lang="de" content="UVP, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
-        <meta name="copyright" content="wemove digital solutions GmbH" />
+        <meta name="copyright" content="© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
-        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+        <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
     </head>
     <body>
-        <div class="nav-overlay">
-            <a title="Login" class="nav-overlay__item nav-overlay__item--level1" href="/log-in">Login</a>
-            <ul class="nav__mobile nav__foot">
-                <li>
-                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an UVP" href="/kontakt">Kontakt</a>
-                </li>
-                <li>
-                    <a title="Alle Inhalte von UVP auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
-                </li>
-                <li>
-                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                </li>
-                <li>
-                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="page">
-            <header class="header">
-                <div class="ob-box-padded-more ob-box-center">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                            <svg class="icon">
-                                <use xlink:href="#burger"></use>
-                            </svg>
-                            <svg class="icon ob-fade">
-                                <use xlink:href="#cross"></use>
-                            </svg>
+        <div class="container">
+            <header>
+                <div class="row">
+                    <div class="columns small-7 medium-13 large-9 xlarge-8">
+                        <div class="logo">
+                            <div class="switch">
+                               <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
+                            </div>
+                            <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"/></a>
+                            <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="UVP"/></a>
                         </div>
                     </div>
-                    <div class="header__widgets__section">
-                        <a class="header__widget header__logo" href="/startseite" title="Startseite von UVP aufrufen ">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg ">
-                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png ">
-                        </a>
+                    <div class="columns xsmall-16 small-15 medium-9 large-7 xlarge-6 nav-tabs">
+                        <div class="menu-tab-row">
+                            <a class="menu-tab is-selected" href="/log-in" title="Login">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-user"></span>
+                                    <span>Login</span>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                    <div class="header__widgets__section">
-                        <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von UVP aufrufen ">
-                            <p class="main__title">Das niedersächsische UVP-Portal</p>
-                            <p class="sub__title"></p>
-                        </a>
-                        <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von UVP aufrufen "><span class="mq-show-m">Nds. UVP-Portal</span><span class="mq-hide-m">Das niedersächsische UVP-Portal</span></a>
-                    </div>
-                </div> 
-                <nav class="nav-desktop mq-hide-xxl">
-                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/log-in" title="Login">Login</a>
-                        </li>
-                    </ul>
-                </nav>
+                </div>
             </header>
-            <!-- CONTENT BLOCK -->
-            <section class="block block--padded">
-                <div class="ob-box-wide ob-box-padded ob-box-center">
-                    <article class="content ob-container">
-                        <h1><fmt:message key="ui.entry.session.expired" /></h1>
-                        <p><fmt:message key="ui.entry.session.expired.text" /></p>
-                        <br />
-                    </article>
-                </div>
-            </section>
-            <footer class="footer">
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__top">
-                        <a href="/startseite">
-                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
-                        </a>
-                        <p class="copyright">© Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
-                    </div>
-                </div>
-                <hr class="bx-top-0 bx-bot-0"></hr>
-                <div class="grid">
-                    <div class="column column--3-4-xl">
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <nav class="footer__middle mq-hide-l">
-                                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an UVP" href="/kontakt">Kontakt</a>
-                                    <a title="Alle Inhalte von UVP auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
-                                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                                </nav>
+            <div class="body">
+                <div class="banner subpage">
+                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+                        <div class="row align-center">
+                            <div class="large-20 columns dark">
+                                <h1><fmt:message key="ui.entry.session.expired" /></h1>
                             </div>
                         </div>
                     </div>
-                    <div class="column column--1-4-xl">
-                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <div class="footer__bottom"> </div>
+                </div>
+                <div class="row content-small">
+                    <div class="columns">
+                        <div class="form">
+                            <p>
+                                <fmt:message key="ui.entry.session.expired.text" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="footer">
+                    <hr>
+                    <div class="row">
+                        <div class="xsmall-24 medium-24 large-16 xlarge-17 columns">
+                            <div class="logo">
+                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"/></a>
+                            </div>
+                            <div class="copyright">
+                                <span class="icon"></span>
+                                <span class="text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
+                            </div>
+                        </div>
+                        <div class="xsmall-24 small-24 large-8 xlarge-7 columns">
+                            <div class="footer-menu-entries">
+                                <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="entry">
+                                    <span class="text">Impressum</span>
+                                </a>
+                                <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="entry">
+                                    <span class="text">Datenschutz</span>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
+            <div class="popup switch-popup">
+                <button type="button" class="button round popup__close js-popup-close" data-box=".switch-popup"><span class="ic-ic-cross"></span></button>
+                <div class="popup__content text-box">
+                    <div class="list-item">
+                        <a class="switch-link uvp">
+                            <span class="ic-ic-check"></span>
+                            <img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP" class="hide-for-xsmall-only"/>
+                            <img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP" class="show-for-xsmall-only"/>
+                        </a>
+                    </div>
+                    <div class="list-item">
+                        <a class="switch-link numis" href="https://numis.niedersachsen.de">
+                            <span class=""></span>
+                            <img src="/decorations/layout/uvp/images/template/logo-numis-mit-tag.svg" alt="NUMIS" class="hide-for-xsmall-only"/>
+                            <img src="/decorations/layout/uvp/images/template/logo-numis-mobile.svg" alt="NUMIS" class="show-for-xsmall-only"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
-        
     </body>
+    <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+    <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
 </html>

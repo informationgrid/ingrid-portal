@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -53,7 +53,6 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/inspireRelevant/spatialSystems",
         "ingrid/hierarchy/behaviours/inspireRelevant/geoservice",
         "ingrid/hierarchy/behaviours/inspireRelevant/inspireIsoConnection",
-        "ingrid/hierarchy/behaviours/inspireRelevant/inspireEncodingConnection",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
@@ -81,17 +80,19 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/extraInfoCharSetData",
         "ingrid/hierarchy/behaviours/parentIdentifier",
         "ingrid/hierarchy/behaviours/deleteNonEmptyFolders",
-        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints"
+        "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints",
+        "ingrid/hierarchy/behaviours/priorityDataset",
+        "ingrid/hierarchy/behaviours/spatialScope"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
-            inspireEncodingConnection,advCompatible, adminitrativeArea, advProductGroup, inspireRelevant, thesaurusInspire, thesaurusTopics,
+            advCompatible, adminitrativeArea, advProductGroup, inspireRelevant, thesaurusInspire, thesaurusTopics,
             thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, dataQualitySection,
             ref3BaseDataLink, ref3Operations, ref3CouplingType, ref5KeysText,
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
             extraInfoLangData, extraInfoCharSetData,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope) {
 
     return declare(null, {
         
@@ -155,8 +156,6 @@ define(["dojo/_base/declare",
         
         inspireIsoConnection: inspireIsoConnection,
 
-        inspireEncodingConnection: inspireEncodingConnection,
-
         // Not needed anymore since specifications have been removed and cannot be mapped
         // inspireConformityConnection: inspireConformityConnection,
 
@@ -165,6 +164,10 @@ define(["dojo/_base/declare",
         deleteNonEmptyFolders: deleteNonEmptyFolders,
 
         accessContraintsField: accessConstraints,
+
+        priorityDataset: priorityDataset,
+
+        spatialScope: spatialScope,
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
@@ -218,27 +221,6 @@ define(["dojo/_base/declare",
                     });
                     if (isInvalid) {
                         notPublishableIDs.push(["generalPreviewImageTable", message.get("validation.previewImage.table.missingUrl")]);
-                    }
-                });
-            }
-        },
-        
-        encodingSchemeForGeodatasets: {
-            title: "Kodierungsschema nur für Geodatensätze",
-            description: "Für Geodatensätze wird das Feld \"Kodierungsschema der geographischen Daten\" angezeigt, für andere Klassen ist es ausgeblendet.",
-            defaultActive: true,
-            run: function() {
-                topic.subscribe("/onObjectClassChange", function(data) {
-                    if (data.objClass === "Class1") {
-                        // set field initially hidden
-                        // "Kodierungsschema der geographischen Daten" 
-                        domClass.remove("uiElement1315", "hide");
-    
-                    } else {
-                        // "Kodierungsschema der geographischen Daten" only in class 1
-                        domClass.add("uiElement1315", "hide");
-                        // remove any previous value from now hidden field
-                        registry.byId("availabilityDataFormatInspire").set("value", "");
                     }
                 });
             }

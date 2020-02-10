@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -256,36 +256,6 @@
   .leaflet-popup-content {
       min-width: 400px;
   }
-  header {
-    height: 80px;
-  }
-  header .menu-tab-row .menu-tab {
-    height: 76px;
-    width: 120px;
-    font-size: 14px;
-  }
-  header .menu-tab-row .menu-tab .link-menu-tab {
-    top: 32px;
-    padding: 8px 0;
-  }
-  header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
-    font-size: 22px;
-    top: -18px;
-    left: 48px;
-  }
-  header .logo .hide-for-large {
-    top: 14px;
-  }
-  .header-menu-open {
-    text-align: right;
-    right: 12px;
-  }
-  .header-menu-open button {
-    margin: 13px 0 0 0;
-  }
-  .header-menu-open .login {
-    display: none;
-  }
   .leaflet-popup-content a h5, .leaflet-popup-content .helper.icon{
     white-space: nowrap;
     overflow: hidden;
@@ -306,5 +276,14 @@
   }
   .teaser-data .helper.icon {
     width: 85%;
+  }
+}
+
+@media screen and (max-width: 47.9375em) {
+   .header-menu-open .xsmall-button {
+    display: block;
+  }
+  .header-menu-open .small-button {
+    display: none;
   }
 }

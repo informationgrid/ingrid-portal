@@ -4,7 +4,7 @@
 <section class="block block--padded">
     <div class="ob-box-wide ob-box-center">
         <article class="content ob-container ob-box-narrow ob-box-center">
-            <h4>Kontaktformular</h4>
+            <h4>$MESSAGES.getString('contact.form')</h4>
             #set ($action = $renderResponse.createActionURL())
             <form action="$action" method="post" name="contact" id="contact" enctype="multipart/form-data">
                 #renderMessageInfo($MESSAGES.getString('contact.form.required'))

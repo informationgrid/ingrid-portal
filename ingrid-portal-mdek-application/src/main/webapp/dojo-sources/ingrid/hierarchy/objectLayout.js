@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -243,6 +243,8 @@ define([
             },
 
             createGeneralInfo: function() {
+                var self = this;
+
                 new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
@@ -343,6 +345,47 @@ define([
                 }];
                 layoutCreator.createDataGrid("thesaurusInspire", null, thesaurusInspireStructure, null);
 
+                var priorityDatasetStructure = [{
+                    field: 'title',
+                    name: 'title',
+                    width: '708px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    init: function() { return self.initializedPriorityDatasetList; },
+                    partialSearch: true,
+                    formatter: function(row, cell, value) {
+                        var found = null;
+                        array.some(self.initializedPriorityDatasetList, function(item) {
+                            if (item[1] == value) {
+                                found = item[0];
+                                return true;
+                            }
+                            return false;
+                        });
+                        return found;
+                    }
+                }];
+                layoutCreator.createDataGrid("priorityDataset", null, priorityDatasetStructure, null);
+                this.preparePriorityDatasetList().then(function(data) {
+                    self.initializedPriorityDatasetList = data;
+                });
+
+                var storeProps = {
+                    data: {
+                        identifier: '1',
+                        label: '0'
+                    }
+                };
+                layoutCreator.createSelectBox("spatialScope", null, storeProps, function() {
+                    return UtilSyslist.getSyslistEntry(6360)
+                        .then(function(items) {
+                            items.unshift(["&nbsp;", ""]);
+                            return items;
+                        });
+                });
+
                 new CheckBox({}, "isInspireRelevant");
                 new RadioButton({
                     checked: true,
@@ -370,6 +413,21 @@ define([
                     formatter: lang.partial(gridFormatters.SyslistCellFormatter, 6400)
                 }];
                 layoutCreator.createDataGrid("categoriesOpenData", null, categoriesStructure, null);
+            },
+
+            preparePriorityDatasetList: function() {
+                var self = this;
+                var germanList = UtilSyslist.readSysListData(6350, 'de');
+                var englishList = UtilSyslist.readSysListData(6350, 'en');
+                return all([germanList, englishList]).then(function(results) {
+                    var list = [];
+                    for (var i=0; i < results[0].length; i++) {
+                        var german = results[0][i];
+                        var english = results[1][i];
+                        list.push([german[0] + " {en: " + english[0] + "}", german[1]])
+                    }
+                    return list;
+                });
             },
 
             createFachBezugClass1: function() {
@@ -2035,7 +2093,8 @@ define([
                 }, {
                     field: 'source',
                     name: message.get("ui.obj.availability.useAccessConstraintsTable.header.source"),
-                    editable: true
+                    editable: true,
+                    formatter: gridFormatters.EscapeFormatter
                 }];
                 layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
                 
@@ -2096,16 +2155,6 @@ define([
                 new SimpleTextarea({
                     "class": "textAreaFull"
                 }, "availabilityOrderInfo");
-
-                var storeProps = {
-                    data: {
-                        identifier: '1',
-                        label: '0'
-                    }
-                };
-                layoutCreator.createComboBox("availabilityDataFormatInspire", null, lang.clone(storeProps), function() {
-                    return UtilSyslist.getSyslistEntry(6300);
-                });
 
             },
 

@@ -69,42 +69,45 @@
     #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
     #set($footerMenu = $site.getMenu("footer-menu"))
         #if($serviceMenu && !$serviceMenu.empty)
-            <div class="header-menu-open">
-                #if($jetspeed.getLoggedOn())
-                    #set($userAttributes = $jetspeed.getUserProperties())
-                    #set($userNameGiven = $userAttributes.get("user.name.given"))
-                    #set($userNameFamily = $userAttributes.get("user.name.family"))
-                    
-                    #if($userNameGiven)
-                        #set ($salutation = " $userNameGiven")
-                    #end
-                    #if($userNameFamily)
-                        #set ($salutation = "$!{salutation} $userNameFamily")
-                    #end
-                    <div class="login">
-                        <span class="ic-ic-user"></span>
-                        <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
-                    </div>
-                    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
-                #else
-                    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
-                #end
-                <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
-            </div>
             #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
         #end
         <header>
             <div class="row">
-                <div class="columns xsmall-10 small-7 medium-9 large-7 xlarge-6">
+                <div class="columns small-7 medium-9 large-7 xlarge-6">
                     <div class="logo">
-                        <a href="/startseite" class="hide-for-large"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"></a>
-                        <a href="/startseite" class="show-for-large"><img src="/decorations/layout/uvp/images/template/logo-mit-tag.svg" alt="UVP"></a>
+                        <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"/></a>
+                        <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-mit-tag.svg" alt="UVP"/></a>
+                        <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="UVP"/></a>
                     </div>
                 </div>
-                <div class="columns xsmall-10 small-12 medium-9 large-7 xlarge-6 nav-tabs hide-for-print">
+                <div class="columns xsmall-16 small-15 medium-9 large-7 xlarge-6 nav-tabs hide-for-print">
                 #if(!$mainMenu.empty)
                     #includeMainNavigation($mainMenu)
                 #end
+                </div>
+                <div class="columns">
+                    <div class="header-menu-open">
+                        #if($jetspeed.getLoggedOn())
+                            #set($userAttributes = $jetspeed.getUserProperties())
+                            #set($userNameGiven = $userAttributes.get("user.name.given"))
+                            #set($userNameFamily = $userAttributes.get("user.name.family"))
+                            
+                            #if($userNameGiven)
+                                #set ($salutation = " $userNameGiven")
+                            #end
+                            #if($userNameFamily)
+                                #set ($salutation = "$!{salutation} $userNameFamily")
+                            #end
+                            <div class="login show-for-medium">
+                                <span class="ic-ic-user"></span>
+                                <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
+                            </div>
+                            <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
+                        #else
+                            <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
+                        #end
+                        <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+                    </div>
                 </div>
             </div>
         </header>

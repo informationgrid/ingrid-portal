@@ -106,7 +106,7 @@
     <!-- Hauptsuche   -->
     <rule>
         <from>/freitextsuche</from>
-        <to type="forward">/portal/main-search.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-search.psml</from>
@@ -116,7 +116,7 @@
     <!--  Suche - Datenkataloge - Hierarchiebaum -->
     <rule>
         <from>/datenkataloge</from>
-        <to type="forward">/portal/search-catalog/search-catalog-hierarchy.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/search-catalog/search-catalog-hierarchy.psml</from>
@@ -136,7 +136,7 @@
     <!--  Umweltthemen  -->
     <rule>
         <from>/themensuche</from>
-        <to type="forward">/portal/main-environment.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-environment.psml</from>
@@ -146,7 +146,7 @@
     <!--  Karten   -->
     <rule>
         <from>/kartendienste</from>
-        <to type="forward">/portal/main-maps.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-maps.psml</from>
@@ -156,7 +156,7 @@
     <!--  Umweltchronik  -->
     <rule>
         <from>/umweltchronik</from>
-        <to type="forward">/portal/main-chronicle.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-chronicle.psml</from>
@@ -166,7 +166,7 @@
     <!-- Über InGrid-Portal  -->
     <rule>
         <from>/hintergrundinformationen</from>
-        <to type="forward">/portal/main-about.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about.psml</from>
@@ -176,7 +176,7 @@
     <!-- Informationsanbieter   -->
     <rule>
         <from>/informationsanbieter</from>
-        <to type="forward">/portal/main-about-partner.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-partner.psml</from>
@@ -186,7 +186,7 @@
     <!-- Datenquellen  -->
     <rule>
         <from>/datenquellen</from>
-        <to type="forward">/portal/main-about-data-source.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-about-data-source.psml</from>
@@ -206,7 +206,7 @@
     <!-- Datenschutzbestimmung   -->
     <rule>
         <from>/datenschutzbestimmung</from>
-        <to type="forward">/portal/privacy.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/privacy.psml</from>
@@ -216,7 +216,7 @@
     <!-- Weitere Meldungen  -->
     <rule>
         <from>/neuigkeiten</from>
-        <to type="forward">/portal/rss-news.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/rss-news.psml</from>
@@ -226,7 +226,7 @@
     <!--  Inhaltsübersicht  -->
     <rule>
         <from>/inhaltsverzeichnis</from>
-        <to type="forward">/portal/service-sitemap.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-sitemap.psml</from>
@@ -236,7 +236,7 @@
     <!-- Kontakt   -->
     <rule>
         <from>/kontakt</from>
-        <to type="forward">/portal/service-contact.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/service-contact.psml</from>
@@ -246,7 +246,7 @@
     <!-- Impressum   -->
     <rule>
         <from>/impressum</from>
-        <to type="forward">/portal/disclaimer.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/disclaimer.psml</from>
@@ -266,7 +266,7 @@
     <!-- Help -->
     <rule>
         <from>/hilfe</from>
-        <to type="forward">/portal/help.psml</to>
+        <to type="forward">/portal/default-page.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/help.psml</from>
@@ -282,5 +282,16 @@
         <from>/portal/administration/admin-portal-profile.psml</from>
         <to>/profile</to>
     </outbound-rule>
+
+    <!-- CMS -->
+    <rule>
+        <from>/cms</from>
+        <to type="forward">/portal/administration/admin-cms.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/administration/admin-cms.psml</from>
+        <to>/cms</to>
+    </outbound-rule>
     
+
 </urlrewrite>

@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -20,6 +20,13 @@
  * limitations under the Licence.
  * **************************************************#
  */
+ 
+#footer h2 {
+  color: #FFF !important;
+}
+input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+  outline: 2px solid transparent !important;
+}
 @media screen and (min-width: 940px) {
   .copyright {
       display: block;

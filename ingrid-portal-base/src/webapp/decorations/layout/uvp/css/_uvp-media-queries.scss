@@ -22,7 +22,11 @@
     right: 12px;
     .login {
       display: none;
+      ~ .button { margin: 18px 0; }
     }
+  }
+  .header-menu-close {
+    padding: 15px 0px 0 0;
   }
 }
 
@@ -45,14 +49,14 @@
   .header-menu-open {
     text-align: right;
     right: 12px;
-    button { margin: 25px 0 0 0; }
+    button { margin: 33px 0 0 0; }
   }
   .header-menu {
     width: 450px;
     z-index: 1100;
   }
   .header-menu-close {
-    padding: 25px 8px 0 0;
+    padding: 15px 0px 0 0;
 
     button { padding: 14px 24px; }
   }
@@ -61,6 +65,11 @@
 
   .teaser-data {
     .data-text { max-height: 112px; }
+  }
+
+  h2 .anchor span {
+    top: 10px;
+    font-size: 24px;
   }
 
 }
@@ -85,9 +94,12 @@
         padding-right: .6666666667rem;
       }
     }
+    .logo {
+      width: 16.5em;
+    }
   }
   
-  .header-menu-close { padding: 25px 12px 0 0; }
+  .header-menu-close { padding: 33px 14px 0 0; }
   .menu-main-links, .menu-sub-links { padding: 25px 12px 25px 38px; }
 
   .social-buttons {
@@ -150,7 +162,6 @@
     .header {
       font-size: 24px;
       line-height: 30px;
-      max-height: 60px;
     }
     .data-text { max-height: 82px; }
   }
@@ -224,8 +235,13 @@
 /* LARGE 1024px  */
 @include breakpoint(large) {
 
-  footer .footer {
-    .footer-menu-entries, .copyright { text-align: left; }
+  .header-menu-close { padding: 33px 14px 0 0 !important; }
+  footer {
+    margin-top: 4rem;
+
+    .footer {
+      .footer-menu-entries, .copyright { text-align: left; }
+    }
   }
 
   blockquote p {
@@ -272,6 +288,8 @@
   .portlet-margin-bottom { margin-bottom: 72px;}
 
   .about {
+    margin-bottom: -4rem;
+
     .about-wrapper {
       padding: 80px 0;
 
@@ -333,7 +351,6 @@
 @media screen and (min-width: 1800px) {
 
     .header-menu {
-      width: 400px;
     }
     .header-menu-close {
       padding: 25px 12px 0 34px;

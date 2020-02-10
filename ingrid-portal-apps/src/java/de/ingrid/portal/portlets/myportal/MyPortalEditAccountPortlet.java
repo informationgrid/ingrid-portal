@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -180,9 +180,15 @@ public class MyPortalEditAccountPortlet extends GenericVelocityPortlet {
             // update password only if a old password was provided
             String oldPassword = f.getInput(EditAccountForm.FIELD_PW_OLD);
             if (oldPassword != null && oldPassword.length() > 0) {
-        		PasswordCredential credential = userManager.getPasswordCredential(user);
-        		credential.setPassword(oldPassword, f.getInput(EditAccountForm.FIELD_PW_NEW));
-        		userManager.storePasswordCredential(credential);
+                PasswordCredential credential = userManager.getPasswordCredential(user);
+                String password = f.getInput(EditAccountForm.FIELD_PW_NEW);
+                credential.setPassword(oldPassword, password);
+                userManager.storePasswordCredential(credential);
+                // Update confirmid
+                String confirmId = Utils.getMD5Hash(userName.concat(password).concat(
+                    Long.toString(System.currentTimeMillis())));
+                user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                userManager.updateUser(user);
             }
         } catch (PasswordAlreadyUsedException e) {
             f.setError(EditAccountForm.FIELD_PW_NEW, "account.edit.error.password.in.use");

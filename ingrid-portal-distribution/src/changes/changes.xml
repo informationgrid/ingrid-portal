@@ -7,15 +7,120 @@
 
     <body>
 
-        <release version="5.3.0-SNAPSHOT" date="2019-xx-xx" description="Release 5.3.0">
-          <action type="fix" dev="wemove" issue="1553">
-            IGE: Verlinkung von hochgeladenen Dokumenten im Editor funktioniert nicht.
+        <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="update" dev="wemove" issue="1274">
+            IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
+          </action>
+          <action type="update" dev="wemove" issue="1589">
+            Migration von Sachsen nach METAVER: Aktualisierung METAVER Logo ("Sachsen" als Partner hinzugefügt)
+          </action>
+        </release>
+
+        <release version="5.3.1" date="2020-xx-xx" description="Release 5.3.1">
+          <action type="add" dev="wemove" issue="1699">
+            Portal: Create facets by index field or codelist id.
+          </action>
+          <action type="fix" dev="wemove" issue="1671">
+            Portal: Fix display message after create user as portal admin.
+          </action>
+          <action type="fix" dev="wemove" issue="1672">
+            Portal: Fix NUMIS and UVP-NI layout.
+          </action>
+          <action type="fix" dev="wemove" issue="1673">
+            Portal: Fix change password function.
+          </action>
+          <action type="fix" dev="wemove" issue="1595">
+            Portal: Fix display constraints on portal detail view.
+          </action>
+          <action type="add" dev="wemove" issue="1592">
+            MapClient: Change load service error message.
+          </action>
+          <action type="add" dev="wemove" issue="1656">
+            MapClient: Update attribution displaying and handling of imported services.
+          </action>
+          <action type="add" dev="wemove" issue="1664">
+            MapClient: Update handling coordination search.
+          </action>
+          <action type="fix" dev="wemove" issue="1604">
+            IGE: Fix spatial scope field.
+          </action>
+        </release>
+
+        <release version="5.3.0" date="2020-01-15" description="Release 5.3.0">
+          <action type="add" dev="wemove" issue="1465">
+            Portal: Umsetzung Layout NUMIS/UVP Niedersachsen.
+          </action>
+          <action type="add" dev="wemove" issue="1523">
+            Portal: Aktualisierung Portal Profil HMDK
+          </action>
+          <action type="add" dev="wemove" issue="1593">
+            Portal: Erstellung Portal Profil EBA
+          </action>
+          <action type="add" dev="wemove" issue="1118">
+            Portal: Vermeidung von Klartext Passwörtern in E-Mails.
+          </action>
+          <action type="add" dev="wemove" issue="1273">
+            IGE: Split field "Kodierungsschema".
+          </action>
+          <action type="add" dev="wemove" issue="1517">
+            IGE: Add new field spatial scope.
+          </action>
+          <action type="add" dev="wemove" issue="1516">
+            IGE: Add new field priority data set.
+          </action>
+          <action type="add" dev="wemove" issue="1554">
+            IGE: Change codelist namespace to http://standards.iso.org/iso/19139/resources/gmxCodelists.xml
+          </action>
+          <action type="add" dev="wemove" issue="971">
+            BKG: Add "Quellenvermerk" to IGE.
           </action>
           <action type="update" dev="wemove" issue="1528">
             Portal: Remove "Ähnliche Begriffe" on BKG profile.
           </action>
+          <action type="update" dev="wemove" issue="868">
+            IGE: Clear AdV product group table when hidden.
+          </action>
+          <action type="update" dev="wemove" issue="1577">
+            UVP: Änderung des Slogans "Vorhaben im Rahmen von Umweltprüfungen" zu "Umweltverträglichkeitsprüfungen der Länder"
+          </action>
+          <action type="update" dev="wemove" issue="1570">
+            UVP: Anpassung der länderspezifischen Vorschaltseiten an das neue UVP Layout
+          </action>
+          <action type="update" dev="wemove" issue="1562">
+            UVP: Rewrite statistic using HQL to improve speed.
+          </action>
+          <action type="fix" dev="wemove" issue="1553">
+            IGE: Verlinkung von hochgeladenen Dokumenten im Editor funktioniert nicht.
+          </action>
+          <action type="fix" dev="wemove" issue="1530">
+            IGE: Encode strings in source note of use constraints.
+          </action>
+          <action type="fix" dev="wemove" issue="1560">
+            IGE: Show AdV product group in detail and compare view.
+          </action>
+          <action type="fix" dev="wemove" issue="1221">
+            Portal: Fix exception on DetailPage extracting EPSG code.
+          </action>
           <action type="fix" dev="wemove" issue="1543">
             Portal: Fix password forgotten function.
+          </action>
+          <action type="fix" dev="wemove" issue="1545">
+            Portal: Fix contact form title.
+          </action>
+          <action type="fix" dev="wemove" issue="1555">
+            UVP: Verbesserung der Handhabung von Leerzeichen und Sonderzeichen in Dokumentennamen.
+          </action>
+          <action type="fix" dev="wemove" issue="602">
+            UVP: Sortierung der Trefferliste.
+          </action>
+          <action type="fix" dev="wemove" issue="1590">
+            UVP: Verfahrenstyp soll in Detaildarstellung angezeigt werden
+          </action>
+          <action type="fix" dev="wemove" issue="661">
+            UVP: Fix facet state.
+          </action>
+          <action type="fix" dev="wemove" issue="2466">
+            mCLOUD: Fix upload under wrong UUID
           </action>
         </release>
 

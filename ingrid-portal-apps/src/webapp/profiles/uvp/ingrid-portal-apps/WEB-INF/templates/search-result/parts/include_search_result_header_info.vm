@@ -1,0 +1,8 @@
+#if($ranking == "date")
+    <div class="caption">
+        <div class="icon check">
+            <span class="ic-ic-info"></span>
+            <span>Bauleitpl&auml;ne k&ouml;nnen bei der Sortierung nach "Aktualit&auml;t" leider nicht ber&uuml;cksichtigt werden.</span>
+        </div>
+    </div>
+#end

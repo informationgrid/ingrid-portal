@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -459,8 +459,6 @@ define(["dojo/_base/declare",
             var table = registry.byId(tableId);
 
             if (table) {
-                // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
-                var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_")+"/"+currentUdk.uuid;
 
                 // create uploader instance
                 var uploader = new UploadWidget({
@@ -599,6 +597,9 @@ define(["dojo/_base/declare",
                         cursor: "pointer"
                     },
                     onclick: lang.hitch(this, function() {
+                        // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
+                        var basePath = Catalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_") + "/" + currentUdk.uuid;
+
                         var files = getFiles(this.phases, true);
                         uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
                             handleUploads(uploads, basePath);

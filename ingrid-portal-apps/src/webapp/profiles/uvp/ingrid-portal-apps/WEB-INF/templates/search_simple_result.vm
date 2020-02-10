@@ -4,7 +4,7 @@ $action.setParameter('action','doSearch')
 <div class="banner search">
     <div class="search-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
         <div class="row align-center">
-            <div class="large-19 columns">
+            <div class="large-20 columns">
                 <form action="$action" class="input-search" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
                     <input type="text" class="input-search-field" id="search-field" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if(!$actionForm.getInputHTMLEscaped('q').equals($MESSAGES.getString('searchSimple.query.initial')))#getHTMLEscapedFieldValue('q')#end">
                     <button class="button round hide-for-medium"><span class="ic-ic-lupe"></span></button>

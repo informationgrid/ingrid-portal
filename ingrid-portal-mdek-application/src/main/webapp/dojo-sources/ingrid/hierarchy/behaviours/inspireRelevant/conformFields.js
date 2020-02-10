@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -61,7 +61,8 @@ define([
             // only for geo dataset
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1") {
-                    self.register();
+                    // delayed register to perform other unregister functions
+                    setTimeout(function () { self.register() });
                 } else {
                     self.unregister();
                     // don't forget to hide the element
@@ -84,41 +85,12 @@ define([
 
             // when registering the event handler then the change might already has happened
             // so that we have to set here manually
-            if (inspireRelevantWidget.checked) domClass.remove("uiElement6001", "hidden");
+            this.handleInspireChange(inspireRelevantWidget.checked);
 
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    if (isChecked) {
-                        domClass.remove("uiElement6001", "hidden");
-
-                        // Also make conformity a required field
-                        domClass.add("uiElementN024", "required");
-
-                        // add events implicitly
-                        var isConform = registry.byId("isInspireConform").checked;
-                        if (isConform) {
-                            self.handleInspireConform();
-                        } else {
-                            // do not call this handler here since it's called because of the change event
-                            // self.handleNotInspireConform();
-                        }
-                    } else {
-                        domClass.add("uiElement6001", "hidden");
-
-                        // Conformity is optional for non-INSPIRE fields
-                        domClass.remove("uiElementN024", "required");
-
-                        // make digital representation optional
-                        domClass.remove( "uiElement5062", "required" );
-
-                        // make encoding schema optional
-                        domClass.remove( "uiElement1315", "required" );
-
-                        // remove all conform/not conform events
-                        utils.removeEvents(self.eventsConform);
-                        utils.removeEvents(self.eventsNotConform);
-                    }
+                    self.handleInspireChange(isChecked);
                 }),
 
                 // set conform option and handle modifications when conform was checked implicitly
@@ -135,9 +107,14 @@ define([
                     };
 
                     if (checkboxContext.checked) {
-                        handle();
-                    } else {
                         utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
+                            handle();
+                        }, function () {
+                            // reset checkbox state
+                            checkboxContext.set("checked", false);
+                        });
+                    } else {
+                        utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
                             handle();
                         }, function () {
                             // reset checkbox state
@@ -191,6 +168,36 @@ define([
             );
         },
 
+        handleInspireChange: function (isChecked) {
+            if (isChecked) {
+                domClass.remove("uiElement6001", "hidden");
+
+                // Also make conformity a required field
+                domClass.add("uiElementN024", "required");
+
+                // add events implicitly
+                var isConform = registry.byId("isInspireConform").checked;
+                if (isConform) {
+                    this.handleInspireConform();
+                } else {
+                    // do not call this handler here since it's called because of the change event
+                    // self.handleNotInspireConform();
+                }
+            } else {
+                domClass.add("uiElement6001", "hidden");
+
+                // Conformity is optional for non-INSPIRE fields
+                domClass.remove("uiElementN024", "required");
+
+                // make digital representation optional
+                domClass.remove("uiElement5062", "required");
+
+                // remove all conform/not conform events
+                utils.removeEvents(this.eventsConform);
+                utils.removeEvents(this.eventsNotConform);
+            }
+        },
+
         handleClickConform: function() {
             // add conformity "VERORDNUNG (EG) Nr. 1089/2010 - INSPIRE Durchführungsbestimmung Interoperabilität von Geodatensätzen und -diensten"
             // with conform level
@@ -215,9 +222,6 @@ define([
 
             // make digital representation required
             domClass.add( "uiElement5062", "required" );
-
-            // make encoding schema required
-            domClass.add( "uiElement1315", "required" );
 
             this.eventsConform.push(
                 // added conformity must not be modified or deleted
@@ -266,7 +270,7 @@ define([
                 // onPublish: Validierung entsprechend den Voreinstellungen:
                 //      Spezifikation - inhalt. Prüfung
                 //      Grad der Spezifikation - inhalt. Prüfung
-                //      Kodierungsschema - Prüfung, ob Eintrag erfolgt
+                //      Anwendungsschema - Prüfung, ob Eintrag erfolgt
                 topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
                     var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
                         .filter(function(item) { return item.specification === self.specificationName; });
@@ -293,9 +297,6 @@ define([
 
             // make digital representation optional
             domClass.remove( "uiElement5062", "required" );
-
-            // make encoding schema optional
-            domClass.remove( "uiElement1315", "required" );
 
             var self = this;
             var missingMessage = string.substitute(message.get("validation.specification.missing"), [self.specificationName]);
@@ -333,7 +334,7 @@ define([
                 // the specification must not be deleted
                 self.addEventSpecificationDelete(),
 
-                // INSPIRE-Thema-abhängige Voreinstellung des Kodierungsschemas entfernen
+                // INSPIRE-Thema-abhängige Voreinstellung des Anwendungsschema entfernen
                 // => via behaviour!
 
 
@@ -360,7 +361,7 @@ define([
         },
 
         updateToNotConform: function() {
-            utils.addConformity(true, this.specificationName, "2");
+            utils.removeConformity(this.specificationName);
         },
 
         addEventSpecificationDelete: function() {

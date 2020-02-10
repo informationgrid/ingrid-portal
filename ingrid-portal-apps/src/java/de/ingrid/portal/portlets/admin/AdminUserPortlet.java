@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -45,6 +45,7 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -123,6 +124,8 @@ public class AdminUserPortlet extends ContentPortlet {
     /** profile rules */
     private Map<String, String> rules;
 
+    private String returnURL;
+
     /**
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#refreshBrowserState(javax.portlet.PortletRequest)
      */
@@ -199,6 +202,8 @@ public class AdminUserPortlet extends ContentPortlet {
         }
 
         this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
+
+        this.returnURL = "/service-myportal.psml";
 
         // set specific stuff in mother class
         psmlPage = "/portal/administration/admin-usermanagement.psml";
@@ -518,8 +523,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * Create a 'normal' portal user with the role "user".
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionSave(javax.portlet.ActionRequest)
      */
-    @Override
-    protected void doActionSave(ActionRequest request) {
+    protected void doActionSave(ActionRequest request, ActionResponse response) {
         AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY, AdminUserForm.class);
         f.clearErrors();
         f.clearMessages();
@@ -532,11 +536,14 @@ public class AdminUserPortlet extends ContentPortlet {
 
             String userName = f.getInput(AdminUserForm.FIELD_ID);
             String password = f.getInput(AdminUserForm.FIELD_PW_NEW);
+            boolean isUserPwUpdateRequired = !f.getInput(AdminUserForm.FIELD_CHK_PW_UPDATE_REQUIRED).isEmpty();
+            boolean isUserSendInfo = !f.getInput(AdminUserForm.FIELD_CHK_SEND_INFO).isEmpty();
+            User user;
 
             // check if the user name exists
             boolean userIdExistsFlag = true;
             try {
-                userManager.getUser(userName);
+                user = userManager.getUser(userName);
             } catch (SecurityException e) {
                 userIdExistsFlag = false;
             }
@@ -586,6 +593,11 @@ public class AdminUserPortlet extends ContentPortlet {
             }
             admin.registerUser(userName, password, this.roles, this.groups, userAttributes, rules, null);
 
+            user = userManager.getUser(userName);
+            PasswordCredential credential = userManager.getPasswordCredential(user);
+            credential.setUpdateRequired(isUserPwUpdateRequired);
+            userManager.storePasswordCredential(credential);
+
             IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                     request.getLocale()), request.getLocale());
 
@@ -595,44 +607,17 @@ public class AdminUserPortlet extends ContentPortlet {
                     .get("user.name.prefix"));
             userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
             userInfo.put("login", userName);
-            userInfo.put("password", password);
-
-            // send confirmation email
-            String language = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
-            String localizedTemplatePath = this.emailTemplate;
-            if (localizedTemplatePath == null) {
-                log.error("email template not available");
-                f.setError("nofield", "account.created.problems.email");
-                return;
-            }
-            int period = localizedTemplatePath.lastIndexOf('.');
-            if (period > 0) {
-                String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
-                        + localizedTemplatePath.substring(period + 1);
-                if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
-                    this.emailTemplate = fixedTempl;
-                    localizedTemplatePath = fixedTempl;
+            if (isUserPwUpdateRequired || isUserSendInfo) {
+                // send confirmation email
+                if(isUserSendInfo) {
+                    userInfo.put("password", password);
                 }
+                if (isUserPwUpdateRequired) {
+                    userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId, userAttributes.get("user.business-info.online.email")));
+                }
+                sendMail(request, f, messages, userInfo, true);
             }
-
-            if (localizedTemplatePath == null) {
-                log.error("email template not available");
-                f.setError("nofield", "account.created.problems.email");
-                return;
-            }
-
-            String emailSubject = messages.getString("account.create.confirmation.email.subject");
-
-            String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
-                    "foo@bar.com");
-            String to = userInfo.get("user.business-info.online.email");
-            String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
-            if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-                f.addMessage("account.created.title");
-            } else {
-                f.setError("", "account.created.problems.email");
-            }
-
+            f.addMessage("account.created.title");
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating new user.", e);
@@ -647,8 +632,7 @@ public class AdminUserPortlet extends ContentPortlet {
      * 
      * @see de.ingrid.portal.portlets.admin.ContentPortlet#doActionUpdate(javax.portlet.ActionRequest)
      */
-    @Override
-    protected void doActionUpdate(ActionRequest request) {
+    protected void doActionUpdate(ActionRequest request, ActionResponse response) {
         // is super admin ?
         boolean isAdmin = "admin".equals(request.getUserPrincipal().getName());
         
@@ -663,6 +647,10 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
 
             String userName = f.getInput(AdminUserForm.FIELD_ID);
+            boolean isUserEnabled = !f.getInput(AdminUserForm.FIELD_CHK_ENABLED).isEmpty();
+            boolean isUserPwUpdateRequired = !f.getInput(AdminUserForm.FIELD_CHK_PW_UPDATE_REQUIRED).isEmpty();
+            boolean isUserSendInfo = !f.getInput(AdminUserForm.FIELD_CHK_SEND_INFO).isEmpty();
+
             User user = null;
             try {
                 user = userManager.getUser(userName);
@@ -680,15 +668,39 @@ public class AdminUserPortlet extends ContentPortlet {
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
-
+                if(!user.getName().equals("admin")) {
+                    user.setEnabled(isUserEnabled);
+                }
                 userManager.updateUser(user);
 
+                PasswordCredential credential = userManager.getPasswordCredential(user);
+                credential.setUpdateRequired(isUserPwUpdateRequired);
+                userManager.storePasswordCredential(credential);
+
                 try {
+
+                    IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
+                            request.getLocale()), request.getLocale());
+                    HashMap<String, String> userInfo = new HashMap<>(user.getInfoMap());
+
+                    // map coded stuff
+                    String salutationFull = messages.getString("account.edit.salutation.option", (String) userInfo
+                            .get("user.name.prefix"));
+                    userInfo.put("user.custom.ingrid.user.salutation.full", salutationFull);
+                    userInfo.put("login", userName);
+
                     // update password only if a old password was provided
                     String oldPassword = f.getInput(AdminUserForm.FIELD_PW_OLD);
                     String newPassword = f.getInput(AdminUserForm.FIELD_PW_NEW);
+                    String confirmId = user.getInfoMap().get("user.custom.ingrid.user.confirmid");
+                    
                     if(newPassword != null && newPassword.length() > 0){
-                        PasswordCredential credential = userManager.getPasswordCredential(user);
+                        // generate login id
+                        confirmId = Utils.getMD5Hash(userName.concat(newPassword).concat(
+                                Long.toString(System.currentTimeMillis())));
+                        user.getSecurityAttributes().getAttribute("user.custom.ingrid.user.confirmid", true).setStringValue(confirmId);
+                        userManager.updateUser(user);
+
                         if(isAdmin){
                             credential.setPassword(null, newPassword);
                         }else{
@@ -697,6 +709,16 @@ public class AdminUserPortlet extends ContentPortlet {
                             }
                         }
                         userManager.storePasswordCredential(credential);
+                    }
+                    if (isUserSendInfo || isUserPwUpdateRequired) {
+                        if(isUserSendInfo) {
+                            userInfo.put("password", newPassword);
+                        }
+                        if (isUserPwUpdateRequired) {
+                            userInfo.put("returnURL", generateReturnURL(request, response, userName, confirmId, user.getInfoMap().get("user.business-info.online.email")));
+                        }
+                        userInfo.put("isUpdate", "true");
+                        sendMail(request, f, messages, userInfo);
                     }
                 } catch (PasswordAlreadyUsedException e) {
                     f.setError(AdminUserForm.FIELD_PW_NEW, "account.edit.error.password.in.use");
@@ -787,14 +809,14 @@ public class AdminUserPortlet extends ContentPortlet {
 
         if (request.getParameter(PARAMV_ACTION_DB_DO_UPDATE) != null) {
             // call sub method
-            doActionUpdate(request);
+            doActionUpdate(request, response);
             // reset the sction to edit, to show the edit screen and collect all
             // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_EDIT);
             response.setRenderParameter("cmd", "action processed");
         } else if (request.getParameter(PARAMV_ACTION_DB_DO_SAVE) != null) {
             // call sub method
-            doActionSave(request);
+            doActionSave(request, response);
             // reset the sction to edit, to show the edit screen and collect all
             // necessary data
             response.setRenderParameter(Settings.PARAM_ACTION, PARAMV_ACTION_DO_NEW);
@@ -843,11 +865,12 @@ public class AdminUserPortlet extends ContentPortlet {
         try {
 
             AdminUserForm f = (AdminUserForm) Utils.getActionForm(request, AdminUserForm.SESSION_KEY,
-                    AdminUserForm.class);
+                AdminUserForm.class);
 
             Context context = getContext(request);
             context.put(CONTEXT_MODE, CONTEXTV_MODE_EDIT);
             context.put(CONTEXT_UTILS_STRING, new UtilsString());
+            context.put("isAdmin", true);
 
             String cmd = request.getParameter("cmd");
             if (cmd == null) {
@@ -964,6 +987,7 @@ public class AdminUserPortlet extends ContentPortlet {
             f.setInput(AdminUserForm.FIELD_STREET, replaceNull(userAttributes.get("user.business-info.postal.street")));
             f.setInput(AdminUserForm.FIELD_POSTALCODE, replaceNull(userAttributes.get("user.business-info.postal.postalcode")));
             f.setInput(AdminUserForm.FIELD_CITY, replaceNull(userAttributes.get("user.business-info.postal.city")));
+            f.setInput(AdminUserForm.FIELD_CHK_ENABLED, user.isEnabled() ? "1": "0");
 
             // set admin-portal role
             Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());
@@ -1004,5 +1028,51 @@ public class AdminUserPortlet extends ContentPortlet {
 
         return Arrays.asList(temps);
     }
+    private void sendMail(ActionRequest request, AdminUserForm f, IngridResourceBundle messages, HashMap<String, String> userInfo) {
+        sendMail(request, f, messages, userInfo, false);
+    }
+    private void sendMail(ActionRequest request, AdminUserForm f, IngridResourceBundle messages, HashMap<String, String> userInfo, boolean isCreateUser) {
+        String language = Utils.checkSupportedLanguage(request.getLocale().getLanguage());
+        String localizedTemplatePath = this.emailTemplate;
+        if (localizedTemplatePath == null) {
+            log.error("email template not available");
+            f.setError("nofield", "account.created.problems.email");
+            return;
+        }
+        int period = localizedTemplatePath.lastIndexOf('.');
+        if (period > 0) {
+            String fixedTempl = localizedTemplatePath.substring(0, period) + "_" + language + "."
+                    + localizedTemplatePath.substring(period + 1);
+            if (new File(getPortletContext().getRealPath(fixedTempl)).exists()) {
+                this.emailTemplate = fixedTempl;
+                localizedTemplatePath = fixedTempl;
+            }
+        }
 
+        String emailSubject = messages.getString("account.create.confirmation.email.subject");
+
+        if(!isCreateUser) {
+            emailSubject = messages.getString("account.edit.confirmation.email.subject");
+        }
+        String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_SENDER,
+            "foo@bar.com");
+        String to = userInfo.get("user.business-info.online.email");
+        String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
+        if (!Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
+            f.setError("", "account.created.problems.email");
+        }
+    }
+
+    private String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID, String userEmail) {
+        String userId = Utils.getMD5Hash(userName.concat(userEmail).concat(urlGUID));
+        String fullPath = this.returnURL + "?userChangeId=" + userId + "&userEmail=" + userEmail;
+        
+        String hostname = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_URL);
+        // NOTE: getPortalURL will encode the fullPath for us
+        if(hostname != null && hostname.length() > 0){
+            return hostname.concat(fullPath);
+        }else{
+            return admin.getPortalURL(request, response, fullPath);
+        }
+    }
 }

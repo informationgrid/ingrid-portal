@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -798,7 +798,6 @@ require([
                     return UtilSyslist.getSyslistEntryName(6500, val);
                 });
                 renderTextWithTitle(nodeData.availabilityUseConstraints, "<fmt:message key='ui.obj.availability.useConstraints' />");
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(6300, nodeData.availabilityDataFormatInspire), "<fmt:message key='ui.obj.availability.dataFormatInspire' />");
                 renderTable(nodeData.availabilityDataFormatTable, ["name", "version", "compression", "pixelDepth"], ["<fmt:message key='ui.obj.availability.dataFormatTable.header.name' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.version' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.compression' />", "<fmt:message key='ui.obj.availability.dataFormatTable.header.depth' />"], "<fmt:message key='ui.obj.availability.dataFormatTable.title' />", [
                     function(val) {
                         return UtilSyslist.getSyslistEntryName(1320, val);
@@ -817,6 +816,11 @@ require([
 
                 // indexing
                 renderSectionTitel("<fmt:message key='ui.obj.thesaurus.title' />");
+
+                renderList(nodeData.advProductGroupList, "<fmt:message key='ui.obj.thesaurus.advProductGroup' />", null, function(val) {
+                    return UtilSyslist.getSyslistEntryName(8010, val);
+                });
+
                 var sortedList = nodeData.thesaurusTermsTable.sort(function(a, b) {
                     return UtilString.compareIgnoreCase(a.title, b.title);
                 });
@@ -833,6 +837,15 @@ require([
                 renderList(sortedList, "<fmt:message key='ui.obj.thesaurus.terms.inspire' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(6100, val);
                 });
+                if (nodeData.objectClass == 1 || nodeData.objectClass == 3) {
+                    sortedList = nodeData.priorityDataset.sort(function (a, b) {
+                        return UtilString.compareIgnoreCase(UtilSyslist.getSyslistEntryName(6350, a), UtilSyslist.getSyslistEntryName(6350, b));
+                    });
+                    renderList(sortedList, "<fmt:message key='ui.obj.priority.dataset' />", null, function(val) {
+                        return UtilSyslist.getSyslistEntryName(6350, val);
+                    });
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(6360, nodeData.spatialScope), "<fmt:message key='ui.obj.spatial.scope' />");
+                }
                 renderTextWithTitle(nodeData.thesaurusEnvExtRes ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.thesaurus.terms.enviromental.displayCatalogPage' />");
                 renderList(nodeData.thesaurusEnvTopicsList, "<fmt:message key='ui.obj.thesaurus.terms.enviromental.title' />" + " - " + "<fmt:message key='ui.obj.thesaurus.terms.enviromental.topics' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(1410, val);

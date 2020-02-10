@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -33,13 +33,15 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.apache.jetspeed.CommonPortletServices;
 import org.apache.jetspeed.administration.AdministrationEmailException;
 import org.apache.jetspeed.administration.PortalAdministration;
-import org.apache.jetspeed.security.PasswordCredential;
+import org.apache.jetspeed.security.SecurityException;
 import org.apache.jetspeed.security.User;
 import org.apache.jetspeed.security.UserManager;
 import org.apache.portals.bridges.common.GenericServletPortlet;
@@ -53,8 +55,6 @@ import de.ingrid.portal.forms.PasswordForgottenForm;
 import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Utils;
 
-import org.apache.jetspeed.security.SecurityException;
-
 /**
  * TODO Describe your created type (class, etc.) here.
  *
@@ -64,9 +64,9 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
 
     private static final Logger log = LoggerFactory.getLogger(MyPortalPasswordForgottenPortlet.class);
 
-    private static final String CTX_NEW_PW = "password";
-
     private static final String CTX_USER_NAME = "username";
+
+    private static final String CTX_RETURN_URL = "returnURL";
 
     private static final String IP_EMAIL_TEMPLATE = "emailTemplate";
 
@@ -77,6 +77,8 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
     private static final String TEMPLATE_PW_DONE = "/WEB-INF/templates/myportal/myportal_password_forgotten_done.vm";
 
     private static final String USER_NOT_FOUND_FROM_EMAIL = "User not found for Email address: ";
+
+    private String returnURL;
 
     private PortalAdministration admin;
 
@@ -102,6 +104,7 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
             throw new PortletException("Failed to find the User Manager on portlet initialization");
         }
 
+        this.returnURL = "/service-myportal.psml";
         this.emailTemplate = config.getInitParameter(IP_EMAIL_TEMPLATE);
     }
 
@@ -201,17 +204,15 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
         } else {
             try {
                 String userName = user.getName();
-                String newPassword = admin.generatePassword();
-        
-                PasswordCredential credential = userManager.getPasswordCredential(user);
-        		credential.setPassword(null, newPassword);
-        		userManager.storePasswordCredential(credential);
-        
-        		Map<String, String> userAttributes = new HashMap<>();
-        		userAttributes.putAll(user.getInfoMap());
+                String returnUrl = generateReturnURL(request, actionResponse, userName, user.getInfoMap().get("user.custom.ingrid.user.confirmid"),
+                    email);
+
+                Map<String, String> userAttributes = new HashMap<>();
+                userAttributes.putAll(user.getInfoMap());
                 // special attributes
-                userAttributes.put(CTX_NEW_PW, newPassword);
                 userAttributes.put(CTX_USER_NAME, userName);
+                userAttributes.put(CTX_RETURN_URL, returnUrl);
+
                 // map coded stuff
                 Locale locale = request.getLocale();
                 IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(locale), locale);
@@ -255,6 +256,19 @@ public class MyPortalPasswordForgottenPortlet extends GenericVelocityPortlet {
                 log.error("error sending new password.", e);
                 actionResponse.setRenderParameter("cmd", STATE_PW_NOT_SENT);
             }
+        }
+    }
+    
+    protected String generateReturnURL(PortletRequest request, PortletResponse response, String userName, String urlGUID, String userEmail) {
+        String userId = Utils.getMD5Hash(userName.concat(userEmail).concat(urlGUID));
+        String fullPath = this.returnURL + "?userChangeId=" + userId + "&userEmail=" + userEmail;
+        
+        String hostname = PortalConfig.getInstance().getString(PortalConfig.EMAIL_REGISTRATION_CONFIRMATION_URL);
+        // NOTE: getPortalURL will encode the fullPath for us
+        if(hostname != null && hostname.length() > 0){
+            return hostname.concat(fullPath);
+        }else{
+            return admin.getPortalURL(request, response, fullPath);
         }
     }
 }

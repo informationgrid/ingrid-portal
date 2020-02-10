@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -50,7 +50,8 @@ define([
             // only for geo services
             topic.subscribe("/onObjectClassChange", function(msg) {
                 if (msg.objClass === "Class3") {
-                    self.register();
+                    // delayed register to perform other unregister functions
+                    setTimeout(function () { self.register() });
                 } else {
                     self.unregister();
                 }
@@ -61,43 +62,55 @@ define([
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
+            this.handleInspireChange(inspireRelevantWidget.checked);
+
             this.events.push(
                 on(inspireRelevantWidget, "Click", function () {
                     var checkboxContext = this;
 
-                    utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
-
-                        if (checkboxContext.checked) {
+                    if (checkboxContext.checked) {
+                        utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
                             utils.addConformity(true, self.specificationName, "1");
-                        } else {
-                            self.updateToNotConform();
-                        }
-
-                    }, function () {
-                        // reset checkbox state
-                        checkboxContext.set("checked", false);
-                    });
+                        }, function () {
+                            // toggle checkbox state
+                            checkboxContext.set("checked", !checkboxContext.checked);
+                        });
+                    } else {
+                        utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
+                            utils.removeConformity(self.specificationName);
+                        }, function () {
+                            // toggle checkbox state
+                            checkboxContext.set("checked", !checkboxContext.checked);
+                        });
+                    }
                 }),
 
                 on(inspireRelevantWidget, "Change", function(isChecked) {
-                    if (isChecked) {
-                        var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [self.specificationName]);
-                        self.publishEvent = topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
-                            var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
-                                .filter(function(item) { return item.specification === self.specificationName; });
-
-                            if (requiredSpecification.length === 0) {
-                                notPublishableIDs.push( ["extraInfoConformityTable", missingMessage] );
-                            }
-
-                        });
-                        domClass.add("uiElementN024", "required");
-                    } else {
-                        utils.removeEvents([self.publishEvent]);
-                        domClass.remove("uiElementN024", "required");
-                    }
+                    self.handleInspireChange(isChecked);
                 })
             );
+        },
+
+        handleInspireChange: function (isChecked) {
+            var self = this;
+            if (isChecked) {
+                var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [this.specificationName]);
+                this.publishEvent = topic.subscribe("/onBeforeObjectPublish", function (/*Array*/ notPublishableIDs) {
+                    var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
+                        .filter(function (item) {
+                            return item.specification === self.specificationName;
+                        });
+
+                    if (requiredSpecification.length === 0) {
+                        notPublishableIDs.push(["extraInfoConformityTable", missingMessage]);
+                    }
+
+                });
+                domClass.add("uiElementN024", "required");
+            } else {
+                utils.removeEvents([this.publishEvent]);
+                domClass.remove("uiElementN024", "required");
+            }
         },
 
         updateToNotConform: function() {

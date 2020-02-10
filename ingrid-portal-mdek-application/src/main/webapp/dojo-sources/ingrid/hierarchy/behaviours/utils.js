@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -36,6 +36,8 @@ define([
         COOKIE_HIDE_INSPIRE_CONFORMITY_HINT: "ingrid.inspire.conformity.hint",
 
         inspireConformityHint: message.get("hint.inspireConformity"),
+
+        inspireConformityHintDeleted: message.get("hint.inspireConformity.deleted"),
 
         addConformity: function(isFromInspireList, name, level) {
             console.log("Add conformity");

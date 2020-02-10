@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -112,6 +112,7 @@ public class FileSystemStorage implements Storage {
 
     private String docsDir = null;
     private String partsDir = null;
+    private String tempDir = null;
     private List<Validator> validators = new ArrayList<>();
 
     /**
@@ -177,6 +178,15 @@ public class FileSystemStorage implements Storage {
      */
     public void setPartsDir(final String partsDir) {
         this.partsDir = partsDir;
+    }
+
+    /**
+     * Set the temporary upload directory
+     *
+     * @param tempDir
+     */
+    public void setTempDir(final String tempDir) {
+        this.tempDir = tempDir;
     }
 
     /**
@@ -282,10 +292,10 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public FileSystemItem[] write(final String path, final String file, final InputStream data, final Integer size, final boolean replace, final boolean extract) throws IOException {
-        // validate
+        // file name and content validation
         // NOTE: we write the data to a temporary file before calling the validators
         // in order to allow multiple access to the streamed data
-        final Path tmpFile = Files.createTempFile(TMP_FILE_PREFIX, null);
+        final Path tmpFile = Files.createTempFile(Paths.get(this.tempDir), TMP_FILE_PREFIX, null);
         Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
         try {
             for (final Validator validator : this.validators) {
@@ -366,6 +376,7 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public FileSystemItem[] combineParts(final String path, final String file, final String id, final Integer totalParts, final Integer size, final boolean replace, final boolean extract) throws IOException {
+        // file name validation (content validation is done in write() method)
         for (final Validator validator : this.validators) {
             validator.validate(path, file, null);
         }

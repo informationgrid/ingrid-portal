@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -58,6 +58,7 @@ public class FileSystemStorageTest {
     private static final Path DOCS_PATH = Paths.get("target", "ingrid-storage-test");
     private static final Path TEMP_PATH = Paths.get("target", "ingrid-storage-tmp");
     private static final String OBJ_UUID = "5F1AF722-D767-4980-8403-A432173D5684";
+    private static final String OBJ_UUID_2 = "173D5684-4980-A432-D767-84035F1AF722";
     private static final String ARCHIVE_PATH = "_archive_";
     private static final String TRASH_PATH = "_trash_";
 
@@ -71,6 +72,7 @@ public class FileSystemStorageTest {
 
         // setup storage
         storage.setDocsDir(DOCS_PATH.toString());
+        storage.setTempDir(TEMP_PATH.toString());
         storage.setValidators(Arrays.asList(new FileSystemStorage.NameValidator()));
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         Files.createDirectories(DOCS_PATH);
@@ -293,6 +295,27 @@ public class FileSystemStorageTest {
     }
 
     /**
+     * Test:
+     * - Write a file with a name conflicting with a file in another document
+     * @throws Exception
+     */
+    @Test
+    public void testFilenameConflictWithOtherDocument() throws Exception {
+        final String path1 = Paths.get(PLUG_ID, OBJ_UUID).toString();
+        final String path2 = Paths.get(PLUG_ID, OBJ_UUID_2).toString();
+        final String file = "test.txt";
+        this.storageWriteTestFile(path1, file, "123");
+        this.storageWriteTestFile(path2, file, "234");
+
+        // test
+        // expectation: both files created with their unique content. no conflict
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path1, file)));
+        assertTrue(Files.exists(Paths.get(DOCS_PATH.toString(), path2, file)));
+        assertEquals("123", Files.readAllLines(Paths.get(DOCS_PATH.toString(), path1, file)).get(0));
+        assertEquals("234", Files.readAllLines(Paths.get(DOCS_PATH.toString(), path2, file)).get(0));
+    }
+
+    /**
      * Write a test file using the storage
      * @param path
      * @param file
@@ -300,8 +323,18 @@ public class FileSystemStorageTest {
      * @throws Exception
      */
     private FileSystemItem storageWriteTestFile(final String path, final String file) throws Exception {
-        final String content = "123";
+        return storageWriteTestFile(path, file, "123");
+    }
 
+    /**
+     * Write a test file with content using the storage
+     * @param path
+     * @param file
+     * @param content
+     * @return FileSystemItem
+     * @throws Exception
+     */
+    private FileSystemItem storageWriteTestFile(final String path, final String file, final String content) throws Exception {
         try (final InputStream data = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
             final FileSystemItem result = storage.write(path, file, data, content.length(), true, false)[0];
             assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));

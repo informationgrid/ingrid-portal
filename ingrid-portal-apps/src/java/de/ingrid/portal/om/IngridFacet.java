@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -34,6 +34,9 @@ public class IngridFacet {
     private String mobileName;
     private String query;
     private String queryType;
+    private String field;
+    private String codelist;
+    private String codelistField;
     private String codelistId;
     private String codelistEntryId; 
     private String dependency;
@@ -244,5 +247,23 @@ public class IngridFacet {
     }
     public void setInfoResultSelect(String infoResultSelect) {
         this.infoResultSelect = infoResultSelect;
+    }
+    public String getField() {
+        return field;
+    }
+    public void setField(String field) {
+        this.field = field;
+    }
+    public String getCodelist() {
+        return codelist;
+    }
+    public void setCodelist(String codelist) {
+        this.codelist = codelist;
+    }
+    public String getCodelistField() {
+        return codelistField;
+    }
+    public void setCodelistField(String codelistField) {
+        this.codelistField = codelistField;
     }
 }
