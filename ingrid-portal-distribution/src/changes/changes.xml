@@ -14,9 +14,6 @@
           <action type="update" dev="wemove" issue="1589">
             Migration von Sachsen nach METAVER: Aktualisierung METAVER Logo ("Sachsen" als Partner hinzugefügt)
           </action>
-        </release>
-
-        <release version="5.3.1" date="2020-xx-xx" description="Release 5.3.1">
           <action type="add" dev="wemove" issue="1699">
             Portal: Create facets by index field or codelist id.
           </action>
@@ -40,6 +37,12 @@
           </action>
           <action type="add" dev="wemove" issue="1664">
             MapClient: Update handling coordination search.
+          </action>
+          <action type="add" dev="wemove" issue="1592">
+            Mapclient: Aussagekräftigere Meldung beim Laden eines PW geschützten Dienstes im Kartenclient
+          </action>
+          <action type="fix" dev="wemove" issue="1737">
+            Mapclient: GetFeatureInfo-Abfragen werden nicht mehr geparsed.
           </action>
           <action type="fix" dev="wemove" issue="1604">
             IGE: Fix spatial scope field.
