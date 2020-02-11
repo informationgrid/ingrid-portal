@@ -1027,7 +1027,7 @@ require([
 
         //newUrl.Id = 0;
         newUrl.relationType = -1;
-        newUrl.relationTypeName = relName ? relName : "Informationen im Internet";
+        newUrl.relationTypeName = relName ? relName : "information";
         var urlName = lang.trim( registry.byId( "assistantHtmlTitle" ).getValue() );
         newUrl.name = title ? title : urlName.length !== 0 ? urlName : "Internet-Verweis";
         newUrl.url = lang.trim( uri );
