@@ -34,16 +34,25 @@ define([
         description: "Wird nur zum Pflichtfeld, wenn INSPIRE-relevant.",
         defaultActive: true,
         run: function() {
-            var inspireRelevantWidget = registry.byId("isInspireRelevant");
-            domClass.remove("uiElementN025", "optional");
+            var self = this;
+            // delay execution to execute initial profile setup first
+            setTimeout(function() {
+                var inspireRelevantWidget = registry.byId("isInspireRelevant");
+                domClass.remove("uiElementN025", "optional");
+                self.handleInspireChange(inspireRelevantWidget.checked);
 
-            on(inspireRelevantWidget, "Change", function(isChecked) {
-                if (isChecked) {
-                    domClass.add("uiElementN025", "required");
-                } else {
-                    domClass.remove("uiElementN025", "required");
-                }
+                on(inspireRelevantWidget, "Change", function (isChecked) {
+                    self.handleInspireChange(isChecked);
+                });
             });
+        },
+
+        handleInspireChange: function (isChecked) {
+            if (isChecked) {
+                domClass.add("uiElementN025", "required");
+            } else {
+                domClass.remove("uiElementN025", "required");
+            }
         }
     })();
 });
