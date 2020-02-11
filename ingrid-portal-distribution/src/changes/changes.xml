@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.3.4" date="2020-02-10" description="Release 5.3.4">
+        <release version="5.3.4" date="2020-02-11" description="Release 5.3.4">
           <action type="update" dev="wemove" issue="1274">
             IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
           </action>
@@ -16,6 +16,12 @@
           </action>
           <action type="update" dev="wemove" issue="1727">
             Portal: Indikator für Passwortstärke wird im IE11 nicht angezeigt (commit 809df8e)
+          </action>
+          <action type="add" dev="wemove" issue="1592">
+            Mapclient: Aussagekräftigere Meldung beim Laden eines PW geschützten Dienstes im Kartenclient
+          </action>
+          <action type="fix" dev="wemove" issue="1737">
+            Mapclient: GetFeatureInfo-Abfragen werden nicht mehr geparsed.
           </action>
         </release>
 
