@@ -175,12 +175,6 @@ define([
 
             // class specials !
 
-            // NOTICE: div excluded from normal show/hide mechanism (displaytype="exclude")
-            if (clazz === "Class1") {
-                // show / hide DQ input dependent from INSPIRE Thema !
-                rules.applyRule7();
-            }
-
             // Fields only mandatory for Geoinformation/Karte(1) and Geodatendienst(3)
             if (clazz === "Class1" || clazz === "Class3") {
                 // "Raumbezugssystem"
