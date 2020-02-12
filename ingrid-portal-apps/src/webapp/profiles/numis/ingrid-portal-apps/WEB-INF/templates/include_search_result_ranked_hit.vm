@@ -107,7 +107,9 @@
             </p>
             #end
             #if($rs.url)
-                <a href="$rs.url">$!rs.url_str</a>
+                <p>
+                    <a href="$rs.url">$!rs.url_str</a>
+                </p>
             #end
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
