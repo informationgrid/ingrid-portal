@@ -411,7 +411,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <!-- Elbe -->
             <facet>
                 <name>Elbe</name>
-                <query>bwstr-bwastr-id:070?</query>
+                <query>bwstr-bwastr-id:70?</query>
                 <id>cat_elbe</id>
                 <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon>
             </facet>
