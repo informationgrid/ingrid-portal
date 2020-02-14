@@ -397,21 +397,21 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <!-- Rhein -->
             <facet>
                 <name>Rhein</name>
-                <query>location:3901*</query>
+                <query>bwstr-bwastr-id:390?</query>
                 <id>cat_rhein</id>
                 <icon>/decorations/layout/ingrid/images/template/icon_rhein.svg</icon>
             </facet>
             <!-- Donau -->
             <facet>
                 <name>Donau</name>
-                <query>location:0401*</query>
+                <query>bwstr-bwastr-id:40?</query>
                 <id>cat_donau</id>
                 <icon>/decorations/layout/ingrid/images/template/icon_donau_mdk.svg</icon>
             </facet>
             <!-- Elbe -->
             <facet>
                 <name>Elbe</name>
-                <query>location:0701*</query>
+                <query>bwstr-bwastr-id:070?</query>
                 <id>cat_elbe</id>
                 <icon>/decorations/layout/ingrid/images/template/icon_elbe.svg</icon>
             </facet>
