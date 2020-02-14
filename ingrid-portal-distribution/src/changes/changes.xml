@@ -44,6 +44,9 @@
           <action type="fix" dev="wemove" issue="1737">
             Mapclient: GetFeatureInfo-Abfragen werden nicht mehr geparsed.
           </action>
+          <action type="fix" dev="wemove" issue="1743">
+            Mapclient: Anzahl Threads steigt mit jedem "Drucken" im Mapclient.
+          </action>
           <action type="fix" dev="wemove" issue="1604">
             IGE: Fix spatial scope field.
           </action>
