@@ -21,6 +21,7 @@
             IGE: Bug: Anfangszustand des Felds "Zugriffbeschränkungen".
           </action>
         </release>
+
         <release version="5.3.4" date="2020-02-11" description="Release 5.3.4">
           <action type="update" dev="wemove" issue="1274">
             IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
