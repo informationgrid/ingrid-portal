@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="update" dev="wemove" issue="1726">
+            Simplify enable/disable of virusscan by spring override.
+          </action>
           <action type="update" dev="wemove" issue="1274">
             IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
           </action>
