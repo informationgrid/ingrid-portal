@@ -41,6 +41,9 @@
           <action type="add" dev="wemove" issue="1592">
             Mapclient: Aussagekräftigere Meldung beim Laden eines PW geschützten Dienstes im Kartenclient
           </action>
+          <action type="add" dev="wemove" issue="1439">
+            Mapclient: Admin-GUI Erweiterung um Checkbox "Gruppenlayer als Ordner laden".
+          </action>
           <action type="fix" dev="wemove" issue="1737">
             Mapclient: GetFeatureInfo-Abfragen werden nicht mehr geparsed.
           </action>
