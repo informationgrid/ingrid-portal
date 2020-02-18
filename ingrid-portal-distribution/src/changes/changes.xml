@@ -7,6 +7,20 @@
 
     <body>
 
+        <release version="5.3.5" date="2020-xx-xx" description="Release 5.3.5">
+          <action type="update" dev="wemove" issue="1726">
+            Simplify enable/disable of virusscan by spring override.
+          </action>
+          <action type="update" dev="wemove" issue="1276">
+            IGE: Verhalten der Felder zur "Datenqualität" ändern.
+          </action>
+          <action type="update" dev="wemove" issue="1367">
+            IGE: Überarbeitung der Verwendung des CI_OnLineFunctionCode bei der Erfassung von Verweisen.
+          </action>
+          <action type="fix" dev="wemove" issue="1675">
+            IGE: Bug: Anfangszustand des Felds "Zugriffbeschränkungen".
+          </action>
+        </release>
         <release version="5.3.4" date="2020-02-11" description="Release 5.3.4">
           <action type="update" dev="wemove" issue="1274">
             IGE: INSPIRE-TG MD 2.0.1: Werte und Verhalten des Feldes "Konformität" ändern. (Umsetzung weiterer Anforderungen)
