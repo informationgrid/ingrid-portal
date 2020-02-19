@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="fix" dev="wemove" issue="1750">
+            IGE: Das Upload tmp Verzeichnis sollte automatisch angelegt werden.
+          </action>
           <action type="update" dev="wemove" issue="1726">
             Simplify enable/disable of virusscan by spring override.
           </action>
