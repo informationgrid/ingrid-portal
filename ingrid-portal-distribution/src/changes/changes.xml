@@ -50,6 +50,12 @@
           <action type="add" dev="wemove" issue="1439">
             Mapclient: Admin-GUI Erweiterung um Checkbox "Gruppenlayer als Ordner laden".
           </action>
+          <action type="add" dev="wemove" issue="1440">
+            Mapclient: Admin-GUI Erweiterung um die Funktion "Mehrfachauswahl von Kategorie-Ordnern" zum Löschen.
+          </action>
+          <action type="add" dev="wemove" issue="1441">
+            Mapclient: Admin-GUI Erweiterung um die Funktion "Karten-Zuordnung entfernen" bei Kategorien.
+          </action>
           <action type="fix" dev="wemove" issue="1737">
             Mapclient: GetFeatureInfo-Abfragen werden nicht mehr geparsed.
           </action>
