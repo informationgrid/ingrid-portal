@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1753">
             PORTAL: Update auf Version >= 5.2.1 schlägt fehl mit Oracle Datenbank
           </action>
+          <action type="fix" dev="wemove" issue="1309">
+            Portal: Detailansicht von Datensatz über Katalogbrowser liefert kein XML.
+          </action>
           <action type="fix" dev="wemove" issue="1750">
             IGE: Das Upload tmp Verzeichnis sollte automatisch angelegt werden.
           </action>
