@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.3.5" date="2020-xx-xx" description="Release 5.3.5">
+          <action type="fix" dev="wemove" issue="1674">
+            PORTAL: Erweiterung METAVER_MD Profil für "Kommunaler Metadatenkatalog Sachsen-Anhalt"
+          </action>
           <action type="fix" dev="wemove" issue="1753">
             PORTAL: Update auf Version >= 5.2.1 schlägt fehl mit Oracle Datenbank
           </action>
