@@ -41,6 +41,9 @@
           <action type="fix" dev="wemove" issue="1309">
             Portal: Detailansicht von Datensatz über Katalogbrowser liefert kein XML.
           </action>
+          <action type="fix" dev="wemove" issue="1758">
+            MapClient: Portal-Update löscht Einstellungen vom Mapclient.
+          </action>
           <action type="add" dev="wemove" issue="1592">
             MapClient: Change load service error message.
           </action>

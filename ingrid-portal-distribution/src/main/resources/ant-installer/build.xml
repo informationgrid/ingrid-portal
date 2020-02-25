@@ -396,7 +396,6 @@
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek/WEB-INF/lib"/>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application/WEB-INF/lib"/>
-        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/lib"/>
         <!-- also profiles directory to have plain profiles from update! -->
         <echo>Alte Portal Profile löschen</echo>
         <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps/profiles"/>
@@ -683,13 +682,11 @@
                 </if>
             </then>
         </if>
-        <if>
-            <available file="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/admin"/>
-            <then>
-                <echo>Alte WebmapClient-Installation löschen</echo>
-                <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/"/>
-            </then>
-        </if>
+        <echo>Alte WebmapClient-Installation löschen</echo>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/frontend"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/admin"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/classes/de"/>
+        <delete dir="${installDir}/${tomcat-artifact}/webapps/ingrid-webmap-client/WEB-INF/lib"/>
     </target>
 
     <target name="cleanuptarget">
