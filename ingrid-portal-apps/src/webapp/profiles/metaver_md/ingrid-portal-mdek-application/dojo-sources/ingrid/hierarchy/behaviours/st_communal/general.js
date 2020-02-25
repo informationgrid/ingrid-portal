@@ -38,8 +38,6 @@ define([
             domClass.add( "uiElement1409", "required" );
             // Anwendungsanschränkung
             domClass.add( "uiElementN026", "required" );
-            // Zugriffsbeschränkungen
-            domClass.add( "uiElementN025", "required" );
             // Operationen
             domClass.add( "uiElementN004", "required" );
             require("ingrid/hierarchy/objectLayout").deferredCreation.then(function() {
