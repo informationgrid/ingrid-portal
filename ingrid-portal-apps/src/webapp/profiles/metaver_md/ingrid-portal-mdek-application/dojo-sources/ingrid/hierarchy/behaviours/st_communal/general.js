@@ -38,6 +38,8 @@ define([
             domClass.add( "uiElement1409", "required" );
             // Anwendungsanschränkung
             domClass.add( "uiElementN026", "required" );
+            // Zugriffsbeschränkungen
+            domClass.add( "uiElementN025", "required" );
             // Operationen
             domClass.add( "uiElementN004", "required" );
             require("ingrid/hierarchy/objectLayout").deferredCreation.then(function() {
@@ -48,8 +50,6 @@ define([
                 domClass.add( "uiElement5060", ['optional'] );
                 // Fachliche Grundlage Geodatensatz
                 domClass.remove( "uiElement3520", ['required'] );
-                // Identifikator der Datenquelle
-                domClass.remove( "uiElementN021", ['required'] );
                 // Datensatz/Datenserie
                 domClass.remove( "uiElement5061", ['required'] );
                 // Schlüsselkatalog
