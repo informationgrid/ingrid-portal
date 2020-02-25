@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="1309">
             Portal: Detailansicht von Datensatz über Katalogbrowser liefert kein XML.
           </action>
+          <action type="fix" dev="wemove" issue="1758">
+            MapClient: Portal-Update löscht Einstellungen vom Mapclient.
+          </action>
           <action type="fix" dev="wemove" issue="1750">
             IGE: Das Upload tmp Verzeichnis sollte automatisch angelegt werden.
           </action>
