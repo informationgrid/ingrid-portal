@@ -11,10 +11,10 @@
             ## addresses
             #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
         #end
-        #if($node.origDocId)
+        #if($node.origDocId && $node.origDocId.length() > 0)
             #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}&docuuid=${node.origDocId}#if(${node.docId})&docid=${node.docId}#end")
         #else
-            #if($node.udk_docId)
+            #if($node.udk_docId && $node.udk_docId.length() > 0)
                 #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docuuid=${node.udk_docId}#end")
             #else
                 #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}#if(${node.docId})&docid=${node.docId}#end")
