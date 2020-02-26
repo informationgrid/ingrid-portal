@@ -44,6 +44,9 @@
           <action type="fix" dev="wemove" issue="1309">
             Portal: Detailansicht von Datensatz über Katalogbrowser liefert kein XML.
           </action>
+          <action type="update" dev="wemove" issue="1754">
+            MapClient: Aktualsierung auf den aktuellsten mf-geoadmin3.
+          </action>
           <action type="fix" dev="wemove" issue="1758">
             MapClient: Portal-Update löscht Einstellungen vom Mapclient.
           </action>
