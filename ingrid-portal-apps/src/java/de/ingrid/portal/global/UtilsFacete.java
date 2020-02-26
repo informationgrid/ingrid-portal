@@ -444,7 +444,6 @@ public class UtilsFacete {
         }
         if(facets != null && !facets.isEmpty()){
             ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
-            // Generic facet by config
             if(log.isDebugEnabled()) {
                 log.debug("Facet keys: '" + keys + "'");
                 if(config != null) {
@@ -481,6 +480,7 @@ public class UtilsFacete {
                         elementsMap.put(key.replace("coords:", ""), value);
     
                     }else{
+                        // Generic facet by config
                         for (Iterator<String> iteratorKeys = keys.iterator(); iteratorKeys.hasNext();) {
                             String facetKey = iteratorKeys.next();
                             if(log.isDebugEnabled()) {
