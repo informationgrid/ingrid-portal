@@ -183,7 +183,6 @@ public class UtilsFacete {
                 setAttributeToSession(request, FACET_CONFIG, config);
             }
         }
-        logConfig(config, "facetePrepareInGridQuery");
         // Get all existing selection keys
         if(keys == null){
             keys = getExistingSelectionKeys(request);
@@ -234,7 +233,6 @@ public class UtilsFacete {
         ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
         sortingFacet(config);
         selectedFacet(config);
-        logConfig(config, "setParamsToContext");
         context.put("facetConfig", config);
         context.put("facetKeys", keys);
         context.put("searchTerm", SearchState.getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING));
@@ -446,6 +444,22 @@ public class UtilsFacete {
         }
         if(facets != null && !facets.isEmpty()){
             ArrayList<IngridFacet> config = (ArrayList<IngridFacet>) getAttributeFromSession(request, FACET_CONFIG);
+            // Generic facet by config
+            if(log.isDebugEnabled()) {
+                log.debug("Facet keys: '" + keys + "'");
+                if(config != null) {
+                    for (IngridFacet ingridFacet : config) {
+                        log.debug("Facet id: " + ingridFacet.getId());
+                        if(ingridFacet.getFacets() != null) {
+                            for (IngridFacet ingridFacetChild : ingridFacet.getFacets()) {
+                                log.debug("Child facet id: " + ingridFacetChild.getId() + "::" + ingridFacetChild.getFacetValue());
+                            }
+                        }
+                    }
+                } else {
+                    log.debug("Facet config is null!");
+                }
+            }
             for (Iterator<String> iterator = facets.keySet().iterator(); iterator.hasNext();) {
                 String key = iterator.next();
                 Long value = (Long) facets.get(key);
@@ -467,34 +481,64 @@ public class UtilsFacete {
                         elementsMap.put(key.replace("coords:", ""), value);
     
                     }else{
-                        // Generic facet by config
                         for (Iterator<String> iteratorKeys = keys.iterator(); iteratorKeys.hasNext();) {
                             String facetKey = iteratorKeys.next();
+                            if(log.isDebugEnabled()) {
+                                log.debug("Facet key from keys: '" + facetKey + "'");
+                            }
                             if(key.startsWith("partner")){
                                 IngridFacet ingridFacet = getFacetById(config, key.replace("partner:", ""));
                                 if(ingridFacet != null){
                                     ingridFacet.setFacetValue(value.toString());
                                 }
-                            }else if(key.startsWith(facetKey) && config != null){
+                            }else if(key.startsWith(facetKey)){
                                 IngridFacet ingridFacet = getFacetById(config, facetKey);
                                 if(ingridFacet != null && ingridFacet.getFacets() != null){
                                     String facetSubkey = key.replace(facetKey + ":", "");
                                     if(facetSubkey.indexOf(':') > -1){
                                         facetSubkey = facetSubkey.split(":")[1];
                                     }
+                                    if(log.isDebugEnabled()) {
+                                        log.debug("Facet facetSubkey: '" + facetSubkey + "' from '" + facetKey + "'.");
+                                    }
                                     String queryType = ingridFacet.getQueryType();
                                     IngridFacet facet = getFacetById(ingridFacet.getFacets(), facetSubkey);
-                                    if(facet != null && (queryType == null || (queryType.equals("OR") && facet.getFacetValue() == null))){
-                                        facet.setFacetValue(value.toString());
+                                    
+                                    if(facet != null) {
+                                        if(log.isDebugEnabled()) {
+                                            log.debug("Facet '" + facetKey + "' queryType: '" + queryType + "'.");
+                                            log.debug("Subfacet '" + facetSubkey + "' value: '" + facet.getFacetValue() + "'.");
+                                        }
+                                        if(queryType == null || (queryType.equals("OR") && facet.getFacetValue() == null)){
+                                            if(log.isDebugEnabled()) {
+                                                log.debug("Facet '" + facetSubkey + "' set value: '" + value.toString() + "'.");
+                                            }
+                                            facet.setFacetValue(value.toString());
+                                        }
                                     }
+                                } else {
+                                    log.error("Facet and Subfacets not found..");
                                 }
                             }
                         }
                         setAttributeToSession(request, FACET_CONFIG, config);
+                        if(log.isDebugEnabled()) {
+                            if(config != null) {
+                                for (IngridFacet ingridFacet : config) {
+                                    log.debug("Facet id: " + ingridFacet.getId());
+                                    if(ingridFacet.getFacets() != null) {
+                                        for (IngridFacet ingridFacetChild : ingridFacet.getFacets()) {
+                                            log.debug("Child facet id: " + ingridFacetChild.getId() + "::" + ingridFacetChild.getFacetValue());
+                                        }
+                                    }
+                                }
+                            } else {
+                                log.debug("Facet config is null!");
+                            }
+                        }
                     }
                 }
             }
-            logConfig(config, "checkForExistingFacete");
             if (elementsMap != null){
                 setAttributeToSession(request, ELEMENTS_MAP, sortHashMapAsArrayList(elementsMap));
             } else{
@@ -1678,7 +1722,6 @@ public class UtilsFacete {
                 addDefaultIngridFacets(request, config);
                 setAttributeToSession(request, FACET_CONFIG, config);
             }
-            logConfig(config, "getFacetAttributsParamsFromUrl");
             if(config != null){
                 String[] paramsSplits = paramsFacet.split(";");
                 resetFacetConfigSelect(config);
@@ -2484,24 +2527,6 @@ public class UtilsFacete {
                 if(facet.getFacets() != null){
                     resetFacetConfigSelect(facet.getFacets());
                 }
-            }
-        }
-    }
-    
-    private static void logConfig (ArrayList<IngridFacet> config, String title) {
-        if(log.isDebugEnabled()) {
-            log.debug("Log message for: " + title);
-            if(config != null) {
-                for (IngridFacet ingridFacet : config) {
-                    log.debug("Facet id: " + ingridFacet.getId());
-                    if(ingridFacet.getFacets() != null) {
-                        for (IngridFacet ingridFacetChild : ingridFacet.getFacets()) {
-                            log.debug("Child facet id: " + ingridFacetChild.getId() + "::" + ingridFacetChild.getFacetValue());
-                        }
-                    }
-                }
-            } else {
-                log.debug("Facet config is null!");
             }
         }
     }
