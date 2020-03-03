@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="fix" dev="wemove" issue="1769">
+            IGE: INSPIRE-relevant Bestätigungsdialog ist fehlerhaft
+          </action>
           <action type="fix" dev="wemove" issue="1674">
             PORTAL: Erweiterung METAVER_MD Profil für "Kommunaler Metadatenkatalog Sachsen-Anhalt"
           </action>
