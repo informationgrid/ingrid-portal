@@ -2541,9 +2541,11 @@ define([
             });
 
             // add url to preview image to url table
-            var previewUrl = registry.byId("generalPreviewImage").get("value");
-            var previewUrlDescription = registry.byId("previewImageDescription").get("value");
-            if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl, previewUrlDescription));
+            registry.byId("generalPreviewImageTable").data.forEach(function(row) {
+                var fileName = row.fileName;
+                var fileDescription = row.fileDescription;
+                urlLinks.push(UtilList.urlToListEntry(fileName, fileDescription));
+            });
 
             nodeData.linksToObjectTable = objLinks;
             nodeData.linksToUrlTable = urlLinks;

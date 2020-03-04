@@ -193,6 +193,12 @@
                             case "conformity":
                                 localizedTitle = "<fmt:message key='dialog.conformity.title' />";
                                 break;
+                            case "observedProperty":
+                                localizedTitle = "<fmt:message key='dialog.observedProperty.title' />";
+                                break;
+                            case "subSensorObject":
+                                localizedTitle = "<fmt:message key='dialog.subSensorObject.title' />";
+                                break;
                         }
                         return localizedTitle;
                     }
@@ -302,23 +308,16 @@
                                 </span></div>
                             </span>
                             <span id="uiElement5100" class="outer optional">
-                                <div><span class="label">
-                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5100)">
-                                        <fmt:message key="ui.obj.general.previewImage" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="generalPreviewImage"></div>
-                                </span></div>
-                            </span>
-                            <span id="uiElement5105" class="outer optional">
-                                <div><span class="label">
-                                    <label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5105)">
-                                        <fmt:message key="ui.obj.general.previewImageDescription" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="previewImageDescription">
+                                <div>
+                                    <span class="label">
+                                        <label for="generalPreviewImageTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5100)">
+                                            <fmt:message key="ui.obj.general.previewImage" />
+                                        </label>
+                                    </span>
+                                    <div class="input tableContainer clear">
+                                        <div id="generalPreviewImageTable" interactive="true"></div>
                                     </div>
-                                </span></div>
+                                </div>
                             </span>
                             <span id="uiElement1010" class="outer">
                             	<div><span id="generalDescLabel" class="label">
@@ -711,7 +710,7 @@
                                                     </label>
                                                 </span>
                                                 <span class="input">
-                                                    <input id="ref1AxisDimSize" />
+                                                    <input listId="529" id="ref1AxisDimSize" />
                                                 </span>
                                             </div>
                                         </span>
@@ -1887,6 +1886,22 @@
                                                 </div>
                                                 </div>
                                             </span>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="inputContainer">
+                                <span id="uiElement3572" class="outer">
+                                    <div>
+                                        <span id="boundingPolygonLabel" class="label">
+                                            <label for="boundingPolygon" onclick="require('ingrid/dialog').showContextHelp(arguments[0], '<fmt:message key="ui.obj.spatial.boundingPolygon.help" />')">
+                                                <fmt:message key="ui.obj.bounding_polygon.label" />
+                                            </label>
+                                        </span>
+                                        <div class="input">
+                                            <input type="text" id="boundingPolygon" />
+                                        </div>
+                                        <div class="fill">
                                         </div>
                                     </div>
                                 </span>

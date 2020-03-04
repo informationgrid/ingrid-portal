@@ -767,6 +767,9 @@ define({
     "ui.obj.type6.urlList.header.url": "Url*",
     "ui.obj.type6.urlList.header.urlDescription": "Erl&auml;uterung",
 
+    "ui.obj.previewImage.table.fileName": "Dateiname",
+    "ui.obj.previewImage.table.fileDescription": "Dateibeschreibung",
+
     "ui.adr.header.addressTitle": "Adresstitel",
     "ui.adr.header.addressType": "Adresstyp",
     "ui.adr.header.responsibleUser": "Verantwortlicher",
@@ -953,6 +956,7 @@ define({
     "ui.sysList.526": "Objektklasse 1 - Digitale Repräsentation",
     "ui.sysList.527": "ISO-Themenkategorie",
     "ui.sysList.528": "Vektorformat -Topologieinformation",
+    "ui.sysList.529": "ISO - Bezeichnung der Dimension",
     "ui.sysList.1100": "Freier Raumbezug",
     "ui.sysList.1200": "Zeitbezug",
     "ui.sysList.1230": "Zeitbezug - Alle...",
@@ -1083,6 +1087,7 @@ define({
     "validation.specification.delete.depend": "Die dazugehörige Spezifikation(en) <ul>${0}</ul> wurde(n) ebenfalls gelöscht.",
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
     "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
+    "validation.previewImage.table.missingUrl": "Ein Dateiname muss für jeden Eintrag vorhanden sein",
     "validation.dataformat.missing.gml": "Es muss mindestens ein 'GML' Eintrag mit einer Version eingetragen sein",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",

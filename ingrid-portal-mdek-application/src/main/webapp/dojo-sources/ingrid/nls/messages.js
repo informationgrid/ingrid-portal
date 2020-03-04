@@ -766,6 +766,9 @@ define({
         "ui.obj.type6.urlList.header.url": "Url*",
         "ui.obj.type6.urlList.header.urlDescription": "Description",
 
+        "ui.obj.previewImage.table.fileName": "File Name",
+        "ui.obj.previewImage.table.fileDescription": "File Description",
+
         "ui.adr.header.addressTitle": "Address Title",
         "ui.adr.header.addressType": "Address Type",
         "ui.adr.header.responsibleUser": "Responsible User",
@@ -1082,6 +1085,7 @@ define({
         "validation.specification.delete.depend": "The depending  specification(s) <ul>${0}</ul> was/were deleted as well.",
         "validation.specification.added": "The specification '${0}' was added as well.",
         "validation.spatial.system.inspire.missing": "There must be at least one INSPIRE-spatial reference chosen.",
+        "validation.previewImage.table.missingUrl": "A file name must be defined for each entry",
         "validation.dataformat.missing.gml": "There must be at least one 'GML' entry with a version",
 
         "init.error.userNotFound": "The user could not be found in the catalog. Please check the mdek-database and the used catalog.",
