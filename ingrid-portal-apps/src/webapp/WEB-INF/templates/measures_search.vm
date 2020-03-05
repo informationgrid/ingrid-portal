@@ -18,7 +18,7 @@
   var iframe = document.getElementById('iframe_measure');
   var urlParams = location.hash;
   // define the URL for the elastic search requests
-  var elasticSearchUrl = 'https://numis.niedersachsen.de/elastic-measure/';
+  var elasticSearchUrl = 'https://dev.informationgrid.eu/elastic-measure/';
 
   var bgTileLayerUrl = '$leafletBgLayerWMTS';
   var bgTileLayerAttribution = '$leafletBgLayerAttribution';
@@ -27,7 +27,7 @@
   // var excludeNetworks = ['luen_new'];
   
   // define initial network on init
-  // var initialNetworks = ['odl'];
+  var initialNetworks = ['luen_new'];
 
   // Add iFrame 'src'
   iframe.src = '/ingrid-portal-apps/measures/index.html' + urlParams;
