@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.3.6" date="2020-03-06" description="Release 5.3.6">
+          <action type="fix" dev="wemove" issue="1743">
+            Mapclient: Anzahl Threads steigt mit jedem "Drucken" im Mapclient.
+          </action>
+        </release>
+
         <release version="5.3.5" date="2020-02-26" description="Release 5.3.5">
           <action type="fix" dev="wemove" issue="1674">
             PORTAL: Erweiterung METAVER_MD Profil für "Kommunaler Metadatenkatalog Sachsen-Anhalt"
