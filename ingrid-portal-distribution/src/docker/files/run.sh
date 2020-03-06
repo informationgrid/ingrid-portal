@@ -153,14 +153,14 @@ else
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
     fi
 
-    # Add toybox script if TOYBOX_TOKEN is define
+    # Change measure client elasticsearch URL if MEASURECLIENT_ES_URL is define
     if [ "$MEASURECLIENT_ES_URL" ]; then
-        sed -i 's/elasticSearchUrl = \'https://dev.informationgrid.eu/elastic-measure/\'/elasticSearchUrl = \''${MEASURECLIENT_ES_URL}'\'/' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
+        sed -i 's/https:\/\/dev.informationgrid.eu\/elastic-measure\//'${MEASURECLIENT_ES_URL}'/' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
     fi
 
-    # Add toybox script if TOYBOX_TOKEN is define
+    # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
     if [ "$MAPCLIENT_ADMIN_PW" ]; then
-        sed -i 's/password="admin" roles="admin-gui/password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui/' conf/tomcat-user.xml
+        sed -i 's/password="admin" roles="admin-gui/password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui/' conf/tomcat-users.xml
     fi
 
     touch /initialized
