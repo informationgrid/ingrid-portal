@@ -158,6 +158,11 @@ else
         sed -i 's/elasticSearchUrl = \'https://dev.informationgrid.eu/elastic-measure/\'/elasticSearchUrl = \''${MEASURECLIENT_ES_URL}'\'/' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
     fi
 
+    # Add toybox script if TOYBOX_TOKEN is define
+    if [ "$MAPCLIENT_ADMIN_PW" ]; then
+        sed -i 's/password="admin" roles="admin-gui/password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui/' conf/tomcat-user.xml
+    fi
+
     touch /initialized
 fi
 
