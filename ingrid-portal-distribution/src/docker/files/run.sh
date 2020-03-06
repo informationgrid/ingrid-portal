@@ -155,12 +155,12 @@ else
 
     # Change measure client elasticsearch URL if MEASURECLIENT_ES_URL is define
     if [ "$MEASURECLIENT_ES_URL" ]; then
-        sed -i 's/https:\/\/dev.informationgrid.eu\/elastic-measure\//'${MEASURECLIENT_ES_URL}'/' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
+        sed -i 's|http.*-measure/|'${MEASURECLIENT_ES_URL}'|' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
     fi
 
     # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
     if [ "$MAPCLIENT_ADMIN_PW" ]; then
-        sed -i 's/password="admin" roles="admin-gui/password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui/' conf/tomcat-users.xml
+        sed -i 's|password="admin" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
     fi
 
     touch /initialized
