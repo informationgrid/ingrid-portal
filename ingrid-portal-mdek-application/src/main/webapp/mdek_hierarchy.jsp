@@ -289,15 +289,26 @@
                             </div>
                         </div>
                         <div id="generalContent" class="content">
-                            <span id="uiElement1001" class="outer optional">
-                                <div><span class="label">
-                                    <label for="parentIdentifier" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1001)">
-                                        <fmt:message key="ui.obj.general.parentIdentifier" />
-                                    </label>
-                                </span><span class="input">
-                                    <div id="parentIdentifier"></div>
-                                </span></div>
-                            </span>
+                            <div class="inputContainer">
+	                            <span id="uiElement1001" class="outer optional threeQuarterWidth">
+	                                <div><span class="label">
+	                                    <label for="parentIdentifier" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1001)">
+	                                        <fmt:message key="ui.obj.general.parentIdentifier" />
+	                                    </label>
+	                                </span><span class="input">
+	                                    <div id="parentIdentifier"></div>
+	                                </span></div>
+	                            </span>
+                                <span id="uiElement1002" class="outer quarterWidth">
+                                    <div><span class="label">
+                                        <label for="metadataDate" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1002)">
+                                            <fmt:message key="ui.obj.general.metadataDate" />
+                                        </label>
+                                    </span><span class="input">
+	                                    <div id="metadataDate"></div>
+                                    </span></div>
+                                </span>
+                            </div>
                             <span id="uiElement5000" class="outer">
                                 <div><span class="label">
                                     <label for="generalShortDesc" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5000)">
