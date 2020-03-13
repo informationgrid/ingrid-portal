@@ -987,7 +987,7 @@ define({
     "ui.sysList.5152": "Objektklasse 3 - Version des Dienstes - WMS",
     "ui.sysList.5153": "Objektklasse 3 - Version des Dienstes - Downloaddienst",
     "ui.sysList.5154": "Objektklasse 3 - Version des Dienstes - WCTS",
-    "ui.sysList.5180": "Objektklasse 3 - Operation - Unterstützte Platformen",
+    "ui.sysList.5180": "Objektklasse 3 - Operation - Unterstützte Plattformen",
     "ui.sysList.5200": "Objektklasse 3 - Klassifikation des Dienstes",
     "ui.sysList.5300": "Objektklasse 6 - Art des Dienstes",
     "ui.sysList.6000": "Konformität - Grad der Konformität",
