@@ -88,6 +88,49 @@
           </action>
         </release>
 
+      <release version="5.3.0.mCLOUD" date="2020-01-24" description="Release 5.3.0.mCLOUD">
+        <action type="fix" dev="wemove">
+          IGE: Fix upload of documents
+        </action>
+      </release>
+
+      <release version="5.1.1.mCLOUD" date="2019-09-16" description="Release 5.1.1.mCLOUD">
+        <action type="add" dev="wemove" issue="2105">
+          IGE: Add upload function
+        </action>
+      </release>
+
+      <release version="5.1.0.mCLOUD" date="2019-07-10" description="Release 5.1.0.mCLOUD">
+        <action type="update" dev="wemove" issue="2149">
+          IGE: Extend IGE user table
+        </action>
+        <action type="update" dev="wemove" issue="2174">
+          IGE: Update address context help
+        </action>
+        <action type="fix" dev="wemove" issue="2161">
+          IGE: Fix codelist with correct license URLs
+        </action>
+        <action type="add" dev="wemove" issue="2004,2005">
+          IGE: Add password forgotten function
+        </action>
+
+      </release>
+
+      <release version="5.0.1.mCLOUD" date="2019-06-07" description="Release 5.0.1.mCLOUD">
+        <action type="fix" dev="wemove" issue="2124">
+          IGE: Fix user table not shown for standalone IGE
+        </action>
+        <action type="fix" dev="wemove" issue="2142">
+          IGE: Fix date range input
+        </action>
+        <action type="fix" dev="wemove" issue="2141">
+          IGE(mCLOUD/UVP): Show link from upload dialog correctly if a protocol seem to be found.
+        </action>
+        <action type="fix" dev="wemove" issue="2111">
+          IGE(mCLOUD): Codelist sometimes not correctly initialized.
+        </action>
+      </release>
+
         <release version="5.3.0" date="2020-01-15" description="Release 5.3.0">
           <action type="add" dev="wemove" issue="1465">
             Portal: Umsetzung Layout NUMIS/UVP Niedersachsen.
