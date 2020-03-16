@@ -285,6 +285,7 @@ define([
                 console.debug("generalAddress");
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
+                /*
                 var previewImage = new ValidationTextBox({
                     maxLength: 1024,
                     style: "width:100%;"
@@ -311,6 +312,25 @@ define([
                 on(previewImage.domNode, "mouseout", function() {
                     Tooltip.hide(dom.byId("generalPreviewImage"));
                 });
+                */
+
+                var previewImageStructure = [
+                    {
+                        field: 'fileName',
+                        name: message.get("ui.obj.previewImage.table.fileName") + "*",
+                        width: '350px',
+                        type: gridEditors.TextCellEditor,
+                        editable: true
+                    },
+                    {
+                        field: 'fileDescription',
+                        name: message.get("ui.obj.previewImage.table.fileDescription"),
+                        width: 'auto',
+                        type: gridEditors.TextCellEditor,
+                        editable: true
+                    }
+                ];
+                layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null);
 
                 var thesaurusInspireStructure = [{
                     field: 'title',
@@ -530,7 +550,9 @@ define([
                 /* Add spatialRepresentationInfo (REDMINE-381) */
                 new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
-                new ValidationTextBox({style: "width:100%;"}, "ref1AxisDimName");
+                layoutCreator.createFilteringSelect("ref1AxisDimName", null, lang.clone(storeProps), function() {
+                    return UtilSyslist.getSyslistEntry(514);
+                });
                 new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
                 new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
                 

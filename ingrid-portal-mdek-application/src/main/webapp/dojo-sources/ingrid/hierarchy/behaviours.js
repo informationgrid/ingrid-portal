@@ -201,30 +201,26 @@ define(["dojo/_base/declare",
                 });
             }
         },
-        
-        showFileDescription: {
-            title: "Dateibeschreibung - Einblenden bei vorhandenem Bild",
-            description: "Das Feld \"Dateibeschreibung\" wird nur dann eingeblendet, wenn auch ein Link zur Vorschaugrafik eingegeben worden ist.",
+
+        validateGraphicPreviewTableEntries: {
+            title: "Vorschaugrafik - Überprüfung der Tebelleneinträge",
+            description: "Für Vorschaugrafiken muss ein Dateiname immer vorhanden sein.",
             defaultActive: true,
             run: function() {
-                // set field initially hidden
-                domClass.add("uiElement5105", "hidden");
-                
-                // react when object is loaded (passive)
-                on(registry.byId("generalPreviewImage"), "Change", function(value) {
-                    if (value.trim().length === 0) {
-                        domClass.add("uiElement5105", "hidden");
-                    } else {
-                        domClass.remove("uiElement5105", "hidden");
-                    }
-                });
-                
-                // react on user input (active)
-                on(registry.byId("generalPreviewImage"), "KeyUp", function() {
-                    if (this.get("value").trim().length === 0) {
-                        domClass.add("uiElement5105", "hidden");
-                    } else {
-                        domClass.remove("uiElement5105", "hidden");
+                topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                    var table = registry.byId("generalPreviewImageTable");
+                    table.unmarkCells();
+
+                    var isInvalid = false;
+                    array.forEach(table.data, function(row, rowIndex) {
+                        var url = row.fileName;
+                        if (!url || !url.trim()) {
+                            isInvalid = true;
+                            table.markCells("ERROR", rowIndex, [0]);
+                        }
+                    });
+                    if (isInvalid) {
+                        notPublishableIDs.push(["generalPreviewImageTable", message.get("validation.previewImage.table.missingUrl")]);
                     }
                 });
             }

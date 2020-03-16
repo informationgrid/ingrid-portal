@@ -296,6 +296,7 @@ public class FileSystemStorage implements Storage {
         // NOTE: we write the data to a temporary file before calling the validators
         // in order to allow multiple access to the streamed data
         final Path tmpFile = Files.createTempFile(Paths.get(this.tempDir), TMP_FILE_PREFIX, null);
+        Files.createDirectories(tmpFile.getParent());
         Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
         try {
             for (final Validator validator : this.validators) {

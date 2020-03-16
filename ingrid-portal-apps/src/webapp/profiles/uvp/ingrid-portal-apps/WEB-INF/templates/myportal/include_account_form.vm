@@ -64,7 +64,11 @@
         #addErrorFormMessage('password_new')
         <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
         <b><small class="media__obj--right" id="password-strength-text"></small></b>
-        <meter max="4" id="password-strength-meter" name="password-strength-meter"></meter>
+        <meter max="4" id="password-strength-meter">
+          <div class="meter-gauge">
+              <span style="width: 0.0%;">Meterfallback</span>
+          </div>
+        </meter>
     </div>
     <div class="form-element">
         <label for="password_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>

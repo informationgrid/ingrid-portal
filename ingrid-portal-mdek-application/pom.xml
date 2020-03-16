@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.1.0.1204-SNAPSHOT</version>
+        <version>5.4.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -1009,6 +1009,32 @@
                 <version>20020829</version>
               </dependency>
             </dependencies>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>profile-metaver_md</id>
+      <activation>
+        <property>
+          <name>profile</name>
+          <value>metaver_md</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <configuration>
+              <webApp>
+                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                  <resourcesAsCSV>
+                    ../ingrid-portal-apps/src/webapp/profiles/metaver_md/ingrid-portal-mdek-application,src/main/webapp
+                  </resourcesAsCSV>
+                </baseResource>
+              </webApp>
+            </configuration>
           </plugin>
         </plugins>
       </build>

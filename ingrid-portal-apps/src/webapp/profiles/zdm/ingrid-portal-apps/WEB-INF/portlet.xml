@@ -922,8 +922,8 @@
                 <value>1</value>
             </preference>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--pad-top block--light</value>
+                <name>divStyle</name>
+                <value>empty</value>
             </preference>
         </portlet-preferences>
     </portlet>

@@ -54,6 +54,15 @@ Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeite
  - Alphabetisch nach Facettenname - "SORT_BY_NAME"
  - keine Sortierung
 
+<codelist-id>"ID"</codelist-id> und <codelist-entry-id>"ID"</codelist-entry-id>:
+- Diese Facetten-Tags definieren den Titel der Facette im Portal. Hierbei wird er Titel aus der Codelist mit der ID ("<codelist-id>") und dem Codelisten-Eintrag mit der ID ("<codelist-entry-id>") zu entnehmen.
+
+<field>"INDEX-FELD"</field>:
+- Dieser Facetten-Tag erzeugt eine oder mehrere Facetten über das Indexfeld. 
+
+<codelist>"ID"</codelist> und <codelist-field>"KEY"</codelist-field>:
+- Hiermit wird eine Facette aus der Codelist mit der ID und dem Feld aus den Codelist-Einträgen erzeugt. 
+
 Spezielle Facetten:
 *************************
 Themen:
@@ -113,7 +122,7 @@ Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "spr
 </bean>
 ....
 
-Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):  
+Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):
 <value>"FACET-PARENT-ID":"FACET-ID"</value>
 
 Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 

@@ -20,6 +20,13 @@
  * limitations under the Licence.
  * **************************************************#
  */
+ 
+#footer h2 {
+  color: #FFF !important;
+}
+input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:focus {
+  outline: 2px solid transparent !important;
+}
 @media screen and (min-width: 940px) {
   .copyright {
       display: block;

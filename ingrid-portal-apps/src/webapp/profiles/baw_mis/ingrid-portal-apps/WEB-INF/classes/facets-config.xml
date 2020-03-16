@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- DOKUMENTATION
 
-Diese Datei dient zur Konfiguration der Facettierung. Hier können weitere Facetten definiert werden oder auch entfernt werden.
+Diese Datei dient zur Konfiguration der Facettierung. Hier können weitere Facetten definiert werden oder auch entfernt werden. 
 Standardmäßig sind hier die Facettierungseinstellungen von InGrid-Portal definiert.
 
 Für die Facette (<facet>) sind folgende Tags Pflicht:
 - <name>
 - <id>
 
-Eine Facette (<facet>), welches zur Auswahlt dient, müssen dazu einen Tag <query> bzw. <from>, <to> enthalten.
+Eine Facette (<facet>), welches zur Auswahlt dient, müssen dazu einen Tag <query> bzw. <from>, <to> enthalten. 
 
 Struktur:
 *********
@@ -17,13 +17,13 @@ Struktur:
         <name></name> ******************************* Facettierungsbaum-Name (lokalisiert per Portal-Resource-Key oder nicht lokalisiert als reiner Text)
         <id></id> *********************************** Facettierungsbaum-ID (dieser muss eindeutig sein und darf bei weiteren Facetten nicht existieren)
         <isOpen></isOpen>**************************** Facettierungsbaum wird bei true aufgeklappt dargestellt (default: false)
-
+        
         <facets> ************************************ Facettierungsbaum-Kinder (zur Auswahl)
             <facet> ********************************* Neuer Facettierungs-Kind (kann die Eigenschaft "sort" enthalten, siehe unten)
                 <name></name> *********************** Neuer Facettierungs-Kind-Name
-                <id></id> *************************** Neuer Facettierungs-Kind-ID
+                <id></id> *************************** Neuer Facettierungs-Kind-ID 
                 <query></query> ********************* Neuer Facettierungs-Kind-Abfrage
-
+                 
                 <facets> **************************** Facettierungsbaum-Enkeln (zur Auswahl und kann die Eigenschaft "queryType" enthalten, siehe unten)
                     <facet> ************************* Facettierungsbaum-Enkel
                         <name></name> *************** Facettierungsbaum-Enkel-Name
@@ -42,10 +42,10 @@ Struktur:
 Weitere Facetten-Tags/Eigenschaften:
 ****************
 <dependency>"ID"</dependency>:
- - Diese Facetten-Tag dient dazu eine Abhängigkeit zu beschreiben, d.h. wird die existierende definierte Facetten-ID ausgewählt, so wird diese Facette sichtbar. (siehe Facette "Akualität")
-
+ - Diese Facetten-Tag dient dazu eine Abhängigkeit zu beschreiben, d.h. wird die existierende definierte Facetten-ID ausgewählt, so wird diese Facette sichtbar. (siehe Facette "Akualität") 
+  
 <hidden>"ID"</hidden>:
- - Dieser Facetten-Tag dient dazu eine Facette verschwinden zu lassen, sobald die existierende definierte Facetten-ID ausgewählt wird. (siehe Facette "Raumbezug")
+ - Dieser Facetten-Tag dient dazu eine Facette verschwinden zu lassen, sobald die existierende definierte Facetten-ID ausgewählt wird. (siehe Facette "Raumbezug")  
 
 <facet sort="">:
 Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeiten:
@@ -54,12 +54,21 @@ Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeite
  - Alphabetisch nach Facettenname - "SORT_BY_NAME"
  - keine Sortierung
 
+<codelist-id>"ID"</codelist-id> und <codelist-entry-id>"ID"</codelist-entry-id>:
+- Diese Facetten-Tags definieren den Titel der Facette im Portal. Hierbei wird er Titel aus der Codelist mit der ID ("<codelist-id>") und dem Codelisten-Eintrag mit der ID ("<codelist-entry-id>") zu entnehmen.
+
+<field>"INDEX-FELD"</field>:
+- Dieser Facetten-Tag erzeugt eine oder mehrere Facetten über das Indexfeld. 
+
+<codelist>"ID"</codelist> und <codelist-field>"KEY"</codelist-field>:
+- Hiermit wird eine Facette aus der Codelist mit der ID und dem Feld aus den Codelist-Einträgen erzeugt. 
+
 Spezielle Facetten:
 *************************
 Themen:
 Bei Betätigung der Themen-Facette (<id>topic</id>) wird diese mit Unterthemen erweitert, welches als ODER-Abfrage (Mehrauswahl) ausgewählt werden können.
 Die Unterthemen werden aus der Datenbank des Portals gelesen und sind hier in der Konfiguration nicht definiert.
-
+ 
 Aktualität:
 Die Facette Aktualität enthält keine <query>-Tag, wie üblich, sondern hier wird die Query aus den Tags <from> sowie <to> erstellt, deren Inhalt eine Zeit-Periode beschreibt.
 Die Notation (entspricht dem Format ISO 8601) für die Zeit-Periode ist folgendermaßen: (vom aktuellen Datum aus)
@@ -73,9 +82,9 @@ Die Notation (entspricht dem Format ISO 8601) für die Zeit-Periode ist folgende
  - M -> Positive Zahl, Anzahl von Minuten
  - S -> Positive Zahl, Anzahl von Sekunden
 Beispiel: Eine Dauer von 5 Tagen, 4 Stunden und 30,7 Minuten hat folgenden Notation: P5DT4H30.7M
-
+ 
 Anbieter: (Analog zu Themen)
-Die Facette Anbieter (<id>provider</id>) wird aus der Portal-Datenbank generiert. Dabei werden die Partner als UND-Abfrage (Einfachauswahl), man kann nur einen Partner auswählen,
+Die Facette Anbieter (<id>provider</id>) wird aus der Portal-Datenbank generiert. Dabei werden die Partner als UND-Abfrage (Einfachauswahl), man kann nur einen Partner auswählen, 
 und deren Anbieter als ODER-Abfrage (Mehrauswahl), man kann mehrere Anbieter gleichzeitig auswählen, durchgeführt.
 
 Raumbezug:
@@ -116,7 +125,7 @@ Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "spr
 Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):
 <value>"FACET-PARENT-ID":"FACET-ID"</value>
 
-Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert.
+Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 
 
 
 Beispiele:

@@ -24,7 +24,7 @@
             <hidden>false</hidden>
             <portlets>
                 <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
             </portlets>
         </page>
@@ -33,7 +33,7 @@
             <hidden>false</hidden>
             <portlets>
                 <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
             </portlets>
         </page>
@@ -42,7 +42,7 @@
             <hidden>false</hidden>
             <portlets>
                 <portlet col="0" row="0">
-                    <name>ingrid-portal-apps::SearchSimple</name>
+                    <name>ingrid-portal-apps::IngridInformPortlet</name>
                 </portlet>
             </portlets>
         </page>

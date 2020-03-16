@@ -38,16 +38,6 @@ define([
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
 
-            applyRule7();
-
-            aspect.after(registry.byId("thesaurusInspire"), "onDataChanged", function() {
-                var objClass = registry.byId("objectClass").get("value");
-                if (objClass === 'Class1') {
-                    // Show/hide DQ tables in class 1 depending on themes
-                    applyRule7();
-                }
-            });
-
             topic.subscribe("/onObjectClassChange",  function(msg) {
                 if (msg.objClass === "Class1") {
                     // initial set needed, since inspireRelevantWidget might not have change event

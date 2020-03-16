@@ -200,6 +200,16 @@ else
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
     fi
 
+    # Change measure client elasticsearch URL if MEASURECLIENT_ES_URL is define
+    if [ "$MEASURECLIENT_ES_URL" ]; then
+        sed -i 's|http.*-measure/|'${MEASURECLIENT_ES_URL}'|' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
+    fi
+
+    # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
+    if [ "$MAPCLIENT_ADMIN_PW" ]; then
+        sed -i 's|password="admin" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
+    fi
+
     touch /initialized
 fi
 

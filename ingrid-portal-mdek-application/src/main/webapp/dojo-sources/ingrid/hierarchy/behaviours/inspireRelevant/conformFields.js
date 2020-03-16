@@ -107,9 +107,14 @@ define([
                     };
 
                     if (checkboxContext.checked) {
-                        handle();
-                    } else {
                         utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
+                            handle();
+                        }, function () {
+                            // reset checkbox state
+                            checkboxContext.set("checked", false);
+                        });
+                    } else {
+                        utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
                             handle();
                         }, function () {
                             // reset checkbox state
@@ -356,7 +361,7 @@ define([
         },
 
         updateToNotConform: function() {
-            utils.addConformity(true, this.specificationName, "2");
+            utils.removeConformity(this.specificationName);
         },
 
         addEventSpecificationDelete: function() {
