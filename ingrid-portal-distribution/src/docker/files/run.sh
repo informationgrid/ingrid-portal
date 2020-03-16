@@ -77,7 +77,7 @@ else
             -e "s@hibernate.driverClass=com.mysql.jdbc.Driver@hibernate.driverClass=${DB_DRIVERCLASS}@" \
             -e "s@hibernate.user=root@hibernate.user=${DB_USER}@" \
             -e "s/hibernate.password=$/hibernate.password=${DB_PASSWORD}/" \
-            -e "s@hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect@hibernate.dialect=${DB_DIALECT}@" \
+            -e "s@hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect@hibernate.dialect=${DB_DIALECT}@" \
             -e "s@hibernate.jdbcUrl=jdbc:mysql://localhost/mdek@hibernate.jdbcUrl=${DB_URL_MDEK}@" \
             \
             webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
