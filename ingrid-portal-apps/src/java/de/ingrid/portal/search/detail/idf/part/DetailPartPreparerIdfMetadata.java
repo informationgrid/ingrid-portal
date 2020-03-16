@@ -1134,7 +1134,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(code.contains("EPSG")){
                         value = code;
                     }else{
-                        value = codeSpace.concat(": " + code);
+                        value = codeSpace.concat(":" + code);
                     }
                 }else if(codeSpace.length() > 0){
                     value = codeSpace;
