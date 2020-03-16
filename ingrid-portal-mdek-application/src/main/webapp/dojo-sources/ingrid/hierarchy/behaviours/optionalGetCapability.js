@@ -26,7 +26,7 @@ define([
     "dojo/topic",
     "dijit/registry",
     "ingrid/message",
-    "ingrid/utils/Grid",
+    "ingrid/utils/Grid"
 ], function (array, declare, topic, registry, message, UtilGrid) {
     return declare(null, {
 
