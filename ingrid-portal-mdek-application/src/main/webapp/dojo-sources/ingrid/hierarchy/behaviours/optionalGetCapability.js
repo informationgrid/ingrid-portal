@@ -27,12 +27,11 @@ define([
     "dijit/registry",
     "ingrid/message",
     "ingrid/utils/Grid",
-    "ingrid/utils/General"
-], function (array, declare, topic, registry, message, UtilGrid, UtilGeneral) {
+], function (array, declare, topic, registry, message, UtilGrid) {
     return declare(null, {
 
-        title: "Operationen",
-        description: "Für jede Operation muss Name, Zugriffsadresse und Plattform existieren.",
+        title: "Eingabe von Capabilities URL bei darstellenden Geodatendiensten verpflichtend",
+        description: "Geodatendienste (Typ: Darstellungsdienst) können nur mit Angabe einer getCapabilities URL veröffentlicht werden",
         category: "Felder",
         defaultActive: true,
         run: function () {
@@ -45,22 +44,22 @@ define([
         ref3OperationPublishable: function(notPublishableIDs) {
             var objClass = registry.byId("objectClass").get("value").substr(5, 1);
             if (objClass === "3") {
-                // Check if the operation table contains valid input (name has to be set)
-                // NOTICE: Name may be reset to "" if serviceType is changed !!!
                 var grid = UtilGrid.getTable("ref3Operation");
                 grid.resetInvalidRows();
-                var newInvalidRows = [];
+                var hasCapabilitiesOperation = false;
+                var serviceType = registry.byId("ref3ServiceType").get("value");
 
                 array.forEach(UtilGrid.getTableData("ref3Operation"), function(op, row) {
-                    if (!UtilGeneral.hasValue(op.name) || !UtilGeneral.hasValue(op.addressList) || !UtilGeneral.hasValue(op.platform)) {
-                        newInvalidRows.push(row);
-                    }
+                    if (op.name === "GetCapabilities")
+                        hasCapabilitiesOperation = true;
                 });
-                if (newInvalidRows.length > 0) {
-                    grid.setInvalidRows(newInvalidRows);
-                    console.debug("All entries in the operation table must have a valid name.");
-                    notPublishableIDs.push( ["ref3Operation", message.get( "validation.error.invalid.operation.name" )] );
-                }
+
+                // at least one GetCapabilities entry has been entered
+                // only check for certain serviceTypes (2==Darstellungsdienste)!
+                // see email AW: Operationen zum Pflichtfeld (03.04.2013 14:48)
+                if ((serviceType === "2") && !hasCapabilitiesOperation)
+                    notPublishableIDs.push( ["ref3Operation", message.get( "validation.error.missing.capabilities.entry" )]);
+
             }
         }
     })();
