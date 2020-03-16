@@ -38,6 +38,9 @@
           <action type="fix" dev="wemove" issue="1671">
             Portal: Fix display message after create user as portal admin.
           </action>
+          <action type="fix" dev="wemove" issue="1761">
+            Portal: Fix display link of coordinate system without EPSG code.
+          </action>
           <action type="fix" dev="wemove" issue="1672">
             Portal: Fix NUMIS and UVP-NI layout.
           </action>
