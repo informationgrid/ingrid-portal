@@ -365,10 +365,28 @@ define([
                             return false;
                         });
                         return found;
+                    },
+                    onChange: function(val){
+                        var label = this.get("displayedValue")
+                        if (label.indexOf("INVALID") === 0) {
+                            console.log("Invalid choice:", val);
+                            UtilUI.showToolTip("priorityDataset", message.get('hint.invalidChoice'));
+                            this.reset();
+                        }
                     }
                 }];
                 layoutCreator.createDataGrid("priorityDataset", null, priorityDatasetStructure, null);
                 this.preparePriorityDatasetList().then(function(data) {
+                    data.sort(function(a, b) {
+                        // put INVALID items to the end of the list
+                        if (a[0].indexOf("INVALID -") === 0) {
+                            return 1;
+                        }
+                        if (b[0].indexOf("INVALID -") === 0) {
+                            return -1;
+                        }
+                        return a[0].localeCompare(b[0]);
+                    });
                     self.initializedPriorityDatasetList = data;
                 });
 
@@ -424,10 +442,21 @@ define([
                     for (var i=0; i < results[0].length; i++) {
                         var german = results[0][i];
                         var english = results[1][i];
-                        list.push([german[0] + " {en: " + english[0] + "}", german[1]])
+                        var isValid = self.isValidStatus(results[0][i]);
+                        var label = german[0] + " {en: " + english[0] + "}";
+
+                        if (!isValid) {
+                            label = "INVALID - " + label;
+                        }
+                        list.push([label, german[1]])
                     }
                     return list;
                 });
+            },
+
+            isValidStatus: function(item) {
+                var data = JSON.parse(item[3]);
+                return data.status === "VALID";
             },
 
             createFachBezugClass1: function() {
