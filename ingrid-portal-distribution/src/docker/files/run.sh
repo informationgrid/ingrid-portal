@@ -183,6 +183,7 @@ else
     fi
 
     # SMTP_HOST
+    echo "Update SMTP host"
     sed -i 's/workflow.mail.smtp=localhost/workflow.mail.smtp=$SMTP_HOST/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/workflow.mail.sender=test@wemove.de/workflow.mail.sender=$MAIL_SENDER/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/workflow.mail.smtp.user=/workflow.mail.smtp.user=$MAIL_USER/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
@@ -191,29 +192,39 @@ else
     sed -i 's/mdek.directLink=http:\/\/localhost:8080\/ingrid-portal-mdek-application\/index.jsp/mdek.directLink=$IGE_DIRECT_LINK/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     # Upload settings
+    echo "Update upload settings"
     sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\//upload.docsdir='${UPLOAD_DOCS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/upload.partsdir=\/tmp\/ingrid\/upload\/parts\//upload.partsdir='${UPLOAD_PARTS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     # Add toybox script if TOYBOX_TOKEN is define
     if [ "$TOYBOX_TOKEN" ]; then
+        echo "Update toybox"
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid/header.vm
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
     fi
 
     # Change measure client elasticsearch URL if MEASURECLIENT_ES_URL is define
     if [ "$MEASURECLIENT_ES_URL" ]; then
+        echo "Update measure client"
         sed -i 's|http.*-measure/|'${MEASURECLIENT_ES_URL}'|' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
     fi
 
     # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
     if [ "$MAPCLIENT_ADMIN_PW" ]; then
+        echo "Update mapclient admin password"
         sed -i 's|password="admin" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
     fi
 
     # Change server.xml
     if [ "$HOSTNAME" ]; then
-        sed -i 's|address=".*"|address="'${HOSTNAME}'"|' conf/server.xml
+        echo "Update connector address"
+        sed -i -e "s@address=\".*\"@address=\"${HOSTNAME}\"@" conf/server.xml
     fi
+    if [ "$PORTAL_SERVER_CONNECTOR_ATTR" ]; then
+        echo "Update connector attributes"
+        sed -i -e "s@redirectPort=\"8443\" />@redirectPort=\"8443\" ${PORTAL_SERVER_CONNECTOR_ATTR} />@' conf/server.xml
+    fi
+    
 
     touch /initialized
 fi
