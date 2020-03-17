@@ -210,6 +210,11 @@ else
         sed -i 's|password="admin" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
     fi
 
+    # Change server.xml
+    if [ "$HOSTNAME" ]; then
+        sed -i 's|address="::1"|address="'${HOSTNAME}'"|' conf/server.xml
+    fi
+
     touch /initialized
 fi
 
