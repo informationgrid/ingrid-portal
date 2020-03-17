@@ -193,8 +193,12 @@ else
 
     # Upload settings
     echo "Update upload settings"
-    sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\//upload.docsdir='${UPLOAD_DOCS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
-    sed -i 's/upload.partsdir=\/tmp\/ingrid\/upload\/parts\//upload.partsdir='${UPLOAD_PARTS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    if [ "$UPLOAD_DOCS_DIR" ]; then
+        sed -i -e "s@upload.docsdir=.*@upload.docsdir=${UPLOAD_DOCS_DIR}@" webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    fi
+    if [ "$UPLOAD_PARTS_DIR" ]; then
+        sed -i -e "s@upload.partsdir=.*@upload.partsdir=${UPLOAD_PARTS_DIR}@" webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    fi
 
     # Add toybox script if TOYBOX_TOKEN is define
     if [ "$TOYBOX_TOKEN" ]; then
