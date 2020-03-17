@@ -212,7 +212,7 @@ else
 
     # Change server.xml
     if [ "$HOSTNAME" ]; then
-        sed -i 's|address="::1"|address="'${HOSTNAME}'"|' conf/server.xml
+        sed -i 's|address=".*"|address="'${HOSTNAME}'"|' conf/server.xml
     fi
 
     touch /initialized
