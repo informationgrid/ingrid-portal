@@ -216,7 +216,7 @@
                 #set($tmp = "")
         ## Begrenzungspolygon als WKT
                 #set($tmp = $TOOL.getPolygon("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon"))
-                #renderTextListSpaceList($MESSAGES.getString("t01_object.polygon_wkt") $tmp "" false); 
+                #renderTextListSpaceList($MESSAGES.getString("t01_object.polygon_wkt") $tmp "" false)
                 #set($tmp = "")
         ## Raumbezugssystem
                 #set($tmp = $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))

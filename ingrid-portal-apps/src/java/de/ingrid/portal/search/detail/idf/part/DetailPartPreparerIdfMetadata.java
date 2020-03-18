@@ -1157,7 +1157,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
                                 NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, xpathExpression);
                                 for(int k=0; k<interiorNodes.getLength(); k++) {
-                                    String str = UtilsString.gmlPosListToWktCoordinates(interiorNodes.item(k).getTextContent(), "POLYGON");
+                                    String str = UtilsString.gmlPosListToWktCoordinates(interiorNodes.item(k).getTextContent());
                                     if (!wkt.isEmpty() && !str.isEmpty()) {
                                         wkt += ", ";
                                     }
@@ -1165,6 +1165,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 }
                             }
                             if (wkt != null && !wkt.isEmpty()) {
+                                wkt = "POLYGON (" + wkt + ")";
                                 result.add(wkt);
                             }
                         }
