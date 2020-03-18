@@ -655,16 +655,26 @@
 #end
 
 #macro (renderTextListSpace $title $textList $space)
+    #renderTextListSpaceList ($title $textList $space true)
+#end
+
+#macro (renderTextListSpaceList $title $textList $space $asList)
     #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
             <h4 class="title-font">$title</h4>
             ##renderGroupTitle($entry.title)
         #end
-        <ul class="list list--bullets bx-top-s">
-        #foreach($text in $sorter.sort($textList,"body"))
-             <li><p>$text</li>
+        #if($asList)
+            <ul class="list list--bullets bx-top-s">
+            #foreach($text in $sorter.sort($textList,"body"))
+                <li><p>$text</p></li>
+            #end
+            </ul>
+        #else
+            #foreach($text in $sorter.sort($textList,"body"))
+                <p>$text</p>
+            #end
         #end
-        </ul>
     #else
         #if($space != "")
             #renderTextLabelAbove($title $space)

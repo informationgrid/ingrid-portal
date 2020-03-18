@@ -1111,7 +1111,84 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
+
+    public List getPolygon(String xpathExpression) {
+        List<String> result = new ArrayList<>();
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i=0; i<nodeList.getLength(); i++){
+                Node node = nodeList.item(i);
+                if(node != null) {
+                    xpathExpression = "./gml:Point/gml:pos";
+                    if(xPathUtils.nodeExists(node, xpathExpression)){
+                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
+                        for(int j=0;j<tmpNodeList.getLength(); j++) {
+                            String wkt = gmlPosListToWktCoordinates(tmpNodeList.item(j));
+                            if (wkt != null) {
+                                wkt = "POINT " + wkt;
+                                result.add(wkt);
+                            }
+                        }
+                    }
+                    xpathExpression = "./gml:LineString/gml:posList";
+                    if(xPathUtils.nodeExists(node, xpathExpression)){
+                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
+                        for(int j=0;j<tmpNodeList.getLength(); j++) {
+                            String wkt = gmlPosListToWktCoordinates(tmpNodeList.item(j));
+                            if (wkt != null) {
+                                wkt = "POINT " + wkt;
+                                result.add(wkt);
+                            }
+                        }
+                    }
+                    xpathExpression = "./gml:Polygon";
+                    if(xPathUtils.nodeExists(node, xpathExpression)){
+                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
+                        for(int j=0;j<tmpNodeList.getLength(); j++) {
+                            String wkt = "";
+                            Node polygonNode = tmpNodeList.item(i);
     
+                            Node exteriorNode = xPathUtils.getNode(polygonNode, "./gml:exterior/gml:LinearRing/gml:posList");
+                            wkt += gmlPosListToWktCoordinates(exteriorNode);
+    
+                            NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, "./gml:interior/gml:LinearRing/gml:posList");
+                            for(int k=0; k<interiorNodes.getLength(); k++) {
+                                String str = gmlPosListToWktCoordinates(interiorNodes.item(k));
+                                if (wkt != null && str != null) {
+                                    wkt += ", ";
+                                }
+                                wkt += str;
+                            }
+                            if (wkt != null) {
+                                wkt = "POLYGON (" + wkt + ")";
+                                result.add(wkt);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private String gmlPosListToWktCoordinates(Node node) {
+        if (node == null) return "";
+
+        String posList = node.getTextContent();
+        if (posList.isEmpty()) return "";
+
+        posList = posList.replace("/[\r\n]/g", ""); // Remove newlines
+        String coords = "";
+        String[] arr = posList.split(" ");
+        for(int i=0; i<arr.length; i+=2) {
+            if (coords != "") { // not empty
+                coords += ", ";
+            }
+            coords += arr[i] + " " + arr[i+1];
+        }
+        return "(" + coords + ")";
+    }
+
     public List getNodeListValueReferenceSystem(String xpathExpression) {
         ArrayList<Map> list = new ArrayList<>();
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
@@ -1162,7 +1239,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return list;
     }
-    
+
     public String getGeoReport(String xpathExpression, String checkDescription, String checkNameOfMeasure) {
         StringBuilder value = new StringBuilder("");
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){

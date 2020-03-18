@@ -17,6 +17,9 @@
           <action type="update" dev="wemove" issue="1768">
             Portal: Update tomcat to version 7.0.100.
           </action>
+          <action type="add" dev="wemove" issue="1781">
+            Portal: Add display polygon wkt to detail.
+          </action>
           <action type="fix" dev="wemove" issue="1674">
             PORTAL: Erweiterung METAVER_MD Profil für "Kommunaler Metadatenkatalog Sachsen-Anhalt"
           </action>

@@ -44,7 +44,7 @@
                                         <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>
                                     #end
                                     ## Raum/Zeit
-                                    #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
+                                    #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon", "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
                                     #if($TOOL.aNodeOfListExist($xpathList))
                                         <a href="#detail-3" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("spacial_reference_tab")</span></a>
                                     #end
@@ -189,12 +189,12 @@
                     </div>
                 #end
             #end
-            #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
+            #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon", "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
             #if($TOOL.aNodeOfListExist($xpathList))
 ## Raum/Zeit
 <h2><a class="anchor" name="detail-3"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("spacial_reference_tab")</span></h2>
         ## Raumbezugssystem
-            #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo"])
+            #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon", "./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="row columns">
                 #renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
@@ -213,6 +213,10 @@
         ## Erläuterung zum Raumbezug
                 #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
                 #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $tmp)
+                #set($tmp = "")
+        ## Begrenzungspolygon als WKT
+                #set($tmp = $TOOL.getPolygon("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_BoundingPolygon/gmd:polygon"))
+                #renderTextListSpaceList($MESSAGES.getString("t01_object.polygon_wkt") $tmp "" false); 
                 #set($tmp = "")
         ## Raumbezugssystem
                 #set($tmp = $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))
