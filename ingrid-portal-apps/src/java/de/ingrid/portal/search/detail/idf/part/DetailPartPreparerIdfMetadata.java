@@ -39,6 +39,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
+import de.ingrid.utils.udk.UtilsString;
 
 public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
@@ -1123,9 +1124,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(xPathUtils.nodeExists(node, xpathExpression)){
                         NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
                         for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = gmlPosListToWktCoordinates(tmpNodeList.item(j));
-                            if (wkt != null) {
-                                wkt = "POINT " + wkt;
+                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "POINT");
+                            if (wkt != null && !wkt.isEmpty()) {
                                 result.add(wkt);
                             }
                         }
@@ -1134,9 +1134,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(xPathUtils.nodeExists(node, xpathExpression)){
                         NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
                         for(int j=0;j<tmpNodeList.getLength(); j++) {
-                            String wkt = gmlPosListToWktCoordinates(tmpNodeList.item(j));
-                            if (wkt != null) {
-                                wkt = "POINT " + wkt;
+                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "LINESTRING");
+                            if (wkt != null && !wkt.isEmpty()) {
                                 result.add(wkt);
                             }
                         }
@@ -1148,19 +1147,24 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             String wkt = "";
                             Node polygonNode = tmpNodeList.item(i);
     
-                            Node exteriorNode = xPathUtils.getNode(polygonNode, "./gml:exterior/gml:LinearRing/gml:posList");
-                            wkt += gmlPosListToWktCoordinates(exteriorNode);
-    
-                            NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, "./gml:interior/gml:LinearRing/gml:posList");
-                            for(int k=0; k<interiorNodes.getLength(); k++) {
-                                String str = gmlPosListToWktCoordinates(interiorNodes.item(k));
-                                if (wkt != null && str != null) {
-                                    wkt += ", ";
-                                }
-                                wkt += str;
+                            xpathExpression = "./gml:exterior/gml:LinearRing/gml:posList";
+                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
+                                Node exteriorNode = xPathUtils.getNode(polygonNode, xpathExpression);
+                                wkt += UtilsString.gmlPosListToWktCoordinates(exteriorNode.getTextContent());
                             }
-                            if (wkt != null) {
-                                wkt = "POLYGON (" + wkt + ")";
+    
+                            xpathExpression = "./gml:interior/gml:LinearRing/gml:posList";
+                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
+                                NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, xpathExpression);
+                                for(int k=0; k<interiorNodes.getLength(); k++) {
+                                    String str = UtilsString.gmlPosListToWktCoordinates(interiorNodes.item(k).getTextContent(), "POLYGON");
+                                    if (!wkt.isEmpty() && !str.isEmpty()) {
+                                        wkt += ", ";
+                                    }
+                                    wkt += str;
+                                }
+                            }
+                            if (wkt != null && !wkt.isEmpty()) {
                                 result.add(wkt);
                             }
                         }
@@ -1169,24 +1173,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             }
         }
         return result;
-    }
-
-    private String gmlPosListToWktCoordinates(Node node) {
-        if (node == null) return "";
-
-        String posList = node.getTextContent();
-        if (posList.isEmpty()) return "";
-
-        posList = posList.replace("/[\r\n]/g", ""); // Remove newlines
-        String coords = "";
-        String[] arr = posList.split(" ");
-        for(int i=0; i<arr.length; i+=2) {
-            if (coords != "") { // not empty
-                coords += ", ";
-            }
-            coords += arr[i] + " " + arr[i+1];
-        }
-        return "(" + coords + ")";
     }
 
     public List getNodeListValueReferenceSystem(String xpathExpression) {
