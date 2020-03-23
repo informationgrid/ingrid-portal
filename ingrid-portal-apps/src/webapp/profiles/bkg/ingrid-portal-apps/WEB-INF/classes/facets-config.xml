@@ -134,7 +134,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Geo-Information / Karte -->
             <facet>
                 <name>searchResult.facete.metaclass.map</name>
-                <query>datatype:metadata t01_object.obj_class:1</query>
+                <query>t01_object.obj_class:1</query>
                 <id>map</id>
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>1</codelist-entry-id>
@@ -142,7 +142,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Geodatendienst -->
             <facet>
                 <name>searchResult.facete.metaclass.geoservice</name>
-                <query>datatype:metadata t01_object.obj_class:3</query>
+                <query>t01_object.obj_class:3</query>
                 <id>geoservice</id>
                 <codelist-id>8000</codelist-id>
                 <codelist-entry-id>3</codelist-entry-id>
@@ -150,7 +150,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Sonstige -->
              <facet>
                 <name>Sonstige</name>
-                <query>datatype:metadata -t01_object.obj_class:1 -t01_object.obj_class:3</query>
+                <query>-t01_object.obj_class:1 -t01_object.obj_class:3</query>
                 <id>others</id>
             </facet>
         </facets>
@@ -163,13 +163,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant true-->
             <facet>
                 <name>Ja</name>
-                <query>datatype:metadata inspireidentifiziert</query>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire_true</id>
             </facet>
         <!-- INSPIRE-relevant false -->
             <facet>
                 <name>Nein</name>
-                <query>datatype:metadata -inspireidentifiziert</query>
+                <query>-t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire_false</id>
             </facet>
         </facets>
@@ -182,13 +182,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Opendata true-->
            <facet>
                 <name>Ja</name>
-                <query>datatype:metadata (opendata OR opendataident)</query>
+                <query>t04_search.searchterm:opendata OR t04_search.searchterm:opendataident</query>
                 <id>opendata_true</id>
             </facet>
         <!-- Opendata false-->
            <facet>
                 <name>Nein</name>
-                <query>datatype:metadata -opendata -opendataident</query>
+                <query>-t04_search.searchterm:opendata -t04_search.searchterm:opendataident</query>
                 <id>opendata_false</id>
             </facet>
         </facets>
@@ -201,13 +201,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- AdV-Produkt true-->
            <facet>
                 <name>Ja</name>
-                <query>datatype:metadata adv</query>
+                <query>t04_search.searchterm:advmis</query>
                 <id>adv_true</id>
             </facet>
         <!-- AdV-Produkt false-->
            <facet>
                 <name>Nein</name>
-                <query>datatype:metadata -adv</query>
+                <query>-t04_search.searchterm:advmis</query>
                 <id>adv_false</id>
             </facet>
         </facets>
