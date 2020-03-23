@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1769">
             IGE: INSPIRE-relevant Bestätigungsdialog ist fehlerhaft
           </action>
+          <action type="fix" dev="wemove" issue="1774">
+            Portal: Fix BKG facet configuration.
+          </action>
           <action type="update" dev="wemove" issue="1768">
             Portal: Update tomcat to version 7.0.100.
           </action>
