@@ -182,7 +182,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Opendata true-->
            <facet>
                 <name>Ja</name>
-                <query>t04_search.searchterm:opendata OR t04_search.searchterm:opendataident</query>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata_true</id>
             </facet>
         <!-- Opendata false-->
