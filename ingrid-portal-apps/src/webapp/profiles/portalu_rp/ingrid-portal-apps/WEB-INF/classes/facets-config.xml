@@ -155,13 +155,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                     <facet>
 <!--                    <name>searchResult.facete.metaclass.inspire</name> -->
                         <name>INSPIRE</name>
-                        <query>inspireidentifiziert</query>
+                        <query>t04_search.searchterm:inspireidentifiziert</query>
                         <id>inspire_metadata</id>
                     </facet>
               <!-- Opendata -->
                      <facet>
                         <name>Opendata</name>
-                        <query>(opendata OR opendataident) datatype:metadata</query>
+                        <query>t04_search.searchterm:opendata OR t04_search.searchterm:opendataident</query>
                         <id>opendata_metadata</id>
                     </facet>
                 <!-- Organisationseinheit / Fachaufgabe -->
@@ -225,13 +225,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                <query>datatype:metadata inspireidentifiziert</query>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
-                <query>(opendata OR opendataident) datatype:metadata</query>
+                <query>t04_search.searchterm:opendata OR t04_search.searchterm:opendataident</query>
                 <id>opendata</id>
             </facet>
         <!-- Karten -->
@@ -437,7 +437,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                <query>datatype:metadata inspireidentifiziert</query>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
                 <parentId>type</parentId>
                 <icon>icon-globe-2</icon>
@@ -445,7 +445,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
-                <query>(opendata OR opendataident) datatype:metadata</query>
+                <query>t04_search.searchterm:opendata OR t04_search.searchterm:opendataident</query>
                 <id>opendata</id>
                 <parentId>type</parentId>
                 <icon>icon-hotspot-2</icon>
