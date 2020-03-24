@@ -143,31 +143,31 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Daten -->
             <facet>
                 <name>Daten</name>
-                <query>hierarchylevel: dataset OR hierarchylevel: series OR hierarchylevel: featureType OR hierarchylevel: tile</query>
+                <query>datatype:metadata (hierarchylevel:dataset OR hierarchylevel:series OR hierarchylevel:featureType OR hierarchylevel:tile)</query>
                 <id>data</id>
             </facet>
         <!-- Dienste -->
             <facet>
                 <name>Dienste</name>
-                <query>hierarchylevel: service</query>
+                <query>hierarchylevel:service</query>
                 <id>service</id>
             </facet>
         <!-- Anwendungen -->
              <facet>
                 <name>Anwendungen</name>
-                <query>hierarchylevel: application</query>
+                <query>hierarchylevel:application</query>
                 <id>others</id>
             </facet>
         <!-- INSPIRE-identifiziert -->
             <facet>
                 <name>INSPIRE-identifiziert</name>
-                <query>t04_search.searchterm: inspireidentifiziert</query>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
         <!-- Opendata-->
            <facet>
                 <name>Opendata</name>
-                <query>t04_search.searchterm: opendata</query>
+                <query>t04_search.searchterm:opendata</query>
                 <id>opendata</id>
             </facet>
         </facets>
