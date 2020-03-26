@@ -626,9 +626,10 @@ public class UtilsDB {
      */
     public static void executeRawUpdateSQL(String sqlStr) {
         Transaction tx = null;
+        Session session = null;
         try {
             // delete it
-            Session session = HibernateUtil.currentSession();
+            session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
             try (Statement st = session.connection().createStatement()) {
                 if (log.isDebugEnabled()) {
@@ -651,6 +652,9 @@ public class UtilsDB {
                 }
             }
         } finally {
+            if (session != null) {
+                session.close();
+            }
             HibernateUtil.closeSession();
         }
     }
