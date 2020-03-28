@@ -146,7 +146,7 @@
     <!--  Karten   -->
     <rule>
         <from>/kartendienste</from>
-        <to type="forward">/portal/default-page.psml</to>
+        <to type="forward">/portal/main-maps.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-maps.psml</from>
