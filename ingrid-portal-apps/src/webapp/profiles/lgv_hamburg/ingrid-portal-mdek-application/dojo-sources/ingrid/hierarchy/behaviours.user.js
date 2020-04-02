@@ -153,7 +153,7 @@ openDataLGV : {
 
                         // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                         var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
-                        UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense}]);
+                        UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense, source:'Freie und Hansestadt Hamburg, zuständige Behörde'}]);
 
                         // set publication condition to Internet
                         registry.byId("extraInfoPublishArea").attr("value", 1, true);
@@ -348,7 +348,7 @@ openDataLGV : {
 
                 // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                 var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
-                UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense}]);
+                UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense, source:'Freie und Hansestadt Hamburg, zuständige Behörde'}]);
 
                 // automatically replace access constraint with "keine"
                 var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
@@ -417,7 +417,7 @@ openDataLGV : {
                 domClass.add("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.add("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.add("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.add("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
+                domClass.add("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
 
             } else {
 
@@ -458,7 +458,7 @@ openDataLGV : {
                 domClass.remove("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.remove("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.remove("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.remove("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
+                domClass.remove("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
 
                 // Tab containers may be rendered for the first time and needs to be layouted
                 igeEvents.refreshTabContainers();
@@ -562,7 +562,7 @@ openDataLGV : {
             });
         });
     },
-
+    
     handleDelete: function() {
         var self = this;
         var text = "Dieser Datensatz ist bereits nach dem HmbTG im Hamburger Transparenzportal veröffentlicht und bleibt auch bei der Löschung der Metadatenbeschreibung aus dem HMDK bis zum Ablauf der 10 Jahre im Transparenzportal veröffentlicht.";
@@ -571,13 +571,13 @@ openDataLGV : {
                 return function(args){
                     // check if dataset has been published under HmbTG
                     var def = self.isPublishedByHmbTG(args[0].item.id);
-
+                    
                     // show info dialog if dataset was published (HmbTG)
                     def.then(function(isHmbTGPublished) {
                         if (isHmbTGPublished) {
                             dialog.show(message.get("dialog.general.info"), text, dialog.INFO, [
                                 { caption: message.get("general.ok"),
-                                    action: function() {
+                                    action: function() { 
                                         setTimeout(function() {
                                             lang.hitch(menuAction, lang.partial(origMethod, args))();
                                         }, 500);
@@ -592,13 +592,14 @@ openDataLGV : {
             });
         });
     },
-
+    
     initialClass1: function() {
         // default values when creating new objects of class 1 - geodata (REDMINE-119)
-        topic.subscribe("/onObjectClassChange", function(data) {
-            if (currentUdk.uuid === "newNode" && data.objClass === "Class1") {
+        topic.subscribe("/onObjectClassChange", function(data) { 
+            if (currentUdk.uuid === "newNode" && data.objClass === "Class1") { 
                 registry.byId("ref1BasisText").set("value", "keine Angabe");
                 registry.byId("ref1DataSet").set("value", "5"); // "Datensatz"
+                UtilGrid.setTableData("extraInfoConformityTable", [{specification:"INSPIRE-Richtlinie", level:3}]); // "nicht evaluiert"
                 UtilGrid.setTableData("ref1SpatialSystem", [{title:"EPSG 25832: ETRS89 / UTM Zone 32N"}]);
                 registry.byId("availabilityDataFormatInspire").set("value", "Geographic Markup Language (GML)");
             }
