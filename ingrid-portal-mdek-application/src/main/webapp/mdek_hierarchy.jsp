@@ -299,7 +299,7 @@
 	                                    <div id="parentIdentifier"></div>
 	                                </span></div>
 	                            </span>
-                                <span id="uiElement1002" class="outer quarterWidth">
+                                <span id="uiElement1002" class="outer optional quarterWidth">
                                     <div><span class="label">
                                         <label for="metadataDate" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1002)">
                                             <fmt:message key="ui.obj.general.metadataDate" />

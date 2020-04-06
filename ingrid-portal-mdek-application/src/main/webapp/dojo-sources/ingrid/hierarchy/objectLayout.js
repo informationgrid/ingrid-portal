@@ -245,6 +245,11 @@ define([
             createGeneralInfo: function() {
                 var self = this;
 
+                new DateTextBox({
+                    style: "width: 100%;",
+                    disabled: true
+                }, "metadataDate");
+
                 new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
@@ -282,7 +287,6 @@ define([
                     editable: false /*!!!formatter: validator.emptyOrNullValidation*/
                 }];
 
-                console.debug("generalAddress");
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
                 /*
