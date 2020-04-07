@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="1774">
             Portal: Fix BKG facet configuration.
           </action>
+          <action type="fix" dev="wemove">
+            Mapclient: Fix CORS on embed mode.
+          </action>
         </release>
 
         <release version="5.3.6" date="2020-03-06" description="Release 5.3.6">
