@@ -35,12 +35,19 @@
  * Image swiper
  *______________________*/
  
-#detail_meta .preview_image {
-    margin: auto;
-    height: 360px;
+#detail_meta {
+    .preview_image {
+        margin: auto;
+        height: 360px;
+    }
 }
-.search-result .preview_image {
-    margin: auto
+.search-result {
+    .preview_image {
+        margin: auto;
+    }
+    .swiper-wrapper {
+        padding-bottom: 30px;
+    }
 }
 
 .swiper-pagination-bullet {
@@ -48,5 +55,5 @@
 }
 
 .swiper-button-next, .swiper-button-prev {
-    background: color(fruit-salad) !important;
+    color: color(fruit-salad) !important;
 }
