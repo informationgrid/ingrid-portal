@@ -1304,7 +1304,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         HashMap<String, Object> map = new HashMap<>();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
-            
             for (int i=0; i<nodeList.getLength();i++){
                 if(xPathUtils.nodeExists(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL")){
                     Node node = xPathUtils.getNode(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine/*/gmd:linkage/gmd:URL");
@@ -1332,20 +1331,22 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     private HashMap<String,Object> getPreviewImage(String xpathExpression) {
-        String url = getPreviewImageUrl(xpathExpression);
+        ArrayList<HashMap<String, String>> urls = getPreviewImageUrl(xpathExpression);
         HashMap<String,Object> elementCapabilities = new HashMap<>();
-        if (url != null) {
-            elementCapabilities.put("type", "multiLine");
-            HashMap<String,Object> elementMapLink = new HashMap<>();
-            elementMapLink.put("type", "linkLine");
-            elementMapLink.put("isMapLink", true);
-            elementMapLink.put("isExtern", false);
-            elementMapLink.put("title", messages.getString("preview"));
-            elementMapLink.put("href", url);
-            elementMapLink.put("src", url);
-            // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
+        if(!urls.isEmpty()) {
+            elementCapabilities.put("type", "multiLineImage");
             ArrayList<HashMap<String,Object>> list = new ArrayList<>();
-            list.add(elementMapLink);
+            for (HashMap<String, String> url : urls) {
+                // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
+                HashMap<String,Object> elementMapLink = new HashMap<>();
+                elementMapLink.put("type", "linkLine");
+                elementMapLink.put("isMapLink", true);
+                elementMapLink.put("isExtern", false);
+                elementMapLink.put("title", url.get("description") != null ? url.get("description") : messages.getString("preview"));
+                elementMapLink.put("href", url.get("name"));
+                elementMapLink.put("src", url.get("name"));
+                list.add(elementMapLink);
+            }
             elementCapabilities.put("elements", list);
             elementCapabilities.put("width", "full");
         }
@@ -1382,7 +1383,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     private HashMap<String, Object> addBigMapLink(String urlValue, boolean urlEncodeHref) {
         HashMap<String, Object> elementCapabilities = new HashMap<>();
         if (urlValue != null) {
-            elementCapabilities.put("type", "multiLine");
+            elementCapabilities.put("type", "multiLineImage");
             HashMap<String, Object> elementMapLink = new HashMap<>();
             elementMapLink.put("type", "linkLine");
             elementMapLink.put("isMapLink", true);
@@ -1401,9 +1402,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             }
 
             // use preview image if provided otherwise static image
-            String imageUrl = getPreviewImageUrl(null);
-            if (imageUrl == null ) imageUrl = "/ingrid-portal-apps/images/show_map.png";
-            elementMapLink.put("src", imageUrl);
+            ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
+            if (imageUrls.isEmpty()) {
+                elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+            } else {
+                elementMapLink.put("src", imageUrls.get(0).get("name"));
+            }
             // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
             ArrayList<HashMap<String, Object>> list = new ArrayList<>();
             list.add(elementMapLink);
@@ -1413,18 +1417,26 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return elementCapabilities;
     }
     
-    private String getPreviewImageUrl(String xpathExpression) {
+    private ArrayList<HashMap<String, String>> getPreviewImageUrl(String xpathExpression) {
         if (xpathExpression == null)
             xpathExpression = "./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString";
         
-        String value = null;
+        ArrayList<HashMap<String, String>> values = new ArrayList<>();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
-            Node node = xPathUtils.getNode(rootNode, xpathExpression);
-            if(node.getTextContent().length() > 0){
-                value = node.getTextContent();
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                HashMap<String, String> map = new HashMap<>(); 
+                map.put("name", node.getTextContent());
+                xpathExpression = "../../gmd:fileDescription/gco:CharacterString";
+                if (xPathUtils.nodeExists(node, xpathExpression)) {
+                    Node tmpNode = xPathUtils.getNode(node, xpathExpression);
+                    map.put("description", tmpNode.getTextContent());
+                }
+                values.add(map);
             }
         }
-        return value;
+        return values;
     }
     
     private String getCapabilityUrl() {

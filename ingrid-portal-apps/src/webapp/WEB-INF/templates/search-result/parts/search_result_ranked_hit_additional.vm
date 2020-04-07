@@ -11,15 +11,26 @@
                 $tmpValue
             #end
         #else
-            #set ($tmpValue = $!rs.additional_html_1.split(", ").get(0))
-            #if($tmpValue.indexOf("src=\"http") > -1 && $tmpValue.indexOf("preview_image") > -1)
-                $tmpValue.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
-                <noscript>
-                    $tmpValue
-                </noscript>
-            #else
-                $tmpValue
-            #end
+            #set($tmpValues = $!rs.additional_html_1.split(", "))
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                #foreach($tmpValue in $tmpValues)
+                    <div class="swiper-slide">
+                    #if($tmpValue.indexOf("src=\"http") > -1 && $tmpValue.indexOf("preview_image") > -1)
+                        $tmpValue.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
+                        <noscript>
+                            $tmpValue
+                        </noscript>
+                    #else
+                        $tmpValue
+                    #end
+                    </div>
+                #end
+                </div>
+                #if($tmpValues.size() > 1)
+                    <div class="swiper-pagination"></div>
+                #end
+            </div>
         #end
     </div>
 #end

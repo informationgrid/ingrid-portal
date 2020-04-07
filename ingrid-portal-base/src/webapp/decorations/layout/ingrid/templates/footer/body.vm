@@ -1,0 +1,34 @@
+#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
+    <footer class="footer">
+        <div class="ob-box-padded ob-box-center ob-clear">
+            <div class="footer__top">
+##              <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
+                #parse("/decorations/layout/ingrid/templates/footer/body_footer_logo.vm")
+                <p class="copyright">$MESSAGES.getString("ingrid.page.copyright")</p>
+            </div>
+        </div>
+        <hr class="bx-top-0 bx-bot-0">
+        <div class="grid">
+            <div class="column column--3-4-xl">
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__section">
+                    #set($footerMenu = $site.getMenu("footer-menu"))
+                    #if(!$footerMenu.empty)
+                      #includeFooterNavigation($footerMenu)
+                    #end
+                    </div>
+                </div>
+            </div>
+            <div class="column column--1-4-xl">
+                <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
+                <div class="ob-box-padded ob-box-center ob-clear">
+                    <div class="footer__section">
+                        <div class="footer__bottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer__top-link mq-show-l js-top">$MESSAGES.getString("ingrid.page.top")</div>
+    </footer>
+#end
+#parse("/decorations/layout/ingrid/templates/footer/body_script.vm")

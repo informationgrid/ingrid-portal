@@ -24,10 +24,8 @@
                             http.send();
                             return ('');
                         } else {
-                            if(src.indexOf('http') > -1) {
-                                img[0].src = src;
-                                img[0].classList.remove('is-hidden');
-                            }
+                            img[0].src = src;
+                            img[0].classList.remove('is-hidden');
                         }
                     }
                 }

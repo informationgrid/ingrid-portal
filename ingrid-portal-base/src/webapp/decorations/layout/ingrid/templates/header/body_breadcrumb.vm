@@ -1,0 +1,18 @@
+#if($currentPage != "/main-maps.psml")
+    <section class="breadcrumb ob-box-padded-more mq-hide-l">
+        <div class="breadcrumb__title mq-hide-xxl">$MESSAGES.getString('ingrid.page.navigation.title'):</div>
+        <nav class="breadcrumb__list">
+            <a href="$jetspeed.getAbsoluteUrl("/default-page.psml")">$MESSAGES.getString('ingrid.page.home')</a>
+        #if($currentPage)
+            #if($currentPage == "/search-detail.psml")
+                <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                <a href="$jetspeed.getAbsoluteUrl("/main-search.psml")">$MESSAGES.getString('ingrid.page.search')</a>
+            #end
+            #if($currentPage != "/default-page.psml")
+                <svg class="icon icon-xs"><use xlink:href="#arrow"></use></svg>
+                <a href="javascript:openURL(window.location.href)">$MESSAGES.getString($site.getPageOrTemplate().shortTitle)</a>
+            #end
+        #end
+        </nav>
+    </section>
+#end

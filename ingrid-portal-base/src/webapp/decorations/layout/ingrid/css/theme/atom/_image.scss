@@ -30,3 +30,23 @@
 .image__caption {
 
 }
+
+/*
+ * Image swiper
+ *______________________*/
+ 
+#detail_meta .preview_image {
+    margin: auto;
+    height: 360px;
+}
+.search-result .preview_image {
+    margin: auto
+}
+
+.swiper-pagination-bullet {
+    background: color(fruit-salad) !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    background: color(fruit-salad) !important;
+}

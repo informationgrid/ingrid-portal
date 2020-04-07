@@ -1,0 +1,27 @@
+#* Jetspeed macros, see WEB-INF/jetspeed_macros.vm *#
+#includeHeaderResource()
+#set($currentPage = $site.getPageOrTemplate().url)
+<!--
+#if($currentPage)
+    #if($currentPage != "/help.psml")
+        <base href="#BaseHref()" />
+    #end
+#end
+-->
+<link rel="prefetch" href="/decorations/layout/ingrid/images/template/icons.svg" />
+<meta http-equiv="Content-type" content="#ContentType()" />
+<meta http-equiv="Content-style-type" content="text/css" />
+<meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+<meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
+<meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
+<meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
+<meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
+
+#if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
+    <meta name="robots" content="noindex,follow" />
+#else
+    <meta name="robots" content="index,follow" />
+#end
+#parse("/decorations/layout/ingrid/templates/header/head_script.vm")

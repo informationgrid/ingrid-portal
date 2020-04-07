@@ -124,7 +124,7 @@
                             #if($enableMapLink)
                                 ## Zeige in Karte
                                 #set($tmp = $TOOL.getMapImage())
-                                #renderMultiLine($tmp)
+                                #renderMultiLineImage($tmp)
                                 #set($tmp = "")
                             #end
                         </div>

@@ -1,0 +1,64 @@
+<!-- Popup -->
+<div class="popup">
+    <header class="popup__header">
+        <div class="popup__close link--alt ob-flt-r js-popup-close">
+            <svg class="icon"><use xlink:href="#cross" /></svg>
+            <span class="mq-hide-m"></span>
+        </div>
+        <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
+    </header>
+    <section class="popup__content ob-container">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua.</p>
+        <p><a href="#">Read more</a></p>
+    </section>
+</div>
+
+<!-- Global scripts -->
+<script src="/decorations/layout/ingrid/scripts/all.js"></script>
+
+<!-- Popup -->
+<script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+<script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+
+<!-- Accordion -->
+<script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
+<script>
+$('.js-accordion').accordion();
+$('.js-accordion-multi').accordion({
+    multi: true
+});
+</script>
+<!-- Tabs -->
+<script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
+<script>
+    $('.js-tabs').tabs();
+</script>
+<!-- Selection -->
+<script src="/decorations/layout/ingrid/scripts/selection.js"></script>
+<script>
+    $('.js-selection').selection();
+</script>
+<!-- Table Sort -->
+<script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
+<script>
+    $('.js-table-sortable').sortable();
+</script>
+<!-- swiper -->
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
+<script>
+  var mySwiper = new Swiper ('.swiper-container', {
+    grabCursor: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+  })
+  </script>
