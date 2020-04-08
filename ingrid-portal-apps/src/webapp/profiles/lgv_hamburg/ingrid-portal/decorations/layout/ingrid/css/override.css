@@ -259,6 +259,13 @@ thead {
   color: #005ca9 !important;
 }
 
+.swiper-pagination-bullet {
+  background: #005ca9 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #005ca9 !important;
+}
+
 @media screen and (min-width: 640px) {
   .pagination__number:hover, .pagination__number.is-active {
     color: #005ca9;

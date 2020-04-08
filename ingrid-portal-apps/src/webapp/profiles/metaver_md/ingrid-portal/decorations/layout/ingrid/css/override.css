@@ -297,3 +297,10 @@ thead {
     fill: #1b5768;
   }
 }
+
+.swiper-pagination-bullet {
+  background: #1b5768 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #1b5768 !important;
+}

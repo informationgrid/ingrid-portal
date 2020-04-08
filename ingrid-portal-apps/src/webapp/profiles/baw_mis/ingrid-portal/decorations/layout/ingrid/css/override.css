@@ -361,3 +361,10 @@ thead {
 .no-touchevents .sidebar-filter-subheader:hover {
     color: rgb(79, 79, 78);
 }
+
+.swiper-pagination-bullet {
+  background: rgb(44, 99, 177) !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: rgb(44, 99, 177) !important;
+}

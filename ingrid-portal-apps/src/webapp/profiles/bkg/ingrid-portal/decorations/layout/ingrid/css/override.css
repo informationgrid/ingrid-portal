@@ -434,3 +434,10 @@ body {
 .desktop__title:hover {
   text-decoration: none;
 }
+
+.swiper-pagination-bullet {
+  background: #407e40 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #407e40 !important;
+}
