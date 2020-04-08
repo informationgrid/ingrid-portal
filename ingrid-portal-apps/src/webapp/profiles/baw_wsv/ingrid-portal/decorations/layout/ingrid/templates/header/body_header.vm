@@ -1,0 +1,21 @@
+<header class="header">
+    <div class="ob-box-padded-more ob-box-center mq-show-xxl">
+        <div class="header__widgets__section">
+            <div class="header__widget nav-toggle js-nav-mobile-toggle">
+                <svg class="icon">
+                <use xlink:href="#burger">
+                </svg>
+                <svg class="icon ob-fade">
+                <use xlink:href="#cross">
+                </svg>
+            </div>
+            #parse("/decorations/layout/ingrid/templates/header/body_header_logo.vm")
+        </div>
+        #if($serviceMenu && !$serviceMenu.empty)
+            #includeServiceNavigation($serviceMenu)
+        #end
+    </div>
+#if(!$mainMenu.empty)
+  #includeMainNavigation($mainMenu $serviceMenu)
+#end
+</header>

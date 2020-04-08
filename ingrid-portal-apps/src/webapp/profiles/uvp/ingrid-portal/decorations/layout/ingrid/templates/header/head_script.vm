@@ -1,0 +1,26 @@
+#if($MESSAGES.getString('ingrid.page.opensearch.xml')!="")
+    <link rel="search" type="application/opensearchdescription+xml" href="$MESSAGES.getString('ingrid.page.opensearch.xml')" title="$MESSAGES.getString('ingrid.page.opensearch.title')"/>
+#end
+
+#* Hack ! Fix fuer width:100%; height:100% aus inkludierten Headern von J2 Portlets (j2-admin ...) -> zerschiesst Navigation *#
+##includeJavaScriptForHead()
+##IncludeStylesheets()
+<link rel="stylesheet" href="/decorations/layout/uvp/css/main.css">
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print">
+<!-- swiper -->
+<link rel="stylesheet" href="/decorations/layout/ingrid/scripts/swiper/css/swiper.min.css">
+
+#* our decorator macros, see ./decorator-macros.vm *#
+#decoratorIncludeJavaScriptForHead()
+<!-- Global scripts -->
+<script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+<script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+<script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"></script>
+<script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
+<script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
+<script src="/decorations/layout/uvp/scripts/main.js"></script>
+
+<!-- zxcvbn -->
+<script src="/decorations/layout/ingrid/scripts/zxcvbn/zxcvbn.js"></script>

@@ -1,3 +1,5 @@
-        #parse("/decorations/layout/ingrid/templates/footer/body.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_additional.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_script.vm")
     </body>
 </html>

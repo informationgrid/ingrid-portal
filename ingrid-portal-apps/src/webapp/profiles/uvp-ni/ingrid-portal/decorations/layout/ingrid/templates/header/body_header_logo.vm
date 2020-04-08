@@ -1,0 +1,8 @@
+<div class="logo">
+    <div class="switch">
+        <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
+    </div>
+    <a href="/startseite" class="hide-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-uvp-mobile.svg" alt="UVP"/></a>
+    <a href="/startseite" class="show-for-medium hide-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-uvp-mit-tag.svg" alt="UVP"/></a>
+    <a href="/startseite" class="show-for-xsmall-only"><img src="/decorations/layout/uvp/images/template/logo-xsmall.svg" alt="UVP"/></a>
+</div>

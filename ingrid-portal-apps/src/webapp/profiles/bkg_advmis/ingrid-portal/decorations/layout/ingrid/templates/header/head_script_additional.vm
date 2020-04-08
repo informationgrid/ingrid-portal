@@ -1,0 +1,6 @@
+<!-- bkg -->
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/bkg/normalize.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/bkg/_libs.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/bkg/small.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/bkg/medium.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/decorations/layout/ingrid/css/bkg/large.css" type="text/css" media="screen" />

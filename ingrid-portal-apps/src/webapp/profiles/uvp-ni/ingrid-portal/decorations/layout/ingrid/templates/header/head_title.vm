@@ -1,0 +1,1 @@
+<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "$MESSAGES.getString('ingrid.header.title.main')")</title>

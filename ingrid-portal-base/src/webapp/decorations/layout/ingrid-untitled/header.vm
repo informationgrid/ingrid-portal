@@ -10,6 +10,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         #parse("/decorations/layout/ingrid/templates/header/head.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_favicon.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_script.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_script_additional.vm")
     </head>
     <body>
-        #parse("/decorations/layout/ingrid/templates/header/body.vm")
+        #set($mainMenu = $site.getMenu("main-menu"))
+        #set($serviceMenu = $site.getMenu("service-menu"))
+        #set($footerMenu = $site.getMenu("footer-menu"))
+        #if(!$mainMenu.empty)
+            #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
+        #end
+        #parse("/decorations/layout/ingrid/templates/header/body_header.vm")
+        #parse("/decorations/layout/ingrid/templates/header/body_header_additional.vm")
+        #parse("/decorations/layout/ingrid/templates/header/body_breadcrumb.vm")

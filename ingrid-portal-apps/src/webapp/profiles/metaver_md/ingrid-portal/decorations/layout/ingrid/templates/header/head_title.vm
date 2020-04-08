@@ -1,0 +1,1 @@
+<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "MetaVer - Zentraler Zugangspunkt zu den Metadaten aus BB, HB, HH, MV, SL, SN und ST")</title>

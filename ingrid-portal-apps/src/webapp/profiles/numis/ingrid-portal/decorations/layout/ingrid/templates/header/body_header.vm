@@ -1,0 +1,34 @@
+<header>
+    <div class="row">
+        #parse("/decorations/layout/ingrid/templates/header/body_header_logo.vm")
+        <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
+        #if(!$mainMenu.empty)
+            #includeMainNavigation($mainMenu)
+        #end
+        </div>
+        <div class="columns">
+            <div class="header-menu-open">
+                #if($jetspeed.getLoggedOn())
+                    #set($userAttributes = $jetspeed.getUserProperties())
+                    #set($userNameGiven = $userAttributes.get("user.name.given"))
+                    #set($userNameFamily = $userAttributes.get("user.name.family"))
+                    
+                    #if($userNameGiven)
+                        #set ($salutation = " $userNameGiven")
+                    #end
+                    #if($userNameFamily)
+                        #set ($salutation = "$!{salutation} $userNameFamily")
+                    #end
+                    <div class="login">
+                        <span class="ic-ic-user"></span>
+                        <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
+                    </div>
+                    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger-logged-user"></span></button>
+                #else
+                    <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
+                #end
+                <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+            </div>
+        </div>
+    </div>
+</header>

@@ -1,0 +1,1 @@
+<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "HMDK - Metadaten der Freien und Hansestadt Hamburg")</title>
