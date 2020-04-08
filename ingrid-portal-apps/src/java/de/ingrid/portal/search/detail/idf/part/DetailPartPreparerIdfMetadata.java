@@ -1342,7 +1342,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("type", "linkLine");
                 elementMapLink.put("isMapLink", true);
                 elementMapLink.put("isExtern", false);
-                elementMapLink.put("title", url.get("description") != null ? url.get("description") : messages.getString("preview"));
+                elementMapLink.put("title", messages.getString("preview"));
+                elementMapLink.put("description", url.get("description"));
                 elementMapLink.put("href", url.get("name"));
                 elementMapLink.put("src", url.get("name"));
                 list.add(elementMapLink);
@@ -1407,6 +1408,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
             } else {
                 elementMapLink.put("src", imageUrls.get(0).get("name"));
+                elementMapLink.put("description", imageUrls.get(0).get("description"));
             }
             // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
             ArrayList<HashMap<String, Object>> list = new ArrayList<>();

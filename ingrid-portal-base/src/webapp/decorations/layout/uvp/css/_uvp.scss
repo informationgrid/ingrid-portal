@@ -1721,24 +1721,32 @@ h2 .anchor:target {
  *______________________*/
  
 .detail {
-    .preview_image {
-        margin: auto;
-        max-height: 360px;
-    }
+  .preview_image {
+    margin: auto;
+    max-height: 360px;
+    width: auto;
+  }
 }
 .teaser-data {
+  .swiper-container {
+    max-width: 25%;
+    float: right;
+    
     .preview_image {
-        margin: auto;
+      margin: auto;
+      max-width: none;
+      float: none;
     }
     .swiper-wrapper {
-        padding-bottom: 30px;
+      padding-bottom: 30px;
     }
+  }
 }
 
 .swiper-pagination-bullet {
-    background: $green-jelly !important;
+  background: $green-jelly !important;
 }
 
 .swiper-button-next, .swiper-button-prev {
-    color: $green-jelly !important;
+  color: $green-jelly !important;
 }

@@ -14,29 +14,33 @@
             #elseif($entry.isMapLink)
                 <div class="swiper-slide">
                     <div class="box__content ob-container">
-                    #if(!$entry.get("href"))
                         <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="">
                         <noscript>
                             <img class="preview_image ob-box-left" src="$entry.src" alt="">
                         </noscript>
+                        #if($entry.description)
+                        <p class="quote">$entry.description</p>
+                        #end
+                    #if(!$entry.get("href"))
+                        <p class="quote">$entry.title</p>
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
-                        <a href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="">
-                            <noscript>
-                                <img class="preview_image ob-box-left" src="$entry.src" alt="">
-                            </noscript>
-                        </a>
+                        <figcaption class="quote">
+                            <p>
+                                <a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                                    $entry.title
+                                </a>
+                            </p>
+                        </figcaption>
                     #else
-                        <a href="$entry.get("href")" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="">
-                            <noscript>
-                                <img class="preview_image ob-box-left" src="$entry.src" alt="">
-                            </noscript>
-                        </a>
+                        <figcaption class="quote">
+                            <p>
+                                <a class="btn btn--primary btn--small" href="$entry.href" title="$entry.title">
+                                    $entry.title
+                                </a>
+                            </p>
+                        </figcaption>
                     #end
-                    #if($entry.get("title"))
-                        <p class="quote">$entry.get("title")</p>
-                    #end
+                        <br>
                     </div>
                 </div>
             #else
