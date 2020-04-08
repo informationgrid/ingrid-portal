@@ -968,6 +968,7 @@ define({
     "ui.sysList.1410": "Verschlagwortung - Umweltthemen - Themen",
     "ui.sysList.2000": "Objekt / Url-Verweis - Typ",
     "ui.sysList.2010": "Adresstyp für spezielle Objektklassen",
+    "ui.sysList.2100": "ISO - Punkt im Pixel",
     "ui.sysList.2251": "Url-Verweis - Intranet/Internet",
     "ui.sysList.3230": "System",
     "ui.sysList.3561": "Orte",
