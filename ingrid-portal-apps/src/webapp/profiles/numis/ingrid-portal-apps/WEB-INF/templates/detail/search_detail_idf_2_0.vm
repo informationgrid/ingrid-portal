@@ -62,16 +62,18 @@
                 <span class="text">$entry.title</span>
             </a>
         #end
-        #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
-            #if($tool.hasContent($entry.linkInfo))
-                <p><small>$entry.linkInfo</small></p>
-            #end
-            #if($tool.hasContent($entry.attachedToField))
-                <p><small>(${entry.get("attachedToField")})</small></p>
-            #end
-            #if($tool.hasContent($entry.description))
-                #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
-                <p><small>${myDescription}</small></p>
+        #if(!$entry.isMapLink)
+            #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
+                #if($tool.hasContent($entry.linkInfo))
+                    <p><small>$entry.linkInfo</small></p>
+                #end
+                #if($tool.hasContent($entry.attachedToField))
+                    <p><small>(${entry.get("attachedToField")})</small></p>
+                #end
+                #if($tool.hasContent($entry.description))
+                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
+                    <p><small>${myDescription}</small></p>
+                #end
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
