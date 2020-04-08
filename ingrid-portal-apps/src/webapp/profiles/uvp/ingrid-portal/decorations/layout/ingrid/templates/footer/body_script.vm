@@ -23,6 +23,7 @@
 <script>
   var mySwiper = new Swiper ('.swiper-container', {
     grabCursor: true,
+    updateOnWindowResize: true,
     pagination: {
       el: '.swiper-pagination',
       clickable: true,
