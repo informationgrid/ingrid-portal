@@ -21,14 +21,14 @@
                         </noscript>
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                         <a href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="" style="margin: auto; width: 90%;">
+                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="">
                             <noscript>
                                 <img class="preview_image ob-box-left" src="$entry.src" alt="">
                             </noscript>
                         </a>
                     #else
                         <a href="$entry.get("href")" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="" style="margin: auto; height: 360px;">
+                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="">
                             <noscript>
                                 <img class="preview_image ob-box-left" src="$entry.src" alt="">
                             </noscript>
