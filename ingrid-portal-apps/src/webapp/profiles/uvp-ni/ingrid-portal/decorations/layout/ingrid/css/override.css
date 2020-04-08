@@ -755,6 +755,13 @@ header .menu-tab-row .menu-tab {
   color: #1D4B7B;
 }
 
+.swiper-pagination-bullet {
+  background: #0089C6 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #0089C6 !important;
+}
+
 @media print, screen and (min-width: 35em) {
   .header-menu-open button {
     margin: 33px 0;
