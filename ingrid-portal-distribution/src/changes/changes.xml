@@ -8,8 +8,20 @@
     <body>
 
         <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="fix" dev="wemove" issue="1778">
+            IGE: Typo "Platformen" -> Plattformen.
+          </action>
           <action type="fix" dev="wemove" issue="1769">
             IGE: INSPIRE-relevant Bestätigungsdialog ist fehlerhaft
+          </action>
+          <action type="fix" dev="wemove" issue="1774">
+            Portal: Fix BKG facet configuration.
+          </action>
+          <action type="update" dev="wemove" issue="1768">
+            Portal: Update tomcat to version 7.0.100.
+          </action>
+          <action type="add" dev="wemove" issue="1781">
+            Portal: Add display polygon wkt to detail.
           </action>
           <action type="fix" dev="wemove" issue="1674">
             PORTAL: Erweiterung METAVER_MD Profil für "Kommunaler Metadatenkatalog Sachsen-Anhalt"
@@ -34,6 +46,9 @@
           </action>
           <action type="fix" dev="wemove" issue="1671">
             Portal: Fix display message after create user as portal admin.
+          </action>
+          <action type="fix" dev="wemove" issue="1761">
+            Portal: Fix display link of coordinate system without EPSG code.
           </action>
           <action type="fix" dev="wemove" issue="1672">
             Portal: Fix NUMIS and UVP-NI layout.
@@ -83,7 +98,56 @@
           <action type="fix" dev="wemove" issue="1604">
             IGE: Fix spatial scope field.
           </action>
+          <action type="update" dev="wemove" issue="1602">
+            IGE: Show invalid codelist entries of priority datasets
+          </action>
+          <action type="fix" dev="wemove" issue="1782">
+            IGE: Fix detail and compare view
+          </action>
         </release>
+
+      <release version="5.3.0.mCLOUD" date="2020-01-24" description="Release 5.3.0.mCLOUD">
+        <action type="fix" dev="wemove">
+          IGE: Fix upload of documents
+        </action>
+      </release>
+
+      <release version="5.1.1.mCLOUD" date="2019-09-16" description="Release 5.1.1.mCLOUD">
+        <action type="add" dev="wemove" issue="2105">
+          IGE: Add upload function
+        </action>
+      </release>
+
+      <release version="5.1.0.mCLOUD" date="2019-07-10" description="Release 5.1.0.mCLOUD">
+        <action type="update" dev="wemove" issue="2149">
+          IGE: Extend IGE user table
+        </action>
+        <action type="update" dev="wemove" issue="2174">
+          IGE: Update address context help
+        </action>
+        <action type="fix" dev="wemove" issue="2161">
+          IGE: Fix codelist with correct license URLs
+        </action>
+        <action type="add" dev="wemove" issue="2004,2005">
+          IGE: Add password forgotten function
+        </action>
+
+      </release>
+
+      <release version="5.0.1.mCLOUD" date="2019-06-07" description="Release 5.0.1.mCLOUD">
+        <action type="fix" dev="wemove" issue="2124">
+          IGE: Fix user table not shown for standalone IGE
+        </action>
+        <action type="fix" dev="wemove" issue="2142">
+          IGE: Fix date range input
+        </action>
+        <action type="fix" dev="wemove" issue="2141">
+          IGE(mCLOUD/UVP): Show link from upload dialog correctly if a protocol seem to be found.
+        </action>
+        <action type="fix" dev="wemove" issue="2111">
+          IGE(mCLOUD): Codelist sometimes not correctly initialized.
+        </action>
+      </release>
 
         <release version="5.3.0" date="2020-01-15" description="Release 5.3.0">
           <action type="add" dev="wemove" issue="1465">

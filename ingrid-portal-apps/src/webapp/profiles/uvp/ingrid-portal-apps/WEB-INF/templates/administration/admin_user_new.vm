@@ -87,7 +87,7 @@
             <div class="xsmall-24 columns">
                 <div class="form-element boxed">
                     <div class="control-group">
-                        <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="send_info">
+                        <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="password_update_required">
                             <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
                             <div class="control__indicator"></div>
                             $MESSAGES.getString('account.edit.password.update.required')

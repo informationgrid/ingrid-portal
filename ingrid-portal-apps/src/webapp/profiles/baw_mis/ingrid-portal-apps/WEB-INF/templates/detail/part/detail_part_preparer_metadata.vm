@@ -1,0 +1,547 @@
+##Render header 
+#macro (renderDetailHeader $title $type $modTime)
+    <section class="block block--light block--pad-top">
+        <div class="ob-box-wide ob-box-padded ob-box-center">
+            <article id="detail_meta_header" class="content ob-container">
+                <form class="box box--medium">
+                    <div class="box__content ob-container">
+                        <h6 class="tx-light tx-brand bx-bot-0">$MESSAGES.getString("t02_address.mod_time"): $modTime</h6>
+                        <h1 class="bx-top-0 bx-bot-s">$title</h1>
+##                        <h3 class="bx-top-0">
+##                            #renderUDKIcon($type)
+##                           #renderUdkClass($type)
+##                        </h3>
+                    </div>
+                    <hr class="hr-thick bx-top-0 bx-bot-0">
+                    <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
+                        <div class="tab__select mq-show-l">
+                            <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
+                            <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+                        </div>
+                        <nav class="tab__toggles ob-clear mq-hide-l">
+                            ## Allgemeines
+                            <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
+                            ## Fachdaten
+                            <div class="tab__toggle" data-tabid="tab-4"><a href="#">Fachdaten</a></div>
+                            ## Zugriff
+                            #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-6"><a href="#">Zugriff</a></div>
+                            #end
+                            ## Zusätzliche Info
+                            #set($xpathList = ["./gmd:identificationInfo//gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:language/gmd:LanguageCode/@codeListValue"])
+                            #if($TOOL.aNodeOfListExist($xpathList))
+                                <div class="tab__toggle" data-tabid="tab-7"><a href="#">$MESSAGES.getString("additional_information_tab")</a></div>
+                            #end
+                            ## Zusatzfelder
+                            #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+                            #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+                            #if($tabtitle)
+                                <div class="tab__toggle" data-tabid="tab-8"><a href="#">$tabtitle</a></div>
+                            #end
+                        </nav>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </section>
+#end
+
+#set ($type = $TOOL.getUdkObjectClassType())
+#set ($lang = $TOOL.getLanguage())
+#if($TOOL.getTitle())
+    #set($tmp = $TOOL.getTitle())
+    #set($tmp2 = $TOOL.getTimeStamp("./gmd:dateStamp"))
+    #renderDetailHeader ($tmp $type $tmp2)
+    #set($tmp = "")
+    #set($tmp2 = "")
+    <section id="detail_meta" class="block">
+        <div class="ob-box-wide ob-box-padded ob-box-center ob-rel">
+            <article class="content ob-container ob-box-wide">
+                ## Allgemeines
+                <div class="tab__content box--medium bx-bot-xl" data-tabid="tab-1">
+                    <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("general_tab")<h2>
+                        ## Beschreibung
+                        #renderSectionTitle($MESSAGES.getString("general_tab"))
+                        <div class="media ob-clear">
+                            ## Beschreibung
+                            <div class="media__body ob-container ob-container">
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"))
+                                #if(!$tmp || $tmp.length() == 0)
+                                    #set($tmp = $MESSAGES.getString("detail_description"))
+                                #end
+                                #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
+                                #renderTextLabelAbove($tmp $tmp2)
+                                #set($tmp = "")
+                                #set($tmp2 = "")
+                            </div>
+                            ## Zeige in Karte
+                            #set($tmp = $TOOL.getMapImage())
+                            #renderMultiLine($tmp)
+                            #set($tmp = "")
+                            ## Untergeordnete Objekte
+                            #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))
+                            #renderLinkList($MESSAGES.getString("subordinated_references") $tmp "false")
+                            #set($tmp = "")
+                            ## Übergeordnetet Objekte
+                            #set($tmp = $TOOL.getReference("./idf:superiorReference"))
+                            #renderLinkList($MESSAGES.getString("superior_references") $tmp "false")
+                            #set($tmp = "")
+                        </div>
+                        ## BAW Auftragsnummer
+                        #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
+                        #renderTextLabelAbove("BAW Auftragsnummer" $tmp)
+                        #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString"))
+                        #renderTextLabelAbove("BAW Auftragstitel" $tmp)
+                        #set($tmp = "")
+                        ## Addressen
+                        #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact"))
+                        #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp)
+                        #set($tmp = "")
+                        ## Zeitbezug
+                        #set($xpathList = ["./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])            
+                        #if($TOOL.aNodeOfListExist($xpathList))
+                            <hr>
+                            #renderSectionTitle($MESSAGES.getString("time_reference"))
+                            <div class="search-result--nested">
+                                ## Zeitbezug der Ressource
+                                #set($nodelist = $TOOL.getNodeListFromXPath("./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date"))
+                                ## Erstellung 
+                                #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+                                #if($title.length() > 0)
+                                    #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+                                    #renderTextLabelAbove($title $tmp)
+                                    #set($tmp = "")
+                                #end
+                                ## Publikation
+                                #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+                                #if($title.length() > 0)
+                                    #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+                                    #renderTextLabelAbove($title $tmp)
+                                    #set($tmp = "")
+                                #end
+                                ## letzte Änderung 
+                                #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+                                #if($title.length() > 0)
+                                    #set($tmp = $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+                                    #renderTextLabelAbove($title $tmp)
+                                    #set($tmp = "")
+                                #end
+                                ## Durch die Ressource abgedeckte Zeitspanne
+                                #set($beginTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
+                                #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
+                                #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+                                    #if($beginTime == $endTime)
+                                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                                    #elseif($beginTime && !$endTime)
+                                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                                    #elseif(!$beginTime && $endTime)
+                                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                                    #elseif($beginTime != $endTime)
+                                        #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                                    #end
+                                #end
+                                ## Status
+                                #set($tmp = $TOOL.getValueFromXPath("./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue", "523"))
+                                #renderTextLabelAbove($MESSAGES.getString("t01_object.time_status") $tmp)
+                                #set($tmp = "")
+                                ## Periodizität
+                                #set($tmp = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue", "518"))
+                                #renderTextLabelAbove($MESSAGES.getString("t01_object.time_period") $tmp)
+                                #set($tmp = "")
+                                ## Intervall der Erhebung
+                                #set($value = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency"))
+                                #set($content = $TOOL.timePeriodDurationToTimeAlle($value))
+                                #set($unit = $TOOL.timePeriodDurationToTimeInterval($value))
+                                #if($value)
+                                    #renderTextLabelAbove($MESSAGES.getString("t01_object.time_interval") "$content $unit")
+                                #end
+                                ## Erläuterung zum Zeitbezug
+                                #set($tmp = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote"))
+                                #renderTextLabelAbove($MESSAGES.getString("t01_object.time_descr") $tmp)
+                                #set($tmp = "")
+                                ##Zeitliche Genauigkeit
+                                #set($tmp = $TOOL.getValueFromXPath("//gmd:dataQualityInfo//gmd:DQ_AccuracyOfATimeMeasurement//gmd:value/gco:Record"))
+                                #set($tmp2 = $TOOL.getValueFromXPath("//gmd:DQ_AccuracyOfATimeMeasurement//gmd:valueUnit//gml:catalogSymbol"))
+                                #if($tmp && $tmp.length() > 0 && $tmp2 && $tmp2.length() > 0)
+                                    #renderTextLabelAbove("Zeitliche Genauigkeit" "$tmp $tmp2")
+                                #end
+                                #set($tmp = "")
+                                #set($tmp2 = "")
+                            </div>
+                            <hr>
+                        #end
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("spacial_reference_tab")<h2>
+                        ## Raumbezugssystem
+                        #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo"])
+                        #if($TOOL.aNodeOfListExist($xpathList))
+                            #renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
+                            <div class="search-result--nested">
+                                ## Administrative Einheit (Gemeindenummer)
+                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code"))
+                                #renderTextList("Bundeswasserstra&szlig;en ID" $tmp)
+                                #set($tmp = "")
+                                ## Geothesaurus-Raumbezug
+                                #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent", "./idf:additionalDataSection/@bawDmqsAdditionalFields"])
+                                #if($TOOL.aNodeOfListExist($xpathList))
+                                    #set($tmp = $TOOL.getAreaGeothesaurus("./gmd:identificationInfo/*/*/gmd:EX_Extent"))
+                                    #if($tmp)
+                                        #renderTable($tmp)
+                                        #set($westBoundLongitude = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/*/*/gmd:westBoundLongitude"))
+                                        #set($eastBoundLongitude = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/*/*/gmd:eastBoundLongitude"))
+                                        #set($southBoundLatitude = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/*/*/gmd:southBoundLatitude"))
+                                        #set($northBoundLatitude = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/*/*/gmd:northBoundLatitude"))
+                                        #set($bawstrCenterLongitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lon']/idf:data"))
+                                        #set($bawstrCenterLatitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:data"))
+                                        
+                                        <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
+                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+                                        <div id="map" style="height: 400px; width:100%;"></div>
+                                        <script language="JavaScript" type="text/javascript">
+                                            var map = new L.Map('map');
+                                            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                                            var osmAttrib='';
+                                            var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 20, attribution: osmAttrib});
+                                            var bounds;
+                                            var hasBounds = false;
+                                            map.addLayer(osm);
+                                        </script>
+                                        
+                                        #if($southBoundLatitude && $westBoundLongitude && $northBoundLatitude && $eastBoundLongitude)
+                                            <script>
+                                                if(map){
+                                                    var southWest = L.latLng($southBoundLatitude, $westBoundLongitude),
+                                                    northEast = L.latLng($northBoundLatitude, $eastBoundLongitude),
+                                                    bounds = L.latLngBounds(southWest, northEast);
+                                                    hasBounds = true;
+                                                    
+                                                    if(bounds){
+                                                        map.fitBounds(bounds);
+                                                    }
+                                                    
+                                                    var rect = L.rectangle(bounds, {color: 'blue', weight: 1}).on('click', function (e) {
+                                                        /*
+                                                        var popLocation= e.latlng;
+                                                        var popup = L.popup()
+                                                        .setLatLng(popLocation)
+                                                        .setContent('<p>Koordinaten:<br />$southBoundLatitude\, $westBoundLongitude<br/>$northBoundLatitude, $eastBoundLongitude</p>')
+                                                        .openOn(map);
+                                                        */
+                                                    }).addTo(map);
+                                                }
+                                            </script>
+                                        #end
+                                        #if($bawstrCenterLongitude && $bawstrCenterLatitude)
+                                            #set($bawstrCenterLongitudeTitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lon']/idf:title[@lang='$lang']"))
+                                            #set($bawstrCenterLatitudeTitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:title[@lang='$lang']"))
+                                            #set($bawstrName = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-bwastr_name']/idf:data"))
+                                            #set($bawstrLineName = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-strecken_name']/idf:data"))
+                                            <script>
+                                                if(map){
+                                                    var popupContent = "<b>$bawstrName</b> ($bawstrLineName)";
+                                                    popupContent = popupContent + "<br/>";
+                                                    popupContent = popupContent + "<table>";
+                                                    popupContent = popupContent + "<tr><td>$bawstrCenterLongitudeTitle</td><td>$bawstrCenterLongitude</td></tr>";
+                                                    popupContent = popupContent + "<tr><td>$bawstrCenterLatitudeTitle</td><td>$bawstrCenterLatitude</td></tr>";
+                                                    popupContent = popupContent + "</table>";
+                                                    
+                                                    var marker = L.marker([$bawstrCenterLatitude, $bawstrCenterLongitude]).addTo(map).bindPopup(popupContent);
+                                                    if(!hasBounds){
+                                                         map.setView(new L.LatLng($bawstrCenterLatitude, $bawstrCenterLongitude),6);
+                                                    }
+                                                }
+                                            </script>
+                                        #end
+                                    #end
+                                #end
+                                #set($tmp = "")
+                                ## Höhe
+                                #set($tmp = $TOOL.getAreaHeight("./gmd:identificationInfo/*/*/gmd:EX_Extent"))
+                                #renderTable($tmp)
+                                #set($tmp = "")
+                                ## Erläuterung zum Raumbezug
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
+                                #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $tmp)
+                                #set($tmp = "")
+                                ## Raumbezugssystem
+                                #set($tmp = $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))
+                                #renderLinkListSpace($MESSAGES.getString("t011_obj_geo.referencesystem_id") $tmp false "" true)
+                                #set($tmp = "")
+                                ## Räumliche Auflösung
+                                #set($tmp = $TOOL.getValueFromXPath("//gmd:identificationInfo//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance"))
+                                #set($tmp2 = $TOOL.getValueFromXPath("//gmd:identificationInfo//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance/@uom"))
+                                #renderTextLabelAbove("R&auml;umliche Aufl&ouml;sung" "$tmp $tmp2")
+                                #set($tmp = "")
+                                #set($tmp2 = "")
+                            </div>
+                            <hr>
+                        #end
+                        ## Verschlagwortung
+                        #set($xpathList = ["./gmd:identificationInfo//gmd:descriptiveKeywords[not(contains(.//gmd:thesaurusName//gmd:title//gco:CharacterString/text(), 'de.baw.codelist.'))]","./gmd:identificationInfo/*/gmd:topicCategory"])
+                        #if($TOOL.aNodeOfListExist($xpathList))
+                            #renderSectionTitle($MESSAGES.getString("thesaurus"))
+                            <div class="search-result--nested">
+                                ## Verschlagwortung
+                                #renderTextList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords[not(contains(.//gmd:thesaurusName//gmd:title//gco:CharacterString/text(), 'de.baw.codelist.'))]", "search"))
+                                #renderTextList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords", "inspire"))
+                                #renderTextList("GEMET - Concepts" $TOOL.getIndexInformationKeywords("./gmd:identificationInfo//gmd:descriptiveKeywords", "gemet"))
+                                ## ISO-Themenkategorien
+                                #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
+                            </div>
+                            <hr>
+                        #end
+                        ## Herkunft
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                        #renderTextLabelAbove("Herkunft" $tmp)
+                        #set($tmp = "")
+                        ## Identifikator der Datenquelle
+                        #set($tmp = $TOOL.getValueFromXPath("//gmd:identificationInfo//gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code"))
+                        #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.datasource_uuid") $tmp)
+                        #set($tmp = "")
+                    </div>
+                </div>    
+            ## Fachdaten
+                    <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
+                        <div class="box__content ob-container">
+                            <h2 class="print-title is-hidden">Fachdaten<h2>
+                            ## Beschreibung
+                            #renderSectionTitle("Fachdaten")
+                            <div class="search-result--nested">
+                                #set($headTitles = ["Format","Version"])
+                                #set($headXpathExpressions = ["./gmd:name/gco:CharacterString","./gmd:version/gco:CharacterString"])
+                                #set($tmp = $TOOL.getNodeListTable("Datenformat", "//gmd:resourceFormat/gmd:MD_Format", $headTitles, $headXpathExpressions))
+                                #renderTable($tmp)
+                                #set($tmp = "")
+                                ##Verfahren
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.method']//gmd:keyword/gco:CharacterString"))
+                                #renderTextLabelAbove("Verfahren" $tmp)
+                                #set($tmp = "")
+                                ## Modellart
+                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.type']//gmd:keyword/gco:CharacterString", "."))
+                                #renderTextList("Modellart" $tmp)
+                                #set($tmp = "")
+                                ##Raeumliche Dimensionalitaet
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo//gmd:descriptiveKeywords[.//gmd:thesaurusName//gmd:title//gco:CharacterString = 'de.baw.codelist.model.dimensionality']//gmd:keyword/gco:CharacterString"))
+                                #renderTextLabelAbove("R&aumlumliche Dimensionalit&auml;t" $tmp)
+                                #set($tmp = "")
+                                ## Daten / Größen / Parameter
+                                #set($headTitles = ["Rolle","Name","Einheit","Wert"])
+                                #set($headTypes = ["text","text","text", "text"])
+                                #set($headXpathExpressions = ["./gmd:lineage//gmd:LI_Source/gmd:description/gco:CharacterString",".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueType/gco:RecordType", ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:valueUnit//gml:catalogSymbol", ".//gmd:DQ_QuantitativeAttributeAccuracy//gmd:value/gco:Record"])
+                                #set($tmp = $TOOL.getNodeListTable("Parameter und Zustandsgr&ouml;&szlig;en", "//gmd:DQ_DataQuality", $headTitles, $headXpathExpressions, null, $headTypes))
+                                #renderTable($tmp)
+                            </div>
+                        </div>
+                    </div>
+            ## Datenqualität
+            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+            #if($TOOL.aNodeOfListExist($xpathList))
+                <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-5">
+                    <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("data_quality")<h2>
+                        #renderSectionTitle($MESSAGES.getString("data_quality"))
+                        <div class="search-result--nested">
+                            ## Datendefizit
+                            #set($tmp = $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission", "completeness omission (rec_grade)", "Rate of missing items"))
+                            #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.coverage") $tmp)
+                            #set($tmp = "")
+                            ## Höhengenauigkeit (m)
+                            #set($tmp = $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy", "vertical", "Mean value of positional uncertainties (1D)"))
+                            #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.pos_accuracy_vertical") $tmp)
+                            #set($tmp = "")
+                            ## Lagegenauigkeit (m)
+                            #set($tmp = $TOOL.getGeoReport("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy", "geographic", "Mean value of positional uncertainties (2D)"))
+                            #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.rec_exact") $tmp)
+                            #set($tmp = "")
+                            ## Datenüberschuss
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7109"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table109.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Konzeptionelle Konsistenz
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7112"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table112.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Konsistenz des Wertebereichs
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7113"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table113.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Formatkonsistenz
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7114"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table114.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Topologische Konsistenz
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7115"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table115.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Zeitliche Genauigkeit
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7120"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table120.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Korrektheit der thematischen Klassifizierung
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7125"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table125.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Genauigkeit nicht-quantitativer Attribute
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7126"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table126.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Genauigkeit quantitativer Attribute
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7127"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table127.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                        </div>
+                    </div>
+                </div>
+            #end
+            ## Zugriff
+            #set($xpathList = ["./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:name/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:version/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:fileDecompressionTechnique/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributionFormat/gmd:MD_Format/gmd:specification/gco:CharacterString","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions/gmd:MD_DigitalTransferOptions/gmd:offLine","./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:otherConstraints","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints/gmd:MD_RestrictionCode/@codeListValue","./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation","./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints/gmd:MD_RestrictionCode/@codeListValue"])
+            #if($TOOL.aNodeOfListExist($xpathList))
+                <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-6">
+                    <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("availability_tab")<h2>
+                        ## Verfügbarkeit
+                        #renderSectionTitle("Zugriff")
+                        <div class="search-result--nested">
+                            ## Datenformat
+                            #set($tmp = $TOOL.getAvailability("./gmd:distributionInfo/gmd:MD_Distribution"))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Medien
+                            #set($tmp = $TOOL.getMediumOptions("./gmd:distributionInfo/gmd:MD_Distribution"))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+                            ## Bestellinformationen
+                            #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
+                            #renderTextLabelAbove($MESSAGES.getString("t01_object.ordering_instructions") $tmp)
+                            #set($tmp = "")
+                            ## Zugangsbeschränkungen (accessConstraints)
+                            #set($consideredValues = ["otherRestrictions"])
+                            #set($accessConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
+                            #set($tmp = $TOOL.mergeList($TOOL.getListOfValuesFromXPath($accessConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($accessConstraintsXPath, "gmd:otherConstraints", false, "6010", $consideredValues)))
+                            #renderTextList($MESSAGES.getString("object_access.restriction_value") $tmp)
+                            #set($tmp = "")
+                            ## Nutzungsbeschr�nkungen (useConstraints)
+                            #set($useConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:useConstraints")
+                            #set($tmp = $TOOL.mergeList($TOOL.getListOfValuesFromXPath($useConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "524", $consideredValues), $TOOL.getSiblingsValuesFromXPath($useConstraintsXPath, "gmd:otherConstraints", false, "6500")))
+                            #renderTextList($MESSAGES.getString("object_access.license") $tmp)
+                            #set($tmp = "")
+                            ## Nutzungsbedingungen (useLimitation)
+                            #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation", "."))
+                            #renderTextList($MESSAGES.getString("object_access.terms_of_use") $tmp)
+                            #set($tmp = "")
+                            #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"))
+                            #renderLinkList("Online-Resource" $tmp "false")
+                            #set($tmp = "")
+                        </div>
+                    </div>
+                </div>
+            #end
+            ## Zusätzliche Info
+            <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-7">
+                <div class="box__content ob-container">
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("additional_information_tab")<h2>
+                    #renderSectionTitle($MESSAGES.getString("additional_information"))
+                    <div class="search-result--nested">
+                        ## Sprache des Metadatensatzes
+                        #set($tmp = $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:language/gmd:LanguageCode/@codeListValue")))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.metadata_language") $tmp)
+                        #set($tmp = "")
+                        ## Sprache des Datensatzes
+                        #set($tmp = $TOOL.getLanguageValue($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.data_language") $tmp)
+                        #set($tmp = "")
+                        ## Veröffentlichung
+                        #set($tmp = $TOOL.getPublishId($TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue")))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $tmp)
+                        #set($tmp = "")
+                        ## Eignung/Nutzung
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.dataset_usage") $tmp)
+                        #set($tmp = "")
+                        ## Herstellungszweck
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.info_note") $tmp)
+                        #set($tmp = "")
+                        ## Rechtliche Grundlagen
+                        #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/idf:idfLegalBasisConstraints/gmd:otherConstraints/gco:CharacterString", "."))
+                        #renderTextList($MESSAGES.getString("t015_legist.name") $tmp)
+                        #set($tmp = "")
+                        ## XML-Export-Kriterium
+                        #set($tmp = $TOOL.getListOfValuesFromXPath("./idf:exportCriteria", "."))
+                        #renderTextList($MESSAGES.getString("t014_info_impart.name") $tmp)
+                        #set($tmp = "")
+                        ## Konformität
+                        #set($tmp = $TOOL.getConformityData("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report"))
+                        #renderTable($tmp)
+                        #set($tmp = "")
+                        ## Objekt-ID 
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
+                        #renderTextLabelAbove($MESSAGES.getString("t01_object.obj_id") $tmp)
+                        #set($tmp = "")
+                        ## XML Darstellung 
+                        #set($tmp = $TOOL.addLinkToGetXML())
+                        #renderTextLabelAbove($MESSAGES.getString("xml_link_label") $tmp)
+                        #set($tmp = "")
+                    </div>
+                    ## Ansprechpartner (Metadatum)
+                    #set($tmp = $TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505'))
+                    #set($tmp2 = $TOOL.getNodeListFromXPath("./gmd:contact"))
+                    #renderMultiLineAddresses("Kontakt ($MESSAGES.getString('pointofcontact_metadata'))" $tmp2 false)
+                    #set($tmp = "")
+                    #set($tmp2 = "")
+                 </div>
+            </div>
+            ## Additional Fields Example
+            #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
+            #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
+            #if($tabtitle)
+                <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-8">
+                    <div class="box__content ob-container">
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("$tabtitle")<h2>
+                        #renderSectionTitle($MESSAGES.getString("additional_information"))
+                        <div class="search-result--nested">
+                            #set($nodelist = $TOOL.getNodeListFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField"))
+                            #foreach($number in [0..$nodelist.getLength()])
+                                #set($tmp = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:title[@lang='$lang']"))
+                                #set($tmp2 = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField[$number]/idf:data"))
+                                #renderTextLabelAbove($tmp $tmp2)
+                                #set($tmp = "")
+                                #set($tmp2 = "")
+                            #end
+                        </div>
+                     </div>
+                </div>
+            #end
+            </article>
+        </div>
+    </section>
+#end

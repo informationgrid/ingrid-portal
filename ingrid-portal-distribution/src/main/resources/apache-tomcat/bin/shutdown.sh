@@ -24,8 +24,10 @@ os400=false
 case "`uname`" in
 OS400*) os400=true;;
 esac
-# InGrid specific settings
+
+# INGRID: specific settings
 export CATALINA_HOME=.
+
 # resolve links - $0 may be a softlink
 PRG="$0"
 

@@ -81,7 +81,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(4300,"Adresse - Anrede");   put(4305,"Adresse - Titel");    put(4430,"Adresse - Kommunikation - Art");
                 put(5100,"Objektklasse 3 - Art des Dienstes");    put(5105,"Objektklasse 3 - Name der Operation - CWS");
                 put(5110,"Objektklasse 3 - Name der Operation - WMS");    put(5120,"Objektklasse 3 - Name der Operation - WFS");
-                put(5130,"Objektklasse 3 - Name der Operation - WCTS");    put(5180,"Objektklasse 3 - Operation - Unterstützte Platformen");
+                put(5130,"Objektklasse 3 - Name der Operation - WCTS");    put(5180,"Objektklasse 3 - Operation - Unterstützte Plattformen");
                 put(5200,"Objektklasse 3 - Klassifikation des Dienstes");    put(5300,"Objektklasse 6 - Art des Dienstes");
                 put(6000,"Konformität - Grad der Konformität"); put(6005,"Konformität - Spezifikation der Konformität");
                 put(6010,"Verfügbarkeit - Zugriffsbeschränkungen");

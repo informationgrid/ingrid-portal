@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
-    <name>lfug_sachsen</name>
-    <description>Portal-Profile für LFUG Sachsen (SachsenPortalU)</description>
+    <name>lgv_hamburg</name>
+    <description>Portal-Profile für HMDK Hamburg</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
@@ -65,6 +65,10 @@
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>
+        </file>
+        <file>
+            <action>copy-dir</action>
+            <src>ingrid-portal-mdek-application/</src>
         </file>
         <file>
             <action>copy-dir</action>

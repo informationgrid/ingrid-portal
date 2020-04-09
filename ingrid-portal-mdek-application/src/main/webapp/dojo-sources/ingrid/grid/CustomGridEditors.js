@@ -238,6 +238,11 @@ define([
                     maxHeight: "150",
                     style: "width:100%; padding:0; color: black; font-family: 10px Verdana, Helvetica, Arial, sans-serif;"
                 }).placeAt(args.container);
+
+                if (args.column.onChange) {
+                    on(box, "Change", args.column.onChange);
+                }
+
                 box.store.fetch();
                 //$(args.container).append(box.domNode);
                 box.focus();
@@ -278,17 +283,27 @@ define([
                 // load the value(s) from the data item and update the UI
                 // this method will be called immediately after the editor is initialized
                 // it may also be called by the grid if if the row/cell being edited is updated via grid.updateRow/updateCell
-                var search = item[args.column.field];
-                var items = box.store._arrayOfTopLevelItems;
-                var found = false;
-                array.forEach(items, function(item, i) {
-                    if (item[1] == search) {
-                        box.set("value", i);
-                        found = true;
-                    }
-                });
-                if (!found)
-                    box.set("value", item[args.column.field]);
+                var updateValue = function() {
+                    if (box._destroyed) return;
+
+                    var search = item[args.column.field];
+                    var items = box.store._arrayOfTopLevelItems;
+                    var found = false;
+                    array.forEach(items, function(item, i) {
+                        if (item[1] == search) {
+                            box.set("value", i);
+                            found = true;
+                        }
+                    });
+                    if (!found)
+                        box.set("value", item[args.column.field]);
+                };
+
+                if (args.column.init) {
+                    setTimeout(updateValue, 100);
+                } else {
+                    updateValue();
+                }
             };
 
             this.applyValue = function(item, state) {

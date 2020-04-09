@@ -42,6 +42,7 @@ define([
     "dijit/form/Select",
     "dijit/form/DateTextBox",
     "dijit/form/NumberSpinner",
+    "dijit/form/NumberTextBox",
     "dijit/form/SimpleTextarea",
     "dijit/form/FilteringSelect",
     "dojo/data/ItemFileWriteStore",
@@ -51,7 +52,7 @@ define([
     "ingrid/utils/Store",
     "dojo/store/Memory"
 ], function(declare, dom, domClass, construct, request, has, array, lang, Deferred, when, on, query, Grid, menu, message, registry,
-        ValidationTextBox, ComboBox, Selectbox, DateTextBox, NumberSpinner, SimpleTextarea, FilteringSelect,
+        ValidationTextBox, ComboBox, Selectbox, DateTextBox, NumberSpinner, NumberTextBox, SimpleTextarea, FilteringSelect,
         ItemFileWriteStore, ItemFileReadStore, UtilDOM, UtilSyslist, UtilStore, Memory){
 
     gridManager = {};
@@ -447,6 +448,27 @@ define([
                     style: "width:100%;"
                 });
                 return this.addSurroundingContainer(inputWidget.domNode, additionalField, lang.trim(additionalField.unit) == "" ? "" : "Numberbox");
+            },
+
+            createDomNumberTextbox: function(additionalField) {
+                var inputWidget = new NumberTextBox({
+                    id: this.additionalFieldPrefix + additionalField.id,
+                    maxLength: additionalField.size,
+                    name: additionalField.name,
+                    style: "width:100%;",
+                    format: function (value, constraints) {
+                        var displayedValue = this.get('displayedValue');
+                        if (Math.abs(dojo.number.parse(value) - dojo.number.parse(displayedValue)) < 1.0e-6) {
+                            return displayedValue;
+                        } else {
+                            return dojo.number.format(value);
+                        }
+                    },
+                    parse: function (value, constraints) {
+                        return dojo.number.parse(value);
+                    }
+                });
+                return this.addSurroundingContainer(inputWidget.domNode, additionalField);
             },
 
             createDomDatebox: function(additionalField) {

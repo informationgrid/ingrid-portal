@@ -96,8 +96,8 @@ require([
             renderTable(nodeDataOld.generalAddressTable, nodeDataNew.generalAddressTable, ["nameOfRelation", "linkLabel"], ["<fmt:message key='dialog.compare.object.addressLink.type' />", "<fmt:message key='dialog.compare.object.addressLink.title' />"], message.get("ui.obj.general.addressTable.title"));
 
             // preview image
-            var previewImageUrlOld = IgeEvents._filterPreviewImage(nodeDataOld.linksToUrlTable);
-            var previewImageUrlNew = IgeEvents._filterPreviewImage(nodeDataNew.linksToUrlTable);
+            var previewImageUrlOld = IgeEvents._filterPreviewImages(nodeDataOld.linksToUrlTable);
+            var previewImageUrlNew = IgeEvents._filterPreviewImages(nodeDataNew.linksToUrlTable);
             renderTextWithTitle(previewImageUrlOld.url, previewImageUrlNew.url, "<fmt:message key='ui.obj.general.previewImage' />");
             renderTextWithTitle(previewImageUrlOld.description, previewImageUrlNew.description, "<fmt:message key='ui.obj.general.previewImageDescription' />");
 

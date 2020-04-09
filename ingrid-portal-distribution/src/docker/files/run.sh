@@ -1,3 +1,4 @@
+#!/bin/bash
 ###
 # **************************************************-
 # InGrid Portal Distribution
@@ -20,7 +21,6 @@
 # limitations under the Licence.
 # **************************************************#
 ###
-#!/bin/bash
 PROFILES_DIR="webapps/ingrid-portal-apps/profiles"
 HIERARCHY_DIR="webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierarchy"
 
@@ -30,17 +30,64 @@ if [ -e /initialized ]
 then
     echo "Container already initialized"
 else
-    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ingrid-portal-apps.xml
-    sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-apps.xml
-    sed -i 's/jdbc:mysql:\/\/localhost\/mdek/'${DB_URL_MDEK}'/' conf/Catalina/localhost/ingrid-portal-mdek.xml
-    sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ingrid-portal-mdek.xml
-    sed -i 's/jdbc:mysql:\/\/localhost\/ingrid-portal?autoReconnect=true/'${DB_URL_PORTAL}'/' conf/Catalina/localhost/ROOT.xml
-    sed -i 's/password=""/password="${DB_PASSWORD}"/' conf/Catalina/localhost/ROOT.xml
-    sed -i 's/hibernate.driverClass=com.mysql.jdbc.Driver/hibernate.driverClass='${DB_DRIVERCLASS}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
-    sed -i 's/hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect/hibernate.dialect='${DB_DIALECT}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
-    sed -i 's/jdbc:mysql:\/\/localhost\/mdek/'${DB_URL_MDEK}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
-    sed -i 's/hibernate.user=root/hibernate.user='${DB_USER}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
-    sed -i 's/hibernate.password=/hibernate.password='${DB_PASSWORD}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+    # Perform some substitutions if environment variables are set
+    if [ ! -z "${DB_DRIVERCLASS}" ]; then
+        # common substution scripts for sed
+        substitution_catalina_db_user="s@username=\"root\"@username=\"${DB_USER}\"@"
+        substitution_catalina_db_pass='s@password=""@password="${DB_PASSWORD}"@' # No variable substitution in shell/sed. Database password will be set in the JAVA_OPTS environment variable.
+        substitution_catalina_db_driver="s@driverClassName=\"com.mysql.jdbc.Driver\"@driverClassName=\"${DB_DRIVERCLASS}\"@"
+        substitution_catalina_db_url_portal="s@url=\"jdbc:mysql://localhost/ingrid-portal[^\"]*\"@url=\"${DB_URL_PORTAL}\"@"
+        substitution_catalina_db_url_mdek="s@url=\"jdbc:mysql://localhost/mdek[^\"]*\"@url=\"${DB_URL_MDEK}\"@"
+
+        # substitutions in Tomcat context files
+        sed -i \
+            -e $substitution_catalina_db_user \
+            -e $substitution_catalina_db_pass \
+            -e $substitution_catalina_db_driver \
+            -e $substitution_catalina_db_url_portal \
+            \
+            conf/Catalina/localhost/ingrid-portal-apps.xml
+
+        sed -i \
+            -e $substitution_catalina_db_user \
+            -e $substitution_catalina_db_pass \
+            -e $substitution_catalina_db_driver \
+            -e $substitution_catalina_db_url_mdek \
+            \
+            conf/Catalina/localhost/ingrid-portal-mdek.xml
+
+        sed -i \
+            -e $substitution_catalina_db_user \
+            -e $substitution_catalina_db_pass \
+            -e $substitution_catalina_db_driver \
+            -e $substitution_catalina_db_url_portal \
+            \
+            conf/Catalina/localhost/ROOT.xml
+
+        # Substitute the dialect in hibernate xml files
+        sed -i \
+            -e "s@org.hibernate.dialect.MySQLDialect@${DB_DIALECT}@" \
+            -e "s@org.hibernate.dialect.MySQLInnoDBDialect@${DB_DIALECT}@" \
+            \
+            webapps/ingrid-portal-apps/WEB-INF/classes/hibernate.cfg.xml \
+            webapps/ingrid-portal-mdek/WEB-INF/classes/hibernate.cfg.xml
+
+        # Substitute values in datasource properties file
+        sed -i \
+            -e "s@hibernate.driverClass=com.mysql.jdbc.Driver@hibernate.driverClass=${DB_DRIVERCLASS}@" \
+            -e "s@hibernate.user=root@hibernate.user=${DB_USER}@" \
+            -e "s/hibernate.password=$/hibernate.password=${DB_PASSWORD}/" \
+            -e "s@hibernate.dialect=org.hibernate.dialect.MySQLInnoDBDialect@hibernate.dialect=${DB_DIALECT}@" \
+            -e "s@hibernate.jdbcUrl=jdbc:mysql://localhost/mdek@hibernate.jdbcUrl=${DB_URL_MDEK}@" \
+            \
+            webapps/ingrid-portal-mdek-application/WEB-INF/classes/default-datasource.properties
+
+        # Replace the quartz driver delegate class
+        sed -i \
+            -e "s@org.quartz.jobStore.driverDelegateClass = org.quartz.impl.jdbcjobstore.StdJDBCDelegate@org.quartz.jobStore.driverDelegateClass = ${QUARTZ_DRIVERCLASS}@" \
+            \
+            webapps/ingrid-portal-apps/WEB-INF/classes/quartz.properties
+    fi
 
     sed -i 's/communications.ibus=\/ingrid-group\\:ibus-live,127.0.0.1,9900/communications.ibus=\/ingrid-group:ibus,'${IBUS_IP}',9900/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
     sed -i 's/portal.enable.caching=true/portal.enable.caching='${PORTAL_CACHE_ENABLE}'/' webapps/ingrid-portal-apps/WEB-INF/classes/ingrid-portal-apps.properties
@@ -136,6 +183,7 @@ else
     fi
 
     # SMTP_HOST
+    echo "Update SMTP host"
     sed -i 's/workflow.mail.smtp=localhost/workflow.mail.smtp=$SMTP_HOST/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/workflow.mail.sender=test@wemove.de/workflow.mail.sender=$MAIL_SENDER/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
     sed -i 's/workflow.mail.smtp.user=/workflow.mail.smtp.user=$MAIL_USER/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
@@ -144,24 +192,43 @@ else
     sed -i 's/mdek.directLink=http:\/\/localhost:8080\/ingrid-portal-mdek-application\/index.jsp/mdek.directLink=$IGE_DIRECT_LINK/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
 
     # Upload settings
-    sed -i 's/upload.docsdir=\/tmp\/ingrid\/upload\/documents\//upload.docsdir='${UPLOAD_DOCS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
-    sed -i 's/upload.partsdir=\/tmp\/ingrid\/upload\/parts\//upload.partsdir='${UPLOAD_PARTS_DIR}'/' webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    echo "Update upload settings"
+    if [ "$UPLOAD_DOCS_DIR" ]; then
+        sed -i -e "s@upload.docsdir=.*@upload.docsdir=${UPLOAD_DOCS_DIR}@" webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    fi
+    if [ "$UPLOAD_PARTS_DIR" ]; then
+        sed -i -e "s@upload.partsdir=.*@upload.partsdir=${UPLOAD_PARTS_DIR}@" webapps/ingrid-portal-mdek-application/WEB-INF/classes/mdek.properties
+    fi
 
     # Add toybox script if TOYBOX_TOKEN is define
     if [ "$TOYBOX_TOKEN" ]; then
+        echo "Update toybox"
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid/header.vm
         cat webapps/ROOT/decorations/layout/ingrid/header.vm | grep -q "ToyboxSnippet" || sed -i 's/<\/head>/<script src="'${TOYBOX_SRC}'" async data-id="ToyboxSnippet" data-token="'${TOYBOX_TOKEN}'"><\/script><\/head>/' webapps/ROOT/decorations/layout/ingrid-untitled/header.vm
     fi
 
     # Change measure client elasticsearch URL if MEASURECLIENT_ES_URL is define
     if [ "$MEASURECLIENT_ES_URL" ]; then
+        echo "Update measure client"
         sed -i 's|http.*-measure/|'${MEASURECLIENT_ES_URL}'|' webapps/ingrid-portal-apps/WEB-INF/templates/measures_search.vm
     fi
 
     # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
     if [ "$MAPCLIENT_ADMIN_PW" ]; then
+        echo "Update mapclient admin password"
         sed -i 's|password="admin" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
     fi
+
+    # Change server.xml
+    if [ "$HOSTNAME" ]; then
+        echo "Update connector address"
+        sed -i -e "s@address=\".*\"@address=\"${HOSTNAME}\"@" conf/server.xml
+    fi
+    if [ "$PORTAL_SERVER_CONNECTOR_ATTR" ]; then
+        echo "Update connector attributes"
+        sed -i -e "s@redirectPort=\"8443\" />@redirectPort=\"8443\" ${PORTAL_SERVER_CONNECTOR_ATTR} />@" conf/server.xml
+    fi
+    
 
     touch /initialized
 fi

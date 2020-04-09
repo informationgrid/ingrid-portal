@@ -623,7 +623,7 @@
             <div class="document-list">
             #foreach($link in $sorter.sort($linkList,"title"))
                 <div class="list-item">
-                #renderLinkLine($link)
+                    #renderLinkLine($link)
                 </div>
             #end
             </div>
@@ -637,16 +637,28 @@
 #end
 
 #macro (renderTextListSpace $title $textList $space)
+    #renderTextListSpaceList ($title $textList $space true)
+#end
+
+#macro (renderTextListSpaceList $title $textList $space $asList)
     #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
             <h4>$title</h4>
             ##renderGroupTitle($entry.title)
         #end
-        <div class="text-list">
-        #foreach($text in $sorter.sort($textList,"body"))
-            <p class="list-item">$text.replaceAll("<svg.*svg>", "")</p>
+        #if($asList)
+            <div class="text-list">
+            #foreach($text in $sorter.sort($textList,"body"))
+                <p class="list-item">$text.replaceAll("<svg.*svg>", "")</p>
+            #end
+            </div>
+        #else
+            <div class="text-list">
+            #foreach($text in $sorter.sort($textList,"body"))
+                <p class="list-item">$text.replaceAll("<svg.*svg>", "")</p>
+            #end
+            </div>
         #end
-        </div>
     #else
         #if($space != "")
             #renderTextLabelAbove($title $space)

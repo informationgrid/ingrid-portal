@@ -138,6 +138,7 @@ define([
     "dijit/form/ComboBox",
     "dijit/form/DateTextBox",
     "dijit/form/CheckBox",
+    "dijit/form/NumberTextBox",
     "ingrid/IgeEvents",
     "ingrid/hierarchy/objectLayout",
     "ingrid/hierarchy/addressLayout",
@@ -158,7 +159,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, NumberTextBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -2007,6 +2008,8 @@ define([
                                 }
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
+                            } else if (currentFieldWidget instanceof NumberTextBox) {
+                                currentFieldWidget.attr("value", currentFieldWidget.format(currentField.value));
                             } else {
                                 if (currentFieldWidget.valueAsTableData) {
                                     currentFieldWidget.attr("value", currentField.tableRows, true);
@@ -2029,6 +2032,7 @@ define([
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
 
+            topic.publish("beforeFinishApplyingObjectNodeData", nodeData);
         },
         
         prepareBackendDataForGrid: function(currentField) {
@@ -2598,6 +2602,8 @@ define([
                             var isChecked = currentField.checked;
                             value = isChecked ? "true" : "false";
 
+                        } else if (currentField instanceof NumberTextBox) {
+                            value = currentField.parse(currentField.get("displayedValue"));
                         } else {
                             value = currentField.get("displayedValue");
                         }
@@ -2666,6 +2672,8 @@ define([
                     console.debug("Error in _getObjectData - Object Class must be 0...7!");
                     break;
             }
+
+            topic.publish("beforeFinishGettingObjectNodeData", nodeData);
 
             console.debug("------ OBJECT DATA ------");
             console.debug(nodeData);

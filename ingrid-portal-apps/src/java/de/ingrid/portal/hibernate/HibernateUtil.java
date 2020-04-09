@@ -32,6 +32,9 @@ import org.hibernate.engine.SessionFactoryImplementor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 public class HibernateUtil {
 
     private static Logger log = LoggerFactory.getLogger(HibernateUtil.class);
@@ -41,6 +44,9 @@ public class HibernateUtil {
     static {
         try {
             // Create the SessionFactory
+            if (log.isDebugEnabled()) {
+                log.debug("Create hibernate session factory.");
+            }
             sessionFactory = new Configuration().configure().buildSessionFactory();
         } catch (Exception ex) {
             log.error("Initial SessionFactory creation failed.", ex);
@@ -51,11 +57,37 @@ public class HibernateUtil {
     public static final ThreadLocal session = new ThreadLocal();
 
     public static Session currentSession() {
-        Session s = (Session) session.get();
-        // Open a new Session, if this Thread has none yet
-        if (s == null) {
-            s = sessionFactory.openSession();
-            session.set(s);
+        Session s = null;
+        try {
+            s = (Session) session.get();
+            if (s == null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Session in thread is null, open new session in thread local.");
+                }
+                s = sessionFactory.openSession();
+                session.set(s);
+            } else {
+                Connection con = s.connection();
+                if (con == null) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Connection of session is null, close existing session, open new session in thread local.");
+                    }
+                    // close existing session
+                    s.close();
+                    s = sessionFactory.openSession();
+                    session.set(s);
+                } else if (con.isClosed()) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Connection is closed, close existing session, open new session in thread local.");
+                    }
+                    // close existing session
+                    s.close();
+                    s = sessionFactory.openSession();
+                    session.set(s);
+                }
+            }
+        } catch (Exception e) {
+            log.error("Error getting hibernate session.", e);
         }
         return s;
     }

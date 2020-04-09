@@ -505,7 +505,7 @@ require([
             // addresses
             renderAddressList(nodeData.generalAddressTable);
             // preview image
-            var previewImageUrl = IgeEvents._filterPreviewImage(nodeData.linksToUrlTable);
+            var previewImageUrl = IgeEvents._filterPreviewImages(nodeData.linksToUrlTable);
             renderTextWithTitle(previewImageUrl.url, "<fmt:message key='ui.obj.general.previewImage' />");
             renderTextWithTitle(previewImageUrl.description, "<fmt:message key='ui.obj.general.previewImageDescription' />");
 
