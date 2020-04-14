@@ -583,8 +583,10 @@ define([
                     return UtilSyslist.getSyslistEntry(514);
                 });
                 new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
-                new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
-                
+                layoutCreator.createFilteringSelect("ref1CellGeometry", null, lang.clone(storeProps), function() {
+                    return UtilSyslist.getSyslistEntry(509);
+                });
+
                 var geoRectified = new RadioButton({
                     checked: true,
                     value: "true",
