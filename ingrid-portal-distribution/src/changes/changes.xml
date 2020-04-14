@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1769">
             IGE: INSPIRE-relevant Bestätigungsdialog ist fehlerhaft
           </action>
+          <action type="fix" dev="wemove" issue="1826">
+            Portal: Fix log-in error messages .
+          </action>
           <action type="fix" dev="wemove" issue="1774">
             Portal: Fix BKG facet configuration.
           </action>
