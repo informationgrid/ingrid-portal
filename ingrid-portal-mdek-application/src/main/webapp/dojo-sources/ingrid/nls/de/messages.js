@@ -948,7 +948,7 @@ define({
     "ui.sysList.511": "Status",
     "ui.sysList.514": "ISO - Bezeichnung der Dimension",
     "ui.sysList.515": "Vektorformat - Geometrietyp",
-    "ui.sysList.516": "ISO - Zellengeometrie",
+    "ui.sysList.509": "ISO - Zellengeometrie",
     "ui.sysList.517": "ISO Liste Thesaurus Typ",
     "ui.sysList.518": "Periodizität",
     "ui.sysList.520": "Medienoption - Medium",

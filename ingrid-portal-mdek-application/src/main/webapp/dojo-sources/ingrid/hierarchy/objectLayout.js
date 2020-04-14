@@ -584,7 +584,7 @@ define([
                 });
                 new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
                 layoutCreator.createFilteringSelect("ref1CellGeometry", null, lang.clone(storeProps), function() {
-                    return UtilSyslist.getSyslistEntry(516);
+                    return UtilSyslist.getSyslistEntry(509);
                 });
 
                 var geoRectified = new RadioButton({
