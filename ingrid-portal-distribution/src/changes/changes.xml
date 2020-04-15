@@ -8,11 +8,17 @@
     <body>
 
         <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+          <action type="add" dev="wemove" issue="1772">
+            IGE: Indroduce Codeliste 5.24 MD_DimensionNameTypeCode.
+          </action>
           <action type="fix" dev="wemove" issue="1778">
             IGE: Typo "Platformen" -> Plattformen.
           </action>
           <action type="fix" dev="wemove" issue="1769">
             IGE: INSPIRE-relevant Bestätigungsdialog ist fehlerhaft
+          </action>
+          <action type="fix" dev="wemove" issue="1826">
+            Portal: Fix log-in error messages .
           </action>
           <action type="fix" dev="wemove" issue="1774">
             Portal: Fix BKG facet configuration.

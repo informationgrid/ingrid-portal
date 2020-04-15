@@ -86,6 +86,14 @@ define(["dojo/_base/declare",
             on(registry.byId("ref1CellGeometry"), "Change", fxnGridSpatialRepresentationValidation);
             on(registry.byId("ref1AxisDimName"), "Change", fxnGridSpatialRepresentationValidation);
             on(registry.byId("ref1AxisDimSize"), "Change", fxnGridSpatialRepresentationValidation);
+
+            on(registry.byId("ref1GridFormatRectCheckpoint"), "Change", function () {
+                if (registry.byId("ref1GridFormatRectCheckpoint").get("value") === "on") {
+                    domClass.add("uiElement5309", "required");
+                } else {
+                    domClass.remove("uiElement5309", "required");
+                }
+            })
         }
     })();
 });
