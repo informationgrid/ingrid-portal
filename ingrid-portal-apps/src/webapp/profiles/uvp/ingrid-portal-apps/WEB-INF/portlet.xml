@@ -550,7 +550,7 @@
             </preference>
             <preference>
                 <name>titleKey</name>
-                <value>Vorhaben im Überblick</value>
+                <value>hitteaser.portlet.title</value>
             </preference>
             <preference>
                 <name>disableTitle</name>
