@@ -55,6 +55,11 @@ $actionForm.getInputHTMLEscaped($field)#end
   #end
 #end
 
+#macro (addErrorFormMessagePlaceholderWithInputCheck $field $param)
+    #if($actionForm.getInput($field) && $actionForm.getInput($field) != "")
+        #addErrorFormMessage($field $param)
+    #end
+#end
 #macro (addErrorFormMessageBox $field)
 #if ($actionForm.hasErrorInField($field))#renderMessageError($MESSAGES.getString($actionForm.getErrorInField($field)))</small>#end
 #end

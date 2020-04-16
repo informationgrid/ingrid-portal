@@ -34,6 +34,7 @@
     </div>
     <div class="form-element">
         <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email') />
+        #addErrorFormMessagePlaceholderWithInputCheck('email')
     </div>
 #end
 #if ($formType == 'edit')
@@ -43,6 +44,7 @@
         </div>
         <div class="form-element">
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login') #addErrorFormMessagePlaceholder('login' $loginLength) />
+            #addErrorFormMessagePlaceholderWithInputCheck('login' $loginLength)
         </div>
     #end
     <div class="form-element">
@@ -50,6 +52,7 @@
     </div>
     <div class="form-element">
         <input type="password" id="password_old" name="password_old" value="#getFieldValue('password_old')" #addErrorFormClass('password_old') #addErrorFormMessagePlaceholder('password_old') />
+        #addErrorFormMessagePlaceholderWithInputCheck('password_old')
     </div>
     <hr />
     <div class="form-element">
@@ -63,12 +66,14 @@
               <span style="width: 0.0%;">Meterfallback</span>
           </div>
         </meter>
+        #addErrorFormMessagePlaceholderWithInputCheck('password_new')
     </div>
     <div class="form-element">
         <label for="password_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')*:</label>
     </div>
     <div class="form-element">
         <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm') #addErrorFormMessagePlaceholder('password_new_confirm') />
+        #addErrorFormMessagePlaceholderWithInputCheck('password_new_confirm')
     </div>
 #elseif($formType == 'create')
     #if(!$isPasswordUpdate)
@@ -77,6 +82,7 @@
         </div>
         <div class="form-element">
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login') #addErrorFormMessagePlaceholder('login' $loginLength) />
+            #addErrorFormMessagePlaceholderWithInputCheck('login' $loginLength)
         </div>
     #else
         <div class="form-element">
@@ -84,6 +90,7 @@
         </div>
         <div class="form-element">
             <input type="text" id="login" name="login" value="#getFieldValue('login')" #addErrorFormClass('login') #addErrorFormMessagePlaceholder('login' $loginLength) />
+            #addErrorFormMessagePlaceholderWithInputCheck('login' $loginLength)
         </div>
     #end
     <hr />
@@ -98,12 +105,14 @@
               <span style="width: 0.0%;">Meterfallback</span>
           </div>
         </meter>
+        #addErrorFormMessagePlaceholderWithInputCheck('password')
     </div>
     <div class="form-element">
         <label for="password_confirm">$MESSAGES.getString('account.create.label.password_confirm')*:</label>
     </div>
     <div class="form-element">
         <input type="password" id="password_confirm" name="password_confirm" value="#getFieldValue('password_confirm')" #addErrorFormClass('password_confirm') #addErrorFormMessagePlaceholder('password_confirm') />
+        #addErrorFormMessagePlaceholderWithInputCheck('password_confirm')
     </div>
 #end
 #if(!$isPasswordUpdate)

@@ -39,6 +39,7 @@
             </div>
             <div class="form-element">
                 <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email') />
+                #addErrorFormMessagePlaceholderWithInputCheck('email')
             </div>
             <hr />
             <div class="form-element">
@@ -46,6 +47,7 @@
             </div>
             <div class="form-element">
                 <input type="text" id="id" name="id" value="#getFieldValue('id')" #addErrorFormClass('id') #addErrorFormMessagePlaceholder('id' $loginLength) />
+                #addErrorFormMessagePlaceholderWithInputCheck('id' $loginLength)
             </div>
             <hr />
             <div class="form-element">
@@ -59,12 +61,14 @@
                       <span style="width: 0.0%;">Meterfallback</span>
                   </div>
                 </meter>
+                #addErrorFormMessagePlaceholderWithInputCheck('password_new')
             </div>
             <div class="form-element">
                 <label for="password_new_confirm">$MESSAGES.getString('account.create.label.password_confirm')*</label>
             </div>
             <div class="form-element">
                 <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm') #addErrorFormMessagePlaceholder('password_new_confirm') />
+                #addErrorFormMessagePlaceholderWithInputCheck('password_new_confirm')
             </div>
             <div class="xsmall-24 columns">
                 <div class="form-element boxed">
