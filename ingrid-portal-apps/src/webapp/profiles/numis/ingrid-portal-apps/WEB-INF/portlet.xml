@@ -600,6 +600,7 @@
         </supports>
         <resource-bundle>de.ingrid.portal.resources.SearchResultResources</resource-bundle>
         <portlet-preferences>
+            <!-- 
             <preference>
                 <name>portlet-type</name>
                 <value>ingrid-home</value>
@@ -608,6 +609,7 @@
                 <name>default-vertical-position</name>
                 <value>1</value>
             </preference>
+             -->
             <preference>
                 <name>titleKey</name>
                 <value>hitteaser.portlet.title</value>
@@ -645,7 +647,7 @@
             </preference>
             <preference>
                 <name>default-vertical-position</name>
-                <value>4</value>
+                <value>1</value>
             </preference>
             <preference>
                 <name>titleKey</name>
