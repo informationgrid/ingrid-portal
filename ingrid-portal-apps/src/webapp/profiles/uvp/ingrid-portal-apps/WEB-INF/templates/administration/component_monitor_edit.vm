@@ -38,8 +38,7 @@
                         <label for="title">$MESSAGES.getString('component.forms.text.component.name')*</label>
                     </div>
                     <div class="form-element">
-                        #addErrorFormMessage('title')
-                        <input id="title" name="title" value="#getFieldValue('title')" type="text" #addErrorFormClass('title')>
+                        <input id="title" name="title" value="#getFieldValue('title')" type="text" #addErrorFormClass('title') #addErrorFormMessagePlaceholder('title') />
                     </div>
                     
                     ################ content according to component type ###################
@@ -65,15 +64,13 @@
                           <label for="interval">$MESSAGES.getString('component.forms.text.interval')*</label>
                     </div>
                     <div class="form-element">
-                        #addErrorFormMessage('interval')
-                        <input id="interval" name="interval" value="#getFieldValue('interval')" type="text" #addErrorFormClass('interval')>
+                        <input id="interval" name="interval" value="#getFieldValue('interval')" type="text" #addErrorFormClass('interval') #addErrorFormMessagePlaceholder('interval') />
                     </div>
                     <div class="form-element">
                         <label for="timeout">$MESSAGES.getString('component.forms.text.timeout')*</label>
                     </div>
                     <div class="form-element">
-                         #addErrorFormMessage('timeout')
-                         <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text" #addErrorFormClass('timeout')>
+                         <input id="timeout" name="timeout" value="#getFieldValue('timeout')" type="text" #addErrorFormClass('timeout') #addErrorFormMessagePlaceholder('timeout') />
                    </div>
                     <div class="form-element boxed">
                         <div class="input-check">

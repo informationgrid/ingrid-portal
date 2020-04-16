@@ -53,22 +53,19 @@
                     <label for="firstname">$MESSAGES.getString('account.edit.label.firstname')*</label>
                 </div>
                 <div class="form-element">
-                    #addErrorFormMessage('firstname')
-                    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname')/>
+                    <input type="text" id="firstname" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') #addErrorFormMessagePlaceholder('firstname') />
                 </div>
                 <div class="form-element">
                     <label for="lastname">$MESSAGES.getString('account.edit.label.lastname')*</label>
                 </div>
                 <div class="form-element">
-                    #addErrorFormMessage('lastname')
-                    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname')/>
+                    <input type="text" id="lastname" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname') #addErrorFormMessagePlaceholder('lastname') />
                 </div>
                 <div class="form-element">
                      <label for="email">$MESSAGES.getString('account.edit.label.email')*</label>
                 </div>
                 <div class="form-element">
-                    #addErrorFormMessage('email')
-                    <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email')/>
+                    <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email') />
                 </div>
                    <hr/>
                 <div class="form-element">
@@ -95,8 +92,7 @@
                     <label for="password_new">$MESSAGES.getString('account.edit.label.password_new')</label>
                 </div>
                 <div class="form-element">
-                    #addErrorFormMessage('password_new')
-                    <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
+                    <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') #addErrorFormMessagePlaceholder('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
                     <b><small class="media__obj--right" id="password-strength-text"></small></b>
                     <meter max="4" id="password-strength-meter">
                       <div class="meter-gauge">
@@ -108,8 +104,7 @@
                     <label for="password_new_confirm">$MESSAGES.getString('account.edit.label.password_new_confirm')</label>
                 </div>
                 <div class="form-element">
-                    #addErrorFormMessage('password_new_confirm')
-                    <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm')/>
+                    <input type="password" id="password_new_confirm" name="password_new_confirm" value="#getFieldValue('password_new_confirm')" #addErrorFormClass('password_new_confirm') #addErrorFormMessagePlaceholder('password_new_confirm') />
                 </div>
                 #if($actionForm.getInput('id') != "admin")
                     <div class="xsmall-24 columns">
