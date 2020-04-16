@@ -8,8 +8,8 @@
 <div class="columns">
     <div class="teaser-data-projects" id="rss_news_teaser">
         <div class="row">
-            <div class="xsmall-24 medium-15 xlarge-17 columns">
-                <h2 class="projects-header">$MESSAGES.getString('news.teaser.title')</h2>
+            <div class="columns text-center">
+                <h2>$MESSAGES.getString('news.teaser.title')</h2>
             </div>
         </div>
         <div class="row">
