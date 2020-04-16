@@ -9,19 +9,19 @@
                 <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
             </div>
             <div class="form-element">
-                <textarea class="custom-scrollbar #addErrorFormClassText('message')" name="message" id="bemerkungen"  rows="10" placeholder="$MESSAGES.getString('contact.error.noMessage')">#getFieldValue('message')</textarea>
+                <textarea class="custom-scrollbar #addErrorFormClassText('message')" name="message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('message')">#getFieldValue('message')</textarea>
             </div>
             <div class="form-element">
                 <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
             </div>
             <div class="form-element">
-                <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') placeholder="$MESSAGES.getString('contact.error.noFirstName')"/>
+                <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') #addErrorFormMessagePlaceholder('firstname')" />
             </div>
         <div class="form-element">
             <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname') placeholder="$MESSAGES.getString('contact.error.noLastName')"/>
+            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname') #addErrorFormMessagePlaceholder('lastname')" />
         </div>
         <div class="form-element">
             <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
@@ -39,7 +39,8 @@
             <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') placeholder="$MESSAGES.getString('contact.error.noEmail')"/>
+            <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email')" />
+            #addErrorFormMessagePlaceholderWithInputCheck('email')
         </div>
         #if ($uploadEnable)
             <div class="form-element">
@@ -64,7 +65,8 @@
             #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "outline small-button")
             $action.setParameter("doRefresh",  "Refresh")
             <div class="form-element">
-                <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha') placeholder="$MESSAGES.getString('contact.error.noJCapture')"/>
+                <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha') #addErrorFormMessagePlaceholder('jcaptcha')" />
+                #addErrorFormMessagePlaceholderWithInputCheck('jcaptcha')
             </div>
         #end
         <hr>
