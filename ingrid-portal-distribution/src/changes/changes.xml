@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="1774">
             Portal: Fix BKG facet configuration.
           </action>
+          <action type="fix" dev="wemove" issue="1828">
+            Portal: Fix configuration of start page.
+          </action>
           <action type="fix" dev="wemove">
             Mapclient: Fix CORS on embed mode.
           </action>
