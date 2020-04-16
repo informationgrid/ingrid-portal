@@ -293,7 +293,7 @@
                         </div>
                         <div id="generalContent" class="content">
                             <div class="inputContainer">
-	                            <span id="uiElement1001" class="outer optional threeQuarterWidth">
+	                            <span id="uiElement1001" class="outer optional halfWidth">
 	                                <div><span class="label">
 	                                    <label for="parentIdentifier" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1001)">
 	                                        <fmt:message key="ui.obj.general.parentIdentifier" />
@@ -302,7 +302,7 @@
 	                                    <div id="parentIdentifier"></div>
 	                                </span></div>
 	                            </span>
-                                <span id="uiElement1002" class="outer optional quarterWidth">
+                                <span id="uiElement1002" class="outer optional halfWidth">
                                     <div><span class="label">
                                         <label for="metadataDate" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 1002)">
                                             <fmt:message key="ui.obj.general.metadataDate" />
