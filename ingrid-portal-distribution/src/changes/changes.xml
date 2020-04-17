@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.4.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.0">
+        <release version="5.4.0" date="2020-04-17" description="Release 5.4.0">
           <action type="add" dev="wemove" issue="1084">
             IGE: Handle metadata date according to changes in ISO 19139 XML data.
           </action>
