@@ -1,5 +1,5 @@
 #if($switchedToProfile)
-    #renderMessageSuccess("$MESSAGES.getString('admin.portal.profile.switched_to'): $switchedToProfile")
+    #renderMessageSuccess($MESSAGES.getString("admin.portal.profile.switched_to.$switchedToProfile"))
     #renderMessageSuccess($MESSAGES.getString('admin.portal.profile.restart'))
 #else
     #renderMessageInfo($MESSAGES.getString('admin.portal.profile.description'))

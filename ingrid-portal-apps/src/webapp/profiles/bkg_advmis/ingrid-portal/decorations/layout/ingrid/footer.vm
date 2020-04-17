@@ -1,0 +1,105 @@
+        </div>
+#if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
+        <footer id="footer">
+            <div id="navFunctionsWrapper" class="row ob-box-wide ob-box-padded ob-box-center">
+              <div class="medium-7 columns">
+                <h2>Diese Seite</h2>
+                <ul id="navFunctions">
+                  <li id="navFunctionsPrint">
+                    <a onclick="window.print()" title="Seite drucken (öffnet Dialog)">drucken</a>
+                  </li>
+                  #defineUrlParams()
+                  #set($shareUrl = "$jetspeed.getAbsoluteUrl($jetspeed.page.getUrl())")
+                  #set($shareUrl = "${shareUrl}${urlParams}")
+                  #set($shareUrlEncode = $esc.url("${shareUrl}"))
+                  <li id="navFunctionsRecommend">
+                    <a href="mailto:?body=$shareUrlEncode" class="" aria-haspopup="true" aria-owns="share" title="Mehr anzeigen">empfehlen</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div id="social-media-footer">
+              <div class="socialmedia ob-box-wide ob-box-padded ob-box-center">
+                  <h2 class="aural">Service</h2>
+                  <ul class="columns hide-for-small-only">
+                    <li class="navTwitter"><a class="external" href="https://twitter.com/BKG_Bund" title="Externer Link&nbsp;zum Twitter-Account des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Twit­ter</a></li>
+                    <li class="navXing"><a class="external" href="https://www.xing.com/companies/bundesamtfürkartographieundgeodäsie" title="Externer Link&nbsp;zum XING-Profil des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Xing</a></li>
+                    <li class="navYouTube"><a class="external" href="https://www.youtube.com/user/pressebkg" title="Externer Link&nbsp;zum YouTube-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">You­tu­be</a></li>
+                    <li class="navRSSFeed"><a href="http://www.bkg.bund.de/DE/Aktuelles/RSS-Feeds/rss-feeds.html">RSS</a></li>
+                  </ul>
+              </div>
+            </div>
+            <div class="copyright row ob-box-wide ob-box-padded ob-box-center">
+              <div class="small-1 medium-2 columns bkg-logo ">
+                <a target="_new" href="https://www.bkg.bund.de/DE/Home/home.html" alt="BKG Webseite">
+                    <img src="/decorations/layout/ingrid/images/template/bkg_logo.png" alt="Logo">
+                </a>
+              </div>
+              <div class="legal-links small-12 medium-10 columns">
+                <div class="row">
+                  <div class="columns hide-for-small-only">
+                    #set($footerMenu = $site.getMenu("footer-menu"))
+                    #if(!$footerMenu.empty)
+                      #includeFooterNavigation($footerMenu)
+                    #end
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="columns">
+                    <p>
+                      © Bundesamt für Kartographie und Geodäsie - 2019
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </footer>
+#end
+        <!-- Popup -->
+        <div class="popup">
+            <header class="popup__header">
+                <div class="popup__close link--alt ob-flt-r js-popup-close">
+                    <svg class="icon"><use xlink:href="#cross" /></svg>
+                    <span class="mq-hide-m"></span>
+                </div>
+                <h4 class="popup__title bx-top-0 bx-bot-0">$MESSAGES.getString("ingrid.page.help")</h4>
+            </header>
+            <section class="popup__content ob-container">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p><a href="#">Read more</a></p>
+            </section>
+        </div>
+        
+        <!-- Global scripts -->
+        <script src="#GetPageResource("scripts/all.js")"></script>
+        
+        <!-- Popup -->
+        <script src="#GetPageResource("scripts/popup.js")"></script>
+        <script src="#GetPageResource("scripts/expander.js")"></script>
+        
+        <!-- Accordion -->
+        <script src="#GetPageResource("scripts/accordion.js")"></script>
+        <script>
+        $('.js-accordion').accordion();
+        $('.js-accordion-multi').accordion({
+            multi: true
+        });
+        </script>
+        <!-- Tabs -->
+        <script src="#GetPageResource("scripts/tabs.js")"></script>
+        <script>
+            $('.js-tabs').tabs();
+        </script>
+        <!-- Selection -->
+        <script src="#GetPageResource("scripts/selection.js")"></script>
+        <script>
+            $('.js-selection').selection();
+        </script>
+        <!-- Table Sort -->
+        <script src="#GetPageResource("scripts/table.sortable.js")"></script>
+        <script>
+            $('.js-table-sortable').sortable();
+        </script>
+    </body>
+</html>

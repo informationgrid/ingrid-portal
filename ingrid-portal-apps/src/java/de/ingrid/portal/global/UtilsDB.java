@@ -105,8 +105,10 @@ public class UtilsDB {
      * null we only reload if flag alwaysReloadDBData in our class is set to
      * true. If flag is set false we just return cacheList.
      * 
-     * @param Criteria
+     * @param c
+     * @param session
      * @param cacheList
+     * @param closeSession
      * @return
      */
     public static List getValuesFromDB(Criteria c, Session session, List cacheList, boolean closeSession) {
@@ -180,7 +182,7 @@ public class UtilsDB {
      * IngridFormToQuery objects, based on the QueryValue.
      * 
      * @param formToQueryList
-     * @param formValue
+     * @param queryValue
      * @return
      */
     public static String getFormValueFromQueryValue(List formToQueryList, String queryValue) {
@@ -624,9 +626,10 @@ public class UtilsDB {
      */
     public static void executeRawUpdateSQL(String sqlStr) {
         Transaction tx = null;
+        Session session = null;
         try {
             // delete it
-            Session session = HibernateUtil.currentSession();
+            session = HibernateUtil.currentSession();
             tx = session.beginTransaction();
             try (Statement st = session.connection().createStatement()) {
                 if (log.isDebugEnabled()) {
@@ -636,13 +639,22 @@ public class UtilsDB {
             }
             tx.commit();
         } catch (Exception ex) {
-            if (tx != null) {
-                tx.rollback();
-            }
             if (log.isErrorEnabled()) {
                 log.error("Problems executing RAW-SQL:" + sqlStr, ex);
             }
+            if (tx != null) {
+                try {
+                    tx.rollback();
+                } catch (Exception ex1) {
+                    if (log.isErrorEnabled()) {
+                        log.error("Problems rolling back", ex1);
+                    }
+                }
+            }
         } finally {
+            if (session != null) {
+                session.close();
+            }
             HibernateUtil.closeSession();
         }
     }

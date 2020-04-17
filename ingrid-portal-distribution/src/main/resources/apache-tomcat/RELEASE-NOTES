@@ -16,7 +16,7 @@
 ================================================================================
 
 
-                     Apache Tomcat Version 7.0.94
+                     Apache Tomcat Version 7.0.100
                             Release Notes
 
 
@@ -41,7 +41,7 @@ CONTENTS:
 ===================
 Dependency Changes:
 ===================
-Tomcat 7.0 is designed to run on Java SE 6 and later.
+Tomcat 7.0 is designed to run on Java 6 and later.
 
 In addition, Tomcat 7.0 uses the Eclipse JDT Java compiler for
 compiling JSP pages.  This means you no longer need to have the complete
@@ -169,7 +169,7 @@ have a JDK that is up to date, or disable sendfile behavior in the Connector.<br
 Enabling SSI and CGI Support:
 =============================
 Because of the security risks associated with CGI and SSI available
-to web applications, these features are disabled by default.  
+to web applications, these features are disabled by default.
 
 To enable and configure CGI support, please see the cgi-howto.html page.
 

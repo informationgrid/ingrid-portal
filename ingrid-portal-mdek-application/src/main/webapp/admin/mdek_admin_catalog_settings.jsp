@@ -42,6 +42,7 @@
             "dojo/dom",
             "dojo/dom-class",
             "dojo/dom-construct",
+            "dojox/html/entities",
             "ingrid/layoutCreator",
             "ingrid/dialog",
             "ingrid/init",
@@ -49,7 +50,7 @@
             "ingrid/utils/List",
             "ingrid/utils/Catalog",
             "ingrid/hierarchy/behaviours.user"
-        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, query, dom, domClass, domConstruct, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog, behaviour) {
+        ], function(array, lang, Deferred, registry, Select, CheckBox, NumberTextBox, on, query, dom, domClass, domConstruct, entities, layoutCreator, dialog, init, UtilSyslist, UtilList, UtilCatalog, behaviour) {
             
             console.log("catalog settings");
         
@@ -375,7 +376,7 @@
             function renderRow(data, id, padding) {
                 var pad = padding ? " intend" : "";
                 var row = domConstruct.toDom("<span class='input" + pad + "'></span>");
-                var label = domConstruct.toDom("<label class='inActive' title='" + data.description + "'></label>");
+                var label = domConstruct.toDom("<label class='inActive' title=\"" + entities.encode(data.description) + "\"></label>");
                 // only render checkbox if it's a real behaviour and not a category
                 if (data.run) {
                     var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});

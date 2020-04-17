@@ -259,7 +259,11 @@
                     // Compare with previous row if we should be able to modify it
                     // dialogConformity.caller.selectedRow
 
-                    // Validation has been peformed before this method is called, so don't check nulls
+                    // Only test datasets of type 'Geodatensatz'
+                    var objClass = registry.byId("objectClass").get("value");
+                    if (objClass !== "Class1") return false;
+
+                    // Validation has been performed before this method is called, so don't check nulls
                     var isInspireRelevant = registry.byId("isInspireRelevant").get("value");
                     if (isInspireRelevant !== "on") return false;
 

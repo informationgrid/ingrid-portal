@@ -138,6 +138,7 @@ define([
     "dijit/form/ComboBox",
     "dijit/form/DateTextBox",
     "dijit/form/CheckBox",
+    "dijit/form/NumberTextBox",
     "ingrid/IgeEvents",
     "ingrid/hierarchy/objectLayout",
     "ingrid/hierarchy/addressLayout",
@@ -158,7 +159,7 @@ define([
     "ingrid/grid/CustomGrid",
     "ingrid/hierarchy/rules",
     "ingrid/hierarchy/requiredChecks"
-], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, igeEvents,
+], function(declare, lang, array, date, Deferred, DeferredList, ready, query, topic, string, dom, domClass, style, registry, FilteringSelect, ComboBox, DateTextBox, CheckBox, NumberTextBox, igeEvents,
     ingridObjectLayout, ingridAddressLayout, message, dialog, UtilUI, UtilAddress, UtilList, UtilTree, UtilStore, UtilString, UtilSyslist, UtilGrid, UtilGeneral, UtilDOM, UtilSecurity, dirty,
     CustomGrid, rules, checks) {
     return declare(null, {
@@ -1818,6 +1819,7 @@ define([
             // --- General ---
             registry.byId("generalShortDesc").attr("value", nodeData.generalShortDescription, true);
             registry.byId("parentIdentifier").attr("value", nodeData.parentIdentifier, true);
+            registry.byId("metadataDate").attr("value", nodeData.metadataDate, true);
             registry.byId("generalDesc").attr("value", nodeData.generalDescription, true);
             var addressTable = nodeData.generalAddressTable;
             //UtilList.addTableIndices(addressTable);
@@ -2006,6 +2008,8 @@ define([
                                 }
                             } else if (currentFieldWidget instanceof CheckBox) {
                                 currentFieldWidget.attr("value", currentField.value == "true", true);
+                            } else if (currentFieldWidget instanceof NumberTextBox) {
+                                currentFieldWidget.attr("value", currentFieldWidget.format(currentField.value));
                             } else {
                                 if (currentFieldWidget.valueAsTableData) {
                                     currentFieldWidget.attr("value", currentField.tableRows, true);
@@ -2028,6 +2032,7 @@ define([
             this._setObjectDataClass5(nodeData);
             this._setObjectDataClass6(nodeData);
 
+            topic.publish("beforeFinishApplyingObjectNodeData", nodeData);
         },
         
         prepareBackendDataForGrid: function(currentField) {
@@ -2410,6 +2415,7 @@ define([
             // --- General ---
             nodeData.generalShortDescription = registry.byId("generalShortDesc").get("value");
             nodeData.parentIdentifier = registry.byId("parentIdentifier").get("value");
+            nodeData.metadataDate = registry.byId("metadataDate").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
             nodeData.generalAddressTable = this._getTableData("generalAddress");
@@ -2541,9 +2547,11 @@ define([
             });
 
             // add url to preview image to url table
-            var previewUrl = registry.byId("generalPreviewImage").get("value");
-            var previewUrlDescription = registry.byId("previewImageDescription").get("value");
-            if (previewUrl) urlLinks.push(UtilList.urlToListEntry(previewUrl, previewUrlDescription));
+            registry.byId("generalPreviewImageTable").data.forEach(function(row) {
+                var fileName = row.fileName;
+                var fileDescription = row.fileDescription;
+                urlLinks.push(UtilList.urlToListEntry(fileName, fileDescription));
+            });
 
             nodeData.linksToObjectTable = objLinks;
             nodeData.linksToUrlTable = urlLinks;
@@ -2594,6 +2602,8 @@ define([
                             var isChecked = currentField.checked;
                             value = isChecked ? "true" : "false";
 
+                        } else if (currentField instanceof NumberTextBox) {
+                            value = currentField.parse(currentField.get("displayedValue"));
                         } else {
                             value = currentField.get("displayedValue");
                         }
@@ -2662,6 +2672,8 @@ define([
                     console.debug("Error in _getObjectData - Object Class must be 0...7!");
                     break;
             }
+
+            topic.publish("beforeFinishGettingObjectNodeData", nodeData);
 
             console.debug("------ OBJECT DATA ------");
             console.debug(nodeData);

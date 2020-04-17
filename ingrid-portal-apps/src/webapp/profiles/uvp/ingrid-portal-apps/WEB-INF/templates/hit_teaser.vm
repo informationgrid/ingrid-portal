@@ -2,7 +2,7 @@
     <div class="teaser-data-projects">
         <div class="row">
             <div class="xsmall-24 medium-15 xlarge-17 columns">
-                <h2 class="projects-header">Vorhaben im &Uuml;berblick</h2>
+                <h2 class="projects-header">$MESSAGES.getString("hitteaser.portlet.title")</h2>
             </div>
             <!--
             <div class="xsmall-24 medium-9 xlarge-7 columns">

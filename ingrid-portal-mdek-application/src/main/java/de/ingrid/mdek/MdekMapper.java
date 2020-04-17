@@ -81,6 +81,7 @@ public class MdekMapper implements DataMapperInterface {
         // General
         mdekObj.setToBePublishedOn((Date) obj.get(MdekKeys.TO_BE_PUBLISHED_ON));
         mdekObj.setParentIdentifier((String) obj.get(MdekKeys.PARENT_IDENTIFIER));
+        mdekObj.setMetadataDate(convertTimestampToDate((String) obj.get(MdekKeys.METADATA_DATE)));
         mdekObj.setGeneralShortDescription((String) obj.get(MdekKeys.DATASET_ALTERNATE_NAME));
         mdekObj.setGeneralDescription((String) obj.get(MdekKeys.ABSTRACT));
         mdekObj.setUuid((String) obj.get(MdekKeys.UUID));
@@ -760,6 +761,7 @@ public class MdekMapper implements DataMapperInterface {
         udkObj.put(MdekKeys.ABSTRACT, data.getGeneralDescription());
         udkObj.put(MdekKeys.TO_BE_PUBLISHED_ON, data.getToBePublishedOn());
         udkObj.put(MdekKeys.PARENT_IDENTIFIER, data.getParentIdentifier());
+        udkObj.put(MdekKeys.METADATA_DATE, convertDateToTimestamp(data.getMetadataDate()));
         udkObj.put(MdekKeys.DATASET_ALTERNATE_NAME, data.getGeneralShortDescription());
         udkObj.put(MdekKeys.UUID, data.getUuid());
         udkObj.put(MdekKeys.PARENT_UUID, data.getParentUuid());

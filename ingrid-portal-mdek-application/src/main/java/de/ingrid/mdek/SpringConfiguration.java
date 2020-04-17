@@ -130,6 +130,7 @@ public class SpringConfiguration {
 			final FileSystemStorage instance = new FileSystemStorage();
 			instance.setDocsDir(config.uploadDocsDir);
 			instance.setPartsDir(config.uploadPartsDir);
+			instance.setTempDir(config.uploadTempDir);
 
 			// validators
 			final List<Validator> validators = new ArrayList<Validator>();

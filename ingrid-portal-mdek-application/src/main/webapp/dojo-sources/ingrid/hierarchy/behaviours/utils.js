@@ -25,17 +25,20 @@ define([
     "dojo/_base/declare",
     "dojo/cookie",
     "dojo/Deferred",
+    "dojo/on",
     "ingrid/dialog",
     "ingrid/message",
     "ingrid/utils/Grid",
     "ingrid/utils/Syslist"
-], function(array, declare, cookie, Deferred, dialog, message, UtilGrid, UtilSyslist) {
+], function(array, declare, cookie, Deferred, on, dialog, message, UtilGrid, UtilSyslist) {
 
     return declare(null, {
 
         COOKIE_HIDE_INSPIRE_CONFORMITY_HINT: "ingrid.inspire.conformity.hint",
 
         inspireConformityHint: message.get("hint.inspireConformity"),
+
+        inspireConformityHintDeleted: message.get("hint.inspireConformity.deleted"),
 
         addConformity: function(isFromInspireList, name, level) {
             console.log("Add conformity");
@@ -77,7 +80,7 @@ define([
         showConfirmDialog: function(dialogMessage, cookieId) {
             var def = new Deferred();
             if (cookie(cookieId) !== "true") {
-                dialog.show(message.get("dialog.general.info"), dialogMessage, dialog.INFO,
+                var h = dialog.show(message.get("dialog.general.info"), dialogMessage, dialog.INFO,
                     [
                         {
                             caption: message.get("general.ok.hide.next.time"), type: "checkbox",
@@ -98,6 +101,9 @@ define([
                             }
                         }
                     ]);
+                on(h, "Hide", function() {
+                     def.reject();
+                });
             } else {
                 def.resolve();
             }

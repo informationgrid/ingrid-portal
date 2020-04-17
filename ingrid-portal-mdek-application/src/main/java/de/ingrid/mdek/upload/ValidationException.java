@@ -30,8 +30,9 @@ import javax.ws.rs.WebApplicationException;
 public class ValidationException extends WebApplicationException implements UploadException {
 
     private static final long serialVersionUID = 1L;
+    private static final String FILE_KEY = "file";
 
-    private final Map<String, Object> data = new HashMap<>();
+    protected final Map<String, Object> data = new HashMap<>();
 
     /**
      * Constructor
@@ -41,7 +42,7 @@ public class ValidationException extends WebApplicationException implements Uplo
      */
     public ValidationException(final String message, final String file, final int statusCode) {
         super(message, statusCode);
-        this.data.put("file", file);
+        this.data.put(FILE_KEY, file);
     }
 
     @Override

@@ -14,14 +14,13 @@ rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
-if "%OS%" == "Windows_NT" setlocal
 rem ---------------------------------------------------------------------------
 rem Stop script for the CATALINA Server
 rem ---------------------------------------------------------------------------
 
-rem InGrid specific settings
-SET CATALINA_HOME=.
 setlocal
+rem INGRID: specific settings
+SET CATALINA_HOME=.
 
 rem Guess CATALINA_HOME if not defined
 set "CURRENT_DIR=%cd%"

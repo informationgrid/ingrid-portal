@@ -245,6 +245,11 @@ define([
             createGeneralInfo: function() {
                 var self = this;
 
+                new DateTextBox({
+                    style: "width: 100%;",
+                    disabled: true
+                }, "metadataDate");
+
                 new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
@@ -282,9 +287,9 @@ define([
                     editable: false /*!!!formatter: validator.emptyOrNullValidation*/
                 }];
 
-                console.debug("generalAddress");
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
+                /*
                 var previewImage = new ValidationTextBox({
                     maxLength: 1024,
                     style: "width:100%;"
@@ -311,6 +316,25 @@ define([
                 on(previewImage.domNode, "mouseout", function() {
                     Tooltip.hide(dom.byId("generalPreviewImage"));
                 });
+                */
+
+                var previewImageStructure = [
+                    {
+                        field: 'fileName',
+                        name: message.get("ui.obj.previewImage.table.fileName") + "*",
+                        width: '350px',
+                        type: gridEditors.TextCellEditor,
+                        editable: true
+                    },
+                    {
+                        field: 'fileDescription',
+                        name: message.get("ui.obj.previewImage.table.fileDescription"),
+                        width: 'auto',
+                        type: gridEditors.TextCellEditor,
+                        editable: true
+                    }
+                ];
+                layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null);
 
                 var thesaurusInspireStructure = [{
                     field: 'title',
@@ -345,10 +369,28 @@ define([
                             return false;
                         });
                         return found;
+                    },
+                    onChange: function(val){
+                        var label = this.get("displayedValue")
+                        if (label.indexOf("INVALID") === 0) {
+                            console.log("Invalid choice:", val);
+                            UtilUI.showToolTip("priorityDataset", message.get('hint.invalidChoice'));
+                            this.reset();
+                        }
                     }
                 }];
                 layoutCreator.createDataGrid("priorityDataset", null, priorityDatasetStructure, null);
                 this.preparePriorityDatasetList().then(function(data) {
+                    data.sort(function(a, b) {
+                        // put INVALID items to the end of the list
+                        if (a[0].indexOf("INVALID -") === 0) {
+                            return 1;
+                        }
+                        if (b[0].indexOf("INVALID -") === 0) {
+                            return -1;
+                        }
+                        return a[0].localeCompare(b[0]);
+                    });
                     self.initializedPriorityDatasetList = data;
                 });
 
@@ -404,10 +446,21 @@ define([
                     for (var i=0; i < results[0].length; i++) {
                         var german = results[0][i];
                         var english = results[1][i];
-                        list.push([german[0] + " {en: " + english[0] + "}", german[1]])
+                        var isValid = self.isValidStatus(results[0][i]);
+                        var label = german[0] + " {en: " + english[0] + "}";
+
+                        if (!isValid) {
+                            label = "INVALID - " + label;
+                        }
+                        list.push([label, german[1]])
                     }
                     return list;
                 });
+            },
+
+            isValidStatus: function(item) {
+                var data = JSON.parse(item[3]);
+                return data.status === "VALID";
             },
 
             createFachBezugClass1: function() {
@@ -507,6 +560,14 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1VFormatDetails", null, ref1VFormatDetailsStructure, null);
 
+                new SimpleTextarea({
+                    style: "width: 100%;"
+                }, "boundingPolygon");
+
+                var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
+                additionalFields.push(registry.byId("boundingPolygon"));
+                array.forEach(["boundingPolygon"], lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
+
                 var ref1SpatialSystemStructure = [{
                     field: 'title',
                     name: 'System',
@@ -522,10 +583,14 @@ define([
                 /* Add spatialRepresentationInfo (REDMINE-381) */
                 new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
-                new ValidationTextBox({style: "width:100%;"}, "ref1AxisDimName");
+                layoutCreator.createFilteringSelect("ref1AxisDimName", null, lang.clone(storeProps), function() {
+                    return UtilSyslist.getSyslistEntry(514);
+                });
                 new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
-                new ValidationTextBox({style: "width:100%;"}, "ref1CellGeometry");
-                
+                layoutCreator.createFilteringSelect("ref1CellGeometry", null, lang.clone(storeProps), function() {
+                    return UtilSyslist.getSyslistEntry(509);
+                });
+
                 var geoRectified = new RadioButton({
                     checked: true,
                     value: "true",

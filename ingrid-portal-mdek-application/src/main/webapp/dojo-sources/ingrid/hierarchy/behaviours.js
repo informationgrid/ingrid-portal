@@ -56,6 +56,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/advCompatible",
         "ingrid/hierarchy/behaviours/administrativeArea",
         "ingrid/hierarchy/behaviours/advProductGroup",
+        "ingrid/hierarchy/behaviours/optionalGetCapability",
         "ingrid/hierarchy/behaviours/inspireRelevant",
         "ingrid/hierarchy/behaviours/thesaurusInspire",
         "ingrid/hierarchy/behaviours/thesaurusTopics",
@@ -86,7 +87,7 @@ define(["dojo/_base/declare",
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
-            advCompatible, adminitrativeArea, advProductGroup, inspireRelevant, thesaurusInspire, thesaurusTopics,
+            advCompatible, adminitrativeArea, advProductGroup, optionalGetCapability, inspireRelevant, thesaurusInspire, thesaurusTopics,
             thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, dataQualitySection,
             ref3BaseDataLink, ref3Operations, ref3CouplingType, ref5KeysText,
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
@@ -101,6 +102,8 @@ define(["dojo/_base/declare",
         advCompatible : advCompatible,
 
         advProductGroup : advProductGroup,
+
+        optionalGetCapability: optionalGetCapability,
 
         inspireRelevant : inspireRelevant,
 
@@ -201,30 +204,26 @@ define(["dojo/_base/declare",
                 });
             }
         },
-        
-        showFileDescription: {
-            title: "Dateibeschreibung - Einblenden bei vorhandenem Bild",
-            description: "Das Feld \"Dateibeschreibung\" wird nur dann eingeblendet, wenn auch ein Link zur Vorschaugrafik eingegeben worden ist.",
+
+        validateGraphicPreviewTableEntries: {
+            title: "Vorschaugrafik - Überprüfung der Tebelleneinträge",
+            description: "Für Vorschaugrafiken muss ein Dateiname immer vorhanden sein.",
             defaultActive: true,
             run: function() {
-                // set field initially hidden
-                domClass.add("uiElement5105", "hidden");
-                
-                // react when object is loaded (passive)
-                on(registry.byId("generalPreviewImage"), "Change", function(value) {
-                    if (value.trim().length === 0) {
-                        domClass.add("uiElement5105", "hidden");
-                    } else {
-                        domClass.remove("uiElement5105", "hidden");
-                    }
-                });
-                
-                // react on user input (active)
-                on(registry.byId("generalPreviewImage"), "KeyUp", function() {
-                    if (this.get("value").trim().length === 0) {
-                        domClass.add("uiElement5105", "hidden");
-                    } else {
-                        domClass.remove("uiElement5105", "hidden");
+                topic.subscribe("/onBeforeObjectPublish", function(notPublishableIDs) {
+                    var table = registry.byId("generalPreviewImageTable");
+                    table.unmarkCells();
+
+                    var isInvalid = false;
+                    array.forEach(table.data, function(row, rowIndex) {
+                        var url = row.fileName;
+                        if (!url || !url.trim()) {
+                            isInvalid = true;
+                            table.markCells("ERROR", rowIndex, [0]);
+                        }
+                    });
+                    if (isInvalid) {
+                        notPublishableIDs.push(["generalPreviewImageTable", message.get("validation.previewImage.table.missingUrl")]);
                     }
                 });
             }

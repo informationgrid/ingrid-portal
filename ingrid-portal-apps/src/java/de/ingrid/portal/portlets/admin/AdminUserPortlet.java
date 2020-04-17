@@ -617,7 +617,7 @@ public class AdminUserPortlet extends ContentPortlet {
                 }
                 sendMail(request, f, messages, userInfo, true);
             }
-
+            f.addMessage("account.created.title");
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.error("Problems creating new user.", e);
@@ -1058,11 +1058,7 @@ public class AdminUserPortlet extends ContentPortlet {
             "foo@bar.com");
         String to = userInfo.get("user.business-info.online.email");
         String text = Utils.mergeTemplate(getPortletConfig(), userInfo, "map", localizedTemplatePath);
-        if (Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
-            if(isCreateUser) {
-                f.addMessage("account.created.title");
-            }
-        } else {
+        if (!Utils.sendEmail(from, emailSubject, new String[] { to }, text, null)) {
             f.setError("", "account.created.problems.email");
         }
     }

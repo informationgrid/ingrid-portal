@@ -43,7 +43,7 @@ define(["dojo/_base/declare",
     run: function () {
       // hide open-data checkbox for classes 0 and 4
       topic.subscribe("/onObjectClassChange", function (data) {
-        if (data.objClass === "Class0" || data.objClass === "Class4") {
+        if (data.objClass === "Class0" || data.objClass === "Class4" || data.objClass === "Class20") {
           domClass.add(dom.byId("uiElement6010"), "hide");
           // also uncheck openData checkbox, so that categories table must not be
           // displayed according to the state

@@ -578,11 +578,10 @@
         <section help-key="maintanance-of-objects-3">
             <header>Gazetteer</header>
             <content>
-                 <p>InGridEditor uses the Gazetteer GTU (Geo-Thesaurus Umwelt [environment]). It is made available via the 
+                 <p>InGridEditor uses the WFS des Geodatenzentrums (wfs_gnde) or the Gazetteer GTU (Geo-Thesaurus Umwelt [environment]). It is made available via the
 				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
 				 of the Federal Environment Agency (Umweltbundesamt).</p>
                  <p>Just like the place index of an atlas the GTU describes the names of communities, rivers, mountains, landscapes and other geographical objects in Germany. In doing this, the GTU gives the exact spelling as well as the geographical position (coordinates) of a place.</p>
-                 <p>For practical reasons the GTU restricts itself to those places usually shown on maps from the scale 1:250,000 onwards. At present there are approx. 50,000 geographical objects listed in it.</p>
                  <p>Enter the geographical term (or a part of the term) you are looking for into the  <i>Please enter your search criteria</i> den geografischen Begriff field. After clicking on the <i>Search in Gazetteer</i> button a search is run on this term in the SNS. A search for a substring is carried out.</p>
                  <p>The results are listed under <i>Selection</i>. You can tick one or more terms and, 
 				 by means of the <i>Apply</i> button, add as a spatial reference to the object. For the 

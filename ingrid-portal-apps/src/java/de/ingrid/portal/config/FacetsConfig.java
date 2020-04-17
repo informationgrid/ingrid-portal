@@ -22,10 +22,12 @@
  */
 package de.ingrid.portal.config;
 
-import de.ingrid.portal.global.UtilsFacete;
-import de.ingrid.portal.om.IngridFacet;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
-import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.HierarchicalConfiguration.Node;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -33,15 +35,13 @@ import org.apache.commons.configuration.tree.ConfigurationNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import de.ingrid.portal.om.IngridFacet;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration;
+import de.ingrid.utils.udk.iso19108.TM_PeriodDuration.Interval;
 
 public class FacetsConfig {
 
-    private static final Logger log = LoggerFactory.getLogger( UtilsFacete.class );
+    private static final Logger log = LoggerFactory.getLogger( FacetsConfig.class );
     private static XMLConfiguration instance = null;
 
     private FacetsConfig() {
@@ -105,6 +105,13 @@ public class FacetsConfig {
                     }
                 }
 
+                if (!facetNode.getChildren( "field" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "field" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setField( (String) node.getValue() );
+                    }
+                }
+
                 if (!facetNode.getChildren( "shortName" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "shortName" ).get( 0 );
                     if (node != null) {
@@ -133,6 +140,20 @@ public class FacetsConfig {
                     Node node = (Node) facetNode.getChildren( "query" ).get( 0 );
                     if (node != null) {
                         ingridFacet.setQuery( (String) node.getValue() );
+                    }
+                }
+
+                if (!facetNode.getChildren( "codelist" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "codelist" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setCodelist( (String) node.getValue() );
+                    }
+                }
+
+                if (!facetNode.getChildren( "codelist-field" ).isEmpty()) {
+                    Node node = (Node) facetNode.getChildren( "codelist-field" ).get( 0 );
+                    if (node != null) {
+                        ingridFacet.setCodelistField( (String) node.getValue() );
                     }
                 }
 

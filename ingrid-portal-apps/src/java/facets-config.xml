@@ -54,6 +54,15 @@ Für die Sortierung der Unterfacetten eine Facette existieren vier Möglichkeite
  - Alphabetisch nach Facettenname - "SORT_BY_NAME"
  - keine Sortierung
 
+<codelist-id>"ID"</codelist-id> und <codelist-entry-id>"ID"</codelist-entry-id>:
+- Diese Facetten-Tags definieren den Titel der Facette im Portal. Hierbei wird er Titel aus der Codelist mit der ID ("<codelist-id>") und dem Codelisten-Eintrag mit der ID ("<codelist-entry-id>") zu entnehmen.
+
+<field>"INDEX-FELD"</field>:
+- Dieser Facetten-Tag erzeugt eine oder mehrere Facetten über das Indexfeld. 
+
+<codelist>"ID"</codelist> und <codelist-field>"KEY"</codelist-field>:
+- Hiermit wird eine Facette aus der Codelist mit der ID und dem Feld aus den Codelist-Einträgen erzeugt. 
+
 Spezielle Facetten:
 *************************
 Themen:
@@ -113,7 +122,7 @@ Um eine Definition in solch einen iPlug durchzuführen, fügt man der Datei "spr
 </bean>
 ....
 
-Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):  
+Unter "property" (property>) mit dem Namen "facetClassDefinitions" erweitert man die Liste (<list>) mit dem Wert (<value>):
 <value>"FACET-PARENT-ID":"FACET-ID"</value>
 
 Dadurch wird von dem iPlug eine Facetten-Klasse mit der Notation "FACET-PARENT-ID":"FACET-ID" zurückgeliefert. 
@@ -146,13 +155,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                     <facet>
 <!--                    <name>searchResult.facete.metaclass.inspire</name> -->
                         <name>INSPIRE</name>
-                        <query>inspireidentifiziert</query>
+                        <query>t04_search.searchterm:inspireidentifiziert</query>
                         <id>inspire_metadata</id>
                     </facet>
               <!-- Opendata -->
                      <facet>
                         <name>Opendata</name>
-                        <query>(opendata OR opendataident) datatype:metadata</query>
+                        <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                         <id>opendata_metadata</id>
                     </facet>
                 <!-- Organisationseinheit / Fachaufgabe -->
@@ -216,13 +225,13 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                <query>datatype:metadata inspireidentifiziert</query>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
             </facet>
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
-                <query>(opendata OR opendataident) datatype:metadata</query>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
             </facet>
         <!-- Karten -->
@@ -435,7 +444,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- INSPIRE-relevant -->
             <facet>
                 <name>INSPIRE</name>
-                <query>datatype:metadata inspireidentifiziert</query>
+                <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
                 <parentId>type</parentId>
                 <icon>icon-globe-2</icon>
@@ -443,7 +452,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
-                <query>(opendata OR opendataident) datatype:metadata</query>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
                 <parentId>type</parentId>
                 <icon>icon-hotspot-2</icon>

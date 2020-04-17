@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -15,7 +15,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<tomcat-users>
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
 <!--
   NOTE:  By default, no user is included in the "manager-gui" role required
   to operate the "/manager/html" web application.  If you wish to use this app,
@@ -31,10 +34,12 @@
   examples web application, do not forget to remove the <!.. ..> that surrounds
   them. You will also need to set the passwords to something appropriate.
 -->
-  <role rolename="manager"/>
-  <role rolename="standard"/>
+<!-- INGRID: Uncomment -->
   <role rolename="tomcat"/>
   <role rolename="role1"/>
+<!-- INGRID: Add -->
+  <role rolename="manager"/>
+  <role rolename="standard"/>
   <role rolename="admin-gui"/>
   <user username="munin" password="munin" roles="manager,standard"/>
   <user username="tomcat" password="tomcat" roles="tomcat"/>

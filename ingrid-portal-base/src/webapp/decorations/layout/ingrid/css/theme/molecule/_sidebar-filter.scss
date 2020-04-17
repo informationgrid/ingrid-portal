@@ -45,7 +45,7 @@
     color: color(black);
     cursor: pointer;
     font-size: rem(14px);
-    padding: rem(12px) 0;
+    padding: rem(12px) rem(12px) rem(12px) 0;
 
     .no-touchevents &:hover {
         color: color(fruit-salad);

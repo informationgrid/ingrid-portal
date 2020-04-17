@@ -1,6 +1,3 @@
-#if($urlNotExists)
-    #renderMessageError($MESSAGES.getString('login.error.url.not.exists'))
-#end
 #if($isPasswordUpdate)
     #parse ('/WEB-INF/templates/myportal/myportal_password_update_required.vm')
 #else

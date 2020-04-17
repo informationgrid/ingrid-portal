@@ -72,6 +72,7 @@ public class MdekDataBean {
 
 	// General
 	private String parentIdentifier;
+	private Date metadataDate;
 	private String generalShortDescription;
 	private String generalDescription;
 	private List<MdekAddressBean> generalAddressTable;
@@ -2225,5 +2226,13 @@ public class MdekDataBean {
 
 	public void setSpatialScope(Integer spatialScope) {
 		this.spatialScope = spatialScope;
+	}
+
+	public Date getMetadataDate() {
+		return metadataDate;
+	}
+
+	public void setMetadataDate(Date metadataDate) {
+		this.metadataDate = metadataDate;
 	}
 }

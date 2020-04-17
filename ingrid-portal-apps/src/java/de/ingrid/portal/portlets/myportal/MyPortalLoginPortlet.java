@@ -195,16 +195,13 @@ public class MyPortalLoginPortlet extends GenericVelocityPortlet {
         String errorCode = request.getParameter("errorCode");
         frm.clearErrors();
         if (errorCode != null) {
-            if (errorCode.equals(LoginConstants.ERROR_UNKNOWN_USER.toString())) {
-                frm.setError(LoginForm.FIELD_USERNAME, "login.error.unknownUser");
-            } else if (errorCode.equals(LoginConstants.ERROR_INVALID_PASSWORD.toString())) {
-                frm.setError(LoginForm.FIELD_PW, "login.error.invalidPassword");
-            } else if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_DISABLED.toString())) {
+            if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_DISABLED.toString())) {
                 frm.setError(LoginForm.FIELD_PW, "login.error.userDisabled");
             } else if (errorCode.equals(LoginConstants.ERROR_CREDENTIAL_EXPIRED.toString())) {
                 frm.setError(LoginForm.FIELD_PW, "login.error.userExpired");
             } else {
-                frm.setError("", "login.error.general");
+                frm.setError(LoginForm.FIELD_USERNAME, "");
+                frm.setError(LoginForm.FIELD_PW, "login.error.general");
             }
         } else if (!frm.hasErrors()) {
             frm.setInitialUsername(messages.getString("login.form.username.initialValue"));

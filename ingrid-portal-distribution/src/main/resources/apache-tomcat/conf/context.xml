@@ -16,6 +16,7 @@
   limitations under the License.
 -->
 <!-- The contents of this file will be loaded for each web application -->
+<!-- INGRID: Change context -->
 <Context sessionCookiePath="/" xmlValidation="false" xmlNamespaceAware="false">
 
     <!-- Default set of monitored resources -->

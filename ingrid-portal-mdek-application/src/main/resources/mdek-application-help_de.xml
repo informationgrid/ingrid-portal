@@ -806,16 +806,13 @@
         <section help-key="maintanance-of-objects-3">
             <header>Der Geothesaurus-Navigator</header>
             <content>
-                 <p>Der InGridEditor nutzt den Geo-Thesaurus Umwelt (GTU). Er wird über den 
-				 <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
-				 des Umweltbundesamtes zur Verfügung gestellt.</p>
-                 <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt der Geo-Thesaurus Umwelt (GTU) 
+                 <p>Als Geo-Thesaurus kommt entweder ein WFS des Geodatenzentrums (wfs_gnde) oder
+				 der <a href="http://www.semantic-network.de/" target="SNS">Semantic Network
+				 Service (SNS)</a> des Umweltbundesamtes zum Einsatz.</p>
+                 <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt der Geo-Thesaurus Umwelt (GTU)
 				 die Namen von Gemeinden, Flüssen, Bergen, Landschaften und anderen geografischen Objekten 
 				 in Deutschland. Dabei gibt der GTU die genaue Schreibweise ebenso wie die geografische 
 				 Position (Koordinaten) eines Orts an.</p>
-                 <p>Der GTU beschränkt sich aus praktischen Gründen auf Orte, die üblicherweise auf Karten 
-				 ab dem Maßstab 1:250.000 verzeichnet sind. Derzeit sind ca. 50.000 geografische Objekte 
-				 in ihm verzeichnet.</p>
                  <p>Geben Sie in das Feld <i><b>Räumliche Einheit festlegen</b></i> den geografischen Begriff
 				 (oder einen Teil des Begriffs) ein, den Sie suchen. Nach dem Klicken auf die Schaltfläche
 				 <i><b>In Geo-Thesaurus suchen</b></i> wird nach diesem Begriff im SNS gesucht. Es wird eine 

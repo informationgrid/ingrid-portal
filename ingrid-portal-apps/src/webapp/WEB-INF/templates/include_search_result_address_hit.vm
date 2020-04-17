@@ -65,7 +65,7 @@
         </p>
 ##        #end
         #if($rs.wms_url)
-            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
+            <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${rs.wms_url}" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
         #end
         #if($rs.url)
             <a href="$rs.url" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>

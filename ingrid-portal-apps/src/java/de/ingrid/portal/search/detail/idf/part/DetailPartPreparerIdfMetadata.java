@@ -39,6 +39,7 @@ import de.ingrid.portal.config.PortalConfig;
 import de.ingrid.portal.global.UtilsVelocity;
 import de.ingrid.utils.capabilities.CapabilitiesUtils;
 import de.ingrid.utils.capabilities.CapabilitiesUtils.ServiceType;
+import de.ingrid.utils.udk.UtilsString;
 
 public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
@@ -154,7 +155,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 // since this link will be going to the webmap-client, the service must be WMS!
                 getCapUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( getCapUrl, ServiceType.WMS );
                 
-                url = UtilsVelocity.urlencode( getCapUrl ) + "||";
+                url = UtilsVelocity.urlencode( getCapUrl + "||");
                 
                 if(!getLayerIdentifier(null).equals("NOT_FOUND")) {
                     url = url + "" + UtilsVelocity.urlencode(getLayerIdentifier(null));
@@ -310,7 +311,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
                             if ( capabilityUrl != null ) {
                                 capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
-                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString()) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
+                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString() + "||" + getLayerIdentifier(node)));
                             }
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
@@ -326,7 +327,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if ( capUrl != null ) {
                             // add possible missing parameters
                             capUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl.toString() ));
-                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString()) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(node)));
+                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString() + "||" + getLayerIdentifier(node)));
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
@@ -907,7 +908,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
-                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS||" + UtilsVelocity.urlencode(urlValue.toString()) + "||");
+                                elementMapLink.put("href", "portal/main-maps.psml?layers=WMS" + UtilsVelocity.urlencode( "||" + urlValue.toString() + "||" ));
                                   element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
@@ -1111,7 +1112,70 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return element;
     }
+
+    public List getPolygon(String xpathExpression) {
+        List<String> result = new ArrayList<>();
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i=0; i<nodeList.getLength(); i++){
+                Node node = nodeList.item(i);
+                if(node != null) {
+                    xpathExpression = "./gml:Point/gml:pos";
+                    if(xPathUtils.nodeExists(node, xpathExpression)){
+                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
+                        for(int j=0;j<tmpNodeList.getLength(); j++) {
+                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "POINT");
+                            if (wkt != null && !wkt.isEmpty()) {
+                                result.add(wkt);
+                            }
+                        }
+                    }
+                    xpathExpression = "./gml:LineString/gml:posList";
+                    if(xPathUtils.nodeExists(node, xpathExpression)){
+                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
+                        for(int j=0;j<tmpNodeList.getLength(); j++) {
+                            String wkt = UtilsString.gmlPosListToWktCoordinates(tmpNodeList.item(j).getTextContent(), "LINESTRING");
+                            if (wkt != null && !wkt.isEmpty()) {
+                                result.add(wkt);
+                            }
+                        }
+                    }
+                    xpathExpression = "./gml:Polygon";
+                    if(xPathUtils.nodeExists(node, xpathExpression)){
+                        NodeList tmpNodeList = xPathUtils.getNodeList(node, xpathExpression);
+                        for(int j=0;j<tmpNodeList.getLength(); j++) {
+                            String wkt = "";
+                            Node polygonNode = tmpNodeList.item(i);
     
+                            xpathExpression = "./gml:exterior/gml:LinearRing/gml:posList";
+                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
+                                Node exteriorNode = xPathUtils.getNode(polygonNode, xpathExpression);
+                                wkt += UtilsString.gmlPosListToWktCoordinates(exteriorNode.getTextContent());
+                            }
+    
+                            xpathExpression = "./gml:interior/gml:LinearRing/gml:posList";
+                            if(xPathUtils.nodeExists(polygonNode, xpathExpression)) {
+                                NodeList interiorNodes = xPathUtils.getNodeList(polygonNode, xpathExpression);
+                                for(int k=0; k<interiorNodes.getLength(); k++) {
+                                    String str = UtilsString.gmlPosListToWktCoordinates(interiorNodes.item(k).getTextContent());
+                                    if (!wkt.isEmpty() && !str.isEmpty()) {
+                                        wkt += ", ";
+                                    }
+                                    wkt += str;
+                                }
+                            }
+                            if (wkt != null && !wkt.isEmpty()) {
+                                wkt = "POLYGON (" + wkt + ")";
+                                result.add(wkt);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
     public List getNodeListValueReferenceSystem(String xpathExpression) {
         ArrayList<Map> list = new ArrayList<>();
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
@@ -1134,7 +1198,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(code.contains("EPSG")){
                         value = code;
                     }else{
-                        value = codeSpace.concat(": " + code);
+                        value = codeSpace.concat(":" + code);
                     }
                 }else if(codeSpace.length() > 0){
                     value = codeSpace;
@@ -1162,7 +1226,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return list;
     }
-    
+
     public String getGeoReport(String xpathExpression, String checkDescription, String checkNameOfMeasure) {
         StringBuilder value = new StringBuilder("");
         if(xPathUtils.nodeExists(rootNode, xpathExpression)){
@@ -1251,7 +1315,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     }
                     if (urlValue.toLowerCase().contains("request=getcapabilities")) {
                         // also add an identifier to select the correct layer in the map client 
-                        map = addBigMapLink(UtilsVelocity.urlencode(urlValue) + "||" + UtilsVelocity.urlencode(getLayerIdentifier(null)), true);
+                        map = addBigMapLink(urlValue + "||" + getLayerIdentifier(null), true);
                         // ADD FIRST ONE FOUND !!!
                         mapLinkAdded = true;
                         break;

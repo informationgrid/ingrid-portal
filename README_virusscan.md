@@ -18,8 +18,8 @@ The `virusscan` instance is configured together with all other validators in the
 The `properties` value must contain the following properties defining the virus scanner to be used:
 
 - `command` The command to invoke the virus scanner. This string must contain the literal `%FILE%` that will be replaced by the real file path to scan. The scanner output must inform about the file's status and archive support should be activated.
-- `infectedPattern` A regular expression pattern that matches the virus scanner output in case of an infection
-- `cleanPattern` A regular expression pattern that matches the virus scanner output in case of no infection
+- `virusPattern` A regular expression pattern that matches infections reported in the scan command result. The pattern must contain a capturing group for the virus name (#1) and one for the infected resource (#2)
+- `cleanPattern` A regular expression pattern applied to the command result that matches, if no virus infection is found
 
 The following sections show typically configurations for some free virus scanners:
 
@@ -30,8 +30,8 @@ The following sections show typically configurations for some free virus scanner
         "virusscan":{\
             "impl":"de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator",\
             "properties":{\
-                "command":"\\\\path\\\\to\\\\sophos\\\\savscan -f -archive %FILE%",\
-                "infectedPattern":"(?m)^1 file out of 1 was infected.$",\
+                "command":"\\\\path\\\\to\\\\sophos\\\\savscan -f -all -archive -mime %FILE%",\
+                "virusPattern":"(?m)^>>> Virus '([^']+)' found in file (.+)$",\
                 "cleanPattern":"(?m)^No viruses were discovered.$"\
             }\
         }\
@@ -47,7 +47,7 @@ upload.validators.config={\
         "impl":"de.ingrid.mdek.upload.storage.validate.impl.VirusScanValidator",\
         "properties":{\
             "command":"\\\\path\\\\to\\\\clamav\\\\clamscan %FILE%",\
-            "infectedPattern":"(?m)^Infected files: 1$",\
+            "virusPattern":"(?m)^(?=.+: (.+) FOUND$)(.+): .+ FOUND$",\
             "cleanPattern":"(?m)^Infected files: 0$"\
         }\
     }\
@@ -124,7 +124,7 @@ https://en.wikipedia.org/wiki/EICAR_test_file
 7. To scan a `<File>` call
 
    ```
-   docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/<File>
+   docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/<File>
    ```
 
 # Example scan reports 
@@ -134,7 +134,7 @@ https://en.wikipedia.org/wiki/EICAR_test_file
 ### Virus detected
 
 ```
-> docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/virus.bat
+> docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/virus.bat
 SAVScan virus detection utility
 Version 5.53.0 [Linux/AMD64]
 Virus data version 5.55, September 2018
@@ -161,7 +161,7 @@ End of Scan.
 ### No virus detected
 
 ```
-> docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/ok.txt
+> docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/ok.txt
 SAVScan virus detection utility
 Version 5.53.0 [Linux/AMD64]
 Virus data version 5.55, September 2018
@@ -184,7 +184,7 @@ End of Scan.
 ### File not existing
 
 ```
-> docker exec -it docker_sophos-av_1 savscan -f -archive /uploads/not-existing.txt
+> docker exec -it docker_sophos-av_1 savscan -f -all -archive -mime /uploads/not-existing.txt
 SAVScan virus detection utility
 Version 5.53.0 [Linux/AMD64]
 Virus data version 5.55, September 2018

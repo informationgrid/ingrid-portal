@@ -631,7 +631,7 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
 
   .columns { padding: 0; }
   p {
-    height: 80px;
+    padding: 16px 0;
 
     .alert-text {
       position: relative;
@@ -665,6 +665,14 @@ li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
       top: 18px;
       left: 10px;
       color: $black;
+    }
+  }
+}
+.form-element {
+  .row.alert {
+    p {
+      padding: 8px 0;
+      font-size: 16px;
     }
   }
 }

@@ -14,9 +14,11 @@ rem WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 rem See the License for the specific language governing permissions and
 rem limitations under the License.
 
-if "%OS%" == "Windows_NT" setlocal
 rem ---------------------------------------------------------------------------
 rem Start/Stop Script for the CATALINA Server
+rem
+rem For supported commands call "catalina.bat help" or see the usage section
+rem towards the end of this file.
 rem
 rem Environment Variable Prerequisites
 rem
@@ -29,9 +31,8 @@ rem   script will have no effect at all on Windows Services. As such, any
 rem   local customizations made in a CATALINA_BASE/bin/setenv.bat script
 rem   will also have no effect on Tomcat when launched as a Windows Service.
 rem   The configuration that controls Windows Services is stored in the Windows
-rem   Registry, and is most conveniently maintained using the "tomcatXw.exe"
-rem   maintenance utility, where "X" is the major version of Tomcat you are
-rem   running.
+rem   Registry, and is most conveniently maintained using the "tomcat7w.exe"
+rem   maintenance utility.
 rem
 rem   CATALINA_HOME   May point at your Catalina "build" directory.
 rem
@@ -68,14 +69,14 @@ rem   JAVA_ENDORSED_DIRS (Optional) Lists of of semi-colon separated directories
 rem                   containing some jars in order to allow replacement of APIs
 rem                   created outside of the JCP (i.e. DOM and SAX from W3C).
 rem                   It can also be used to update the XML parser implementation.
-rem                   Note that Java 9 no longer supports this feature.
+rem                   This is only supported for Java <= 8.
 rem                   Defaults to $CATALINA_HOME/endorsed.
 rem
 rem   JPDA_TRANSPORT  (Optional) JPDA transport used when the "jpda start"
 rem                   command is executed. The default is "dt_socket".
 rem
 rem   JPDA_ADDRESS    (Optional) Java runtime options used when the "jpda start"
-rem                   command is executed. The default is 8000.
+rem                   command is executed. The default is localhost:8000.
 rem
 rem   JPDA_SUSPEND    (Optional) Java runtime options used when the "jpda start"
 rem                   command is executed. Specifies whether JVM should suspend
@@ -107,10 +108,10 @@ rem                   Example (all one line)
 rem                   set TITLE=Tomcat.Cluster#1.Server#1 [%DATE% %TIME%]
 rem ---------------------------------------------------------------------------
 
-rem changed memory parameters due to integration of gssoil thesaurus, gazetteer service in IGE !
-rem set CATALINA_OPTS=%CATALINA_OPTS% -server -Xmx1024m -XX:MaxPermSize=256m
+rem INGRID: changed memory parameters due to integration of gssoil thesaurus, gazetteer service in IGE !
+rem INGRID: set CATALINA_OPTS=%CATALINA_OPTS% -server -Xmx1024m -XX:MaxPermSize=256m
 set CATALINA_OPTS=%CATALINA_OPTS% -server -Xms256m -Xmx1024m -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
-rem needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
+rem INGRID: needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
 set JAVA_OPTS=%JAVA_OPTS% -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING="false" -Duser.language="de"
 setlocal
 
@@ -150,6 +151,23 @@ if not "%CATALINA_BASE%" == "" goto gotBase
 set "CATALINA_BASE=%CATALINA_HOME%"
 :gotBase
 
+rem Ensure that neither CATALINA_HOME nor CATALINA_BASE contains a semi-colon
+rem as this is used as the separator in the classpath and Java provides no
+rem mechanism for escaping if the same character appears in the path. Check this
+rem by replacing all occurrences of ';' with '' and checking that neither
+rem CATALINA_HOME nor CATALINA_BASE have changed
+if "%CATALINA_HOME%" == "%CATALINA_HOME:;=%" goto homeNoSemicolon
+echo Using CATALINA_HOME:   "%CATALINA_HOME%"
+echo Unable to start as CATALINA_HOME contains a semicolon (;) character
+goto end
+:homeNoSemicolon
+
+if "%CATALINA_BASE%" == "%CATALINA_BASE:;=%" goto baseNoSemicolon
+echo Using CATALINA_BASE:   "%CATALINA_BASE%"
+echo Unable to start as CATALINA_BASE contains a semicolon (;) character
+goto end
+:baseNoSemicolon
+
 rem Ensure that any user defined CLASSPATH variables are not used on startup,
 rem but allow them to be specified in setenv.bat, in rare case when it is needed.
 set CLASSPATH=
@@ -168,23 +186,15 @@ echo Cannot find "%CATALINA_HOME%\bin\setclasspath.bat"
 echo This file is needed to run this program
 goto end
 :okSetclasspath
-set "BASEDIR=%CATALINA_HOME%"
 call "%CATALINA_HOME%\bin\setclasspath.bat" %1
 if errorlevel 1 goto end
 
-if not "%CATALINA_TMPDIR%" == "" goto gotTmpdir
-set "CATALINA_TMPDIR=%CATALINA_BASE%\temp"
-:gotTmpdir
-
-rem Add tomcat-juli.jar and bootstrap.jar to classpath
-rem tomcat-juli.jar can be over-ridden per instance
 rem Add on extra jar file to CLASSPATH
 rem Note that there are no quotes as we do not want to introduce random
 rem quotes into the CLASSPATH
 if "%CLASSPATH%" == "" goto emptyClasspath
 set "CLASSPATH=%CLASSPATH%;"
 :emptyClasspath
-if "%CATALINA_BASE%" == "%CATALINA_HOME%" goto juliClasspathHome
 set "CLASSPATH=%CLASSPATH%%CATALINA_HOME%\bin\bootstrap.jar"
 
 if not "%CATALINA_TMPDIR%" == "" goto gotTmpdir
@@ -201,7 +211,7 @@ set "CLASSPATH=%CLASSPATH%;%CATALINA_HOME%\bin\tomcat-juli.jar"
 :juliClasspathDone
 
 if not "%JSSE_OPTS%" == "" goto gotJsseOpts
-set JSSE_OPTS="-Djdk.tls.ephemeralDHKeySize=2048"
+set "JSSE_OPTS=-Djdk.tls.ephemeralDHKeySize=2048"
 :gotJsseOpts
 set "JAVA_OPTS=%JAVA_OPTS% %JSSE_OPTS%"
 
@@ -259,7 +269,7 @@ if not "%JPDA_TRANSPORT%" == "" goto gotJpdaTransport
 set JPDA_TRANSPORT=dt_socket
 :gotJpdaTransport
 if not "%JPDA_ADDRESS%" == "" goto gotJpdaAddress
-set JPDA_ADDRESS=8000
+set JPDA_ADDRESS=localhost:8000
 :gotJpdaAddress
 if not "%JPDA_SUSPEND%" == "" goto gotJpdaSuspend
 set JPDA_SUSPEND=n
@@ -311,13 +321,8 @@ goto execCmd
 
 :doStart
 shift
-if not "%OS%" == "Windows_NT" goto noTitle
 if "%TITLE%" == "" set TITLE=Tomcat
 set _EXECJAVA=start "%TITLE%" %_RUNJAVA%
-goto gotTitle
-:noTitle
-set _EXECJAVA=start %_RUNJAVA%
-:gotTitle
 if not ""%1"" == ""-security"" goto execCmd
 shift
 echo Using Security Manager
