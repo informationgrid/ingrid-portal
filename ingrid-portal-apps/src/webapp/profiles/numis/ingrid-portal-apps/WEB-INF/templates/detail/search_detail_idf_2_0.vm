@@ -12,11 +12,21 @@
             #if($entry.isExtern)
                 <svg class="icon"><use xlink:href="#external-link"></use></svg>
             #elseif($entry.isMapLink)
+                #if($entry.description)
+                    #set($imgAlt = $entry.description)
+                    #set($imgTitle = $entry.description)
+                #elseif($entry.title)
+                    #set($imgAlt = $entry.title)
+                    #set($imgTitle = $entry.title)
+                #else
+                    #set($imgAlt = "")
+                    #set($imgTitle = "")
+                #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" tmp="$entry.src" alt="">
+                        <img class="preview_image is-hidden" tmp="$entry.src" alt="$imgAlt" title="$imgTitle" >
                         <noscript>
-                            <img class="preview_image" src="$entry.src" alt="">
+                            <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle" >
                         </noscript>
                     </p>
                     #if($entry.description)
