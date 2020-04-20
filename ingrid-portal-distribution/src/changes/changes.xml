@@ -14,6 +14,9 @@
           <action type="fix" dev="wemove" issue="1828">
             Portal: Fix configuration of start page.
           </action>
+          <action type="fix" dev="wemove" issue="1833">
+            Portal: Fix URL parameter plugId on detail view.
+          </action>
           <action type="fix" dev="wemove">
             Mapclient: Fix CORS on embed mode.
           </action>
