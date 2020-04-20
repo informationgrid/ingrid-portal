@@ -1,0 +1,1 @@
+<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "GeoPortal.WSV - Wasserstraßen- und Schifffahrtsverwaltung des Bundes")</title>

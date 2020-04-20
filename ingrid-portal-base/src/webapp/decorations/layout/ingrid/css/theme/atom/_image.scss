@@ -30,3 +30,30 @@
 .image__caption {
 
 }
+
+/*
+ * Image swiper
+ *______________________*/
+ 
+#detail_meta {
+    .preview_image {
+        margin: auto;
+        max-height: 360px;
+    }
+}
+.search-result {
+    .preview_image {
+        margin: auto;
+    }
+    .swiper-wrapper {
+        padding-bottom: 30px;
+    }
+}
+
+.swiper-pagination-bullet {
+    background: color(fruit-salad) !important;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: color(fruit-salad) !important;
+}

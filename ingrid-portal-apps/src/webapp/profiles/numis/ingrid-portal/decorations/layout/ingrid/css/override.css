@@ -794,8 +794,6 @@ footer hr {
 .search .preview_image {
   max-width: 25%;
   float: right;
-  top: 40px;
-  right: 40px;
 }
 header .button-up {
   margin-top: 4em
@@ -999,6 +997,14 @@ header .row .columns:last-of-type {
 header .menu-tab-row .menu-tab {
   display: none;
 }
+
+.swiper-pagination-bullet {
+  background: #0089C6 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #0089C6 !important;
+}
+
 @media print, screen and (min-width: 35em) {
   header .logo {
     height: 120px;

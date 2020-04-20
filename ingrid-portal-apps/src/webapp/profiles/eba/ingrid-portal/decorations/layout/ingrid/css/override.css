@@ -321,3 +321,10 @@ input:checked + .field-toggle__label--highlight .field-toggle__icon {
     fill: #485f88;
   }
 }
+
+.swiper-pagination-bullet {
+  background: #485f88 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #485f88 !important;
+}
