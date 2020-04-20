@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="1785">
             Portal: Add displaying of multi preview images.
           </action>
+          <action type="fix" dev="wemove" issue="1833">
+            Portal: Fix URL parameter plugId on detail view.
+          </action>
         </release>
 
         <release version="5.4.0" date="2020-04-17" description="Release 5.4.0">
