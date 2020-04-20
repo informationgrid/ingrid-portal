@@ -237,6 +237,9 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
+            if(iplugId != null) {
+                iplugId = iplugId.toLowerCase();
+            }
             boolean isAddress = "address".equals( request.getParameter("type") );
             IngridHit hit = null;
             PlugDescription plugDescription = null;
