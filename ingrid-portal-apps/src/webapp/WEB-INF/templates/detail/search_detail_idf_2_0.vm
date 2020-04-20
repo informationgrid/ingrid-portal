@@ -4,7 +4,7 @@
     #end
 #end
 
-#macro (renderLinkLine $entry)
+#macro (renderLinkLine $entry $newTarget)
     #if($entry.type == "html")
         $entry.body
     #else
@@ -26,7 +26,7 @@
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                         <figcaption class="quote">
                             <p>
-                                <a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                                <a class="btn btn--primary btn--small" #if($newTarget)target="_blank"#end href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
                                     $entry.title
                                 </a>
                             </p>
@@ -34,7 +34,7 @@
                     #else
                         <figcaption class="quote">
                             <p>
-                                <a class="btn btn--primary btn--small" href="$entry.href" title="$entry.title">
+                                <a class="btn btn--primary btn--small" #if($newTarget)target="_blank"#end href="$entry.href" title="$entry.title">
                                     $entry.title
                                 </a>
                             </p>
@@ -166,7 +166,7 @@
                     #elseif($e.type=="multiLineImage")
                         #renderMultiLineImage($e)
                     #elseif($e.type=="linkLine")
-                        #renderLinkLine($e)
+                        #renderLinkLine($e true)
                     #end
                 #end
             </div>

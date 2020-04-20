@@ -165,7 +165,7 @@
                     #elseif($e.type=="multiLineImage")
                         #renderMultiLineImage($e)
                     #elseif($e.type=="linkLine")
-                        #renderLinkLine($e)
+                        #renderLinkLine($e true)
                     #end
                 #end
             </div>
