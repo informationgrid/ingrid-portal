@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.3.7" date="2020-xx-xx" description="Release 5.3.7">
+        <release version="5.3.9" date="2020-04-20" description="Release 5.3.9">
           <action type="fix" dev="wemove" issue="1774">
             Portal: Fix BKG facet configuration.
           </action>
