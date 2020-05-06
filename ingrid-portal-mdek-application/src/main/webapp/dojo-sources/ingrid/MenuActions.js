@@ -75,6 +75,9 @@ define([
                         self.attachNewNode(selectedNode, res)
                             .then(IgeActions.onAfterCreate);
                         selectedNode.setSelected(false);
+                        setTimeout(function () {
+                            dirty.setDirtyFlag();
+                        });
                         self.openCreateObjectWizardDialog();
                     }, function(err) {
                         displayErrorMessage(err);
@@ -136,6 +139,9 @@ define([
             deferred.then(function(res) {
                 self.attachNewNode(UtilTree.getNodeById("dataTree", parentId), res);
                 parentNode.setSelected(false);
+                setTimeout(function () {
+                    dirty.setDirtyFlag();
+                });
             }, function(err) {
                 displayErrorMessage(err);
             });
