@@ -24,13 +24,14 @@ define(["dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/dom-construct",
+    "dojo/on",
     "dijit/form/Button",
     "dijit/registry",
     "ingrid/dialog",
     "ingrid/message",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/dirty"
-], function(declare, array, lang, construct, Button, registry,dialog, message, creator, dirty) {
+], function(declare, array, lang, construct, on, Button, registry,dialog, message, creator, dirty) {
 
     return declare(null, {
         title: "Unterstützung der Erfassung von DOIs/Export im DataCite Format",
@@ -123,13 +124,14 @@ define(["dojo/_base/declare",
         },
 
         addValidationToDOI: function (field) {
-            field.message = message.get("nokis.form.doi.validation");
+            field.invalidMessage = message.get("nokis.form.doi.validation");
             var doiRegExp = new RegExp('(?:^(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?![%"#? ])\\S)+)$)');
 
             // see: https://www.crossref.org/blog/dois-and-matching-regular-expressions/
             // and: https://github.com/regexhq/doi-regex
-            field.validate = function() {
-                return doiRegExp.test(this.get("value"));
+            field.validator = function() {
+                var value = this.get("value");
+                return value.trim().length === 0 || doiRegExp.test(value);
             };
         }
 
