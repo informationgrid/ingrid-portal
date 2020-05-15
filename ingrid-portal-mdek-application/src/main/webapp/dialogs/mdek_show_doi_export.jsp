@@ -40,15 +40,24 @@
             "ingrid/hierarchy/behaviours/DOI/doiExport"
         ], function (on, Deferred, all, lang, domStyle, domAttr, message, doiExport) {
             on(_container_, "Load", function () {
-                var result = doiExport.run();
-                hideLoadingZone();
-                handleResult(result);
+                try {
+                    var result = doiExport.run();
+                    handleResult(result);
+                } catch(e) {
+                    handleError(e);
+                } finally {
+                    hideLoadingZone();
+                }
             });
 
             function handleResult(res) {
                 var highlighted = hljs.highlight("xml", res);
                 // putting the highlighted code in a html element so you can see
                 domAttr.set("xmlContainer", {innerHTML: highlighted.value});
+            }
+
+            function handleError(error) {
+                domAttr.set("xmlError", {innerHTML: error});
             }
 
             function showLoadingZone() {
@@ -74,5 +83,7 @@
 <code id="xmlContainer" style="border: 0;"></code>
         </pre>
     </div>
+
+    <div id="xmlError" class="error"></div>
 </div>
 </body>
