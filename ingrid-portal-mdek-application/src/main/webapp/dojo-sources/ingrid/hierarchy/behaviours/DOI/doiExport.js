@@ -73,7 +73,7 @@ define([
         },
 
         addHeader: function () {
-            return construct.create("resource", {
+            return this.create("resource", {
                 "xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
                 "xmlns": "http://datacite.org/schema/kernel-4",
                 "xsi:schemaLocation": "http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.1/metadata.xsd"
@@ -83,7 +83,7 @@ define([
 
         getIdentifier: function (parent) {
 
-            construct.create("identifier", {
+            this.create("identifier", {
                 identifierType: "DOI",
                 innerHTML: this.getDOIValue()
             }, parent);
@@ -97,7 +97,7 @@ define([
             });
 
             if (authors.length > 0) {
-                var creators = construct.create("creators", null, parent);
+                var creators = this.create("creators", null, parent);
                 this.addAddressInfo("creator", authors[0], null, creators);
             } else {
                 throw new Error("We need at least one author");
@@ -107,10 +107,10 @@ define([
 
         getTitles: function (parent) {
 
-            var titles = construct.create("titles", null, parent);
-            titles.appendChild(construct.create("title", {innerHTML: currentUdk.objectName}));
+            var titles = this.create("titles", null, parent);
+            titles.appendChild(this.create("title", {innerHTML: currentUdk.objectName}));
             if (currentUdk.generalShortDescription) {
-                titles.appendChild(construct.create("title", {innerHTML: currentUdk.generalShortDescription}));
+                titles.appendChild(this.create("title", {innerHTML: currentUdk.generalShortDescription}));
             }
 
         },
@@ -121,7 +121,7 @@ define([
                 return address.typeOfRelation === 10
             });
             if (publisher.length === 1) {
-                construct.create("publisher", {innerHTML: this.getNameFromAddress(publisher[0])}, parent);
+                this.create("publisher", {innerHTML: this.getNameFromAddress(publisher[0])}, parent);
             } else {
                 throw new Error("We need exactly one publisher defined");
             }
@@ -133,7 +133,7 @@ define([
                 return date.type === 2;
             });
             if (publications.length > 0) {
-                construct.create("publicationYear", {innerHTML: publications[0].date.getFullYear()}, parent);
+                this.create("publicationYear", {innerHTML: publications[0].date.getFullYear()}, parent);
             } else {
                 throw new Error("No publication date set");
             }
@@ -141,7 +141,7 @@ define([
 
         /*getSubjects: function(parent) {
 
-            var subjects = construct.create("subjects");
+            var subjects = this.create("subjects");
 
         },*/
 
@@ -152,7 +152,7 @@ define([
             });
 
             if (addresses.length > 0) {
-                var contributors = construct.create("contributors", null, parent);
+                var contributors = this.create("contributors", null, parent);
                 for (var i = 0; i < addresses.length; i++) {
                     this.addAddressInfo("contributor", addresses[i], "other", contributors);
                 }
@@ -168,9 +168,9 @@ define([
                 return date.type !== 2;
             });
             if (dates.length > 0) {
-                var element = construct.create("dates", null, parent);
+                var element = this.create("dates", null, parent);
                 for (var i = 0; i < dates.length; i++) {
-                    construct.create("date", {
+                    this.create("date", {
                         dateType: dates[i].type === 1 ? "Created" : "Updated",
                         innerHTML: dates[i].date.toISOString().substring(0, 10)
                     }, element);
@@ -185,14 +185,14 @@ define([
                 return lang === 150
             });
 
-            return construct.create("language", {innerHTML: containsGerman ? "de-DE" : "en-US"}, parent);
+            return this.create("language", {innerHTML: containsGerman ? "de-DE" : "en-US"}, parent);
 
         },
 
         getResourceType: function (parent) {
 
             // TODO: should we use XML?
-            return construct.create("resourceType", {
+            return this.create("resourceType", {
                 resourceTypeGeneral: this.getDOIType(),
                 innerHTML: "XML"
             }, parent);
@@ -201,9 +201,9 @@ define([
 
         getAlternateIdentifiers: function (parent) {
 
-            construct.create("alternateIdentifiers", null, parent)
+            this.create("alternateIdentifiers", null, parent)
                 .appendChild(
-                    construct.create("alternateIdentifier", {
+                    this.create("alternateIdentifier", {
                         alternateIdentifierType: "UUID",
                         innerHTML: currentUdk.uuid
                     }));
@@ -213,9 +213,9 @@ define([
         getRelatedIdentifiers: function (parent) {
 
             if (currentUdk.ref2PublishedISBN) {
-                construct.create("relatedIdentifiers", null, parent)
+                this.create("relatedIdentifiers", null, parent)
                     .appendChild(
-                        construct.create("relatedIdentifier", {
+                        this.create("relatedIdentifier", {
                             relatedIdentifierType: "ISBN",
                             relationType: "Describes",
                             innerHTML: currentUdk.ref2PublishedISBN
@@ -226,7 +226,7 @@ define([
 
         getVersion: function (parent) {
 
-            return construct.create("version", {innerHTML: "4.1"}, parent);
+            return this.create("version", {innerHTML: "4.1"}, parent);
 
         },
 
@@ -237,9 +237,9 @@ define([
             var constraints = currentUdk.availabilityUseAccessConstraints;
 
             if (constraints.length > 0) {
-                var element = construct.create("rightsList", null, parent);
+                var element = this.create("rightsList", null, parent);
                 for (var i = 0; i < constraints.length; i++) {
-                    construct.create("rights", {
+                    this.create("rights", {
                         innerHTML: constraints.title
                     }, element);
                 }
@@ -250,9 +250,9 @@ define([
 
         getDescriptions: function (parent) {
 
-            var element = construct.create("descriptions", null, parent);
+            var element = this.create("descriptions", null, parent);
             var description = currentUdk.generalDescription;
-            construct.create("description", {
+            this.create("description", {
                 descriptionType: "Abstract",
                 innerHTML: description
             });
@@ -263,18 +263,18 @@ define([
 
         getGeoLocations: function (parent) {
 
-            var element = construct.create("geoLocations", null, parent);
+            var element = this.create("geoLocations", null, parent);
             var freeSpatial = currentUdk.spatialRefLocationTable;
             var spatialRefs = currentUdk.spatialRefAdminUnitTable;
             var allSpatialRefs = spatialRefs.concat(freeSpatial);
             for (var i = 0; i < allSpatialRefs.length; i++) {
-                construct.create("geoLocation", null, element)
-                    .appendChild(construct.create("geoLocationPlace", {innerHTML: allSpatialRefs[i].name})).parentNode
-                    .appendChild(construct.create("geoLocationBox")
-                        .appendChild(construct.create("westBoundLongitude", {innerHTML: allSpatialRefs[i].longitude1})).parentNode
-                        .appendChild(construct.create("eastBoundLongitude", {innerHTML: allSpatialRefs[i].longitude2})).parentNode
-                        .appendChild(construct.create("southBoundLatitude", {innerHTML: allSpatialRefs[i].latitude1})).parentNode
-                        .appendChild(construct.create("northBoundLatitude", {innerHTML: allSpatialRefs[i].latitude2})).parentNode)
+                this.create("geoLocation", null, element)
+                    .appendChild(this.create("geoLocationPlace", {innerHTML: allSpatialRefs[i].name})).parentNode
+                    .appendChild(this.create("geoLocationBox")
+                        .appendChild(this.create("westBoundLongitude", {innerHTML: allSpatialRefs[i].longitude1})).parentNode
+                        .appendChild(this.create("eastBoundLongitude", {innerHTML: allSpatialRefs[i].longitude2})).parentNode
+                        .appendChild(this.create("southBoundLatitude", {innerHTML: allSpatialRefs[i].latitude1})).parentNode
+                        .appendChild(this.create("northBoundLatitude", {innerHTML: allSpatialRefs[i].latitude2})).parentNode)
             }
 
             // TODO: handle WKT
@@ -290,17 +290,21 @@ define([
                 type = {};
                 type[addressType + "Type"] = role;
             }
-            construct.create(addressType, type, parent)
-                .appendChild(construct.create(addressType + "Name", {
+            this.create(addressType, type, parent)
+                .appendChild(this.create(addressType + "Name", {
                     nameType: address.addressClass === 2 ? "Organizational" : "Personal",
                     innerHTML: fullName
                 })).parentNode
-                .appendChild(construct.create("givenName", {innerHTML: address.givenName})).parentNode
-                .appendChild(construct.create("familyName", {innerHTML: address.name}))
-            // .parentNode.appendChild(construct.create("nameIdentifier")).parentNode
-            // .appendChild(construct.create("affiliation"));
+                .appendChild(this.create("givenName", {innerHTML: address.givenName})).parentNode
+                .appendChild(this.create("familyName", {innerHTML: address.name}))
+            // .parentNode.appendChild(this.create("nameIdentifier")).parentNode
+            // .appendChild(this.create("affiliation"));
 
 
+        },
+
+        create: function (tag, attributes, parent) {
+            return construct.create(document.createElementNS(null, tag), attributes, parent);
         },
 
         getNameFromAddress: function (publisher) {
