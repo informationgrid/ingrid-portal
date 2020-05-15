@@ -23,9 +23,8 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/nokis/docTypes",
-    "ingrid/hierarchy/behaviours/nokis/doi",
-], function(lang, behaviours, docTypes, doi) {
+    "ingrid/hierarchy/behaviours/nokis/docTypes"
+], function(lang, behaviours, docTypes) {
 
     return lang.mixin(behaviours, {
 
@@ -35,11 +34,6 @@ define([
          * Load new syslists containing Nokis stuff.
          */
         nokisDocumentTypes: docTypes,
-
-        /**
-         * Add new fields for DOI and functionality for export.
-         */
-        nokisDOI: doi,
 
         advCompatible : undefined,
         advProductGroup : undefined,

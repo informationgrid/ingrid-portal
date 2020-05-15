@@ -37,8 +37,6 @@ define(["dojo/_base/declare",
         title: "Unterstützung der Erfassung von DOIs/Export im DataCite Format",
         description: "Ermöglicht die Erfassung eines DOI für einen Datensatz. Der Datensatz kann in das DataCite Format exportiert werden.",
         defaultActive: false,
-        // type: "SYSTEM",
-        category: "Nokis",
         run: function() {
 
             var self = this;
