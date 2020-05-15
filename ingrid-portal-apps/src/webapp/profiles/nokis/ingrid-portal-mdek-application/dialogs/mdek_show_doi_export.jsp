@@ -18,15 +18,15 @@
   **************************************************#
   --%>
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <meta name="author" content="wemove digital solutions" />
-    <meta name="copyright" content="wemove digital solutions GmbH" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+    <meta name="author" content="wemove digital solutions"/>
+    <meta name="copyright" content="wemove digital solutions GmbH"/>
 
-    <link rel="stylesheet" href="dojo-sources/ingrid/css/github.css" />
+    <link rel="stylesheet" href="dojo-sources/ingrid/css/github.css"/>
 
     <script type="text/javascript">
 
@@ -36,21 +36,28 @@
             "dojo/_base/lang",
             "dojo/dom-style",
             "dojo/dom-attr",
-            "ingrid/message"], function(on, Deferred, all, lang, domStyle, domAttr, message) {
-            on(_container_, "Load", function() {
-
+            "ingrid/message",
+            "ingrid/hierarchy/behaviours/DOI/doiExport"
+        ], function (on, Deferred, all, lang, domStyle, domAttr, message, doiExport) {
+            on(_container_, "Load", function () {
+                debugger;
+                var result = doiExport.run();
+                hideLoadingZone();
+                handleResult(result);
             });
 
-            function handleResult(container, def, res) {
-
+            function handleResult(res) {
+                var highlighted = hljs.highlight("xml", res);
+                // putting the highlighted code in a html element so you can see
+                domAttr.set("xmlContainer", {innerHTML: highlighted.value});
             }
 
             function showLoadingZone() {
-                domStyle.set( "xmlLoadingZone", "display", "block" );
+                domStyle.set("xmlLoadingZone", "display", "block");
             }
 
             function hideLoadingZone() {
-                domStyle.set( "xmlLoadingZone", "display", "none" );
+                domStyle.set("xmlLoadingZone", "display", "none");
             }
 
         });
@@ -60,9 +67,13 @@
 <body>
 <div data-dojo-type="dijit/layout/ContentPane">
     <div id="xmlLoadingZone" style="float: right;">
-        <img id="imageZone" src="img/ladekreis.gif" />
+        <img id="imageZone" src="img/ladekreis.gif"/>
     </div>
 
-</div>
+    <div id="container">
+        <pre style="font-size: 12px;">
+<code id="xmlContainer" style="border: 0;"></code>
+        </pre>
+    </div>
 </div>
 </body>

@@ -97,6 +97,10 @@ define(["dojo/_base/declare",
                 label: message.get("nokis.form.exportDataCite"),
                 "class": "right show",
                 onClick: function() {
+                    // *****************
+                    // for quick development
+                    delete require.modules["ingrid/hierarchy/behaviours/DOI/doiExport"];
+                    // *****************
                     dialog.showPage(message.get("nokis.form.exportDataCite"), "dialogs/mdek_show_doi_export.jsp", 755, 600, true, {
                     });
                 }
