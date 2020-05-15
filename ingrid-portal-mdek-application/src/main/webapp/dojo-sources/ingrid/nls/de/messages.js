@@ -439,6 +439,15 @@ define({
     "sns.freeTermAddTopTermHint": "'${0}' ist ein Thesaurus-Topterm! Er kann nicht &uuml;bernommen werden!",
     "sns.freeTermAddNodeLabelHint": "'${0}' ist ein Ordnungsbegriff! Er kann nicht &uuml;bernommen werden!",
 
+    "doi.title": "DOI/DataCite Format",
+    "doi.id": "DOI",
+    "doi.id.helpMessage": "Eingabe eines DOI nach den Vorschriften eines DOI Namens (https://www.doi.org/doi_handbook/2_Numbering.html#2.2).",
+    "doi.id.validation": "Das Format entspricht nicht den Vorschriften für ein DOI Namen",
+    "doi.type": "Typ",
+    "doi.type.helpMessage": "",
+    "doi.button.exportDataCite": "Export DataCite Format",
+    "doi.hint.save": "Bitte speichern Sie den Datensatz vor dem Export",
+
     "links.fillRequiredFieldsHint": "Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
     "links.noLinkToSelfHint": "Ein Objekt kann nicht mit sich selbst verkn&uuml;pft werden!",
 

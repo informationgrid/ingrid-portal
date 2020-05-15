@@ -40,7 +40,6 @@
             "ingrid/hierarchy/behaviours/DOI/doiExport"
         ], function (on, Deferred, all, lang, domStyle, domAttr, message, doiExport) {
             on(_container_, "Load", function () {
-                debugger;
                 var result = doiExport.run();
                 hideLoadingZone();
                 handleResult(result);

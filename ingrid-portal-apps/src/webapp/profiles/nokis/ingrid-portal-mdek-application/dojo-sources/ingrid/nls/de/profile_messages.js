@@ -21,15 +21,6 @@
  * **************************************************#
  */
 define({
-    "nokis.form.section.doi": "DOI/DataCite Format",
-    "nokis.form.doi": "DOI",
-    "nokis.form.doi.helpMessage": "Eingabe eines DOI nach den Vorschriften eines DOI Namens (https://www.doi.org/doi_handbook/2_Numbering.html#2.2).",
-    "nokis.form.doi.validation": "Das Format entspricht nicht den Vorschriften für ein DOI Namen",
 
-
-    "nokis.form.type": "Typ",
-    "nokis.form.type.helpMessage": "",
-
-    "nokis.form.exportDataCite": "Export DataCite Format"
 });
 

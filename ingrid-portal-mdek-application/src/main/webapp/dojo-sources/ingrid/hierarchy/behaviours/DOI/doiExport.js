@@ -23,18 +23,9 @@
 
 define([
     "dojo/_base/declare",
-    "dojo/_base/lang",
-    "dojo/dom",
     "dojo/dom-construct",
-    "dojo/_base/array",
-    "dojo/aspect",
-    "dijit/registry",
-    "ingrid/utils/List",
-    "ingrid/utils/Store",
-    "ingrid/utils/UI",
-    "ingrid/utils/PageNavigation",
-    "ingrid/message"
-], function (declare, lang, dom, construct, array, aspect, registry, UtilList, UtilStore, UtilUI, navigation, message) {
+    "dojo/_base/array"
+], function (declare, construct, array) {
     return declare(null, {
 
         run: function () {
@@ -92,7 +83,7 @@ define([
 
         getCreators: function (parent) {
 
-            var authors = currentUdk.generalAddressTable.filter(function (address) {
+            var authors = array.filter(currentUdk.generalAddressTable, function (address) {
                 return address.typeOfRelation === 11
             });
 
@@ -117,7 +108,7 @@ define([
 
         getPublisher: function (parent) {
 
-            var publisher = currentUdk.generalAddressTable.filter(function (address) {
+            var publisher = array.filter(currentUdk.generalAddressTable, function (address) {
                 return address.typeOfRelation === 10
             });
             if (publisher.length === 1) {
@@ -129,7 +120,7 @@ define([
         },
 
         getPublicationYear: function (parent) {
-            var publications = currentUdk.timeRefTable.filter(function (date) {
+            var publications = array.filter(currentUdk.timeRefTable, function (date) {
                 return date.type === 2;
             });
             if (publications.length > 0) {
@@ -147,14 +138,14 @@ define([
 
         getContributors: function (parent) {
 
-            var addresses = currentUdk.generalAddressTable.filter(function (address) {
+            var addresses = array.filter(currentUdk.generalAddressTable, function (address) {
                 return address.typeOfRelation !== 10 && address.typeOfRelation !== 11
             });
 
             if (addresses.length > 0) {
                 var contributors = this.create("contributors", null, parent);
                 for (var i = 0; i < addresses.length; i++) {
-                    this.addAddressInfo("contributor", addresses[i], "other", contributors);
+                    this.addAddressInfo("contributor", addresses[i], "Other", contributors);
                 }
                 return contributors;
             }
@@ -164,7 +155,7 @@ define([
         addDates: function (parent) {
 
 
-            var dates = currentUdk.timeRefTable.filter(function (date) {
+            var dates = array.filter(currentUdk.timeRefTable, function (date) {
                 return date.type !== 2;
             });
             if (dates.length > 0) {
@@ -191,11 +182,15 @@ define([
 
         getResourceType: function (parent) {
 
-            // TODO: should we use XML?
-            return this.create("resourceType", {
-                resourceTypeGeneral: this.getDOIType(),
-                innerHTML: "XML"
-            }, parent);
+            var attributes = {
+                resourceTypeGeneral: this.getDOIType().value
+            }
+            if (this.getDOIType().listId === "-1") {
+                attributes.resourceTypeGeneral = "Other";
+                attributes.innerHTML = this.getDOIType().value;
+            }
+
+            return this.create("resourceType", attributes, parent);
 
         },
 
@@ -240,7 +235,7 @@ define([
                 var element = this.create("rightsList", null, parent);
                 for (var i = 0; i < constraints.length; i++) {
                     this.create("rights", {
-                        innerHTML: constraints.title
+                        innerHTML: constraints[i].title
                     }, element);
                 }
                 return element;
@@ -255,9 +250,7 @@ define([
             this.create("description", {
                 descriptionType: "Abstract",
                 innerHTML: description
-            });
-
-            return element;
+            }, element);
 
         },
 
@@ -290,13 +283,16 @@ define([
                 type = {};
                 type[addressType + "Type"] = role;
             }
-            this.create(addressType, type, parent)
-                .appendChild(this.create(addressType + "Name", {
-                    nameType: address.addressClass === 2 ? "Organizational" : "Personal",
-                    innerHTML: fullName
-                })).parentNode
-                .appendChild(this.create("givenName", {innerHTML: address.givenName})).parentNode
-                .appendChild(this.create("familyName", {innerHTML: address.name}))
+            var wrapper = this.create(addressType, type, parent);
+            this.create(addressType + "Name", {
+                nameType: address.addressClass === 2 ? "Personal" : "Organizational",
+                innerHTML: fullName
+            }, wrapper);
+
+            if (address.addressClass === 2) {
+                this.create("givenName", {innerHTML: address.givenName}, wrapper);
+                this.create("familyName", {innerHTML: address.name}, wrapper);
+            }
             // .parentNode.appendChild(this.create("nameIdentifier")).parentNode
             // .appendChild(this.create("affiliation"));
 
@@ -317,7 +313,7 @@ define([
 
         getDOIValue: function () {
             var doi = array.filter(currentUdk.additionalFields, function (field) {
-                return field.identifier === "nokisDOI"
+                return field.identifier === "doiId"
             });
             if (doi.length === 1) {
                 return doi[0].value;
@@ -328,10 +324,10 @@ define([
 
         getDOIType: function () {
             var doiType = array.filter(currentUdk.additionalFields, function (field) {
-                return field.identifier === "nokisType"
+                return field.identifier === "doiType"
             });
             if (doiType.length === 1) {
-                return doiType[0].value;
+                return doiType[0];
             } else {
                 throw new Error("No DOI field found");
             }

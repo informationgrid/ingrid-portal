@@ -31,20 +31,21 @@ define(["dojo/_base/declare",
     "ingrid/message",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/dirty"
-], function(declare, array, lang, construct, on, Button, registry,dialog, message, creator, dirty) {
+], function (declare, array, lang, construct, on, Button, registry, dialog, message, creator, dirty) {
 
     return declare(null, {
         title: "Unterstützung der Erfassung von DOIs/Export im DataCite Format",
         description: "Ermöglicht die Erfassung eines DOI für einen Datensatz. Der Datensatz kann in das DataCite Format exportiert werden.",
         defaultActive: false,
-        run: function() {
+        run: function () {
 
             var self = this;
             this.createFields();
 
         },
 
-        createFields: function() {
+        createFields: function () {
+            var self = this;
             var rubric = "links";
             var newFieldsToDirtyCheck = [];
             var additionalFields = require("ingrid/IgeActions").additionalFieldWidgets;
@@ -55,14 +56,15 @@ define(["dojo/_base/declare",
             /*
              * DOI - Field
              */
-            var id = "nokisDOI";
+            var id = "doiId";
             construct.place(
                 creator.createDomTextbox({
                     id: id,
                     style: "width: 50%",
-                    name: message.get("nokis.form.doi"),
-                    help: message.get("nokis.form.doi.helpMessage"),
-                    visible: "show"}),
+                    name: message.get("doi.id"),
+                    help: message.get("doi.id.helpMessage"),
+                    visible: "show"
+                }),
                 container);
             newFieldsToDirtyCheck.push(id);
             var doiField = registry.byId(id);
@@ -74,16 +76,32 @@ define(["dojo/_base/declare",
             /*
              * Type
              */
-            id = "nokisType";
+            id = "doiType";
             construct.place(
                 creator.createDomSelectBox({
                     id: id,
-                    name: message.get("nokis.form.type"),
-                    help: message.get("nokis.form.type.helpMessage"),
-                    useSyslist: "6500",
+                    name: message.get("doi.type"),
+                    help: message.get("doi.type.helpMessage"),
+                    listEntries: [
+                        {id: "1", value: "Audiovisual"},
+                        {id: "2", value: "Collection"},
+                        {id: "3", value: "DataPaper"},
+                        {id: "4", value: "Dataset"},
+                        {id: "5", value: "Event"},
+                        {id: "6", value: "Image"},
+                        {id: "7", value: "InteractiveResource"},
+                        {id: "8", value: "Model"},
+                        {id: "9", value: "PhysicalObject"},
+                        {id: "10", value: "Service"},
+                        {id: "11", value: "Software"},
+                        {id: "12", value: "Sound"},
+                        {id: "13", value: "Text"},
+                        {id: "14", value: "Workflow"}
+                    ],
                     isExtendable: true,
                     visible: "show",
-                    style: "width:50%" }),
+                    style: "width:50%"
+                }),
                 container);
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
@@ -92,15 +110,18 @@ define(["dojo/_base/declare",
              * Export Button
              */
             var exportButton = new Button({
-                label: message.get("nokis.form.exportDataCite"),
+                label: message.get("doi.button.exportDataCite"),
                 "class": "right show",
-                onClick: function() {
+                onClick: function () {
                     // *****************
                     // for quick development
                     delete require.modules["ingrid/hierarchy/behaviours/DOI/doiExport"];
                     // *****************
-                    dialog.showPage(message.get("nokis.form.exportDataCite"), "dialogs/mdek_show_doi_export.jsp", 755, 600, true, {
-                    });
+                    if (self.hasUnsavedChanges()) {
+                        dialog.show(message.get("dialog.general.info"), message.get("doi.hint.save"), dialog.INFO);
+                    } else {
+                        dialog.showPage(message.get("doi.button.exportDataCite"), "dialogs/mdek_show_doi_export.jsp", 755, 600, true, {});
+                    }
                 }
             });
             construct.place(exportButton.domNode, container);
@@ -111,11 +132,15 @@ define(["dojo/_base/declare",
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         },
 
+        hasUnsavedChanges: function() {
+            return dirty.dirtyFlag;
+        },
+
         createOutlinedWrapper: function (rubric) {
             var insertNode = construct.create("span", {class: 'outer'});
             var div = construct.create("div");
             var labelSpan = construct.create("span", {class: 'label'});
-            var label = construct.create("label", {innerHTML: message.get("nokis.form.section.doi")});
+            var label = construct.create("label", {innerHTML: message.get("doi.title")});
             labelSpan.appendChild(label);
             var outlined = construct.create("div", {class: 'outlined'});
             insertNode.appendChild(div);
@@ -126,12 +151,12 @@ define(["dojo/_base/declare",
         },
 
         addValidationToDOI: function (field) {
-            field.invalidMessage = message.get("nokis.form.doi.validation");
+            field.invalidMessage = message.get("doi.id.validation");
             var doiRegExp = new RegExp('(?:^(10[.][0-9]{4,}(?:[.][0-9]+)*/(?:(?![%"#? ])\\S)+)$)');
 
             // see: https://www.crossref.org/blog/dois-and-matching-regular-expressions/
             // and: https://github.com/regexhq/doi-regex
-            field.validator = function() {
+            field.validator = function () {
                 var value = this.get("value");
                 return value.trim().length === 0 || doiRegExp.test(value);
             };
