@@ -2569,28 +2569,37 @@ define([
                     if (currentField instanceof CustomGrid) {
                         
                         var tableData = this.prepareGridDataForBackend(currentField);
-                        
+
                         nodeData.additionalFields.push({
                             identifier: currentField.id,
                             value: null,
                             listId: null,
                             tableRows: tableData
                         });
-                        
+
                     } else {
                         // if it's a select box we need to get listId and value
                         var value = null;
                         var listId = null;
                         if (currentField instanceof FilteringSelect ||
                             currentField instanceof ComboBox) {
-                            listId = -1;
-                            var item = this.additionalFieldWidgets[nr].item;
-                            if (item !== null) {
-                                listId = item.id[0];
-                            }
 
                             // for lists to get value
-                            value = this.additionalFieldWidgets[nr].get("value");
+                            value = currentField.get("value");
+
+                            listId = -1;
+                            var item = currentField.item;
+                            if (item !== null) {
+                                listId = item.id[0];
+                            } else {
+                                currentField.store.fetch();
+                                var idFromComboValue = array.filter(currentField.store._arrayOfAllItems, function (item) {
+                                    return item.value == value;
+                                });
+                                if (idFromComboValue.length === 1) {
+                                    listId = idFromComboValue[0].id[0];
+                                }
+                            }
 
                         } else if (currentField instanceof DateTextBox) {
                             value = currentField.get("value");
