@@ -241,15 +241,15 @@ public class DetailPartPreparer {
     public String removePraefix(String value) {
         String newValue = value;
         if (newValue != null) {
-            if (newValue.startsWith( "Nutzungseinschränkungen: " )) {
-                newValue = newValue.replace("Nutzungseinschränkungen: ", "");
+            if (newValue.startsWith( "Nutzungseinschränkungen:" )) {
+                newValue = newValue.replace("Nutzungseinschränkungen:", "");
             }
-            if (newValue.startsWith( "Nutzungsbedingungen: " )) {
-                newValue = newValue.replace("Nutzungsbedingungen: ", "");
-            }            
+            if (newValue.startsWith( "Nutzungsbedingungen:" )) {
+                newValue = newValue.replace("Nutzungsbedingungen:", "");
+            }
         }
         
-        return newValue;
+        return newValue.trim();
     }
 
     public List<String> getUseConstraints() {
@@ -321,7 +321,7 @@ public class DetailPartPreparer {
                     log.warn("Empty otherConstraints ! We skip this one");
                     continue;
                 }
-                constraintSource = constraintSource.trim();
+                constraintSource = removePraefix(constraintSource);
                 // parse JSON
                 boolean isJSON = false;
                 try {
