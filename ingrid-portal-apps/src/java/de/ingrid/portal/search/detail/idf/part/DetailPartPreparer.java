@@ -639,13 +639,10 @@ public class DetailPartPreparer {
                 if(xPathUtils.nodeExists(node, xpathExpressionDependOn)){
                     String xpathValue = xPathUtils.getString(node, xpathExpressionDependOn).trim();
                     if(xpathValue.equals(dependOn)){
-                        value = xPathUtils.getString(node, xpathExpression);
-                        if(value != null) {
-                            value = value.trim();
-                        } else {
-                            value = xpathValue;
+                        if(xPathUtils.nodeExists(node, xpathExpression)){
+                            value = xPathUtils.getString(node, xpathExpression);
+                            break;
                         }
-                        break;
                     }
                 }
             }
