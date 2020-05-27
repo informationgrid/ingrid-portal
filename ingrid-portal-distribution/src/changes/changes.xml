@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="1874">
             Portal: Fix detail view publisher.
           </action>
+          <action type="fix" dev="wemove" issue="1854">
+            Portal: Fix empty constraints on detail view.
+          </action>
         </release>
 
         <release version="5.4.2" date="2020-05-25" description="Release 5.4.2">
