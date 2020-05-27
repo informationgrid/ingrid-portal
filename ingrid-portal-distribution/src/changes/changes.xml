@@ -7,15 +7,18 @@
 
     <body>
 
+        <release version="5.4.3-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.3">
+          <action type="fix" dev="wemove" issue="1874">
+            Portal: Fix detail view publisher.
+          </action>
+        </release>
+
         <release version="5.4.2" date="2020-05-25" description="Release 5.4.2">
           <action type="fix" dev="wemove" issue="1858">
             Portal: HTML 403 Error-Seite fehlt im BAW-Profil
           </action>
           <action type="fix" dev="wemove" issue="1833">
             Portal: Fix URL parameter plugId on detail view.
-          </action>
-          <action type="fix" dev="wemove" issue="1874">
-            Portal: Fix detail view publisher.
           </action>
         </release>
  
