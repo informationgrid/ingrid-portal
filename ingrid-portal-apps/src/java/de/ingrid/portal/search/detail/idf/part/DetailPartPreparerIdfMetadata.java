@@ -1295,6 +1295,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return messages.getString("t01_object.publish_id_" + publishId);
     }
 
+    public Map<String, String> getDOI() {
+        String doiId = getValueFromXPath("./idf:doi/id");
+        String doiType = getValueFromXPath("./idf:doi/type");
+
+        Map<String, String> element = new HashMap<>();
+        element.put("id", doiId);
+        element.put("type", doiType);
+
+        return element;
+    }
+
     /*
      * Private functiions
      *
