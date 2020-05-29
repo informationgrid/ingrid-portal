@@ -440,6 +440,16 @@ define({
         "sns.freeTermAddTopTermHint": "'${0}' is a Thesaurus-Topterm! It can't be added to the free terms list!",
         "sns.freeTermAddNodeLabelHint": "'${0}' is a node label! It can't be added to the free terms list!",
 
+
+        "doi.title": "DOI/DataCite Format",
+        "doi.id": "DOI",
+        "doi.id.helpMessage": "Input of a DOI according to regulations of DOI names (https://www.doi.org/doi_handbook/2_Numbering.html#2.2).",
+        "doi.id.validation": "This format does not correspond to regulations of a DOI name",
+        "doi.type": "Type",
+        "doi.type.helpMessage": "",
+        "doi.button.exportDataCite": "Export DataCite Format",
+        "doi.hint.save": "Please save the document before exporting",
+
         "links.fillRequiredFieldsHint": "Please fill out all required fields.",
         "links.noLinkToSelfHint": "It is not possible to create a link to the same object.",
 

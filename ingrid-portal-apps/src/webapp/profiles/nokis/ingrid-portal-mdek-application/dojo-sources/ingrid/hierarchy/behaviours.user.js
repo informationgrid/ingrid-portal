@@ -23,7 +23,7 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/nokis/docTypes",
+    "ingrid/hierarchy/behaviours/nokis/docTypes"
 ], function(lang, behaviours, docTypes) {
 
     return lang.mixin(behaviours, {
@@ -33,7 +33,7 @@ define([
          * Define which documents can be created according to the parent.
          * Load new syslists containing Nokis stuff.
          */
-        mcloudDocumentTypes: docTypes,
+        nokisDocumentTypes: docTypes,
 
         advCompatible : undefined,
         advProductGroup : undefined,
