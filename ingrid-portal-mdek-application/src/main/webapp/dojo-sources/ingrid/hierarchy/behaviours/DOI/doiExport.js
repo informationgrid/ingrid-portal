@@ -25,7 +25,7 @@ define([
     "dojo/_base/declare",
     "dojo/dom-construct",
     "dojo/_base/array",
-    "ingrid/message",
+    "ingrid/message"
 ], function (declare, construct, array, message) {
     return declare(null, {
 
