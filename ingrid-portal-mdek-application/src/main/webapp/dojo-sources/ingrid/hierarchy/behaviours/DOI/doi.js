@@ -24,14 +24,13 @@ define(["dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
     "dojo/dom-construct",
-    "dojo/on",
     "dijit/form/Button",
     "dijit/registry",
     "ingrid/dialog",
     "ingrid/message",
     "ingrid/layoutCreator",
     "ingrid/hierarchy/dirty"
-], function (declare, array, lang, construct, on, Button, registry, dialog, message, creator, dirty) {
+], function (declare, array, lang, construct, Button, registry, dialog, message, creator, dirty) {
 
     return declare(null, {
         title: "Unterstützung der Erfassung von DOIs/Export im DataCite Format",
@@ -39,7 +38,6 @@ define(["dojo/_base/declare",
         defaultActive: false,
         run: function () {
 
-            var self = this;
             this.createFields();
 
         },
@@ -127,7 +125,7 @@ define(["dojo/_base/declare",
             construct.place(exportButton.domNode, container);
 
             // fix float container
-            construct.place(construct.create("div", {class: 'clear'}), container);
+            construct.place(construct.create("div", {"class": 'clear'}), container);
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
         },
@@ -137,12 +135,12 @@ define(["dojo/_base/declare",
         },
 
         createOutlinedWrapper: function (rubric) {
-            var insertNode = construct.create("span", {class: 'outer'});
+            var insertNode = construct.create("span", {"class": 'outer'});
             var div = construct.create("div");
-            var labelSpan = construct.create("span", {class: 'label'});
-            var label = construct.create("label", {innerHTML: message.get("doi.title")});
+            var labelSpan = construct.create("span", {"class": 'label'});
+            var label = construct.create("label", {"innerHTML": message.get("doi.title")});
             labelSpan.appendChild(label);
-            var outlined = construct.create("div", {class: 'outlined'});
+            var outlined = construct.create("div", {"class": 'outlined'});
             insertNode.appendChild(div);
             div.appendChild(labelSpan);
             div.appendChild(outlined);
