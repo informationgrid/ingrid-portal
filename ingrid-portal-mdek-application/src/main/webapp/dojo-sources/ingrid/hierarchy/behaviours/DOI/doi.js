@@ -113,7 +113,7 @@ define(["dojo/_base/declare",
                 onClick: function () {
                     // *****************
                     // for quick development
-                    delete require.modules["ingrid/hierarchy/behaviours/DOI/doiExport"];
+                    // delete require.modules["ingrid/hierarchy/behaviours/DOI/doiExport"];
                     // *****************
                     if (self.hasUnsavedChanges()) {
                         dialog.show(message.get("dialog.general.info"), message.get("doi.hint.save"), dialog.INFO);
