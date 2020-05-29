@@ -43,8 +43,11 @@
                 try {
                     var result = doiExport.run();
                     handleResult(result);
-                } catch(e) {
-                    handleError(e);
+                    setTimeout(function () {
+                        _container_.resize();
+                    });
+                } catch (e) {
+                    handleError(e.message);
                 } finally {
                     hideLoadingZone();
                 }
@@ -54,10 +57,14 @@
                 var highlighted = hljs.highlight("xml", res);
                 // putting the highlighted code in a html element so you can see
                 domAttr.set("xmlContainer", {innerHTML: highlighted.value});
+
+                var copyText = document.getElementsByClassName("copyfrom")[0];
+                copyText.value = res;
             }
 
             function handleError(error) {
                 domAttr.set("xmlError", {innerHTML: error});
+                domStyle.set("xmlError", "display", "block")
             }
 
             function showLoadingZone() {
@@ -67,6 +74,22 @@
             function hideLoadingZone() {
                 domStyle.set("xmlLoadingZone", "display", "none");
             }
+
+            function copyToClipboard() {
+
+                /* Get the text field */
+                var copyText = document.getElementsByClassName("copyfrom")[0];
+
+                /* Select the text field */
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+                /* Copy the text inside the text field */
+                document.execCommand("copy");
+
+            }
+
+            copy = copyToClipboard;
 
         });
     </script>
@@ -79,11 +102,13 @@
     </div>
 
     <div id="container">
-        <pre style="font-size: 12px;">
+        <button data-dojo-type="dijit/form/Button" onclick="copy()"><fmt:message key="ui.copyClipboard" /></button>
+        <textarea class='copyfrom' tabindex='-1' aria-hidden='true' style="position: absolute;left: -9999px;"></textarea>
+        <pre style="font-size: 12px; max-height: 600px; overflow: auto">
 <code id="xmlContainer" style="border: 0;"></code>
         </pre>
     </div>
 
-    <div id="xmlError" class="error"></div>
+    <div id="xmlError" class="error" style="display: none;"></div>
 </div>
 </body>

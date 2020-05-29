@@ -449,6 +449,11 @@ define({
         "doi.type.helpMessage": "",
         "doi.button.exportDataCite": "Export DataCite Format",
         "doi.hint.save": "Please save the document before exporting",
+        "doi.error.noAuthor": "We need at least one author",
+        "doi.error.noPublisher": "We need exactly one publisher defined",
+        "doi.error.noPublicationDate": "No publication date set",
+        "doi.error.noDOIId": "No DOI ID set",
+        "doi.error.noDOIType": "No DOI Type set",
 
         "links.fillRequiredFieldsHint": "Please fill out all required fields.",
         "links.noLinkToSelfHint": "It is not possible to create a link to the same object.",

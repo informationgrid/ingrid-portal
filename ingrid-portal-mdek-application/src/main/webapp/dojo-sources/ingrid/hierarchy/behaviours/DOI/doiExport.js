@@ -24,8 +24,9 @@
 define([
     "dojo/_base/declare",
     "dojo/dom-construct",
-    "dojo/_base/array"
-], function (declare, construct, array) {
+    "dojo/_base/array",
+    "ingrid/message",
+], function (declare, construct, array, message) {
     return declare(null, {
 
         run: function () {
@@ -91,7 +92,7 @@ define([
                 var creators = this.create("creators", null, parent);
                 this.addAddressInfo("creator", authors[0], null, creators);
             } else {
-                throw new Error("We need at least one author");
+                throw new Error(message.get("doi.error.noAuthor"));
             }
 
         },
@@ -114,7 +115,7 @@ define([
             if (publisher.length === 1) {
                 this.create("publisher", {innerHTML: this.getNameFromAddress(publisher[0])}, parent);
             } else {
-                throw new Error("We need exactly one publisher defined");
+                throw new Error(message.get("doi.error.noPublisher"));
             }
 
         },
@@ -126,7 +127,7 @@ define([
             if (publications.length > 0) {
                 this.create("publicationYear", {innerHTML: publications[0].date.getFullYear()}, parent);
             } else {
-                throw new Error("No publication date set");
+                throw new Error(message.get("doi.error.noPublicationDate"));
             }
         },
 
@@ -318,7 +319,7 @@ define([
             if (doi.length === 1) {
                 return doi[0].value;
             } else {
-                throw new Error("No DOI field found");
+                throw new Error(message.get("doi.error.noDOIId"));
             }
         },
 
@@ -329,7 +330,7 @@ define([
             if (doiType.length === 1) {
                 return doiType[0];
             } else {
-                throw new Error("No DOI field found");
+                throw new Error(message.get("doi.error.noDOIType"));
             }
         },
 

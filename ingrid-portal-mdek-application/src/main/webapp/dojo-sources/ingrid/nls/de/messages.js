@@ -447,6 +447,11 @@ define({
     "doi.type.helpMessage": "",
     "doi.button.exportDataCite": "Export DataCite Format",
     "doi.hint.save": "Bitte speichern Sie den Datensatz vor dem Export",
+    "doi.error.noAuthor": "Es muss mindestens ein Autor angegeben sein",
+    "doi.error.noPublisher": "Es muss genau ein Herausgeber angegeben sein",
+    "doi.error.noPublicationDate": "Es wird das Datum der Veröffentlichung benötigt",
+    "doi.error.noDOIId": "Keine DOI ID angegeben",
+    "doi.error.noDOIType": "Kein DOI Typ angegeben",
 
     "links.fillRequiredFieldsHint": "Vor dem Speichern m&uuml;ssen alle Pflichtfelder gef&uuml;llt sein!",
     "links.noLinkToSelfHint": "Ein Objekt kann nicht mit sich selbst verkn&uuml;pft werden!",
