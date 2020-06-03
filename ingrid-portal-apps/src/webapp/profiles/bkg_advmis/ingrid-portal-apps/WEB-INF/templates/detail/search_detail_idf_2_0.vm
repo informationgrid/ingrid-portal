@@ -26,7 +26,7 @@
                         <noscript>
                             <img class="preview_image ob-box-left" height=130 width=155 src="$entry.src" alt="">
                         </noscript>
-                        <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||${entry.get("href")}">$entry.title</a></p></figcaption>
+                        <figcaption class="caption"><p><a class="btn btn--primary btn--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}">$entry.title</a></p></figcaption>
                     </figure>
                 #else
                     <figure>
@@ -51,6 +51,8 @@
                 #renderUDKIcon($entry.objectClass)
                 $entry.title
             </a>
+        #elseif($entry.noLink)
+            $entry.title
         #elseif(!$entry.isMapLink)
             <a class="link" href="$entry.href">
                 <svg class="icon"><use xlink:href="#internal-link"></use></svg>
@@ -70,7 +72,7 @@
             #end
         #end
         #if($tool.hasContent($entry.mapLink))
-           <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS||$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
+           <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">$MESSAGES.getString('common.result.showMap')</a>
         #end
     #end
 #end
@@ -609,7 +611,7 @@
 #macro (renderLinkList $title $linkList $titleAsSection)
     #renderLinkListSpace ($title $linkList $titleAsSection "")
 #end
-#macro (renderLinkListSpace $title $linkList $titleAsSection $space)
+#macro (renderLinkListSpace $title $linkList $titleAsSection $space $asList)
     #if($tool.hasContent($linkList))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
@@ -622,10 +624,22 @@
                     <h4 class="title-font">$title</h4>
                 #end
             #end
-            #foreach($link in $sorter.sort($linkList,"title"))
-                <p>
-                    #renderLinkLine($link)
-                </p>
+            #if($asList == "true")
+                <ul class="list list--bullets bx-top-s">
+                    #foreach($link in $sorter.sort($linkList,"title"))
+                        <li>
+                            <p>
+                                #renderLinkLine($link)
+                            </p>
+                        </li>
+                    #end
+                </ul>
+            #else
+                #foreach($link in $sorter.sort($linkList,"title"))
+                    <p>
+                        #renderLinkLine($link)
+                    </p>
+                #end
             #end
         </div>
     #else
@@ -641,16 +655,26 @@
 #end
 
 #macro (renderTextListSpace $title $textList $space)
+    #renderTextListSpaceList ($title $textList $space true)
+#end
+
+#macro (renderTextListSpaceList $title $textList $space $asList)
     #if($tool.hasContent($textList))
         #if($tool.hasContent($title))
             <h4 class="title-font">$title</h4>
             ##renderGroupTitle($entry.title)
         #end
-        <ul class="list list--bullets bx-top-s">
-        #foreach($text in $sorter.sort($textList,"body"))
-             <li><p>$text</li>
+        #if($asList)
+            <ul class="list list--bullets bx-top-s">
+            #foreach($text in $sorter.sort($textList,"body"))
+                <li><p>$text</p></li>
+            #end
+            </ul>
+        #else
+            #foreach($text in $sorter.sort($textList,"body"))
+                <p>$text</p>
+            #end
         #end
-        </ul>
     #else
         #if($space != "")
             #renderTextLabelAbove($title $space)
