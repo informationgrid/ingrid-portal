@@ -20,6 +20,9 @@
           <action type="fix" dev="wemove" issue="1221">
             BKG: Fix show links for INSPIRE spatial reference systems.
           </action>
+          <action type="fix" dev="wemove" issue="1536">
+            BKG ADVMIS: Update facets.
+          </action>
         </release>
 
         <release version="5.4.2" date="2020-05-25" description="Release 5.4.2">
