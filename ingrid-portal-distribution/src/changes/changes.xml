@@ -23,6 +23,9 @@
           <action type="add" dev="wemove" issue="1890">
             Portal: Add contact mail replyTo function.
           </action>
+          <action type="fix" dev="wemove" issue="1221">
+            BKG: Fix show links for INSPIRE spatial reference systems.
+          </action>
         </release>
 
         <release version="5.4.0" date="2020-04-17" description="Release 5.4.0">
