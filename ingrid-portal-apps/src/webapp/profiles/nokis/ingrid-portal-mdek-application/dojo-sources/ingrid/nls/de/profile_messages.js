@@ -37,7 +37,9 @@ define({
     "nokis.dialog.geometryContext.scalar": "Skalares Element",
     "nokis.dialog.geometryContext.other": "Sonstiges Element",
 
-    "nokis.form.button.addGeometryContext": "Feature hinzufügen"
+    "nokis.form.button.addGeometryContext": "Feature hinzufügen",
+    "nokis.attributes.code": "Code",
+    "nokis.attributes.definition": "Definition"
 
 });
 

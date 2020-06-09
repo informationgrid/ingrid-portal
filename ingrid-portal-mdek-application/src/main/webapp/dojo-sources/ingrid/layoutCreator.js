@@ -561,6 +561,7 @@ define([
                 this.addToSection(section, surrDiv);
 
                 this.createDataGrid(additionalField.id, null, structure, null, {
+                    id: additionalField.id,
                     interactive: "true",
                     autoHeight: additionalField.rows,
                     forceGridHeight: additionalField.forceGridHeight,

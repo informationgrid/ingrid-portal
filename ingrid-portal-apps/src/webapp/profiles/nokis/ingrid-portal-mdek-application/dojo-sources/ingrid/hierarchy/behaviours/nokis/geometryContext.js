@@ -46,6 +46,7 @@ define(["dojo/_base/declare",
         // type: "SYSTEM",
         category: "Nokis",
         run: function () {
+            var self = this;
 
             this.createNokisContextMenus();
             this.createFields();
@@ -56,6 +57,10 @@ define(["dojo/_base/declare",
                 } else {
                     domClass.add("uiElementAddgeometryContext", "hide");
                 }
+            });
+
+            topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
+                self.validate(notPublishableIDs);
             });
 
         },
@@ -69,14 +74,14 @@ define(["dojo/_base/declare",
             var geometryContextStructure = [
                 {
                     field: 'geometryType',
-                    name: message.get("nokis.form.geometryContext.geometryType"),
+                    name: message.get("nokis.form.geometryContext.geometryType") + "*",
                     width: '100px',
                     editable: true
                 },
-                {field: 'name', name: message.get("nokis.form.geometryContext.name"), width: '100px', editable: true},
+                {field: 'name', name: message.get("nokis.form.geometryContext.name") + "*", width: '100px', editable: true},
                 {
                     field: 'featureType',
-                    name: message.get("nokis.form.geometryContext.featureType"),
+                    name: message.get("nokis.form.geometryContext.featureType") + "*",
                     width: '100px',
                     editable: true,
                     type: Editors.SelectboxEditor,
@@ -85,16 +90,20 @@ define(["dojo/_base/declare",
                 },
                 {
                     field: 'dataType',
-                    name: message.get("nokis.form.geometryContext.dataType"),
+                    name: message.get("nokis.form.geometryContext.dataType") + "*",
                     width: '130px',
                     editable: true
                 },
                 {
                     field: 'description',
-                    name: message.get("nokis.form.geometryContext.description"),
+                    name: message.get("nokis.form.geometryContext.description") + "*",
                     width: 'auto',
                     editable: true
-                }
+                },
+                {field: 'min', hidden: true},
+                {field: 'max', hidden: true},
+                {field: 'unit', hidden: true},
+                {field: 'attributes', hidden: true}
             ];
 
             var table = layoutCreator.createDomDataGrid({
@@ -109,6 +118,7 @@ define(["dojo/_base/declare",
 
             newFieldsToDirtyCheck.push(id);
             var tableWidget = registry.byId(id);
+            tableWidget.reinitLastColumn(true);
             additionalFields.push(tableWidget);
 
             var linkContainer = construct.create("span", {
@@ -121,9 +131,10 @@ define(["dojo/_base/declare",
                 style: {
                     cursor: "pointer"
                 },
-                onclick: lang.hitch(this, function() {
-                    dialog.showPage(message.get("nokis.dialog.geometryContext.nominal"), "dialogs/mdek_nokis_geometryContext_dialog.jsp");
-
+                onclick: lang.hitch(this, function () {
+                    dialog.showPage(message.get("nokis.dialog.geometryContext.nominal"), "dialogs/mdek_nokis_geometryContext_dialog.jsp", 800, 300, true, {
+                        gridId: "geometryContext"
+                    });
                 })
             }, linkContainer);
 
@@ -133,7 +144,7 @@ define(["dojo/_base/declare",
 
         createNokisContextMenus: function () {
             var type = "NOKIS_GEOMETRYCONTEXT_PARAMETER";
-            var contextMenu = menu.initContextMenu({contextMenu: type});
+            var contextMenu = menu.initContextMenu({id: "geometryContext", contextMenu: type});
             contextMenu.addChild(new MenuSeparator());
             contextMenu.addChild(new MenuItem({
                 id: "menuEditClicked_" + type,
@@ -142,11 +153,35 @@ define(["dojo/_base/declare",
                     var rowData = clickedSlickGrid.getData()[clickedRow];
                     var dialogData = {
                         gridId: clickedSlickGridProperties.id,
-                        selectedRow: rowData
+                        selectedRow: rowData,
+                        rowIndex: clickedRow
                     };
-                    dialog.showPage(message.get("nokis.dialog.geometryContext.nominal"), 'dialogs/mdek_nokis_geometryContext_dialog.jsp?c=' + userLocale, 600, 300, true, dialogData);
+                    dialog.showPage(message.get("nokis.dialog.geometryContext.nominal"), 'dialogs/mdek_nokis_geometryContext_dialog.jsp?c=' + userLocale, 800, 300, true, dialogData);
                 }
             }));
         },
+
+        validate: function (notPublishableIDs) {
+            var table = registry.byId("geometryContext");
+            var hasIncompleteRows = false;
+
+            array.forEach(table.getData(), function (row) {
+                var isComplete = array.every(table.columns, function(col) {
+                    var columnIsNotEmpty = row[col.field] !== null && row[col.field] !== undefined && lang.trim(row[col.field] + "") !== "";
+                    return col.hidden || columnIsNotEmpty;
+                });
+                if (!isComplete) {
+                    hasIncompleteRows = true;
+                }
+
+                if (row.featureType === "scalar" && !row.unit) {
+                    notPublishableIDs.push(["geometryContext", "Ein skalares Element benötigt eine Einheit! Bitte Zeile bearbeiten."])
+                }
+            });
+
+            if (hasIncompleteRows) {
+                notPublishableIDs.push(["geometryContext", "Zu jedem Kontext müssen alle Pflichtspalten ausgefüllt sein"])
+            }
+        }
     })();
 })
