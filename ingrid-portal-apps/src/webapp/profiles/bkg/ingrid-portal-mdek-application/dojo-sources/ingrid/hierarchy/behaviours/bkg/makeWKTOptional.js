@@ -21,37 +21,24 @@
  * **************************************************#
  */
 define([
-    "dojo/_base/lang",
-    "ingrid/hierarchy/behaviours",
-    "ingrid/hierarchy/behaviours/bkg/general",
-    "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/makeWKTOptional",
-    "ingrid/hierarchy/behaviours/bkg/opendata"
-], function(lang, behaviours, general, useConstraintsField, oldUseField, openData, makeWKTOptional) {
+    "dojo/_base/array",
+    "dojo/_base/declare",
+    "dojo/on",
+    "dojo/dom",
+    "dojo/dom-class",
+    "dojo/dom-construct",
+    "dijit/registry",
+    "ingrid/widgets/MultiInputInfoField"
+], function(array, declare, on, dom, domClass, construct, registry, MultiInputInfoField) {
 
-    return lang.mixin(behaviours, {
-
-        /**
-         * 
-         */
-        bkgGeneral: general,
-
-        /**
-         * 
-         */
-        bkgNewUseConstraintsField: useConstraintsField,
-
-        /**
-         * 
-         */
-        bkgOldUseConstraintsField: oldUseField,
-
-        /**
-         *
-         */
-        openData: openData,
-
-        makeWKTOptional: makeWKTOptional
-    });
+    // issue: 556
+    return declare(null, {
+        title: "Optionale Anzeige von Feld 'Begrenzungspolygon als wkt'",
+        description: "Setzt die Anzeige des Feldes 'Begrenzungspolygon als wkt' auf optional.",
+        defaultActive: true,
+        category: "BKG",
+        run: function() {
+          domClass.add("uiElement3572", "optional");
+        }
+    })();
 });
