@@ -117,6 +117,7 @@ define(["dojo/_base/declare",
 
             // general
             domClass.add("uiElement1001", "hide");
+            domClass.add("uiElement1002", "hide");
             domClass.add("uiElement5000", "hide");
             domClass.add("uiElement5100", "hide");
             domClass.add("uiElement6005", "hide");
