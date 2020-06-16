@@ -591,8 +591,8 @@ define(["dojo/_base/declare",
 
                 construct.create("a", {
                     id: tableId + "_uploadLink",
-                    title: "Dokument-Upload [Popup]",
-                    innerHTML: "Dokument-Upload",
+                    title: "Hinzufügen [Popup]",
+                    innerHTML: "Hinzufügen",
                     style: {
                         cursor: "pointer"
                     },
