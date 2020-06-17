@@ -32,6 +32,12 @@
           <action type="fix" dev="wemove" issue="1536">
             BKG ADVMIS: Update facets.
           </action>
+          <action type="fix" dev="wemove" issue="1908">
+            Fix wrong state for INSPIRE topics
+          </action>
+          <action type="fix" dev="wemove" issue="1922">
+            Show correct version information in IGE
+          </action>
         </release>
 
         <release version="5.4.0" date="2020-04-17" description="Release 5.4.0">
