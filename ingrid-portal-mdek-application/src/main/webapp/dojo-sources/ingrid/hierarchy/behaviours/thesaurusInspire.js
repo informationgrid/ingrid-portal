@@ -26,14 +26,16 @@ define([
     "dojo/on",
     "dojo/dom-class",
     "dojo/topic",
-    "dijit/registry"
-], function(declare, aspect, on, domClass, topic, registry) {
+    "dijit/registry",
+    "ingrid/hierarchy/behaviours/utils"
+], function(declare, aspect, on, domClass, topic, registry, utils) {
     return declare(null, {
 
         title : "INSPIRE-Themen",
         description : "Die INSPIRE-Themen sind verpflichtend für Geodatensätze, die INSPIRE-relevant sind.",
         category: "Felder",
         defaultActive : true,
+        events: [],
         run : function() {
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
@@ -44,11 +46,13 @@ define([
                     // when coming from another class where this widget is also available
                     self.handleInspireRelevant(inspireRelevantWidget.checked);
 
-                    on(inspireRelevantWidget, "Change", function(isChecked) {
-                        self.handleInspireRelevant(isChecked);
-                    });
+                    self.events.push(
+                        on(inspireRelevantWidget, "Change", function(isChecked) {
+                            self.handleInspireRelevant(isChecked);
+                        }));
                 } else {
                     self.resetField();
+                    utils.removeEvents(self.events);
                 }
             });
         },
