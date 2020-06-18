@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.4.3-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.3">
+        <release version="5.4.3" date="2020-06-16" description="Release 5.4.3">
           <action type="add" dev="wemove" issue="1909">
             BKG: Add behavior for making wkt field optional.
           </action>
