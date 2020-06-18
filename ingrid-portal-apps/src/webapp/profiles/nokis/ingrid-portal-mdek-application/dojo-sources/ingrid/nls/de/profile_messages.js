@@ -22,5 +22,24 @@
  */
 define({
 
+    "nokis.form.geometryContext": "Geometrie-Kontext",
+    "nokis.form.geometryContext.help": "Ermöglicht die Eingabe eines Geometry Context.",
+    "nokis.contextmenu.geometryContext": "Eigenschaften ansehen/bearbeiten",
+
+    "nokis.form.geometryContext.geometryType": "Geometrie-Typ",
+    "nokis.form.geometryContext.name": "Name",
+    "nokis.form.geometryContext.featureType": "Feature-Typ",
+    "nokis.form.geometryContext.dataType": "Daten-Typ/-Klasse",
+    "nokis.form.geometryContext.description": "Beschreibung",
+
+    "nokis.dialog.geometryContext.nominal": "Nominales Element",
+    "nokis.dialog.geometryContext.ordinal": "Ordinales Element",
+    "nokis.dialog.geometryContext.scalar": "Skalares Element",
+    "nokis.dialog.geometryContext.other": "Sonstiges Element",
+
+    "nokis.form.button.addGeometryContext": "Feature hinzufügen",
+    "nokis.attributes.code": "Code",
+    "nokis.attributes.definition": "Definition"
+
 });
 
