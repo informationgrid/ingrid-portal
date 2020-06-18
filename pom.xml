@@ -35,7 +35,7 @@
   <properties>
     <org.apache.portals.jetspeed.version>2.3.1</org.apache.portals.jetspeed.version>
     <mdek.version>5.4.3-SNAPSHOT</mdek.version>
-    <webmap-client.version>5.4.1-SNAPSHOT</webmap-client.version>
+    <webmap-client.version>5.4.3</webmap-client.version>
     <ingrid-codelist-service.version>5.4.0</ingrid-codelist-service.version>
   </properties>
 
