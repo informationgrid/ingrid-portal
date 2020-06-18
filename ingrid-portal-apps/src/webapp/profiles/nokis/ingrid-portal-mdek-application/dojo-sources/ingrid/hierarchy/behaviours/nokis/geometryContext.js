@@ -86,7 +86,8 @@ define(["dojo/_base/declare",
                     editable: true,
                     type: Editors.SelectboxEditor,
                     options: ["nominal", "ordinal", "skalar", "sonstiges"],
-                    values: ["nominal", "ordinal", "scalar", "other"]
+                    values: ["nominal", "ordinal", "scalar", "other"],
+                    formatter: Formatters.ListCellFormatter
                 },
                 {
                     field: 'dataType',
