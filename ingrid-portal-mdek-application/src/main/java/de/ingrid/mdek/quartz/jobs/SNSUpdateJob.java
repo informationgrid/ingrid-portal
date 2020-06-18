@@ -139,26 +139,25 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
     			List<SNSTopic> snsTopicsResult = updateChangedTopics(snsService, snsTopics, jobExecutionContext);
 
     			List<SNSTopic> snsTopicsToExpire = filterExpired(snsTopicsResult);
-    			if(!snsTopicsToExpire.isEmpty()) {
-        			log.debug("expired topic matches: " + snsTopicsToExpire.size());
-        			log.debug("total free terms: " + freeTerms.size());
 
-        			List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
+				log.debug("expired topic matches: " + snsTopicsToExpire.size());
+				log.debug("total free terms: " + freeTerms.size());
 
-        			long endTime = System.currentTimeMillis();
-        			log.debug("SNS Update took "+(endTime - startTime)+" ms.");
+				List<SNSTopic> freeTermsResult = updateFreeTerms(snsService, freeTerms, jobExecutionContext);
 
-        			if (!cancelJob) {
-        				JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
-        				jobExecutionContext.setResult(jobResult);
+				long endTime = System.currentTimeMillis();
+				log.debug("SNS Update took "+(endTime - startTime)+" ms.");
 
-        				connectionFacade.getMdekCallerCatalog().updateSearchTerms(
-        						pId,
-        						MdekMapper.mapFromThesTermTable(jobResult.getOldTopics()),
-        						MdekMapper.mapFromThesTermTable(jobResult.getNewTopics()),
-        						userId);
-        			}
-    			}
+				if (!cancelJob) {
+					JobResult jobResult = createJobResult(snsTopics, snsTopicsResult, snsTopicsToExpire, freeTerms, freeTermsResult);
+					jobExecutionContext.setResult(jobResult);
+
+					connectionFacade.getMdekCallerCatalog().updateSearchTerms(
+							pId,
+							MdekMapper.mapFromThesTermTable(jobResult.getOldTopics()),
+							MdekMapper.mapFromThesTermTable(jobResult.getNewTopics()),
+							userId);
+				}
 			}
 		} catch (Exception e) {
 			log.error("Error during SNS Update.", e);
@@ -227,7 +226,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 	}
 
 	private static boolean isEqual(String s1, String s2) {
-		return s1.equals(s2);
+		return s1 != null ? s1.equals(s2) : s1 == s2;
 	}
 
 	private static void removeUnknownTerms(List<String> freeTerms, List<SNSTopic> topics) {
@@ -235,6 +234,7 @@ public class SNSUpdateJob extends QuartzJobBean implements MdekJob, Interruptabl
 		Iterator<SNSTopic> topicsIt = topics.iterator();
 
 		while (freeTermsIt.hasNext()) {
+			freeTermsIt.next();
 			SNSTopic topic = topicsIt.next();
 			if (topic == null) {
 				freeTermsIt.remove();
