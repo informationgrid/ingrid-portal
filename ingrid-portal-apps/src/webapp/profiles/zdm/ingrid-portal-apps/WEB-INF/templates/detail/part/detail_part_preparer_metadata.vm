@@ -259,7 +259,7 @@
                                 #set($tmp = "")
                                 ## Raumbezugssystem
                                 #set($tmp = $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))
-                                #renderTextList("Raumbezugssystem" $tmp)
+                                #renderLinkListSpace("Raumbezugssystem" $tmp false "" true)
                                 #set($tmp = "")
                                 ## Räumliche Auflösung
                                 #set($tmp = $TOOL.getValueFromXPath("//gmd:identificationInfo//gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance"))

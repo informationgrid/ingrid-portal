@@ -137,7 +137,7 @@
                         <div class="clearer"></div>
                         ## Raumbezugssystem
                         #set($tmp = $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))
-                        #renderTextListSpace("Bezugssystem" $tmp "-")
+                        #renderLinkListSpace("Bezugssystem" $tmp false "" true)
                         #set($tmp = "")
                         ## Geografisches Begrenzungsrechteck
                         #set($tmp = $TOOL.getAreaGeothesaurus("./gmd:identificationInfo/*/*/gmd:EX_Extent"))
