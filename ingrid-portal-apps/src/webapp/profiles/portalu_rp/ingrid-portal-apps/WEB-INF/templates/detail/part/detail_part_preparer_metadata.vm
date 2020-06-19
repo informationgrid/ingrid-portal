@@ -231,7 +231,7 @@
                                 #set($tmp = "")
                                 ## Raumbezugssystem
                                 #set($tmp = $TOOL.getNodeListValueReferenceSystem("./gmd:referenceSystemInfo"))
-                                #renderTextList($MESSAGES.getString("t011_obj_geo.referencesystem_id") $tmp)
+                                #renderLinkListSpace($MESSAGES.getString("t011_obj_geo.referencesystem_id") $tmp false "" true)
                                 #set($tmp = "")
                             </div>
                         #end
