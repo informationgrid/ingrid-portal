@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.3.11" date="2020-06-22" description="Release 5.3.11">
+          <action type="fix" dev="wemove" issue="1929">
+            IGE(UVP): Fix UVP report when semicolon in titel.
+          </action>
+        </release>
+
         <release version="5.3.10" date="2020-05-29" description="Release 5.3.10">
           <action type="add" dev="wemove" issue="1890">
             Portal: Add contact mail replyTo function.
