@@ -51,6 +51,8 @@ public class UVPReport {
     private static final String TOTAL_NEGATIVE = "totalNegative";
     private static final String TOTAL_POSITIVE = "totalPositive";
     private static final String AVERAGE_DURATION = "averageDuration";
+    // RegEx for finding semicolon outside of quotes: https://stackoverflow.com/questions/18893390/splitting-on-comma-outside-quotes
+    private static final String DELIMITER_OUTSIDE_QUOTES = ";(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)";
 
     private final CatalogRequestHandler catalogRequestHandler;
 
@@ -93,7 +95,7 @@ public class UVPReport {
         String csv = gzipFileToString(fileTransfer.getInputStream());
         String[] lines = splitByNewline(csv);
         for (int i = 1; i < lines.length; i++) {
-            String[] dateLine = lines[i].split(";");
+            String[] dateLine = lines[i].split(DELIMITER_OUTSIDE_QUOTES);
             Map<String, Long> result = new HashMap<>();
             result.put("start", Long.valueOf(dateLine[1]));
             result.put("end", Long.valueOf(dateLine[2]));
@@ -137,7 +139,7 @@ public class UVPReport {
         String csv = gzipFileToString(fileTransfer.getInputStream());
         String[] lines = splitByNewline(csv);
         for (int i = 1; i < lines.length; i++) {
-            String[] catIdAndCount = lines[i].split(";");
+            String[] catIdAndCount = lines[i].split(DELIMITER_OUTSIDE_QUOTES);
             result.put(catIdAndCount[0], Integer.valueOf(catIdAndCount[1]));
         }
         return result;
@@ -155,7 +157,7 @@ public class UVPReport {
         String csv = gzipFileToString(fileTransfer.getInputStream());
         String[] lines = splitByNewline(csv);
         if (lines.length > 1) {
-            String[] catIdAndCount = lines[1].split(";");
+            String[] catIdAndCount = lines[1].split(DELIMITER_OUTSIDE_QUOTES);
             return Integer.parseInt(catIdAndCount[1]);
         }
         return null;
