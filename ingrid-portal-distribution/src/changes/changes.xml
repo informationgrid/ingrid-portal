@@ -8,6 +8,12 @@
     <body>
 
         <release version="5.5.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.0">
+          <action type="fix" dev="wemove" issue="1929">
+            IGE(UVP): Fix UVP report when semicolon in titel.
+          </action>
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.16.
+          </action>
           <action type="add" dev="wemove" issue="1909">
             BKG: Add behavior for making wkt field optional.
           </action>
