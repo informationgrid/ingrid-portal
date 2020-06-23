@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.4.4-SNAPSHOT" date="2020-xx-xx" description="Release 5.4.4">
+        <release version="5.4.4" date="2020-06-23" description="Release 5.4.4">
           <action type="fix" dev="wemove" issue="1929">
             IGE(UVP): Fix UVP report when semicolon in titel.
           </action>
