@@ -117,6 +117,12 @@
                 </div>
                 #end
                 <div id="navPrimary">
+                    #if($currentPage == "/main-maps.psml")
+                    <div class="columns large-2 addShrinkLogo" style="">
+                        <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/additionalLogoShrinkheader.jpg?__blob=normal&amp;v=2" alt="WSVPageAltLink"></a></p>
+                    </div>
+                    #end
+                    <h2 class="aural">Hauptmenü</h2>
                   <ul>
                     <li tabindex="0" class="">
                       <div class="" id="n-1">
