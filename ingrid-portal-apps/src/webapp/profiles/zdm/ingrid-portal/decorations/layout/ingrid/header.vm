@@ -62,8 +62,8 @@
               <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#navPrimary">Hauptmenü</a></li>
               <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#search">Suche</a></li>
             </ul>
-            <div id="wrapperDivisions">
-              <div id="header">
+            <div id="wrapperDivisions" #if($currentPage == "/main-maps.psml")class="maps smaller" style="margin-top: 117px;"#end>
+              <div id="header" #if($currentPage == "/main-maps.psml")class="maps smaller"#end>
                 <div class="wrapperBranding row mod">
                   <div id="navServiceMeta" class="large-9 columns">
                     <h2 class="aural">Servicemen&uuml;</h2>
@@ -101,6 +101,7 @@
                     </form>
                   </div>
                 </div>
+                #if($currentPage != "/main-maps.psml")
                 <div class="row mod">
                   <div class="large-3 logo columns show-for-large-up">
                       <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png?__blob=normal&v=2" alt="WSVPageAltLink"></a></p>
@@ -114,6 +115,7 @@
                     </p>
                   </div>
                 </div>
+                #end
                 <div id="navPrimary">
                   <ul>
                     <li tabindex="0" class="">
@@ -171,14 +173,16 @@
                     </li>
                   </ul>
                 </div>
+                #if($currentPage != "/main-maps.psml")
                 <div id="wrapperBreadcrumbs">
                   <div id="navBreadcrumbsVertical">
                   </div>
                 </div>
+                #end
                 <div id="navBreadcrumbs">
                   <p class="aural">Sie sind hier:</p>
-                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>HTTP Status 404</strong></li></ol>
+                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>#if($currentPage != "/main-maps.psml") HTTP Status 404 #else GeoViewer #end</strong></li></ol>
                 </div>
               </div>
-              <div id="main" class="row">
-                <div id="content" class="large-8 medium-12 small-12 columns">
+              <div #if($currentPage != "/main-maps.psml")id="main" class="row"#end>
+                <div #if($currentPage != "/main-maps.psml")id="content" class="large-8 medium-12 small-12 columns"#end>

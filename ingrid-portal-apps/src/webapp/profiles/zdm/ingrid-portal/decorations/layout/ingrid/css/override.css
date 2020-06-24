@@ -32,3 +32,10 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:f
       display: block;
   }
 }
+
+#wrapperDivisions.maps {
+  margin-top: 0px !important;
+}
+#header.maps {
+  position: relative !important;
+}
