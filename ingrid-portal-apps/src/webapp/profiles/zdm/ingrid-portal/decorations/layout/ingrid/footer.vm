@@ -1,5 +1,12 @@
-                </div>
-                #if($currentPage != "/main-maps.psml")
+        #if($isMap || $currentPage == "/main-measures.psml")
+            #set ($isMap = true)
+        #else
+            #set ($isMap = false)
+        #end
+        #if(!$isMap)
+              </div>
+        #end
+                #if(!$isMap)
                 <div id="supplement" class="large-4 small-12 columns">
                     <div id="navSecondary">
                          <div class="navMain"></div>
@@ -7,7 +14,7 @@
                 </div>
                 #end
               </div>
-              #if($currentPage != "/main-maps.psml")
+              #if(!$isMap)
               <div id="footer">
                   <div id="navFunctionsWrapper" class="row">
                     <div class="small-12 medium-2 medium-push-10 end columns">
