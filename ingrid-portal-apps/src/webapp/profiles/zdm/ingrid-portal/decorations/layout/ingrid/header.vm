@@ -192,7 +192,20 @@
                 #end
                 <div id="navBreadcrumbs">
                   <p class="aural">Sie sind hier:</p>
-                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>#if(!$isMap) HTTP Status 404 #else GeoViewer #end</strong></li></ol>
+                  <ol>
+                    <li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li>
+                    <li>
+                        <strong>
+                            #if($currentPage == "/main-maps.psml")
+                                GeoViewer
+                            #elseif($currentPage == "/main-measures.psml")
+                                MVIS
+                            #else 
+                                HTTP Status 404
+                            #end
+                        </strong>
+                    </li>
+                  </ol>
                 </div>
               </div>
               #if($isMap)
