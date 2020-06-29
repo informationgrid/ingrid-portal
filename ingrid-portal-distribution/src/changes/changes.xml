@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.5.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.0">
+          <action type="fix" dev="wemove" issue="1932">
+            Portal: Fix display data quality on detail view. 
+          </action>
           <action type="fix" dev="wemove" issue="1929">
             IGE(UVP): Fix UVP report when semicolon in titel.
           </action>
