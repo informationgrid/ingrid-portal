@@ -702,9 +702,8 @@ public class DetailPartPreparer {
                                     String tmpValue = sysCodeList.getNameByCodeListValue(codelist, value).trim();
                                     if(tmpValue.length() > 0){
                                         value = tmpValue;
-                                        valueConcated.append(value);
-                                        break;
                                     }
+                                    valueConcated.append(value);
                                 }
                             } else {
                                 valueConcated.append(value);
