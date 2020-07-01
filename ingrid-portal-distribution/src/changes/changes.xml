@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.5" date="2020-xx-xx" description="Release 5.4.5">
+          <action type="add" dev="wemove" issue="1953">
+            Mapclient: Add GFI function to imported WMTS. 
+          </action>
           <action type="fix" dev="wemove" issue="1932">
             Portal: Fix display data quality on detail view. 
           </action>
