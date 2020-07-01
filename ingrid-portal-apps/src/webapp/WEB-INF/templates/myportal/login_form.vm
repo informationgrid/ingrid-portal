@@ -1,19 +1,23 @@
 #set ($action = $renderResponse.createActionURL())
-<form class="metamenu__box ob-container" action="$action" method="post" id="frm_login">
+
+#if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
+    #set($formId = "frm_login")
+    #set($loginId = "login")
+    #set($pwdId = "passwd")
+    #set($autofocus = "autofocus")
+#else
+    #set($formId = "frm_login_service")
+    #set($loginId = "login_service")
+    #set($pwdId = "passwd_service")
+    #set($autofocus = "")
+#end
+
+<form class="metamenu__box ob-container" action="$action" method="post" id="$formId">
     #set($name = "#getFieldValue($loginConstants.USERNAME)")
     #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
     
     <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
     <input type="hidden" name="cmd" value="doLogin" />
-    #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
-        #set($loginId = "login")
-        #set($pwdId = "passwd")
-        #set($autofocus = "autofocus")
-    #else
-        #set($loginId = "login_service")
-        #set($pwdId = "passwd_service")
-        #set($autofocus = "")
-    #end
     <label for="$loginId">$MESSAGES.getString('login.form.username')</label>
     <input type="text" id="$loginId" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" class="field bx-bot-s" $autofocus>
     #addErrorFormMessage('org.apache.jetspeed.login.username')

@@ -3,21 +3,24 @@
         #renderMessageError($MESSAGES.getString('login.error.url.not.exists'))
     #end
     #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" id="frm_login">
+
+    #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
+        #set($formId = "frm_login")
+        #set($loginId = "login")
+        #set($pwdId = "passwd")
+        #set($autofocus = "autofocus")
+    #else
+        #set($formId = "frm_service")
+        #set($loginId = "login_service")
+        #set($pwdId = "passwd_service")
+        #set($autofocus = "")
+    #end
+
+    <form action="$action" method="post" id="$formId">
         #set($name = "#getFieldValue($loginConstants.USERNAME)")
         #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
-        
         <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
         <input type="hidden" name="cmd" value="doLogin" />
-        #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
-            #set($loginId = "login")
-            #set($pwdId = "passwd")
-            #set($autofocus = "autofocus")
-        #else
-            #set($loginId = "login_service")
-            #set($pwdId = "passwd_service")
-            #set($autofocus = "")
-        #end
         <div class="form-element">
             <label for="$loginId">$MESSAGES.getString('login.form.username')</label>
         </div>
