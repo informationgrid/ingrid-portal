@@ -125,12 +125,12 @@
     
     <!--  Messwerte  -->
     <rule>
-        <from>/messwertsuche</from>
+        <from>/zeitreihen</from>
         <to type="passthrough">/portal/main-measures.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-measures.psml</from>
-        <to>/messwertsuche</to>
+        <to>/zeitreihen</to>
     </outbound-rule>
     
     <!--  Umweltthemen  -->
@@ -145,12 +145,12 @@
     
     <!--  Karten   -->
     <rule>
-        <from>/kartendienste</from>
+        <from>/karte</from>
         <to type="forward">/portal/main-maps.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-maps.psml</from>
-        <to>/kartendienste</to>
+        <to>/karte</to>
     </outbound-rule>
     
     <!--  Umweltchronik  -->
