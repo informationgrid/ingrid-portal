@@ -197,9 +197,9 @@
                     <li>
                         <strong>
                             #if($currentPage == "/main-maps.psml")
-                                GeoViewer
+                                Karte
                             #elseif($currentPage == "/main-measures.psml")
-                                MVIS
+                                Zeitreihen
                             #else 
                                 HTTP Status 404
                             #end
