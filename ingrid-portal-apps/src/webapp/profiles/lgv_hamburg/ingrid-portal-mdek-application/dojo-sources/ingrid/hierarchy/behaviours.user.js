@@ -417,7 +417,6 @@ openDataLGV : {
                 domClass.add("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.add("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.add("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.add("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
 
             } else {
 
@@ -458,7 +457,6 @@ openDataLGV : {
                 domClass.remove("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                 domClass.remove("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                 domClass.remove("uiElementN024", "showOnlyExpanded"); // Konformität
-                domClass.remove("uiElement1315", "showOnlyExpanded"); // Kodierungsschema
 
                 // Tab containers may be rendered for the first time and needs to be layouted
                 igeEvents.refreshTabContainers();
@@ -618,23 +616,24 @@ requireUseConstraintsLGV: {
     defaultActive: false,
     run: function () {
         // define our useConstraints handler
-        var updateUseConstraintsBehaviour = function (isChecked) {
-            if (isChecked) {
+        var updateUseConstraintsBehaviour = function () {
+            if (registry.byId("isInspireRelevant").checked ||
+                registry.byId("isOpenData").checked ||
+                registry.byId("publicationHmbTG").checked) {
+
                 domClass.add("uiElementN027", "required");
 
             } else {
-                // remove required field if INSPIRE and open data checkbox not selected
-                if (!registry.byId("isInspireRelevant").checked &&
-                    !registry.byId("isOpenData").checked &&
-                    !registry.byId("publicationHmbTG").checked) {
                     domClass.remove("uiElementN027", "required");
                 }
-            }
         };
 
         on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
         on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
         on(registry.byId("publicationHmbTG"), "Change", updateUseConstraintsBehaviour);
+
+        // initial check
+        updateUseConstraintsBehaviour();
     }
 }
 

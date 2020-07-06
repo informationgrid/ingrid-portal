@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.3.12" date="2020-xx-xx" description="Release 5.3.12">
+          <action type="fix" dev="wemove" issue="1975">
+            IGE(LGV): Fix required state for use constraints
+          </action>
+        </release>
+
         <release version="5.3.11" date="2020-06-22" description="Release 5.3.11">
           <action type="fix" dev="wemove" issue="1929">
             IGE(UVP): Fix UVP report when semicolon in titel.
