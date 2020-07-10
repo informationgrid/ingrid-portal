@@ -53,7 +53,7 @@ define([
                 isInspire: true,
                 specification: name,
                 level: level,
-                publicationDate: new Date(publicationDate)
+                publicationDate: publicationDate && publicationDate.length > 0 ? new Date(publicationDate) : null
             });
             UtilGrid.setTableData("extraInfoConformityTable", conformityData);
         },
