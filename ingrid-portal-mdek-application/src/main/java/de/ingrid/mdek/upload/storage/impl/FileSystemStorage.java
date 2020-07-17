@@ -295,8 +295,8 @@ public class FileSystemStorage implements Storage {
         // file name and content validation
         // NOTE: we write the data to a temporary file before calling the validators
         // in order to allow multiple access to the streamed data
+        Files.createDirectories(Paths.get(this.tempDir));
         final Path tmpFile = Files.createTempFile(Paths.get(this.tempDir), TMP_FILE_PREFIX, null);
-        Files.createDirectories(tmpFile.getParent());
         Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
         try {
             for (final Validator validator : this.validators) {
@@ -524,7 +524,7 @@ public class FileSystemStorage implements Storage {
             zis.closeEntry();
         }
         catch (final Exception ex) {
-            log.error("Failed to extract archive '" + path + "'. Cleaning up...");
+            log.error("Failed to extract archive '" + path + "'. Cleaning up...", ex);
             // delete all extracted files, if one file fails
             for (final Path file : result) {
                 try {
