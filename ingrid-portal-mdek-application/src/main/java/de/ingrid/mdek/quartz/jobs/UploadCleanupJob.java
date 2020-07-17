@@ -294,6 +294,7 @@ public class UploadCleanupJob extends QuartzJobBean {
                     final
                     List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
                     if (objs != null) {
+                        log.info("Number of datasets to examine: " + objs.size() );
                         for (final IngridDocument objEntity : objs) {
                             final String file = objEntity.getString("fdLink.data");
 
