@@ -36,7 +36,7 @@ define({
     "help.mcloud.form.addresses.title": "Adressen",
     "help.mcloud.form.addresses.text": "Hier soll der Datenbereitsteller (Institution, Firma, Behörde, etc.) angegeben werden, der die Metadaten einträgt und über die Veröffentlichung entschieden hat. Über den Link „Adresse hinzufügen“ wird aus im System registrierten Adressen ausgewählt. Die entsprechende Adresse muss zuvor im Verzeichnisbaum unter „Adressen“ &rarr; „Neu anlegen“ angelegt worden sein.<br /><br />Die Neueingabe von Adressen hier in diesem Feld ist nicht möglich.<br /><br />Das Feld „Adressen“ muss ausgefüllt sein, damit der Datensatz veröffentlicht werden kann.<br /><br />Die hier ausgewählte Adresse / Institution erscheint in der mCLOUD unter „Bereitgestellt durch“",
     "help.mcloud.form.crsSection.title": "Raumbezugssystem",
-    "help.mcloud.form.crsSection.text": "Einordnung des Datenbestandes in eine geographische Region.",
+    "help.mcloud.form.crsSection.text": "Einordnung des Datenbestandes in geographische Regionen.<br /><br />Die eingegebenen Raumbezüge erscheinen in der mCLOUD in der Trefferliste und Detaildarstellung in einer Karte visualisiert und werden in der räumlichen Suche berücksichtigt.<br /><br />Die Eintragung des Raumbezugs der Daten ist optional.",
     "help.mcloud.form.crs.title": "Raumbezugssystem",
     "help.mcloud.form.crs.text": "Für Geo-Daten: Angabe des Raumbezugssystems, in dem die Daten vorliegen (muss nicht mit den für die räumliche Suche in der mCLOUD erfassten Eckkoordinaten sein).",
     "help.mcloud.form.crs.example": "EPSG:4326 / WGS 84 / geographisch",
