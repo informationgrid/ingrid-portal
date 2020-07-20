@@ -350,8 +350,12 @@ define(["dojo/_base/declare",
                         var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
                         UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense, source:'Freie und Hansestadt Hamburg, zuständige Behörde'}]);
 
-                        // automatically replace access constraint with "keine"
-                        var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
+                        var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+                        // remove all access constraints
+                        var data = [];
+                        if (isInspireRelevant){
+                            // add access constraint "keine"
+                            data.push({ title: UtilSyslist.getSyslistEntryName(6010, 1) });
                         UtilGrid.setTableData('availabilityAccessConstraints', data);
 
                     } else {
