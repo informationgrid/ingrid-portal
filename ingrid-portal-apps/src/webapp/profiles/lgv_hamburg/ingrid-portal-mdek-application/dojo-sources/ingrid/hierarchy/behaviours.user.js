@@ -353,9 +353,10 @@ define(["dojo/_base/declare",
                         var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
                         // remove all access constraints
                         var data = [];
-                        if (isInspireRelevant){
+                        if (isInspireRelevant) {
                             // add access constraint "keine"
                             data.push({ title: UtilSyslist.getSyslistEntryName(6010, 1) });
+                        }
                         UtilGrid.setTableData('availabilityAccessConstraints', data);
 
                     } else {
