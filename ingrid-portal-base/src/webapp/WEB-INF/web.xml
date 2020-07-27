@@ -207,7 +207,7 @@ limitations under the License.
       <filter-class>org.apache.jetspeed.engine.servlet.StaticResourceCachingFilter</filter-class>
       <init-param>
           <param-name>ExpireHours</param-name>
-          <param-value>48</param-value>
+          <param-value>1</param-value>
       </init-param>
   </filter>
 

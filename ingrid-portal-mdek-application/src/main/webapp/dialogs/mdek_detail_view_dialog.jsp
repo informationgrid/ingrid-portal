@@ -587,9 +587,9 @@ require([
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.title' />");
                     renderTextWithTitle(nodeData.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
                     renderTextWithTitle(nodeData.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
-                    renderTextWithTitle(nodeData.ref1GridFormatAxisDimName, "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(514, nodeData.ref1GridFormatAxisDimName), "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
                     renderTextWithTitle(nodeData.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
-                    renderTextWithTitle(nodeData.ref1GridFormatCellGeometry, "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(509, nodeData.ref1GridFormatCellGeometry), "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
                     
                     if (nodeData.ref1GridFormatGeoRectified) {
                         renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");

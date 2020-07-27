@@ -125,12 +125,12 @@
     
     <!--  Messwerte  -->
     <rule>
-        <from>/messwertsuche</from>
+        <from>/zeitreihen</from>
         <to type="passthrough">/portal/main-measures.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-measures.psml</from>
-        <to>/messwertsuche</to>
+        <to>/zeitreihen</to>
     </outbound-rule>
     
     <!--  Umweltthemen  -->
@@ -145,12 +145,12 @@
     
     <!--  Karten   -->
     <rule>
-        <from>/kartendienste</from>
+        <from>/karte</from>
         <to type="forward">/portal/main-maps.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-maps.psml</from>
-        <to>/kartendienste</to>
+        <to>/karte</to>
     </outbound-rule>
     
     <!--  Umweltchronik  -->
@@ -264,15 +264,19 @@
     </outbound-rule>
     
     <!-- Help -->
+    <rule enabled="true">
+        <condition type="parameter" name="hkey" operator="equal">(maps-1)</condition>
+        <from>/hilfe(.*)$</from>
+        <to type="permanent-redirect">https://kuestendaten-zeg-live-test.itz.res.bund.de/DE/Service/Feedback/feedback-node.html</to>
+    </rule>
     <rule>
         <from>/hilfe</from>
-        <to type="forward">/portal/default-page.psml</to>
+        <to type="permanent-redirect">https://kuestendaten-zeg-live-test.itz.res.bund.de/DE/Service/Feedback/feedback-node.html</to>
     </rule>
-    <outbound-rule>
+    <rule>
         <from>/portal/help.psml</from>
-        <to>/hilfe</to>
-    </outbound-rule>
-    
+        <to type="permanent-redirect">https://kuestendaten-zeg-live-test.itz.res.bund.de/DE/Service/Feedback/feedback-node.html</to>
+    </rule>
     <!-- Profile -->
     <rule>
         <from>/profile</from>

@@ -28,7 +28,8 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-style-type" content="text/css" />
         <meta http-equiv="content-language" content="de" />
-        <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="BAW-MIS bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
         <meta name="keywords" lang="de" content="BAW-MIS, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
@@ -45,6 +46,7 @@
     <body>
         <div class="nav-overlay">
             <a title="Freitextsuche nach Informationen" class="nav-overlay__item nav-overlay__item--level1" href="/freitextsuche">Suche</a>
+            <a title="Eingebundene Datenkataloge und Metadaten" class="nav-overlay__item nav-overlay__item--level1" href="/datenkataloge">Kataloge</a>
             <a class="nav-overlay__item nav-overlay__item--level1" href="/kartendienste" title="Interaktive thematische Karten">Karte</a>
             <div class="js-accordion-multi">
                 <div title="Hintergrundinformationen zu BAW-MIS" class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle">
@@ -69,6 +71,12 @@
                 </li>
                 <li>
                     <a title="Alle Inhalte von BAW-MIS auf einen Blick" href="/inhaltsverzeichnis">Inhalt</a>
+                </li>
+                <li>
+                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
+                </li>
+                <li>
+                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
                 </li>
             </ul>
         </div>
@@ -96,6 +104,9 @@
                     <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
                         <li class="nav-desktop__item">
                           <a class="nav-desktop__title" href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
+                        </li>
+                        <li class="nav-desktop__item">
+                          <a class="nav-desktop__title" href="/datenkataloge" title="Eingebundene Datenkataloge und Metadaten">Kataloge</a>
                         </li>
                         <li class="nav-desktop__item">
                           <a class="nav-desktop__title" href="/kartendienste" title="Interaktive thematische Karten">Karte</a>
@@ -152,6 +163,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="/datenkataloge">
+                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                                    Kataloge
+                                </a>
+                            </li>
+                            <li>
                                 <a href="/kartendienste">
                                     <svg class="icon"><use xlink:href="#internal-link"></use></svg>
                                     Karte
@@ -183,7 +200,9 @@
                                     <a href="/hilfe" title="Erläuterungen zur Nutzung von BAW-MIS">Hilfe</a>
                                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an BAW-MIS">Kontakt</a>
                                     <a href="/inhaltsverzeichnis" title="Alle Inhalte von BAW-MIS auf einen Blick">Inhalt</a>
-                                   </nav>
+                                    <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
+                                    <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen">Datenschutz</a>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -206,16 +225,7 @@
         
         <!-- Popup -->
         <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-        
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/picker.date.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/legacy.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/pickadate/lib/translations/de.js"></script>
-        <script>
-           $('.datepicker').pickadate()
-            
-        </script>
-        
+
         <!-- Accordion -->
         <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
         <script>

@@ -7,6 +7,63 @@
 
     <body>
 
+        <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">
+          <action type="update" dev="wemove" issue="2006">
+            IGE: Increase message size and timeout for IGE communication.
+          </action>
+          <action type="add" dev="wemove" issue="1953">
+            Mapclient: Add GFI function to imported WMTS. 
+          </action>
+          <action type="add" dev="wemove" issue="1900">
+            Portal: Add autofocus attribute to login form. 
+          </action>
+          <action type="add" dev="wemove" issue="1898">
+            Change the docker container’s privilege to a non-root user.
+          </action>
+          <action type="fix" dev="wemove" issue="1932">
+            Portal: Fix display data quality on detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="1929">
+            IGE(UVP): Fix UVP report when semicolon in titel.
+          </action>
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.16.
+          </action>
+          <action type="add" dev="wemove" issue="1909">
+            BKG: Add behavior for making wkt field optional.
+          </action>
+          <action type="add" dev="wemove" issue="1785">
+            Portal: Add displaying of multi preview images.
+          </action>
+          <action type="fix" dev="wemove" issue="1833">
+            Portal: Fix URL parameter plugId on detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="1874">
+            Portal: Fix detail view publisher.
+          </action>
+          <action type="fix" dev="wemove" issue="1854">
+            Portal: Fix empty constraints on detail view.
+          </action>
+          <action type="add" dev="wemove" issue="1890">
+            Portal: Add contact mail replyTo function.
+          </action>
+          <action type="fix" dev="wemove" issue="1221">
+            BKG: Fix show links for INSPIRE spatial reference systems.
+          </action>
+          <action type="fix" dev="wemove" issue="1536">
+            BKG ADVMIS: Update facets.
+          </action>
+          <action type="fix" dev="wemove" issue="1908">
+            Fix wrong state for INSPIRE topics
+          </action>
+          <action type="fix" dev="wemove" issue="1922">
+            Show correct version information in IGE
+          </action>
+          <action type="fix" dev="wemove" issue="1975">
+            IGE(LGV): Fix required state for use constraints
+          </action>
+        </release>
+
         <release version="5.4.0" date="2020-04-17" description="Release 5.4.0">
           <action type="add" dev="wemove" issue="1084">
             IGE: Handle metadata date according to changes in ISO 19139 XML data.

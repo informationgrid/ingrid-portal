@@ -1,0 +1,3 @@
+<a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
+    <img class="footer__logo" src="/decorations/layout/ingrid/images/logo_footer_1.png"></img>
+</a>

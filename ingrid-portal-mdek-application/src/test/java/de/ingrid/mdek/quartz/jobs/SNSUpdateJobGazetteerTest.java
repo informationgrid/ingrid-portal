@@ -160,7 +160,8 @@ public class SNSUpdateJobGazetteerTest {
         return doc;
     }
 
-    @Test
+    // Since Gazetteer does not exist anymore, we don't need this test
+    //@Test
     @SuppressWarnings({ "unchecked" })
     public void testNormalTerm() throws JobExecutionException {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
@@ -553,9 +554,10 @@ public class SNSUpdateJobGazetteerTest {
         // START Process
         snsUpdateJob.executeInternal( context );
     }
-    
+
+    // Since Gazetteer does not exist anymore, we don't need this test
+    //@Test
     @SuppressWarnings("unchecked")
-    @Test
     public void testTermIdNotFoundInsteadBySearchingName() throws Exception {
         SNSLocationUpdateJob snsUpdateJob = new SNSLocationUpdateJob();
         JobDataMap jdm = new JobDataMap();

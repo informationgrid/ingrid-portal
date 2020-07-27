@@ -241,15 +241,15 @@ public class DetailPartPreparer {
     public String removePraefix(String value) {
         String newValue = value;
         if (newValue != null) {
-            if (newValue.startsWith( "Nutzungseinschränkungen: " )) {
-                newValue = newValue.replace("Nutzungseinschränkungen: ", "");
+            if (newValue.startsWith( "Nutzungseinschränkungen:" )) {
+                newValue = newValue.replace("Nutzungseinschränkungen:", "");
             }
-            if (newValue.startsWith( "Nutzungsbedingungen: " )) {
-                newValue = newValue.replace("Nutzungsbedingungen: ", "");
-            }            
+            if (newValue.startsWith( "Nutzungsbedingungen:" )) {
+                newValue = newValue.replace("Nutzungsbedingungen:", "");
+            }
         }
         
-        return newValue;
+        return newValue.trim();
     }
 
     public List<String> getUseConstraints() {
@@ -321,7 +321,7 @@ public class DetailPartPreparer {
                     log.warn("Empty otherConstraints ! We skip this one");
                     continue;
                 }
-                constraintSource = constraintSource.trim();
+                constraintSource = removePraefix(constraintSource);
                 // parse JSON
                 boolean isJSON = false;
                 try {
@@ -639,8 +639,10 @@ public class DetailPartPreparer {
                 if(xPathUtils.nodeExists(node, xpathExpressionDependOn)){
                     String xpathValue = xPathUtils.getString(node, xpathExpressionDependOn).trim();
                     if(xpathValue.equals(dependOn)){
-                        value = xPathUtils.getString(node, xpathExpression).trim();
-                        break;
+                        if(xPathUtils.nodeExists(node, xpathExpression)){
+                            value = xPathUtils.getString(node, xpathExpression);
+                            break;
+                        }
                     }
                 }
             }
@@ -700,9 +702,8 @@ public class DetailPartPreparer {
                                     String tmpValue = sysCodeList.getNameByCodeListValue(codelist, value).trim();
                                     if(tmpValue.length() > 0){
                                         value = tmpValue;
-                                        valueConcated.append(value);
-                                        break;
                                     }
+                                    valueConcated.append(value);
                                 }
                             } else {
                                 valueConcated.append(value);

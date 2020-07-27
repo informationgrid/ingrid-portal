@@ -292,7 +292,13 @@ public class ContactPortlet extends GenericVelocityPortlet {
                          emailSubject = emailSubject + " - " + messages.getString("contact.report.email.area.of.profession." + cf.getInput(ContactForm.FIELD_ACTIVITY));
                      }
                      
-                     String from = cf.getInput(ContactForm.FIELD_EMAIL);
+                     String from = PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_SENDER, "");
+                     String[] replyTo = null;
+                     if(from.isEmpty()) {
+                         from = cf.getInput(ContactForm.FIELD_EMAIL);
+                     } else {
+                         replyTo = new String[]{ cf.getInput(ContactForm.FIELD_EMAIL) };
+                     }
                      String to = PortalConfig.getInstance().getString(PortalConfig.EMAIL_CONTACT_FORM_RECEIVER, "foo@bar.com");
 
                      String text = Utils.mergeTemplate(getPortletConfig(), mailData, "map", localizedTemplatePath);
@@ -320,9 +326,9 @@ public class ContactPortlet extends GenericVelocityPortlet {
                                 }
                             }
                         }
-                        Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile);
+                        Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile, replyTo);
                     }else{
-                        Utils.sendEmail(from, emailSubject, new String[] { to }, text, null);
+                        Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, null, replyTo);
                     }
                  } catch (Exception e) {
                      cf.setError("", "Error sending mail from contact form.");

@@ -62,9 +62,10 @@
             </content>
         </section>
         <section>
-            <header>Datenerfassung</header>
+            <header>Metadatenerfassung</header>
             <content>
 			<p>Der Editor (InGrid Editor - IGE) ist die Metadatenerfassungskomponente der InGrid Software und wird für die Erfassung von Metadaten für die mCLOUD eingesetzt.
+			Metadatensätze werden nachfolgend auch einfach nur als Datensätze bezeichnet, diese sind aber immer nur eine übergeordnete Beschreibung der eigentlichen "Inhaltsdaten". 
 			Der IGE wird über eine vorgeschaltete Login-Maske gestartet. </p>
 			<p>Das Hauptmenü unterscheidet sich, abhängig von der Rolle des eingeloggten Benutzers.
             So stehen einem Katalog-Administrator mehr Funktionen zur Verfügung als einem Autor.</p>
@@ -109,7 +110,7 @@
                     </li>
                 </ul>
                 <p>Das Dashboard ist die Einstiegseite für den InGrid-Editor und zeigt eine Zusammenfassung der gerade
-                in Bearbeitung befindlichen Datensätze, abhängig vom eingeloggten Benutzer.</p>
+                in Bearbeitung befindlichen Metadatensätze, abhängig vom eingeloggten Benutzer.</p>
             </content>
         </section>
         <section help-key="editor-design-3">
@@ -202,7 +203,7 @@
             </content>
         </section>
         <section>
-            <header>Anordnung der Daten (Der Strukturbaum)</header>
+            <header>Anordnung der Metadaten (Der Strukturbaum)</header>
             <content>
                  <p>Im <b>linken Fenster</b> werden die Datensätze und Adressen und ihre Stellung in der 
 				 Hierarchie des Kataloges angezeigt. Die Navigation in der Datensatz- bzw. 
@@ -285,7 +286,7 @@
             </content>
         </section>
         <section help-key="hierarchy-maintenance-2">
-            <header>Die Erfassung von Datensätzen</header>
+            <header>Die Erfassung von Metadaten</header>
             <content>
 				<p>Im <b>rechten</b> Fenster sehen Sie alle verfügbaren Felder und Informationen zum 
 				ausgewählten Element. Diese sind je nach Datensatztyp und Adresstyp unterschiedlich. 
@@ -479,6 +480,42 @@
 				 Klick auf eine Adresse markiert diese. Durch ein anschließendes Klicken auf 
 				 <i><b>Übernehmen</b></i> wird die markierte Referenz auf die Adresse in den Datensatz 
 				 übernommen.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-3">
+            <header>Der Geothesaurus-Navigator</header>
+            <content>
+                 <p>Als Geo-Thesaurus kommt entweder ein WFS des Geodatenzentrums (wfs_gnde) oder
+				 der <a href="http://www.semantic-network.de/" target="SNS">Semantic Network
+				 Service (SNS)</a> des Umweltbundesamtes zum Einsatz.</p>
+                 <p>Ähnlich wie das Ortsverzeichnis eines Atlanten beschreibt der Geo-Thesaurus Umwelt (GTU)
+				 die Namen von Gemeinden, Flüssen, Bergen, Landschaften und anderen geografischen Objekten 
+				 in Deutschland. Dabei gibt der GTU die genaue Schreibweise ebenso wie die geografische 
+				 Position (Koordinaten) eines Orts an.</p>
+                 <p>Geben Sie in das Feld <i><b>Räumliche Einheit festlegen</b></i> den geografischen Begriff
+				 (oder einen Teil des Begriffs) ein, den Sie suchen. Nach dem Klicken auf die Schaltfläche
+				 <i><b>In Geo-Thesaurus suchen</b></i> wird nach diesem Begriff im Geo-Thesaurus gesucht. Es wird eine 
+				 Suche nach einer Teilzeichenkette durchgeführt.</p>
+                 <p>Die Ergebnisse werden unter <i><b>Auswahl</b></i> gelistet. Sie können einen oder mehrere 
+				 Begriffe anhaken und über die Schaltfläche <i><b>Übernehmen</b></i> als Raumbezug zu dem 
+				 Objekt hinzufügen. Für die geografischen Begriffe, für die Koordinaten hinterlegt sind (wie 
+				 z.B. für die administrativen Einheiten), werden auch die Koordinaten in das Objekt 
+				 übernommen.</p>
+                 <p>Sie können im Geo-Thesaurus navigieren, indem Sie auf einen der unter <i><b>Auswahl</b></i> 
+				 angezeigten Begriffe klicken. Es werden dann alle zugehörigen geografischen Begriffe 
+				 angezeigt.</p>
+            </content>
+        </section>
+        <section help-key="maintanance-of-objects-4">
+            <header>Raumbezug hinzufügen</header>
+            <content>
+                 <p>In diesem Dialog können Sie einen freien Raumbezug angeben. In dem Feld 
+				 <i>Freier Raumbezug</i> können Sie den geografischen Namen des Raumbezugs angeben. 
+				 Die Rechts- und Hochwerte können in dem Koordinatensystem angegeben werden, 
+				 das aus der Auswahlliste <i>Koordinatensystem</i> ausgewählt wird.</p>
+				 <p>Mit einem Klick auf die Schaltfläche <i><b>Hinzufügen</b></i> werden die Angaben in das 
+				 Feld <i>Freier Raumbezug</i> des Objektes übernommen.</p>
+				 <p>Über den Link <i>erben</i> ist es möglich, die freien Raumbezüge des übergeordneten Objektes zu erben. Vorhandene Raumbezüge (über den Namen identifiziert) werden nicht überschrieben. Diese Funktion steht nur Unterobjekten zur Verfügung!</p>
             </content>
         </section>
         <section help-key="maintanance-of-objects-10">

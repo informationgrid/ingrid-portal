@@ -28,8 +28,9 @@ define([
     "ingrid/hierarchy/behaviours/mcloud/generalModifications",
     "ingrid/hierarchy/behaviours/mcloud/formFields",
     "ingrid/hierarchy/behaviours/mcloud/formFieldsAddress",
-    "ingrid/hierarchy/behaviours/mcloud/validatePublisher"
-], function(lang, behaviours, contactUrl, docTypes, generalModifications, formFields, addressMods, validatePublisher) {
+    "ingrid/hierarchy/behaviours/mcloud/validatePublisher",
+    "ingrid/hierarchy/behaviours/mcloud/validateWKT"
+], function(lang, behaviours, contactUrl, docTypes, generalModifications, formFields, addressMods, validatePublisher, validateWKT) {
 
     return lang.mixin(behaviours, {
 
@@ -67,6 +68,9 @@ define([
 
         // valitation rule to check that publisher exists
         mcloudValidatePublisher: validatePublisher,
+
+        // valitation rule to check that WKT is correct
+        mcloudValidateWKT: validateWKT,
 
         advCompatible : undefined,
         advProductGroup : undefined,

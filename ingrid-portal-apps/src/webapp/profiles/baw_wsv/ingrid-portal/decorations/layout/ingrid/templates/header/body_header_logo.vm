@@ -1,0 +1,4 @@
+<a class="header__widget header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+    <img class="mobile__logo" src="/decorations/layout/ingrid/images/logo-mobile.png">
+</a>
+<a class="mobile__title mq-hide-s" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">$MESSAGES.getString('ingrid.header.title.main')</a>

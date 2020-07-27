@@ -375,3 +375,10 @@ thead {
 .btn--secondary[disabled] {
     color: #DDD !important;
 }
+
+.swiper-pagination-bullet {
+  background: #871D33 !important;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #871D33 !important;
+}

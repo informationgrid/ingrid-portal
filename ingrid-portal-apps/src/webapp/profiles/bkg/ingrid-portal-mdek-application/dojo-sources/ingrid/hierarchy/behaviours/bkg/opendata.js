@@ -85,7 +85,9 @@ define(["dojo/_base/declare",
           var def = new Deferred();
           var self = this;
           if (cookie(thisBehaviour.COOKIE_HIDE_OPEN_DATA_HINT) !== "true") {
-            dialog.show(message.get("dialog.general.info"), message.get("hint.selectOpenData"), dialog.INFO,
+            var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+            var dialogMessage = isInspireRelevant ? message.get("hint.selectOpenDataInspire") : message.get("hint.selectOpenData");
+            dialog.show(message.get("dialog.general.info"), dialogMessage, dialog.INFO,
               [
                 {
                   caption: message.get("general.ok.hide.next.time"), type: "checkbox",
@@ -112,8 +114,14 @@ define(["dojo/_base/declare",
           }
 
           def.then(function () {
-            // automatically replace access constraint with "keine"
-            var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
+            var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+
+            // remove all access constraints
+            var data = [];
+            if (isInspireRelevant){
+              // add access constraint "keine"
+              data.push({ title: UtilSyslist.getSyslistEntryName(6010, 1) });
+            }
             UtilGrid.setTableData('availabilityAccessConstraints', data);
           });
 
