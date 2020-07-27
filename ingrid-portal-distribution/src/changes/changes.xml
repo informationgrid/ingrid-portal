@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.5.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.0">
+        <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">
           <action type="update" dev="wemove" issue="2006">
             IGE: Increase message size and timeout for IGE communication.
           </action>
