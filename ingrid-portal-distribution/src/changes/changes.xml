@@ -11,6 +11,9 @@
           <action type="add" dev="wemove" issue="1953">
             Mapclient: Add GFI function to imported WMTS. 
           </action>
+           <action type="update" dev="wemove" issue="2012">
+            Mapclient: Update mapclient cache. 
+          </action>
           <action type="fix" dev="wemove" issue="1932">
             Portal: Fix display data quality on detail view. 
           </action>
