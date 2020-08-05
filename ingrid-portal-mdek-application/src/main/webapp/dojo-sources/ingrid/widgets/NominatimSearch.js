@@ -87,8 +87,9 @@ define([
             }
         },
         
-        startup: async function() {
-            this.nominatimBaseURL = await this._getNominatimURL();
+        startup: function() {
+            var self = this;
+            this._getNominatimURL().then(function (res) { self.nominatimBaseURL = res});
             this.map = L.map(this.mapId, {
                 scrollWheelZoom: this.scrollWheelZoom
             }).setView([51.505, 8.89], 13);
