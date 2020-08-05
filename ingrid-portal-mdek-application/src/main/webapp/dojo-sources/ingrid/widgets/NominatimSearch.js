@@ -243,7 +243,7 @@ define([
         _getNominatimURL: function() {
             var def = new Deferred();
 
-            UtilityService.getMdekConfigEntry( 'nominatimBaseURL', {
+            UtilityService.getApplicationConfigEntry( 'nominatimBaseURL', {
                 callback: function(res) {
                     def.resolve(res);
                 }

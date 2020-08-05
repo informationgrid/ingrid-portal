@@ -69,7 +69,7 @@ public class UtilityServiceImpl {
     }
 
     /** get globalconfig field (defined in mdek.properties) from backend to frontend */
-    public Object getMdekConfigEntry(String key) throws NoSuchFieldException, IllegalAccessException {
+    public Object getApplicationConfigEntry(String key) throws NoSuchFieldException, IllegalAccessException {
     	Config c = springConfig.globalConfig();
 		return c.getClass().getField( key ).get( c );
     }
