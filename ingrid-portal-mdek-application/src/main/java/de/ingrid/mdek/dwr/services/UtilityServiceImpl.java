@@ -22,16 +22,23 @@
  */
 package de.ingrid.mdek.dwr.services;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import de.ingrid.mdek.SpringConfiguration;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
+import de.ingrid.mdek.Config;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class UtilityServiceImpl {
+
+	@Autowired
+	private SpringConfiguration springConfig;
 
 	private static final Logger log = Logger.getLogger(UtilityServiceImpl.class);
 
@@ -59,5 +66,11 @@ public class UtilityServiceImpl {
 	/** returns java generated UUID via UUID.randomUUID() */
 	public String getRandomUUID() {
 		return UUID.randomUUID().toString();
+    }
+
+    /** get globalconfig field (defined in mdek.properties) from backend to frontend */
+    public Object getMdekConfigEntry(String key) throws NoSuchFieldException, IllegalAccessException {
+    	Config c = springConfig.globalConfig();
+		return c.getClass().getField( key ).get( c );
     }
 }
