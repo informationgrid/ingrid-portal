@@ -25,6 +25,7 @@ define([
     "dojo/_base/declare", 
     "dojo/_base/array", 
     "dojo/_base/lang",
+    "dojo/Deferred",
     "dojo/dom-construct",
     "dojo/dom-class",
     "dojo/query",
@@ -38,23 +39,25 @@ define([
     "ingrid/message"
     // "ingrid/widgets/leaflet",
     // "ingrid/widgets/leaflet-areaselect"
-], function(declare, array, lang, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, creator, message){
+], function(declare, array, lang, Deferred, construct, domClass, query, on, request, json, registry, _WidgetBase, _Templated, creator, message){
 
     return declare("NominatimSearch", [_WidgetBase, dijit._Templated], {
         
         prefix: "uvp_",
-        
+
+        nominatimBaseURL: null,
+
         map: null,
-        
+
         areaSelect: null,
-        
+
         collapseOnEmptyInput: true,
 
         scrollWheelZoom: true,
 
         hideOnStartup: false,
-        
-        templateString: 
+
+        templateString:
             "<span>" +
             "  <span class='outer optional required mapWrapper no-search'>" +
             "    <div data-dojo-attach-point='mapIdNode' class='map'></div>" +
@@ -63,15 +66,15 @@ define([
             // "    <button data-dojo-type='dijit/form/Button' type='button' data-dojo-attach-event='click:_onClose' class='right'>Schließen</button>" +
             "  </span>" +
             "</span>",
-            
+
         widgetsInTemplate: true,
-        
+
         searchInCountries: ["de","fr","es","at","pl","pt","uk"],
-            
+
         // ATTRIBUTES
         mapId: "uvp_map",
         _setMapIdAttr: { node: "mapIdNode", type: "attribute", attribute: "id" },
-            
+
         postCreate: function(){
             construct.place( creator.createDomTextbox({id: this.prefix + "spatial", name: message.get("widget.spatialSearch"), help: message.get("widget.spatialSearch.helpMessage"), isMandatory: false, visible: "show", style: "width:100%"}), this.domNode, "first" );
             on(registry.byId(this.prefix + "spatial"), "keyup", lang.partial(this._handleSpatialSearch, this));
@@ -84,7 +87,8 @@ define([
             }
         },
         
-        startup: function() {
+        startup: async function() {
+            this.nominatimBaseURL = await this._getNominatimURL();
             this.map = L.map(this.mapId, {
                 scrollWheelZoom: this.scrollWheelZoom
             }).setView([51.505, 8.89], 13);
@@ -117,7 +121,7 @@ define([
                 }
             }
             
-            request("https://nominatim.openstreetmap.org/search/" + q + "?format=json&countrycodes=" + self.searchInCountries).then(
+            request(self.nominatimBaseURL + "/search/" + q + "?format=json&countrycodes=" + self.searchInCountries).then(
                 function(data){
                     var results = json.parse(data);
                     console.log("received data: ", results);
@@ -210,7 +214,7 @@ define([
         _determineLocationInfo: function(box) {
             var center = box.getCenter();
             var self = this;
-            return request("https://nominatim.openstreetmap.org/reverse?format=json&lat=" + center.lat + "&lon=" + center.lng + "&zoom=18&addressdetails=1").then(
+            return request(self.nominatimBaseURL + "/reverse?format=json&lat=" + center.lat + "&lon=" + center.lng + "&zoom=18&addressdetails=1").then(
                 function(data){
                     var results = json.parse(data);
                     console.log("received nominatim reverse data: ", results);
@@ -232,6 +236,19 @@ define([
                 northEast.lat.toFixed(4)
             ];
             return coords.join(", ");
+        },
+
+
+        _getNominatimURL: function() {
+            var def = new Deferred();
+
+            UtilityService.getMdekConfigEntry( 'nominatimBaseURL', {
+                callback: function(res) {
+                    def.resolve(res);
+                }
+            });
+
+            return def;
         },
         
         // PUBLIC METHODS

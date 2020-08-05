@@ -188,6 +188,12 @@ public class Config {
     @DefaultValue("")
     public String mdekDirectLink;
 
+    /**
+     * used in UVP profile
+     */
+    @PropertyValue("mdek.nominatimBaseURL")
+    @DefaultValue("https://nominatim.openstreetmap.org")
+    public String nominatimBaseURL;
 
     public void initialize() {
         System.setProperty( "spring.profiles.active", "http" );
