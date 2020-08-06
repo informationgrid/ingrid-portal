@@ -5,10 +5,8 @@ dpis: [150]
 # the list of allowed hosts
 #
 hosts:
-  # allow all hosts
-  - !ipMatch
-    host:0.0.0.0
-    mask:0.0.0.0
+  # allow all
+  - !acceptAll {}
 
 #
 # allowed scales
