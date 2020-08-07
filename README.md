@@ -23,7 +23,7 @@ Requirements
 
 - a running InGrid Software System
 - java 8
-- maven 3.5.x (The build does not work with mavane 3.6.x, see https://github.com/fhoeben/hsac-fitnesse-fixtures/issues/238 for a work around.)
+- maven 3.5.x (The build does not work with maven 3.6.x, see https://github.com/fhoeben/hsac-fitnesse-fixtures/issues/238 for a work around.)
 
 Installation
 ------------
@@ -66,6 +66,33 @@ Alternatively use the maven plugin of you IDE.
 
 ### Development
 
+#### Portal
+
+IntelliJ IDEA Setup:
+
+First the maven project with all the necessary sub projects must be imported and built.
+Then install Tomcat. It is recommended to use the allready configured tomcat which is intalled by running the installer (ingrid-portal-x.x.x-installer.jar).
+Alternatively the tomcat in the project directory 'distribution' as long as the shared libs are correctly copied.
+
+To configure tomcat to run in IntelliJ. Go to run configuration and create a new 'Tomcat Server' configuration. Make sure 'Deploy applications configured in Tomcat directory' is unchecked.
+In the tab Deployment add the following artifacts with the respective Application Context  
+
+|Artifact|Application Context|
+|---|---|
+|ingrid-portal-base:war exploded|/|
+|ingrid-portal-apps:war exploded|/ingrid-portal-apps|
+|ingrid-portal-mdek:war exploded|/ingrid-portal-mdek|
+|ingrid-portal-application:war exploded|/ingrid-portal-application|
+
+Next deploy the database, ibus and elasticsearch with docker:
+```
+docker-compose -f docker-compose.portal.yml up -d
+```
+
+Now the run configuration can be started.
+
+
+#### InGrid editor
 For development on the InGrid editor a special **environment** is needed. It consists of the following components:
 
 - Database server
