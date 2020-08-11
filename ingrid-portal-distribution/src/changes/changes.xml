@@ -8,7 +8,10 @@
     <body>
 
         <release version="5.6.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.0">
-          <action type="fix" dev="wemove" issue="2035">
+          <action type="fix" dev="wemove" issue="2040">
+            Thesaurus-Navigator has search results without titles
+          </action>
+		  <action type="fix" dev="wemove" issue="2035">
             Portal does not start on windows after manual installation.
           </action>
           <action type="update" dev="wemove" issue="2012">
