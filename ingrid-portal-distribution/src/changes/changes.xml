@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.4.5" date="2020-xx-xx" description="Release 5.4.5">
+        <release version="5.4.5" date="2020-08-12" description="Release 5.4.5">
           <action type="add" dev="wemove" issue="1953">
             Mapclient: Add GFI function to imported WMTS. 
           </action>
