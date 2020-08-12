@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.4.6-SNAPSHOT" date="2020-XX-XX" description="Release 5.4.6">
+	      <action type="fix" dev="wemove" issue="1860">
+            Make Nominatim url configurable
+          </action>
+        </release>
+
         <release version="5.4.5" date="2020-08-12" description="Release 5.4.5">
           <action type="add" dev="wemove" issue="1953">
             Mapclient: Add GFI function to imported WMTS. 
