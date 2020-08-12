@@ -14,6 +14,18 @@
            <action type="update" dev="wemove" issue="2012">
             Mapclient: Update mapclient cache. 
           </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Remove DNS check on print.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Imported WMTS print.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Fix handling with category item attribute selectedOpen.
+          </action>
+          <action type="add" dev="wemove" issue="">
+            Mapclient: Add settings to change help and feedback URL.
+          </action>
           <action type="fix" dev="wemove" issue="1932">
             Portal: Fix display data quality on detail view. 
           </action>
