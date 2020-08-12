@@ -23,7 +23,7 @@
           <action type="fix" dev="wemove" issue="">
             Mapclient: Fix handling with category item attribute selectedOpen.
           </action>
-          <action type="add" dev="wemove" issue="">
+          <action type="add" dev="wemove" issue="2043">
             Mapclient: Add settings to change help and feedback URL.
           </action>
           <action type="fix" dev="wemove" issue="1932">
