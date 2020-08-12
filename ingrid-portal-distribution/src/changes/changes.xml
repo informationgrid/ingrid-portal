@@ -11,11 +11,23 @@
           <action type="fix" dev="wemove" issue="2040">
             Thesaurus-Navigator has search results without titles
           </action>
-		  <action type="fix" dev="wemove" issue="2035">
+          <action type="fix" dev="wemove" issue="2035">
             Portal does not start on windows after manual installation.
           </action>
           <action type="update" dev="wemove" issue="2012">
             Mapclient: Update mapclient cache. 
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Remove DNS check on print.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Fix imported WMTS print.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Fix handling with category item attribute selectedOpen.
+          </action>
+          <action type="add" dev="wemove" issue="2043">
+            Mapclient: Add settings to change help and feedback URL.
           </action>
         </release>
 
