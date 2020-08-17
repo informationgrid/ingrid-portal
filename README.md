@@ -64,23 +64,45 @@ Import project as Maven project. There are several sub projects:
 
 Alternatively use the maven plugin of you IDE.
 
+IntelliJ IDEA Setup:
+
+* Create empty Project
+* Import module from existing Sources (Make sure to select the pom.xml in ingrid-portal source directory. All sub modules will be created automatically.)
+
 ### Development
 
-#### Portal
+#### Portal & InGrid Editor
 
 IntelliJ IDEA Setup:
 
+*Known Problems: The map portlet does not work.*
+
 First the maven project with all the necessary sub projects must be imported and built.
-Then install Tomcat. It is recommended to use the allready configured tomcat which is intalled by running the installer (ingrid-portal-x.x.x-installer.jar).
+
+Next some paths need to be configured. In the Project Settings (Menu "Project Structure" or "Module Settings"), in the 
+Facets -> Web section, make sure the following paths are configured, keep other default configurations:
+
+|Module|Deployment Descriptors|Web Ressource Directories|Source Roots|
+|---|---|---|---|
+|ingrid-portal-base|Tomcat Context Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-base/src/webapp/META-INF/context-develop.xml<br><br>Web Module Deployment Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-base/src/webapp/WEB-INF/web.xml|<SRC_DIR>ingrid/ingrid-portal/ingrid-portal-base/src/webapp -> /|<SRC_DIR>/ingrid-portal/ingrid-portal-base/src/java|
+|ingrid-portal-apps|Tomcat Context Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-apps/src/webapp/META-INF/context-develop.xml<br><br>Web Module Deployment Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-apps/src/webapp/WEB-INF/web.xml|<SRC_DIR>ingrid/ingrid-portal/ingrid-portal-apps/src/webapp -> /|<SRC_DIR>/ingrid-portal/ingrid-portal-apps/src/java|
+|ingrid-portal-mdek|Tomcat Context Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek/src/webapp/META-INF/context-develop.xml<br><br>Web Module Deployment Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek/src/webapp/WEB-INF/web.xml|<SRC_DIR>ingrid/ingrid-portal/ingrid-portal-mdek/src/webapp -> /|<SRC_DIR>/ingrid-portal/ingrid-portal-mdek/src/java|
+|ingrid-portal-mdek-application|Tomcat Context Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/webapp/META-INF/context-develop.xml<br><br>Web Module Deployment Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/webapp/WEB-INF/web.xml|<SRC_DIR>ingrid/ingrid-portal/ingrid-portal-mdek-application/src/main/webapp -> /|<SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/java<br><br><SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/resources|
+
+Then install Tomcat. It is recommended to use the allready configured tomcat which is installed by running the installer (ingrid-portal-x.x.x-installer.jar).
 Alternatively the tomcat in the project directory 'distribution' as long as the shared libs are correctly copied.
 
-To configure tomcat to run in IntelliJ. Go to run configuration and create a new 'Tomcat Server' configuration. Make sure 'Deploy applications configured in Tomcat directory' is unchecked.
+To configure tomcat to run in IntelliJ. Go to run configuration and create a new 'Tomcat Server' configuration. 
+Make sure 'Deploy applications configured in Tomcat directory' is unchecked. Optionally clear 
+the directories `webapps` and `conf/Catalina/localhost`.
+
 In the tab Deployment add the following artifacts with the respective Application Context  
 
 |Artifact|Application Context|
 |---|---|
 |ingrid-portal-base:war exploded|/|
 |ingrid-portal-apps:war exploded|/ingrid-portal-apps|
+|ingrid-portal-layout:war exploded|/ingrid-portal-layout|
 |ingrid-portal-mdek:war exploded|/ingrid-portal-mdek|
 |ingrid-portal-application:war exploded|/ingrid-portal-application|
 
@@ -89,10 +111,14 @@ Next deploy the database, ibus and elasticsearch with docker:
 docker-compose -f docker-compose.portal.yml up -d
 ```
 
-Now the run configuration can be started.
+Now the run/debug configuration can be started.
+
+**Changes to source files will not deployed automatically. You must select the artefact in the Run/Debug Deployment and 
+click the `deploy` icon.**
 
 
 #### InGrid editor
+
 For development on the InGrid editor a special **environment** is needed. It consists of the following components:
 
 - Database server
@@ -104,7 +130,6 @@ To set up the environment execute the following steps:
 ##### Database server
 
 The database server is hosted inside a *Docker* container which is set up by executing the following command inside the project's root directory:
-
 ```
 docker-compose -f docker-compose.ige.yml up -d
 ```

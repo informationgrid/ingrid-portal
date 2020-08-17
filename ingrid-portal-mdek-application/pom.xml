@@ -67,7 +67,7 @@
         <version>2.4</version>
         <configuration>
           <warSourceExcludes>
-            start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**
+            start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**,META-INF/context-develop.xml
           </warSourceExcludes>
           <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
           <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->

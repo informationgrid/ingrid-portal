@@ -389,6 +389,7 @@
         <configuration>
           <warSourceDirectory>${basedir}/src/webapp</warSourceDirectory>
           <archiveClasses>false</archiveClasses>
+          <warSourceExcludes>META-INF/context-develop.xml</warSourceExcludes>
         </configuration>
       </plugin>
 
