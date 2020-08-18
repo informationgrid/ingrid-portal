@@ -75,6 +75,8 @@ IntelliJ IDEA Setup:
 
 IntelliJ IDEA Setup:
 
+This setup only works with the IntelliJ Ultimate edition.
+
 *Known Problems: The map portlet does not work.*
 
 First the maven project with all the necessary sub projects must be imported and built.
@@ -104,7 +106,7 @@ In the tab Deployment add the following artifacts with the respective Applicatio
 |ingrid-portal-apps:war exploded|/ingrid-portal-apps|
 |ingrid-portal-layout:war exploded|/ingrid-portal-layout|
 |ingrid-portal-mdek:war exploded|/ingrid-portal-mdek|
-|ingrid-portal-application:war exploded|/ingrid-portal-application|
+|ingrid-portal-mdek-application:war exploded|/ingrid-portal-mdek-application|
 
 Next deploy the database, ibus and elasticsearch with docker:
 ```
