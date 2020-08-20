@@ -68,15 +68,21 @@ define([
                 on(inspireRelevantWidget, "Click", function () {
                     var checkboxContext = this;
 
+                    var openDataMessage = "";
+                    if( registry.byId("isOpenData" ).checked) {
+                        openDataMessage = "<br><br>";
+                        openDataMessage += checkboxContext.checked ? message.get("hint.selectOpenDataInspire") : message.get("hint.selectOpenData");
+                    }
+
                     if (checkboxContext.checked) {
-                        utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
+                        utils.showConfirmDialog(utils.inspireConformityHint+openDataMessage, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
                             utils.addConformity(true, self.specificationName, "1");
                         }, function () {
                             // toggle checkbox state
                             checkboxContext.set("checked", !checkboxContext.checked);
                         });
                     } else {
-                        utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
+                        utils.showConfirmDialog(utils.inspireConformityHintDeleted+openDataMessage, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then(function () {
                             utils.removeConformity(self.specificationName);
                         }, function () {
                             // toggle checkbox state
@@ -93,7 +99,9 @@ define([
 
         handleInspireChange: function (isChecked) {
             var self = this;
+            var accessConstraints = [];
             if (isChecked) {
+                accessConstraints.push({ title: UtilSyslist.getSyslistEntryName(6010, 1) });
                 var missingMessage = string.substitute(message.get("validation.specification.missing.service"), [this.specificationName]);
                 this.publishEvent = topic.subscribe("/onBeforeObjectPublish", function (/*Array*/ notPublishableIDs) {
                     var requiredSpecification = UtilGrid.getTableData("extraInfoConformityTable")
@@ -110,6 +118,9 @@ define([
             } else {
                 utils.removeEvents([this.publishEvent]);
                 domClass.remove("uiElementN024", "required");
+            }
+            if(registry.byId("isOpenData").get("checked")){
+                UtilGrid.setTableData('availabilityAccessConstraints', accessConstraints);
             }
         },
 
