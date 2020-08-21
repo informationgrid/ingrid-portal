@@ -17,6 +17,9 @@
           <action type="fix" dev="wemove" issue="2035">
             Portal does not start on windows after manual installation.
           </action>
+          <action type="fix" dev="wemove" issue="2086">
+            Portal: Change portal registration button title.
+          </action>
           <action type="update" dev="wemove" issue="2012">
             Mapclient: Update mapclient cache. 
           </action>
