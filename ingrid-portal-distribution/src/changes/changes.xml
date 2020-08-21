@@ -8,7 +8,7 @@
     <body>
 
         <release version="5.5.1-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.1">
-		  <action type="fix" dev="wemove" issue="1860">
+          <action type="fix" dev="wemove" issue="1860">
             Make Nominatim url configurable
           </action>
           <action type="fix" dev="wemove" issue="2040">
@@ -16,6 +16,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2035">
             Portal does not start on windows after manual installation.
+          </action>
+          <action type="fix" dev="wemove" issue="2086">
+            Portal: Change portal registration button title.
           </action>
           <action type="update" dev="wemove" issue="2012">
             Mapclient: Update mapclient cache. 
