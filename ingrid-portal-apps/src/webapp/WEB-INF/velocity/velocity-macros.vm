@@ -560,6 +560,9 @@ $actionForm.getInputHTMLEscaped($field)#end
             #elseif($class == "6")
                 ## Informationssystem
                 <use xlink:href="#molecule">
+            #elseif($class == "1000")
+                ## Folder
+                <use xlink:href="#folder">
             #end
         </svg>
     #end
@@ -579,6 +582,9 @@ $actionForm.getInputHTMLEscaped($field)#end
         #elseif($class == "3")
             ## Freie Adresse
             <use xlink:href="#envelope">
+        #elseif($class == "1000")
+            ## Folder
+            <use xlink:href="#folder">
         #end
     </svg>
 #end

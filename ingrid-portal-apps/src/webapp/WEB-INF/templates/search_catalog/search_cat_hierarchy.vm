@@ -48,7 +48,11 @@
                         #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
                     #end
                 #end
-                <strong>#if($nodeUrl != '')<a href="$nodeUrl">$nodeTitle</a>#else$nodeTitle#end</strong>
+                #if($nodeUrl != '' && $node.udk_class != "1000")
+                    <a href="$nodeUrl">$nodeTitle </a>
+                #else
+                    $nodeTitle
+                #end
             </li>
             <li class="tree__content js-accordion-content">
                 ## render sub nodes
@@ -80,7 +84,13 @@
                     #end
                 #end
                 ## render node text
-                <strong>#if($nodeUrl != '')<a href="$nodeUrl">$nodeTitle</a>#else$nodeTitle#end</strong>
+                <strong>
+                #if($nodeUrl != '' && $node.udk_class != "1000")
+                    <a href="$nodeUrl">$nodeTitle </a>
+                #else
+                    $nodeTitle
+                #end
+                </strong>
             </li>
         #else
             #if($nodeUrl != '')
@@ -90,7 +100,11 @@
                 #else
                     #renderUDKAddressIcon(${node.udk_class} $nodeAlt)
                 #end
-                <a href="$nodeUrl">$nodeTitle</a>
+                #if($nodeUrl != '' && $node.udk_class != "1000")
+                    <a href="$nodeUrl">$nodeTitle </a>
+                #else
+                    $nodeTitle
+                #end
             </li>
             #end
         #end
