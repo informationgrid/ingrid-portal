@@ -1285,7 +1285,43 @@ define([
                 }
             }
 
-            // show info of long text which is necessary if no edit mode is available
+            if (this.options.imageLinkTooltip) {
+                var self = this;
+                var cellContent = this.getDataItem(cell.row)?.fileName;
+                if(!cellContent) return;
+                if (this.columns[cell.cell].formatter) cellContent = this.columns[cell.cell].formatter(cell.row, cell.cell, cellContent);
+
+                Tooltip.show("<img style='min-width:350px; max-width: 300px; max-height: 300px;' src='" + cellContent + "' alt='Bild nicht gefunden: " + cellContent + "' />", thisCell);
+                var handle = on(thisCell, "mouseout", function() {
+                    var mousePos = {};
+                    var handleMove = on(has("ie") ? document : window, "mousemove", function(e) {
+                        mousePos.x = e.clientX;
+                        mousePos.y = e.clientY;
+                    });
+                    setTimeout(function() {
+                        var tooltip = query(".dijitTooltip")[0];
+                        if (!self._isCoordinateInElement(tooltip, mousePos)) {
+                            Tooltip.hide(thisCell);
+                            handle.remove();
+                            handleMove.remove();
+                        } else {
+                            var handleTipOut = on(tooltip, "mouseout", function(e) {
+                                if (!self._isCoordinateInElement(tooltip, {
+                                    x: e.clientX,
+                                    y: e.clientY
+                                })) {
+                                    Tooltip.hide(thisCell);
+                                    handleTipOut.remove();
+                                }
+                            });
+                            handle.remove();
+                        }
+                    }, 500);
+                });
+            }
+
+
+                // show info of long text which is necessary if no edit mode is available
             // if (query(".slick-cell.l2.r2")[1].scrollWidth > cellWidth)
             if (!win.global.doNotShowTooltips && this.getDataItem(cell.row) && thisCell.scrollWidth > this.columns[cell.cell].width) {
                 var self = this;

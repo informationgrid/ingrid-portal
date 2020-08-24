@@ -54,6 +54,7 @@ define([
     "ingrid/utils/Grid",
     "ingrid/utils/Thesaurus",
     "ingrid/utils/Catalog",
+    "ingrid/utils/Dom",
     "ingrid/message",
     "ingrid/dialog",
     "ingrid/layoutCreator",
@@ -67,7 +68,7 @@ define([
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
-            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
+            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog, UtilDOM,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
         return declare(null, {
@@ -334,7 +335,9 @@ define([
                         editable: true
                     }
                 ];
-                layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null);
+                var gridProperties = UtilDOM.getHTMLAttributes("generalPreviewImageTable")
+                gridProperties.imageLinkTooltip = "true";
+                layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null, gridProperties);
 
                 var thesaurusInspireStructure = [{
                     field: 'title',
