@@ -1287,7 +1287,7 @@ define([
 
             if (this.options.imageLinkTooltip) {
                 var self = this;
-                var cellContent = this.getDataItem(cell.row)?.fileName;
+                var cellContent = this.getDataItem(cell.row) ? this.getDataItem(cell.row).fileName : null;
                 if(!cellContent) return;
                 if (this.columns[cell.cell].formatter) cellContent = this.columns[cell.cell].formatter(cell.row, cell.cell, cellContent);
 
