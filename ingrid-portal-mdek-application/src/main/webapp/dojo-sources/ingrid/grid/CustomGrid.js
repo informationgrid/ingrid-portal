@@ -1291,7 +1291,7 @@ define([
                 if(!cellContent) return;
                 if (this.columns[cell.cell].formatter) cellContent = this.columns[cell.cell].formatter(cell.row, cell.cell, cellContent);
 
-                Tooltip.show("<img style='min-width:350px; max-width: 300px; max-height: 300px;' src='" + cellContent + "' alt='Bild nicht gefunden: " + cellContent + "' />", thisCell);
+                Tooltip.show("<img style='width: 300px; height: auto;' src='" + cellContent + "' alt='Bild nicht gefunden: " + cellContent + "' />", thisCell);
                 var handle = on(thisCell, "mouseout", function() {
                     var mousePos = {};
                     var handleMove = on(has("ie") ? document : window, "mousemove", function(e) {
