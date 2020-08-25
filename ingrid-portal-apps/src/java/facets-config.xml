@@ -148,7 +148,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Metadaten -->
             <facet>
                 <name>searchResult.facete.title.metaclass</name>
-                <query>-t01_object.obj_class:1000 datatype:metadata</query>
+                <query>datatype:metadata</query>
                 <id>metadata</id>
                 <facets>
               <!-- INSPIRE-relevant -->
@@ -313,7 +313,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Adressen -->
             <facet>
                 <name>searchResult.facete.datatype.address</name>
-                <query>-t02_address.typ:1000 datatype:address</query>
+                <query>datatype:address</query>
                 <id>address</id>
             </facet>
         <!-- Fachdatenbanken -->
@@ -436,7 +436,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <!-- Metadaten -->
             <facet>
                 <name>searchResult.facete.title.metaclass</name>
-                <query>-t01_object.obj_class:1000 datatype:metadata</query>
+                <query>datatype:metadata</query>
                 <id>metadata</id>
                 <parentId>type</parentId>
                 <icon>icon-folder-search</icon>

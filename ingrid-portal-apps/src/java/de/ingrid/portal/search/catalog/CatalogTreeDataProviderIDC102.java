@@ -120,7 +120,7 @@ public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
             Settings.HIT_KEY_UDK_CLASS
         };
         return IPlugHelperDscEcs.getHits(FIELD_OBJECT_ID + ":[0 TO A] -" + FIELD_PARENT_OBJ_UUID + ":[0 TO Z]".concat(
-                " iplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
+                " (isfolder:false OR isfolder:true) isiplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
     }
 
     /**
@@ -141,7 +141,7 @@ public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
         };
         
         return IPlugHelperDscEcs.getHits(FIELDS_ADDRESS_ID + ":[0 TO A] -" + FIELD_PARENT_ADDR_UUID + ":[0 TO Z]".concat(
-                " iplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
+                " (isfolder:false OR isfolder:true) iplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
     }
     
     
@@ -168,7 +168,7 @@ public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
                 Settings.HIT_KEY_ORG_OBJ_ID
         };
         return IPlugHelperDscEcs.getHits(FIELD_PARENT_OBJ_UUID + ":".concat(objUuid).concat(
-        " iplugs:\"").concat(IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
+        " (isfolder:false OR isfolder:true) iplugs:\"").concat(IPlugHelperDscEcs.getPlugIdFromAddressPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
     }
 
     private List getSubordinatedAddresses(String addrUuid, String plugId, Integer maxResults) {
@@ -182,7 +182,7 @@ public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
                 Settings.HIT_KEY_ADDRESS_ADDRID
         };
         return IPlugHelperDscEcs.getHits(FIELD_PARENT_ADDR_UUID + ":".concat(addrUuid).concat(
-        " iplugs:\"").concat(IPlugHelperDscEcs.getAddressPlugIdFromPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
+        " (isfolder:false OR isfolder:true) iplugs:\"").concat(IPlugHelperDscEcs.getAddressPlugIdFromPlugId(plugId)).concat("\""), requestedMetadata, null, maxResults);
     }
     
 }
