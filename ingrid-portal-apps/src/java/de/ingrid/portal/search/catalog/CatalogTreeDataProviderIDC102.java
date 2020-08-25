@@ -120,7 +120,7 @@ public class CatalogTreeDataProviderIDC102 implements CatalogTreeDataProvider {
             Settings.HIT_KEY_UDK_CLASS
         };
         return IPlugHelperDscEcs.getHits(FIELD_OBJECT_ID + ":[0 TO A] -" + FIELD_PARENT_OBJ_UUID + ":[0 TO Z]".concat(
-                " (isfolder:false OR isfolder:true) isiplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
+                " (isfolder:false OR isfolder:true) iplugs:\"".concat(iPlugId).concat("\"")), requestedMetadata, null);
     }
 
     /**
