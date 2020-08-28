@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.6-SNAPSHOT" date="2020-XX-XX" description="Release 5.4.6">
+          <action type="fix" dev="wemove" issue="2087">
+            Fix layout search result on mobile.
+          </action>
           <action type="add" dev="wemove" issue="1102">
             Add display folder on portal catalog tree.
           </action>
