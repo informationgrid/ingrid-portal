@@ -76,3 +76,14 @@ iframe {
         )
     );
 }
+
+.search-result .media__obj--right:last-child {
+    @include media(
+        $query: '< 640',
+        $css: (
+            float: right,
+            margin-bottom: 0px
+        )
+    );
+}
+
