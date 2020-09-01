@@ -95,6 +95,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(7125,"Datenqualität - Korrektheit der thematischen Klassifizierung - Art der Messung");
                 put(7126,"Datenqualität - Genauigkeit nicht-quantitativer Attribute - Art der Messung");
                 put(7127,"Datenqualität - Genauigkeit quantitativer Attribute - Art der Messung");
+                put(7128,"Datenqualität - Relative Positionsgenauigkeit - Art der Messung");
                 put(99999999,"Sprache der Ressource / des Metadatensatzes");
             }};
 

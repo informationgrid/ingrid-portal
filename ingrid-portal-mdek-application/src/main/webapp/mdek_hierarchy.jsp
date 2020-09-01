@@ -1144,6 +1144,18 @@
                                 </div>
                                 </div>
                             </span>
+                            <span id="uiElement7528" class="outer optional">
+                                <div><span class="label">
+                                    <label for="dq128Table" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7528)">
+                                        <fmt:message key="ui.obj.dq.table128.title" />
+                                    </label>
+                                </span>
+                                <div class="input tableContainer">
+                                    <div id="dq128Table" interactive="true" autoHeight="3">
+                                    </div>
+                                </div>
+                                </div>
+                            </span>
                         </div>
                          <div class="fill"></div>
                     </div>

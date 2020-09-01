@@ -244,6 +244,7 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setDq125Table(mapToDqTable(125, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq126Table(mapToDqTable(126, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
             mdekObj.setDq127Table(mapToDqTable(127, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
+            mdekObj.setDq128Table(mapToDqTable(128, (List<IngridDocument>) obj.get(MdekKeys.DATA_QUALITY_LIST)));
 
             mdekObj.setInspireRelevant("Y".equals(obj.get(MdekKeys.IS_INSPIRE_RELEVANT)));
             mdekObj.setInspireConform("Y".equals(obj.get(MdekKeys.IS_INSPIRE_CONFORM)));
@@ -887,6 +888,7 @@ public class MdekMapper implements DataMapperInterface {
             mapFromDQTable(125, data.getDq125Table(), dqList);
             mapFromDQTable(126, data.getDq126Table(), dqList);
             mapFromDQTable(127, data.getDq127Table(), dqList);
+            mapFromDQTable(128, data.getDq128Table(), dqList);
             udkObj.put(MdekKeys.DATA_QUALITY_LIST, dqList);
             
             udkObj.put(MdekKeys.IS_INSPIRE_RELEVANT, isInspireRelevantValue);

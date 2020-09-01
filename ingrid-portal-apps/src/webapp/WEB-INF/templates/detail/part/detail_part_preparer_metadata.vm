@@ -737,6 +737,13 @@
                             #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table127.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
                             #renderTable($tmp)
                             #set($tmp = "")
+                            ## Relative Positionsgenauigkeit
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7128"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table128.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
                         </div>
                     </div>
                 </div>

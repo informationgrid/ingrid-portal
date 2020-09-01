@@ -1104,6 +1104,32 @@ define([
                     editable: true
                 }];
                 layoutCreator.createDataGrid("dq127Table", null, dq127TableStructure, null);
+
+                var dq128TableStructure = [{
+                    field: 'nameOfMeasure',
+                    name: message.get("ui.obj.dq.table.header1"),
+                    width: '300px',
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded listId=7128
+                    values: [],
+                    editable: true,
+                    listId: 7128,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 7128)
+                }, {
+                    field: 'resultValue',
+                    name: message.get("ui.obj.dq.table.header2"),
+                    width: '105px',
+                    editable: true,
+                    type: gridEditors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: gridFormatters.LocalizedNumberFormatter
+                }, {
+                    field: 'measureDescription',
+                    name: message.get("ui.obj.dq.table.header3"),
+                    width: '303px',
+                    editable: true
+                }];
+                layoutCreator.createDataGrid("dq128Table", null, dq128TableStructure, null);
             },
 
             createFachBezugClass2: function() {
