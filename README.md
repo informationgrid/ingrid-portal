@@ -91,8 +91,8 @@ Facets -> Web section, make sure the following paths are configured, keep other 
 |ingrid-portal-mdek|Tomcat Context Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek/src/webapp/META-INF/context-develop.xml<br><br>Web Module Deployment Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek/src/webapp/WEB-INF/web.xml|<SRC_DIR>ingrid/ingrid-portal/ingrid-portal-mdek/src/webapp -> /|<SRC_DIR>/ingrid-portal/ingrid-portal-mdek/src/java|
 |ingrid-portal-mdek-application|Tomcat Context Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/webapp/META-INF/context-develop.xml<br><br>Web Module Deployment Descriptor=<SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/webapp/WEB-INF/web.xml|<SRC_DIR>ingrid/ingrid-portal/ingrid-portal-mdek-application/src/main/webapp -> /|<SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/java<br><br><SRC_DIR>/ingrid-portal/ingrid-portal-mdek-application/src/main/resources|
 
-Then install Tomcat. It is recommended to use the allready configured tomcat which is installed by running the installer (ingrid-portal-x.x.x-installer.jar).
-Alternatively the tomcat in the project directory 'distribution' as long as the shared libs are correctly copied.
+Then install Tomcat. It is recommended to use the already configured tomcat which is installed by running the installer (ingrid-portal-x.x.x-installer.jar).
+Alternatively install the tomcat in the project directory 'distribution' as long as the shared libs are correctly copied.
 
 To configure tomcat to run in IntelliJ. Go to run configuration and create a new 'Tomcat Server' configuration. 
 Make sure 'Deploy applications configured in Tomcat directory' is unchecked. Optionally clear 
@@ -115,7 +115,7 @@ docker-compose -f docker-compose.portal.yml up -d
 
 Now the run/debug configuration can be started.
 
-**Changes to source files will not deployed automatically. You must select the artefact in the Run/Debug Deployment and 
+**Changes to source files will not be deployed automatically. You must select the artefact in the Run/Debug Deployment and 
 click the `deploy` icon.**
 
 
@@ -165,7 +165,7 @@ The InGrid editor is a web application that is started by executing the followin
 run.sh [<profile>]
 ```
 
-The comand starts a development server (Jetty), that allows for directly editing the application sources. When editing Java classes, the server is automatically restarted. Editing resource files like *messages.properties* requires the server to be restarted.
+The command starts a development server (Jetty), that allows for direct editing the application sources. When editing Java classes, the server is automatically restarted. Editing resource files like *messages.properties* requires the server to be restarted.
 
 The optional `profile` parameter adds the sources from the profile directory (`ingrid-portal-apps/src/webapp/profiles/<profile>`) for startup. 
 
