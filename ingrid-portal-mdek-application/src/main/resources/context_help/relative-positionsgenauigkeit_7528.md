@@ -7,5 +7,5 @@ title: Relative Positionsgenauigkeit
 
 # Relative Positionsgenauigkeit
 
-Relative Positionsgenauigkeit
+Genauigkeitsangabe bezüglich einer als richtig akzeptierten Bezugs- oder Sollposition
 
