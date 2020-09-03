@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.5.1-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.1">
+          <action type="add" dev="wemove" issue="2106">
+            Mapclient: Integrate KML attachment as permalink.
+          </action>
           <action type="fix" dev="wemove" issue="2087">
             Fix layout search result on mobile.
           </action>
