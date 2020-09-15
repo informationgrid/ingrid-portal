@@ -33,6 +33,7 @@ globalParallelFetches: 32
 perHostParallelFetches: 32
 connectionTimeout: 30000
 socketTimeout: 60000
+proxyBaseUrl: https://kuestendaten-zeg-live-test.itz.res.bund.de/ingrid-webmap-client/pdf
 
 ignoreCapabilities: true
 maxPrintTimeBeforeWarningInSeconds: 120
