@@ -1,0 +1,457 @@
+<script>
+var winUrl = window.location.href;
+var menu = '';
+var breadCrumbsText = '';
+var breadCrumbsHref = '';
+var subheadlineTitle = '';
+
+if (winUrl.indexOf('/NOK/DE/') > -1) {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="NOK/DE/Aktuelles/Aktuelles_node.html" title="Aktuelles">Ak&shy;tu&shy;el&shy;les</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="NOK/DE/Allg_Infos/Allgemeine_Informationen_node.html" title="Allgemeine Informationen">All&shy;ge&shy;mei&shy;ne In&shy;for&shy;ma&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="NOK/DE/Allg_Infos/Abkuerzungen/Abkuerzungen_node.html" title="Abkürzungen">Ab&shy;kür&shy;zun&shy;gen</a></li>' +
+                '<li class=""><a href="NOK/DE/Allg_Infos/NOK_Info/Der_Nord_Ostsee_Kanal_node.html" title="Der Nord-Ostsee-Kanal">Der Nord-Ost&shy;see-Ka&shy;nal</a></li>' +
+                '<li class=""><a href="NOK/DE/Allg_Infos/Fotos_und_Filme/Fotos_und_Filme_node.html" title="Fotos &amp; Filme">Fo&shy;tos &amp; Fil&shy;me</a></li>' +
+                '<li class=""><a href="NOK/DE/Allg_Infos/Glossar/Glossar_node.html" title="Glossar">Glossar</a></li>' +
+                '<li class="last "><a href="NOK/DE/Allg_Infos/Links/Links_node.html" title="Links">Links</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="NOK/DE/Projekte/Projekte_node.html" title="Projekte">Pro&shy;jek&shy;te</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="NOK/DE/Projekte/Fachgruppe_Investitionen_NOK/Fachgruppe_Investitionen_NOK_node.html" title="Fachbereich Investitionen NOK">Fach&shy;be&shy;reich In&shy;ves&shy;ti&shy;tio&shy;nen <abbr>NOK</abbr></a></li>' +
+                '<li class=""><a href="NOK/DE/Projekte/Schleusen_Brunsbuettel/NOK_Schleusen_Brunsbuettel_node.html" title="NOK Schleusen Brunsbüttel">NOK Schleu&shy;sen Bruns&shy;büt&shy;tel</a></li>' +
+                '<li class=""><a href="NOK/DE/Projekte/Ausbau_NOK/Ausbau-des-Nord-Ostsee-Kanals-node.html" title="Ausbau des Nord-Ostsee-Kanals">Aus&shy;bau des Nord-Ost&shy;see-Ka&shy;nals</a></li>' +
+                '<li class=""><a href="NOK/DE/Projekte/Neubau_Levensauer_Hochbruecke/Neubau-Levensauer-Hochbruecke-node.html" title="Neubau Levensauer Hochbrücke">Neu&shy;bau Le&shy;ven&shy;sau&shy;er Hoch&shy;brücke</a></li>' +
+                '<li class="last "><a href="NOK/DE/Projekte/Sanierung_Kleine_Schleuse_Kiel_Holtenau/Die-Sanierung-der-Kleinen-Schleuse-Kiel-Holtenau-node.html" title="Ersatzneubau der Kleinen Schleuse Kiel-Holtenau">Er&shy;satz&shy;neu&shy;bau der Klei&shy;nen Schleu&shy;se Kiel-Hol&shy;tenau</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-4">' +
+          '<h3><a href="NOK/DE/Service/service_node.html" title="Service">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="NOK/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow&shy;n&shy;load Zeitrei&shy;hen</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In&shy;fo&shy;brie&shy;fe</a></li>' +
+                '<li class=""><a href="NOK/DE/Service/Kartentool/Kartentool_node.html" title="Kartentool">Kar&shy;ten&shy;tool</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;NOKE=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="NOK/DE/Service/Messwertassistent/Messwertassistent_node.html" title=" Sensor Web Client / Messwertassistent">SWC / Mess&shy;wertas&shy;sis&shy;tent</a></li>' +
+                '<li class="last "><a href="NOK/DE/Service/WMS/wms_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Nord-Ostsee-Kanal';
+    breadCrumbsHref = '/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html';
+    subheadlineTitle = 'Portal Nord-Ostsee-Kanal';
+} else if (winUrl.indexOf('/NSK/DE/') > -1) {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0" class="">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="NSK/DE/Aktuelles/Aktuelles_node.html" title="Aktuelles">Ak&shy;tu&shy;el&shy;les</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="NSK/DE/Allg_Infos/Allgemeine-Informationen-node.html" title="Allgemeine Informationen">All&shy;ge&shy;mei&shy;ne In&shy;for&shy;ma&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="NSK/DE/Allg_Infos/Abkuerzungen/Abkuerzungen_node.html" title="Abkürzungen">Ab&shy;kür&shy;zun&shy;gen</a></li>' +
+                '<li class=""><a href="NSK/DE/Allg_Infos/Fotos/Fotos_node.html" title="Fotos">Fo&shy;tos</a></li>' +
+                '<li class=""><a href="NSK/DE/Allg_Infos/Glossar/Glossar_node.html" title="Glossar">Glossar</a></li>' +
+                '<li class="last "><a href="NSK/DE/Allg_Infos/Links/Links_node.html" title="Links">Links</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="NSK/DE/Projekte/Projekte_node.html" title="Projekte ">Pro&shy;jek&shy;te</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="NSK/DE/Projekte/Befliegung_der_Eider/Befliegung_der_Eider_node.html" title="Befliegung der Eider">Be&shy;flie&shy;gung der Ei&shy;der</a></li>' +
+                '<li class="last "><a href="NSK/DE/Projekte/Zukunft_Eider/Zukunft_Eider_node.html" title="Zukunft Eider">Zu&shy;kunft Ei&shy;der</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-4">' +
+          '<h3><a href="NSK/DE/Service/service_node.html" title="Service">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="NSK/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow&shy;n&shy;load Zeitrei&shy;hen</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In&shy;fo&shy;brie&shy;fe</a></li>' +
+                '<li class=""><a href="NSK/DE/Service/Kartentool/Kartentool_node.html" title="Kartentool">Kar&shy;ten&shy;tool</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;NSKE=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="NSK/DE/Service/Messwertassistent/Messwertassistent_node.html" title=" Sensor Web Client / Messwertassistent">SWC / Mess&shy;wertas&shy;sis&shy;tent</a></li>' +
+                '<li class="last "><a href="NSK/DE/Service/WMS/wms_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Nordseeküste';
+    breadCrumbsHref = '/NSK/DE/Startseite/Startseite_Portal_Nordseekueste_node.html';
+    subheadlineTitle = 'Portal Nordseeküste';
+} else if (winUrl.indexOf('/OSK/DE/') > -1) {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="OSK/DE/Aktuelles/Aktuelles_node.html" title="Aktuelles">Ak&shy;tu&shy;el&shy;les</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="OSK/DE/Allg_Infos/Allgemeine_Informationen_node.html" title="Allgemeine Informationen">All&shy;ge&shy;mei&shy;ne In&shy;for&shy;ma&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="OSK/DE/Allg_Infos/Abkuerzungen/Abkuerzungen_node.html" title="Abkürzungen">Ab&shy;kür&shy;zun&shy;gen</a></li>' +
+                '<li class=""><a href="OSK/DE/Allg_Infos/Fotos/Fotos_node.html" title="Fotos">Fo&shy;tos</a></li>' +
+                '<li class=""><a href="OSK/DE/Allg_Infos/Glossar/Glossar_node.html" title="Glossar">Glossar</a></li>' +
+                '<li class="last "><a href="OSK/DE/Allg_Infos/Links/Links_node.html" title="Links">Links</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="OSK/DE/Projekte/Projekte_node.html" title="Projekte">Pro&shy;jek&shy;te</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="OSK/DE/Projekte/Ausbau_Seekanal_Rostock/Ausbau_Seekanal_Rostock_node.html" title="Anpassung der seewärtigen Zufahrt zum Seehafen Rostock">An&shy;pas&shy;sung der see&shy;wär&shy;ti&shy;gen Zu&shy;fahrt zum See&shy;ha&shy;fen Ro&shy;stock</a></li>' +
+                '<li class=""><a href="OSK/DE/Projekte/Anpassung_der_seewartigen_Zufahrt_zum_Seehafen_Wismar/Anpassung_der_seewartigen_Zufahrt_zum_Seehafen_Wismar_node.html" title="Anpassung der seewärtigen Zufahrt zum Seehafen Wismar">An&shy;pas&shy;sung der see&shy;wär&shy;ti&shy;gen Zu&shy;fahrt zum See&shy;ha&shy;fen Wis&shy;mar</a></li>' +
+                '<li class="last "><a href="OSK/DE/Projekte/Noerdlicher_Peenestrom/Anpassung_der_Seewasserstrasse_Noerdlicher_Peenestrom_node.html" title="Anpassung der Seewasserstraße Nördlicher Peenestrom">An&shy;pas&shy;sung der See&shy;was&shy;ser&shy;stra&shy;ße Nörd&shy;li&shy;cher Pee&shy;ne&shy;strom</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-4">' +
+          '<h3><a href="OSK/DE/Service/service_node.html" title="Service">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class="Bar"><a href="OSK/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In&shy;fo&shy;brie&shy;fe</a></li>' +
+                '<li class=""><a href="OSK/DE/Service/Kartentool/Kartentool_node.html" title="Kartentool">Kar&shy;ten&shy;tool</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;OSKE=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="OSK/DE/Service/Messwertassistent/Messwertassistent_node.html" title="Sensor Web Client / Messwertassistent">SWC / Mess&shy;wertas&shy;sis&shy;tent</a></li>' +
+                '<li class="last "><a href="OSK/DE/Service/WMS/wms_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Ostseeküste';
+    breadCrumbsHref = '/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html';
+    subheadlineTitle = 'Portal Ostseeküste';
+} else if (winUrl.indexOf('/Tideelbe/DE/') > -1) {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="Tideelbe/DE/Aktuelles/Aktuelles_node.html" title="Aktuelles">Ak&shy;tu&shy;el&shy;les</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="Tideelbe/DE/Allg_Infos/Allgemeine_Informationen_node.html" title="Allgemeine Informationen">All&shy;ge&shy;mei&shy;ne In&shy;for&shy;ma&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="Tideelbe/DE/Allg_Infos/Abkuerzungen/Abkuerzungen-node.html" title="Abkürzungen">Ab&shy;kür&shy;zun&shy;gen</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Allg_Infos/Fotos-Filme/Fotos-Filme-node.html" title="Fotos &amp; Filme">Fo&shy;tos &amp; Fil&shy;me</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Allg_Infos/Glossar/Glossar_node.html" title="Glossar">Glossar</a></li>' +
+                '<li class="last "><a href="Tideelbe/DE/Allg_Infos/Links/Links_node.html" title="Links">Links</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="Tideelbe/DE/Projekte/Projekte_node.html" title="Projekte">Pro&shy;jek&shy;te</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/FRA20XX/Geplante_Fahrrinnenanpassung_node.html" title="Ausbau der Fahrrinne für Großcontainerschiffe mit Tiefgängen bis zu 14,50 m">Fahr&shy;rin&shy;nen&shy;an&shy;pas&shy;sung 2019</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/Strombau_Sedimentmangt/Strombau_und_Sedimentmanagement_Tideelbe_node.html" title="Strombau- und Sedimentmanagement Tideelbe">Strom&shy;bau- und Se&shy;di&shy;ment&shy;ma&shy;na&shy;ge&shy;ment Ti&shy;de&shy;el&shy;be</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/Uferunterhaltung_Schleswig_Holstein/Uferunterhaltung_Schleswig_Holstein_node.html" title="Uferunterhaltung Schleswig-Holstein">Ufer&shy;un&shy;ter&shy;hal&shy;tung Schles&shy;wig-Hol&shy;stein</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/FRA1999/Fahrrinnenanpassung_1999_node.html" title="Fahrrinnenanpassung 1999">Fahr&shy;rin&shy;nen&shy;an&shy;pas&shy;sung 1999</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/tibass/tibass_node.html" title="tibass">ti&shy;bass</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/ElbService/ElbService-node.html" title="ElbService">Elb&shy;Ser&shy;vice</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Projekte/Umsetzung_der_FFH_Richtlinie/Umsetzung_der_FFH_Richtlinie_node.html" title="Umsetzung der FFH-Richtlinie">Um&shy;set&shy;zung der FFH-Richt&shy;li&shy;nie</a></li>' +
+                '<li class="last "><a href="Tideelbe/DE/Projekte/USK_Niedersaechs_Ufer/Ufersicherungskonzept_am_Niedersaechsischen-Ufer-node.html" title="Ufersicherungskonzept am Niedersächsischen Ufer">Ufer&shy;si&shy;che&shy;rungs&shy;kon&shy;zept am Nie&shy;der&shy;säch&shy;si&shy;schen Ufer</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-4">' +
+          '<h3><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;Elbe=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-5">' +
+          '<h3><a href="Tideelbe/DE/Service/service_node.html" title="Service">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class="Bar"><a href="Tideelbe/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow&shy;n&shy;load Zeitrei&shy;hen</a></li>' +
+                '<li class=""><a href="/Tideelbe/DE/dynamisch/Allgemeine_Informationen/Hoechstgeschwindigkeiten_im_Tideelbebereich/index.php" title="Höchstgeschwindigkeiten im Tideelbebereich km 639 - 729">Höchst&shy;ge&shy;schwin&shy;dig&shy;keit&shy;stool</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In&shy;fo&shy;brie&shy;fe</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Service/Kartentool/Kartentool-node.html" title="Kartentool">Kar&shy;ten&shy;tool</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Service/Leitfaehigkeitsmessnetz/Leitfaehigkeitsmessnetz_node.html" title="Leitfähigkeitsmessnetz">Leit&shy;fä&shy;hig&shy;keits&shy;mess&shy;netz</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;Elbe=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="Tideelbe/DE/Service/Messwertassistent/Messwertassistent-node.html" title="Sensor Web Client / Messwertassistent">SWC / Mess&shy;wertas&shy;sis&shy;tent</a></li>' +
+                '<li class="last "><a href="Tideelbe/DE/Service/WMS/wms_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Tideelbe';
+    breadCrumbsHref = '/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html';
+    subheadlineTitle = 'Portal Tideelbe';
+} else if (winUrl.indexOf('/Tideems/DE/') > -1) {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="Tideems/DE/Aktuelles/Aktuelles_node.html" title="Aktuelles">Ak&shy;tu&shy;el&shy;les</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="Tideems/DE/Allg_Infos/Allgemeine_Informationen_node.html" title="Allgemeine Informationen">All&shy;ge&shy;mei&shy;ne In&shy;for&shy;ma&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="Tideems/DE/Allg_Infos/Abkuerzungen/Abkuerzungen_node.html" title="Abkürzungen">Ab&shy;kür&shy;zun&shy;gen</a></li>' +
+                '<li class="last "><a href="Tideems/DE/Allg_Infos/Links/Links-node.html" title="Links">Links</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="Tideems/DE/Projekte/Projekte_node.html" title="Projekte">Pro&shy;jek&shy;te</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="Tideems/DE/Projekte/Vertiefung-der-Aussenems-bis-Emden/Vertiefung_der_Aussenems_bis_Emden_node.html" title="Vertiefung der Außenems bis Emden">Ver&shy;tie&shy;fung der Au&shy;ßen&shy;ems bis Em&shy;den</a></li>' +
+                '<li class="last "><a href="Tideems/DE/Projekte/Projekte_node.html">In&shy;stand&shy;set&shy;zung der Wan&shy;del&shy;bahn auf Bor&shy;kum</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-4">' +
+          '<h3><a href="Tideems/DE/Service/service_node.html" title="Service">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class="Bar"><a href="Tideems/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class=""><a href="Tideems/DE/Service/Download-EMS-Ausbau/Download-node.html" title="Kompakte Downloads der Projektunterlagen vom Ems-Ausbau">Dow&shy;n&shy;load Pro&shy;jekt Ems-Aus&shy;bau</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In&shy;fo&shy;brie&shy;fe</a></li>' +
+                '<li class=""><a href="Tideems/DE/Service/Kartentool/Kartentool-node.html" title="Kartentool">Kar&shy;ten&shy;tool</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;Ems=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class="last "><a href="Tideems/DE/Service/WMS/wms_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Tideems';
+    breadCrumbsHref = '/Tideems/DE/Startseite/Startseite-Portal-Tideems-node.html';
+    subheadlineTitle = 'Portal Tideems';
+} else if (winUrl.indexOf('/Tideweser/DE/') > -1) {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="Tideweser/DE/Aktuelles/Aktuelles_node.html" title="Aktuelles">Ak&shy;tu&shy;el&shy;les</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="Tideweser/DE/Allg_Infos/Allgemeine_Informationen_node.html" title="Allgemeine Informationen">All&shy;ge&shy;mei&shy;ne In&shy;for&shy;ma&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="Tideweser/DE/Allg_Infos/Abkuerzungen/Abkuerzungen_node.html" title="Abkürzungen">Ab&shy;kür&shy;zun&shy;gen</a></li>' +
+                '<li class=""><a href="Tideweser/DE/Allg_Infos/Glossar/Glossar_node.html" title="Glossar">Glossar</a></li>' +
+                '<li class="last "><a href="Tideweser/DE/Allg_Infos/Links/Links_node.html" title="Links">Links</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="Tideweser/DE/Projekte/Projekte_node.html" title="Projekte">Pro&shy;jek&shy;te</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class="last "><a href="Tideweser/DE/Projekte/Weseranpassung/Weseranpassung-node.html" title="Weseranpassung">We&shy;seran&shy;pas&shy;sung</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-4">' +
+          '<h3><a href="Tideweser/DE/Service/service_node.html" title="Servicebereich Portal-Tideweser">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class="Bar"><a href="Tideweser/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow&shy;n&shy;load Zeitrei&shy;hen</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In&shy;fo&shy;brie&shy;fe</a></li>' +
+                '<li class=""><a href="Tideweser/DE/Service/Kartentool/Kartentool_node.html" title="Kartentool">Kar&shy;ten&shy;tool</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html?Suchtext=&amp;Weser=on&amp;SORT=JD" title="Portalübergreifende Seite">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="Tideweser/DE/Service/Messwertassistent/Messwertassistent_node.html" title="Sensor Web Client / Messwertassistent">SWC / Mess&shy;wertas&shy;sis&shy;tent</a></li>' +
+                '<li class="last "><a href="Tideweser/DE/Service/WMS/wms_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Tideweser';
+    breadCrumbsHref = '/Tideweser/DE/Startseite/Startseite-Portal-Tideweser-node.html';
+    subheadlineTitle = 'Portal Tideweser';
+} else {
+    menu = '' +
+    '<ul>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-1">' +
+          '<h3><a href="DE/Wir-ueber-uns/Wir-ueber-uns-node.html" title="Wir über uns">Wir über uns</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class=""><a href="DE/Wir-ueber-uns/Beteiligte-Institutionen/Beteiligte-Institutionen-node.html" title="Beteiligte Institutionen">Be&shy;tei&shy;lig&shy;te In&shy;sti&shy;tu&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="DE/Wir-ueber-uns/Leitfaden-fuer-Projekte-und-Daten/Leitfaden-fuer-Projekte-und-Daten-node.html" title="Leitfaden für Projekte und Daten">Leit&shy;fa&shy;den für Pro&shy;jek&shy;te und Da&shy;ten</a></li>' +
+                '<li class="last "><a href="DE/Wir-ueber-uns/ZDM-Faltblatt/ZDM-Faltblatt-node.html" title="ZDM-Faltblatt">ZDM-Falt&shy;blatt</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-2">' +
+          '<h3><a href="DE/Portalsystem/Portalsystem_node.html" title="Portalsystem">Por&shy;tal&shy;sys&shy;tem</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-3">' +
+          '<h3><a href="DE/Aktuelle_Massnahmen/Aktuelle_Massnahmen_node.html" title="Aktuelle Maßnahmen">Ak&shy;tu&shy;el&shy;le Maß&shy;nah&shy;men</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="" id="n-4">' +
+          '<h3><a href="/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portalübergreifend">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+        '</div>' +
+      '</li>' +
+      '<li tabindex="0">' +
+        '<div class="mod" id="n-5">' +
+          '<h3><a href="DE/Services/services-node.html" title="Portalübergreifende Services">Ser&shy;vice</a></h3>' +
+          '<h4 class="aural">Unternavigationspunkte</h4>' +
+          '<div class="menu fl-1">' +
+            '<div class="menu-box">' +
+              '<ul>' +
+                '<li class="Bar"><a href="Tideelbe/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow&shy;n&shy;load Geo&shy;da&shy;ten</a></li>' +
+                '<li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow&shy;n&shy;load Zeitrei&shy;hen</a></li>' +
+                '<li class=""><a href="DE/Services/Nassbaggerarbeiten/Nassbaggerarbeiten_node.html" title="Nassbaggerarbeiten">Nass&shy;bag&shy;ger&shy;ar&shy;bei&shy;ten</a></li>' +
+                '<li class=""><a href="DE/Services/Infobrief/infobrief_node.html">In&shy;fo&shy;brief</a></li>' +
+                '<li class=""><a href="/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portalübergreifend">Pu&shy;bli&shy;ka&shy;tio&shy;nen</a></li>' +
+                '<li class=""><a href="DE/Services/Webcams/Webcams-node.html" title="Webcams">Web&shy;cams</a></li>' +
+                '<li class="last "><a href="DE/Services/WMS/WMS_node.html" title="Web Services">Web Ser&shy;vices</a></li>' +
+              '</ul>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</li>' +
+    '</ul>';
+    breadCrumbsText = 'Küstendaten';
+    breadCrumbsHref = '/DE/Startseite/Startseite_Kuestendaten_node.html';
+    subheadlineTitle = 'Zentrales Datenmanagement (ZDM)<br> Küstendaten';
+}
+$( "#navPrimary" ).append( menu );
+$('li.first a').append(breadCrumbsText);
+$('li.first a').attr("href", breadCrumbsHref);
+$('div.subheadline p span').append(subheadlineTitle);
+</script>
