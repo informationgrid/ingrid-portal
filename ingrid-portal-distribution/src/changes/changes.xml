@@ -56,6 +56,9 @@
           <action type="add" dev="wemove" issue="2043">
             Mapclient: Add settings to change help and feedback URL.
           </action>
+          <action type="add" dev="wemove" issue="1846">
+            IGE(Nokis): Add geometry context table
+          </action>
         </release>
 
         <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">
