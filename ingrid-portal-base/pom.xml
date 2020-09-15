@@ -126,6 +126,7 @@
         <configuration>
           <warName>ingrid-portal-${version}</warName>
           <warSourceDirectory>${basedir}/src/webapp</warSourceDirectory>
+          <warSourceExcludes>META-INF/context-develop.xml</warSourceExcludes>
           <archiveClasses>false</archiveClasses>
           <overlays>
             <overlay>

@@ -3,5 +3,6 @@
         #parse("/decorations/layout/ingrid/templates/footer/body_popup.vm")
         #parse("/decorations/layout/ingrid/templates/footer/body_script.vm")
         #parse("/decorations/layout/ingrid/templates/footer/body_piwik.vm")
+        </div>
     </body>
 </html>

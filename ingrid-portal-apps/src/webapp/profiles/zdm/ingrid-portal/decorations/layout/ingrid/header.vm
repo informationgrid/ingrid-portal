@@ -10,6 +10,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
     <head>
         #set($currentPage = $site.getPageOrTemplate().url)
+        #if($currentPage == "/main-maps.psml" || $currentPage == "/main-measures.psml")
+            #set ($isMap = true)
+        #else
+            #set ($isMap = false)
+        #end
         <base href="/" />
         <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "ZDM-Küstendaten")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
@@ -62,8 +67,8 @@
               <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#navPrimary">Hauptmenü</a></li>
               <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#search">Suche</a></li>
             </ul>
-            <div id="wrapperDivisions">
-              <div id="header">
+            <div id="wrapperDivisions" #if($isMap)class="maps smaller" style="margin-top: 117px;"#end>
+              <div id="header" #if($isMap)class="maps smaller"#end>
                 <div class="wrapperBranding row mod">
                   <div id="navServiceMeta" class="large-9 columns">
                     <h2 class="aural">Servicemen&uuml;</h2>
@@ -101,6 +106,7 @@
                     </form>
                   </div>
                 </div>
+                #if(!$isMap)
                 <div class="row mod">
                   <div class="large-3 logo columns show-for-large-up">
                       <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png?__blob=normal&v=2" alt="WSVPageAltLink"></a></p>
@@ -114,7 +120,14 @@
                     </p>
                   </div>
                 </div>
+                #end
                 <div id="navPrimary">
+                    #if($isMap)
+                    <div class="columns large-2 addShrinkLogo" style="">
+                        <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/additionalLogoShrinkheader.jpg?__blob=normal&amp;v=2" alt="WSVPageAltLink"></a></p>
+                    </div>
+                    #end
+                    <h2 class="aural">Hauptmenü</h2>
                   <ul>
                     <li tabindex="0" class="">
                       <div class="" id="n-1">
@@ -171,14 +184,59 @@
                     </li>
                   </ul>
                 </div>
+                #if(!$isMap)
                 <div id="wrapperBreadcrumbs">
                   <div id="navBreadcrumbsVertical">
                   </div>
                 </div>
+                #end
                 <div id="navBreadcrumbs">
                   <p class="aural">Sie sind hier:</p>
-                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>HTTP Status 404</strong></li></ol>
+                  <ol>
+                    <li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html"></a></li>
+                    <li>
+                        <strong>
+                            #if($currentPage == "/main-maps.psml")
+                                Karte
+                            #elseif($currentPage == "/main-measures.psml")
+                                Zeitreihen
+                            #else 
+                                HTTP Status 404
+                            #end
+                        </strong>
+                    </li>
+                  </ol>
                 </div>
+                <script>
+                    var winUrl = window.location.href;
+                    var breadCrumbsText = 'Küstendaten';
+                    var breadCrumbsHref = '/DE/Startseite/Startseite_Kuestendaten_node.html';
+                    
+                    if(winUrl.indexOf('/NOK/DE/') > -1){
+                        breadCrumbsText = 'Nord-Ostsee-Kanal';
+                        breadCrumbsHref = '/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html';
+                    } else if(winUrl.indexOf('/NSK/DE/') > -1){
+                        breadCrumbsText = 'Nordseeküste';
+                        breadCrumbsHref = '/NSK/DE/Startseite/Startseite_Portal_Nordseekueste_node.html';
+                    } else if(winUrl.indexOf('/OSK/DE/') > -1){
+                        breadCrumbsText = 'Ostseeküste';
+                        breadCrumbsHref = '/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html';
+                    } else if(winUrl.indexOf('/Tideelbe/DE/') > -1){
+                        breadCrumbsText = 'Tideelbe';
+                        breadCrumbsHref = '/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html';
+                    } else if(winUrl.indexOf('/Tideems/DE/') > -1){
+                        breadCrumbsText = 'Tideems';
+                        breadCrumbsHref = '/Tideems/DE/Startseite/Startseite-Portal-Tideems-node.html';
+                    } else if(winUrl.indexOf('/Tideweser/DE/') > -1){
+                        breadCrumbsText = 'Tideweser';
+                        breadCrumbsHref = '/Tideweser/DE/Startseite/Startseite-Portal-Tideweser-node.html';
+                    }
+                    $('li.first a').text(breadCrumbsText);
+                    $('li.first a').attr("href", breadCrumbsHref);
+                </script>
               </div>
-              <div id="main" class="row">
-                <div id="content" class="large-8 medium-12 small-12 columns">
+              #if($isMap)
+              </div>
+              #end
+              <div #if(!$isMap)id="main" class="row"#end>
+                <div #if(!$isMap)id="content" class="large-8 medium-12 small-12 columns"#end>

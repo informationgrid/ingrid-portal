@@ -143,6 +143,9 @@ define([
                     if (gridProperties.allowEmptyRows) {
                         options.allowEmptyRows = gridProperties.allowEmptyRows == "true";
                     }
+                    if (gridProperties.imageLinkTooltip){
+                        options.imageLinkTooltip = gridProperties.imageLinkTooltip == "true";
+                    }
 
                     var myDataGrid = new Grid({
                         id: id,

@@ -431,7 +431,11 @@ public class Utils {
 	public static boolean sendEmail(String from, String subject, String[] to, String text, Map headers) {
 		return sendEmail(from, subject, to, text, headers, null);
 	}
-	
+
+    public static boolean sendEmail(String from, String subject, String[] to, String text, Map headers, File attachment) {
+        return sendEmail(from, subject, to, text, headers, attachment, null);
+    }
+
 	/**
 	 * Send email
 	 * 
@@ -442,7 +446,7 @@ public class Utils {
 	 * @param headers
 	 * @return true if email was sent, else false
 	 */
-	public static boolean sendEmail(String from, String subject, String[] to, String text, Map headers, File attachment) {
+	public static boolean sendEmail(String from, String subject, String[] to, String text, Map headers, File attachment, String[] replyToList) {
 
 		boolean debug = log.isDebugEnabled();
 		boolean emailSent = false;
@@ -499,6 +503,14 @@ public class Utils {
 				addressTo[i] = new InternetAddress(to[i]);
 			}
 			msg.setRecipients(Message.RecipientType.TO, addressTo);
+
+            if(replyToList != null) {
+                InternetAddress[] replyTo = new InternetAddress[replyToList.length];
+                for (int i = 0; i < replyToList.length; i++) {
+                    replyTo[i] = new InternetAddress(replyToList[i]);
+                }
+                msg.setReplyTo(replyTo);
+            }
 
 			// set custom headers
 			if (headers != null) {

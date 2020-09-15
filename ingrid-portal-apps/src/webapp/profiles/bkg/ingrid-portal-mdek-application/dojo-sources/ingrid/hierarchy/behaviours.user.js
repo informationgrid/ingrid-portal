@@ -26,8 +26,9 @@ define([
     "ingrid/hierarchy/behaviours/bkg/general",
     "ingrid/hierarchy/behaviours/bkg/useConstraintsField",
     "ingrid/hierarchy/behaviours/bkg/modifyOldUseConstraintsField",
-    "ingrid/hierarchy/behaviours/bkg/opendata"
-], function(lang, behaviours, general, useConstraintsField, oldUseField, openData) {
+    "ingrid/hierarchy/behaviours/bkg/opendata",
+    "ingrid/hierarchy/behaviours/bkg/makeWKTOptional"
+], function(lang, behaviours, general, useConstraintsField, oldUseField, openData, makeWKTOptional) {
 
     return lang.mixin(behaviours, {
 
@@ -49,6 +50,8 @@ define([
         /**
          *
          */
-        openData: openData
+        openData: openData,
+
+        makeWKTOptional: makeWKTOptional
     });
 });

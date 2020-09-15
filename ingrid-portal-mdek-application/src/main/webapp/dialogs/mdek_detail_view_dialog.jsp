@@ -587,9 +587,9 @@ require([
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.title' />");
                     renderTextWithTitle(nodeData.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
                     renderTextWithTitle(nodeData.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
-                    renderTextWithTitle(nodeData.ref1GridFormatAxisDimName, "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(514, nodeData.ref1GridFormatAxisDimName), "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
                     renderTextWithTitle(nodeData.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
-                    renderTextWithTitle(nodeData.ref1GridFormatCellGeometry, "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
+                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(509, nodeData.ref1GridFormatCellGeometry), "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
                     
                     if (nodeData.ref1GridFormatGeoRectified) {
                         renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
@@ -629,6 +629,7 @@ require([
                     renderTable(nodeData.dq125Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table125.title' />");
                     renderTable(nodeData.dq126Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table126.title' />");
                     renderTable(nodeData.dq127Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table127.title' />");
+                    renderTable(nodeData.dq128Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table128.title' />");
 
                     renderAdditionalFieldsForRubric("refClass1DQ", additionalFields);
                 } else if (nodeData.objectClass == 2) {

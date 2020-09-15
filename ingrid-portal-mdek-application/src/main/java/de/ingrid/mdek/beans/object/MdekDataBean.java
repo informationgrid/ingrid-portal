@@ -191,6 +191,7 @@ public class MdekDataBean {
 	private List<DQBean> dq125Table;
 	private List<DQBean> dq126Table;
 	private List<DQBean> dq127Table;
+	private List<DQBean> dq128Table;
 
 	// Object class 2 (Dokument/Bericht/Literatur)
 	private String ref2Author;
@@ -279,6 +280,7 @@ public class MdekDataBean {
 		this.setDq125Table(new ArrayList<>());
 		this.setDq126Table(new ArrayList<>());
 		this.setDq127Table(new ArrayList<>());
+		this.setDq128Table(new ArrayList<>());
 
 		this.setRef3ServiceTypeTable(new ArrayList<>());
 		this.setRef3ServiceVersion(new ArrayList<>());
@@ -1955,6 +1957,13 @@ public class MdekDataBean {
 	}
 	public void setDq127Table(List<DQBean> dq127Table) {
 		this.dq127Table = dq127Table;
+	}
+
+	public List<DQBean> getDq128Table() {
+		return dq128Table;
+	}
+	public void setDq128Table(List<DQBean> dq128Table) {
+		this.dq128Table = dq128Table;
 	}
 
 

@@ -9,8 +9,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
-        #parse("/decorations/layout/ingrid/templates/header/head.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_favicon.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_script.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_script_additional.vm")
     </head>
@@ -21,6 +21,7 @@
         #if(!$mainMenu.empty)
             #includeMobileNavigation($mainMenu $serviceMenu $footerMenu)
         #end
+        <div class="page" >
         #parse("/decorations/layout/ingrid/templates/header/body_header.vm")
         #parse("/decorations/layout/ingrid/templates/header/body_header_additional.vm")
         #parse("/decorations/layout/ingrid/templates/header/body_breadcrumb.vm")

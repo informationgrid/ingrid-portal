@@ -494,7 +494,7 @@
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.info_note") $tmp)
                         #set($tmp = "")
                         ## Rechtliche Grundlagen
-                        #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:resourceConstraints/idf:idfLegalBasisConstraints/gmd:otherConstraints/gco:CharacterString", "."))
+                        #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Further legal basis']/gmd:keyword/gco:CharacterString", "."))
                         #renderTextList($MESSAGES.getString("t015_legist.name") $tmp)
                         #set($tmp = "")
                         ## XML-Export-Kriterium

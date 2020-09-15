@@ -138,9 +138,9 @@ require([
                     nodeDataNew.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />",
                     "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
                 renderTextWithTitle(nodeDataOld.ref1GridFormatNumDimensions, nodeDataNew.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
-                renderTextWithTitle(nodeDataOld.ref1GridFormatAxisDimName, nodeDataNew.ref1GridFormatAxisDimName, "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
+                renderTextWithTitle(UtilSyslist.getSyslistEntryName(514, nodeDataOld.ref1GridFormatAxisDimName), UtilSyslist.getSyslistEntryName(514, nodeDataNew.ref1GridFormatAxisDimName), "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
                 renderTextWithTitle(nodeDataOld.ref1GridFormatAxisDimSize, nodeDataNew.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
-                renderTextWithTitle(nodeDataOld.ref1GridFormatCellGeometry, nodeDataNew.ref1GridFormatCellGeometry, "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
+                renderTextWithTitle(UtilSyslist.getSyslistEntryName(509, nodeDataOld.ref1GridFormatCellGeometry), UtilSyslist.getSyslistEntryName(509, nodeDataNew.ref1GridFormatCellGeometry), "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
                 
                 if (nodeDataNew.ref1GridFormatGeoRectified) {
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
@@ -192,6 +192,7 @@ require([
                 renderTable(nodeDataOld.dq125Table, nodeDataNew.dq125Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table125.title' />");
                 renderTable(nodeDataOld.dq126Table, nodeDataNew.dq126Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table126.title' />");
                 renderTable(nodeDataOld.dq127Table, nodeDataNew.dq127Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table127.title' />");
+                renderTable(nodeDataOld.dq128Table, nodeDataNew.dq128Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table128.title' />");
 
                 renderAdditionalFieldsForRubric("refClass1DQ", oldAdditionalFields, newAdditionalFields);
             } else if (nodeDataNew.objectClass == 2) {

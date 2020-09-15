@@ -3,24 +3,36 @@
         #renderMessageError($MESSAGES.getString('login.error.url.not.exists'))
     #end
     #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" id="frm_login">
+
+    #if($renderRequest.getWindowID() != "MyPortalLoginPortlet")
+        #set($formId = "frm_login")
+        #set($loginId = "login")
+        #set($pwdId = "passwd")
+        #set($autofocus = "autofocus")
+    #else
+        #set($formId = "frm_service")
+        #set($loginId = "login_service")
+        #set($pwdId = "passwd_service")
+        #set($autofocus = "")
+    #end
+
+    <form action="$action" method="post" id="$formId">
         #set($name = "#getFieldValue($loginConstants.USERNAME)")
         #set($pw = "#getFieldValue($loginConstants.PASSWORD)")
-        
         <input type="hidden" name="${loginConstants.DESTINATION}" value="#getFieldValue(${loginConstants.DESTINATION})" />
         <input type="hidden" name="cmd" value="doLogin" />
         <div class="form-element">
-            <label for="login">$MESSAGES.getString('login.form.username')</label>
+            <label for="$loginId">$MESSAGES.getString('login.form.username')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="login" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" class="field bx-bot-s" />
+            <input type="text" id="$loginId" #addErrorFormClass('org.apache.jetspeed.login.username') name="${loginConstants.USERNAME}" placeholder="$MESSAGES.getString('login.form.username.initialValue')" value="#if($name != $MESSAGES.getString('login.form.username.initialValue'))#getFieldValue($loginConstants.USERNAME)#end" class="field bx-bot-s" $autofocus/>
             #addErrorFormMessage('org.apache.jetspeed.login.username')
         </div>
         <div class="form-element">
-            <label for="passwd">$MESSAGES.getString('login.form.passwd')</label>
+            <label for="$pwdId">$MESSAGES.getString('login.form.passwd')</label>
         </div>
         <div class="form-element">
-            <input type="password" id="passwd" #addErrorFormClass('org.apache.jetspeed.login.password') name="${loginConstants.PASSWORD}" placeholder="$MESSAGES.getString('login.form.passwd.initialValue')" value="#if($pw != $MESSAGES.getString('login.form.passwd.initialValue'))#getFieldValue($loginConstants.PASSWORD)#end" class="field bx-bot-0" />
+            <input type="password" id="$pwdId" #addErrorFormClass('org.apache.jetspeed.login.password') name="${loginConstants.PASSWORD}" placeholder="$MESSAGES.getString('login.form.passwd.initialValue')" value="#if($pw != $MESSAGES.getString('login.form.passwd.initialValue'))#getFieldValue($loginConstants.PASSWORD)#end" class="field bx-bot-0" />
             #addErrorFormMessage('org.apache.jetspeed.login.password')
         </div>
         <p><a href="$renderResponse.encodeURL('/portal/myportal-password-forgotten.psml')" class="link">$MESSAGES.getString('login.form.passwdForgotten')</a></p>

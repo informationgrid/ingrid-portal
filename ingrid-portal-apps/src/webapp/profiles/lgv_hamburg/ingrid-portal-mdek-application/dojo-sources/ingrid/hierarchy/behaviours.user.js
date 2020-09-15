@@ -350,8 +350,13 @@ define(["dojo/_base/declare",
                         var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
                         UtilGrid.setTableData("availabilityUseAccessConstraints", [{title: entryNameLicense, source:'Freie und Hansestadt Hamburg, zuständige Behörde'}]);
 
-                        // automatically replace access constraint with "keine"
-                        var data = [{ title: UtilSyslist.getSyslistEntryName(6010, 1) }];
+                        var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+                        // remove all access constraints
+                        var data = [];
+                        if (isInspireRelevant) {
+                            // add access constraint "keine"
+                            data.push({ title: UtilSyslist.getSyslistEntryName(6010, 1) });
+                        }
                         UtilGrid.setTableData('availabilityAccessConstraints', data);
 
                     } else {
@@ -417,7 +422,6 @@ define(["dojo/_base/declare",
                         domClass.add("uiElement5041", "showOnlyExpanded"); // Sprache des Metadatensatzes
                         domClass.add("uiElement5042", "showOnlyExpanded"); // Sprache der Ressource
                         domClass.add("uiElementN024", "showOnlyExpanded"); // Konformität
-                        domClass.add("uiElement1315", "showOnlyExpanded"); // Anwendungsschema
 
                     } else {
 
@@ -605,35 +609,37 @@ define(["dojo/_base/declare",
 
         },
 
-        requireUseConstraintsLGV: {
-            title: "LGV: Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
-            title_en: "Use Constraints - Required on INSPIRE / Open Data",
-            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"Veröffentlichung gemäß HmbTG\", \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
-            description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
-            issue: "https://dev.informationgrid.eu/redmine/issues/223",
-            category: "LGV",
-            defaultActive: false,
-            run: function () {
-                // define our useConstraints handler
-                var updateUseConstraintsBehaviour = function (isChecked) {
-                    if (isChecked) {
-                        domClass.add("uiElementN027", "required");
+requireUseConstraintsLGV: {
+    title: "LGV: Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
+    title_en: "Use Constraints - Required on INSPIRE / Open Data",
+    description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"Veröffentlichung gemäß HmbTG\", \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
+    description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
+    issue: "https://dev.informationgrid.eu/redmine/issues/223",
+    category: "LGV",
+    defaultActive: false,
+    run: function () {
 
-                    } else {
-                        // remove required field if INSPIRE and open data checkbox not selected
-                        if (!registry.byId("isInspireRelevant").checked &&
-                            !registry.byId("isOpenData").checked &&
-                            !registry.byId("publicationHmbTG").checked) {
-                            domClass.remove("uiElementN027", "required");
-                        }
-                    }
-                };
+        // define our useConstraints handler
+        var updateUseConstraintsBehaviour = function () {
+            if (registry.byId("isInspireRelevant").checked ||
+                registry.byId("isOpenData").checked ||
+                registry.byId("publicationHmbTG").checked) {
 
-                on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
-                on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
-                on(registry.byId("publicationHmbTG"), "Change", updateUseConstraintsBehaviour);
+                domClass.add("uiElementN027", "required");
+
+            } else {
+                domClass.remove("uiElementN027", "required");
             }
-        }
+        };
+
+        on(registry.byId("isInspireRelevant"), "Change", updateUseConstraintsBehaviour);
+        on(registry.byId("isOpenData"), "Change", updateUseConstraintsBehaviour);
+        on(registry.byId("publicationHmbTG"), "Change", updateUseConstraintsBehaviour);
+
+        // initial check
+        updateUseConstraintsBehaviour();
+    }
+}
 
     } );
 });

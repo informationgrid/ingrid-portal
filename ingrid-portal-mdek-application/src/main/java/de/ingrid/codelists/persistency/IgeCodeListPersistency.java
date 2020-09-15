@@ -72,7 +72,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(523,"Zeitbezug - Status");  put(525,"Objektklasse 1 - Datensatz/Datenserie");
                 put(526,"Objektklasse 1 - Digitale Repräsentation");    put(527,"ISO-Themenkategorie");
                 put(528,"Vektorformat -Topologieinformation");  put(1100,"Freier Raumbezug");   put(1200,"Zeitbezug");
-                put(1230,"Zeitbezug - Alle...");    put(1320,"Datenformat - Name"); put(1350,"Rechtliche Grundlagen");
+                put(1230,"Zeitbezug - Alle...");    put(1320,"Datenformat - Name"); put(1350,"Weitere Rechtliche Grundlagen");
                 put(1370,"XML Export Kriterium");   put(1400,"Verschlagwortung - Umweltthemen - Kategorien");
                 put(1410,"Verschlagwortung - Umweltthemen - Themen");   put(2000,"Objekt / Url-Verweis - Typ");
                 put(2010,"Adresstyp für spezielle Objektklassen");  put(2251,"Url-Verweis - Intranet/Internet");
@@ -95,6 +95,7 @@ public class IgeCodeListPersistency implements ICodeListPersistency {
                 put(7125,"Datenqualität - Korrektheit der thematischen Klassifizierung - Art der Messung");
                 put(7126,"Datenqualität - Genauigkeit nicht-quantitativer Attribute - Art der Messung");
                 put(7127,"Datenqualität - Genauigkeit quantitativer Attribute - Art der Messung");
+                put(7128,"Datenqualität - Relative Positionsgenauigkeit - Art der Messung");
                 put(99999999,"Sprache der Ressource / des Metadatensatzes");
             }};
 

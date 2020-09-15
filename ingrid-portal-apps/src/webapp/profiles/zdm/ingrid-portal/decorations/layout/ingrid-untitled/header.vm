@@ -114,6 +114,7 @@
                   </div>
                 </div>
                 <div id="navPrimary">
+                    <h2 class="aural">Hauptmenü</h2>
                   <ul>
                     <li tabindex="0" class="">
                       <div class="" id="n-1">
@@ -176,7 +177,7 @@
                 </div>
                 <div id="navBreadcrumbs">
                   <p class="aural">Sie sind hier:</p>
-                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>Ergebnis</strong></li></ol>
+                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>Trefferanzeige</strong></li></ol>
                 </div>
               </div>
               <div id="main" class="row wide">

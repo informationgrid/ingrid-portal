@@ -7,15 +7,111 @@
 
     <body>
 
-        <release version="5.5.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.0">
+        <release version="5.6.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.6.0">
+          <action type="add" dev="wemove" issue="2108">
+            Add support for different crs format in get capabilities
+          </action>
+          <action type="fix" dev="wemove" issue="2100">
+            UVP: Fix help popup.
+          </action>
+          <action type="add" dev="wemove" issue="2106">
+            Mapclient: Integrate KML attachment as permalink.
+          </action>
+          <action type="fix" dev="wemove" issue="2065">
+            Fix preview image table tooltips.
+          </action>
+          <action type="add" dev="wemove" issue="1783">
+            Add data quality table 'Relative Pisitional Accuracy'
+          </action>
+          <action type="fix" dev="wemove" issue="2087">
+            Fix layout search result on mobile.
+          </action>
+          <action type="add" dev="wemove" issue="1102">
+            Add display folder on portal catalog tree.
+          </action>
+          <action type="fix" dev="wemove" issue="1860">
+            Make Nominatim url configurable
+          </action>
+          <action type="fix" dev="wemove" issue="2040">
+            Thesaurus-Navigator has search results without titles
+          </action>
+          <action type="fix" dev="wemove" issue="2035">
+            Portal does not start on windows after manual installation.
+          </action>
+          <action type="fix" dev="wemove" issue="2086">
+            Portal: Change portal registration button title.
+          </action>
+          <action type="update" dev="wemove" issue="2012">
+            Mapclient: Update mapclient cache. 
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Remove DNS check on print.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Fix imported WMTS print.
+          </action>
+          <action type="fix" dev="wemove" issue="">
+            Mapclient: Fix handling with category item attribute selectedOpen.
+          </action>
+          <action type="add" dev="wemove" issue="2043">
+            Mapclient: Add settings to change help and feedback URL.
+          </action>
+        </release>
+
+        <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">
+          <action type="update" dev="wemove" issue="2006">
+            IGE: Increase message size and timeout for IGE communication.
+          </action>
+          <action type="add" dev="wemove" issue="1953">
+            Mapclient: Add GFI function to imported WMTS. 
+          </action>
+          <action type="add" dev="wemove" issue="1900">
+            Portal: Add autofocus attribute to login form. 
+          </action>
+          <action type="add" dev="wemove" issue="1898">
+            Change the docker container’s privilege to a non-root user.
+          </action>
+          <action type="fix" dev="wemove" issue="1932">
+            Portal: Fix display data quality on detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="1929">
+            IGE(UVP): Fix UVP report when semicolon in titel.
+          </action>
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.16.
+          </action>
+          <action type="add" dev="wemove" issue="1909">
+            BKG: Add behavior for making wkt field optional.
+          </action>
           <action type="add" dev="wemove" issue="1785">
             Portal: Add displaying of multi preview images.
           </action>
           <action type="fix" dev="wemove" issue="1833">
             Portal: Fix URL parameter plugId on detail view.
           </action>
-          <action type="add" dev="wemove" issue="1846">
-            IGE(Nokis): Add geometry context table
+          <action type="fix" dev="wemove" issue="1874">
+            Portal: Fix detail view publisher.
+          </action>
+          <action type="fix" dev="wemove" issue="1854">
+            Portal: Fix empty constraints on detail view.
+          </action>
+          <action type="add" dev="wemove" issue="1890">
+            Portal: Add contact mail replyTo function.
+          </action>
+          <action type="fix" dev="wemove" issue="1221">
+            BKG: Fix show links for INSPIRE spatial reference systems.
+          </action>
+          <action type="fix" dev="wemove" issue="1536">
+            BKG ADVMIS: Update facets.
+          </action>
+          <action type="fix" dev="wemove" issue="1908">
+            Fix wrong state for INSPIRE topics
+          </action>
+          <action type="fix" dev="wemove" issue="1922">
+            Show correct version information in IGE
+          </action>
+          <action type="fix" dev="wemove" issue="1975">
+            IGE(LGV): Fix required state for use constraints
           </action>
         </release>
 
