@@ -98,15 +98,10 @@
 
 			<p>The databases are not always compatible with the classical concept of measuring data so that the metadata objects are classified into different object classes. In so doing, it is taken as basis that data can be classified.  </p>
 
-			<p> Seven object classes are differentiated:</p>
+			<p> Two object classes are differentiated:</p>
 			<ul>
-			<li> Organisational Unit / Task</li> 
-			<li> Geoinformation / Map</li> 
-			<li> Document / Report / Literature</li> 
+			<li> Geoinformation / Map</li>
 			<li> Geo-Service</li>
-			<li> Enterprise / Project / Program</li>
-			<li> Data Pooling / Data Base</li>
-			<li> Service / Application / Information System </li>
 			</ul>
 			<p> Metadata objects contain details on the subject reference as well as spatial and temporal reference of a data object. The subject reference makes statements about the type and manner of data collection and its accuracy; spatial and temporal reference state where and when the data object was obtained.</p>
 
@@ -536,8 +531,7 @@
                  <li>Links</li>
 				 <li>Additional fields</li>
 				 </ul>
-                 <p>The groups are identical for all object classes with the exception of relevance, which is different for every object class. 
-				 The <i>Organisational Unit / Task</i> object class neither has a <i>Relevance</i> nor an <i>Availability</i> group.</p>
+                 <p>The groups are identical for all object classes with the exception of relevance, which is different for every object class.</p>
                  <p>The individual groups are separated through bars optically from each other. As standard, only the obligatory fields are 
 				 displayed. They are identified by bold headings and a star *. An object can only then be published or assigned to quality 
 				 assurance (QA) if all obligatory fields have been filled in. If publishing or assigning is rejected on the basis of missing 
