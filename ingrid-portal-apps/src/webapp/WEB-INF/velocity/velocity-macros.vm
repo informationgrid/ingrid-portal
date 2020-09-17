@@ -586,3 +586,8 @@ $actionForm.getInputHTMLEscaped($field)#end
     </svg>
     #end
 #end
+
+
+#macro(removeLocalisation $locString)
+    $stringTool.split($locString, "#locale-").get(0)
+#end

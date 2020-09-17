@@ -43,6 +43,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import de.ingrid.portal.global.*;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -53,11 +54,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.CodeListServiceFactory;
-import de.ingrid.portal.global.IngridHitsWrapper;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.Settings;
-import de.ingrid.portal.global.UtilsFacete;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
 import de.ingrid.portal.search.SearchState;
@@ -135,6 +131,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         IngridResourceBundle messages = new IngridResourceBundle(getPortletConfig().getResourceBundle(
                 request.getLocale()), request.getLocale());
         context.put("MESSAGES", messages);
+        context.put("stringTool", new UtilsString());
         context.put("Codelists", CodeListServiceFactory.instance());
         context.put("enableFacete", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_FACETE, false));
         context.put("showHitPartnerLogo", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_PARTNER_LOGO, false));

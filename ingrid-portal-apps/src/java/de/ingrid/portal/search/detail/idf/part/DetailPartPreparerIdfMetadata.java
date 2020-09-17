@@ -97,7 +97,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     
     public String getTitle(){
         String value = null;
-        String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title";
+        String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString";
         Node node = xPathUtils.getNode(this.rootNode, xpathExpression);
         if(node != null && node.getTextContent().length() > 0){
             value = node.getTextContent();
@@ -137,6 +137,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         value = xPathUtils.getString(abstractParentNode, xpathExpressionAbstract);
         if (value != null) {
+            value = removeLocalisation(value);
             value = value.trim();
         }
 
@@ -689,7 +690,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if(xPathUtils.nodeExists(node, "./gmd:DQ_DomainConsistency")){
                     ArrayList row = new ArrayList();
                     
-                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title";
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString";
                     if (xPathUtils.nodeExists(node, xpathExpression)) {
                         String value = xPathUtils.getString(node, xpathExpression).trim();
                         row.add(notNull(value));
@@ -931,7 +932,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             ArrayList subjectEntries = new ArrayList();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code";
+                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString";
                 Node node = nodeList.item(i);
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList childNodeList = xPathUtils.getNodeList(node, xpathExpression);

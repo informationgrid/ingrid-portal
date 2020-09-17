@@ -466,6 +466,8 @@ public class DetailPartPreparer {
         }
 
         for (Node sibling : siblingList) {
+            // get gco:CharacterString child to strip localisation REDMINE-1882
+            sibling = sibling.getFirstChild().getNextSibling();
             String value = sibling.getTextContent().trim();
             if(value == null ||  value.length() == 0) {
                 continue;
@@ -981,6 +983,10 @@ public class DetailPartPreparer {
             element.put("elements", elements);
         
         return element;
+    }
+
+    public String removeLocalisation (String locString){
+        return locString.split("#locale-")[0];
     }
     
     public String getTemplateName() {
