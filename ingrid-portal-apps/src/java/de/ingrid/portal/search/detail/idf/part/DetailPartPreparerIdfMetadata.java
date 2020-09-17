@@ -501,7 +501,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     // "German Environmental Classification - Category, version 1.0"
                                 } else if (thesaurusName.contains("German Environmental Classification")) {
                                     // do not used in detail view.
-                                    
+
+                                } else if (thesaurusName.contains("Further legal basis")) {
+                                    // do not used in detail view.
+
                                 } else if (thesaurusName.length() < 1 && type.length() < 1) {
                                     listSearch.add(value);
                                 } else{
