@@ -134,5 +134,42 @@ public class IngridSysCodeList {
         }
         return "";
     }
-    
+
+    public String getDataByCodeListName(String codeListId, String entryName) {
+        CodeListService clService = CodeListServiceFactory.instance();
+        
+        CodeList cl = clService.getCodeList(codeListId);
+        if (cl != null) {
+            for (CodeListEntry entry : cl.getEntries()) {
+                Map<String, String> locals = entry.getLocalisations();
+                for (String key : locals.keySet()) {
+                    if (locals.get(key).equalsIgnoreCase(entryName)) {
+                        return entry.getData();
+                    }
+                }
+            }
+        }else{
+            log.debug("Codelist does not exist for codeListId: " + codeListId);
+        }
+        return "";
+    }
+
+    public boolean hasCodeListDataKeyValue(String codeListId, String entryName, String dataKey, String dataValue) {
+        String data = getDataByCodeListName(codeListId, entryName);
+        if(!data.isEmpty()) {
+            try {
+                JSONObject dataJson = new JSONObject(data);
+                if(dataJson.has(dataKey)) {
+                    String dataKeyValue = dataJson.getString(dataKey).trim();
+                    if(dataKeyValue.equalsIgnoreCase(dataValue)) {
+                        return true;
+                    }
+                }
+            } catch (JSONException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
 }
