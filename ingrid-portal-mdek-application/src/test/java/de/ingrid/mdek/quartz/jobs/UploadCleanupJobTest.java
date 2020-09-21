@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -79,13 +79,22 @@ public class UploadCleanupJobTest extends BaseJobTest {
     private static final LocalDateTime JOB_REFERENCE_TIME = LocalDateTime.parse("25.04.2017 12:00:00", dtf);
     private static final Integer JOB_MIN_FILE_AGE = 7200;
 
-	@Mock private ConnectionFacade connectionFacade;
+    @Mock private ConnectionFacade connectionFacade;
     @Mock private MdekClientCaller mdekClientCaller;
     @Mock private MdekCallerQuery mdekCallerQuery;
     @Mock private JobExecutionContext context;
 
     private UploadCleanupJob job;
     private FileSystemStorage storage;
+
+    private class MockEmailService implements UploadCleanupJob.EmailService {
+        public List<String> emails = new ArrayList<String>();
+        @Override
+        public void sendError(String message, Exception ex) {
+            emails.add(message+": "+ex.getMessage());
+        }
+    }
+    private MockEmailService mockEmailService;
 
     @Override
     @Before
@@ -106,12 +115,16 @@ public class UploadCleanupJobTest extends BaseJobTest {
         FileUtils.deleteDirectory(DOCS_PATH.toFile());
         Files.createDirectories(DOCS_PATH);
 
+        // setup email service
+        mockEmailService = new MockEmailService();
+
         // set up job
         this.job = new UploadCleanupJob();
         this.job.setConnectionFacade(this.connectionFacade);
         this.job.setStorage(this.storage);
         this.job.setReferenceDate(JOB_REFERENCE_TIME);
         this.job.setDeleteFileMinAge(JOB_MIN_FILE_AGE);
+        this.job.setEmailService(mockEmailService);
     }
 
     @Override
@@ -157,6 +170,9 @@ public class UploadCleanupJobTest extends BaseJobTest {
         assertTrue(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFile2));
         // exception is logged
         assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
+        // email is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+        assertEquals("Aborted UploadCleanupJob because of an unexpected error: No iPlugs found.", this.mockEmailService.emails.get(0));
     }
 
     /**
@@ -186,6 +202,9 @@ public class UploadCleanupJobTest extends BaseJobTest {
         assertTrue(this.fileExists(this.getFilePath(FAILING_PLUG_ID), unreferencedFile2));
         // exception is logged
         assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
+        // email is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+        assertEquals("Processing test-fail-plug-id failed: Job returned null as OBJ_ENTITIES from plugId: test-fail-plug-id", this.mockEmailService.emails.get(0));
     }
 
     /**
@@ -229,6 +248,9 @@ public class UploadCleanupJobTest extends BaseJobTest {
         assertFalse(this.fileExists(this.getFilePath(PLUG_ID), unreferencedFileB2));
         // exception is logged
         assertEquals(1, this.getTestAppender().getEvents(Level.ERROR).size());
+        // email is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+        assertEquals("Processing test-fail-plug-id failed: Job returned null as OBJ_ENTITIES from plugId: test-fail-plug-id", this.mockEmailService.emails.get(0));
     }
 
     /**

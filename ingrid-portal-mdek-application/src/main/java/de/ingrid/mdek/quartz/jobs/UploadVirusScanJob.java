@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,8 +54,9 @@ public class UploadVirusScanJob extends QuartzJobBean {
     private String quarantineDir = null;
     private Report report = null;
     private boolean sendReportEmails = true;
+    private EmailService emailService = new EmailServiceImpl();
 
-    private static class Report {
+    static class Report {
         private final StringBuilder content = new StringBuilder();
 
         public void add(final String entry) {
@@ -64,6 +65,20 @@ public class UploadVirusScanJob extends QuartzJobBean {
 
         public String getContent() {
             return content.toString();
+        }
+    }
+
+    /**
+     * Encapsulates email functions for better testability
+     */
+    interface EmailService {
+        void sendReport(Report report);
+    }
+
+    private class EmailServiceImpl implements EmailService {
+        @Override
+        public void sendReport(Report report) {
+        	MdekEmailUtils.sendSystemEmail(EMAIL_REPORT_SUBJECT, report.getContent());
         }
     }
 
@@ -100,6 +115,15 @@ public class UploadVirusScanJob extends QuartzJobBean {
      */
     public void setEmailReports(final boolean enabled) {
         this.sendReportEmails = enabled;
+    }
+
+    /**
+     * Set the email service.
+     * Defaults to instance of EmailServiceImpl if not set explicitly.
+     * @param emailService
+     */
+    public void setEmailService(final EmailService emailService) {
+        this.emailService = emailService;
     }
 
     @Override
@@ -139,7 +163,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
         }
 
         if (this.sendReportEmails && !infectedFiles.isEmpty()) {
-            MdekEmailUtils.sendSystemEmail(EMAIL_REPORT_SUBJECT, report.getContent());
+        	this.emailService.sendReport(report);
         }
     }
 
