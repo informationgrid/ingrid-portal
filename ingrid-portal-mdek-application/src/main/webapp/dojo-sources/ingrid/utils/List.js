@@ -95,7 +95,7 @@ define([
                 }
                 // Remove localisation string REDMINE-1882
                 var title = list[i].title;
-                if(title.indexOf("#locale-") != -1){
+                if (title && title.indexOf("#locale-") !== -1){
                     title = title.substring(0,title.indexOf("#locale-"));
                 }
 
