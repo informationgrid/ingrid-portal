@@ -140,7 +140,8 @@
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
         #if($element.url == "/disclaimer.psml" ||
-            $element.url == "/privacy.psml")
+            $element.url == "/privacy.psml" ||
+            $element.url == "/accessibility.psml")
           <a href="$linkUrl" title="$linkTitle" class="entry"><span class="text">$linkName</span></a>
         #end
       #end

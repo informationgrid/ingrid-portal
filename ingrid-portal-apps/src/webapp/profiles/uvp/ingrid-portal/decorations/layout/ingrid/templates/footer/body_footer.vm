@@ -37,16 +37,16 @@
     </div>
     <div class="footer">
         <div class="row">
-            <div class="xsmall-24 large-7 xlarge-6 columns">
+            <div class="xsmall-24 large-24 xlarge-24 columns">
+                <div class="copyright">
+                    <p>© 2019 Landesbetrieb Geoinformation und Vermessung</p>
+                </div>
+            </div>
+            <div class="xsmall-24 large-24 xlarge-24 columns">
             #set($footerMenu = $site.getMenu("footer-menu"))
             #if(!$footerMenu.empty)
                 #includeFooterNavigation($footerMenu)
             #end
-            </div>
-            <div class="xsmall-24 large-17 xlarge-18 columns">
-                <div class="copyright">
-                    <p>© 2019 Landesbetrieb Geoinformation und Vermessung</p>
-                </div>
             </div>
         </div>
     </div>
