@@ -132,6 +132,11 @@
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.privacy")</span>
             </a>
+            #set ($link = $renderResponse.encodeURL("/portal/accessibility.psml"))
+            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.accessibility.tooltip")">
+                <span class="ic-ic-arrow-right"></span>
+                <span class="text">$MESSAGES.getString("sitemap.area.footer.accessibility")</span>
+            </a>
         </div>
     </div>
 </div>
