@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.5.1-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.1">
+          <action type="update" dev="wemove" issue="2083">
+            Portal details: change display of date to last modified on #2083.
+          </action>
           <action type="feature" dev="wemove" issue="2137">
             Add accessibility page.
           </action>
