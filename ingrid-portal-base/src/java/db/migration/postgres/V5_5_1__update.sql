@@ -1,5 +1,5 @@
 -- DB Version
-UPDATE ingrid_lookup SET item_value = '5.6.0', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
+UPDATE ingrid_lookup SET item_value = '5.5.1', item_date = NOW() WHERE ingrid_lookup.item_key ='ingrid_db_version';
 
 -- Temp Table
 DROP TABLE IF EXISTS ingrid_temp;
