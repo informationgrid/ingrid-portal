@@ -252,7 +252,17 @@
         <from>/portal/disclaimer.psml</from>
         <to>/impressum</to>
     </outbound-rule>
-    
+
+    <!-- Barrierefreiheit  -->
+    <rule>
+        <from>/barrierefreiheit</from>
+        <to type="forward">/portal/default-page.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/accessibility.psml</from>
+        <to>/barrierefreiheit</to>
+    </outbound-rule>
+
     <!-- SearchDetail -->
     <rule>
         <from>/trefferanzeige</from>

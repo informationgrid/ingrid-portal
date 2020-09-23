@@ -373,4 +373,16 @@
         <p>$MESSAGES.getString("sitemap.area.footer.privacy.description")</p>
     </li>
     #end
+    #if($enableAccessibility)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/accessibility.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.accessibility.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link">
+            </svg>
+            $MESSAGES.getString("sitemap.area.footer.accessibility")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.footer.accessibility.description")</p>
+    </li>
+    #end
 </ul>
