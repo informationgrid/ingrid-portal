@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.5.1-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.1">
+          <action type="feature" dev="wemove" issue="2137">
+            Add accessibility page.
+          </action>
           <action type="fix" dev="wemove" issue="2117">
             Fix detail view for spatial scope.
           </action>
