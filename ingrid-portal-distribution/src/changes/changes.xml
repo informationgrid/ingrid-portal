@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.6-SNAPSHOT" date="2020-XX-XX" description="Release 5.4.6">
+          <action type="update" dev="wemove" issue="2083">
+            Portal details: change display of date to last modified on #2083.
+          </action>
           <action type="fix" dev="wemove" issue="2087">
             Fix layout search result on mobile.
           </action>
