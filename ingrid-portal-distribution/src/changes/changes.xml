@@ -14,6 +14,9 @@
           <action type="add" dev="wemove" issue="2108">
             Add support for different crs format in get capabilities
           </action>
+          <action type="feature" dev="wemove" issue="2137">
+            Add accessibility page.
+          </action>
           <action type="fix" dev="wemove" issue="2087">
             Fix layout search result on mobile.
           </action>
