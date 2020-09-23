@@ -5,7 +5,7 @@ UPDATE ingrid_lookup SET item_value = '5.6.0', item_date = NOW() WHERE ingrid_lo
 DROP TABLE IF EXISTS ingrid_temp;
 CREATE TABLE ingrid_temp (
   temp_key varchar(255) NOT NULL,
-  temp_value mediumint
+  temp_value int
 );
 
 -- add accessibility page 
