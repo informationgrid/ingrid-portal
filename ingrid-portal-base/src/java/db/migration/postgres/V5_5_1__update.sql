@@ -23,15 +23,15 @@ INSERT INTO page_constraints_ref (CONSTRAINTS_REF_ID, PAGE_ID, APPLY_ORDER, NAME
 
 -- add meta_title
 INSERT INTO page_metadata (METADATA_ID ,PAGE_ID ,NAME ,LOCALE ,VALUE) VALUES 
-    ((SELECT max_key    FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH="/accessibility.psml"), 'meta_title', 'de', 'ingrid.page.accessibility.meta.title');
+    ((SELECT max_key    FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT page_id FROM page WHERE PATH='/accessibility.psml'), 'meta_title', 'de', 'ingrid.page.accessibility.meta.title');
 
 -- add meta_description
 INSERT INTO page_metadata (METADATA_ID ,PAGE_ID ,NAME ,LOCALE ,VALUE) VALUES 
-    ((SELECT max_key+1  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH="/accessibility.psml"), 'meta_descr', 'de', 'ingrid.page.accessibility.meta.description');
+    ((SELECT max_key+1  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH='/accessibility.psml'), 'meta_descr', 'de', 'ingrid.page.accessibility.meta.description');
 
 -- add meta_keywords
 INSERT INTO page_metadata (METADATA_ID ,PAGE_ID ,NAME ,LOCALE ,VALUE) VALUES 
-    ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH="/accessibility.psml"), 'meta_keywords', 'de', 'ingrid.page.accessibility.meta.keywords');
+    ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH='/accessibility.psml'), 'meta_keywords', 'de', 'ingrid.page.accessibility.meta.keywords');
 
 -- add accessibility to footer menu
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES
@@ -41,9 +41,9 @@ INSERT INTO folder_menu (MENU_ID, CLASS_NAME, PARENT_ID, ELEMENT_ORDER, NAME, TI
     ((SELECT max_key FROM ojb_hl_seq where tablename='SEQ_FOLDER_MENU'), 'org.apache.jetspeed.om.folder.impl.FolderMenuOptionsDefinitionImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'footer_menu_id'), '6', NULL, NULL, NULL, NULL, '/accessibility.psml', '0', '0', '0', NULL, NULL, NULL);
 
 -- add cms accessibility and query shortcut
-INSERT INTO ingrid_cms (item_key, item_description, item_changed_by) VALUES ('portal.accessibility', 'Barrierefreiheit', 'admin');
-INSERT INTO ingrid_cms_item (fk_ingrid_cms_id, item_lang, item_title, item_value, item_changed_by) VALUES ((SELECT id FROM ingrid_cms WHERE item_key  = 'portal.accessibility'), 'de', 'Barrierefreiheit', 'Verwenden Sie die Administration des Portals um Ihren Text zur Barrierefreiheit zu pflegen und darzustellen.', 'admin');
-INSERT INTO ingrid_cms_item (fk_ingrid_cms_id, item_lang, item_title, item_value, item_changed_by) VALUES ((SELECT id FROM ingrid_cms WHERE item_key  = 'portal.accessibility'), 'en', 'Accessibility', 'Verwenden Sie die Administration des Portals um Ihren Text zur Barrierefreiheit zu pflegen und darzustellen.', 'admin');
+INSERT INTO ingrid_cms (id, item_key, item_description, item_changed_by) VALUES ((SELECT max_key+2 FROM ojb_hl_seq where tablename='SEQ_FOLDER_MENU'), 'portal.accessibility', 'Barrierefreiheit', 'admin');
+INSERT INTO ingrid_cms_item (id, fk_ingrid_cms_id, item_lang, item_title, item_value, item_changed_by) VALUES ((SELECT max_key+3 FROM ojb_hl_seq where tablename='SEQ_FOLDER_MENU'), (SELECT id FROM ingrid_cms WHERE item_key  = 'portal.accessibility'), 'de', 'Barrierefreiheit', 'Verwenden Sie die Administration des Portals um Ihren Text zur Barrierefreiheit zu pflegen und darzustellen.', 'admin');
+INSERT INTO ingrid_cms_item (id, fk_ingrid_cms_id, item_lang, item_title, item_value, item_changed_by) VALUES ((SELECT max_key+4 FROM ojb_hl_seq where tablename='SEQ_FOLDER_MENU'), (SELECT id FROM ingrid_cms WHERE item_key  = 'portal.accessibility'), 'en', 'Accessibility', 'Verwenden Sie die Administration des Portals um Ihren Text zur Barrierefreiheit zu pflegen und darzustellen.', 'admin');
 
 -- update max keys
 UPDATE ojb_hl_seq SET max_key=max_key+grab_size, version=version+1 WHERE tablename='SEQ_PAGE_METADATA';
