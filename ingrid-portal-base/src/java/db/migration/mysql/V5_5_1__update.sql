@@ -23,15 +23,15 @@ INSERT INTO page_constraints_ref (CONSTRAINTS_REF_ID, PAGE_ID, APPLY_ORDER, NAME
 
 -- add meta_title
 INSERT INTO page_metadata (METADATA_ID ,PAGE_ID ,NAME ,LOCALE ,VALUE) VALUES 
-    ((SELECT max_key    FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH="/accessibility.psml"), 'meta_title', 'de', 'ingrid.page.accessibility.meta.title');
+    ((SELECT max_key    FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH='/accessibility.psml'), 'meta_title', 'de', 'ingrid.page.accessibility.meta.title');
 
 -- add meta_description
 INSERT INTO page_metadata (METADATA_ID ,PAGE_ID ,NAME ,LOCALE ,VALUE) VALUES 
-    ((SELECT max_key+1  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH="/accessibility.psml"), 'meta_descr', 'de', 'ingrid.page.accessibility.meta.description');
+    ((SELECT max_key+1  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH='/accessibility.psml'), 'meta_descr', 'de', 'ingrid.page.accessibility.meta.description');
 
 -- add meta_keywords
 INSERT INTO page_metadata (METADATA_ID ,PAGE_ID ,NAME ,LOCALE ,VALUE) VALUES 
-    ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH="/accessibility.psml"), 'meta_keywords', 'de', 'ingrid.page.accessibility.meta.keywords');
+    ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_PAGE_METADATA'),(SELECT PAGE_ID FROM page WHERE PATH='/accessibility.psml'), 'meta_keywords', 'de', 'ingrid.page.accessibility.meta.keywords');
 
 -- add accessibility to footer menu
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES
