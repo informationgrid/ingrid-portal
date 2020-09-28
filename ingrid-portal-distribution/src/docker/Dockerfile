@@ -9,6 +9,7 @@ RUN unzip ingrid-portal-*-installer.jar -d /tmp \
     && unzip -q $INSTALL_DIR/apache-tomcat/webapps/ROOT.war -d $INSTALL_DIR/apache-tomcat/webapps/ROOT \
     && rm $INSTALL_DIR/apache-tomcat/webapps/ROOT.war \
     && mv $INSTALL_DIR/apache-tomcat/webapps/ROOT/WEB-INF/deploy/*.war $INSTALL_DIR/apache-tomcat/webapps \
+    && mkdir -p $INSTALL_DIR/apache-tomcat/webapps/ROOT/html/nw/res \
     && mkdir -p $INSTALL_DIR/apache-tomcat/webapps/ingrid-portal-apps \
     && unzip -q $INSTALL_DIR/apache-tomcat/webapps/ingrid-portal-apps.war -d $INSTALL_DIR/apache-tomcat/webapps/ingrid-portal-apps \
     && rm $INSTALL_DIR/apache-tomcat/webapps/ingrid-portal-apps.war \
