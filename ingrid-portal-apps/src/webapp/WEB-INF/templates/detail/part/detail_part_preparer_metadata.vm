@@ -237,7 +237,7 @@
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ## Erläuterung zum Raumbezug
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description/gco:CharacterString"))
                                 #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $tmp)
                                 #set($tmp = "")
                                 ## Begrenzungspolygon als WKT
@@ -328,7 +328,7 @@
                             #renderSectionTitle($MESSAGES.getString("subject_reference"))
                             <div class="search-result--nested">
                                 ## Fachliche Grundlage
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"))
                                 #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.special_base") $tmp)
                                 #set($tmp = "")
                                 ## Datensatz/Datenserie
@@ -370,7 +370,7 @@
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ## Datengrundlage
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"))
                                 #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.data_base") $tmp)
                                 #set($tmp = "")
                                 ## Sachdaten/Attributinformation

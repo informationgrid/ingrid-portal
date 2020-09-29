@@ -445,7 +445,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 
                 // keywords
-                xpathExpression = "./gmd:MD_Keywords/gmd:keyword";
+                xpathExpression = "./gmd:MD_Keywords/gmd:keyword/gco:CharacterString";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
                     for (int j = 0; j < keywordNodeList.getLength(); j++) {
