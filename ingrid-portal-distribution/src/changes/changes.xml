@@ -9,7 +9,13 @@
 
         <release version="5.6.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.6.0">
           <action type="add" dev="wemove" issue="1817">
-            Add explanation column to conformity table
+            IGE: Add explanation column to conformity table
+          </action>
+          <action type="fix" dev="wemove" issue="1580">
+            IGE: Fix issue that a document cannot be saved anymore.
+          </action>
+          <action type="add" dev="wemove" issue="1267">
+            IGE: Multiple axis elements can be entered now.
           </action>
           <action type="fix" dev="wemove" issue="2151">
             UVP: Anzeige von Vorschaltseiten funtioniert nicht (404).
