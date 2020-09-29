@@ -1353,6 +1353,10 @@ public class MdekMapper implements DataMapperInterface {
             }
             result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getPublicationDate()));
 
+            if (con.getExplanation() != null) {
+                result.put(MdekKeys.CONFORMITY_EXPLANATION, con.getExplanation().trim());
+            }
+
             if (!result.isEmpty()) {
                 resultList.add(result);
             }
@@ -2036,6 +2040,7 @@ public class MdekMapper implements DataMapperInterface {
             value = value == null || value.trim().isEmpty() ? (String) con.get(MdekKeys.CONFORMITY_SPECIFICATION_VALUE) : value;
             c.setSpecification(value);
 
+            c.setExplanation(con.getString(MdekKeys.CONFORMITY_EXPLANATION));
             c.setPublicationDate(convertTimestampToDate(con.getString(MdekKeys.CONFORMITY_PUBLICATION_DATE)));
             resultList.add(c);
         }

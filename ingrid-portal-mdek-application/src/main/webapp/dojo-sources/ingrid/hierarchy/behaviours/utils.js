@@ -40,7 +40,7 @@ define([
 
         inspireConformityHintDeleted: message.get("hint.inspireConformity.deleted"),
 
-        addConformity: function(isFromInspireList, name, level) {
+        addConformity: function(isFromInspireList, name, level, explanation) {
             console.log("Add conformity");
             var listId = 6005;
             var conformityData = UtilGrid.getTableData("extraInfoConformityTable");
@@ -53,6 +53,7 @@ define([
                 isInspire: true,
                 specification: name,
                 level: level,
+                explanation: explanation,
                 publicationDate: publicationDate && publicationDate.length > 0 ? new Date(publicationDate) : null
             });
             UtilGrid.setTableData("extraInfoConformityTable", conformityData);
