@@ -235,7 +235,7 @@ define(["dojo/_base/declare",
             defaultActive: true,
             run: function() {
                 aspect.after(registry.byId("ref1Representation"), "onDataChanged", function() {
-                    console.log("data: ", this.getData());
+                    // console.log("data: ", this.getData());
                     var hasGridType = array.some(this.getData(), function(row) {
                         // 2 === Raster, Gitter
                         return row.title === 2 || row.title === "2"; 

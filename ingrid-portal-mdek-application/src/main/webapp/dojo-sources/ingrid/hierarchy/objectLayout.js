@@ -2045,7 +2045,7 @@ define([
                 var extraInfoConformityTableStructure = [{
                     field: 'specification',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),
-                    width: '395px',
+                    width: '295px',
                     editable: false,
                     formatter: gridFormatters.ConformityCellFormatter
                 }, {
@@ -2057,7 +2057,13 @@ define([
                 }, {
                     field: 'publicationDate',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.publicationDate"),
-                    width: '150px',
+                    width: '120px',
+                    editable: false,
+                    formatter: gridFormatters.DateCellFormatter
+                }, {
+                    field: 'explanation',
+                    name: message.get("ui.obj.additionalInfo.conformityTable.header.explanation"),
+                    width: '130px',
                     editable: false,
                     formatter: gridFormatters.DateCellFormatter
                 }, {
