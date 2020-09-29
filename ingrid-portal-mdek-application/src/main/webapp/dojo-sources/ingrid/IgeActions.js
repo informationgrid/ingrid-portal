@@ -2419,7 +2419,7 @@ define([
             nodeData.metadataDate = registry.byId("metadataDate").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
-            nodeData.generalAddressTable = this._getTableData("generalAddress");
+            nodeData.generalAddressTable = dojo.clone(this._getTableData("generalAddress"));
 
             // remove additional properties we needed for visualization
             array.forEach(nodeData.generalAddressTable, function(item) {
@@ -2434,13 +2434,13 @@ define([
             nodeData.commentTable = currentUdk.commentStore;
 
             // -- Spatial --
-            nodeData.spatialRefAdminUnitTable = this._getTableData("spatialRefAdminUnit");
+            nodeData.spatialRefAdminUnitTable = dojo.clone(this._getTableData("spatialRefAdminUnit"));
             // remove additional properties we needed for visualization
             array.forEach(nodeData.spatialRefAdminUnitTable, function(item) {
                 delete item.label;
             });
 
-            nodeData.spatialRefLocationTable = this._getTableData("spatialRefLocation");
+            nodeData.spatialRefLocationTable = dojo.clone(this._getTableData("spatialRefLocation"));
             // remove additional properties we needed for visualization
             array.forEach(nodeData.spatialRefLocationTable, function(item) {
                 delete item.label;
@@ -2513,7 +2513,7 @@ define([
             nodeData.availabilityMediaOptionsTable = this._getTableData("availabilityMediaOptions");
 
             // -- Thesaurus --
-            nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
+            nodeData.thesaurusTermsTable = dojo.clone(this._getTableData("thesaurusTerms"));
             // remove additional properties we needed for visualization
             array.forEach(nodeData.thesaurusTermsTable, function(item) {
                 delete item.sourceString;
@@ -2528,10 +2528,10 @@ define([
 
 
             // -- Links --
-            var linksToTable = this._getTableData("linksTo");
+            var linksToTable = dojo.clone(this._getTableData("linksTo"));
             // concat with other tables separated earlier
             if (nodeData.objectClass == "3") {
-                linksToTable = linksToTable.concat(this._getTableData("ref3BaseDataLink"));
+                linksToTable = linksToTable.concat(dojo.clone(this._getTableData("ref3BaseDataLink")));
             }
 
             var objLinks = [];
