@@ -687,6 +687,9 @@ define({
     "ui.obj.type1.processTable.link": "Verweis anlegen",
     "ui.obj.type1.processTable.tab.text": "Text",
     "ui.obj.type1.processTable.tab.links": "Verweise",
+    "ui.obj.type1.gridFormat.axisDimName": "Achsenbezeichnung*",
+    "ui.obj.type1.gridFormat.axisDimSize": "Elementanzahl*",
+    "ui.obj.type1.gridFormat.axisDimResolution": "Aufl&ouml;sung in Meter",
     "ui.obj.refClass2.title": "Fachbezug - Klasse 2 (Literatur)",
     "ui.obj.type2.author": "Autor/Verfasser",
     "ui.obj.type2.editor": "Herausgeber",
@@ -1081,6 +1084,7 @@ define({
     "validation.error.spatial.no.expired": "Der Raumbezug darf nicht abgelaufen sein.",
     "validation.error.missing.download.link": "Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
     "validation.error.date.without.title": "Ohne Titel darf kein Datum gesetzt sein.",
+    "validation.error.axisdim.required.columns": "Die Spalten 'Achsenbezeichnung' und 'Elementanzahl' sind verpflichtend.",
 
     "validation.levelOfSpecification.notConform":"Bei nicht konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'nicht evaluiert' oder 'nicht konform' sein.",
     "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",

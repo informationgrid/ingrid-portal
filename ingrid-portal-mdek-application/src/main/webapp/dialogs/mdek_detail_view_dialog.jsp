@@ -385,6 +385,7 @@ require([
         */
             // skip if the user canceled
             // since several asynchronous deferreds exists it's better to ignore execution
+            debugger;
             if (!pageDetailViewObjects.stopOperation) {
                 // update process info
                 processNode();
@@ -587,17 +588,21 @@ require([
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.title' />");
                     renderTextWithTitle(nodeData.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
                     renderTextWithTitle(nodeData.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
-                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(514, nodeData.ref1GridFormatAxisDimName), "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
-                    renderTextWithTitle(nodeData.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
+                    renderTable(nodeData.ref1GridFormatAxis, ["name", "count", "resolution"], [message.get("ui.obj.type1.gridFormat.axisDimName"),message.get("ui.obj.type1.gridFormat.axisDimSize"),message.get("ui.obj.type1.gridFormat.axisDimResolution")], null, [
+                        function(val) {
+                            return UtilSyslist.getSyslistEntryName(514, val);
+                        },
+                        null, null
+                    ]);
                     renderTextWithTitle(UtilSyslist.getSyslistEntryName(509, nodeData.ref1GridFormatCellGeometry), "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
                     
-                    if (nodeData.ref1GridFormatGeoRectified) {
+                    if (nodeData.ref1GridFormatType === "rectified") {
                         renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
                         renderTextWithTitle(nodeData.ref1GridFormatRectCheckpoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.rectified.checkpoint' />");
                         renderTextWithTitle(nodeData.ref1GridFormatRectDescription, "<fmt:message key='ui.obj.type1.gridFormat.rectified.description' />");
                         renderTextWithTitle(nodeData.ref1GridFormatRectCornerPoint, "<fmt:message key='ui.obj.type1.gridFormat.rectified.cornerPoint' />");
                         renderTextWithTitle(UtilSyslist.getSyslistEntryName(2100, nodeData.ref1GridFormatRectPointInPixel), "<fmt:message key='ui.obj.type1.gridFormat.rectified.pointInPixel' />");
-                    } else {
+                    } else if (nodeData.ref1GridFormatType === "referenced") {
                         renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoReferenced' />");
                         renderTextWithTitle(nodeData.ref1GridFormatRefOrientationParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.referenced.orientationParam' />");
                         renderTextWithTitle(nodeData.ref1GridFormatRefControlPoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", "<fmt:message key='ui.obj.type1.gridFormat.referenced.controlPoint' />");

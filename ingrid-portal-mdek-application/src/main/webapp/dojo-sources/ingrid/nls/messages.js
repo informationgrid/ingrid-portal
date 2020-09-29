@@ -686,6 +686,9 @@ define({
         "ui.obj.type1.processTable.link": "Add Link",
         "ui.obj.type1.processTable.tab.text": "Text",
         "ui.obj.type1.processTable.tab.links": "Links",
+        "ui.obj.type1.gridFormat.axisDimName": "Description of axis*",
+        "ui.obj.type1.gridFormat.axisDimSize": "Number of elements*",
+        "ui.obj.type1.gridFormat.axisDimResolution": "Resolution in meter",
         "ui.obj.refClass2.title": "Relevance - Class 2 (Literature)",
         "ui.obj.type2.author": "Author",
         "ui.obj.type2.editor": "Editor",
@@ -1077,6 +1080,7 @@ define({
         "validation.error.spatial.no.expired": "A spatial reference must not be expired.",
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
         "validation.error.date.without.title": "No date allowed without title.",
+        "validation.error.axisdim.required.columns": "The columns 'Description of axis' and 'Number of elements' are required.",
 
         "validation.levelOfSpecification.notConform":"For non conform INSPIRE-relevant datasets this specification must be 'not evaluated' or 'not conform'.",
         "validation.levelOfSpecification.conform":"For conform INSPIRE-relevant datasets this specification must be 'conform'.",

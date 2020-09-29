@@ -138,11 +138,15 @@ require([
                     nodeDataNew.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />",
                     "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
                 renderTextWithTitle(nodeDataOld.ref1GridFormatNumDimensions, nodeDataNew.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(514, nodeDataOld.ref1GridFormatAxisDimName), UtilSyslist.getSyslistEntryName(514, nodeDataNew.ref1GridFormatAxisDimName), "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
-                renderTextWithTitle(nodeDataOld.ref1GridFormatAxisDimSize, nodeDataNew.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
+				renderTable(nodeDataOld.ref1GridFormatAxis, nodeDataNew.ref1GridFormatAxis, ["name", "count", "resolution"], [message.get("ui.obj.type1.gridFormat.axisDimName"),message.get("ui.obj.type1.gridFormat.axisDimSize"),message.get("ui.obj.type1.gridFormat.axisDimResolution")], null, [
+					function(val) {
+						return UtilSyslist.getSyslistEntryName(514, val);
+					},
+					null, null
+				]);
                 renderTextWithTitle(UtilSyslist.getSyslistEntryName(509, nodeDataOld.ref1GridFormatCellGeometry), UtilSyslist.getSyslistEntryName(509, nodeDataNew.ref1GridFormatCellGeometry), "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
                 
-                if (nodeDataNew.ref1GridFormatGeoRectified) {
+                if (nodeDataNew.ref1GridFormatType === "rectified") {
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
                     renderTextWithTitle(
                         nodeDataOld.ref1GridFormatRectCheckpoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
@@ -154,7 +158,7 @@ require([
                         UtilSyslist.getSyslistEntryName(2100, nodeDataOld.ref1GridFormatRectPointInPixel),
                         UtilSyslist.getSyslistEntryName(2100, nodeDataNew.ref1GridFormatRectPointInPixel),
                         "<fmt:message key='ui.obj.type1.gridFormat.rectified.pointInPixel' />");
-                } else {
+                } else if (nodeDataNew.ref1GridFormatType === "referenced"){
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoReferenced' />");
                     renderTextWithTitle(
                         nodeDataOld.ref1GridFormatRefOrientationParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 

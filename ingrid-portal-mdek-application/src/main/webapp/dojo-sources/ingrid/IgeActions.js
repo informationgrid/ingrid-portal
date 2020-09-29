@@ -2138,11 +2138,11 @@ define([
             // Grid-format
             registry.byId("ref1TransfParamAvail").attr("value", nodeData.ref1GridFormatTransfParam);
             registry.byId("ref1NumDimensions").attr("value", nodeData.ref1GridFormatNumDimensions);
-            registry.byId("ref1AxisDimName").attr("value", nodeData.ref1GridFormatAxisDimName);
-            registry.byId("ref1AxisDimSize").attr("value", nodeData.ref1GridFormatAxisDimSize);
+
             registry.byId("ref1CellGeometry").attr("value", nodeData.ref1GridFormatCellGeometry);
-            registry.byId("isGeoRectified").attr("value", nodeData.ref1GridFormatGeoRectified);
-            registry.byId("isGeoReferenced").attr("value", !nodeData.ref1GridFormatGeoRectified);
+            registry.byId("isGeoBase").attr("value", nodeData.ref1GridFormatType === "base");
+            registry.byId("isGeoRectified").attr("value", nodeData.ref1GridFormatType === "rectified");
+            registry.byId("isGeoReferenced").attr("value", nodeData.ref1GridFormatType === "referenced");
             registry.byId("ref1GridFormatRectCheckpoint").attr("value", nodeData.ref1GridFormatRectCheckpoint);
             registry.byId("ref1GridFormatRectDescription").attr("value", nodeData.ref1GridFormatRectDescription);
             registry.byId("ref1GridFormatRectCornerPoint").attr("value", nodeData.ref1GridFormatRectCornerPoint);
@@ -2151,6 +2151,7 @@ define([
             registry.byId("ref1GridFormatRefOrientationParam").attr("value", nodeData.ref1GridFormatRefOrientationParam);
             registry.byId("ref1GridFormatRefGeoreferencedParam").attr("value", nodeData.ref1GridFormatRefGeoreferencedParam);
 
+            UtilStore.updateWriteStore("ref1GridAxisTable", nodeData.ref1GridFormatAxis);
             UtilStore.updateWriteStore("ref1Scale", nodeData.ref1Scale);
             UtilStore.updateWriteStore("ref1SymbolsText", nodeData.ref1SymbolsText);
             UtilStore.updateWriteStore("ref1KeysText", nodeData.ref1KeysText);
@@ -2756,12 +2757,10 @@ define([
             // Grid-format
             nodeData.ref1GridFormatTransfParam = registry.byId("ref1TransfParamAvail").checked ? true : false;
             var numDimensions = registry.byId("ref1NumDimensions").get("value");
-            var axisDimSize = registry.byId("ref1AxisDimSize").get("value");
             nodeData.ref1GridFormatNumDimensions = isNaN(numDimensions) ? null : numDimensions;
-            nodeData.ref1GridFormatAxisDimName = registry.byId("ref1AxisDimName").get("value");
-            nodeData.ref1GridFormatAxisDimSize = isNaN(axisDimSize) ? null : axisDimSize;
             nodeData.ref1GridFormatCellGeometry = registry.byId("ref1CellGeometry").get("value");
-            nodeData.ref1GridFormatGeoRectified = registry.byId("isGeoRectified").checked ? true : false;
+            var geoFormatType = registry.byId("isGeoBase").checked ? "base" : registry.byId("isGeoRectified").checked ? "rectified" : "referenced";
+            nodeData.ref1GridFormatType = geoFormatType;
             nodeData.ref1GridFormatRectCheckpoint = registry.byId("ref1GridFormatRectCheckpoint").checked ? true : false;
             nodeData.ref1GridFormatRectDescription = registry.byId("ref1GridFormatRectDescription").get("value");
             nodeData.ref1GridFormatRectCornerPoint = registry.byId("ref1GridFormatRectCornerPoint").get("value");
@@ -2770,6 +2769,7 @@ define([
             nodeData.ref1GridFormatRefOrientationParam = registry.byId("ref1GridFormatRefOrientationParam").checked ? true : false;
             nodeData.ref1GridFormatRefGeoreferencedParam = registry.byId("ref1GridFormatRefGeoreferencedParam").get("value");
 
+            nodeData.ref1GridFormatAxis = this._getTableData("ref1GridAxisTable");
             nodeData.ref1Scale = this._getTableData("ref1Scale");
             nodeData.ref1SymbolsText = this._getTableData("ref1SymbolsText");
             nodeData.ref1KeysText = this._getTableData("ref1KeysText");

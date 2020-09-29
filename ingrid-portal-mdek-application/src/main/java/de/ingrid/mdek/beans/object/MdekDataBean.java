@@ -159,10 +159,9 @@ public class MdekDataBean {
 	
 	private Boolean ref1GridFormatTransfParam;
 	private Integer ref1GridFormatNumDimensions;
-	private String ref1GridFormatAxisDimName;
-	private Integer ref1GridFormatAxisDimSize;
+	private List<AxisDimBean> ref1GridFormatAxis;
 	private String ref1GridFormatCellGeometry;
-	private Boolean ref1GridFormatGeoRectified;
+	private String ref1GridFormatType; // "base", "rectified", "referenced"
 	private Boolean ref1GridFormatRectCheckpoint;
 	private String ref1GridFormatRectDescription;
 	private String ref1GridFormatRectCornerPoint;
@@ -2096,26 +2095,6 @@ public class MdekDataBean {
     }
 
 
-    public String getRef1GridFormatAxisDimName() {
-        return ref1GridFormatAxisDimName;
-    }
-
-
-    public void setRef1GridFormatAxisDimName(String ref1GridFormatAxisDimName) {
-        this.ref1GridFormatAxisDimName = ref1GridFormatAxisDimName;
-    }
-
-
-    public Integer getRef1GridFormatAxisDimSize() {
-        return ref1GridFormatAxisDimSize;
-    }
-
-
-    public void setRef1GridFormatAxisDimSize(Integer ref1GridFormatAxisDimSize) {
-        this.ref1GridFormatAxisDimSize = ref1GridFormatAxisDimSize;
-    }
-
-
     public String getRef1GridFormatCellGeometry() {
         return ref1GridFormatCellGeometry;
     }
@@ -2126,13 +2105,13 @@ public class MdekDataBean {
     }
 
 
-    public Boolean getRef1GridFormatGeoRectified() {
-        return ref1GridFormatGeoRectified;
+    public String getRef1GridFormatType() {
+        return ref1GridFormatType;
     }
 
 
-    public void setRef1GridFormatGeoRectified(Boolean ref1GridFormatGeoRectified) {
-        this.ref1GridFormatGeoRectified = ref1GridFormatGeoRectified;
+    public void setRef1GridFormatType(String ref1GridFormatType) {
+        this.ref1GridFormatType = ref1GridFormatType;
     }
 
 
@@ -2243,5 +2222,13 @@ public class MdekDataBean {
 
 	public void setMetadataDate(Date metadataDate) {
 		this.metadataDate = metadataDate;
+	}
+
+	public List<AxisDimBean> getRef1GridFormatAxis() {
+		return ref1GridFormatAxis;
+	}
+
+	public void setRef1GridFormatAxis(List<AxisDimBean> ref1GridFormatAxis) {
+		this.ref1GridFormatAxis = ref1GridFormatAxis;
 	}
 }
