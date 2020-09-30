@@ -385,7 +385,6 @@ require([
         */
             // skip if the user canceled
             // since several asynchronous deferreds exists it's better to ignore execution
-            debugger;
             if (!pageDetailViewObjects.stopOperation) {
                 // update process info
                 processNode();

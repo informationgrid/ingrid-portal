@@ -47,6 +47,7 @@ define(["dojo/_base/declare",
 
                 if (hasGrid) {
                     domClass.remove("ref1GridFormat", "hide");
+                    registry.byId("ref1GridAxisTable").reinitLastColumn();
                 } else {
                     domClass.add("ref1GridFormat", "hide");
                 }
