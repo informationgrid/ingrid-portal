@@ -50,11 +50,8 @@ define(["dojo/_base/declare", "dojo/_base/array", "dojo/Deferred", "dojo/_base/l
             if (array.some(tableData, function(item) {
                 return (item.title == "1");
             })) {
-                registry.byId("ref1VFormatTopology").set("disabled", false);
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", true);
             } else {
-                registry.byId("ref1VFormatTopology").set("value", null);
-                registry.byId("ref1VFormatTopology").set("disabled", true);
                 UtilGrid.setTableData("ref1VFormatDetails", []);
                 UtilGrid.updateOption("ref1VFormatDetails", "editable", false);
             }

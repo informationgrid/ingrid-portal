@@ -575,8 +575,10 @@ require([
                     renderList(nodeData.ref1Representation, "<fmt:message key='ui.obj.type1.digitalRepresentation' />", null, function(val) {
                         return UtilSyslist.getSyslistEntryName(526, val);
                     });
-                    renderTextWithTitle(UtilSyslist.getSyslistEntryName(528, nodeData.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
-                    renderTable(nodeData.ref1VFormatDetails, ["geometryType", "numElements"], ["<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [
+                    renderTable(nodeData.ref1VFormatDetails, ["topologyLevel", "geometryType", "numElements"], ["<fmt:message key="ui.obj.type1.vectorFormat.topology" />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [
+                        function(val) {
+                            return UtilSyslist.getSyslistEntryName(528, val);
+                        },
                         function(val) {
                             return UtilSyslist.getSyslistEntryName(515, val);
                         },

@@ -154,7 +154,6 @@ public class MdekDataBean {
 	private Integer ref1DataSet;
 	private Double ref1Coverage;
 	private List<Integer> ref1Representation;	
-	private Integer ref1VFormatTopology;
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
 	
 	private Boolean ref1GridFormatTransfParam;
@@ -1179,22 +1178,6 @@ public class MdekDataBean {
 	public void setRef1Representation(List<Integer> ref1Representation) {
 		this.ref1Representation = ref1Representation;
 	}
-
-
-
-
-	public Integer getRef1VFormatTopology() {
-		return ref1VFormatTopology;
-	}
-
-
-
-
-	public void setRef1VFormatTopology(Integer ref1VFormatTopology) {
-		this.ref1VFormatTopology = ref1VFormatTopology;
-	}
-
-
 
 
 	public List<VectorFormatDetailsBean> getRef1VFormatDetails() {

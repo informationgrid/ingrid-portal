@@ -17,6 +17,9 @@
           <action type="add" dev="wemove" issue="1267">
             IGE: Multiple axis elements can be entered now.
           </action>
+          <action type="update" dev="wemove" issue="1398">
+            IGE: Move topology level to vector table.
+          </action>
           <action type="fix" dev="wemove" issue="2151">
             UVP: Anzeige von Vorschaltseiten funtioniert nicht (404).
           </action>
