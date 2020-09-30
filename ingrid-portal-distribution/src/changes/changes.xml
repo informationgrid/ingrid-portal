@@ -8,6 +8,30 @@
     <body>
 
         <release version="5.6.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.6.0">
+          <action type="add" dev="wemove" issue="1817">
+            IGE: Add explanation column to conformity table
+          </action>
+          <action type="fix" dev="wemove" issue="1580">
+            IGE: Fix issue that a document cannot be saved anymore.
+          </action>
+          <action type="add" dev="wemove" issue="1267">
+            IGE: Multiple axis elements can be entered now.
+          </action>
+          <action type="fix" dev="wemove" issue="2151">
+            UVP: Anzeige von Vorschaltseiten funtioniert nicht (404).
+          </action>
+          <action type="fix" dev="wemove" issue="2144">
+            Portal: Fix jcaptcha.
+          </action>
+          <action type="update" dev="wemove" issue="2083">
+            Portal details: change display of date to last modified on #2083.
+          </action>
+          <action type="feature" dev="wemove" issue="2137">
+            Add accessibility page.
+          </action>
+          <action type="fix" dev="wemove" issue="2117">
+            Fix detail view for spatial scope.
+          </action>
           <action type="add" dev="wemove" issue="2108">
             Add support for different crs format in get capabilities
           </action>

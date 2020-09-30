@@ -30,6 +30,7 @@
         var dialogConformity = null;
         require([
             "dijit/form/DateTextBox",
+            "dijit/form/TextBox",
             "dijit/registry",
             "dojo/_base/array",
             "dojo/dom-class",
@@ -40,9 +41,11 @@
             "ingrid/layoutCreator",
             "ingrid/utils/Store",
             "ingrid/utils/Syslist"
-        ], function(DateTextBox, registry, array, domClass, on, query, warnDialog, checks, layoutCreator, UtilStore, UtilSyslist) {
+        ], function(DateTextBox, TextBox, registry, array, domClass, on, query, warnDialog, checks, layoutCreator, UtilStore, UtilSyslist) {
                 var inspireDateTextBox = null;
                 var freeDateTextBox = null;
+                var freeExplanationTextBox = null;
+                var inspireExplanationTextBox = null;
                 var isNotInCodelist = false;   // Free conformity entreis
                 var isRowBeingEdited = false;  // Row already exists and is being edited
 
@@ -81,6 +84,10 @@
                         style: "width: 100%;"
                     }, "conformityDateInspireFieldName");
 
+                    inspireExplanationTextBox = new TextBox({
+                        style: "width: 100%;"
+                    }, "conformityExplanationInspireFieldName");
+
 
 
 
@@ -96,6 +103,10 @@
                         style: "width: 100%;"
                     }, "conformityDateFreeFieldName");
 
+                    freeExplanationTextBox = new TextBox({
+                        style: "width: 100%;"
+                    }, "conformityExplanationFreeFieldName");
+
                     return deferred;
                 }
 
@@ -109,6 +120,7 @@
                         var level = row["level"];
                         var publicationDate = row["publicationDate"];
                         var specification = row["specification"];
+                        var explanation = row["explanation"];
 
                         var tabContainer = registry.byId("dialogConformityTab");
                         if (isInspire) {
@@ -126,6 +138,9 @@
                             // Set the level
                             registry.byId("conformityLevelInspireFieldName").set('value', level);
                             // Date is handled automatically for INSPIRE items because no custom entries are allowed
+
+                            // Set the explanation
+                            registry.byId("conformityExplanationInspireFieldName").set('value', explanation);
                         } else {
                             // Switch tab
                             tabContainer.selectChild(registry.byId("dialogConformityFreeTab"));
@@ -147,6 +162,9 @@
 
                             // Set the level
                             registry.byId("conformityLevelFreeFieldName").set('value', level);
+
+                            // Set the explanation
+                            registry.byId("conformityExplanationFreeFieldName").set('value', explanation);
 
                             // Set the date as well, so that it doesn't get lost for custom entries
                             freeDateTextBox.set('value', publicationDate);
@@ -173,7 +191,7 @@
                 function submit() {
                     // collect result from correct tab
                     var isInspire = registry.byId("dialogConformityTab").selectedChildWidget === registry.byId("dialogConformityInspireTab");
-                    var publicationDate, level, specification;
+                    var publicationDate, level, specification, explanation;
 
                     // add data to conformity table
                     if (!validateInputElements()) {
@@ -183,6 +201,7 @@
                             specification = registry.byId("conformitySpecificationInspireFieldName").get("item")[0];
                             level = registry.byId("conformityLevelInspireFieldName").get("value");
                             publicationDate = registry.byId("conformityDateInspireFieldName").get("value");
+                            explanation = registry.byId("conformityExplanationInspireFieldName").get("value");
 
                             if (isInspireConformityInconsistent(specification, level)) {
                                 warnDialog.show("<fmt:message key='general.error' />", "<fmt:message key='dialog.conformity.tab.inspire.mismatchHint' />", warnDialog.WARNING);
@@ -192,10 +211,12 @@
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("value");
                             level = registry.byId("conformityLevelFreeFieldName").get("value");
                             publicationDate = registry.byId("conformityDateFreeFieldName").get("value");
+                            explanation = registry.byId("conformityExplanationFreeFieldName").get("value");
                         } else {
                             specification = registry.byId("conformitySpecificationFreeFieldName").get("item")[0];
                             level = registry.byId("conformityLevelFreeFieldName").get("value");
                             publicationDate = registry.byId("conformityDateFreeFieldName").get("value");
+                            explanation = registry.byId("conformityExplanationFreeFieldName").get("value");
                         }
 
                         var conformityTable = registry.byId("extraInfoConformityTable");
@@ -206,6 +227,7 @@
                             row["specification"] = specification;
                             row["level"] = level;
                             row["publicationDate"] = publicationDate;
+                            row["explanation"] = explanation;
                         } else {
                             // if conformity already exists, update it. otherwise add new row
                             var shouldAppend = true;
@@ -221,7 +243,8 @@
                                     isInspire: isInspire,
                                     specification: specification,
                                     level: level,
-                                    publicationDate: publicationDate
+                                    publicationDate: publicationDate,
+                                    explanation: explanation,
                                 };
                                 conformityData.push(newRow);
                             }
@@ -339,6 +362,18 @@
                                 </span>
                             </div>
                         </span>
+                        <span class="outer">
+                            <div>
+                                <span class="label">
+                                    <label class="inActive" for="conformityExplanationInspireFieldName">
+                                        <fmt:message key="dialog.conformity.inspire.explanation" />
+                                    </label>
+                                </span>
+                                <span class="input">
+                                    <input id="conformityExplanationInspireFieldName" style="width: 100%;" maxLength="255" autoComplete="false" required="true">
+                                </span>
+                            </div>
+                        </span>
                     </div>
                 </div><!-- TAB 1 END -->
                 <!-- TAB 2 START -->
@@ -377,6 +412,18 @@
                                 </span>
                                 <span class="input">
                                     <input id="conformityDateFreeFieldName" style="width: 100%;" maxLength="255" required="true">
+                                </span>
+                            </div>
+                        </span>
+                        <span class="outer">
+                            <div>
+                                <span class="label">
+                                    <label class="inActive" for="conformityExplanationFreeFieldName">
+                                        <fmt:message key="dialog.conformity.inspire.explanation" />
+                                    </label>
+                                </span>
+                                <span class="input">
+                                    <input id="conformityExplanationFreeFieldName" style="width: 100%;" maxLength="255" autoComplete="false" required="true">
                                 </span>
                             </div>
                         </span>

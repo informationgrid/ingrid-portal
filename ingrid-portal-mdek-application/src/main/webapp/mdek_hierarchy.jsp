@@ -691,7 +691,7 @@
                                                 </span>
                                             </div>
                                         </span>
-                                        <span id="uiElement5302" class="outer outer halfWidth">
+                                        <span id="uiElement5302" class="required outer quarterWidth">
                                             <div>
                                                 <span class="label">
                                                     <label for="ref1NumDimensions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5302)">
@@ -703,32 +703,8 @@
                                                 </span>
                                             </div>
                                         </span>
-                                        
-                                        <span id="uiElement5303" class="outer" style="width:25%;">
-                                            <div>
-                                                <span class="label">
-                                                    <label for="ref1AxisDimName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5303)">
-                                                        <fmt:message key="ui.obj.type1.gridFormat.axisDimName" />
-                                                    </label>
-                                                </span>
-                                                <span class="input">
-                                                    <input id="ref1AxisDimName" />
-                                                </span>
-                                            </div>
-                                        </span>
-                                        <span id="uiElement5304" class="outer" style="width:25%;">
-                                            <div>
-                                                <span class="label">
-                                                    <label for="ref1AxisDimSize" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5304)">
-                                                        <fmt:message key="ui.obj.type1.gridFormat.axisDimSize" />
-                                                    </label>
-                                                </span>
-                                                <span class="input">
-                                                    <input listId="529" id="ref1AxisDimSize" />
-                                                </span>
-                                            </div>
-                                        </span>
-                                        <span id="uiElement5305" class="outer outer halfWidth">
+
+                                        <span id="uiElement5305" class="required outer quarterWidth">
                                             <div>
                                                 <span class="label">
                                                     <label for="ref1CellGeometry" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5305)">
@@ -740,10 +716,24 @@
                                                 </span>
                                             </div>
                                         </span>
+
+                                        <div class="inputContainer">
+                                            <span id="uiElement5315" class="outer">
+                                                <div>
+                                                    <div class="input tableContainer">
+                                                        <div id="ref1GridAxisTable" autoHeight="2" interactive="true">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
                                         
-                                        <hr>
+<%--                                        <hr>--%>
 
                                         <span id="uiElement5306" class="outer">
+                                            <div class="input checkboxContainer input-inline">
+                                                <input type="radio" id="isGeoBase"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5315)" for="isGeoBase"><fmt:message key="ui.obj.type1.gridFormat.geoBase" /></label>
+                                            </div>
                                             <div class="input checkboxContainer input-inline">
                                                 <input type="radio" id="isGeoRectified"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5306)" for="isGeoRectified"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
                                             </div>
@@ -752,7 +742,7 @@
                                             </div>
                                         </span>
 
-                                        <div id="geoRectifiedWrapper">
+                                        <div id="geoRectifiedWrapper" class="hide">
                                             <span id="uiElement5308" class="outer halfWidth">
                                                 <div>
                                                     <span class="label"></span>

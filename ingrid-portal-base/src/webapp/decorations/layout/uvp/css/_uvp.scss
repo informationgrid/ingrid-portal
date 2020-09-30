@@ -1368,10 +1368,10 @@ footer {
 
     .footer-menu-entries {
       text-align: center;
-      margin-bottom: 24px;
 
       .entry { font-family: 'Roboto-Medium'; }
-      .entry:first-child { margin-right: 40px; }
+      .entry { margin-right: 40px; }
+      .entry:last-child { margin-right: 0px; }
     }
     .copyright {
       text-align: center;

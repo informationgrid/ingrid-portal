@@ -30,11 +30,8 @@ define(["dojo/_base/declare",
     "dijit/MenuItem",
     "dijit/form/Button",
     "dijit/registry",
-    "ingrid/message",
-    "ingrid/utils/Syslist",
-    "ingrid/utils/Tree",
     "dojo/NodeList-traverse"
-], function (declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry, message, Syslist, TreeUtils) {
+], function (declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry) {
 
     return declare(null, {
         title: "Struktur der räumlichen Daten",
@@ -50,42 +47,12 @@ define(["dojo/_base/declare",
 
                 if (hasGrid) {
                     domClass.remove("ref1GridFormat", "hide");
+                    registry.byId("ref1GridAxisTable").reinitLastColumn();
                 } else {
                     domClass.add("ref1GridFormat", "hide");
                 }
                 // UtilUI.showToolTip("ref1Representation", message.get("validation.digitalRepresentation.conform"));
             });
-
-            var fxnGridSpatialRepresentationValidation = function(msg) {
-                var numDimensions = registry.byId("ref1NumDimensions").get("value");
-                var cellGeometry = registry.byId("ref1CellGeometry").get("value");
-                var axisDimName = registry.byId("ref1AxisDimName").get("value");
-                var axisDimSize = registry.byId("ref1AxisDimSize").get("value");
-
-                // If any of the items has been defined, then all of them should
-                // be marked as required
-                if (numDimensions
-                    || (cellGeometry && cellGeometry.trim())
-                    || (axisDimName && axisDimName.trim())
-                    || (axisDimSize && axisDimSize.trim())) {
-
-                    domClass.add("uiElement5302", "required");
-                    domClass.add("uiElement5305", "required");
-                    domClass.add("uiElement5303", "required");
-                    domClass.add("uiElement5304", "required");
-                } else {
-                    domClass.remove("uiElement5302", "required");
-                    domClass.remove("uiElement5305", "required");
-                    domClass.remove("uiElement5303", "required");
-                    domClass.remove("uiElement5304", "required");
-                }
-            };
-
-
-            on(registry.byId("ref1NumDimensions"), "Change", fxnGridSpatialRepresentationValidation);
-            on(registry.byId("ref1CellGeometry"), "Change", fxnGridSpatialRepresentationValidation);
-            on(registry.byId("ref1AxisDimName"), "Change", fxnGridSpatialRepresentationValidation);
-            on(registry.byId("ref1AxisDimSize"), "Change", fxnGridSpatialRepresentationValidation);
 
             on(registry.byId("ref1GridFormatRectCheckpoint"), "Change", function () {
                 if (registry.byId("ref1GridFormatRectCheckpoint").get("value") === "on") {

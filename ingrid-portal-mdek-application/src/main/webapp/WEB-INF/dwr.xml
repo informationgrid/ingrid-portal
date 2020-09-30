@@ -134,6 +134,7 @@
         <convert converter="bean" match="de.ingrid.mdek.beans.object.MediaOptionBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.OperationBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.OperationParameterBean"/>
+        <convert converter="bean" match="de.ingrid.mdek.beans.object.AxisDimBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.ScaleBean"/>
         <convert converter="bean" match="de.ingrid.mdek.beans.object.TimeReferenceBean">
             <param name="exclude" value="selection"/>

@@ -84,6 +84,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/inspireRelevant/accessConstraints",
         "ingrid/hierarchy/behaviours/priorityDataset",
         "ingrid/hierarchy/behaviours/spatialScope",
+        "ingrid/hierarchy/behaviours/axisDimensionTable",
         "ingrid/hierarchy/behaviours/DOI/doi"
 ], function(declare, array, Deferred, lang, style, topic, query, string, on, aspect, dom, domClass, registry, cookie, message,
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
@@ -94,7 +95,7 @@ define(["dojo/_base/declare",
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
             extraInfoLangData, extraInfoCharSetData,
-            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, doi) {
+            spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, axisDim, doi) {
 
     return declare(null, {
         
@@ -173,6 +174,8 @@ define(["dojo/_base/declare",
 
         spatialScope: spatialScope,
 
+        axisDim: axisDim,
+
         /**
          * Add new fields for DOI and functionality for export.
          */
@@ -241,7 +244,7 @@ define(["dojo/_base/declare",
             defaultActive: true,
             run: function() {
                 aspect.after(registry.byId("ref1Representation"), "onDataChanged", function() {
-                    console.log("data: ", this.getData());
+                    // console.log("data: ", this.getData());
                     var hasGridType = array.some(this.getData(), function(row) {
                         // 2 === Raster, Gitter
                         return row.title === 2 || row.title === "2"; 

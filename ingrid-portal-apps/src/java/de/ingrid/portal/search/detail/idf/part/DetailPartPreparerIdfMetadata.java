@@ -476,38 +476,41 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 // "GEMET - Concepts, version 2.1"
                                 } else if (thesaurusName.contains("Concepts")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listGemet.add(tmpValue);
                                     // "GEMET - INSPIRE themes, version 1.0"
                                 } else if (thesaurusName.contains("priority")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listPriorityDataset.add(tmpValue);
-                                } else if (thesaurusName.contains("Spatial scope")) {
+                                } else if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listSpatialScope.add(tmpValue);
                                 } else if (thesaurusName.contains("INSPIRE")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listInspire.add(tmpValue);
                                     // "German Environmental Classification - Category, version 1.0"
                                 } else if (thesaurusName.contains("German Environmental Classification")) {
                                     // do not used in detail view.
-                                    
+
+                                } else if (thesaurusName.contains("Further legal basis")) {
+                                    // do not used in detail view.
+
                                 } else if (thesaurusName.length() < 1 && type.length() < 1) {
                                     listSearch.add(value);
                                 } else{
                                     listSearch.add(value);
-                                }    
+                                }
                             }
                         }
                     }

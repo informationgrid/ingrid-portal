@@ -586,23 +586,52 @@ define([
                 /* Add spatialRepresentationInfo (REDMINE-381) */
                 new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
-                layoutCreator.createFilteringSelect("ref1AxisDimName", null, lang.clone(storeProps), function() {
-                    return UtilSyslist.getSyslistEntry(514);
-                });
-                new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
                 layoutCreator.createFilteringSelect("ref1CellGeometry", null, lang.clone(storeProps), function() {
                     return UtilSyslist.getSyslistEntry(509);
                 });
 
-                var geoRectified = new RadioButton({
+                var ref1GridAxisTableStructure = [{
+                    field: 'name',
+                    name: message.get("ui.obj.type1.gridFormat.axisDimName"),
+                    width: '135px',
+                    editable: true,
+                    type: gridEditors.SelectboxEditor,
+                    listId: 514,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 514)
+                }, {
+                    field: 'count',
+                    name: message.get("ui.obj.type1.gridFormat.axisDimSize"),
+                    width: '285px',
+                    editable: true,
+                    type: gridEditors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: gridFormatters.LocalizedNumberFormatter
+                }, {
+                    field: 'resolution',
+                    name: message.get("ui.obj.type1.gridFormat.axisDimResolution"),
+                    width: '288px',
+                    editable: true,
+                    type: gridEditors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: gridFormatters.LocalizedNumberFormatter
+                }];
+                layoutCreator.createDataGrid("ref1GridAxisTable", null, ref1GridAxisTableStructure, null);
+
+                var geoBase = new RadioButton({
                     checked: true,
-                    value: "true",
+                    value: "base",
+                    name: "isGeoRectified"
+                }, "isGeoBase");
+                geoBase.startup();
+                var geoRectified = new RadioButton({
+                    checked: false,
+                    value: "rectified",
                     name: "isGeoRectified"
                 }, "isGeoRectified");
                 geoRectified.startup();
                 var geoReferenced = new RadioButton({
                     checked: false,
-                    value: "false",
+                    value: "referenced",
                     name: "isGeoRectified"
                 }, "isGeoReferenced");
                 geoReferenced.startup();
@@ -623,9 +652,20 @@ define([
                     if (checked) {
                         domClass.remove("geoRectifiedWrapper", "hide");
                         domClass.add("geoReferencedWrapper", "hide");
-                    } else {
+                    }
+                });
+
+                on(geoReferenced, "change", function(checked) {
+                    if (checked) {
                         domClass.add("geoRectifiedWrapper", "hide");
                         domClass.remove("geoReferencedWrapper", "hide");
+                    }
+                });
+
+                on(geoBase, "change", function(checked) {
+                    if (checked) {
+                        domClass.add("geoRectifiedWrapper", "hide");
+                        domClass.add("geoReferencedWrapper", "hide");
                     }
                 });
                 
@@ -2045,7 +2085,7 @@ define([
                 var extraInfoConformityTableStructure = [{
                     field: 'specification',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),
-                    width: '395px',
+                    width: '295px',
                     editable: false,
                     formatter: gridFormatters.ConformityCellFormatter
                 }, {
@@ -2057,7 +2097,13 @@ define([
                 }, {
                     field: 'publicationDate',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.publicationDate"),
-                    width: '150px',
+                    width: '120px',
+                    editable: false,
+                    formatter: gridFormatters.DateCellFormatter
+                }, {
+                    field: 'explanation',
+                    name: message.get("ui.obj.additionalInfo.conformityTable.header.explanation"),
+                    width: '130px',
                     editable: false,
                     formatter: gridFormatters.DateCellFormatter
                 }, {

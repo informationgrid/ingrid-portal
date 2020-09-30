@@ -263,10 +263,8 @@ public class MdekMapper implements DataMapperInterface {
             
             mdekObj.setRef1GridFormatTransfParam("Y".equals(td1Map.get( MdekKeys.TRANSFORMATION_PARAMETER )));
             mdekObj.setRef1GridFormatNumDimensions((Integer) td1Map.get( MdekKeys.NUM_DIMENSIONS ));
-            mdekObj.setRef1GridFormatAxisDimName((String) td1Map.get( MdekKeys.AXIS_DIM_NAME ));
-            mdekObj.setRef1GridFormatAxisDimSize((Integer) td1Map.get( MdekKeys.AXIS_DIM_SIZE ));
             mdekObj.setRef1GridFormatCellGeometry((String) td1Map.get( MdekKeys.CELL_GEOMETRY ));
-            mdekObj.setRef1GridFormatGeoRectified("Y".equals(td1Map.get( MdekKeys.GEO_RECTIFIED )));
+            mdekObj.setRef1GridFormatType(td1Map.get( MdekKeys.GEO_RECTIFIED ) == null ? "base" : "Y".equals(td1Map.get( MdekKeys.GEO_RECTIFIED )) ? "rectified" : "referenced");
             mdekObj.setRef1GridFormatRectCheckpoint("Y".equals(td1Map.get( MdekKeys.GEO_RECT_CHECKPOINT )));
             mdekObj.setRef1GridFormatRectDescription((String) td1Map.get( MdekKeys.GEO_RECT_DESCRIPTION ));
             mdekObj.setRef1GridFormatRectCornerPoint((String) td1Map.get( MdekKeys.GEO_RECT_CORNER_POINT ));
@@ -291,6 +289,7 @@ public class MdekMapper implements DataMapperInterface {
                 mdekObj.setRef1Representation(intList);
             
             mdekObj.setRef1VFormatDetails(mapToVFormatDetailsTable((List<IngridDocument>) td1Map.get(MdekKeys.GEO_VECTOR_LIST)));
+            mdekObj.setRef1GridFormatAxis(mapToAxisDimTable((List<IngridDocument>) td1Map.get(MdekKeys.AXIS_DIMENSION_LIST)));
             mdekObj.setRef1Scale(mapToScaleTable((List<IngridDocument>) td1Map.get(MdekKeys.PUBLICATION_SCALE_LIST)));
             mdekObj.setRef1SymbolsText(mapToSymLinkDataTable((List<IngridDocument>) td1Map.get(MdekKeys.SYMBOL_CATALOG_LIST)));
             mdekObj.setRef1KeysText(mapToKeyLinkDataTable((List<IngridDocument>) td1Map.get(MdekKeys.KEY_CATALOG_LIST)));
@@ -906,10 +905,8 @@ public class MdekMapper implements DataMapperInterface {
             
             td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() != null && data.getRef1GridFormatTransfParam() ? "Y" : "N");
             td1Map.put( MdekKeys.NUM_DIMENSIONS, data.getRef1GridFormatNumDimensions());
-            td1Map.put( MdekKeys.AXIS_DIM_NAME, data.getRef1GridFormatAxisDimName() );
-            td1Map.put( MdekKeys.AXIS_DIM_SIZE, data.getRef1GridFormatAxisDimSize() );
             td1Map.put( MdekKeys.CELL_GEOMETRY, data.getRef1GridFormatCellGeometry() );
-            td1Map.put( MdekKeys.GEO_RECTIFIED, data.getRef1GridFormatGeoRectified() != null && data.getRef1GridFormatGeoRectified() ? "Y" : "N");
+            td1Map.put( MdekKeys.GEO_RECTIFIED, "base".equals(data.getRef1GridFormatType()) ? null : "rectified".equals(data.getRef1GridFormatType()) ? "Y" : "N");
             td1Map.put( MdekKeys.GEO_RECT_CHECKPOINT, data.getRef1GridFormatRectCheckpoint() != null && data.getRef1GridFormatRectCheckpoint() ? "Y" : "N");
             td1Map.put( MdekKeys.GEO_RECT_DESCRIPTION, data.getRef1GridFormatRectDescription());
             td1Map.put( MdekKeys.GEO_RECT_CORNER_POINT, data.getRef1GridFormatRectCornerPoint());
@@ -926,6 +923,7 @@ public class MdekMapper implements DataMapperInterface {
             td1Map.put(MdekKeys.DATA, data.getRef1DataBasisText());
             td1Map.put(MdekKeys.METHOD_OF_PRODUCTION, data.getRef1ProcessText());
             td1Map.put(MdekKeys.FEATURE_TYPE_LIST, data.getRef1Data());
+            td1Map.put(MdekKeys.AXIS_DIMENSION_LIST, mapFromAxisDimensionTable(data.getRef1GridFormatAxis()));
             td1Map.put(MdekKeys.PUBLICATION_SCALE_LIST, mapFromScaleTable(data.getRef1Scale()));
             td1Map.put(MdekKeys.SYMBOL_CATALOG_LIST, mapFromSymLinkDataTable(data.getRef1SymbolsText()));
             td1Map.put(MdekKeys.KEY_CATALOG_LIST, mapFromKeyLinkDataTable(data.getRef1KeysText()));
@@ -1353,6 +1351,10 @@ public class MdekMapper implements DataMapperInterface {
             }
             result.put(MdekKeys.CONFORMITY_PUBLICATION_DATE, convertDateToTimestamp(con.getPublicationDate()));
 
+            if (con.getExplanation() != null) {
+                result.put(MdekKeys.CONFORMITY_EXPLANATION, con.getExplanation().trim());
+            }
+
             if (!result.isEmpty()) {
                 resultList.add(result);
             }
@@ -1603,6 +1605,21 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private List<IngridDocument> mapFromAxisDimensionTable(List<AxisDimBean> axisDimBeanList) {
+        List<IngridDocument> resultList = new ArrayList<>();
+        if (axisDimBeanList == null)
+            return resultList;
+
+        for (AxisDimBean s : axisDimBeanList) {
+            IngridDocument result = new IngridDocument();
+            result.put(MdekKeys.AXIS_DIM_NAME, s.getName());
+            result.put(MdekKeys.AXIS_DIM_SIZE, s.getCount());
+            result.put(MdekKeys.AXIS_DIM_RESOLUTION, s.getResolution());
+            resultList.add(result);
+        }
+        return resultList;
+    }
+
     private List<IngridDocument> mapFromScaleTable(List<ScaleBean> scaleList) {
         List<IngridDocument> resultList = new ArrayList<>();
         if (scaleList == null)
@@ -2036,6 +2053,7 @@ public class MdekMapper implements DataMapperInterface {
             value = value == null || value.trim().isEmpty() ? (String) con.get(MdekKeys.CONFORMITY_SPECIFICATION_VALUE) : value;
             c.setSpecification(value);
 
+            c.setExplanation(con.getString(MdekKeys.CONFORMITY_EXPLANATION));
             c.setPublicationDate(convertTimestampToDate(con.getString(MdekKeys.CONFORMITY_PUBLICATION_DATE)));
             resultList.add(c);
         }
@@ -2285,6 +2303,20 @@ public class MdekMapper implements DataMapperInterface {
         return resultList;
     }
     
+    private List<AxisDimBean> mapToAxisDimTable(List<IngridDocument> axisDimList) {
+        List<AxisDimBean> resultList = new ArrayList<>();
+        if (axisDimList == null)
+            return resultList;
+        for (IngridDocument topic : axisDimList) {
+            AxisDimBean s = new AxisDimBean();
+            s.setName((String) topic.get(MdekKeys.AXIS_DIM_NAME));
+            s.setCount((Integer) topic.get(MdekKeys.AXIS_DIM_SIZE));
+            s.setResolution((Double) topic.get(MdekKeys.AXIS_DIM_RESOLUTION));
+            resultList.add(s);
+        }
+        return resultList;
+    }
+
     private List<ScaleBean> mapToScaleTable(List<IngridDocument> scaleList) {
         List<ScaleBean> resultList = new ArrayList<>();
         if (scaleList == null)
