@@ -2,7 +2,7 @@
     <div class="media__obj #if($rs.udk_class)media__obj--right#end">
         #if($!rs.additional_html_1.indexOf(">, <") == -1) 
             #set ($tmpValue = $!rs.additional_html_1)
-            #if($tmpValue.indexOf("src=\"http") > -1 && $tmpValue.indexOf("preview_image") > -1)
+            #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
                 $tmpValue.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
                 <noscript>
                     $tmpValue
@@ -16,7 +16,7 @@
                 <div class="swiper-wrapper">
                 #foreach($tmpValue in $tmpValues)
                     <div class="swiper-slide">
-                    #if($tmpValue.indexOf("src=\"http") > -1 && $tmpValue.indexOf("preview_image") > -1)
+                    #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
                         $tmpValue.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
                         <noscript>
                             $tmpValue
