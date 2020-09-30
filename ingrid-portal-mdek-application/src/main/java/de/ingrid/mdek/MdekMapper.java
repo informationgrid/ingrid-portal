@@ -259,8 +259,7 @@ public class MdekMapper implements DataMapperInterface {
             
             mdekObj.setRef1ObjectIdentifier((String) td1Map.get(MdekKeys.DATASOURCE_UUID));
             mdekObj.setRef1DataSet((Integer) td1Map.get(MdekKeys.HIERARCHY_LEVEL));
-            mdekObj.setRef1VFormatTopology((Integer) td1Map.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
-            
+
             mdekObj.setRef1GridFormatTransfParam("Y".equals(td1Map.get( MdekKeys.TRANSFORMATION_PARAMETER )));
             mdekObj.setRef1GridFormatNumDimensions((Integer) td1Map.get( MdekKeys.NUM_DIMENSIONS ));
             mdekObj.setRef1GridFormatCellGeometry((String) td1Map.get( MdekKeys.CELL_GEOMETRY ));
@@ -901,8 +900,7 @@ public class MdekMapper implements DataMapperInterface {
             IngridDocument td1Map = new IngridDocument();
             td1Map.put(MdekKeys.DATASOURCE_UUID, data.getRef1ObjectIdentifier());
             td1Map.put(MdekKeys.HIERARCHY_LEVEL, data.getRef1DataSet());
-            td1Map.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, data.getRef1VFormatTopology());
-            
+
             td1Map.put( MdekKeys.TRANSFORMATION_PARAMETER, data.getRef1GridFormatTransfParam() != null && data.getRef1GridFormatTransfParam() ? "Y" : "N");
             td1Map.put( MdekKeys.NUM_DIMENSIONS, data.getRef1GridFormatNumDimensions());
             td1Map.put( MdekKeys.CELL_GEOMETRY, data.getRef1GridFormatCellGeometry() );
@@ -1584,6 +1582,7 @@ public class MdekMapper implements DataMapperInterface {
 
         for (VectorFormatDetailsBean v : vFormatList) {
             IngridDocument result = new IngridDocument();
+            result.put(MdekKeys.VECTOR_TOPOLOGY_LEVEL, v.getTopologyLevel());
             result.put(MdekKeys.GEOMETRIC_OBJECT_TYPE, v.getGeometryType());
             result.put(MdekKeys.GEOMETRIC_OBJECT_COUNT, v.getNumElements());
             resultList.add(result);
@@ -2264,6 +2263,7 @@ public class MdekMapper implements DataMapperInterface {
             return resultList;
         for (IngridDocument vFormat : vFormatList) {
             VectorFormatDetailsBean v = new VectorFormatDetailsBean();
+            v.setTopologyLevel((Integer) vFormat.get(MdekKeys.VECTOR_TOPOLOGY_LEVEL));
             v.setGeometryType((Integer) vFormat.get(MdekKeys.GEOMETRIC_OBJECT_TYPE));
             v.setNumElements((Integer) vFormat.get(MdekKeys.GEOMETRIC_OBJECT_COUNT));
             resultList.add(v);

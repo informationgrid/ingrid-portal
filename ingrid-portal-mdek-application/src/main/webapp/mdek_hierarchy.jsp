@@ -645,18 +645,7 @@
                                         </label>
                                     </span>
                                     <div id="ref1VFormatFields" class="outlined">
-                                        <span id="uiElement5063" class="outer" style="width:33%;">
-									     <div>
-                                            <span class="label">
-                                                <label for="ref1VFormatTopology" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5063)">
-                                                    <fmt:message key="ui.obj.type1.vectorFormat.topology" />
-                                                </label>
-                                            </span>
-                                            <span class="input">
-                                                <input style="width:100%;" listId="528" id="ref1VFormatTopology" />
-                                            </span></div>
-                                        </span>
-                                        <span id="uiElementN001" class="outer" style="width:67%;">
+                                        <span id="uiElementN001" class="outer">
 									     <div>
                                             <span class="label hidden">
                                                 <label for="ref1VFormatDetails" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10001)">
@@ -732,7 +721,7 @@
 
                                         <span id="uiElement5306" class="outer">
                                             <div class="input checkboxContainer input-inline">
-                                                <input type="radio" id="isGeoBase"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5315)" for="isGeoBase"><fmt:message key="ui.obj.type1.gridFormat.geoBase" /></label>
+                                                <input type="radio" id="isGeoBase"/><label class="inActive" for="isGeoBase"><fmt:message key="ui.obj.type1.gridFormat.geoBase" /></label>
                                             </div>
                                             <div class="input checkboxContainer input-inline">
                                                 <input type="radio" id="isGeoRectified"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5306)" for="isGeoRectified"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>

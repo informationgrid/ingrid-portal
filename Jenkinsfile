@@ -63,6 +63,9 @@ pipeline {
             }
         }
         stage ('SonarQube Analysis'){
+            when {
+                anyOf { branch 'develop' }
+            }
             steps {
                 withMaven(
                     maven: 'Maven3',

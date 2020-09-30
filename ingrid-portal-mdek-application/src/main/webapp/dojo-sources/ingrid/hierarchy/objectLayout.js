@@ -541,11 +541,17 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1Representation", null, ref1RepresentStructure, null);
 
-                layoutCreator.createFilteringSelect("ref1VFormatTopology", null, storeProps, function() {
-                    return UtilSyslist.getSyslistEntry(528);
-                });
-
                 var ref1VFormatDetailsStructure = [{
+                    field: 'topologyLevel',
+                    name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"),
+                    width: '260px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 528,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 528)
+                }, {
                     field: 'geometryType',
                     name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"),
                     width: '120px',

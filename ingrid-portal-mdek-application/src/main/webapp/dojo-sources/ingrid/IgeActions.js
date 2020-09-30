@@ -2117,7 +2117,6 @@ define([
             registry.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
             registry.byId("ref1DataSet").attr("value", nodeData.ref1DataSet, true);
             registry.byId("ref1Coverage").attr("value", nodeData.ref1Coverage, true);
-            registry.byId("ref1VFormatTopology").attr("value", nodeData.ref1VFormatTopology, true);
 
             // The spatial system table is a combobox that allows free entries but also entries associated with IDs
             // If the reference system ID == -1 then we receive a free entry, otherwise we have to resolve the id
@@ -2748,7 +2747,6 @@ define([
             nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").get("value");
             nodeData.ref1DataSet = registry.byId("ref1DataSet").get("value");
             nodeData.ref1Coverage = UtilGeneral.getNumberFromDijit("ref1Coverage");
-            nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
             nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
