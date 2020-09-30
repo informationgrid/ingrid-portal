@@ -47,11 +47,16 @@ define(["dojo/_base/declare",
 
                 if (hasGrid) {
                     domClass.remove("ref1GridFormat", "hide");
+                    // also remove hide class from required fields (which was needed for correct publication)
+                    domClass.remove("uiElement5302", "hide"); // ref1NumDimensions
+                    domClass.remove("uiElement5305", "hide"); // ref1CellGeometry
                     registry.byId("ref1GridAxisTable").reinitLastColumn();
                 } else {
                     domClass.add("ref1GridFormat", "hide");
+                    // also add hide class to required fields (which is needed for correct publication)
+                    domClass.add("uiElement5302", "hide"); // ref1NumDimensions
+                    domClass.add("uiElement5305", "hide"); // ref1CellGeometry
                 }
-                // UtilUI.showToolTip("ref1Representation", message.get("validation.digitalRepresentation.conform"));
             });
 
             on(registry.byId("ref1GridFormatRectCheckpoint"), "Change", function () {
