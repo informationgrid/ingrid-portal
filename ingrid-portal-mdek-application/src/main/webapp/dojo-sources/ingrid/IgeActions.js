@@ -2140,7 +2140,7 @@ define([
             registry.byId("ref1NumDimensions").attr("value", nodeData.ref1GridFormatNumDimensions);
 
             registry.byId("ref1CellGeometry").attr("value", nodeData.ref1GridFormatCellGeometry);
-            registry.byId("isGeoBase").attr("value", nodeData.ref1GridFormatType === "base");
+            registry.byId("isGeoBase").attr("value", !nodeData.ref1GridFormatType || nodeData.ref1GridFormatType === "base");
             registry.byId("isGeoRectified").attr("value", nodeData.ref1GridFormatType === "rectified");
             registry.byId("isGeoReferenced").attr("value", nodeData.ref1GridFormatType === "referenced");
             registry.byId("ref1GridFormatRectCheckpoint").attr("value", nodeData.ref1GridFormatRectCheckpoint);
