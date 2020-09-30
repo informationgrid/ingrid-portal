@@ -732,7 +732,7 @@
 
                                         <span id="uiElement5306" class="outer">
                                             <div class="input checkboxContainer input-inline">
-                                                <input type="radio" id="isGeoBase"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5315)" for="isGeoBase"><fmt:message key="ui.obj.type1.gridFormat.geoBase" /></label>
+                                                <input type="radio" id="isGeoBase"/><label class="inActive" for="isGeoBase"><fmt:message key="ui.obj.type1.gridFormat.geoBase" /></label>
                                             </div>
                                             <div class="input checkboxContainer input-inline">
                                                 <input type="radio" id="isGeoRectified"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5306)" for="isGeoRectified"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
