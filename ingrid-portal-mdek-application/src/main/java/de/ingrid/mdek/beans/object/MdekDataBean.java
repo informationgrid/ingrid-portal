@@ -176,7 +176,7 @@ public class MdekDataBean {
 	private List<LinkDataBean> ref1SymbolsText;
 	private List<LinkDataBean> ref1KeysText;
 	private String ref1BasisText;
-	private String ref1DataBasisText;
+	private List<String> ref1DataBasisText;
 	private String ref1ProcessText;
 	private List<String> ref1Data;
 	// Data Quality !
@@ -1280,14 +1280,14 @@ public class MdekDataBean {
 
 
 
-	public String getRef1DataBasisText() {
+	public List<String> getRef1DataBasisText() {
 		return ref1DataBasisText;
 	}
 
 
 
 
-	public void setRef1DataBasisText(String ref1DataBasisText) {
+	public void setRef1DataBasisText(List<String> ref1DataBasisText) {
 		this.ref1DataBasisText = ref1DataBasisText;
 	}
 

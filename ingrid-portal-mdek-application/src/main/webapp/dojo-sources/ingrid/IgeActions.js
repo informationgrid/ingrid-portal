@@ -2126,7 +2126,8 @@ define([
             registry.byId("ref1GridPosAccuracy").attr("value", nodeData.ref1GridPosAccuracy, true);
             registry.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
             registry.byId("ref1BasisText").attr("value", nodeData.ref1BasisText, true);
-            registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
+            // registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
+            UtilStore.updateWriteStore("ref1DataBasisTable1", UtilList.listToTableData(nodeData.ref1DataBasisText));
             registry.byId("ref1ProcessText").attr("value", nodeData.ref1ProcessText, true);
 
             UtilStore.updateWriteStore("ref1Representation", UtilList.listToTableData(nodeData.ref1Representation));
@@ -2743,7 +2744,7 @@ define([
             nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
             nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
-            nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");
+            nodeData.ref1DataBasisText = UtilList.tableDataToList(this._getTableData("ref1DataBasisTable1"));
             nodeData.ref1ProcessText = registry.byId("ref1ProcessText").get("value");
 
 
