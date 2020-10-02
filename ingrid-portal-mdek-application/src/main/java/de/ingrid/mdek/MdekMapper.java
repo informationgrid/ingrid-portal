@@ -277,7 +277,10 @@ public class MdekMapper implements DataMapperInterface {
             mdekObj.setRef1GridPosAccuracy((Double) td1Map.get(MdekKeys.GRID_POS_ACCURACY));
             mdekObj.setRef1PosAccuracy((Double) td1Map.get(MdekKeys.RESOLUTION));
             mdekObj.setRef1BasisText((String) td1Map.get(MdekKeys.TECHNICAL_BASE));
-            mdekObj.setRef1DataBasisText((String) td1Map.get(MdekKeys.DATA));
+
+            List<String> baseList = (List<String>) td1Map.get(MdekKeys.DATA);
+            if (baseList != null)
+                mdekObj.setRef1DataBasisText(baseList);
             
             List<String> strList = (List<String>) td1Map.get(MdekKeys.FEATURE_TYPE_LIST);
             if (strList != null)
