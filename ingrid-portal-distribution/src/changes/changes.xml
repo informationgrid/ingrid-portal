@@ -7,6 +7,15 @@
 
     <body>
 
+        <release version="5.5.2-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.2">
+          <action type="add" dev="wemove" issue="2024">
+            Mapclient: Warnhinweis beim Importieren von Layern ohne Extent (Admin-GUI).
+          </action>
+          <action type="add" dev="wemove" issue="2025">
+            Mapclient: Aufräumjob für Karten ohne Kategorienzuordnung.
+          </action>
+        </release>
+
         <release version="5.5.1" date="2020-09-29" description="Release 5.5.1">
           <action type="fix" dev="wemove" issue="2151">
             UVP: Anzeige von Vorschaltseiten funtioniert nicht (404).
