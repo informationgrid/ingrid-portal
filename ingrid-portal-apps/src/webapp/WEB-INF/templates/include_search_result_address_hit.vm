@@ -56,7 +56,7 @@
             </h4>
         #end
         <p>
-            $!rs.abstract 
+            #removeLocalisation($!rs.abstract)
         </p>
 ##        #if($topHit)
         <p>

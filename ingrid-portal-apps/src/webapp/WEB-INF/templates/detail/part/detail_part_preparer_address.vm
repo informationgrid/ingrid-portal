@@ -54,7 +54,7 @@
                         #renderSectionTitle($MESSAGES.getString("detail_description"))
                         ## Beschreibung
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
-                        #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName")))
+                        #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
                         #renderTextLabelAbove($tmp $tmp2)
                         #set($tmp = "")
                         #set($tmp2 = "")
