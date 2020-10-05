@@ -843,10 +843,22 @@ define([
                     doLayout: false
                 }, "ref1DataBasisTabContainer");
 
-                var tabDataBasisTab1 = new SimpleTextarea({
+/*                var tabDataBasisTab1 = new SimpleTextarea({
                     title: "Text",
                     "class": "textAreaFull"
-                }, "ref1DataBasisText");
+                }, "ref1DataBasisText");*/
+
+                var tabDataBasisTab1 = new ContentPane({
+                    title: message.get("ui.obj.type1.dataBasisTable.tab.text")
+                }, "ref1DataBasisTab1");
+
+                var tabDataBasisTab1Structure = [{
+                    field: 'title',
+                    name: 'title',
+                    editable: true
+                }];
+                layoutCreator.createDataGrid("ref1DataBasisTable1", null, tabDataBasisTab1Structure, null);
+
 
                 var tabDataBasisTab2 = new ContentPane({
                     title: message.get("ui.obj.type1.dataBasisTable.tab.links")

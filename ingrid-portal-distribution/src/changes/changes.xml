@@ -8,6 +8,15 @@
     <body>
 
         <release version="5.6.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.6.0">
+          <action type="update" dev="wemove" issue="1429">
+            IGE/Portal: Change 'Datengrundlage' Field from single entry to list.
+          </action>
+          <action type="add" dev="wemove" issue="2024">
+            Mapclient: Warnhinweis beim Importieren von Layern ohne Extent (Admin-GUI).
+          </action>
+          <action type="add" dev="wemove" issue="2025">
+            Mapclient: Aufräumjob für Karten ohne Kategorienzuordnung.
+          </action>
           <action type="add" dev="wemove" issue="1817">
             IGE: Add explanation column to conformity table
           </action>

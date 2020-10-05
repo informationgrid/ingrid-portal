@@ -921,7 +921,9 @@
                                     </span><span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref1DataBasis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3570, gridId: 'ref1DataBasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.dataBasisTable.link" /></a></span>
                                     <div id="ref1DataBasisTabContainer" selectedChild="ref1DataBasisTab1">
                                         <div id='ref1DataBasisTab1' class="input" label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.text" />">
-                                            <input type="text" id="ref1DataBasisText" name="ref1DataBasisText"  title=""/>
+                                            <div class="input tableContainer">
+                                                <div id="ref1DataBasisTable1" name="ref1DataBasisTable1"  title="" interactive="true" autoHeight="3" minRows="3" class="hideTableHeader"></div>
+                                            </div>
                                         </div>
                                         <div id='ref1DataBasisTab2' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.links" />">
                                             <div class="input tableContainer">
