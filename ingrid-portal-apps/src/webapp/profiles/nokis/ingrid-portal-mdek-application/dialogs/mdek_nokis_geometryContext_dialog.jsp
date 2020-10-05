@@ -99,10 +99,10 @@
                     contextType.set("value", value.featureType);
                 }
                 if (value.min !== undefined) {
-                    registry.byId("contextMin").set("value", value.min);
+                    registry.byId("contextMin").set("value", dojo.number.format(value.min));
                 }
                 if (value.max !== undefined) {
-                    registry.byId("contextMax").set("value", value.max);
+                    registry.byId("contextMax").set("value", dojo.number.format(value.max));
                 }
                 if (value.unit !== undefined) {
                     registry.byId("contextUnit").set("value", value.unit);
