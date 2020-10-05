@@ -924,7 +924,6 @@
                                             <div class="input tableContainer">
                                                 <div id="ref1DataBasisTable1" name="ref1DataBasisTable1"  title="" interactive="true" autoHeight="3" minRows="3" class="hideTableHeader"></div>
                                             </div>
-                                    </div>
                                         </div>
                                         <div id='ref1DataBasisTab2' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.links" />">
                                             <div class="input tableContainer">
