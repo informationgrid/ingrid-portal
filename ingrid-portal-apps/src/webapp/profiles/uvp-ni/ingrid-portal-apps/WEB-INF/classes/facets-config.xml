@@ -138,6 +138,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
+        <isOpen>true</isOpen>
         <facets>
         <!-- Zulassungsverfahren -->
             <facet>
@@ -186,6 +187,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_NAME">
         <name>searchResult.facete.title.types</name>
         <id>type</id>
+        <isOpen>true</isOpen>
         <facets>
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
@@ -326,6 +328,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
+        <isOpen>true</isOpen>
         <infoResultSelect>Bauleitpläne können im Filter "Aktualität" leider nicht berücksichtigt werden.</infoResultSelect>
         <facets>
             <!-- letzter Monat -->
@@ -375,6 +378,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.area</name>
         <id>area.map</id>
+        <isOpen>true</isOpen>
     </facet>
     <!-- Kategorien -->
     <facet>

@@ -166,7 +166,7 @@
                     #end
                 #end
                 <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-                    <li class="accordion-item #if($isSelected)is-active#end" data-accordion-item="">
+                    <li class="accordion-item #if($isSelected || $facet.isOpen())is-active#end" data-accordion-item="">
                         <a class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label" #if($facet.isSelect() || $facet.isOpen())aria-expanded="true" aria-selected="true"#end>
                             <span class="text">$MESSAGES.getString("$facet.getName()")</span>
                         </a>

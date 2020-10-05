@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li id="facet_area_map_header" class="accordion-item #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)is-active#end" data-accordion-item="" onclick="resizeMap()">
+    <li id="facet_area_map_header" class="accordion-item #if(($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0) || $facet.isOpen())is-active#end" data-accordion-item="" onclick="resizeMap()">
         <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
