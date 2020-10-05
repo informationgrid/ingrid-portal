@@ -440,13 +440,12 @@ define({
         "sns.freeTermAddTopTermHint": "'${0}' is a Thesaurus-Topterm! It can't be added to the free terms list!",
         "sns.freeTermAddNodeLabelHint": "'${0}' is a node label! It can't be added to the free terms list!",
 
-
         "doi.title": "DOI/DataCite Format",
         "doi.id": "DOI",
-        "doi.id.helpMessage": "Input of a DOI according to regulations of DOI names (https://www.doi.org/doi_handbook/2_Numbering.html#2.2).",
-        "doi.id.validation": "This format does not correspond to regulations of a DOI name",
-        "doi.type": "Type",
-        "doi.type.helpMessage": "",
+        "doi.id.helpMessage": "The DOI (Digital Object Identifier) is a unique string, which identifies a resource.",
+        "doi.id.validation": "This format does not correspond to regulations of a DOI name (e.g: 10.1234/abcde)",
+        "doi.type": "Resource Type",
+        "doi.type.helpMessage": "A resource type is a classification of types, which have the same attributes (e.g. dataset, service, publication, model).<h3>Service:</h3>A system, which offers one or more functions of values to the end user (e.g. Web Map Service, Web Feature Service)<h3>Dataset:</h3>Data, which is coded in a defined structure (e.g. vectors, grid, ascii)<h3>Publication:</h3>A resource, which mainly consists of words for reading (e.g. white literature, grey literature, accompanying materials, validation documents, posters).<h3>Model:</h3>An abstract, conceptual, graphical, mathematical, or visualization model that represents empirical objects, phenomena, or physical processes. Modeled description of e.g. B. different aspects of an ocean, behavior of a suspended particle within a water column or a chemical reaction.",
         "doi.button.exportDataCite": "Export DataCite Format",
         "doi.hint.save": "Please save the document before exporting",
         "doi.error.noAuthor": "We need at least one author",

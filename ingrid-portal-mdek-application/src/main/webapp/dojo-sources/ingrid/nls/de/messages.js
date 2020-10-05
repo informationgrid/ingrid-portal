@@ -43,7 +43,7 @@ define({
     "general.fieldId": "Feld ID",
     "general.image.not.found": "Kein Bild gefunden",
     "general.add.keywords": "Verarbeite Schlagworte: ${0} von ${1}",
-    "general.add.layers": "Erzeuge gekoppelte Resource: ${0} of ${1}",
+    "general.add.layers": "Erzeuge gekoppelte Ressource: ${0} of ${1}",
     "general.field.too.long.255": "Das Feld darf nicht länger als 255 Zeichen sein. Bitte überprüfen Sie die Eingabe.",
 
     "general.page": "Seite",
@@ -441,10 +441,10 @@ define({
 
     "doi.title": "DOI/DataCite Format",
     "doi.id": "DOI",
-    "doi.id.helpMessage": "Eingabe eines DOI nach den Vorschriften eines DOI Namens (https://www.doi.org/doi_handbook/2_Numbering.html#2.2).",
-    "doi.id.validation": "Das Format entspricht nicht den Vorschriften für ein DOI Namen",
-    "doi.type": "Typ",
-    "doi.type.helpMessage": "",
+    "doi.id.helpMessage": "Der DOI (Digital Object Identifier) ist eine eindeutige Zeichenfolge, die eine Ressource identifiziert.",
+    "doi.id.validation": "Das Format entspricht nicht den Vorschriften für ein DOI Namen (Bsp.: 10.1234/abcde)",
+    "doi.type": "Ressource Typ",
+    "doi.type.helpMessage": "Ein Ressource Typ ist eine Klassifizierung von Typen, die dieselben Merkmale oder Attribute aufweisen (z. B. Dataset, Service, Publikation, Modell).<h3>Service:</h3>Ein System, das dem Endbenutzer eine oder mehrere Funktionen von Werten zur Verfügung stellt (z. B. Web Map Service, Web Feature Service)<h3>Dataset:</h3>Daten, die in einer definierten Struktur kodiert sind (z. B. Vektoren, Raster, Ascii)<h3>Publikation:</h3>Eine Ressource, die hauptsächlich aus Wörtern zum Lesen besteht (z.B. weiße Literatur, graue Literatur, Begleitmaterialien, Validierungsdokumente, Poster).<h3>Modell:</h3>Ein abstraktes, konzeptuelles, grafisches, mathematisches oder Visualisierungsmodell, das empirische Objekte, Phänomene oder physikalische Prozesse darstellt. Modellierte Beschreibung von z. B. verschiedenen Aspekten eines Ozeans, Verhalten eines Schwebteilchens innerhalb einer Wassersäule oder einer chemischen Reaktion.",
     "doi.button.exportDataCite": "Export DataCite Format",
     "doi.hint.save": "Bitte speichern Sie den Datensatz vor dem Export",
     "doi.error.noAuthor": "Es muss mindestens ein Autor angegeben sein",
