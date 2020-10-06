@@ -74,8 +74,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
             customLocation: null,       // custom location id from the catalog
             timeBegin: null,            // Time reference. Date object begin.
             timeEnd: null,              // Time reference. Date object end.
-            timeAt: null,               // Time reference. Date object.
-            timeIntersects: null,       // Flag signaling if the entered interval should be cut by the result 
+            timeIntersects: null,       // Flag signaling if the entered interval should be cut by the result
             timeContains: null          // Flag signaling if the entered interval should be included in the result
         };
         
@@ -144,7 +143,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         
         
             on(registry.byId("objTimeRef1"), "change", function(value) {displayTimeToInput(value);});
-            registry.byId("objTimeRef1").setValue("am");
+            registry.byId("objTimeRef1").setValue("seit");
         
             aspect.after(pageNav, "onPageSelected", startSearch);
         }
@@ -271,10 +270,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
             if (timeFrom == "") { timeFrom = null; }
             if (timeTo == "") { timeTo = null; }
         
-            if (timeType == "am") {
-                currentQuery.timeAt = timeFrom;
-        
-            } else if (timeType == "seit") {
+            if (timeType == "seit") {
                 currentQuery.timeBegin = timeFrom;
         
             } else if (timeType == "bis") {
@@ -307,7 +303,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         //  dom.byId("objTimeRef2").checked = false;
         //  dom.byId("objTimeRef3").checked = true;
         
-            registry.byId("objTimeRef1").setValue("am");
+            registry.byId("objTimeRef1").setValue("seit");
             registry.byId("objTimeRef1From").set("value", null);
             registry.byId("objTimeRef1To").set("value", null);
         //  registry.byId("objTimeRef2On").set("value", null);
@@ -955,7 +951,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
               <div>
                   <span class="label hidden"><label for="objTimeRef1">Typ</label></span>
                   <span class="input">
-                    <select data-dojo-type="dijit/form/Select" autoComplete="false" style="width:100%;" id="objTimeRef1"><option value="am"><fmt:message key="dialog.research.ext.obj.content.time.at" /></option><option value="seit"><fmt:message key="dialog.research.ext.obj.content.time.since" /></option><option value="bis"><fmt:message key="dialog.research.ext.obj.content.time.until" /></option><option value="von"><fmt:message key="dialog.research.ext.obj.content.time.fromto" /></option></select>
+                    <select data-dojo-type="dijit/form/Select" autoComplete="false" style="width:100%;" id="objTimeRef1"></option><option value="seit"><fmt:message key="dialog.research.ext.obj.content.time.since" /></option><option value="bis"><fmt:message key="dialog.research.ext.obj.content.time.until" /></option><option value="von"><fmt:message key="dialog.research.ext.obj.content.time.fromto" /></option></select>
                   </span>
               </div>
             </span>

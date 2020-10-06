@@ -1049,7 +1049,6 @@ define({
     "dialog.research.ext.obj.coordinates.utm33s": "UTM-33 ohne f&uuml;hrender Zonenangabe",
     "dialog.research.ext.obj.coordinates.lamgw": "Lambert-Abbildung",
 
-    "dialog.research.ext.obj.content.time.at": "am",
     "dialog.research.ext.obj.content.time.since": "seit",
     "dialog.research.ext.obj.content.time.until": "bis",
     "dialog.research.ext.obj.content.time.fromto": "von - bis",

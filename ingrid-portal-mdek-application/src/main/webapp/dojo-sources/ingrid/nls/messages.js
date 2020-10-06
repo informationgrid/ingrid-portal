@@ -1045,7 +1045,6 @@ define({
         "dialog.research.ext.obj.coordinates.utm33s": "UTM-33",
         "dialog.research.ext.obj.coordinates.lamgw": "lambert projection",
 
-        "dialog.research.ext.obj.content.time.at": "at",
         "dialog.research.ext.obj.content.time.since": "since",
         "dialog.research.ext.obj.content.time.until": "until",
         "dialog.research.ext.obj.content.time.fromto": "from - to",
