@@ -562,14 +562,16 @@ define([
                 div.setAttribute("id", additionalField.id);
                 var surrDiv = this.addSurroundingContainer(div, additionalField, true);
                 this.addToSection(section, surrDiv);
-                
-                var gridWidget = this.createDataGrid(additionalField.id, null, structure, null, {
+
+                this.createDataGrid(additionalField.id, null, structure, null, {
+                    id: additionalField.id,
                     interactive: "true",
                     autoHeight: additionalField.rows,
                     forceGridHeight: additionalField.forceGridHeight,
                     contextMenu: additionalField.contextMenu,
                     moveRows: additionalField.moveRows ? "true" : "false"
                 });
+                return surrDiv;
             },
 
             createDomCheckbox: function(additionalField) {

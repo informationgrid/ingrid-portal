@@ -48,7 +48,7 @@ define(["dojo/_base/declare",
                 // remove all assistants
                 data.assistants.splice(0, data.assistants.length);
 
-                mcloudType = array.filter(data.types, function(t) { return t[1] === "20"; });
+                var mcloudType = array.filter(data.types, function(t) { return t[1] === "20"; });
                 data.types.splice(0, data.types.length);
                 data.types.push(mcloudType[0]);
 

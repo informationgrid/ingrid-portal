@@ -517,4 +517,9 @@ public class UtilsString {
     public static String replaceAll(String stringToProcess, String stringToReplace, String stringToReplaceWith) {
     	return stringToProcess.replaceAll(stringToReplace, stringToReplaceWith);
     }
+
+    /** split String method (Java) for velocity :) */
+    public static String[] split(String stringToProcess, String regex) {
+    	return stringToProcess.split(regex);
+    }
 }

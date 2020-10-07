@@ -119,7 +119,7 @@
                         <div class="media ob-clear">
                             ## Beschreibung
                             <div class="media__body ob-container ob-container">
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString"))
                                 #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
                                 #renderTextLabelAbove($tmp $tmp2)
                                 #set($tmp = "")
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             ## Verweis
-            #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+            #set($xpathList = ["./idf:doi","./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-2">
                     <div class="box__content ob-container">
@@ -201,6 +201,15 @@
                                 #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
                             </div>
                         #end
+                        #set($xpathList = ["./idf:doi"])
+                        #if($TOOL.aNodeOfListExist($xpathList))
+                            #renderSectionTitle($MESSAGES.getString("doi"))
+                            <div class="search-result--nested">
+                                #set($doi = $TOOL.getDOI())
+                                #renderTextLabelAbove($MESSAGES.getString("doi.id") $doi.id)
+                                #renderTextLabelAbove($MESSAGES.getString("doi.type") $doi.type)
+                            </div>
+                        #end
                     </div>
                 </div>
             #end
@@ -216,7 +225,7 @@
                             #renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
                             <div class="search-result--nested">
                                 ## Administrative Einheit (Gemeindenummer)
-                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code"))
+                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
                                 #renderTextList($MESSAGES.getString("t011_township.township_no") $tmp)
                                 #set($tmp = "")
                                 ## Geothesaurus-Raumbezug
@@ -228,7 +237,7 @@
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ## Erläuterung zum Raumbezug
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description/gco:CharacterString"))
                                 #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $tmp)
                                 #set($tmp = "")
                                 ## Begrenzungspolygon als WKT
@@ -310,7 +319,7 @@
             #end
             ## Fachbezug
             #if($type == "1")
-                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
+                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
                 #if($TOOL.aNodeOfListExist($xpathList))
                     <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                         <div class="box__content ob-container">
@@ -319,7 +328,7 @@
                             #renderSectionTitle($MESSAGES.getString("subject_reference"))
                             <div class="search-result--nested">
                                 ## Fachliche Grundlage
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"))
                                 #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.special_base") $tmp)
                                 #set($tmp = "")
                                 ## Datensatz/Datenserie
@@ -361,7 +370,7 @@
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ## Datengrundlage
-                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage", "./gmd:source/gmd:LI_Source/gmd:description"))
+                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage", "./gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"))
                                 #renderTextList($MESSAGES.getString("t011_obj_geo.data_base") $tmp)
                                 #set($tmp = "")
                                 ## Sachdaten/Attributinformation
@@ -766,7 +775,7 @@
                             #renderTable($tmp)
                             #set($tmp = "")
                             ## Bestellinformationen
-                            #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
+                            #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString"))
                             #renderTextLabelAbove($MESSAGES.getString("t01_object.ordering_instructions") $tmp)
                             #set($tmp = "")
                             
@@ -807,11 +816,11 @@
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $tmp)
                         #set($tmp = "")
                         ## Eignung/Nutzung
-                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage/gco:CharacterString"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.dataset_usage") $tmp)
                         #set($tmp = "")
                         ## Herstellungszweck
-                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose"))
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose/gco:CharacterString"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.info_note") $tmp)
                         #set($tmp = "")
                         ## Rechtliche Grundlagen
