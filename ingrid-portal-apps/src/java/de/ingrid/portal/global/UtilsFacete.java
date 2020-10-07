@@ -300,11 +300,32 @@ public class UtilsFacete {
             if(config != null){
                 HashMap<String, String> lastSelection = null;
                 boolean facetIsSelect = false; 
+                boolean isQueryTypeOr = false;
+                String keyQueryTypeOr = null;
+                
+                if(request.getParameter("doMultiFacets") != null) {
+                    isQueryTypeOr = true;
+                    keyQueryTypeOr = request.getParameter("doMultiFacets");
+                    IngridFacet tmpFacet = getFacetById(config, keyQueryTypeOr);
+                    if(tmpFacet.getFacets() != null) {
+                        for(IngridFacet tmpSubFacet : tmpFacet.getFacets()){
+                            if(tmpSubFacet.isSelect()) {
+                                tmpSubFacet.setSelect(false);
+                            }
+                        }
+                    }
+                }
                 for (Iterator<String> iterator = set.iterator(); iterator.hasNext();) {
                     String key = iterator.next();
                     String value = request.getParameter(key);
                     // Set facet selection
                     if(value != null){
+                        if(isQueryTypeOr) {
+                            key = keyQueryTypeOr;
+                            if(key.equals(value)) {
+                               continue;
+                            }
+                        }
                         resetFacetConfigValues(config, null);
                         IngridFacet tmpFacetKey = getFacetById(config, key);
                         if(tmpFacetKey != null){
@@ -2452,9 +2473,9 @@ public class UtilsFacete {
                     for(IngridFacet ingridFacet : facets){
                         if((ingridFacet.isSelect() || ingridFacet.isParentHidden()) && ingridFacet.getQuery() != null){
                             if(orQuery.equals("()")){
-                                orQuery = orQuery.replace(")", ingridFacet.getQuery().toLowerCase()+")");
+                                orQuery = orQuery.replace(")", ingridFacet.getQuery() +")");
                             }else{
-                                orQuery = orQuery.replace(")", " OR " + ingridFacet.getQuery().toLowerCase()+")");
+                                orQuery = orQuery.replace(")", " OR " + ingridFacet.getQuery()+")");
                             }
                         }
                     }

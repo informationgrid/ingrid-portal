@@ -51,6 +51,7 @@ public class IngridFacet {
     private String infoResultSelect;
     private int showOnMoreThan;
     private int colNum;
+    private int listLength;
     private boolean isDependencySelect = false;
     private boolean isHiddenSelect = false;
     private boolean isSelect = false;
@@ -265,5 +266,11 @@ public class IngridFacet {
     }
     public void setCodelistField(String codelistField) {
         this.codelistField = codelistField;
+    }
+    public int getListLength() {
+        return listLength;
+    }
+    public void setListLength(int listLength) {
+        this.listLength = listLength;
     }
 }
