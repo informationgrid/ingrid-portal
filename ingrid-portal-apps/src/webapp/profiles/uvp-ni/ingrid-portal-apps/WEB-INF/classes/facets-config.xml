@@ -139,7 +139,9 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.procedures</name>
         <id>procedure</id>
         <isOpen>true</isOpen>
-        <facets queryType="OR" listLength="6">
+        <queryType>OR</queryType>
+        <listLength>6</listLength>
+        <facets>
         <!-- Zulassungsverfahren -->
             <facet>
                 <name>Zulassungsverfahren</name>
@@ -189,7 +191,8 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.types</name>
         <id>type</id>
         <isOpen>true</isOpen>
-        <facets queryType="OR">
+        <queryType>OR</queryType>
+        <facets>
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>

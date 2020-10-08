@@ -49,7 +49,6 @@ public class IngridFacet {
     private String wildcard;
     private String info;
     private String infoResultSelect;
-    private int showOnMoreThan;
     private int colNum;
     private int listLength;
     private boolean isDependencySelect = false;
@@ -58,6 +57,7 @@ public class IngridFacet {
     private boolean isOpen = false;
     private boolean isDisplay = false;
     private boolean categoryOnly = false;
+    private boolean displayEmptyChildren = false;
     
     /* Only for partner restriction */
     private boolean isParentHidden = false;
@@ -207,12 +207,6 @@ public class IngridFacet {
     public void setUrl(String url) {
         this.url = url;
     }
-    public int getShowOnMoreThan() {
-        return showOnMoreThan;
-    }
-    public void setShowOnMoreThan(int showOnMoreThan) {
-        this.showOnMoreThan = showOnMoreThan;
-    }
     public String getWildcard() {
         return wildcard;
     }
@@ -272,5 +266,11 @@ public class IngridFacet {
     }
     public void setListLength(int listLength) {
         this.listLength = listLength;
+    }
+    public boolean isDisplayEmptyChildren() {
+        return displayEmptyChildren;
+    }
+    public void setDisplayEmptyChildren(boolean displayEmptyChildren) {
+        this.displayEmptyChildren = displayEmptyChildren;
     }
 }
