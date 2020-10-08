@@ -36,7 +36,7 @@
                             #if($node.udk_class != "1000")
                                 <a href="$nodeUrl">$nodeTitle</a>
                             #else
-                                <a href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
+                                <span>$nodeTitle</span>
                             #end
                         </span>
                     </div>
@@ -65,7 +65,7 @@
                         #if($node.udk_class != "1000")
                             <a href="$nodeUrl">$nodeTitle</a>
                         #else
-                            <a href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
+                            <span>$nodeTitle</span>
                         #end
                     </span>
                 </div>
