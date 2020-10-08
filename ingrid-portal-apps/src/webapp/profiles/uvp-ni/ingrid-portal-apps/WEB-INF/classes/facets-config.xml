@@ -180,6 +180,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>Linienbestimmungen</name>
                 <query>t01_object.obj_class:14</query>
                 <id>procedure_14</id>
+                <display>true</display>
             </facet>
         <!-- Ausländische Vorhaben -->
             <facet>
@@ -202,7 +203,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.types</name>
         <id>type</id>
         <isOpen>true</isOpen>
-        <facets queryType="OR" listLength="6">
+        <facets queryType="OR">
         <!-- Wärmeerzeugung, Bergbau und Energie -->
             <facet>
                 <name>Wärmeerzeugung\, Bergbau und Energie</name>

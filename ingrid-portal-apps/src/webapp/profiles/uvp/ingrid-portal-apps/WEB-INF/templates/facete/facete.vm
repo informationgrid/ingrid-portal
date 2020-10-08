@@ -176,9 +176,8 @@
                             #end
                             </span>
                         </a>
-                        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion">
-                            #set ($action = $renderResponse.createActionURL())
-                            <form action="$action" method="post" class="boxes">
+                        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
+                            <div class="boxes">
                             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
                             #set($count = 0)
                             #set($isGreaterThanSubFacetsCount = false)
@@ -186,16 +185,38 @@
                             #if($facet.getQueryType() == "OR")
                                 #set($isQueryTypeOR = true)
                             #end
-                            #foreach($subFacet in $facet.getFacets())
-                                #if($isSelected)
+                            #set($listLength = $subFacetsCount)
+                            #if($facet.getListLength() != 0)
+                                #set($listLength = $facet.getListLength())
+                            #end
+                            #if($isSelected)
+                                #set($hasUnselectedDisplayFacet = false)
+                                #foreach($subFacet in $facet.getFacets())
                                     #if($subFacet.isSelect())
                                         #renderFacetCategoryEntry($subFacet $facet.getId())
+                                    #elseif($subFacet.isDisplay())
+                                        #set($hasUnselectedDisplayFacet = true)
                                     #end
-                                #else
-                                    #set($listLength = $subFacetsCount)
-                                    #if($facet.getListLength() != 0)
-                                        #set($listLength = $facet.getListLength())
+                                #end
+                                #if($hasUnselectedDisplayFacet)
+                                    <hr class="no-margin dotted">
+                                    #foreach($subFacet in $facet.getFacets())
+                                        #if(!$subFacet.isSelect())
+                                            #if($isQueryTypeOR && $count == $listLength)
+                                                #set($isGreaterThanSubFacetsCount = true)
+                                                <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
+                                                    <div class="accordion-item text-right" data-accordion-item="">
+                                                        <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
+                                            #end
+                                            #renderFacetCategoryEntry($subFacet $facet.getId())
+                                            #if($subFacet.isDisplay())
+                                                #set($count = $count + 1)
+                                            #end
+                                        #end
                                     #end
+                                #end
+                            #else
+                                #foreach($subFacet in $facet.getFacets())
                                     #if($isQueryTypeOR && $count == $listLength)
                                         #set($isGreaterThanSubFacetsCount = true)
                                         <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
@@ -203,9 +224,9 @@
                                                 <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
                                     #end
                                     #renderFacetCategoryEntry($subFacet $facet.getId())
-                                #end
-                                #if($subFacet.isDisplay() || $subFacet.getFacetValue())
-                                    #set($count = $count + 1)
+                                    #if($subFacet.isDisplay() || $subFacet.getFacetValue())
+                                        #set($count = $count + 1)
+                                    #end
                                 #end
                             #end
                             #if($isQueryTypeOR)
@@ -225,9 +246,8 @@
                                         </div>
                                     #set($isGreaterThanSubFacetsCount = false)
                                 #end
-                                #renderInputButtonDialog("$facet.getId()" "" "doMultiFacets" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button outline pill filter_submit" "")
                             #end
-                            </form>
+                            </div>
                         </div>
                     </li>
                 </ul>
