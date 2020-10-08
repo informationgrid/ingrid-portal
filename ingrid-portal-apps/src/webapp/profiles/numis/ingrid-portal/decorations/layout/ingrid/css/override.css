@@ -849,6 +849,9 @@ header .row .columns:last-of-type {
   padding: 5px 0;
   border-radius: 0 !important;
 }
+.catalog .accordion-item-sub span.icon > span {
+  color: #5E788D;
+}
 .accordion-content .accordion-item-sub:last-child {
   border-bottom: 0;
 }
