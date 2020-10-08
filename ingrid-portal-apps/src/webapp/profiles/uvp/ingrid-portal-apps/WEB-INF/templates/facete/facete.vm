@@ -193,7 +193,7 @@
                                     #end
                                 #end
                                 #if($hasUnselectedDisplayFacet)
-                                    <hr class="no-margin dotted">
+                                    <hr class="no-margin border-dotted">
                                     #foreach($subFacet in $facet.getFacets())
                                         #if(!$subFacet.isSelect())
                                             #if($isQueryTypeOR && $count == $listLength)
