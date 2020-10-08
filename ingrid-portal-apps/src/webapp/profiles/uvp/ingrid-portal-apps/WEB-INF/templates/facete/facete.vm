@@ -315,6 +315,8 @@
                         (0)
                         #elseif($facet.getParent().isSelect() && $facet.isSelect())
                         (0)
+                        #elseif(!$facet.getParent().isSelect() && !$facet.isSelect())
+                        (0)
                         #end
                     #end
                     </span>
