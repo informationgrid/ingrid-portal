@@ -814,7 +814,7 @@ define({
         "ui.adr.details.poBox": "P.O. Box",
         "ui.adr.details.poBoxPostCode": "Post code (POB)",
         "ui.adr.details.notes": "Notes",
-        "ui.adr.details.tasks": "Tasks",
+        "ui.adr.details.tasks": "Position/subordinate department",
         "ui.adr.thesaurus.title": "Indexing",
         "ui.adr.thesaurus.terms": "Thesaurus search terms",
         "ui.adr.thesaurus.terms.link.navigator": "Thesaurus Navigator",

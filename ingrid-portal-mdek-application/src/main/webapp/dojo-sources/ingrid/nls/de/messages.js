@@ -815,7 +815,7 @@ define({
     "ui.adr.details.poBox": "Postfach",
     "ui.adr.details.poBoxPostCode": "PLZ (Postfach)",
     "ui.adr.details.notes": "Notizen",
-    "ui.adr.details.tasks": "Aufgaben",
+    "ui.adr.details.tasks": "Position/nachgeordnete Abteilung",
     "ui.adr.thesaurus.title": "Verschlagwortung",
     "ui.adr.thesaurus.terms": "Optionale Schlagworte",
     "ui.adr.thesaurus.terms.link.navigator": "Thesaurus-Navigator",

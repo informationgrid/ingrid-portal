@@ -98,6 +98,9 @@
           <action type="add" dev="wemove" issue="1846">
             IGE(Nokis): Add geometry context table
           </action>
+          <action type="update" dev="wemove" issue="1834">
+            IGE: Update tasks field in addresses
+          </action>
         </release>
 
         <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">

@@ -51,7 +51,7 @@
                     #set($xpathList = ["./gmd:positionName"])
                     #if($TOOL.aNodeOfListExist($xpathList))
                         ## Beschreibung
-                        #renderSectionTitle($MESSAGES.getString("detail_description"))
+                        #renderSectionTitle($MESSAGES.getString("detail_position"))
                         ## Beschreibung
                         #set($tmp = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
                         #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
