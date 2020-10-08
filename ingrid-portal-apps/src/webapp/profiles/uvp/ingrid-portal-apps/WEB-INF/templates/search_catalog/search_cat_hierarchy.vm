@@ -33,7 +33,11 @@
                     <div class="accordion-item-sub">
                         <span class="icon">
                             <a id="${node.id}-accordion-label" href="$action" class="ic-ic-minus" onclick="makeScrollTopLink(this)"></a>
-                            <a href="$nodeUrl">$nodeTitle</a>
+                            #if($node.udk_class != "1000")
+                                <a href="$nodeUrl">$nodeTitle</a>
+                            #else
+                                <a href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
+                            #end
                         </span>
                     </div>
                 #else
@@ -58,7 +62,11 @@
                 <div class="accordion-item-sub">
                     <span class="icon">
                         <a id="${node.id}-accordion-label" href="$action" class="ic-ic-plus" onclick="makeScrollTopLink(this)"></a>
-                        <a href="$nodeUrl">$nodeTitle</a>
+                        #if($node.udk_class != "1000")
+                            <a href="$nodeUrl">$nodeTitle</a>
+                        #else
+                            <a href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
+                        #end
                     </span>
                 </div>
             #else
