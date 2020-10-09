@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.5.3" date="2020-xx-xx" description="Release 5.5.3">
+          <action type="update" dev="wemove" issue="2150">
+            UVP: UVP Link von saarländischer Seite anpassen.
+          </action>
+        </release>
+
         <release version="5.5.2" date="2020-10-09" description="Release 5.5.2">
           <action type="fix" dev="wemove" issue="2164">
             UVP: Raumsuche funktioniert im UVP-Portal nicht, wenn nach Aktualität sortiert wird.
