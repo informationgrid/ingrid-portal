@@ -138,23 +138,18 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet>
         <name>searchResult.facete.title.types</name>
         <id>type</id>
-        <isOpen>true</isOpen>
-        <queryType>OR</queryType>
         <facets>
         <!-- Webseiten -->
             <facet>
                 <name>searchResult.facete.datatype.www</name>
                 <query>datatype:www</query>
                 <id>www</id>
-                <display>true</display>
             </facet>
         <!-- Metadaten -->
             <facet>
                 <name>searchResult.facete.title.metaclass</name>
                 <query>datatype:metadata</query>
                 <id>metadata</id>
-                <display>true</display>
-                <queryType>OR</queryType>
                 <facets>
               <!-- INSPIRE-relevant -->
                     <facet>
@@ -162,14 +157,12 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <name>INSPIRE</name>
                         <query>t04_search.searchterm:inspireidentifiziert</query>
                         <id>inspire_metadata</id>
-                        <display>true</display>
                     </facet>
               <!-- Opendata -->
                      <facet>
                         <name>Opendata</name>
                         <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                         <id>opendata_metadata</id>
-                        <display>true</display>
                     </facet>
                 <!-- Organisationseinheit / Fachaufgabe -->
                     <facet>
@@ -178,7 +171,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>job</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>0</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 <!-- Dienst /Anwendung / Informationssystem -->
                     <facet>
@@ -187,7 +179,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>service</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>6</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 <!-- Geo-Information / Karte -->
                     <facet>
@@ -196,7 +187,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>map</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>1</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 <!-- Dokument / Bericht / Literatur -->
                     <facet>
@@ -205,7 +195,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>document</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>2</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 <!-- Geodatendienst -->
                     <facet>
@@ -214,7 +203,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>geoservice</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>3</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 <!-- Vorhaben / Projekt / Programm -->
                     <facet>
@@ -223,7 +211,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>project</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>4</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 <!-- Datensammlung / Datenbank -->
                     <facet>
@@ -232,7 +219,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                         <id>database</id>
                         <codelist-id>8000</codelist-id>
                         <codelist-entry-id>5</codelist-entry-id>
-                        <display>true</display>
                     </facet>
                 </facets>
             </facet>
@@ -241,21 +227,18 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>INSPIRE</name>
                 <query>t04_search.searchterm:inspireidentifiziert</query>
                 <id>inspire</id>
-                <display>true</display>
             </facet>
         <!-- Opendata -->
            <facet>
                 <name>Opendata</name>
                 <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
                 <id>opendata</id>
-                <display>true</display>
             </facet>
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
                 <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
                 <id>map</id>
-                <display>true</display>
             </facet>
         <!-- Themen -->
         <!-- Kann nicht erweitert werden -->
@@ -263,52 +246,44 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.title.topic</name>
                 <query>datatype:topics</query>
                 <id>topic</id>
-                <display>true</display>
             </facet>
         <!-- Rechtsvorschriften -->
             <facet>
                 <name>searchResult.facete.datatype.law</name>
                 <query>datatype:law</query>
                 <id>law</id>
-                <display>true</display>
             </facet>
         <!-- Forschungsprojekte -->
             <facet>
                 <name>searchResult.facete.datatype.research</name>
                 <query>datatype:research</query>
                 <id>research</id>
-                <display>true</display>
             </facet>
         <!-- Messwerte -->
             <facet sort="SORT_BY_VALUE_DESC">
                 <name>searchResult.facete.datatype.measure</name>
                 <query>datatype:measure</query>
                 <id>measure</id>
-                <display>true</display>
                 <facets>
                     <facet>
                         <name>searchResult.facete.measures.radiation</name>
                         <query>topic:radiation</query>
                         <id>radiation</id>
-                        <display>true</display>
                     </facet>
                     <facet>
                         <name>searchResult.facete.measures.air</name>
                         <query>topic:air</query>
                         <id>air</id>
-                        <display>true</display>
                     </facet>
                     <facet>
                         <name>searchResult.facete.measures.water</name>
                         <query>topic:water</query>
                         <id>water</id>
-                        <display>true</display>
                     </facet>
                     <facet>
                         <name>searchResult.facete.measures.misc</name>
                         <query>topic:misc</query>
                         <id>misc</id>
-                        <display>true</display>
                     </facet>
                 </facets>
             </facet>
@@ -340,7 +315,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <name>searchResult.facete.datatype.address</name>
                 <query>datatype:address</query>
                 <id>address</id>
-                <display>true</display>
             </facet>
         <!-- Fachdatenbanken -->
             <facet>
@@ -362,7 +336,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>searchResult.facete.title.time</name>
         <id>modtime</id>
         <dependency>metadata</dependency>
-        <isOpen>true</isOpen>
         <facets>
             <!-- letzter Monat -->
             <facet>
@@ -411,9 +384,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     <facet sort="SORT_BY_VALUE_DESC">
         <name>searchResult.facete.title.provider</name>
         <id>provider</id>
-        <isOpen>true</isOpen>
-        <queryType>OR</queryType>
-        <displayEmptyChildren>true</displayEmptyChildren>
     </facet>
     <!-- Raumbezug -->
     <!-- Standard - Kann nicht erweitert werden -->

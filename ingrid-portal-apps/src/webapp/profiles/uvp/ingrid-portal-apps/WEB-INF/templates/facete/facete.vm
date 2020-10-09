@@ -97,47 +97,29 @@
     #end
 #end
 
-#macro(renderFacetCategoryEntry $facet $parentId $mainId)
-    #if(($facet.getFacetValue() || $facet.isDisplay() || $facet.getParent().isDisplayEmptyChildren()) && !$facet.isCategoryOnly())
+#macro(renderFacetCategoryEntry $facet $parentId)
+    #if(($facet.getFacetValue() || $facet.isDisplay()) && !$facet.isCategoryOnly())
         #if($facet.getFacets())
             ## Check for sub facets
             #if($facet.isSelect())
                 ## Create Tree with single selection
                 #if($facet.isOldIPlug())
                     #set ($action = $renderResponse.createActionURL())
-                    #set($key = $parentId)
-                    #if($mainId)
-                        #set($key = $mainId)
-                    #end
-                    $action.setParameter("$key", "$facet.getId()")
+                    $action.setParameter("$parentId", "$facet.getId()")
                     #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
                 #else
-                    #set ($action = $renderResponse.createActionURL())
-                    #set($key = $parentId)
-                    #if($mainId)
-                        #set($key = $mainId)
-                    #end
-                    $action.setParameter("$key", "$facet.getId()")
-                    #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
+                    #renderTree ($facet $parentId)
                 #end
             #else
                 ## Set single facets
                 #set ($action = $renderResponse.createActionURL())
-                #set($key = $parentId)
-                #if($mainId)
-                    #set($key = $mainId)
-                #end
-                $action.setParameter("$key", "$facet.getId()")
+                $action.setParameter("$parentId", "$facet.getId()")
                 #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
             #end
         #else
             ## Set single facets
             #set ($action = $renderResponse.createActionURL())
-            #set($key = $parentId)
-            #if($mainId)
-                #set($key = $mainId)
-            #end
-            $action.setParameter("$key", "$facet.getId()")
+            $action.setParameter("$parentId", "$facet.getId()")
             #renderFaceteSelectedAttributeNumber($action $facet $MESSAGES.getString("${facet.getName()}") $facet.getFacetValue() $facet.isSelect())
         #end
     #elseif($facet.getWildcard())
@@ -146,7 +128,7 @@
 #end
 
 
-#macro(renderFacetContent $facet $parentId)
+#macro(renderFacetContent $facet)
     #if($facet && !$facet.isCategoryOnly())
         #if($facet.getId() == 'area' || $facet.getId() == 'area.map' || $facet.getId() == 'attribute' || $facet.getId() == 'area.address')
             ## RAUMBEZUG ##
@@ -169,96 +151,100 @@
             #end
         #else
             #set($count = 0)
-            #set($isSelected = false)
-            #foreach($subFacet in $facet.getFacets())
-                #if($subFacet.isSelect())
-                    #set($isSelected = true)
+            #if($facet.getShowOnMoreThan() != 0)
+                #foreach($tmpFacet in $facet.getFacets())
+                    #if($tmpFacet.getFacetValue() || $facet.isDisplay())
+                        #set($count = $count + 1)
+                    #end
                 #end
             #end
-            <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-                <li class="accordion-item #if($isSelected || $facet.isOpen())is-active#end" data-accordion-item="">
-                    <a class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label" #if($facet.isSelect() || $facet.isOpen())aria-expanded="true" aria-selected="true"#end>
-                        <span class="text">$MESSAGES.getString("$facet.getName()")</span>
-                    </a>
-                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
-                        <div class="boxes">
-                        #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
-                        #set($count = 0)
-                        #set($isGreaterThanSubFacetsCount = false)
-                        #set($isQueryTypeOR = false)
-                        #if($facet.getQueryType() == "OR")
-                            #set($isQueryTypeOR = true)
-                        #end
-                        #set($listLength = $subFacetsCount)
-                        #if($facet.getListLength() != 0)
-                            #set($listLength = $facet.getListLength())
-                        #end
-                        #if($isSelected)
-                            #set($hasUnselectedDisplayFacet = false)
-                            #foreach($subFacet in $facet.getFacets())
-                                #if($subFacet.isSelect())
-                                    #renderFacetCategoryEntry($subFacet $facet.getId() $parentId)
-                                #elseif($subFacet.isDisplay() || $facet.isDisplayEmptyChildren())
-                                    #set($hasUnselectedDisplayFacet = true)
-                                #end
+            #if($facet.getShowOnMoreThan() == 0 || $count > $facet.getShowOnMoreThan())
+                #set($isSelected = false)
+                #foreach($subFacet in $facet.getFacets())
+                    #if($subFacet.isSelect())
+                        #set($isSelected = true)
+                    #end
+                #end
+                <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                    <li class="accordion-item #if($isSelected || $facet.isOpen())is-active#end" data-accordion-item="">
+                        <a class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label" #if($facet.isSelect() || $facet.isOpen())aria-expanded="true" aria-selected="true"#end>
+                            <span class="text">$MESSAGES.getString("$facet.getName()")</span>
+                        </a>
+                        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
+                            <div class="boxes">
+                            #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
+                            #set($count = 0)
+                            #set($isGreaterThanSubFacetsCount = false)
+                            #set($isQueryTypeOR = false)
+                            #if($facet.getQueryType() == "OR")
+                                #set($isQueryTypeOR = true)
                             #end
-                            #if($hasUnselectedDisplayFacet)
-                                <hr class="no-margin border-dotted">
+                            #set($listLength = $subFacetsCount)
+                            #if($facet.getListLength() != 0)
+                                #set($listLength = $facet.getListLength())
+                            #end
+                            #if($isSelected)
+                                #set($hasUnselectedDisplayFacet = false)
                                 #foreach($subFacet in $facet.getFacets())
-                                    #if(!$subFacet.isSelect())
-                                        #if($isQueryTypeOR && $count == $listLength)
-                                            #set($isGreaterThanSubFacetsCount = true)
-                                            <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
-                                                <div class="accordion-item text-right" data-accordion-item="">
-                                                    <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
-                                        #end
-                                        #renderFacetCategoryEntry($subFacet $facet.getId() $parentId)
-                                        #if($subFacet.isDisplay() || $subFacet.getFacetValue() || $facet.isDisplayEmptyChildren())
-                                            #set($count = $count + 1)
+                                    #if($subFacet.isSelect())
+                                        #renderFacetCategoryEntry($subFacet $facet.getId())
+                                    #elseif($subFacet.isDisplay())
+                                        #set($hasUnselectedDisplayFacet = true)
+                                    #end
+                                #end
+                                #if($hasUnselectedDisplayFacet)
+                                    <hr class="no-margin border-dotted">
+                                    #foreach($subFacet in $facet.getFacets())
+                                        #if(!$subFacet.isSelect())
+                                            #if($isQueryTypeOR && $count == $listLength)
+                                                #set($isGreaterThanSubFacetsCount = true)
+                                                <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
+                                                    <div class="accordion-item text-right" data-accordion-item="">
+                                                        <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
+                                            #end
+                                            #renderFacetCategoryEntry($subFacet $facet.getId())
+                                            #if($subFacet.isDisplay())
+                                                #set($count = $count + 1)
+                                            #end
                                         #end
                                     #end
                                 #end
-                            #end
-                        #else
-                            #foreach($subFacet in $facet.getFacets())
-                                #if($isQueryTypeOR && $count == $listLength)
-                                    #set($isGreaterThanSubFacetsCount = true)
-                                    <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
-                                        <div class="accordion-item text-right" data-accordion-item="">
-                                            <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
+                            #else
+                                #foreach($subFacet in $facet.getFacets())
+                                    #if($isQueryTypeOR && $count == $listLength)
+                                        #set($isGreaterThanSubFacetsCount = true)
+                                        <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
+                                            <div class="accordion-item text-right" data-accordion-item="">
+                                                <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
+                                    #end
+                                    #renderFacetCategoryEntry($subFacet $facet.getId())
+                                    #if($subFacet.isDisplay() || $subFacet.getFacetValue())
+                                        #set($count = $count + 1)
+                                    #end
                                 #end
-                                #renderFacetCategoryEntry($subFacet $facet.getId() $parentId)
-                                #if($subFacet.isDisplay() || $subFacet.getFacetValue() || $facet.isDisplayEmptyChildren())
-                                    #set($count = $count + 1)
-                                #end
                             #end
-                        #end
-                        #if($isQueryTypeOR)
-                            #if($isGreaterThanSubFacetsCount)
+                            #if($isQueryTypeOR)
+                                #if($isGreaterThanSubFacetsCount)
+                                                </div>
+                                                <a href="#" class="more" aria-controls="$subFacet.getParent().getId()_more" role="tab" id="$subFacet.getParent().getId()_more-label" aria-expanded="false" aria-selected="false">
+                                                    <div class="helper plus">
+                                                        <span class="ic-ic-plus"></span>
+                                                        <span class="text">$MESSAGES.getString("searchResult.facete.category.plus")</span>
+                                                    </div>
+                                                    <div class="helper minus">
+                                                        <span class="ic-ic-minus"></span>
+                                                        <span class="text">$MESSAGES.getString("searchResult.facete.category.minus")</span>
+                                                    </div>
+                                                </a>
                                             </div>
-                                            <a href="#" class="more" aria-controls="$subFacet.getParent().getId()_more" role="tab" id="$subFacet.getParent().getId()_more-label" aria-expanded="false" aria-selected="false">
-                                                <div class="helper plus">
-                                                    <span class="ic-ic-plus"></span>
-                                                    <span class="text">$MESSAGES.getString("searchResult.facete.category.plus")</span>
-                                                </div>
-                                                <div class="helper minus">
-                                                    <span class="ic-ic-minus"></span>
-                                                    <span class="text">$MESSAGES.getString("searchResult.facete.category.minus")</span>
-                                                </div>
-                                            </a>
                                         </div>
-                                    </div>
-                                #set($isGreaterThanSubFacetsCount = false)
+                                    #set($isGreaterThanSubFacetsCount = false)
+                                #end
                             #end
-                        #end
+                            </div>
                         </div>
-                    </div>
-                </li>
-            </ul>
-            #foreach($subFacet in $facet.getFacets())
-                #if($subFacet.isSelect() && $subFacet.getFacets() && $subFacet.getFacetValue())
-                    #renderFacetContent($subFacet $facet.getId())
-                #end
+                    </li>
+                </ul>
             #end
         #end
     #end
@@ -330,8 +316,6 @@
                         #elseif($facet.getParent().isSelect() && $facet.isSelect())
                         (0)
                         #elseif(!$facet.getParent().isSelect() && !$facet.isSelect())
-                        (0)
-                        #elseif($facet.getParent() && $facet.getParent().getParent())
                         (0)
                         #end
                     #end

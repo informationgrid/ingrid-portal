@@ -130,7 +130,12 @@ public class FacetsConfig {
                     Node subNode = (Node) facetNode.getAttributes( "sort" ).get( 0 );
                     ingridFacet.setSort( subNode.getValue().toString() );
                 }
-
+                
+                if (!facetNode.getAttributes( "show-on-more-than" ).isEmpty()) {
+                    Node subNode = (Node) facetNode.getAttributes( "show-on-more-than" ).get( 0 );
+                    ingridFacet.setShowOnMoreThan( new Integer(subNode.getValue().toString()) );
+                }
+                
                 if (!facetNode.getChildren( "query" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "query" ).get( 0 );
                     if (node != null) {
@@ -260,13 +265,6 @@ public class FacetsConfig {
                     }
                 }
 
-                if (!facetNode.getChildren( "displayEmptyChildren" ).isEmpty()) {
-                    Node node = (Node) facetNode.getChildren( "displayEmptyChildren" ).get( 0 );
-                    if (node != null) {
-                        ingridFacet.setDisplayEmptyChildren( Boolean.parseBoolean(node.getValue().toString()) );
-                    }
-                }
-
                 if (!facetNode.getChildren( "categoryOnly" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "categoryOnly" ).get( 0 );
                     if (node != null) {
@@ -315,23 +313,26 @@ public class FacetsConfig {
                         ingridFacet.setColNum( Integer.parseInt(node.getValue().toString()) );
                     }
                 }
-
-                if (!facetNode.getChildren( "queryType" ).isEmpty()) {
-                    Node node = (Node) facetNode.getChildren( "queryType" ).get( 0 );
-                    ingridFacet.setQueryType( node.getValue().toString() );
-                }
-
-                if (!facetNode.getChildren( "listLength" ).isEmpty()) {
-                    Node node = (Node) facetNode.getChildren( "listLength" ).get( 0 );
-                    ingridFacet.setListLength( Integer.parseInt(node.getValue().toString()) );
-                }
-
+                
                 if (!facetNode.getChildren( "facets" ).isEmpty()) {
                     Node node = (Node) facetNode.getChildren( "facets" ).get( 0 );
-                    if (facetNode != null) {
-                        List<ConfigurationNode> subFacet = node.getChildren( "facet" );
-                        if (subFacet != null) {
-                            ingridFacet.setFacets( extractFacets( subFacet, ingridFacet ) );
+                    if (node != null) {
+                        if (!node.getAttributes( "queryType" ).isEmpty()) {
+                            Node subNode = (Node) node.getAttributes( "queryType" ).get( 0 );
+                            ingridFacet.setQueryType( subNode.getValue().toString() );
+                        }
+
+                        if (!node.getAttributes( "listLength" ).isEmpty()) {
+                            Node subNode = (Node) node.getAttributes( "listLength" ).get( 0 );
+                            ingridFacet.setListLength( Integer.parseInt(subNode.getValue().toString()) );
+                        }
+
+                        Node facetsNode = (Node) facetNode.getChildren( "facets" ).get( 0 );
+                        if (facetNode != null) {
+                            List<ConfigurationNode> subFacet = facetsNode.getChildren( "facet" );
+                            if (subFacet != null) {
+                                ingridFacet.setFacets( extractFacets( subFacet, ingridFacet ) );
+                            }
                         }
                     }
                 }
