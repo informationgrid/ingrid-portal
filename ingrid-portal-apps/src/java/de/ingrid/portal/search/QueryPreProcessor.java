@@ -189,9 +189,6 @@ public class QueryPreProcessor {
         }
 
         if(query.isRanked(IngridQuery.DATE_RANKED)) {
-            for (ClauseQuery cq : query.getClauses()) {
-                query.removeClause(cq);
-            }
             ClauseQuery cq = new ClauseQuery(true, false);
             cq.addField(new FieldQuery(true, false, "datatype", "metadata"));
             query.addClause(cq);

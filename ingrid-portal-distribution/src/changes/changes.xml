@@ -14,6 +14,9 @@
           <action type="update" dev="wemove" issue="1429">
             IGE/Portal: Change 'Datengrundlage' Field from single entry to list.
           </action>
+          <action type="fix" dev="wemove" issue="2164">
+            UVP: Raumsuche funktioniert im UVP-Portal nicht, wenn nach Aktualität sortiert wird.
+          </action>
           <action type="add" dev="wemove" issue="2024">
             Mapclient: Warnhinweis beim Importieren von Layern ohne Extent (Admin-GUI).
           </action>
