@@ -14,6 +14,9 @@
           <action type="update" dev="wemove" issue="1429">
             IGE/Portal: Change 'Datengrundlage' Field from single entry to list.
           </action>
+          <action type="update" dev="wemove" issue="2150">
+            UVP: UVP Link von saarländischer Seite anpassen.
+          </action>
           <action type="fix" dev="wemove" issue="2164">
             UVP: Raumsuche funktioniert im UVP-Portal nicht, wenn nach Aktualität sortiert wird.
           </action>
