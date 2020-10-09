@@ -16,7 +16,7 @@
                 <input id="y1" name="y1" type="hidden" />
                 <input id="y2" name="y2" type="hidden" />
                 <input id="areaid" name="areaid" type="hidden" />
-                #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "width:100%;" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button outline pill filter_submit" "getMapBounds()")
+                #renderInputButtonDialog($MESSAGES.getString('searchResult.facete.dialog.commit') "width:100%;" "doAddMap" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button filter_submit" "getMapBounds()")
             </form>
         </div>
     </li>
