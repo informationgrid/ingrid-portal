@@ -684,6 +684,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             head.add(messages.getString("object_conformity.specification"));
             head.add(messages.getString("object_conformity.degree_value"));
             head.add(messages.getString("object_conformity.publication_date"));
+            head.add(messages.getString("object_conformity.explanation"));
             element.put("head", head);
             ArrayList body = new ArrayList();
             element.put("body", body);
@@ -726,6 +727,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }else {
                             String value = xPathUtils.getString(node, xpathExpression).trim();
                             row.add(notNull(getDateFormatValue(value)));
+                        }
+                    } else {
+                        row.add("");
+                    }
+
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:explanation/gco:CharacterString";
+                    if (xPathUtils.nodeExists(node, xpathExpression)) {
+                        String value = xPathUtils.getString(node, xpathExpression).trim();
+                        // only add explanation if non standard value REDMINE-1817
+                        if (value.equals("see the referenced specification")){
+                            row.add("");
+                        } else {
+                            row.add(notNull(value));
                         }
                     } else {
                         row.add("");
