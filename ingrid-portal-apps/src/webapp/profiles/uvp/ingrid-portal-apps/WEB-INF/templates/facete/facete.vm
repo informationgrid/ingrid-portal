@@ -171,7 +171,8 @@
                             <span class="text">$MESSAGES.getString("$facet.getName()")</span>
                         </a>
                         <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
-                            <div class="boxes">
+                            #set ($action = $renderResponse.createActionURL())
+                            <form action="$action" method="post" class="boxes">
                             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
                             #set($count = 0)
                             #set($isGreaterThanSubFacetsCount = false)
@@ -179,38 +180,16 @@
                             #if($facet.getQueryType() == "OR")
                                 #set($isQueryTypeOR = true)
                             #end
-                            #set($listLength = $subFacetsCount)
-                            #if($facet.getListLength() != 0)
-                                #set($listLength = $facet.getListLength())
-                            #end
-                            #if($isSelected)
-                                #set($hasUnselectedDisplayFacet = false)
-                                #foreach($subFacet in $facet.getFacets())
+                            #foreach($subFacet in $facet.getFacets())
+                                #if($isSelected)
                                     #if($subFacet.isSelect())
                                         #renderFacetCategoryEntry($subFacet $facet.getId())
-                                    #elseif($subFacet.isDisplay())
-                                        #set($hasUnselectedDisplayFacet = true)
                                     #end
-                                #end
-                                #if($hasUnselectedDisplayFacet)
-                                    <hr class="no-margin dotted">
-                                    #foreach($subFacet in $facet.getFacets())
-                                        #if(!$subFacet.isSelect())
-                                            #if($isQueryTypeOR && $count == $listLength)
-                                                #set($isGreaterThanSubFacetsCount = true)
-                                                <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
-                                                    <div class="accordion-item text-right" data-accordion-item="">
-                                                        <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
-                                            #end
-                                            #renderFacetCategoryEntry($subFacet $facet.getId())
-                                            #if($subFacet.isDisplay())
-                                                #set($count = $count + 1)
-                                            #end
-                                        #end
+                                #else
+                                    #set($listLength = $subFacetsCount)
+                                    #if($facet.getListLength() != 0)
+                                        #set($listLength = $facet.getListLength())
                                     #end
-                                #end
-                            #else
-                                #foreach($subFacet in $facet.getFacets())
                                     #if($isQueryTypeOR && $count == $listLength)
                                         #set($isGreaterThanSubFacetsCount = true)
                                         <div class="accordion " data-accordion="" data-allow-all-closed="true" role="tablist">
@@ -218,9 +197,9 @@
                                                 <div class="text-left" data-tab-content="" role="tabpanel" aria-labelledby="type-accordion-label" id="$subFacet.getParent().getId()_more" aria-hidden="false" style="display: none;">
                                     #end
                                     #renderFacetCategoryEntry($subFacet $facet.getId())
-                                    #if($subFacet.isDisplay() || $subFacet.getFacetValue())
-                                        #set($count = $count + 1)
-                                    #end
+                                #end
+                                #if($subFacet.isDisplay() || $subFacet.getFacetValue())
+                                    #set($count = $count + 1)
                                 #end
                             #end
                             #if($isQueryTypeOR)
@@ -240,8 +219,9 @@
                                         </div>
                                     #set($isGreaterThanSubFacetsCount = false)
                                 #end
+                                #renderInputButtonDialog("$facet.getId()" "" "doMultiFacets" $MESSAGES.getString('searchResult.facete.dialog.tooltip.commit') "button outline pill filter_submit" "")
                             #end
-                            </div>
+                            </form>
                         </div>
                     </li>
                 </ul>
@@ -304,7 +284,7 @@
                     #if($facet.getMobileName())
                       #set ($hasMobileName = true)
                     #end
-                    <input id="facet-$facet.getId()" name="$facet.getId()" value="$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
+                    <input id="facet-$facet.getId()" name="$facet.getId()" value="$facet.getId()" type="checkbox" #if($isDelete)checked#end #if(!$isCheckbox)onclick="location.href='$doAction'"#end>
                     <div class="control__indicator"></div>
                     $MESSAGES.getString("$facet.getName()")
                     <span class="nr-results">
