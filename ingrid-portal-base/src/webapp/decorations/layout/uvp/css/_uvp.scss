@@ -454,20 +454,20 @@ ul ol, ol ol { margin-left: 2.25rem; }
 li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
 .accordion-item::before { content:""; }
 
-div.accordion-item > .more {
-  .minus {
+div.accordion-item {
+  .more .minus {
     display: none;
   }
-  .plus {
+  .more .plus {
     display: block;
   }
 }
 
-div.accordion-item.is-active > .more{
-  .minus {
+div.accordion-item.is-active {
+  .more .minus {
     display: block;
   }
-  .plus {
+  .more .plus {
     display: none;
   }
 }

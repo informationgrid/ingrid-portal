@@ -198,9 +198,7 @@
                                     #end
                                     #renderFacetCategoryEntry($subFacet $facet.getId())
                                 #end
-                                #if($subFacet.isDisplay() || $subFacet.getFacetValue())
-                                    #set($count = $count + 1)
-                                #end
+                                #set($count = $count + 1)
                             #end
                             #if($isQueryTypeOR)
                                 #if($isGreaterThanSubFacetsCount)
