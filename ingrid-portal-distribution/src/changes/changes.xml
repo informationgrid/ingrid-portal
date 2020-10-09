@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.5.2-SNAPSHOT" date="2020-xx-xx" description="Release 5.5.2">
+          <action type="fix" dev="wemove" issue="2164">
+            UVP: Raumsuche funktioniert im UVP-Portal nicht, wenn nach Aktualität sortiert wird.
+          </action>
           <action type="add" dev="wemove" issue="2024">
             Mapclient: Warnhinweis beim Importieren von Layern ohne Extent (Admin-GUI).
           </action>
