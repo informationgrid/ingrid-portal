@@ -112,7 +112,8 @@ define(["dojo/_base/declare",
                 name: message.get("nokis.form.geometryContext"),
                 help: message.get("nokis.form.geometryContext.help"),
                 contextMenu: "NOKIS_GEOMETRYCONTEXT_PARAMETER",
-                isMandatory: true,
+                isMandatory: false,
+                visible: "show",
                 style: "width: 100%"
             }, geometryContextStructure, "refClass1");
             construct.place(table, "ref1VFormat", "after");
