@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.5.3" date="2020-xx-xx" description="Release 5.5.3">
+        <release version="5.5.3" date="2020-10-12" description="Release 5.5.3">
           <action type="update" dev="wemove" issue="2150">
             UVP: UVP Link von saarländischer Seite anpassen.
           </action>
