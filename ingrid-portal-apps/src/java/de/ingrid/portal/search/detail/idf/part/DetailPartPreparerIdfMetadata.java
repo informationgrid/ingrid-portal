@@ -1076,7 +1076,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             
                             String rowValue;
                             // "Maßeinheit"
-                            xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@gml:uom";
+                            xpathExpression = "./gmd:verticalCRS/gml:VerticalCRS/gml:verticalCS/gml:VerticalCS/gml:axis/gml:CoordinateSystemAxis/@uom";
                             if(xPathUtils.nodeExists(childNode, xpathExpression)){
                                 rowValue = xPathUtils.getString(childNode, xpathExpression).trim();
                                 row.add(notNull(sysCodeList.getNameByCodeListValue("102", rowValue)));
