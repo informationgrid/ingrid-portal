@@ -58,7 +58,6 @@ require([
         });
 
         function init() {
-            //  showStatus("<fmt:message key='sns.loadingHint' />");    
             showLoadingZone();
 
             createTables();
@@ -67,10 +66,18 @@ require([
             var analyzedFields =
                 ["objectName", "generalDesc", "generalShortDesc", "spatialRefExplanation", "timeRefExplanation",
                 "extraInfoPurpose", "extraInfoUse", "ref5Explanation", "ref3History", "ref3Explanation",
-                "ref2Explanation", "ref1BasisText", "ref1DataBasisText", "ref4Explanation"
+                "ref2Explanation", "ref1BasisText", "ref4Explanation"
             ];
+            var analyzedListFields = ["ref1DataBasisTable1"];
 
             var queryTerm = "";
+            array.forEach(analyzedListFields, function (listField) {
+                array.forEach(registry.byId(listField).data, function (item){
+                    if(item.title){
+                        queryTerm += item.title + " ";
+                    }
+                });
+            });
             array.forEach(analyzedFields, function(item) {
                 var val = registry.byId(item).getValue();
                 if (val) {
