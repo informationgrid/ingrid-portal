@@ -282,7 +282,7 @@
 
 #macro(renderDeleteIcon $doAction $title)
     <a href="$doAction" class="facete_link_line">
-        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title"></img>
+        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title" alt="$title"></img>
     </a>
 #end
 

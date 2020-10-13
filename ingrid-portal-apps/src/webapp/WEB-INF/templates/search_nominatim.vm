@@ -132,7 +132,7 @@ function renderNominatimMap(response) {
 
             var html = "<a title=\"" + '$nominatimTooltip' + "\" ";
             html += "href=\"/kartendienste?SRS=EPSG:4326&amp;BBOX=" + GET_MAP_BBOX + "\" style=\"padding: 0 0 0 0;\">";
-            html += "<img style=\"display: block; margin: 0 auto;\" src=\"" + nominatimGetMapURL;
+            html += "<img alt=\"" + '$nominatimTooltip' + "\" style=\"display: block; margin: 0 auto;\" src=\"" + nominatimGetMapURL;
             html += "&amp;WIDTH=" + GET_MAP_WIDTH;
             html += "&amp;HEIGHT=" + GET_MAP_HEIGHT;
             html += "&amp;BBOX=" + GET_MAP_BBOX;

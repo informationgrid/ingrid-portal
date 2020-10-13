@@ -81,8 +81,8 @@
                     </div>
                     <div class="header__widgets__section">
                         <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
-                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="logo.svg"></img>
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg" alt="mobile-logo.svg""></img>
                         </a>
                     </div>
                 </div> 
@@ -108,7 +108,7 @@
                 <div class="ob-box-padded ob-box-center ob-clear">
                     <div class="footer__top">
                         <a href="/startseite">
-                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
+                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png" alt="mobile-logo.png"></img>-->
                         </a>
                         <p class="copyright">Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50</p>
                     </div>

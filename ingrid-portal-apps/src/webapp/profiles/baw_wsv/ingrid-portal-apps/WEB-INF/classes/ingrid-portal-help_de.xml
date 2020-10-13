@@ -572,10 +572,10 @@
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
                     Verfügung gestellt.</p>
-				<p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"/> klicken,
+				<p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="image018.jpg"/> klicken,
                     erhalten Sie zu jedem eingegebenen Suchbegriff die ähnlichen
                     Begriffe angeboten. Diese können Sie sich wiederum über das
-                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg"/> Symbol
+                        <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="image018.jpg"/> Symbol
                     anzeigen lassen. Durch das Ankreuzen der einzelnen Begriffe
                     und Klick auf den Button „Zur Suche
                     hinzufügen“ werden die ähnlichen Begriffe jeweils
@@ -1504,7 +1504,7 @@
 					<a target="_self" href="https://appfarm.dlz-it.res.bund.de">zur zentralen Appfarm</a>
 				</p>
 				<p>
-					<img border="0" style="margin: 8px;" src="../../common/img/citrix-arcgis3-klein.png"/>
+					<img border="0" style="margin: 8px;" src="../../common/img/citrix-arcgis3-klein.png" alt="citrix-arcgis3-klein.png"/>
 				</p>
 			</content>
 		</section>
