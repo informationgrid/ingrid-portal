@@ -42,23 +42,29 @@ public class ContactForm extends ActionForm {
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "contact_form";
 
-    public static final String FIELD_MESSAGE = "message";
+    public static final String FIELD_MESSAGE = "user_message";
 
-    public static final String FIELD_FIRSTNAME = "firstname";
+    public static final String FIELD_FIRSTNAME = "user_firstname";
 
-    public static final String FIELD_LASTNAME = "lastname";
+    public static final String FIELD_LASTNAME = "user_lastname";
 
-    public static final String FIELD_COMPANY = "company";
+    public static final String FIELD_COMPANY = "user_company";
 
-    public static final String FIELD_PHONE = "phone";
+    public static final String FIELD_PHONE = "user_phone";
 
-    public static final String FIELD_EMAIL = "email";
+    public static final String FIELD_EMAIL = "user_email";
 
     public static final String FIELD_ACTIVITY = "activity";
 
     public static final String FIELD_JCAPTCHA = "jcaptcha";
 
     public static final String FIELD_UPLOAD = "upload";
+
+    public static final String FIELD_NAME_HONEYPOT = "name";
+
+    public static final String FIELD_MESSAGE_HONEYPOT = "message";
+
+    public static final String FIELD_EMAIL_HONEYPOT = "email";
 
     /**
      * @see de.ingrid.portal.forms.ActionForm#init()
@@ -90,6 +96,11 @@ public class ContactForm extends ActionForm {
         boolean allOk = true;
         clearErrors();
 
+        // honeypot detection
+        if (hasInput(FIELD_NAME_HONEYPOT) || hasInput(FIELD_MESSAGE_HONEYPOT) || hasInput(FIELD_EMAIL_HONEYPOT)) {
+            allOk = false;
+        }
+        // regular field validity check
         if (!hasInput(FIELD_MESSAGE)) {
             setError(FIELD_MESSAGE, "contact.error.noMessage");
             allOk = false;
@@ -102,7 +113,7 @@ public class ContactForm extends ActionForm {
             setError(FIELD_LASTNAME, "contact.error.noLastName");
             allOk = false;
         }
-                
+
         if (!hasInput(FIELD_EMAIL)) {
             setError(FIELD_EMAIL, "contact.error.noEmail");
             allOk = false;
@@ -135,23 +146,41 @@ public class ContactForm extends ActionForm {
     	if(items != null){
 	        clearInput();
 	        for(FileItem item : items){
-	        	if(item.getFieldName().equals(FIELD_MESSAGE)){
-	        		setInput(FIELD_MESSAGE, item.getString("UTF-8"));
-	        	} else if(item.getFieldName().equals(FIELD_FIRSTNAME)){
-	        		setInput(FIELD_FIRSTNAME, item.getString("UTF-8"));
-	        	} else if(item.getFieldName().equals(FIELD_LASTNAME)){
-	        		setInput(FIELD_LASTNAME, item.getString("UTF-8"));
-	        	} else if(item.getFieldName().equals(FIELD_COMPANY)){
-	        		setInput(FIELD_COMPANY, item.getString("UTF-8"));
-	        	} else if(item.getFieldName().equals(FIELD_PHONE)){
-	        		setInput(FIELD_PHONE, item.getString("UTF-8"));
-	        	} else if(item.getFieldName().equals(FIELD_EMAIL)){
-	        		setInput(FIELD_EMAIL, item.getString("UTF-8"));
-	        	} else if(item.getFieldName().equals(FIELD_ACTIVITY)){
-	        		setInput(FIELD_ACTIVITY, item.getString());
-	        	} else if(item.getFieldName().equals(FIELD_JCAPTCHA)){
-	        		setInput(FIELD_JCAPTCHA, item.getString());
-	        	}
+                switch (item.getFieldName()) {
+                    case FIELD_MESSAGE:
+                        setInput(FIELD_MESSAGE, item.getString("UTF-8"));
+                        break;
+                    case FIELD_FIRSTNAME:
+                        setInput(FIELD_FIRSTNAME, item.getString("UTF-8"));
+                        break;
+                    case FIELD_LASTNAME:
+                        setInput(FIELD_LASTNAME, item.getString("UTF-8"));
+                        break;
+                    case FIELD_COMPANY:
+                        setInput(FIELD_COMPANY, item.getString("UTF-8"));
+                        break;
+                    case FIELD_PHONE:
+                        setInput(FIELD_PHONE, item.getString("UTF-8"));
+                        break;
+                    case FIELD_EMAIL:
+                        setInput(FIELD_EMAIL, item.getString("UTF-8"));
+                        break;
+                    case FIELD_ACTIVITY:
+                        setInput(FIELD_ACTIVITY, item.getString());
+                        break;
+                    case FIELD_JCAPTCHA:
+                        setInput(FIELD_JCAPTCHA, item.getString());
+                        break;
+                    case FIELD_NAME_HONEYPOT:
+                        setInput(FIELD_NAME_HONEYPOT, item.getString("UTF-8"));
+                        break;
+                    case FIELD_MESSAGE_HONEYPOT:
+                        setInput(FIELD_MESSAGE_HONEYPOT, item.getString("UTF-8"));
+                        break;
+                    case FIELD_EMAIL_HONEYPOT:
+                        setInput(FIELD_EMAIL_HONEYPOT, item.getString("UTF-8"));
+                        break;
+                }
 	        }
     	}
     }

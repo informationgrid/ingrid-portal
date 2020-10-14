@@ -152,6 +152,9 @@ public class ContactPortlet extends GenericVelocityPortlet {
             setDefaultViewPage(TEMPLATE_SUCCESS);
         }
 
+        // insert timestamp tokens into session
+        request.getPortletSession().setAttribute("timeToken", System.currentTimeMillis());
+
         super.doView(request, response);
     }
     
@@ -182,8 +185,11 @@ public class ContactPortlet extends GenericVelocityPortlet {
         List<FileItem> items = null;
         File uploadFile = null;
         boolean uploadEnable = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_CONTACT_UPLOAD_ENABLE, Boolean.FALSE);
-        int uploadSize = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_CONTACT_UPLOAD_SIZE, 10); 
-        
+        int uploadSize = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_CONTACT_UPLOAD_SIZE, 10);
+        int minFilloutDuration = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_FORM_VALID_FILLOUT_DURATION_MIN, 3);
+        Object timeToken = request.getPortletSession().getAttribute("timeToken");
+
+
         RequestContext requestContext = (RequestContext) request.getAttribute(RequestContext.REQUEST_PORTALENV);
         HttpServletRequest servletRequest = requestContext.getRequest();
         if(ServletFileUpload.isMultipartContent(servletRequest)){
@@ -193,7 +199,6 @@ public class ContactPortlet extends GenericVelocityPortlet {
             factory.setSizeThreshold(uploadSize * 1000 * 1000);
             File file = new File(".");
             factory.setRepository(file);
-            ServletFileUpload.isMultipartContent(servletRequest);
             // Create a new file upload handler
             ServletFileUpload upload = new ServletFileUpload(factory);
 
@@ -225,17 +230,18 @@ public class ContactPortlet extends GenericVelocityPortlet {
             
             ContactForm cf = (ContactForm) Utils.getActionForm(request, ContactForm.SESSION_KEY, ContactForm.class);
             cf.populate(items);
-            if (!cf.validate()) {
+            if (!cf.validate() || timeToken == null || System.currentTimeMillis() - (Long) timeToken <= minFilloutDuration * 1000) {
+                // check if token exists and user spends more than xx mins to fill out the form
                 // add URL parameter indicating that portlet action was called
                 // before render request
-                     
+
                 String urlViewParam = "?" + Utils.toURLParam(Settings.PARAM_ACTION, Settings.MSGV_TRUE);
                 actionResponse.sendRedirect(actionResponse.encodeURL(Settings.PAGE_CONTACT + urlViewParam));
-                
+
                 return;
             }
 
-            //remenber that we need an id to validate!
+            // remember that we need an id to validate!
             String sessionId = request.getPortletSession().getId();
             //retrieve the response
             boolean enableCaptcha = PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE);
@@ -303,30 +309,28 @@ public class ContactPortlet extends GenericVelocityPortlet {
 
                      String text = Utils.mergeTemplate(getPortletConfig(), mailData, "map", localizedTemplatePath);
                      if(uploadEnable){
-                        if(uploadEnable){
-                            for(FileItem item : items){
-                                if(item.getName() != null && !item.getName().isEmpty() && item.getFieldName() != null && item.getFieldName().equals("upload")) {
-                                    uploadFile = new File(sessionId + "_" + item.getName());
-                                    // read this file into InputStream
-                                    try(
-                                        InputStream inputStream = item.getInputStream();
-                                        // write the inputStream to a FileOutputStream
-                                        OutputStream out = new FileOutputStream(uploadFile);
-                                    ){
-                                        int read = 0;
-                                        byte[] bytes = new byte[1024];
+                         for(FileItem item : items){
+                             if(item.getName() != null && !item.getName().isEmpty() && item.getFieldName() != null && item.getFieldName().equals("upload")) {
+                                 uploadFile = new File(sessionId + "_" + item.getName());
+                                 // read this file into InputStream
+                                 try(
+                                     InputStream inputStream = item.getInputStream();
+                                     // write the inputStream to a FileOutputStream
+                                     OutputStream out = new FileOutputStream(uploadFile);
+                                 ){
+                                     int read = 0;
+                                     byte[] bytes = new byte[1024];
 
-                                        while ((read = inputStream.read(bytes)) != -1) {
-                                            out.write(bytes, 0, read);
-                                         }
-                                    } catch (Exception e) {
-                                        log.error("Error loading stream.", e);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile, replyTo);
+                                     while ((read = inputStream.read(bytes)) != -1) {
+                                         out.write(bytes, 0, read);
+                                      }
+                                 } catch (Exception e) {
+                                     log.error("Error loading stream.", e);
+                                 }
+                                 break;
+                             }
+                         }
+                         Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, uploadFile, replyTo);
                     }else{
                         Utils.sendEmail(from, emailSubject, new String[] { to }, text, null, null, replyTo);
                     }

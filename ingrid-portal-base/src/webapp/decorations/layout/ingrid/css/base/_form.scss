@@ -60,3 +60,11 @@ input[type="checkbox"] {
 input[type="date"] {
     width: 100%;
 }
+
+.yummy {
+    position: absolute;
+    left: 0;
+    height: 0;
+    width: 0;
+    z-index: -1;
+}
