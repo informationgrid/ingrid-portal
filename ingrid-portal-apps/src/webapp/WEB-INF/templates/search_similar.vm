@@ -44,12 +44,12 @@
                                         #else
                                             <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
                                             <label class="field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
-                                            <div class="field-toggle__icon">
-                                                <svg class="icon"><use xlink:href="#tick"/></svg>
-                                            </div>
+                                                <span class="field-toggle__icon">
+                                                    <svg class="icon"><use xlink:href="#tick"/></svg>
+                                                </span>
                                                 $tokenNode.name
+                                            </label>
                                         #end
-                                        </label>
                                     </div>
                                 #end
                             #else

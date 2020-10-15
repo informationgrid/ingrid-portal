@@ -217,11 +217,11 @@ $actionForm.getInputHTMLEscaped($field)#end
                                 <div class="field-toggle field-toggle--check">
                                 <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
                                 <label class="field-toggle__label field-toggle__label--highlight" for="chk_all">
-                                    <div class="field-toggle__icon field-toggle__icon-alt">
+                                    <span class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
                                             <use xlink:href="#tick"/>
                                         </svg>
-                                    </div>
+                                    </span>
                                     <a href="$colLink" class="contentColumnHead"><strong>$colTitle</strong></a>
                                 </label>
                             #end
@@ -257,12 +257,12 @@ $actionForm.getInputHTMLEscaped($field)#end
         <div class="field-toggle field-toggle--check">
             <input id="chk_$velocityCount" type="checkbox" name="id" value="$rowId">
             <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
-            <div class="field-toggle__icon field-toggle__icon-alt">
-                <svg class="icon">
-                    <use xlink:href="#tick"/>
-                </svg>
-            </div>
-            <a href="$action">$rowId</a>
+                <span class="field-toggle__icon field-toggle__icon-alt">
+                    <svg class="icon">
+                        <use xlink:href="#tick"/>
+                    </svg>
+                </span>
+                <a href="$action">$rowId</a>
             </label>
         </div>
     </td>

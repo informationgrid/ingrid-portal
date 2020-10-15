@@ -14,11 +14,11 @@
             <div class="field-toggle field-toggle--check">
                 <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
                 <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
-                    <div class="field-toggle__icon field-toggle__icon-alt">
+                    <span class="field-toggle__icon field-toggle__icon-alt">
                         <svg class="icon">
                             <use xlink:href="#tick"/>
                         </svg>
-                    </div>
+                    </span>
                     $rowId
                 </label>
             </div>

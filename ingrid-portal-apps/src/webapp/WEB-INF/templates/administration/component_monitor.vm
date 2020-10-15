@@ -85,12 +85,12 @@
             <td><a href="$action">$interval</a></td>
         #else
             <label class="field-toggle__label field-toggle__label--highlight" for="chk_$count">
-            <div class="field-toggle__icon field-toggle__icon-alt">
-	            <svg class="icon">
-	                <use xlink:href="#tick"/>
-	            </svg>
-	        </div>
-            <a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a>
+                <span class="field-toggle__icon field-toggle__icon-alt">
+                    <svg class="icon">
+                        <use xlink:href="#tick"/>
+                    </svg>
+                </span>
+                <a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a>
             </label></div></td>
             <td><a href="$action">$MESSAGES.getString($jobData.getString("component.monitor.general.type"))</a></td>
             <td>
@@ -196,9 +196,9 @@ ingrid_enableButtonByCheckbox('id', 'doDelete');
                     <div class="field-toggle field-toggle--check">
                         <input id="activate" name="activate" value="1" type="checkbox">
                         <label class="field-toggle__label field-toggle__label--boxed" for="activate">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon"><use xlink:href="#tick"/></svg>
-                            </div>
+                            </span>
                             $MESSAGES.getString('component.forms.text.import.activate.job')
                         </label>
                     </div>
@@ -212,9 +212,9 @@ ingrid_enableButtonByCheckbox('id', 'doDelete');
                     <div class="field-toggle field-toggle--check">
                         <input id="overwrite" name="overwrite" value="1" type="checkbox">
                         <label class="field-toggle__label field-toggle__label--boxed" for="overwrite">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon"><use xlink:href="#tick"/></svg>
-                            </div>
+                            </span>
                             $MESSAGES.getString('component.forms.text.import.overwrite.job')
                         </label>
                     </div>

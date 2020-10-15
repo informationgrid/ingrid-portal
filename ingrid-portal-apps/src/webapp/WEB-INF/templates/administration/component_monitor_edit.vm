@@ -95,9 +95,9 @@
                         <div class="field-toggle field-toggle--check">
                             <input type="checkbox" id="component_active" name="active" value="1" #getChecked('active' '1')>
                             <label for="component_active" class="field-toggle__label field-toggle__label--boxed">
-                                <div class="field-toggle__icon field-toggle__icon-alt">
+                                <span class="field-toggle__icon field-toggle__icon-alt">
                                     <svg class="icon"><use xlink:href="#tick"/></svg>
-                                </div>
+                                </span>
                                 #displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))
                             </label>
                         </div>

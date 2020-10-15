@@ -202,7 +202,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                                 <div class="form-element boxed">
                                     <div class="control-group">
                                         <label class="control control--checkbox" for="chk_all">
-                                            <div class="control__indicator"></div>
+                                            <span class="control__indicator"></span>
                                             <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
                                             <a href="$colLink">$colTitle</a>
                                         </label>

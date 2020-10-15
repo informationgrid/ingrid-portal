@@ -72,11 +72,11 @@
                         #end
                         >
                         <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
                                     <use xlink:href="#tick"/>
                                 </svg>
-                            </div>
+                            </span>
                             $topic.title#renderMsgTopicType()
                         </label>
                     </div>
@@ -111,11 +111,11 @@
                         #end
                         >
                         <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
                                     <use xlink:href="#tick"/>
                                 </svg>
-                            </div>
+                            </span>
                             $topic.title#renderMsgTopicType()
                         </label>
                     </div>
