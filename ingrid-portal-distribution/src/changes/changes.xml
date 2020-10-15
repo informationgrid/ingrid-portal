@@ -113,6 +113,9 @@
           <action type="update" dev="wemove" issue="1834">
             IGE: Update tasks field in addresses
           </action>
+          <action type="fix" dev="wemove" issue="736">
+            Portal: Fix issue in which the given dates disappear in Chrome and IE browser.
+          </action>
         </release>
 
         <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">
