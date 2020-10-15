@@ -11,7 +11,7 @@
         <li>
             <a href="$link">
                 <svg class="icon">
-                    <use xlink:href="#internal-link">
+                    <use xlink:href="#internal-link"/>
                 </svg>
             $partner.name
             </a>
@@ -37,7 +37,7 @@
                     <li>
                     #if($provider.provider.url && $provider.provider.url != "")
                         <a href="$provider.provider.url">
-                            <svg class="icon"><use xlink:href="#external-link"></svg>
+                            <svg class="icon"><use xlink:href="#external-link"/></svg>
                             $provider.provider.name
                         </a>
                     #else

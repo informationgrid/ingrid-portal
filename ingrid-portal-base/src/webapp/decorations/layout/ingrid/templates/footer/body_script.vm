@@ -1,12 +1,12 @@
 <!-- Global scripts -->
-<script src="/decorations/layout/ingrid/scripts/all.js"/>
+<script src="/decorations/layout/ingrid/scripts/all.js" type="text/javascript"></script>
 
 <!-- Popup -->
-<script src="/decorations/layout/ingrid/scripts/popup.js"/>
-<script src="/decorations/layout/ingrid/scripts/expander.js"/>
+<script src="/decorations/layout/ingrid/scripts/popup.js" type="text/javascript"></script>
+<script src="/decorations/layout/ingrid/scripts/expander.js" type="text/javascript"></script>
 
 <!-- Accordion -->
-<script src="/decorations/layout/ingrid/scripts/accordion.js"/>
+<script src="/decorations/layout/ingrid/scripts/accordion.js" type="text/javascript"></script>
 <script type="text/javascript">
 $('.js-accordion').accordion();
 $('.js-accordion-multi').accordion({
@@ -14,22 +14,22 @@ $('.js-accordion-multi').accordion({
 });
 </script>
 <!-- Tabs -->
-<script src="/decorations/layout/ingrid/scripts/tabs.js"/>
+<script src="/decorations/layout/ingrid/scripts/tabs.js" type="text/javascript"></script>
 <script type="text/javascript">
     $('.js-tabs').tabs();
 </script>
 <!-- Selection -->
-<script src="/decorations/layout/ingrid/scripts/selection.js"/>
+<script src="/decorations/layout/ingrid/scripts/selection.js" type="text/javascript"></script>
 <script type="text/javascript">
     $('.js-selection').selection();
 </script>
 <!-- Table Sort -->
-<script src="/decorations/layout/ingrid/scripts/table.sortable.js"/>
+<script src="/decorations/layout/ingrid/scripts/table.sortable.js" type="text/javascript"></script>
 <script type="text/javascript">
     $('.js-table-sortable').sortable();
 </script>
 <!-- swiper -->
-<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"/>
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js" type="text/javascript"></script>
 <script type="text/javascript">
   var mySwiper = new Swiper ('.swiper-container', {
     grabCursor: true,
@@ -44,5 +44,5 @@ $('.js-accordion-multi').accordion({
     scrollbar: {
       el: '.swiper-scrollbar',
     },
-  })
-  </script>
+  });
+</script>

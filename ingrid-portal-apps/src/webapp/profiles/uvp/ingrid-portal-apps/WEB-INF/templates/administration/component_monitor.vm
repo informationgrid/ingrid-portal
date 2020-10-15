@@ -191,7 +191,7 @@
         </div>
     </form>
 </div>
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
     function closeDialog() {
         document.getElementById('exportDialog').style.display = "none";
         document.getElementById('blocker').style.display = "none"; 

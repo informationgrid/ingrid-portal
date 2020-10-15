@@ -881,7 +881,7 @@
                 #if($entryLink && $entryLink.length() > 0)
                     <a class="link download" href="$entryLink">
                         <svg class="icon">
-                            <use xlink:href="#internal-link">
+                            <use xlink:href="#internal-link"/>
                         </svg>
                         #if($entryLabel && $entryLabel.length() > 0)
                             $entryLabel
@@ -918,13 +918,13 @@
     <h2 class="mq-hide-xxl">
         $title
         <svg class="filter__title__icon icon">
-            <use xlink:href="#arrow-thick"></use>
+            <use xlink:href="#arrow-thick"/>
         </svg>
     </h2>
     <h3 class="mq-show-xxl">
         $title
         <svg class="filter__title__icon icon">
-            <use xlink:href="#arrow-thick"></use>
+            <use xlink:href="#arrow-thick"/>
         </svg>
     </h3>
 #end

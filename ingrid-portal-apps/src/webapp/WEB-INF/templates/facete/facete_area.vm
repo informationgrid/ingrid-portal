@@ -28,7 +28,7 @@
             <div class="search-form ob-clear ob-flex">
                 <input class="field" type="text" name="search_term" id="search_term" #if($geothesaurusTerm)value="$geothesaurusTerm"#end />
                 <button type="submit" name="doSearchGeothesaurus" value="$MESSAGES.getString("searchResult.facete.area.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
-                    <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+                    <svg class="icon"><use xlink:href="#magnifier"/></svg>
                 </button>
             </div>
             #if($geothesaurusTerm)
@@ -74,7 +74,7 @@
                         <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
                             <div class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
                             </div>
                             $topic.title#renderMsgTopicType()
@@ -89,7 +89,7 @@
                     <div>
                         <a href="#" class="js-expander link tx-upper tx-brand" id="facete_area_more">
                             <svg class="icon link__icon">
-                                <use xlink:href="#plus"></use>
+                                <use xlink:href="#plus"/>
                             </svg>
                             <strong>$MESSAGES.getString("searchResult.facete.category.plus")</strong>
                         </a>
@@ -113,7 +113,7 @@
                         <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
                             <div class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
                             </div>
                             $topic.title#renderMsgTopicType()
@@ -124,7 +124,7 @@
                         <div>
                             <a href="#" class="js-expander-close facete_area_more is-hidden link tx-upper tx-brand">
                                 <svg class="icon link__icon">
-                                    <use xlink:href="#minus"></use>
+                                    <use xlink:href="#minus"/>
                                 </svg>
                                 <strong>$MESSAGES.getString("searchResult.facete.category.minus")</strong>
                             </a>

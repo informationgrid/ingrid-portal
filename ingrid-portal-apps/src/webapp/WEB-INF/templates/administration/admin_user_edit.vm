@@ -103,7 +103,7 @@
                                 <label class="field-toggle__label field-toggle__label--boxed" for="enabled">
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
-                                            <use xlink:href="#tick">
+                                            <use xlink:href="#tick"/>
                                         </svg>
                                     </div>
                                     $MESSAGES.getString('account.edit.enable')
@@ -147,7 +147,7 @@
                                 <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('send_info')" for="send_info" >
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
-                                            <use xlink:href="#tick">
+                                            <use xlink:href="#tick"/>
                                         </svg>
                                     </div>
                                     $MESSAGES.getString('account.edit.send.information')
@@ -165,7 +165,7 @@
                                 <label class="field-toggle__label field-toggle__label--boxed" for="password_update_required">
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
-                                            <use xlink:href="#tick">
+                                            <use xlink:href="#tick"/>
                                         </svg>
                                     </div>
                                     $MESSAGES.getString('account.edit.password.update.required')
@@ -211,7 +211,7 @@
                         <label class="field-toggle__label field-toggle__label--boxed" for="admin_portal">
                             <div class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
                             </div>
                             $MESSAGES.getString('account.edit.admin.portal')

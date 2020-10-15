@@ -11,10 +11,10 @@
             <div class="sidebar__title js-accordion-toggle mq-show-l">
                 Filter
                 #if($isFiltering)
-                    <svg class="icon-active"><use xlink:href="#check"></use></svg>
+                    <svg class="icon-active"><use xlink:href="#check"/></svg>
                 #end
-                <svg class="icon"><use xlink:href="#filter"></use></svg>
-                <svg class="icon"><use xlink:href="#cross"></use></svg>
+                <svg class="icon"><use xlink:href="#filter"/></svg>
+                <svg class="icon"><use xlink:href="#cross"/></svg>
             </div>
             <div class="sidebar__content js-accordion-content is-hidden">
                 <div class="sidebar__widget js-accordion-multi">
@@ -63,7 +63,7 @@
                                     <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
-                                            <use xlink:href="#tick">
+                                            <use xlink:href="#tick"/>
                                         </svg>
                                     </div>
                                     <a href="$action">$rowId</a>
@@ -88,7 +88,7 @@
             #renderDBBrowserFooterButtonsDisable($buttons true)
             <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
                 <svg class="icon">
-                    <use xlink:href="#arrow-thick">
+                    <use xlink:href="#arrow-thick"/>
                 </svg>
             </div>
         </article>

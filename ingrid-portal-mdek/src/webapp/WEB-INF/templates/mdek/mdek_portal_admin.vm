@@ -16,7 +16,7 @@
                 <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
                     <div class="field-toggle__icon field-toggle__icon-alt">
                         <svg class="icon">
-                            <use xlink:href="#tick">
+                            <use xlink:href="#tick"/>
                         </svg>
                     </div>
                     $rowId

@@ -29,7 +29,7 @@ html, body {
 </div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm]);
     var enablePopUp = true;

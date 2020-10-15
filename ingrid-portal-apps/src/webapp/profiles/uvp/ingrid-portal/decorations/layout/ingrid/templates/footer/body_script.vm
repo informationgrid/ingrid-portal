@@ -1,25 +1,25 @@
 <!-- Global scripts -->
-<script src="/decorations/layout/ingrid/scripts/all.js"/>
+<script src="/decorations/layout/ingrid/scripts/all.js" type="text/javascript"></script>
 
 <!-- Popup -->
-<script src="/decorations/layout/ingrid/scripts/popup.js"/>
+<script src="/decorations/layout/ingrid/scripts/popup.js" type="text/javascript"></script>
 
 <!-- Expand -->
-<script src="/decorations/layout/ingrid/scripts/expander.js"/>
+<script src="/decorations/layout/ingrid/scripts/expander.js" type="text/javascript"></script>
 
 <!-- Anchor target -->
-<script src="/decorations/layout/ingrid/scripts/anchor-target.js"/>
+<script src="/decorations/layout/ingrid/scripts/anchor-target.js" type="text/javascript"></script>
 <script type="text/javascript">
     $('.js-anchor-target').anchorTarget();
 </script>
 
 <!-- Anchor navigation -->
-<script src="/decorations/layout/ingrid/scripts/anchor-navigation.js"/>
+<script src="/decorations/layout/ingrid/scripts/anchor-navigation.js" type="text/javascript"></script>
 <script type="text/javascript">
     $('.js-anchor-navigation').anchorNavigation();
 </script>
 <!-- swiper -->
-<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"/>
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js" type="text/javascript"></script>
 <script type="text/javascript">
   var mySwiper = new Swiper ('.swiper-container', {
     grabCursor: true,
@@ -35,5 +35,5 @@
     scrollbar: {
       el: '.swiper-scrollbar',
     },
-  })
-  </script>
+  });
+</script>

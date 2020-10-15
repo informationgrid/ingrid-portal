@@ -45,12 +45,12 @@
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"/>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"/>
-        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"/>
-        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"/>
-        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"/>
-        <script src="/decorations/layout/uvp/scripts/main.js"/>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js" type="text/javascript"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js" type="text/javascript"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js" type="text/javascript"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js" type="text/javascript"></script>
+        <script src="/decorations/layout/uvp/scripts/main.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
@@ -198,6 +198,6 @@
             </div>
         </div>
     </body>
-    <script src="/decorations/layout/ingrid/scripts/all.js"/>
-    <script src="/decorations/layout/ingrid/scripts/popup.js"/>
+    <script src="/decorations/layout/ingrid/scripts/all.js" type="text/javascript"></script>
+    <script src="/decorations/layout/ingrid/scripts/popup.js" type="text/javascript"></script>
 </html>

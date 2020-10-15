@@ -1,6 +1,6 @@
 <article class="teaser ob-container">
     <div class="teaser__graphic">
-        <svg class="icon"><use xlink:href="#dashboard"></use></svg>
+        <svg class="icon"><use xlink:href="#dashboard"/></svg>
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
@@ -18,7 +18,7 @@
                 $action.setParameter('isMeasure', 'true')
                 <a class="link link--big" href="$action">
                     <strong>$MESSAGES.getString('measures.teaser.new.link')</strong>
-                    <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
+                    <svg class="icon link__icon"><use xlink:href="#internal-link"/></svg>
                 </a>
             </p>
         </div>

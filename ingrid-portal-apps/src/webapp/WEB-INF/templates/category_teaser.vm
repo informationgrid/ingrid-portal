@@ -3,8 +3,8 @@
     #if($facetsTyp.size() > 1)
     <div class="tab__select mq-show-l">
         <span class="tab__select__text">$MESSAGES.getString('searchResult.facete.title.types')</span>
-        <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
-        <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+        <svg class="tab__select__icon icon"><use xlink:href="#burger"/></svg>
+        <svg class="tab__select__icon icon"><use xlink:href="#cross"/></svg>
     </div>
     <nav class="tab__toggles ob-clear mq-hide-l">
         #set($isActive = "")
@@ -236,7 +236,7 @@
         #if($icon.startsWith("#"))
             <svg class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" style="#if($facetStyle)$facetStyle#end"><use xlink:href="$icon" /></svg>
         #elseif($icon.startsWith("/"))
-            <img style="margin: auto;" class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" src="$icon" alt="$facet.getIcon()"></img>
+            <img style="margin: auto;" class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end" src="$icon" alt="$facet.getIcon()"/>
         #else
             <i class="bx-top-s icon-$facet.getId() #if($facetClass)$facetClass#end $icon" style="#if($facetStyle)$facetStyle#end"></i>
         #end

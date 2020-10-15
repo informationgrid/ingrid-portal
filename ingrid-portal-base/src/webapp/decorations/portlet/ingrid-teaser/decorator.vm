@@ -53,7 +53,7 @@
                 #set($helpkey = $jetspeed.getPreferenceFirstValue($f, "helpKey"))
                 #if($helpkey)
                     <div class="tooltip ob-circle js-popup" data-content="<p>Lorem ipsum dolor sit amet, consectetur adipsiicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p><a href=&quot;#&quot;>Read more</a></p>">
-                        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+                        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"/></svg>
                     </div>
                 #end
                 -->

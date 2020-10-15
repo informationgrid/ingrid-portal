@@ -16,8 +16,8 @@
                     <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
                         <div class="tab__select mq-show-l">
                             <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
-                            <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
-                            <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#burger"/></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#cross"/></svg>
                         </div>
                         <nav class="tab__toggles ob-clear mq-hide-l">
                             ## Allgemeines
@@ -199,9 +199,9 @@
                                         #set($bawstrCenterLatitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:data"))
                                         
                                         <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"/>
+                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js" type="text/javascript"></script>
                                         <div id="map" style="height: 400px; width:100%;"></div>
-                                        <script language="JavaScript" type="text/javascript">
+                                        <script type="text/javascript">
                                             var map = new L.Map('map');
                                             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                                             var osmAttrib='';

@@ -308,7 +308,7 @@
 
 #macro(renderDeleteIcon $doAction $title)
     <a href="$doAction" class="facete_link_line">
-        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title" alt="$title"></img>
+        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title" alt="$title"/>
     </a>
 #end
 
@@ -350,7 +350,7 @@
         <div class="search-form ob-clear ob-flex">
             <input class="field" type="text" name="termWildcard_$node.getId()" id="termWildcard_$node.getId()" #if($wildcard_item_term)value="$wildcard_item_term"#end />
             <button type="submit" name="doSearchWildcard_$node.getId()" value="$MESSAGES.getString("searchResult.facete.wildcard.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
-                <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+                <svg class="icon"><use xlink:href="#magnifier"/></svg>
             </button>
         </div>
         #if($wildcard_item_term)

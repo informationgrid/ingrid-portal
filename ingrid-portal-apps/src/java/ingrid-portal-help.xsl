@@ -33,8 +33,8 @@
             <aside class="sidebar js-accordion-multi">
                  <div class="sidebar__title js-accordion-toggle mq-show-l">
                     Navigation
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filter"></use></svg>
-                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cross"></use></svg>
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#filter"/></svg>
+                    <svg class="icon"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cross"/></svg>
                 </div>
                 <div class="sidebar__content js-accordion-content is-hidden">
                     <form>

@@ -10,7 +10,7 @@
     #else
         #if(!$entry.hasLinkIcon)
             #if($entry.isExtern)
-                <svg class="icon"><use xlink:href="#external-link"></use></svg>
+                <svg class="icon"><use xlink:href="#external-link"/></svg>
             #elseif($entry.isMapLink)
                 #if($entry.description)
                     #set($imgAlt = $entry.description)
@@ -24,9 +24,9 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" tmp="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                        <img class="preview_image is-hidden" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         <noscript>
-                            <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                            <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>
                     </p>
                     #if($entry.description)
@@ -52,7 +52,7 @@
                     <br>
                 </div>
             #else
-                <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                <svg class="icon"><use xlink:href="#internal-link"/></svg>
             #end
         #end
         #if($entry.isExtern)
@@ -837,7 +837,7 @@
            #end
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
-                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                    <svg class="icon"><use xlink:href="#internal-link"/></svg>
                     <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end

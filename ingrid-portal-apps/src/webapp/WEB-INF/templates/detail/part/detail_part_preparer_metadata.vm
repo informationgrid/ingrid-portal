@@ -20,8 +20,8 @@
                     <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
                         <div class="tab__select mq-show-l">
                             <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
-                            <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
-                            <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#burger"/></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#cross"/></svg>
                         </div>
                         <nav class="tab__toggles ob-clear mq-hide-l">
                             ## Allgemeines

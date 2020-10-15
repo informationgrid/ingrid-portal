@@ -2,8 +2,8 @@
 <aside class="sidebar js-accordion-multi">
     <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
         Info
-        <svg class="icon"><use xlink:href="#filter"></use></svg>
-        <svg class="icon"><use xlink:href="#cross"></use></svg>
+        <svg class="icon"><use xlink:href="#filter"/></svg>
+        <svg class="icon"><use xlink:href="#cross"/></svg>
     </div>
     <div class="sidebar__content js-accordion-content is-hidden">
        <div class="portlet-section-body portlet_info">
@@ -18,7 +18,7 @@
 <article class="content ob-container ob-box-narrow">
     <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
         <svg class="icon">
-            <use xlink:href="#arrow-thick">
+            <use xlink:href="#arrow-thick"/>
          </svg>
     </div>
     <h4>$MESSAGES.getString('chronicle.form.term')</h4>
@@ -38,7 +38,7 @@
             <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_all">
                 <div class="field-toggle__icon field-toggle__icon-alt">
                     <svg class="icon">
-                        <use xlink:href="#tick">
+                        <use xlink:href="#tick"/>
                     </svg>
                 </div>
                 $MESSAGES.getString('chronicle.form.allEventtypes')
@@ -51,7 +51,7 @@
                 <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_$velocityCount">
                     <div class="field-toggle__icon field-toggle__icon-alt">
                         <svg class="icon">
-                            <use xlink:href="#tick">
+                            <use xlink:href="#tick"/>
                         </svg>
                     </div>
                     $MESSAGES.getString("$evtype.QueryValue")

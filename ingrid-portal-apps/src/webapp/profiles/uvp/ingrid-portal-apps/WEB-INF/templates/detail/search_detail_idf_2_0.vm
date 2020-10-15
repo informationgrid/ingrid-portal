@@ -10,7 +10,7 @@
     #else
         #if(!$entry.hasLinkIcon)
             #if($entry.isExtern)
-                <svg class="icon"><use xlink:href="#external-link"></use></svg>
+                <svg class="icon"><use xlink:href="#external-link"/></svg>
             #elseif($entry.isMapLink)
                 #if($entry.description)
                     #set($imgAlt = $entry.description)
@@ -25,22 +25,22 @@
                 <div class="swiper-slide">
                     <div class="box__content ob-container">
                     #if(!$entry.get("href"))
-                        <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                        <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         <noscript>
-                            <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                            <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                         <a href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             <noscript>
-                                <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                                <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             </noscript>
                         </a>
                     #else
                         <a href="$entry.get("href")" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             <noscript>
-                                <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle" >
+                                <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             </noscript>
                         </a>
                     #end
@@ -50,12 +50,12 @@
                     </div>
                 </div>
             #else
-                <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                <svg class="icon"><use xlink:href="#internal-link"/></svg>
             #end
         #end
         #if($entry.isExtern)
             <a class="link" href="$entry.href">
-                <svg class="icon"><use xlink:href="#external-link"></use></svg>
+                <svg class="icon"><use xlink:href="#external-link"/></svg>
                 $entry.title
             </a>
         #elseif($entry.objectClass)
@@ -67,7 +67,7 @@
             $entry.title
         #elseif(!$entry.isMapLink)
             <a class="link" href="$entry.href">
-                <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                <svg class="icon"><use xlink:href="#internal-link"/></svg>
                 $entry.title
             </a>
         #end
@@ -812,7 +812,7 @@
            #end
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
-                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
+                    <svg class="icon"><use xlink:href="#internal-link"/></svg>
                     <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end

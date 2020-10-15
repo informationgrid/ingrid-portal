@@ -87,7 +87,7 @@
             <label class="field-toggle__label field-toggle__label--highlight" for="chk_$count">
             <div class="field-toggle__icon field-toggle__icon-alt">
 	            <svg class="icon">
-	                <use xlink:href="#tick">
+	                <use xlink:href="#tick"/>
 	            </svg>
 	        </div>
             <a href="$action" title="$jobId">$!jobData.getString("component.monitor.general.title")</a>
@@ -239,7 +239,7 @@ ingrid_enableButtonByCheckbox('id', 'doDelete');
     </div>
 </form>
 
-<script language="JavaScript" type="text/javascript">
+<script type="text/javascript">
     function closeDialog() {
         document.getElementById('exportDialog').style.display = "none";
         document.getElementById('blocker').style.display = "none"; 

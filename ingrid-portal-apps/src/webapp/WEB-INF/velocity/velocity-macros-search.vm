@@ -77,7 +77,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
     
@@ -85,7 +85,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
 
@@ -105,7 +105,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -113,7 +113,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
 </ul>
@@ -124,7 +124,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
     
@@ -132,7 +132,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -146,7 +146,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -154,7 +154,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('rstart', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.numberOfPages)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
 </ul>
@@ -175,7 +175,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
     
@@ -183,7 +183,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -202,7 +202,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -210,7 +210,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
 </ul>
@@ -222,7 +222,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
     
@@ -230,7 +230,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -243,7 +243,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -251,7 +251,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.currentSelectorPage != $pageSelector.lastSelectorPage)href="$action"#end>
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
 </ul>
@@ -269,7 +269,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 <ul class="pagination__list tx-right mq-hide-m">
     <li style="display:none">
         <a class="pagination__left">
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
     #set ($action = $renderResponse.createActionURL())
@@ -277,7 +277,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     #if($pageSelector.currentSelectorPage > 1)
@@ -306,12 +306,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     <li style="display:none">
         <a class="pagination__right is-hidden">
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
 </ul>
@@ -320,7 +320,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 <ul class="pagination__list mq-show-m">
     <li style="display:none">
         <a class="pagination__left">
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
     #set ($action = $renderResponse.createActionURL())
@@ -328,7 +328,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__left" #if($pageSelector.currentSelectorPage != 1)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     
@@ -340,12 +340,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     $action.setParameter('currentSelectorPage', $pstart.toString())
     <li>
         <a class="pagination__right" #if($pageSelector.selectorHasNextPage)href="$action"#end>
-            <svg class="icon"><use xlink:href="#arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#arrow"/></svg>
         </a>
     </li>
     <li style="display:none">
         <a class="pagination__right">
-            <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+            <svg class="icon"><use xlink:href="#double-arrow"/></svg>
         </a>
     </li>
 </ul>
@@ -360,10 +360,10 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
             Filter
             #if($enableFacetSelection || $isSelection)
-                <svg class="icon-active"><use xlink:href="#check"></use></svg>
+                <svg class="icon-active"><use xlink:href="#check"/></svg>
             #end
-            <svg class="icon"><use xlink:href="#filter"></use></svg>
-            <svg class="icon"><use xlink:href="#cross"></use></svg>
+            <svg class="icon"><use xlink:href="#filter"/></svg>
+            <svg class="icon"><use xlink:href="#cross"/></svg>
         </div>
         <div class="sidebar__content js-accordion-content is-hidden">
             #parse ('/WEB-INF/templates/facete/facete.vm')
@@ -387,7 +387,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 #if($geothesaurusSelectTopics)
                     <div class="message message--info bx-top-s bx-bot-s">
                         <div class="message__simple-content message-fill--info">
-                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
                             $entry.getInfoResultSelect()
                         </div>
                     </div>
@@ -397,7 +397,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)
                         <div class="message message--info bx-top-s bx-bot-s">
                         <div class="message__simple-content message-fill--info">
-                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
                             $entry.getInfoResultSelect()
                         </div>
                     </div>
@@ -409,7 +409,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                         || $doAddAttribute.db_staff || $doAddAttribute.db_org ||$doAddAttribute.term_from || $doAddAttribute.term_to)
                         <div class="message message--info bx-top-s bx-bot-s">
                             <div class="message__simple-content message-fill--info">
-                                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
                                 $entry.getInfoResultSelect()
                             </div>
                         </div>
@@ -420,7 +420,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                     #if($doAddAreaAddress.street || $doAddAreaAddress.zip || $doAddAreaAddress.city)
                         <div class="message message--info bx-top-s bx-bot-s">
                             <div class="message__simple-content message-fill--info">
-                                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                                <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
                                 $entry.getInfoResultSelect()
                             </div>
                         </div>
@@ -429,7 +429,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
             #elseif($entry.isSelect())
                 <div class="message message--info bx-top-s bx-bot-s">
                     <div class="message__simple-content message-fill--info">
-                        <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                        <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
                         $entry.getInfoResultSelect()
                     </div>
                 </div>
@@ -446,7 +446,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 #if($wildcard_item_term)
                     <div class="message message--info bx-top-s bx-bot-s">
                         <div class="message__simple-content message-fill--info">
-                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"></use></svg></span>
+                            <span class="message__circle"><svg class="icon"><use xlink:href="#attention"/></svg></span>
                             $entry.getInfoResultSelect()
                         </div>
                     </div>
@@ -603,7 +603,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     <li class="tag tag--small">
         <a id="chk_fs_$entry.getId()" href="$action">
             <svg class="icon icon-xs icon-marr-xs"> 
-                <use href="#cross"></use>
+                <use href="#cross"/>
             </svg>
             $title
         </a>
