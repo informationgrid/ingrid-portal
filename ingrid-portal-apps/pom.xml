@@ -324,29 +324,6 @@
       <groupId>rome</groupId>
       <artifactId>rome</artifactId>
     </dependency>
-    <dependency>
-      <groupId>com.octo.captcha</groupId>
-      <artifactId>jcaptcha-noSunPackage</artifactId>
-      <version>1.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.octo.captcha</groupId>
-          <artifactId>jcaptcha-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.jhlabs</groupId>
-          <artifactId>imaging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
     <!-- backward compatible -->
     <dependency>
       <groupId>org.apache.logging.log4j</groupId>

@@ -10,15 +10,6 @@
         diskPersistent="false"
         diskExpiryThreadIntervalSeconds="120"
         />
-    
-    <cache name="de.ingrid.portal.servlet.jcaptcha"
-        maxElementsInMemory="200"
-        eternal="false"
-        timeToIdleSeconds="300"
-        timeToLiveSeconds="500"
-        overflowToDisk="true"
-        diskPersistent="false"
-        />   
         
     <cache name="ingrid-cache"
         maxElementsInMemory="5000"

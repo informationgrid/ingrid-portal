@@ -269,6 +269,9 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
 
+    public static final String PORTAL_FORM_VALID_FILLOUT_DURATION_MIN = "portal.form.valid.fillout.duration.min";
+
+
     // private stuff
     private static PortalConfig instance = null;
 
