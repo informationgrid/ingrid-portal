@@ -224,7 +224,7 @@
     #renderDBEditFooter($mode)
 </form>
 
-<script >
+<script type="text/javascript">
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditUser');

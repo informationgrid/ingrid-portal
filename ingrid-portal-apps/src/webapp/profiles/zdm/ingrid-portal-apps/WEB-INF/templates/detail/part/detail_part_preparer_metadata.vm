@@ -12,7 +12,7 @@
 ##                           #renderUdkClass($type)
 ##                        </h3>
                     </div>
-                    <hr class="hr-thick bx-top-0 bx-bot-0">
+                    <hr class="hr-thick bx-top-0 bx-bot-0"/>
                     <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
                         <div class="tab__select mq-show-l">
                             <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
@@ -189,7 +189,7 @@
                                         #set($bawstrCenterLatitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:data"))
                                         
                                         <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
+                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"/>
                                         <div id="map" style="height: 400px; width:100%;"></div>
                                         <script language="JavaScript" type="text/javascript">
                                             var map = new L.Map('map');
@@ -202,7 +202,7 @@
                                         </script>
                                         
                                         #if($southBoundLatitude && $westBoundLongitude && $northBoundLatitude && $eastBoundLongitude)
-                                            <script>
+                                            <script type="text/javascript">
                                                 if(map){
                                                     var southWest = L.latLng($southBoundLatitude, $westBoundLongitude),
                                                     northEast = L.latLng($northBoundLatitude, $eastBoundLongitude),
@@ -230,7 +230,7 @@
                                             #set($bawstrCenterLatitudeTitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:title[@lang='$lang']"))
                                             #set($bawstrName = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-bwastr_name']/idf:data"))
                                             #set($bawstrLineName = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-strecken_name']/idf:data"))
-                                            <script>
+                                            <script type="text/javascript">
                                                 if(map){
                                                     var popupContent = "<b>$bawstrName</b> ($bawstrLineName)";
                                                     popupContent = popupContent + "<br/>";

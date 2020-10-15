@@ -26,7 +26,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <title>MetaVer</title>
@@ -40,11 +40,11 @@
         <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"/>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
-        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"/>
     </head>
     <body>
         <div class="nav-overlay">
@@ -114,7 +114,7 @@
                         <p class="copyright">Copyright &copy; Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</p>
                     </div>
                 </div>
-                <hr class="bx-top-0 bx-bot-0"></hr>
+                <hr class="bx-top-0 bx-bot-0"/>
                 <div class="grid">
                     <div class="column column--3-4-xl">
                         <div class="ob-box-padded ob-box-center ob-clear">
@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="column column--1-4-xl">
-                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
+                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"/>
                         <div class="ob-box-padded ob-box-center ob-clear">
                             <div class="footer__section">
                                 <div class="footer__bottom"> </div>
@@ -141,10 +141,10 @@
             </footer>
         </div>
         <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"/>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"/>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"/>
+        <script src="/decorations/layout/ingrid/scripts/all.js"/>
         
     </body>
 </html>

@@ -1,4 +1,4 @@
-<script>
+<script type="text/javascript">
     $( document ).ready(function() {
         $('img.preview_image').each(function(index) {
             var img = $(this);

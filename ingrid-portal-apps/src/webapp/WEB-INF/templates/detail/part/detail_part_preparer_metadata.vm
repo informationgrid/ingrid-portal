@@ -16,7 +16,7 @@
                             #renderUdkClass($type)
                         </h3>
                     </div>
-                    <hr class="hr-thick bx-top-0 bx-bot-0">
+                    <hr class="hr-thick bx-top-0 bx-bot-0"/>
                     <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
                         <div class="tab__select mq-show-l">
                             <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>

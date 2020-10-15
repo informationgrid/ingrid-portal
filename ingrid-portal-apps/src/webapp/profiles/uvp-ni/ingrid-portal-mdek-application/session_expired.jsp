@@ -25,7 +25,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value='<%= request.getParameter("lang") == null ? "de" : request.getParameter("lang") %>' scope="session" />
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <title>Das nieders&auml;chsische UVP-Portal</title>
@@ -42,8 +42,8 @@
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"/>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"/>
     </head>
     <body>
         <div class="container">
@@ -138,6 +138,6 @@
             </div>
         </div>
     </body>
-    <script src="/decorations/layout/ingrid/scripts/all.js"></script>
-    <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+    <script src="/decorations/layout/ingrid/scripts/all.js"/>
+    <script src="/decorations/layout/ingrid/scripts/popup.js"/>
 </html>

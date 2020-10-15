@@ -1,36 +1,36 @@
 <!-- Global scripts -->
-<script src="/decorations/layout/ingrid/scripts/all.js"></script>
+<script src="/decorations/layout/ingrid/scripts/all.js"/>
 
 <!-- Popup -->
-<script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-<script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+<script src="/decorations/layout/ingrid/scripts/popup.js"/>
+<script src="/decorations/layout/ingrid/scripts/expander.js"/>
 
 <!-- Accordion -->
-<script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
-<script>
+<script src="/decorations/layout/ingrid/scripts/accordion.js"/>
+<script type="text/javascript">
 $('.js-accordion').accordion();
 $('.js-accordion-multi').accordion({
     multi: true
 });
 </script>
 <!-- Tabs -->
-<script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
-<script>
+<script src="/decorations/layout/ingrid/scripts/tabs.js"/>
+<script type="text/javascript">
     $('.js-tabs').tabs();
 </script>
 <!-- Selection -->
-<script src="/decorations/layout/ingrid/scripts/selection.js"></script>
-<script>
+<script src="/decorations/layout/ingrid/scripts/selection.js"/>
+<script type="text/javascript">
     $('.js-selection').selection();
 </script>
 <!-- Table Sort -->
-<script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
-<script>
+<script src="/decorations/layout/ingrid/scripts/table.sortable.js"/>
+<script type="text/javascript">
     $('.js-table-sortable').sortable();
 </script>
 <!-- swiper -->
-<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
-<script>
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"/>
+<script type="text/javascript">
   var mySwiper = new Swiper ('.swiper-container', {
     grabCursor: true,
     pagination: {

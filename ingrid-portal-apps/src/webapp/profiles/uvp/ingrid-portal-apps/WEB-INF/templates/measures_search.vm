@@ -22,7 +22,7 @@
   <iframe id="iframe_measure" allowfullscreen></iframe>
 </div>
 
-<script>
+<script type="text/javascript">
   var buffer = 0; //scroll bar buffer
   var iframe = document.getElementById('iframe_measure');
   var urlParams = location.hash;

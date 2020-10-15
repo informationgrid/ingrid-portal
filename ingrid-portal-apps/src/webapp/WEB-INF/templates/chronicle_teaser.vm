@@ -6,7 +6,7 @@
         <div class="teaser__content ob-container">
             #renderPortletTitle($MESSAGES.getString('chronicle.teaser.title') "h4")
         </div>
-        <hr class="bx-top-0 bx-bot-0">
+        <hr class="bx-top-0 bx-bot-0"/>
         #if($snsAnniversary.years && $snsAnniversary.title)
             <div class="teaser__content ob-container">
                 #set ($action = $renderResponse.createActionURL())
@@ -32,7 +32,7 @@
                     <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
                 </p>
             </div>
-            <hr class="bx-top-0 bx-bot-0">
+            <hr class="bx-top-0 bx-bot-0"/>
         #end
         <div class="teaser__content ob-container">
             <p>$MESSAGES.getString('chronicle.teaser.new.body')</p>

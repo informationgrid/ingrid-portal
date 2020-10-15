@@ -39,7 +39,7 @@ html, body {
 
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
-<script>
+<script type="text/javascript">
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'bottomright', 'ic-ic-center', mapBounds, '', '23px');
     map.zoomControl.setPosition('bottomright');
     window.onresize = resizeIframe;

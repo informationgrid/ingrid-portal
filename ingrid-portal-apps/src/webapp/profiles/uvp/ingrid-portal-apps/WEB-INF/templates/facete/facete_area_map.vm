@@ -50,7 +50,7 @@
     }
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
-<script>
+<script type="text/javascript">
     $('#map').parent().css('display', 'none')
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', mapBounds, '', '23px');
 </script>

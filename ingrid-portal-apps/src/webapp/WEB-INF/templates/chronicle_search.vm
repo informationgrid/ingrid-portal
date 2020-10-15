@@ -28,7 +28,7 @@
             <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')"></input>
             <button class="btn btn--primary btn--medium btn--icon-transition">
                 <svg class="icon mq-show-m"><use xlink:href="#magnifier"></svg>
-                <div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
+                <span class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</span>
             </button>
         </div>
         <input type="hidden" name="action" value="doSearch"/>
@@ -88,7 +88,7 @@
         </div>
     </form>
 </article>
-<script>
+<script type="text/javascript">
     var input_from_yy = $('#from_yy.datepicker').pickadate();
     var from_yy = input_from_yy.pickadate('picker');
     

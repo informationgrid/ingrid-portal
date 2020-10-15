@@ -6,7 +6,7 @@
         <div class="teaser__content ob-container">
             #renderPortletTitle($MESSAGES.getString('teaser.search.title') "h4")
         </div>
-        <hr class="bx-top-0 bx-bot-0">
+        <hr class="bx-top-0 bx-bot-0"/>
         <div class="teaser__content ob-container">
             <strong>$MESSAGES.getString('search.teaser.title')</strong>
             <p>

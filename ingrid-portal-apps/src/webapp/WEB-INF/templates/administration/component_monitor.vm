@@ -171,7 +171,7 @@
     </div>
     #renderDBBrowserFooterButtonsDisable($buttons true)
 </form>
-<script>
+<script type="text/javascript">
 ingrid_enableButtonByCheckbox('id', 'doDelete');
 </script>
 <span class="mq-hide-l">&nbsp;</span>

@@ -928,7 +928,7 @@
         </svg>
     </h3>
 #end
-<script>
+<script type="text/javascript">
     $( document ).ready(function() {
         $('a.download').each(function(index) {
             var a = $(this);

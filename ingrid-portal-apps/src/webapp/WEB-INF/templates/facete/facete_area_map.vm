@@ -42,20 +42,20 @@
     var layer;
 </script>
 #if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
-    <script>
+    <script type="text/javascript">
     var layerUrl = '$leafletBgLayerWMSUrl';
     var layerName = '$leafletBgLayerWMSName';
     layer = getWMSLayer(layerUrl, layerName); 
     </script>
 #else
-   <script>
+   <script type="text/javascript">
     var osm = getOSMLayer('');
     osm.options.minZoom = 5;
     osm.options.maxZoom = 20;
     layer = osm; 
    </script>
 #end
-<script>
+<script type="text/javascript">
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     map.setView(new L.LatLng(lat, lng),zoom);

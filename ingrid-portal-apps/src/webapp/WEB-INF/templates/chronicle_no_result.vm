@@ -2,6 +2,6 @@
 <div id="chronicleResult">
 #renderMessageInfo($MESSAGES.getString('chronicle.result.noResult1'))
 </div>
-<script >
+<script type="text/javascript">
     goToByScroll('chronicleResult');
 </script>

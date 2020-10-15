@@ -213,7 +213,7 @@
         </div>
     </div>
 </div>
-<script >
+<script type="text/javascript">
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditProvider');
