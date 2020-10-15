@@ -56,8 +56,6 @@ public class ContactForm extends ActionForm {
 
     public static final String FIELD_ACTIVITY = "activity";
 
-    public static final String FIELD_JCAPTCHA = "jcaptcha";
-
     public static final String FIELD_UPLOAD = "upload";
 
     public static final String FIELD_NAME_HONEYPOT = "name";
@@ -86,7 +84,6 @@ public class ContactForm extends ActionForm {
         setInput(FIELD_PHONE, request.getParameter(FIELD_PHONE));
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
         setInput(FIELD_ACTIVITY, request.getParameter(FIELD_ACTIVITY));
-        setInput(FIELD_JCAPTCHA, request.getParameter(FIELD_JCAPTCHA));
        }
 
     /**
@@ -125,16 +122,7 @@ public class ContactForm extends ActionForm {
             }
         }
 
-        if(PortalConfig.getInstance().getBoolean("portal.contact.enable.captcha", Boolean.TRUE) && !hasInput(FIELD_JCAPTCHA)){
-            setError(FIELD_JCAPTCHA, "contact.error.noJCapture");
-            allOk = false;
-        }
         return allOk;
-    }
-    
-    public void setErrorCaptcha(){
-    	clearErrors();
-    	setError(FIELD_JCAPTCHA, "contact.jcaptcha.error");
     }
 
     public void setErrorUpload(){
@@ -167,9 +155,6 @@ public class ContactForm extends ActionForm {
                         break;
                     case FIELD_ACTIVITY:
                         setInput(FIELD_ACTIVITY, item.getString());
-                        break;
-                    case FIELD_JCAPTCHA:
-                        setInput(FIELD_JCAPTCHA, item.getString());
                         break;
                     case FIELD_NAME_HONEYPOT:
                         setInput(FIELD_NAME_HONEYPOT, item.getString("UTF-8"));

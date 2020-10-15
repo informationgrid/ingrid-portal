@@ -75,37 +75,7 @@
                             <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
                         </div>
                         <div class="media__body">
-                            <input type="file" id="upload" name="upload"></input>
-                        </div>
-                    </div>
-                #end
-                #if($enableCaptcha)
-                    <div class="media">
-                        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                            <label class="mq-hide-l">&nbsp;</label>
-                        </div>
-                        <div class="media__body">
-                        #if ($actionForm.hasErrors() && !$actionForm.hasErrorInField("jcaptcha"))
-                            <image width=210px height=70px class="float_left" src="/ingrid-portal-apps/jcaptcha?keep">
-                        #else
-                            <image width=210px height=70px class="float_left" src="/ingrid-portal-apps/jcaptcha">
-                        #end 
-                        </div>
-                    </div>
-                    <div class="media">
-                        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                            <label class="mq-hide-l">&nbsp;</label>    
-                        </div>
-                        #renderInputButtonClass($MESSAGES.getString('common.form.button.reload') "font-size:90%;" "doRefresh" $MESSAGES.getString('common.form.button.reload.tooltip') "btn btn--secondary btn--small")
-                    </div>
-                    $action.setParameter("doRefresh",  "Refresh")
-                    <div class="media">
-                        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
-                            <label for="xx7">$MESSAGES.getString('contact.jcaptcha.title')</label>
-                        </div>
-                        <div class="media__body">
-                            <input type="text" id="xx7" name="jcaptcha" value="#getFieldValue('jcaptcha')" #addErrorFormClass('jcaptcha')/>
-                            #addErrorFormMessage('jcaptcha')
+                            <input type="file" id="upload" name="upload">
                         </div>
                     </div>
                 #end
