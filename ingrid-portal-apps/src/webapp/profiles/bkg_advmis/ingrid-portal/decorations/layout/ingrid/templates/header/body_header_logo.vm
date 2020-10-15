@@ -1,5 +1,5 @@
 <div class="header__widgets__section">
-    <a target="_new" class="header__widget header__logo" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+    <a target="_blank" class="header__widget header__logo" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
         <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="logo.svg">
     </a>
 </div>

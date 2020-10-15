@@ -210,7 +210,7 @@
 <span class="mq-hide-l">&nbsp;</span>
 <hr/>
 <div class="box box--fill box--small">
-    <a name="help"></a>
+    <a id="help" name="help"></a>
     <div class="box__title ob-container">
         <h4>$MESSAGES.getString('component.forms.help.header')</h4>
     </div>
@@ -241,7 +241,7 @@
         <p>$MESSAGES.getString('component.forms.help.part19')</p>
     </div>
 </div>
-<script type="text/javascript">
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditProvider');

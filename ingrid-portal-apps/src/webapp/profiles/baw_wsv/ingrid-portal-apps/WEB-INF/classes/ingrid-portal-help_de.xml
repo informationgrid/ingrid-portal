@@ -569,7 +569,7 @@
 			<content>
 				<p>GeoPortal.WSV bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
-                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
                     Verfügung gestellt.</p>
 				<p>Wenn Sie auf das Pluszeichen <img border="0" width="9" height="9" src="../decorations/layout/ingrid-help/images/image018.jpg" alt="image018.jpg"/> klicken,
@@ -776,7 +776,7 @@
 					</p>
 					<p>GeoPortal.WSV führt nicht nur die bei Suchmaschinen übliche
                         Indizierung  der Seiten durch, sondern lässt den
-                        Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                        Seiteninhalt auch über den <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> des
                         Umweltbundesamtes analysieren. Als Ergebnis dieser
                         Analyse werden geeignete Fachbegriffe aus dem <a href="?hkey=ext-search-subject-4">Umwelt-Thesaurus</a>
                         den Webseiten zugeordnet.</p>

@@ -154,7 +154,7 @@
     </div>
     #renderDBEditFooter($mode)
 </form>
-<script type="text/javascript">
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmCreateUser');

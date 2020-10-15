@@ -15,7 +15,7 @@
     #end
 #end
 #if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
-    <script type="text/javascript">
+    <script>
     if($actionForm.hasErrorInField('org.apache.jetspeed.login.username') || $actionForm.hasErrorInField('org.apache.jetspeed.login.password')){
         $('#logged_on_link').addClass('is-active');
     }

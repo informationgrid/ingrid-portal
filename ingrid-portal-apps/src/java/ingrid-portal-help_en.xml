@@ -273,7 +273,7 @@
 					   number of related terms. A synonym is an alternative expression, but one with the same meaning for the thesaurus keyword. 
 					   Sometimes a synonym consists of two or several thesaurus terms. In this case, the synonym is not to be understood as an 
 					   alternative expression for a single thesaurus term but as a synonym for the combined term.</p>
-                    <p>The UMTHES is made available via the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> 
+                    <p>The UMTHES is made available via the <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> 
                         by the Federal Environment Agency (Umweltbundesamt).</p>
                 </content>
    
@@ -302,7 +302,7 @@
          <section help-key="ext-search-spacial-3">
             <header>The Environmental Gazetteer Geo-Thesaurus-Umwelt</header>
               <content>
-                 <p>The environmental gazetteer Geo-Thesaurus-Umwelt is a component of the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> 
+                 <p>The environmental gazetteer Geo-Thesaurus-Umwelt is a component of the <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> 
 					of the Federal Environment Agency (Umweltbundesamt). SNS offers commen environmental terms in German and English. Currently the Geo-Thesaurus provides 
 					about 50,000 geographical objects.</p>
 
@@ -399,7 +399,7 @@
         <section help-key="ext-search-time-1">
             <header>Time</header>
             <content>
-                <p>InGrid-Portal is able to search for the time references of the connected systems. For this, on the one hand, the data are used that the  <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) has analysed from the web pages as time references. On the other hand, the time references in the databases are accessed. </p>
+                <p>InGrid-Portal is able to search for the time references of the connected systems. For this, on the one hand, the data are used that the  <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) has analysed from the web pages as time references. On the other hand, the time references in the databases are accessed. </p>
             </content>
         </section>
         <section help-key="ext-search-time-2">
@@ -427,7 +427,7 @@
                 <header>What is the Almanac (Environmental Chronicle)?</header>
                 <content>
                     <p>The environmental chronicle is a collection of current and historical events that have significantly influenced our environment situation. As well as the dates of the events, a short description is given of the events as appropriate. </p>
-                    <p>The environment chronicle is being made available via the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a>of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau.</p>
+                    <p>The environment chronicle is being made available via the <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a>of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau.</p>
                 </content>
             </section>
             <section help-key="ext-search-time-6">
@@ -516,7 +516,7 @@
             <header>Include similar terms in search</header>
             <content>
                 <p>InGrid-Portal not only carries out the usual indexing found in search engines but also has the page contents analysed by the 
-				   <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a 
+				   <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a 
 				   result of this analysis specialist terms from the <a href="?hkey=ext-search-subject-4">Environment Thesaurus</a> are assigned to the web pages.</p>
                 <p>If you chose to include the setting <i>Include similar terms in search</i> by putting a cross, the associated similar terms will be taken into account. (Note: In most cases the number of hits will be increased by selecting this setting.)</p>
             </content>
@@ -1082,7 +1082,7 @@
         <section help-key="search-results-4">
             <header>Similar terms</header>
             <content>
-                <p>InGrid-Portal offers you the possibility of expanding your search query by similar terms. For this, the search string entered by you will be analysed by the <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau and made available to them.</p>
+                <p>InGrid-Portal offers you the possibility of expanding your search query by similar terms. For this, the search string entered by you will be analysed by the <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt) in Dessau-Rosslau and made available to them.</p>
                 <p>If you click on the plus sign  <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg"/> you will be offered the similar terms for each search entered. You can in turn get these displayed by means of the symbol
                         <img border="0" width="9" height="9" src="../decorations/layout/ingrid/images/help/image018.jpg"/> By putting a cross next to the individual terms and clicking on the <i>Append to Query</i> button, the similar terms will be added to the associated search term each time such that a document will be found if either the search term or the similar term are contained (OR linking).</p>
             </content>
@@ -1205,7 +1205,7 @@
             <header>Environmental Almanac</header>
             <content>
                 <p>The environmental almanac is a collection of current and historical events which have significantly influenced our environment situation. As well as the basic data, the environmental almanac provides a short description of the events.</p>
-                <p>The environmental almanac is made available via the  <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt).</p>
+                <p>The environmental almanac is made available via the  <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt).</p>
                 <p>You can search in a targeted manner for events by submitting a search in the environment chronicle via <i>Search Term</i>, <i>Temporal Relation</i> and <i>Event-Type</i> using the <i>Show</i> button.</p>
             </content>
         </section>
@@ -1453,7 +1453,7 @@
         <section help-key="ingrid-inform-1">
             <header>InGrid-Portal informs</header>
             <content>
-                <p>In this area you can find reports, which are provided by the operator of InGrid-Portal, the <a href="http://www.kst.portalu.de/" target="_new">Coordination Center InGrid-Portal</a>.</p>
+                <p>In this area you can find reports, which are provided by the operator of InGrid-Portal, the <a href="http://www.kst.portalu.de/" target="_blank">Coordination Center InGrid-Portal</a>.</p>
             </content>
         </section>
     </chapter>
@@ -1559,7 +1559,7 @@
                     <p>
                         <b>Include similar terms in the search </b>
                     </p>
-                    <p>InGrid-Portal not only performs the usual indexing of the pages found on search engines but gets the page contents analysed by the n <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis, appropriate technical terms from the <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Environment-Thesaurus</a>
+                    <p>InGrid-Portal not only performs the usual indexing of the pages found on search engines but gets the page contents analysed by the n <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> of the Federal Environment Agency (Umweltbundesamt). As a result of this analysis, appropriate technical terms from the <a href="?hkey=ext-search-subject-4#ext-search-subject-4">Environment-Thesaurus</a>
                         are assigned to the web pages.</p>
                     <p>If you select the setting <i>Include similar terms in search</i> by putting a cross then these keywords will be taken account of in the search. (Note: one should assume that selecting this setting increases the number of hits.)</p>
                     <p>The settings will be effective on a lasting basis as preset settings for the display of the search result list, but can be overwritten via settings in <i>Search</i> for individual searches. </p>

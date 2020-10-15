@@ -220,7 +220,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
                                             <use xlink:href="#tick"/>
-                                        </use></svg>
+                                        </svg>
                                     </div>
                                     <a href="$colLink" class="contentColumnHead"><strong>$colTitle</strong></a>
                                 </label>
@@ -460,6 +460,9 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    #if(!$buttonname)
+        #set($buttonname = $buttonvalue)
+    #end
     <input type="submit" class="$buttonclass" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")disabled#end />
 #end
 
@@ -539,7 +542,8 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro(renderUDKIcon $class $title)
     #if($class && $title)
         #if($class != "1000")
-        <svg class="icon globe__icon" title="$title">
+        <svg class="icon globe__icon">
+            <title>$title</title>
             #if($class == "0")
                 ## Fachaufgabe
                 <use xlink:href="#checklist"/>
@@ -569,7 +573,8 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro(renderUDKAddressIcon $class $title)
     #if($class != "1000")
-    <svg class="icon globe__icon" title="$title">
+    <svg class="icon globe__icon">
+        <title>$title</title>
         #if($class == "0")
             ## Institution
             <use xlink:href="#building"/>

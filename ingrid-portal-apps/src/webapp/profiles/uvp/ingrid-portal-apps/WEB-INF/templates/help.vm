@@ -18,7 +18,7 @@
 </div>
 
 #if($helpKey)
-<script type="text/javascript">
+<script>
   if (window.location.hash !== '$helpKey') {
     window.location.hash = '$helpKey';
   }

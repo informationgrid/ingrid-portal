@@ -88,7 +88,7 @@
         </div>
     </form>
 </article>
-<script type="text/javascript">
+<script>
     var input_from_yy = $('#from_yy.datepicker').pickadate();
     var from_yy = input_from_yy.pickadate('picker');
     

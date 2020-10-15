@@ -25,7 +25,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-<script type="text/javascript">
+<script>
 
     var pageUvpStatistic = _container_;
     require([

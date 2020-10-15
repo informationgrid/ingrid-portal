@@ -29,7 +29,7 @@ html, body {
 </div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script type="text/javascript">
+<script>
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm]);
     var enablePopUp = true;
@@ -39,7 +39,7 @@ html, body {
 
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
 
-<script type="text/javascript">
+<script>
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'bottomright', 'ic-ic-center', mapBounds, '', '23px');
     map.zoomControl.setPosition('bottomright');
     window.onresize = resizeIframe;

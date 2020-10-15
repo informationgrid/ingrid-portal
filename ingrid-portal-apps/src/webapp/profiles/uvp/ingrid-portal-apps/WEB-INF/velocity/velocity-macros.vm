@@ -416,6 +416,9 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    #if(!$buttonname)
+        #set($buttonname = $buttonvalue)
+    #end
     <button type="submit" class="button $buttonclass" style="$buttonstyle" name="$buttonname" onclick="$buttononclick" #if($buttondisable == "true")disabled#end>$buttonvalue</button>
 #end
 

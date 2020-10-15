@@ -12,7 +12,7 @@
 
 </style>
 
-<script type="text/javascript">
+<script>
     function showMarker(m) {
         if(m.target.uuid){
             jQuery.get('$restUrlBBOX'+'?uuid='+m.target.uuid).done(function(data) {

@@ -23,7 +23,7 @@
 </ul>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script type="text/javascript">
+<script>
     var osm = getOSMLayer('');
     var map = addLeafletMap([osm]);
     map.gestureHandling.enable();
@@ -50,7 +50,7 @@
     }
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
-<script type="text/javascript">
+<script>
     $('#map').parent().css('display', 'none')
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', mapBounds, '', '23px');
 </script>

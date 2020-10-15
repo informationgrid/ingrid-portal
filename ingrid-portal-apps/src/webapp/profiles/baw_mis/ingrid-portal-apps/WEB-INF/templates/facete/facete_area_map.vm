@@ -33,8 +33,8 @@
 </div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script src="$restUrlMarker" type="text/javascript"></script>
-<script type="text/javascript">
+<script src="$restUrlMarker"></script>
+<script>
     var bounds;
     var selectedMap = '$selectedMap.webmapclientCoords';
     if(selectedMap.indexOf("y1") > -1){
@@ -84,7 +84,7 @@
     }
 </script>
 #parse("/WEB-INF/templates/global/include_leaflet_marker.vm")
-<script type="text/javascript">
+<script>
     var homeCtlBounds;
     addLeafletHomeControl(map, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'icon small icon-crosshair-2-1', mapMarkers, new L.LatLng(51.3, 10), 5)
 </script>

@@ -67,7 +67,7 @@
                                             #set($y1 = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "y1" ))
                                             #set($y2 = $UtilsSearch.getDetailValue( $hit.getHitDetail(), "y2" ))
                                             
-                                            <script type="text/javascript">
+                                            <script>
                                                 var bounds = null;
                                                 var southWest = null;
                                                 var northEast = null;

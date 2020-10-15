@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
     function resizeTeaserData() {
       var parent = $('$teaserDataId');
       var teaserDatas = parent.find( ".teaser-data" );

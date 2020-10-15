@@ -161,7 +161,7 @@
     #end
 #end
 
-<script type="text/javascript">
+<script>
 $( ".tab__content" ).each(function( i ) {
     var tabContent = $( this );
     var height = 0;

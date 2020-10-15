@@ -98,6 +98,7 @@
     #set ($pf = $parentFacet)
     #set ($facetListSize = $facetList.size())
     #set($list = [])
+    #set($tmpDivIsOpen = false)
     #foreach ($facet in $facetList)
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") == 0)))
             #if(!$facet.isDisplay())
@@ -128,6 +129,7 @@
         #if(($hits.get("FACETS").get("$facetId:$facet.getId()") && ($hits.get("FACETS").get("$facetId:$facet.getId()") != 0) || $facet.isDisplay()))
             #if($count % $facetListSize == 0)
                 <div class="grid grid--gutter flex-row auto-height-m">
+                #set($tmpDivIsOpen = true)
             #end
             <div class="column column--1-${facetListSize}-m">
                 #set($facetParam = "$pf:$facet.getId();")
@@ -216,8 +218,13 @@
             #set ($count = $count + 1)
             #if($count % $facetListSize == 0 || $count > $facetList.size())
                 </div>
+                #set($tmpDivIsOpen = false)
             #end
         #end
+    #end
+    #if($tmpDivIsOpen)
+        </div>
+        #set($tmpDivIsOpen = false)
     #end
 #end
 
@@ -245,7 +252,7 @@
     #end
 #end
 
-<script type="text/javascript">
+<script>
 $( ".tab__content" ).each(function( i ) {
     var tabContent = $( this );
     var height = 0;

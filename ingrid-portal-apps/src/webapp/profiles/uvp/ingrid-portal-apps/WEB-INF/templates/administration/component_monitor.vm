@@ -148,7 +148,7 @@
     </script>
     <hr/>
     #set ($action = $renderResponse.createActionURL())
-    <a name="import"></a>
+    <a id="import" name="import"></a>
     <form class="form" action="$action" method="post" name="frmContentProvider" id="frmContentMonitor2">
         <input type="hidden" name="action" value="doImport">
         <p>

@@ -35,7 +35,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
 function submitform(anchor, lang)
     {
         var form = anchor.closest('form');

@@ -22,7 +22,7 @@
 </ul>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script type="text/javascript">
+<script>
     var map = new L.Map('map');
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);
@@ -30,20 +30,20 @@
     var layer;
 </script>
 #if($leafletBgLayerWMSUrl && $leafletBgLayerWMSName)
-    <script type="text/javascript">
+    <script>
     var layerUrl = '$leafletBgLayerWMSUrl';
     var layerName = '$leafletBgLayerWMSName';
     layer = getWMSLayer(layerUrl, layerName); 
     </script>
 #else
-   <script type="text/javascript">
+   <script>
     var osm = getOSMLayer('');
     osm.options.minZoom = 5;
     osm.options.maxZoom = 20;
     layer = osm; 
    </script>
 #end
-<script type="text/javascript">
+<script>
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     map.setView(new L.LatLng(lat, lng),zoom);

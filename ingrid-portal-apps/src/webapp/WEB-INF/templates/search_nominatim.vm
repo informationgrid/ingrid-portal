@@ -13,7 +13,7 @@
 
 #set ($nominatimTooltip = $MESSAGES.getString('searchNominatim.tooltip'))
 
-<script type="text/javascript">
+<script>
 function nominatimAjaxCall(url, cfunc) {
     var xmlhttp;
     if (window.XMLHttpRequest){

@@ -30,8 +30,6 @@
     <head>
         <title>UVP</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="Content-style-type" content="text/css" />
-        <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="UVP bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />

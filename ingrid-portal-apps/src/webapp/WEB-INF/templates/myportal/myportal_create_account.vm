@@ -9,7 +9,7 @@
 </form>
 <br/>
 <br/>
-<script type="text/javascript">
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('create_account');

@@ -83,7 +83,7 @@
             <div class="columns form">
                         #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                         <div id="map" style="height: 400px; width:100%;"></div>
-                        <script type="text/javascript">
+                        <script>
                             var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
                             northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
                             bounds = L.latLngBounds(southWest, northEast);
@@ -357,7 +357,7 @@
             #set($entryLink = "$entry.get('link')")
         #end
         #if($entryLink && $entryLink.length() > 0)
-            <a target="_new" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
+            <a target="_blank" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
             <span class="text">
             (
             #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
@@ -442,7 +442,7 @@
         </svg>
     </h3>
 #end
-<script type="text/javascript">
+<script>
     $( document ).ready(function() {
         $('a.download').each(function(index) {
             var a = $(this);

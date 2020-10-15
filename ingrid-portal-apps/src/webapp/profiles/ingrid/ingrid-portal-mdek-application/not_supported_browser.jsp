@@ -31,8 +31,6 @@
     <head>
         <title>InGrid-Portal</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="Content-style-type" content="text/css" />
-        <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
@@ -43,7 +41,7 @@
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"/>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
-        <script src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+        <script src="/decorations/layout/ingrid/scripts/ingrid.js"></script>
     </head>
     <body>
         <div class="nav-overlay">
@@ -140,10 +138,10 @@
             </footer>
         </div>
         <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js" type="text/javascript"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js" type="text/javascript"></script>
-        <script src="/decorations/layout/ingrid/scripts/all.js" type="text/javascript"></script>
+        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
         
     </body>
 </html>

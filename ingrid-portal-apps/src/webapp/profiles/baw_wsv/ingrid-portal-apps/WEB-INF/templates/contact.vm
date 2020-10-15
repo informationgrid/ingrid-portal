@@ -128,7 +128,7 @@
         </article>
     </div>
 </section>
-<script type="text/javascript">
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('contact');

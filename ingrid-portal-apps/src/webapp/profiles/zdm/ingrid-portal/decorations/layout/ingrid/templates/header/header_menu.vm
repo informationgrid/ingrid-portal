@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 var winUrl = window.location.href;
 var menu = '';
 var breadCrumbsText = '';

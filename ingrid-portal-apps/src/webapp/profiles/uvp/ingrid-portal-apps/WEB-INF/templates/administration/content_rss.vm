@@ -51,6 +51,6 @@
     </form>
 </div>
 
-<script type="text/javascript">
+<script>
 ingrid_enableButtonByCheckbox('id', 'doDelete');
 </script>

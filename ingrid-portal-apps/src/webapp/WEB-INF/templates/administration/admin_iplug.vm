@@ -90,9 +90,8 @@
                                     #set($plug = $plugNode.get("iplug"))
                                     #if($plug.getIplugAdminGuiUrl())
                                         <li class="tree__item">
-                                            <svg class="tree__icon icon" title="Informationssystem">
+                                            <svg class="tree__icon icon">
                                                 <use xlink:href="#external-link"/>
-                                                </use>
                                             </svg>
                                             <a href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
                                         </li>

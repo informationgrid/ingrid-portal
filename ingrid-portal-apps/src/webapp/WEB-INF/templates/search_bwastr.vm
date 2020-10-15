@@ -13,7 +13,7 @@
 
 #set ($bwastrTooltip = $MESSAGES.getString('searchBwastr.tooltip'))
 
-<script type="text/javascript">
+<script>
 function bwastrAjaxCall(url, method, cfunc) {
     var xmlhttp;
     if (window.XMLHttpRequest){

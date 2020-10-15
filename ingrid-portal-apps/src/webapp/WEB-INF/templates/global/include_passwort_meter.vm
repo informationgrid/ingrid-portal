@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 var meterStrength = {
   0: "$MESSAGES.getString('common.password.strength.worst')",
   1: "$MESSAGES.getString('common.password.strength.bad')",

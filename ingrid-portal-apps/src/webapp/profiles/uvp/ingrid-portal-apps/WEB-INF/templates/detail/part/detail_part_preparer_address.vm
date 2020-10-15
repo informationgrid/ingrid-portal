@@ -48,7 +48,7 @@
         <div class="large-2 xlarge-2"></div>
         <div class="xsmall-24 large-16 xlarge-16 columns">
 ## Allgemeines
-<h2><a class="anchor" name="detail-1"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("general_tab")</span></h2>
+<h2><a class="anchor" id="detail-1" name="detail-1"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("general_tab")</span></h2>
         #set($xpathList = ["./gmd:positionName"])
         #if($TOOL.aNodeOfListExist($xpathList))
         ## Beschreibung
@@ -76,7 +76,7 @@
         #set($xpathList = ["./idf:objectReference"])
         #if($TOOL.aNodeOfListExist($xpathList))
 ## Verweis
-<h2><a class="anchor" name="detail-2"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("references_tab")</span></h2>
+<h2><a class="anchor" id="detail-2" name="detail-2"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("references_tab")</span></h2>
             ## Datenbezüge
             #set($tmp = $TOOL.getReference("./idf:objectReference", true))
             #renderLinkList($MESSAGES.getString("search.detail.dataRelations") $tmp "true")

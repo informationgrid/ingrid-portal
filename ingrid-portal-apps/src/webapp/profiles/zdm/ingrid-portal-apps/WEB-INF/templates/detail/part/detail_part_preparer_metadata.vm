@@ -189,9 +189,9 @@
                                         #set($bawstrCenterLatitude = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:data"))
                                         
                                         <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
-                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js" type="text/javascript"></script>
+                                        <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
                                         <div id="map" style="height: 400px; width:100%;"></div>
-                                        <script type="text/javascript">
+                                        <script>
                                             var map = new L.Map('map');
                                             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                                             var osmAttrib='';
@@ -202,7 +202,7 @@
                                         </script>
                                         
                                         #if($southBoundLatitude && $westBoundLongitude && $northBoundLatitude && $eastBoundLongitude)
-                                            <script type="text/javascript">
+                                            <script>
                                                 if(map){
                                                     var southWest = L.latLng($southBoundLatitude, $westBoundLongitude),
                                                     northEast = L.latLng($northBoundLatitude, $eastBoundLongitude),
@@ -230,7 +230,7 @@
                                             #set($bawstrCenterLatitudeTitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-center-lat']/idf:title[@lang='$lang']"))
                                             #set($bawstrName = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-bwastr_name']/idf:data"))
                                             #set($bawstrLineName = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='bawDmqsAdditionalFields']/idf:additionalDataField[@id='bwstr-strecken_name']/idf:data"))
-                                            <script type="text/javascript">
+                                            <script>
                                                 if(map){
                                                     var popupContent = "<b>$bawstrName</b> ($bawstrLineName)";
                                                     popupContent = popupContent + "<br/>";

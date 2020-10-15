@@ -30,8 +30,6 @@
     <head>
         <title>Das nieders&auml;chsische UVP-Portal</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="Content-style-type" content="text/css" />
-        <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="UVP bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
@@ -42,8 +40,8 @@
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js" type="text/javascript"></script>
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
     </head>
     <body>
         <div class="container">
@@ -138,6 +136,6 @@
             </div>
         </div>
     </body>
-    <script src="/decorations/layout/ingrid/scripts/all.js" type="text/javascript"></script>
-    <script src="/decorations/layout/ingrid/scripts/popup.js" type="text/javascript"></script>
+    <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+    <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
 </html>

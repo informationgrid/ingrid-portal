@@ -44,7 +44,7 @@
         <article class="$articleStyle">
             #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
             #if($akey && $akey.length() > 0)
-                <a name="$akey"></a>
+                <a id="$akey" name="$akey"></a>
             #end
             #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)
             <$titleTag class="$titleStyle">

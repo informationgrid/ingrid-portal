@@ -26,7 +26,7 @@
     #set($partner = $partnerHash.partner)
     #if($partnerHash.providers)
         #if($partners.size() > 1)
-            <a name="$partner.ident"></a>
+            <a id="$partner.ident" name="$partner.ident"></a>
             <hr />
             <h4>$partner.name</h4>
         #end
