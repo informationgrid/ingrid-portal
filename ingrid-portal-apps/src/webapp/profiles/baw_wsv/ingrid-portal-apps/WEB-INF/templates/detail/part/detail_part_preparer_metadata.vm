@@ -60,7 +60,7 @@
                 ## Allgemeines
                 <div class="tab__content box--medium bx-bot-xl" data-tabid="tab-1">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">Beschreibung<h2>
+                        <h2 class="print-title is-hidden">Beschreibung</h2>
                         ## Kurzbeschreibung
                         #renderSectionTitle("Kurzbeschreibung")
                         <div class="media ob-clear">
@@ -184,7 +184,7 @@
                 ## Kategorisierung
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-2">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">Kategorisierung<h2>
+                        <h2 class="print-title is-hidden">Kategorisierung</h2>
                         #renderSectionTitle("Kategorisierung")
                         <div class="search-result--nested">
                             ## Typ
@@ -431,7 +431,7 @@
                 #if($TOOL.aNodeOfListExist($xpathList))
                     <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-3">
                         <div class="box__content ob-container">
-                            <h2 class="print-title is-hidden">Zugriff<h2>
+                            <h2 class="print-title is-hidden">Zugriff</h2>
                             #renderSectionTitle("Zugriff")
                             <div class="search-result--nested">
                                 ## Operationen
@@ -496,7 +496,7 @@
                 #if($TOOL.aNodeOfListExist($xpathList))
                     <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                         <div class="box__content ob-container">
-                            <h2 class="print-title is-hidden">Vertrieb<h2>
+                            <h2 class="print-title is-hidden">Vertrieb</h2>
                             #renderSectionTitle("Vertrieb")
                             <div class="search-result--nested">
                                 ## Vertriebsformat
@@ -547,7 +547,7 @@
                 ## Qualität
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-5">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">Qualit&auml;t<h2>
+                        <h2 class="print-title is-hidden">Qualit&auml;t</h2>
                         #renderSectionTitle("Qualit&auml;t")
                         <div class="search-result--nested">
                             ## Aussage zur Herkunft
@@ -658,7 +658,7 @@
                 ## Metadaten
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-6">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">Metadaten<h2>
+                        <h2 class="print-title is-hidden">Metadaten</h2>
                         #renderSectionTitle("Metadaten")
                         ## Kontakt
                         #set($tmp = $TOOL.getNodeListFromXPath("./gmd:contact"))
