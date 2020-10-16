@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.3.13" date="2020-xx-xx" description="Release 5.3.13">
+          <action type="fix" dev="wemove" issue="2141">
+            IGE: Fix visibility of dateformat.
+          </action>
+        </release>
+
         <release version="5.3.12" date="2020-09-29" description="Release 5.3.12">
           <action type="update" dev="wemove" issue="2083">
             Portal details: change display of date to last modified 
