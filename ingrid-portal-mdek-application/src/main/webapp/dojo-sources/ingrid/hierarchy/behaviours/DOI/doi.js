@@ -138,7 +138,7 @@ define(["dojo/_base/declare",
             var insertNode = construct.create("span", {"class": 'outer'});
             var div = construct.create("div");
             var labelSpan = construct.create("span", {"class": 'label'});
-            var label = construct.create("label", {"innerHTML": message.get("doi.title")});
+            var label = construct.create("label", {"innerHTML": message.get("doi.title"), "class": "inActive"});
             labelSpan.appendChild(label);
             var outlined = construct.create("div", {"class": 'outlined'});
             insertNode.appendChild(div);

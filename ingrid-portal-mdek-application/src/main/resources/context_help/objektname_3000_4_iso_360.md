@@ -11,6 +11,8 @@ title: Objektname
 
 Angabe einer kurzen prägnanten Bezeichnung des beschriebenen Vorhabens / Projekts / Programms. Der Objektname kann z.B. identisch mit dem Titel des Vorhabens / Projekts / Programms sein, sofern dieser ausreichend kurz und aussagekräftig ist. Soweit ein gängiges Kürzel vorhanden ist, ist dieses Kürzel mit anzugeben. Der Eintrag in dieses Feld ist obligatorisch.
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
+
 ## Beispiel:
 
 Moorschutzprogramm

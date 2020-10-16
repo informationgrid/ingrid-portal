@@ -11,6 +11,8 @@ title: Objektname
 
 Angabe einer kurzen, prägnanten Bezeichnung der beschriebenen Organisationseinheit oder Fachaufgabe.
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
+
 ## Beispiel:
 
 Jahresstatistik zum Stand der Altlastenbearbeitung

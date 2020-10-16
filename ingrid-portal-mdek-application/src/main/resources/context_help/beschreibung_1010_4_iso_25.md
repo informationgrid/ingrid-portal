@@ -11,6 +11,7 @@ title: Beschreibung
 
 Fachliche Inhaltsangabe des Vorhabens / Projektes / Programms. Hier sollen in knapper Form die Zielsetzungen und wichtigsten Rahmenbedingungen des Vorhabens / Projektes / Programms beschrieben werden. Auf Verständlichkeit für fachfremde Dritte ist zu achten. Für Detailinformationen (Name des Projektleiters, Projektbeteiligte, etc.) stehen gesonderte Eingabefelder zur Verfügung. Das Feld Beschreibungen muss ausgefüllt werden, damit das Objekt abgespeichert werden kann.
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
 
 # ISO Abbildung
 

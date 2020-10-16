@@ -162,7 +162,9 @@ public class ImportServiceImpl {
             case XML:
                 
             	IngridDocument result = analyzeXMLData( importDataStream, targetObjectUuid, targetAddressUuid, publishImmediately, doSeparateImport, copyNodeIfPresent, fileType, startNewAnalysis );
-            	if (result.get("error") != null) {
+            	if (result == null) {
+                    throw new IllegalArgumentException("Error analyzing input file");
+                } else if (result.get("error") != null) {
                     throw new IllegalArgumentException("Error analyzing input file: " + result.getString("error"));
                 }
             	allProtocols.add( ((ProtocolHandler) result.get( "protocol" )).getProtocol() );
