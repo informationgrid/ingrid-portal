@@ -98,9 +98,9 @@
 #macro (renderLinkLineAddress $entry)
     <div>
     #if($entry.isExtern)
-        <a href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
+        <a href="$entry.href" title="$MESSAGES.getString('common.alt.icon.extern')">$entry.title</a>
     #else
-        <a href="$entry.href" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
+        <a href="$entry.href" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title</a>
     #end
     </div>  
 #end
@@ -613,7 +613,7 @@
                     <tr>
                         <th>$entry.title</th>
                         <td>
-                            <a href="$entry.href" alt="$entry.altText">$entry.body</a>
+                            <a href="$entry.href" title="$entry.altText">$entry.body</a>
                         </td>
                     </tr>
                 </tbody>
@@ -825,7 +825,7 @@
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
                     <svg class="icon"><use xlink:href="#internal-link"/></svg>
-                    <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" alt="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+                    <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
         </div>

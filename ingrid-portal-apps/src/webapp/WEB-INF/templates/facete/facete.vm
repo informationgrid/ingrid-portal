@@ -159,7 +159,7 @@
         <div class="js-accordion-toggle sidebar-filter-subheader is-active" onclick="location.href='$action'">
         #set ($action = $renderResponse.createActionURL())
             <svg class="sidebar-subheader-icon icon">
-                <use xlink:href="#select-arrow">
+                <use xlink:href="#select-arrow"/>
             </svg>
             $MESSAGES.getString("$treeFacet.getName()")
             <strong>($treeFacet.getFacetValue())</strong>
@@ -207,7 +207,7 @@
     <div class="js-accordion">
         <div class="js-accordion-toggle sidebar-filter-subheader #if($isDelete)is-active#end" onclick="location.href='$doAction'">
             <svg class="sidebar-subheader-icon icon">
-                <use xlink:href="#select-arrow">
+                <use xlink:href="#select-arrow"/>
             </svg>
             #set ($hasShortName = false)
             #if($facet.getShortName())

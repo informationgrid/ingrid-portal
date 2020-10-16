@@ -36,7 +36,7 @@
                 #if($provider.provider)
                     <li>
                     #if($provider.provider.url && $provider.provider.url != "")
-                        <a href="$provider.provider.url" alt="$provider.provider.name">
+                        <a href="$provider.provider.url" title="$provider.provider.name">
                             <svg class="icon">
                                 <use xlink:href="#external-link"/>
                             </svg>
