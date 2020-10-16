@@ -7,7 +7,7 @@
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
 
-<html xmlns="http://www.w3.org/1999/xhtml" lang="de" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="$renderRequest.Locale.getLanguage()" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
     <head>
         #set($currentPage = $site.getPageOrTemplate().url)
         #if($currentPage == "/main-maps.psml" || $currentPage == "/main-measures.psml")
@@ -18,7 +18,6 @@
         <base href="/" />
         <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "ZDM-Küstendaten")</title>
         <meta http-equiv="Content-type" content="#ContentType()" />
-        <meta http-equiv="content-language" content="$renderRequest.Locale.getLanguage()" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport"/>
         <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
