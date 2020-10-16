@@ -116,6 +116,9 @@
           <action type="fix" dev="wemove" issue="736">
             Portal: Fix issue in which the given dates disappear in Chrome and IE browser.
           </action>
+          <action type="fix" dev="wemove" issue="2141">
+            IGE: Fix visibility of dateformat.
+          </action>
         </release>
 
         <release version="5.5.0" date="2020-07-27" description="Release 5.5.0">
