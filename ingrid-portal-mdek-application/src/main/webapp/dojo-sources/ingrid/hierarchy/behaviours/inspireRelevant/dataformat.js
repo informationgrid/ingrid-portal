@@ -50,6 +50,8 @@ define([
                 // only register if class 1 and if not already registered
                 if (msg.objClass === "Class1") {
                     if (self.events.length === 0) {
+                        domClass.remove("uiElement1320", "required");
+                        domClass.remove("uiElement1320", "show");
                         // delayed register to perform other unregister functions
                         setTimeout(function () { self.register() });
                     }
@@ -122,13 +124,14 @@ define([
                 utils.removeEvents([this.publishEvent]);
                 this.publishEvent = null;
                 domClass.remove("uiElement1320", "required");
-                domClass.add("uiElement1320", "show");
+                domClass.remove("uiElement1320", "show");
             }
         },
 
         unregister: function () {
             utils.removeEvents(this.events);
             utils.removeEvents([this.publishEvent]);
+            this.validationIsOn = false;
             this.publishEvent = null;
             domClass.remove("uiElement1320", "required");
             domClass.remove("uiElement1320", "show");
