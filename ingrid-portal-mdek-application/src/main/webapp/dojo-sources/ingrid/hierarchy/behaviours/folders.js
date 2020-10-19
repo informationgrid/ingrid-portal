@@ -266,6 +266,11 @@ define(["dojo/_base/declare",
           return tree._expandNode(parentNode);
         })
         .then(function() {
+          // we need to refresh children again to have correct parent information of new child nodes
+          // cannot really explain why
+          return tree.refreshChildren(parentNode);
+        })
+        .then(function() {
           TreeUtils.selectNode("dataTree", folderNode.uuid, true);
 
           topic.publish("/loadRequest", {
