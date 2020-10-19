@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.6.0-SNAPSHOT" date="2020-xx-xx" description="Release 5.6.0">
+        <release version="5.6.0" date="2020-10-19" description="Release 5.6.0">
           <action type="update" dev="wemove" issue="1215">
             Remove 'am' time type.
           </action>
@@ -49,6 +49,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2144">
             Portal: Fix jcaptcha.
+          </action>
+          <action type="fix" dev="wemove" issue="3015">
+            Portal: Alternative CAPTCHA in contact form.
           </action>
           <action type="update" dev="wemove" issue="2083">
             Portal details: change display of date to last modified on #2083.
@@ -116,8 +119,14 @@
           <action type="fix" dev="wemove" issue="736">
             Portal: Fix issue in which the given dates disappear in Chrome and IE browser.
           </action>
+          <action type="fix" dev="wemove" issue="1882">
+            Portal: Strip localisation from addresses.
+          </action>
           <action type="fix" dev="wemove" issue="2141">
             IGE: Fix visibility of dateformat.
+          </action>
+          <action type="fix" dev="wemove" issue="2613">
+            IGE: Fix context help.
           </action>
         </release>
 
