@@ -31,7 +31,7 @@
                         <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') />
+                        <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') autocomplete="given-name"/>
                         #addErrorFormMessage('user_firstname')
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname')/>
+                        <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') autocomplete="family-name"/>
                         #addErrorFormMessage('user_lastname')
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')"/>
+                        <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')" autocomplete="organization"/>
                     </div>
                 </div>
                 <div class="media">
@@ -57,7 +57,7 @@
                         <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')"/>
+                        <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')" autocomplete="tel"/>
                     </div>
                 </div>
                 <div class="media">
@@ -65,7 +65,7 @@
                         <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
                     </div>
                     <div class="media__body">
-                        <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email')/>
+                        <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') autocomplete="email"/>
                         #addErrorFormMessage('user_email')
                     </div>
                 </div>
