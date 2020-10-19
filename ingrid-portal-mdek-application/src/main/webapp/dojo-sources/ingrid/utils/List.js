@@ -93,13 +93,18 @@ define([
                     if (!list[i].writePermission)
                         disabledClass = " disabled";
                 }
+                // Remove localisation string REDMINE-1882
+                var title = list[i].title;
+                if (title && title.indexOf("#locale-") !== -1){
+                    title = title.substring(0,title.indexOf("#locale-"));
+                }
 
                 if (list[i].pubOnly) {
                     list[i].linkLabel = "<a class='pubOnly" + disabledClass + "' href='#' onclick='require(\"ingrid/menu\").handleSelectNodeInTree(\"" + list[i].uuid + "\", \"O\"" + addJump + ");'" +
-                        "title='" + list[i].title + "'>" + list[i].title + "</a>";
+                        "title='" + title + "'>" + title + "</a>";
                 } else {
                     list[i].linkLabel = "<a class='" + disabledClass + "' href='#' onclick='require(\"ingrid/menu\").handleSelectNodeInTree(\"" + list[i].uuid + "\", \"O\"" + addJump + ");'" +
-                        "title='" + list[i].title + "'>" + list[i].title + "</a>";
+                        "title='" + title + "'>" + title + "</a>";
                 }
             }
             return list;

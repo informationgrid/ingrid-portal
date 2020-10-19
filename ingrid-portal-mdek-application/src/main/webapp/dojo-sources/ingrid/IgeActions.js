@@ -2117,7 +2117,6 @@ define([
             registry.byId("ref1ObjectIdentifier").attr("value", nodeData.ref1ObjectIdentifier, true);
             registry.byId("ref1DataSet").attr("value", nodeData.ref1DataSet, true);
             registry.byId("ref1Coverage").attr("value", nodeData.ref1Coverage, true);
-            registry.byId("ref1VFormatTopology").attr("value", nodeData.ref1VFormatTopology, true);
 
             // The spatial system table is a combobox that allows free entries but also entries associated with IDs
             // If the reference system ID == -1 then we receive a free entry, otherwise we have to resolve the id
@@ -2127,7 +2126,8 @@ define([
             registry.byId("ref1GridPosAccuracy").attr("value", nodeData.ref1GridPosAccuracy, true);
             registry.byId("ref1PosAccuracy").attr("value", nodeData.ref1PosAccuracy, true);
             registry.byId("ref1BasisText").attr("value", nodeData.ref1BasisText, true);
-            registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
+            // registry.byId("ref1DataBasisText").attr("value", nodeData.ref1DataBasisText, true);
+            UtilStore.updateWriteStore("ref1DataBasisTable1", UtilList.listToTableData(nodeData.ref1DataBasisText));
             registry.byId("ref1ProcessText").attr("value", nodeData.ref1ProcessText, true);
 
             UtilStore.updateWriteStore("ref1Representation", UtilList.listToTableData(nodeData.ref1Representation));
@@ -2138,11 +2138,11 @@ define([
             // Grid-format
             registry.byId("ref1TransfParamAvail").attr("value", nodeData.ref1GridFormatTransfParam);
             registry.byId("ref1NumDimensions").attr("value", nodeData.ref1GridFormatNumDimensions);
-            registry.byId("ref1AxisDimName").attr("value", nodeData.ref1GridFormatAxisDimName);
-            registry.byId("ref1AxisDimSize").attr("value", nodeData.ref1GridFormatAxisDimSize);
+
             registry.byId("ref1CellGeometry").attr("value", nodeData.ref1GridFormatCellGeometry);
-            registry.byId("isGeoRectified").attr("value", nodeData.ref1GridFormatGeoRectified);
-            registry.byId("isGeoReferenced").attr("value", !nodeData.ref1GridFormatGeoRectified);
+            registry.byId("isGeoBase").attr("value", !nodeData.ref1GridFormatType || nodeData.ref1GridFormatType === "base");
+            registry.byId("isGeoRectified").attr("value", nodeData.ref1GridFormatType === "rectified");
+            registry.byId("isGeoReferenced").attr("value", nodeData.ref1GridFormatType === "referenced");
             registry.byId("ref1GridFormatRectCheckpoint").attr("value", nodeData.ref1GridFormatRectCheckpoint);
             registry.byId("ref1GridFormatRectDescription").attr("value", nodeData.ref1GridFormatRectDescription);
             registry.byId("ref1GridFormatRectCornerPoint").attr("value", nodeData.ref1GridFormatRectCornerPoint);
@@ -2151,6 +2151,7 @@ define([
             registry.byId("ref1GridFormatRefOrientationParam").attr("value", nodeData.ref1GridFormatRefOrientationParam);
             registry.byId("ref1GridFormatRefGeoreferencedParam").attr("value", nodeData.ref1GridFormatRefGeoreferencedParam);
 
+            UtilStore.updateWriteStore("ref1GridAxisTable", nodeData.ref1GridFormatAxis);
             UtilStore.updateWriteStore("ref1Scale", nodeData.ref1Scale);
             UtilStore.updateWriteStore("ref1SymbolsText", nodeData.ref1SymbolsText);
             UtilStore.updateWriteStore("ref1KeysText", nodeData.ref1KeysText);
@@ -2418,7 +2419,7 @@ define([
             nodeData.metadataDate = registry.byId("metadataDate").get("value");
             nodeData.generalDescription = registry.byId("generalDesc").get("value");
             nodeData.objectClass = registry.byId("objectClass").get("value").substr(5); // Value is a string: "Classx" where x is the class
-            nodeData.generalAddressTable = this._getTableData("generalAddress");
+            nodeData.generalAddressTable = dojo.clone(this._getTableData("generalAddress"));
 
             // remove additional properties we needed for visualization
             array.forEach(nodeData.generalAddressTable, function(item) {
@@ -2433,13 +2434,13 @@ define([
             nodeData.commentTable = currentUdk.commentStore;
 
             // -- Spatial --
-            nodeData.spatialRefAdminUnitTable = this._getTableData("spatialRefAdminUnit");
+            nodeData.spatialRefAdminUnitTable = dojo.clone(this._getTableData("spatialRefAdminUnit"));
             // remove additional properties we needed for visualization
             array.forEach(nodeData.spatialRefAdminUnitTable, function(item) {
                 delete item.label;
             });
 
-            nodeData.spatialRefLocationTable = this._getTableData("spatialRefLocation");
+            nodeData.spatialRefLocationTable = dojo.clone(this._getTableData("spatialRefLocation"));
             // remove additional properties we needed for visualization
             array.forEach(nodeData.spatialRefLocationTable, function(item) {
                 delete item.label;
@@ -2459,11 +2460,6 @@ define([
             if (nodeData.timeRefType == "bis") {
                 if (timeFrom !== "") {
                     nodeData.timeRefDate1 = null;
-                    nodeData.timeRefDate2 = timeFrom;
-                }
-            } else if (nodeData.timeRefType == "am") {
-                if (timeFrom !== "") {
-                    nodeData.timeRefDate1 = timeFrom;
                     nodeData.timeRefDate2 = timeFrom;
                 }
             } else if (nodeData.timeRefType == "seit") {
@@ -2512,7 +2508,7 @@ define([
             nodeData.availabilityMediaOptionsTable = this._getTableData("availabilityMediaOptions");
 
             // -- Thesaurus --
-            nodeData.thesaurusTermsTable = this._getTableData("thesaurusTerms");
+            nodeData.thesaurusTermsTable = dojo.clone(this._getTableData("thesaurusTerms"));
             // remove additional properties we needed for visualization
             array.forEach(nodeData.thesaurusTermsTable, function(item) {
                 delete item.sourceString;
@@ -2527,10 +2523,10 @@ define([
 
 
             // -- Links --
-            var linksToTable = this._getTableData("linksTo");
+            var linksToTable = dojo.clone(this._getTableData("linksTo"));
             // concat with other tables separated earlier
             if (nodeData.objectClass == "3") {
-                linksToTable = linksToTable.concat(this._getTableData("ref3BaseDataLink"));
+                linksToTable = linksToTable.concat(dojo.clone(this._getTableData("ref3BaseDataLink")));
             }
 
             var objLinks = [];
@@ -2569,28 +2565,37 @@ define([
                     if (currentField instanceof CustomGrid) {
                         
                         var tableData = this.prepareGridDataForBackend(currentField);
-                        
+
                         nodeData.additionalFields.push({
                             identifier: currentField.id,
                             value: null,
                             listId: null,
                             tableRows: tableData
                         });
-                        
+
                     } else {
                         // if it's a select box we need to get listId and value
                         var value = null;
                         var listId = null;
                         if (currentField instanceof FilteringSelect ||
                             currentField instanceof ComboBox) {
-                            listId = -1;
-                            var item = this.additionalFieldWidgets[nr].item;
-                            if (item !== null) {
-                                listId = item.id[0];
-                            }
 
                             // for lists to get value
-                            value = this.additionalFieldWidgets[nr].get("value");
+                            value = currentField.get("value");
+
+                            listId = -1;
+                            var item = currentField.item;
+                            if (item !== null) {
+                                listId = item.id[0];
+                            } else {
+                                currentField.store.fetch();
+                                var idFromComboValue = array.filter(currentField.store._arrayOfAllItems, function (item) {
+                                    return item.value == value;
+                                });
+                                if (idFromComboValue.length === 1) {
+                                    listId = idFromComboValue[0].id[0];
+                                }
+                            }
 
                         } else if (currentField instanceof DateTextBox) {
                             value = currentField.get("value");
@@ -2738,13 +2743,12 @@ define([
             nodeData.ref1ObjectIdentifier = registry.byId("ref1ObjectIdentifier").get("value");
             nodeData.ref1DataSet = registry.byId("ref1DataSet").get("value");
             nodeData.ref1Coverage = UtilGeneral.getNumberFromDijit("ref1Coverage");
-            nodeData.ref1VFormatTopology = registry.byId("ref1VFormatTopology").get("value");
 
             nodeData.ref1AltAccuracy = UtilGeneral.getNumberFromDijit("ref1AltAccuracy");
             nodeData.ref1GridPosAccuracy = UtilGeneral.getNumberFromDijit("ref1GridPosAccuracy");
             nodeData.ref1PosAccuracy = UtilGeneral.getNumberFromDijit("ref1PosAccuracy");
             nodeData.ref1BasisText = registry.byId("ref1BasisText").get("value");
-            nodeData.ref1DataBasisText = registry.byId("ref1DataBasisText").get("value");
+            nodeData.ref1DataBasisText = UtilList.tableDataToList(this._getTableData("ref1DataBasisTable1"));
             nodeData.ref1ProcessText = registry.byId("ref1ProcessText").get("value");
 
 
@@ -2756,12 +2760,10 @@ define([
             // Grid-format
             nodeData.ref1GridFormatTransfParam = registry.byId("ref1TransfParamAvail").checked ? true : false;
             var numDimensions = registry.byId("ref1NumDimensions").get("value");
-            var axisDimSize = registry.byId("ref1AxisDimSize").get("value");
             nodeData.ref1GridFormatNumDimensions = isNaN(numDimensions) ? null : numDimensions;
-            nodeData.ref1GridFormatAxisDimName = registry.byId("ref1AxisDimName").get("value");
-            nodeData.ref1GridFormatAxisDimSize = isNaN(axisDimSize) ? null : axisDimSize;
             nodeData.ref1GridFormatCellGeometry = registry.byId("ref1CellGeometry").get("value");
-            nodeData.ref1GridFormatGeoRectified = registry.byId("isGeoRectified").checked ? true : false;
+            var geoFormatType = registry.byId("isGeoBase").checked ? "base" : registry.byId("isGeoRectified").checked ? "rectified" : "referenced";
+            nodeData.ref1GridFormatType = geoFormatType;
             nodeData.ref1GridFormatRectCheckpoint = registry.byId("ref1GridFormatRectCheckpoint").checked ? true : false;
             nodeData.ref1GridFormatRectDescription = registry.byId("ref1GridFormatRectDescription").get("value");
             nodeData.ref1GridFormatRectCornerPoint = registry.byId("ref1GridFormatRectCornerPoint").get("value");
@@ -2770,6 +2772,7 @@ define([
             nodeData.ref1GridFormatRefOrientationParam = registry.byId("ref1GridFormatRefOrientationParam").checked ? true : false;
             nodeData.ref1GridFormatRefGeoreferencedParam = registry.byId("ref1GridFormatRefGeoreferencedParam").get("value");
 
+            nodeData.ref1GridFormatAxis = this._getTableData("ref1GridAxisTable");
             nodeData.ref1Scale = this._getTableData("ref1Scale");
             nodeData.ref1SymbolsText = this._getTableData("ref1SymbolsText");
             nodeData.ref1KeysText = this._getTableData("ref1KeysText");

@@ -122,9 +122,10 @@ require([
                 renderList(nodeDataOld.ref1Representation, nodeDataNew.ref1Representation, "<fmt:message key='ui.obj.type1.digitalRepresentation' />", null, function(val) {
                     return UtilSyslist.getSyslistEntryName(526, val);
                 });
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(528, nodeDataOld.ref1VFormatTopology), UtilSyslist.getSyslistEntryName(528, nodeDataNew.ref1VFormatTopology), "<fmt:message key='ui.obj.type1.vectorFormat.topology' />");
-                renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["geometryType", "numElements"], ["<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [
-
+                renderTable(nodeDataOld.ref1VFormatDetails, nodeDataNew.ref1VFormatDetails, ["topologyLevel", "geometryType", "numElements"], ["<fmt:message key="ui.obj.type1.vectorFormat.topology" />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.geoType' />", "<fmt:message key='ui.obj.type1.vectorFormat.detailsTable.header.elementCount' />"], "<fmt:message key='ui.obj.type1.vectorFormat.title' />", [
+                    function(val) {
+                        return UtilSyslist.getSyslistEntryName(528, val);
+                    },
                     function(val) {
                         return UtilSyslist.getSyslistEntryName(515, val);
                     },
@@ -138,11 +139,15 @@ require([
                     nodeDataNew.ref1GridFormatTransfParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />",
                     "<fmt:message key='ui.obj.type1.gridFormat.transfParamAvail' />");
                 renderTextWithTitle(nodeDataOld.ref1GridFormatNumDimensions, nodeDataNew.ref1GridFormatNumDimensions, "<fmt:message key='ui.obj.type1.gridFormat.numDimensions' />");
-                renderTextWithTitle(UtilSyslist.getSyslistEntryName(514, nodeDataOld.ref1GridFormatAxisDimName), UtilSyslist.getSyslistEntryName(514, nodeDataNew.ref1GridFormatAxisDimName), "<fmt:message key='ui.obj.type1.gridFormat.axisDimName' />");
-                renderTextWithTitle(nodeDataOld.ref1GridFormatAxisDimSize, nodeDataNew.ref1GridFormatAxisDimSize, "<fmt:message key='ui.obj.type1.gridFormat.axisDimSize' />");
+				renderTable(nodeDataOld.ref1GridFormatAxis, nodeDataNew.ref1GridFormatAxis, ["name", "count", "resolution"], [message.get("ui.obj.type1.gridFormat.axisDimName"),message.get("ui.obj.type1.gridFormat.axisDimSize"),message.get("ui.obj.type1.gridFormat.axisDimResolution")], null, [
+					function(val) {
+						return UtilSyslist.getSyslistEntryName(514, val);
+					},
+					null, null
+				]);
                 renderTextWithTitle(UtilSyslist.getSyslistEntryName(509, nodeDataOld.ref1GridFormatCellGeometry), UtilSyslist.getSyslistEntryName(509, nodeDataNew.ref1GridFormatCellGeometry), "<fmt:message key='ui.obj.type1.gridFormat.cellGeometry' />");
                 
-                if (nodeDataNew.ref1GridFormatGeoRectified) {
+                if (nodeDataNew.ref1GridFormatType === "rectified") {
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoRectified' />");
                     renderTextWithTitle(
                         nodeDataOld.ref1GridFormatRectCheckpoint ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
@@ -154,7 +159,7 @@ require([
                         UtilSyslist.getSyslistEntryName(2100, nodeDataOld.ref1GridFormatRectPointInPixel),
                         UtilSyslist.getSyslistEntryName(2100, nodeDataNew.ref1GridFormatRectPointInPixel),
                         "<fmt:message key='ui.obj.type1.gridFormat.rectified.pointInPixel' />");
-                } else {
+                } else if (nodeDataNew.ref1GridFormatType === "referenced"){
                     renderSectionTitel("<fmt:message key='ui.obj.type1.gridFormat.geoReferenced' />");
                     renderTextWithTitle(
                         nodeDataOld.ref1GridFormatRefOrientationParam ? "<fmt:message key='general.yes' />" : "<fmt:message key='general.no' />", 
@@ -173,7 +178,7 @@ require([
                 renderTable(nodeDataOld.ref1SymbolsText, nodeDataNew.ref1SymbolsText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.symbolCatTable.header.title' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.date' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.symbolCatTable.title' />", [null, formatDate, null]);
                 renderTable(nodeDataOld.ref1KeysText, nodeDataNew.ref1KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.keyCatTable.title' />", [null, formatDate, null]);
                 renderList(nodeDataOld.ref1Data, nodeDataNew.ref1Data, "<fmt:message key='ui.obj.type1.attributes' />");
-                renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
+				renderList(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
                 renderTextWithTitle(nodeDataOld.ref1ProcessText, nodeDataNew.ref1ProcessText, "<fmt:message key='ui.obj.type1.processTable.title' />");
 
                 renderAdditionalFieldsForRubric("refClass1", oldAdditionalFields, newAdditionalFields);
@@ -192,6 +197,7 @@ require([
                 renderTable(nodeDataOld.dq125Table, nodeDataNew.dq125Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table125.title' />");
                 renderTable(nodeDataOld.dq126Table, nodeDataNew.dq126Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table126.title' />");
                 renderTable(nodeDataOld.dq127Table, nodeDataNew.dq127Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table127.title' />");
+                renderTable(nodeDataOld.dq128Table, nodeDataNew.dq128Table, ["nameOfMeasure", "resultValue", "measureDescription"], ["<fmt:message key='ui.obj.dq.table.header1' />", "<fmt:message key='ui.obj.dq.table.header2' />", "<fmt:message key='ui.obj.dq.table.header3' />"], "<fmt:message key='ui.obj.dq.table128.title' />");
 
                 renderAdditionalFieldsForRubric("refClass1DQ", oldAdditionalFields, newAdditionalFields);
             } else if (nodeDataNew.objectClass == 2) {
@@ -352,7 +358,7 @@ require([
             renderTextWithTitle(UtilSyslist.getSyslistEntryName(510, nodeDataOld.extraInfoCharSetDataCode), UtilSyslist.getSyslistEntryName(510, nodeDataNew.extraInfoCharSetDataCode), "<fmt:message key='ui.obj.additionalInfo.charSet.data' />");
             // Table is only displayed for object classes 1 and 3
             if (nodeDataNew.objectClass == 1 || nodeDataNew.objectClass == 3) {
-                renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["specification", "level", "publicationDate"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.publicationDate' />"],
+                renderTable(nodeDataOld.extraInfoConformityTable, nodeDataNew.extraInfoConformityTable, ["specification", "level", "publicationDate", "explanation"], ["<fmt:message key='ui.obj.additionalInfo.conformityTable.header.specification' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.level' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.publicationDate' />", "<fmt:message key='ui.obj.additionalInfo.conformityTable.header.explanation' />"],
                     "<fmt:message key='ui.obj.additionalInfo.conformityTable.title' />", [
                         function(val) {
                             return UtilSyslist.getSyslistEntryName(6005, val);

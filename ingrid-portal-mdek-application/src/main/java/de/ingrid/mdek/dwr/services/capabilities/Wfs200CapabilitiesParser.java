@@ -303,10 +303,17 @@ public class Wfs200CapabilitiesParser extends GeneralCapabilitiesParser implemen
         // check codelists for matching entryIds
         for (String item : crsAll) {
             SpatialReferenceSystemBean srsBean = new SpatialReferenceSystemBean();
-            
-            String[] splittedItem = item.split(":");
-            Integer itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
-            
+
+            Integer itemId;
+            try{
+                String[] splittedItem = item.split(":");
+                itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+            } catch (NumberFormatException e) {
+                // also detect crs like: http://www.opengis.net/def/crs/[epsg|ogc]/0/{code} (REDMINE-2108)
+                String[] splittedItem = item.split("/");
+                itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+            }
+
             String value = syslistCache.getValueFromListId(100, itemId, false);
             if (value == null || value.isEmpty()) {
                 srsBean.setId(-1);

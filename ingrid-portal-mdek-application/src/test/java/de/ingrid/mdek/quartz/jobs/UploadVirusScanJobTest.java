@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,6 +22,7 @@
  */
 package de.ingrid.mdek.quartz.jobs;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -64,6 +65,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.quartz.JobExecutionContext;
 
+import de.ingrid.mdek.quartz.jobs.UploadVirusScanJob.Report;
 import de.ingrid.mdek.upload.storage.validate.Validator;
 import de.ingrid.mdek.upload.storage.validate.ValidatorFactory;
 import de.ingrid.mdek.upload.storage.validate.impl.ExternalCommand;
@@ -103,6 +105,15 @@ public class UploadVirusScanJobTest extends BaseJobTest {
     @Mock private JobExecutionContext context;
 
     private UploadVirusScanJob job;
+
+    private class MockEmailService implements UploadVirusScanJob.EmailService {
+        public List<String> emails = new ArrayList<String>();
+        @Override
+        public void sendReport(Report report) {
+        	emails.add(report.getContent());
+        }
+    }
+    private MockEmailService mockEmailService;
 
     private class MockedServiceExecution implements Answer<CloseableHttpResponse> {
         private final int numFiles;
@@ -195,6 +206,9 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertTrue(this.fileExists(file2));
         assertTrue(this.fileExists(file3));
         assertFalse(this.getTestAppender().hasIssues());
+
+        // no report is sent
+        assertEquals(0, this.mockEmailService.emails.size());
     }
 
     /**
@@ -236,6 +250,19 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertTrue(!this.fileExists(file3));
         assertTrue(this.fileExists(file3InQuarantine));
         assertFalse(this.getTestAppender().hasIssues());
+
+        // report is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        String report = "Executing UploadVirusScanJob...\n"
+        + "Directories to scan: target\\ingrid-upload-test\n"
+        + "Found 2 infected file(s)\n"
+        + "Moving infected file(s)...\n"
+        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moved 2 infected file(s)\n"
+        + "Finished UploadVirusScanJob\n";
+        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " "));
     }
 
     /**
@@ -264,6 +291,9 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertTrue(this.fileExists(file2));
         assertTrue(this.fileExists(file3));
         assertFalse(this.getTestAppender().hasIssues());
+
+        // no report is sent
+        assertEquals(0, this.mockEmailService.emails.size());
     }
 
     /**
@@ -302,6 +332,46 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         assertTrue(!this.fileExists(file3));
         assertTrue(this.fileExists(file3InQuarantine));
         assertFalse(this.getTestAppender().hasIssues());
+
+        // report is sent
+        assertEquals(1, this.mockEmailService.emails.size());
+
+        String report = "Executing UploadVirusScanJob...\n"
+        + "Directories to scan: target\\ingrid-upload-test\n"
+        + "Found 2 infected file(s)\n"
+        + "Moving infected file(s)...\n"
+        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File2Ä\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File2Ä\"\n"
+        + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
+        + "Moved 2 infected file(s)\n"
+        + "Finished UploadVirusScanJob\n";
+        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " "));
+    }
+
+    /**
+     * Test:
+     * - No report should be send if deactivated
+     * @throws Exception
+     */
+    @Test
+    public void testLocalNoReport() throws Exception {
+        // set up job
+        setupJob(localVirusScanValidator);
+
+        // deactivate reports (activated by default in test setup)
+        this.job.setEmailReports(false);
+
+        // set up files
+        this.createFile(Paths.get("dir1", "File1"), VIRUS_CONTENT);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        Mockito.verify(this.scanner, times(1)).execute(any());
+        assertFalse(this.getTestAppender().hasIssues());
+
+        // no report is sent
+        assertEquals(0, this.mockEmailService.emails.size());
     }
 
     /**
@@ -317,13 +387,17 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         when(this.validatorFactory.getValidatorNames()).thenReturn(Stream.of(VIRUSSCAN_VALIDATOR_NAME).collect(Collectors.toSet()));
         when(this.validatorFactory.getValidator(VIRUSSCAN_VALIDATOR_NAME)).thenReturn(validator);
 
+        // setup email service
+        mockEmailService = new MockEmailService();
+
         // set up job
         this.job = new UploadVirusScanJob();
         this.job.setValidatorFactory(this.validatorFactory);
         this.job.setScanDirs(Stream.of(DOCS_PATH.toString()).collect(Collectors.toList()));
         this.job.setQuarantineDir(QUARANTINE_PATH.toString());
         // static method call on MdekEmailUtils cannot be mocked by mockito
-        this.job.setEmailReports(false);
+        this.job.setEmailReports(true);
+        this.job.setEmailService(mockEmailService);
     }
 
     /**

@@ -108,9 +108,6 @@ rem                   Example (all one line)
 rem                   set TITLE=Tomcat.Cluster#1.Server#1 [%DATE% %TIME%]
 rem ---------------------------------------------------------------------------
 
-rem INGRID: changed memory parameters due to integration of gssoil thesaurus, gazetteer service in IGE !
-rem INGRID: set CATALINA_OPTS=%CATALINA_OPTS% -server -Xmx1024m -XX:MaxPermSize=256m
-set CATALINA_OPTS=%CATALINA_OPTS% -server -Xms256m -Xmx1024m -XX:PermSize=384m -XX:MaxPermSize=384m -Xss2048k"
 rem INGRID: needed for TomCat 5.5.27+ when it complains about '"' in *.jsp
 set JAVA_OPTS=%JAVA_OPTS% -Dorg.apache.jasper.compiler.Parser.STRICT_QUOTE_ESCAPING="false" -Duser.language="de"
 setlocal

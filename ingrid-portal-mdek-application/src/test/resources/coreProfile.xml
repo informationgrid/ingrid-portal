@@ -221,6 +221,12 @@
                 <isVisible>optional</isVisible>
                 <scriptedProperties><![CDATA[]]></scriptedProperties>
             </legacyControl>
+            <legacyControl>
+                <id>uiElement7528</id><!-- Relative Positionsgenauigkeit -->
+                <isMandatory>false</isMandatory>
+                <isVisible>optional</isVisible>
+                <scriptedProperties><![CDATA[]]></scriptedProperties>
+            </legacyControl>
         </controls>
     </layoutRubric>
     <layoutRubric isLegacy="true">

@@ -97,6 +97,12 @@ define([
                 on(inspireRelevantWidget, "Click", function() {
                     var checkboxContext = this;
 
+                    var openDataMessage = "";
+                    if( registry.byId("isOpenData" ).checked) {
+                        openDataMessage = "<br><br>";
+                        openDataMessage += checkboxContext.checked ? message.get("hint.selectOpenDataInspire") : message.get("hint.selectOpenData");
+                    }
+
                     var handle = function() {
                         if (checkboxContext.checked) {
                             registry.byId("isInspireConform").set("checked", true);
@@ -107,14 +113,14 @@ define([
                     };
 
                     if (checkboxContext.checked) {
-                        utils.showConfirmDialog(utils.inspireConformityHint, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
+                        utils.showConfirmDialog(utils.inspireConformityHint+openDataMessage, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
                             handle();
                         }, function () {
                             // reset checkbox state
                             checkboxContext.set("checked", false);
                         });
                     } else {
-                        utils.showConfirmDialog(utils.inspireConformityHintDeleted, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
+                        utils.showConfirmDialog(utils.inspireConformityHintDeleted+openDataMessage, utils.COOKIE_HIDE_INSPIRE_CONFORMITY_HINT).then( function() {
                             handle();
                         }, function () {
                             // reset checkbox state
@@ -169,7 +175,13 @@ define([
         },
 
         handleInspireChange: function (isChecked) {
+
+            // set access constraints if opendata
+            var accessConstraints = [];
+
             if (isChecked) {
+                // add access constraint "keine"
+                accessConstraints.push({ title: UtilSyslist.getSyslistEntryName(6010, 1) });
                 domClass.remove("uiElement6001", "hidden");
 
                 // Also make conformity a required field
@@ -195,6 +207,9 @@ define([
                 // remove all conform/not conform events
                 utils.removeEvents(this.eventsConform);
                 utils.removeEvents(this.eventsNotConform);
+            }
+            if(registry.byId("isOpenData").get("checked")){
+                UtilGrid.setTableData('availabilityAccessConstraints', accessConstraints);
             }
         },
 

@@ -141,14 +141,15 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         GenericMetadata metadata = getPage().getMetadata();
         if (metadata == null)
             return "";
-        
-        Collection<LocalizedField> c = metadata.getFields(field);
+        Collection<LocalizedField> c = metadata.getFields();
         
         if (c != null) {
             for (LocalizedField entry : c) {
-                value = entry.getValue();
-                if(value != null) {
-                    break;
+                if(entry.getName() != null && entry.getName().equals(field)) {
+                    value = entry.getValue();
+                    if(value != null) {
+                        break;
+                    }
                 }
             }
         }

@@ -538,6 +538,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro(renderUDKIcon $class $title)
     #if($class && $title)
+        #if($class != "1000")
         <svg class="icon globe__icon" title="$title">
             #if($class == "0")
                 ## Fachaufgabe
@@ -562,10 +563,12 @@ $actionForm.getInputHTMLEscaped($field)#end
                 <use xlink:href="#molecule">
             #end
         </svg>
+        #end
     #end
 #end
 
 #macro(renderUDKAddressIcon $class $title)
+    #if($class != "1000")
     <svg class="icon globe__icon" title="$title">
         #if($class == "0")
             ## Institution
@@ -581,4 +584,10 @@ $actionForm.getInputHTMLEscaped($field)#end
             <use xlink:href="#envelope">
         #end
     </svg>
+    #end
+#end
+
+
+#macro(removeLocalisation $locString)
+    $stringTool.split($locString, "#locale-").get(0)
 #end

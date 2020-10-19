@@ -11,6 +11,7 @@ title: Beschreibung
 
 Fachliche Beschreibung der Datensammlung / Datenbank. Hier sollen in knapper Form die Hauptinhalte Datensammlung / Datenbank beschrieben werden. Hierbei sollte sich auf Parametergruppen beschränkt werden (z.B. Schwermetalle). Detaillierte Parameter können in einem gesonderten Feld eingetragen werden (siehe Fachbezug). Ferner sind ggf. die organisatorischen Rahmenbedingungen der Datensammlung / Datenbank von Interesse (Historie, Pflege, Nutzerkreis, Kooperationen). Auf Verständlichkeit für fachfremde Dritte ist zu achten. Das Feld Beschreibungen muss ausgefüllt werden, damit das Objekt abgespeichert werden kann.
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
 
 # ISO Abbildung
 

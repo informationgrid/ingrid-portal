@@ -361,11 +361,7 @@ require([
                 console.debug( "prepare: " + i );
                 eventTopicList[i].selection = "<input type='radio' name='objectWiz_eventTopic' id='objectWiz_"+eventTopicList[i].topicId+"'>";
 
-                if (eventTopicList[i].at) {
-                    eventTopicList[i].date1 = eventTopicList[i].at;
-                    eventTopicList[i].type = "am";
-
-                } else if (eventTopicList[i].from && eventTopicList[i].to) {
+                if (eventTopicList[i].from && eventTopicList[i].to) {
                     eventTopicList[i].date1 = eventTopicList[i].from;
                     eventTopicList[i].date2 = eventTopicList[i].to;
                     eventTopicList[i].type = "von - bis";
@@ -641,10 +637,6 @@ require([
 
                 if (eventJS.type == "bis") {
                     registry.byId( "timeRefDate1" ).setValue( eventJS.to );
-
-                } else if (eventJS.type == "am") {
-                    registry.byId( "timeRefDate1" ).setValue( eventJS.at );
-                    registry.byId( "timeRefDate2" ).setValue( eventJS.at );
 
                 } else {
                     registry.byId( "timeRefDate1" ).setValue( eventJS.from );

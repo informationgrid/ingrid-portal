@@ -645,18 +645,7 @@
                                         </label>
                                     </span>
                                     <div id="ref1VFormatFields" class="outlined">
-                                        <span id="uiElement5063" class="outer" style="width:33%;">
-									     <div>
-                                            <span class="label">
-                                                <label for="ref1VFormatTopology" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5063)">
-                                                    <fmt:message key="ui.obj.type1.vectorFormat.topology" />
-                                                </label>
-                                            </span>
-                                            <span class="input">
-                                                <input style="width:100%;" listId="528" id="ref1VFormatTopology" />
-                                            </span></div>
-                                        </span>
-                                        <span id="uiElementN001" class="outer" style="width:67%;">
+                                        <span id="uiElementN001" class="outer">
 									     <div>
                                             <span class="label hidden">
                                                 <label for="ref1VFormatDetails" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 10001)">
@@ -691,7 +680,7 @@
                                                 </span>
                                             </div>
                                         </span>
-                                        <span id="uiElement5302" class="outer outer halfWidth">
+                                        <span id="uiElement5302" class="required outer quarterWidth">
                                             <div>
                                                 <span class="label">
                                                     <label for="ref1NumDimensions" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5302)">
@@ -703,32 +692,8 @@
                                                 </span>
                                             </div>
                                         </span>
-                                        
-                                        <span id="uiElement5303" class="outer" style="width:25%;">
-                                            <div>
-                                                <span class="label">
-                                                    <label for="ref1AxisDimName" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5303)">
-                                                        <fmt:message key="ui.obj.type1.gridFormat.axisDimName" />
-                                                    </label>
-                                                </span>
-                                                <span class="input">
-                                                    <input id="ref1AxisDimName" />
-                                                </span>
-                                            </div>
-                                        </span>
-                                        <span id="uiElement5304" class="outer" style="width:25%;">
-                                            <div>
-                                                <span class="label">
-                                                    <label for="ref1AxisDimSize" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5304)">
-                                                        <fmt:message key="ui.obj.type1.gridFormat.axisDimSize" />
-                                                    </label>
-                                                </span>
-                                                <span class="input">
-                                                    <input listId="529" id="ref1AxisDimSize" />
-                                                </span>
-                                            </div>
-                                        </span>
-                                        <span id="uiElement5305" class="outer outer halfWidth">
+
+                                        <span id="uiElement5305" class="required outer quarterWidth">
                                             <div>
                                                 <span class="label">
                                                     <label for="ref1CellGeometry" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5305)">
@@ -740,10 +705,24 @@
                                                 </span>
                                             </div>
                                         </span>
+
+                                        <div class="inputContainer">
+                                            <span id="uiElement5315" class="outer">
+                                                <div>
+                                                    <div class="input tableContainer">
+                                                        <div id="ref1GridAxisTable" autoHeight="2" interactive="true">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </span>
+                                        </div>
                                         
-                                        <hr>
+<%--                                        <hr>--%>
 
                                         <span id="uiElement5306" class="outer">
+                                            <div class="input checkboxContainer input-inline">
+                                                <input type="radio" id="isGeoBase"/><label class="inActive" for="isGeoBase"><fmt:message key="ui.obj.type1.gridFormat.geoBase" /></label>
+                                            </div>
                                             <div class="input checkboxContainer input-inline">
                                                 <input type="radio" id="isGeoRectified"/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5306)" for="isGeoRectified"><fmt:message key="ui.obj.type1.gridFormat.geoRectified" /></label>
                                             </div>
@@ -752,7 +731,7 @@
                                             </div>
                                         </span>
 
-                                        <div id="geoRectifiedWrapper">
+                                        <div id="geoRectifiedWrapper" class="hide">
                                             <span id="uiElement5308" class="outer halfWidth">
                                                 <div>
                                                     <span class="label"></span>
@@ -942,7 +921,9 @@
                                     </span><span id="ref1DataBasisTab2Header" class="functionalLink onTab marginRight" style="display: none;"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" /><a id="ref1AddDataBasisLink" href="javascript:void(0);" onclick="require('ingrid/dialog').showPage(pageDashboard.getLocalizedTitle('ref1DataBasis'), 'dialogs/mdek_links_dialog.jsp?c='+userLocale, 1010, 680, true, {filter: 3570, gridId: 'ref1DataBasisLink'});" title="<fmt:message key="dialog.popup.serviceLink.link" /> [Popup]"><fmt:message key="ui.obj.type1.dataBasisTable.link" /></a></span>
                                     <div id="ref1DataBasisTabContainer" selectedChild="ref1DataBasisTab1">
                                         <div id='ref1DataBasisTab1' class="input" label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.text" />">
-                                            <input type="text" id="ref1DataBasisText" name="ref1DataBasisText"  title=""/>
+                                            <div class="input tableContainer">
+                                                <div id="ref1DataBasisTable1" name="ref1DataBasisTable1"  title="" interactive="true" autoHeight="3" minRows="3" class="hideTableHeader"></div>
+                                            </div>
                                         </div>
                                         <div id='ref1DataBasisTab2' label="<fmt:message key="ui.obj.type1.dataBasisTable.tab.links" />">
                                             <div class="input tableContainer">
@@ -1140,6 +1121,18 @@
                                 </span>
                                 <div class="input tableContainer">
                                     <div id="dq127Table" interactive="true" autoHeight="3">
+                                    </div>
+                                </div>
+                                </div>
+                            </span>
+                            <span id="uiElement7528" class="outer optional">
+                                <div><span class="label">
+                                    <label for="dq128Table" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 7528)">
+                                        <fmt:message key="ui.obj.dq.table128.title" />
+                                    </label>
+                                </span>
+                                <div class="input tableContainer">
+                                    <div id="dq128Table" interactive="true" autoHeight="3">
                                     </div>
                                 </div>
                                 </div>

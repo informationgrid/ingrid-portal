@@ -23,6 +23,7 @@
 package de.ingrid.mdek.beans.object;
 
 public class VectorFormatDetailsBean {
+	private Integer topologyLevel;
 	private Integer geometryType;
 	private Integer numElements;
 
@@ -40,5 +41,13 @@ public class VectorFormatDetailsBean {
 
 	public void setNumElements(Integer numElements) {
 		this.numElements = numElements;
+	}
+
+	public Integer getTopologyLevel() {
+		return topologyLevel;
+	}
+
+	public void setTopologyLevel(Integer topologyLevel) {
+		this.topologyLevel = topologyLevel;
 	}
 }

@@ -352,7 +352,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderTitle $title)
-#if ($title && $title != "")$title#else $MESSAGES.getString('common.result.noTitle')#end
+#if ($title && $title != "")#removeLocalisation($title)#else $MESSAGES.getString('common.result.noTitle')#end
 #end
 
 #macro(renderSearchResultFacetFilter $classes)

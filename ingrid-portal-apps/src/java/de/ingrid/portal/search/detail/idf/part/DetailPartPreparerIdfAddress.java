@@ -69,11 +69,11 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                 if(xPathUtils.nodeExists(node, "./idf:addressIndividualName")){
                     addressTitle = getIndividualName(xPathUtils.getString(node, "./idf:addressIndividualName").trim());
                 }else if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                    addressTitle = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                    addressTitle = removeLocalisation(xPathUtils.getString(node, "./idf:addressOrganisationName")).trim();
                 }
             }else{
                 if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                    addressTitle = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                    addressTitle = removeLocalisation(xPathUtils.getString(node, "./idf:addressOrganisationName")).trim();
                 }    
                 
             }
@@ -126,11 +126,11 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                         if(xPathUtils.nodeExists(node, "./idf:addressIndividualName")){
                             title = getIndividualName(xPathUtils.getString(node, "./idf:addressIndividualName").trim());
                         }else if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                            title = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                            title = removeLocalisation(xPathUtils.getString(node, "./idf:addressOrganisationName")).trim();
                         }
                     }else{
                         if(xPathUtils.nodeExists(node, "./idf:addressOrganisationName")){
-                            title = xPathUtils.getString(node, "./idf:addressOrganisationName").trim();
+                            title = removeLocalisation(xPathUtils.getString(node, "./idf:addressOrganisationName")).trim();
                         }
                     }
                 }

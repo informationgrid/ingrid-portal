@@ -1368,10 +1368,10 @@ footer {
 
     .footer-menu-entries {
       text-align: center;
-      margin-bottom: 24px;
 
       .entry { font-family: 'Roboto-Medium'; }
-      .entry:first-child { margin-right: 40px; }
+      .entry { margin-right: 40px; }
+      .entry:last-child { margin-right: 0px; }
     }
     .copyright {
       text-align: center;
@@ -1757,4 +1757,13 @@ h2 .anchor:target {
 
 .swiper-button-next, .swiper-button-prev {
   color: $green-jelly !important;
+}
+
+.yummy {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 0;
+  width: 0;
+  z-index: -1;
 }

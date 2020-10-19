@@ -105,18 +105,6 @@
 		<taglib-uri>x.tld</taglib-uri>
 		<taglib-location>/WEB-INF/tld/x.tld</taglib-location>
 	</taglib>
-
-	<!-- JCaptcha -->
-	<servlet>
-        <servlet-name>jcaptcha</servlet-name>
-        <servlet-class>de.ingrid.portal.servlet.CaptchaImageServlet</servlet-class>
-        <load-on-startup>0</load-on-startup>
-    </servlet>
-    
-    <servlet-mapping>
-        <servlet-name>jcaptcha</servlet-name>
-        <url-pattern>/jcaptcha</url-pattern>
-    </servlet-mapping>
     
     <!-- HelperImage -->
     <servlet>

@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-        <version>5.5.0</version>
+        <version>5.6.0</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -20,8 +20,11 @@
   <!-- ==================== REPOSITORIES ==================== -->
   <repositories>
     <repository>
-      <id>geotools</id>
-      <url>http://download.osgeo.org/webdav/geotools/</url>
+      <id>osgeo</id>
+      <name>OSGeo Release Repository</name>
+      <url>https://repo.osgeo.org/repository/release/</url>
+      <snapshots><enabled>false</enabled></snapshots>
+      <releases><enabled>true</enabled></releases>
     </repository>
   </repositories>
 
@@ -67,7 +70,7 @@
         <version>2.4</version>
         <configuration>
           <warSourceExcludes>
-            start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**
+            start_dev.jsp,TEST_*.*,test_*.*,dev_*.*,dojo-sources/util/**,dojo-sources/dojo/**,dojo-sources/dijit/**,dojo-sources/dojox/**,dojo-sources/ingrid/**,META-INF/context-develop.xml
           </warSourceExcludes>
           <!-- NOTICE: supply log4j.jar and commons-logging.jar in war, SO log4j.properties IS READ FROM WEBAPP !!!! -->
           <!-- Tomcat is configured for log4j, so if NO log4j.jar is supplied in war, log4j.properties is read from tomcat/common/classes, ignoring the one in the war !!! -->
@@ -259,7 +262,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>4.0.2</version>
+      <version>5.6.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -566,7 +569,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>4.0.1</version>
+      <version>5.5.0</version>
     </dependency>
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
@@ -1031,6 +1034,32 @@
                 <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                   <resourcesAsCSV>
                     ../ingrid-portal-apps/src/webapp/profiles/metaver_md/ingrid-portal-mdek-application,src/main/webapp
+                  </resourcesAsCSV>
+                </baseResource>
+              </webApp>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>profile-nokis</id>
+      <activation>
+        <property>
+          <name>profile</name>
+          <value>nokis</value>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <configuration>
+              <webApp>
+                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
+                  <resourcesAsCSV>
+                    ../ingrid-portal-apps/src/webapp/profiles/nokis/ingrid-portal-mdek-application,src/main/webapp
                   </resourcesAsCSV>
                 </baseResource>
               </webApp>

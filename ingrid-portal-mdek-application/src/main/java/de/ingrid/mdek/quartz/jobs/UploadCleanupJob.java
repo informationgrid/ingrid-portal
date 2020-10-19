@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -47,10 +48,13 @@ import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.upload.storage.Storage;
 import de.ingrid.mdek.upload.storage.StorageItem;
+import de.ingrid.mdek.util.MdekEmailUtils;
 import de.ingrid.mdek.util.MdekUtils;
 import de.ingrid.utils.IngridDocument;
 
 public class UploadCleanupJob extends QuartzJobBean {
+
+    private static final String ERROR_EMAIL_SUBJECT = "[IGE] Upload cleanup error";
 
     // Separator used in file paths
     public static final String PATH_SEPARATOR = "/";
@@ -68,7 +72,7 @@ public class UploadCleanupJob extends QuartzJobBean {
 
     private static final Logger log = LogManager.getLogger(UploadCleanupJob.class);
 
-    public class FileReference {
+    class FileReference {
         public String file;
         public String path;
         public LocalDate expiryDate;
@@ -84,10 +88,25 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
     }
 
+    /**
+     * Encapsulates email functions for better testability
+     */
+    interface EmailService {
+        void sendError(String message, Exception ex);
+    }
+
+    private static class EmailServiceImpl implements EmailService {
+        @Override
+        public void sendError(String message, Exception ex) {
+            MdekEmailUtils.sendSystemEmail(ERROR_EMAIL_SUBJECT, message + "\n" + ExceptionUtils.getStackTrace(ex));
+        }
+    }
+
     private ConnectionFacade connectionFacade;
     private Storage storage;
     private Integer deleteFileMinAge;
     private LocalDateTime referenceDateTime = LocalDateTime.now();
+    private EmailService emailService = new EmailServiceImpl();
 
     /**
      * Set the connection facade used for communication.
@@ -120,6 +139,15 @@ public class UploadCleanupJob extends QuartzJobBean {
      */
     public void setReferenceDate(final LocalDateTime referenceDateTime) {
         this.referenceDateTime = referenceDateTime;
+    }
+
+    /**
+     * Set the email service.
+     * Defaults to instance of EmailServiceImpl if not set explicitly.
+     * @param emailService
+     */
+    public void setEmailService(final EmailService emailService) {
+        this.emailService = emailService;
     }
 
     @Override
@@ -239,12 +267,14 @@ public class UploadCleanupJob extends QuartzJobBean {
                 catch (final Exception e) {
                     // current iplug failed
                     this.logError("Processing "+plugId+" failed", e);
+                    this.emailService.sendError("Processing "+plugId+" failed", e);
                 }
             }
         }
         catch (final Exception ex) {
             this.logError(ex.toString(), ex);
             log.info("Aborted UploadCleanupJob");
+            this.emailService.sendError("Aborted UploadCleanupJob because of an unexpected error", ex);
             return;
         }
 

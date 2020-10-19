@@ -139,6 +139,8 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_ENABLE_PRIVACY = "portal.enable.privacy";
     
+    public static final String PORTAL_ENABLE_ACCESSIBILITY = "portal.enable.accessibility";
+    
     public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
     
     public static final String PORTAL_ENABLE_SNS_LOGO = "portal.enable.sns.logo";
@@ -266,6 +268,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.passsword";
 
     public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
+
+    public static final String PORTAL_FORM_VALID_FILLOUT_DURATION_MIN = "portal.form.valid.fillout.duration.min";
+
 
     // private stuff
     private static PortalConfig instance = null;

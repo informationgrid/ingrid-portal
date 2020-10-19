@@ -154,15 +154,13 @@ public class MdekDataBean {
 	private Integer ref1DataSet;
 	private Double ref1Coverage;
 	private List<Integer> ref1Representation;	
-	private Integer ref1VFormatTopology;
 	private List<VectorFormatDetailsBean> ref1VFormatDetails;
 	
 	private Boolean ref1GridFormatTransfParam;
 	private Integer ref1GridFormatNumDimensions;
-	private String ref1GridFormatAxisDimName;
-	private Integer ref1GridFormatAxisDimSize;
+	private List<AxisDimBean> ref1GridFormatAxis;
 	private String ref1GridFormatCellGeometry;
-	private Boolean ref1GridFormatGeoRectified;
+	private String ref1GridFormatType; // "base", "rectified", "referenced"
 	private Boolean ref1GridFormatRectCheckpoint;
 	private String ref1GridFormatRectDescription;
 	private String ref1GridFormatRectCornerPoint;
@@ -178,7 +176,7 @@ public class MdekDataBean {
 	private List<LinkDataBean> ref1SymbolsText;
 	private List<LinkDataBean> ref1KeysText;
 	private String ref1BasisText;
-	private String ref1DataBasisText;
+	private List<String> ref1DataBasisText;
 	private String ref1ProcessText;
 	private List<String> ref1Data;
 	// Data Quality !
@@ -191,6 +189,7 @@ public class MdekDataBean {
 	private List<DQBean> dq125Table;
 	private List<DQBean> dq126Table;
 	private List<DQBean> dq127Table;
+	private List<DQBean> dq128Table;
 
 	// Object class 2 (Dokument/Bericht/Literatur)
 	private String ref2Author;
@@ -279,6 +278,7 @@ public class MdekDataBean {
 		this.setDq125Table(new ArrayList<>());
 		this.setDq126Table(new ArrayList<>());
 		this.setDq127Table(new ArrayList<>());
+		this.setDq128Table(new ArrayList<>());
 
 		this.setRef3ServiceTypeTable(new ArrayList<>());
 		this.setRef3ServiceVersion(new ArrayList<>());
@@ -1180,22 +1180,6 @@ public class MdekDataBean {
 	}
 
 
-
-
-	public Integer getRef1VFormatTopology() {
-		return ref1VFormatTopology;
-	}
-
-
-
-
-	public void setRef1VFormatTopology(Integer ref1VFormatTopology) {
-		this.ref1VFormatTopology = ref1VFormatTopology;
-	}
-
-
-
-
 	public List<VectorFormatDetailsBean> getRef1VFormatDetails() {
 		return ref1VFormatDetails;
 	}
@@ -1296,14 +1280,14 @@ public class MdekDataBean {
 
 
 
-	public String getRef1DataBasisText() {
+	public List<String> getRef1DataBasisText() {
 		return ref1DataBasisText;
 	}
 
 
 
 
-	public void setRef1DataBasisText(String ref1DataBasisText) {
+	public void setRef1DataBasisText(List<String> ref1DataBasisText) {
 		this.ref1DataBasisText = ref1DataBasisText;
 	}
 
@@ -1957,6 +1941,13 @@ public class MdekDataBean {
 		this.dq127Table = dq127Table;
 	}
 
+	public List<DQBean> getDq128Table() {
+		return dq128Table;
+	}
+	public void setDq128Table(List<DQBean> dq128Table) {
+		this.dq128Table = dq128Table;
+	}
+
 
 
 
@@ -2087,26 +2078,6 @@ public class MdekDataBean {
     }
 
 
-    public String getRef1GridFormatAxisDimName() {
-        return ref1GridFormatAxisDimName;
-    }
-
-
-    public void setRef1GridFormatAxisDimName(String ref1GridFormatAxisDimName) {
-        this.ref1GridFormatAxisDimName = ref1GridFormatAxisDimName;
-    }
-
-
-    public Integer getRef1GridFormatAxisDimSize() {
-        return ref1GridFormatAxisDimSize;
-    }
-
-
-    public void setRef1GridFormatAxisDimSize(Integer ref1GridFormatAxisDimSize) {
-        this.ref1GridFormatAxisDimSize = ref1GridFormatAxisDimSize;
-    }
-
-
     public String getRef1GridFormatCellGeometry() {
         return ref1GridFormatCellGeometry;
     }
@@ -2117,13 +2088,13 @@ public class MdekDataBean {
     }
 
 
-    public Boolean getRef1GridFormatGeoRectified() {
-        return ref1GridFormatGeoRectified;
+    public String getRef1GridFormatType() {
+        return ref1GridFormatType;
     }
 
 
-    public void setRef1GridFormatGeoRectified(Boolean ref1GridFormatGeoRectified) {
-        this.ref1GridFormatGeoRectified = ref1GridFormatGeoRectified;
+    public void setRef1GridFormatType(String ref1GridFormatType) {
+        this.ref1GridFormatType = ref1GridFormatType;
     }
 
 
@@ -2234,5 +2205,13 @@ public class MdekDataBean {
 
 	public void setMetadataDate(Date metadataDate) {
 		this.metadataDate = metadataDate;
+	}
+
+	public List<AxisDimBean> getRef1GridFormatAxis() {
+		return ref1GridFormatAxis;
+	}
+
+	public void setRef1GridFormatAxis(List<AxisDimBean> ref1GridFormatAxis) {
+		this.ref1GridFormatAxis = ref1GridFormatAxis;
 	}
 }

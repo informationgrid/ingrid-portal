@@ -1155,7 +1155,13 @@ define([
 			//		Overridable function to get the label for a tree node (given the item)
 			// tags:
 			//		extension
-			return this.model.getLabel(item);	// String
+
+			// Remove localisation string REDMINE-1882
+			var label = this.model.getLabel(item);
+			if (label && label.indexOf("#locale-") != -1){
+				label = label.substring(0,label.indexOf("#locale-"))
+			}
+			return label;	// String
 		},
 
 		getIconClass: function(/*dojo/data/Item*/ item, /*Boolean*/ opened){

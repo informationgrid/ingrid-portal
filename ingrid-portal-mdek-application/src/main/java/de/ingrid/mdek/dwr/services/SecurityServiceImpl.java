@@ -392,7 +392,7 @@ public class SecurityServiceImpl implements SecurityService {
 	public boolean sendPasswordEmail(String email) {
 		// check if email exists in user table
 		List<Map<String, Object>> userWithEmail = userRepoManager.getAllUsers().stream()
-				.filter( user -> email.equals(user.get("email")))
+				.filter( user -> email.equalsIgnoreCase((String)user.get("email")))
 				.collect(Collectors.toList());
 
 		// check if no or more than one user with this email exists

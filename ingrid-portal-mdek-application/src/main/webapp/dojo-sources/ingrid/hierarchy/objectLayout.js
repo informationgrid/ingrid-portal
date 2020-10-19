@@ -54,6 +54,7 @@ define([
     "ingrid/utils/Grid",
     "ingrid/utils/Thesaurus",
     "ingrid/utils/Catalog",
+    "ingrid/utils/Dom",
     "ingrid/message",
     "ingrid/dialog",
     "ingrid/layoutCreator",
@@ -67,7 +68,7 @@ define([
 ], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
-            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog,
+            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog, UtilDOM,
             message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
 
         return declare(null, {
@@ -334,7 +335,9 @@ define([
                         editable: true
                     }
                 ];
-                layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null);
+                var gridProperties = UtilDOM.getHTMLAttributes("generalPreviewImageTable")
+                gridProperties.imageLinkTooltip = "true";
+                layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null, gridProperties);
 
                 var thesaurusInspireStructure = [{
                     field: 'title',
@@ -538,11 +541,17 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1Representation", null, ref1RepresentStructure, null);
 
-                layoutCreator.createFilteringSelect("ref1VFormatTopology", null, storeProps, function() {
-                    return UtilSyslist.getSyslistEntry(528);
-                });
-
                 var ref1VFormatDetailsStructure = [{
+                    field: 'topologyLevel',
+                    name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"),
+                    width: '260px',
+                    type: gridEditors.SelectboxEditor,
+                    options: [], // will be filled later, when syslists are loaded
+                    values: [],
+                    editable: true,
+                    listId: 528,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 528)
+                }, {
                     field: 'geometryType',
                     name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"),
                     width: '120px',
@@ -583,23 +592,52 @@ define([
                 /* Add spatialRepresentationInfo (REDMINE-381) */
                 new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
-                layoutCreator.createFilteringSelect("ref1AxisDimName", null, lang.clone(storeProps), function() {
-                    return UtilSyslist.getSyslistEntry(514);
-                });
-                new NumberTextBox({style: "width:100%;"}, "ref1AxisDimSize");
                 layoutCreator.createFilteringSelect("ref1CellGeometry", null, lang.clone(storeProps), function() {
                     return UtilSyslist.getSyslistEntry(509);
                 });
 
-                var geoRectified = new RadioButton({
+                var ref1GridAxisTableStructure = [{
+                    field: 'name',
+                    name: message.get("ui.obj.type1.gridFormat.axisDimName"),
+                    width: '135px',
+                    editable: true,
+                    type: gridEditors.SelectboxEditor,
+                    listId: 514,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 514)
+                }, {
+                    field: 'count',
+                    name: message.get("ui.obj.type1.gridFormat.axisDimSize"),
+                    width: '285px',
+                    editable: true,
+                    type: gridEditors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: gridFormatters.LocalizedNumberFormatter
+                }, {
+                    field: 'resolution',
+                    name: message.get("ui.obj.type1.gridFormat.axisDimResolution"),
+                    width: '288px',
+                    editable: true,
+                    type: gridEditors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: gridFormatters.LocalizedNumberFormatter
+                }];
+                layoutCreator.createDataGrid("ref1GridAxisTable", null, ref1GridAxisTableStructure, null);
+
+                var geoBase = new RadioButton({
                     checked: true,
-                    value: "true",
+                    value: "base",
+                    name: "isGeoRectified"
+                }, "isGeoBase");
+                geoBase.startup();
+                var geoRectified = new RadioButton({
+                    checked: false,
+                    value: "rectified",
                     name: "isGeoRectified"
                 }, "isGeoRectified");
                 geoRectified.startup();
                 var geoReferenced = new RadioButton({
                     checked: false,
-                    value: "false",
+                    value: "referenced",
                     name: "isGeoRectified"
                 }, "isGeoReferenced");
                 geoReferenced.startup();
@@ -620,9 +658,20 @@ define([
                     if (checked) {
                         domClass.remove("geoRectifiedWrapper", "hide");
                         domClass.add("geoReferencedWrapper", "hide");
-                    } else {
+                    }
+                });
+
+                on(geoReferenced, "change", function(checked) {
+                    if (checked) {
                         domClass.add("geoRectifiedWrapper", "hide");
                         domClass.remove("geoReferencedWrapper", "hide");
+                    }
+                });
+
+                on(geoBase, "change", function(checked) {
+                    if (checked) {
+                        domClass.add("geoRectifiedWrapper", "hide");
+                        domClass.add("geoReferencedWrapper", "hide");
                     }
                 });
                 
@@ -794,10 +843,22 @@ define([
                     doLayout: false
                 }, "ref1DataBasisTabContainer");
 
-                var tabDataBasisTab1 = new SimpleTextarea({
+/*                var tabDataBasisTab1 = new SimpleTextarea({
                     title: "Text",
                     "class": "textAreaFull"
-                }, "ref1DataBasisText");
+                }, "ref1DataBasisText");*/
+
+                var tabDataBasisTab1 = new ContentPane({
+                    title: message.get("ui.obj.type1.dataBasisTable.tab.text")
+                }, "ref1DataBasisTab1");
+
+                var tabDataBasisTab1Structure = [{
+                    field: 'title',
+                    name: 'title',
+                    editable: true
+                }];
+                layoutCreator.createDataGrid("ref1DataBasisTable1", null, tabDataBasisTab1Structure, null);
+
 
                 var tabDataBasisTab2 = new ContentPane({
                     title: message.get("ui.obj.type1.dataBasisTable.tab.links")
@@ -1101,6 +1162,32 @@ define([
                     editable: true
                 }];
                 layoutCreator.createDataGrid("dq127Table", null, dq127TableStructure, null);
+
+                var dq128TableStructure = [{
+                    field: 'nameOfMeasure',
+                    name: message.get("ui.obj.dq.table.header1"),
+                    width: '300px',
+                    type: gridEditors.ComboboxEditor,
+                    options: [], // will be filled later, when syslists are loaded listId=7128
+                    values: [],
+                    editable: true,
+                    listId: 7128,
+                    formatter: lang.partial(gridFormatters.SyslistCellFormatter, 7128)
+                }, {
+                    field: 'resultValue',
+                    name: message.get("ui.obj.dq.table.header2"),
+                    width: '105px',
+                    editable: true,
+                    type: gridEditors.DecimalCellEditor,
+                    widgetClass: NumberTextBox,
+                    formatter: gridFormatters.LocalizedNumberFormatter
+                }, {
+                    field: 'measureDescription',
+                    name: message.get("ui.obj.dq.table.header3"),
+                    width: '303px',
+                    editable: true
+                }];
+                layoutCreator.createDataGrid("dq128Table", null, dq128TableStructure, null);
             },
 
             createFachBezugClass2: function() {
@@ -1918,10 +2005,6 @@ define([
                     var def = new Deferred();
                     var data = [
                         [
-                            message.get("dialog.research.ext.obj.content.time.at"),
-                            "am"
-                        ],
-                        [
                             message.get("dialog.research.ext.obj.content.time.since"),
                             "seit"
                         ],
@@ -2016,7 +2099,7 @@ define([
                 var extraInfoConformityTableStructure = [{
                     field: 'specification',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.specification"),
-                    width: '395px',
+                    width: '295px',
                     editable: false,
                     formatter: gridFormatters.ConformityCellFormatter
                 }, {
@@ -2028,7 +2111,13 @@ define([
                 }, {
                     field: 'publicationDate',
                     name: message.get("ui.obj.additionalInfo.conformityTable.header.publicationDate"),
-                    width: '150px',
+                    width: '120px',
+                    editable: false,
+                    formatter: gridFormatters.DateCellFormatter
+                }, {
+                    field: 'explanation',
+                    name: message.get("ui.obj.additionalInfo.conformityTable.header.explanation"),
+                    width: '130px',
                     editable: false,
                     formatter: gridFormatters.DateCellFormatter
                 }, {

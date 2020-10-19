@@ -109,67 +109,12 @@
                     </div>
                   <div class="right large-5 small-6 addlogo columns subheadline">
                     <p>
-                      <span>Zentrales Datenmanagement (ZDM)<br> K&uuml;stendaten</span>
+                      <span></span>
                     </p>
                   </div>
                 </div>
                 <div id="navPrimary">
                     <h2 class="aural">Hauptmenü</h2>
-                  <ul>
-                    <li tabindex="0" class="">
-                      <div class="" id="n-1">
-                        <h3><a href="/DE/Wir-ueber-uns/Wir-ueber-uns-node.html" title="Wir über uns">Wir über uns</a></h3>
-                        <h4 class="aural">Unternavigationspunkte</h4>
-                        <div class="menu fl-1">
-                          <div class="menu-box" style="display: none; opacity: 1;">
-                            <ul>
-                              <li class=""><a href="/DE/Wir-ueber-uns/Beteiligte-Institutionen/Beteiligte-Institutionen-node.html" title="Beteiligte Institutionen">Be­tei­lig­te In­sti­tu­tio­nen</a></li>
-                              <li class=""><a href="/DE/Wir-ueber-uns/Leitfaden-fuer-Projekte-und-Daten/Leitfaden-fuer-Projekte-und-Daten-node.html" title="Leitfaden für Projekte und Daten">Leit­fa­den für Pro­jek­te und Da­ten</a></li>
-                              <li class=""><a href="/DE/Wir-ueber-uns/ZDM-Faltblatt/ZDM-Faltblatt-node.html" title="ZDM-Faltblatt">ZDM-Falt­blatt</a></li>
-                              <li class="last "><a href="/DE/Wir-ueber-uns/Vorlage-Teaser/teaser-node.html">teaser-no­de</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li tabindex="0">
-                      <div class="" id="n-2">
-                        <h3><a href="/DE/Portalsystem/Portalsystem_node.html" title="Portalsystem">Por­tal­sys­tem</a></h3>
-                        <h4 class="aural">Unternavigationspunkte</h4>
-                      </div>
-                    </li>
-                    <li tabindex="0">
-                      <div class="" id="n-3">
-                        <h3><a href="/DE/Aktuelle_Massnahmen/Aktuelle_Massnahmen_node.html" title="Aktuelle Maßnahmen">Ak­tu­el­le Maß­nah­men</a></h3>
-                        <h4 class="aural">Unternavigationspunkte</h4>
-                      </div>
-                    </li>
-                    <li tabindex="0">
-                      <div class="" id="n-4">
-                        <h3><a href="/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portalübergreifend-Alt-Text">Pu­bli­ka­tio­nen</a></h3>
-                        <h4 class="aural">Unternavigationspunkte</h4>
-                      </div>
-                    </li>
-                    <li tabindex="0">
-                      <div class="mod" id="n-5">
-                        <h3><a href="/DE/Services/services-node.html" title="Portalübergreifende Services">Ser­vice</a></h3>
-                        <h4 class="aural">Unternavigationspunkte</h4>
-                        <div class="menu fl-1">
-                          <div class="menu-box">
-                            <ul>
-                              <li class="Bar"><a href="/Tideelbe/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow­n­load Geo­da­ten</a></li>
-                              <li class="Bar"><a href="/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portalübergreifend">Dow­n­load Zeitrei­hen</a></li>
-                              <li class=""><a href="/DE/dynamisch/infobriefe/index.php.html" title="Infobriefe - portalübergreifend">In­fo­brie­fe</a></li>
-                              <li class=""><a href="/DE/Services/Infobrief-NEU/infobrief_node.html">In­fo­brief NEU</a></li>
-                              <li class=""><a href="/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portalübergreifend-Alt-Text">Pu­bli­ka­tio­nen</a></li>
-                              <li class=""><a href="/DE/Services/Webcams/Webcams-node.html" title="Webcams">Web­cams</a></li>
-                              <li class="last "><a href="/DE/Services/WMS/WMS_node.html" title="Web Services">Web Ser­vices</a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
                 <div id="wrapperBreadcrumbs">
                   <div id="navBreadcrumbsVertical">
@@ -177,8 +122,16 @@
                 </div>
                 <div id="navBreadcrumbs">
                   <p class="aural">Sie sind hier:</p>
-                  <ol><li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a></li><li><strong>Trefferanzeige</strong></li></ol>
+                  <ol>
+                    <li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html"></a></li>
+                    <li>
+                        <strong>
+                            Trefferanzeige
+                        </strong>
+                    </li>
+                  </ol>
                 </div>
+              #parse("/decorations/layout/ingrid/templates/header/header_menu.vm")
               </div>
               <div id="main" class="row wide">
                 <div id="content" class="large-12 medium-12 small-12 columns">

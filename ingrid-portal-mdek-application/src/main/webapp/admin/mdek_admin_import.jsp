@@ -254,7 +254,7 @@ require([
                         if (importInfo.exception) {
                             console.debug("Error showing importInfo:");
                             console.debug(importInfo);
-                            if (importInfo.exception.message.indexOf("IMPORT_OBJECTS_ALREADY_EXIST") != -1) {
+                            if (importInfo.exception.message && importInfo.exception.message.indexOf("IMPORT_OBJECTS_ALREADY_EXIST") != -1) {
                                 handleImportError(importInfo.exception.mdekError.errorInfo);
                             }
                         }
@@ -480,7 +480,7 @@ require([
         }
         
         function addErrorInfo(exception) {
-            if (exception.message.indexOf("IMPORT_OBJECTS_ALREADY_EXIST") != -1) {
+            if (exception.message && exception.message.indexOf("IMPORT_OBJECTS_ALREADY_EXIST") != -1) {
                 var msg = string.substitute("<fmt:message key='dialog.admin.import.alreadyExistErrorInfo' />", [_prepareErrorInfo(exception.mdekError.errorInfo)]);
                 return msg;
             } else {

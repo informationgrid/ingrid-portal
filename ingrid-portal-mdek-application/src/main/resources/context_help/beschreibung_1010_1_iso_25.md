@@ -11,6 +11,7 @@ title: Beschreibung
 
 Fachliche Inhaltsangabe der Geo-Information/Karte. Hier soll in knapper Form beschrieben werden, um welche Art von Geo-Information es sich handelt: - GIS-Daten, analoge Karte, Kartenwerk/Atlas - topographische Karte, politische Karte, fachbezogene Karte, etc. Ferner sollten die Hauptinhalte der dargestellten Sachinformationen genannt werden (z.B.: Pegelmessstellen, Kohlekraftwerke). Auf Verständlichkeit für fachfremde Dritte ist zu achten. Für Detailinformationen (Maßstäbe, etc.) stehen gesonderte Eingabefelder zur Verfügung. Das Feld Beschreibungen muss ausgefüllt werden, damit das Objekt abgespeichert werden kann.
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
 
 # ISO Abbildung
 

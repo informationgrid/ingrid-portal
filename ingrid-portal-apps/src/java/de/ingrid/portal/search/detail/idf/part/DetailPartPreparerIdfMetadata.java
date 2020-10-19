@@ -97,7 +97,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     
     public String getTitle(){
         String value = null;
-        String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title";
+        String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString";
         Node node = xPathUtils.getNode(this.rootNode, xpathExpression);
         if(node != null && node.getTextContent().length() > 0){
             value = node.getTextContent();
@@ -137,6 +137,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         value = xPathUtils.getString(abstractParentNode, xpathExpressionAbstract);
         if (value != null) {
+            value = removeLocalisation(value);
             value = value.trim();
         }
 
@@ -444,7 +445,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 
                 // keywords
-                xpathExpression = "./gmd:MD_Keywords/gmd:keyword";
+                xpathExpression = "./gmd:MD_Keywords/gmd:keyword/gco:CharacterString";
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList keywordNodeList = xPathUtils.getNodeList(node, xpathExpression);
                     for (int j = 0; j < keywordNodeList.getLength(); j++) {
@@ -475,38 +476,41 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 // "GEMET - Concepts, version 2.1"
                                 } else if (thesaurusName.contains("Concepts")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("5200", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listGemet.add(tmpValue);
                                     // "GEMET - INSPIRE themes, version 1.0"
                                 } else if (thesaurusName.contains("priority")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6350", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listPriorityDataset.add(tmpValue);
-                                } else if (thesaurusName.contains("Spatial scope")) {
+                                } else if (thesaurusName.contains("Spatial scope") || sysCodeList.hasCodeListDataKeyValue("6360", value, "thesaurusTitle", thesaurusName)) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6360", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listSpatialScope.add(tmpValue);
                                 } else if (thesaurusName.contains("INSPIRE")) {
                                     String tmpValue = sysCodeList.getNameByCodeListValue("6100", value);
-                                    if(tmpValue.length() < 1){
+                                    if(tmpValue.isEmpty()){
                                         tmpValue = value;
                                     }
                                     listInspire.add(tmpValue);
                                     // "German Environmental Classification - Category, version 1.0"
                                 } else if (thesaurusName.contains("German Environmental Classification")) {
                                     // do not used in detail view.
-                                    
+
+                                } else if (thesaurusName.contains("Further legal basis")) {
+                                    // do not used in detail view.
+
                                 } else if (thesaurusName.length() < 1 && type.length() < 1) {
                                     listSearch.add(value);
                                 } else{
                                     listSearch.add(value);
-                                }    
+                                }
                             }
                         }
                     }
@@ -680,6 +684,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             head.add(messages.getString("object_conformity.specification"));
             head.add(messages.getString("object_conformity.degree_value"));
             head.add(messages.getString("object_conformity.publication_date"));
+            head.add(messages.getString("object_conformity.explanation"));
             element.put("head", head);
             ArrayList body = new ArrayList();
             element.put("body", body);
@@ -689,7 +694,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 if(xPathUtils.nodeExists(node, "./gmd:DQ_DomainConsistency")){
                     ArrayList row = new ArrayList();
                     
-                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title";
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:title/gco:CharacterString";
                     if (xPathUtils.nodeExists(node, xpathExpression)) {
                         String value = xPathUtils.getString(node, xpathExpression).trim();
                         row.add(notNull(value));
@@ -722,6 +727,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }else {
                             String value = xPathUtils.getString(node, xpathExpression).trim();
                             row.add(notNull(getDateFormatValue(value)));
+                        }
+                    } else {
+                        row.add("");
+                    }
+
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:explanation/gco:CharacterString";
+                    if (xPathUtils.nodeExists(node, xpathExpression)) {
+                        String value = xPathUtils.getString(node, xpathExpression).trim();
+                        // only add explanation if non standard value REDMINE-1817
+                        if (value.equals("see the referenced specification")){
+                            row.add("");
+                        } else {
+                            row.add(notNull(value));
                         }
                     } else {
                         row.add("");
@@ -931,7 +949,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
             ArrayList subjectEntries = new ArrayList();
             for (int i = 0; i < nodeList.getLength(); i++) {
-                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code";
+                xpathExpression = "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString";
                 Node node = nodeList.item(i);
                 if (xPathUtils.nodeExists(node, xpathExpression)) {
                     NodeList childNodeList = xPathUtils.getNodeList(node, xpathExpression);
@@ -1293,6 +1311,17 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             }
         }
         return messages.getString("t01_object.publish_id_" + publishId);
+    }
+
+    public Map<String, String> getDOI() {
+        String doiId = getValueFromXPath("./idf:doi/id");
+        String doiType = getValueFromXPath("./idf:doi/type");
+
+        Map<String, String> element = new HashMap<>();
+        element.put("id", doiId);
+        element.put("type", doiType);
+
+        return element;
     }
 
     /*

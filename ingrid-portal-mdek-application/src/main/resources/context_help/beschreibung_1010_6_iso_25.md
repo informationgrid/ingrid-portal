@@ -11,6 +11,7 @@ title: Beschreibung
 
 Fachliche Inhaltsangabe des Dienstes, der Anwendung oder des Informationssystems. Hier sollen in knapper Form die Art des Dienstes, der Anwendung oder des Informationssystems sowie die fachlichen Informationsgehalte beschrieben werden. Auf Verständlichkeit für fachfremde Dritte ist zu achten. DV-technische Einzelheiten sollten auf zentrale, kennzeichnende Aspekte beschränkt werden. Das Feld Beschreibungen muss ausgefüllt werden, damit das Objekt abgespeichert werden kann.
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
 
 # ISO Abbildung
 
