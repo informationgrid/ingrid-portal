@@ -27,9 +27,10 @@ HIERARCHY_DIR="webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierar
 cd /opt/ingrid/ingrid-portal/apache-tomcat
 
 if [ -e /initialized ]
-then
+then:q
     echo "Container already initialized"
 else
+    echo "Mapped files will throw an error (sed resource busy)"
     # Perform some substitutions if environment variables are set
     if [ ! -z "${DB_DRIVERCLASS}" ]; then
         # common substution scripts for sed
