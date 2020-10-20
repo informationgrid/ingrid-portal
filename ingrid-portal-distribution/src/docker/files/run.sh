@@ -27,7 +27,7 @@ HIERARCHY_DIR="webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierar
 cd /opt/ingrid/ingrid-portal/apache-tomcat
 
 if [ -e /initialized ]
-then:q
+then
     echo "Container already initialized"
 else
     echo "Mapped files will throw an error (sed resource busy)"
