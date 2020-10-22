@@ -35,23 +35,7 @@ define([
          * Load new syslists containing Nokis stuff.
          */
         nokisDocumentTypes: docTypes,
-        geometryContext: geometryContext,
-
-        advCompatible : undefined,
-        advProductGroup : undefined,
-        administrativeArea: undefined,
-        conformityFields: undefined,
-        inspireGeoservice: undefined,
-        inspireIsoConnection: undefined,
-        inspireEncodingConnection: undefined,
-        inspireConformityConnection: undefined,
-        spatialRepresentationInfo: undefined,
-        coupledResourceDownloadDataCheck: undefined,
-        requireUseConstraints: undefined,
-        showFileDescription: undefined,
-        encodingSchemeForGeodatasets: undefined,
-        dqGriddedDataPositionalAccuracy: undefined,
-        openData: undefined
+        geometryContext: geometryContext
 
     });
 });
