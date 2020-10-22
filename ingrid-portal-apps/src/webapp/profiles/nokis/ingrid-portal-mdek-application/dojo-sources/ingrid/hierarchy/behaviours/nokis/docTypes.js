@@ -33,10 +33,9 @@ define(["dojo/_base/declare",
         category: "Nokis",
         run: function() {
 
-            var self = this;
             topic.subscribe("/afterInitDialog/ChooseWizard", function(data) {
-                // remove all assistants
-                data.assistants.splice(0, data.assistants.length);
+                // remove first assistant to only allow getCapabilities-assistant
+                data.assistants.shift();
 
                 var nokisTypes = array.filter(data.types, function(t) { return t[1] === "1" || t[1] === "3"; });
                 data.types.splice(0, data.types.length);
@@ -47,11 +46,11 @@ define(["dojo/_base/declare",
             });
 
             // load custom syslists
-            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
+            /*topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
 
                 // ids.push(8002);
 
-            });
+            });*/
 
         }
 
