@@ -725,115 +725,6 @@
       </build>
     </profile>
     <profile>
-      <id>profile-baw</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>baw</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/baw_mis/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-bkg</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>bkg</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <!--<scanTargets>
-                  <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
-              </scanTargets>-->
-              <webApp>
-                <!--<extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>-->
-                <!-- use resources from profile first, before using the default webapp dir -->
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-lgv</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>lgv</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/lgv_hamburg/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-mcloud</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>mcloud</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/mcloud/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
       <id>profile-mcloud-build</id>
       <build>
         <plugins>
@@ -1017,11 +908,10 @@
       </build>
     </profile>
     <profile>
-      <id>profile-metaver_md</id>
+      <id>profile-general</id>
       <activation>
         <property>
           <name>profile</name>
-          <value>metaver_md</value>
         </property>
       </activation>
       <build>
@@ -1033,33 +923,7 @@
               <webApp>
                 <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                   <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/metaver_md/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-nokis</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>nokis</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/nokis/ingrid-portal-mdek-application,src/main/webapp
+                    ../ingrid-portal-apps/src/webapp/profiles/${profile}/ingrid-portal-mdek-application,src/main/webapp
                   </resourcesAsCSV>
                 </baseResource>
               </webApp>
