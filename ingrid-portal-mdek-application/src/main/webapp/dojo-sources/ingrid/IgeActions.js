@@ -2451,6 +2451,7 @@ define([
             nodeData.spatialRefAltMeasure = registry.byId("spatialRefAltMeasure").get("value");
             nodeData.spatialRefAltVDate = registry.byId("spatialRefAltVDate").get("value");
             nodeData.spatialRefExplanation = registry.byId("spatialRefExplanation").get("value");
+            nodeData.boundingPolygon = registry.byId("boundingPolygon").get("value");
 
             // -- Time --
             nodeData.timeRefType = registry.byId("timeRefType").get("value");
