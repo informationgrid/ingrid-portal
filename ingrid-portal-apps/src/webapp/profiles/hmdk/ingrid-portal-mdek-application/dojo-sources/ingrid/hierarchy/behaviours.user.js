@@ -41,9 +41,9 @@ define(["dojo/_base/declare",
     return lang.mixin(behaviours, {
 
         openDataLGV : {
-            title : "LGV: Open Data",
+            title : "Open Data",
             description : "Neue Anforderungen seitens des Hamburger Transparenzportals, aber auch der Geodateninfrastruktur Hamburg, machen es erforderlich, dass die Funktionalitäten der beiden Checkboxen 'Open Data' und 'Veröffentlichung gemäß HmbTG' angepasst werden müssen.",
-            category: "LGV",
+            category: "HMDK",
             defaultActive: false,
             run : function() {
                 // disable free text in categories by choosing a selectbox editor
@@ -610,12 +610,12 @@ define(["dojo/_base/declare",
         },
 
 requireUseConstraintsLGV: {
-    title: "LGV: Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
+    title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
     title_en: "Use Constraints - Required on INSPIRE / Open Data",
     description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"Veröffentlichung gemäß HmbTG\", \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
     description_en: "Input of field \"Use Constraints\" (ISO: useConstraints + useLimitation) is required if checkbox \"INSPIRE-relevant dataset\" or \"Open data\" is set.",
     issue: "https://dev.informationgrid.eu/redmine/issues/223",
-    category: "LGV",
+    category: "HMDK",
     defaultActive: false,
     run: function () {
 
