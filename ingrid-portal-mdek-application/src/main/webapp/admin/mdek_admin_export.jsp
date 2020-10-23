@@ -191,14 +191,21 @@ require([
     		},
     		errorHandler: function(message, err) {
     		    displayErrorMessage(err);
-    			console.debug("Error: "+ message);
-    			// If there's a timeout try again
-    			if (err.message != "USER_LOGIN_ERROR") {
-    			    setTimeout(refreshExportProcessInfo, 2000);
-    			}
+    			console.error(message);
+				setErrorState();
     		}
     	});
     }
+
+    function setErrorState() {
+		style.set("exportProgressBarContainer", "display", "none");
+		style.set("cancelExportProcessButton", "display", "none");
+		style.set("exportExceptionMessage", "display", "block");
+		style.set("exportInfoDownload", "display", "none");
+		style.set("exportInfoEndDateContainer", "display", "none");
+		style.set("exportInfoNumExportedEntitiesContainer", "display", "none");
+		dom.byId("exportInfoNumExportedEntities").innerHTML = "";
+	}
     
     function updateExportInfo(exportInfo) {
     	if (exportInfo.entityType == "OBJECT") {
@@ -215,11 +222,7 @@ require([
     		style.set("cancelExportProcessButton", "display", "none");
     
     		if (exportInfo.exception) {
-    			style.set("exportExceptionMessage", "display", "block");
-    			style.set("exportInfoDownload", "display", "none");
-    			style.set("exportInfoEndDateContainer", "display", "none");
-    			style.set("exportInfoNumExportedEntitiesContainer", "display", "none");
-    			dom.byId("exportInfoNumExportedEntities").innerHTML = "";
+				setErrorState();
     
     		} else if (exportInfo.endTime) {
     			//dojo.html.hide(dom.byId("exportExceptionMessage"));
