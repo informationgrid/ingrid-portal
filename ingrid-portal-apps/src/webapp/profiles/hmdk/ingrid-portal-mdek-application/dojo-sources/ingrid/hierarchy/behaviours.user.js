@@ -36,11 +36,16 @@ define(["dojo/_base/declare",
     "ingrid/hierarchy/behaviours",
     "ingrid/utils/Grid",
     "ingrid/utils/Syslist",
-    "ingrid/grid/CustomGridEditors"
-], function(declare, array, Deferred, lang, topic, on, aspect, dom, domClass, registry, cookie, message, dialog, behaviours, UtilGrid, UtilSyslist, Editors) {
+    "ingrid/hierarchy/behaviours/hmdk/formFields"
+], function(declare, array, Deferred, lang, topic, on, aspect, dom, domClass, registry, cookie, message, dialog, behaviours, UtilGrid, UtilSyslist, formFields) {
     return lang.mixin(behaviours, {
 
-        openDataLGV : {
+        /**
+         * Create fields for all the hmdk classes and show those fields according to the class.
+         */
+        hmdkFormFields: formFields,
+
+        openDataHMDK : {
             title : "Open Data",
             description : "Neue Anforderungen seitens des Hamburger Transparenzportals, aber auch der Geodateninfrastruktur Hamburg, machen es erforderlich, dass die Funktionalitäten der beiden Checkboxen 'Open Data' und 'Veröffentlichung gemäß HmbTG' angepasst werden müssen.",
             category: "HMDK",
@@ -83,6 +88,7 @@ define(["dojo/_base/declare",
                 this.initialClass1();
                 this.handleOpenDataChange();
                 this.handlePublicationHmbTG();
+                this.handleInformationSelect();
             },
 
             handlePublicationHmbTG: function() {
@@ -609,7 +615,7 @@ define(["dojo/_base/declare",
 
         },
 
-requireUseConstraintsLGV: {
+requireUseConstraintsHMDK: {
     title: "Nutzungsbedingungen - Pflichtfeld bei INSPIRE / Open Data",
     title_en: "Use Constraints - Required on INSPIRE / Open Data",
     description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die Checkbox \"Veröffentlichung gemäß HmbTG\", \"INSPIRE-relevanter Datensatz\" oder \"Open Data\" angeklickt wird.",
