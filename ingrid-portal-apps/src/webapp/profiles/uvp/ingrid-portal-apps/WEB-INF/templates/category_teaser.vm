@@ -42,7 +42,7 @@
 
 #macro (getTabs $facetName $facetList $parentFacet $isActive)
     <li class="tabs-title #if($isActive)is-active#end" role="presentation">
-        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" aria-controls="panel-${parentFacet}" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
+        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
     </li>
 #end
 

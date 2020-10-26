@@ -1807,3 +1807,14 @@ meter[value="2"]::-moz-meter-bar { background: yellow; }
 meter[value="3"]::-moz-meter-bar { background: orange; }
 meter[value="4"]::-moz-meter-bar { background: green; }
 meter[value="5"]::-moz-meter-bar { background: green; }
+
+.leaflet-interactive-disable {
+  cursor: grab !important;
+}
+
+.leaflet-hyphens {
+  hyphens: auto;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+}

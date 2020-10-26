@@ -47,12 +47,12 @@
 
 #macro (getTabs $facetName $facetList $parentFacet $isActive)
     <li class="tabs-title #if($isActive)is-active#end" role="presentation">
-        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" aria-controls="panel-${parentFacet}" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
+        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
     </li>
 #end
 
 #macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
-    <div class="tabs-panel midnight #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel" aria-labelledby="panel-${parentFacet}-label">
+    <div class="tabs-panel midnight #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel">
         <div class="row align-center text-center">
             #if($parentFacet == "provider")
                 #set($facetId = "partner")
