@@ -39,6 +39,7 @@ define([
             var self = this;
             return topic.subscribe("/onBeforeObjectPublish", function(/*Array*/ notPublishableIDs) {
                 self.validateWKT(notPublishableIDs);
+                self.validateWGS84(notPublishableIDs);
             });
         },
 
@@ -46,6 +47,12 @@ define([
             var boundingPolygon = registry.byId("boundingPolygon").value;
             if(boundingPolygon && !this.isValidWKT(boundingPolygon.toLowerCase())){
                 notPublishableIDs.push(["boundingPolygon", "Begrenzungspolygon muss gültiges WKT enthalten!"]);
+            }
+        },
+        validateWGS84: function (notPublishableIDs) {
+            var boundingPolygon = registry.byId("boundingPolygon").value;
+            if(boundingPolygon && !this.isWGS84(boundingPolygon)){
+                notPublishableIDs.push(["boundingPolygon", "WKT Koordinaten müssen in WGS84 angegeben werden!"]);
             }
         },
 
@@ -86,9 +93,28 @@ define([
                     return re.exec(coordinates)
                 }
             } catch (e) {
+                console.error(e.message)
                 return false;
             }
-         }
+         },
+
+        isWGS84: function (wkt) {
+            try {
+                var coords = wkt.match(/[\(,]\s*([.0-9]+)\s+([.0-9]+)\s*[\),]/g)
+                for(var i = 0; i < coords.length; i++){
+                    var lonlat = /[\(,]\s*([.0-9]+)\s+([.0-9]+)\s*[\),]/g.exec(coords[i]);
+                    var lon = parseFloat(lonlat[1]);
+                    var lat = parseFloat(lonlat[2]);
+                    if(lon < -180 || lon > 180 || lat < -90 || lat > 90){
+                        return false;
+                    }
+                }
+                return true;
+            } catch (e) {
+                console.error(e.message)
+                return false;
+            }
+        }
 
         })();
 });
