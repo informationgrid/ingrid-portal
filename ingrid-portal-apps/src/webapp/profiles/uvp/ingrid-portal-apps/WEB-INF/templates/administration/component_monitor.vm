@@ -64,7 +64,8 @@
                     <div class="control-group">
                         <label class="control control--checkbox" for="chk_$count">
                             <input id="chk_$count" type="checkbox" name="id" type="checkbox" value="$jobId">
-                            <div class="control__indicator"></div>$!jobData.getString("component.monitor.general.title")
+                            <span class="control__indicator"></span>
+                            $!jobData.getString("component.monitor.general.title")
                         </label>
                     </div>
                 </div>
@@ -162,7 +163,7 @@
                 <div class="control-group">
                     <label class="control control--checkbox" for="activate">
                         <input id="activate" name="activate" value="1" type="checkbox">
-                        <div class="control__indicator"></div>
+                        <span class="control__indicator"></span>
                         $MESSAGES.getString('component.forms.text.import.activate.job')
                     </label>
                 </div>
@@ -173,7 +174,7 @@
                 <div class="control-group">
                     <label class="control control--checkbox" for="overwrite">
                         <input id="overwrite" name="overwrite" value="1" type="checkbox">
-                        <div class="control__indicator"></div>
+                        <span class="control__indicator"></span>
                         $MESSAGES.getString('component.forms.text.import.overwrite.job')
                     </label>
                 </div>

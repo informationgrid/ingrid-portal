@@ -81,7 +81,7 @@
                             <div class="control-group">
                                 <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="enabled">
                                     <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.enable')
                                 </label>
                             </div>
@@ -116,7 +116,7 @@
                                 #addErrorFormMessage('send_info')
                                 <label class="control control--checkbox field-toggle__label field-toggle__label--boxed #addErrorFormClassLabelText('send_info')" for="send_info">
                                     <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.send.information')
                                 </label>
                             </div>
@@ -127,7 +127,7 @@
                             <div class="control-group">
                                 <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="password_update_required">
                                     <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.password.update.required')
                                 </label>
                             </div>
@@ -165,7 +165,7 @@
                             <div class="control-group">
                                 <label class="field-toggle__label field-toggle__label--boxed" for="admin_portal">
                                     <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.admin.portal')
                                 </label>
                             </div>
