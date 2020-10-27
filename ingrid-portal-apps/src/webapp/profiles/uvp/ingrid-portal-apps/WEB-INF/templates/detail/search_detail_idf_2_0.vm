@@ -25,20 +25,20 @@
                 <div class="swiper-slide">
                     <div class="box__content ob-container">
                     #if(!$entry.get("href"))
-                        <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
+                        <img class="preview_image is-hidden ob-box-left" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         <noscript>
                             <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                         <a href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
+                            <img class="preview_image is-hidden ob-box-left" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             <noscript>
                                 <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             </noscript>
                         </a>
                     #else
                         <a href="$entry.get("href")" title="$entry.title">
-                            <img class="preview_image is-hidden ob-box-left" tmp="$entry.src" alt="$imgAlt" title="$imgTitle"/>
+                            <img class="preview_image is-hidden ob-box-left" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             <noscript>
                                 <img class="preview_image ob-box-left" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                             </noscript>
