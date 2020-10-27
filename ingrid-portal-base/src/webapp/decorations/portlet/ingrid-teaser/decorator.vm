@@ -44,7 +44,7 @@
         <article class="$articleStyle">
             #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
             #if($akey && $akey.length() > 0)
-                <a name="$akey"></a>
+                <a id="$akey" name="$akey"></a>
             #end
             #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)
             <$titleTag class="$titleStyle">
@@ -53,7 +53,7 @@
                 #set($helpkey = $jetspeed.getPreferenceFirstValue($f, "helpKey"))
                 #if($helpkey)
                     <div class="tooltip ob-circle js-popup" data-content="<p>Lorem ipsum dolor sit amet, consectetur adipsiicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><p><a href=&quot;#&quot;>Read more</a></p>">
-                        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+                        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"/></svg>
                     </div>
                 #end
                 -->

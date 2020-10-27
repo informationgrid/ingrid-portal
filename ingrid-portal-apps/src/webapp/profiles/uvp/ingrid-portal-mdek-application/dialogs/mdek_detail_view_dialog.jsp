@@ -34,7 +34,7 @@
     
     #detailViewContent { background: white; }
 </style>
-<script type="text/javascript">
+<script>
 
 var pageDetailViewObjects = _container_;
 

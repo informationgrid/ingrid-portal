@@ -15,7 +15,7 @@
 
 ## set flag indicating how to render stuff (e.g. in includes)
 #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-<hr class="hr-small-full">
+<hr class="hr-small-full"/>
 ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
 #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
     #foreach($rs in $rankedResultList.getWrapperHits())

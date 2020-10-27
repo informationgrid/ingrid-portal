@@ -78,7 +78,7 @@
     #end
     #renderDBEditFooter($mode)
 </form>
-<script >
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditCMS');

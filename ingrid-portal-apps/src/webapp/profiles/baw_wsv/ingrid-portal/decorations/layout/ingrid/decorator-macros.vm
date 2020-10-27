@@ -16,7 +16,7 @@
 
 #* Adds ingrid javascript *#
 #macro (decoratorIncludeJavaScriptForHead)
-  <script language="JavaScript" src="$request.contextPath/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+  <script src="$request.contextPath/decorations/layout/ingrid/scripts/ingrid.js"></script>
 #end
 
 #* define navigation constants *#
@@ -38,7 +38,7 @@
   <ul class="nav-desktop__list ob-box-center">
     <li class="nav-desktop__item " style="max-width: 100px; display: inline-block;">
       <a class="desktop__header__logo" href="$jetspeed.getAbsoluteUrl('/default-page.psml')" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-        <img class="desktop__logo" style="height: 57px;" src="/decorations/layout/ingrid/images/logo-desktop.png">
+        <img class="desktop__logo" style="height: 57px;" src="/decorations/layout/ingrid/images/logo-desktop.png" alt="logo-desktop.png">
       </a>
     </li>
     <li class="nav-desktop__item mq-hide-xb" style="max-width: 200px; ">
@@ -204,7 +204,7 @@
         #end
         <a id="logged_on_link#if($inMain)_main#end" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
             <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
-                <use xlink:href="#user">
+                <use xlink:href="#user"/>
             </svg>
         </a>
         #if($jetspeed.getLoggedOn())
@@ -236,7 +236,7 @@
     <div class="header__widget #if($inMain)service_in_main#end">
         <a class="header__widget__toggle js-header-toggle" href="$linkUrl" title="$!linkTitle">
             <svg class="header__widget__icon icon">
-                <use xlink:href="#gear">
+                <use xlink:href="#gear"/>
             </svg>
         </a>
         <div class="metamenu">
@@ -274,7 +274,7 @@
             #set($linkName = $MESSAGES.getString('ingrid.page.mapclient'))
             #if($linkName != "ingrid.page.mapclient")
               #set($linkUrl = "/ingrid-webmap-client/admin")
-              <a target="_new" class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
+              <a target="_blank" class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
             #end
             </div>
         </div>
@@ -285,7 +285,7 @@
     <div class="header__widget #if($inMain)service_in_main#end">
         <a href="$linkUrl" title="$!linkTitle">
             <svg class="header__widget__icon icon">
-                <use xlink:href="#overview">
+                <use xlink:href="#overview"/>
             </svg>
         </a>
     </div>

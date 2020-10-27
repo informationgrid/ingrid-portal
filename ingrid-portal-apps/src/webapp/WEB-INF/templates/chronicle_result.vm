@@ -8,7 +8,7 @@
         #if ($rs.title)
             <h4 class="bx-bot-m bx-bot-xs">#if ($rs.title == "")$MESSAGES.getString('common.result.noTitle')#else$rs.title#end</h4>
             <a href="$!rs.searchURL">
-                <svg class="icon research__icon"><use xlink:href="#magnifier"></use></svg> 
+                <svg class="icon research__icon"><use xlink:href="#magnifier"/></svg> 
                 $MESSAGES.getString('chronicle.result.inquiry')
             </a>
             <p class="bx-bot-0 bx-top-s">
@@ -32,7 +32,7 @@
                     #set ($defTitle = $rs.defTitles.get($titleIndex))
                     <li>
                         <a href="$defURL">
-                            <svg class="icon"><use xlink:href="#external-link"></use></svg> 
+                            <svg class="icon"><use xlink:href="#external-link"/></svg> 
                             #if ($defTitle)$defTitle#else$defURL#end
                         </a>
                     </li>
@@ -50,7 +50,7 @@
                     #set ($defTitle = $rs.sampleTitles.get($titleIndex))
                     <li>
                         <a href="$defURL">
-                            <svg class="icon"><use xlink:href="#external-link"></use></svg> 
+                            <svg class="icon"><use xlink:href="#external-link"/></svg> 
                             #if ($defTitle)$defTitle#else$defURL#end
                         </a>
                     </li>
@@ -68,6 +68,6 @@
         #renderRankedPageNavigation($rankedPageSelector)
     </div>
 </div>
-<script >
+<script>
     goToByScroll('chronicleResult');
 </script>

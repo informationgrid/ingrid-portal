@@ -35,5 +35,5 @@
     scrollbar: {
       el: '.swiper-scrollbar',
     },
-  })
-  </script>
+  });
+</script>

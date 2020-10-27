@@ -7,7 +7,7 @@
                 <p class="copyright">$MESSAGES.getString("ingrid.page.copyright")</p>
             </div>
         </div>
-        <hr class="bx-top-0 bx-bot-0">
+        <hr class="bx-top-0 bx-bot-0"/>
         <div class="grid">
             <div class="column column--3-4-xl">
                 <div class="ob-box-padded ob-box-center ob-clear">
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="column column--1-4-xl">
-                <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0">
+                <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"/>
                 <div class="ob-box-padded ob-box-center ob-clear">
                     <div class="footer__section">
                         <div class="footer__bottom"></div>

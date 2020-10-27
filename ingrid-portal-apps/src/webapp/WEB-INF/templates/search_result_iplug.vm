@@ -10,7 +10,7 @@
             #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
         #end
         #parse ('/WEB-INF/templates/include_search_result_counter.vm')
-        <hr class="hr-small-full">
+        <hr class="hr-small-full"/>
         ##parse ('/WEB-INF/templates/include_search_result_navigation.vm')
         #parse ('/WEB-INF/templates/include_search_result_filter.vm')
         #if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")

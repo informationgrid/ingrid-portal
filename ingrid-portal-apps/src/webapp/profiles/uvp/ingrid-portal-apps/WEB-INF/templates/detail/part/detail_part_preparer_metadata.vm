@@ -83,7 +83,7 @@
             <div class="columns form">
                         #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                         <div id="map" style="height: 400px; width:100%;"></div>
-                        <script language="JavaScript" type="text/javascript">
+                        <script>
                             var southWest = L.latLng($spatialEntries.get(1), $spatialEntries.get(0)),
                             northEast = L.latLng($spatialEntries.get(3), $spatialEntries.get(2)),
                             bounds = L.latLngBounds(southWest, northEast);
@@ -357,7 +357,7 @@
             #set($entryLink = "$entry.get('link')")
         #end
         #if($entryLink && $entryLink.length() > 0)
-            <a target="_new" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
+            <a target="_blank" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
             <span class="text">
             (
             #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
@@ -395,7 +395,7 @@
                 #if($entryLink && $entryLink.length() > 0)
                     <a class="link download" href="$entryLink">
                         <svg class="icon">
-                            <use xlink:href="#internal-link">
+                            <use xlink:href="#internal-link"/>
                         </svg>
                         #if($entryLabel && $entryLabel.length() > 0)
                             $entryLabel
@@ -432,13 +432,13 @@
     <h2 class="mq-hide-xxl">
         $title
         <svg class="filter__title__icon icon">
-            <use xlink:href="#arrow-thick"></use>
+            <use xlink:href="#arrow-thick"/>
         </svg>
     </h2>
     <h3 class="mq-show-xxl">
         $title
         <svg class="filter__title__icon icon">
-            <use xlink:href="#arrow-thick"></use>
+            <use xlink:href="#arrow-thick"/>
         </svg>
     </h3>
 #end

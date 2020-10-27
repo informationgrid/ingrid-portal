@@ -3,10 +3,10 @@
         <div class="header__widgets__section">
             <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
                 <svg class="icon">
-                <use xlink:href="#burger">
+                    <use xlink:href="#burger"/>
                 </svg>
                 <svg class="icon ob-fade">
-                <use xlink:href="#cross">
+                    <use xlink:href="#cross"/>
                 </svg>
             </div>
         </div>

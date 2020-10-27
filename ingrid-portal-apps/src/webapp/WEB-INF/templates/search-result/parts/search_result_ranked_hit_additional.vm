@@ -3,7 +3,7 @@
         #if($!rs.additional_html_1.indexOf(">, <") == -1) 
             #set ($tmpValue = $!rs.additional_html_1)
             #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
-                $tmpValue.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
+                $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden')
                 <noscript>
                     $tmpValue
                 </noscript>
@@ -17,7 +17,7 @@
                 #foreach($tmpValue in $tmpValues)
                     <div class="swiper-slide">
                     #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
-                        $tmpValue.replace('src', 'tmp').replace('preview_image', 'preview_image is-hidden')
+                        $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden')
                         <noscript>
                             $tmpValue
                         </noscript>

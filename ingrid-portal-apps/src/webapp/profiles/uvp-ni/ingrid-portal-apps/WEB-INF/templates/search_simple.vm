@@ -14,7 +14,7 @@ $action.setParameter('action','doSearch')
                 <p class="intro">$MESSAGES.getString('searchSimple.portlet.title.3')</p>
             </div>
             <form action="$action" class="input-search" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
-                <input type="text" class="input-search-field" id="search-field" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if(!$actionForm.getInputHTMLEscaped('q').equals($MESSAGES.getString('searchSimple.query.initial')))#getHTMLEscapedFieldValue('q')#end">
+                <input type="text" class="input-search-field" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if(!$actionForm.getInputHTMLEscaped('q').equals($MESSAGES.getString('searchSimple.query.initial')))#getHTMLEscapedFieldValue('q')#end">
                 <button class="button round hide-for-medium"><span class="ic-ic-lupe"></span></button>
                 <button class="button large show-for-medium">$MESSAGES.getString('searchSimple.query.submit')</button>
             </form>

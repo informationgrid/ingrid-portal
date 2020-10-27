@@ -22,7 +22,7 @@
 </ul>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script language="JavaScript" type="text/javascript">
+<script>
     var map = new L.Map('map');
     var lat = $facetMapCenter.get(0);
     var lng = $facetMapCenter.get(1);

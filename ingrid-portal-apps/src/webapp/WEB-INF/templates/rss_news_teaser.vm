@@ -30,7 +30,7 @@
 </div>
 <p>
     <a class="link tx-upper tx-brand" href="$renderResponse.encodeURL('/portal/rss-news.psml')" title="$MESSAGES.getString('news.teaser.more.tooltip')">
-        <svg class="icon link__icon"><use xlink:href="#refresh"></use></svg>
+        <svg class="icon link__icon"><use xlink:href="#refresh"/></svg>
         <strong>$MESSAGES.getString('news.teaser.more')</strong>
     </a>
 </p>

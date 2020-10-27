@@ -31,8 +31,6 @@
     <head>
         <title>InGrid-Portal</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="Content-style-type" content="text/css" />
-        <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
@@ -43,7 +41,7 @@
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
         <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
-        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+        <script src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="nav-overlay">
@@ -72,17 +70,17 @@
                     <div class="header__widgets__section">
                         <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
                             <svg class="icon">
-                                <use xlink:href="#burger"></use>
+                                <use xlink:href="#burger"/>
                             </svg>
                             <svg class="icon ob-fade">
-                                <use xlink:href="#cross"></use>
+                                <use xlink:href="#cross"/>
                             </svg>
                         </div>
                     </div>
                     <div class="header__widgets__section">
                         <a class="header__widget header__logo" href="/startseite" title="Startseite von InGrid-Portal">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"></img>
-                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"></img>
+                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg"/>
+                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg"/>
                         </a>
                     </div>
                 </div> 
@@ -108,7 +106,7 @@
                 <div class="ob-box-padded ob-box-center ob-clear">
                     <div class="footer__top">
                         <a href="/startseite">
-                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"></img>-->
+                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"/>-->
                         </a>
                         <p class="copyright">Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50</p>
                     </div>
