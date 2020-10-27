@@ -129,6 +129,14 @@ else
             fi
         fi
 
+        # BAW-DOI extends UVP layout
+        if [ "$PORTAL_PROFILE" == "baw_doi" ]; then
+            echo "Copying profile files from parent (uvp) into portal directories ..."
+            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
+        fi
+
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
