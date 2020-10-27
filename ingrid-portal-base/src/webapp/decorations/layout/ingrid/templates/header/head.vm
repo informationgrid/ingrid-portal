@@ -24,3 +24,5 @@
 #else
     <meta name="robots" content="index,follow" />
 #end
+
+#parse("/decorations/layout/ingrid/templates/header/head_apple_touch_icon.vm")
