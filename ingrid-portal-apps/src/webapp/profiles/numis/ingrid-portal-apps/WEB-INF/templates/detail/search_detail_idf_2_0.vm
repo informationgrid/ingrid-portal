@@ -24,7 +24,7 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
+                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         <noscript>
                             <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>
