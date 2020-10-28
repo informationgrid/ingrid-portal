@@ -123,6 +123,7 @@
              that are performed against this UserDatabase are immediately
              available for use by the Realm.  -->
         <Realm className="org.apache.catalina.realm.UserDatabaseRealm"
+               digest="md5"
                resourceName="UserDatabase"/>
       </Realm>
 
