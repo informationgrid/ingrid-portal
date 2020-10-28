@@ -51,8 +51,10 @@ h1, h2, h3, h4, h5{
 .row.content-small {
   margin-top: 3rem;
 }
-footer .button-up {
-  margin-top: .9rem;
+@media print, screen and (min-width: 54em) {
+  .footer-menu-entries {
+    margin-top: 1rem !important;
+  }
 }
 .footer-menu-entries span {
   color: #FFFFFF;
