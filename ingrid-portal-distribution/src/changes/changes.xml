@@ -10,8 +10,8 @@
           <action type="fix" dev="wemove" issue="2195">
             Add wkt to print and compare view.
           </action>
-          <action type="update" dev="wemove" issue="1810">
-            Verbesserung der Barrierefreiheit des Portals.
+          <action type="add" dev="wemove" issue="2207">
+            Mapclient Admin-GUI: Account Passwörter verschlüsseln.
           </action>
         </release>
 
