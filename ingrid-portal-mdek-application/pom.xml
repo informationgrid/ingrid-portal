@@ -626,6 +626,8 @@
                 <argument>load=build</argument>
                 <argument>--profile</argument>
                 <argument>profiles/ingrid.profile.js</argument>
+                <argument>-Xms64m</argument>
+                <argument>-Xmx512m</argument>
               </arguments>
               <!-- optional -->
               <workingDirectory>src/main/webapp/dojo-sources/util/buildscripts</workingDirectory>
@@ -844,6 +846,8 @@
                 <argument>load=build</argument>
                 <argument>--profile</argument>
                 <argument>profiles/ingrid.profile.js</argument>
+                <argument>-Xms64m</argument>
+                <argument>-Xmx512m</argument>
               </arguments>
               <!-- optional -->
               <workingDirectory>src/main/webapp/dojo-sources/util/buildscripts</workingDirectory>
