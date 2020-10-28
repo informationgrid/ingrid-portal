@@ -68,22 +68,22 @@
                 </select>
             </div>
             <div class="media__obj--left">
-                <div class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                <output for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
                     <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
                     <input id="from_yy" class="field datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" data-value="#getFieldValue('time_from_submit')">
-                </div>
+                </output>
             </div>
             <div class="media__obj--left">
-                <div class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                <output for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
                     <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
                     <input id="till_yy" class="field datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" data-value="#getFieldValue('time_to_submit')">
-                </div>
+                </output>
             </div>
             <div class="media__obj--left">
-                <div class="selection-content  #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
+                <output for="am" class="selection-content  #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
                     <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
                     <input id="time_at" class="field datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" data-value="#getFieldValue('time_at_submit')">
-                </div>
+                </output>
             </div>
         </div>
     </form>
