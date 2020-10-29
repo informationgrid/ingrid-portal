@@ -452,8 +452,8 @@
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
-      <artifactId>jersey-spring3</artifactId>
-      <version>2.26-b03</version>
+      <artifactId>jersey-spring4</artifactId>
+      <version>2.32</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
