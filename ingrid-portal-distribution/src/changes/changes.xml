@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.6.1" date="2020-xx-xx" description="Release 5.6.1">
+          <action type="fix" dev="wemove" issue="2206">
+            Fix opendata access constraints behaviour
+          </action>
           <action type="fix" dev="wemove" issue="2195">
             Add wkt to print and compare view.
           </action>
