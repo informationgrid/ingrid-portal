@@ -145,6 +145,17 @@
             #if($TOOL.aNodeOfListExist($xpathList))
 ## Verweis
 <h2><a class="anchor" name="detail-2"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("references_tab")</span></h2>
+        ## Querverweise
+                #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue!='author']"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    <div class="row columns">
+                    #renderSectionTitle($TOOL.getAPACitationFromXPath([
+                            "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue!='author']/gmd:individualName/gco:CharacterString",
+                            "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date|./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime",
+                            "./gmd:identificationInfo/*/gmd:title/gco:CharacterString",
+                            "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"]))
+                    </div>
+                #end
         ## Verweise
                 #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"])
                 #if($TOOL.aNodeOfListExist($xpathList))
