@@ -23,12 +23,18 @@
 define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
+    "ingrid/hierarchy/behaviours/baw_doi/bawDoiCrossReferences",
     "ingrid/hierarchy/behaviours/baw_mis/bawSystemBehaviours",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
+
+        /**
+         * Cross-References table for DOIs
+         */
+        bawDoiCrossReferenceBehaviours: bawDoiCrossReferences,
 
         /**
          * System-level changes for BAW-MIS profile
