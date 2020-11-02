@@ -16,6 +16,7 @@
                                     if (this.status === 200) {
                                         if(this.response){
                                             img[0].src = this.response;
+                                            img[0].removeAttribute("srcset");
                                             img[0].classList.remove('is-hidden');
                                         }
                                     }
