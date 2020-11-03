@@ -45,7 +45,7 @@
                                                                 <p>$MESSAGES.getString('searchSimilar.terms.not.available')</p>
                                                             #else
                                                                 <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
-                                                                <div class="control__indicator"></div>
+                                                                <span class="control__indicator"></span>
                                                                 $tokenNode.name
                                                             #end
                                                             </label>

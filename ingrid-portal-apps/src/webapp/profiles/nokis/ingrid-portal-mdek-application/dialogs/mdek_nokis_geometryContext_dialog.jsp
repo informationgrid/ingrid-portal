@@ -29,7 +29,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="author" content="wemove digital solutions"/>
     <meta name="copyright" content="wemove digital solutions GmbH"/>
-    <script type="text/javascript">
+    <script>
 
         var pageLinksDialog = _container_;
         require(["dojo/_base/lang",

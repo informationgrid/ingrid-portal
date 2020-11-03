@@ -7,13 +7,13 @@
                 $action.setParameter('action','doCloseSimilar')
                 <div onclick="location.href='$action'" class="js-accordion-toggle filter__title is-active">
                     $MESSAGES.getString('searchSimilar.headline')
-                    <svg class="filter__title__icon icon"><use xlink:href="#arrow-thick"></use></svg>
+                    <svg class="filter__title__icon icon"><use xlink:href="#arrow-thick"/></svg>
                 </div>
             #else
                 $action.setParameter('action','doOpenSimilar')
                 <div onclick="location.href='$action'" class="js-accordion-toggle filter__title">
                     $MESSAGES.getString('searchSimilar.headline')
-                    <svg class="filter__title__icon icon"><use xlink:href="#arrow-thick"></use></svg>
+                    <svg class="filter__title__icon icon"><use xlink:href="#arrow-thick"/></svg>
                 </div>
             #end
             <div class="bx-top-s js-accordion-content #if($ps.isSimilarOpen)#else is-hidden #end">
@@ -29,8 +29,8 @@
                             $action.setParameter('action','doOpenNode')
                             <li class="tree__item tree__toggle js-accordion-toggle" onclick="location.href='$action'"><a onclick="location.href='$action'">
                         #end
-                            <svg class="tree__toggle__icon icon"><use xlink:href="#plus"></use></svg>
-                            <svg class="tree__toggle__icon icon"><use xlink:href="#minus"></use></svg>
+                            <svg class="tree__toggle__icon icon"><use xlink:href="#plus"/></svg>
+                            <svg class="tree__toggle__icon icon"><use xlink:href="#minus"/></svg>
                             $similarNode.getName() ($similarNode.getChildren().size())
                             </a>
                         </li>
@@ -44,12 +44,12 @@
                                         #else
                                             <input id="chk_$tokenNode.id" name="chk_$tokenNode.id" value="1" type="checkbox">
                                             <label class="field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">
-                                            <div class="field-toggle__icon">
-                                                <svg class="icon"><use xlink:href="#tick"></use></svg>
-                                            </div>
+                                                <span class="field-toggle__icon">
+                                                    <svg class="icon"><use xlink:href="#tick"/></svg>
+                                                </span>
                                                 $tokenNode.name
+                                            </label>
                                         #end
-                                        </label>
                                     </div>
                                 #end
                             #else

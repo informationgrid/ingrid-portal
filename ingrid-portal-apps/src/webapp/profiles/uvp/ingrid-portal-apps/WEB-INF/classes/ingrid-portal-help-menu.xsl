@@ -31,7 +31,7 @@
         <xsl:if test="header/@display != 'false' or not(header/@display)">
             <ul class="accordion filter-group nav-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
                 <li class="accordion-item" data-accordion-item="">
-                    <a class="accordion-title" aria-controls="facet-accordion" role="tab" id="help-accordion-label" aria-expanded="false" aria-selected="false">
+                    <a class="accordion-title" role="tab" id="help-accordion-label" aria-expanded="false" aria-selected="false">
                         <span class="text"><xsl:value-of select="header"/></span>
                     </a>
                     <div class="accordion-content" data-tab-content="" role="tabpanel">

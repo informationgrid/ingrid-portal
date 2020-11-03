@@ -2,8 +2,8 @@
 <aside class="sidebar js-accordion-multi">
     <div class="sidebar__title js-accordion-toggle mq-show-l" onclick="onClickFilterEvent()">
         Info
-        <svg class="icon"><use xlink:href="#filter"></use></svg>
-        <svg class="icon"><use xlink:href="#cross"></use></svg>
+        <svg class="icon"><use xlink:href="#filter"/></svg>
+        <svg class="icon"><use xlink:href="#cross"/></svg>
     </div>
     <div class="sidebar__content js-accordion-content is-hidden">
        <div class="portlet-section-body portlet_info">
@@ -18,17 +18,17 @@
 <article class="content ob-container ob-box-narrow">
     <div class="sidebar-toggle mq-hide-l mq-show-xb js-sidebar-toggle">
         <svg class="icon">
-            <use xlink:href="#arrow-thick">
+            <use xlink:href="#arrow-thick"/>
          </svg>
     </div>
     <h4>$MESSAGES.getString('chronicle.form.term')</h4>
-    <form action="$action" method="post" enctype="" name="chronicle_search" id="chronicle_search">
+    <form action="$action" method="post" name="chronicle_search" id="chronicle_search">
         #displayFormErrorQuery()
         <div class="search-form ob-clear ob-container ob-flex">
             <input class="field field--large" type="text" id="qry" name="search" value="#getHTMLEscapedFieldValue('search')">
             <button class="btn btn--primary btn--medium btn--icon-transition">
-                <svg class="icon mq-show-m"><use xlink:href="#magnifier"></svg>
-                <div class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</div>
+                <svg class="icon mq-show-m"><use xlink:href="#magnifier"/></svg>
+                <span class="mq-hide-m">$MESSAGES.getString('common.form.button.show')</span>
             </button>
         </div>
         <input type="hidden" name="action" value="doSearch"/>
@@ -36,11 +36,11 @@
         <div class="field-toggle field-toggle--check bx-bot-xs" >
             <input id="chk_all" name="event" type="checkbox" value="all" onclick="ingrid_checkAll(document.chronicle_search.event)" onkeypress="ingrid_checkAll(document.chronicle_search.event)" #getChecked('event' 'all')>
             <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_all">
-                <div class="field-toggle__icon field-toggle__icon-alt">
+                <span class="field-toggle__icon field-toggle__icon-alt">
                     <svg class="icon">
-                        <use xlink:href="#tick">
+                        <use xlink:href="#tick"/>
                     </svg>
-                </div>
+                </span>
                 $MESSAGES.getString('chronicle.form.allEventtypes')
             </label>
         </div>
@@ -49,11 +49,11 @@
             <div class="field-toggle field-toggle--check bx-bot-xs">
                 <input id="chk_$velocityCount" name="event" type="checkbox" value="$evtype.FormValue" onclick="ingrid_checkGroup(document.chronicle_search)" onkeypress="ingrid_checkGroup(document.chronicle_search)" #getChecked('event' "$evtype.FormValue")>
                 <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('event')" for="chk_$velocityCount">
-                    <div class="field-toggle__icon field-toggle__icon-alt">
+                    <span class="field-toggle__icon field-toggle__icon-alt">
                         <svg class="icon">
-                            <use xlink:href="#tick">
+                            <use xlink:href="#tick"/>
                         </svg>
-                    </div>
+                    </span>
                     $MESSAGES.getString("$evtype.QueryValue")
                 </label>
             </div>
@@ -68,22 +68,22 @@
                 </select>
             </div>
             <div class="media__obj--left">
-                <div for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                <output for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
                     <label for="from_yy">$MESSAGES.getString('chronicle.form.time.from')</label>
                     <input id="from_yy" class="field datepicker picker__input #addErrorFormClassText('time_from')" type="date" name="time_from" data-value="#getFieldValue('time_from_submit')">
-                </div>
+                </output>
             </div>
             <div class="media__obj--left">
-                <div for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
+                <output for="vonbis" class="selection-content #if($actionForm.isCurrentInput('time_select', 'date')) is-hidden #end">
                     <label for="till_yy" >$MESSAGES.getString('chronicle.form.time.to')</label>
                     <input id="till_yy" class="field datepicker picker__input #addErrorFormClassText('time_to')" type="date" name="time_to" data-value="#getFieldValue('time_to_submit')">
-                </div>
+                </output>
             </div>
             <div class="media__obj--left">
-                <div for="am" class="selection-content  #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
+                <output for="am" class="selection-content  #if($actionForm.isCurrentInput('time_select', 'period')) is-hidden #end">
                     <label for="time_at" >$MESSAGES.getString('chronicle.form.time.at')</label>
                     <input id="time_at" class="field datepicker picker__input #addErrorFormClassText('time_at')" type="date" name="time_at" data-value="#getFieldValue('time_at_submit')">
-                </div>
+                </output>
             </div>
         </div>
     </form>

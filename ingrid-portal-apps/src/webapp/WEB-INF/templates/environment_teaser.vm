@@ -7,7 +7,7 @@
             #set ($numTopics = $topicList.size())
             #foreach ($topic in $topicList)
                 <li>
-                    <a class="tag tag--big" href="$renderResponse.encodeURL("/portal/main-search.psml?action=doSearch&q=topic:${topic.QueryValue}&ds=1&grouping=domain")">$topic.QueryValue</a>
+                    <a class="tag tag--big" href="$renderResponse.encodeURL("/portal/main-search.psml?action=doSearch&q=topic:${topic.QueryValue.replace(' ','%20')}&ds=1&grouping=domain")">$topic.QueryValue</a>
                 </li>
             #end
         </ul>

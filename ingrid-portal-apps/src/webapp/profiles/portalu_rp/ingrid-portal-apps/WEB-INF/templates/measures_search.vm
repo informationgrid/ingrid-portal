@@ -1,15 +1,4 @@
-<style>
-  #iframe_measure { height: 100%; }
-  .embed-container { width: 100%; position: absolute; bottom: 0; top: 159px;}
-  @media screen and (max-width: 939px) {
-    .embed-container { top: 76px; }
-  }
-  @media screen and (max-width: 767px) {
-    .embed-container { top: 60px; }
-  }
-</style>
-
-<div class="embed-container">
+div class="embed-container">
   <iframe id="iframe_measure" allowfullscreen></iframe>
 </div>
 

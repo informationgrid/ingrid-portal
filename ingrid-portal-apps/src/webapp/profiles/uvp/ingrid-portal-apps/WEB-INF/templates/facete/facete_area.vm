@@ -70,7 +70,7 @@
                                             #end
                                         #end
                                         >
-                                        <div class="control__indicator"></div>
+                                        <span class="control__indicator"></span>
                                         $topic.title#renderMsgTopicType()
                                     </label>
                                 </div>
@@ -107,7 +107,7 @@
                                             #end
                                         #end
                                         >
-                                        <div class="control__indicator"></div>
+                                        <span class="control__indicator"></span>
                                         $topic.title#renderMsgTopicType()
                                     </label>
                                 </div>

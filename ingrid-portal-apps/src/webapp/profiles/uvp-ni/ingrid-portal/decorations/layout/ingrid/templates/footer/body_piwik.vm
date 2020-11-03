@@ -1,12 +1,12 @@
 <!-- Piwik -->
-<script type="text/javascript">
+<script>
 var domain = document.domain;
 if(domain == "uvp.niedersachsen.de"){
     var pkBaseURL = (("https:" == document.location.protocol) ? "https://matomo.niedersachsen.de/" : "http://matomo.niedersachsen.de/");
     document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 }
 </script>
-<script type="text/javascript">
+<script>
     try {
         var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 4);
         piwikTracker.trackPageView();
