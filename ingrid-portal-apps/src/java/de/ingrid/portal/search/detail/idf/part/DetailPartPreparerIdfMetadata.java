@@ -22,10 +22,9 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -536,7 +535,120 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 return listSearch;
         }
     }
-    
+
+    public List<HashMap<String, Object>> getListAPACitation(String xpathExpression, List<String> headXpathExpressions, String nameXpathExpression) {
+        // headXpathExpressions order: name, year, title and doi-link
+        List<HashMap<String, Object>> listCitation = new ArrayList<>();
+        if(xPathUtils.nodeExists(rootNode, xpathExpression)){
+            NodeList tmpNodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+            for (int i = 0; i < tmpNodeList.getLength(); i++){
+                HashMap<String, Object> element = new HashMap<>();
+                Node node = tmpNodeList.item(i);
+
+                for (String headXpathExpression : headXpathExpressions) {
+                    if (xPathUtils.nodeExists(node, headXpathExpression)) {
+                        int index = headXpathExpressions.indexOf(headXpathExpression);
+                        if (index == 0){
+                            // author names
+                            StringBuilder valueConcated = new StringBuilder();
+                            NodeList tmpNameList = xPathUtils.getNodeList(node, headXpathExpression);
+                            for (int j = 0; j < tmpNameList.getLength(); j++){
+                                Node nameNode = xPathUtils.getNode(tmpNameList.item(j), nameXpathExpression);
+                                if (nameNode != null && nameNode.getTextContent().length() > 0){
+                                    if (j != 0){valueConcated.append(", ");}
+                                    String name = nameNode.getTextContent().trim();
+                                    List<String> nameSplits = Arrays.asList(name.split(", "));
+                                    valueConcated.append(String.format("%s,", nameSplits.get(0)));
+                                    for (String nameSlit : nameSplits) {
+                                        if (nameSplits.indexOf(nameSlit) != 0) {
+                                            valueConcated.append(String.format(" %s.", nameSlit.charAt(0)));
+                                        }
+                                    }
+                                }
+                            }
+                            element.put("authors", valueConcated.toString());
+                        } else {
+                            Node valueNode = xPathUtils.getNode(node, headXpathExpression);
+                            if (valueNode != null && valueNode.getTextContent().length() > 0){
+                                String value = valueNode.getTextContent().trim();
+                                switch (index) {
+                                    case 1:
+                                        // year
+                                        Pattern pattern = Pattern.compile("\\d{4}");
+                                        Matcher matcher = pattern.matcher(value);
+                                        if (matcher.find()) {
+                                            element.put("year", value);
+                                        }
+                                        break;
+                                    case 2:
+                                        // title
+                                        element.put("title", value);
+                                        break;
+                                    case 3:
+                                        // doi-link
+                                        element.put("doi", value);
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                }
+                listCitation.add(element);
+            }
+        }
+        return listCitation;
+    }
+
+    public List<HashMap<String, Object>> getAPACitationFromXPath(List<String> xpathExpressions) {
+        return getAPACitationFromXPath(xpathExpressions, this.rootNode);
+    }
+
+    public List<HashMap<String, Object>> getAPACitationFromXPath(List<String> xpathExpressions, Node root){
+        // get a single APACitation with given absolute paths
+        // expression order: name, year, title and doi-link
+        List<HashMap<String, Object>> listCitation = new ArrayList<>();
+        HashMap<String, Object> element = new HashMap<>();
+        for (String expression : xpathExpressions){
+            String tmpValue;
+            Node node = xPathUtils.getNode(root, expression);
+            if (node != null && node.getTextContent().length() > 0){
+                tmpValue = node.getTextContent().trim();
+                switch (xpathExpressions.indexOf(expression)){
+                    case 0:
+                        // name
+                        StringBuilder valueConcated = new StringBuilder();
+                        List<String> nameSplits = Arrays.asList(tmpValue.split(", "));
+                        valueConcated.append(String.format("%s,", nameSplits.get(0)));
+                        for (String nameSlit : nameSplits){
+                            if (nameSplits.indexOf(nameSlit) != 0){
+                                valueConcated.append(String.format(" %s.", nameSlit.charAt(0)));
+                            }
+                        }
+                        element.put("authors", valueConcated.toString());
+                        break;
+                    case 1:
+                        // year
+                        Pattern pattern = Pattern.compile("\\d{4}");
+                        Matcher matcher = pattern.matcher(tmpValue);
+                        if (matcher.find()){
+                            element.put("year", matcher.group());
+                        }
+                        break;
+                    case 2:
+                        // title
+                        element.put("title", tmpValue);
+                        break;
+                    case 3:
+                        // doi-link
+                        element.put("doi", tmpValue);
+                        break;
+                }
+            }
+        }
+        listCitation.add(element);
+        return listCitation;
+    }
+
     public Map getAvailability(String xpathExpression) {
         HashMap element = new HashMap();
         

@@ -143,18 +143,32 @@
             #set($tmp = "")
             #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             #if($TOOL.aNodeOfListExist($xpathList))
+        ## Quellenvermerk
+            #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']"])
+            #if($TOOL.aNodeOfListExist($xpathList))
+                #set($xpathExpressions = [
+                    "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue!='author']/gmd:individualName/gco:CharacterString",
+                    "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date|./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime",
+                    "./gmd:identificationInfo/*/gmd:title/gco:CharacterString",
+                    "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"])
+                #set($tmp = $TOOL.getAPACitationFromXPath($xpathExpressions))
+                #renderCitation($MESSAGES.getString("source_note") $tmp)
+                #set($tmp = "")
+            #end
 ## Verweis
 <h2><a class="anchor" name="detail-2"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("references_tab")</span></h2>
         ## Querverweise
-                #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue!='author']"])
+                #set($xpathList = ["./gmd:identificationInfo/*/gmd:aggregationInfo/gmd:MD_AggregateInformation[./gmd:associationType/gmd:DS_AssociationTypeCode/@codeListValue='crossReference']"])
                 #if($TOOL.aNodeOfListExist($xpathList))
-                    <div class="row columns">
-                    #renderSectionTitle($TOOL.getAPACitationFromXPath([
-                            "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue!='author']/gmd:individualName/gco:CharacterString",
-                            "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date|./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime",
-                            "./gmd:identificationInfo/*/gmd:title/gco:CharacterString",
-                            "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"]))
-                    </div>
+                    #set($headXpathExpressions = [
+                        "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:citedResponsibleParty",
+                        "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date",
+                        "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:title/gco:CharacterString",
+                        "./gmd:MD_AggregateInformation/gmd:aggregateDataSetName/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"])
+                    #set($nameXpathExpression = "./gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']/gmd:individualName/gco:CharacterString")
+                    #set($tmp = $TOOL.getListAPACitation("./gmd:identificationInfo/*/gmd:aggregationInfo", $headXpathExpressions, $nameXpathExpression))
+                    #renderCitation($MESSAGES.getString("cross_references") $tmp)
+                    #set($tmp = "")
                 #end
         ## Verweise
                 #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"])

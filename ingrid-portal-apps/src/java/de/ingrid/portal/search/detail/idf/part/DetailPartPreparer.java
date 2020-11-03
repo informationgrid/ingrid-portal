@@ -22,16 +22,15 @@
  */
 package de.ingrid.portal.search.detail.idf.part;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.global.IngridResourceBundle;
+import de.ingrid.portal.global.IngridSysCodeList;
+import de.ingrid.portal.global.UtilsString;
+import de.ingrid.utils.IngridDocument;
+import de.ingrid.utils.json.JsonUtil;
+import de.ingrid.utils.udk.*;
+import de.ingrid.utils.xml.IDFNamespaceContext;
+import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.velocity.context.Context;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
@@ -40,19 +39,12 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.IngridResourceBundle;
-import de.ingrid.portal.global.IngridSysCodeList;
-import de.ingrid.portal.global.UtilsString;
-import de.ingrid.utils.IngridDocument;
-import de.ingrid.utils.json.JsonUtil;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeAlle;
-import de.ingrid.utils.udk.TM_PeriodDurationToTimeInterval;
-import de.ingrid.utils.udk.UtilsCountryCodelist;
-import de.ingrid.utils.udk.UtilsDate;
-import de.ingrid.utils.udk.UtilsLanguageCodelist;
-import de.ingrid.utils.xml.IDFNamespaceContext;
-import de.ingrid.utils.xpath.XPathUtils;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class DetailPartPreparer {
 
@@ -143,55 +135,6 @@ public class DetailPartPreparer {
             }
         }
         return value;
-    }
-
-    public String getAPACitationFromXPath(List<String> xpathExpressions) {
-        return getAPACitationFromXPath(xpathExpressions, this.rootNode);
-    }
-
-    public String getAPACitationFromXPath(List<String> xpathExpressions, Node root){
-        // expression order: name, year, title and doi-link
-        StringBuilder value = new StringBuilder();
-        for (String expression : xpathExpressions){
-            String tmpValue;
-            Node node = xPathUtils.getNode(root, expression);
-            if (node != null && node.getTextContent().length() > 0){
-                tmpValue = node.getTextContent().trim();
-                switch (xpathExpressions.indexOf(expression)){
-                    case 0:
-                        // name
-                        List<String> nameSplits = Arrays.asList(tmpValue.split(", "));
-                        value.append(String.format("%s,", nameSplits.get(0)));
-                        for (String nameSlit : nameSplits){
-                            if (nameSplits.indexOf(nameSlit) != 0){
-                                value.append(String.format(" %s.", nameSlit.charAt(0)));
-                            }
-                        }
-                        break;
-                    case 1:
-                        // year
-                        Pattern pattern = Pattern.compile("\\d{4}");
-                        Matcher matcher = pattern.matcher(tmpValue);
-                        if (matcher.find()){
-                            value.append(String.format(" (%s)", matcher.group()));
-                        }
-                        break;
-                    case 2:
-                        // title
-                        value.append(String.format(": %s", tmpValue));
-                        break;
-                    case 3:
-                        // doi-link
-                        value.append(String.format(", %s", tmpValue));
-                        break;
-                }
-            }
-        }
-        if (!value.toString().equals("")){
-            return value.toString();
-        } else {
-            return null;
-        }
     }
     
     public String getDecodeValue(String value) {
