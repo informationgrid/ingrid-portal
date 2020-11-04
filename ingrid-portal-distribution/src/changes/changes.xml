@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.4.6-SNAPSHOT" date="2020-XX-XX" description="Release 5.4.6">
+          <action type="add" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
           <action type="update" dev="wemove" issue="2083">
             Portal details: change display of date to last modified on #2083.
           </action>
