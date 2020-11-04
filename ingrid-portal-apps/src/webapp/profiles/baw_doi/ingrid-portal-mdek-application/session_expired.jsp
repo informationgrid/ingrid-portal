@@ -60,7 +60,7 @@
                 </div>
                 <div class="menu-main-links">
                     <div class="highlighted">
-                        <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Umweltinformationen"><span class="text">Suche</span></a>
+                        <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Daten"><span class="text">Suche</span></a>
                         <a href="/kartendienste" class="header-menu-entry " title="Interaktive thematische Karten"><span class="text">Karten</span></a>
                         <a href="/messwertsuche" class="header-menu-entry " title="Umweltmessdaten"><span class="text">Messwerte</span></a>
                         <a href="/datenkataloge" class="header-menu-entry " title="Datenkataloge"><span class="text">Kataloge</span></a>
@@ -92,7 +92,7 @@
                     </div>
                     <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
                         <div class="menu-tab-row">
-                            <a class="menu-tab is-selected" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
+                            <a class="menu-tab is-selected" href="/freitextsuche" title="Freitextsuche nach Daten">
                                 <div class="link-menu-tab">
                                     <span class="ic-ic-daten"></span>
                                     <span class="text">Suche</span>

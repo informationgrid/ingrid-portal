@@ -417,7 +417,7 @@ header a.icon.is-selected {
 .about .about-wrapper .button.outline:hover {
   background-color: #1D4B7B;
 }
-.banner.home h1.green {
+.banner.home h2.aqua {
   color: #7DCFF2;
 }
 .banner.home .home-wrapper .indent span {
@@ -694,7 +694,7 @@ footer hr {
   color: #0089C6;
 }
 .category {
-  margin: 72px 0 0;
+  margin: 0;
 }
 
 .category .text-center h2, .teaser-data-projects .text-center h2 {

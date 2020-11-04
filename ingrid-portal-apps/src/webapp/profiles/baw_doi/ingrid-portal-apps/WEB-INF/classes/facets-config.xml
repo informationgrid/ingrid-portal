@@ -335,7 +335,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <id>rss</id>
                 <icon>ic-rss</icon>
                 <url>/neuigkeiten</url>
-                <display>true</display>
+                <display>false</display>
             </facet>
             <!-- Webseiten -->
             <facet>

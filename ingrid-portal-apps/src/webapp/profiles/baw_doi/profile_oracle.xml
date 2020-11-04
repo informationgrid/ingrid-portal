@@ -32,16 +32,24 @@
             <hidden>false</hidden>
         </page>
         <page>
+            <name>main-about-partner.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
+            <name>main-about-data-source.psml</name>
+            <hidden>true</hidden>
+        </page>
+        <page>
             <name>default-page.psml</name>
             <hidden>false</hidden>
             <portlets>
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+<!--                <portlet col="0" row="1">-->
+<!--                    <name>ingrid-portal-apps::RssNewsTeaser</name>-->
+<!--                </portlet>-->
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>
@@ -53,10 +61,10 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+<!--                <portlet col="0" row="1">-->
+<!--                    <name>ingrid-portal-apps::RssNewsTeaser</name>-->
+<!--                </portlet>-->
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>
@@ -68,10 +76,10 @@
                 <portlet col="0" row="0">
                     <name>ingrid-portal-apps::SearchSimple</name>
                 </portlet>
+<!--                <portlet col="0" row="1">-->
+<!--                    <name>ingrid-portal-apps::RssNewsTeaser</name>-->
+<!--                </portlet>-->
                 <portlet col="0" row="1">
-                    <name>ingrid-portal-apps::RssNewsTeaser</name>
-                </portlet>
-                <portlet col="0" row="2">
                     <name>ingrid-portal-apps::CategoryTeaser</name>
                 </portlet>
             </portlets>

@@ -1,9 +1,9 @@
 #set ($action = $renderResponse.createActionURL())
-    <div class="row">
-        <div class="columns text-center">
-            <h2>$MESSAGES.getString('search.teaser.portlet.title')</h2>
-        </div>
-    </div>
+##    <div class="row">
+##        <div class="columns text-center">
+##            <h2>$MESSAGES.getString('search.teaser.portlet.title')</h2>
+##        </div>
+##    </div>
     #if($facetsTyp.size() > 1)
         <ul class="tabs" data-tabs="" id="uvp-tabs" role="tablist" data-e="">
         #set($isActive = "")
