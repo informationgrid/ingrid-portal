@@ -10,6 +10,9 @@
           <action type="update" dev="wemove" issue="1810">
             Portal: Verbesserung der Barrierefreiheit des Portals
           </action>
+          <action type="add" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
         </release>
 
         <release version="5.6.1" date="2020-10-30" description="Release 5.6.1">
