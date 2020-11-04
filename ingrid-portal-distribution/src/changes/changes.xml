@@ -11,6 +11,9 @@
           <action type="fix" dev="wemove" issue="2141">
             IGE: Fix visibility of dateformat.
           </action>
+          <action type="fix" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
         </release>
 
         <release version="5.3.12" date="2020-09-29" description="Release 5.3.12">
