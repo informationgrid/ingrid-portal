@@ -7,7 +7,7 @@
 
     <body>
         <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
-          <action type="fix" dev="wemove" issue="2212">
+          <action type="add" dev="wemove" issue="2212">
             Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
           </action>
           <action type="fix" dev="wemove" issue="2213">
