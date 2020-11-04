@@ -686,10 +686,13 @@
                         <b>$citation.authors</b>
                     #end
                     #if($tool.hasContent($citation.year))
-                        <b>($citation.year)</b>
+                        <b>($citation.year):</b>
                     #end
                     #if($tool.hasContent($citation.title))
-                        : <i>$citation.title</i>.
+                        <i>$citation.title</i>.
+                    #end
+                    #if($tool.hasContent($citation.publisher))
+                        $citation.publisher.
                     #end
                     #if($tool.hasContent($citation.doi))
                         <a href="$citation.doi" target="_blank">$citation.doi</a>
