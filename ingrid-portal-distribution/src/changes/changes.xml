@@ -11,6 +11,9 @@
           <action type="update" dev="wemove" issue="2150">
             UVP: UVP Link von saarländischer Seite anpassen.
           </action>
+          <action type="add" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
         </release>
 
         <release version="5.5.2" date="2020-10-09" description="Release 5.5.2">
