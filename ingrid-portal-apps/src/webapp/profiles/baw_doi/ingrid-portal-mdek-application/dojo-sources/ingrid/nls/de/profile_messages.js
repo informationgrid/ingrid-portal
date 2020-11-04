@@ -21,6 +21,7 @@
  * **************************************************#
  */
 define({
+    "dialog.doi.xref.title": "Querverweis",
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
 
     "ui.obj.baw.auftragsnummer.title": "PSP-Element",
