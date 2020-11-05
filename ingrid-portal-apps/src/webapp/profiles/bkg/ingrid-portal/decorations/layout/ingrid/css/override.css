@@ -477,10 +477,9 @@ body {
 @media screen and (min-width: 840px) {
   .block--pad-top {
     padding-top: 1rem;
-    padding-bottom: 0.5rem;
   }
 }
 /* footer logo */
 .bkg-logo a {
-  padding: 0;
+  padding: 0 !important;
 }
