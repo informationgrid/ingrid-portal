@@ -25,6 +25,9 @@
           <action type="update" dev="wemove" issue="1810">
             Portal: Verbesserung der Barrierefreiheit des Portals
           </action>
+          <action type="add" dev="wemove" issue="2210">
+            IGE (Nokis): Add Nokis thesaurus.
+          </action>
         </release>
 
         <release version="5.6.0" date="2020-10-19" description="Release 5.6.0">
