@@ -144,7 +144,7 @@
             #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             #if($TOOL.aNodeOfListExist($xpathList))
         ## Quellenvermerk
-            #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']"])
+            #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 #set($xpathExpressions = {
                     "rootName" : "./gmd:identificationInfo/*/gmd:pointOfContact",

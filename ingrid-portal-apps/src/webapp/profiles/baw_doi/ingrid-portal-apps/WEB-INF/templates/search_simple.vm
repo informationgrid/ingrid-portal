@@ -9,10 +9,6 @@ $action.setParameter('action','doSearch')
         <div class="large-20 columns dark">
             <h1>$MESSAGES.getString('searchSimple.portlet.title.1')</h1>
             <h2 class="aqua">$MESSAGES.getString('searchSimple.portlet.title.2')<span class="ic-ic-asterisc"></span></h2>
-##            <div class="indent">
-##                <span class="ic-ic-asterisc"></span>
-##                <p class="intro">$MESSAGES.getString('searchSimple.portlet.title.3')</p>
-##            </div>
             <form action="$action" class="input-search" method="get" name="SearchForm" id="SearchForm" onSubmit='if (this.q.value == "$MESSAGES.getString('searchSimple.query.initial')") this.q.value=""'>
                 <input type="text" class="input-search-field" id="search-field" placeholder="$MESSAGES.getString('searchSimple.query.initial')" id="qrystr" name="q" value="#if(!$actionForm.getInputHTMLEscaped('q').equals($MESSAGES.getString('searchSimple.query.initial')))#getHTMLEscapedFieldValue('q')#end">
                 <button class="button round hide-for-medium"><span class="ic-ic-lupe"></span></button>
