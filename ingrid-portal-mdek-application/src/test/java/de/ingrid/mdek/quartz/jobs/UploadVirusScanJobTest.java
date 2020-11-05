@@ -262,7 +262,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
-        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " "));
+        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " ").replaceAll("/", "\\\\"));
     }
 
     /**
@@ -344,7 +344,7 @@ public class UploadVirusScanJobTest extends BaseJobTest {
         + "Moving file: \"target\\ingrid-upload-test\\dir 2\\File,3Ö\" to \"target\\ingrid-upload-quarantine\\target\\ingrid-upload-test\\dir 2\\File,3Ö\"\n"
         + "Moved 2 infected file(s)\n"
         + "Finished UploadVirusScanJob\n";
-        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " "));
+        assertEquals(report.replaceAll("\\R", " "), this.mockEmailService.emails.get(0).replaceAll("\\R", " ").replaceAll("/", "\\\\"));
     }
 
     /**
