@@ -324,7 +324,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         } else {
                             capUrl = new StringBuilder(getCapabilityUrlFromCrossReference( uuid ));
                         }
-                        if ( capUrl != null ) {
+                        if ( capUrl != null && capUrl.length() != 0) {
                             // add possible missing parameters
                             capUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl.toString() ));
                             link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString() + "||" + getLayerIdentifier(node)));
