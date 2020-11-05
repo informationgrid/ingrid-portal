@@ -309,7 +309,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                     capabilityUrl =  new StringBuilder(getCapabilityUrl());
                                 }
                             }
-                            if ( capabilityUrl != null ) {
+                            if ( capabilityUrl != null && capabilityUrl.length() != 0 ) {
                                 capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
                                 link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString() + "||" + getLayerIdentifier(node)));
                             }
