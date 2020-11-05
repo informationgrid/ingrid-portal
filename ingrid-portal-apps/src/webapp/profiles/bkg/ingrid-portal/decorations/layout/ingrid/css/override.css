@@ -465,21 +465,19 @@ body {
   font-size: 1rem;
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-  background: #eee;
 }
 .breadcrumb__list {
   margin: 0;
 }
-/* search bar */
-.block--light {
-  background: transparent;
-}
-@media screen and (min-width: 840px) {
-  .block--pad-top {
-    padding-top: 1rem;
-  }
-}
 /* footer logo */
 .bkg-logo a {
   padding: 0 !important;
+}
+/* pagination */
+.pagination.bx-top-xl.bx-bot-xl .mq-hide-l {
+  font-size: 1.4rem;
+  margin: 1.5rem 0 1.5rem;
+}
+.tab__select:hover, .tab__select.is-active {
+  background: #0080c4;
 }
