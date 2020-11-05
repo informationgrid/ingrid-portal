@@ -38,9 +38,10 @@ define([
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
     "ingrid/menu",
-    "ingrid/message"
+    "ingrid/message",
+    "ingrid/utils/Store"
     //"module"
-], function (MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message) {
+], function (MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore) {
 
     return declare(null, {
         title: "Veröffentlichung-Querverweise-Tabelle",
@@ -118,6 +119,19 @@ define([
                 style: "width: 100%"
             }, structure, "links");
             this._createAppendDoiCrossReferenceLink();
+
+            topic.subscribe("beforeFinishApplyingObjectNodeData", function (nodeData) {
+                var xrefData = registry.byId(id).data;
+                xrefData.forEach(function (row) {
+                    var dt = row.doiCrossReferenceDate;
+                    console.log(dt);
+                    console.log(typeof dt);
+                    if (typeof dt === "string" || dt instanceof String) {
+                        row.doiCrossReferenceDate = new Date(parseInt(dt));
+                    }
+                });
+                UtilStore.updateWriteStore(id, xrefData);
+            });
 
             newFieldsToDirtyCheck.push(id);
             additionalFields.push(registry.byId(id));
