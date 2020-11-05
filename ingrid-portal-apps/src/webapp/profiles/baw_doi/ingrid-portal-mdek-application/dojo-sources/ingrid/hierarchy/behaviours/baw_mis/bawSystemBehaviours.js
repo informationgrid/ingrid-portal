@@ -40,9 +40,9 @@ define([
             });
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
-                // out of the existing options, keep only Geodatensatz for new object type
+                // out of the existing options, keep only Geodatensatz and Geodatendienst for new object type
                 sysLists[UtilSyslist.listIdObjectClass] = sysLists[UtilSyslist.listIdObjectClass].filter(function(item) {
-                    return item[1] === "1";
+                    return item[1] === "1" || item[1] === "3";
                 });
 
                 // Add vertical CRSes to the list of horizontal CRSes

@@ -21,6 +21,7 @@
  * **************************************************#
  */
 define({
+    "dialog.doi.xref.title": "Querverweis",
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
 
     "ui.obj.baw.auftragsnummer.title": "PSP-Element",
@@ -32,6 +33,7 @@ define({
     "ui.obj.baw.bwastr.table.column.name": "BWaStr.-Streckenname",
     "ui.obj.baw.bwastr.table.help": "Streckenabschnitte der Bundeswasserstrassen nach VV/WSV 1103",
     "ui.obj.baw.bwastr.table.title": "Streckenabschnitte",
+
     "ui.obj.baw.hierarchy.level.name.title": "Bezeichnung der Hierarchieebene",
     "ui.obj.baw.hierarchy.level.name.help": "Bezeichnung der Hierarchieebene",
     "ui.obj.baw.keyword.catalogue.row.title": "Schlagwort",
@@ -53,6 +55,17 @@ define({
     "ui.obj.baw.simulation.timestep.help": "Zeitschrittgröße der Simulation in Sekunden",
     "ui.obj.baw.simulation.spatial.dimensionality.title": "Räumliche Dimensionalität",
     "ui.obj.baw.simulation.spatial.dimensionality.help": "Räumliche Dimensionalität der Simulation",
+
+    "ui.obj.doi.xref.author.table.column.family.name": "Name",
+    "ui.obj.doi.xref.author.table.column.given.name": "Vorname",
+    "ui.obj.doi.xref.table.help": "Querverweise zu anderen Veröffentlichungen hinzufügen",
+    "ui.obj.doi.xref.table.new.row": "Querverweis hinzufügen",
+    "ui.obj.doi.xref.table.row.author": "Autor(en)",
+    "ui.obj.doi.xref.table.row.date": "Datum",
+    "ui.obj.doi.xref.table.row.identifier": "Identifikator",
+    "ui.obj.doi.xref.table.row.publisher": "Verlag",
+    "ui.obj.doi.xref.table.row.title": "Titel",
+    "ui.obj.doi.xref.table.title": "Querverweise",
 
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",

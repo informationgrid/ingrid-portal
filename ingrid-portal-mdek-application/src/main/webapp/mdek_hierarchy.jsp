@@ -196,6 +196,9 @@
                             case "simParamValue":
                                 localizedTitle = message.get('dialog.simulation.parameter.title');
                                 break;
+                            case "doiCrossReference":
+                                localizedTitle = message.get('dialog.doi.xref.title');
+                                break;
                             case "observedProperty":
                                 localizedTitle = "<fmt:message key='dialog.observedProperty.title' />";
                                 break;
