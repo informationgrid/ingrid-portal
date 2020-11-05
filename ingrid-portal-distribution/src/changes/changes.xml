@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="2212">
             Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
           </action>
+          <action type="add" dev="wemove" issue="2210">
+            Nokis: Map thesaurus to/from ISO
+          </action>
         </release>
 
         <release version="5.6.1" date="2020-10-30" description="Release 5.6.1">

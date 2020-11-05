@@ -24,8 +24,9 @@ define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/nokis/docTypes",
-    "ingrid/hierarchy/behaviours/nokis/geometryContext"
-], function(lang, behaviours, docTypes, geometryContext) {
+    "ingrid/hierarchy/behaviours/nokis/geometryContext",
+    "ingrid/hierarchy/behaviours/nokis/thesaurus"
+], function(lang, behaviours, docTypes, geometryContext, thesaurus) {
 
     return lang.mixin(behaviours, {
 
@@ -35,7 +36,8 @@ define([
          * Load new syslists containing Nokis stuff.
          */
         nokisDocumentTypes: docTypes,
-        geometryContext: geometryContext
+        geometryContext: geometryContext,
+        thesaurus: thesaurus
 
     });
 });

@@ -46,11 +46,11 @@ define(["dojo/_base/declare",
             });
 
             // load custom syslists
-            /*topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
+            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
 
-                // ids.push(8002);
+                ids.push(20000);
 
-            });*/
+            });
 
         }
 
