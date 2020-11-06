@@ -93,7 +93,7 @@
             <src>../uvp/ingrid-portal-mdek/</src>
             <dst>ingrid-portal-mdek/</dst>
         </file>
-        <!-- COPY NUMIS FILES -->
+        <!-- COPY BAW FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>

@@ -133,7 +133,7 @@
         <to>/messwertsuche</to>
     </outbound-rule>
     
-    <!--  Umweltthemen  -->
+    <!--  Themen  -->
     <rule>
         <from>/themensuche</from>
         <to type="forward">/portal/main-environment.psml</to>
@@ -153,14 +153,14 @@
         <to>/kartendienste</to>
     </outbound-rule>
     
-    <!--  Umweltchronik  -->
+    <!--  Chronik  -->
     <rule>
-        <from>/umweltchronik</from>
+        <from>/chronik</from>
         <to type="forward">/portal/main-chronicle.psml</to>
     </rule>
     <outbound-rule>
         <from>/portal/main-chronicle.psml</from>
-        <to>/umweltchronik</to>
+        <to>/chronik</to>
     </outbound-rule>
     
     <!-- Über InGrid-Portal  -->
@@ -194,6 +194,10 @@
     </outbound-rule>
     
     <!-- Mein Portal  -->
+    <rule>
+        <from>/log-in/</from>
+        <to type="forward">/portal/service-myportal.psml</to>
+    </rule>
     <rule>
         <from>/log-in</from>
         <to type="forward">/portal/service-myportal.psml</to>

@@ -149,7 +149,7 @@ define([
                     }
                 }
 
-                // Umweltthemen
+                // Themen
                 domClass.add("uiElementN014", "hide");
 
                 // ----------------------------------------

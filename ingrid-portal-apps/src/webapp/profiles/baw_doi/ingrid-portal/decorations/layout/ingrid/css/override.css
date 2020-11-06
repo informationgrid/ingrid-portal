@@ -283,7 +283,7 @@
   }
 }
 
-/* NUMIS */
+/* BAW */
 a {
   color: #4A7CC1;
 }
@@ -645,44 +645,6 @@ footer hr {
   padding: 12px;
   border: 1px solid #C6CFE2;
   position: absolute;
-}
-.switch-popup {
-  left: 0;
-  margin-left: 0;
-  width: 35em;
-}
-.switch-popup .js-popup-close {
-  right: 0;
-  position: absolute;
-  background: transparent !important;
-}
-.switch-popup .text-box {
-  padding: 16px;
-}
-.switch-popup a {
-  display: flex;
-  padding: 24px;
-  border-radius: 32px;
-  text-decoration: none;
-}
-.switch-popup a[href] {
-  background: #F6F6F6;
-}
-.switch-popup a[href]:hover {
-  background: #C6CFE2;
-}
-.switch-popup .switch-link.numis span {
-  font-size: 32px;
-  padding: 12px 24px 0 0;
-}
-.switch-popup a.switch-link.numis img {
-  width: 18em;
-}
-.switch-popup a.switch-link.uvp span{
-  padding: 0 28px 0;
-}
-.switch-popup a.switch-link.uvp img {
-  width: 15em;
 }
 .select2-container--default .select2-selection--single::after {
   color: #0089C6;
@@ -1161,12 +1123,6 @@ header .menu-tab-row .menu-tab {
     top: -6px;
     font-size: 26px;
   }
-  .switch-popup a.switch-link.numis img {
-    width: 13.725em;
-  }
-  .switch-popup a.switch-link.uvp img {
-    width: 9.725em;
-  }
 }
 @media print, screen and (min-width: 64em) {
   .nav-content {
@@ -1177,12 +1133,6 @@ header .menu-tab-row .menu-tab {
   }
   .nav-content .columns:last-of-type {
     padding-left: 0;
-  }
-  .switch-popup a.switch-link.uvp img {
-    width: 20em;
-  }
-  .switch-popup a.switch-link.numis img {
-     width: 24em;
   }
   h3, .h3 {
     font-size: 1.33rem;
@@ -1224,7 +1174,7 @@ h1, h2, h3, h4, h5{
   color: #4A7CC1;
   border-radius: 60px;
 }
-.midnight {
+.lightgrey {
   background-color: #EAEAEA;
 }
 .block--padded {
@@ -1289,7 +1239,7 @@ h1, h2, h3, h4, h5{
 .search-filtered h2 {
   color: #2c63b1;
 }
-/* search details page*/
+/* search details page */
 .row.align-center.detail-header {
   justify-content: unset;
   padding-left: 32px;
@@ -1315,7 +1265,7 @@ h1, h2, h3, h4, h5{
 .accordion-title.js-anchor-target.is-active {
   background-color: #2C63B1 !important;;
 }
-/* search page*/
+/* search page */
 .teaser-data.search {
   padding: 30px;
   margin-bottom: 30px;
@@ -1340,7 +1290,7 @@ h1, h2, h3, h4, h5{
     font-size: 1.33rem;
   }
 }
-/* user management page*/
+/* user management page */
 .button[disabled] {
   background-color: #4A7CC1;
 }
@@ -1349,4 +1299,9 @@ h1, h2, h3, h4, h5{
 }
 .popup.headline {
   background-color: #4A7CC1;
+}
+/* category */
+.category-teaser h2 {
+  text-transform: none !important;
+  margin-bottom: 2rem;
 }

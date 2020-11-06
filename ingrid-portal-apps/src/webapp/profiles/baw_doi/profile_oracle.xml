@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <profile>
-    <name>numis</name>
-    <description>Portal-Profile für NUMIS</description>
+    <name>baw_doi</name>
+    <description>Portal-Profile für BAW</description>
     <pages>
         <page>
             <name>main-measures.psml</name>
@@ -93,7 +93,7 @@
             <src>../uvp/ingrid-portal-mdek/</src>
             <dst>ingrid-portal-mdek/</dst>
         </file>
-        <!-- COPY NUMIS FILES -->
+        <!-- COPY BAW FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>

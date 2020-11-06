@@ -43,7 +43,7 @@
         <section help-key="search-4">
             <header>Auf Karte festlegen</header>
             <content>
-                <p>Die räumliche Einschränkung der NUMIS-Suche ist auch über die Auswahl eines Kartenausschnitts 
+                <p>Die räumliche Einschränkung der BAW-Suche ist auch über die Auswahl eines Kartenausschnitts 
                    möglich.</p>
                 <p>Wählen Sie ein Gebiet aus, indem Sie mit Shift + gedrückter 
                    linker Maustaste ein Rechteck auf der Karte aufziehen.
@@ -186,7 +186,7 @@
         <section help-key="search-expert-8">
             <header>Sonderzeichen</header>
             <content>
-                <p>Die folgenden Zeichen haben im Suchausdruck von NUMIS eine
+                <p>Die folgenden Zeichen haben im Suchausdruck von BAW eine
                     spezielle Bedeutung (z.B. in Form von Operatoren):</p>
                 <p>+ - &amp;&amp; || ! ( ) { } [ ] ^ &quot; ~ * ? : \</p>
                 <p>Sollen sie dennoch als einfache Zeichen innerhalb eines
@@ -199,11 +199,11 @@
         <section help-key="search-expert-9a">
             <header>Suche nach speziellen Dokumenttypen</header>
             <content>
-                <p> In NUMIS kann nach verschiedenen Dokumenttypen gesucht werden. 
+                <p> In BAW kann nach verschiedenen Dokumenttypen gesucht werden. 
                     Dazu wird die Syntax ‚fileformat:Wert’ verwandt.</p>
                 <p>Beispiel: ‚fileformat:pdf’ (Es wird nur nach
                     PDF-Dokumenten gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'fileformat' in NUMIS zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'fileformat' in BAW zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -240,14 +240,14 @@
         <br></br>
             <header>Suche nach speziellen Datentypen</header>
             <content>
-                <p>Der NUMIS-Volltextindex gliedert sich in verschiedene
-                    Felder. Alle in NUMIS verwendeten Felder lassen sich
+                <p>Der BAW-Volltextindex gliedert sich in verschiedene
+                    Felder. Alle in BAW verwendeten Felder lassen sich
                     gezielt einzeln durchsuchen. Dazu wird die Syntax
                     ‚Feldname:Wert’ verwandt.</p>
                 <p>Bei der Suche nach einem Datentyp ist der Feldname 'Datatype'.</p>
                 <p>Beispiel: ‚datatype:law’ (Es wird nach
                     Dokumenten gesucht, die unter Rechtsvorschriften eingeordnet sind.)</p>
-                <p>Folgende Werte stehen für das Feld 'datatype' in NUMIS zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'datatype' in BAW zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -351,7 +351,7 @@
                 Syntax ‚topic:Wert’ verwandt.</p>
                 <p>Beispiel: ‚datatype:metadata metaclass:map’ (Es wird nach
                     Metadaten der Klasse Geo-Information/Karte gesucht.)</p>
-                <p>Folgende Werte stehen für das Feld 'metaclass' in NUMIS zur Verfügung:</p>
+                <p>Folgende Werte stehen für das Feld 'metaclass' in BAW zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -408,7 +408,7 @@
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in NUMIS zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in BAW zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -449,7 +449,7 @@
                 werden. </p>
                 <p>Beispiel: ‚t1:2006-01-01 t2:2008-12-31’ (Die Suche wird auf ein 
                 ausgewähltes Zeitintervall eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in NUMIS zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in BAW zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -515,7 +515,7 @@
                     Originalseite geführt. In den Fällen, in denen eine Karte
                     hinterlegt ist, bekommen Sie einen Link „Zeige
                     Karte“ angeboten, über den Sie die Karte in der
-                    Kartenansicht von NUMIS öffnen können.</p>
+                    Kartenansicht von BAW öffnen können.</p>
             </content>
         </section>
         <section help-key="search-results-3">
@@ -523,7 +523,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über NUMIS abgefragt. Die
+                    Umweltinformationssysteme über BAW abgefragt. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach
@@ -537,7 +537,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>NUMIS bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>BAW bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
@@ -619,7 +619,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von NUMIS mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von BAW mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>
