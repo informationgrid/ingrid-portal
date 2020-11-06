@@ -10,6 +10,9 @@
           <action type="update" dev="wemove" issue="1810">
             Portal: Verbesserung der Barrierefreiheit des Portals
           </action>
+          <action type="fix" dev="wemove" issue="2199">
+            Portal: Zeige in Karte Link wird trotz Kennzeichnung "geschützter Dienst"
+          </action>
           <action type="add" dev="wemove" issue="2212">
             Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
           </action>
