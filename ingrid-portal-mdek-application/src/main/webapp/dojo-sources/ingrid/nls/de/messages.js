@@ -1124,6 +1124,7 @@ define({
     "hint.inspireConformity.deleted": "ACHTUNG: Der Eintrag in Konformität zur INSPIRE-Spezifikation im Bereich 'Zusatzinformationen' wird gelöscht.",
     "hint.advProductGroupCleared": "Die AdV-Produktgruppe wurde automatisch geleert.",
     "hint.invalidChoice": "Dieser Eintrag kann nicht gewählt werden.",
+    "hint.atomDownload": "Bitte stellen Sie sicher, dass in den extern verkoppelten dargestellten Daten ein Downloadlink vorhanden ist.",
 
     "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
     "warning.address.inherit.to.children": "Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",
