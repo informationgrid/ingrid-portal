@@ -58,6 +58,9 @@ define([
         run: function() {
             var promise = this._createCustomFields();
 
+            // For now, don't make hierarchyLevelName mandatory in this profile
+            domClass.remove("uiElementAddbawHierarchyLevelName", "required");
+
             topic.subscribe("/onObjectClassChange", function(data) {
 
                 var isNewItem = "newNode" === currentUdk.uuid;
