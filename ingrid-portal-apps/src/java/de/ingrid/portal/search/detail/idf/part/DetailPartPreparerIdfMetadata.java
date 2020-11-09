@@ -595,7 +595,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             for (int i = 0; i < nameList.getLength(); i++){
                 Node nameNode = xPathUtils.getNode(nameList.item(i), xpathExpression);
                 if (nameNode != null && nameNode.getTextContent().length() > 0){
-                    if (i != 0){value.append(", ");}
+                    if (!value.toString().equals("")){value.append(", ");}
                     String name = nameNode.getTextContent().trim();
                     List<String> nameSplits = Arrays.asList(name.split(", "));
                     value.append(String.format("%s,", nameSplits.get(0)));

@@ -144,14 +144,14 @@
             #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             #if($TOOL.aNodeOfListExist($xpathList))
         ## Quellenvermerk
-            #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']"])
+            #set($xpathList = ["./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 #set($xpathExpressions = {
                     "rootName" : "./gmd:identificationInfo/*/gmd:pointOfContact",
-                    "name" : "./gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']/gmd:individualName/gco:CharacterString",
+                    "name" : "./idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='author']/gmd:individualName/gco:CharacterString",
                     "year" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:Date|./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date[./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue='publication']/gmd:date/gco:DateTime",
-                    "title" : "./gmd:identificationInfo/*/gmd:title/gco:CharacterString",
-                    "publisher": "./gmd:identificationInfo/*/gmd:pointOfContact/gmd:CI_ResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='publisher'][1]/gmd:organisationName/gco:CharacterString",
+                    "title" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString",
+                    "publisher": "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='publisher'][1]/gmd:organisationName/gco:CharacterString",
                     "doi" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"})
                 #set($tmp = $TOOL.getListAPACitation($xpathExpressions))
                 #renderCitation($MESSAGES.getString("source_note") $tmp)
