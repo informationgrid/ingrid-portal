@@ -140,7 +140,7 @@
                     <div class="row">
                         <div class="xsmall-24 medium-24 large-11 xlarge-12 columns">
                             <div class="logo">
-                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="BAW"/></a>
+                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo-white.svg" alt="BAW"/></a>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">

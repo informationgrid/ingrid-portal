@@ -978,14 +978,15 @@
                     }
                 }
             }
-            // Dublin-Core Elements
-            $('head').append('<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />');
-            if (!"${resourceTitle}".includes("resourceTitle")){
-                $('head').append('<meta name="DC.title" content="${resourceTitle}" />');
-            }
-            if ("${doi}".includes("doi.org")){
-                $('head').append('<meta name="DC.identifier" content="${doi}" />');
-            }
         });
+
+        // Dublin-Core Elements
+        $('head').append('<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />');
+        if (!"${resourceTitle}".includes("resourceTitle")){
+            $('head').append('<meta name="DC.title" content="${resourceTitle}" />');
+        }
+        if ("${doi}".includes("doi.org")){
+            $('head').append('<meta name="DC.identifier" content="${doi}" />');
+        }
     });
 </script>
