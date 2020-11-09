@@ -536,6 +536,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
     }
 
+    /**
+     * getListAPACitation(xpathExpressions, rootXpathExpression)
+     * xpathExpressions: the xpath where the relevant elements are, including author names, publish year, title, doi.
+     * rootName is the mandatory rootXpath that repeats itself for the possibility of multiple authors.
+     * rootXpathExpression: the recurrent rootXpath that contains multiple citations; every element should have
+     * relative xpath to the rootXpath.
+     * when extracting a single citation, the second argument should not be given; the xpath for every element should
+     * be absolute xpath.
+     * */
+
     public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions) {
         return getListAPACitation(xpathExpressions, "");
     }
