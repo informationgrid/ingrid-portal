@@ -42,6 +42,9 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 -- Show '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
 
+-- Delete all '/_user/<USER>/default-page.psml'
+DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';
+
 -- Delete temporary table
 DROP TABLE ingrid_temp;
 
