@@ -513,6 +513,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         }
         // Add page doi by hit for dublin-core
         if(context.get("doi") != null){
+            org.w3c.dom.Element link = response.createElement("link");
+            link.setAttribute("rel", "schema.DC");
+            link.setAttribute("href", "http://purl.org/dc/elements/1.1/");
+            response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, link);
             if(context.get("title") != null){
                 org.w3c.dom.Element meta = response.createElement("meta");
                 meta.setAttribute("name", "DC.title");

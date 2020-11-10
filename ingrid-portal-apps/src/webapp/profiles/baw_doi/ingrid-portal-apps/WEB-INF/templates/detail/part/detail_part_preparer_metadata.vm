@@ -379,8 +379,8 @@
                     #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.method") $tmp)
                     #set($tmp = "")
         ## Identifikator der Datenquelle
-                    #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code"))
-                    #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.datasource_uuid") $tmp)
+                    #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code", "."))
+                    #renderTextList($MESSAGES.getString("t011_obj_geo.datasource_uuid") $tmp)
                     #set($tmp = "")
         ## Identifikator der Datenquelle (older iplug)
                     #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"))

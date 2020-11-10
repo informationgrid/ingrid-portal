@@ -1,4 +1,4 @@
-#set ($showProvider = true)
+#set ($showProvider = false)
 #if($grouping && $grouping == 'provider')
     #set ($showProvider = false)
 #end
