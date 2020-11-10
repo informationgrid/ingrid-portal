@@ -537,19 +537,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     /**
-     * getListAPACitation(xpathExpressions, rootXpathExpression)
-     * xpathExpressions: the xpath where the relevant elements are, including author names, publish year, title, doi.
+     * @param xpathExpressions is the xpath where the relevant elements are, including author names, publish year, title, doi.
      * rootName is the mandatory rootXpath that repeats itself for the possibility of multiple authors.
-     * rootXpathExpression: the recurrent rootXpath that contains multiple citations; every element should have
-     * relative xpath to the rootXpath.
-     * when extracting a single citation, the second argument should not be given; the xpath for every element should
-     * be absolute xpath.
-     * */
-
+     */
     public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions) {
         return getListAPACitation(xpathExpressions, "");
     }
 
+    /**
+     * @param rootXpathExpression is the recurrent rootXpath that contains multiple citations; every element should have
+     * relative xpath to the rootXpath.
+     * when extracting a single citation, the second argument should not be given; the xpath for every element should
+     * be absolute xpath.
+     */
     public List<HashMap<String, Object>> getListAPACitation(Map<String, String> xpathExpressions, String rootXpathExpression) {
         List<HashMap<String, Object>> listCitation = new ArrayList<>();
         if(xPathUtils.nodeExists(rootNode, rootXpathExpression)){
@@ -606,8 +606,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 Node nameNode = xPathUtils.getNode(nameList.item(i), xpathExpression);
                 if (nameNode != null && nameNode.getTextContent().length() > 0){
                     if (!value.toString().equals("")){value.append(", ");}
-                    String name = nameNode.getTextContent().trim();
-                    List<String> nameSplits = Arrays.asList(name.split(", "));
+                    String name = nameNode.getTextContent().trim().replace(",", "").replace(".", "");
+                    List<String> nameSplits = Arrays.asList(name.split(" "));
                     value.append(String.format("%s,", nameSplits.get(0)));
                     for (String nameSlit : nameSplits) {
                         if (nameSplits.indexOf(nameSlit) != 0) {

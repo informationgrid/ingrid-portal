@@ -956,11 +956,6 @@
         </svg>
     </h3>
 #end
-
-## Dublin-Core Elements
-#set($doi =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString[contains(text(),'doi')]"))
-#set($resourceTitle =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:title/gco:CharacterString"))
-
 <script>
     $( document ).ready(function() {
         $('a.download').each(function() {
@@ -979,14 +974,5 @@
                 }
             }
         });
-
-        // Dublin-Core Elements
-        $('head').append('<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/" />');
-        if (!"${resourceTitle}".includes("resourceTitle")){
-            $('head').append('<meta name="DC.title" content="${resourceTitle}" />');
-        }
-        if ("${doi}".includes("doi.org")){
-            $('head').append('<meta name="DC.identifier" content="${doi}" />');
-        }
     });
 </script>
