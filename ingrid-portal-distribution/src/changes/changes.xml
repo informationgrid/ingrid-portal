@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
+          <action type="fix" dev="wemove" issue="2227">
+            PORTAL: Bereinigung der benutzerspezifischen Portal-Startseite
+          </action>
           <action type="fix" dev="wemove" issue="2216">
             PORTAL: Installation über Installer aktualisiert die Tomcat-Konfiguration nicht
           </action>
