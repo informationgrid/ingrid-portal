@@ -21,7 +21,7 @@
  * **************************************************#
  */
 define({
-    "dialog.doi.xref.title": "Querverweis",
+    "dialog.doi.xref.title": "Literaturverweis",
     "dialog.simulation.parameter.title": "Simulationsparameter/-Größe",
 
     "ui.obj.baw.auftragsnummer.title": "PSP-Element",
@@ -58,14 +58,14 @@ define({
 
     "ui.obj.doi.xref.author.table.column.family.name": "Name",
     "ui.obj.doi.xref.author.table.column.given.name": "Vorname",
-    "ui.obj.doi.xref.table.help": "Querverweise zu anderen Veröffentlichungen hinzufügen",
-    "ui.obj.doi.xref.table.new.row": "Querverweis hinzufügen",
+    "ui.obj.doi.xref.table.help": "Literaturverweise zu anderen Veröffentlichungen hinzufügen",
+    "ui.obj.doi.xref.table.new.row": "Literaturverweis hinzufügen",
     "ui.obj.doi.xref.table.row.author": "Autor(en)",
     "ui.obj.doi.xref.table.row.date": "Datum",
     "ui.obj.doi.xref.table.row.identifier": "Identifikator",
     "ui.obj.doi.xref.table.row.publisher": "Verlag",
     "ui.obj.doi.xref.table.row.title": "Titel",
-    "ui.obj.doi.xref.table.title": "Querverweise",
+    "ui.obj.doi.xref.table.title": "Literaturverweise",
 
     "ui.sysList.3950000": "BAW - Räumliche Dimensionalität",
     "ui.sysList.3950001": "BAW - Simulationsverfahren",
