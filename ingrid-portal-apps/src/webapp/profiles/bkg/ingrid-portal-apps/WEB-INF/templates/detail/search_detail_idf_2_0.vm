@@ -62,7 +62,7 @@
             #end
         #end
         #if($entry.isExtern)
-            <a class="link" href="$entry.href">
+            <a class="link" href="$entry.href" target="_blank">
                 <svg class="icon"><use xlink:href="#external-link"/></svg>
                 $entry.title
             </a>
@@ -437,7 +437,7 @@
                                     #else 
                                         #set($url = "http://$url")
                                     #end
-                                    <td><a href="$url">$url</a></td>
+                                    <td><a href="$url" target="_blank">$url</a></td>
                                 </tr>
                             #end
                             ## Servicezeiten

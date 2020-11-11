@@ -401,7 +401,7 @@ abbr, acronym {
 
 a {
  font-size: 100%;
- color: #407e40;
+ color: #0077b6;
  text-decoration: none
 }
 
@@ -1504,7 +1504,7 @@ input[type="checkbox"], input[type="radio"] {
 
 input:hover, input:focus, input:active, textarea:hover, textarea:focus,
  textarea:active, select:hover, select:focus, select:active {
- border: 1px solid #407e40
+ border: 1px solid #0077b6
 }
 
 input.submit:hover, input.submit:focus, input.submit:active, input.reset:hover,

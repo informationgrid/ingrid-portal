@@ -17,6 +17,9 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-maps.psml';
 -- Hide '/help.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/help.psml';
 
+-- Hide '/accessibility.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/accessibility.psml';
+
 -- Hide '/service-sitemap.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/service-sitemap.psml';
 

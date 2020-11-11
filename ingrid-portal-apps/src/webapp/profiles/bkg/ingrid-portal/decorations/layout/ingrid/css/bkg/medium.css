@@ -222,7 +222,7 @@
   max-width: 100%
  }
  #social-media-footer {
-  background-color: #407e40;
+  background-color: #0077b6;
   margin-bottom: 2em
  }
  .socialmedia {
@@ -292,7 +292,7 @@
   color: #333
  }
  #navFunctionsWrapper {
-  margin: 3em auto 2em
+  margin: 3em auto 1em;
  }
  .searchresult h2 {
   padding-right: 60px
