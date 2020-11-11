@@ -154,7 +154,7 @@
                     "publisher": "./gmd:identificationInfo/*/gmd:pointOfContact/idf:idfResponsibleParty[./gmd:role/gmd:CI_RoleCode/@codeListValue='publisher'][1]/gmd:organisationName/gco:CharacterString",
                     "doi" : "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code/gco:CharacterString[contains(text(),'doi')]"})
                 #set($tmp = $TOOL.getListAPACitation($xpathExpressions))
-                #renderCitation($MESSAGES.getString("source_note") $tmp)
+                #renderCitation($MESSAGES.getString("citation") $tmp)
                 #set($tmp = "")
             #end
 ## Verweis
