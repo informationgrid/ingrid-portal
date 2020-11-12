@@ -37,7 +37,7 @@
         <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_iefix.css?v=1" type="text/css" /><![endif]-->
         <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_print.css?v=3" type="text/css" media="print">
         <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_preview.css?v=1" type="text/css">
-        <script src="/decorations/layout/ingrid/gsb/scripts/global.js?v=29"/>
+        <script src="/decorations/layout/ingrid/gsb/scripts/global.js?v=29"></script>
         <meta class="foundation-data-attribute-namespace">
         <meta class="foundation-mq-xxlarge">
         <meta class="foundation-mq-xlarge">
