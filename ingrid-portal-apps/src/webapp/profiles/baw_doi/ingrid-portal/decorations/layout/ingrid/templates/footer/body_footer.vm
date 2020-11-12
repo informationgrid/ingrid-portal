@@ -24,13 +24,13 @@
             <a href="mailto:?body=$shareUrlEncode" class="button round social" target="_blank" title="E-Mail">
               <span class="ic-ic-mailto"></span><span class="text"></span>
             </a>
-            <button id="share-buttons" class="button round social share" title="Seite teilen">
+            <button id="share-buttons" class="button round social share" title="$MESSAGES.getString('ingrid.page.share')">
               <span class="ic-ic-share"></span>
               <span class="text"></span>
             </button>
         </div>
         <div class="button-up">
-            <button type="button" class="button round social js-top" title="Nach oben">
+            <button type="button" class="button round social js-top" title="$MESSAGES.getString('ingrid.page.top')">
                 <span class="ic-ic-angle-up"></span>
             </button>
         </div>

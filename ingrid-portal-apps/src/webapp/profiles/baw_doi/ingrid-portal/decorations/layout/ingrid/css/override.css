@@ -1305,3 +1305,7 @@ h1, h2, h3, h4, h5{
   text-transform: none !important;
   margin-bottom: 2rem;
 }
+/* fab */
+.button.round:hover {
+  color: #2C63B1;
+}
