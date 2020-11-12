@@ -192,7 +192,8 @@
             <patternset>
                 <include name="**/*.*"/>
                 <exclude name="distribution/${tomcat-artifact}/conf/tomcat-users.xml" />
-                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/*.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ingrid-portal-*.xml" />
+            	<exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/ROOT.xml" />
             </patternset>
         </unzip>
 

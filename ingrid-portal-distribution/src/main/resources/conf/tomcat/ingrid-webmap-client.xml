@@ -16,4 +16,5 @@ limitations under the License.
 <Context path="/ingrid-webmap-client"
          crossContext="true">
 
+         <Manager pathname="" maxActiveSessions="1" />
 </Context>
