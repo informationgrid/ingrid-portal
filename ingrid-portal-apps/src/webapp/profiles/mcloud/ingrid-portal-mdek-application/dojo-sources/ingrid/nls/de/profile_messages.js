@@ -49,7 +49,7 @@ define({
     "help.mcloud.form.timeSection.title": "Zeitbezug",
     "help.mcloud.form.timeSection.text": "Angabe des Zeitraums oder des Zeitpunktes, für den die referenzierten Daten Gültigkeit haben.<br /><br />In der mCLOUD erscheint die 'abgedeckte Zeitspanne' als „Zeitbezug der Daten“.<br /><br />Die Einträge in die folgenden Felder sind optional.",
     "help.mcloud.form.resourceDate.title": "Zeitbezug der Ressource",
-    "help.mcloud.form.resourceDate.text": "Angabe, wann die eigentlichen Daten erstellt und/oder zuletzt revidiert wurden. Die Erfassung dieser Information ist z.B. für eine spätere zeitliche Suche relevant.",
+    "help.mcloud.form.resourceDate.text": "Angabe, wann die eigentlichen Daten erstellt und/oder zuletzt revidiert wurden. Hier kann eine interne Chronologie der Änderungen der Daten erstellt werden.",
     "help.mcloud.form.resourceDate.example": "11.11.2017 Erstellung",
     "help.mcloud.form.timeCoverage.title": "Durch die Ressource abgedeckte Zeitspanne",
     "help.mcloud.form.timeCoverage.text": "Hier soll die Zeitspanne der Entstehung der eigentlichen Daten (z.B. Messdaten) eingetragen werden. Es stehen umfassende Möglichkeiten zur exakten Eingabe der abgedeckten Zeitspanne zur Verfügung, damit später einmal eine exakte zeitliche Suche möglich ist.<br /><br />In der mCLOUD erscheint dieser Eintrag als „Zeitbezug der Daten“.",
