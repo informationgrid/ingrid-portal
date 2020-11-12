@@ -48,7 +48,7 @@ define(["dojo/_base/declare",
             // load custom syslists
             topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
 
-                ids.push(20000);
+                ids.push(7200);
 
             });
 

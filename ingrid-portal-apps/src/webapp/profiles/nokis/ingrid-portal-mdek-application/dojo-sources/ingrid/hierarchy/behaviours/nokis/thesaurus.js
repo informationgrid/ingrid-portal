@@ -56,8 +56,8 @@ define(["dojo/_base/declare",
                     type: Editors.SelectboxEditor,
                     options: [],
                     values: [],
-                    listId: 20000,
-                    formatter: lang.partial(Formatters.SyslistCellFormatter, 20000),
+                    listId: 7200,
+                    formatter: lang.partial(Formatters.SyslistCellFormatter, 7200),
                     partialSearch: true
                 }
             ];
