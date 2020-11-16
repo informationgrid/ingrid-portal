@@ -158,10 +158,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if ( !getCapUrl.isEmpty() ) {
                         // since this link will be going to the webmap-client, the service must be WMS!
                         getCapUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( getCapUrl, ServiceType.WMS );
-                        getCapUrl += UtilsVelocity.urlencode( getCapUrl + "||");
+                        getCapUrl = UtilsVelocity.urlencode( getCapUrl + "||");
                         
-                        if(!getLayerIdentifier(null).equals("NOT_FOUND")) {
-                            getCapUrl += UtilsVelocity.urlencode(getLayerIdentifier(null));
+                        String layerIdentifier = getLayerIdentifier(null);
+                        if(!layerIdentifier.equals("NOT_FOUND")) {
+                            getCapUrl += UtilsVelocity.urlencode(layerIdentifier);
                         }
                         
                         if(!getCapUrl.isEmpty()) {
