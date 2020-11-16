@@ -1481,13 +1481,22 @@ a.icon {
 /* fonts */
 @font-face {
   font-family: 'Flexo-Bold';
-  src: url('../../ingrid/fonts/Flexo/Flexo-Bold.woff');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Bold.eot');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Bold.eot?#iefix') format("embedded-opentype"),
+       url('../../ingrid/fonts/Flexo/Flexo-Bold.woff') format("woff"),
+       url('../../ingrid/fonts/Flexo/Flexo-Bold.ttf')  format('truetype');
 }
 @font-face {
   font-family: 'Flexo-Regular';
-  src: url('../../ingrid/fonts/Flexo/Flexo-Regular.woff');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Regular.eot');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Regular.eot?#iefix') format("embedded-opentype"),
+       url('../../ingrid/fonts/Flexo/Flexo-Regular.woff') format("woff"),
+       url('../../ingrid/fonts/Flexo/Flexo-Regular.ttf')  format('truetype');
 }
 @font-face {
   font-family: 'Flexo-Medium';
-  src: url('../../ingrid/fonts/Flexo/Flexo-Medium.woff');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Medium.eot');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Medium.eot?#iefix') format("embedded-opentype"),
+       url('../../ingrid/fonts/Flexo/Flexo-Medium.woff') format("woff"),
+       url('../../ingrid/fonts/Flexo/Flexo-Medium.ttf')  format('truetype');
 }
