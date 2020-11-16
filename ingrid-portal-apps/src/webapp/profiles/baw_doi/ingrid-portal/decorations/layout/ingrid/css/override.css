@@ -1302,7 +1302,7 @@ h1, h2, h3, h4, h5, h6{
   }
 }
 .filter-group .accordion-item .accordion-title[role="tab"]{
-  font-family: 'Flexo-Bold', sans-serif;
+  font-family: 'Flexo-Medium', sans-serif;
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
   color: #FFFFFF;
   margin-bottom: 5px;
@@ -1469,9 +1469,9 @@ h1, h2, h3, h4, h5, h6{
 }
 /* footer */
 a.icon {
-  font-family: 'Flexo-Bold', sans-serif;
+  font-family: 'Flexo-Medium', sans-serif;
 }
-/* contact fomular */
+/* contact form */
 .form-element label {
   font-family: 'Flexo-Regular', sans-serif;
 }
