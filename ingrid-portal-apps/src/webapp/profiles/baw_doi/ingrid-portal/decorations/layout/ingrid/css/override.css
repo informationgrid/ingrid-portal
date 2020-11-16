@@ -1457,6 +1457,9 @@ h1, h2, h3, h4, h5, h6{
 .menu-sub-links a {
   font-family: 'Flexo-Bold', sans-serif;
 }
+.menu-sub-links .button.logout {
+  font-family: 'Flexo-Bold', sans-serif;
+}
 /* catalogue */
 @media print, screen and (max-width: 63.9375em) {
   .row.content-small {
@@ -1478,13 +1481,13 @@ a.icon {
 /* fonts */
 @font-face {
   font-family: 'Flexo-Bold';
-  src: url('../../ingrid/fonts/Flexo/Flexo-Bold.woff2');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Bold.woff');
 }
 @font-face {
   font-family: 'Flexo-Regular';
-  src: url('../../ingrid/fonts/Flexo/Flexo-Regular.woff2');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Regular.woff');
 }
 @font-face {
   font-family: 'Flexo-Medium';
-  src: url('../../ingrid/fonts/Flexo/Flexo-Medium.woff2');
+  src: url('../../ingrid/fonts/Flexo/Flexo-Medium.woff');
 }
