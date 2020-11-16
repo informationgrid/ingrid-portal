@@ -463,6 +463,7 @@ header a.icon.is-selected {
 }
 .accordion-title {
   color: #ffffff;
+  font-family: 'Flexo-Bold', sans-serif;
   background-color: #4a7cc1;
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
 }
@@ -1169,7 +1170,16 @@ header .menu-tab-row .menu-tab {
   }
 }
 
-/* additions*/
+/* general */
+body {
+  font-family: 'Flexo-Regular', sans-serif;
+}
+b {
+  font-family: 'Flexo-Bold', sans-serif;
+}
+.button {
+  font-family: 'Flexo-Bold', sans-serif;
+}
 .ic-ic-asterisc:before {
   content: "";
 }
@@ -1177,8 +1187,8 @@ header .row .columns {
   padding-left: .4444444444rem;
   padding-right: .4444444444rem;
 }
-h1, h2, h3, h4, h5{
-  font-family: 'Roboto-Bold', sans-serif;
+h1, h2, h3, h4, h5, h6{
+  font-family: 'Flexo-Bold', sans-serif;
   color: #4d4d4d;
 }
 .row.alert .success {
@@ -1252,6 +1262,9 @@ h1, h2, h3, h4, h5{
   color: #2c63b1;
 }
 /* search details page */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  font-family: 'Flexo-Medium', sans-serif;
+}
 .row.align-center.detail-header {
   justify-content: unset;
   padding-left: 32px;
@@ -1275,6 +1288,9 @@ h1, h2, h3, h4, h5{
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
   background-color: #4A7CC1 !important;;
 }
+.helper {
+  font-family: 'Flexo-Medium', sans-serif;
+}
 /* search page */
 .filters-active .pill {
   margin: 0 10px 16px 0;
@@ -1286,7 +1302,7 @@ h1, h2, h3, h4, h5{
   }
 }
 .filter-group .accordion-item .accordion-title[role="tab"]{
-  font-family: 'Roboto-Regular', sans-serif;
+  font-family: 'Flexo-Bold', sans-serif;
   transition: background-color 0.2s ease-out, color 0.2s ease-out;
   color: #FFFFFF;
   margin-bottom: 5px;
@@ -1328,6 +1344,12 @@ h1, h2, h3, h4, h5{
 #results {
   padding-right: 1.2rem;
   padding-left: 1.2rem;
+}
+.form-element .control {
+  font-family: 'Flexo-Regular', sans-serif;
+}
+.form-element .input-check {
+  padding-left: 10px;
 }
 @media print, screen and (max-width: 63.9375em) {
   .search-filtered {
@@ -1379,6 +1401,8 @@ h1, h2, h3, h4, h5{
   left: calc(50% - 25px);
 }
 .teaser .teaser-link {
+  font-family: 'Flexo-Bold', sans-serif;
+  font-size: 16px;
   padding: 145px 8px 0;
 }
 .teaser .teaser-link .teaser-number {
@@ -1419,13 +1443,19 @@ h1, h2, h3, h4, h5{
 }
 /* top menu */
 .menu-tab-row .menu-tab {
-  font-family: 'Roboto-Bold', sans-serif;
+  font-family: 'Flexo-Bold', sans-serif;
   font-size: 18px;
 }
 /* side menu */
 .menu-main-links a.header-menu-entry {
-  font-family: 'Roboto-Bold', sans-serif;
+  font-family: 'Flexo-Bold', sans-serif;
   font-size: 20px;
+}
+.menu-main-links a {
+  font-family: 'Flexo-Bold', sans-serif;
+}
+.menu-sub-links a {
+  font-family: 'Flexo-Bold', sans-serif;
 }
 /* catalogue */
 @media print, screen and (max-width: 63.9375em) {
@@ -1435,4 +1465,26 @@ h1, h2, h3, h4, h5{
 }
 [type='text'], [type='password'] {
   box-shadow: none;
+  font-family: 'Flexo-Regular', sans-serif;
+}
+/* footer */
+a.icon {
+  font-family: 'Flexo-Bold', sans-serif;
+}
+/* contact fomular */
+.form-element label {
+  font-family: 'Flexo-Regular', sans-serif;
+}
+/* fonts */
+@font-face {
+  font-family: 'Flexo-Bold';
+  src: url('../../ingrid/fonts/Flexo/Flexo-Bold.woff2');
+}
+@font-face {
+  font-family: 'Flexo-Regular';
+  src: url('../../ingrid/fonts/Flexo/Flexo-Regular.woff2');
+}
+@font-face {
+  font-family: 'Flexo-Medium';
+  src: url('../../ingrid/fonts/Flexo/Flexo-Medium.woff2');
 }
