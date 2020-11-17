@@ -615,7 +615,7 @@ define({
         "ui.obj.availability.dataFormatTable.header.name": "Name",
         "ui.obj.availability.dataFormatTable.header.version": "Version",
         "ui.obj.availability.dataFormatTable.header.compression": "Compression",
-        "ui.obj.availability.dataFormatTable.header.depth": "Depth",
+        "ui.obj.availability.dataFormatTable.header.depth": "Specification",
         "ui.obj.availability.mediaOptionTable.title": "Media Option",
         "ui.obj.availability.mediaOptionTable.header.type": "Medium",
         "ui.obj.availability.mediaOptionTable.header.amount": "Amount [MB]",
