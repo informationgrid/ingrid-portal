@@ -122,12 +122,10 @@
             #renderTextLabelAbove($tmp $tmp2)
             #set($tmp = "")
             #set($tmp2 = "")
-            #if($enableMapLink)
-                ## Zeige in Karte
-                #set($tmp = $TOOL.getMapImage())
-                #renderMultiLineImage($tmp)
-                #set($tmp = "")
-            #end
+            ## Zeige in Karte
+            #set($tmp = $TOOL.getMapImage())
+            #renderMultiLineImage($tmp)
+            #set($tmp = "")
             </div>
         ## Untergeordnete Objekte
             #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))

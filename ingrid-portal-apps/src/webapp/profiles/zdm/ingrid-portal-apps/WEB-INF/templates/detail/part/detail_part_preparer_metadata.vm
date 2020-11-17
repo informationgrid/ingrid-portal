@@ -77,12 +77,10 @@
                                 #set($tmp = "")
                                 #set($tmp2 = "")
                             </div>
-                            #if($enableMapLink)
-                                ## Zeige in Karte
-                                #set($tmp = $TOOL.getMapImage())
-                                #renderMultiLineImage($tmp)
-                                #set($tmp = "")
-                            #end
+                            ## Zeige in Karte
+                            #set($tmp = $TOOL.getMapImage())
+                            #renderMultiLineImage($tmp)
+                            #set($tmp = "")
                         </div>
                         ## BAW Auftragsnummer
                         #set($tmp =  $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[./gmd:thesaurusName/*/gmd:title/gco:CharacterString='DEBUNDBAWAUFTRAGNR']/gmd:keyword/gco:CharacterString"))

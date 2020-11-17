@@ -147,7 +147,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     public Map<String, Object> getMapImage(){
         HashMap<String, Object> map = new HashMap<>();
         // showMap/Preview-Link
-        if ( getUdkObjectClassType().equals("1") ) {
+        if ( getUdkObjectClassType().equals("1") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
             // first try to get any valid WMS url from the crossReference section
             String xpathCrossReference = "./idf:crossReference/idf:serviceType[text() = 'view']/../idf:serviceOperation[text() = 'GetCapabilities']/../idf:serviceUrl";
             NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
@@ -180,15 +180,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             }
             
         // otherwise try within distribution info or SV_OperationMetadata
-        } else if ( getUdkObjectClassType().equals("3") ) {
+        } else if ( getUdkObjectClassType().equals("3")  && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
             String capabilitiesUrl = getCapabilityUrl();
             if(capabilitiesUrl != null){
-                capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS );
-                if (capabilitiesUrl != null) {
-                    // get it directly from the operation
-                    map = addBigMapLink(capabilitiesUrl + "||", true);
-                }
+                capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS ) + "||";
             }
+            // get it directly from the operation
+            map = addBigMapLink(capabilitiesUrl, true);
         } else {
             // show preview image (with map link information if provided)
             map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
@@ -303,52 +301,56 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     link.put("href", "");
                 }
                 
-                if(isCoupled && entryId.equals("3600") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)){
+                if(isCoupled && entryId.equals("3600")){
                     // add map links to data objects from services
                     if (type.equals("3")) {
-                        StringBuilder capabilityUrl = null;
-                        // get link from operation (unique one)
-                        if (serviceType != null && serviceType.trim().equals("view") && !hasAccessConstraints(node)) {
-                            if(serviceUrl != null){
-                                capabilityUrl= new StringBuilder(serviceUrl);
+                        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+                            StringBuilder capabilityUrl = null;
+                            // get link from operation (unique one)
+                            if (serviceType != null && serviceType.trim().equals("view") && !hasAccessConstraints(node)) {
+                                if(serviceUrl != null){
+                                    capabilityUrl= new StringBuilder(serviceUrl);
+                                }
+                            } else {
+                                String tmpUrl = getCapabilityUrl();
+                                if(tmpUrl != null) {
+                                    capabilityUrl =  new StringBuilder(tmpUrl);
+                                }
                             }
-                        } else {
-                            String tmpUrl = getCapabilityUrl();
-                            if(tmpUrl != null) {
-                                capabilityUrl =  new StringBuilder(tmpUrl);
+                            if ( capabilityUrl != null && capabilityUrl.length() != 0) {
+                                capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
+                                link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString() + "||" + getLayerIdentifier(node)));
                             }
-                        }
-                        if ( capabilityUrl != null && capabilityUrl.length() != 0) {
-                            capabilityUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capabilityUrl.toString(), ServiceType.WMS ));
-                            link.put("mapLink", UtilsVelocity.urlencode(capabilityUrl.toString() + "||" + getLayerIdentifier(node)));
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
                         linkList.add(link);
                     } else if (type.equals("1")) {
                         StringBuilder capUrl = new StringBuilder();
-                        if(serviceUrl != null){
-                            capUrl.append(serviceUrl);
-                        } else {
-                            String xpathCrossReference = "./idf:crossReference[@uuid='" + uuid + "']/idf:serviceType[text() = 'view']/../idf:serviceOperation[text() = 'GetCapabilities']/../idf:serviceUrl";
-                            NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
-                            if(crossReferenceNodeList.getLength() > 0) {
-                                for (int j=0; j< crossReferenceNodeList.getLength(); j++) {
-                                    Node crossReferenceNode = crossReferenceNodeList.item(j);
-                                    String getCapUrl = crossReferenceNode.getTextContent();
-                                    if(!getCapUrl.isEmpty()) {
-                                        if(!hasAccessConstraints(crossReferenceNode.getParentNode())) {
-                                            capUrl.append(crossReferenceNode.getTextContent());
-                                            break;
+                        if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
+                            if(serviceUrl != null){
+                                capUrl.append(serviceUrl);
+                            } else {
+                                String xpathCrossReference = "./idf:crossReference[@uuid='" + uuid + "']/idf:serviceType[text() = 'view']/../idf:serviceOperation[text() = 'GetCapabilities']/../idf:serviceUrl";
+                                NodeList crossReferenceNodeList = xPathUtils.getNodeList(rootNode, xpathCrossReference);
+                                if(crossReferenceNodeList.getLength() > 0) {
+                                    for (int j=0; j< crossReferenceNodeList.getLength(); j++) {
+                                        Node crossReferenceNode = crossReferenceNodeList.item(j);
+                                        String getCapUrl = crossReferenceNode.getTextContent();
+                                        if(!getCapUrl.isEmpty()) {
+                                            if(!hasAccessConstraints(crossReferenceNode.getParentNode())) {
+                                                capUrl.append(crossReferenceNode.getTextContent());
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        if ( capUrl != null && capUrl.length() != 0 && !hasAccessConstraints(node)) {
-                            // add possible missing parameters
-                            capUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl.toString() ));
-                            link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString() + "||" + getLayerIdentifier(node)));
+                            if ( capUrl != null && capUrl.length() != 0 && !hasAccessConstraints(node)) {
+                                // add possible missing parameters
+                                capUrl.append(CapabilitiesUtils.getMissingCapabilitiesParameter( capUrl.toString() ));
+                                link.put("mapLink",  UtilsVelocity.urlencode(capUrl.toString() + "||" + getLayerIdentifier(node)));
+                            }
                         }
                         // do not show link relation for coupled resources (INGRID-2285)
                         link.remove("attachedToField");
@@ -1436,39 +1438,40 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
         HashMap<String, Object> elementCapabilities = new HashMap<>();
-        if (urlValue != null) {
-            elementCapabilities.put("type", "multiLineImage");
-            HashMap<String, Object> elementMapLink = new HashMap<>();
-            elementMapLink.put("type", "linkLine");
-            elementMapLink.put("isMapLink", true);
-            elementMapLink.put("isExtern", false);
+        elementCapabilities.put("type", "multiLineImage");
+        HashMap<String, Object> elementMapLink = new HashMap<>();
+        elementMapLink.put("type", "linkLine");
+        elementMapLink.put("isMapLink", true);
+        elementMapLink.put("isExtern", false);
 
-            if (hasAccessConstraints(node)) {
-                // do not render "show in map" link if the map has access constraints (no href added).
-                elementMapLink.put("title", messages.getString("common.alt.image.preview"));
-            } else {
-                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-                if(urlEncodeHref){
-                    elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
-                }else{
-                    elementMapLink.put("href", urlValue);
-                }
+        if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+            // do not render "show in map" link if the map has access constraints (no href added).
+            elementMapLink.put("title", messages.getString("preview"));
+        } else {
+            elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+            if(urlEncodeHref){
+                elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
+            }else{
+                elementMapLink.put("href", urlValue);
             }
-
-            // use preview image if provided otherwise static image
-            ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
-            if (imageUrls.isEmpty()) {
-                elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
-            } else {
-                elementMapLink.put("src", imageUrls.get(0).get("name"));
-                elementMapLink.put("description", imageUrls.get(0).get("description"));
-            }
-            // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
-            ArrayList<HashMap<String, Object>> list = new ArrayList<>();
-            list.add(elementMapLink);
-            elementCapabilities.put("elements", list);
-            elementCapabilities.put("width", "full");
         }
+
+        // use preview image if provided otherwise static image
+        ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
+        if (imageUrls.isEmpty()) {
+            elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+        } else {
+            elementMapLink.put("src", imageUrls.get(0).get("name"));
+            if(elementMapLink.get("href") == null) {
+                elementMapLink.put("href", imageUrls.get(0).get("name"));
+            } 
+            elementMapLink.put("description", imageUrls.get(0).get("description"));
+        }
+        // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+        list.add(elementMapLink);
+        elementCapabilities.put("elements", list);
+        elementCapabilities.put("width", "full");
         return elementCapabilities;
     }
     
