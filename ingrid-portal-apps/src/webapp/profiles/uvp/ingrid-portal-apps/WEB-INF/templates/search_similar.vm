@@ -1,5 +1,5 @@
 #if(!$closeSimilarSection)
-    <div>
+    <div class="search similar">
         <div class="row">
             <div class="columns">
                 <ul class="accordion nested-group">
