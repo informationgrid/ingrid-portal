@@ -11,7 +11,7 @@ Angabe des Formats der Daten in DV-technischer Hinsicht, in welchem diese verfü
 * Name: Angabe des Formatnamens, z.B. "DXF" 
 * Version: Version der verfügbaren Daten (z.B. "2.0" oder "Version vom 8.11.2001")
 * Kompressionstechnik: Kompression, in welcher die Daten geliefert werden (z.B. "WinZip", "keine")
-* Bildpunkttiefe: BitsPerSample.
+* Spezifikation: Details zur Spezifikation.
 
 Für INSPIRE-konforme Datensätze ist das Datenformat GML und dessen Version anzugeben:
 * Formatkürzel: GML
@@ -19,7 +19,7 @@ Für INSPIRE-konforme Datensätze ist das Datenformat GML und dessen Version anz
 
 ## Beispiel:
 
-Formatkürzel: tif | Version: 6.0 | Kompression: LZW | Bildpunkttiefe: 8 Bit
+Formatkürzel: tif | Version: 6.0 | Kompression: LZW | Spezifikation: WCS
 
 Für INSPIRE-konforme Datensätze ist das Datenformat GML und dessen Version anzugeben:
 
