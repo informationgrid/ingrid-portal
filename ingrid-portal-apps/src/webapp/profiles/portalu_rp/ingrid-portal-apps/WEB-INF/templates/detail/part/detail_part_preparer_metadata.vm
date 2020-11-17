@@ -121,12 +121,10 @@
                                 #set($tmp = "")
                                 #set($tmp2 = "")
                             </div>
-                            #if($enableMapLink)
-                                ## Zeige in Karte
-                                #set($tmp = $TOOL.getMapImage())
-                                #renderMultiLineImage($tmp)
-                                #set($tmp = "")
-                            #end
+                            ## Zeige in Karte
+                            #set($tmp = $TOOL.getMapImage())
+                            #renderMultiLineImage($tmp)
+                            #set($tmp = "")
                         </div>
                         ## Untergeordnete Objekte
                         #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))
@@ -143,7 +141,7 @@
                     </div>
                 </div>
             ## Verweis
-            #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+            #set($xpathList = ["./idf:doi","./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-2">
                     <div class="box__content ob-container">
@@ -195,6 +193,15 @@
                                 #renderTextList("GEMET - Concepts" $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "gemet"))
                                 ## ISO-Themenkategorien
                                 #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
+                            </div>
+                        #end
+                        #set($xpathList = ["./idf:doi"])
+                        #if($TOOL.aNodeOfListExist($xpathList))
+                            #renderSectionTitle($MESSAGES.getString("doi"))
+                            <div class="search-result--nested">
+                                #set($doi = $TOOL.getDOI())
+                                #renderTextLabelAbove($MESSAGES.getString("doi.id") $doi.id)
+                                #renderTextLabelAbove($MESSAGES.getString("doi.type") $doi.type)
                             </div>
                         #end
                     </div>
