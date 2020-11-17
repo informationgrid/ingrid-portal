@@ -141,7 +141,7 @@
             #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact"))
             #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp false)
             #set($tmp = "")
-            #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
+            #set($xpathList = ["./idf:doi","./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             #if($TOOL.aNodeOfListExist($xpathList))
 ## Verweis
 <h2><a class="anchor" id="detail-2" name="detail-2"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("references_tab")</span></h2>
@@ -188,6 +188,15 @@
                     #renderTextList("GEMET - Concepts" $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "gemet"))
         ## ISO-Themenkategorien
                     #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
+                    </div>
+                #end
+                #set($xpathList = ["./idf:doi"])
+                #if($TOOL.aNodeOfListExist($xpathList))
+                    #renderSectionTitle($MESSAGES.getString("doi"))
+                    <div class="search-result--nested">
+                        #set($doi = $TOOL.getDOI())
+                        #renderTextLabelAbove($MESSAGES.getString("doi.id") $doi.id)
+                        #renderTextLabelAbove($MESSAGES.getString("doi.type") $doi.type)
                     </div>
                 #end
             #end
