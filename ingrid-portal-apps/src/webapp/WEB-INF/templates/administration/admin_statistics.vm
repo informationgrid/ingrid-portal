@@ -7,7 +7,7 @@
             <li>
                 <a href="$apacheStatisticsURL">
                     <svg class="icon">
-                        <use xlink:href="#internal-link">
+                        <use xlink:href="#internal-link"/>
                     </svg>
                     $MESSAGES.getString('admin.statistics.apache')
                 </a>

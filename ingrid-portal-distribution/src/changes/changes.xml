@@ -7,8 +7,39 @@
 
     <body>
         <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
+          <action type="fix" dev="wemove" issue="2227">
+            PORTAL: Bereinigung der benutzerspezifischen Portal-Startseite
+          </action>
+          <action type="fix" dev="wemove" issue="2216">
+            PORTAL: Installation über Installer aktualisiert die Tomcat-Konfiguration nicht
+          </action>
+          <action type="fix" dev="wemove" issue="2199">
+            Portal: Zeige in Karte Link wird trotz Kennzeichnung "geschützter Dienst"
+          </action>
+          <action type="add" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
+          <action type="fix" dev="wemove" issue="2213">
+            Fix free address pasting
+          </action>
+          <action type="fix" dev="wemove" issue="2206">
+            Fix opendata access constraints behaviour
+          </action>
           <action type="fix" dev="wemove" issue="2195">
             Add wkt to print and compare view.
+          </action>
+          <action type="add" dev="wemove" issue="2207">
+            Mapclient Admin-GUI: Account Passwörter verschlüsseln.
+          </action>
+          <action type="update" dev="wemove" issue="1810">
+            Portal: Verbesserung der Barrierefreiheit des Portals
+          </action>
+          <action type="add" dev="wemove" issue="2210">
+            IGE (Nokis): Add Nokis thesaurus.
+          </action>
+          <action type="update" dev="wemove" issue="1746">
+            IGE: Extend ISO with coupled resource info and improve UX when adding coupled resource for a service
+            which also is used as an ATOM download service.
           </action>
         </release>
 
@@ -101,7 +132,7 @@
             Portal: Change portal registration button title.
           </action>
           <action type="update" dev="wemove" issue="2012">
-            Mapclient: Update mapclient cache. 
+            Mapclient: Update mapclient cache.
           </action>
           <action type="fix" dev="wemove" issue="">
             Mapclient: Remove DNS check on print.
@@ -140,10 +171,10 @@
             IGE: Increase message size and timeout for IGE communication.
           </action>
           <action type="add" dev="wemove" issue="1953">
-            Mapclient: Add GFI function to imported WMTS. 
+            Mapclient: Add GFI function to imported WMTS.
           </action>
           <action type="add" dev="wemove" issue="1900">
-            Portal: Add autofocus attribute to login form. 
+            Portal: Add autofocus attribute to login form.
           </action>
           <action type="add" dev="wemove" issue="1898">
             Change the docker container’s privilege to a non-root user.

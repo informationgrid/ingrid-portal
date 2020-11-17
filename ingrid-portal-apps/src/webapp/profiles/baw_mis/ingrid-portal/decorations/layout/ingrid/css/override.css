@@ -368,3 +368,14 @@ thead {
 .swiper-button-next, .swiper-button-prev {
   color: rgb(44, 99, 177) !important;
 }
+
+.leaflet-interactive-disable {
+    cursor: grab !important;
+}
+
+.leaflet-hyphens {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+}

@@ -1,5 +1,5 @@
 #if($autoStartQueryString && $autoStartQueryString != "")
-<script type="text/javascript"><!--
+<script><!--
     window.open('/ingrid-portal-mdek-application/index.jsp?${autoStartQueryString}');
  //--></script>
 #end

@@ -1,12 +1,12 @@
 <article class="teaser ob-container">
     <div class="teaser__graphic">
-        <svg class="icon"><use xlink:href="#calendar-color"></use></svg>
+        <svg class="icon"><use xlink:href="#calendar-color"/></svg>
     </div>
     <div class="teaser__box">
         <div class="teaser__content ob-container">
             #renderPortletTitle($MESSAGES.getString('chronicle.teaser.title') "h4")
         </div>
-        <hr class="bx-top-0 bx-bot-0">
+        <hr class="bx-top-0 bx-bot-0"/>
         #if($snsAnniversary.years && $snsAnniversary.title)
             <div class="teaser__content ob-container">
                 #set ($action = $renderResponse.createActionURL())
@@ -32,7 +32,7 @@
                     <a href="$action" title="$MESSAGES.getString('chronicle.teaser.event.tooltip')">$snsAnniversary.title</a>
                 </p>
             </div>
-            <hr class="bx-top-0 bx-bot-0">
+            <hr class="bx-top-0 bx-bot-0"/>
         #end
         <div class="teaser__content ob-container">
             <p>$MESSAGES.getString('chronicle.teaser.new.body')</p>
@@ -42,7 +42,7 @@
                 $action.setParameter('isChronicle', 'true')
                 <a class="link link--big" href="$action">
                     <strong>$MESSAGES.getString('chronicle.teaser.new.link')</strong>
-                    <svg class="icon link__icon"><use xlink:href="#internal-link"></use></svg>
+                    <svg class="icon link__icon"><use xlink:href="#internal-link"/></svg>
                 </a>
             </p>
         </div>

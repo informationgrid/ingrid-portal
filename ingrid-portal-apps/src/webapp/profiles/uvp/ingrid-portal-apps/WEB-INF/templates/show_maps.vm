@@ -1,14 +1,5 @@
 #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
 #set ($action = $renderResponse.createActionURL())
-<style>
-html, body {
-    height: 100%;
-}
-
-#map {
-    height: 100%;
-}
-</style>
 
 <div id="map" class="map-ingrid map-full" style="width:100%;position:fixed;z-index:0;">
     <div class="map-filter">
@@ -29,7 +20,7 @@ html, body {
 </div>
 
 #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
-<script language="JavaScript" type="text/javascript">
+<script>
     var osm = getOSMLayer('<br>$MESSAGES.getString("common.map.info")');
     var map = addLeafletMap([osm]);
     var enablePopUp = true;

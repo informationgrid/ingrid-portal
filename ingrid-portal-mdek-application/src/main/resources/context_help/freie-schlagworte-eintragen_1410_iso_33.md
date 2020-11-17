@@ -11,9 +11,11 @@ Eingabe von Schlagworten, über die das Objekt bei einer Schlagwortsuche möglic
 
 Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: "Apfelbaum#locale-eng:apple tree"
 
+Mehrere Schlagworte können in das Textfeld, durch Komma getrennt, angegeben werden. Zusammengehörige Worte werden in Anführungszeichen gesetzt.
+
 ## Beispiel:
 
-Bestandsaufnahme; Rasterkarte; Nachtfalter
+Bestandsaufnahme, Rasterkarte, Nachtfalter
 
 
 # ISO Abbildung

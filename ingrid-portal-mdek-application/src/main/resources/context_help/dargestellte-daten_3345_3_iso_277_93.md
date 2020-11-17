@@ -15,6 +15,7 @@ Als bevorzugte Methode können über "Gekoppelte Daten auswählen" Geodatensätz
 
 Die Angabe eines Textes beschreibt die dargestellten Daten in Form eines Textes. Zusätzlich kann hier auch  die Art der Daten (z. B. digital, automatisch ermittelt oder aus Umfrageergebnissen, Primärdaten, fehlerbereinigte Daten) angegeben werden.
 
+Ist die Option "Als ATOM-Download Dienst bereitstellen" ausgewählt, so muss darauf geachtet werden, dass die extern verkoppelten dargestellten Daten einen Downloadlink besitzen.
 
 ## Beispiel:
 

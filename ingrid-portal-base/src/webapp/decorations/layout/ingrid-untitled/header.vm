@@ -13,6 +13,7 @@
         #parse("/decorations/layout/ingrid/templates/header/head.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_script.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_script_additional.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_style.vm")
     </head>
     <body>
         #set($mainMenu = $site.getMenu("main-menu"))

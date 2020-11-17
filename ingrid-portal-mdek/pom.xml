@@ -319,7 +319,11 @@
         </exclusion>
         <exclusion>
           <groupId>org.glassfish.jersey.ext</groupId>
-          <artifactId>jersey-spring3</artifactId>
+          <artifactId>jersey-spring4</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.glassfish.jersey.inject</groupId>
+          <artifactId>jersey-hk2</artifactId>
         </exclusion>
         <exclusion>
           <groupId>org.rauschig</groupId>

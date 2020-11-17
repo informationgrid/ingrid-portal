@@ -16,7 +16,7 @@
                     <div class="control-group">
                         <label class="control control--checkbox" for="chk_$velocityCount">
                             <input id="chk_$velocityCount" name="id" type="checkbox" value="$rowId" />
-                            <div class="control__indicator"></div>
+                            <span class="control__indicator"></span>
                             $rowId
                         </label>
                     </div>

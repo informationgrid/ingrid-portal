@@ -276,6 +276,12 @@ define("ingrid/tree/MetadataTree", [
                                     canBePasted = canBePasted && (srcType === 0 || srcType === 1000); // Only Institutions and folders are allowed below the root node
                                 }
                             }
+
+                            if (srcType === 3 && node.id !== "addressFreeRoot"){
+                                // Free Addresses can only be pasted under addressFreeRoot #2213
+                                canBePasted = false;
+                            }
+
                             // The target node is no root node and no folder. Compare the src and dst types:
                             if (dstType !== 1000 && (dstType >= 2 || (srcType === 0 && dstType === 1))) {
                                 canBePasted = false;

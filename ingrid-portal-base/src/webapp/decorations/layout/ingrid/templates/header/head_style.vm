@@ -1,0 +1,19 @@
+#if($currentPage == "/main-maps.psml")
+<style>
+    html, body { height: 100%; }
+    #map { height: 100%; }
+</style>
+#end
+
+#if($currentPage == "/main-measures.psml")
+<style>
+    #iframe_measure { height: 100%; }
+    .embed-container { width: 100%; position: absolute; bottom: 0; top: 200px;}
+    @media screen and (max-width: 939px) {
+        .embed-container { top: 117px; }
+    }
+    @media screen and (max-width: 767px) {
+        .embed-container { top: 60px; }
+    }
+</style>
+#end

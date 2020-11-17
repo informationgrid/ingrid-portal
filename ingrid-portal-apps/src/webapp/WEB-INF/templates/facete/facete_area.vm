@@ -17,7 +17,7 @@
     <div id="facet_area_header" class="sidebar__widget__title filter__title js-accordion-toggle #if($geothesaurusTopics || $geothesaurusSelectTopics || $geothesaurusTerm)is-active#end">
         $MESSAGES.getString("searchResult.facete.area.name.search")
          <svg class="filter__title__icon icon">
-            <use xlink:href="#arrow-thick" >
+            <use xlink:href="#arrow-thick"/>
         </svg>
     </div>
     <div id="facet_area_content" class="sidebar__widget__content--pushed js-accordion-content #if(!$geothesaurusTopics && !$geothesaurusSelectTopics && !$geothesaurusTerm)is-hidden#end">
@@ -28,7 +28,7 @@
             <div class="search-form ob-clear ob-flex">
                 <input class="field" type="text" name="search_term" id="search_term" #if($geothesaurusTerm)value="$geothesaurusTerm"#end />
                 <button type="submit" name="doSearchGeothesaurus" value="$MESSAGES.getString("searchResult.facete.area.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
-                    <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+                    <svg class="icon"><use xlink:href="#magnifier"/></svg>
                 </button>
             </div>
             #if($geothesaurusTerm)
@@ -72,11 +72,11 @@
                         #end
                         >
                         <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
-                            </div>
+                            </span>
                             $topic.title#renderMsgTopicType()
                         </label>
                     </div>
@@ -89,7 +89,7 @@
                     <div>
                         <a href="#" class="js-expander link tx-upper tx-brand" id="facete_area_more">
                             <svg class="icon link__icon">
-                                <use xlink:href="#plus"></use>
+                                <use xlink:href="#plus"/>
                             </svg>
                             <strong>$MESSAGES.getString("searchResult.facete.category.plus")</strong>
                         </a>
@@ -111,11 +111,11 @@
                         #end
                         >
                         <label class="field-toggle__label field-toggle__label--highlight" for="$topicId_$count">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
-                            </div>
+                            </span>
                             $topic.title#renderMsgTopicType()
                         </label>
                     </div>
@@ -124,7 +124,7 @@
                         <div>
                             <a href="#" class="js-expander-close facete_area_more is-hidden link tx-upper tx-brand">
                                 <svg class="icon link__icon">
-                                    <use xlink:href="#minus"></use>
+                                    <use xlink:href="#minus"/>
                                 </svg>
                                 <strong>$MESSAGES.getString("searchResult.facete.category.minus")</strong>
                             </a>

@@ -10,7 +10,7 @@
                 <li>
                     <a href="$ibusURL">
                         <svg class="icon">
-                            <use xlink:href="#internal-link">
+                            <use xlink:href="#internal-link"/>
                         </svg>
                         $MESSAGES.getString('admin.iplug.headline.ibus')
                     </a>
@@ -32,7 +32,7 @@
                     #if($plug.getIplugAdminGuiUrl())
                     <a href="$plug.getIplugAdminGuiUrl()">
                         <svg class="icon">
-                            <use xlink:href="#internal-link">
+                            <use xlink:href="#internal-link"/>
                         </svg>
                         $plug.getDataSourceName()
                     </a>
@@ -59,10 +59,10 @@
                 <li class="tree__item tree__toggle is-active">
                     <a id="$action" href="$action">
                         <svg class="tree__toggle__icon icon">
-                            <use xlink:href="#plus">
+                            <use xlink:href="#plus"/>
                         </svg>
                         <svg class="tree__toggle__icon icon">
-                            <use xlink:href="#minus">
+                            <use xlink:href="#minus"/>
                         </svg>
                     </a>
                     <strong>$partnerNode.name</strong>
@@ -78,10 +78,10 @@
                                 <li class="tree__item tree__toggle is-active">
                                     <a id="$action" href="$action">
                                         <svg class="tree__toggle__icon icon">
-                                            <use xlink:href="#plus">
+                                            <use xlink:href="#plus"/>
                                         </svg>
                                         <svg class="tree__toggle__icon icon">
-                                            <use xlink:href="#minus">
+                                            <use xlink:href="#minus"/>
                                         </svg>
                                     </a>
                                     <strong>$providerNode.name</strong>
@@ -90,9 +90,8 @@
                                     #set($plug = $plugNode.get("iplug"))
                                     #if($plug.getIplugAdminGuiUrl())
                                         <li class="tree__item">
-                                            <svg class="tree__icon icon" title="Informationssystem">
-                                                <use xlink:href="#external-link">
-                                                </use>
+                                            <svg class="tree__icon icon">
+                                                <use xlink:href="#external-link"/>
                                             </svg>
                                             <a href="$plug.getIplugAdminGuiUrl()">$plugNode.name</a>
                                         </li>
@@ -105,10 +104,10 @@
                                 <li class="tree__item tree__toggle">
                                     <a id="$action" href="$action">
                                         <svg class="tree__toggle__icon icon">
-                                            <use xlink:href="#plus">
+                                            <use xlink:href="#plus"/>
                                         </svg>
                                         <svg class="tree__toggle__icon icon">
-                                            <use xlink:href="#minus">
+                                            <use xlink:href="#minus"/>
                                         </svg>
                                     </a>
                                     <strong>$providerNode.name</strong>
@@ -124,10 +123,10 @@
                 <li class="tree__item tree__toggle">
                     <a id="$action" href="$action">
                         <svg class="tree__toggle__icon icon">
-                            <use xlink:href="#plus">
+                            <use xlink:href="#plus"/>
                         </svg>
                         <svg class="tree__toggle__icon icon">
-                            <use xlink:href="#minus">
+                            <use xlink:href="#minus"/>
                         </svg>
                     </a>
                     <strong>$partnerNode.name</strong>

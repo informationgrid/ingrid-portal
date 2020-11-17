@@ -16,7 +16,7 @@
 
 #* Adds ingrid javascript *#
 #macro (decoratorIncludeJavaScriptForHead)
-  <script language="JavaScript" src="$request.contextPath/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+  <script src="$request.contextPath/decorations/layout/ingrid/scripts/ingrid.js"></script>
 #end
 
 #* define navigation constants *#
@@ -166,7 +166,7 @@
             #end
             <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
                 <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
-                    <use xlink:href="#user">
+                    <use xlink:href="#user"/>
                 </svg>
                 <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
             </a>
@@ -196,7 +196,7 @@
     <div class="header__widget">
         <a class="header__widget__toggle js-header-toggle" href="$linkUrl" title="$!linkTitle">
             <svg class="header__widget__icon icon">
-                <use xlink:href="#gear">
+                <use xlink:href="#gear"/>
             </svg>
             <span class="header__widget__text mq-hide-l">${linkName}</span>
         </a>
@@ -235,7 +235,7 @@
             #set($linkName = $MESSAGES.getString('ingrid.page.mapclient'))
             #if($linkName != "ingrid.page.mapclient")
               #set($linkUrl = "/ingrid-webmap-client/admin/")
-              <a target="_new" class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
+              <a target="_blank" class="metamenu__link link" href="$linkUrl" title="$linkTitle">$linkName</a>
             #end
             </div>
         </div>
@@ -246,7 +246,7 @@
     <div class="header__widget">
         <a href="$linkUrl" title="$!linkTitle">
             <svg class="header__widget__icon icon">
-                <use xlink:href="#overview">
+                <use xlink:href="#overview"/>
             </svg>
             <span class="header__widget__text mq-hide-l">${linkName}</span>
         </a>

@@ -5,7 +5,7 @@ guid: 10011
 title: Zeitbezug des Dateninhalts
 ---
 
-# Zeitbezug des Dateninhalts
+# Durch die Ressource abgedeckte Zeitspanne
 
 Hier soll das Zeitspanne der Entstehung der eigentlichen Umwelt-Daten (z.B. Messdaten) eingetragen werden.
 
