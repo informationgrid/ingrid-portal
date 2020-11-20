@@ -40,18 +40,15 @@ define([
     "ingrid/menu",
     "ingrid/message",
     "ingrid/utils/Store"
-    //"module"
 ], function (MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore) {
 
     return declare(null, {
-        title: "Veröffentlichung-Querverweise-Tabelle",
-        description: "Tabelle für die Querverweise zu anderen Veröffentlichungen",
+        title: "Literaturverweise-Tabelle",
+        description: "Tabelle für die Literaturverweise",
         defaultActive: true,
         category: "BAW-DOI",
 
         run: function () {
-            //var self = require(module.id);
-
             topic.subscribe("/onObjectClassChange", function(data) {
                 if (data.objClass == "Class1") {
                     domClass.remove("uiElementAdddoiCrossReferenceTable", "hide");
@@ -115,7 +112,6 @@ define([
                 name: message.get("ui.obj.doi.xref.table.title"),
                 help: message.get("ui.obj.doi.xref.table.help"),
                 contextMenu: "DOI_CROSS_REFERENCE",
-                //isMandatory: true,
                 style: "width: 100%"
             }, structure, "links");
             this._createAppendDoiCrossReferenceLink();
