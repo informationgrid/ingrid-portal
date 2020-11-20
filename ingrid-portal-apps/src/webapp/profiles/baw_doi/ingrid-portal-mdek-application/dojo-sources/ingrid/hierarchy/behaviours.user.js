@@ -25,10 +25,11 @@ define([
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiCrossReferences",
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiPublicationRestriction",
-    "ingrid/hierarchy/behaviours/baw_mis/bawSystemBehaviours",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisNewObjectTypes, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
@@ -43,9 +44,14 @@ define([
         bawDoiPublicationRestriction: bawDoiPublicationRestriction,
 
         /**
-         * System-level changes for BAW-MIS profile
+         * Codelist changes for BAW-MIS profile
          */
-        bawSystemBehaviours: bawSystemBehaviours,
+        bawMisCodelists: bawMisCodelists,
+
+        /**
+         * Allowed object types in New Object dialog box
+         */
+        bawMisNewObjectTypes: bawMisNewObjectTypes,
 
         /**
          * UI changes for BAW-MIS profile
