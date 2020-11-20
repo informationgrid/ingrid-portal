@@ -7,6 +7,15 @@
 
     <body>
         <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.20
+          </action>
+          <action type="add" dev="wemove" issue="2231">
+            IGE: Adjust help text
+          </action>
+          <action type="fix" dev="wemove" issue="1818">
+            Change reminder email text
+          </action>
           <action type="add" dev="wemove" issue="967">
             Ige: Add localization to operation parameters
           </action>
