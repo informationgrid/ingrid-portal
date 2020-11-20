@@ -46,7 +46,7 @@ define([
         title: "Literaturverweise-Tabelle",
         description: "Tabelle für die Literaturverweise",
         defaultActive: true,
-        category: "BAW-DOI",
+        category: "BAW-Datenrepository",
 
         run: function () {
             topic.subscribe("/onObjectClassChange", function(data) {
