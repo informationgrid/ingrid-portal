@@ -26,11 +26,12 @@ define([
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiCrossReferences",
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiPublicationRestriction",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisNewObjectTypes, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
@@ -48,6 +49,11 @@ define([
          * Codelist changes for BAW-MIS profile
          */
         bawMisCodelists: bawMisCodelists,
+
+        /**
+         * BAW-Keyword Catalogue (2012)
+         */
+        bawMisKeywordCatalogue: bawMisKeywordCatalogue,
 
         /**
          * Allowed object types in New Object dialog box
