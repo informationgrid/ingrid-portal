@@ -24,10 +24,11 @@ define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiCrossReferences",
+    "ingrid/hierarchy/behaviours/baw_doi/bawDoiPublicationRestriction",
     "ingrid/hierarchy/behaviours/baw_mis/bawSystemBehaviours",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawSystemBehaviours, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
@@ -35,6 +36,11 @@ define([
          * Cross-References table for DOIs
          */
         bawDoiCrossReferenceBehaviours: bawDoiCrossReferences,
+
+        /**
+         * Allow publication of objects only for Cat-admin
+         */
+        bawDoiPublicationRestriction: bawDoiPublicationRestriction,
 
         /**
          * System-level changes for BAW-MIS profile
