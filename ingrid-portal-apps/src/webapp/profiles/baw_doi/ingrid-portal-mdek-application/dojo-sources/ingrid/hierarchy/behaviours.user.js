@@ -27,9 +27,10 @@ define([
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiPublicationRestriction",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisNewObjectTypes, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisNewObjectTypes, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
@@ -52,6 +53,11 @@ define([
          * Allowed object types in New Object dialog box
          */
         bawMisNewObjectTypes: bawMisNewObjectTypes,
+
+        /**
+         * New table for federal waterways
+         */
+        bawMisWaterwaysTable: bawMisWaterwaysTable,
 
         /**
          * UI changes for BAW-MIS profile
