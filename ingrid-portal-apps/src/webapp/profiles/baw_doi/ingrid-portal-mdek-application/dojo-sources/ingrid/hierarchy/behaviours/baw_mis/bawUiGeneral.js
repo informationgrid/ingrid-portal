@@ -25,7 +25,6 @@ define([
     "dojo/_base/array",
     "dojo/_base/declare",
     "dojo/_base/lang",
-    "dojo/dom",
     "dojo/dom-class",
     "dojo/dom-construct",
     "dojo/on",
@@ -34,9 +33,8 @@ define([
     "ingrid/layoutCreator",
     "ingrid/message",
     "ingrid/utils/Store",
-    "ingrid/utils/Syslist",
-    "module"
-], function(registry, array, declare, lang, dom, domClass, construct, on, topic, dirty, creator, message, UtilStore, UtilSyslist, module) {
+    "ingrid/utils/Syslist"
+], function(registry, array, declare, lang, domClass, construct, on, topic, dirty, creator, message, UtilStore, UtilSyslist) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -246,7 +244,6 @@ define([
         },
 
         _createCustomFields: function () {
-            var self = require(module.id);
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
@@ -283,64 +280,9 @@ define([
                 })
             });
 
-            // Create elements in the reverse order instead of deriving ids
-            // of the wrapped DOM elements.
-            id = "bawAuftragsnummer";
-            construct.place(
-                creator.createDomTextbox({
-                    id: id,
-                    name: message.get("ui.obj.baw.auftragsnummer.title"),
-                    help: message.get("ui.obj.baw.auftragsnummer.help"),
-                    visible: "optional",
-                    style: "width: 100%"
-                }),
-                "uiElement1000", "after");
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
-            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
-                self._setMandatory("bawAuftragsnummer", isMandatory);
-            });
-
-            id = "bawAuftragstitel";
-            construct.place(
-                creator.createDomTextbox({
-                    id: id,
-                    name: message.get("ui.obj.baw.auftragstitel.title"),
-                    help: message.get("ui.obj.baw.auftragstitel.help"),
-                    visible: "optional",
-                    style: "width: 100%"
-                }),
-                "uiElement1000", "after");
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
-            topic.subscribe("onBawHierarchyLevelNameChange", function (args) {
-                var isMandatory = args.isSimulationRelated;
-                self._setMandatory("bawAuftragstitel", isMandatory);
-            });
-
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             return registry.byId(id).promiseInit;
-        },
-
-        /**
-         * Mark or unmark a widget's DOM wrapper as required.
-         *
-         * @param widgetId widget to mark or unmark as required
-         * @param isMandatory true if an entry is mandatory, false if not
-         * @private
-         */
-        _setMandatory: function (widgetId, isMandatory) {
-            var domPrefix = "uiElementAdd";
-            var domElementId = domPrefix + widgetId;
-            if (isMandatory) {
-                domClass.add(domElementId, "required");
-                domClass.remove(domElementId, "optional");
-            } else {
-                domClass.remove(domElementId, "required");
-                domClass.add(domElementId, "optional");
-            }
         }
 
     })();
