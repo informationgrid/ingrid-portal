@@ -24,10 +24,8 @@ define([
     "dijit/registry",
     "dojo/_base/declare",
     "dojo/dom-class",
-    "dojo/topic",
-    "ingrid/utils/Store",
-    "ingrid/utils/Syslist"
-], function(registry, declare, domClass, topic, UtilStore, UtilSyslist) {
+    "dojo/topic"
+], function(registry, declare, domClass, topic) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -36,8 +34,6 @@ define([
         category: "BAW-MIS",
         run: function() {
             topic.subscribe("/onObjectClassChange", function(data) {
-
-                var isNewItem = "newNode" === currentUdk.uuid;
 
                 // ========================================
                 // Modifications to existing fields
@@ -60,28 +56,10 @@ define([
                 domClass.add("uiElement6010", "hidden");
 
                 // Kategorien (opendata)
-                var ogdCategoriesTableId = "categoriesOpenData";
-                var ogdCategoriesTable = registry.byId(ogdCategoriesTableId);
-
                 domClass.add("uiElement6020", "required");
                 domClass.remove("uiElement6020", "hide");
                 domClass.remove("uiElement6020", "halfWidth");
-                ogdCategoriesTable.reinitLastColumn(true);
-
-                if (isNewItem && data.objClass !== "Class0") {
-                    var listId = 6400;
-                    var entryId = "10";
-                    var entryTitle = UtilSyslist.getSyslistEntryName(listId, entryId);
-
-                    var ogdCategoriesTableData = ogdCategoriesTable.data;
-                    var existing = ogdCategoriesTableData.find(function (value) {
-                        return value.title === entryTitle;
-                    });
-                    if (!existing) {
-                        ogdCategoriesTableData.push({title: entryTitle });
-                        UtilStore.updateWriteStore(ogdCategoriesTableId, ogdCategoriesTableData);
-                    }
-                }
+                registry.byId("categoriesOpenData").reinitLastColumn(true);
 
                 // ----------------------------------------
                 // Verschlagwortung
@@ -93,38 +71,6 @@ define([
                 // AdV-Produktgruppe
                 domClass.add("uiElement5170", "hide");
 
-
-                // INSPIRE Themen
-                // Automatically add entry for "Gewässernetz" to new items
-                var inspireThemeTableId = "thesaurusInspire";
-                var inspireThemeTable = registry.byId(inspireThemeTableId);
-                if (isNewItem && data.objClass !== "Class0") {
-                    var inspireThemeTableData = inspireThemeTable.data;
-                    // title 108 is for Gewässernetz
-                    var existing = inspireThemeTableData.find(function (row) {
-                        return row.title === "108";
-                    });
-                    if (!existing) {
-                        inspireThemeTableData.push({title: "108"});
-                        UtilStore.updateWriteStore(inspireThemeTableId, inspireThemeTableData);
-                    }
-                }
-
-                // ISO-Themenkategorie
-                // For new items, add "transportation" as category automatically
-                var topicsTableId = "thesaurusTopics";
-                var topicsTableNodeId = "uiElement5060";
-                if (isNewItem && data.objClass !== "Class0") {
-                    var topicsTableData = registry.byId(topicsTableId).data;
-                    // title 18 is for transportation
-                    var existing = topicsTableData.find(function (row) {
-                        return row.title === "18";
-                    });
-                    if (!existing) {
-                        topicsTableData.push({title: "18"});
-                        UtilStore.updateWriteStore(topicsTableId, topicsTableData);
-                    }
-                }
 
                 // Themen
                 domClass.add("uiElementN014", "hide");
@@ -189,18 +135,6 @@ define([
                 var datasetCharsetNodeId = "uiElement5043";
                 if(!domClass.contains(datasetCharsetNodeId, "hide")) {
                     domClass.add(datasetCharsetNodeId, "required");
-                }
-
-                // If the dataset is new (not saved yet), then initialise the
-                // value as "utf8"
-                var datasetCharsetUtf8Value = "4";
-                var datasetCharsetWidgetId = "extraInfoCharSetData";
-
-                var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
-                if (isNewItem
-                    && datasetCharsetWidget
-                    && !datasetCharsetWidget.get("value")) {
-                    datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
                 }
 
                 // XML-Export-Kriterium
