@@ -27,13 +27,14 @@ define([
     "ingrid/hierarchy/behaviours/baw_doi/bawDoiPublicationRestriction",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisAuftrag",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisHierarchyLevelName",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisAuftrag, bawMisCodelists, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisAuftrag, bawMisCodelists, bawMisHierarchyLevelName, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
@@ -56,6 +57,11 @@ define([
          * Codelist changes for BAW-MIS profile
          */
         bawMisCodelists: bawMisCodelists,
+
+        /**
+         * heirarchyLevelName Field
+         */
+        bawMisHierarchyLevelName: bawMisHierarchyLevelName,
 
         /**
          * BAW-Keyword Catalogue (2012)

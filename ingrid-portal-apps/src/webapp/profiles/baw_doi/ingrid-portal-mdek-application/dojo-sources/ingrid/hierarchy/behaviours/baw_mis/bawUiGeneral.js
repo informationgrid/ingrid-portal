@@ -22,19 +22,12 @@
  */
 define([
     "dijit/registry",
-    "dojo/_base/array",
     "dojo/_base/declare",
-    "dojo/_base/lang",
     "dojo/dom-class",
-    "dojo/dom-construct",
-    "dojo/on",
     "dojo/topic",
-    "ingrid/hierarchy/dirty",
-    "ingrid/layoutCreator",
-    "ingrid/message",
     "ingrid/utils/Store",
     "ingrid/utils/Syslist"
-], function(registry, array, declare, lang, domClass, construct, on, topic, dirty, creator, message, UtilStore, UtilSyslist) {
+], function(registry, declare, domClass, topic, UtilStore, UtilSyslist) {
 
     return declare(null, {
         title: "BAW-Allgemein",
@@ -42,11 +35,6 @@ define([
         defaultActive: true,
         category: "BAW-MIS",
         run: function() {
-            var promise = this._createCustomFields();
-
-            // For now, don't make hierarchyLevelName mandatory in this profile
-            domClass.remove("uiElementAddbawHierarchyLevelName", "required");
-
             topic.subscribe("/onObjectClassChange", function(data) {
 
                 var isNewItem = "newNode" === currentUdk.uuid;
@@ -240,49 +228,7 @@ define([
 
             });
 
-            return promise;
-        },
-
-        _createCustomFields: function () {
-            var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
-            var newFieldsToDirtyCheck = [];
-
-            // TODO mark fields as "required" if not Auftrag
-
-            var id;
-
-            id = "bawHierarchyLevelName";
-            construct.place(
-                creator.createDomSelectBox({
-                    id: id,
-                    name: message.get("ui.obj.baw.hierarchy.level.name.title"),
-                    help: message.get("ui.obj.baw.hierarchy.level.name.help"),
-                    isMandatory: true,
-                    useSyslist: 3950002,
-                    style: "width: 100%"
-                }),
-                "uiElement5100", "before"
-            );
-            newFieldsToDirtyCheck.push(id);
-            additionalFields.push(registry.byId(id));
-            on(registry.byId(id), "Change", function (newVal) {
-                var key = UtilSyslist.getSyslistEntryKey(3950002, newVal);
-                var isSimulationRelated = key === "6" // datei
-                    || key === "18"  // simulationslauf
-                    || key === "19"  // simulationsmodell
-                    || key === "22"  // szenario
-                    || key === "24";  // variante
-                var isSimulationRunOrFile = key === "6" // datei
-                    || key === "18";  // simulationslauf
-                topic.publish("onBawHierarchyLevelNameChange", {
-                    isSimulationRelated: isSimulationRelated,
-                    isSimulationRunOrFile: isSimulationRunOrFile
-                })
-            });
-
-
-            array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
-            return registry.byId(id).promiseInit;
+            return;
         }
 
     })();
