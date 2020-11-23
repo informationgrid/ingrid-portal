@@ -28,10 +28,11 @@ define([
     "ingrid/hierarchy/behaviours/baw_mis/bawMisCodelists",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisKeywordCatalogue",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisNewObjectTypes",
+    "ingrid/hierarchy/behaviours/baw_mis/bawMisSimulationMdFields",
     "ingrid/hierarchy/behaviours/baw_mis/bawMisWaterwaysTable",
     "ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral",
     "ingrid/hierarchy/behaviours/baw_mis/bawValidationRules"
-], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
+], function(lang, behaviours, bawDoiCrossReferences, bawDoiPublicationRestriction, bawMisCodelists, bawMisKeywordCatalogue, bawMisNewObjectTypes, bawMisSimulationMdFields, bawMisWaterwaysTable, bawUiGeneral, bawValidationRules) {
 
     return lang.mixin(behaviours, {
 
@@ -59,6 +60,11 @@ define([
          * Allowed object types in New Object dialog box
          */
         bawMisNewObjectTypes: bawMisNewObjectTypes,
+
+        /**
+         * IGE fields for simulation-related metadata
+         */
+        bawMisSimulationMdFields: bawMisSimulationMdFields,
 
         /**
          * New table for federal waterways
