@@ -46,9 +46,7 @@
         </div>
         <div class="row">
           <div class="columns">
-            <p>
-              © Bundesamt für Kartographie und Geodäsie - 2019
-            </p>
+            <p class="copyright_text">$MESSAGES.getString("ingrid.page.copyright")</p>
           </div>
         </div>
       </div>

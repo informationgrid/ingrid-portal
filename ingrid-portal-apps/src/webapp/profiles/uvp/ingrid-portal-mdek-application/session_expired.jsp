@@ -105,7 +105,7 @@
                         </div>
                         <div class="xsmall-24 large-17 xlarge-18 columns">
                             <div class="copyright">
-                                <p>© 2020 Landesbetrieb Geoinformation und Vermessung</p>
+                                <p class="copyright_text">© 2020 Landesbetrieb Geoinformation und Vermessung</p>
                             </div>
                         </div>
                     </div>

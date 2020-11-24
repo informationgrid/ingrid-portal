@@ -4,7 +4,7 @@
             <div class="footer__top">
 ##              <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
                 #parse("/decorations/layout/ingrid/templates/footer/body_footer_logo.vm")
-                <p class="copyright">$MESSAGES.getString("ingrid.page.copyright")</p>
+                <p class="copyright copyright_text">$MESSAGES.getString("ingrid.page.copyright")</p>
             </div>
         </div>
         <hr class="bx-top-0 bx-bot-0"/>

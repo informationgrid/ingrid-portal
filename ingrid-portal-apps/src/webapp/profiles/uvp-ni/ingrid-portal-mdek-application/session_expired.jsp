@@ -99,7 +99,7 @@
                             </div>
                             <div class="copyright">
                                 <span class="icon"></span>
-                                <span class="text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
+                                <span class="text copyright_text">Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</span>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-8 xlarge-7 columns">
