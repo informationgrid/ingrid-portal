@@ -27,31 +27,19 @@ define([
 ], function(declare, topic, UtilSyslist) {
 
     return declare(null, {
-        title: "Systemanpassungen",
-        description: "Anpassungen für die BAW, die beim erstem Laden des IGE laufen.",
+        title: "Objekttypen",
+        description: "Angepasste Liste der erlaubten Objekttypen",
         defaultActive: true,
         type: "SYSTEM",
         category: "BAW-MIS",
         run: function() {
 
-            // load custom syslists
-            topic.subscribe("/collectAdditionalSyslistsToLoad", function(ids) {
-                ids.push(3950000, 3950001, 3950002, 3950003, 3950004, 3950005, 3950010);
-            });
-
             topic.subscribe("/additionalSyslistsLoaded", function() {
-                // Keep only Geodatensatz and Geodatendienst for new object type
+                // out of the existing options, keep only Geodatensatz and Geodatendienst for new object type
                 sysLists[UtilSyslist.listIdObjectClass] = sysLists[UtilSyslist.listIdObjectClass].filter(function(item) {
                     return item[1] === "1" || item[1] === "3";
                 });
 
-                // Add vertical CRSes to the list of horizontal CRSes
-                var crsSyslist = sysLists[100];
-                if (crsSyslist) {
-                    crsSyslist.push([ "EPSG 7837: DHHN2016 Höhe", "7837", "N", null ]);
-                    crsSyslist.push([ "EPSG 5783: DHHN92 Höhe", "5783", "N", null ]);
-                    crsSyslist.push([ "EPSG 7699: DHHN12 Höhe", "7699", "N", null ]);
-                }
             });
         }
     })();
