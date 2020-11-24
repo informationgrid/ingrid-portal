@@ -108,7 +108,7 @@
                         <a href="/startseite">
                             <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png"/>-->
                         </a>
-                        <p class="copyright">Copyright &copy; Verwaltungskooperation Umweltinformationssysteme (VKoopUIS) Projekt Nr. 50</p>
+                        <p class="copyright copyright_text">&copy; Niedersächsisches Ministerium für Umwelt, Energie, Bauen und Klimaschutz</p>
                     </div>
                 </div>
                 <hr class="bx-top-0 bx-bot-0"></hr>
