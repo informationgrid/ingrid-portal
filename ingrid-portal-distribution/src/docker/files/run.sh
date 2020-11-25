@@ -229,7 +229,32 @@ else
         echo "Update connector attributes"
         sed -i -e "s@redirectPort=\"8443\" />@redirectPort=\"8443\" ${PORTAL_SERVER_CONNECTOR_ATTR} />@" conf/server.xml
     fi
-    
+
+    if [ "$PORTAL_COPYRIGHT" ]; then
+        echo "Update copyright"
+        sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_de.properties
+        if [ "$PORTAL_COPYRIGHT_EN" ]; then
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT_EN}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT_EN}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_en.properties
+        else
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_en.properties
+        fi
+
+        # HTML
+        sed -i "s@<meta name=\"author\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ROOT/error*.html
+        sed -i "s@<meta name=\"author\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/error*.html
+        sed -i "s@<meta name=\"author\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+
+        sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ROOT/error*.html
+        sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/error*.html
+        sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+        
+        sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ROOT/error*.html
+        sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/error*.html
+        sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+
+    fi
 
     touch /initialized
 fi

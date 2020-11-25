@@ -785,7 +785,7 @@ define({
         "ui.obj.type6.urlList.header.url": "Url*",
         "ui.obj.type6.urlList.header.urlDescription": "Description",
 
-        "ui.obj.previewImage.table.fileName": "File Name",
+        "ui.obj.previewImage.table.fileName": "File Name/URL",
         "ui.obj.previewImage.table.fileDescription": "File Description",
 
         "ui.adr.header.addressTitle": "Address Title",

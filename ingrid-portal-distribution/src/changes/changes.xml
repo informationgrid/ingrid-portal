@@ -8,7 +8,7 @@
     <body>
         <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
           <action type="update" dev="wemove">
-            Portal: Update measurement client to version 1.0.20
+            Portal: Update measurement client to version 1.0.21
           </action>
           <action type="add" dev="wemove" issue="2231">
             IGE: Adjust help text
@@ -58,6 +58,9 @@
           </action>
           <action type="update" dev="wemove" issue="1581">
             Update copy dialog information
+          </action>
+          <action type="update" dev="wemove" issue="2198">
+            Change title of preview image column.
           </action>
         </release>
 

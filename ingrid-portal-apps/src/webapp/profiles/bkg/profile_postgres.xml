@@ -25,7 +25,7 @@
         </page>
         <page>
             <name>accessibility.psml</name>
-            <hidden>true</hidden>
+            <hidden>false</hidden>
         </page>
         <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
