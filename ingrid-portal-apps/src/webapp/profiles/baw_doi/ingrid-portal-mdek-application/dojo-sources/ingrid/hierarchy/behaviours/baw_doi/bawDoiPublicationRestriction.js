@@ -37,7 +37,10 @@ define([
         run: function () {
             topic.subscribe("/onObjectClassChange", function() {
                 if (UtilSecurity.currentUser.role !== 1) {
-                    registry.byId('toolbarBtnFinalSave').set('disabled', true);
+                    var publishBtn = registry.byId('toolbarBtnFinalSave');
+                    if (publishBtn) {
+                        publishBtn.set('disabled', true);
+                    }
                 }
             });
         }
