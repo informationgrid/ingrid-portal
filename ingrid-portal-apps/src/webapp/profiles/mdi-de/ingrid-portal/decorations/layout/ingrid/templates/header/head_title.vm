@@ -1,0 +1,1 @@
+<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "MDI-DE - Die Marine Dateninfrastruktur Deutschland")</title>

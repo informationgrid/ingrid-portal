@@ -1,0 +1,8 @@
+<article class="teaser ob-container">
+    <div class="teaser__box">
+        <div class="teaser__content ob-container">
+            #renderPortletTitle($MESSAGES.getString('teaser.weather.title') "h4")
+        </div>
+        <p>$MESSAGES.getString("teaser.weather.no.data")</p>
+    </div>
+</article>

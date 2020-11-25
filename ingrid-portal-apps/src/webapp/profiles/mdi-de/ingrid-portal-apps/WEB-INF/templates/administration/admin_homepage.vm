@@ -1,0 +1,37 @@
+<div class="columns">
+    #set ($action = $renderResponse.createActionURL())
+    <form class="form" action="$action" method="post" name="personalize_home" id="personalize_home">
+        <p>$MESSAGES.getString('admin.homepage.explanation')</p>
+        <hr/>
+        <h4>$MESSAGES.getString('admin.homepage.content')</h4>
+        #foreach($l in $leftColumnPortlets)
+            #if($leftColumnFragments.size() >= $velocityCount)
+                #set($idx = $velocityCount - 1)
+                #set($fragment = $leftColumnFragments.get($idx).get("fragment"))
+            #else
+                #set($fragment = "")
+            #end
+            <div class="form-element">
+                <label for="c1r$velocityCount">$MESSAGES.getString('admin.homepage.line') $velocityCount</label>
+            </div>
+            <div class="form-element">
+                <p>
+                    <select class="select2" size="1" id="c1r$velocityCount" name="c1r$velocityCount">
+                    <option value="none">$MESSAGES.getString('admin.homepage.entry.empty')</option>
+                    #foreach($f in $leftColumnPortlets)
+                        <option value="$f.portlet.getUniqueName()"
+                            #if($fragment.getName())
+                                #if($fragment.getName()==$f.portlet.getUniqueName()) 
+                                    selected="selected"
+                                #end
+                            #end
+                        >$f.title</option>
+                    #end
+                    </select>
+                </p>
+            </div>
+        #end
+        <hr>
+        #parse ('/WEB-INF/templates/administration/include_form_footer_save.vm')
+    </form>
+</div>

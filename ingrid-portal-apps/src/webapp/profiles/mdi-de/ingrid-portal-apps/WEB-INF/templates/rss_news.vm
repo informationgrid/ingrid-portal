@@ -1,0 +1,36 @@
+<div class="columns">
+    <h3>$MESSAGES.getString('news.archive.header')</h3>
+    #foreach($rssEntry in $rssEntries)
+        <div class="teaser-data">
+            <div class="text-wrapper">
+                <small class="bx-bot-0">
+                    <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
+                    <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
+                </small>
+                <a href="$!rssEntry.link" title="$!rssEntry.title">
+                    <h2 class="header">
+                        $!rssEntry.title
+                    </h2>
+                </a>
+                <p class="data-text">
+                    #if ($rssEntry && $rssEntry.description)
+                        $strutils.cutString($rssEntry.description, 350)
+                    #end  
+                </p>
+                #if($rssEntry.author && $rssEntry.author != "")
+                <h6 class="no-margin">$MESSAGES.getString('news.author')</h6>
+                <p>$rssEntry.author</p>
+                #end
+                <a href="$!rssEntry.link" title="$!rssEntry.title">
+                    <span class="ic-ic-arrow arrow"></span>
+                </a>
+            </div>
+        </div>
+    #end
+    <a class="icon" href="$renderResponse.encodeURL('/portal/default-page.psml')">
+        <span class="ic-ic-arrow-left"></span>
+        <span class="text">$MESSAGES.getString('news.archive.back')</span>
+    </a>
+<br>
+<br>
+</div>

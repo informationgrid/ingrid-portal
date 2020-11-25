@@ -1,0 +1,20 @@
+#if($cmsItemValue)
+<div class="about-wrapper dark" style="background-image: url('/decorations/layout/uvp/images/template/drops-small.svg');">
+    <h2 class="hide-for-large">
+        $cmsItemTitle
+    </h2>
+    <div class="row">
+        <div class="xsmall-24 medium-12 large-14 columns">
+            <h2 class="show-for-large">
+                $cmsItemTitle
+            </h2>
+            $cmsItemValue
+        </div>
+        <div class="medium-12 large-10 columns show-for-medium">
+            <div class="img-wrapper">
+              <img src="/decorations/layout/uvp/images/template/illu-map-boxes.svg" alt="" class="">
+            </div>
+        </div>
+    </div>
+</div>
+#end
