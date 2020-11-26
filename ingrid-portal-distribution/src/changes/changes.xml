@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.6.4" date="2020-xx-xx" description="Release 5.6.4">
+          <action type="fix" dev="wemove" issue="2247">
+            When inheriting links it should not get preview images.
+          </action>
+        </release>
+      
         <release version="5.6.3" date="2020-11-20" description="Release 5.6.3">
           <action type="update" dev="wemove">
             Portal: Update measurement client to version 1.0.21

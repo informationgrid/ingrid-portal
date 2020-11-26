@@ -744,6 +744,18 @@ define([
                 //preHook: dojo.partial(UtilDWR.enterLoadingState, "updateGetLinksToFromParent"),
                 //postHook: dojo.partial(UtilDWR.exitLoadingState, "updateGetLinksToFromParent"),
                 callback: function(objNodeData) {
+                    
+                    // filter all links not to be inherited (exclude preview image links and coupled resources)
+                    var linkFilter = function(links) {
+                        return array.filter(links, function(row) {
+                            return row.relationType !== 9000 && row.relationType !== 3600;
+                        });
+                    }
+                    var objLinkTable = objNodeData.linksToObjectTable;
+                    var urlLinkTable = objNodeData.linksToUrlTable;
+                    objNodeData.linksToObjectTable = linkFilter(objLinkTable);
+                    objNodeData.linksToUrlTable = linkFilter(urlLinkTable);
+                    
                     // get linksTo-references
                     var linkTableData = self._prepareObjectAndUrlReferences(objNodeData);
 
