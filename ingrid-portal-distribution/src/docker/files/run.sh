@@ -129,7 +129,7 @@ else
         fi
 
         # PortalU-RLP extends UVP layout
-        if [ "$PORTAL_PROFILE" == "portalu_rlp" ]; then
+        if [ "$PORTAL_PROFILE" == "portalu_rp" ]; then
             echo "Copying profile files from parent (uvp) into portal directories ..."
             cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
             cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
