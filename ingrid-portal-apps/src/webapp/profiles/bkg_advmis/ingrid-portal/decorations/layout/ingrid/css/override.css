@@ -319,7 +319,7 @@ thead {
 }
 
 .desktop-logo {
-    width: 21.5em;
+  height: inherit;
 }
 
 .mobile__logo {
