@@ -1259,8 +1259,12 @@ header .logo a .vertical-line {
   background-color: #741327;
 }
 .teaser {
+  transition: .2s ease;
   border-radius: 15px;
   box-shadow: 0 0 40px rgba(0, 0, 0, .1);
+}
+.teaser:hover {
+  transform: scale(1.05);
 }
 .teaser .blue-border {
   border-radius: 100px;
