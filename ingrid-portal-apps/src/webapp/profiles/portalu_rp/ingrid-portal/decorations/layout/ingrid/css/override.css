@@ -1484,3 +1484,10 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 .form-element .input-check, .form-element .input-check:hover {
   background-color: transparent;
 }
+
+/* error page */
+.row.content-small {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 4rem;
+}
