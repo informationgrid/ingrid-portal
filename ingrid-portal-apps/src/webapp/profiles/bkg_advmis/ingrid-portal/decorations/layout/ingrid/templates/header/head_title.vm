@@ -1,1 +1,1 @@
-<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "BKG-MIS")</title>
+<title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "ADV-MIS")</title>

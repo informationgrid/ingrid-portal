@@ -114,7 +114,7 @@
   padding: 20px 20px 10px
  }
  .startseite .linklist {
-  background: #407e40
+  background: #0066b3
  }
  .startseite .linklist li {
   border-bottom: 1px solid #7aa478
@@ -144,7 +144,7 @@
  }
  .startseite .linklist.icon li a:hover, .startseite .linklist.icon li a:focus,
   .startseite .linklist.icon li a:active {
-  color: #407e40
+  color: #0066b3
  }
  .startseite .linklist.icon li:last-child {
   border-bottom: 0
@@ -189,7 +189,7 @@
  }
  .wrapperLinklist .linklist li a:hover, .wrapperLinklist .linklist li a:focus,
   .wrapperLinklist .linklist li a:active {
-  color: #407e40
+  color: #0066b3
  }
 }
 
@@ -222,7 +222,7 @@
   max-width: 100%
  }
  #social-media-footer {
-  background-color: #407e40;
+  background-color: #0066b3;
   margin-bottom: 2em
  }
  .socialmedia {
@@ -277,6 +277,10 @@
   background:
     url(/decorations/layout/ingrid/images/template/sprite-social.png?__blob=normal&v=4) no-repeat 0 -1176px;
   }
+ .socialmedia ul li.navAdvmis a {
+  background:
+    url(/decorations/layout/ingrid/images/template/AdV_Logo_SocialMedia.png) no-repeat;
+ }
  .contactbox dt, .contactbox p {
   padding-left: 20px
  }
@@ -396,11 +400,11 @@
   width: 50%
  }
  #stage .textContainer h3 {
-  color: #407e40;
+  color: #0066b3;
   margin: 0
  }
  #stage .textContainer h3 a {
-  color: #407e40
+  color: #0066b3
  }
  #stage .pagination {
   position: absolute;
@@ -432,7 +436,7 @@
  .js-on #stage .slick-dots li button {
   font-size: 133.33%;
   font-weight: bold;
-  color: #407e40;
+  color: #0066b3;
   background-color: transparent;
   height: auto;
   width: auto;
@@ -453,7 +457,7 @@
  }
  .js-on #stage .slick-dots li button:hover, .js-on #stage .slick-dots li button:focus,
   .js-on #stage .slick-dots li button:active {
-  color: #407e40;
+  color: #0066b3;
   background: white;
   opacity: 1
  }
@@ -466,7 +470,7 @@
   color: white
  }
  .js-on #stage .slick-dots li.slick-active button {
-  color: #407e40;
+  color: #0066b3;
   background-color: white;
   cursor: inherit
  }
@@ -543,7 +547,7 @@
   max-width: none
  }
  .bkgMap div.olControlZoom a {
-  background: #407e40
+  background: #0066b3
  }
  .bkgMap div.olControlZoom a:hover, .bkgMap div.olControlZoom a:focus,
   .bkgMap div.olControlZoom a:active {
