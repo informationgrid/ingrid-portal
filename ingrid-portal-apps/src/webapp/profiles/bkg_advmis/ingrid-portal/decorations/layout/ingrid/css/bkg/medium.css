@@ -280,6 +280,7 @@
  .socialmedia ul li.navAdvmis a {
   background:
     url(/decorations/layout/ingrid/images/template/AdV_Logo_SocialMedia.png) no-repeat;
+  background-size: contain;
  }
  .contactbox dt, .contactbox p {
   padding-left: 20px

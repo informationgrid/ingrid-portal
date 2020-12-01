@@ -302,11 +302,8 @@ thead {
 }
 
 .desktop-logo {
-    max-width: 85%;
-}
-
-.header__logo {
-    width: inherit;
+  height: inherit;
+  padding-right: 5em;
 }
 
 .desktop__title p.main__title {
@@ -316,10 +313,6 @@ thead {
 .mobile__title {
     padding: 0 5px;
     color: #FFFFFF;
-}
-
-.desktop-logo {
-  height: inherit;
 }
 
 .mobile__logo {
@@ -353,6 +346,16 @@ thead {
 
 .footer__logo {
     width: 3.125rem;
+}
+
+/* footer logo */
+.bkg-logo a {
+  padding: 0 !important;
+  float: right;
+}
+
+.bkg-logo img {
+  max-height: 85px;
 }
 
 @media screen and (max-width: 768px) {
