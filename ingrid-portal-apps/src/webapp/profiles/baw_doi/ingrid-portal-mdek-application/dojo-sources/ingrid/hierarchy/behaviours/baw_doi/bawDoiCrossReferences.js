@@ -120,8 +120,6 @@ define([
                 var xrefData = registry.byId(id).data;
                 xrefData.forEach(function (row) {
                     var dt = row.doiCrossReferenceDate;
-                    console.log(dt);
-                    console.log(typeof dt);
                     if (typeof dt === "string" || dt instanceof String) {
                         row.doiCrossReferenceDate = new Date(parseInt(dt));
                     }
