@@ -90,7 +90,9 @@ define([
 
             if (authors.length > 0) {
                 var creators = this.create("creators", null, parent);
-                this.addAddressInfo("creator", authors[0], null, creators);
+                for (var i=0; i<authors.length; i++) {
+                    this.addAddressInfo("creator", authors[i], null, creators);
+                }
             } else {
                 throw new Error(message.get("doi.error.noAuthor"));
             }
