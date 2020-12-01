@@ -160,13 +160,13 @@
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end
         #end
-        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
-            <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
-                <use xlink:href="#user"/>
-            </svg>
-            <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
-        </a>
         #if($jetspeed.getLoggedOn())
+            <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
+                <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
+                    <use xlink:href="#user"/>
+                </svg>
+                <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
+            </a>
             <div class="metamenu metamenu--wide">
                 <!-- State logged in -->
                 #set($userAttributes = $jetspeed.getUserProperties())
