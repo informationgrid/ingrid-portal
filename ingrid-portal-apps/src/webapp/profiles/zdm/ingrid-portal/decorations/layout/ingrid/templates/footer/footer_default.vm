@@ -1,0 +1,97 @@
+
+<div id="footer">
+    <div id="navFunctionsWrapper" class="row">
+        <div class="small-12 medium-2 medium-push-10 end columns">
+            
+            <p class="navToTop">
+                <!--Auskommentierung Zum Seitenanfang
+                <a href="https://www.kuestendaten.de/DE/_seitenrahmen/footer.html?processids=#Start">Zum Seitenanfang</a -->
+                
+                <!--2018-07-17 MO: Einbau Java-Funktion-->
+                <a href="javascript:window.scrollTo(0,0)">Zum Seitenanfang</a>
+            </p>
+        
+        </div>
+         
+    <div class="small-12 medium-10 medium-pull-2 columns">
+        <h2>Diese Seite</h2>
+        <ul id="navFunctions">
+            <li id="navFunctionsRecommend">
+                
+            </li>
+            <li id="navFunctionsFeedback">
+                <a href="https://www.kuestendaten.de/DE/Service/Feedback/feedback-node.html">Feed­back</a><!-- Auskommentierung Feedbackparameter, ["noUrlNavNode", true,"addParam_docId",105264])-->
+            </li>
+            <!-- <li>
+<span class="label">Kurzlink:</span>
+<span class="shortLink">https://www.kuestendaten.de/webcode/105264</span>
+</li>-->
+        </ul>
+    </div>
+
+</div>
+
+
+
+        <div id="siteInfo" class="row">
+        <h2 class="aural">Service Navigation</h2>
+          <div class="siteInfo_links">
+            <ul class="small-block-grid-2 large-block-grid-6">
+
+<li ><a href="https://www.kuestendaten.de/DE/Service/Datenschutz/datenschutz_node.html">Da­ten­schutz</a></li>
+
+<li ><a href="https://www.kuestendaten.de/DE/Service/Barrierefreiheit/barrierefreiheit_node.html" title="Erkl&#228;rung zur Barrierefreiheit">Bar­rie­re­frei­heit</a></li>
+
+<li ><a href="https://www.kuestendaten.de/DE/Service/Impressum/impressum_node.html">Im­pres­s­um</a></li>
+
+<li ><a href="https://www.kuestendaten.de/DE/Service/Sitemap/sitemap_node.html">In­halts­ver­zeich­nis</a></li>
+
+<li ><a href="https://www.kuestendaten.de/DE/Service/Haftungsausschluss/haftungsausschluss_node.html">Haf­tungs­aus­schluss</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="copyright row">
+          <div class="small-12 columns">
+            <p>
+              &#169; Wasserstraßen- und Schifffahrtsverwaltung des Bundes&nbsp;
+             </p>
+          </div>
+        </div>
+      </div>
+    </div>  </div></div>
+    <script type="text/javascript">//<![CDATA[
+        //materna_print
+        var PRINT_PAGE_TEXT = 'drucken',
+             PRINT_TOOLTIP = 'Seite drucken (öffnet Dialog)',
+        //gsb_printTable
+             PRINTTABLE_TEXT = 'Tabelle drucken',
+
+        //materna_twoclickshare
+             TWOCLICKSHARE_TITLE = 'Inhalte teilen',  
+             TWOCLICKSHARE_FORMLINKTEXT = 'Freunden per E-Mail schicken';             
+
+        //materna_navigation_mobile
+             NAV_MENU_NODE = "/105264", 
+             NAV_MOBILE_MENU = 'Menü', 
+             NAV_MOBILE_SEARCH = 'Suchen',
+
+             SHOW_LESS = 'Weniger anzeigen',             // materna_mobile_navigation, materna_service_border, materna_toggle, materna_twoclickshare
+             SHOW_MORE = 'Mehr anzeigen',               // materna_mobile_navigation, materna_service_border, materna_toggle, materna_twoclickshare
+             CLOSE = 'Schlie&szlig;en',                               // materna_mobile_navigation, materna_service_border, materna_twoclickshare, materna_lightbox
+             NEXT ='Nächste Seite',                                 //materna_slideshow, materna_lightbox
+             BACK ='Vorherige Seite',                                 //materna_slideshow, materna_lightbox
+
+         //materna_slideshow
+             NEXT_INACTIVE ='Keine nächste Seite', 
+             BACK_INACTIVE ='Keine vorherige Seite', 
+             PLAY ='Animation starten',
+             PAUSE ='Animation stoppen';
+             PAGE='Seite';
+
+      //]]>
+    </script>
+    <script type="text/javascript" src="https://www.kuestendaten.de/SiteGlobals/Frontend/JavaScript/init/global_shrink_no_scroll.js?v=3"></script>
+    <!-- Seite generiert am: Tue Dec 01 12:59:32 CET 2020 -->
+  </body>
+</html>
