@@ -188,7 +188,8 @@
                 </div>
             </div>
         #else
-            $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
+            ## deactivate login portlet
+            ## $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
     </div>
   #elseif($el == "/administration")
