@@ -2,134 +2,40 @@
 #defineLayoutObjects()
 
 #* Loads our custom macros *#
-#parse("/decorations/layout/ingrid/decorator-macros.vm")
+#parse($layoutDecoration.getResource("decorator-macros.vm"))
 
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
 
+#set($rc = $request.getAttribute("org.apache.jetspeed.request.RequestContext"))
+#set($zdm = $rc.request.getParameter("zdm"))
+
+#set($currentPage = $site.getPageOrTemplate().url)
+#if($currentPage == "/main-maps.psml" || $currentPage == "/main-measures.psml")
+    #set ($isMap = true)
+#else
+    #set ($isMap = false)
+#end
+
 <html xmlns="http://www.w3.org/1999/xhtml" lang="$renderRequest.Locale.getLanguage()" class=" js no-touch svg inlinesvg svgclippaths no-ie8compat">
     <head>
-        #set($currentPage = $site.getPageOrTemplate().url)
         <base href="/" />
-        <meta http-equiv="Content-type" content="#ContentType()" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta content="width=device-width, initial-scale=1" name="viewport"/>
-        <meta name="description" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_descr"), "")" />
-        <meta name="author" content="$MESSAGES.getString('ingrid.page.copyright')" />
-        <meta name="keywords" lang="$renderRequest.Locale.getLanguage()" content="$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_keywords"), "")" />
-        <meta name="copyright" content="$MESSAGES.getString('ingrid.page.copyright')" />
-        <meta name="robots" content="index,follow" />
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/gsb/icons/favicon.ico?__blob=normal&v=1" />
- 
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/style.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/streamline-24px/styles.css">
         <link rel="stylesheet" href="/decorations/layout/ingrid/css/print.css" media="print">
 
         <script src="/decorations/layout/ingrid/scripts/ingrid.js"></script>
-        <!-- ZDM -->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/_libs.css?v=7" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/small.css?v=25" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/medium.css?v=4" type="text/css">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/large.css?v=11" type="text/css">
-        <!--[if IE 9]><link rel="stylesheet"  href="/decorations/layout/ingrid/gsb/css/addon_iefix_9.css?v=1" type="text/css"/><![endif]-->
-        <!--[if lte IE 8]><link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_iefix.css?v=1" type="text/css" /><![endif]-->
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_print.css?v=3" type="text/css" media="print">
-        <link rel="stylesheet" href="/decorations/layout/ingrid/gsb/css/addon_preview.css?v=1" type="text/css">
-        <script src="/decorations/layout/ingrid/gsb/scripts/global.js?v=29"></script>
-        <meta class="foundation-data-attribute-namespace">
-        <meta class="foundation-mq-xxlarge">
-        <meta class="foundation-mq-xlarge">
-        <meta class="foundation-mq-large">
-        <meta class="foundation-mq-medium">
-        <meta class="foundation-mq-small">
-        <style></style>
+        <script type="text/javascript" src="https://www.kuestendaten.de/SiteGlobals/Frontend/JavaScript/init/global.js?v=32"></script>
+        #parse("/decorations/layout/ingrid/templates/header/header_head.vm")
     </head>
-    <body class="gsb lang-de fixed js-on">
-        <div id="wrapperOuter" class="page" >
-          <div id="wrapperInner">
-            <a id="Start"></a>
-            <h1 class="aural">Generaldirektion Wasserstraßen und Schifffahrt</h1>
-            <p class="navSkip">
-              <em>Springe direkt zu:</em>
-            </p>
-            <ul class="navSkip">
-              <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#content">Inhalt</a></li>
-              <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#navPrimary">Hauptmenü</a></li>
-              <li><a href="/SiteGlobals/ErrorPages/ErrorPage404.html?nn=523912#search">Suche</a></li>
-            </ul>
-            <div id="wrapperDivisions">
-              <div id="header">
-                <div class="wrapperBranding row mod">
-                  <div id="navServiceMeta" class="large-9 columns">
-                    <h2 class="aural">Servicemen&uuml;</h2>
-                    <ul>
-                      <li><a href="https://www.kuestendaten.de/DE/Startseite/Startseite_Kuestendaten_node.html">K&uuml;s&shy;ten&shy;da&shy;ten</a></li>
-                      <li id="Bar"><a href="https://www.kuestendaten.de/NSK/DE/Startseite/Startseite_Portal_Nordseekueste_node.html" title="Nordseek&uuml;ste">Nord&shy;see&shy;k&uuml;s&shy;te</a></li>
-                      <li><a href="https://www.kuestendaten.de/Tideems/DE/Startseite/Startseite-Portal-Tideems-node.html">Ti&shy;de&shy;ems</a></li>
-                      <li id="Bar"><a href="https://www.kuestendaten.de/Tideweser/DE/Startseite/Startseite-Portal-Tideweser-node.html" title="Tideweser">Ti&shy;de&shy;we&shy;ser</a></li>
-                      <li id="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html" title="Tideelbe">Ti&shy;de&shy;el&shy;be</a></li>
-                      <li id="Bar"><a href="https://www.kuestendaten.de/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html" title="Nord-Ostsee-Kanal">Nord-Ost&shy;see-Ka&shy;nal</a></li>
-                      <li id="Bar"><a href="https://www.kuestendaten.de/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html" title="Ostseek&uuml;ste">Ost&shy;see&shy;k&uuml;s&shy;te</a></li>
-                      <li><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icons/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache"></a></li>
-                      <li id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="/decorations/layout/ingrid/gsb/icons/icons/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Geb&auml;rdensprache" alt="Geb&auml;rdensprache"></a></li>
-                    </ul>
-                  </div>
-                  <div id="search" class="large-3 columns">
-                    <h2 class="aural">Suche</h2>
-                    <form name="searchService" action="/SiteGlobals/Forms/Suche/Servicesuche_Formular.html" method="get" enctype="application/x-www-form-urlencoded">
-                      <input type="hidden" name="nn" value="523912">
-                      <input type="hidden" name="resourceId" value="10950">
-                      <input type="hidden" name="input_" value="17684">
-                      <input type="hidden" name="pageLocale" value="de">
-                      <fieldset>
-                          <p>
-                            <span class="formLabel aural">
-                                <label for="f10950d16094">Suchtext </label>
-                            </span>
-                            <span class="formField">
-                                <input id="f10950d16094" name="templateQueryString" value="" title="Suchtext" type="text" placeholder="Suchbegriff" size="26" maxlength="100" autocomplete="off">
-                                <p id="searchAutoSuggestBox1" class="searchAutoSuggestBox" style="width: 178px; top: 24px; left: 12px; display: none;"></p>
-                            </span>
-                            <input class="image" type="image" src="/decorations/layout/ingrid/gsb/Forms/_components/Buttons/Servicesuche_Submit.png?__blob=image&amp;v=1" id="f10950d18056" name="submit" alt="Suchen" title="Suchen">
-                          </p>
-                      </fieldset>
-                    </form>
-                  </div>
-                </div>
-                <div class="row mod">
-                  <div class="large-3 logo columns show-for-large-up">
-                      <p><a href="https://www.wsv.de" title="WSVPageTitle" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/logo.png?__blob=normal&v=2" alt="WSVPageAltLink"></a></p>
-                  </div>
-                  <div class="small-6 logo columns hide-for-large-up">
-                       <p><a href="https://www.wsv.de" title="Wasserstraßen- und Schifffahrtsverwaltung des Bundes" target="_blank" rel="noopener noreferrer"><img src="/decorations/layout/ingrid/gsb/icons/additionalLogoShrinkheader.jpg?__blob=normal&amp;v=2" alt="Weitere Informationen unter Wasserstraßen- und Schifffahrtsverwaltung des Bundes"></a></p>
-                    </div>
-                  <div class="right large-5 small-6 addlogo columns subheadline">
-                    <p>
-                      <span></span>
-                    </p>
-                  </div>
-                </div>
-                <div id="navPrimary">
-                    <h2 class="aural">Hauptmenü</h2>
-                </div>
-                <div id="wrapperBreadcrumbs">
-                  <div id="navBreadcrumbsVertical">
-                  </div>
-                </div>
-                <div id="navBreadcrumbs">
-                  <p class="aural">Sie sind hier:</p>
-                  <ol>
-                    <li class="first"><a href="/DE/Startseite/Startseite_Kuestendaten_node.html"></a></li>
-                    <li>
-                        <strong>
-                            Trefferanzeige
-                        </strong>
-                    </li>
-                  </ol>
-                </div>
-              #parse("/decorations/layout/ingrid/templates/header/header_menu.vm")
-              </div>
-              <div id="main" class="row wide">
-                <div id="content" class="large-12 medium-12 small-12 columns">
+    <body class="gsb js-off lang-de fixed">
+        #parse("/decorations/layout/ingrid/templates/header/header_body.vm")
+        #if($isMap)
+        </div>
+        #end
+        <div #if(!$isMap)id="main" class="row"#end>
+          <div #if(!$isMap)id="content" class="large-8 medium-12 small-12 columns"#end>

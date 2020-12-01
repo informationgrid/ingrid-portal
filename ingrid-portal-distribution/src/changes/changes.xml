@@ -62,6 +62,9 @@
           <action type="update" dev="wemove" issue="2198">
             Change title of preview image column.
           </action>
+          <action type="fix" dev="wemove" issue="2247">
+            When inheriting links it should not get preview images.
+          </action>
         </release>
 
         <release version="5.6.0" date="2020-10-19" description="Release 5.6.0">
