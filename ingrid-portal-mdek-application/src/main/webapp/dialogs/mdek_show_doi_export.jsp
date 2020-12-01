@@ -36,9 +36,13 @@
             "dojo/_base/lang",
             "dojo/dom-style",
             "dojo/dom-attr",
+            "dijit/registry",
             "ingrid/message",
             "ingrid/hierarchy/behaviours/DOI/doiExport"
-        ], function (on, Deferred, all, lang, domStyle, domAttr, message, doiExport) {
+        ], function (on, Deferred, all, lang, domStyle, domAttr, registry, message, doiExport) {
+
+            var url;
+
             on(_container_, "Load", function () {
                 try {
                     var result = doiExport.run();
@@ -53,6 +57,13 @@
                 }
             });
 
+            on(_container_, "Unload", function () {
+                // See: https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL#Usage_notes
+                if (url) {
+                    URL.revokeObjectURL(url);
+                }
+            });
+
             function handleResult(res) {
                 var highlighted = hljs.highlight("xml", res);
                 // putting the highlighted code in a html element so you can see
@@ -60,6 +71,24 @@
 
                 var copyText = document.getElementsByClassName("copyfrom")[0];
                 copyText.value = res;
+
+                // See also https://www.bennadel.com/blog/3472-downloading-text-using-blobs-url-createobjecturl-and-the-anchor-download-attribute-in-javascript.htm
+                var blob = new Blob( [ res ], {
+                    type: "application/xml;charset=utf-8"
+                })
+                url = URL.createObjectURL(blob);
+
+                domAttr.set("xmlDlAnchor", "href", url);
+
+                var doiField = registry.byId('doiId');
+                if (doiField) {
+                    var filename = doiField.get('value');
+                    if (filename) {
+                        filename = filename + ".xml";
+
+                        domAttr.set("xmlDlAnchor", "download", filename);
+                    }
+                }
             }
 
             function handleError(error) {
@@ -103,6 +132,9 @@
 
     <div id="container">
         <button data-dojo-type="dijit/form/Button" onclick="copy()"><fmt:message key="ui.copyClipboard" /></button>
+        <a id="xmlDlAnchor" href="#">
+            <button data-dojo-type="dijit/form/Button"><fmt:message key="ui.download" /></button>
+        </a>
         <textarea class='copyfrom' tabindex='-1' aria-hidden='true' style="position: absolute;left: -9999px;"></textarea>
         <pre style="font-size: 12px; max-height: 600px; overflow: auto">
 <code id="xmlContainer" style="border: 0;"></code>
