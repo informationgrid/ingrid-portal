@@ -1,0 +1,34 @@
+#if ($zdm == "NOK")
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_nok.vm")
+#elseif ($zdm == "NSK")
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_nsk.vm")
+#elseif ($zdm == "OSK")
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_osk.vm")
+#elseif ($zdm == "Tideelbe")
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_tideelbe.vm")
+#elseif ($zdm == "Tideems")
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_tideems.vm")
+#elseif ($zdm == "Tideweser")
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_tideweser.vm")
+#else
+    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_default.vm")
+#end
+
+<script>
+    var breadCrump = 'HTTP Status 404';
+    if ('$currentPage' == '/main-maps.psml') {
+        breadCrump = 'Karte';
+    } else if ('$currentPage' == '/main-measures.psml') {
+        breadCrump = 'Zeitreihen';
+    } else if ('$currentPage' == '/search-detail.psml') {
+        breadCrump = 'Trefferanzeige';
+    }
+$('#navBreadcrumbs li strong' ).text(breadCrump);
+</script>
+
+#if($isMap)
+<script>
+    $('#wrapperDivisions').addClass('maps smaller');
+    $('#header').addClass('maps smaller');
+</script>
+#end
