@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import de.ingrid.mdek.caller.IMdekCallerObject;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -570,6 +571,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Archiving file: "+this.formatItem(item));
             try {
                 this.storage.archive(item.getPath(), item.getFile());
+                updateIndex(file);
                 archiveCount++;
             }
             catch (final IOException e) {
@@ -587,6 +589,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Restoring file: "+this.formatItem(item));
             try {
                 this.storage.restore(item.getPath(), item.getFile());
+                updateIndex(file);
                 restoreCount++;
             }
             catch (final IOException e) {
@@ -605,6 +608,13 @@ public class UploadCleanupJob extends QuartzJobBean {
             // log error, but keep the job running
             this.logError("Error cleaning up the storage", e);
         }
+    }
+
+    private void updateIndex(String file) {
+        IMdekCallerObject caller = this.connectionFacade.getMdekCallerObject();
+        String plugId = "/" + file.split("/")[0].replace("_", ":");
+        String uuid = file.split("/")[1];
+        caller.updateObjectIndex(plugId, uuid);
     }
 
     /**
