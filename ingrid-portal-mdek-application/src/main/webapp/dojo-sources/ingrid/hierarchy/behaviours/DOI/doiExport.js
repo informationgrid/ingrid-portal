@@ -26,8 +26,9 @@ define([
     "dojo/_base/declare",
     "dojo/dom-construct",
     "dojo/_base/array",
-    "ingrid/message"
-], function (registry, declare, construct, array, message) {
+    "ingrid/message",
+    "ingrid/utils/Catalog"
+], function (registry, declare, construct, array, message, UtilCatalog) {
     return declare(null, {
 
         run: function () {
@@ -103,9 +104,15 @@ define([
         getTitles: function (parent) {
 
             var titles = this.create("titles", null, parent);
-            titles.appendChild(this.create("title", {innerHTML: currentUdk.objectName}));
+            titles.appendChild(this.create("title", {
+                "xml:lang" : UtilCatalog.getCatalogLanguage(),
+                innerHTML: currentUdk.objectName
+            }));
             if (currentUdk.generalShortDescription) {
-                titles.appendChild(this.create("title", {innerHTML: currentUdk.generalShortDescription}));
+                titles.appendChild(this.create("title", {
+                    "xml:lang" : UtilCatalog.getCatalogLanguage(),
+                    innerHTML: currentUdk.generalShortDescription
+                }));
             }
 
         },
@@ -289,6 +296,7 @@ define([
             var description = currentUdk.generalDescription;
             this.create("description", {
                 descriptionType: "Abstract",
+                "xml:lang" : UtilCatalog.getCatalogLanguage(),
                 innerHTML: description
             }, element);
 
