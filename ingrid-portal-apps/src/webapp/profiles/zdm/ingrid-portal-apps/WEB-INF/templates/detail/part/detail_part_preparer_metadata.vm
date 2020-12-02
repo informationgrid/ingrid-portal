@@ -328,7 +328,7 @@
                         </div>
                     </div>
             ## Datenqualität
-            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy/gmd:nameOfMeasure"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-5">
                     <div class="box__content ob-container">
@@ -410,6 +410,14 @@
                             #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table127.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
                             #renderTable($tmp)
                             #set($tmp = "")
+                            ## Relative Positionsgenauigkeit
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7128"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table128.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
+
                         </div>
                     </div>
                 </div>
