@@ -200,12 +200,19 @@ define([
 
         getAlternateIdentifiers: function (parent) {
 
-            this.create("alternateIdentifiers", null, parent)
-                .appendChild(
-                    this.create("alternateIdentifier", {
-                        alternateIdentifierType: "UUID",
-                        innerHTML: currentUdk.uuid
-                    }));
+            var identifier = currentUdk.ref1ObjectIdentifier;
+            if (!identifier) return ;
+
+            // Match the UUID
+            var match = identifier.match(/.*([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$/i);
+            if (match && match[1]) {
+                this.create("alternateIdentifiers", null, parent)
+                    .appendChild(
+                        this.create("alternateIdentifier", {
+                            alternateIdentifierType: "UUID",
+                            innerHTML: match[1]
+                        }));
+            }
 
         },
 
