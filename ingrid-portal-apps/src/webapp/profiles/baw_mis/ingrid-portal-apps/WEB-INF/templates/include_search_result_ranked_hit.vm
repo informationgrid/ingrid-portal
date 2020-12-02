@@ -84,7 +84,7 @@
         </div>
         #end
         <p>
-            $!rs.abstract 
+            #removeLocalisation($rs.abstract)
         </p>
         <p> 
             #set( $bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name") )
