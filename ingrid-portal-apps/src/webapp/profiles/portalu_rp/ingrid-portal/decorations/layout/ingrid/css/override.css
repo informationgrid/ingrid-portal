@@ -329,7 +329,7 @@ a.icon:hover {
   background-color: #b32643;
 }
 .input-search .button:hover {
-  background-color: #c50027;
+  background-color: #d03453;
 }
 .input-search .button.round {
   background-color: #b32643;
@@ -486,7 +486,7 @@ header a.icon.is-selected {
   color: #b32643;
 }
 .teaser-data .header:hover, .teaser-data .arrow:hover {
-  color: #b52744;
+  color: #d03453;
 }
 .teaser-data .helper.icon {
   margin-bottom: 24px;
@@ -571,7 +571,7 @@ header a.icon.is-selected {
 }
 .button.pill:hover {
   color: #eaf6ff;
-  background-color: #b32643;
+  background-color: #d03453;
 }
 .button.pill:hover span {
   color: #eaf6ff;
@@ -604,7 +604,7 @@ footer .footer .columns div {
   margin: 10px auto;
 }
 footer .footer .copyright span {
-  color: #5E788D;
+  color: #666;
   text-transform: none;
   max-width: 350px;
   line-height: 1.25;
