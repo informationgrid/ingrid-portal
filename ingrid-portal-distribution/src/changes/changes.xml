@@ -65,6 +65,9 @@
           <action type="fix" dev="wemove" issue="2247">
             When inheriting links it should not get preview images.
           </action>
+          <action type="fix" dev="wemove" issue="2260">
+            IGE(UVP): Fix strange spatial search effect.
+          </action>
         </release>
 
         <release version="5.6.0" date="2020-10-19" description="Release 5.6.0">
