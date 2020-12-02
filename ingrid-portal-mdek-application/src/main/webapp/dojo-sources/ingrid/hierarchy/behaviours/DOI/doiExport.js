@@ -22,11 +22,12 @@
  */
 
 define([
+    "dijit/registry",
     "dojo/_base/declare",
     "dojo/dom-construct",
     "dojo/_base/array",
     "ingrid/message"
-], function (declare, construct, array, message) {
+], function (registry, declare, construct, array, message) {
     return declare(null, {
 
         run: function () {
@@ -210,14 +211,43 @@ define([
 
         getRelatedIdentifiers: function (parent) {
 
+            var relatedIdentifiers;
             if (currentUdk.ref2PublishedISBN) {
-                this.create("relatedIdentifiers", null, parent)
-                    .appendChild(
+                relatedIdentifiers = this.create("relatedIdentifiers", null, parent);
+                relatedIdentifiers.appendChild(
+                    this.create("relatedIdentifier", {
+                        relatedIdentifierType: "ISBN",
+                        relationType: "IsSupplementTo",
+                        innerHTML: currentUdk.ref2PublishedISBN
+                    }));
+            }
+
+            var xrefTable = registry.byId('doiCrossReferenceTable');
+            if (xrefTable) {
+                var relatedDois = array.filter(xrefTable.data, function (row) {
+                    return row.doiCrossReferenceIdentifier
+                        && (row.doiCrossReferenceIdentifier.startsWith("http://doi.org/")
+                            || row.doiCrossReferenceIdentifier.startsWith("https://doi.org/"));
+                });
+
+                if (relatedDois.length > 0 && !relatedIdentifiers) {
+                    relatedIdentifiers = this.create("relatedIdentifiers", null, parent);
+                }
+
+                for(var i=0; i<relatedDois.length; i++) {
+                    var doi = relatedDois[i].doiCrossReferenceIdentifier;
+                    const searchElement = '://doi.org/';
+                    var idx = searchElement.length + doi.indexOf(searchElement);
+                    doi = doi.substring(idx);
+
+                    relatedIdentifiers.appendChild(
                         this.create("relatedIdentifier", {
-                            relatedIdentifierType: "ISBN",
-                            relationType: "Describes",
-                            innerHTML: currentUdk.ref2PublishedISBN
-                        }));
+                            relatedIdentifierType: "DOI",
+                            relationType: "Cites",
+                            innerHTML: doi
+                        })
+                    );
+                }
             }
 
         },
