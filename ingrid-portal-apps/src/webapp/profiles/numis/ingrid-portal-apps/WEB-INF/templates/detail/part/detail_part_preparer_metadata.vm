@@ -346,8 +346,8 @@
                     #renderTable($tmp)
                     #set($tmp = "")
         ## Datengrundlage
-                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
-                    #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.data_base") $tmp)
+                    #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage", "./gmd:source/gmd:LI_Source/gmd:description"))
+                    #renderTextList($MESSAGES.getString("t011_obj_geo.data_base") $tmp)
                     #set($tmp = "")
         ## Sachdaten/Attributinformation
                     #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes", "."))
