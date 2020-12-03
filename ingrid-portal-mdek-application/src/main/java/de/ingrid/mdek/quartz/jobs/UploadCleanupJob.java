@@ -612,8 +612,9 @@ public class UploadCleanupJob extends QuartzJobBean {
 
     private void updateIndex(String file) {
         IMdekCallerObject caller = this.connectionFacade.getMdekCallerObject();
-        String plugId = "/" + file.split("/")[0].replace("_", ":");
-        String uuid = file.split("/")[1];
+        String [] fileNameSplits = file.split("/");
+        String plugId = "/" + fileNameSplits[0].replace("_", ":");
+        String uuid = fileNameSplits[1];
         caller.updateObjectIndex(plugId, uuid);
     }
 
