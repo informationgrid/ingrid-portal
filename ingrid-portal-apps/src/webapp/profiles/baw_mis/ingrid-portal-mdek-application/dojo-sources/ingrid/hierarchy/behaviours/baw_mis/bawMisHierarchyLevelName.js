@@ -45,9 +45,6 @@ define([
         run: function() {
             var promise = this._createCustomFields();
 
-            // For now, don't make hierarchyLevelName mandatory in this profile
-            domClass.remove("uiElementAddbawHierarchyLevelName", "required");
-
             topic.subscribe("/onObjectClassChange", function(data) {
                 if (data.objClass === "Class1") {
                     domClass.remove("uiElementAdd" + HIERARCHY_LEVEL_NAME_ID, "hide");
