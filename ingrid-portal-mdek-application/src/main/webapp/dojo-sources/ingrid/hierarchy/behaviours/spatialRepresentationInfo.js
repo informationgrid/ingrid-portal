@@ -59,6 +59,10 @@ define(["dojo/_base/declare",
             var ref1TransfParamAvail = registry.byId("ref1TransfParamAvail");
             var ref1GridFormatRefOrientationParam = registry.byId("ref1GridFormatRefOrientationParam");
             var ref1GridFormatRefControlpoint = registry.byId("ref1GridFormatRefControlpoint");
+            var ref1GridFormatRectDescription = registry.byId("ref1GridFormatRectDescription");
+            // var ref1GridFormatRectPointInPixel = registry.byId("ref1GridFormatRectPointInPixel");
+            var ref1GridFormatRectCornerPoint = registry.byId("ref1GridFormatRectCornerPoint");
+            var ref1GridFormatRectCheckpoint = registry.byId("ref1GridFormatRectCheckpoint");
             
             var handleMandatoryFields = function() {
                 if( ref1NumDimensions.get("value")
@@ -68,6 +72,11 @@ define(["dojo/_base/declare",
                     || ref1TransfParamAvail.checked
                     || ref1GridFormatRefOrientationParam.checked
                     || ref1GridFormatRefControlpoint.checked
+                    || ref1GridFormatRectDescription.get("value")
+                    // || ref1GridFormatRectPointInPixel.get("value")
+                    || ref1GridFormatRectCornerPoint.get("value")
+                    || ref1GridFormatRectCheckpoint.checked
+                    
                 ) {
                     UtilUI.setMandatory(dom.byId("uiElement5302"));
                     UtilUI.setMandatory(dom.byId("uiElement5305"));
@@ -87,6 +96,11 @@ define(["dojo/_base/declare",
             on(ref1TransfParamAvail, "Change", handleMandatoryFields);
             on(ref1GridFormatRefOrientationParam, "Change", handleMandatoryFields);
             on(ref1GridFormatRefControlpoint, "Change", handleMandatoryFields);
+            on(ref1GridFormatRectDescription, "Change", handleMandatoryFields);
+            // this is a select box and always has a value, so ignore it
+            // on(ref1GridFormatRectPointInPixel, "Change", handleMandatoryFields);
+            on(ref1GridFormatRectCornerPoint, "Change", handleMandatoryFields);
+            on(ref1GridFormatRectCheckpoint, "Change", handleMandatoryFields);
             
         },
         
