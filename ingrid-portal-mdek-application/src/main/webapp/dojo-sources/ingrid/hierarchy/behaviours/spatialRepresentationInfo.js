@@ -51,7 +51,7 @@ define(["dojo/_base/declare",
             
         },
         
-        mandatoryIfAnyFieldFilled() {
+        mandatoryIfAnyFieldFilled: function() {
             var ref1GridAxisTable = registry.byId("ref1GridAxisTable");
             var ref1NumDimensions = registry.byId("ref1NumDimensions");
             var ref1CellGeometry = registry.byId("ref1CellGeometry");
@@ -91,7 +91,7 @@ define(["dojo/_base/declare",
             
         },
         
-        controlPointDescriptionBehaviour() {
+        controlPointDescriptionBehaviour: function() {
             on(registry.byId("ref1GridFormatRectCheckpoint"), "Change", function () {
                 if (registry.byId("ref1GridFormatRectCheckpoint").get("value") === "on") {
                     domClass.add("uiElement5309", "required");
@@ -101,7 +101,7 @@ define(["dojo/_base/declare",
             });
         },
         
-        showFieldsOnGridSelection() {
+        showFieldsOnGridSelection: function() {
             var self = this;
             on(registry.byId("ref1Representation"), "DataChanged", function () {
                 var hasGrid = array.some(this.data, function (element) {
