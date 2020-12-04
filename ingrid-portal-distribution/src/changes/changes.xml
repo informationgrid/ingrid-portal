@@ -71,6 +71,9 @@
           <action type="fix" dev="wemove" issue="1308">
             Fix upload cleanup job indexing issue.
           </action>
+          <action type="fix" dev="wemove" issue="2262">
+            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled. 
+          </action>
         </release>
 
         <release version="5.6.0" date="2020-10-19" description="Release 5.6.0">
