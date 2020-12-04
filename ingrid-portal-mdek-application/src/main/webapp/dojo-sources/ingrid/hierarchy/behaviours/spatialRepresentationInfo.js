@@ -80,8 +80,7 @@ define(["dojo/_base/declare",
             // call check to initialize fields on startup
             handleMandatoryFields();
 
-            aspect.after(ref1GridAxisTable, "onDeleteItems", handleMandatoryFields);
-            aspect.after(ref1GridAxisTable, "onAddNewRow", handleMandatoryFields);
+            aspect.after(ref1GridAxisTable, "onDataChanged", handleMandatoryFields);
             on(ref1NumDimensions, "Change", handleMandatoryFields);
             on(ref1CellGeometry, "Change", handleMandatoryFields);
             on(ref1GridFormatRefGeoreferencedParam, "Change", handleMandatoryFields);
