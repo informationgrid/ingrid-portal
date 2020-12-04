@@ -571,7 +571,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Archiving file: "+this.formatItem(item));
             try {
                 this.storage.archive(item.getPath(), item.getFile());
-                updateIndex(item.getPath());
+                updateIndex(file);
                 archiveCount++;
             }
             catch (final IOException e) {
@@ -589,7 +589,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Restoring file: "+this.formatItem(item));
             try {
                 this.storage.restore(item.getPath(), item.getFile());
-                updateIndex(item.getPath());
+                updateIndex(file);
                 restoreCount++;
             }
             catch (final IOException e) {
@@ -610,11 +610,11 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
     }
 
-    private void updateIndex(String itemPath) {
+    private void updateIndex(String file) {
         IMdekCallerObject caller = this.connectionFacade.getMdekCallerObject();
-        String [] pathNameSplits = itemPath.split("\\\\");
-        String plugId = "/" + pathNameSplits[0].replace("_", ":");
-        String uuid = pathNameSplits[1];
+        String [] nameSplits = file.split("/");
+        String plugId = "/" + nameSplits[0].replace("_", ":");
+        String uuid = nameSplits[1];
         caller.updateObjectIndex(plugId, uuid);
     }
 
