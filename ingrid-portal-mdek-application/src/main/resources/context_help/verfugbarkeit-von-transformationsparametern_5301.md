@@ -7,5 +7,8 @@ title: Verfügbarkeit von Transformationsparametern
 
 # Verfügbarkeit von Transformationsparametern
 
+Angabe, ob Transformationsparameter für eine Georeferenzierung des Rasters existieren
 
+# ISO Abbildung
 
+Domain: 161 (gmd:transformationParameterAvailability)
