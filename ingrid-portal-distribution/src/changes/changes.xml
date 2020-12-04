@@ -13,6 +13,9 @@
           <action type="fix" dev="wemove" issue="2262">
             IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled.
           </action>
+          <action type="fix" dev="wemove" issue="2265">
+            IGE: Add context help for grid format fields.
+          </action>
         </release>
       
         <release version="5.6.3" date="2020-11-20" description="Release 5.6.3">
