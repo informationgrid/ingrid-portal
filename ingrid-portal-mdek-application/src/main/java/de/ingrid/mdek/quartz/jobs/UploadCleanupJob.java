@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import de.ingrid.mdek.caller.IMdekCallerObject;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -45,6 +44,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekClientCaller;
+import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.upload.storage.Storage;
@@ -571,7 +571,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Archiving file: "+this.formatItem(item));
             try {
                 this.storage.archive(item.getPath(), item.getFile());
-                updateIndex(file);
+                updateIndex(item.getPath());
                 archiveCount++;
             }
             catch (final IOException e) {
@@ -589,7 +589,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Restoring file: "+this.formatItem(item));
             try {
                 this.storage.restore(item.getPath(), item.getFile());
-                updateIndex(file);
+                updateIndex(item.getPath());
                 restoreCount++;
             }
             catch (final IOException e) {
@@ -610,11 +610,11 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
     }
 
-    private void updateIndex(String file) {
+    private void updateIndex(String itemPath) {
         IMdekCallerObject caller = this.connectionFacade.getMdekCallerObject();
-        String [] fileNameSplits = file.split("/");
-        String plugId = "/" + fileNameSplits[0].replace("_", ":");
-        String uuid = fileNameSplits[1];
+        String [] pathNameSplits = itemPath.split("\\\\");
+        String plugId = "/" + pathNameSplits[0].replace("_", ":");
+        String uuid = pathNameSplits[1];
         caller.updateObjectIndex(plugId, uuid);
     }
 
