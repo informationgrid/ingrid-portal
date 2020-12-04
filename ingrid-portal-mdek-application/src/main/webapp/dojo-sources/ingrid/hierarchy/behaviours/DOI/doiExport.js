@@ -250,7 +250,7 @@ define([
 
                 for(var i=0; i<relatedDois.length; i++) {
                     var doi = relatedDois[i].doiCrossReferenceIdentifier;
-                    const searchElement = '://doi.org/';
+                    var searchElement = '://doi.org/';
                     var idx = searchElement.length + doi.indexOf(searchElement);
                     doi = doi.substring(idx);
 
