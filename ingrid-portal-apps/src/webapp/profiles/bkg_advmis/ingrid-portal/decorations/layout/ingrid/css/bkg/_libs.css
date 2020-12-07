@@ -98,8 +98,7 @@ img {
 }
 
 img {
- display: inline-block;
- vertical-align: middle
+ display: block;
 }
 
 textarea {
