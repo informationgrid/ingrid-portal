@@ -3,14 +3,12 @@
         <a href="/startseite" class="show-for-large hide-for-xsmall-only">
             <img src="/decorations/layout/rlp/images/template/logo.png" alt="RLP"/>
             <div class="vertical-line"></div>
-            <span>PortalU</span>
-            <p>Umweltportal<br>Rheinland-Pfalz</p>
+            <p>PortalU<br>Umweltportal<br>Rheinland-Pfalz</p>
         </a>
         <a href="/startseite" class="hide-for-xlarge hide-for-large hide-for-xsmall-only hide-for-small-only">
             <img src="/decorations/layout/rlp/images/template/logo.png" alt="RLP"/>
             <div class="vertical-line"></div>
-            <span>PortalU</span>
-            <p>Umweltportal<br>Rheinland-Pfalz</p>
+            <p>PortalU<br>Umweltportal<br>Rheinland-Pfalz</p>
         </a>
         <a href="/startseite" class="hide-for-medium">
             <img src="/decorations/layout/rlp/images/template/logo.png" alt="RLP"/>
