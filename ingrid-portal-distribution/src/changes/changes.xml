@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.6.4" date="2020-xx-xx" description="Release 5.6.4">
+        <release version="5.6.4" date="2020-12-07" description="Release 5.6.4">
           <action type="fix" dev="wemove" issue="2247">
             When inheriting links it should not get preview images.
           </action>
@@ -16,8 +16,20 @@
           <action type="fix" dev="wemove" issue="2265">
             IGE: Add context help for grid format fields.
           </action>
+          <action type="fix" dev="wemove" issue="2267">
+            Adjust advmis image position.
+          </action>
+          <action type="add" dev="wemove" issue="1536">
+            Add ADVMIS profile
+          </action>
+          <action type="fix" dev="wemove" issue="1429">
+            Fix data basis detail view.
+          </action>
+          <action type="fix" dev="wemove" issue="3011">
+            mCLOUD: Update mcloud context help "Frequenz"
+          </action>
         </release>
-      
+
         <release version="5.6.3" date="2020-11-20" description="Release 5.6.3">
           <action type="update" dev="wemove">
             Portal: Update measurement client to version 1.0.21
@@ -164,7 +176,7 @@
             Portal: Change portal registration button title.
           </action>
           <action type="update" dev="wemove" issue="2012">
-            Mapclient: Update mapclient cache. 
+            Mapclient: Update mapclient cache.
           </action>
           <action type="fix" dev="wemove" issue="">
             Mapclient: Remove DNS check on print.
@@ -203,10 +215,10 @@
             IGE: Increase message size and timeout for IGE communication.
           </action>
           <action type="add" dev="wemove" issue="1953">
-            Mapclient: Add GFI function to imported WMTS. 
+            Mapclient: Add GFI function to imported WMTS.
           </action>
           <action type="add" dev="wemove" issue="1900">
-            Portal: Add autofocus attribute to login form. 
+            Portal: Add autofocus attribute to login form.
           </action>
           <action type="add" dev="wemove" issue="1898">
             Change the docker container’s privilege to a non-root user.
