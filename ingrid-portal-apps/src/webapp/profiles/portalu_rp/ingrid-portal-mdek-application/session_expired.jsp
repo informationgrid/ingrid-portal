@@ -171,7 +171,7 @@
                             </div>
                             <div class="copyright">
                                 <span class="icon"></span>
-                                <span class="text copyright_text">Ministerium für Umwelt, Energie, Ernährung und Forsten</span>
+                                <span class="text copyright_text">Ministerium für Umwelt, Energie, <br>Ernährung und Forsten</span>
                             </div>
                         </div>
                         <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">

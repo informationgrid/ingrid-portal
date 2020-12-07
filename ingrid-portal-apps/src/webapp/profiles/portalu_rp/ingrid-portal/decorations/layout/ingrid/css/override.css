@@ -1522,7 +1522,7 @@ footer .footer .logo a img{
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
 }
 .accordion-title:hover, .accordion-title:focus {
-  color: #da2f52;
+  color: #871D33;
   box-shadow: none;
   background-color: #ececec;
 }
