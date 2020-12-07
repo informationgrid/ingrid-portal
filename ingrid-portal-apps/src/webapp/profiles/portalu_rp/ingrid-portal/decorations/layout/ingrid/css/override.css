@@ -329,12 +329,12 @@ a.icon:hover {
   background-color: #962039;
 }
 .button.outline {
-  color: #b02642;
+  color: #871d33;
   background-color: #fff;
-  border: 2px solid #b22643;
+  border: 2px solid #871d33;
 }
 .button.outline:hover {
-  background-color: #ffeaea;
+  background-color: #f1f1f1;
 }
 .input-search .button {
   background-color: #871D33;
@@ -1517,6 +1517,7 @@ footer .footer .logo a img{
 
 /* catalogue */
 .accordion-title {
+  font-family: Arial, sans-serif;
   color: #871D33;
   background-color: #F6F6F6;
   transition: color 0.2s ease-out, background-color 0.2s ease-out;
