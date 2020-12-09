@@ -46,6 +46,8 @@ define([
                     self._setInspireThemes();
                     self._setIsoTopics();
                     self._setCharsetData();
+                    self._setAccessConstraints();
+                    self._setUseAccessConstraints();
                 }
             });
 
@@ -84,6 +86,36 @@ define([
             if (datasetCharsetWidget && !datasetCharsetWidget.get("value")) {
                 datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
             }
+        },
+
+        _setAccessConstraints: function () {
+            this._addTableEntriesByEntryNames({
+                tableId: "availabilityAccessConstraints",
+                listId: 6010,
+                entryIds: [ "1" ] // Es gelten keine Zugriffsbeschränkungen
+            });
+        },
+
+        _setUseAccessConstraints: function () {
+            var id = "availabilityUseAccessConstraints";
+            var theTable = registry.byId(id);
+            var tableData = theTable.data;
+
+            var listId = 6500;
+            var entryId = "27"; // CC BY 4.0
+            var entryTitle = UtilSyslist.getSyslistEntryName(listId, entryId);
+            var source = "Bundesanstalt für Wasserbau";
+
+            var existing = tableData.find(function (row) {
+                return row.title === entryTitle && row.source === source;
+            });
+            if (!existing) {
+                tableData.push({
+                    title: entryTitle,
+                    source: source
+                });
+            }
+            UtilStore.updateWriteStore(id, tableData);
         },
 
         _addTableEntriesByEntryNames: function (args) {
