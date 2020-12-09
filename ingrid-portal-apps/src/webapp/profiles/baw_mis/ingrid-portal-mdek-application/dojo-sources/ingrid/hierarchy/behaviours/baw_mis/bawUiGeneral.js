@@ -160,6 +160,12 @@ define([
                 // Bestellinformation
                 domClass.add("uiElement5052", "hidden");
 
+
+                // ----------------------------------------
+                // Verweise
+                // ----------------------------------------
+                // Verweise zu
+                domClass.add("uiElementN017", "show");
             });
 
             return;
