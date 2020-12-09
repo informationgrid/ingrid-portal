@@ -25,8 +25,9 @@ define([
     "dojo/_base/declare",
     "dojo/topic",
     "ingrid/utils/Store",
-    "ingrid/utils/Syslist"
-], function(registry, declare, topic, UtilStore, UtilSyslist) {
+    "ingrid/utils/Syslist",
+    "module"
+], function(registry, declare, topic, UtilStore, UtilSyslist, module) {
 
     return declare(null, {
         title: "Standardeinträge",
@@ -35,78 +36,89 @@ define([
         category: "BAW-MIS",
 
         run: function() {
+            var self = require(module.id);
+
             topic.subscribe("/onObjectClassChange", function(data) {
 
                 var isNewItem = "newNode" === currentUdk.uuid;
-                if (!isNewItem) return;
-
-                // Kategorien (opendata)
-                var ogdCategoriesTableId = "categoriesOpenData";
-                var ogdCategoriesTable = registry.byId(ogdCategoriesTableId);
-
                 if (isNewItem && data.objClass !== "Class0") {
-                    var listId = 6400;
-                    var entryId = "10";
-                    var entryTitle = UtilSyslist.getSyslistEntryName(listId, entryId);
-
-                    var ogdCategoriesTableData = ogdCategoriesTable.data;
-                    var existing = ogdCategoriesTableData.find(function (value) {
-                        return value.title === entryTitle;
-                    });
-                    if (!existing) {
-                        ogdCategoriesTableData.push({title: entryTitle });
-                        UtilStore.updateWriteStore(ogdCategoriesTableId, ogdCategoriesTableData);
-                    }
+                    self._setOpendataKeywords();
+                    self._setInspireThemes();
+                    self._setIsoTopics();
+                    self._setCharsetData();
                 }
-
-
-                // INSPIRE Themen
-                // Automatically add entry for "Gewässernetz" to new items
-                var inspireThemeTableId = "thesaurusInspire";
-                var inspireThemeTable = registry.byId(inspireThemeTableId);
-                if (isNewItem && data.objClass !== "Class0") {
-                    var inspireThemeTableData = inspireThemeTable.data;
-                    // title 108 is for Gewässernetz
-                    var existing = inspireThemeTableData.find(function (row) {
-                        return row.title === "108";
-                    });
-                    if (!existing) {
-                        inspireThemeTableData.push({title: "108"});
-                        UtilStore.updateWriteStore(inspireThemeTableId, inspireThemeTableData);
-                    }
-                }
-
-                // ISO-Themenkategorie
-                // For new items, add "transportation" as category automatically
-                var topicsTableId = "thesaurusTopics";
-                var topicsTableNodeId = "uiElement5060";
-                if (isNewItem && data.objClass !== "Class0") {
-                    var topicsTableData = registry.byId(topicsTableId).data;
-                    // title 18 is for transportation
-                    var existing = topicsTableData.find(function (row) {
-                        return row.title === "18";
-                    });
-                    if (!existing) {
-                        topicsTableData.push({title: "18"});
-                        UtilStore.updateWriteStore(topicsTableId, topicsTableData);
-                    }
-                }
-
-                // If the dataset is new (not saved yet), then initialise the
-                // value as "utf8"
-                var datasetCharsetUtf8Value = "4";
-                var datasetCharsetWidgetId = "extraInfoCharSetData";
-
-                var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
-                if (isNewItem
-                    && datasetCharsetWidget
-                    && !datasetCharsetWidget.get("value")) {
-                    datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
-                }
-
             });
 
             return;
+        },
+
+        _setOpendataKeywords: function () {
+            this._addTableEntriesByEntryNames({
+                tableId: "categoriesOpenData",
+                listId: 6400,
+                entryIds: [ "10" ] // Transport und Verkehr
+            });
+        },
+
+        _setInspireThemes: function () {
+            this._addTableEntriesByEntryIds({
+                tableId: "thesaurusInspire",
+                entryIds: [ "108" ] // Gewässernetz
+            });
+        },
+
+        _setIsoTopics: function () {
+            this._addTableEntriesByEntryIds({
+                tableId: "thesaurusTopics",
+                entryIds: [ "18" ] // transportation
+            });
+        },
+
+        _setCharsetData: function () {
+            // If the dataset is new (not saved yet), then initialise the
+            // value as "utf8"
+            var datasetCharsetUtf8Value = "4";
+            var datasetCharsetWidgetId = "extraInfoCharSetData";
+
+            var datasetCharsetWidget = registry.byId(datasetCharsetWidgetId);
+            if (datasetCharsetWidget && !datasetCharsetWidget.get("value")) {
+                datasetCharsetWidget.set("value", datasetCharsetUtf8Value);
+            }
+        },
+
+        _addTableEntriesByEntryNames: function (args) {
+            var theTable = registry.byId(args.tableId);
+            var tableData = theTable.data;
+
+            for (var i=0; i<args.entryIds.length; i++) {
+                var entryId = args.entryIds[i];
+                var entryTitle = UtilSyslist.getSyslistEntryName(args.listId, entryId);
+
+                var existing = tableData.find(function (value) {
+                    return value.title === entryTitle;
+                });
+                if (!existing) {
+                    tableData.push({title: entryTitle});
+                    UtilStore.updateWriteStore(args.tableId, tableData);
+                }
+            }
+        },
+
+        _addTableEntriesByEntryIds: function (args) {
+            var theTable = registry.byId(args.tableId);
+            var tableData = theTable.data;
+
+            for (var i=0; i<args.entryIds.length; i++) {
+                var entryId = args.entryIds[i];
+
+                var existing = tableData.find(function (value) {
+                    return value.title === entryId;
+                });
+                if (!existing) {
+                    tableData.push({title: entryId});
+                    UtilStore.updateWriteStore(args.tableId, tableData);
+                }
+            }
         }
 
     })();
