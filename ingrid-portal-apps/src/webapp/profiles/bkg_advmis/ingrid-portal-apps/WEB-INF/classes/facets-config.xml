@@ -158,17 +158,43 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>hierarchylevel:application</query>
                 <id>others</id>
             </facet>
-        <!-- INSPIRE-identifiziert -->
+        </facets>
+    </facet>
+    <facet>
+        <name>INSPIRE</name>
+        <id>inspire</id>
+        <isOpen>true</isOpen>
+        <facets>
+        <!-- INSPIRE-relevant true-->
             <facet>
-                <name>INSPIRE-identifiziert</name>
+                <name>Ja</name>
                 <query>t04_search.searchterm:inspireidentifiziert</query>
-                <id>inspire</id>
+                <id>inspire_true</id>
             </facet>
-        <!-- Opendata-->
+        <!-- INSPIRE-relevant false -->
+            <facet>
+                <name>Nein</name>
+                <query>-t04_search.searchterm:inspireidentifiziert</query>
+                <id>inspire_false</id>
+            </facet>
+        </facets>
+    </facet>
+    <facet>
+        <name>Opendata</name>
+        <id>opendata</id>
+        <isOpen>true</isOpen>
+        <facets>
+        <!-- Opendata true-->
            <facet>
-                <name>Opendata</name>
-                <query>t04_search.searchterm:opendata</query>
-                <id>opendata</id>
+                <name>Ja</name>
+                <query>datatype:metadata (t04_search.searchterm:opendata OR t04_search.searchterm:opendataident)</query>
+                <id>opendata_true</id>
+            </facet>
+        <!-- Opendata false-->
+           <facet>
+                <name>Nein</name>
+                <query>-t04_search.searchterm:opendata -t04_search.searchterm:opendataident</query>
+                <id>opendata_false</id>
             </facet>
         </facets>
     </facet>
@@ -387,14 +413,6 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <name>Verwaltet von</name>
         <id>maintain</id>
         <field>t02_address.administrative_area_value</field>
-        <isOpen>true</isOpen>
-    </facet>
-    <facet  sort="SORT_BY_VALUE_DESC">
-        <name>INSPIRE-Themen</name>
-        <id>inspire_topics</id>
-        <field>t04_search.searchterm</field>
-        <codelist>6100</codelist>
-        <codelist-field>de</codelist-field>
         <isOpen>true</isOpen>
     </facet>
 </facets>
