@@ -36,10 +36,15 @@ define([
 
             topic.subscribe("/additionalSyslistsLoaded", function() {
                 // out of the existing options, keep only Geodatensatz and Geodatendienst for new object type
-                sysLists[UtilSyslist.listIdObjectClass] = sysLists[UtilSyslist.listIdObjectClass].filter(function(item) {
-                    return item[1] === "1" || item[1] === "3";
-                });
-
+                // Items are added one by one to ensure the correct order
+                arr = [];
+                arr.push(sysLists[UtilSyslist.listIdObjectClass].find(function (item) {
+                    return item[1] === "1";
+                }));
+                arr.push(sysLists[UtilSyslist.listIdObjectClass].find(function (item) {
+                    return item[1] === "3";
+                }));
+                sysLists[UtilSyslist.listIdObjectClass] = arr;
             });
         }
     })();
