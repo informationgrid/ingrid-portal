@@ -89,10 +89,15 @@ public class VirusScanValidator implements Validator {
     }
 
     @Override
-    public void validate(final String path, final String file, final long size, final Path data) throws ValidationException {
+    public void validate(final String path, final String file, final long size, final Path data, final boolean isArchiveContent) throws ValidationException {
         if (data == null) {
             return;
         }
+        // archive content is scanned before extraction
+        if (isArchiveContent) {
+            return;
+        }
+
         try {
             // scan file or directory
             final String result = runScan(data);

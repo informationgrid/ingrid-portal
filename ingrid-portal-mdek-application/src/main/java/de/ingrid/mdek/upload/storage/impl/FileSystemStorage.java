@@ -123,22 +123,21 @@ public class FileSystemStorage implements Storage {
         public void initialize(final Map<String, String> configuration) throws IllegalArgumentException {}
 
         @Override
-        public void validate(final String path, final String file, final long size, final Path data) throws ValidationException {
+        public void validate(final String path, final String file, final long size, final Path data, final boolean isArchiveContent) throws ValidationException {
             // check if names conflict with special directories
-            boolean result = true;
             final Path filePath = Paths.get(path, file);
             final Iterator<Path> it = filePath.iterator();
             while(it.hasNext()) {
                 final String pathPart = it.next().toString();
                 if (TRASH_PATH.equals(pathPart) || ARCHIVE_PATH.equals(pathPart)) {
-                    result = false;
-                    break;
+                    throw new IllegalNameException("The file name containes the reserved name '" + pathPart + "'.", path+"/"+file,
+                            IllegalNameException.ErrorReason.RESERVED_WORD, pathPart);
                 }
             }
             // we only reject invalid filenames, because the path will be sanitized
-            result = result && this.isValidName(file, ILLEGAL_FILE_NAME);
-            if (!result) {
-                throw new IllegalNameException("The file name is invalid.", path+"/"+file);
+            if (!this.isValidName(file, ILLEGAL_FILE_NAME)) {
+                throw new IllegalNameException("The file name '" + file + "' contains illegal characters.", path+"/"+file,
+                        IllegalNameException.ErrorReason.ILLEGAL_CHAR, file);
             }
         }
 
@@ -274,7 +273,7 @@ public class FileSystemStorage implements Storage {
     public void validate(final String path, final String file, final long size) {
         final String validatePath = Paths.get(this.docsDir, path).toString();
         for (final Validator validator : this.validators) {
-            validator.validate(validatePath, file, size, null);
+            validator.validate(validatePath, file, size, null, false);
         }
     }
 
@@ -302,7 +301,7 @@ public class FileSystemStorage implements Storage {
         final String validatePath = Paths.get(this.docsDir, path).toString();
         try {
             for (final Validator validator : this.validators) {
-                validator.validate(validatePath, file, size, tmpFile);
+                validator.validate(validatePath, file, size, tmpFile, false);
             }
         }
         catch (final ValidationException ex) {
@@ -342,7 +341,7 @@ public class FileSystemStorage implements Storage {
                         Path extractedPath = Paths.get(extractedFile);
                         Path basePath = realPath.getParent();
                         for (final Validator validator : this.validators) {
-                            validator.validate(basePath.toString(), basePath.relativize(extractedPath).toString(), 0, extractedPath);
+                            validator.validate(basePath.toString(), basePath.relativize(extractedPath).toString(), 0, extractedPath, true);
                         }
                     }
                 }
@@ -403,7 +402,7 @@ public class FileSystemStorage implements Storage {
         // file name validation (content validation is done in write() method)
         final String validatePath = Paths.get(this.docsDir, path).toString();
         for (final Validator validator : this.validators) {
-            validator.validate(validatePath, file, size, null);
+            validator.validate(validatePath, file, size, null, false);
         }
         // combine parts into stream
         final Vector<InputStream> streams = new Vector<>();

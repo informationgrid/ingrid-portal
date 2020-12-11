@@ -85,26 +85,19 @@ public class SizeValidator implements Validator {
     }
 
     @Override
-    public void validate(final String path, final String file, final long size, final Path data) throws ValidationException {
+    public void validate(final String path, final String file, final long size, final Path data, final boolean isArchiveContent) throws ValidationException {
         final Path targetPath = Paths.get(path, file);
 
         try {
-            // prefer given size over real size because that
-            // allows to fail faster, if real size is not available yet
+            // use given size as long as real data is not available yet
             long fileSize = size;
-            if (fileSize <= 0) {
-                // file size is not specified
-                // prefer real data for obtaining file size
-                final Path filePath = data != null ? data : targetPath;
-                if (!Files.exists(filePath)) {
-                    // file size is not available
-                    return;
-                }
-                fileSize = Files.size(filePath);
+            if (data != null && Files.exists(data)) {
+                fileSize = Files.size(data);
             }
 
             if (maxFileSize != -1) {
-                if (fileSize > maxFileSize) {
+                // do not limit single file after extraction
+                if (!isArchiveContent && fileSize > maxFileSize) {
                     throw new IllegalSizeException("The file size exceeds the maximum size of " + maxFileSize + " bytes.", path+"/"+file,
                             IllegalSizeException.LimitType.FILE, maxFileSize, 0L);
                 }
