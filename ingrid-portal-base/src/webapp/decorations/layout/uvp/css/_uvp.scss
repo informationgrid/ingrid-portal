@@ -446,12 +446,12 @@ ul ol, ol ol { margin-left: 2.25rem; }
     position: absolute;
     top: 50%;
     right: 24px;
-    content: '\e900';
+    content: '\e922';
     font-family: 'icomoon';
     margin-top: -0.5rem;
   }
 }
-li.accordion-item.is-active .accordion-title::after { content: '\e903'; }
+li.accordion-item.is-active .accordion-title::after { content: '\e925'; }
 .accordion-item::before { content:""; }
 
 /* menu tabs */ 
