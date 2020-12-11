@@ -133,12 +133,15 @@ public class FileSystemStorage implements Storage {
                     throw new IllegalNameException("The file name containes the reserved name '" + pathPart + "'.", path+"/"+file,
                             IllegalNameException.ErrorReason.RESERVED_WORD, pathPart);
                 }
-                // check if names contain illegal characters
-                if (!this.isValidName(pathPart, ILLEGAL_FILE_NAME)) {
-                    throw new IllegalNameException("The file name '" + file + "' contains illegal characters.", path+"/"+file,
-                            IllegalNameException.ErrorReason.ILLEGAL_CHAR, pathPart);
-                }
             }
+            // we only reject invalid filenames, because the path will be sanitized
+            // NOTE file could be a path, if extracted from an archive
+            final String filename = Paths.get(file).getFileName().toString();
+            if (!this.isValidName(filename, ILLEGAL_FILE_NAME)) {
+                throw new IllegalNameException("The file name '" + file + "' contains illegal characters.", path+"/"+file,
+                        IllegalNameException.ErrorReason.ILLEGAL_CHAR, filename);
+            }
+
         }
 
         /**
