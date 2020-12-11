@@ -1,33 +1,3 @@
-<!-- Global scripts -->
-<script src="/decorations/layout/ingrid/scripts/all.js"></script>
-
-<!-- Popup -->
-<script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-<script src="/decorations/layout/ingrid/scripts/expander.js"></script>
-
-<!-- Accordion -->
-<script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
-<script>
-$('.js-accordion').accordion();
-$('.js-accordion-multi').accordion({
-    multi: true
-});
-</script>
-<!-- Tabs -->
-<script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
-<script>
-    $('.js-tabs').tabs();
-</script>
-<!-- Selection -->
-<script src="/decorations/layout/ingrid/scripts/selection.js"></script>
-<script>
-    $('.js-selection').selection();
-</script>
-<!-- Table Sort -->
-<script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
-<script>
-    $('.js-table-sortable').sortable();
-</script>
 <!-- swiper -->
 <script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
 <script>
