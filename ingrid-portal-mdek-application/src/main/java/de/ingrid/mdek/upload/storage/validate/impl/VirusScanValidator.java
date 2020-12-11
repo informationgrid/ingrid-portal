@@ -89,7 +89,7 @@ public class VirusScanValidator implements Validator {
     }
 
     @Override
-    public void validate(final String path, final String file, final Path data) throws ValidationException {
+    public void validate(final String path, final String file, final long size, final Path data) throws ValidationException {
         if (data == null) {
             return;
         }

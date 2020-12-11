@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -123,7 +123,7 @@ public class FileSystemStorage implements Storage {
         public void initialize(final Map<String, String> configuration) throws IllegalArgumentException {}
 
         @Override
-        public void validate(final String path, final String file, final Path data) throws ValidationException {
+        public void validate(final String path, final String file, final long size, final Path data) throws ValidationException {
             // check if names conflict with special directories
             boolean result = true;
             final Path filePath = Paths.get(path, file);
@@ -271,9 +271,10 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public void validate(final String path, final String file) {
+    public void validate(final String path, final String file, final long size) {
+        final String validatePath = Paths.get(this.docsDir, path).toString();
         for (final Validator validator : this.validators) {
-            validator.validate(path, file, null);
+            validator.validate(validatePath, file, size, null);
         }
     }
 
@@ -291,16 +292,17 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public FileSystemItem[] write(final String path, final String file, final InputStream data, final Integer size, final boolean replace, final boolean extract) throws IOException {
+    public FileSystemItem[] write(final String path, final String file, final InputStream data, final Long size, final boolean replace, final boolean extract) throws IOException {
         // file name and content validation
         // NOTE: we write the data to a temporary file before calling the validators
         // in order to allow multiple access to the streamed data
         Files.createDirectories(Paths.get(this.tempDir));
         final Path tmpFile = Files.createTempFile(Paths.get(this.tempDir), TMP_FILE_PREFIX, null);
         Files.copy(data, tmpFile, StandardCopyOption.REPLACE_EXISTING);
+        final String validatePath = Paths.get(this.docsDir, path).toString();
         try {
             for (final Validator validator : this.validators) {
-                validator.validate(path, file, tmpFile);
+                validator.validate(validatePath, file, size, tmpFile);
             }
         }
         catch (final ValidationException ex) {
@@ -335,18 +337,39 @@ public class FileSystemStorage implements Storage {
             // extract archive
             try {
                 files = this.extract(realPath, copyOptions);
+                try {
+                    for (String extractedFile : files) {
+                        Path extractedPath = Paths.get(extractedFile);
+                        Path basePath = realPath.getParent();
+                        for (final Validator validator : this.validators) {
+                            validator.validate(basePath.toString(), basePath.relativize(extractedPath).toString(), 0, extractedPath);
+                        }
+                    }
+                }
+                catch (final ValidationException ex) {
+                    // remove extracted files, if validation failed
+                    for (String extractedFile : files) {
+                        Files.delete(Paths.get(extractedFile));
+                    }
+                    throw ex;
+                }
             }
             catch (final FileAlreadyExistsException faex) {
                 // get files from existing archive
                 final List<StorageItem> items = this.list(this.getExtractPath(realPath));
                 throw new ConflictException(faex.getMessage(), items.toArray(new StorageItem[items.size()]), this.getFileInfo(realPath.toString()).getNextName());
             }
+            catch (final ValidationException ex) {
+                throw ex;
+            }
             catch (final Exception ex) {
                 throw new IOException(ex);
             }
             finally {
                 // delete archive
-                Files.delete(realPath);
+                if (Files.exists(realPath)) {
+                    Files.delete(realPath);
+                }
             }
         }
 
@@ -376,10 +399,11 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public FileSystemItem[] combineParts(final String path, final String file, final String id, final Integer totalParts, final Integer size, final boolean replace, final boolean extract) throws IOException {
+    public FileSystemItem[] combineParts(final String path, final String file, final String id, final Integer totalParts, final Long size, final boolean replace, final boolean extract) throws IOException {
         // file name validation (content validation is done in write() method)
+        final String validatePath = Paths.get(this.docsDir, path).toString();
         for (final Validator validator : this.validators) {
-            validator.validate(path, file, null);
+            validator.validate(validatePath, file, size, null);
         }
         // combine parts into stream
         final Vector<InputStream> streams = new Vector<>();
@@ -536,6 +560,9 @@ public class FileSystemStorage implements Storage {
             }
             throw ex;
         }
+
+        // delete archive
+        Files.delete(path);
         return result.stream().map(p -> p.toString()).toArray(size -> new String[size]);
     }
 

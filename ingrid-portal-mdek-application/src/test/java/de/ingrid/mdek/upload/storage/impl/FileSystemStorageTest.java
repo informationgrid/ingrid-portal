@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -154,7 +154,7 @@ public class FileSystemStorageTest {
         FileSystemItem[] results;
         final File zipFile = this.createZipFile(file);
         try (final InputStream data = new FileInputStream(zipFile)) {
-            results = storage.write(path, file, data, (int)zipFile.length(), true, false);
+            results = storage.write(path, file, data, zipFile.length(), true, false);
         }
 
         // test
@@ -180,7 +180,7 @@ public class FileSystemStorageTest {
         FileSystemItem[] results;
         final File zipFile = this.createZipFile(file);
         try (final InputStream data = new FileInputStream(zipFile)) {
-            results = storage.write(path, file, data, (int)zipFile.length(), true, true);
+            results = storage.write(path, file, data, zipFile.length(), true, true);
         }
 
         // test
@@ -336,7 +336,7 @@ public class FileSystemStorageTest {
      */
     private FileSystemItem storageWriteTestFile(final String path, final String file, final String content) throws Exception {
         try (final InputStream data = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
-            final FileSystemItem result = storage.write(path, file, data, content.length(), true, false)[0];
+            final FileSystemItem result = storage.write(path, file, data, (long)content.length(), true, false)[0];
             assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));
             return result;
         }
