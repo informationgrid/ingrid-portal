@@ -341,9 +341,12 @@ define([
                         else {
                             // set error message according to response status
                             var status = xhrOrXdr ? xhrOrXdr.status : "default";
+                            var errorData = responseJSON.errorData || {};
                             var messages = {
                                 418: "Der Dateiname ist ungültig. Siehe auch <a href='https://de.wikipedia.org/wiki/Dateiname#Problematische_und_unzul.C3.A4ssige_Zeichen_oder_Namen' target='_blank'>unzulässige Zeichen in Dateinamen [Wikipedia]</a>.",
                                 419: "Die Datei enthält einen Virus.",
+                                420: "Die Datei ist zu groß. " + (("" + errorData.limitType).toLowerCase() == "directory" ? "Alle Dateien eines Metadatensatzes dürfen zusammen" : "Eine einzelne Datei darf") + " maximal " + this.fileSize(errorData.maxSize) + " groß sein." +
+                                    (errorData.usedSize ? " Inklusive dieser Datei belegt der Metadatensatz " + this.fileSize(errorData.usedSize) + "." : ""),
                                 401: "Sie haben keine Berechtigung für den Upload. Eventuell ist die Session abgelaufen.",
                                 409: "Die Datei existiert bereits.",
                                 "default": "Beim Upload ist ein Fehler aufgetreten." 
@@ -559,13 +562,21 @@ define([
          */
         sortUploads: function(uploads) {
             uploads.sort(function(a,b) {
-            	var c = a.path.localeCompare(b.path);
-            	if (c != 0) {
-            		return c;
-            	} else {
-                	return (a.path+a.file).localeCompare(b.path+b.file);
-            	}
+                var c = a.path.localeCompare(b.path);
+                if (c != 0) {
+                    return c;
+                } else {
+                    return (a.path+a.file).localeCompare(b.path+b.file);
+                }
             });
+        },
+
+        /**
+         * Get a human readable file size
+         */
+        fileSize: function(size) {
+            var i = size == 0 ? 0 : Math.floor(Math.log(size)/Math.log(1024));
+            return (size/Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
         }
     });
 });

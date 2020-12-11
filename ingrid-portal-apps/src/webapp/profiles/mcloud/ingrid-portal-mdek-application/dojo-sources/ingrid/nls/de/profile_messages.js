@@ -54,7 +54,7 @@ define({
     "help.mcloud.form.timeCoverage.title": "Durch die Ressource abgedeckte Zeitspanne",
     "help.mcloud.form.timeCoverage.text": "Hier soll die Zeitspanne eingetragen werden, die die zugrunde liegenden Daten abdecken (z.B. Messdaten). Ein Tagesdatum wird auch als 'von - bis' angegeben, ansonsten können hier auch offene Zeitspannen eingegeben werden ('seit' oder 'bis').<br /><br />In der mCLOUD erscheint dieser Eintrag als „Zeitbezug der Daten“.",
     "help.mcloud.form.periodicity.title": "Periodizität",
-    "help.mcloud.form.periodicity.text": "Angabe des Zeitzyklus der Datenerhebung, also wie oft die Daten im abgedeckten Zeitraum aktualisiert werden. Der Eintrag muss aus der Auswahlliste erfolgen, die über den Pfeil am Ende des Feldes geöffnet wird.",
+    "help.mcloud.form.periodicity.text": "Angabe des Zeitzyklus der Datenerhebung, also wie oft die Daten im abgedeckten Zeitraum aktualisiert werden. Der Eintrag muss aus der Auswahlliste erfolgen, die über den Pfeil am Ende des Feldes geöffnet wird.<br /><br />In der mCLOUD erscheint dieser Eintrag als „Frequenz“ bzw. „Aktualisierungsfrequenz“.",
     "help.mcloud.form.periodicity.example": "täglich",
 
     "help.mcloud.form.address.institution.title": "Institution",

@@ -50,7 +50,7 @@
                                     #end
                                     ## Fachbezug
                                     #if($type == "1")
-                                        #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
+                                        #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
                                         #if($TOOL.aNodeOfListExist($xpathList))
                                             <a href="#detail-4" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("subject_reference_tab")</span></a>
                                         #end
@@ -83,7 +83,7 @@
                                         #end
                                     #end
                                     ## Datenqualität
-                                    #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+                                    #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy/gmd:nameOfMeasure"])
                                     #if($TOOL.aNodeOfListExist($xpathList))
                                         <a href="#detail-5" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("data_quality")</span></a>
                                     #end
@@ -117,7 +117,7 @@
         ## Beschreibung
             <div class="row columns">
             #renderSectionTitle($MESSAGES.getString("detail_description"))
-            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"))
+            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString"))
             #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
             #renderTextLabelAbove($tmp $tmp2)
             #set($tmp = "")
@@ -208,7 +208,7 @@
                 <div class="row columns">
                 #renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
         ## Administrative Einheit (Gemeindenummer)
-                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code"))
+                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
                 #renderTextList($MESSAGES.getString("t011_township.township_no") $tmp)
                 #set($tmp = "")
         ## Geothesaurus-Raumbezug
@@ -220,7 +220,7 @@
                 #renderTable($tmp)
                 #set($tmp = "")
         ## Erläuterung zum Raumbezug
-                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
+                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description/gco:CharacterString"))
                 #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $tmp)
                 #set($tmp = "")
         ## Begrenzungspolygon als WKT
@@ -298,13 +298,13 @@
                 </div>
             #end
             #if($type == "1")
-                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
+                #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString","./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue","./gmd:identificationInfo/*/gmd:spatialRepresentationType", "gmd:MD_SpatialRepresentationTypeCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:topologyLevel/gmd:MD_TopologyLevelCode/@codeListValue","./gmd:spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation/gmd:geometricObjects","./gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution","./gmd:portrayalCatalogueInfo","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureCatalogueCitation/gmd:CI_Citation","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description","./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:processStep/gmd:LI_ProcessStep/gmd:description","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:identifier/gmd:RS_Identifier/gmd:code"])
                 #if($TOOL.aNodeOfListExist($xpathList))
 ## Fachbezug
 <h2><a class="anchor" id="detail-4" name="detail-4"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("subject_reference_tab")</span></h2>
                     <div class="row columns">
         ## Fachliche Grundlage
-                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"))
                     #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.special_base") $tmp)
                     #set($tmp = "")
         ## Datensatz/Datenserie
@@ -346,8 +346,8 @@
                     #renderTable($tmp)
                     #set($tmp = "")
         ## Datengrundlage
-                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
-                    #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.data_base") $tmp)
+                    #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage", "./gmd:source/gmd:LI_Source/gmd:description"))
+                    #renderTextList($MESSAGES.getString("t011_obj_geo.data_base") $tmp)
                     #set($tmp = "")
         ## Sachdaten/Attributinformation
                     #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:contentInfo/gmd:MD_FeatureCatalogueDescription/gmd:featureTypes", "."))
@@ -439,7 +439,7 @@
 <h2><a class="anchor" id="detail-4" name="detail-4"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("subject_reference_tab")</span></h2>
                     <div class="row columns">
         ## Fachliche Grundlage
-                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement"))
+                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"))
                     #renderTextLabelAbove($MESSAGES.getString("t011_obj_geo.special_base") $tmp)
                     #set($tmp = "")
         ## Klassifikation des Dienstes
@@ -561,7 +561,7 @@
                         #set($tmp = "")
                     #end
         ## Methode/Datengrundlage
-                    #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description"))
+                   #set($tmp = $TOOL.getValueFromXPath("./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:source/gmd:LI_Source/gmd:description/gco:CharacterString"))
                     #renderTextLabelAbove($MESSAGES.getString("t011_obj_data.base") $tmp)
                     #set($tmp = "")
         ## Erläuterungen zum Fachbezug
@@ -613,7 +613,7 @@
                 #end
             #end
 ## Datenqualität
-            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy/gmd:nameOfMeasure"])
             #if($TOOL.aNodeOfListExist($xpathList))
 <h2><a class="anchor" id="detail-5" name="detail-5"><span class="ic-ic-check-circle"></span></a><span>$MESSAGES.getString("data_quality")</span></h2>
                 <div class="row columns">
@@ -692,6 +692,14 @@
                 #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table127.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
                 #renderTable($tmp)
                 #set($tmp = "")
+        ## Relative Positionsgenauigkeit
+                #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                #set($headCodeList = ["7128"])
+                #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table128.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
+                #renderTable($tmp)
+                #set($tmp = "")
+
                 </div>
             #end
             ## Verfügbarkeit
@@ -709,7 +717,7 @@
                 #renderTable($tmp)
                 #set($tmp = "")
         ## Bestellinformationen
-                #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
+                #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString"))
                 #renderTextLabelAbove($MESSAGES.getString("t01_object.ordering_instructions") $tmp)
                 #set($tmp = "")
                 
@@ -745,11 +753,11 @@
             #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $tmp)
             #set($tmp = "")
         ## Eignung/Nutzung
-            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
+            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage/gco:CharacterString"))
             #renderTextLabelAbove($MESSAGES.getString("t01_object.dataset_usage") $tmp)
             #set($tmp = "")
         ## Herstellungszweck
-            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose"))
+            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose/gco:CharacterString"))
             #renderTextLabelAbove($MESSAGES.getString("t01_object.info_note") $tmp)
             #set($tmp = "")
         ## Rechtliche Grundlagen

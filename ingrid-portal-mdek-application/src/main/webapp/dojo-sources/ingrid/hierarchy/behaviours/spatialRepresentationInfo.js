@@ -23,6 +23,8 @@
 define(["dojo/_base/declare",
     "dojo/_base/array",
     "dojo/_base/lang",
+    "dojo/aspect",
+    "dojo/dom",
     "dojo/dom-class",
     "dojo/on",
     "dojo/query",
@@ -31,7 +33,7 @@ define(["dojo/_base/declare",
     "dijit/form/Button",
     "dijit/registry",
     "dojo/NodeList-traverse"
-], function (declare, array, lang, domClass, on, query, topic, MenuItem, Button, registry) {
+], function (declare, array, lang, aspect, dom, domClass, on, query, topic, MenuItem, Button, registry) {
 
     return declare(null, {
         title: "Struktur der räumlichen Daten",
@@ -39,8 +41,82 @@ define(["dojo/_base/declare",
         defaultActive: true,
         gridRepresentation: "2", // Grid
         run: function () {
+            
+            this.showFieldsOnGridSelection();
+
+            this.controlPointDescriptionBehaviour();
+            
+            this.mandatoryIfAnyFieldFilled();
+            
+            
+        },
+        
+        mandatoryIfAnyFieldFilled: function() {
+            var ref1GridAxisTable = registry.byId("ref1GridAxisTable");
+            var ref1NumDimensions = registry.byId("ref1NumDimensions");
+            var ref1CellGeometry = registry.byId("ref1CellGeometry");
+            var ref1GridFormatRefGeoreferencedParam = registry.byId("ref1GridFormatRefGeoreferencedParam");
+            var ref1TransfParamAvail = registry.byId("ref1TransfParamAvail");
+            var ref1GridFormatRefOrientationParam = registry.byId("ref1GridFormatRefOrientationParam");
+            var ref1GridFormatRefControlpoint = registry.byId("ref1GridFormatRefControlpoint");
+            var ref1GridFormatRectDescription = registry.byId("ref1GridFormatRectDescription");
+            // var ref1GridFormatRectPointInPixel = registry.byId("ref1GridFormatRectPointInPixel");
+            var ref1GridFormatRectCornerPoint = registry.byId("ref1GridFormatRectCornerPoint");
+            var ref1GridFormatRectCheckpoint = registry.byId("ref1GridFormatRectCheckpoint");
+            
+            var handleMandatoryFields = function() {
+                if( ref1NumDimensions.get("value")
+                    || ref1CellGeometry.get("value")
+                    || ref1GridFormatRefGeoreferencedParam.get("value")
+                    || ref1GridAxisTable.data.length > 0
+                    || ref1TransfParamAvail.checked
+                    || ref1GridFormatRefOrientationParam.checked
+                    || ref1GridFormatRefControlpoint.checked
+                    || ref1GridFormatRectDescription.get("value")
+                    // || ref1GridFormatRectPointInPixel.get("value")
+                    || ref1GridFormatRectCornerPoint.get("value")
+                    || ref1GridFormatRectCheckpoint.checked
+                    
+                ) {
+                    UtilUI.setMandatory(dom.byId("uiElement5302"));
+                    UtilUI.setMandatory(dom.byId("uiElement5305"));
+                } else {
+                    UtilUI.setOptional(dom.byId("uiElement5302"));
+                    UtilUI.setOptional(dom.byId("uiElement5305"));
+                }
+            };
+            
+            // call check to initialize fields on startup
+            handleMandatoryFields();
+
+            aspect.after(ref1GridAxisTable, "onDataChanged", handleMandatoryFields);
+            on(ref1NumDimensions, "Change", handleMandatoryFields);
+            on(ref1CellGeometry, "Change", handleMandatoryFields);
+            on(ref1GridFormatRefGeoreferencedParam, "Change", handleMandatoryFields);
+            on(ref1TransfParamAvail, "Change", handleMandatoryFields);
+            on(ref1GridFormatRefOrientationParam, "Change", handleMandatoryFields);
+            on(ref1GridFormatRefControlpoint, "Change", handleMandatoryFields);
+            on(ref1GridFormatRectDescription, "Change", handleMandatoryFields);
+            // this is a select box and always has a value, so ignore it
+            // on(ref1GridFormatRectPointInPixel, "Change", handleMandatoryFields);
+            on(ref1GridFormatRectCornerPoint, "Change", handleMandatoryFields);
+            on(ref1GridFormatRectCheckpoint, "Change", handleMandatoryFields);
+            
+        },
+        
+        controlPointDescriptionBehaviour: function() {
+            on(registry.byId("ref1GridFormatRectCheckpoint"), "Change", function () {
+                if (registry.byId("ref1GridFormatRectCheckpoint").get("value") === "on") {
+                    domClass.add("uiElement5309", "required");
+                } else {
+                    domClass.remove("uiElement5309", "required");
+                }
+            });
+        },
+        
+        showFieldsOnGridSelection: function() {
             var self = this;
-            on(registry.byId("ref1Representation"), "DataChanged", function (msg) {
+            on(registry.byId("ref1Representation"), "DataChanged", function () {
                 var hasGrid = array.some(this.data, function (element) {
                     return self.gridRepresentation === (element.title+"");
                 });
@@ -58,14 +134,6 @@ define(["dojo/_base/declare",
                     domClass.add("uiElement5305", "hide"); // ref1CellGeometry
                 }
             });
-
-            on(registry.byId("ref1GridFormatRectCheckpoint"), "Change", function () {
-                if (registry.byId("ref1GridFormatRectCheckpoint").get("value") === "on") {
-                    domClass.add("uiElement5309", "required");
-                } else {
-                    domClass.remove("uiElement5309", "required");
-                }
-            })
         }
     })();
 });

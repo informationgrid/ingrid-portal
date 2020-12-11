@@ -131,7 +131,7 @@
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
         #if($element.url == "/privacy.psml")
-          <li><a target="_blank" href="https://www.bkg.bund.de/DE/Service/Datenschutz/datenschutz.html" title="$linkTitle">$linkName</a></li>
+          <li><a target="_blank" href="http://www.adv-online.de/Datenschutzerklaerung/" title="$linkTitle">$linkName</a></li>
         #else 
             #if($element.isSelected($site))
               <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
@@ -160,13 +160,13 @@
                 #set ($salutation = "$!{salutation} $userNameFamily")
             #end
         #end
-        <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
-            <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
-                <use xlink:href="#user"/>
-            </svg>
-            <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
-        </a>
         #if($jetspeed.getLoggedOn())
+            <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
+                <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
+                    <use xlink:href="#user"/>
+                </svg>
+                <span class="header__widget__text mq-hide-l">#if($jetspeed.getLoggedOn())$salutation#else${linkName}#end</span>
+            </a>
             <div class="metamenu metamenu--wide">
                 <!-- State logged in -->
                 #set($userAttributes = $jetspeed.getUserProperties())
@@ -188,7 +188,8 @@
                 </div>
             </div>
         #else
-            $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
+            ## deactivate login portlet
+            ## $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
         #end
     </div>
   #elseif($el == "/administration")

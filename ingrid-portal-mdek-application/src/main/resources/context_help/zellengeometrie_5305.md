@@ -7,5 +7,8 @@ title: Zellengeometrie
 
 # Zellengeometrie
 
+Angabe, ob die Rasterdatenzelle einen Punkt oder eine Fläche beschreibt
 
+# ISO Abbildung
 
+Domain: 160 (gmd:cellGeometry)

@@ -53,6 +53,7 @@ import org.quartz.JobExecutionContext;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.caller.MdekCallerQuery;
 import de.ingrid.mdek.caller.MdekClientCaller;
+import de.ingrid.mdek.caller.MdekCallerObject;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
@@ -82,6 +83,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
     @Mock private ConnectionFacade connectionFacade;
     @Mock private MdekClientCaller mdekClientCaller;
     @Mock private MdekCallerQuery mdekCallerQuery;
+    @Mock private MdekCallerObject mdekCallerObject;
     @Mock private JobExecutionContext context;
 
     private UploadCleanupJob job;
@@ -108,6 +110,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         when(this.mdekClientCaller.getRegisteredIPlugs()).thenReturn(plugIds);
         when(this.connectionFacade.getMdekClientCaller()).thenReturn(this.mdekClientCaller);
         when(this.connectionFacade.getMdekCallerQuery()).thenReturn(this.mdekCallerQuery);
+        when(this.connectionFacade.getMdekCallerObject()).thenReturn(this.mdekCallerObject);
 
         // setup storage
         this.storage = new FileSystemStorage();

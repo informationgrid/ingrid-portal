@@ -1,5 +1,5 @@
 <div class="header__widgets__section">
-    <a target="_blank" class="header__widget header__logo" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+    <a target="_blank" class="header__widget header__logo" href="http://www.adv-online.de" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
         <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/advmis_logo.png" alt="advmis_logo.png">
     </a>
 </div>

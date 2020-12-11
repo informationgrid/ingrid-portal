@@ -16,6 +16,9 @@
           <action type="fix" dev="wemove" issue="1818">
             Change reminder email text
           </action>
+          <action type="fix" dev="wemove" issue="2161">
+            Fix Spatial reference updating
+          </action>
           <action type="add" dev="wemove" issue="967">
             Ige: Add localization to operation parameters
           </action>
@@ -64,6 +67,18 @@
           </action>
           <action type="fix" dev="wemove" issue="2247">
             When inheriting links it should not get preview images.
+          </action>
+          <action type="fix" dev="wemove" issue="2260">
+            IGE(UVP): Fix strange spatial search effect.
+          </action>
+          <action type="fix" dev="wemove" issue="1308">
+            Fix upload cleanup job indexing issue.
+          </action>
+          <action type="fix" dev="wemove" issue="2262">
+            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled. 
+          </action>
+          <action type="fix" dev="wemove" issue="2265">
+            IGE: Add context help for grid format fields. 
           </action>
         </release>
 
