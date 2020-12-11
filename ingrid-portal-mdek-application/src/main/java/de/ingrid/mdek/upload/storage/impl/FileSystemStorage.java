@@ -124,20 +124,20 @@ public class FileSystemStorage implements Storage {
 
         @Override
         public void validate(final String path, final String file, final long size, final Path data, final boolean isArchiveContent) throws ValidationException {
-            // check if names conflict with special directories
             final Path filePath = Paths.get(path, file);
             final Iterator<Path> it = filePath.iterator();
             while(it.hasNext()) {
                 final String pathPart = it.next().toString();
+                // check if names conflict with special directories
                 if (TRASH_PATH.equals(pathPart) || ARCHIVE_PATH.equals(pathPart)) {
                     throw new IllegalNameException("The file name containes the reserved name '" + pathPart + "'.", path+"/"+file,
                             IllegalNameException.ErrorReason.RESERVED_WORD, pathPart);
                 }
-            }
-            // we only reject invalid filenames, because the path will be sanitized
-            if (!this.isValidName(file, ILLEGAL_FILE_NAME)) {
-                throw new IllegalNameException("The file name '" + file + "' contains illegal characters.", path+"/"+file,
-                        IllegalNameException.ErrorReason.ILLEGAL_CHAR, file);
+                // check if names contain illegal characters
+                if (!this.isValidName(pathPart, ILLEGAL_FILE_NAME)) {
+                    throw new IllegalNameException("The file name '" + file + "' contains illegal characters.", path+"/"+file,
+                            IllegalNameException.ErrorReason.ILLEGAL_CHAR, pathPart);
+                }
             }
         }
 
