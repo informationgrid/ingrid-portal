@@ -2,35 +2,35 @@
 <?xml-stylesheet type="text/xsl" href="ingrid-portal-help.xsl" ?>
 <help>
     <chapter>
-        <header>Über Umweltportal Schleswig-Holstein</header>
+        <header>Über UP-SH</header>
         <section help-key="about-1">
-            <header>Konzept und Aufgabe von Umweltportal Schleswig-Holstein</header>
+            <header>Konzept und Aufgabe von UP-SH</header>
             <content>
-                <p>Das Umweltportal Schleswig-Holstein, bietet einen zentralen Zugriff auf umweltrelevante Informationen von öffentlichen Institutionen und Organisationen in Rheinland-Pfalz. Mit einem Mix aus aktuellen Nachrichten, Messwerten, Hintergrundinformationen und Umweltereignissen richtet sich das Umweltportals an interessierte Bürgerinnen und Bürger sowie "professionelle" Nutzer von Umweltinformationen, z.B. Umweltorganisationen und Ingenieurbüros. Das Informationsangebot wird kontinuierlich ausgebaut mit dem Ziel, langfristig möglichst alle behördlichen Anbieter von Umweltinformationen in Rheinland-Pfalz zu erfassen.</p>
+                <p>Das Umweltportal Schleswig-Holstein bietet einen zentralen Zugriff auf umweltrelevante Informationen von öffentlichen Institutionen und Organisationen in Rheinland-Pfalz. Mit einem Mix aus aktuellen Nachrichten, Messwerten, Hintergrundinformationen und Umweltereignissen richtet sich das Umweltportals an interessierte Bürgerinnen und Bürger sowie "professionelle" Nutzer von Umweltinformationen, z.B. Umweltorganisationen und Ingenieurbüros. Das Informationsangebot wird kontinuierlich ausgebaut mit dem Ziel, langfristig möglichst alle behördlichen Anbieter von Umweltinformationen in Rheinland-Pfalz zu erfassen.</p>
                 <p>Bei der Konzeption des Umweltportals spielten die EU-Umweltinformationsrichtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=UIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">Umweltinformationsgesetz</a> ) sowie die EU-INSPIRE-Richtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=GDIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">nds. Geodateninfrastrukturgesetz</a>) eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen.</p>
                 <p>Umweltportal Schleswig-Holstein und die eigens zum Aufbau des Portals entwickelte Software „InGrid®“ wurden u.a. als Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
             </content>
         </section>
         <section help-key="about-2">
-            <header>Die Betreiber von Umweltportal Schleswig-Holstein</header>
+            <header>Die Betreiber von UP-SH</header>
             <content>
                 <p>Das Umweltportal wird vom Schleswig-Holstein betrieben. Wir sind darum bemüht, das System kontinuierlich zu erweitern und zu verbessern. Bei Fragen und Verbesserungsvorschlägen nutzen Sie bitte unser <a href="/kontakt">Kontaktformular</a>.</p>
             </content>
         </section>
         <section help-key="about-4">
-            <header>Informationsquellen in Umweltportal Schleswig-Holstein</header>
+            <header>Informationsquellen in UP-SH</header>
             <content>
                 <p>Das Umweltportal Schleswig-Holstein ist ein komfortables und benutzerfreundliches Tor zu Umweltinformationen im Internet. Im Gegensatz zu den meisten Portalen und Suchmaschinen erfasst das Umweltportal Schleswig-Holstein nicht nur Webseiten, Textdokumente und andere Internetformate, sondern greift auch auf Datenbanken und Fachinformationssysteme zu.</p>
             </content>
         </section>
         <section help-key="about-5">
-            <header>Bedingungen für Nutzung und Beteiligung an Umweltportal Schleswig-Holstein</header>
+            <header>Bedingungen für Nutzung und Beteiligung an UP-SH</header>
             <content>
                 <p>Der Kreis der Informationsanbieter in Umweltportal Schleswig-Holstein beschränkt sich vorwiegend auf Behörden und behördennahe Organisationen in Deutschland. Wenn Ihre Organisation ebenfalls umweltrelevante Informationen über Umweltportal Schleswig-Holstein bereitstellen möchte, wenden Sie sich bitte an die <a href="/kontakt">Fachgruppe Umweltinformationssysteme</a> im Umweltportal Schleswig-Holstein.</p>
             </content>
         </section>
         <section help-key="about-6">
-            <header>InGrid – Die Software hinter Umweltportal Schleswig-Holstein</header>
+            <header>InGrid – Die Software hinter UP-SH</header>
             <content>
                 <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts “InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von Internetportalen und Metadatenkatalogen” (VKoopUIS-Projekt Nr. 50) unter dem Dach “Verwaltungskooperation Umweltinformationssysteme” (VKoopUIS) weiter entwickelt. Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/" target="_blank">Projekt-Webseite</a>.</p>
             </content>
@@ -434,7 +434,7 @@
                 Verwaltungseinheit eingeschränkt.)</p>
                 <p>Beispiel: ‚x1:7.52 y1:50.18 x2:10.17 y2:52.73’ (Die Suche wird auf ein 
                 ausgewähltes Rechteck eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in PortalU zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Raumbezugs in Umweltportal zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -475,7 +475,7 @@
                 werden. </p>
                 <p>Beispiel: ‚t1:2006-01-01 t2:2008-12-31’ (Die Suche wird auf ein 
                 ausgewähltes Zeitintervall eingeschränkt.)</p>
-                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in PortalU zur Verfügung:</p>
+                <p>Folgende Felder stehen für die Einschränkung des Zeitbezugs in Umweltportal zur Verfügung:</p>
                 <table border="1" cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:none">
                     <tr>
                         <td>
@@ -541,7 +541,7 @@
                     Originalseite geführt. In den Fällen, in denen eine Karte
                     hinterlegt ist, bekommen Sie einen Link „Zeige
                     Karte“ angeboten, über den Sie die Karte in der
-                    Kartenansicht von PortalU öffnen können.</p>
+                    Kartenansicht von Umweltportal öffnen können.</p>
             </content>
         </section>
         <section help-key="search-results-3">
@@ -549,7 +549,7 @@
             <content>
                 <p>Neben den in der Hauptergebnisliste eingebunden Meta- und
                     Fachinformationssystemen werden auch weitere
-                    Umweltinformationssysteme über PortalU abgefragt. Die
+                    Umweltinformationssysteme über Umweltportal abgefragt. Die
                     Schnittstellen dieser Systeme erlauben keine Einbindung der
                     Suchergebnisse in die gewichtete Hauptergebnisliste. Die
                     Suchergebnisse werden daher in einer getrennten Liste nach
@@ -563,7 +563,7 @@
         <section help-key="search-results-4">
             <header>Ähnliche Begriffe</header>
             <content>
-                <p>PortalU bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
+                <p>Umweltportal bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
                     eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
@@ -657,7 +657,7 @@
         <section help-key="maps-1">
             <header display="false">Karten</header>
              <content>
-                <p>Die Kartenanwendung des PortalUs ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmässigen Web-Browsers.</p>
+                <p>Die Kartenanwendung des Umweltportals ist eine intuitive Anwendung für die Suche, Anzeige und Nutzung von Informationen geografischer Art. Sie ermöglicht die interaktive Darstellung von Karten und eingeblendeten Fachdaten mit Hilfe eines standardmässigen Web-Browsers.</p>
                 <p>Als Benutzer können Sie zahlreiche Parameter dieser Karte festlegen, zum Beispiel den dargestellten räumlichen Bereich und die Bildgrösse sowie den Typus der angezeigten Informationen oder den Kartenhintergrund.</p>
                 <p>Die Anwendung gestattet nicht nur die Bildschirmanzeige, sondern auch einen qualitativ guten Papierausdruck. Sie ermöglicht je nach Einstellung den Zugriff auf Zusatzinformationen, die mit den geografischen Objekten verknüpft sind.</p>
                 <p>Seine Funktionalität umfasst u.a.:</p>
@@ -969,18 +969,18 @@
         </section>
     </chapter>
     <chapter>
-        <header>PortalU informiert</header>
+        <header>UP-SH formiert</header>
         <section help-key="ingrid-inform-1">
-            <header display="false">PortalU informiert</header>
+            <header display="false">Umweltportal Schleswig-Holstein informiert</header>
             <content>
                 <p>In diesem Bereich finden Sie Meldungen, die durch den
-                    <a href="/impressum">Betreiber von PortalU</a>
+                    <a href="/impressum">Betreiber von Umweltportal Schleswig-Holstein</a>
                     bereitgestellt werden.</p>
             </content>
         </section>
     </chapter>
     <chapter>
-        <header>Mein PortalU</header>
+        <header>Mein UP-SH</header>
         <section help-key="myingrid-1">
             <header>Anmeldung</header>
             <content>
@@ -1025,7 +1025,7 @@
             <header>Logout</header>
             <content>
                 <p>Über das Logout verlassen Sie den personalisierten Bereich
-                    und kommen zurück auf die Startseite von PortalU mit seinen Standard-Voreinstellungen.</p>
+                    und kommen zurück auf die Startseite von UP-SH mit seinen Standard-Voreinstellungen.</p>
             </content>
         </section>
     </chapter>

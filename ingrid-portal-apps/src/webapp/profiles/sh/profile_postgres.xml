@@ -109,7 +109,7 @@
             <src>../numis/ingrid-portal/</src>
             <dst>ingrid-portal/</dst>
         </file>
-        <!-- COPY RP FILES -->
+        <!-- COPY SH FILES -->
         <file>
             <action>copy-dir</action>
             <src>ingrid-portal-apps/</src>

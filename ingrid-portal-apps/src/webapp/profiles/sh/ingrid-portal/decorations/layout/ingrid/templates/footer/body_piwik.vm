@@ -2,7 +2,7 @@
 <script>
 var domain = document.domain;
 if(domain == "www.ush.de"){
-    var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.ush.de/piwik/" : "http://www.ush.de/piwik/");
+    var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.up-sh.de/piwik/" : "http://www.up-sh.de/piwik/");
     document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 }
 </script>
@@ -13,5 +13,5 @@ if(domain == "www.ush.de"){
         piwikTracker.enableLinkTracking();
     } catch( err ) {
     }
-</script><noscript><p><img src="https://www.portalu.rlp.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
+</script><noscript><p><img src="https://www.up-sh.de/piwik/piwik.php?idsite=1" style="border:0" alt="" /></p></noscript>
 <!-- End Piwik Tag -->

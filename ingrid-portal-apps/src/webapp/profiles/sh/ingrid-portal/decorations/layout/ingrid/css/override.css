@@ -1161,7 +1161,7 @@ h4, .h4 {
     width: 26.225em;
   }
   footer .footer .footer-menu-entries, footer .footer .copyright {
-    text-align: right;
+    text-align: left;
   }
   .banner.home h1 {
     font-size: 34px;
@@ -1175,6 +1175,11 @@ h4, .h4 {
   }
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     padding: 64px 0 16px;
+  }
+}
+@media screen and (min-width: 78em) {
+  footer .footer .footer-menu-entries, footer .footer .copyright {
+    text-align: right;
   }
 }
 
@@ -1265,6 +1270,7 @@ header .logo a:hover{
   background-image: url('/decorations/layout/sh/images/template/stage-overlay.svg') !important;
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: right bottom !important;
 }
 @media print, screen and (min-width: 48em){
   .input-search .button.large {
@@ -1488,9 +1494,6 @@ h6 {
     top: 0px;
   }
 }
-.ic-ic-check-circle:before {
-  content: "　";
-}
 
 /* help page */
 .nav-group .accordion-item.is-active .accordion-title {
@@ -1543,7 +1546,7 @@ h6 {
 
 /* user administration */
 .boxed-table tbody tr:nth-child(even) {
-  background-color: #fff6f6;
+  background-color: #f2f2f2;
 }
 table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, .js-popup {
   color: #003064;
