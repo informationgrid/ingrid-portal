@@ -462,7 +462,7 @@ define([
          *          empty string otherwise.
          * @private
          */
-        _mapToSpdxLicenceUrl(licenceTitle) {
+        _mapToSpdxLicenceUrl: function (licenceTitle) {
             var listId = 6500;
             var data = UtilSyslist.getSyslistEntryData(listId, licenceTitle);
             if (!data) return "";
