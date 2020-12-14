@@ -27,8 +27,9 @@ define([
     "dojo/dom-construct",
     "dojo/_base/array",
     "ingrid/message",
-    "ingrid/utils/Catalog"
-], function (registry, declare, construct, array, message, UtilCatalog) {
+    "ingrid/utils/Catalog",
+    "ingrid/utils/Syslist"
+], function (registry, declare, construct, array, message, UtilCatalog, UtilSyslist) {
     return declare(null, {
 
         run: function () {
@@ -281,9 +282,19 @@ define([
             if (constraints.length > 0) {
                 var element = this.create("rightsList", null, parent);
                 for (var i = 0; i < constraints.length; i++) {
-                    this.create("rights", {
-                        innerHTML: constraints[i].title
-                    }, element);
+                    var licenceTitle = constraints[i].title;
+                    var spdxUrl = this._mapToSpdxLicenceUrl(licenceTitle);
+
+                    if (spdxUrl) {
+                        this.create("rights", {
+                            rightsURI: spdxUrl,
+                            innerHTML: constraints[i].title
+                        }, element);
+                    } else {
+                        this.create("rights", {
+                            innerHTML: constraints[i].title
+                        }, element);
+                    }
                 }
                 return element;
             }
@@ -439,6 +450,42 @@ define([
             }
 
             return formatted;
+        },
+
+        /**
+         * Maps the Licence URLs from the JSON data in codelist 6500 to the
+         * SPDX Licence List used by DataCite. See also:
+         * https://spdx.org/licenses/
+         *
+         * @param licenceTitle the "value" of the licence-entry in codelist 6500
+         * @returns mapped url from the SPDX List, if mapping was successful,
+         *          empty string otherwise.
+         * @private
+         */
+        _mapToSpdxLicenceUrl(licenceTitle) {
+            var listId = 6500;
+            var data = UtilSyslist.getSyslistEntryData(listId, licenceTitle);
+            if (!data) return "";
+
+            var entry = JSON.parse(data);
+            var id = entry.id;
+            if (id === "odby") {
+                return "https://opendatacommons.org/licenses/by/1.0/";
+            } else if (id === "cc-by-nd/3.0") {
+                return "https://creativecommons.org/licenses/by/3.0/legalcode";
+            } else if (id === "cc-by/4.0") {
+                return "https://creativecommons.org/licenses/by/4.0/legalcode";
+            } else if (id === "cc-by-nc/4.0") {
+                return "https://creativecommons.org/licenses/by-nc/4.0/legalcode";
+            } else if (id === "cc-by-nd/4.0") {
+                return "https://creativecommons.org/licenses/by-nd/4.0/legalcode";
+            } else if (id === "cc-by-sa/4.0") {
+                return "https://creativecommons.org/licenses/by-sa/4.0/legalcode";
+            } else if (id === "mozilla") {
+                return "https://opensource.org/licenses/MPL/2.0/";
+            } else {
+                return "";
+            }
         }
     })();
 });
