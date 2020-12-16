@@ -6,11 +6,21 @@
     </properties>
 
     <body>
+        <release version="5.6.6" date="2020-xx-xx" description="Release 5.6.6">
+          <action type="fix" dev="wemove" issue="2280">
+            IGE (UVP): Remove metadata date field
+          </action>
+          <action type="fix" dev="wemove" issue="2282">
+            IGE (UVP): Fix preview dialog on research page.
+          </action>
+        </release>
+      
         <release version="5.6.5" date="2020-12-14" description="Release 5.6.5">
           <action type="fix" dev="wemove" issue="2161">
             Fix Spatial reference updating
           </action>
         </release>
+      
         <release version="5.6.4" date="2020-12-07" description="Release 5.6.4">
           <action type="fix" dev="wemove" issue="2247">
             When inheriting links it should not get preview images.
