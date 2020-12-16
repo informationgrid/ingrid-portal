@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
+        <release version="5.7.0" date="2021-xx-xx" description="Release 5.7.0">
           <action type="update" dev="wemove">
             Portal: Update measurement client to version 1.0.21
           </action>
@@ -79,6 +79,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2265">
             IGE: Add context help for grid format fields. 
+          </action>
+          <action type="fix" dev="wemove" issue="2261">
+            IGE: Fix jump to tree function on duplicate check page.
           </action>
         </release>
 
