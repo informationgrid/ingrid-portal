@@ -286,7 +286,7 @@ require([
             // var renderDetailView = registry.byId("showDetailedView").checked;
 
             // count all subnodes first!
-            if (renderDetailView && pageDetailViewObjects.subNodesCount > 100) {
+            if (pageDetailViewObjects.subNodesCount > 100) {
                 var displayText = string.substitute(message.get("dialog.object.detailView.dialog.warning"), [pageDetailViewObjects.subNodesCount]);
                 dialog.show("<fmt:message key='general.info' />", displayText, dialog.INFO, [{
                     caption: "<fmt:message key='general.cancel' />",
