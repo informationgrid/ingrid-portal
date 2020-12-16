@@ -83,6 +83,9 @@
           <action type="fix" dev="wemove" issue="2261">
             IGE: Fix jump to tree function on duplicate check page.
           </action>
+          <action type="fix" dev="wemove" issue="2280">
+            IGE (UVP): Remove metadata date field
+          </action>
           <action type="fix" dev="wemove" issue="2282">
             IGE(UVP): Fix preview dialog on research page.
           </action>
