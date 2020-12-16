@@ -1051,6 +1051,9 @@ require([
                 // if this rubric was dynamically created by a repeatable field
                 if (domRubric.classList.contains("phase")) {
                     var dynField = array.filter(additionalFields, function(a) { return a.identifier === "UVPPhases"; })[0];
+                    
+                    if (!dynField.tableRows) return;
+                    
                     var phase = dynField.tableRows[phaseIndex][0];
                     var fields = [];
                     // normalize array
