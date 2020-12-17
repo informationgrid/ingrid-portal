@@ -156,9 +156,19 @@ define([
             });
 
             if (addresses.length > 0) {
+                var uniqueAddresses = [];
+                array.forEach(addresses, function (addr) {
+                    var existing = array.some(uniqueAddresses, function (entry) {
+                        return (addr.addressClass === 0 && addr.organisation === entry.organisation)
+                            || (addr.addressClass === 2 && addr.name === entry.name && addr.givenName === entry.givenName);
+                    });
+
+                    if (!existing) uniqueAddresses.push(addr);
+                });
+
                 var contributors = this.create("contributors", null, parent);
-                for (var i = 0; i < addresses.length; i++) {
-                    this.addAddressInfo("contributor", addresses[i], "Other", contributors);
+                for (var i = 0; i < uniqueAddresses.length; i++) {
+                    this.addAddressInfo("contributor", uniqueAddresses[i], "Other", contributors);
                 }
                 return contributors;
             }
