@@ -152,6 +152,7 @@ define([
 
             var addresses = array.filter(currentUdk.generalAddressTable, function (address) {
                 return address.typeOfRelation !== 10 && address.typeOfRelation !== 11
+                    && address.addressClass != 1; // Exclude the type "Einheit" for now. It gets exported as "null, null" TODO export organisation name of parent
             });
 
             if (addresses.length > 0) {
