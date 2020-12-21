@@ -628,13 +628,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 Node nameNode = xPathUtils.getNode(nameList.item(i), xpathExpression);
                 if (nameNode != null && nameNode.getTextContent().length() > 0){
                     if (!value.toString().equals("")){value.append(", ");}
-                    String name = nameNode.getTextContent().trim().replace(",", "").replace(".", "");
-                    List<String> nameSplits = Arrays.asList(name.split(" "));
+                    String name = nameNode.getTextContent().trim();
+                    // last name
+                    List<String> nameSplits = Arrays.asList(name.split(","));
                     value.append(String.format("%s,", nameSplits.get(0)));
-                    for (String nameSlit : nameSplits) {
-                        if (nameSplits.indexOf(nameSlit) != 0) {
-                            value.append(String.format(" %s.", nameSlit.charAt(0)));
-                        }
+                    // first name
+                    String[] firstnameSplits = nameSplits.get(1).trim().split(" ");
+                    for (String split : firstnameSplits) {
+                        value.append(String.format(" %s.", split.charAt(0)));
                     }
                 }
             }
