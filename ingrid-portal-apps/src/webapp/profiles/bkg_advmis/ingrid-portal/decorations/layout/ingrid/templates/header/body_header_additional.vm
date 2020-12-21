@@ -1,4 +1,4 @@
-<a target="_blank" class="mq-show-xxl" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-    <img class="mobile__logo-x" src="/decorations/layout/ingrid/images/template/logo.svg" alt="logo.svg">
+<a target="_blank" class="mq-show-xxl" href="http://www.adv-online.de/" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+    <img class="mobile__logo-x" src="/decorations/layout/ingrid/images/template/advmis_logo.png" alt="advmis_logo.png">
 </a>
 <div class="container">

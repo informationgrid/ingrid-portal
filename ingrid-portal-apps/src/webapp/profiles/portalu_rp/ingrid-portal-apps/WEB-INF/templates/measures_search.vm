@@ -1,4 +1,4 @@
-div class="embed-container">
+<div class="embed-container">
   <iframe id="iframe_measure" allowfullscreen></iframe>
 </div>
 

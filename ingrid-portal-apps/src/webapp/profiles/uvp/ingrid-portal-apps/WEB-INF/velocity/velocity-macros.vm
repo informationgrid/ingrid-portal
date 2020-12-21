@@ -503,3 +503,7 @@ $actionForm.getInputHTMLEscaped($field)#end
     #end
     <span class="text">$title</span>
 #end
+
+#macro(removeLocalisation $locString)
+    $stringTool.split($locString, "#locale-").get(0)
+#end

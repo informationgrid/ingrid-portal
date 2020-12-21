@@ -313,10 +313,10 @@
                                         <span>$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode))</span>
                                         #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                             <br>
-                                            $TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)
+                                            $TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))
                                         #end
                                     #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
-                                        <span>$TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)</span>
+                                        <span>$TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))</span>
                                     #end
                                 #else
                                     ## Organisation
@@ -328,7 +328,7 @@
                             #end
                         #else
                             ## Organistation
-                            #set($xPath = "$xParentPath/gmd:organisationName")
+                            #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
                             #if($TOOL.nodeExist($xPath, $node))
                                 #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
                                 #set($organisationLength = $organisation.countTokens() - 1)
@@ -345,7 +345,7 @@
                         #end
                     #else
                         ## Organistation
-                        #set($xPath = "$xParentPath/gmd:organisationName")
+                        #set($xPath = "$xParentPath/gmd:organisationName/gco:CharacterString")
                         #if($TOOL.nodeExist($xPath, $node))
                             #set($organisation = $TOOL.stringTokenizer($TOOL.getValueFromXPath($xPath, null, $node)))
                             #set($organisationLength = $organisation.countTokens() - 1)
@@ -449,7 +449,7 @@
                                 </tr>
                             #end
                             ## Servicezeiten
-                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService")
+                            #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString")
                             #if($TOOL.nodeExist($xPath, $node))
                                 <tr>
                                     <th>$MESSAGES.getString('t02_address.hours_of_service')</th>

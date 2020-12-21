@@ -1,11 +1,11 @@
 <div class="header__widgets__section">
-    <a target="_blank" class="header__widget header__logo" href="https://www.bkg.bund.de/DE/Home/home.html" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
-        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="logo.svg">
+    <a target="_blank" class="header__widget header__logo" href="http://www.adv-online.de" title="$MESSAGES.getString('ingrid.page.home.tooltip')">
+        <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/advmis_logo.png" alt="advmis_logo.png">
     </a>
 </div>
 <div class="header__widgets__section">
-    <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von BKG-MIS aufrufen ">
-        <p class="main__title">MetadatenInformationsSystem</p>
+    <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von AdV-MIS aufrufen ">
+        <p class="main__title">AdV MetadatenInformationsSystem</p>
     </a>
-    <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von BKG-MIS aufrufen "><span class="mq-show-s">MIS</span><span class="mq-hide-s">MetadatenInformationsSystem</span></a>
+    <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von AdV-MIS aufrufen "><span class="mq-show-s">MIS</span><span class="mq-hide-s">AdV MetadatenInformationsSystem</span></a>
 </div>

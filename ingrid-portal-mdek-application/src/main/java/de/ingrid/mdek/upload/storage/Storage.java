@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -62,9 +62,10 @@ public interface Storage {
      *
      * @param path The path
      * @param file The file
+     * @param size The size
      * @throws ValidationException
      */
-    void validate(String path, String file) throws ValidationException;
+    void validate(String path, String file, final long size) throws ValidationException;
 
     /**
      * Get information about a file
@@ -98,7 +99,7 @@ public interface Storage {
      * @return StorageItem[] The list of created files
      * @throws IOException
      */
-    StorageItem[] write(String path, String file, InputStream data, Integer size, boolean replace, boolean extract) throws IOException;
+    StorageItem[] write(String path, String file, InputStream data, Long size, boolean replace, boolean extract) throws IOException;
 
     /**
      * Write a file part
@@ -124,7 +125,7 @@ public interface Storage {
      * @return StorageItem[] The list of created files
      * @throws IOException
      */
-    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Integer size, boolean replace, boolean extract) throws IOException;
+    StorageItem[] combineParts(String path, String file, String id, Integer totalParts, Long size, boolean replace, boolean extract) throws IOException;
 
     /**
      * Delete a file

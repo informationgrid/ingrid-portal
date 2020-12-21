@@ -404,7 +404,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	}
 
 	private static boolean isEqual(String s1, String s2) {
-		return s1.equals(s2);
+		return s1 != null ? s1.equals(s2) : s1 == s2;
 	}
 
 	private static boolean isEqual(float[] bb1, float[] bb2) {

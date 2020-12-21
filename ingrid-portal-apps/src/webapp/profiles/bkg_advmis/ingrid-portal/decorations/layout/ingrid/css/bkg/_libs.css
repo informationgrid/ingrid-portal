@@ -98,8 +98,7 @@ img {
 }
 
 img {
- display: inline-block;
- vertical-align: middle
+ display: block;
 }
 
 textarea {
@@ -1789,7 +1788,7 @@ select {
 
 .has-tip:hover, .has-tip:focus {
  border-bottom: dotted 1px #1d391d;
- color: #407e40
+ color: #0066b3
 }
 
 .has-tip.tip-left, .has-tip.tip-right {
@@ -1841,7 +1840,7 @@ select {
 }
 
 .tooltip.opened {
- color: #407e40 !important;
+ color: #0066b3 !important;
  border-bottom: dotted 1px #1d391d !important
 }
 
@@ -2049,7 +2048,7 @@ select {
 }
 
 a {
- color: #407e40;
+ color: #0066b3;
  text-decoration: none;
  line-height: inherit
 }

@@ -110,7 +110,7 @@
                         <a href="/startseite">
                             <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="footer-logo.svg"/>
                         </a>
-                        <p class="copyright">© Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</p>
+                        <p class="copyright copyright_text">© Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</p>
                     </div>
                 </div>
                 <hr class="bx-top-0 bx-bot-0"/>

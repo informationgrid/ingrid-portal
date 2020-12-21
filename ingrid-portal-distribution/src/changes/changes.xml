@@ -6,7 +6,22 @@
     </properties>
 
     <body>
-        <release version="5.7.0" date="2020-xx-xx" description="Release 5.7.0">
+        <release version="5.7.0" date="2021-xx-xx" description="Release 5.7.0">
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.21
+          </action>
+          <action type="add" dev="wemove" issue="2231">
+            IGE: Adjust help text
+          </action>
+          <action type="fix" dev="wemove" issue="1818">
+            Change reminder email text
+          </action>
+          <action type="fix" dev="wemove" issue="2161">
+            Fix Spatial reference updating
+          </action>
+          <action type="add" dev="wemove" issue="967">
+            Ige: Add localization to operation parameters
+          </action>
           <action type="fix" dev="wemove" issue="2227">
             PORTAL: Bereinigung der benutzerspezifischen Portal-Startseite
           </action>
@@ -43,6 +58,39 @@
           </action>
           <action type="fix" dev="wemove" issue="2232">
             Rename column of dataformat to specification
+          </action>
+          <action type="update" dev="wemove" issue="1581">
+            Update copy dialog information
+          </action>
+          <action type="update" dev="wemove" issue="2198">
+            Change title of preview image column.
+          </action>
+          <action type="fix" dev="wemove" issue="2247">
+            When inheriting links it should not get preview images.
+          </action>
+          <action type="fix" dev="wemove" issue="2260">
+            IGE(UVP): Fix strange spatial search effect.
+          </action>
+          <action type="fix" dev="wemove" issue="1308">
+            Fix upload cleanup job indexing issue.
+          </action>
+          <action type="fix" dev="wemove" issue="2262">
+            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled. 
+          </action>
+          <action type="fix" dev="wemove" issue="2265">
+            IGE: Add context help for grid format fields. 
+          </action>
+          <action type="fix" dev="wemove" issue="2261">
+            IGE: Fix jump to tree function on duplicate check page.
+          </action>
+          <action type="fix" dev="wemove" issue="2280">
+            IGE (UVP): Remove metadata date field
+          </action>
+          <action type="fix" dev="wemove" issue="2282">
+            IGE(UVP): Fix preview dialog on research page.
+          </action>
+          <action type="fix" dev="wemove" issue="2283">
+            Set DB_PASSWORD only with environment variable
           </action>
         </release>
 
