@@ -131,9 +131,9 @@
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
         #if($element.isSelected($site))
-          <li><a href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
+          <li><a #if($element.url == "/privacy.psml") target="_blank" #end href="$linkUrl" title="$linkTitle" class="selected">$linkName</a></li>
         #else
-          <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
+          <li><a #if($element.url == "/privacy.psml") target="_blank" #end href="$linkUrl" title="$linkTitle">$linkName</a></li>
         #end
       #end
     #end
