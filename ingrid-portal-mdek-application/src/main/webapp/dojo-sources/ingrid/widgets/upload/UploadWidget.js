@@ -343,7 +343,8 @@ define([
                             var status = xhrOrXdr ? xhrOrXdr.status : "default";
                             var errorData = responseJSON.errorData || {};
                             var messages = {
-                                418: "Der Dateiname ist ungültig. Siehe auch <a href='https://de.wikipedia.org/wiki/Dateiname#Problematische_und_unzul.C3.A4ssige_Zeichen_oder_Namen' target='_blank'>unzulässige Zeichen in Dateinamen [Wikipedia]</a>.",
+                                418: "Der Dateiname " + (errorData.invalidPart ? "'" + errorData.invalidPart + "' " : "") + "enthält " + (("" + errorData.errorReason).toLowerCase() == "reserved_word" ? "ein reserviertes Wort." : 
+                                	"unzulässige Zeichen. Siehe auch <a href='https://de.wikipedia.org/wiki/Dateiname#Problematische_und_unzul.C3.A4ssige_Zeichen_oder_Namen' target='_blank'>unzulässige Zeichen in Dateinamen [Wikipedia]</a>."),
                                 419: "Die Datei enthält einen Virus.",
                                 420: "Die Datei ist zu groß. " + (("" + errorData.limitType).toLowerCase() == "directory" ? "Alle Dateien eines Metadatensatzes dürfen zusammen" : "Eine einzelne Datei darf") + " maximal " + this.fileSize(errorData.maxSize) + " groß sein." +
                                     (errorData.usedSize ? " Inklusive dieser Datei belegt der Metadatensatz " + this.fileSize(errorData.usedSize) + "." : ""),

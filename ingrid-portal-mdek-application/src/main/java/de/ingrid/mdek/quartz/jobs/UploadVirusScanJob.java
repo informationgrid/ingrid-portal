@@ -139,7 +139,7 @@ public class UploadVirusScanJob extends QuartzJobBean {
             for (final String scanDir : scanDirs) {
                 log(Level.DEBUG, "Scanning directory \""+scanDir+"\"...", null);
                 try {
-                    virusScanValidator.validate(scanDir, null, 0L, Paths.get(scanDir));
+                    virusScanValidator.validate(scanDir, null, 0L, Paths.get(scanDir), false);
                 }
                 catch (final VirusFoundException vfex) {
                     for (final Path file : vfex.getInfections().keySet()) {

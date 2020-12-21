@@ -281,7 +281,7 @@ public class FileSystemStorageTest {
             fail("Expected an ValidationException to be thrown");
         }
         catch (final ValidationException ex) {
-            assertEquals("The file name is invalid.", ex.getMessage());
+            assertEquals("The file name containes the reserved name '_trash_'.", ex.getMessage());
         }
 
         try {
@@ -290,7 +290,7 @@ public class FileSystemStorageTest {
             fail("Expected an ValidationException to be thrown");
         }
         catch (final ValidationException ex) {
-            assertEquals("The file name is invalid.", ex.getMessage());
+            assertEquals("The file name containes the reserved name '_archive_'.", ex.getMessage());
         }
     }
 

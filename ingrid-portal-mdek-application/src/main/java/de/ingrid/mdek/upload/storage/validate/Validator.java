@@ -42,10 +42,11 @@ public interface Validator {
      * Validate the path, file and data
      * NOTE: Since this method could be called in different stages of the upload process one or more parameters might be null.
      * E.g. in an early stage only the file path and name could be validated while the file data is still unknown.
-     * @param path
-     * @param file
-     * @param size
-     * @param data
+     * @param path The path where the file will be placed finally
+     * @param file The file name
+     * @param size The size of the file in bytes (if data is not empty, this parameter should be ignored and the actual size of data should be used)
+     * @param data The path pointing to the uploaded file content (is not necessarily equal to path + file)
+     * @param isArchiveContent True, if the file was part of an archive that was extracted in the upload process
      */
-    void validate(final String path, final String file, final long size, Path data) throws ValidationException;
+    void validate(final String path, final String file, final long size, final Path data, final boolean isArchiveContent) throws ValidationException;
 }

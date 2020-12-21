@@ -227,6 +227,7 @@
     </outbound-rule>
     
     <!-- Datenschutzbestimmung   -->
+
     <rule>
         <from>/datenschutzbestimmung</from>
         <to type="forward">/portal/privacy.psml</to>
@@ -235,6 +236,15 @@
         <from>/portal/privacy.psml</from>
         <to>/datenschutzbestimmung</to>
     </outbound-rule>
+
+    <rule>
+        <from>/datenschutzbestimmung</from>
+        <to type="permanent-redirect">http://www.adv-online.de/Datenschutzerklaerung/</to>
+    </rule>
+    <rule>
+        <from>/portal/privacy.psml</from>
+        <to type="permanent-redirect">http://www.adv-online.de/Datenschutzerklaerung/</to>
+    </rule>
     
     <!-- Weitere Meldungen  -->
     <rule>

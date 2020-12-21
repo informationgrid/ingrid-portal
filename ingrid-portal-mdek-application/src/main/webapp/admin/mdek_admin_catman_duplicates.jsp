@@ -89,11 +89,7 @@ require([
             function selectObjectInTreeByUuid(uuid) {
                 ObjectService.getPathToObject(uuid, {
                     callback: function(path) {
-                        //console.debug(path);
-                        //var def = expandPathDef(path);
                         path.splice(0, 0, "objectRoot");
-                        path.splice(0, 0, "ObjectsAndAddressesRoot");
-                        var targetNodeId = path[path.length - 1];
                         registry.byId("duplicatesTree").set('paths', [path])
                             .then(selectNode);
                     },
