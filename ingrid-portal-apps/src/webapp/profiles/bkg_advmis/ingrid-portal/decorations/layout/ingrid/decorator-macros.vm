@@ -362,7 +362,7 @@
         #if($linkUrl && $linkUrl.contains("@"))
             #set($linkUrl = $jetspeed.htmlescapeAll($linkUrl))
         #end
-        <li><a href="$linkUrl" title="$linkTitle">$linkName</a></li>
+        <li><a #if($element.url == "/privacy.psml") target="_blank" #end href="$linkUrl" title="$linkTitle">$linkName</a></li>
       #end
     #end
 </ul>
