@@ -198,12 +198,7 @@ thead {
 }
 
 .tab__select:hover, .tab__select.is-active {
-  background: #E2E2E2;
-  color: #0066b3;
-}
-
-.tab__select:hover .tab__select__icon, .tab__select.is-active .tab__select__icon {
-  fill: #0066b3;
+  background: #0066b3;
 }
 
 .tab__toggle.is-active a {
