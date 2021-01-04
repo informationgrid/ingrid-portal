@@ -153,9 +153,16 @@ define(["dojo/_base/declare",
                             }
 
                             def2.then(function() {
-                                // automatically replace access constraint with "keine"
-                                var data = [{title: UtilSyslist.getSyslistEntryName(6010, 1) }];
-                                UtilGrid.setTableData('availabilityAccessConstraints', data);
+                                // only replace value if INSPIRE-relevant (#2222)
+                                var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+                                if (isInspireRelevant) {
+                                    // automatically replace access constraint with "keine"
+                                    var data = [{title: UtilSyslist.getSyslistEntryName(6010, 1)}];
+                                    UtilGrid.setTableData('availabilityAccessConstraints', data);
+                                } else {
+                                    // just empty table
+                                    UtilGrid.setTableData('availabilityAccessConstraints', []);
+                                }
 
                                 // set Anwendungseinschränkungen to "Datenlizenz Deutschland Namensnennung". Extract from syslist !
                                 var entryNameLicense = UtilSyslist.getSyslistEntryName(6500, 1);
@@ -169,12 +176,12 @@ define(["dojo/_base/declare",
                     } else {
 
                         // show info of already published version according to HmbTG
-                        var def = that.isPublishedByHmbTG(currentUdk.uuid)
-                        def.then(function(isPublished) {
-                            if (isPublished) {
-                                dialog.show(message.get("dialog.general.info"), HMBTG_INFO_TEXT_MODIFY, dialog.INFO);
-                            }
-                        });
+                        that.isPublishedByHmbTG(currentUdk.uuid)
+                            .then(function(isPublished) {
+                                if (isPublished) {
+                                    dialog.show(message.get("dialog.general.info"), HMBTG_INFO_TEXT_MODIFY, dialog.INFO);
+                                }
+                            });
 
                         // remove all categories
                         UtilGrid.setTableData("categoriesOpenData", []);
@@ -189,6 +196,12 @@ define(["dojo/_base/declare",
                 var hmbTGDownloadCheck = null;
                 on(registry.byId("publicationHmbTG"), "Change", function(isChecked) {
                     if (isChecked) {
+                        // only mandatory if INSPIRE-relevant (#2222)
+                        var isInspireRelevant = registry.byId("isInspireRelevant").get("checked");
+                        if (isInspireRelevant) {
+                            domClass.add("uiElementN025", "required");
+                        }
+                        
                         domClass.add("uiElement6020", "required");
 
                         if (!hmbTGAddressCheck) hmbTGAddressCheck = that.addAddressCheck();
@@ -205,12 +218,26 @@ define(["dojo/_base/declare",
                             hmbTGDownloadCheck = null;
                         }
 
+                        domClass.remove("uiElementN025", "required");
+
                         // remove required field unless open data checkbox is still selected
                         if (!registry.byId("isOpenData").checked) {
                             domClass.remove("uiElement6020", "required");
                         }
                     }
                     that.handleInformationSelect();
+                });
+
+                on(registry.byId("isInspireRelevant"), "Change", function (isChecked) {
+                    if (isChecked) {
+                        // if publicationHmbTG is also checked then make access constraints required (#2222)
+                        var isPublicationHmbTG = registry.byId("publicationHmbTG").get("checked");
+                        if (isPublicationHmbTG) {
+                            domClass.add("uiElementN025", "required");
+                        }
+                    } else {
+                        domClass.remove("uiElementN025", "required");
+                    }
                 });
             },
 
