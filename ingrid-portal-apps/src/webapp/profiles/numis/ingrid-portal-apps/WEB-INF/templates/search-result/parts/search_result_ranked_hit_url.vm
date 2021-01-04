@@ -1,0 +1,3 @@
+#if($rs.url)
+    #renderTableEntry( "URL" $!rs.url_str)
+#end

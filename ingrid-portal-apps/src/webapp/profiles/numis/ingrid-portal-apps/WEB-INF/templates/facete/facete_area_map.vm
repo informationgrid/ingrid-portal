@@ -1,6 +1,6 @@
 #set ($action = $renderResponse.createActionURL())
 <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li id="facet_area_map_header" class="accordion-item #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)is-active#end" data-accordion-item="" onclick="resizeMap()">
+    <li id="facet_area_map_header" class="accordion-item #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)is-active#end" data-accordion-item="" onclick="resizeMap(map)">
         <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
@@ -47,6 +47,7 @@
     var selectedMap = '$selectedMap.webmapclientCoords';
     
     map.setView(new L.LatLng(lat, lng),zoom);
+    map.gestureHandling.enable();
     
     if(selectedMap.indexOf("y1") > -1){
         map.fitBounds([[$selectedMap.webmapclientCoords.y1, $selectedMap.webmapclientCoords.x1], [$selectedMap.webmapclientCoords.y2, $selectedMap.webmapclientCoords.x2]]);
@@ -54,7 +55,7 @@
     map.addLayer(layer);
     
     window.onresize = function(event) {
-        resizeMap();
+        resizeMap(map);
     };
 
     function getMapBounds(){
@@ -63,12 +64,6 @@
             $('#x2').prop("value", Math.round(map.getBounds().getEast() * 10000)/10000);
             $('#y1').prop("value", Math.round(map.getBounds().getSouth() * 10000)/10000);
             $('#y2').prop("value", Math.round(map.getBounds().getNorth() * 10000)/10000);
-        }
-    }
-
-    function resizeMap(){
-        if(map){
-            map._onResize();
         }
     }
 </script>

@@ -943,13 +943,13 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if (!hasAccessConstraints()) {
                             element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
                             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && (serviceType != null && serviceType.equals("view"))){
-                                  HashMap elementMapLink = new HashMap();
+                                HashMap elementMapLink = new HashMap();
                                 elementMapLink.put("type", "linkLine");
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
                                 elementMapLink.put("title", messages.getString("common.result.showMap"));
                                 elementMapLink.put("href", "portal/main-maps.psml?layers=WMS" + UtilsVelocity.urlencode( "||" + urlValue.toString() + "||" ));
-                                  element.put("link", elementMapLink);
+                                element.put("link", elementMapLink);
                                 element.put("linkLeft", true);
                             }
                         } else {
@@ -1318,6 +1318,20 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return htmlLink;
     }
     
+    public HashMap addLinkElementToGetXML() {
+        HashMap elementLink = null;
+        String cswUrl = PortalConfig.getInstance().getString(PortalConfig.CSW_INTERFACE_URL, "");
+        if (!cswUrl.isEmpty()) {
+            elementLink = new HashMap();
+            elementLink.put("type", "linkLine");
+            elementLink.put("hasLinkIcon", true);
+            elementLink.put("isDownload", true);
+            elementLink.put("title", messages.getString("xml_link"));
+            elementLink.put("href", "cswUrl" + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid + "&iplug=" + this.iPlugId + "&elementSetName=full");
+        }
+        return elementLink;
+    }
+
     public String getPublishId(String value) {
         if (value == null) {
             return null;

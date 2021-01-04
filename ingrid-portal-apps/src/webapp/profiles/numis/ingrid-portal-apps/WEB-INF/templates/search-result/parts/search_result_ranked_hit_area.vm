@@ -1,0 +1,41 @@
+#if($coords.size() > 0) 
+    <div id="map${mapId}" class="map-ingrid" style="height:320px; margin-bottom: 24px;"></div>
+    
+    <script>
+        $('#map${mapId}').closest('.js-expander-content').removeClass('is-hidden');
+        var bounds${mapId} = ${coords}[0];
+        var y1${mapId} = bounds${mapId}[2];
+        var x1${mapId} = bounds${mapId}[1];
+        var y2${mapId} = bounds${mapId}[4];
+        var x2${mapId} = bounds${mapId}[3];
+        
+        var southWest${mapId} = null;
+        var northEast${mapId} = null;
+        
+        if (y1${mapId} && x1${mapId} && y2${mapId} && x2${mapId}) {
+            southWest${mapId} = L.latLng(y1${mapId}, x1${mapId});
+            northEast${mapId} = L.latLng(y2${mapId}, x2${mapId});
+            bounds${mapId} = L.latLngBounds(southWest${mapId}, northEast${mapId});
+        } else {
+            //var coords = $coords;
+        }
+        var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
+        map${mapId}.gestureHandling.enable();
+        addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');
+        if(bounds${mapId}) {
+            map${mapId}.fitBounds(bounds${mapId});
+        }
+        var coords = ${coords};
+        coords.forEach(function(coord) {
+            var y1Coord = coord[2];
+            var x1Coord = coord[1];
+            var y2Coord = coord[4];
+            var x2Coord = coord[3];
+            var map${mapId}LayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+            map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
+            map${mapId}.addLayer(map${mapId}LayerBounds);
+        });
+        
+        $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
+    </script>
+#end

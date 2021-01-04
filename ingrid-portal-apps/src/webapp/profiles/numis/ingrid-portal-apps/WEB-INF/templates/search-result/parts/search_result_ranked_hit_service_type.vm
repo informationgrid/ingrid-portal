@@ -1,0 +1,12 @@
+#set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
+#if($tmp)
+    <div class="info--right">
+    #if($tmp == "view")
+        <span>WMS</span>
+    #elseif($tmp == "download")
+        <span>WFS</span>
+    #elseif($tmp == "discovery")
+        <span>XML</span>
+    #end
+    </div>
+#end
