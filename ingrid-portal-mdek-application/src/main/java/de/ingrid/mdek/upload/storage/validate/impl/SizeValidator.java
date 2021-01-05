@@ -96,8 +96,8 @@ public class SizeValidator implements Validator {
             }
 
             if (maxFileSize != -1) {
-                // do not limit single file after extraction
-                if (!isArchiveContent && fileSize > maxFileSize) {
+                // limit single file also after extraction (ignore isArchiveContent)
+                if (fileSize > maxFileSize) {
                     throw new IllegalSizeException("The file size exceeds the maximum size of " + maxFileSize + " bytes.", path+"/"+file,
                             IllegalSizeException.LimitType.FILE, maxFileSize, 0L);
                 }
