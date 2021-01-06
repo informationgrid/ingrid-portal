@@ -104,8 +104,10 @@ public class SizeValidator implements Validator {
             }
 
             if (maxDirSize != -1) {
-                // sum sizes of all files in the target directory
-                long usedSize = getSize(targetPath.getParent(), targetPath);
+                // reference directory for maxDirSize parameter
+                final Path rootPath = Paths.get(path);
+                // sum sizes of all files in the root directory
+                long usedSize = getSize(rootPath, targetPath);
                 if (fileSize + usedSize > maxDirSize) {
                     throw new IllegalSizeException("The directory size exceeds the maximum size of " + maxDirSize + " bytes.", path+"/"+file,
                             IllegalSizeException.LimitType.DIRECTORY, maxDirSize, fileSize + usedSize);
