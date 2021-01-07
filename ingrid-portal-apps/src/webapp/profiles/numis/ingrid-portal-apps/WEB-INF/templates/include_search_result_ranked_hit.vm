@@ -108,68 +108,8 @@
                 <a href="$detailLink" title="$rs.title">
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
-                #set($moreId =$hitCount)
-                #set($x1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x1" , 1))
-                #set($y1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y1" , 1))
-                #set($x2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x2" , 1))
-                #set($y2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" , 1))
-                
-                <a id="${moreId}_more" class="js-expander" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
-                    <span class="icon  ic-ic-plus"></span>
-                    <span class="text">Mehr Infos</span>
-                </a>
-                <a class="js-expander-close ${moreId}_more is-hidden" href="#">
-                    <span class="icon  ic-ic-minus"></span>
-                    <span class="text">Weniger Infos</span>
-                </a>
-                <div class="js-expander-content ${moreId}_more is-hidden">
-                    <div class="row">
-                        <div class="columns">
-                            <h5>Links</h5>
-                            #set($referingUUID = $rs.getHitDetail().get("refering.object_reference.obj_uuid"))
-                            #set($referingName = $rs.getHitDetail().get("refering.object_reference.obj_name" ))
-                            #set($referingClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
-                            #set($referingType = $rs.getHitDetail().get("refering.object_reference.type" ))
-                            #set($referingTypeKey = $rs.getHitDetail().get("refering.object_reference.type_key" ))
-                            #if($rs.url)
-                                <p>
-                                    <a href="$rs.url">$!rs.url_str</a>
-                                </p>
-                            #end
-                            ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
-                            ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
-                            <!--
-                            #if($adminContent)
-                                <h6 class="no-margin">Score</h6>
-                                <p>
-                                    $rs.getScore()
-                                </p>
-                            #end
-                            -->
-                            ## do not show wms urls when they already have been displayed (above)
-                            ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_wms_url.vm")
-                
-                            ## render "Get XML"-link displayed next to the title
-                            ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
-                
-                            #if($rs.wms_coord)
-                                <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
-                            #end
-                        </div>
-                        #if(($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false ) 
-                            || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()))
-                        <div class="columns">
-                           #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_additional.vm")
-                           #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )
-                               #set($coords = [])
-                               #set($mapId = $moreId)
-                               #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
-                               #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
-                           #end
-                        </div>
-                        #end
-                    </div>
-                </div>
+                #set($moreId = $hitCount)
+                #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand.vm")
             </div>
         </div>
     #else

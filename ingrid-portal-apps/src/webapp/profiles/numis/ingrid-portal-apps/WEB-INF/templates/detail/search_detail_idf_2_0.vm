@@ -343,12 +343,12 @@
                                             $TOOL.removeLocalisation("./idf:addressOrganisationName", null, $hierarchyPartyNode)
                                         #end
                                     #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
-                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation("./idf:addressOrganisationName", null, $hierarchyPartyNode)</a>
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))</a>
                                     #end
                                 #else
                                     ## Organisation
                                     #set($xPath = "./idf:addressOrganisationName")
-                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($xPath, null, $hierarchyPartyNode)</a>
+                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
                                     
                                 #end
                                 <br>

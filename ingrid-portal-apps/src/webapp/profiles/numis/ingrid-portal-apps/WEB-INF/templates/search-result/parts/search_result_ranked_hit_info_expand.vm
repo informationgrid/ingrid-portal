@@ -1,0 +1,157 @@
+## Area details
+#set($x1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x1" , 1))
+#set($y1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y1" , 1))
+#set($x2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x2" , 1))
+#set($y2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" , 1))
+
+## Refering details
+#set($referingUUID = $rs.getHitDetail().get("refering.object_reference.obj_uuid"))
+#set($referingName = $rs.getHitDetail().get("refering.object_reference.obj_name" ))
+#set($referingClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
+#set($referingType = $rs.getHitDetail().get("refering.object_reference.type" ))
+#set($referingTypeKey = $rs.getHitDetail().get("refering.object_reference.type_key" ))
+
+#set($referingObjUUID = $rs.getHitDetail().get("object_reference.obj_to_uuid"))
+#set($referingObjName = $rs.getHitDetail().get("object_reference.obj_to_name" ))
+#set($referingObjClass = $rs.getHitDetail().get("object_reference.obj_to_class" ))
+
+#set($countObjRef = 0)
+#foreach($objUuid in $referingObjUUID)
+    #if(!$referingUUID.contains($objUuid))
+        #set($add = $referingUUID.add($objUuid))
+        #set($add = $referingName.add($referingObjName.get($countObjRef)))
+        #set($add = $referingClass.add($referingObjClass.get($countObjRef)))
+    #end
+    #set($countObjRef = $countObjRef + 1)
+#end
+
+## URLRefering details
+#set($urlReferingLink = $rs.getHitDetail().get("t017_url_ref.url_link"))
+#set($urlReferingContent = $rs.getHitDetail().get("t017_url_ref.content" ))
+
+#if($referingUUID || $x1)
+    <a id="${moreId}_more" class="js-expander" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
+        <span class="icon  ic-ic-plus"></span>
+        <span class="text">Mehr Infos</span>
+    </a>
+    <a class="js-expander-close ${moreId}_more is-hidden" href="#">
+        <span class="icon  ic-ic-minus"></span>
+        <span class="text">Weniger Infos</span>
+    </a>
+    <div class="js-expander-content ${moreId}_more is-hidden">
+        <div class="row">
+            <div class="columns">
+                #if($referingUUID || $urlReferingLink)
+                    #set($linksRef = [])
+                    #if($referingUUID)
+                        #set($refCount = 0)
+                        #foreach($uuid in $referingUUID)
+                            #set($link = {})
+                            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cmd=doShowDocument&docuuid=$referingUUID.get($refCount)&plugid=$rs.plugid"))
+                            #set($add = $link.put("type", "$referingClass.get($refCount)"))
+                            #set($add = $link.put("title", "$referingName.get($refCount)"))
+                            #set($add = $linksRef.add($link))
+                            #set($refCount = $refCount + 1)
+                        #end
+                    #end
+                    #set($linksUrlRef = [])
+                    #if($urlReferingLink)
+                        #set($refCount = 0)
+                        #foreach($uuid in $urlReferingLink)
+                            #set($link = {})
+                            #set($add = $link.put("href", "$urlReferingLink.get($refCount)"))
+                            #set($add = $link.put("title", "$urlReferingContent.get($refCount)"))
+                            #set($add = $linksUrlRef.add($link))
+                            #set($refCount = $refCount + 1)
+                        #end
+                    #end
+                    #if($linksRef.size() > 0 || $linksUrlRef.size() > 0)
+                        #set($countRefs = $linksRef.size() + $linksUrlRef.size())
+                        <h5>Links ($countRefs)</h5>
+                        <div class="document-list">
+                            #set($countRefsAll = 0)
+                            #set($addRefsExpand = false)
+                            #foreach($link in $sorter.sort($linksRef,"title"))
+                                #if($countRefsAll > 7 && $addRefsExpand == false)
+                                    #set($addRefsExpand = true)
+                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
+                                        Alle Links
+                                    </button>
+                                    <div class="js-expander-content ${moreId}_more_links is-hidden ">
+                                #end
+                                <div class="list-item">
+                                    <div>
+                                        <a href="$link.href" class="icon">
+                                            #renderUDKIcon($link.type $link.title)
+                                        </a>
+                                    </div>
+                                </div>
+                                #set($countRefsAll = $countRefsAll + 1)
+                            #end
+                            #foreach($link in $sorter.sort($linksUrlRef,"title"))
+                                #if($countRefsAll > 5 && $addRefsExpand == false)
+                                    #set($addRefsExpand = true)
+                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
+                                        Alle Links
+                                    </button>
+                                    <div class="js-expander-content ${moreId}_more_links is-hidden ">
+                                #end
+                                <div class="list-item">
+                                    <div>
+                                        <a href="$link.href" class="icon">
+                                            <span class="text">$link.title</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                #set($countRefsAll = $countRefsAll + 1)
+                            #end
+                            #if($addRefsExpand)
+                                #set($addRefsExpand = false)
+                                </div>
+                                <button type="button" class="button outline js-expander-close ${moreId}_more_links is-hidden" href="#">
+                                    Weniger Links
+                                </button>
+                            #end
+                        </div>
+                    #end
+                    #if($rs.url)
+                        <p>
+                            <a href="$rs.url">$!rs.url_str</a>
+                        </p>
+                    #end
+                    ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
+                    ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
+                    <!--
+                    #if($adminContent)
+                        <h6 class="no-margin">Score</h6>
+                        <p>
+                            $rs.getScore()
+                        </p>
+                    #end
+                    -->
+                    ## do not show wms urls when they already have been displayed (above)
+                    ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_wms_url.vm")
+        
+                    ## render "Get XML"-link displayed next to the title
+                    ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
+        
+                    #if($rs.wms_coord)
+                        <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
+                    #end
+                #end
+            </div>
+            #if(($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false ) 
+                || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()))
+            <div class="columns">
+               #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_additional.vm")
+               #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )
+                   #set($coords = [])
+                   #set($mapId = $moreId)
+                   #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
+                   #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
+               #end
+            </div>
+            #end
+        </div>
+    </div>
+#end

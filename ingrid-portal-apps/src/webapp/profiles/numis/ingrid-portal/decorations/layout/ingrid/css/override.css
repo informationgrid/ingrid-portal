@@ -440,7 +440,7 @@ header a.icon.is-selected {
   background-repeat: no-repeat;
   background-color: #F6F6F6;
 }
-.detail .list-item div {
+.detail .list-item div, .search .list-item div {
   padding: 0;
 }
 .detail.nav-content {
