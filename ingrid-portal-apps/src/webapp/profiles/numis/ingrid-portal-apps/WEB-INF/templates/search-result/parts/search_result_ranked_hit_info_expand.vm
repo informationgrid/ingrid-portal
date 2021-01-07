@@ -5,11 +5,27 @@
 #set($y2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" , 1))
 
 ## Refering details
+#set($referingAllUUID = [])
+#set($referingAllName = [])
+#set($referingAllClass = [])
+#set($referingAllType = [])
+#set($referingAllTypeKey = [])
+
 #set($referingUUID = $rs.getHitDetail().get("refering.object_reference.obj_uuid"))
 #set($referingName = $rs.getHitDetail().get("refering.object_reference.obj_name" ))
 #set($referingClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
 #set($referingType = $rs.getHitDetail().get("refering.object_reference.type" ))
 #set($referingTypeKey = $rs.getHitDetail().get("refering.object_reference.type_key" ))
+
+#set($countObjRef = 0)
+#foreach($objUuid in $referingUUID)
+    #if(!$referingAllUUID.contains($objUuid))
+        #set($add = $referingAllUUID.add($objUuid))
+        #set($add = $referingAllName.add($referingName.get($countObjRef)))
+        #set($add = $referingAllClass.add($referingClass.get($countObjRef)))
+    #end
+    #set($countObjRef = $countObjRef + 1)
+#end
 
 #set($referingObjUUID = $rs.getHitDetail().get("object_reference.obj_to_uuid"))
 #set($referingObjName = $rs.getHitDetail().get("object_reference.obj_to_name" ))
@@ -17,10 +33,10 @@
 
 #set($countObjRef = 0)
 #foreach($objUuid in $referingObjUUID)
-    #if(!$referingUUID.contains($objUuid))
-        #set($add = $referingUUID.add($objUuid))
-        #set($add = $referingName.add($referingObjName.get($countObjRef)))
-        #set($add = $referingClass.add($referingObjClass.get($countObjRef)))
+    #if(!$referingAllUUID.contains($objUuid))
+        #set($add = $referingAllUUID.add($objUuid))
+        #set($add = $referingAllName.add($referingObjName.get($countObjRef)))
+        #set($add = $referingAllClass.add($referingObjClass.get($countObjRef)))
     #end
     #set($countObjRef = $countObjRef + 1)
 #end
@@ -29,7 +45,7 @@
 #set($urlReferingLink = $rs.getHitDetail().get("t017_url_ref.url_link"))
 #set($urlReferingContent = $rs.getHitDetail().get("t017_url_ref.content" ))
 
-#if($referingUUID || $x1)
+#if($referingAllUUID || $x1)
     <a id="${moreId}_more" class="js-expander" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">Mehr Infos</span>
@@ -41,15 +57,15 @@
     <div class="js-expander-content ${moreId}_more is-hidden">
         <div class="row">
             <div class="columns">
-                #if($referingUUID || $urlReferingLink)
+                #if($referingAllUUID || $urlReferingLink)
                     #set($linksRef = [])
-                    #if($referingUUID)
+                    #if($referingAllUUID)
                         #set($refCount = 0)
-                        #foreach($uuid in $referingUUID)
+                        #foreach($uuid in $referingAllUUID)
                             #set($link = {})
-                            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cmd=doShowDocument&docuuid=$referingUUID.get($refCount)&plugid=$rs.plugid"))
-                            #set($add = $link.put("type", "$referingClass.get($refCount)"))
-                            #set($add = $link.put("title", "$referingName.get($refCount)"))
+                            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cmd=doShowDocument&docuuid=$referingAllUUID.get($refCount)&plugid=$rs.plugid"))
+                            #set($add = $link.put("type", "$referingAllClass.get($refCount)"))
+                            #set($add = $link.put("title", "$referingAllName.get($refCount)"))
                             #set($add = $linksRef.add($link))
                             #set($refCount = $refCount + 1)
                         #end
