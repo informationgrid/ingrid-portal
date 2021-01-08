@@ -10,33 +10,63 @@
 #set($referingAllClass = [])
 #set($referingAllType = [])
 #set($referingAllTypeKey = [])
+#set($linksUrlRef = [])
 
+#set($referingUUID = [])
 #set($referingUUID = $rs.getHitDetail().get("refering.object_reference.obj_uuid"))
+#set($referingName = [])
 #set($referingName = $rs.getHitDetail().get("refering.object_reference.obj_name" ))
+#set($referingClass = [])
 #set($referingClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
+#set($referingType = [])
 #set($referingType = $rs.getHitDetail().get("refering.object_reference.type" ))
+#set($referingTypeKey = [])
 #set($referingTypeKey = $rs.getHitDetail().get("refering.object_reference.type_key" ))
 
 #set($countObjRef = 0)
 #foreach($objUuid in $referingUUID)
-    #if(!$referingAllUUID.contains($objUuid))
-        #set($add = $referingAllUUID.add($objUuid))
-        #set($add = $referingAllName.add($referingName.get($countObjRef)))
-        #set($add = $referingAllClass.add($referingClass.get($countObjRef)))
+    #if($objUuid.startsWith("http"))
+        #set($link = {})
+        #set($add = $link.put("href", "$objUuid"))
+        #if($referingName.get($countObjRef) && $referingObjName.get($countObjRef) != "")
+            #set($add = $link.put("title", "$referingName.get($countObjRef)"))
+        #else
+            #set($add = $link.put("title", "$objUuid"))
+        #end
+        #set($add = $linksUrlRef.add($link))
+    #else
+        #if(!$referingAllUUID.contains($objUuid))
+            #set($add = $referingAllUUID.add($objUuid))
+            #set($add = $referingAllName.add($referingName.get($countObjRef)))
+            #set($add = $referingAllClass.add($referingClass.get($countObjRef)))
+        #end
     #end
     #set($countObjRef = $countObjRef + 1)
 #end
 
+#set($referingObjUUID = [])
 #set($referingObjUUID = $rs.getHitDetail().get("object_reference.obj_to_uuid"))
+#set($referingObjName = [])
 #set($referingObjName = $rs.getHitDetail().get("object_reference.obj_to_name" ))
+#set($referingObjClass = [])
 #set($referingObjClass = $rs.getHitDetail().get("object_reference.obj_to_class" ))
-
 #set($countObjRef = 0)
 #foreach($objUuid in $referingObjUUID)
-    #if(!$referingAllUUID.contains($objUuid))
-        #set($add = $referingAllUUID.add($objUuid))
-        #set($add = $referingAllName.add($referingObjName.get($countObjRef)))
-        #set($add = $referingAllClass.add($referingObjClass.get($countObjRef)))
+    #if($objUuid.startsWith("http"))
+        #set($link = {})
+        #set($add = $link.put("href", "$objUuid"))
+        #if($referingObjName.get($countObjRef) && $referingObjName.get($countObjRef) != "")
+            #set($add = $link.put("title", "$referingObjName.get($countObjRef)"))
+        #else
+            #set($add = $link.put("title", "$objUuid"))
+        #end
+        #set($add = $linksUrlRef.add($link))
+    #else
+        #if(!$referingAllUUID.contains($objUuid))
+            #set($add = $referingAllUUID.add($objUuid))
+            #set($add = $referingAllName.add($referingObjName.get($countObjRef)))
+            #set($add = $referingAllClass.add($referingObjClass.get($countObjRef)))
+        #end
     #end
     #set($countObjRef = $countObjRef + 1)
 #end
@@ -70,7 +100,6 @@
                             #set($refCount = $refCount + 1)
                         #end
                     #end
-                    #set($linksUrlRef = [])
                     #if($urlReferingLink)
                         #set($refCount = 0)
                         #foreach($uuid in $urlReferingLink)
