@@ -711,8 +711,8 @@
     #renderLinkListImage ($title $linkList $titleAsSection $hasImage "")
 #end
 
-#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId)
-    #if($tool.hasContent($linkList))
+#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId $linkListInclude)
+    #if($tool.hasContent($linkList) || $tool.hasContent($linkListInclude))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
                 #renderSectionTitle($title)
@@ -724,35 +724,42 @@
             #end
         #end
         <div class="document-list">
-            #set($sortList = $sorter.sort($linkList,"title"))
-            #set($sortListSize = $sortList.size())
-            #if($listLimit)
-                #set($startList = 0)
-                #if($listLimit > $sortListSize)
-                    #set($endListSize = $sortListSize - 1)
-                #else
-                    #set($endListSize = $listLimit - 1)
-                #end
+            #set($countLinksAll = 0)
+            #set($numberLinksAll = $linkList.size())
+            #if($linkListInclude)
+                #set($numberLinksAll = $numberLinksAll + $linkListInclude.size())
             #end
-            #foreach($entry in [$startList..$endListSize])
-                #set($link = $sortList.get($entry))
+            #set($addLinksExpand = false)
+            #foreach($link in $sorter.sort($linkList,"title"))
+                #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
+                    #set($addLinksExpand = true)
+                    <button type="button" id="${expandId}" class="js-expander button outline " href="#">
+                        Alle Links
+                    </button>
+                    <div class="js-expander-content ${expandId} is-hidden ">
+                #end
                 <div class="list-item">
                     #renderLinkLine($link $hasImage)
                 </div>
+                #set($countLinksAll = $countLinksAll + 1)
             #end
-            #if($listLimit && $endListSize != $sortListSize - 1)
-                <button type="button" id="${expandId}" class="js-expander button outline " href="#">
-                    Alle Links
-                </button>
-                <div class="js-expander-content ${expandId} is-hidden ">
-                    #set($startList = $endListSize + 1)
-                    #set($endListSize = $sortList.size() - 1)
-                    #foreach($entry in [$startList..$endListSize])
-                        #set($link = $sortList.get($entry))
-                        <div class="list-item">
-                            #renderLinkLine($link $hasImage)
-                        </div>
+            #if($linkListInclude)
+                #foreach($link in $sorter.sort($linkListInclude,"title"))
+                    #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
+                        #set($addLinksExpand = true)
+                        <button type="button" id="${expandId}" class="js-expander button outline " href="#">
+                            Alle Links
+                        </button>
+                        <div class="js-expander-content ${expandId} is-hidden ">
                     #end
+                    <div class="list-item">
+                        #renderLinkLine($link $hasImage)
+                    </div>
+                    #set($countLinksAll = $countLinksAll + 1)
+                #end
+            #end
+            #if($addLinksExpand)
+                #set($addLinksExpand = false)
                 </div>
                 <button type="button" class="button outline js-expander-close ${expandId} is-hidden" href="#">
                     Weniger Links

@@ -1371,6 +1371,8 @@ a[class*="js-expander"] span.text {
 .search-filtered div.document-list .list-item a {
     display: block;
     margin-right: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .search-filtered div.document-list .list-item div {

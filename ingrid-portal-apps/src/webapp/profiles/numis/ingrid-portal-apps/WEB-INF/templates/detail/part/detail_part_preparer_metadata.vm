@@ -146,14 +146,13 @@
                         #set($tmpXPath = "./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]")
                         #set($tmp = $TOOL.getReference("${tmpXPath}", true))
                         #set($tmp2 = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"))
-                        #set($add = $tmp.addAll($tmp2))
-                        #if($tmp)
+                        #if($tmp || $tmp2)
                             #set($tmpTitle = "Links")
-                            #set($tmpCount = $tmp.size())
+                            #set($tmpCount = $tmp.size() + $tmp2.size())
                             #if($tmpCount)
                                 #set($tmpTitle = $tmpTitle + " (${tmpCount})")
                             #end
-                            #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more")
+                            #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more" $tmp2)
                         #end
                     ## Kontakt
                         #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact[1]"))

@@ -76,7 +76,11 @@
                         #foreach($uuid in $urlReferingLink)
                             #set($link = {})
                             #set($add = $link.put("href", "$urlReferingLink.get($refCount)"))
-                            #set($add = $link.put("title", "$urlReferingContent.get($refCount)"))
+                            #if($urlReferingContent)
+	                            #set($add = $link.put("title", "$urlReferingContent.get($refCount)"))
+                            #else
+                                #set($add = $link.put("title", "$urlReferingLink.get($refCount)"))
+                            #end
                             #set($add = $linksUrlRef.add($link))
                             #set($refCount = $refCount + 1)
                         #end
@@ -87,8 +91,9 @@
                         <div class="document-list">
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
+                            #set($listLimit = 6)
                             #foreach($link in $sorter.sort($linksRef,"title"))
-                                #if($countRefsAll > 7 && $addRefsExpand == false)
+                                #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
                                     <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
                                         Alle Links
@@ -105,7 +110,7 @@
                                 #set($countRefsAll = $countRefsAll + 1)
                             #end
                             #foreach($link in $sorter.sort($linksUrlRef,"title"))
-                                #if($countRefsAll > 5 && $addRefsExpand == false)
+                                #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
                                     <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
                                         Alle Links
