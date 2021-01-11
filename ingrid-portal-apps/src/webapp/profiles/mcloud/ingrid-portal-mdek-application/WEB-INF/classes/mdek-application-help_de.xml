@@ -518,6 +518,68 @@
 				 <p>Über den Link <i>erben</i> ist es möglich, die freien Raumbezüge des übergeordneten Objektes zu erben. Vorhandene Raumbezüge (über den Namen identifiziert) werden nicht überschrieben. Diese Funktion steht nur Unterobjekten zur Verfügung!</p>
             </content>
         </section>
+		<section help-key="maintanance-of-objects-5">
+			<header>Der Verschlagwortungsassistent</header>
+			<content>
+				<p>Zur fachlichen Verschlagwortung kann der InGridCatalog sowohl den deutschen
+					Umweltthesaurus UMTHES als auch den europäischen Umweltthesaurus GEMET nutzen
+					(siehe auch <a href="?hkey=maintanance-of-objects-6">Der Thesaurus-Navigator</a>).</p>
+				<p>Aus den bereits ausgefüllten Textfeldern wird
+					eine Vorschlagsliste für Thesaurusbegriffe zur Verschlagwortung erstellt. </p>
+				<p>Sie können durch Anklicken einen oder mehrere (Strg-Mausklick) Begriffe auswählen und
+					sie über die Schaltfläche „&gt;“ zu der Liste <i>Übernehmen</i> hinzufügen. Über die
+					Schaltfläche „&gt;&gt;“ können alle Begriffe in die Liste übernommen werden. Die
+					Schaltfläche  „&lt;“ entfernt die markierten Begriffe wieder aus der Liste und die
+					Schaltfläche „&lt;&lt;“ entfernt alle Begriffe aus der Liste.</p>
+				<p>Durch einen Klick auf die Schaltfläche <i>Übernehmen</i> werden alle Begriffe aus
+					der Liste <i>Übernehmen</i> dem Objekt als Schlagworte hinzugefügt.</p>
+			</content>
+		</section>
+		<section help-key="maintanance-of-objects-6">
+			<header>Der Thesaurus-Navigator</header>
+			<content>
+				<p>Ein Thesaurus ist eine hierarchisch strukturierte begrenzte Liste von Bezeichnungen,
+					die der natürlichen Sprache entnommen sind. Er soll es ermöglichen, die Inhalte (Begriffe,
+					Vorgänge, Gegenstände) der umweltrelevanten Fachgebiete mit einheitlich benutzten
+					Bezeichnungen wiederzugeben bzw. zu umschreiben. Eine einheitliche Beschreibung ermöglicht
+					wiederum eine gezielte Suche mit weitgehend vollständigem Suchergebnis. </p>
+				<p>Der InGridCatalog (IGC) kann folgende Thesauri verwenden:</p>
+				<ul>
+					<li>den Umweltthesaurus (UMTHES) des Umweltbundesamtes in Dessau-Rosslau. Er enthält mehr als 30.000 Fachbegriffe aus dem Themengebiet "Umwelt".<br></br>
+						Der UMTHES wird über den <a href="http://www.semantic-network.de/" target="SNS">Semantic Network Service (SNS)</a>
+						vom Umweltbundesamt zur Verfügung gestellt.
+					</li>
+					<li>den europäischen Umweltthesaurus <a href="http://www.eionet.europa.eu/gemet" target="SNS">
+						GEMET (GEneral Multilingual Environmental Thesaurus)</a>.</li>
+				</ul>
+				<p><b>Hierarchiebaum </b></p>
+				<p>Um den optimalen Suchbegriff im Thesaurus zu finden, können Sie sich über den
+					Hierarchiebaum von den Oberbegriffen zu den spezifischeren Ebenen leiten lassen.
+					Die Bedienung des Hierarchiebaumes entspricht der üblichen Bedienung von Baumstrukturen,
+					das heißt über einen Klick auf die Symbole + bzw. – kann die Struktur auf- bzw. wieder
+					zugeklappt werden. Ein Klick auf einen Begriff färbt diesen <b>rot</b> ein. Er kann
+					dann über die Schaltfläche <i>Hinzufügen</i> zur <i>Liste der Deskriptoren</i> hinzugefügt
+					werden.</p>
+				<p><u>Achtung</u>: Begriffe die sich durch Anklicken nicht rot einfärben, sind nur
+					Ordnungsbegriffe und keine Deskriptoren. Sie können daher nicht der
+					<i>Liste der Deskriptoren</i> hinzugefügt werden.</p>
+				<p><b>Ergebnisliste</b></p>
+				<p>Alternativ zum Hierarchiebaum können Sie einen Thesaurusbegriff auch über eine Suche
+					finden. Hierzu geben Sie einen Suchbegriff in das Feld <i>Suche nach Deskriptoren und
+						Ordnungsbegriffen</i> ein. Nach Absenden der Suche über <i>In Thesaurus suchen</i> werden
+					alle gefundene Thesaurusbegriffe in der Ergebnisliste angezeigt.</p>
+				<p>Ein Klick auf einen Begriff färbt diesen <b>rot</b> ein. Er kann dann über die
+					Schaltfläche <i>Hinzufügen</i> zur <i>Liste der Deskriptoren</i> hinzugefügt werden.
+					Ein Klick auf das Symbol vor dem Begriff zeigt ihn im hierarchischen Kontext an.
+					Dazu wird in den Hierarchiebaum (siehe oben) gewechselt.</p>
+				<p><b>Liste der Deskriptoren übernehmen</b></p>
+				<p>Über den Hierarchiebaum bzw. die Suche nach Deskriptoren können Sie Thesaurusbegriffe
+					finden und der <i>Liste der Deskriptoren</i> zuordnen (siehe oben).
+					Wenn Sie alle Thesaurusbegriffe, die Sie dem Objekt
+					zuordnen wollen, zusammengestellt haben, können Sie sie über die Schaltfläche <i>Übernehmen</i>
+					zu den bereits im Objekt vorhandenen Thesaurusbegriffen hinzufügen. </p>
+			</content>
+		</section>
         <section help-key="maintanance-of-objects-10">
             <header>Das Kommentarfenster</header>
             <content>
