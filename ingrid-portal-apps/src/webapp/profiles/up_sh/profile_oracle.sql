@@ -7,7 +7,7 @@ CREATE TABLE  ingrid_temp (
 );
 
 -- Show '/main-measures.psml'
-UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
+UPDATE page SET is_hidden = 0 WHERE path = '/main-measures.psml';
 
 -- Hide '/main-about-data-source.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-about-data-source.psml';
