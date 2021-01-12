@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.6.6" date="2020-xx-xx" description="Release 5.6.6">
+        <release version="5.6.6" date="2020-01-12" description="Release 5.6.6">
           <action type="fix" dev="wemove" issue="2280">
             IGE (UVP): Remove metadata date field
           </action>
