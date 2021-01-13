@@ -25,7 +25,9 @@ package de.ingrid.portal.portlets;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -86,30 +88,39 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     @Override
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
-        
-        try {
+        String paramURL = request.getParameter( "url" );
+        if(paramURL != null) {
             if (resourceID.equals( "httpURLImage" )) {
-                String paramURL = request.getParameter( "url" );
-                if(paramURL != null){
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    InputStream inStreamConvert = con.getInputStream();
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    if (null != con.getContentType()) {
-                        byte[] chunk = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                            os.write(chunk, 0, bytesRead);
-                        }
-                        os.flush();
-                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                Base64.getEncoder().encodeToString(os.toByteArray()));
-                        response.getWriter().write(dataUri.toString());
+                try {
+                    getURLResponse(paramURL, response);
+                } catch (Exception e) {
+                    log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
+                    log.error( "Try https URL: " + paramURL.replace("http", "https"));
+                    try {
+                        getURLResponse(paramURL.replace("http", "https"), response);
+                    } catch (URISyntaxException e1) {
+                        log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
                     }
                 }
             }
-        } catch (Exception e) {
-            log.error( "Error creating resource for resource ID: " + resourceID, e );
+        }
+    }
+
+    private void getURLResponse (String paramURL, ResourceResponse response) throws IOException, URISyntaxException {
+        URL url = new URL(paramURL);
+        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+        InputStream inStreamConvert = con.getInputStream();
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        if (null != con.getContentType()) {
+            byte[] chunk = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
+                os.write(chunk, 0, bytesRead);
+            }
+            os.flush();
+            URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
+                    Base64.getEncoder().encodeToString(os.toByteArray()));
+            response.getWriter().write(dataUri.toString());
         }
     }
 
