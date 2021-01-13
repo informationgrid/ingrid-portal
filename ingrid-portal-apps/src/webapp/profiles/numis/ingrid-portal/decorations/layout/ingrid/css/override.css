@@ -1591,3 +1591,30 @@ a[class*="js-expander"] span.text {
 .js-open-expand-text, .js-close-expand-text {
     margin: 24px 0;
 }
+
+/* Swiper */
+
+#searchResult .teaser-data .swiper-container .swiper-pagination-bullet {
+    width: unset !important;
+    height: unset !important;
+    padding: 0px 12px;
+    border: 1px solid #0089C6;
+    color: #0089C6;
+    text-decoration: none;
+    border-radius: 32px !important;
+    background-color: transparent !important;
+    opacity: 1 !important;
+}
+
+#searchResult .teaser-data .swiper-container .swiper-pagination-bullet-active {
+    background-color: #eaf6ff !important;
+}
+
+#searchResult .teaser-data .swiper-container .swiper-pagination {
+    top: 0 !important;
+}
+
+#searchResult .teaser-data .swiper-container .swiper-wrapper {
+    padding-top: 40px !important;
+    padding-bottom: 0 !important;
+}

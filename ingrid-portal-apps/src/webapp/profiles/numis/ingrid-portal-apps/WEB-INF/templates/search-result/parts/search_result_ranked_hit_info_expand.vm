@@ -193,13 +193,97 @@
             #if(($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false ) 
                 || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()))
             <div class="columns">
-               #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_additional.vm")
-               #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )
-                   #set($coords = [])
-                   #set($mapId = $moreId)
-                   #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
-                   #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
-               #end
+                #set($swipeSlides = [])
+                #set($hasArea = false)
+                #set($hasPreview = false)
+                #set($hasSwipe = false)
+                
+                #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )
+                    #set($hasArea = true)
+                #end
+                
+                #if($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
+                    #set($hasPreview = true)
+                #end
+                
+                #if($hasArea && $hasPreview)
+                    #set($hasSwipe = true)
+                #elseif($hasPreview && $!rs.additional_html_1.indexOf(">, <") > 0)
+                    #set($hasSwipe = true)
+                #end
+                
+                #if($hasSwipe)
+                    <div class="swiper-container_${moreId} swiper-container">
+                        <div class="swiper-wrapper">
+                #end
+                #if($hasPreview)
+                    #if($!rs.additional_html_1.indexOf(">, <") == -1)
+                        #if($hasSwipe)
+                        <div class="swiper-slide">
+                        #end
+                        #set ($tmpValue = $!rs.additional_html_1)
+                        #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
+                            $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden')
+                            <noscript>
+                                $tmpValue
+                            </noscript>
+                        #else
+                            $tmpValue
+                        #end
+                        #if($hasSwipe)
+                        </div>
+                        #end
+                        #set($add = $swipeSlides.add("'Vorschau'"))
+                    #else
+                        #set($tmpValues = $!rs.additional_html_1.split(", "))
+                        #foreach($tmpValue in $tmpValues)
+                            <div class="swiper-slide">
+                            #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
+                                $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden')
+                                <noscript>
+                                    $tmpValue
+                                </noscript>
+                            #else
+                                $tmpValue
+                            #end
+                            </div>
+                            #set($add = $swipeSlides.add("'Vorschau'"))
+                        #end
+                    #end
+                #end
+                #if($hasSwipe)
+                            <div class="swiper-slide">
+                #end
+                #if($hasArea)
+                    #set($coords = [])
+                    #set($mapId = $moreId)
+                    #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
+                    #set($add = $swipeSlides.add("'Raumbezug'"))
+                #end
+                #if($hasSwipe)
+                            </div>
+                        </div>
+                        <div class="swiper-pagination"></div>
+                    </div>
+                    <script>
+                      var swiper_${moreId} = new Swiper ('.swiper-container_${moreId}', {
+                        spaceBetween: 10,
+                        grabCursor: true,
+                        updateOnWindowResize: true,
+                        observer: true,
+                        observeParents: true,
+                        pagination: {
+                          el: '.swiper-pagination',
+                          clickable: true,
+                          renderBullet: function (index, className) {
+                            var swiperSlides = $swipeSlides;
+                            return '<span class="' + className + '">' + swiperSlides[index] + '</span>';
+                          }
+                        }
+                      });
+                    </script>
+                #end
             </div>
             #end
         </div>

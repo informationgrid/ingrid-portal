@@ -1,4 +1,4 @@
-#if($coords.size() > 0) 
+#if($coords.size() > 0)
     <div id="map${mapId}" class="map-ingrid" style="height:320px; margin-bottom: 24px;"></div>
     
     <script>
@@ -20,8 +20,7 @@
             //var coords = $coords;
         }
         var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
-        map${mapId}.gestureHandling.enable();
-        addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');
+        disableLeafletMapTouchControl(map${mapId});
         if(bounds${mapId}) {
             map${mapId}.fitBounds(bounds${mapId});
         }

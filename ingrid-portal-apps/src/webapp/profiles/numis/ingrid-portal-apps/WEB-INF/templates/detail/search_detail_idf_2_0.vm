@@ -29,7 +29,7 @@
                 #end
                 #if($tool.hasContent($entry.description))
                     #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
-                    <p><small>${myDescription}</small></p>
+                    ##<p><small>${myDescription}</small></p>
                 #end
             #end
         #end
@@ -225,8 +225,6 @@
             </div>
             #if($entry.elements.size() > 1)
             <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
             #end
         </div>
         #end
