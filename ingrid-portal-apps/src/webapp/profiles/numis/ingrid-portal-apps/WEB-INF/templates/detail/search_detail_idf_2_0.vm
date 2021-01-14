@@ -4,7 +4,7 @@
     #end
 #end
 
-#macro (renderLinkLine $entry $hasImage)
+#macro (renderLinkLine $entry $hasImage $displayPreview)
     #if($entry.type == "html")
         $entry.body
     #else
@@ -15,6 +15,15 @@
                 <span class="ic-ic-external"></span>
             </div>
             -->
+            #end
+            #if($displayPreview)
+                <div class="info--left">
+                #if($tool.hasContent($entry.graphicOverview))
+                    <img src="$entry.graphicOverview" title="" alt="">
+                #else
+                    <div class="empty--preview">#renderInitials($entry.title)</div>
+                #end
+                </div>
             #end
             #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
                 #if($tool.hasContent($entry.linkInfo))
@@ -707,7 +716,7 @@
     #renderLinkListImage ($title $linkList $titleAsSection $hasImage "")
 #end
 
-#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId $linkListInclude)
+#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId $linkListInclude $displayPreview)
     #if($tool.hasContent($linkList) || $tool.hasContent($linkListInclude))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
@@ -735,7 +744,7 @@
                     <div class="js-expander-content ${expandId} is-hidden ">
                 #end
                 <div class="list-item">
-                    #renderLinkLine($link $hasImage)
+                    #renderLinkLine($link $hasImage $displayPreview)
                 </div>
                 #set($countLinksAll = $countLinksAll + 1)
             #end
@@ -749,7 +758,7 @@
                         <div class="js-expander-content ${expandId} is-hidden ">
                     #end
                     <div class="list-item">
-                        #renderLinkLine($link $hasImage)
+                        #renderLinkLine($link $hasImage $displayPreview)
                     </div>
                     #set($countLinksAll = $countLinksAll + 1)
                 #end

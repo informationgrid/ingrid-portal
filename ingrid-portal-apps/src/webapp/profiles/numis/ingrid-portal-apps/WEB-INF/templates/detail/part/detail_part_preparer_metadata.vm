@@ -326,7 +326,7 @@
                 #if($tmpCount)
                     #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                 #end
-                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "links_more")
+                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "links_more" [] true)
                 #set($tmp = "")
             ## Weitere Verweise
                 #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"))

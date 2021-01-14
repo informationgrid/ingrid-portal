@@ -462,3 +462,28 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         </div>
     #end
 #end
+
+#macro(renderInitials $text $length)
+    #if(!$length)
+        #set($length = 2)
+    #end
+    #set($textSplits = $text.split(" "))
+    #set($initials = "")
+    #set($count = 0)
+    #if($textSplits.size() > 1)
+        #foreach($split in $textSplits)
+            #set($split = $split.replaceAll("[^a-zA-Z0-9]+",""))
+            #set($initials = $initials + $split.charAt(0))
+            #set($count = $count + 1)
+            #if($length == $count)
+                #break
+            #end
+        #end
+    #else
+        #set($tmptext = $text.replaceAll("[^a-zA-Z0-9]+",""))
+        #if($tmptext.length() >= $length)
+            #set($initials = $tmptext.substring(0,$length))
+        #end
+    #end
+    $initials
+#end

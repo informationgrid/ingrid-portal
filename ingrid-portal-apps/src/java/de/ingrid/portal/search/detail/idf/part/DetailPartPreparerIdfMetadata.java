@@ -230,6 +230,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String entryId = "";
                 String description = "";
                 String serviceUrl = null;
+                String graphicOverview = null;
                 String tmp = null;
                 
                 xpathExpression = "./@uuid";
@@ -280,12 +281,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     serviceUrl = tmp.trim();
                 }
                 
+                xpathExpression = "./idf:graphicOverview";
+                tmp = xPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    graphicOverview = tmp.trim();
+                }
+
                 HashMap<String, Object> link = new HashMap<>();
                 link.put("hasLinkIcon", true);
                 link.put("isExtern", false);
                 link.put("title", title);
                 link.put("objectClass", type);
                 link.put("serviceType", serviceType);
+                link.put("graphicOverview", graphicOverview);
                 if (description.length() > 0) {
                     link.put("description", description);
                 }
