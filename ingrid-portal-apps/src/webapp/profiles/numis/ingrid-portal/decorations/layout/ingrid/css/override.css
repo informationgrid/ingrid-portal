@@ -1200,6 +1200,7 @@ header .menu-tab-row .menu-tab {
     position: relative;
     bottom: 0;
     right: 0;
+    font-size: 40px;
 }
 
 .teaser-data.search .info--right {
@@ -1238,7 +1239,7 @@ a[class*="js-expander"] span.text {
     font-weight: bold;
 }
 .teaser-data.search .js-expander-content {
-    padding: 16px 0 0;
+    padding: 24px 0 0;
 }
 
 .helper.icon.info {
@@ -1415,8 +1416,12 @@ a[class*="js-expander"] span.text {
     border-top: 0;
 }
 
-.search-filtered div.document-list .js-expander, .search-filtered div.document-list .js-expander-close {
+.search-filtered div.document-list .js-expander, .search-filtered div.document-list .js-expander-close,
+.search-filtered .js-open-expand-text {
     margin-top: 16px;
+    font-family: "Roboto-Regular", sans-serif;
+    padding: 8px 16px;
+    text-transform: none;
 }
 
 .search-filtered .teaser-data {
@@ -1621,4 +1626,17 @@ a[class*="js-expander"] span.text {
 #searchResult .teaser-data .swiper-container .swiper-wrapper {
     padding-top: 40px !important;
     padding-bottom: 0 !important;
+}
+
+.teaser-data .helper, .teaser-data p {
+    color: #3a566d;
+}
+
+h4, h5 {
+    color: #3a566d	;
+}
+
+h4 span, h5 span {
+    font-family: "Roboto-Regular", sans-serif;
+    font-weight: normal;
 }

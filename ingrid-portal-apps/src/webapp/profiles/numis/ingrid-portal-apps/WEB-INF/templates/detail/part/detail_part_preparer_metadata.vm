@@ -116,7 +116,7 @@
 ## FactSheet
 ################################
                 <div class="teaser-data search row">
-                    <div class="xsmall-24 small-14 columns">
+                    <div class="xsmall-24 small-24 medium-14 large-14 xlarge-14 columns">
                     ## Durch die Ressource abgedeckte Zeitspanne
                         #set($beginTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
                         #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
@@ -150,7 +150,7 @@
                             #set($tmpTitle = "$MESSAGES.getString('search.detail.info.links')")
                             #set($tmpCount = $tmp.size() + $tmp2.size())
                             #if($tmpCount)
-                                #set($tmpTitle = $tmpTitle + " (${tmpCount})")
+                                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                             #end
                             #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more" $tmp2)
                         #end
@@ -185,10 +185,10 @@
                     <div class="desc-fade"></div>
                 </div>
                 <button type="button" class="js-open-expand-text button outline is-hidden" href="#">
-                    Mehr
+                    $MESSAGES.getString('searchResult.info.more')
                 </button>
                 <button type="button" class="js-close-expand-text button outline is-hidden" href="#">
-                    Weniger
+                    $MESSAGES.getString('searchResult.info.less')
                 </button>
                 #end
             ## Zeitbezug
@@ -319,21 +319,21 @@
             #if($TOOL.aNodeOfListExist($xpathList))
             <h2><a class="anchor" id="detail-2" name="detail-2"></a>$MESSAGES.getString("references_tab")</h2>
             <div class="row columns">
-            ## Dargestellte Daten 
+            ## Daten
                 #set($tmp = $TOOL.getReference("./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]", true))
                 #set($tmpTitle = $MESSAGES.getString("coupled_data"))
                 #set($tmpCount = $tmp.size())
                 #if($tmpCount)
-                    #set($tmpTitle = $tmpTitle + " (${tmpCount})")
+                    #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                 #end
                 #renderLinkListImageLimit($tmpTitle $tmp false true 3 "links_more")
                 #set($tmp = "")
-            ## Verweise im WWW
+            ## Weitere Verweise
                 #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"))
                 #set($tmpTitle = $MESSAGES.getString("www_references"))
                 #set($tmpCount = $tmp.size())
                 #if($tmpCount)
-                    #set($tmpTitle = $tmpTitle + " (${tmpCount})")
+                    #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                 #end
                 #renderLinkListImageLimit($tmpTitle $tmp false true 3 "downloads_more")
                 #set($tmp = "")

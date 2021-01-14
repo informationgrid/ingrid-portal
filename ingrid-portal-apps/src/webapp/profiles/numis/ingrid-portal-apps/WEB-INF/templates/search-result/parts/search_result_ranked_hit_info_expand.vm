@@ -116,7 +116,7 @@
                     #end
                     #if($linksRef.size() > 0 || $linksUrlRef.size() > 0)
                         #set($countRefs = $linksRef.size() + $linksUrlRef.size())
-                        <h5>$MESSAGES.getString('searchResult.info.preview') ($countRefs)</h5>
+                        <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
                         <div class="document-list">
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
