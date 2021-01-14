@@ -47,8 +47,9 @@ require([
     "ingrid/utils/Events",
     "ingrid/dialog",
     "ingrid/message",
-    "ingrid/layoutCreator"
-], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, message, layoutCreator) {
+    "ingrid/layoutCreator",
+    "ingrid/utils/Catalog"
+], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, message, layoutCreator, catalog) {
 
         on(_container_, "Load", function() {
             init();
@@ -85,7 +86,7 @@ require([
                 }
             });
 
-	SNSService.getTopicsForText(queryTerm, 100, userLocale, {
+	SNSService.getTopicsForText(queryTerm, 100, catalog.getCatalogLanguage(), {
                 preHook: disableUiElements,
                 postHook: enableUiElements,
                 callback: function(res) {

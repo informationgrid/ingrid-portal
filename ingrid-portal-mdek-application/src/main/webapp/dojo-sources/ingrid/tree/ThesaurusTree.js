@@ -31,8 +31,9 @@ define("ingrid/tree/ThesaurusTree", [
     "ingrid/tree/SnsStore",
     "ingrid/utils/Tree",
     "dojo/store/Observable",
-    "dijit/tree/ObjectStoreModel"
-], function(declare, array, lang, wnd, Deferred, Tree, message, SnsStore, UtilTree, Observable, ObjectStoreModel) {
+    "dijit/tree/ObjectStoreModel",
+    "ingrid/utils/Catalog"
+], function(declare, array, lang, wnd, Deferred, Tree, message, SnsStore, UtilTree, Observable, ObjectStoreModel, catalog) {
 
     var ThesaurusTree = declare( "ingrid.tree.ThesaurusTree", [ Tree ], {
 
@@ -99,7 +100,7 @@ define("ingrid/tree/ThesaurusTree", [
             // var treePane = this.treeWidget;
             var _this = this;
             var service = this.model.store.service;
-            service.getSubTopicsWithRoot(topicId, 0, 'up', userLocale, {
+            service.getSubTopicsWithRoot(topicId, 0, 'up', catalog.getCatalogLanguage(), {
                 // preHook: this.showLoadingZone,
                 // postHook: this.hideLoadingZone,
                 callback: function(res) {
