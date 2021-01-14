@@ -285,6 +285,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 link.put("isExtern", false);
                 link.put("title", title);
                 link.put("objectClass", type);
+                link.put("serviceType", serviceType);
                 if (description.length() > 0) {
                     link.put("description", description);
                 }

@@ -444,3 +444,21 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         <span class="ic-ic-cross"></span>
     </a>
 #end
+
+#macro(renderServiceType $type)
+    #if($type && $type != "")
+        <div class="info--right">
+            <span>
+        #if($type == "view" || $type == "wms")
+            WMS
+        #elseif($type == "download")
+            WFS
+        #elseif($type == "discovery")
+            XML
+        #else
+            $type
+        #end
+            </span>
+        </div>
+    #end
+#end

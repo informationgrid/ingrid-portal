@@ -22,10 +22,8 @@
                     <span class="text">$entry.linkInfo</span>
                 </div>
                 #end
-                #if($tool.hasContent($entry.attachedToField))
-                <div class="info">
-                    <span class="text">${entry.get("attachedToField")}</span>
-                </div>
+                #if($tool.hasContent($entry.serviceType))
+                    #renderServiceType($entry.serviceType)
                 #end
                 #if($tool.hasContent($entry.description))
                     #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
