@@ -9,7 +9,6 @@
 #set($referenceAllName = [])
 #set($referenceAllClass = [])
 #set($referenceAllType = [])
-#set($referenceAllTypeKey = [])
 #set($linksUrlRef = [])
 
 #set($referingObjRefUUID = [])
@@ -20,8 +19,6 @@
 #set($referingObjRefClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
 #set($referingObjRefType = [])
 #set($referingObjRefType = $rs.getHitDetail().get("refering.object_reference.type" ))
-#set($referingObjRefTypeKey = [])
-#set($referingObjRefTypeKey = $rs.getHitDetail().get("refering.object_reference.type_key" ))
 
 #set($countObjRef = 0)
 #foreach($objUuid in $referingObjRefUUID)
@@ -53,8 +50,6 @@
 #set($objRefClass = $rs.getHitDetail().get("object_reference.obj_to_class" ))
 #set($objRefType = [])
 #set($objRefType = $rs.getHitDetail().get("object_reference.type" ))
-#set($objRefTypeKey = [])
-#set($objRefTypeKey = $rs.getHitDetail().get("object_reference.type_key" ))
 
 #set($countObjRef = 0)
 #foreach($objUuid in $objRefUUID)
