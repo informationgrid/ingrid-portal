@@ -1246,7 +1246,7 @@ a[class*="js-expander"] span.text {
 }
 
 .helper.icon.info span[class*="ic-"] {
-    font-size: 14px !important;
+    font-size: 16px !important;
 }
 
 .helper.icon.info span.text {
@@ -1261,6 +1261,10 @@ a[class*="js-expander"] span.text {
 
 .search-filtered .data {
     margin-bottom: 48px;
+}
+
+.search-filtered .preview_image {
+    width: 100%;
 }
 
 .detail div.row div.columns {
@@ -1487,13 +1491,13 @@ a[class*="js-expander"] span.text {
 
 /* fact sheet */
 
-.teaser-data .helper.icon {
-    font-size: 16px;
-    line-height: 16px;
+.teaser-data .helper.icon .text {
+    font-size: 18px;
+    line-height: 24px;
 }
 
 .teaser-data .helper.icon span:first-child {
-    font-size: 14px;
+    font-size: 20px;
 }
 
 .teaser-data .swiper-container {

@@ -78,15 +78,15 @@
 #if($referingAllUUID || $x1)
     <a id="${moreId}_more" class="js-expander" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
-        <span class="text">Mehr Infos</span>
+        <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
     </a>
     <a class="js-expander-close ${moreId}_more is-hidden" href="#">
         <span class="icon  ic-ic-minus"></span>
-        <span class="text">Weniger Infos</span>
+        <span class="text">$MESSAGES.getString('searchResult.info.less')</span>
     </a>
     <div class="js-expander-content ${moreId}_more is-hidden">
         <div class="row">
-            <div class="columns">
+            <div class="xsmall-24 small-24 medium-14 large-14 xlarge-14 columns">
                 #if($referingAllUUID || $urlReferingLink)
                     #set($linksRef = [])
                     #if($referingAllUUID)
@@ -116,7 +116,7 @@
                     #end
                     #if($linksRef.size() > 0 || $linksUrlRef.size() > 0)
                         #set($countRefs = $linksRef.size() + $linksUrlRef.size())
-                        <h5>Links ($countRefs)</h5>
+                        <h5>$MESSAGES.getString('searchResult.info.preview') ($countRefs)</h5>
                         <div class="document-list">
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
@@ -125,7 +125,7 @@
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
                                     <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
-                                        Alle Links
+                                        $MESSAGES.getString('searchResult.info.links.more')
                                     </button>
                                     <div class="js-expander-content ${moreId}_more_links is-hidden ">
                                 #end
@@ -142,7 +142,7 @@
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
                                     <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
-                                        Alle Links
+                                        $MESSAGES.getString('searchResult.info.links.more')
                                     </button>
                                     <div class="js-expander-content ${moreId}_more_links is-hidden ">
                                 #end
@@ -159,7 +159,7 @@
                                 #set($addRefsExpand = false)
                                 </div>
                                 <button type="button" class="button outline js-expander-close ${moreId}_more_links is-hidden" href="#">
-                                    Weniger Links
+                                    $MESSAGES.getString('searchResult.info.links.less')
                                 </button>
                             #end
                         </div>
@@ -233,7 +233,7 @@
                         #if($hasSwipe)
                         </div>
                         #end
-                        #set($add = $swipeSlides.add("'Vorschau'"))
+                        #set($add = $swipeSlides.add("'$MESSAGES.getString('searchResult.info.preview')'"))
                     #else
                         #set($tmpValues = $!rs.additional_html_1.split(", "))
                         #foreach($tmpValue in $tmpValues)
@@ -247,7 +247,7 @@
                                 $tmpValue
                             #end
                             </div>
-                            #set($add = $swipeSlides.add("'Vorschau'"))
+                            #set($add = $swipeSlides.add("'$MESSAGES.getString('searchResult.info.preview')'"))
                         #end
                     #end
                 #end
@@ -259,7 +259,7 @@
                     #set($mapId = $moreId)
                     #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
-                    #set($add = $swipeSlides.add("'Raumbezug'"))
+                    #set($add = $swipeSlides.add("'$MESSAGES.getString('searchResult.info.area')'"))
                 #end
                 #if($hasSwipe)
                             </div>
