@@ -7,6 +7,12 @@
 
     <body>
         <release version="5.7.0" date="2021-xx-xx" description="Release 5.7.0">
+          <action type="fix" dev="wemove" issue="2305">
+            IGE: Fix "Lagegenauigkeit" Helptext
+          </action>
+          <action type="fix" dev="wemove" issue="3032">
+            mCLOUD: Validate coordinates in WKT
+          </action>
           <action type="update" dev="wemove">
             Portal: Update measurement client to version 1.0.21
           </action>
