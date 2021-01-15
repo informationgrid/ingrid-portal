@@ -8,9 +8,27 @@
 
 #macro (renderHitDate $date)
     #if($date)
-    <div class="helper date">
-        <b>Aktualit&auml;t der Daten:</b> 
+    <div class="helper text date">
         <span class="">$date</span>
+    </div>
+    #end
+#end
+
+#macro(renderTimeType $timeTypeTitle $timeType $t0 $t1 $t2)
+    #if($timeType)
+    <div class="helper date">
+        #if($timeTypeTitle)
+            <b>$timeTypeTitle</b>:
+        #end
+        #if($timeType == "seit")
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1</span>
+        #elseif ($timeType == "von")
+        <span>$t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
+        #elseif ($timeType == "am")
+        <span>$MESSAGES.getString('searchResult.hit.time.at') $t0</span>
+        #elseif ($timeType == "bis")
+        <span>$MESSAGES.getString('searchResult.hit.time.until') $t2</span>
+        #end
     </div>
     #end
 #end
