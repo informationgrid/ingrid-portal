@@ -9,7 +9,7 @@
 <div class="detail" id="detail">
 #if($title)
     <div class="banner-noimage">
-        <div class="page-wrapper">
+        <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
             <div class="row">
                 <div class="xsmall-24 large-6 xlarge-6 columns">
                     <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">

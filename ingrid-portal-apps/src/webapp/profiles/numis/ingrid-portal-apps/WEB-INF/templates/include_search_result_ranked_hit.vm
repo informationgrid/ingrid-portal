@@ -23,7 +23,6 @@
                             <span class="text">Webseite</span>
                         </div>
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                        #renderServiceType($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
                         #set($detailLink ="$!rs.url")
                         <a href="$detailLink" title="$rs.title">
                             <h2 class="header">$rs.title</h2>
@@ -55,7 +54,6 @@
                                 #renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
                             </div>
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                            #renderServiceType($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
                             <a href="$detailLink" title="$rs.title">
                                 <h2 class="header">$rs.title</h2>
                             </a>
@@ -70,7 +68,6 @@
                                 #renderUDKIcon($rs.udk_class $udkObjClassName)
                             </div>
                             #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                            #renderServiceType($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
                             <a href="$detailLink" title="$rs.title">
                                 <h2 class="header">$rs.title</h2>
                             </a>
@@ -91,7 +88,6 @@
                         <span class="">$udkObjClassName</span>
                     </div>
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
-                    #renderServiceType($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
                     <h2 class="header">
                         $rs.title
                     </h2>
@@ -105,6 +101,7 @@
                     #removeLocalisation($rs.abstract)
                 </p>
                 #end
+                #renderServiceType($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
                 <a href="$detailLink" title="$rs.title">
                     <span class="ic-ic-arrow arrow"></span>
                 </a>

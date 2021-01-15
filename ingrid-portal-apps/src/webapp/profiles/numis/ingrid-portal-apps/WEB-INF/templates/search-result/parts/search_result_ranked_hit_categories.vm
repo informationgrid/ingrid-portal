@@ -1,13 +1,17 @@
 #set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
-#if($tmp.contains("inspireidentifiziert"))
-    <div class="helper icon info">
-        <span class="ic-ic-inspire"></span>
-        <span class="text">INSPIRE</span>
-    </div>
-#end
-#if($tmp.contains("opendata"))
-    <div class="helper icon info">
-        <span class="ic-ic-opendata"></span>
-        <span class="text">Opendata</span>
+#if($tmp.contains("inspireidentifiziert") || $tmp.contains("opendata"))
+    <div class="icon--info">
+    #if($tmp.contains("inspireidentifiziert"))
+        <div class="helper icon info">
+            <span class="ic-ic-inspire"></span>
+            <span class="text">INSPIRE</span>
+        </div>
+    #end
+    #if($tmp.contains("opendata"))
+        <div class="helper icon info">
+            <span class="ic-ic-opendata"></span>
+            <span class="text">Opendata</span>
+        </div>
+    #end
     </div>
 #end
