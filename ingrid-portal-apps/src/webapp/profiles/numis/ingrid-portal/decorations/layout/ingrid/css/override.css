@@ -1439,7 +1439,7 @@ a[class*="js-expander"] span.text {
 }
 
 .search-filtered div.document-list .js-expander, .search-filtered div.document-list .js-expander-close,
-.search-filtered .js-open-expand-text {
+.search-filtered .js-open-expand-text, .search-filtered .js-close-expand-text {
     margin-top: 16px;
     font-family: "Roboto-Regular", sans-serif;
     padding: 8px 16px;
