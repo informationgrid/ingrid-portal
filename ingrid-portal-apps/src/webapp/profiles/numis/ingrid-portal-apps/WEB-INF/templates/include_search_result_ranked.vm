@@ -15,7 +15,7 @@
 #end
 
 #macro(renderTimeType $timeTypeTitle $timeType $t0 $t1 $t2)
-    #if($timeType)
+    #if($timeType && !$timeType.isEmpty())
     <div class="helper date">
         #if($timeTypeTitle)
             <b>$timeTypeTitle</b>:
