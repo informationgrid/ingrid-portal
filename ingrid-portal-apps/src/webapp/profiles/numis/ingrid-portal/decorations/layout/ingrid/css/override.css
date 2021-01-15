@@ -437,7 +437,13 @@ header a.icon.is-selected {
   padding: 0 0 54px 0;
 }
 .detail .banner-noimage .helper.icon {
-  padding-bottom: 24px;
+  margin-bottom: 24px;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.detail .banner-noimage .helper.icon span:first-child {
+    font-size: 20px;
 }
 .detail .banner-noimage .page-wrapper {
   background-repeat: no-repeat;
@@ -1053,6 +1059,13 @@ header .menu-tab-row .menu-tab {
     font-size: 1.1rem;
     margin-bottom: 0.75rem;
   }
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
+    padding: 24px 0 16px;
+  }
+  
+  .detail div.row div.columns {
+      margin-bottom: 24px;
+  }
 }
 @media print, screen and (max-width: 63.9375em) {
   header .menu-tab-row .menu-tab {
@@ -1083,12 +1096,13 @@ header .menu-tab-row .menu-tab {
   */
   .nav-content .accordion.accordion-filter-group {
     border-radius: 0;
+    margin-bottom: 0;
   }
   .nav-content .accordion.accordion-filter-group .accordion-title-filter-group::after {
-    content: '\e900';
+    content: '\e922';
   }
   .nav-content .accordion.accordion-filter-group .is-active .accordion-title-filter-group::after {
-    content: '\e903';
+    content: '\e925';
   }
   .nav-content .accordion.accordion-filter-group .accordion-content.filter-wrapper {
     padding: 16px;
@@ -1159,6 +1173,9 @@ header .menu-tab-row .menu-tab {
     font-size: 1.1rem;
     margin-bottom: 0.75rem;
   }
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
+    padding: 48px 0 16px;
+  }
 }
 @media print, screen and (min-width: 78em) {
   header .logo {
@@ -1186,6 +1203,13 @@ header .menu-tab-row .menu-tab {
 .teaser-data.search .helper.icon {
     margin-bottom: 0px;
 }
+
+@media print, screen and (min-width: 48em) {
+  .teaser-data.search .helper.icon {
+    margin-bottom: 16px;
+  }
+}
+
 .teaser-data.search .header {
     margin-bottom: 12px;
 }
@@ -1305,9 +1329,8 @@ a[class*="js-expander"] span.text {
     width: 100%;
 }
 
-.detail div.row div.columns {
+.detail .page-wrapper div.row div.columns {
     padding-bottom: 0;
-    margin-bottom: 24px;
 }
 
 .search-filtered .table table {
@@ -1480,6 +1503,9 @@ a[class*="js-expander"] span.text {
     }
 }
 
+#detail .icon--info {
+    display: inline-block;
+}
 @media print, screen and (min-width: 48em) {
     .icon--info {
         display: inline-block;
@@ -1690,4 +1716,17 @@ h4, h5 {
 h4 span, h5 span {
     font-family: "Roboto-Regular", sans-serif;
     font-weight: normal;
+}
+
+
+@media print, screen and (min-width: 48em) {
+  h2, .h2 {
+    font-size: 32px;
+  }
+}
+
+@media print, screen and (min-width: 64em) {
+  h2, .h2 {
+    font-size: 34px;
+  }
 }
