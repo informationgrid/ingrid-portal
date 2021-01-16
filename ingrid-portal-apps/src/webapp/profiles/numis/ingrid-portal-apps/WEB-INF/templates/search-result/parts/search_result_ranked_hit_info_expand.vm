@@ -107,8 +107,8 @@
                         #foreach($uuid in $urlReferenceLink)
                             #set($link = {})
                             #set($add = $link.put("href", "$urlReferenceLink.get($refCount)"))
-                            #if($urlReferenceContent)
-	                            #set($add = $link.put("title", "$urlReferenceContent.get($refCount)"))
+                            #if($urlReferenceContent.get($refCount) && $urlReferenceContent.get($refCount) != "")
+                                #set($add = $link.put("title", "$urlReferenceContent.get($refCount)"))
                             #else
                                 #set($add = $link.put("title", "$urlReferenceLink.get($refCount)"))
                             #end

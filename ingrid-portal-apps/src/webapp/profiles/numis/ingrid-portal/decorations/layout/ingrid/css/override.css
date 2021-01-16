@@ -1066,6 +1066,10 @@ header .menu-tab-row .menu-tab {
   .detail div.row div.columns {
       margin-bottom: 24px;
   }
+  
+  .detail .banner-noimage .helper.icon {
+    font-size: 18px;
+}
 }
 @media print, screen and (max-width: 63.9375em) {
   header .menu-tab-row .menu-tab {
