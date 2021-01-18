@@ -1530,6 +1530,7 @@ a[class*="js-expander"] span.text {
     border-top: 2px solid #c6cfe2;
     padding-top: 16px;
     font-size: 14px;
+    margin-top: 16px;
 }
 
 .search-filtered .border-line-info > span {

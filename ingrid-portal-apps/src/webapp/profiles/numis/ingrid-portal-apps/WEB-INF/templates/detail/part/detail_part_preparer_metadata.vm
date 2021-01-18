@@ -204,33 +204,33 @@
                     #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
                     #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
                         #if($beginTime == $endTime)
-                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                            #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime" "no-background")
                         #elseif($beginTime && !$endTime)
-                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                            #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime" "no-background")
                         #elseif(!$beginTime && $endTime)
-                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                            #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
                         #elseif($beginTime != $endTime)
-                            #renderTextLabelLeft($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                            #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
                         #end
                     #end
                 ## Status
                     #set($tmp = $TOOL.getValueFromXPath("./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue", "523"))
-                    #renderTextLabelLeft($MESSAGES.getString("t01_object.time_status") $tmp)
+                    #renderLinkTable($MESSAGES.getString("t01_object.time_status") $tmp "no-background")
                     #set($tmp = "")
                 ## Periodizität
                     #set($tmp = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue", "518"))
-                    #renderTextLabelLeft($MESSAGES.getString("t01_object.time_period") $tmp)
+                    #renderLinkTable($MESSAGES.getString("t01_object.time_period") $tmp "no-background")
                     #set($tmp = "")
                 ## Intervall der Erhebung
                     #set($value = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency"))
                     #set($content = $TOOL.timePeriodDurationToTimeAlle($value))
                     #set($unit = $TOOL.timePeriodDurationToTimeInterval($value))
                     #if($value)
-                        #renderTextLabelLeft($MESSAGES.getString("t01_object.time_interval") "$content $unit")
+                        #renderLinkTable($MESSAGES.getString("t01_object.time_interval") "$content $unit" "no-background")
                     #end
                 ## Erläuterung zum Zeitbezug
                     #set($tmp = $TOOL.getValueFromXPath("./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceNote"))
-                    #renderTextLabelAbove($MESSAGES.getString("t01_object.time_descr") $tmp)
+                    #renderLinkTable($MESSAGES.getString("t01_object.time_descr") $tmp "no-background")
                     #set($tmp = "")
                 ## Zeitbezug der Ressource
                     #set($nodelist = $TOOL.getNodeListFromXPath("./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date"))
