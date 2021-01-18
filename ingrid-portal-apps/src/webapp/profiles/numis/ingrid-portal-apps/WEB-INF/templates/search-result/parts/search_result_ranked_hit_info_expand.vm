@@ -43,11 +43,11 @@
 #end
 
 #set($objRefUUID = [])
-#set($objRefUUID = $rs.getHitDetail().get("object_reference.obj_to_uuid"))
+#set($objRefUUID = $rs.getHitDetail().get("object_reference.obj_uuid"))
 #set($objRefName = [])
-#set($objRefName = $rs.getHitDetail().get("object_reference.obj_to_name" ))
+#set($objRefName = $rs.getHitDetail().get("object_reference.obj_name" ))
 #set($objRefClass = [])
-#set($objRefClass = $rs.getHitDetail().get("object_reference.obj_to_class" ))
+#set($objRefClass = $rs.getHitDetail().get("object_reference.obj_class" ))
 #set($objRefType = [])
 #set($objRefType = $rs.getHitDetail().get("object_reference.type" ))
 
@@ -72,6 +72,7 @@
     #end
     #set($countObjRef = $countObjRef + 1)
 #end
+
 ## URLRefering details
 #set($urlReferenceLink = $rs.getHitDetail().get("t017_url_ref.url_link"))
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content" ))
