@@ -68,14 +68,14 @@
                     <p class="caption">$entry.title</p>
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <p class="caption">
-                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}">
+                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
                             $entry.title
                             <span class="ic-ic-angle-right">
                         </a>
                     </p>
                 #else
                     <p class="caption">
-                        <a class="button outline" href="${entry.get("href")}">
+                        <a class="button outline" href="${entry.get("href")}" title="$entry.title">
                             $entry.title
                             <span class="ic-ic-angle-right">
                         </a>
@@ -89,42 +89,42 @@
         #end
         #if($entry.isExtern)
             <div>
-                <a href="$entry.href" >
+                <a href="$entry.href" title="$entry.title">
                   <span class="text">$entry.title</span>
                 </a>
             </div>
         #elseif($entry.objectClass)
             #if(!$hasImage)
             <div>
-            <a href="$entry.href" class="icon">
-                #renderUDKIcon($entry.objectClass $entry.title)
-            </a>
+                <a href="$entry.href" class="icon" title="$entry.title">
+                    #renderUDKIcon($entry.objectClass $entry.title)
+                </a>
             </div>
             #else
             <div>
-            <div class="helper icon">
-                #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
-                #renderUDKIcon($entry.objectClass $udkObjClassName)
-            </div>
-            <a href="$entry.href" class="icon">
-                <span class="text">$entry.title</span>
-            </a>
+                <div class="helper icon">
+                    #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
+                    #renderUDKIcon($entry.objectClass $udkObjClassName)
+                </div>
+                <a href="$entry.href" class="icon" title="$entry.title">
+                    <span class="text">$entry.title</span>
+                </a>
             </div>
             #end
         #elseif($entry.noLink)
             <div>
-            $entry.title
+                $entry.title
             </div>
         #elseif($entry.isDownload)
             <div>
-            <a href="$entry.href" class="icon">
+            <a href="$entry.href" class="icon" title="$entry.title">
               <span class="ic-ic-download"></span>
               <span class="text">$entry.title</span>
             </a>
             </div>
         #elseif(!$entry.isMapLink)
             <div>
-            <a href="$entry.href" class="icon">
+            <a href="$entry.href" class="icon" title="$entry.title">
                 <span class="ic-ic-karte"></span>
                 <span class="text">$entry.title</span>
             </a>
@@ -286,7 +286,8 @@
                 ## <h4>$TOOL.getNameFromCodeList("4430", "3")</h4>
                 <span class="helper icon">
                     <span class="ic-ic-mailto"></span>
-                    <a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a>
+                    #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                    <a href="mailto:${tmpTitle}" title="$tmpTitle">$tmpTitle</a>
                 </span>
             #end
         </div>
@@ -337,23 +338,27 @@
                                     #set($xPath = "./idf:addressIndividualName")
                                     ## Person -> Name
                                     #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
-                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
+                                        #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
                                     #end
                                 #elseif($t == "3")
                                     ## Free Address -> Name or Organisation
                                     #if($TOOL.nodeExist("./idf:addressIndividualName", $hierarchyPartyNode))
-                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode))</a>
+                                        #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode)))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
                                         #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                             <br>
                                             $TOOL.removeLocalisation("./idf:addressOrganisationName", null, $hierarchyPartyNode)
                                         #end
                                     #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
-                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode))</a>
+                                        #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)))
+                                        <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
                                     #end
                                 #else
                                     ## Organisation
                                     #set($xPath = "./idf:addressOrganisationName")
-                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()">$TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode))</a>
+                                    #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
+                                    <a href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
                                     
                                 #end
                                 <br>
@@ -389,7 +394,8 @@
                         ## Name
                         #set($xPath = "$xParentPath/gmd:individualName")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <a class="link" href="#">$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</a>
+                            #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node)))
+                            <a class="link" href="#" title="$tmpTitle">$tmpTitle</a>
                         #end
                     #end
                     </p>
@@ -449,7 +455,8 @@
                             <span class="helper icon">
                                 ## $TOOL.getNameFromCodeList("4430", "3")
                                 <span class="ic-ic-mailto"></span>
-                                <a href="mailto:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a>
+                                #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                                <a href="mailto:${tmpTitle}" title="$tmpTitle">$tmpTitle</a>
                             </span>
                         </div>
                     #end
@@ -460,7 +467,8 @@
                             <span class="helper icon">
                                 ## $TOOL.getNameFromCodeList("4430", "1")
                                 <span class="ic-ic-phone"></span>
-                                <a href="tel:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a>
+                                #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                                <a href="tel:${tmpTitle}" title="$tmpTitle">$tmpTitle</a>
                             </span>
                         </div>
                     #end
@@ -471,7 +479,8 @@
                             <span class="helper icon">
                                 ## $TOOL.getNameFromCodeList("4430", "2")
                                 <span class="ic-ic-fax"></span>
-                                <a href="fax:$TOOL.getValueFromXPath($xPath, null, $node)">$TOOL.getValueFromXPath($xPath, null, $node)</a>
+                                #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
+                                <a href="fax:${tmpTitle}" title="$tmpTitle">$tmpTitle</a>
                             </span>
                         </div>
                     #end
@@ -488,7 +497,7 @@
                                 #else 
                                     #set($url = "http://$url")
                                 #end
-                                <a href="$url">$url</a>
+                                <a href="$url" title="$url">$url</a>
                             </span>
                         </div>
                     #end
@@ -621,7 +630,7 @@
                     #if($entry.types)
                         #set($bodyType = $entry.types.get($num))
                         #if($bodyType == "link")
-                            <td><a href="$td">$td</a></td>
+                            <td><a href="$td" title="$td">$td</a></td>
                         #else
                             <td>$td</td>
                         #end
@@ -738,7 +747,7 @@
             #foreach($link in $sorter.sort($linkList,"title"))
                 #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
                     #set($addLinksExpand = true)
-                    <button type="button" id="${expandId}" class="js-expander button outline " href="#">
+                    <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
                         $MESSAGES.getString('search.detail.info.links.more')
                     </button>
                     <div class="js-expander-content ${expandId} is-hidden ">
@@ -752,7 +761,7 @@
                 #foreach($link in $sorter.sort($linkListInclude,"title"))
                     #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
                         #set($addLinksExpand = true)
-                        <button type="button" id="${expandId}" class="js-expander button outline " href="#">
+                        <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
                             $MESSAGES.getString('search.detail.info.links.more')
                         </button>
                         <div class="js-expander-content ${expandId} is-hidden ">
@@ -766,7 +775,7 @@
             #if($addLinksExpand)
                 #set($addLinksExpand = false)
                 </div>
-                <button type="button" class="button outline js-expander-close ${expandId} is-hidden" href="#">
+                <button type="button" class="button outline js-expander-close ${expandId} is-hidden" title="$MESSAGES.getString('search.detail.info.links.less')" href="#">
                     $MESSAGES.getString('search.detail.info.links.less')
                 </button>
             #end
@@ -897,7 +906,7 @@
             #if($entry.objectClass)
                 #renderLinkLine($entry)
             #else
-            <a href="$entry.href">
+            <a href="$entry.href" title="$entry.title">
                 $entry.title
             </a>
             #end
@@ -1050,7 +1059,7 @@
                         #end
                         #if($tool.hasContent($entry.link))
                             <p>
-                                <a class="tag tag--small" href="$entry.link.href">$MESSAGES.getString('common.result.showMap')</a>
+                                <a class="tag tag--small" href="$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">$MESSAGES.getString('common.result.showMap')</a>
                             </p>
                         #end
                     </td>

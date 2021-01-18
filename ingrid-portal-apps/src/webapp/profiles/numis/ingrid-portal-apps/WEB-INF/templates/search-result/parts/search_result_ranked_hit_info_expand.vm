@@ -77,11 +77,11 @@
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content" ))
 
 #if($referenceAllUUID || $x1)
-    <a id="${moreId}_more" class="js-expander" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
+    <a id="${moreId}_more" class="js-expander" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
     </a>
-    <a class="js-expander-close ${moreId}_more is-hidden" href="#">
+    <a class="js-expander-close ${moreId}_more is-hidden" title="$MESSAGES.getString('searchResult.info.less')" href="#">
         <span class="icon  ic-ic-minus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.less')</span>
     </a>
@@ -126,7 +126,7 @@
                             #foreach($link in $sorter.sort($linksRef,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
-                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
+                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
                                         $MESSAGES.getString('searchResult.info.links.more')
                                     </button>
                                     <div class="js-expander-content ${moreId}_more_links is-hidden ">
@@ -136,7 +136,7 @@
                                         #renderServiceType($link.serviceType)
                                     #end
                                     <div>
-                                        <a href="$link.href" class="icon">
+                                        <a href="$link.href" class="icon" title="$link.title">
                                             #renderUDKIcon($link.type $link.title)
                                         </a>
                                     </div>
@@ -146,14 +146,14 @@
                             #foreach($link in $sorter.sort($linksUrlRef,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
-                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " href="#">
+                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
                                         $MESSAGES.getString('searchResult.info.links.more')
                                     </button>
                                     <div class="js-expander-content ${moreId}_more_links is-hidden ">
                                 #end
                                 <div class="list-item">
                                     <div>
-                                        <a href="$link.href" class="icon">
+                                        <a href="$link.href" class="icon" title="$link.title">
                                             <span class="text">$link.title</span>
                                         </a>
                                     </div>
@@ -163,7 +163,7 @@
                             #if($addRefsExpand)
                                 #set($addRefsExpand = false)
                                 </div>
-                                <button type="button" class="button outline js-expander-close ${moreId}_more_links is-hidden" href="#">
+                                <button type="button" class="button outline js-expander-close ${moreId}_more_links is-hidden" title="$MESSAGES.getString('searchResult.info.links.less')" href="#">
                                     $MESSAGES.getString('searchResult.info.links.less')
                                 </button>
                             #end
@@ -171,7 +171,7 @@
                     #end
                     #if($rs.url)
                         <p>
-                            <a href="$rs.url">$!rs.url_str</a>
+                            <a href="$rs.url" title="$rs.url">$!rs.url_str</a>
                         </p>
                     #end
                     ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
