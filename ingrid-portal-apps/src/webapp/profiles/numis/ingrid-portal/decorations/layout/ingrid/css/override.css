@@ -455,6 +455,10 @@ header a.icon.is-selected {
 .detail.nav-content {
   margin-top: -54px;
 }
+.detail div.row div.columns {
+    margin-bottom: 24px;
+    padding-bottom: 0;
+}
 .nav-content {
   margin-top: 0;
 }
@@ -1062,14 +1066,15 @@ header .menu-tab-row .menu-tab {
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     padding: 24px 0 16px;
   }
-  
-  .detail div.row div.columns {
-      margin-bottom: 24px;
+  .data ~ h2 {
+    padding-top: 24px;
   }
-  
+  .data ~ .row.columns {
+    margin-bottom: 48px !important;
+  }
   .detail .banner-noimage .helper.icon {
     font-size: 18px;
-}
+  }
 }
 @media print, screen and (max-width: 63.9375em) {
   header .menu-tab-row .menu-tab {
@@ -1348,6 +1353,7 @@ a[class*="js-expander"] span.text {
 
 .search-filtered .table:not(.table--lined) table tr th{
     border-bottom: 1px solid #FFFFFF;
+    vertical-align: top;
 }
 
 .search-filtered .table.list table {
@@ -1704,6 +1710,7 @@ a[class*="js-expander"] span.text {
 
 #searchResult .teaser-data .swiper-container .swiper-pagination {
     top: 0 !important;
+    font-size: 14px;
 }
 
 #searchResult .teaser-data .swiper-container .swiper-wrapper {
@@ -1735,4 +1742,7 @@ h4 span, h5 span {
   h2, .h2 {
     font-size: 34px;
   }
+}
+.content--link {
+  margin-bottom: 24px;
 }

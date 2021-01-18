@@ -68,16 +68,14 @@
                     <p class="caption">$entry.title</p>
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <p class="caption">
-                        <a class="button outline" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                        <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
                             $entry.title
-                            <span class="ic-ic-angle-right">
                         </a>
                     </p>
                 #else
                     <p class="caption">
-                        <a class="button outline" href="${entry.get("href")}" title="$entry.title">
+                        <a class="button outline pill" href="${entry.get("href")}" title="$entry.title">
                             $entry.title
-                            <span class="ic-ic-angle-right">
                         </a>
                     </p>
                 #end
@@ -284,7 +282,7 @@
                 #end
                 #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
                 ## <h4>$TOOL.getNameFromCodeList("4430", "3")</h4>
-                <span class="helper icon">
+                <span class="icon">
                     <span class="ic-ic-mailto"></span>
                     #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                     <a href="mailto:${tmpTitle}" title="$tmpTitle">$tmpTitle</a>
@@ -452,7 +450,7 @@
                     #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
                     #if($TOOL.nodeExist($xPath, $node))
                         <div>
-                            <span class="helper icon">
+                            <span class="icon">
                                 ## $TOOL.getNameFromCodeList("4430", "3")
                                 <span class="ic-ic-mailto"></span>
                                 #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
@@ -464,7 +462,7 @@
                     #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice")
                     #if($TOOL.nodeExist($xPath, $node))
                         <div>
-                            <span class="helper icon">
+                            <span class="icon">
                                 ## $TOOL.getNameFromCodeList("4430", "1")
                                 <span class="ic-ic-phone"></span>
                                 #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
@@ -476,7 +474,7 @@
                     #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile")
                     #if($TOOL.nodeExist($xPath, $node))
                         <div>
-                            <span class="helper icon">
+                            <span class="icon">
                                 ## $TOOL.getNameFromCodeList("4430", "2")
                                 <span class="ic-ic-fax"></span>
                                 #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
@@ -488,7 +486,7 @@
                     #set($xPath = "$xParentPath//gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL")
                     #if($TOOL.nodeExist($xPath, $node))
                         <div>
-                            <span class="helper icon">
+                            <span class="icon">
                                 ## $TOOL.getNameFromCodeList("4430", "4")
                                 <span class="ic-ic-external"></span>
                                 #set($url = $TOOL.getValueFromXPath($xPath, null, $node))
@@ -1040,13 +1038,14 @@
 
 #macro (renderTextLabelLeftLink $entry)
     #if($tool.hasContent($entry))
-    <div class="table--lined">
+    <div class="table table--lined no-background">
         <table>
             <tbody>
                 <tr>
                     <th>#if($tool.hasContent($entry.title))$entry.title#end</th>
                     <td>
                         #if($entry.body)
+                            <div class="content--link">
                             #if($entry.body.type)
                                 #if($entry.body.type == "linkLine")
                                     #renderLinkLine($entry.body)
@@ -1056,11 +1055,12 @@
                             #else
                                 $entry.body
                             #end
+                            </div>
                         #end
                         #if($tool.hasContent($entry.link))
-                            <p>
-                                <a class="tag tag--small" href="$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">$MESSAGES.getString('common.result.showMap')</a>
-                            </p>
+                            <button type="button" class="button outline pill" href="$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
+                                $MESSAGES.getString('common.result.showMap')
+                            </button>
                         #end
                     </td>
                 </tr>
