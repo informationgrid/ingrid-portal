@@ -68,8 +68,9 @@
                 "ingrid/utils/List",
                 "ingrid/utils/Tree",
                 "ingrid/utils/Events",
+                "ingrid/utils/Catalog",
                 "ingrid/tree/ThesaurusTree"
-            ], function(array, lang, on, topic, keys, query, dom, domClass, wnd, style, registry, layoutCreator, message, dialog, UtilGrid, UtilList, UtilTree, UtilEvents, ThesaurusTree) {
+            ], function(array, lang, on, topic, keys, query, dom, domClass, wnd, style, registry, layoutCreator, message, dialog, UtilGrid, UtilList, UtilTree, UtilEvents, catalog, ThesaurusTree) {
 
 
                     var selectedTextNode = null;
@@ -240,7 +241,7 @@
                         registry.byId("thesResultTabContainer").selectChild(resultPane);
 
                         var service = registry.byId("thesTree").getService();
-                        service.findTopicsContains(queryTerm, userLocale, {
+                        service.findTopicsContains(queryTerm, catalog.getCatalogLanguage(), {
                             preHook: showLoadingZone,
                             postHook: hideLoadingZone,
                             callback: function(result) {

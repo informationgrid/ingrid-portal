@@ -39,8 +39,9 @@
             "ingrid/utils/List",
             "ingrid/utils/UI",
             "ingrid/utils/String",
-            "ingrid/dialog"
-        ], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, UtilString, dialog) {
+            "ingrid/dialog",
+            "ingrid/utils/Catalog",
+        ], function(on, aspect, dom, layoutCreator, LoadingZone, UtilStore, navigation, UtilList, UtilUI, UtilString, dialog, catalog) {
 
             var resultsPerPage = 20;
             var pageNav = new navigation.PageNavigation({
@@ -72,7 +73,7 @@
 			}
             
 			pageSearchTerms.startSNSUpdateJob = function(){
-                CatalogManagementService.startSNSUpdateJob(userLocale, {
+                CatalogManagementService.startSNSUpdateJob(catalog.getCatalogLanguage(), {
                     preHook: LoadingZone.show,
                     postHook: LoadingZone.hide,
                     callback: function(){
