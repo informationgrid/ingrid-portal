@@ -135,26 +135,28 @@
                         #end
                     ## Downloads
                         #set($tmpXPath = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]")
-                        #set($tmp = $TOOL.getExternLinks("${tmpXPath}"))
+                        #set($tmp = $TOOL.getExternLinks("${tmpXPath}", true))
                         #if($tmp)
-                            #set($tmpTitle = "Downloads")
+                            #set($tmpTitle = $MESSAGES.getString("downloads"))
                             #set($tmpCount = $tmp.size())
                             #if($tmpCount)
                                 #set($tmpTitle = $tmpTitle + " (${tmpCount})")
                             #end
-                            #renderLinkListImageLimit($tmpTitle $tmp.add(tmp2) false false 2 "factsheets_downloads_more")
+                            #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_downloads_more")
                         #end
                     ## Links
                         #set($tmpXPath = "./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]")
                         #set($tmp = $TOOL.getReference("${tmpXPath}", true))
-                        #set($tmp2 = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"))
+                        #set($tmp2 = [])
+                        ##set($tmp2 = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]"))
                         #if($tmp || $tmp2)
-                            #set($tmpTitle = "$MESSAGES.getString('search.detail.info.links')")
+                            #set($tmpTitle = $MESSAGES.getString('search.detail.info.links'))
                             #set($tmpCount = $tmp.size() + $tmp2.size())
                             #if($tmpCount)
                                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                             #end
-                            #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more" $tmp2)
+                            ##renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more" $tmp2)
+                            #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more")
                         #end
                     ## Kontakt
                         #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact[1]"))
@@ -321,9 +323,18 @@
             #if($TOOL.aNodeOfListExist($xpathList))
             <h2><a class="anchor" id="detail-2" name="detail-2"></a>$MESSAGES.getString("references_tab")</h2>
             <div class="row columns">
-            ## Daten
+            ## Downloads
+                #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]"))
+                #set($tmpTitle = $MESSAGES.getString("downloads"))
+                #set($tmpCount = $tmp.size())
+                #if($tmpCount)
+                    #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+                #end
+                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "downloads_more")
+                #set($tmp = "")
+            ## Links
                 #set($tmp = $TOOL.getReference("./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]", true))
-                #set($tmpTitle = $MESSAGES.getString("coupled_data"))
+                #set($tmpTitle = $MESSAGES.getString('search.detail.info.links'))
                 #set($tmpCount = $tmp.size())
                 #if($tmpCount)
                     #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
@@ -331,13 +342,13 @@
                 #renderLinkListImageLimit($tmpTitle $tmp false true 3 "links_more" [] true)
                 #set($tmp = "")
             ## Weitere Verweise
-                #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions"))
+                #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]"))
                 #set($tmpTitle = $MESSAGES.getString("www_references"))
                 #set($tmpCount = $tmp.size())
                 #if($tmpCount)
                     #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                 #end
-                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "downloads_more")
+                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "others_more")
                 #set($tmp = "")
                 #set($xpathList = ["./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             </div>

@@ -375,8 +375,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return linkList;
     }
-    
+
     public List<HashMap<String, Object>> getExternLinks(String xpathExpression) {
+        return getExternLinks(xpathExpression, false);
+    }
+
+    public List<HashMap<String, Object>> getExternLinks(String xpathExpression, boolean isDownload) {
         ArrayList<HashMap<String, Object>> linkList = new ArrayList<>();
         if (xPathUtils.nodeExists(rootNode, xpathExpression)) {
             NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
@@ -423,7 +427,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(url.length() > 0){
                         HashMap<String, Object> link = new HashMap<>();
                         link.put("hasLinkIcon", true);
-                          link.put("isExtern", true);
+                          if (isDownload) {
+                              link.put("isDownload", isDownload);
+                          } else {
+                              link.put("isExtern", true);
+                          }
                           link.put("href", url);
 
                           if(name.length() > 0){
@@ -440,7 +448,6 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                           if (size.length() > 0) {
                               link.put("linkInfo", "[" + roundSize + " MB]");
                           }
-                          
                           linkList.add(link);
                     }
                 }
