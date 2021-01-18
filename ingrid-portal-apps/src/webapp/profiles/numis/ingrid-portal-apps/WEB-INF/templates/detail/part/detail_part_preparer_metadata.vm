@@ -324,7 +324,7 @@
             <h2><a class="anchor" id="detail-2" name="detail-2"></a>$MESSAGES.getString("references_tab")</h2>
             <div class="row columns">
             ## Downloads
-                #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]"))
+                #set($tmp = $TOOL.getExternLinks("./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990']]", true))
                 #set($tmpTitle = $MESSAGES.getString("downloads"))
                 #set($tmpCount = $tmp.size())
                 #if($tmpCount)
