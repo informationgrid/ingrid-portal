@@ -87,6 +87,7 @@
         #end
         #if($entry.isExtern)
             <div>
+                #renderServiceTypeUrl($link.href)
                 <a href="$entry.href" title="$entry.title">
                   <span class="text">$entry.title</span>
                 </a>
@@ -115,10 +116,11 @@
             </div>
         #elseif($entry.isDownload)
             <div>
-            <a href="$entry.href" class="icon" title="$entry.title">
-              <span class="ic-ic-download"></span>
-              <span class="text">$entry.title</span>
-            </a>
+                #renderServiceTypeUrl($link.href)
+                <a href="$entry.href" class="icon" title="$entry.title">
+                  <span class="ic-ic-download"></span>
+                  <span class="text">$entry.title</span>
+                </a>
             </div>
         #elseif(!$entry.isMapLink)
             <div>

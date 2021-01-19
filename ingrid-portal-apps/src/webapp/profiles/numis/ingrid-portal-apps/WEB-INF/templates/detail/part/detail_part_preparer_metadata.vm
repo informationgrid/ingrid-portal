@@ -158,6 +158,12 @@
                             ##renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more" $tmp2)
                             #renderLinkListImageLimit($tmpTitle $tmp false false 2 "factsheets_links_more")
                         #end
+                    ## Lizenz
+                        #set($tmp = $TOOL.getUseConstraints())
+                        #if($tmp.size() > 0)
+                            #set($tmp2 = [$tmp.get(0)])
+                            #renderTextList($MESSAGES.getString("object_access.license") $tmp2)
+                        #end
                     ## Kontakt
                         #set($tmp = $TOOL.getNodeListFromXPath("./gmd:identificationInfo/*/gmd:pointOfContact[1]"))
                         #renderMultiLineAddresses("" $tmp false true)
@@ -289,6 +295,7 @@
                         #end
                         #set($mapId = "_detail")
                         #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
+                        #set($isDetail = true)
                         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
                     #end
                 #end

@@ -446,19 +446,58 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderServiceType $type)
-    #if($type && $type != "")
+    #if($type && !$type.isEmpty())
         <div class="info--right">
             <span>
-        #if($type == "view" || $type == "wms")
-            WMS
-        #elseif($type == "download")
-            WFS
-        #elseif($type == "discovery")
-            XML
-        #else
-            $type
-        #end
+            #if($type == "view" || $type == "wms")
+                WMS
+            #elseif($type == "download")
+                WFS
+            #elseif($type == "discovery")
+                XML
+            #else
+                $type
+            #end
             </span>
+        </div>
+    #end
+#end
+
+#macro(renderServiceTypeUrl $url $types)
+    #set($serviceType = "HTML")
+    #if($link.href.toLowerCase().indexOf('service=csw') > -1)
+        #set($serviceType = "CSW")
+    #elseif($link.href.toLowerCase().indexOf('service=wms') > -1)
+        #set($serviceType = "view")
+    #elseif($link.href.toLowerCase().indexOf('service=wfs') > -1)
+        #set($serviceType = "download")
+    #elseif($link.href.toLowerCase().indexOf('.zip') > -1)
+        #set($serviceType = "ZIP")
+    #elseif($link.href.toLowerCase().indexOf('.pdf') > -1)
+        #set($serviceType = "PDF")
+    #end
+    #if(!$serviceType.isEmpty && $types.indexOf($serviceType) == -1)
+        #set($add = $types.add($serviceType))
+    #end
+    #renderServiceType($serviceType)
+#end
+
+#macro(renderServiceTypeList $types)
+    #if($types && $types.size() > 0)
+        <div class="info--right">
+        #foreach($type in $types)
+            <span>
+            #if($type == "view" || $type == "wms")
+                WMS
+            #elseif($type == "download")
+                WFS
+            #elseif($type == "discovery")
+                XML
+            #else
+                $type
+            #end
+            </span>
+        #end
         </div>
     #end
 #end

@@ -85,15 +85,15 @@ $(function(){
 
     $('.js-expand-box ~ .js-open-expand-text').click(function() {
         $(this).addClass('is-hidden');
+        $('.js-expand-box').addClass('is-active');
         $('.js-expand-box ~ .js-close-expand-text').removeClass('is-hidden');
         $('.js-expand-box .js-expand-text-fade').addClass('is-hidden');
-        $('.js-expand-box').animate({height: wrapHeight}, 1000);
     });
 
     $('.js-expand-box ~ .js-close-expand-text').click(function() {
         $(this).addClass('is-hidden');
+        $('.js-expand-box').removeClass('is-active');
         $('.js-expand-box ~ .js-open-expand-text').removeClass('is-hidden');
         $('.js-expand-box .js-expand-text-fade').removeClass('is-hidden');
-        $('.js-expand-box').animate({height: descHeight}, 1000);
     });
 });

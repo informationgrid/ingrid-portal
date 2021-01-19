@@ -111,12 +111,17 @@
                     #removeLocalisation($rs.abstract)
                 </p>
                 #end
-                #renderServiceType($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
                 <a href="$detailLink" title="$rs.title">
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
                 #set($moreId = $hitCount)
+                #set($serviceTypes = [])
+                #set($serviceType = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
+                #if($serviceType && !$serviceType.isEmpty())
+                    #set($add = $serviceTypes.add($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" )))
+                #end
                 #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand.vm")
+                #renderServiceTypeList($serviceTypes)
             </div>
         </div>
     #else

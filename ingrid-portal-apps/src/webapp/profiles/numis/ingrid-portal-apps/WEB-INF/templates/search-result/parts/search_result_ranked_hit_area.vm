@@ -20,7 +20,12 @@
             //var coords = $coords;
         }
         var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
-        disableLeafletMapTouchControl(map${mapId});
+        #if($isDetail)
+            map${mapId}.gestureHandling.enable();
+            addLeafletHomeControl(map${mapId}, 'Zoom auf initialen Kartenausschnitt', 'topleft', 'ic-ic-center', bounds${mapId}, '', '23px');
+        #else
+            disableLeafletMapTouchControl(map${mapId});
+        #end
         if(bounds${mapId}) {
             map${mapId}.fitBounds(bounds${mapId});
         }

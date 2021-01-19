@@ -1279,14 +1279,14 @@ header .menu-tab-row .menu-tab {
     color: #3a566d;
 }
 
-#searchResult .info--right {
+#searchResult .teaser-data > .info--right {
     display: block;
     width: 100%;
     margin-bottom: 16px;
 }
 
 @media print, screen and (min-width: 35em) {
-  #searchResult .info--right {
+  #searchResult .teaser-data > .info--right {
     position: absolute;
     top: 24px;
     right: 24px;
@@ -1654,9 +1654,13 @@ a[class*="js-expander"] span.text {
 /* */
 
 .js-expand-text {
-    height: 155px;
+    max-height: 155px;
     overflow: hidden;
     position: relative;
+}
+
+.js-expand-text.is-active {
+    max-height: unset;
 }
 
 .js-non-expand-text {
