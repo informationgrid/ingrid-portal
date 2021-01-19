@@ -39,7 +39,7 @@
         <div class="row">
             <div class="xsmall-24 large-24 xlarge-24 columns">
                 <div class="copyright">
-                    <p>© 2020 Landesbetrieb Geoinformation und Vermessung</p>
+                    <p class="copyright_text">$MESSAGES.getString("ingrid.page.copyright")</p>
                 </div>
             </div>
             <div class="xsmall-24 large-24 xlarge-24 columns">

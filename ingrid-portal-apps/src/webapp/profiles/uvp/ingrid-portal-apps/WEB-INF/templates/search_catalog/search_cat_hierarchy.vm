@@ -95,11 +95,11 @@
         #renderNode($plugNode)
     #end
     #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+    <form action="$action" method="post" name="extsearch" id="extsearch">
         #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
     </form>
 </div>
-<script type="text/javascript">
+<script>
     document.onreadystatechange = function () {
         if (document.readyState == "complete") {
                 var browser = whichBrowser();

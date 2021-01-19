@@ -44,5 +44,5 @@ $('.js-accordion-multi').accordion({
     scrollbar: {
       el: '.swiper-scrollbar',
     },
-  })
-  </script>
+  });
+</script>

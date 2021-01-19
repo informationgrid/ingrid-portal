@@ -7,7 +7,7 @@
             <li>
                 <a href="$wmsMapbenderInterface">
                     <svg class="icon">
-                        <use xlink:href="#internal-link">
+                        <use xlink:href="#internal-link"/>
                     </svg>
                     $MESSAGES.getString('admin.wms.mapbender')
                 </a>
@@ -15,7 +15,7 @@
             <li>
                 <a href="$wmsMaplabInterface">
                     <svg class="icon">
-                        <use xlink:href="#internal-link">
+                        <use xlink:href="#internal-link"/>
                     </svg>
                     $MESSAGES.getString('admin.wms.maplab')
                 </a>

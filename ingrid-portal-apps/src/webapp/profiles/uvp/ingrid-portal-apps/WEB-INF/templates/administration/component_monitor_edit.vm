@@ -77,7 +77,7 @@
                             <div class="control-group">
                                 <label class="control control--checkbox" for="component_active">
                                     <input id="component_active" name="active" type="checkbox" #getChecked('active' '1')>
-                                    <div class="control__indicator"></div>
+                                    <span class="control__indicator"></span>
                                     #displayFieldLabel('active' $MESSAGES.getString('component.forms.text.active'))
                                 </label>
                             </div>
@@ -181,7 +181,7 @@
     <span class="mq-hide-l">&nbsp;</span>
     <hr/>
     <div class="box box--fill box--small">
-        <a name="help"></a>
+        <a id="help" name="help"></a>
         <div class="box__title ob-container">
             <h4>$MESSAGES.getString('component.forms.help.header')</h4>
         </div>
@@ -213,7 +213,7 @@
         </div>
     </div>
 </div>
-<script >
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditProvider');

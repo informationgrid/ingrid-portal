@@ -32,6 +32,9 @@ INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('user_template_default_pa
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id');
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+2  FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::IngridInformPortlet',        'portlet', 0, 0, -1, -1, -1, -1, -1);
 
+-- Delete all '/_user/<USER>/default-page.psml'
+DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';
+
 -- Delete temporary table
 DROP TABLE IF EXISTS ingrid_temp;
 

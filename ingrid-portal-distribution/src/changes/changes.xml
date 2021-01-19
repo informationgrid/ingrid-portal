@@ -6,6 +6,99 @@
     </properties>
 
     <body>
+        <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
+          <action type="fix" dev="wemove" issue="2305">
+            IGE: Fix "Lagegenauigkeit" Helptext
+          </action>
+          <action type="fix" dev="wemove" issue="3032">
+            mCLOUD: Validate coordinates in WKT
+          </action>
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.21
+          </action>
+          <action type="add" dev="wemove" issue="2231">
+            IGE: Adjust help text
+          </action>
+          <action type="fix" dev="wemove" issue="1818">
+            Change reminder email text
+          </action>
+          <action type="fix" dev="wemove" issue="2161">
+            Fix Spatial reference updating
+          </action>
+          <action type="add" dev="wemove" issue="967">
+            Ige: Add localization to operation parameters
+          </action>
+          <action type="fix" dev="wemove" issue="2227">
+            PORTAL: Bereinigung der benutzerspezifischen Portal-Startseite
+          </action>
+          <action type="fix" dev="wemove" issue="2216">
+            PORTAL: Installation über Installer aktualisiert die Tomcat-Konfiguration nicht
+          </action>
+          <action type="fix" dev="wemove" issue="2199">
+            Portal: Zeige in Karte Link wird trotz Kennzeichnung "geschützter Dienst"
+          </action>
+          <action type="add" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
+          <action type="fix" dev="wemove" issue="2213">
+            Fix free address pasting
+          </action>
+          <action type="fix" dev="wemove" issue="2206">
+            Fix opendata access constraints behaviour
+          </action>
+          <action type="fix" dev="wemove" issue="2195">
+            Add wkt to print and compare view.
+          </action>
+          <action type="add" dev="wemove" issue="2207">
+            Mapclient Admin-GUI: Account Passwörter verschlüsseln.
+          </action>
+          <action type="update" dev="wemove" issue="1810">
+            Portal: Verbesserung der Barrierefreiheit des Portals
+          </action>
+          <action type="add" dev="wemove" issue="2210">
+            IGE (Nokis): Add Nokis thesaurus.
+          </action>
+          <action type="update" dev="wemove" issue="1746">
+            IGE: Extend ISO with coupled resource info and improve UX when adding coupled resource for a service
+            which also is used as an ATOM download service.
+          </action>
+          <action type="fix" dev="wemove" issue="2232">
+            Rename column of dataformat to specification
+          </action>
+          <action type="update" dev="wemove" issue="1581">
+            Update copy dialog information
+          </action>
+          <action type="update" dev="wemove" issue="2198">
+            Change title of preview image column.
+          </action>
+          <action type="fix" dev="wemove" issue="2247">
+            When inheriting links it should not get preview images.
+          </action>
+          <action type="fix" dev="wemove" issue="2260">
+            IGE(UVP): Fix strange spatial search effect.
+          </action>
+          <action type="fix" dev="wemove" issue="1308">
+            Fix upload cleanup job indexing issue.
+          </action>
+          <action type="fix" dev="wemove" issue="2262">
+            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled. 
+          </action>
+          <action type="fix" dev="wemove" issue="2265">
+            IGE: Add context help for grid format fields. 
+          </action>
+          <action type="fix" dev="wemove" issue="2261">
+            IGE: Fix jump to tree function on duplicate check page.
+          </action>
+          <action type="fix" dev="wemove" issue="2280">
+            IGE (UVP): Remove metadata date field
+          </action>
+          <action type="fix" dev="wemove" issue="2282">
+            IGE(UVP): Fix preview dialog on research page.
+          </action>
+          <action type="fix" dev="wemove" issue="2283">
+            Set DB_PASSWORD only with environment variable
+          </action>
+        </release>
 
         <release version="5.6.0" date="2020-10-19" description="Release 5.6.0">
           <action type="update" dev="wemove" issue="1215">
@@ -96,7 +189,7 @@
             Portal: Change portal registration button title.
           </action>
           <action type="update" dev="wemove" issue="2012">
-            Mapclient: Update mapclient cache. 
+            Mapclient: Update mapclient cache.
           </action>
           <action type="fix" dev="wemove" issue="">
             Mapclient: Remove DNS check on print.
@@ -135,10 +228,10 @@
             IGE: Increase message size and timeout for IGE communication.
           </action>
           <action type="add" dev="wemove" issue="1953">
-            Mapclient: Add GFI function to imported WMTS. 
+            Mapclient: Add GFI function to imported WMTS.
           </action>
           <action type="add" dev="wemove" issue="1900">
-            Portal: Add autofocus attribute to login form. 
+            Portal: Add autofocus attribute to login form.
           </action>
           <action type="add" dev="wemove" issue="1898">
             Change the docker container’s privilege to a non-root user.
@@ -1367,7 +1460,7 @@
             </action>
         </release>
 
-        <release version="3.6.2.9-SNAPSHOT" date="2017-xx-xx" description="Release 3.6.2.9">
+        <release version="3.6.2.9" date="2017-01-17" description="Release 3.6.2.9">
             <action type="fix" dev="wemove" issue="REDMINE-530">
                 IGE: Fixed moving a subtree to the root node.
             </action>

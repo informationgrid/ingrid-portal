@@ -131,14 +131,14 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doFirst', 'first')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"/></svg>
                 </a>
             </li>
             <li>
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doPrev', 'prev')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"/></svg>
                 </a>
             </li>
             
@@ -148,7 +148,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doNext', 'next')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"/></svg>
                 </a>
             </li>
             
@@ -156,7 +156,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doLast', 'last')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"/></svg>
                 </a>
             </li>
         </ul>
@@ -165,14 +165,14 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doFirst', 'first')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"/></svg>
                 </a>
             </li>
             <li>
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doPrev', 'prev')
                 <a class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"/></svg>
                 </a>
             </li>
             
@@ -182,7 +182,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doNext', 'next')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#arrow"/></svg>
                 </a>
             </li>
             
@@ -190,7 +190,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 #set ($action = $renderResponse.createActionURL())
                 $action.setParameter('doLast', 'last')
                 <a class="pagination__right" #if($browser.hasNextPage())href="$action"#end>
-                    <svg class="icon"><use xlink:href="#double-arrow"></use></svg>
+                    <svg class="icon"><use xlink:href="#double-arrow"/></svg>
                 </a>
             </li>
         </ul>
@@ -217,11 +217,11 @@ $actionForm.getInputHTMLEscaped($field)#end
                                 <div class="field-toggle field-toggle--check">
                                 <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
                                 <label class="field-toggle__label field-toggle__label--highlight" for="chk_all">
-                                    <div class="field-toggle__icon field-toggle__icon-alt">
+                                    <span class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
-                                            <use xlink:href="#tick">
-                                        </use></svg>
-                                    </div>
+                                            <use xlink:href="#tick"/>
+                                        </svg>
+                                    </span>
                                     <a href="$colLink" class="contentColumnHead"><strong>$colTitle</strong></a>
                                 </label>
                             #end
@@ -257,12 +257,12 @@ $actionForm.getInputHTMLEscaped($field)#end
         <div class="field-toggle field-toggle--check">
             <input id="chk_$velocityCount" type="checkbox" name="id" value="$rowId">
             <label class="field-toggle__label field-toggle__label--highlight" for="chk_$velocityCount">
-            <div class="field-toggle__icon field-toggle__icon-alt">
-                <svg class="icon">
-                    <use xlink:href="#tick">
-                </svg>
-            </div>
-            <a href="$action">$rowId</a>
+                <span class="field-toggle__icon field-toggle__icon-alt">
+                    <svg class="icon">
+                        <use xlink:href="#tick"/>
+                    </svg>
+                </span>
+                <a href="$action">$rowId</a>
             </label>
         </div>
     </td>
@@ -460,6 +460,9 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    #if($buttonname == "")
+        #set($buttonname = $buttonvalue)
+    #end
     <input type="submit" class="$buttonclass" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")disabled#end />
 #end
 
@@ -503,7 +506,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro (renderPopUpIcon $_message $_class $_style $_title )
     <div class="tooltip ob-circle js-popup #if($_class)$_class#end" #if($_title)data-title="$_title"#end data-content="$_message" #if($_style)style="$_style"#end>
-        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"></use></svg>
+        <svg class="tooltip__icon icon"><use xlink:href="#question-mark"/></svg>
     </div>
 #end
 
@@ -539,28 +542,29 @@ $actionForm.getInputHTMLEscaped($field)#end
 #macro(renderUDKIcon $class $title)
     #if($class && $title)
         #if($class != "1000")
-        <svg class="icon globe__icon" title="$title">
+        <svg class="icon globe__icon">
+            <title>$title</title>
             #if($class == "0")
                 ## Fachaufgabe
-                <use xlink:href="#checklist">
+                <use xlink:href="#checklist"/>
             #elseif($class == "1")
                 ## Geodatensatz
-                <use xlink:href="#globe">
+                <use xlink:href="#globe"/>
             #elseif($class == "2")
                 ## Literatur
-                <use xlink:href="#book">
+                <use xlink:href="#book"/>
             #elseif($class == "3")
                 ## Geodatendienst
-                <use xlink:href="#gears">
+                <use xlink:href="#gears"/>
             #elseif($class == "4")
                 ## Projekt
-                <use xlink:href="#folder">
+                <use xlink:href="#folder"/>
             #elseif($class == "5")
                 ## Datensammlung
-                <use xlink:href="#database">
+                <use xlink:href="#database"/>
             #elseif($class == "6")
                 ## Informationssystem
-                <use xlink:href="#molecule">
+                <use xlink:href="#molecule"/>
             #end
         </svg>
         #end
@@ -569,19 +573,20 @@ $actionForm.getInputHTMLEscaped($field)#end
 
 #macro(renderUDKAddressIcon $class $title)
     #if($class != "1000")
-    <svg class="icon globe__icon" title="$title">
+    <svg class="icon globe__icon">
+        <title>$title</title>
         #if($class == "0")
             ## Institution
-            <use xlink:href="#building">
+            <use xlink:href="#building"/>
         #elseif($class == "1")
             ## Einheit
-            <use xlink:href="#group">
+            <use xlink:href="#group"/>
         #elseif($class == "2")
             ## Person
-            <use xlink:href="#users">
+            <use xlink:href="#users"/>
         #elseif($class == "3")
             ## Freie Adresse
-            <use xlink:href="#envelope">
+            <use xlink:href="#envelope"/>
         #end
     </svg>
     #end

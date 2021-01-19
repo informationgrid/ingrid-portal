@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -74,6 +74,9 @@ define([
         // ATTRIBUTES
         mapId: "uvp_map",
         _setMapIdAttr: { node: "mapIdNode", type: "attribute", attribute: "id" },
+        
+        // timer for delaying search on input
+        delayTimer: null,
 
         postCreate: function(){
             construct.place( creator.createDomTextbox({id: this.prefix + "spatial", name: message.get("widget.spatialSearch"), help: message.get("widget.spatialSearch.helpMessage"), isMandatory: false, visible: "show", style: "width:100%"}), this.domNode, "first" );
@@ -106,6 +109,15 @@ define([
         _handleSpatialSearch: function(ref) {
             var self = ref;
             var q = this.get("value");
+
+            clearTimeout(self.delayTimer);
+            self.delayTimer = setTimeout(function () {
+                self._doSearch(q);
+            }, 500);
+        },
+        
+        _doSearch: function(q) {
+            var self = this;
             
             if (self.collapseOnEmptyInput) {
                 if (q.trim() === "") {

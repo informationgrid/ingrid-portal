@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -34,7 +34,7 @@
     
     #detailViewContent { background: white; }
 </style>
-<script type="text/javascript">
+<script>
 
 var pageDetailViewObjects = _container_;
 
@@ -286,7 +286,7 @@ require([
             // var renderDetailView = registry.byId("showDetailedView").checked;
 
             // count all subnodes first!
-            if (renderDetailView && pageDetailViewObjects.subNodesCount > 100) {
+            if (pageDetailViewObjects.subNodesCount > 100) {
                 var displayText = string.substitute(message.get("dialog.object.detailView.dialog.warning"), [pageDetailViewObjects.subNodesCount]);
                 dialog.show("<fmt:message key='general.info' />", displayText, dialog.INFO, [{
                     caption: "<fmt:message key='general.cancel' />",
@@ -1051,6 +1051,9 @@ require([
                 // if this rubric was dynamically created by a repeatable field
                 if (domRubric.classList.contains("phase")) {
                     var dynField = array.filter(additionalFields, function(a) { return a.identifier === "UVPPhases"; })[0];
+                    
+                    if (!dynField.tableRows) return;
+                    
                     var phase = dynField.tableRows[phaseIndex][0];
                     var fields = [];
                     // normalize array

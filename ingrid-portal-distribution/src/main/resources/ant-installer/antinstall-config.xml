@@ -68,6 +68,18 @@
     </page>
 
     <page
+        type        ="input"
+        overflow    = "true"
+        name        ="portalSSLUpdate"
+        displayText ="SSL aktivieren">
+        <comment displayText="" explanatoryText="Aktivieren Sie bitte die Checkbox, wenn Ihr Portal über SSL/HTTPS aufgerufen wird."/>
+        <checkbox
+            property     ="executeTomcatSSLUpdate"
+            displayText  ="SSL/HTTPS aktivieren"
+            defaultValue ="false" />
+    </page>
+
+    <page
             ifTarget    ="InstallPortal"
             type        ="input"
             name        ="menu"

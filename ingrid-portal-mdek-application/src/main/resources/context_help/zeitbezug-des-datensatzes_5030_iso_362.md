@@ -5,7 +5,7 @@ guid: 5030
 title: Durch die Ressource abgedeckte Zeitspanne
 ---
 
-# Durch die Ressource abgedeckte Zeitspanne
+# Zeitbezug des Dateninhalts
 
 Angabe, wann der Datensatz erstellt, revidiert und/oder publiziert wurde.
 

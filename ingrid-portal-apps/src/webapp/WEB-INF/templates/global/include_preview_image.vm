@@ -4,7 +4,7 @@
             var img = $(this);
             if(img){
                 if(img.length > 0){
-                    var srcRegEx = img[0].outerHTML.match(new RegExp('<img.*?tmp=\"(.*?)\"'));
+                    var srcRegEx = img[0].outerHTML.match(new RegExp('<img.*?srcset=\"(.*?)\"'));
                     if(srcRegEx && srcRegEx.length > 0) {
                         var src = srcRegEx[srcRegEx.length - 1].replace(/\&amp;/g,'&');
                         if(src.indexOf('http') > -1 && src.indexOf('https://') === -1 && location.protocol === 'https:') {
@@ -16,6 +16,7 @@
                                     if (this.status === 200) {
                                         if(this.response){
                                             img[0].src = this.response;
+                                            img[0].removeAttribute("srcset");
                                             img[0].classList.remove('is-hidden');
                                         }
                                     }

@@ -7,7 +7,7 @@
             <header>Konzept und Aufgabe von NUMIS</header>
             <content>
                 <p>NUMIS, das niedersächsische Umweltportal, bietet einen zentralen Zugriff auf umweltrelevante Informationen von öffentlichen Institutionen und Organisationen in Niedersachsen. Mit einem Mix aus aktuellen Nachrichten, Messwerten, Hintergrundinformationen und Umweltereignissen richtet sich das NUMIS-Portal an interessierte Bürgerinnen und Bürger sowie "professionelle" Nutzer von Umweltinformationen, z.B. Umweltorganisationen und Ingenieurbüros. Das Informationsangebot wird kontinuierlich ausgebaut mit dem Ziel, langfristig möglichst alle behördlichen Anbieter von Umweltinformationen in Niedersachsen zu erfassen.</p>
-                <p>Bei der Konzeption des NUMIS-Portals spielten die EU-Umweltinformationsrichtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=UIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_new">Umweltinformationsgesetz</a> ) sowie die EU-INSPIRE-Richtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=GDIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_new">nds. Geodateninfrastrukturgesetz</a>) eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen.</p>
+                <p>Bei der Konzeption des NUMIS-Portals spielten die EU-Umweltinformationsrichtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=UIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">Umweltinformationsgesetz</a> ) sowie die EU-INSPIRE-Richtlinie (umgesetzt im <a href="http://www.nds-voris.de/jportal/?quelle=jlink&amp;query=GDIG+ND&amp;psml=bsvorisprod.psml&amp;max=true" target="_blank">nds. Geodateninfrastrukturgesetz</a>) eine wichtige Rolle. Diese Richtlinien setzen neue Maßstäbe für die öffentliche Verbreitung behördlicher Umweltinformationen bzw. den Aufbau der dafür notwendigen informationstechnischen Infrastrukturen.</p>
                 <p>NUMIS und die eigens zum Aufbau des Portals entwickelte Software „InGrid®“ wurden u.a. als Werkzeuge zur Unterstützung der Behörden bei der Umsetzung der Richtlinien konzipiert.</p>
             </content>
         </section>
@@ -32,7 +32,7 @@
         <section help-key="about-6">
             <header>InGrid – Die Software hinter NUMIS</header>
             <content>
-                <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts “InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von Internetportalen und Metadatenkatalogen” (VKoopUIS-Projekt Nr. 50) unter dem Dach “Verwaltungskooperation Umweltinformationssysteme” (VKoopUIS) weiter entwickelt. Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/" target="_new">Projekt-Webseite</a>.</p>
+                <p>Die InGrid-Softwarekomponenten werden im Rahmen des Projekts “InGrid - Pflege und Weiterentwicklung der InGrid-Softwarekomponenten zum Betrieb von Internetportalen und Metadatenkatalogen” (VKoopUIS-Projekt Nr. 50) unter dem Dach “Verwaltungskooperation Umweltinformationssysteme” (VKoopUIS) weiter entwickelt. Nähere Informationen erhalten Sie auf der <a href="http://www.ingrid-oss.eu/" target="_blank">Projekt-Webseite</a>.</p>
             </content>
         </section>
     </chapter>
@@ -44,7 +44,7 @@
                 <p>Über die Suche können Sie einen oder mehrere Suchbegriffe eingeben. Gefunden werden diejenigen Seiten, die alle Suchbegriffe enthalten.</p>
                 <p>Mit Hilfe der Facetten "Ergebnistypen" und "Anbieter" können Sie Ihre Suchanfrage weiter spezifizieren. Hinter den Ergebnistypen und Anbietern sehen Sie in Klammern direkt die Anzahl der jeweiligen Treffer zu Ihrer Suchanfrage. Bei Klick auf einen Ergebnistyp oder Anbieter wird die Suchergebnisliste auf die jeweilige Auswahl eingeschränkt. Um die Einschränkung aufzuheben, klicken Sie auf "Alle Einschränkungen löschen" oder auf den gewünschten Eintrag in der Liste der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste. Sie können beliebig viele Einschränkungen aus- und wieder abwählen.</p>
                 <p>Mit den Funktionalitäten "Nach Ort suchen" und "Auf Karte festlegen" können Sie Ihre Suchanfrage räumlich einschränken. Um die Einschränkungen anzuwenden, klicken Sie auf "Auswahl anwenden". Die gewählten Einschränkungen erscheinen ebenfalls in der Liste der grau hinterlegten, aktiven Einschränkungen oberhalb der Ergebnisliste.</p>
-                <p>Auf den Suchergebnisseiten haben Sie unterhalb des Suchfeldes die Möglichkeit, Ihre Suchanfrage um ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen eingegebene Suchausdruck durch den Semantic Network Service (SNS) <a title="SNS" target="_new" href="http://www.semantic-network.de"><img width="30" height="23" style="display:inline;" title="SNS" alt="SNS Logo" src="/ingrid-portal-apps/images/sns_small.gif"></img></a> des Umweltbundesamtes analysiert. Die ähnlichen Begriffe werden angezeigt und können der Suchanfrage zur Verfeinerung hinzu gefügt werden.</p>
+                <p>Auf den Suchergebnisseiten haben Sie unterhalb des Suchfeldes die Möglichkeit, Ihre Suchanfrage um ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen eingegebene Suchausdruck durch den Semantic Network Service (SNS) <a title="SNS" target="_blank" href="http://www.semantic-network.de"><img width="30" height="23" style="display:inline;" title="SNS" alt="SNS Logo" src="/ingrid-portal-apps/images/sns_small.gif"/></a> des Umweltbundesamtes analysiert. Die ähnlichen Begriffe werden angezeigt und können der Suchanfrage zur Verfeinerung hinzu gefügt werden.</p>
             </content>
         </section>
         <section help-key="search-2">
@@ -565,7 +565,7 @@
             <content>
                 <p>NUMIS bietet Ihnen die Möglichkeit, Ihre Suchanfrage um
                     ähnliche Begriffe zu erweitern. Dazu wird der von Ihnen
-                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                    eingegebene Suchausdruck durch den <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes in Dessau analysiert und ihnen zur
                     Verfügung gestellt.</p>
                 <p>Wenn Sie auf das Pluszeichen "+" klicken,
@@ -619,7 +619,7 @@
                     historischer Ereignisse, die unsere Umweltsituation
                     wesentlich beeinflusst haben. Neben den Eckdaten liefert die
                     Chronik eine kurze Beschreibung der Ereignisse.</p>
-                <p>Die Chronik wird über den <a href="http://www.semantic-network.de/" target="_new">Semantic Network Service (SNS)</a> des
+                <p>Die Chronik wird über den <a href="http://www.semantic-network.de/" target="_blank">Semantic Network Service (SNS)</a> des
                     Umweltbundesamtes zur Verfügung gestellt.</p>
                 <p>Sie können gezielt nach Ereignissen suchen, indem Sie eine
                     Suche in der Chronik über Suchbegriff, Zeitbezug und

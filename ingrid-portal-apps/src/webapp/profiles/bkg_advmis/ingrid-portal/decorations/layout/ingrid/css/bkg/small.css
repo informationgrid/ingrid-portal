@@ -130,7 +130,7 @@ h1.firstInSlot {
 }
 
 .navSkip a:focus, .navSkip a:active {
- background-color: #407e40;
+ background-color: #0066b3;
  color: white;
  font-size: 16px;
  height: auto;
@@ -401,7 +401,7 @@ abbr, acronym {
 
 a {
  font-size: 100%;
- color: #407e40;
+ color: #0066b3;
  text-decoration: none
 }
 
@@ -775,7 +775,7 @@ p.navToTop a:hover, p.navToTop a:focus, p.navToTop a:active {
  display: block;
  padding: 8px 10px 10px;
  color: white;
- background-color: #407e40;
+ background-color: #0066b3;
  line-height: 1;
  text-transform: uppercase;
  word-spacing: .25em;
@@ -898,12 +898,12 @@ strong.button {
  .teaser h2 a:active, .teaser h2 a:focus, .teaser h3 a:hover, .teaser h3 a:active,
  .teaser h3 a:focus {
  text-decoration: underline;
- color: #407e40
+ color: #0066b3
 }
 
 .teaser h1 .metaInfo span, .teaser h2 .metaInfo span, .teaser h3 .metaInfo span
  {
- color: #407e40
+ color: #0066b3
 }
 
 .teaser h1 .metaInfo span.date, .teaser h2 .metaInfo span.date, .teaser h3 .metaInfo span.date
@@ -1020,7 +1020,7 @@ strong.button {
  background:
   url(/decorations/layout/ingrid/images/template/sprite.png?__blob=normal&v=1)
   no-repeat 0 -421px;
- color: #407e40
+ color: #0066b3
 }
 
 .dossier .tableOfDocuments li>strong {
@@ -1058,7 +1058,7 @@ strong.button {
 #supplement .banner a:hover h3, #supplement .banner a:active h3,
  #supplement .banner a:focus h3 {
  color: white;
- background: #407e40;
+ background: #0066b3;
  text-decoration: underline
 }
 
@@ -1136,7 +1136,7 @@ strong.button {
 }
 
 .startseite .topics {
- background: #407e40
+ background: #0066b3
 }
 
 #content .linklist ul {
@@ -1504,7 +1504,7 @@ input[type="checkbox"], input[type="radio"] {
 
 input:hover, input:focus, input:active, textarea:hover, textarea:focus,
  textarea:active, select:hover, select:focus, select:active {
- border: 1px solid #407e40
+ border: 1px solid #0066b3
 }
 
 input.submit:hover, input.submit:focus, input.submit:active, input.reset:hover,
@@ -1531,8 +1531,8 @@ input.submit:hover, input.submit:focus, input.submit:active, input.reset:hover,
 input.submit, input.reset {
  font-size: 1.3rem;
  font-weight: normal;
- background-color: #407e40;
- border-color: #407e40;
+ background-color: #0066b3;
+ border-color: #0066b3;
  color: white;
  padding: 4px 10px 7px;
  text-transform: uppercase;
@@ -1586,7 +1586,7 @@ input.reset {
 
 #supplement .facets h4 a {
  display: block;
- color: #407e40;
+ color: #0066b3;
  padding: 2px 20px 4px 2px
 }
 
@@ -1630,7 +1630,7 @@ input.reset {
 }
 
 #supplement .facets ul li.link a {
- background: #407e40
+ background: #0066b3
   url(/SiteGlobals/Frontend/Images/icons/sprite-right.png?__blob=normal&v=3)
   no-repeat 95% -5233px;
  font-size: 1.3rem;
@@ -1665,7 +1665,7 @@ input.reset {
 }
 
 #supplement li a.sortDown {
- background: #407e40
+ background: #0066b3
   url(/SiteGlobals/Frontend/Images/icons/sprite-right.png?__blob=normal&v=3)
   no-repeat 90% -6484px;
  padding: 8px 35px 10px 10px
@@ -1679,7 +1679,7 @@ input.reset {
 }
 
 #supplement li a.sortUp {
- background: #407e40
+ background: #0066b3
   url(/SiteGlobals/Frontend/Images/icons/sprite-right.png?__blob=normal&v=3)
   no-repeat 90% -6693px;
  padding: 8px 35px 10px 10px
@@ -1732,7 +1732,7 @@ input.reset {
 .navIndex a.page:hover, .navIndex a.page:focus, .navIndex a.page:active,
  .navIndex strong {
  color: white;
- background: #407e40
+ background: #0066b3
 }
 
 .navIndex a.page, .navIndex strong, .navIndex span.page {
@@ -1745,7 +1745,7 @@ input.reset {
 }
 
 .navIndex span.back, .navIndex span.forward {
- color: #407e40;
+ color: #0066b3;
  background: white
 }
 
@@ -1825,7 +1825,7 @@ input.reset {
 }
 
 .bg-bkg {
- background: #407e40
+ background: #0066b3
 }
 
 .bg-bkg * {
@@ -1961,7 +1961,7 @@ input.reset {
 }
 
 .live-calendar .on {
- color: #407e40;
+ color: #0066b3;
  font-weight: bold
 }
 
@@ -2003,7 +2003,7 @@ input.reset {
 }
 
 .live-calendar .calendar-details li span {
- color: #407e40;
+ color: #0066b3;
  font-weight: normal;
  text-align: left;
  display: inline
@@ -2018,7 +2018,7 @@ input.reset {
 }
 
 .live-calendar .opened>a {
- background-color: #407e40;
+ background-color: #0066b3;
  color: white;
  border-bottom: 0;
  height: 30px
@@ -2124,7 +2124,7 @@ video, .mejs-container {
 #navBreadcrumbs a:hover, #navBreadcrumbs a:focus, #navBreadcrumbs a:active
  {
  text-decoration: underline;
- color: #407e40
+ color: #0066b3
 }
 
 #navBreadcrumbs strong {
@@ -2157,7 +2157,7 @@ video, .mejs-container {
 
 #menu h1 {
  font-size: 140%;
- background: #407e40;
+ background: #0066b3;
  z-index: 1000;
  position: relative;
  top: 0;
@@ -2180,7 +2180,7 @@ video, .mejs-container {
 }
 
 #menu .mm-search {
- background: #407e40;
+ background: #0066b3;
  position: relative
 }
 
@@ -2226,7 +2226,7 @@ video, .mejs-container {
 
 #menu li a.mm-subopen:after, #menu li a.mm-subclose:before, #menu li span.mm-subopen:after,
  #menu li span.mm-subclose:before {
- border-color: #407e40
+ border-color: #0066b3
 }
 
 #menu li a span, #menu li span span {
@@ -2234,7 +2234,7 @@ video, .mejs-container {
 }
 
 #menu li.service {
- background: #407e40
+ background: #0066b3
 }
 
 #menu li.service a, #menu li.service strong, #menu li.service span {
@@ -2254,7 +2254,7 @@ video, .mejs-container {
 
 #menu li.service li a, #menu li.service li strong, #menu li.service li span
  {
- color: #407e40
+ color: #0066b3
 }
 
 #menu li li {
@@ -2608,7 +2608,7 @@ html.mm-opened #togglenav {
 }
 
 #stage {
- background: #407e40
+ background: #0066b3
 }
 
 #stage .stage-wrapper {
@@ -2693,11 +2693,11 @@ html.mm-opened #togglenav {
 
 #stage .pagination a {
  color: white;
- background-color: #407e40
+ background-color: #0066b3
 }
 
 #stage .pagination strong {
- color: #407e40;
+ color: #0066b3;
  background-color: white
 }
 
@@ -2823,7 +2823,7 @@ html.mm-opened #togglenav {
 #togglenav {
  width: 100%;
  z-index: 9999;
- background: #407e40;
+ background: #0066b3;
  overflow: hidden;
  padding: 0 5px 0 10px
 }

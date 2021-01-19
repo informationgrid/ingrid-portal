@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -169,14 +169,14 @@ public class Api {
             @FormDataParam("path") final String path,
             @FormDataParam("filename") final String file,
             @FormDataParam("id") final String id,
-            @FormDataParam("size") final Integer size,
+            @FormDataParam("size") final Long size,
             @FormDataParam("replace") final boolean replace,
             @FormDataParam("extract") final boolean extract,
             @FormDataParam("file") final InputStream fileInputStream,
             @FormDataParam("parts_total") final Integer partsTotal,
             @FormDataParam("parts_index") final Integer partsIndex,
             @FormDataParam("parts_size") final Integer partsSize,
-            @FormDataParam("parts_offset") final Integer partsOffset
+            @FormDataParam("parts_offset") final Long partsOffset
             ) throws Exception {
         // check permission
         if (!this.authService.isAuthorized(this.request, path+"/"+file, Action.CREATE.name())) {
@@ -184,7 +184,7 @@ public class Api {
         }
 
         // check filename
-        this.storage.validate(path, file);
+        this.storage.validate(path, file, size);
 
         // check if file exists already
         if (!replace && this.storage.exists(path, file)) {
@@ -226,7 +226,7 @@ public class Api {
             @FormParam("path") final String path,
             @FormParam("filename") final String file,
             @FormParam("id") final String id,
-            @FormParam("size") final Integer size,
+            @FormParam("size") final Long size,
             @FormParam("replace") final boolean replace,
             @FormParam("extract") final boolean extract,
             @FormParam("parts_total") final Integer partsTotal
@@ -237,7 +237,7 @@ public class Api {
         }
 
         // check filename
-        this.storage.validate(path, file);
+        this.storage.validate(path, file, size);
 
         // store files
         final StorageItem[] files = this.storage.combineParts(path, file, id, partsTotal, size, replace, extract);

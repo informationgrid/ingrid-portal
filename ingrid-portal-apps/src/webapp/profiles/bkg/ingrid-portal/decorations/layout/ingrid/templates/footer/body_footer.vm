@@ -22,16 +22,17 @@
           <h2 class="aural">Service</h2>
           <ul class="columns hide-for-small-only">
             <li class="navTwitter"><a class="external" href="https://twitter.com/BKG_Bund" title="Externer Link&nbsp;zum Twitter-Account des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Twit­ter</a></li>
+            <li class="navInstagram"><a class="external" href="https://www.instagram.com/bkg.bund" title="Externer Link&nbsp;zum Instagram-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Ins­ta­gram</a></li>
             <li class="navXing"><a class="external" href="https://www.xing.com/companies/bundesamtfürkartographieundgeodäsie" title="Externer Link&nbsp;zum XING-Profil des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">Xing</a></li>
             <li class="navYouTube"><a class="external" href="https://www.youtube.com/user/pressebkg" title="Externer Link&nbsp;zum YouTube-Kanal des BKG (Öffnet&nbsp;neues&nbsp;Fenster)" target="_blank">You­tu­be</a></li>
-            <li class="navRSSFeed"><a href="http://www.bkg.bund.de/DE/Aktuelles/RSS-Feeds/rss-feeds.html">RSS</a></li>
+            <li class="navRSSFeed"><a href="http://www.bkg.bund.de/DE/Aktuelles/RSS-Feeds/rss-feeds.html" target="_blank">RSS</a></li>
           </ul>
       </div>
     </div>
     <div class="copyright row ob-box-wide ob-box-padded ob-box-center">
       <div class="small-1 medium-2 columns bkg-logo ">
-        <a target="_new" href="https://www.bkg.bund.de/DE/Home/home.html" alt="BKG Webseite">
-            <img src="/decorations/layout/ingrid/images/template/bkg_logo.png" alt="Logo">
+        <a target="_blank" href="https://www.bkg.bund.de/DE/Home/home.html" title="BKG Webseite">
+            <img src="/decorations/layout/ingrid/images/template/bkg_logo.jpg" alt="Logo">
         </a>
       </div>
       <div class="legal-links small-12 medium-10 columns">
@@ -45,9 +46,7 @@
         </div>
         <div class="row">
           <div class="columns">
-            <p>
-              © Bundesamt für Kartographie und Geodäsie - 2019
-            </p>
+            <p class="copyright_text">$MESSAGES.getString("ingrid.page.copyright")</p>
           </div>
         </div>
       </div>

@@ -1,17 +1,3 @@
-<style>
-.leaflet-interactive-disable {
-    cursor: grab !important;
-}
-
-.leaflet-hyphens {
-    hyphens: auto;
-    -ms-hyphens: auto;
-    -webkit-hyphens: auto;
-    -moz-hyphens: auto;
-}
-
-</style>
-
 <script>
     function showMarker(m) {
         if(m.target.uuid){
@@ -155,7 +141,7 @@
         if(mapFilter) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    mapFilter.append( '<div class="form-element boxed map blue"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><div class="control__indicator"></div>Zulassungsverfahren</label></div></div></div>');
+                    mapFilter.append( '<div class="form-element boxed map blue"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><span class="control__indicator"></span>Zulassungsverfahren</label></div></div></div>');
                     $('#mapMarkers10').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -166,7 +152,7 @@
                     });
                 }
                 if(legendCounter.countMarker3){
-                    mapFilter.append( '<div class="form-element boxed map"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><div class="control__indicator"></div>Ausl&#228;ndische Vorhaben</label></div></div></div>');
+                    mapFilter.append( '<div class="form-element boxed map"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><span class="control__indicator"></span>Ausl&#228;ndische Vorhaben</label></div></div></div>');
                     $('#mapMarkers11').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -177,7 +163,7 @@
                     });
                 }
                 if(legendCounter.countMarker2){
-                    mapFilter.append( '<div class="form-element boxed map red"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><div class="control__indicator"></div>Vorgelagerte Verfahren</label></div></div></div>');
+                    mapFilter.append( '<div class="form-element boxed map red"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><span class="control__indicator"></span>Vorgelagerte Verfahren</label></div></div></div>');
                     $('#mapMarkers1314').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -188,7 +174,7 @@
                     });
                 }
                 if(legendCounter.countMarker4){
-                    mapFilter.append( '<div class="form-element boxed map orange"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><div class="control__indicator"></div>Negative Vorpr&#252;fungen</label></div></div></div>');
+                    mapFilter.append( '<div class="form-element boxed map orange"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><span class="control__indicator"></span>Negative Vorpr&#252;fungen</label></div></div></div>');
                     $('#mapMarkers12').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -199,7 +185,7 @@
                     });
                 }
                 if(legendCounter.countMarkerDevPlan){
-                   mapFilter.append( '<div class="form-element boxed map green"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><div class="control__indicator"></div>Bauleitplanung</label></div></div></div>');
+                   mapFilter.append( '<div class="form-element boxed map green"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><span class="control__indicator"></span>Bauleitplanung</label></div></div></div>');
                    $('#mapMarkersDevPlan').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -215,7 +201,7 @@
         if(mapFilterXs) {
             if(legendCounter){
                 if(legendCounter.countMarker1){
-                    mapFilterXs.append( '<div class="form-element boxed map blue" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><div class="control__indicator"></div>Zulassungsverfahren</label></div></div></div>');
+                    mapFilterXs.append( '<div class="form-element boxed map blue" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers10"><input id="mapMarkers10" name="mapMarkers10" type="checkbox"><span class="control__indicator"></span>Zulassungsverfahren</label></div></div></div>');
                     $('#mapMarkers10').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -226,7 +212,7 @@
                     });
                 }
                 if(legendCounter.countMarker3){
-                    mapFilterXs.append( '<div class="form-element boxed map" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><div class="control__indicator"></div>Ausl&#228;ndische Vorhaben</label></div></div></div>');
+                    mapFilterXs.append( '<div class="form-element boxed map" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers11"><input id="mapMarkers11" name="mapMarkers11" type="checkbox"><span class="control__indicator"></span>Ausl&#228;ndische Vorhaben</label></div></div></div>');
                     $('#mapMarkers11').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -237,7 +223,7 @@
                     });
                 }
                 if(legendCounter.countMarker2){
-                    mapFilterXs.append( '<div class="form-element boxed map red" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><div class="control__indicator"></div>Vorgelagerte Verfahren</label></div></div></div>');
+                    mapFilterXs.append( '<div class="form-element boxed map red" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers1314"><input id="mapMarkers1314" name="mapMarkers1314" type="checkbox"><span class="control__indicator"></span>Vorgelagerte Verfahren</label></div></div></div>');
                     $('#mapMarkers1314').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -248,7 +234,7 @@
                     });
                 }
                 if(legendCounter.countMarker4){
-                    mapFilterXs.append( '<div class="form-element boxed map orange" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><div class="control__indicator"></div>Negative Vorpr&#252;fungen</label></div></div></div>');
+                    mapFilterXs.append( '<div class="form-element boxed map orange" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkers12"><input id="mapMarkers12" name="mapMarkers12" type="checkbox"><span class="control__indicator"></span>Negative Vorpr&#252;fungen</label></div></div></div>');
                     $('#mapMarkers12').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {
@@ -259,7 +245,7 @@
                     });
                 }
                 if(legendCounter.countMarkerDevPlan){
-                   mapFilterXs.append( '<div class="form-element boxed map green" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><div class="control__indicator"></div>Bauleitplanung</label></div></div></div>');
+                   mapFilterXs.append( '<div class="form-element boxed map green" style="padding:0px"><div class="input-check"><div class="control-group"><label class="control control--checkbox" for="mapMarkersDevPlan"><input id="mapMarkersDevPlan" name="mapMarkersDevPlan" type="checkbox"><span class="control__indicator"></span>Bauleitplanung</label></div></div></div>');
                    $('#mapMarkersDevPlan').on('change', function() {
                         var checkbox = $(this);
                         if ($(this).is(':checked')) {

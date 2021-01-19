@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -89,11 +89,7 @@ require([
             function selectObjectInTreeByUuid(uuid) {
                 ObjectService.getPathToObject(uuid, {
                     callback: function(path) {
-                        //console.debug(path);
-                        //var def = expandPathDef(path);
                         path.splice(0, 0, "objectRoot");
-                        path.splice(0, 0, "ObjectsAndAddressesRoot");
-                        var targetNodeId = path[path.length - 1];
                         registry.byId("duplicatesTree").set('paths', [path])
                             .then(selectNode);
                     },

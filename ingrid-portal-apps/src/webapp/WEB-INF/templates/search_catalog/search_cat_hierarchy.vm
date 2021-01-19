@@ -35,10 +35,10 @@
             <li class="tree__item tree__toggle is-active">
                 <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
                     <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#plus">
+                        <use xlink:href="#plus"/>
                     </svg>
                     <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#minus">
+                        <use xlink:href="#minus"/>
                     </svg>
                 </a>
                 #if($nodeUrl != '')
@@ -70,10 +70,10 @@
             <li class="tree__item tree__toggle">
                 <a id="$action" href="$action" onclick="makeScrollTopLink('$action')">
                     <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#plus">
+                        <use xlink:href="#plus"/>
                     </svg>
                     <svg class="tree__toggle__icon icon">
-                        <use xlink:href="#minus">
+                        <use xlink:href="#minus"/>
                     </svg>
                 </a>
                 #if($nodeUrl != '')
@@ -118,12 +118,12 @@
     #end
 </div>
 #set ($action = $renderResponse.createActionURL())
-<form action="$action" method="post" enctype="" name="extsearch" id="extsearch">
+<form action="$action" method="post" name="extsearch" id="extsearch">
     <p class="media__obj">
         #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
     </p>
 </form>
-<script type="text/javascript">
+<script>
     document.onreadystatechange = function () {
         if (document.readyState == "complete") {
                 var browser = whichBrowser();

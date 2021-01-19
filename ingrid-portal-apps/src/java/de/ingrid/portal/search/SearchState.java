@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -95,9 +95,6 @@ public class SearchState {
             // (read only from request)
             String action = Utils.toURLParam(Settings.PARAM_ACTION, request.getParameter(Settings.PARAM_ACTION));
             Utils.appendURLParameter(result, action);
-            
-            // add provider from simple search form
-            Utils.appendURLParameter(result, Utils.toURLParam(Settings.PARAM_PROVIDER, request.getParameter(Settings.PARAM_PROVIDER)));
             
             // query string (read from state)
             String paramValue = getSearchStateObjectAsString(request, Settings.PARAM_QUERY_STRING, msgTopic);

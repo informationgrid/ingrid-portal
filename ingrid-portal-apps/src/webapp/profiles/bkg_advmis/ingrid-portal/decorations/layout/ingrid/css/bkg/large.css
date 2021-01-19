@@ -7,7 +7,7 @@
   margin-bottom: 20px
  }
  body {
-  border-top: 10px solid #407e40
+  border-top: 10px solid #0066b3
  }
  #header .wrapperBranding, #navPrimary, #service-section .service-section-wrapper,
   #main, #navBreadcrumbs ol, #stage .stage-wrapper, #wrapperFooter {
@@ -160,7 +160,7 @@
   margin-bottom: 0
  }
  .startseite .topicWrapper {
-  background-color: #407e40;
+  background-color: #0066b3;
   padding-bottom: 5em
  }
  .topicWrapper {
@@ -193,7 +193,7 @@
   font-size: 100%
  }
  #navPrimary>ul>li strong {
-  background-color: #407e40;
+  background-color: #0066b3;
   color: white;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -205,12 +205,12 @@
   -khtml-border-radius: 3px 3px 3px 3px
  }
  #navPrimary>ul>li em a {
-  color: #407e40;
+  color: #0066b3;
   font-style: normal
  }
  #navPrimary>ul>li.topinpath a, #navPrimary>ul>li.active a, #navPrimary>ul>li.hovered a
   {
-  background-color: #407e40;
+  background-color: #0066b3;
   color: white;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
@@ -226,7 +226,7 @@
   border-bottom-right-radius: 0
  }
  #navPrimary>ul>li.hovered a {
-  background-color: #407e40;
+  background-color: #0066b3;
   color: white;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0
@@ -242,7 +242,7 @@
  }
  #navPrimary .menu-box ul {
   padding: 5px 20px;
-  background-color: #407e40;
+  background-color: #0066b3;
   margin: 0
  }
  #navPrimary .menu-box li {
@@ -275,7 +275,7 @@
   padding: 0 5px
  }
  #navPrimary .fl-2 .menu-box>ul {
-  background-color: #407e40;
+  background-color: #0066b3;
   display: inline-block;
   width: 410px
  }
@@ -333,14 +333,14 @@
   color: #333
  }
  #navSecondary li strong {
-  background: #407e40
+  background: #0066b3
    url(/SiteGlobals/Frontend/Images/icons/sprite-right.png?__blob=normal&v=3)
    no-repeat 95% -4615px;
   color: white
  }
  #navSecondary li a:hover, #navSecondary li a:focus, #navSecondary li a:active
   {
-  background: #407e40
+  background: #0066b3
    url(/SiteGlobals/Frontend/Images/icons/sprite-right.png?__blob=normal&v=3)
    no-repeat 94% -5233px;
   text-decoration: underline;
@@ -361,17 +361,17 @@
   background: #f7f7f7
    url(/SiteGlobals/Frontend/Images/icons/sprite-right.png?__blob=normal&v=3)
    no-repeat 94% -5442px;
-  color: #407e40
+  color: #0066b3
  }
  #navSecondary li li strong {
-  background-color: #407e40;
+  background-color: #0066b3;
   padding-left: 20px
  }
  #navSecondary li li li a {
   padding-left: 30px
  }
  #navSecondary li li li strong {
-  background-color: #407e40;
+  background-color: #0066b3;
   padding-left: 30px
  }
  #navBreadcrumbsVertical>strong {
@@ -425,7 +425,7 @@
   padding-right: 0
  }
  #stage .textContainer p {
-  color: #407e40;
+  color: #0066b3;
   display: block
  }
  #stage .textContainer p, #stage .textContainer h3 {

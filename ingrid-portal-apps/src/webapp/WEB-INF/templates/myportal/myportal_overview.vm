@@ -20,12 +20,12 @@
 
 #if(!$externalLogin)
     <li>
-        <a href="/portal/myportal-edit-account.psml"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry2')</a>
+        <a href="/portal/myportal-edit-account.psml"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('overview.content.entry2')</a>
     </li>
 #end
 #if(!$externalLogin)
     <li>
-        <a href="/login/logout"><svg class="icon"><use xlink:href="#internal-link"></svg>$MESSAGES.getString('overview.content.entry4')</a>
+        <a href="/login/logout"><svg class="icon"><use xlink:href="#internal-link"/></svg>$MESSAGES.getString('overview.content.entry4')</a>
     </li>
 #end
 </ul>

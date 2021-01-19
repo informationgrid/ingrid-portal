@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,7 +39,7 @@ define(["dojo/_base/declare",
     title: "Open Data",
     description: "Bei der Aktivierung der Checkbox \"Open Data\" werden folgende Verhalten hinzugefügt. Anzeige der Kategorien als Pflichtfeld.",
     category: "BKG",
-    defaultActive: true,
+    defaultActive: false,
     COOKIE_HIDE_OPEN_DATA_HINT: "ingrid.open.data.hint",
     run: function () {
       // hide open-data checkbox for classes 0 and 4

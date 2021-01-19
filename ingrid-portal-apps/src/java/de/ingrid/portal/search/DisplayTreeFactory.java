@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -360,7 +360,8 @@ public class DisplayTreeFactory {
         // set up according children nodes in tree
         int parentLevel = ((Integer) nodeToOpen.get(NODE_LEVEL)).intValue();
         int childrenLevel = parentLevel + 1;
-        ArrayList childNodes = new ArrayList(hits.size());
+        ArrayList<DisplayTreeNode> childNodes = new ArrayList(hits.size());
+        ArrayList<DisplayTreeNode> freeAddresses = new ArrayList();
         Iterator it = hits.iterator();
         while (it.hasNext()) {
             IngridHit hit = (IngridHit) it.next();
@@ -399,6 +400,22 @@ public class DisplayTreeFactory {
             childNode.put(NODE_UDK_CLASS, udkClass);
             childNode.put(NODE_EXPANDABLE, hasChildren);
 
+            if (plugType.equals(Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS) && udkClass.equals("3")) {
+                freeAddresses.add(childNode);
+            } else {
+                childNodes.add(childNode);
+            }
+        }
+        if (!freeAddresses.isEmpty()) {
+            DisplayTreeNode childNode = new DisplayTreeNode("" + rootNode.getNextId(), "searchCatHierarchy.tree.addresses.free", false);
+            childNode.setType(DisplayTreeNode.GENERIC);
+            childNode.put(NODE_LEVEL, childrenLevel);
+            childNode.put(NODE_PLUG_TYPE, plugType);
+            childNode.put(NODE_PLUG_ID, plugId);
+            childNode.put(NODE_EXPANDABLE, true);
+            for (DisplayTreeNode freeAddress : freeAddresses) {
+                childNode.addChild(freeAddress);
+            }
             childNodes.add(childNode);
         }
 

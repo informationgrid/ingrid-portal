@@ -2,17 +2,17 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -53,6 +53,7 @@ import org.quartz.JobExecutionContext;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.caller.MdekCallerQuery;
 import de.ingrid.mdek.caller.MdekClientCaller;
+import de.ingrid.mdek.caller.MdekCallerObject;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.job.repository.Pair;
@@ -82,6 +83,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
     @Mock private ConnectionFacade connectionFacade;
     @Mock private MdekClientCaller mdekClientCaller;
     @Mock private MdekCallerQuery mdekCallerQuery;
+    @Mock private MdekCallerObject mdekCallerObject;
     @Mock private JobExecutionContext context;
 
     private UploadCleanupJob job;
@@ -108,6 +110,7 @@ public class UploadCleanupJobTest extends BaseJobTest {
         when(this.mdekClientCaller.getRegisteredIPlugs()).thenReturn(plugIds);
         when(this.connectionFacade.getMdekClientCaller()).thenReturn(this.mdekClientCaller);
         when(this.connectionFacade.getMdekCallerQuery()).thenReturn(this.mdekCallerQuery);
+        when(this.connectionFacade.getMdekCallerObject()).thenReturn(this.mdekCallerObject);
 
         // setup storage
         this.storage = new FileSystemStorage();

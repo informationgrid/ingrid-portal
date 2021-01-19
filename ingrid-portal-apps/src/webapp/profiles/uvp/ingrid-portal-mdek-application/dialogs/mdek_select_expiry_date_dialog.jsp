@@ -2,7 +2,7 @@
   **************************************************-
   InGrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -22,7 +22,7 @@
   --%>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-    <script type="text/javascript">
+    <script>
 
         require([
             "dojo/_base/array",

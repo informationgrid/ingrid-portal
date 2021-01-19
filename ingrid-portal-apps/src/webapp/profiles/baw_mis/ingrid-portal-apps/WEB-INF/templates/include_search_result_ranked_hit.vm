@@ -26,7 +26,7 @@
                 #set($urlTitle = $MESSAGES.getStringWithMsgParams('common.tooltip.link.extern.document'))
             #end
             <h4 class=#if(!$topHit)"bx-top-l bx-bot-xs"><div class="search-hr"></div>#else"bx-bot-0 bx-bot-xs"> #end
-                <svg class="icon globe__icon" ><use xlink:href="#external-link"></svg>
+                <svg class="icon globe__icon" ><use xlink:href="#external-link"/></svg>
                 <a href="$!rs.url" title="$urlTitle">#renderTitle($rs.title)</a>
             </h4>
         #elseif($rs.type == "detail-style")
@@ -84,7 +84,7 @@
         </div>
         #end
         <p>
-            $!rs.abstract 
+            #removeLocalisation($rs.abstract)
         </p>
         <p> 
             #set( $bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name") )

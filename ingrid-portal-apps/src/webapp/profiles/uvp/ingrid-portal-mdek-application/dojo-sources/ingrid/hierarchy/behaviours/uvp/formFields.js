@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -200,6 +200,7 @@ define(["dojo/_base/declare",
             domClass.add("uiElement6005", "hide");
             domClass.add("uiElement6010", "hide");
             domClass.add("uiElement1001", "hide");
+            domClass.add("uiElement1002", "hide");
 
             // hide all rubrics
             query(".rubric", "contentFrameBodyObject").forEach(function(item) {

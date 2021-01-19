@@ -7,5 +7,9 @@ title: Raster/Gridformat
 
 # Raster/Gridformat
 
+Information über die Strukturelemente der Rasterdaten.
 
+# ISO Abbildung
+
+Domain: 157 (gmd:MD_GridSpatialRepresentation)
 

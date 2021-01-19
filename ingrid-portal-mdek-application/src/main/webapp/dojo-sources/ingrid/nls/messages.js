@@ -142,7 +142,7 @@ define({
         "tree.forwardToQAHint": "Please fill all required fields before assigning the object to the Quality Assurance.",
         "tree.selectNodeHint": "Please select a parent node.",
         "tree.selectNodeCopyHint": "The nodes Objects, Addresses and Free Addresses cannot be copied! With Ctrl+Click on the node you can de-/select it.",
-        "tree.selectNodeCopyUuidHint": "If you insert a copy of this metadata at another location, then this object will get a new UUID!<br/><br/>Please note that a new object is created, which is not identical to the original onea and which cannot be found under the old UUID! If you want to move an object including its identity then you have to use the operation \"Cut Objects / Addresses / Subtrees\" and \"Paste\".",
+        "tree.selectNodeCopyUuidHint": "If you insert a copy of this metadata at another location, then this object will get a new UUID!<br/>If the document is a geodataset, then the 'Identificator of the data source' will be resetted and has to be manually added.<br/><br/>Please note that a new object is created, which is not identical to the original onea and which cannot be found under the old UUID! If you want to move an object including its identity then you have to use the operation \"Cut Objects / Addresses / Subtrees\" and \"Paste\".",
         "tree.selectNodeCutHint": "Please select a node to cut.",
         "tree.selectNodeDeleteHint": "The nodes Objects, Addresses and Free Addresses must not be deleted!",
         "tree.nodePasteNoCutCopyHint": "The node couldn't be copied!",
@@ -615,7 +615,7 @@ define({
         "ui.obj.availability.dataFormatTable.header.name": "Name",
         "ui.obj.availability.dataFormatTable.header.version": "Version",
         "ui.obj.availability.dataFormatTable.header.compression": "Compression",
-        "ui.obj.availability.dataFormatTable.header.depth": "Depth",
+        "ui.obj.availability.dataFormatTable.header.depth": "Specification",
         "ui.obj.availability.mediaOptionTable.title": "Media Option",
         "ui.obj.availability.mediaOptionTable.header.type": "Medium",
         "ui.obj.availability.mediaOptionTable.header.amount": "Amount [MB]",
@@ -785,7 +785,7 @@ define({
         "ui.obj.type6.urlList.header.url": "Url*",
         "ui.obj.type6.urlList.header.urlDescription": "Description",
 
-        "ui.obj.previewImage.table.fileName": "File Name",
+        "ui.obj.previewImage.table.fileName": "File Name/URL",
         "ui.obj.previewImage.table.fileDescription": "File Description",
 
         "ui.adr.header.addressTitle": "Address Title",

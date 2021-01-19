@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -44,6 +44,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
 import de.ingrid.mdek.MdekKeys;
 import de.ingrid.mdek.caller.IMdekCallerQuery;
 import de.ingrid.mdek.caller.IMdekClientCaller;
+import de.ingrid.mdek.caller.IMdekCallerObject;
 import de.ingrid.mdek.handler.ConnectionFacade;
 import de.ingrid.mdek.job.repository.IJobRepository;
 import de.ingrid.mdek.upload.storage.Storage;
@@ -570,6 +571,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Archiving file: "+this.formatItem(item));
             try {
                 this.storage.archive(item.getPath(), item.getFile());
+                updateIndex(file);
                 archiveCount++;
             }
             catch (final IOException e) {
@@ -587,6 +589,7 @@ public class UploadCleanupJob extends QuartzJobBean {
             log.info("Restoring file: "+this.formatItem(item));
             try {
                 this.storage.restore(item.getPath(), item.getFile());
+                updateIndex(file);
                 restoreCount++;
             }
             catch (final IOException e) {
@@ -605,6 +608,14 @@ public class UploadCleanupJob extends QuartzJobBean {
             // log error, but keep the job running
             this.logError("Error cleaning up the storage", e);
         }
+    }
+
+    private void updateIndex(String file) {
+        IMdekCallerObject caller = this.connectionFacade.getMdekCallerObject();
+        String [] nameSplits = file.split("/");
+        String plugId = "/" + nameSplits[0].replace("_", ":");
+        String uuid = nameSplits[1];
+        caller.updateObjectIndex(plugId, uuid);
     }
 
     /**
