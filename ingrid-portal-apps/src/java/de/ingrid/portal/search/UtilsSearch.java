@@ -1519,8 +1519,8 @@ public class UtilsSearch {
         return addQueryString;
     }
     
-    public static String getCodeListDataValue(PortletRequest request, String codeListId, String entryId, String dataKey) {
-        IngridSysCodeList codelist = new IngridSysCodeList(request.getLocale());
+    public static String getCodeListDataValue(String codeListId, String entryId, String dataKey, Locale locale) {
+        IngridSysCodeList codelist = new IngridSysCodeList(locale);
         return codelist.getCodeListDataKeyValue(codeListId, entryId, dataKey);
     }
 }

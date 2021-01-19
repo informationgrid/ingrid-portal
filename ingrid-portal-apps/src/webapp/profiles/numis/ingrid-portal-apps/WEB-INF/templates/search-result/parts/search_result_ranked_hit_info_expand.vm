@@ -201,7 +201,7 @@
                     #set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
                     #if($tmp)
                         #set($licenseName = $Codelists.getCodeListValue('6500', $tmp, $languageCode))
-                        #set($licenseUrl = $UTIL_SEARCH.license_($request, '6500', $tmp, "url"))
+                        #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $tmp, "url", $request.getLocale()))
                         <h5>$MESSAGES.getString('searchResult.info.license')</h5>
                         #if($licenseUrl)
                             <a href="$licenseUrl" title="$licenseName">$licenseName<a>
