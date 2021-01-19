@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.7.0" date="2021-xx-xx" description="Release 5.7.0">
+        <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
           <action type="fix" dev="wemove" issue="2305">
             IGE: Fix "Lagegenauigkeit" Helptext
           </action>
