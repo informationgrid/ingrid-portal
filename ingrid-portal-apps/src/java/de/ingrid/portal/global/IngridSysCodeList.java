@@ -173,7 +173,7 @@ public class IngridSysCodeList {
     }
 
     public String getCodeListDataKeyValue(String codeListId, String entryName, String dataKey) {
-        String data = getDataByCodeListName(codeListId, entryName);
+        String data = getDataByCodeListValue(codeListId, entryName);
         if(!data.isEmpty()) {
             try {
                 JSONObject dataJson = new JSONObject(data);

@@ -199,7 +199,7 @@
                         </div>
                     #end
                     #set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
-                    #if($tmp)
+                    #if($tmp && !$tmp.isEmpty())
                         #set($licenseName = $Codelists.getCodeListValue('6500', $tmp, $languageCode))
                         #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $tmp, "url", $request.getLocale()))
                         <h5>$MESSAGES.getString('searchResult.info.license')</h5>
