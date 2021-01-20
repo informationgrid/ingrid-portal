@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -68,8 +68,9 @@
                 "ingrid/utils/List",
                 "ingrid/utils/Tree",
                 "ingrid/utils/Events",
+                "ingrid/utils/Catalog",
                 "ingrid/tree/ThesaurusTree"
-            ], function(array, lang, on, topic, keys, query, dom, domClass, wnd, style, registry, layoutCreator, message, dialog, UtilGrid, UtilList, UtilTree, UtilEvents, ThesaurusTree) {
+            ], function(array, lang, on, topic, keys, query, dom, domClass, wnd, style, registry, layoutCreator, message, dialog, UtilGrid, UtilList, UtilTree, UtilEvents, catalog, ThesaurusTree) {
 
 
                     var selectedTextNode = null;
@@ -240,7 +241,7 @@
                         registry.byId("thesResultTabContainer").selectChild(resultPane);
 
                         var service = registry.byId("thesTree").getService();
-                        service.findTopicsContains(queryTerm, userLocale, {
+                        service.findTopicsContains(queryTerm, catalog.getCatalogLanguage(), {
                             preHook: showLoadingZone,
                             postHook: hideLoadingZone,
                             callback: function(result) {

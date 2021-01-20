@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -46,6 +46,9 @@ define({
     "help.mcloud.form.freeBBox.text": "Manuelle Eingabe von Eckkoordinaten (NO- und SW-Ecke des Bezugsgebietes) im Bezugssystem WGS84.",
     "help.mcloud.form.freeCoordsTransformed.title": "Umgerechnete Koordinaten",
     "help.mcloud.form.freeCoordsTransformed.text": "Umrechnung der unter „Freier Raumbezug“ ausgewählten Daten in die in der Auswahlbox zur Verfügung stehenden Koordinatensysteme",
+    "help.mcloud.form.freeKeywords.title": "Freie Schlagworte eintragen",
+    "help.mcloud.form.freeKeywords.text": "Eingabe von Schlagworten, über die das Objekt bei einer Schlagwortsuche möglichst schnell zu finden ist und die nicht im Thesaurus vorhanden sind. Hier sollen prägnante Begriffe und Termini, die in engem Zusammenhang mit dem Objekt stehen und die nicht im Thesaurus vorhanden sind, eingetragen werden. Dies können spezielle Fachgebiete, (Mess-Methoden, Bestandteile o.ä. sein. Die Freien Suchbegriffe sind ergänzend zu den Thesaurus-Suchbegriffen anzugeben. Wenn Sie hier einen Thesaurusbegriff eingeben, wird dieser automatisch als Thesaurusbegriff gekennzeichnet.<br/><br/>Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema \"Deutscher Text#locale-eng:English text\" gefüllt werden. Beispiel: \"Apfelbaum#locale-eng:apple tree\"<br/><br/>Mehrere Schlagworte können in das Textfeld, durch Komma getrennt, angegeben werden. Zusammengehörige Worte werden in Anführungszeichen gesetzt.",
+    "help.mcloud.form.freeKeywords.example": "Bestandsaufnahme, Rasterkarte, Nachtfalter",
     "help.mcloud.form.timeSection.title": "Zeitbezug",
     "help.mcloud.form.timeSection.text": "Angabe des Zeitraums oder des Zeitpunktes, für den die referenzierten Daten Gültigkeit haben.<br /><br />In der mCLOUD erscheint die 'abgedeckte Zeitspanne' als „Zeitbezug der Daten“.<br /><br />Die Einträge in die folgenden Felder sind optional.",
     "help.mcloud.form.resourceDate.title": "Zeitbezug der Ressource",
@@ -53,6 +56,9 @@ define({
     "help.mcloud.form.resourceDate.example": "11.11.2017 Erstellung",
     "help.mcloud.form.timeCoverage.title": "Durch die Ressource abgedeckte Zeitspanne",
     "help.mcloud.form.timeCoverage.text": "Hier soll die Zeitspanne eingetragen werden, die die zugrunde liegenden Daten abdecken (z.B. Messdaten). Ein Tagesdatum wird auch als 'von - bis' angegeben, ansonsten können hier auch offene Zeitspannen eingegeben werden ('seit' oder 'bis').<br /><br />In der mCLOUD erscheint dieser Eintrag als „Zeitbezug der Daten“.",
+    "help.mcloud.form.optionalKeywords.title": "Optionale Schlagworte",
+    "help.mcloud.form.optionalKeywords.text": "Eingabe von möglichst mindestens drei Schlagworten, die im Thesaurus verzeichnet sind. Die Verschlagwortung dient dem themenbezogenen Wiederauffinden (Retrieval) der Objekte über den Thesaurus-Navigator. Dazu müssen Schlagworte aus dem Thesaurus ausgewählt werden, die das Objekt so genau wie möglich, aber auch so allgemein wie nötig beschreiben. So sollte mindestens ein Schlagwort in der Thesaurushierarchie einen relativ allgemeinen Aspekt des Objektes beschreiben und mindestens ein Schlagwort das Objekt so speziell wie möglich beschreiben. Die Auswahl kann über den \"Verschlagwortungsassistenten\" oder den \"Thesaurus-Navigator\" vorgenommen werden - siehe Verlinkung.",
+    "help.mcloud.form.optionalKeywords.example": "Naturschutz; Schmetterling; Kartierung; Artenschutz",
     "help.mcloud.form.periodicity.title": "Periodizität",
     "help.mcloud.form.periodicity.text": "Angabe des Zeitzyklus der Datenerhebung, also wie oft die Daten im abgedeckten Zeitraum aktualisiert werden. Der Eintrag muss aus der Auswahlliste erfolgen, die über den Pfeil am Ende des Feldes geöffnet wird.<br /><br />In der mCLOUD erscheint dieser Eintrag als „Frequenz“ bzw. „Aktualisierungsfrequenz“.",
     "help.mcloud.form.periodicity.example": "täglich",

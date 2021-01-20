@@ -17,6 +17,6 @@ Angabe über die Genauigkeit z.B. in einer Karte
 
 # ISO Abbildung
 
-Relative Positionsgenauigkeit: Genauigkeitsangabe bezüglich einer als richtig akzeptierten Bezugs-oder Sollposition
+Absolute Positionsgenauigkeit: Abweichung der Ist-Koordinaten von den Soll-Koordinaten
 
-Domain: 119 (DQ_RelativeInternalPositionalAccuracy)
+Domain: 117 (DQ_AbsoluteExternalPositionalAccuracy)

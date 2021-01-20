@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal Base
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -109,7 +109,7 @@
                         <a href="/startseite">
                             <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.svg" alt="footer-logo.svg"/>
                         </a>
-                        <p class="copyright copyright_text">© Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</p>
+                        <p class="copyright copyright_text">&copy; Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</p>
                     </div>
                 </div>
                 <hr class="bx-top-0 bx-bot-0"/>

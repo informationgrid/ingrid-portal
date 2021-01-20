@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -27,8 +27,9 @@ define([
     "dojo/dom-style",
     "dojo/store/util/QueryResults",
     "dojo/store/Memory",
-    "ingrid/message"
-], function(Deferred, declare, array, style, QueryResults /*=====, Store =====*/ , Memory, message) {
+    "ingrid/message",
+    "ingrid/utils/Catalog"
+], function(Deferred, declare, array, style, QueryResults /*=====, Store =====*/ , Memory, message, catalog) {
 
     return declare("ingrid.store.SnsStore", Memory, {
         // summary:
@@ -87,6 +88,7 @@ define([
          */
 
         _loadSNSData: function(query) {
+                var catLocale = catalog.getCatalogLanguage();
                 var _this = this;
                 var deferred = new Deferred();
                 // if it's the initialization
@@ -108,11 +110,11 @@ define([
                         }
                     };
                     if (this.rootUrl)
-                        this.service.getRootTopics(this.rootUrl, userLocale, serviceCallbacks);
+                        this.service.getRootTopics(this.rootUrl, catLocale, serviceCallbacks);
                     else
-                        this.service.getRootTopics(userLocale, serviceCallbacks);
+                        this.service.getRootTopics(catLocale, serviceCallbacks);
                 } else {
-                    this.service.getSubTopics(query.parent, 2, 'down', userLocale, {
+                    this.service.getSubTopics(query.parent, 2, 'down', catLocale, {
                         preHook: _this.showLoadingZone,
                         postHook: _this.hideLoadingZone,
                         callback: function(res) {
@@ -169,7 +171,7 @@ define([
                 var def = new Deferred();
                 var treePane = this.treeWidget;
                 var _this = this;
-                this.service.getSubTopicsWithRoot(topicID, 0, 'up', userLocale, {
+                this.service.getSubTopicsWithRoot(topicID, 0, 'up', catalog.getCatalogLanguage(), {
                     preHook: function() {
                         _this.showLoadingZone();
                     },

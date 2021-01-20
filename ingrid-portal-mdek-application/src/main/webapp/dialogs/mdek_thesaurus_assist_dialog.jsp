@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -47,8 +47,9 @@ require([
     "ingrid/utils/Events",
     "ingrid/dialog",
     "ingrid/message",
-    "ingrid/layoutCreator"
-], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, message, layoutCreator) {
+    "ingrid/layoutCreator",
+    "ingrid/utils/Catalog"
+], function(array, on, dom, topic, style, registry, UtilGrid, UtilList, UtilStore, UtilThesaurus, UtilEvents, dialog, message, layoutCreator, catalog) {
 
         on(_container_, "Load", function() {
             init();
@@ -85,7 +86,7 @@ require([
                 }
             });
 
-	SNSService.getTopicsForText(queryTerm, 100, userLocale, {
+	SNSService.getTopicsForText(queryTerm, 100, catalog.getCatalogLanguage(), {
                 preHook: disableUiElements,
                 postHook: enableUiElements,
                 callback: function(res) {

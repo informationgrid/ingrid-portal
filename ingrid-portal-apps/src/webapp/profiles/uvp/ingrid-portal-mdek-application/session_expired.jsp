@@ -2,7 +2,7 @@
   **************************************************-
   InGrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -105,7 +105,7 @@
                         </div>
                         <div class="xsmall-24 large-17 xlarge-18 columns">
                             <div class="copyright">
-                                <p class="copyright_text">© 2020 Landesbetrieb Geoinformation und Vermessung</p>
+                                <p class="copyright_text">&copy; 2021 Landesbetrieb Geoinformation und Vermessung</p>
                             </div>
                         </div>
                     </div>

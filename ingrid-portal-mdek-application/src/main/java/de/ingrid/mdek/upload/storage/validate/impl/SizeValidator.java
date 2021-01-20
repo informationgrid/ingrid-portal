@@ -2,17 +2,17 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- *
+ * 
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- *
+ * 
  * http://ec.europa.eu/idabc/eupl5
- *
+ * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -96,16 +96,18 @@ public class SizeValidator implements Validator {
             }
 
             if (maxFileSize != -1) {
-                // do not limit single file after extraction
-                if (!isArchiveContent && fileSize > maxFileSize) {
+                // limit single file also after extraction (ignore isArchiveContent)
+                if (fileSize > maxFileSize) {
                     throw new IllegalSizeException("The file size exceeds the maximum size of " + maxFileSize + " bytes.", path+"/"+file,
                             IllegalSizeException.LimitType.FILE, maxFileSize, 0L);
                 }
             }
 
             if (maxDirSize != -1) {
-                // sum sizes of all files in the target directory
-                long usedSize = getSize(targetPath.getParent(), targetPath);
+                // reference directory for maxDirSize parameter
+                final Path rootPath = Paths.get(path);
+                // sum sizes of all files in the root directory
+                long usedSize = getSize(rootPath, targetPath);
                 if (fileSize + usedSize > maxDirSize) {
                     throw new IllegalSizeException("The directory size exceeds the maximum size of " + maxDirSize + " bytes.", path+"/"+file,
                             IllegalSizeException.LimitType.DIRECTORY, maxDirSize, fileSize + usedSize);
