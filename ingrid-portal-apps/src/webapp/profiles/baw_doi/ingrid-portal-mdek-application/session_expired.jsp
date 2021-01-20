@@ -110,7 +110,7 @@
             </header>
             <div class="body">
                 <div class="banner subpage">
-                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/waves-subpage.svg');">
                         <div class="row align-center">
                             <div class="large-20 columns dark">
                                 <h1><fmt:message key="ui.entry.session.expired" /></h1>
