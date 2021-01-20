@@ -198,19 +198,25 @@
                             #end
                         </div>
                     #end
-                    #set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
-                    #if($tmp && !$tmp.isEmpty())
-                        #set($licenseName = $Codelists.getCodeListValue('6500', $tmp, $languageCode))
-                        #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $tmp, "url", $request.getLocale()))
+                    #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
+                    #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
+                    #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && $licenseValue))
+                        #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
+                        #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
                         <h5>$MESSAGES.getString('searchResult.info.license')</h5>
                         #if($licenseUrl)
-                            <a href="$licenseUrl" title="$licenseName">$licenseName<a>
-                        #elseif($licenseName)
+                            <a href="$licenseUrl" title="$licenseName">$licenseName</a>
+                        #elseif($licenseName && !$licenseName.isEmpty())
                             <p>$licenseName</p>
                         #else
-                            #set($tmp = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
-                            #if($tmp)
-                            <p>$tmp</p>
+                            #if($licenseValue && !$licenseValue.isEmpty())
+                                #set($licenseName = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "name"))
+                                #set($licenseUrl = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "url"))
+                                #if($licenseUrl && $licenseName)
+                                    <a href="$licenseUrl" title="$licenseName">$licenseName</a>
+                                #else
+                                     <p>$licenseValue</p>
+                                #end
                             #end
                         #end
                     #end

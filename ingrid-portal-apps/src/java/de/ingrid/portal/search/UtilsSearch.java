@@ -44,6 +44,8 @@ import de.ingrid.utils.udk.UtilsCSWDate;
 import de.ingrid.utils.udk.UtilsDate;
 import org.apache.portals.messaging.PortletMessaging;
 import org.apache.velocity.context.Context;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1522,5 +1524,17 @@ public class UtilsSearch {
     public static String getCodeListDataValue(String codeListId, String entryId, String dataKey, Locale locale) {
         IngridSysCodeList codelist = new IngridSysCodeList(locale);
         return codelist.getCodeListDataKeyValue(codeListId, entryId, dataKey);
+    }
+    
+    public static String getCodeListDataStringValue(String jsonString, String dataKey) {
+        try {
+            JSONObject dataJson = new JSONObject(jsonString);
+            if(dataJson.has(dataKey)) {
+                return dataJson.getString(dataKey).trim();
+            }
+        } catch (JSONException e) {
+            return null;
+        }
+        return null;
     }
 }
