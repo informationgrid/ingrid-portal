@@ -1344,7 +1344,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementLink.put("hasLinkIcon", true);
             elementLink.put("isDownload", true);
             elementLink.put("title", messages.getString("xml_link"));
-            elementLink.put("href", "cswUrl" + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid + "&iplug=" + this.iPlugId + "&elementSetName=full");
+            elementLink.put("href", cswUrl + "?REQUEST=GetRecordById&SERVICE=CSW&VERSION=2.0.2&id=" + this.uuid + "&iplug=" + this.iPlugId + "&elementSetName=full");
         }
         return elementLink;
     }
