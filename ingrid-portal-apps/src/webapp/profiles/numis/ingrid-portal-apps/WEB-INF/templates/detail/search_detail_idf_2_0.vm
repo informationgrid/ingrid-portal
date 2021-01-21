@@ -8,7 +8,7 @@
     #if($entry.type == "html")
         $entry.body
     #else
-        #if(!$entry.isMapLink)
+        #if(!$entry.isMapLink && !$entry.isDownload && !$entry.isExtern)
             #if($hasImage)
             <!--
             <div class="map">
@@ -87,7 +87,9 @@
         #end
         #if($entry.isExtern)
             <div>
-                #renderServiceTypeUrl($link.href)
+                #if($tool.hasContent($entry.serviceType))
+                    #renderServiceTypeUrl($entry.serviceType)
+                #end
                 <a href="$entry.href" title="$entry.title">
                   <span class="text">$entry.title</span>
                 </a>
@@ -116,7 +118,9 @@
             </div>
         #elseif($entry.isDownload)
             <div>
-                #renderServiceTypeUrl($link.href)
+                #if($tool.hasContent($entry.serviceType))
+                    #renderServiceTypeUrl($entry.serviceType)
+                #end
                 <a href="$entry.href" class="icon" title="$entry.title">
                   <span class="ic-ic-download"></span>
                   <span class="text">$entry.title</span>
@@ -124,10 +128,10 @@
             </div>
         #elseif(!$entry.isMapLink)
             <div>
-            <a href="$entry.href" class="icon" title="$entry.title">
-                <span class="ic-ic-karte"></span>
-                <span class="text">$entry.title</span>
-            </a>
+                <a href="$entry.href" class="icon" title="$entry.title">
+                    <span class="ic-ic-karte"></span>
+                    <span class="text">$entry.title</span>
+                </a>
             </div>
         #end
         #if($tool.hasContent($entry.mapLink))

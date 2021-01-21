@@ -337,7 +337,7 @@
                 #if($tmpCount)
                     #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                 #end
-                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "downloads_more")
+                #renderLinkListImageLimit($tmpTitle $tmp false false 3 "downloads_more")
                 #set($tmp = "")
             ## Links
                 #set($tmp = $TOOL.getReference("./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]", true))
@@ -355,7 +355,7 @@
                 #if($tmpCount)
                     #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
                 #end
-                #renderLinkListImageLimit($tmpTitle $tmp false true 3 "others_more")
+                #renderLinkListImageLimit($tmpTitle $tmp false false 3 "others_more")
                 #set($tmp = "")
                 #set($xpathList = ["./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             </div>

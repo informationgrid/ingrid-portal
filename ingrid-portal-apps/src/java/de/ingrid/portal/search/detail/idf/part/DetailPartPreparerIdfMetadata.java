@@ -427,28 +427,30 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(url.length() > 0){
                         HashMap<String, Object> link = new HashMap<>();
                         link.put("hasLinkIcon", true);
-                          if (isDownload) {
-                              link.put("isDownload", isDownload);
-                          } else {
-                              link.put("isExtern", true);
-                          }
-                          link.put("href", url);
+                      if (isDownload) {
+                          link.put("isDownload", isDownload);
+                          link.put("serviceType", url);
+                      } else {
+                          link.put("isExtern", true);
+                          link.put("serviceType", url);
+                      }
+                      link.put("href", url);
 
-                          if(name.length() > 0){
-                              link.put("title", name);
-                            }else{
-                                link.put("title", url);
-                          }
-                          if (description.length() > 0) {
-                              link.put("description", description);
-                          }
-                          if (attachedToField.length() > 0) {
-                              link.put("attachedToField", attachedToField);
-                          }
-                          if (size.length() > 0) {
-                              link.put("linkInfo", "[" + roundSize + " MB]");
-                          }
-                          linkList.add(link);
+                      if(name.length() > 0){
+                          link.put("title", name);
+                        }else{
+                            link.put("title", url);
+                      }
+                      if (description.length() > 0) {
+                          link.put("description", description);
+                      }
+                      if (attachedToField.length() > 0) {
+                          link.put("attachedToField", attachedToField);
+                      }
+                      if (size.length() > 0) {
+                          link.put("linkInfo", "[" + roundSize + " MB]");
+                      }
+                      linkList.add(link);
                     }
                 }
             }
