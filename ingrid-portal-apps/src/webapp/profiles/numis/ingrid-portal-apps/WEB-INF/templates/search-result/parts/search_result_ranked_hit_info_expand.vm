@@ -9,7 +9,8 @@
 #set($referenceAllName = [])
 #set($referenceAllClass = [])
 #set($referenceAllType = [])
-#set($linksUrlRef = [])
+#set($linksUrlRefDownload = [])
+#set($linksUrlRefOthers = [])
 
 #set($referingObjRefUUID = [])
 #set($referingObjRefUUID = $rs.getHitDetail().get("refering.object_reference.obj_uuid"))
@@ -30,7 +31,7 @@
         #else
             #set($add = $link.put("title", "$objUuid"))
         #end
-        #set($add = $linksUrlRef.add($link))
+        #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
             #set($add = $referenceAllUUID.add($objUuid))
@@ -61,7 +62,7 @@
         #else
             #set($add = $link.put("title", "$objUuid"))
         #end
-        #set($add = $linksUrlRef.add($link))
+        #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
             #set($add = $referenceAllUUID.add($objUuid))
@@ -78,7 +79,7 @@
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content" ))
 #set($urlReferenceSpecialRef = $rs.getHitDetail().get("t017_url_ref.special_ref" ))
 
-#if($referenceAllUUID || $x1)
+#if($referenceAllUUID || $urlReferenceLink || $x1)
     <a id="${moreId}_more" class="js-expander" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
@@ -117,25 +118,27 @@
                             #set($tmpSpecialRef = $urlReferenceSpecialRef.get($refCount))
                             #set($add = $link.put("special_ref", $tmpSpecialRef))
                             #if($tmpSpecialRef && $tmpSpecialRef == "9990")
-                                #set($add = $linksUrlRef.add($link))
+                                #set($add = $linksUrlRefDownload.add($link))
+                            #else
+                                #set($add = $linksUrlRefOthers.add($link))
                             #end
                             #set($refCount = $refCount + 1)
                         #end
                     #end
-                    #if($linksUrlRef.size() > 0)
-                        #set($countRefs = $linksUrlRef.size())
-                        <h5>$MESSAGES.getString('searchResult.info.downloads') <span>($countRefs)</span></h5>
+                    #if($linksUrlRefDownload.size() > 0 || $linksRef.size() > 0)
+                        #set($countRefs = $linksUrlRefDownload.size() + $linksRef.size())
+                        <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
                         <div class="document-list">
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
-                            #set($listLimit = 3)
-                            #foreach($link in $sorter.sort($linksUrlRef,"title"))
+                            #set($listLimit = 5)
+                            #foreach($link in $sorter.sort($linksUrlRefDownload,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
-                                    <button type="button" id="${moreId}_more_downloads" class="js-expander button outline " title="$MESSAGES.getString('searchResult.info.downloads.more')" href="#">
+                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
                                         $MESSAGES.getString('searchResult.info.downloads.more')
                                     </button>
-                                    <div class="js-expander-content ${moreId}_more_downloads is-hidden ">
+                                    <div class="js-expander-content ${moreId}_more_links is-hidden ">
                                 #end
                                 <div class="list-item">
                                     <div>
@@ -150,22 +153,6 @@
                                 </div>
                                 #set($countRefsAll = $countRefsAll + 1)
                             #end
-                            #if($addRefsExpand)
-                                #set($addRefsExpand = false)
-                                </div>
-                                <button type="button" class="button outline js-expander-close ${moreId}_more_downloads is-hidden" title="$MESSAGES.getString('searchResult.info.downloads.less')" href="#">
-                                    $MESSAGES.getString('searchResult.info.downloads.less')
-                                </button>
-                            #end
-                        </div>
-                    #end
-                    #if($linksRef.size() > 0)
-                        #set($countRefs = $linksRef.size())
-                        <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
-                        <div class="document-list">
-                            #set($countRefsAll = 0)
-                            #set($addRefsExpand = false)
-                            #set($listLimit = 3)
                             #foreach($link in $sorter.sort($linksRef,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
@@ -197,10 +184,43 @@
                                 </button>
                             #end
                         </div>
+                    #elseif($linksUrlRefOthers.size() > 0)
+                        #set($countRefs = $linksUrlRefOthers.size())
+                        <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
+                        <div class="document-list">
+                            #set($countRefsAll = 0)
+                            #set($addRefsExpand = false)
+                            #set($listLimit = 5)
+                            #foreach($link in $sorter.sort($linksUrlRefOthers,"title"))
+                                #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
+                                    #set($addRefsExpand = true)
+                                    <button type="button" id="${moreId}_more_links" class="js-expander button outline " title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
+                                        $MESSAGES.getString('searchResult.info.links.more')
+                                    </button>
+                                    <div class="js-expander-content ${moreId}_more_links is-hidden ">
+                                #end
+                                <div class="list-item">
+                                    <div>
+                                        #renderServiceTypeUrl($link.href $serviceTypes)
+                                        <a href="$link.href" class="icon" title="$link.title">
+                                            #renderUDKIcon($link.type $link.title)
+                                        </a>
+                                    </div>
+                                </div>
+                                #set($countRefsAll = $countRefsAll + 1)
+                            #end
+                            #if($addRefsExpand)
+                                #set($addRefsExpand = false)
+                                </div>
+                                <button type="button" class="button outline js-expander-close ${moreId}_more_links is-hidden" title="$MESSAGES.getString('searchResult.info.links.less')" href="#">
+                                    $MESSAGES.getString('searchResult.info.links.less')
+                                </button>
+                            #end
+                        </div>
                     #end
                     #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
                     #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
-                    #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && $licenseValue))
+                    #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
                         #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
                         #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
                         <h5>$MESSAGES.getString('searchResult.info.license')</h5>
