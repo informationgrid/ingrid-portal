@@ -104,15 +104,69 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                 String uuid = "";
                 String title = "";
                 String type = "";
+                String attachedToField = "";
+                String entryId = "";
+                String description = "";
+                String serviceUrl = null;
+                String objServiceType = null;
+                String graphicOverview = null;
+                String tmp = null;
                 
-                if(xPathUtils.nodeExists(node, "@uuid")){
-                    uuid = xPathUtils.getString(node, "@uuid").trim();
+                xpathExpression = "./@uuid";
+                tmp = xPathUtils.getString(node, xpathExpression);
+                if(tmp != null){
+                    uuid = tmp.trim();
                 }
                 
                 if(isObject){
-                    if(xPathUtils.nodeExists(node, "./idf:objectName")){
-                        title = xPathUtils.getString(node, "./idf:objectName").trim();
+                    xpathExpression = "./idf:objectName";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        title = tmp.trim();
                     }
+                    
+                    xpathExpression = "./idf:objectType";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        type = tmp.trim();
+                    }
+
+                    xpathExpression = "./idf:attachedToField";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        attachedToField = tmp.trim();
+                    }
+                    
+                    xpathExpression = "./idf:attachedToField/@entry-id";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        entryId = tmp.trim();
+                    }
+                
+                    xpathExpression = "./idf:description";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        description = tmp.trim();
+                    }
+
+                    xpathExpression = "./idf:serviceType";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        objServiceType = tmp.trim();
+                    }
+                    
+                    xpathExpression = "./idf:serviceUrl";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        serviceUrl = tmp.trim();
+                    }
+                    
+                    xpathExpression = "./idf:graphicOverview";
+                    tmp = xPathUtils.getString(node, xpathExpression);
+                    if(tmp != null){
+                        graphicOverview = tmp.trim();
+                    }
+
                 }else{
                     if(xPathUtils.nodeExists(node, "./idf:addressType")){
                         type = xPathUtils.getString(node, "./idf:addressType").trim();
@@ -142,6 +196,15 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                 if(this.iPlugId != null){
                     if(uuid != null){
                         if(isObject){
+                            link.put("objectClass", type);
+                            link.put("serviceType", objServiceType);
+                            link.put("graphicOverview", graphicOverview);
+                            if (description.length() > 0) {
+                                link.put("description", description);
+                            }
+                            if (attachedToField.length() > 0) {
+                                link.put("attachedToField", attachedToField);
+                            }
                             link.put("href", "?cmd=doShowObjectDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
                         }else{
                             link.put("href", "?cmd=doShowDocument&docuuid="+uuid+"&plugid="+this.iPlugId);

@@ -118,7 +118,8 @@
 ## FactSheet
 ################################
                 <div class="teaser-data search row">
-                    <div class="xsmall-24 small-24 medium-14 large-14 xlarge-14 columns">
+                    #set($mapImage = $TOOL.getMapImage())
+                    <div class="xsmall-24 small-24 #if($tool.hasContent($mapImage))medium-14 large-14 xlarge-14#end columns">
                     ## Durch die Ressource abgedeckte Zeitspanne
                         #set($beginTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition"))
                         #set($endTime = $TOOL.getDateValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition"))
@@ -169,14 +170,13 @@
                         #renderMultiLineAddresses("" $tmp false true)
                         #set($tmp = "")
                     </div>
+                    #if($mapImage)
                     <div class="xsmall-24 small-10 columns">
                     ## Zeige in Karte
-                    #set($tmp = $TOOL.getMapImage())
-                    #if($tmp)
-                        #renderMultiLineImage($tmp)
-                        #set($tmp = "")
-                    #end
+                        #renderMultiLineImage($mapImage)
+                        #set($mapImage = "")
                     </div>
+                    #end
                 </div>
             </div>
 
@@ -772,7 +772,6 @@
             <div class="row columns">
                 #renderSectionTitle("Schlagworte")
                 ## Verschlagwortung
-                #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "spatial_scope"))
                 #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
                 #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "inspire"))
                 #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "priority"))

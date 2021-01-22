@@ -19,7 +19,10 @@
             #if($displayPreview)
                 <div class="info--left">
                 #if($tool.hasContent($entry.graphicOverview))
-                    <img src="$entry.graphicOverview" title="" alt="">
+                    <img class="preview_image " srcset="$entry.graphicOverview" title="$entry.title" alt="img">
+                    <noscript>
+                        <img class="preview_image" src="$entry.graphicOverview" alt="$imgAlt" title="$imgTitle"/>
+                    </noscript>
                 #else
                     <div class="empty--preview">#renderInitials($entry.title)</div>
                 #end

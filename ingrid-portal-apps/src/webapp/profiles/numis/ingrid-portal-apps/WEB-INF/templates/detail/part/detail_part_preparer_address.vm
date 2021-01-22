@@ -1,0 +1,103 @@
+#set($type = $TOOL.getAddressClassType())
+#set($title = $TOOL.getAddressClassTitle($type))
+#set($lang = $TOOL.getLanguage())
+#set($modTime = $TOOL.getDateValueFromXPath("./idf:last-modified"))
+<div class="detail">
+    <div class="banner-noimage">
+        <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+            <div class="row">
+                <div class="xsmall-24 large-6 xlarge-6 columns">
+                    <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                        <span class="ic-ic-arrow-left"></span>
+                        <span class="text">Alle Suchergebnisse</span>
+                    </a>
+                </div>
+                <div class="xsmall-24 large-18 xlarge-18 columns">
+                    <div class="helper icon">
+                        #renderUDKAddressIcon($type $MESSAGES.getString("udk_adr_class_name_$type"))
+                    </div>
+                    <h2>$title</h2>
+            ##<div class="helper text date">
+            ##    <span>$MESSAGES.getString("t02_address.mod_time"): $modTime</span>
+            ##</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row nav-content search-filtered">
+        <div class="xsmall-24 large-6 xlarge-6 columns">
+            <div class="data filter">
+                <div class="teaser-data search">
+                    <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
+                        <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+                            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="detail-accordion-label" aria-expanded="false" aria-selected="false">Inhalt</a>
+                            <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
+                                <div class="boxes">
+                                    <ul class="accordion filter-group nav-group">
+                                        <li class="accordion-item">
+                                        ## Übersicht
+                                            <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("general_tab")</span></a>
+                                        ## Links und Downloads
+                                            #set($xpathList = ["./idf:objectReference"])
+                                            #if($TOOL.aNodeOfListExist($xpathList))
+                                                <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>
+                                            #end
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xsmall-24 large-18 xlarge-18 columns">
+            <div class="data">
+                <a class="anchor" id="detail-0" name="detail-1"></a>
+## FactSheet
+################################
+                <div class="teaser-data search row">
+        ## Adressen
+                    #set($tmp = $TOOL.getNodeListFromXPath("."))
+                    #renderMultiLineAddresses($MESSAGES.getString("addresses") $tmp)
+                    #set($tmp = "")
+                </div>
+            </div>
+            #set($xpathList = ["./gmd:positionName"])
+            #if($TOOL.aNodeOfListExist($xpathList))
+        ## Beschreibung
+                #renderSectionTitle($MESSAGES.getString("detail_description"))
+            <div class="row columns">
+                #set($tmp = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
+                #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
+                #renderTextLabelAbove($tmp $tmp2)
+                #set($tmp = "")
+                #set($tmp2 = "")
+            </div>
+            #end
+            #set($xpathList = ["./idf:objectReference"])
+            #if($TOOL.aNodeOfListExist($xpathList))
+        ## Verweis
+                <h2><a class="anchor" id="detail-2" name="detail-2"></a>$MESSAGES.getString("references_tab")</span></h2>
+                <div class="row columns">
+        ## Datenbezüge
+                #set($tmp = $TOOL.getReference("./idf:objectReference", true))
+                #renderLinkListImageLimit($MESSAGES.getString("search.detail.dataRelations") $tmp false true 3 "links_more" [] true)
+                #set($tmp = "")
+                </div>
+            #end
+
+                <div class="border-line-info">
+                    ## Übergeordnete Adressen 
+                    #set($tmp = $TOOL.getReference("./idf:superiorParty", false))
+                    #renderTableLinkList($MESSAGES.getString("superior_address") $tmp "true")
+                    #set($tmp = "")
+                    ## Untergeordnete Adressen 
+                    #set($tmp = $TOOL.getReference("./idf:subordinatedParty", false))
+                    #renderTableLinkList($MESSAGES.getString("subordinated_addresses") $tmp "true")
+                    #set($tmp = "")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

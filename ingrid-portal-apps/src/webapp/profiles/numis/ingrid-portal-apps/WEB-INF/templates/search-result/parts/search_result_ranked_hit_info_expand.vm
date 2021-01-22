@@ -79,7 +79,7 @@
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content" ))
 #set($urlReferenceSpecialRef = $rs.getHitDetail().get("t017_url_ref.special_ref" ))
 
-#if($referenceAllUUID || $urlReferenceLink || $x1)
+#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink || ($x1 && !$x1.isEmpty()))
     <a id="${moreId}_more" class="js-expander" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
