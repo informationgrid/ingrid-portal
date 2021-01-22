@@ -86,17 +86,16 @@
                 #set($tmp = "")
                 </div>
             #end
-
+            #set($tmpSuperior = $TOOL.getReference("./idf:superiorParty", false))
+            #set($tmpSubodinated = $TOOL.getReference("./idf:subordinatedParty", false))
+            #if(($tmpSuperior && $tmpSuperior.size() > 0) || ($tmpSubodinated && $tmpSubodinated.size() > 0))
                 <div class="border-line-info">
                     ## Übergeordnete Adressen 
-                    #set($tmp = $TOOL.getReference("./idf:superiorParty", false))
-                    #renderTableLinkList($MESSAGES.getString("superior_address") $tmp "true")
-                    #set($tmp = "")
+                    #renderTableLinkList($MESSAGES.getString("superior_address") $tmpSuperior "true")
                     ## Untergeordnete Adressen 
-                    #set($tmp = $TOOL.getReference("./idf:subordinatedParty", false))
-                    #renderTableLinkList($MESSAGES.getString("subordinated_addresses") $tmp "true")
-                    #set($tmp = "")
+                    #renderTableLinkList($MESSAGES.getString("subordinated_addresses") $tmpSubodinated "true")
                 </div>
+            #end
             </div>
         </div>
     </div>

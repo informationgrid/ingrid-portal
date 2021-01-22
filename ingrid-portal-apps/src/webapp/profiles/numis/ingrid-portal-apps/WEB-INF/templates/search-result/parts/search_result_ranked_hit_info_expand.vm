@@ -34,10 +34,12 @@
         #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
-            #set($add = $referenceAllUUID.add($objUuid))
-            #set($add = $referenceAllName.add($referingObjRefName.get($countObjRef)))
-            #set($add = $referenceAllClass.add($referingObjRefClass.get($countObjRef)))
-            #set($add = $referenceAllType.add($referingObjRefType.get($countObjRef)))
+            #if(!$referingObjRefName.get($countObjRef).isEmpty())
+                #set($add = $referenceAllUUID.add($objUuid))
+                #set($add = $referenceAllName.add($referingObjRefName.get($countObjRef)))
+                #set($add = $referenceAllClass.add($referingObjRefClass.get($countObjRef)))
+                #set($add = $referenceAllType.add($referingObjRefType.get($countObjRef)))
+            #end
         #end
     #end
     #set($countObjRef = $countObjRef + 1)
@@ -65,10 +67,12 @@
         #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
-            #set($add = $referenceAllUUID.add($objUuid))
-            #set($add = $referenceAllName.add($objRefName.get($countObjRef)))
-            #set($add = $referenceAllClass.add($objRefClass.get($countObjRef)))
-            #set($add = $referenceAllType.add($objRefType.get($countObjRef)))
+            #if(!$objRefName.get($countObjRef).isEmpty())
+                #set($add = $referenceAllUUID.add($objUuid))
+                #set($add = $referenceAllName.add($objRefName.get($countObjRef)))
+                #set($add = $referenceAllClass.add($objRefClass.get($countObjRef)))
+                #set($add = $referenceAllType.add($objRefType.get($countObjRef)))
+            #end
         #end
     #end
     #set($countObjRef = $countObjRef + 1)
