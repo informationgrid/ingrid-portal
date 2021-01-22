@@ -6,6 +6,15 @@
     </properties>
 
     <body>
+        <release version="5.7.1-SNAPSHOT" date="2021-xx-xx" description="Release 5.7.1">
+          <action type="fix" dev="wemove" issue="2315">
+            Portal: Anpassung Darstellung Teaser Boxen
+          </action>
+          <action type="add" dev="wemove" issue="1358">
+            Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
+          </action>
+        </release>
+    
         <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
           <action type="fix" dev="wemove" issue="2305">
             IGE: Fix "Lagegenauigkeit" Helptext

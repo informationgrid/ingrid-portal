@@ -230,6 +230,14 @@
       }
     }
   }
+  
+  .teaser-data {
+    height: unset !important;
+
+    .header {
+      height: unset !important;
+    }
+  }
 }
 
 /* LARGE 1024px  */

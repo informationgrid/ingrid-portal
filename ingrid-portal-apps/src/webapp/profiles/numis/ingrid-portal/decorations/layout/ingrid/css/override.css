@@ -1534,9 +1534,6 @@ a[class*="js-expander"] span.text {
     .icon--info .helper.icon.info {
         margin-bottom: 16px;
     }
-    #rss_news_teaser .teaser-data .text-wrapper {
-        height: inherit;
-    }
 }
 
 .search-filtered .border-line-info {
