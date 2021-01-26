@@ -166,7 +166,7 @@
                                     <div class="js-expander-content ${moreId}_more_links is-hidden ">
                                 #end
                                 <div class="list-item">
-                                    #if($link.serviceType)
+                                    #if($link.serviceType && !$link.serviceType.isEmpty())
                                         #if($serviceTypes.indexOf($link.serviceType) == -1)
                                             #set($add = $serviceTypes.add($link.serviceType))
                                         #end

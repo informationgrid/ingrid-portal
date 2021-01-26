@@ -547,7 +547,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                                 } else if (thesaurusName.contains("Further legal basis")) {
                                     // do not used in detail view.
 
-                                } else if (thesaurusName.length() < 1 && type.length() < 1) {
+                                } else if (thesaurusName.isEmpty() && type.isEmpty()) {
                                     listSearch.add(value);
                                 } else{
                                     listSearch.add(value);

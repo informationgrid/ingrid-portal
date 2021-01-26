@@ -201,6 +201,8 @@
                     $MESSAGES.getString('search.detail.info.less')
                 </button>
                 #end
+                #set($tmp = "")
+                #set($tmp2 = "")
             ## Zeitbezug
                 #set($xpathList = ["./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])            
                 #if($TOOL.aNodeOfListExist($xpathList))
@@ -357,7 +359,6 @@
                 #end
                 #renderLinkListImageLimit($tmpTitle $tmp false false 3 "others_more")
                 #set($tmp = "")
-                #set($xpathList = ["./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
             </div>
             #end
 ################################
@@ -368,13 +369,13 @@
             #if($TOOL.aNodeOfListExist($xpathList))
             <h2><a class="anchor" id="detail-6" name="detail-6"></a>$MESSAGES.getString("Nutzung")</h2>
             <div class="row columns">
-            ## Zugangsbeschränkungen (accessConstraints)
+            ## Zugriffsbeschränkungen (accessConstraints)
                 #set($consideredValues = ["otherRestrictions"])
                 #set($accessConstraintsXPath = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
                 #set($tmp = $TOOL.mergeList($TOOL.getListOfValuesFromXPath($accessConstraintsXPath, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($accessConstraintsXPath, "gmd:otherConstraints", false, "6010", $consideredValues)))
                 #renderTextList($MESSAGES.getString("object_access.restriction_value") $tmp)
                 #set($tmp = "")
-            ## Nutzungsbeschr�nkungen (useConstraints)
+            ## Lizenz (useConstraints)
                 #set($tmp = $TOOL.getUseConstraints())
                 #renderTextList($MESSAGES.getString("object_access.license") $tmp)
                 #set($tmp = "")

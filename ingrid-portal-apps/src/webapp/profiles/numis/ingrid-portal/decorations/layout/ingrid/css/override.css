@@ -1291,6 +1291,7 @@ header .menu-tab-row .menu-tab {
     position: absolute;
     top: 24px;
     right: 24px;
+    width: 100px;
   }
 }
 a[class*="js-expander"] {
