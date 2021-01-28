@@ -2,7 +2,7 @@
 #defineLayoutObjects()
 
 #* Loads our custom macros *#
-#parse($layoutDecoration.getResource("decorator-macros.vm"))
+#parse("/decorations/layout/ingrid/decorator-macros.vm")
 
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()

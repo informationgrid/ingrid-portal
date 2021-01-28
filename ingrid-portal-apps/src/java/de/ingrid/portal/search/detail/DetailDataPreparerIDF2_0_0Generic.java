@@ -215,9 +215,13 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
 	}
 	
 	private void renderGenericTag(List<RenderElement> renderElements, Node node){
-        if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("idf:body")) {
+        if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("html") 
+                && !node.getNodeName().equals("idf:body") && !node.getNodeName().equals("body")) {
             RenderElement renderElement = new RenderElement();
             renderElement.setType("html");
+            DetailPartPreparer dpp = new DetailPartPreparer();
+            dpp.init(node, this.iPlugId, this.request, this.response, this.context);
+            renderElement.setPreparer(dpp);
             String body="";
             if (node.getNodeType() == Node.TEXT_NODE) {
                 body = node.getNodeValue().trim();
@@ -246,7 +250,8 @@ public class DetailDataPreparerIDF2_0_0Generic implements DetailDataPreparer {
         }
         
         if (isGenericIdfNode && node.getNodeType() != Node.TEXT_NODE) {
-            if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("idf:body")) {
+            if (!node.getNodeName().equals("idf:html") && !node.getNodeName().equals("html") 
+                    && !node.getNodeName().equals("idf:body") && !node.getNodeName().equals("body")) {
                 RenderElement renderElement = new RenderElement();
                 renderElement.setType("html");
                 String body="";

@@ -1,17 +1,17 @@
 #if ($zdm == "NOK")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_nok.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_nok.vm")
 #elseif ($zdm == "NSK")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_nsk.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_nsk.vm")
 #elseif ($zdm == "OSK")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_osk.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_osk.vm")
 #elseif ($zdm == "Tideelbe")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_tideelbe.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_tideelbe.vm")
 #elseif ($zdm == "Tideems")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_tideems.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_tideems.vm")
 #elseif ($zdm == "Tideweser")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_tideweser.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_tideweser.vm")
 #else
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_body_default.vm")
+    #parse("/decorations/layout/ingrid/templates/header/header_body_default.vm")
 #end
 
 <script>
