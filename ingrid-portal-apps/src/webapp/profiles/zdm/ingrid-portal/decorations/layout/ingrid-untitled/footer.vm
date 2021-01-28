@@ -1,21 +1,7 @@
       </div>
     </div>
     #if(!$isMap)
-      #if ($zdm == "NOK")
-          #parse("/decorations/layout/ingrid/templates/footer/footer_nok.vm")
-      #elseif ($zdm == "NSK")
-          #parse("/decorations/layout/ingrid/templates/footer/footer_nsk.vm")
-      #elseif ($zdm == "OSK")
-          #parse("/decorations/layout/ingrid/templates/footer/footer_osk.vm")
-      #elseif ($zdm == "Tideelbe")
-          #parse("/decorations/layout/ingrid/templates/footer/footer_tideelbe.vm")
-      #elseif ($zdm == "Tideems")
-          #parse("/decorations/layout/ingrid/templates/footer/footer_tideems.vm")
-      #elseif ($zdm == "Tideweser")
-          #parse("/decorations/layout/ingrid/templates/footer/footer_tideweser.vm")
-      #else
-          #parse("/decorations/layout/ingrid/templates/footer/footer_default.vm")
-      #end
+      #parse("/decorations/layout/ingrid/templates/footer/footer_local.vm")
     #end
   </body>
 </html>

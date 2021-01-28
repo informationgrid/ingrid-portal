@@ -1,18 +1,4 @@
-#if ($zdm == "NOK")
-    #parse("/decorations/layout/ingrid/templates/header/header_body_nok.vm")
-#elseif ($zdm == "NSK")
-    #parse("/decorations/layout/ingrid/templates/header/header_body_nsk.vm")
-#elseif ($zdm == "OSK")
-    #parse("/decorations/layout/ingrid/templates/header/header_body_osk.vm")
-#elseif ($zdm == "Tideelbe")
-    #parse("/decorations/layout/ingrid/templates/header/header_body_tideelbe.vm")
-#elseif ($zdm == "Tideems")
-    #parse("/decorations/layout/ingrid/templates/header/header_body_tideems.vm")
-#elseif ($zdm == "Tideweser")
-    #parse("/decorations/layout/ingrid/templates/header/header_body_tideweser.vm")
-#else
-    #parse("/decorations/layout/ingrid/templates/header/header_body_default.vm")
-#end
+#parse("/decorations/layout/ingrid/templates/header/header_body_local.vm")
 
 <script>
     var breadCrump = 'HTTP Status 404';
