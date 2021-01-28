@@ -39,3 +39,22 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus, textarea:f
 #header.maps {
   position: relative !important;
 }
+
+@media only screen and (min-width: 64em) {
+  #navPrimary>ul {
+      margin-left: auto !important;
+  }
+}
+
+@media only screen and (min-width: 64em) {
+  #navPrimary {
+      display: flex !important;
+      align-items: flex-end !important;
+  }
+}
+
+@media only screen and (min-width: 64em) {
+  #header.smaller .addlogo p, #header.smaller .logo p, #header .addShrinkLogo, #header.smaller #wrapperBreadcrumbs {
+      display: block !important;
+  }
+}
