@@ -7,12 +7,18 @@
 
     <body>
 
+        <release version="5.5.5" date="2021-02-01" description="Release 5.5.5">
+          <action type="add" dev="wemove" issue="2212">
+            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
+          </action>
+          <action type="add" dev="wemove" issue="1746">
+            Fix uuid link on search catalog
+          </action>
+        </release>
+      
         <release version="5.5.3" date="2020-10-12" description="Release 5.5.3">
           <action type="update" dev="wemove" issue="2150">
             UVP: UVP Link von saarländischer Seite anpassen.
-          </action>
-          <action type="add" dev="wemove" issue="2212">
-            Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
           </action>
         </release>
 
