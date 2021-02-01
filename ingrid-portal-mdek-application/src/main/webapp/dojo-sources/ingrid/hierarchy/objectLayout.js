@@ -544,7 +544,7 @@ define([
 
                 var ref1VFormatDetailsStructure = [{
                     field: 'topologyLevel',
-                    name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"),
+                    name: message.get("ui.obj.type1.vectorFormat.topology"),
                     width: '260px',
                     type: gridEditors.SelectboxEditor,
                     options: [], // will be filled later, when syslists are loaded

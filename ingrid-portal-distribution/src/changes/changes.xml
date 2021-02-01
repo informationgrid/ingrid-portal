@@ -6,6 +6,12 @@
     </properties>
 
     <body>
+        <release version="5.8.0" date="2021-xx-xx" description="Release 5.8.0">
+          <action type="fix" dev="wemove" issue="2336">
+            IGE: Fix vector format table column name and add validation
+          </action>
+        </release>
+      
         <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
           <action type="fix" dev="wemove" issue="2305">
             IGE: Fix "Lagegenauigkeit" Helptext
