@@ -1,15 +1,1 @@
-#if ($zdm == "NOK")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_nok.vm")
-#elseif ($zdm == "NSK")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_nsk.vm")
-#elseif ($zdm == "OSK")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_osk.vm")
-#elseif ($zdm == "Tideelbe")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_tideelbe.vm")
-#elseif ($zdm == "Tideems")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_tideems.vm")
-#elseif ($zdm == "Tideweser")
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_tideweser.vm")
-#else
-    #parse(https://www.kuestendaten.de/DEcorations/layout/ingrid/templates/header/header_head_default.vm")
-#end
+#parse("/decorations/layout/ingrid/templates/header/header_head_local.vm")
