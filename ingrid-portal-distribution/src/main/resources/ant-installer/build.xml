@@ -377,7 +377,7 @@
 
     <target name="writeTomcatSSLProps" description="">
         <echo>Bearbeitung von Tomcat Konfigurationen für SSL.</echo>
-        <replace      file="${installedTomcatConfDir}/server.xml" token='redirectPort="8443" />' value='redirectPort="8443" proxyPort="443" scheme="https" secure="true" emptySessionPath="true" />'/>
+        <replace      file="${installedTomcatConfDir}/server.xml" token='redirectPort="8443" />' value='redirectPort="8443" proxyPort="443" scheme="https" secure="true" />'/>
     </target>
 
     <target name="ExtractIge">
