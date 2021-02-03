@@ -7,6 +7,12 @@
 
     <body>
 
+        <release version="5.5.6" date="2021-xx-xx" description="Release 5.5.6">
+          <action type="update" dev="wemove" issue="2346">
+            IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
+          </action>
+        </release>
+      
         <release version="5.5.5" date="2021-02-01" description="Release 5.5.5">
           <action type="add" dev="wemove" issue="2212">
             Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
