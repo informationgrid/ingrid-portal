@@ -13,6 +13,9 @@
           <action type="update" dev="wemove" issue="2294">
             Portal: Aktualisierung TOMCAT auf aktuellere Version 9.0.41
           </action>
+          <action type="update" dev="wemove" issue="2346">
+            IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
+          </action>
         </release>
       
         <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
