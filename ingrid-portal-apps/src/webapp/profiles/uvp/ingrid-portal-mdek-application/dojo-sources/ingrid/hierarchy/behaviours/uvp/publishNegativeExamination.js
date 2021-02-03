@@ -23,20 +23,15 @@
 var uvp = {};
 
 define([
-    "dojo/_base/declare",
-    "dojo/dom",
-    "dojo/dom-class",
-    "dojo/query",
-    "dojo/topic",
-    "dijit/registry",
-    "ingrid/message"
-], function(declare, dom, domClass, query, topic, registry, message) {
+    "dojo/_base/declare"
+], function(declare) {
 
     return declare(null, {
         title: "UVP: 'Negative Vorprüfungen' veröffentlichen",
         description: "Bei Auswahl, werden zusätzliche Formularfelder angezeigt, für die vollständige Erfassung einer negativen Vorprüfung. Diese werden auch nur im Portal angezeigt, wenn diese Checkbox ausgewählt ist.",
         defaultActive: false,
         category: "UVP",
+        params: [{id: "onlyWithSpatialReferences", label: "nur mit Raumbezügen", isCheckbox: true, "default": false}],
         run: function() {
             uvp.publishNegativeExaminations = true;
         }
