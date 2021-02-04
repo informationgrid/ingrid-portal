@@ -22,5 +22,9 @@
   function onParamChange(params) {
     window.history.pushState('', '', '#' + params );
   }
-  
+
+  $('iframe').load( function() {
+    $('iframe').contents().find("head")
+            .append($("<link rel='stylesheet' href='/decorations/layout/ingrid/css/measure.css'>"));
+  });
 </script>
