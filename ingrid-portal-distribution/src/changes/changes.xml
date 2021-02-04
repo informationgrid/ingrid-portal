@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="1358">
             Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
           </action>
+          <action type="fix" dev="wemove" issue="2303">
+            Portal: In Katalogdarstellung sollen nur Katalog mit Suchergebnissen dargestellt werden
+          </action>
         </release>
 
         <release version="5.7.1" date="2021-xx-xx" description="Release 5.7.1">
