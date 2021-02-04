@@ -196,7 +196,7 @@
                                 #renderTextList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "priority"))
                                 #renderTextList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "spatial_scope"))
                                 #renderTextList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "gemet"))
-                                #renderTextList($MESSAGES.getString("adv_group") $TOOL.getAlternateTitleListFromCodelist("8010"))
+                                #renderTextList($MESSAGES.getString("adv_group") $advGroup)
                                 ## ISO-Themenkategorien
                                 #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
                             </div>
