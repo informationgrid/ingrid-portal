@@ -785,11 +785,7 @@
             #renderTextLabelAbove($MESSAGES.getString("xml_link_label") $tmp)
             #set($tmp = "")
         ## Ansprechpartner (Metadatum)
-            #set($tmp = $TOOL.getValueFromXPath('./gmd:contact/*/gmd:role/gmd:CI_RoleCode/@codeListValue', '505'))
-            #set($tmp2 = $TOOL.getNodeListFromXPath("./gmd:contact"))
-            #renderMultiLineAddresses("$tmp ($MESSAGES.getString('pointofcontact_metadata'))" $tmp2 true)
-            #set($tmp = "")
-            #set($tmp2 = "")
+        #parse ('/WEB-INF/templates/detail/part/metadata/metadata_part_metadatum.vm')
 ## Additional Fields Example
             #set($xpathList = ["./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"])
             #set($tabtitle = $TOOL.getValueFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']"))
