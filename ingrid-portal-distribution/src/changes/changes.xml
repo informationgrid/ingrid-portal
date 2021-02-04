@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.8.0" date="2021-xx-xx" description="Release 5.8.0">
+          <action type="add" dev="wemove" issue="2256">
+            Portal: Erstellung Portal-Profil Sachsen-Anhalt Umweltportal
+          </action>
           <action type="fix" dev="wemove" issue="2338">
             IGE: Udpate behaviour label and tooltip
           </action>
