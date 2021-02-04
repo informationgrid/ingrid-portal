@@ -13,6 +13,9 @@
           <action type="add" dev="wemove" issue="2185">
             Portal: PortalU RLP - Umstellung auf neues Design
           </action>
+          <action type="fix" dev="wemove" issue="2303">
+            Portal: In Katalogdarstellung sollen nur Katalog mit Suchergebnissen dargestellt werden
+          </action>
           <action type="fix" dev="wemove" issue="2338">
             IGE: Udpate behaviour label and tooltip
           </action>
