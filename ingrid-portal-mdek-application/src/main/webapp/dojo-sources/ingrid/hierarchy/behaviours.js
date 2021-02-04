@@ -201,7 +201,7 @@ define(["dojo/_base/declare",
 
         requireUseConstraints: {
             title: "Nutzungsbedingungen - Pflichtfeld für Geodatensatz und -dienst",
-            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die die Objektklasse 1 oder 3 ausgewählt wurde.",
+            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints) wird verpflichtend, wenn Geodatensatz oder Geodatendienst ausgewählt wurde.",
             issue: "https://dev.informationgrid.eu/redmine/issues/223,1362",
             defaultActive: true,
         	run: function() {
@@ -216,7 +216,7 @@ define(["dojo/_base/declare",
         },
 
         validateGraphicPreviewTableEntries: {
-            title: "Vorschaugrafik - Überprüfung der Tebelleneinträge",
+            title: "Vorschaugrafik - Überprüfung der Tabelleneinträge",
             description: "Für Vorschaugrafiken muss ein Dateiname immer vorhanden sein.",
             defaultActive: true,
             run: function() {
