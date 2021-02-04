@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.7.1" date="2021-xx-xx" description="Release 5.7.1">
+          <action type="fix" dev="wemove" issue="2338">
+            IGE: Udpate behaviour label and tooltip
+          </action>
           <action type="fix" dev="wemove" issue="2336">
             IGE: Fix vector format table column name and add validation
           </action>
