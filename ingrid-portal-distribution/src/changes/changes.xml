@@ -10,6 +10,9 @@
           <action type="add" dev="wemove" issue="2256">
             Portal: Erstellung Portal-Profil Sachsen-Anhalt Umweltportal
           </action>
+          <action type="add" dev="wemove" issue="2185">
+            Portal: PortalU RLP - Umstellung auf neues Design
+          </action>
           <action type="fix" dev="wemove" issue="2338">
             IGE: Udpate behaviour label and tooltip
           </action>
