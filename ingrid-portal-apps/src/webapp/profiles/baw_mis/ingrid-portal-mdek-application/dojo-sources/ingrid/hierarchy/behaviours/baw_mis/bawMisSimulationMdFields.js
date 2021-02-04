@@ -37,20 +37,14 @@ define([
     "ingrid/hierarchy/dirty",
     "ingrid/layoutCreator",
     "ingrid/menu",
-    "ingrid/message",
-    "ingrid/utils/Store",
-    "module"
-], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message, UtilStore, module) {
+    "ingrid/message"
+], function(MenuItem, MenuSeparator, registry, array, declare, lang, dom, domClass, construct, topic, dialog, Editors, Formatters, dirty, creator, menu, message) {
 
     const SIM_MODEL_TYPE_TABLE_ID = "simModelTypeTable";
     const SIM_PROCESS_ID = "simProcess";
     const SIM_SPATIAL_DIMENSION_ID = "simSpatialDimension";
     const TIMESTEP_SIZE_ID = "dqAccTimeMeas";
     const SIM_PARAM_TABLE_ID = "simParamTable";
-
-    const DISCRETE_NUMERIC = "DISCRETE_NUMERIC";
-    const DISCRETE_STRING = "DISCRETE_STRING";
-    const RANGE_NUMERIC = "RANGE_NUMERIC";
 
     return declare(null, {
         title: "Simulationsmetadatenfelder",
@@ -59,7 +53,7 @@ define([
         category: "BAW-MIS",
 
         run: function() {
-            var self = require(module.id);
+            var self = this;
             var additionalFields = require('ingrid/IgeActions').additionalFieldWidgets;
             var newFieldsToDirtyCheck = [];
 
@@ -188,37 +182,26 @@ define([
                     width: "150px"
                 },
                 {
-                    field: "simParamValue",
+                    field: "simParamValuesFormatted",
                     name: message.get("ui.obj.baw.simulation.parameter.table.column.value"),
                     editable: false,
                     isMandatory: true,
                     width: "150px"
-                    // Also see comment below
                 },
                 {
                     field: "simParamUnit",
                     name: message.get("ui.obj.baw.simulation.parameter.table.column.units"),
                     editable: false,
-                    //isMandatory: true,
                     width: "auto"
+                },
+                {
+                    field: "simParamValueType",
+                    hidden: true
+                },
+                {
+                    field: "simParamValues",
+                    hidden: true
                 }
-                /*
-                 * Besides the visible columns listed above, the table contains
-                 * data entered using the dialog box, which isn't directly
-                 * visible in this table. This data is:
-                 * - simParamValueType -> Depends on which checkbox is selected
-                 *                        in the dialog box.
-                 * - values -> Array containing:
-                 *             - row data from discrete values table
-                 *             - two entries: one each from the minimum and
-                 *               maximum value text fields.
-                 *
-                 * Additionally, the value displayed in the simParamValue column
-                 * is derived using the simulationParameterValueArrayToString
-                 * function below. Since this value is a derived one, it can be
-                 * recreated every time to avoid inconsistency with the actual
-                 * values.
-                 */
             ];
 
             // Create the simulation table parameter
@@ -241,103 +224,6 @@ define([
 
             // Add link for creating a new entry to the simulation parameter table
             this._createAppendSimulationParameterLink();
-
-            // Special handling of nested table data originating from the dialog box
-            topic.subscribe("beforeFinishGettingObjectNodeData", function (nodeData) {
-                /*
-                 * We manipulate the additional field data to add values that
-                 * have been added in the dialog box. Ideally one would add
-                 * another nested level. However, that doesn't work perfectly
-                 * right now at the IGC level because if multiple rows at the
-                 * intermediate level have the same key, then it is impossible
-                 * to map the nested values to the correct row.
-                 *
-                 * See also the comment in the structure of this table.
-                 */
-                var simParamTableData = registry.byId(SIM_PARAM_TABLE_ID).data;
-                var simParamNodeAdditionalValues = nodeData.additionalFields.find(function (row) {
-                    return row.identifier === SIM_PARAM_TABLE_ID;
-                });
-
-                var newTableRows = [];
-
-                if (simParamTableData.length > 0) {
-                    simParamNodeAdditionalValues.tableRows.forEach(function (row, idx) {
-                        // Remove existing simParamValue entry
-                        const rowToEdit = row.filter(function (r) {
-                            return r.identifier !== "simParamValue"
-                        });
-
-                        const simParamValueType = simParamTableData[idx].simParamValueType;
-                        rowToEdit.push({
-                            identifier: "simParamValueType",
-                            listId: "-1",
-                            tableRows: null,
-                            value: simParamValueType
-                        });
-
-                        // Add values to the additional values object
-                        simParamTableData[idx].values.forEach(function (value, validx) {
-                            rowToEdit.push({
-                                identifier: "simParamValue." + (validx + 1), // Start count at 1 instead of 0
-                                listId: "-1",
-                                tableRows: null,
-                                value: value
-                            });
-                        });
-
-                        newTableRows.push(rowToEdit);
-                    });
-                }
-
-                simParamNodeAdditionalValues.tableRows = newTableRows;
-            });
-
-            topic.subscribe("beforeFinishApplyingObjectNodeData", function (nodeData) {
-                /*
-                 * Since values are stored as additional fields, some columns
-                 * have been automatically handled by this point. We just need
-                 * to handle two hidden fields here. See also the comment on the
-                 * structure for the table above.
-                 */
-                var simParamTableData = registry.byId(SIM_PARAM_TABLE_ID).data;
-                var nodeAdditionalFieldData = nodeData.additionalFields.find(function (row) {
-                    return row.identifier === SIM_PARAM_TABLE_ID;
-                });
-
-                // If no additional values for the desired id are found then there is nothing to do
-                if (!nodeAdditionalFieldData || !nodeAdditionalFieldData.tableRows) return;
-
-                nodeAdditionalFieldData.tableRows.forEach(function (additionalFieldRow, idx) {
-                    const simParamTableRow = simParamTableData[idx];
-
-                    const valuesEntries = additionalFieldRow.filter(function (row) {
-                        return row.identifier.startsWith("simParamValue.");
-                    });
-
-                    if (valuesEntries) {
-                        var simParamValueType = simParamTableRow.simParamValueType;
-                        const hasNumericValues = self.hasNumericValues(simParamValueType);
-                        var values = [];
-                        for (var i = 0; i < valuesEntries.length; i++) {
-                            const identifier = "simParamValue." + (i + 1);
-                            const row = valuesEntries.find(function (row) {
-                                return row.identifier === identifier;
-                            });
-
-                            if (row) {
-                                const v = hasNumericValues ? JSON.parse(row.value) : row.value;
-                                values.push(v);
-                            }
-                            delete simParamTableRow[identifier];
-                        }
-
-                        simParamTableRow["values"] = values;
-                        simParamTableRow["simParamValue"] = self.simulationParameterValueArrayToString(values, simParamValueType);
-                    }
-                });
-                UtilStore.updateWriteStore(SIM_PARAM_TABLE_ID, simParamTableData);
-            });
 
             array.forEach(newFieldsToDirtyCheck, lang.hitch(dirty, dirty._connectWidgetWithDirtyFlag));
             return registry.byId(SIM_PARAM_TABLE_ID).promiseInit;
@@ -406,45 +292,6 @@ define([
                 domClass.remove(domElementId, "required");
                 domClass.add(domElementId, "optional");
             }
-        },
-
-        /*
-         * Create a string representation for the simulation parameters as
-         * follows:
-         * - A single discrete value is displayed as is,
-         * - Multiple discrete values are displayed as the stringified
-         *   form of the "values" array e.g. [ 1, 2, 3 ], and
-         * - Min and max values (not discrete) are displayed in square brackets
-         *   and delimited by two dots e.g. [ 0 .. 5 ]
-         */
-        simulationParameterValueArrayToString: function (values, simParamValueType) {
-            const hasDiscreteValues = this.hasDiscreteValues(simParamValueType);
-            const formatted = values.map(function (val) {
-                var v = dojo.number.format(val);
-                return v ? v : val;
-            });
-
-            var valuesString = "";
-            if (hasDiscreteValues) {
-                if (formatted.length === 1) {
-                    valuesString += formatted[0];
-                } else {
-                    valuesString = JSON.stringify(formatted);
-                }
-            } else {
-                const min = formatted[0];
-                const max = formatted[1];
-                valuesString = "[" + min + " .. " + max + "]";
-            }
-            return valuesString;
-        },
-
-        hasNumericValues(simParamValueType) {
-            return simParamValueType === DISCRETE_NUMERIC || simParamValueType === RANGE_NUMERIC;
-        },
-
-        hasDiscreteValues(simParamValueType) {
-            return simParamValueType === DISCRETE_NUMERIC || simParamValueType === DISCRETE_STRING;
         }
 
     })();

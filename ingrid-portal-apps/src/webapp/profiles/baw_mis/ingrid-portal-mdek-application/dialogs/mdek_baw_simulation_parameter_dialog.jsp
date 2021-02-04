@@ -48,11 +48,9 @@
         "ingrid/utils/Store"
     ], function (NumberTextBox, registry, domClass, on, query, warnDialog, checks, Editors, Formatters, layoutCreator, message, UtilStore) {
 
-        // TODO duplicate code from bawUiGeneral.js
         const DISCRETE_NUMERIC = "DISCRETE_NUMERIC";
         const DISCRETE_STRING = "DISCRETE_STRING";
         const RANGE_NUMERIC = "RANGE_NUMERIC";
-        const bawUiGeneralModule = require("ingrid/hierarchy/behaviours/baw_mis/bawUiGeneral");
 
         var caller = {};
         var dialog = null;
@@ -80,29 +78,29 @@
                 registry.byId("spType").set("value", row.simParamType);
                 registry.byId("spUnits").set("value", row.simParamUnit);
 
-                var values = row.values;
+                var values = JSON.parse(row.simParamValues);
+
+                var tableId;
                 if (simParamValueType === RANGE_NUMERIC) {
                     registry.byId("spRangeValsRadio").set("value", "on");
+
                     registry.byId("spValueMinInput").set("value", values[0]);
                     registry.byId("spValueMaxInput").set("value", values[1]);
+                } else if (simParamValueType === DISCRETE_NUMERIC) {
+                    registry.byId("spDiscreteNumValsRadio").set("value", "on");
+                    tableId = "spDiscreteNumValsTable";
                 } else {
-                    var tableId;
-                    if (simParamValueType === DISCRETE_NUMERIC) {
-                        tableId = "spDiscreteNumValsTable";
-                        registry.byId("spDiscreteNumValsRadio").set("value", "on");
-                    } else {
-                        tableId = "spDiscreteStrValsTable";
-                        registry.byId("spDiscreteStrValsRadio").set("value", "on");
-                    }
+                    registry.byId("spDiscreteStrValsRadio").set("value", "on");
+                    tableId = "spDiscreteStrValsTable";
+                }
+
+                if (tableId) {
                     var tableData = registry.byId(tableId).data;
 
-                    if (values instanceof Array) {
-                        values.forEach(function (v) {
-                            tableData.push({paramValue: v});
-                        });
-                    } else {
-                        tableData.push({paramValue: values});
-                    }
+                    values.forEach(function (v) {
+                        tableData.push({paramValue: v});
+                    });
+
                     UtilStore.updateWriteStore(tableId, tableData);
                 }
             }
@@ -272,28 +270,73 @@
                 values.push(min);
                 values.push(max);
             }
-            var valuesString = bawUiGeneralModule.simulationParameterValueArrayToString(values, simParamValueType);
 
             if (isRowBeingEdited) {
                 const row = caller.selectedRow;
                 row["simParamName"] = simParamName;
                 row["simParamType"] = simParamType;
                 row["simParamUnit"] = simParamUnits;
-                row["simParamValue"] = valuesString;
                 row["simParamValueType"] = simParamValueType;
-                row["values"] = values;
+                row["simParamValues"] = JSON.stringify(values);
+                row["simParamValuesFormatted"] = simulationParameterValueArrayToString(values);
             } else {
                 tableData.push({
                     simParamName: simParamName,
                     simParamType: simParamType,
                     simParamUnit: simParamUnits,
-                    simParamValue: valuesString,
                     simParamValueType: simParamValueType,
-                    values: values
+                    simParamValues: JSON.stringify(values),
+                    simParamValuesFormatted: simulationParameterValueArrayToString(values)
                 });
             }
             UtilStore.updateWriteStore(tableId, tableData);
             _container_.hide();
+        }
+
+        /*
+         * Create a string representation for the simulation parameters as
+         * follows:
+         * - A single discrete value is displayed as is,
+         * - Multiple discrete values are displayed as an array of values
+         *   separated by the | character e.g. [ 1 | 2 | 3 ] truncated after a
+         *   certain character limit, and
+         * - Min and max values (not discrete) are displayed in square brackets
+         *   and delimited by two dots e.g. [ 0 .. 5 ]
+         */
+        function simulationParameterValueArrayToString(values) {
+            var hasDiscreteValues = simParamValueType === DISCRETE_NUMERIC || simParamValueType === DISCRETE_STRING;
+
+            var formatted = values.map(function (val) {
+                var v = dojo.number.format(val);
+                return v ? v : val;
+            });
+
+            var valuesString = "";
+            if (hasDiscreteValues) {
+                if (formatted.length === 1) {
+                    valuesString += formatted[0];
+                } else {
+                    var maxLength = 30;
+                    valuesString += "[ ";
+                    for (var i=0; i<formatted.length; i++) {
+                        if (i > 0) {
+                            valuesString += " | ";
+                        }
+                        if (valuesString.length > maxLength) {
+                            valuesString += "...";
+                            break;
+                        } else {
+                            valuesString += formatted[i];
+                        }
+                    }
+                    valuesString += " ]";
+                }
+            } else {
+                const min = formatted[0];
+                const max = formatted[1];
+                valuesString = "[" + min + " .. " + max + "]";
+            }
+            return valuesString;
         }
 
         function cancel() {
