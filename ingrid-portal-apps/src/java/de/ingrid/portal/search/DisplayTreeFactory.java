@@ -45,9 +45,11 @@ import de.ingrid.portal.search.catalog.CatalogTreeDataProvider;
 import de.ingrid.portal.search.catalog.CatalogTreeDataProviderFactory;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
+import de.ingrid.utils.IngridHits;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 import de.ingrid.utils.query.TermQuery;
+import de.ingrid.utils.queryparser.QueryStringParser;
 
 /**
  * TODO Describe your created type (class, etc.) here.
@@ -237,79 +239,110 @@ public class DisplayTreeFactory {
                 PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER);
         boolean hiddenCatalogName = PortalConfig.getInstance().getBoolean(
                 PortalConfig.PORTAL_HIERARCHY_CATALOGNAME_HIDDEN, false);
-        
+
         for (int i = 0; i < plugs.length; i++) {
             PlugDescription plug = plugs[i];
+            String queryString = "iplugs:\"" + plug.getPlugId() + "\"";
 
-            if(!hiddenCatalogName){
-                String[] partners = plug.getPartners();
-                StringBuilder partnerNameBuffer = new StringBuilder("");
-                for (int j = 0; j < partners.length; j++) {
-                    partnerNameBuffer.append(UtilsDB.getPartnerFromKey(partners[j]));
-                }
-    
-                // Partner node
-                String partnerName = partnerNameBuffer.toString();
-                if (partnerNode == null || 
-                        !partnerNode.getName().equals(partnerName)) {
-                    partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);
-                    partnerNode.setType(DisplayTreeNode.GENERIC);
-                    partnerNode.put(NODE_LEVEL, 1);
-                    partnerNode.put(NODE_EXPANDABLE, true);
-                    // no "plugid", no "docid" !
-                    if(partnerRestriction == null || partnerRestriction.length() < 1){
-                        partnerNode.setParent(root);
-                        root.addChild(partnerNode);
+            if(hasPlugHits(queryString)) { 
+                if(!hiddenCatalogName){
+                    String[] partners = plug.getPartners();
+                    StringBuilder partnerNameBuffer = new StringBuilder("");
+                    for (int j = 0; j < partners.length; j++) {
+                        partnerNameBuffer.append(UtilsDB.getPartnerFromKey(partners[j]));
+                    }
+
+                    // Partner node
+                    String partnerName = partnerNameBuffer.toString();
+                    if (partnerNode == null || 
+                            !partnerNode.getName().equals(partnerName)) {
+                        partnerNode = new DisplayTreeNode("" + root.getNextId(), partnerName, false);
+                        partnerNode.setType(DisplayTreeNode.GENERIC);
+                        partnerNode.put(NODE_LEVEL, 1);
+                        partnerNode.put(NODE_EXPANDABLE, true);
+                        // no "plugid", no "docid" !
+                        if(partnerRestriction == null || partnerRestriction.length() < 1){
+                            partnerNode.setParent(root);
+                            root.addChild(partnerNode);
+                        }
+                        
                     }
                     
+                    // catalog node
+                    String catalogName = plug.getDataSourceName();
+                    if (catalogNode == null || 
+                            !catalogNode.getName().equals(catalogName)) {
+                        catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);
+                        catalogNode.setType(DisplayTreeNode.GENERIC);
+                        catalogNode.put(NODE_LEVEL, 2);
+                        catalogNode.put(NODE_EXPANDABLE, true);
+                        // no "plugid", no "docid" !
+                         if(partnerRestriction != null && partnerRestriction.length() > 0){
+                             catalogNode.setParent(root);
+                             root.addChild(catalogNode);
+                         }else{
+                            catalogNode.setParent(partnerNode);
+                             partnerNode.addChild(catalogNode);
+                         }
+                        
+                    }
+                }
+                // iPlug Node
+                String name;
+                String type = null;
+                if(hiddenCatalogName){
+                    catalogNode = root;
                 }
                 
-                // catalog node
-                String catalogName = plug.getDataSourceName();
-                if (catalogNode == null || 
-                        !catalogNode.getName().equals(catalogName)) {
-                    catalogNode = new DisplayTreeNode("" + root.getNextId(), catalogName, false);                
-                    catalogNode.setType(DisplayTreeNode.GENERIC);
-                    catalogNode.put(NODE_LEVEL, 2);
-                    catalogNode.put(NODE_EXPANDABLE, true);
-                    // no "plugid", no "docid" !
-                     if(partnerRestriction != null && partnerRestriction.length() > 0){
-                         catalogNode.setParent(root);
-                         root.addChild(catalogNode);
-                     }else{
-                        catalogNode.setParent(partnerNode);
-                         partnerNode.addChild(catalogNode);
-                     }
-                    
+                if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) && IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+                    name = "searchCatHierarchy.tree.objects";
+                    type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
+                    queryString = "iplugs:\"" + plug.getPlugId() + "\" datatype:metadata";
+                    if(hasPlugHits(queryString)) { 
+                        addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                    }
+
+                    name = "searchCatHierarchy.tree.addresses";
+                    type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
+                    queryString = "iplugs:\"" + plug.getPlugId() + "\" datatype:address";
+                    if(hasPlugHits(queryString)) { 
+                        addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                    }
+                } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
+                    name = "searchCatHierarchy.tree.objects";
+                    type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
+                    queryString = "iplugs:\"" + plug.getPlugId() + "\" datatype:metadata";
+                    if(hasPlugHits(queryString)) { 
+                        addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                    }
+                } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
+                    name = "searchCatHierarchy.tree.addresses";
+                    type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
+                    queryString = "iplugs:\"" + plug.getPlugId() + "\" datatype:address";
+                    if(hasPlugHits(queryString)) { 
+                        addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
+                    }
                 }
-            }
-            // iPlug Node
-            String name;
-            String type = null;
-            if(hiddenCatalogName){
-                catalogNode = root;
-            }
-            
-            if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS) && IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-                name = "searchCatHierarchy.tree.objects";
-                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
-                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
-                name = "searchCatHierarchy.tree.addresses";
-                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
-                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
-            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS)) {
-                name = "searchCatHierarchy.tree.objects";
-                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS;
-                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
-            } else if (IPlugHelper.hasDataType(plug, Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS)) {
-                name = "searchCatHierarchy.tree.addresses";
-                type = Settings.QVALUE_DATATYPE_IPLUG_DSC_ECS_ADDRESS;
-                addTreeNode( root, name, type, plug.getPlugId(), catalogNode );
             }
         }
         return root;
     }
     
+    public static boolean hasPlugHits(String queryString) {
+        IngridHits hits = null;
+        IngridQuery query = null;
+        
+        try {
+            query = QueryStringParser.parse( queryString );
+            hits = IBUSInterfaceImpl.getInstance().search( query, 1, 0, 0, PortalConfig.getInstance().getInt( PortalConfig.QUERY_TIMEOUT_RANKED, 5000 ));
+        } catch (Exception e) {
+        }
+        if(hits != null && hits.length() > 0) {
+            return true;
+        }
+        return false;
+    }
+
     private static void addTreeNode(DisplayTreeNode root, String name, Object type, String plugId, DisplayTreeNode catalogNode) {
         DisplayTreeNode node = new DisplayTreeNode("" + root.getNextId(), name, false);
         node.setType(DisplayTreeNode.GENERIC);
