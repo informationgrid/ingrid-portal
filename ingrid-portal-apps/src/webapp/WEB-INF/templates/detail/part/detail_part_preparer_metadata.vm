@@ -28,7 +28,7 @@
                             <div class="tab__toggle is-active" data-tabid="tab-1"><a href="#">$MESSAGES.getString("general_tab")</a></div>
                             ## Verweise
                             #set($xpathList = ["./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
-                            #if($TOOL.aNodeOfListExist($xpathList))
+                            #if($TOOL.aNodeOfListExist($xpathList) || $advGroup.size() > 0)
                                 <div class="tab__toggle" data-tabid="tab-2"><a href="#">$MESSAGES.getString("references_tab")</a></div>
                             #end
                             ## Raum/Zeit
@@ -104,7 +104,8 @@
 #if($TOOL.getTitle())
     #set($tmp = $TOOL.getTitle())
     #set($tmp2 = $TOOL.getTimeStamp("./gmd:dateStamp"))
-    #renderDetailHeader ($tmp $type $tmp2)
+    #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
+    #renderDetailHeader ($tmp $type $tmp2 $advGroup)
     #set($tmp = "")
     #set($tmp2 = "")
     <section id="detail_meta" class="block">
@@ -119,7 +120,7 @@
                         <div class="media ob-clear">
                             ## Beschreibung
                             <div class="media__body ob-container ob-container">
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString"))
+                                #set($tmp = $TOOL.getAlternateTitle())
                                 #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
                                 #renderTextLabelAbove($tmp $tmp2)
                                 #set($tmp = "")
@@ -146,7 +147,7 @@
                 </div>
             ## Verweis
             #set($xpathList = ["./idf:doi","./idf:crossReference","./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions","./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
-            #if($TOOL.aNodeOfListExist($xpathList))
+            #if($TOOL.aNodeOfListExist($xpathList) || $advGroup.size() > 0)
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-2">
                     <div class="box__content ob-container">
                         <h2 class="print-title is-hidden">$MESSAGES.getString("references_tab")</h2>
@@ -186,7 +187,7 @@
                         #end
                         ## Verschlagwortung
                         #set($xpathList = ["./gmd:identificationInfo/*/gmd:descriptiveKeywords","./gmd:identificationInfo/*/gmd:topicCategory"])
-                        #if($TOOL.aNodeOfListExist($xpathList))
+                        #if($TOOL.aNodeOfListExist($xpathList) || $advGroup.size() > 0)
                             #renderSectionTitle($MESSAGES.getString("thesaurus"))
                             <div class="search-result--nested">
                                 ## Verschlagwortung
@@ -194,7 +195,8 @@
                                 #renderTextList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "inspire"))
                                 #renderTextList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "priority"))
                                 #renderTextList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "spatial_scope"))
-                                #renderTextList("GEMET - Concepts" $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "gemet"))
+                                #renderTextList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "gemet"))
+                                #renderTextList($MESSAGES.getString("adv_group") $TOOL.getAlternateTitleListFromCodelist("8010"))
                                 ## ISO-Themenkategorien
                                 #renderTextList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/gmd:topicCategory", "./gmd:MD_TopicCategoryCode", "527"))
                             </div>
