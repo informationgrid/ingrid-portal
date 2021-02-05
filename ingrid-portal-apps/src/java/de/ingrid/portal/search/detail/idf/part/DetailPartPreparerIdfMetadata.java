@@ -124,7 +124,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return value;
     }
 
-    public String getAlternateTitle(){
+    public List<String> getAlternateTitle(){
+        List<String> listSearch = new ArrayList<>();
         String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString";
         NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
         for (int i=0; i< nodeList.getLength(); i++) {
@@ -133,10 +134,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             String codelistAdvGroup = "8010";
             String codelistValue = sysCodeList.getNameByCodeListValue(codelistAdvGroup, content);
             if(codelistValue.isEmpty()) {
-                return content;
+                listSearch.add(content);
             }
         }
-        return "";
+        return listSearch;
     }
 
     public List<String> getAlternateTitleListFromCodelist(String codelist){
