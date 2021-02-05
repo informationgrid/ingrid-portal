@@ -122,7 +122,10 @@
                             <div class="media__body ob-container ob-container">
                                 #set($tmp = $TOOL.getAlternateTitle())
                                 #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
-                                #renderTextLabelAbove($tmp $tmp2)
+                                #foreach($t in $tmp)
+                                    <h4 class="title-font">$t</h4>
+                                #end
+                                #renderTextLabelAbove("" $tmp2)
                                 #set($tmp = "")
                                 #set($tmp2 = "")
                             </div>
