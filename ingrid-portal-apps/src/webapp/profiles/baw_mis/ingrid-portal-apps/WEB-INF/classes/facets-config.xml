@@ -148,17 +148,17 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
             <facet>
                 <name>Donau</name>
                 <id>bwastrdonau</id>
-                <query>bwstr-bwastr_name:donau</query>
+                <query>bwstr-bwastr-id:id_040?</query>
             </facet>
             <facet>
                 <name>Elbe</name>
                 <id>bwastrelbe</id>
-                <query>bwstr-bwastr_name:elbe</query>
+                <query>bwstr-bwastr-id:id_070?</query>
             </facet>
             <facet>
                 <name>Rhein</name>
                 <id>bwastrrhein</id>
-                <query>bwstr-bwastr_name:rhein</query>
+                <query>bwstr-bwastr-id:id_390?</query>
             </facet>
             <!--
             <facet>
