@@ -1098,6 +1098,7 @@ define({
     "validation.error.missing.download.link": "Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
     "validation.error.date.without.title": "Ohne Titel darf kein Datum gesetzt sein.",
     "validation.error.axisdim.required.columns": "Die Spalten 'Achsenbezeichnung' und 'Elementanzahl' sind verpflichtend.",
+    "validation.error.geometry.type": "Wenn die 'Elementanzahl' angegeben ist, dann muss auch ein 'Geometrietyp' angegeben werden.",
 
     "validation.levelOfSpecification.notConform":"Bei nicht konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'nicht evaluiert' oder 'nicht konform' sein.",
     "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",

@@ -6,12 +6,24 @@
     </properties>
 
     <body>
-        <release version="5.7.1-SNAPSHOT" date="2021-xx-xx" description="Release 5.7.1">
+        <release version="5.7.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.7.2">
           <action type="fix" dev="wemove" issue="2315">
             Portal: Anpassung Darstellung Teaser Boxen
           </action>
           <action type="add" dev="wemove" issue="1358">
             Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
+          </action>
+        </release>
+
+        <release version="5.7.1" date="2021-xx-xx" description="Release 5.7.1">
+          <action type="fix" dev="wemove" issue="2338">
+            IGE: Udpate behaviour label and tooltip
+          </action>
+          <action type="fix" dev="wemove" issue="2336">
+            IGE: Fix vector format table column name and add validation
+          </action>
+          <action type="update" dev="wemove" issue="2346">
+            IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
           </action>
         </release>
     
