@@ -88,11 +88,10 @@
         </p>
         <p> 
             #set( $bwastr_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-bwastr_name") )
-            #set( $bwstr-strecken_name = $UTIL_SEARCH.getDetailValue($rs.get("detail"), "bwstr-strecken_name") )
-            #if($bwastr_name && $bwstr-strecken_name)
+            #if($bwastr_name && $bwastr_name != "")
             <small>
                 <span class="tx-darkest"><strong>Ortslage:</strong></span>
-                <span class="tx-light">$!bwastr_name, $!bwstr-strecken_name</span>
+                <span class="tx-light">$!bwastr_name</span>
             </small>
             #end
             #if($adminContent)
