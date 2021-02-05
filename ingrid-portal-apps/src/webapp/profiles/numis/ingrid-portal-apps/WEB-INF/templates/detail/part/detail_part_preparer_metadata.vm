@@ -120,9 +120,12 @@
         ## Beschreibung
             <div class="row columns">
             #renderSectionTitle($MESSAGES.getString("detail_description"))
-            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"))
+            #set($tmp = $TOOL.getAlternateTitle())
             #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
-            #renderTextLabelAbove($tmp $tmp2)
+            #foreach($t in $tmp)
+                <h4>$t</h4>
+            #end
+            #renderTextLabelAbove("" $tmp2)
             #set($tmp = "")
             #set($tmp2 = "")
             ## Zeige in Karte
