@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.7.1" date="2021-xx-xx" description="Release 5.7.1">
+        <release version="5.7.1" date="2021-02-05" description="Release 5.7.1">
           <action type="add" dev="wemove" issue="2290">
             Portal: Anzeige von Kurzbezeichnung ist in der Portal Detaildarstellung falsch, wenn eine AdV Produktgruppe angegeben wurden.
           </action>
