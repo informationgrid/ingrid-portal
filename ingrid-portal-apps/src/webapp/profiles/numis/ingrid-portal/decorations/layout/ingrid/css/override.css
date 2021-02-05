@@ -1570,8 +1570,9 @@ a[class*="js-expander"] span.text {
     padding-left: 0.66667rem;
 }
 
-.search-filtered .anchor.is-active {
+.search-filtered .anchor {
     margin-top: -5rem;
+    display: unset;
 }
 
 
