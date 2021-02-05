@@ -185,15 +185,20 @@
 
 ## Beschreibung
 ################################
-            #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString"))
+            #set($tmp = $TOOL.getAlternateTitle())
             #set($tmp2 = $TOOL.valueHTMLEscape($TOOL.getDescription()))
             <h2><a class="anchor" id="detail-1" name="detail-1"></a>$MESSAGES.getString("detail_description")</h2>
             <div class="row columns">
+                #if($tmp)
+                    foreach($t in $tmp)
+                        <h4>$t</h4>
+                    #end
+                #end
                 #if($tmp2)
                 <div class="js-expand-box js-expand-text js-non-expand-text">
                     ## Beschreibung
                     <div class="js-expand-text-content">
-                    #renderTextLabelAbove($tmp $tmp2)
+                    #renderTextLabelAbove("" $tmp2)
                     </div>
                     <div class="desc-fade"></div>
                 </div>
@@ -207,7 +212,7 @@
                 #set($tmp = "")
                 #set($tmp2 = "")
             ## Zeitbezug
-                #set($xpathList = ["./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])            
+                #set($xpathList = ["./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:beginPosition","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:temporalElement/gmd:EX_TemporalExtent/gmd:extent/gml:TimePeriod/gml:endPosition","./*/*/gmd:status/gmd:MD_ProgressCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:maintenanceAndUpdateFrequency/gmd:MD_MaintenanceFrequencyCode/@codeListValue","./*/*/gmd:resourceMaintenance/gmd:MD_MaintenanceInformation/gmd:userDefinedMaintenanceFrequency","./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"])
                 #if($TOOL.aNodeOfListExist($xpathList))
                     #renderSectionTitle($MESSAGES.getString("time_reference"))
                 ## Durch die Ressource abgedeckte Zeitspanne
