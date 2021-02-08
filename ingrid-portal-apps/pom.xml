@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.7.2-SNAPSHOT</version>
+    <version>5.7.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -206,7 +206,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>5.7.1</version>
+      <version>3.5.0</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
