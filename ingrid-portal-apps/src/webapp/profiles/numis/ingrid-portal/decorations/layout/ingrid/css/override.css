@@ -1504,7 +1504,7 @@ a[class*="js-expander"] span.text {
     margin-left: 0;
     margin-right: 0;
 }
-.search-filtered .teaser-data a:last-child {
+.search-filtered #searchResult .teaser-data > a:last-child {
     display: inline-block;
 }
 
