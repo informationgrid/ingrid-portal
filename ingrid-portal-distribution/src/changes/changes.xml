@@ -7,12 +7,12 @@
 
     <body>
 
-        <release version="5.5.6" date="2021-xx-xx" description="Release 5.5.6">
+        <release version="5.5.6" date="2021-02-09" description="Release 5.5.6">
           <action type="update" dev="wemove" issue="2346">
             IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
           </action>
         </release>
-      
+
         <release version="5.5.5" date="2021-02-01" description="Release 5.5.5">
           <action type="add" dev="wemove" issue="2212">
             Knoten "Freie Adressen" auch in Portal Katalogansicht aufnehmen
@@ -21,7 +21,7 @@
             Fix uuid link on search catalog
           </action>
         </release>
-      
+
         <release version="5.5.3" date="2020-10-12" description="Release 5.5.3">
           <action type="update" dev="wemove" issue="2150">
             UVP: UVP Link von saarländischer Seite anpassen.
@@ -90,7 +90,7 @@
             Portal: Change portal registration button title.
           </action>
           <action type="update" dev="wemove" issue="2012">
-            Mapclient: Update mapclient cache. 
+            Mapclient: Update mapclient cache.
           </action>
           <action type="fix" dev="wemove" issue="">
             Mapclient: Remove DNS check on print.
@@ -111,10 +111,10 @@
             IGE: Increase message size and timeout for IGE communication.
           </action>
           <action type="add" dev="wemove" issue="1953">
-            Mapclient: Add GFI function to imported WMTS. 
+            Mapclient: Add GFI function to imported WMTS.
           </action>
           <action type="add" dev="wemove" issue="1900">
-            Portal: Add autofocus attribute to login form. 
+            Portal: Add autofocus attribute to login form.
           </action>
           <action type="add" dev="wemove" issue="1898">
             Change the docker container’s privilege to a non-root user.
