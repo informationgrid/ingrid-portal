@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.8.0" date="2021-xx-xx" description="Release 5.8.0">
+          <action type="add" dev="wemove" issue="2345">
+            Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
+          </action>
           <action type="add" dev="wemove" issue="2290">
             Portal: Anzeige von Kurzbezeichnung ist in der Portal Detaildarstellung falsch, wenn eine AdV Produktgruppe angegeben wurden.
           </action>
