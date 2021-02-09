@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.6.7" date="2020-xx-xx" description="Release 5.6.7">
+          <action type="add" dev="wemove" issue="2345">
+            Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
+          </action>
           <action type="update" dev="wemove" issue="2346">
             IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
           </action>
