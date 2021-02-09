@@ -36,26 +36,24 @@ import de.ingrid.portal.global.Utils;
  * 
  * @author Martin Maidhof
  */
-public class ContactForm extends ActionForm {
+public class ContactZammadForm extends ActionForm {
 
     private static final long serialVersionUID = -8772366310279327463L;
 
     /** attribute name of action form in session */
     public static final String SESSION_KEY = "contact_form";
 
+    public static final String FIELD_SUBJECT = "user_subject";
+
     public static final String FIELD_MESSAGE = "user_message";
 
-    public static final String FIELD_FIRSTNAME = "user_firstname";
-
-    public static final String FIELD_LASTNAME = "user_lastname";
+    public static final String FIELD_CHK_TECHNICAL = "user_technical";
 
     public static final String FIELD_COMPANY = "user_company";
 
-    public static final String FIELD_PHONE = "user_phone";
-
     public static final String FIELD_EMAIL = "user_email";
 
-    public static final String FIELD_ACTIVITY = "activity";
+    public static final String FIELD_NAME = "user_name";
 
     public static final String FIELD_UPLOAD = "upload";
 
@@ -78,13 +76,12 @@ public class ContactForm extends ActionForm {
      */
     public void populate(PortletRequest request) {
         clearInput();
+        setInput(FIELD_SUBJECT, request.getParameter(FIELD_SUBJECT));
         setInput(FIELD_MESSAGE, request.getParameter(FIELD_MESSAGE));
-        setInput(FIELD_FIRSTNAME, request.getParameter(FIELD_FIRSTNAME));
-        setInput(FIELD_LASTNAME, request.getParameter(FIELD_LASTNAME));
+        setInput(FIELD_CHK_TECHNICAL, request.getParameter(FIELD_CHK_TECHNICAL));
         setInput(FIELD_COMPANY, request.getParameter(FIELD_COMPANY));
-        setInput(FIELD_PHONE, request.getParameter(FIELD_PHONE));
         setInput(FIELD_EMAIL, request.getParameter(FIELD_EMAIL));
-        setInput(FIELD_ACTIVITY, request.getParameter(FIELD_ACTIVITY));
+        setInput(FIELD_NAME, request.getParameter(FIELD_NAME));
        }
 
     /**
@@ -103,12 +100,9 @@ public class ContactForm extends ActionForm {
             setError(FIELD_MESSAGE, "contact.error.noMessage");
             allOk = false;
         }
-        if (!hasInput(FIELD_FIRSTNAME)) {
-            setError(FIELD_FIRSTNAME, "contact.error.noFirstName");
-            allOk = false;
-        }
-        if (!hasInput(FIELD_LASTNAME)) {
-            setError(FIELD_LASTNAME, "contact.error.noLastName");
+
+        if (!hasInput(FIELD_SUBJECT)) {
+            setError(FIELD_SUBJECT, "contact.error.noSubject");
             allOk = false;
         }
 
@@ -132,30 +126,27 @@ public class ContactForm extends ActionForm {
     }
     
     public void populate(List<FileItem> items) throws UnsupportedEncodingException {
-    	if(items != null){
-	        clearInput();
-	        for(FileItem item : items){
+        if(items != null){
+            clearInput();
+            for(FileItem item : items){
                 switch (item.getFieldName()) {
+                    case FIELD_SUBJECT:
+                        setInput(FIELD_SUBJECT, item.getString("UTF-8"));
+                        break;
                     case FIELD_MESSAGE:
                         setInput(FIELD_MESSAGE, item.getString("UTF-8"));
                         break;
-                    case FIELD_FIRSTNAME:
-                        setInput(FIELD_FIRSTNAME, item.getString("UTF-8"));
-                        break;
-                    case FIELD_LASTNAME:
-                        setInput(FIELD_LASTNAME, item.getString("UTF-8"));
+                    case FIELD_CHK_TECHNICAL:
+                        setInput(FIELD_CHK_TECHNICAL, item.getString("UTF-8"));
                         break;
                     case FIELD_COMPANY:
                         setInput(FIELD_COMPANY, item.getString("UTF-8"));
                         break;
-                    case FIELD_PHONE:
-                        setInput(FIELD_PHONE, item.getString("UTF-8"));
-                        break;
                     case FIELD_EMAIL:
                         setInput(FIELD_EMAIL, item.getString("UTF-8"));
                         break;
-                    case FIELD_ACTIVITY:
-                        setInput(FIELD_ACTIVITY, item.getString());
+                    case FIELD_NAME:
+                        setInput(FIELD_NAME, item.getString("UTF-8"));
                         break;
                     case FIELD_NAME_HONEYPOT:
                         setInput(FIELD_NAME_HONEYPOT, item.getString("UTF-8"));
