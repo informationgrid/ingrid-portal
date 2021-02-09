@@ -99,7 +99,7 @@
                         </div>
                         <div class="media__body">
                             <div class="field-toggle field-toggle--check bx-bot-xs">
-                                <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') onchange="adapt()">
+                                <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') >
                                 <label class="field-toggle__label field-toggle__label--boxed" for="enabled">
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
@@ -143,7 +143,7 @@
                         </div>
                         <div class="media__body">
                             <div class="field-toggle field-toggle--check bx-bot-xs">
-                                <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
+                                <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') >
                                 <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('send_info')" for="send_info" >
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
@@ -161,7 +161,7 @@
                         </div>
                         <div class="media__body">
                             <div class="field-toggle field-toggle--check bx-bot-xs">
-                                <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
+                                <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') >
                                 <label class="field-toggle__label field-toggle__label--boxed" for="password_update_required">
                                     <div class="field-toggle__icon field-toggle__icon-alt">
                                         <svg class="icon">
@@ -207,7 +207,7 @@
                 ## only show content of permission tab if we are "admin"
                 #if($actionForm.getInput('layoutPermission') == "admin")
                     <div class="field-toggle field-toggle--check bx-bot-xs">
-                        <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()">
+                        <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') >
                         <label class="field-toggle__label field-toggle__label--boxed" for="admin_portal">
                             <div class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">

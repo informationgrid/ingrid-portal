@@ -22,21 +22,36 @@
  */
 package de.ingrid.portal.global;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.hibernate.HibernateUtil;
-import de.ingrid.portal.om.*;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
+import de.ingrid.portal.config.PortalConfig;
+import de.ingrid.portal.hibernate.HibernateUtil;
+import de.ingrid.portal.om.IngridChronicleEventType;
+import de.ingrid.portal.om.IngridEnvTopic;
+import de.ingrid.portal.om.IngridFormToQuery;
+import de.ingrid.portal.om.IngridMeasuresRubric;
+import de.ingrid.portal.om.IngridPartner;
+import de.ingrid.portal.om.IngridProvider;
+import de.ingrid.portal.om.IngridServiceRubric;
 
 /**
  * Global STATIC data and utility methods for Database.
@@ -212,6 +227,20 @@ public class UtilsDB {
                 partners, true);
     }
 
+    public static List getPartnersExclude(List values,String propertyName) {
+        // NOTICE: assign list to our static variable, passed static variable
+        // may be null,
+        // so there's no call by reference !
+        Session session = HibernateUtil.currentSession();
+        Criteria criteria = session.createCriteria(IngridPartner.class);
+        for (Object value : values) {
+            criteria.add(Restrictions.ne(propertyName, value));
+        }
+        return getValuesFromDB(criteria.addOrder(Order.asc("sortkey")), session,
+                partners, true);
+    }
+
+    
     /**
      * Get the name of the partner with the according ident. NOTICE: comparison
      * is case insensitive !

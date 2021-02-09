@@ -1,58 +1,46 @@
 <div class="columns">
     <div>$contactIntroPostEmail</div>
-    <div>
+    <div class="search-filtered">
         <h2>$MESSAGES.getString('contact.form')</h2>
         #set ($action = $renderResponse.createActionURL())
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
             #displayFormError()
             <div class="form-element">
-                <label for="subject">$MESSAGES.getString('contact.form.subject')</label>
-            </div>
-            <div class="form-element">
-                <input type="text" id="subject" name="subject" value="#getFieldValue('subject')" #addErrorFormClass('subject') #addErrorFormMessagePlaceholder('subject') />
-            </div>
-            <div class="form-element">
-                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
+                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
             </div>
             <div class="form-element">
                 <textarea class="custom-scrollbar #addErrorFormClassText('message')" name="message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('message')">#getFieldValue('message')</textarea>
             </div>
-            <div class="form-element ">
-                <div class="control-group">
-                    <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="technical">
-                        <input id="technical" type="checkbox" name="technical" value="1" #getChecked('technical' '1') onchange="ingrid_disableElementByCheckbox('technical', 'company')">
-                        <span class="control__indicator"></span>
-                        $MESSAGES.getString('contact.form.technical')
-                    </label>
-                </div>
-            </div>
-            <br>
             <div class="form-element">
-                <label for="company">$MESSAGES.getString('contact.form.company')</label>
+                <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
             </div>
             <div class="form-element">
-                <p>
-                    <select class="select2" name="company" id="company" size="1">
-                        <option value="" #getSelectedFlag('company' '')>---</option>
-                        #foreach($partner in $partners)
-                        <option value="$partner.getIdent()" #getSelectedFlag('company' '$partner.getIdent()')>$partner.getName()</option>
-                        #end
-                    </select>
-                </p>
-                <br>
+                <input type="text" id="xx2" name="firstname" value="#getFieldValue('firstname')" #addErrorFormClass('firstname') #addErrorFormMessagePlaceholder('firstname')" />
             </div>
         <div class="form-element">
-            <label for="email">$MESSAGES.getString('contact.form.email')</label>
+            <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="email" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email') />
+            <input type="text" id="xx3" name="lastname" value="#getFieldValue('lastname')" #addErrorFormClass('lastname') #addErrorFormMessagePlaceholder('lastname')" />
+        </div>
+        <div class="form-element">
+            <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="xx4" name="company" value="#getFieldValue('company')"/>
+        </div>
+        <div class="form-element">
+            <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="xx5" name="phone" value="#getFieldValue('phone')"/>
+        </div>
+        <div class="form-element">
+            <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="xx6" name="email" value="#getFieldValue('email')" #addErrorFormClass('email') #addErrorFormMessagePlaceholder('email')" />
             #addErrorFormMessagePlaceholderWithInputCheck('email')
-        </div>
-        <div class="form-element">
-            <label for="name">$MESSAGES.getString('contact.form.name')</label>
-        </div>
-        <div class="form-element">
-            <input type="text" id="name" name="name" value="#getFieldValue('name')" />
         </div>
         #if ($uploadEnable)
             <div class="form-element">
@@ -81,7 +69,9 @@
                 #addErrorFormMessagePlaceholderWithInputCheck('jcaptcha')
             </div>
         #end
+        <hr>
         <div class="subtext-submit">
+            <h6>$MESSAGES.getString('contact.form.required')</h6>
             <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
         </div>
         </form>

@@ -212,6 +212,10 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_CONTACT_UPLOAD_ENABLE = "email.contact.upload.enable";
     public static final String PORTAL_CONTACT_UPLOAD_SIZE = "email.contact.upload.size";
     
+    public static final String PORTAL_CONTACT_PORTAL = "email.contact.portal";
+    
+    public static final String PORTAL_CONTACT_REMOVE_PARTNERS = "email.contact.remove.partners";
+    
     public static final String PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS = "portal.detail.view.hidden.keywords";
     
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";

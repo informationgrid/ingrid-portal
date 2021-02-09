@@ -6,6 +6,11 @@
     </properties>
 
     <body>
+        <release version="5.5.7" date="2021-02-09" description="Release 5.5.7">
+          <action type="add" dev="wemove" issue="2345">
+            UVP: Anpassung Kontakt-Formular UVP für Zammad
+          </action>
+        </release>
 
         <release version="5.5.6" date="2021-02-09" description="Release 5.5.6">
           <action type="update" dev="wemove" issue="2346">
