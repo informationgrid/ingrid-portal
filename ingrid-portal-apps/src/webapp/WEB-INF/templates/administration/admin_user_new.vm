@@ -92,7 +92,7 @@
                 </div>
                 <div class="media__body">
                     <div class="field-toggle field-toggle--check bx-bot-xs">
-                        <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
+                        <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') >
                         <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('send_info')" for="send_info">
                             <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="media__body">
                     <div class="field-toggle field-toggle--check bx-bot-xs">
-                        <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
+                        <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') >
                         <label class="field-toggle__label field-toggle__label--boxed" for="password_update_required">
                             <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">

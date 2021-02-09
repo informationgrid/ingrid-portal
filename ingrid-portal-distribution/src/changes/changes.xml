@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.7.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.7.2">
+          <action type="add" dev="wemove" issue="2345">
+            Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
+          </action>
           <action type="fix" dev="wemove" issue="2315">
             Portal: Anpassung Darstellung Teaser Boxen
           </action>
@@ -15,7 +18,7 @@
           </action>
         </release>
 
-        <release version="5.7.1" date="2021-02-05" description="Release 5.7.1">
+        <release version="5.7.1" date="2021-02-08" description="Release 5.7.1">
           <action type="add" dev="wemove" issue="2290">
             Portal: Anzeige von Kurzbezeichnung ist in der Portal Detaildarstellung falsch, wenn eine AdV Produktgruppe angegeben wurden.
           </action>
@@ -30,6 +33,9 @@
           </action>
           <action type="update" dev="wemove" issue="2346">
             IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
+          </action>
+          <action type="update" dev="wemove" issue="2321">
+            IGE: Handle %-character in thesaurus
           </action>
         </release>
     
@@ -108,10 +114,10 @@
             Fix upload cleanup job indexing issue.
           </action>
           <action type="fix" dev="wemove" issue="2262">
-            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled. 
+            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled.
           </action>
           <action type="fix" dev="wemove" issue="2265">
-            IGE: Add context help for grid format fields. 
+            IGE: Add context help for grid format fields.
           </action>
           <action type="fix" dev="wemove" issue="2261">
             IGE: Fix jump to tree function on duplicate check page.
