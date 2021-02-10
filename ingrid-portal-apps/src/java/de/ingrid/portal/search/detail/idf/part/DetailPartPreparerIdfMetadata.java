@@ -1523,7 +1523,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         // use preview image if provided otherwise static image
         ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
         if (imageUrls.isEmpty()) {
-            elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+            if(elementMapLink.get("href") != null) {
+                elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+            }
         } else {
             elementMapLink.put("src", imageUrls.get(0).get("name"));
             if(elementMapLink.get("href") == null) {
@@ -1532,10 +1534,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             elementMapLink.put("description", imageUrls.get(0).get("description"));
         }
         // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
-        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
-        list.add(elementMapLink);
-        elementCapabilities.put("elements", list);
-        elementCapabilities.put("width", "full");
+        if(elementMapLink.get("href") != null && elementMapLink.get("src") != null) {
+            ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+            list.add(elementMapLink);
+            elementCapabilities.put("elements", list);
+            elementCapabilities.put("width", "full");
+        }
         return elementCapabilities;
     }
     
