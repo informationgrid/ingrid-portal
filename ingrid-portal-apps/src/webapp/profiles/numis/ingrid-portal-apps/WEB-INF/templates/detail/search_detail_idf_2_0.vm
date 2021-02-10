@@ -765,11 +765,18 @@
             #set($addLinksExpand = false)
             #foreach($link in $sorter.sort($linkList,"title"))
                 #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
-                    #set($addLinksExpand = true)
-                    <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
-                        $MESSAGES.getString('search.detail.info.links.more')
-                    </button>
-                    <div class="js-expander-content ${expandId} is-hidden ">
+                    #if($expandId != "")
+                        #set($addLinksExpand = true)
+                        <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
+                            $MESSAGES.getString('search.detail.info.links.more')
+                        </button>
+                        <div class="js-expander-content ${expandId} is-hidden ">
+                    #else
+                        <a type="button" class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-2">
+                            $MESSAGES.getString('search.detail.info.links.more')
+                        </a>
+                        #break
+                    #end
                 #end
                 <div class="list-item">
                     #renderLinkLine($link $hasImage $displayPreview)
@@ -779,11 +786,18 @@
             #if($linkListInclude)
                 #foreach($link in $sorter.sort($linkListInclude,"title"))
                     #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
-                        #set($addLinksExpand = true)
-                        <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
-                            $MESSAGES.getString('search.detail.info.links.more')
-                        </button>
-                        <div class="js-expander-content ${expandId} is-hidden ">
+                        #if($expandId != "")
+                            #set($addLinksExpand = true)
+                            <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
+                                $MESSAGES.getString('search.detail.info.links.more')
+                            </button>
+                            <div class="js-expander-content ${expandId} is-hidden ">
+                        #else
+                            <a class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-2">
+                                $MESSAGES.getString('search.detail.info.links.more')
+                            </a>
+                            #break
+                        #end
                     #end
                     <div class="list-item">
                         #renderLinkLine($link $hasImage $displayPreview)
