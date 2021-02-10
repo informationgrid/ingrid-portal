@@ -348,7 +348,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         if (PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
                             StringBuilder capabilityUrl = null;
                             // get link from operation (unique one)
-                            if (serviceType != null && serviceType.trim().equals("view") && !hasAccessConstraints(node)) {
+                            if ((serviceType != null && serviceType.trim().equals("view")) || (objServiceType != null && objServiceType.trim().equals("view")) && !hasAccessConstraints(node)) {
                                 if(serviceUrl != null){
                                     capabilityUrl= new StringBuilder(serviceUrl);
                                 }

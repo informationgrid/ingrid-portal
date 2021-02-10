@@ -10,11 +10,9 @@
     #else
         #if(!$entry.isMapLink && !$entry.isDownload && !$entry.isExtern)
             #if($hasImage)
-            <!--
-            <div class="map">
-                <span class="ic-ic-external"></span>
-            </div>
-            -->
+            ##<div class="map">
+            ##    <span class="ic-ic-external"></span>
+            ##</div>
             #end
             #if($displayPreview)
                 <div class="info--left">
@@ -28,18 +26,11 @@
                 #end
                 </div>
             #end
-            #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField) || $tool.hasContent($entry.description))
+            #if($tool.hasContent($entry.linkInfo) || $tool.hasContent($entry.attachedToField))
                 #if($tool.hasContent($entry.linkInfo))
                 <div class="info">
                     <span class="text">$entry.linkInfo</span>
                 </div>
-                #end
-                #if($tool.hasContent($entry.serviceType))
-                    #renderServiceType($entry.serviceType)
-                #end
-                #if($tool.hasContent($entry.description))
-                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
-                    ##<p><small>${myDescription}</small></p>
                 #end
             #end
         #end
@@ -96,16 +87,22 @@
                 <a href="$entry.href" title="$entry.title">
                   <span class="text">$entry.title</span>
                 </a>
+                #if($tool.hasContent($entry.description))
+                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
+                    <small>${myDescription}</small>
+                #end
             </div>
         #elseif($entry.objectClass)
+            #if($tool.hasContent($entry.serviceType))
+                    #renderServiceType($entry.serviceType)
+                #end
             #if(!$hasImage)
-            <div>
+            <div class="no-image">
                 <a href="$entry.href" class="icon" title="$entry.title">
                     #renderUDKIcon($entry.objectClass $entry.title)
                 </a>
-            </div>
             #else
-            <div>
+            <div class="image">
                 <div class="helper icon">
                     #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
                     #renderUDKIcon($entry.objectClass $udkObjClassName)
@@ -113,14 +110,27 @@
                 <a href="$entry.href" class="icon" title="$entry.title">
                     <span class="text">$entry.title</span>
                 </a>
-            </div>
             #end
+            ##if($displayPreview)
+                #if($tool.hasContent($entry.description))
+                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
+                    <div class="description">
+                        <small class="description">${myDescription}</small>
+                    </div>
+                #end
+            ##end
+            #if($tool.hasContent($entry.mapLink))
+            <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
+                $MESSAGES.getString('common.result.showMap')
+            </a>
+            #end
+            </div>
         #elseif($entry.noLink)
             <div>
                 $entry.title
             </div>
         #elseif($entry.isDownload)
-            <div>
+            <div class="download">
                 #if($tool.hasContent($entry.serviceType))
                     #renderServiceTypeUrl($entry.serviceType)
                 #end
@@ -128,6 +138,10 @@
                   <span class="ic-ic-download"></span>
                   <span class="text">$entry.title</span>
                 </a>
+                #if($tool.hasContent($entry.description))
+                    #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
+                    <small class="description">${myDescription}</small>
+                #end
             </div>
         #elseif(!$entry.isMapLink)
             <div>
@@ -136,11 +150,6 @@
                     <span class="text">$entry.title</span>
                 </a>
             </div>
-        #end
-        #if($tool.hasContent($entry.mapLink))
-            <a class="button pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.mapLink" title="$MESSAGES.getString('common.result.showMap.tooltip')">
-                $MESSAGES.getString('common.result.showMap')
-            </a>
         #end
     #end
 #end

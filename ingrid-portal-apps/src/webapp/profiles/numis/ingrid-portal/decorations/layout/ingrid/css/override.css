@@ -452,6 +452,11 @@ header a.icon.is-selected {
 .detail .list-item div, .search .list-item div {
   padding: 0;
 }
+
+.detail .list-item div.download small, .detail .list-item div.no-image a.button {
+  display: block;
+}
+
 .detail.nav-content {
   margin-top: -54px;
 }
@@ -1454,6 +1459,22 @@ a[class*="js-expander"] span.text {
     text-overflow: ellipsis;
 }
 
+.search-filtered div.document-list .list-item a.button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 12px 6px 12px;
+}
+
+.search-filtered div.document-list .list-item a.button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 12px 6px 12px;
+}
+
+.search-filtered div.document-list .list-item .image a.button {
+    margin-left: 128px;
+}
+
 .search-filtered div.document-list .list-item div {
     display: block;
 }
@@ -1706,6 +1727,44 @@ a[class*="js-expander"] span.text {
 .js-open-expand-text, .js-close-expand-text {
     margin: 24px 0;
 }
+.js-expand-text .js-expand-text-content:before, .image div.description:before, .no-image div.description:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.js-expand-text .js-expand-text-content:before {
+    background: linear-gradient(rgba(255, 255, 255, 0) 115px, white);
+}
+
+.image div.description:before {
+    background: linear-gradient(rgba(255, 255, 255, 0) 50px, white);
+}
+
+.no-image div.description:before {
+    background: linear-gradient(rgba(255, 255, 255, 0) 35px, white);
+}
+.image div.description, .no-image div.description {
+    position: relative;
+}
+
+.image div.description small.description, .no-image div.description small.description {
+    display: block;
+    overflow: hidden;
+}
+.image div.description small.description {
+    max-height: 110px;
+}
+
+.no-image div.description small.description {
+    max-height: 70px;
+}
+
+.js-expand-text.is-active .js-expand-text-content:before {
+    background: transparent;
+}
 
 /* Swiper */
 
@@ -1761,5 +1820,5 @@ h4 span, h5 span {
   }
 }
 .content--link {
-  margin-bottom: 24px;
+  margin-bottom: 8px;
 }
