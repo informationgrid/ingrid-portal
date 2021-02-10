@@ -453,6 +453,10 @@ header a.icon.is-selected {
   padding: 0;
 }
 
+.detail .list-item div small {
+  display:block;
+}
+
 .detail .list-item div.download small, .detail .list-item div.no-image a.button {
   display: block;
 }

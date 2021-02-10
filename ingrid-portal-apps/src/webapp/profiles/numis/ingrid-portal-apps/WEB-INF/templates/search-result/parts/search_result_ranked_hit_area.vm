@@ -39,7 +39,8 @@
             map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
             map${mapId}.addLayer(map${mapId}LayerBounds);
         });
-        
+        #if(!$isMoreId)
         $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');
+        #end
     </script>
 #end

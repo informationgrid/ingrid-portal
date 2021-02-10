@@ -36,6 +36,7 @@ var expander = (function () {
             expander_close.removeClass('is-hidden');
             expander_open = $('#' + ident +'.js-expander');
             expander_open.addClass('is-hidden');
+            updateParams("more", ident);
         }
     }
 
@@ -44,12 +45,41 @@ var expander = (function () {
           expander_content = $('.js-expander-content.' + ident);
           expander_close = $('.js-expander-close.' + ident);
           expander_open = $('#' + ident +'.js-expander');
+          updateParams("more", ident);
         }
         expander_content.addClass('is-hidden');
         expander_close.addClass('is-hidden');
         expander_open.removeClass('is-hidden');
     }
 
+    function updateParams(key, id) {
+      var queryParams = new URLSearchParams(window.location.search);
+      var paramKey = queryParams.get(key);
+      if(paramKey) {
+        var paramKeys = paramKey.split('|');
+        if(paramKeys.includes(id)){
+          paramKeys = paramKeys.filter(e => e !== id);
+        } else {
+          paramKeys.push(id);
+        }
+        paramKey = ''
+        for (var i = 0; i < paramKeys.length; i++) {
+          if(i > 0) {
+            paramKey = paramKey + '|';
+          }
+          paramKey = paramKey + paramKeys[i];
+        }
+      } else {
+        paramKey = id
+      }
+      if(paramKey === '') {
+        queryParams.delete(key);
+      } else {
+        queryParams.set(key, paramKey);
+      }
+      history.replaceState(null, null, "?"+queryParams.toString());
+    }
+    
     return {
         open: expand,
         close: close
