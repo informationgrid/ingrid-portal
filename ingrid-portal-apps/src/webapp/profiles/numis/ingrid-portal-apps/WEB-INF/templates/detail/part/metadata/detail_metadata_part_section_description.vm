@@ -1,0 +1,78 @@
+## Beschreibung
+################################
+#if($hasDetail1)
+    <a class="anchor" id="detail-1" name="detail-1"></a>
+    <h2>$MESSAGES.getString("detail_description")</h2>
+    <div class="row columns">
+        #if($getAlternateTitle)
+            #foreach($t in $getAlternateTitle)
+                <h4>$t</h4>
+            #end
+        #end
+        #if($getDescription)
+        <div class="js-expand-box js-expand-text js-non-expand-text">
+            ## Beschreibung
+            <div class="js-expand-text-content">
+            #renderTextLabelAbove("" $getDescription)
+            </div>
+            <div class="desc-fade"></div>
+        </div>
+        <button type="button" class="js-open-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.more')" href="#">
+            $MESSAGES.getString('search.detail.info.more')
+        </button>
+        <button type="button" class="js-close-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.less')" href="#">
+            $MESSAGES.getString('search.detail.info.less')
+        </button>
+        #end
+    ## Zeitbezug
+        #if($TOOL.aNodeOfListExist($xPathListTime))
+            #renderSectionTitle($MESSAGES.getString("time_reference"))
+        ## Durch die Ressource abgedeckte Zeitspanne
+            #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
+            #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
+            #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+                #if($beginTime == $endTime)
+                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime" "no-background")
+                #elseif($beginTime && !$endTime)
+                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime" "no-background")
+                #elseif(!$beginTime && $endTime)
+                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
+                #elseif($beginTime != $endTime)
+                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
+                #end
+            #end
+        ## Status
+            #renderLinkTable($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath($xPathListTimeMDProgressCode, "523") "no-background")
+        ## Periodizität
+            #renderLinkTable($MESSAGES.getString("t01_object.time_period") $TOOL.getValueFromXPath($xPathListTimeMDMaintenanceFrequencyCode, "518") "no-background")
+        ## Intervall der Erhebung
+            #set($value = $TOOL.getValueFromXPath($xPathListTimeUserDefinedMaintenanceFrequency))
+            #if($value)
+                #renderLinkTable($MESSAGES.getString("t01_object.time_interval") "$TOOL.timePeriodDurationToTimeAlle($value) $TOOL.timePeriodDurationToTimeInterval($value)" "no-background")
+            #end
+        ## Erläuterung zum Zeitbezug
+            #renderLinkTable($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath($xPathListTimeMaintenanceNote) "no-background")
+        ## Zeitbezug der Ressource
+            #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
+            #if($nodelist)
+                <div class="border-line-info">
+            ## Erstellung 
+                #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
+                #if(!$title.isEmpty())
+                    <span>$title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation"))</span>
+                #end
+            ## Publikation
+                #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
+                #if(!$title.isEmpty())
+                    <span>$title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication"))</span>
+                #end
+            ## letzte Änderung 
+                #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
+                #if(!$title.isEmpty())
+                    <span>$title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision"))</span>
+                #end
+                </div>
+            #end
+        #end
+    </div>
+#end

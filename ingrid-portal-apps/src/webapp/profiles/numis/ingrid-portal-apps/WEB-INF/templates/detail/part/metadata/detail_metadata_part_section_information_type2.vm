@@ -1,0 +1,33 @@
+## Literatur
+################################
+<div class="row columns">
+    #set($nodelist = $TOOL.getNodeListFromXPath($xPathInfo2CICitationCitedResponsibleParty))
+## Autor
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.autor") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo2IndividualName, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "originator"))
+## Standort
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo2ContactInstructions, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "resourceProvider"))
+## Herausgeber
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.publisher") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo2IndividualName, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
+## Erscheinungsort
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.publish_loc") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo2CIAddressCity, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "publisher"))
+## Verlag
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.publishing") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo2OrganisationName, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "distribute"))
+## Erschienen in
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.publish_in") $TOOL.getValueFromXPath($xPathInfo2CISeriesName))
+## Erscheinungsjahr
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.publish_year") $TOOL.getValueFromXPath($xPathInfo2CICitationEditionDate))
+## Band, Heft
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.volume") $TOOL.getValueFromXPath($xPathInfo2CICitationIssueIdentification))
+## Seiten
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.sides") $TOOL.getValueFromXPath($xPathInfo2CICitationPage))
+## ISBN-Nummer des Dokumentes
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.isbn") $TOOL.getValueFromXPath($xPathInfo2CICitationISBN))
+## Dokumententyp
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.typ") $TOOL.getValueFromXPath($xPathInfo2MDFormatName))
+## Basisdaten
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.base") $TOOL.getValueFromXPath($xPathInfo2LISourceDescription))
+## Weitere bibliographische Angaben
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.doc_info") $TOOL.getValueFromXPath($xPathInfo2CICitationOtherCitationDetails))
+## Erläuterung zum Fachbezug
+    #renderTextTable($MESSAGES.getString("t011_obj_literatur.description") $TOOL.getValueFromXPath($xPathInfo2SupplementalInformation))
+</div>

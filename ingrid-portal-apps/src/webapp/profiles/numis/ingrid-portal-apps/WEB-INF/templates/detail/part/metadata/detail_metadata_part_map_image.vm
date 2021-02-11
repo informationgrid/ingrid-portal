@@ -1,0 +1,6 @@
+#if($mapImage)
+    <div class="xsmall-24 small-10 columns">
+        #renderMultiLineImage($mapImage)
+        #set($mapImage = "")
+    </div>
+#end

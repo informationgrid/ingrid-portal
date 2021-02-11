@@ -1,0 +1,58 @@
+## Zusatzinformationen
+################################
+#if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML)
+    <div class="row columns">
+        #renderSectionTitle($MESSAGES.getString("additional_information"))
+    ## Sprache des Metadatensatzes
+        #renderTextTable($MESSAGES.getString("t01_object.metadata_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath($xPathAdditionalInfoLanguageCode)))
+    ## Sprache des Datensatzes
+        #renderTextListTable($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath($xPathAdditionalInfoIdentificationInfoLanguageCode,".")))
+    ## Veröffentlichung
+        #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))
+    ## Eignung/Nutzung
+        #renderTextTable($MESSAGES.getString("t01_object.dataset_usage") $TOOL.getValueFromXPath($xPathAdditionalInfoSpecificUsage))
+    ## Herstellungszweck
+        #renderTextTable($MESSAGES.getString("t01_object.info_note") $TOOL.getValueFromXPath($xPathAdditionalInfoPurpose))
+    ## Rechtliche Grundlagen
+        #renderTextListTable($MESSAGES.getString("t015_legist.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoFurtherLegalBasis, "."))
+    ## XML-Export-Kriterium
+        #renderTextListTable($MESSAGES.getString("t014_info_impart.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoExportCriteria, "."))
+    ## Konformität
+        #renderTable($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport))
+    ## Identifikator des übergeordneten Metadatensatzes
+        #renderTextTable($MESSAGES.getString("t01_object.parent_identifier") $TOOL.getValueFromXPath($xPathAdditionalInfoParentIdentifier))
+    ## Datenformat
+        #renderTable($TOOL.getAvailability($xPathAdditionalInfoMDDistribution))
+    ## Medien
+        #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
+    ## Bestellinformationen
+        #renderTextTable($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions))
+    ## XML Darstellung 
+        #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML "no-background")
+    </div>
+#end
+
+## Schlagworte
+#if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
+    <div class="row columns">
+        #renderSectionTitle("Schlagworte")
+        ## Verschlagwortung
+        #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search"))
+        #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire"))
+        #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "priority"))
+        #renderTableList($MESSAGES.getString("spatial_scope") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "spatial_scope"))
+        #renderTableList($MESSAGES.getString("gemet_concepts") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "gemet"))
+        #renderTableList($MESSAGES.getString("adv_group") $advGroup)
+        ## ISO-Themenkategorien
+        #renderTableList($MESSAGES.getString("t011_obj_geo_topic_cat.topic_category") $TOOL.getListOfValuesFromXPath($xPathKeywordsTopicCategory, "./gmd:MD_TopicCategoryCode", "527"))
+    </div>
+#end
+
+## DOI
+#if($TOOL.aNodeOfListExist($xPathListDoi))
+    #renderSectionTitle($MESSAGES.getString("doi"))
+    <div class="search-result--nested">
+        #renderTextTable($MESSAGES.getString("doi.id") $doi.id)
+        #renderTextTable($MESSAGES.getString("doi.type") $doi.type)
+    </div>
+#end

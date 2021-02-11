@@ -1,0 +1,11 @@
+## Projekt
+################################
+<div class="row columns">
+    #set($nodelist = $TOOL.getNodeListFromXPath($xPathInfo4CICitationCitedResponsibleParty))
+## Projektleiter
+    #renderTextTable($MESSAGES.getString("t011_obj_project.leader") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo4IndividualName, "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectManager"))
+## Beteiligte
+    #renderTextTable($MESSAGES.getString("t011_obj_project.member") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo4IndividualName, "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectParticipant"))
+## Erläuterung des Fachbezug
+    #renderTextTable($MESSAGES.getString("t011_obj_project.description") $TOOL.getValueFromXPath($xPathInfo4SupplementalInformation))
+</div>

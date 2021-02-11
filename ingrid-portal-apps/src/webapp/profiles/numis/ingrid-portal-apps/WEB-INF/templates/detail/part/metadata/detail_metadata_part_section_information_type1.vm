@@ -1,0 +1,39 @@
+## Geodatensatz
+################################
+<div class="row columns">
+## Fachliche Grundlage
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
+## Datensatz/Datenserie
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.hierarchy_level") $TOOL.getValueFromXPath($xPathInfo1MDScopeCode, "525"))
+## Digitale Repräsentation
+    #renderTextListTable($MESSAGES.getString("t011_obj_geo_spatial_rep.type") $TOOL.getListOfValuesFromXPath($xPathInfo1SpatialRepresentationType, $xPathInfo1MDSpatialRepresentationTypeCode, "526"))
+## Topologieinformation
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.vector_topology_level") $TOOL.getValueFromXPath($xPathInfo1MD_VectorSpatialRepresentationTopologyLevel, "528"))
+## Vektorformat
+    #set($headTitles = [$MESSAGES.getString("t011_obj_geo_vector.geometric_object_type"),$MESSAGES.getString("t011_obj_geo_vector.geometric_object_count")])
+    #set($headXpathExpressions = ["./gmd:MD_GeometricObjects/gmd:geometricObjectType/gmd:MD_GeometricObjectTypeCode/@codeListValue","./gmd:MD_GeometricObjects/gmd:geometricObjectCount"])
+    #set($headCodeList = ["515"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_vector"), $xPathInfo1MD_VectorSpatialRepresentationGeometricObjects, $headTitles, $headXpathExpressions, $headCodeList))
+## Erstellungsmaßstab
+    #renderTable($TOOL.getReferenceObject($xPathInfo1MDResolution))
+## Symbolkatalog
+    #set($headTitles = [$MESSAGES.getString("t011_obj_geo_symc.symbol_cat"),$MESSAGES.getString("t011_obj_geo_symc.symbol_date"),$MESSAGES.getString("t011_obj_geo_symc.edition")])
+    #set($headXpathExpressions = ["./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:title","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date","./gmd:MD_PortrayalCatalogueReference/gmd:portrayalCatalogueCitation/gmd:CI_Citation/gmd:edition"])
+    #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_symc"), $xPathInfo1PortrayalCatalogueInfo, $headTitles, $headXpathExpressions))
+## Schlüsselkatalog: im Datensatz vorhanden
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath($xPathInfo1MDFeatureCatalogueDescriptionIncludedWithDataset))
+## Schlüsselkatalog
+    #set($headTitles = [$MESSAGES.getString("t011_obj_geo_keyc.subject_cat"),$MESSAGES.getString("t011_obj_geo_keyc.key_date"),$MESSAGES.getString("t011_obj_geo_keyc.edition")])
+    #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
+    #renderTextTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation, $headTitles, $headXpathExpressions))
+## Datengrundlage
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getValueFromXPath($xPathInfo1LISourceDescription))
+## Sachdaten/Attributinformation
+    #renderTextList($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
+## Herstellungsprozess
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
+## Identifikator der Datenquelle
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath($xPathInfo1MDIdentifierCode))
+## Identifikator der Datenquelle (older iplug)
+    #renderTextTable($MESSAGES.getString("t011_obj_geo.datasource_uuid") $TOOL.getValueFromXPath($xPathInfo1RSIdentifierCode))
+</div>
