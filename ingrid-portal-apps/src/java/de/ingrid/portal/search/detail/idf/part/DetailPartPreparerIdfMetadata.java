@@ -1501,8 +1501,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
-        HashMap<String, Object> elementCapabilities = new HashMap<>();
-        elementCapabilities.put("type", "multiLineImage");
+        HashMap<String, Object> elementCapabilities = null;
         HashMap<String, Object> elementMapLink = new HashMap<>();
         elementMapLink.put("type", "linkLine");
         elementMapLink.put("isMapLink", true);
@@ -1535,6 +1534,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
         if(elementMapLink.get("href") != null && elementMapLink.get("src") != null) {
+            elementCapabilities = new HashMap<>();
+            elementCapabilities.put("type", "multiLineImage");
             ArrayList<HashMap<String, Object>> list = new ArrayList<>();
             list.add(elementMapLink);
             elementCapabilities.put("elements", list);
