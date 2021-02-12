@@ -209,7 +209,7 @@
 
 #### Type 3
 #### Fachliche Grundlage
-#set($xPathInfo3LILineageStatement = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString"))
+#set($xPathInfo3LILineageStatement = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString")
 #### Typ des Dienstes
 #set($xPathInfo3ServiceType = "./gmd:identificationInfo/*/srv:serviceType")
 #### Version des Services
@@ -412,7 +412,7 @@
 #set($xPathAdditionalFieldsData = "./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField")
 
 
-#FactSheet
+##FactSheet
 #set($xPathListFactSheet = [
     $xPathListTimeTimePeriodBeginPosition,
     $xPathListTimeTimePeriodEndPosition,
