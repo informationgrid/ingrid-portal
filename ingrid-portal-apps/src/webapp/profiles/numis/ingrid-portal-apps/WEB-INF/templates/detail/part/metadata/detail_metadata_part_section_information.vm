@@ -19,6 +19,6 @@
         #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type5.vm")
     #elseif($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0))
     ## Informationsystem
-        #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_typei.vm")
+        #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type6.vm")
     #end
 #end
