@@ -1,4 +1,4 @@
-<div class="xsmall-24 medium-12 xlarge-15 columns">
+<div>
     ## RANKED (left column stuff)
     #renderRankedResultCounterGrouping($rankedPageSelector)
 </div>
