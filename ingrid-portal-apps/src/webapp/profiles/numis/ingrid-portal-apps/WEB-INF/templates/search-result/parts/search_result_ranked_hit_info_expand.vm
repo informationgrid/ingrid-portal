@@ -1,94 +1,3 @@
-## Area details
-#set($x1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x1" , 1))
-#set($y1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y1" , 1))
-#set($x2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x2" , 1))
-#set($y2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" , 1))
-
-## Refering details
-#set($referenceAllUUID = [])
-#set($referenceAllName = [])
-#set($referenceAllClass = [])
-#set($referenceAllType = [])
-#set($linksUrlRefDownload = [])
-#set($linksUrlRefOthers = [])
-
-#set($referingObjRefUUID = [])
-#set($referingObjRefUUID = $rs.getHitDetail().get("refering.object_reference.obj_uuid"))
-#set($referingObjRefName = [])
-#set($referingObjRefName = $rs.getHitDetail().get("refering.object_reference.obj_name" ))
-#set($referingObjRefClass = [])
-#set($referingObjRefClass = $rs.getHitDetail().get("refering.object_reference.obj_class" ))
-#set($referingObjRefType = [])
-#set($referingObjRefType = $rs.getHitDetail().get("refering.object_reference.type" ))
-
-#set($countObjRef = 0)
-#foreach($objUuid in $referingObjRefUUID)
-    #if($objUuid.startsWith("http"))
-        #set($link = {})
-        #set($add = $link.put("href", "$objUuid"))
-        #if($referingObjRefName.get($countObjRef) && $referingObjRefObjName.get($countObjRef) != "")
-            #set($add = $link.put("title", "$referingObjRefName.get($countObjRef)"))
-        #else
-            #set($add = $link.put("title", "$objUuid"))
-        #end
-        #set($add = $linksUrlRefOthers.add($link))
-    #else
-        #if(!$referenceAllUUID.contains($objUuid))
-            #if(!$referingObjRefName.get($countObjRef).isEmpty())
-                #set($add = $referenceAllUUID.add($objUuid))
-                #set($add = $referenceAllName.add($referingObjRefName.get($countObjRef)))
-                #set($add = $referenceAllClass.add($referingObjRefClass.get($countObjRef)))
-                #set($add = $referenceAllType.add($referingObjRefType.get($countObjRef)))
-            #end
-        #end
-    #end
-    #set($countObjRef = $countObjRef + 1)
-#end
-
-#set($objRefUUID = [])
-#set($objRefUUID = $rs.getHitDetail().get("object_reference.obj_uuid"))
-#set($objRefName = [])
-#set($objRefName = $rs.getHitDetail().get("object_reference.obj_name" ))
-#set($objRefClass = [])
-#set($objRefClass = $rs.getHitDetail().get("object_reference.obj_class" ))
-#set($objRefType = [])
-#set($objRefType = $rs.getHitDetail().get("object_reference.type" ))
-
-#set($countObjRef = 0)
-#foreach($objUuid in $objRefUUID)
-    #if($objUuid.startsWith("http"))
-        #set($link = {})
-        #set($add = $link.put("href", "$objUuid"))
-        #if($objRefName.get($countObjRef) && $objRefName.get($countObjRef) != "")
-            #set($add = $link.put("title", "$objRefName.get($countObjRef)"))
-        #else
-            #set($add = $link.put("title", "$objUuid"))
-        #end
-        #set($add = $linksUrlRefOthers.add($link))
-    #else
-        #if(!$referenceAllUUID.contains($objUuid))
-            #if(!$objRefName.get($countObjRef).isEmpty())
-                #set($add = $referenceAllUUID.add($objUuid))
-                #set($add = $referenceAllName.add($objRefName.get($countObjRef)))
-                #set($add = $referenceAllClass.add($objRefClass.get($countObjRef)))
-                #set($add = $referenceAllType.add($objRefType.get($countObjRef)))
-            #end
-        #end
-    #end
-    #set($countObjRef = $countObjRef + 1)
-#end
-
-## URLRefering details
-#set($urlReferenceLink = $rs.getHitDetail().get("t017_url_ref.url_link"))
-#set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content" ))
-#set($urlReferenceSpecialRef = $rs.getHitDetail().get("t017_url_ref.special_ref" ))
-
-#set($paramMore = $request.getParameter("more"))
-#set($moreId = "${moreId}_more")
-#set($isMoreId = false)
-#if($paramMore.indexOf($moreId) > -1)
-    #set($isMoreId = true)
-#end
 #if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink || ($x1 && !$x1.isEmpty()))
     <a id="${moreId}" class="js-expander #if($isMoreId)is-hidden#end"" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
@@ -102,39 +11,6 @@
         <div class="row">
             <div class="xsmall-24 small-24 medium-14 large-14 xlarge-14 columns">
                 #if($referenceAllUUID || $urlReferenceLink)
-                    #set($linksRef = [])
-                    #if($referenceAllUUID)
-                        #set($refCount = 0)
-                        #foreach($uuid in $referenceAllUUID)
-                            #set($link = {})
-                            #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cmd=doShowDocument&docuuid=$referenceAllUUID.get($refCount)&plugid=$rs.plugid"))
-                            #set($add = $link.put("type", "$referenceAllClass.get($refCount)"))
-                            #set($add = $link.put("title", "$referenceAllName.get($refCount)"))
-                            #set($add = $link.put("serviceType", "$referenceAllType.get($refCount)"))
-                            #set($add = $linksRef.add($link))
-                            #set($refCount = $refCount + 1)
-                        #end
-                    #end
-                    #if($urlReferenceLink)
-                        #set($refCount = 0)
-                        #foreach($uuid in $urlReferenceLink)
-                            #set($link = {})
-                            #set($add = $link.put("href", "$urlReferenceLink.get($refCount)"))
-                            #if($urlReferenceContent.get($refCount) && $urlReferenceContent.get($refCount) != "")
-                                #set($add = $link.put("title", "$urlReferenceContent.get($refCount)"))
-                            #else
-                                #set($add = $link.put("title", "$urlReferenceLink.get($refCount)"))
-                            #end
-                            #set($tmpSpecialRef = $urlReferenceSpecialRef.get($refCount))
-                            #set($add = $link.put("special_ref", $tmpSpecialRef))
-                            #if($tmpSpecialRef && $tmpSpecialRef == "9990")
-                                #set($add = $linksUrlRefDownload.add($link))
-                            #else
-                                #set($add = $linksUrlRefOthers.add($link))
-                            #end
-                            #set($refCount = $refCount + 1)
-                        #end
-                    #end
                     #if($linksUrlRefDownload.size() > 0 || $linksRef.size() > 0)
                         #set($countRefs = $linksUrlRefDownload.size() + $linksRef.size())
                         <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
@@ -152,7 +28,7 @@
                                 #end
                                 <div class="list-item">
                                     <div>
-                                        #renderServiceTypeUrl($link.href $serviceTypes)
+                                        #renderServiceTypeUrl($link.href)
                                         <a href="$link.href" class="icon" title="$link.title">
                                             #if($link.special_ref == "9990")
                                                 <span class="ic-ic-download"></span>
@@ -173,9 +49,6 @@
                                 #end
                                 <div class="list-item">
                                     #if($link.serviceType && !$link.serviceType.isEmpty())
-                                        #if($serviceTypes.indexOf($link.serviceType) == -1)
-                                            #set($add = $serviceTypes.add($link.serviceType))
-                                        #end
                                         #renderServiceType($link.serviceType)
                                     #end
                                     <div>
@@ -211,7 +84,7 @@
                                 #end
                                 <div class="list-item">
                                     <div>
-                                        #renderServiceTypeUrl($link.href $serviceTypes)
+                                        #renderServiceTypeUrl($link.href)
                                         <a href="$link.href" class="icon" title="$link.title">
                                             #renderUDKIcon($link.type $link.title)
                                         </a>

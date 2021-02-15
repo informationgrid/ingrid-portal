@@ -91,12 +91,14 @@ var expander = (function () {
 $('.js-expander').on('click', function (event) {
     event.preventDefault();
     expander.open(this.id);
+    $(this).parent().addClass("is-active");
 });
 
 $('.js-expander-close').on('click', function (event) {
     event.preventDefault();
     var id = $(event.currentTarget).prevUntil(event.currentTarget,".js-expander")[0].id;
     expander.close(id);
+    $(this).parent().removeClass("is-active");
 });
 
 

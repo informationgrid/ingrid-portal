@@ -37,7 +37,7 @@
                                             <div class="accordion-content" #if($similarNode.isOpen())aria-hidden="true" style="display:block"#end>
                                             #if($similarNode.getChildren().size() > 0)
                                                 <div class="form-element boxed">
-                                                    <div class="input-check">
+                                                    <div class="input-check input-check-no-hover">
                                                         <div class="control-group">
                                                         #foreach($tokenNode in $similarNode.getChildren())
                                                             <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="chk_$tokenNode.id">

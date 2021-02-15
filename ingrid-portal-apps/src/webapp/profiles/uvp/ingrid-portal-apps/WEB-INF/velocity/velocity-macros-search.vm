@@ -463,7 +463,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderServiceTypeUrl $url $types)
+#macro(renderServiceTypeUrl $url $types $isNotDisplay)
     #set($serviceType = "HTML")
     #if($url.toLowerCase().indexOf('service=csw') > -1)
         #set($serviceType = "CSW")
@@ -478,10 +478,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
      #elseif($url.toLowerCase().indexOf('.xml') > -1)
         #set($serviceType = "XML")
     #end
-    #if(!$serviceType.isEmpty && $types.indexOf($serviceType) == -1)
+    #if(!$serviceType.isEmpty && $types && $types.indexOf($serviceType) == -1)
         #set($add = $types.add($serviceType))
     #end
-    #renderServiceType($serviceType)
+    #if(!$isNotDisplay)
+        #renderServiceType($serviceType)
+    #end
 #end
 
 #macro(renderServiceTypeList $types)

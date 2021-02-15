@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail0)
 <a class="anchor" id="detail-0" name="detail-0"></a>
-<div class="teaser-data search row">
+<div class="teaser-data search row is-active">
     <div class="xsmall-24 small-24 #if($tool.hasContent($mapImage))medium-14 large-14 xlarge-14#end columns">
     ## Durch die Ressource abgedeckte Zeitspanne
         #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
