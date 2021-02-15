@@ -1665,6 +1665,18 @@ a[class*="js-expander"] span.text {
     top: 0;
 }
 
+.shrink .login {
+    display: none;
+}
+
+.shrink .header-menu-open .login ~ .button {
+    margin: 18px 0 0 0;
+}
+
+.shrink .login ~ .small-button .ic-ic-hamburger:before {
+    content: "\e960";
+}
+
 .shrink header .logo {
     height: 80px;
 }
