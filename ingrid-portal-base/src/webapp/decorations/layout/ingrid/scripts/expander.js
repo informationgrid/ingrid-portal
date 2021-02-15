@@ -154,12 +154,12 @@ $(function(){
         $('.js-expand-box .js-expand-text-fade').removeClass('is-hidden');
     });
     
-    var isAllOpen = false;
+    var isAllOpen = true;
     var jsExpanders = $('.data .teaser-data .js-expander');
     for (var i = 0; i < jsExpanders.length; i++) {
       var jsExpander = jsExpanders.get(i);
-      if($(jsExpander).hasClass("is-hidden")){
-          isAllOpen = true;
+      if(!$(jsExpander).hasClass("is-hidden")){
+          isAllOpen = false;
       }
     }
     if(isAllOpen) {

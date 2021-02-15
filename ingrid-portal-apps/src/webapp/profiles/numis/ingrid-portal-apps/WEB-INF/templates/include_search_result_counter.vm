@@ -8,10 +8,10 @@
     </span>
     <div class="js-expander-toggle-all">
         <a class="icon js-toggle-all-expander-collapse is-active" href="#" title="$MESSAGES.getString('searchResult.hit.view.collapse')">
-            <span class="ic-ic-view-colapsed">
+            <span class="ic-ic-view-colapsed"></span>
         </a>
         <a class="icon js-toggle-all-expander-expand" href="#" title="$MESSAGES.getString('searchResult.hit.view.expand')">
-            <span class="ic-ic-view-expanded">
+            <span class="ic-ic-view-expanded"></span>
         </a>
     </div>
 #if($enableFacete)
