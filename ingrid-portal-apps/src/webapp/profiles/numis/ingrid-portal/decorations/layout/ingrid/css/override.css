@@ -1879,9 +1879,45 @@ h4 span, h5 span {
 
 .results-index .result-text  {
     margin-right:16px;
+    color: #3a566d;
 }
 
-.results-index .result-text ~ div {
+.results-index .result-text ~ div.sort {
+    margin-right: 24px;
     width: 125px;
-    margin-right:24px;
+}
+
+.js-expander-toggle-all {
+    margin-right: 24px;
+    margin-top: 12px;
+}
+
+.js-expander-toggle-all a.icon {
+    padding: 8px;
+    margin-right: 0;
+    border: 1px solid #c6cfe2;
+}
+
+.js-expander-toggle-all a.icon [class^="ic-"] {
+    margin-right: 0;
+}
+
+.js-expander-toggle-all a.icon:first-child {
+    padding-left: 16px;
+    border-radius: 24.04px 0 0 24.04px;
+    border-right: 0;
+}
+
+.js-expander-toggle-all a.icon:last-child {
+    border-radius: 0 24.04px 24.04px 0;
+    padding-right: 16px;
+}
+
+.js-expander-toggle-all a.icon:hover, .js-expander-toggle-all a.icon.is-active {
+    background: #1d4b7b;
+    color: #FFFFFF;
+}
+
+.js-expander-toggle-all a.icon:hover{
+    background: #1d4b7b;
 }

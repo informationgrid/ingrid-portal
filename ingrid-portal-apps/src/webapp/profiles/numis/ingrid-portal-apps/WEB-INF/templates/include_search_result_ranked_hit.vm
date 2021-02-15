@@ -10,6 +10,11 @@
     #if($paramMore.indexOf($moreId) > -1)
         #set($isMoreId = true)
     #end
+    #set($isMoreIdLinks = false)
+    #set($moreIdLinks = "${moreId}_links")
+    #if($paramMore.indexOf($moreIdLinks) > -1)
+        #set($isMoreIdLinks = true)
+    #end
     ##
     ############
 
