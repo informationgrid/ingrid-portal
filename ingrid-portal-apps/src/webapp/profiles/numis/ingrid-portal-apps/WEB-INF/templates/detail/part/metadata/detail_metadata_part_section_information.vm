@@ -10,7 +10,7 @@
         #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type2.vm")
     #elseif($type == "3" && ($TOOL.aNodeOfListExist($xPathListInformationType3) || $serviceClassification.size() > 0))
     ## Geodatendienst
-        #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_typei.vm")
+        #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type3.vm")
     #elseif($type == "4" && $TOOL.aNodeOfListExist($xPathListInformationType4))
     ## Projekt
         #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type4.vm")
