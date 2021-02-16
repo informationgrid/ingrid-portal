@@ -83,7 +83,6 @@
 #set($urlReferenceContent = $rs.getHitDetail().get("t017_url_ref.content" ))
 #set($urlReferenceSpecialRef = $rs.getHitDetail().get("t017_url_ref.special_ref" ))
 
-
 #if($referenceAllUUID || $urlReferenceLink)
     #set($linksRef = [])
     #if($referenceAllUUID)
@@ -123,7 +122,7 @@
             #set($refCount = $refCount + 1)
             
             ## Add service type to list 
-            #if($serviceTypes.indexOf($link.serviceType) == -1)
+            #if($referenceAllUUID.size() == 0 && $serviceTypes.indexOf($link.serviceType) == -1)
                 #renderServiceTypeUrl($link.href $serviceTypes true)
             #end
         #end

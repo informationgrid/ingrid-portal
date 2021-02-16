@@ -3,11 +3,9 @@
 <div class="border-line-info">
 ## Objekt-ID 
     <div class="row">
-        <div>
+        <div class="columns">
             <b>$MESSAGES.getString("t01_object.obj_id"): </b>
-        </div>
-        &nbsp
-        <div>
+            &nbsp
             <b>$TOOL.getValueFromXPath("./gmd:fileIdentifier")</b>
         </div>
     </div>
