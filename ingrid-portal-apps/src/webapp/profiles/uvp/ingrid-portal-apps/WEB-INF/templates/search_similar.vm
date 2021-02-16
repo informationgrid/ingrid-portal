@@ -61,7 +61,7 @@
                                     </ul>
                                 #end
                                 <div class="columns text-center">
-                                    <button class="button">$MESSAGES.getString('searchSimilar.add.to.query')</button>
+                                    <button class="button small">$MESSAGES.getString('searchSimilar.add.to.query')</button>
                                     <input type="hidden" name="action" value="doAddSimilar" />
                                 </div>
                             </form>
