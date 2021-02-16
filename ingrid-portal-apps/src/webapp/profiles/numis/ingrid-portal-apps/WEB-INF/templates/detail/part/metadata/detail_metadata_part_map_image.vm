@@ -1,4 +1,4 @@
-#if($mapImage)
+#if($mapImage && $mapImage.size() > 0)
     <div class="xsmall-24 small-10 columns">
         <h4 class="text-center">$MESSAGES.getString("preview")</h4>
         #renderMultiLineImage($mapImage)

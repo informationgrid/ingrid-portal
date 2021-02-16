@@ -1565,10 +1565,12 @@ a[class*="js-expander"] span.text {
 }
 
 @media print, screen and (min-width: 64em) {
+    .search-filtered .row .columns:first-child,
     .detail .row .columns:first-child {
         padding-right: 24px;
     }
 
+    .search-filtered .row .columns:last-child,
     .detail .row .columns:last-child {
         padding-left: 24px;
     }

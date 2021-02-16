@@ -156,11 +156,15 @@ $(function(){
     
     var isAllOpen = true;
     var jsExpanders = $('.data .teaser-data .js-expander');
-    for (var i = 0; i < jsExpanders.length; i++) {
-      var jsExpander = jsExpanders.get(i);
-      if(!$(jsExpander).hasClass("is-hidden")){
-          isAllOpen = false;
-      }
+    if(jsExpanders.length > 0) {
+        for (var i = 0; i < jsExpanders.length; i++) {
+            var jsExpander = jsExpanders.get(i);
+            if(!$(jsExpander).hasClass("is-hidden")){
+                isAllOpen = false;
+            }
+        }
+    } else {
+      isAllOpen = false;
     }
     if(isAllOpen) {
       $('.js-toggle-all-expander-expand').addClass("is-active").siblings().removeClass('is-active');
