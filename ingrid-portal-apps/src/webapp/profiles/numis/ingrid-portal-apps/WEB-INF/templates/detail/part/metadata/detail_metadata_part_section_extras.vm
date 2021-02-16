@@ -3,11 +3,12 @@
 <div class="border-line-info">
 ## Objekt-ID 
     <div class="row">
-        <div class="xsmall-24 small-24 large-5 columns">
-            <b>$MESSAGES.getString("t01_object.obj_id")</b>
+        <div>
+            <b>$MESSAGES.getString("t01_object.obj_id"): </b>
         </div>
-        <div class="xsmall-24 small-24 large-19 columns">
-            <b>$TOOL.getValueFromXPath("./gmd:fileIdentifier"))</b>
+        &nbsp
+        <div>
+            <b>$TOOL.getValueFromXPath("./gmd:fileIdentifier")</b>
         </div>
     </div>
 ## Untergeordnete Objekte

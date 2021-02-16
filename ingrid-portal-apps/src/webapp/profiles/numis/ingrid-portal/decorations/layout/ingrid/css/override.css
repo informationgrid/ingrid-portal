@@ -1076,7 +1076,7 @@ header .menu-tab-row .menu-tab {
     padding: 24px 0 16px;
   }
   .data ~ h2 {
-    padding-top: 24px;
+    padding-top: 32px;
   }
   .data ~ .row.columns {
     margin-bottom: 48px !important;
@@ -1170,10 +1170,10 @@ header .menu-tab-row .menu-tab {
 }
 @media print, screen and (min-width: 64em) {
   .nav-content {
-    margin-top: 4rem !important;
+    margin-top: 54px !important;
   }
   .detail .nav-content {
-    margin-top: -4rem !important;
+    margin-top: -94px !important;
   }
   .nav-content .columns:last-of-type {
     padding-left: 0;
@@ -1185,7 +1185,8 @@ header .menu-tab-row .menu-tab {
      width: 24em;
   }
   h3, .h3 {
-    font-size: 1.33rem;
+    font-size: 24px;
+    line-height: 30px;
   }
   h4, .h4 {
     font-size: 1.1rem;
@@ -1210,7 +1211,7 @@ header .menu-tab-row .menu-tab {
     font-size: 29px;
   }
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    padding: 64px 0 16px;
+    padding: 64px 0 40px;
   }
 }
 
@@ -1419,11 +1420,15 @@ a[class*="js-expander"] span.text {
 }
 
 .search-filtered .table table th:first-child {
-    width: 230px;
+    width: 210px;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;
     vertical-align: top;
+}
+
+.search-filtered .table.no-background {
+    padding: 0 10px;
 }
 
 .search-filtered .table.no-background table th:first-child {
@@ -1529,6 +1534,7 @@ a[class*="js-expander"] span.text {
     font-family: "Roboto-Regular", sans-serif;
     padding: 8px 16px;
     text-transform: none;
+    border-width: 1px;
 }
 
 .search-filtered .teaser-data {
@@ -1540,6 +1546,7 @@ a[class*="js-expander"] span.text {
     background: #FFFFFF;
     margin-left: 0;
     margin-right: 0;
+    margin-bottom: 48px;
 }
 
 .search-filtered .teaser-data.is-active h2.header,
@@ -1558,12 +1565,15 @@ a[class*="js-expander"] span.text {
 }
 
 @media print, screen and (min-width: 64em) {
-    .search-filtered .columns:first-child {
+    .detail .row .columns:first-child {
         padding-right: 24px;
     }
 
-    .search-filtered .columns:last-child {
+    .detail .row .columns:last-child {
         padding-left: 24px;
+    }
+    .detail .row .row.row.columns {
+        padding-left: 0;
     }
 }
 
@@ -1624,6 +1634,19 @@ a[class*="js-expander"] span.text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.detail .search-filtered .teaser-data.row .columns {
+    padding: 0;
+    margin-bottom: 0;
+} 
+
+.detail .search-filtered .teaser-data.row .columns + .columns{
+    padding-left: 24px;
+}
+
+.detail .search-filtered .teaser-data .swiper-slide p {
+    margin-bottom: 24px;
 }
 
 
@@ -1805,7 +1828,7 @@ a[class*="js-expander"] span.text {
 #searchResult .teaser-data .swiper-container .swiper-pagination-bullet {
     width: unset !important;
     height: unset !important;
-    padding: 0px 12px;
+    padding: 4px 12px;;
     border: 1px solid #006ec5;
     color: #006ec5;
     text-decoration: none;
@@ -1873,6 +1896,10 @@ h4 span, h5 span {
     margin-bottom: 8px;
 }
 
+.results-index .row {
+    margin-left: 0;
+}
+
 .results-index .row .row {
     margin-left: auto;
 }
@@ -1921,3 +1948,4 @@ h4 span, h5 span {
 .js-expander-toggle-all a.icon:hover{
     background: #1d4b7b;
 }
+

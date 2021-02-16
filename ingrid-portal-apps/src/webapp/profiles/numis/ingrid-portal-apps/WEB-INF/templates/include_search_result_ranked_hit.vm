@@ -7,12 +7,12 @@
     #set($paramMore = $request.getParameter("more"))
     #set($moreId = "${moreId}_more")
     #set($isMoreId = false)
-    #if($paramMore.indexOf($moreId) > -1)
+    #if($paramMore && $paramMore.indexOf($moreId) > -1)
         #set($isMoreId = true)
     #end
     #set($isMoreIdLinks = false)
     #set($moreIdLinks = "${moreId}_links")
-    #if($paramMore.indexOf($moreIdLinks) > -1)
+    #if($paramMore && $paramMore.indexOf($moreIdLinks) > -1)
         #set($isMoreIdLinks = true)
     #end
     ##
