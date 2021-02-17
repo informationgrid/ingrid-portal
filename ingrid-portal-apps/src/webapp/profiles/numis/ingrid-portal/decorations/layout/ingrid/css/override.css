@@ -442,6 +442,10 @@ header a.icon.is-selected {
   line-height: 24px;
 }
 
+.detail .banner-noimage .helper.icon .text-normal {
+    font-family: "Roboto";
+}
+
 .detail .banner-noimage .helper.icon span:first-child {
     font-size: 20px;
 }
