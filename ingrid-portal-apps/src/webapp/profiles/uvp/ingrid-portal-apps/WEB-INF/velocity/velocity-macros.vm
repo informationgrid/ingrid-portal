@@ -467,7 +467,7 @@ $actionForm.getInputHTMLEscaped($field)#end
         <span class="ic-ic-zulassungsverfahren"></span>
     #elseif($class == "1")
         ## Geodatensatz
-        <span class="ic-ic-inspire"></span>
+        <span class="ic-ic-karte"></span>
     #elseif($class == "2")
         ## Literatur
         <span class="ic-ic-katalog"></span>

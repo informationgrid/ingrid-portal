@@ -1966,3 +1966,14 @@ h4 span, h5 span {
 .nr-results {
     color: #3a566d;
 }
+
+.button.small {
+    font-size: 16px;
+    padding: 8px 24px;
+    text-transform: none;
+    line-height: 24px;
+}
+
+span.icon span {
+    margin-right: 8px;
+}

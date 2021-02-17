@@ -55,13 +55,13 @@
                     <p class="caption">$entry.title</p>
                 #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
                     <p class="caption">
-                        <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                        <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
                             $entry.title
                         </a>
                     </p>
                 #else
                     <p class="caption">
-                        <a class="button outline pill" href="${entry.get("href")}" title="$entry.title">
+                        <a class="button small" href="${entry.get("href")}" title="$entry.title">
                             $entry.title
                         </a>
                     </p>
