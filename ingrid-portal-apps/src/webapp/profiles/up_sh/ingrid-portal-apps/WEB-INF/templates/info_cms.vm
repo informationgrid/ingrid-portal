@@ -3,83 +3,9 @@
     <div class="row">
         <div class="large-24 columns" style="padding-top: 15px">
             <h2 style="text-align: center">
-                UP-SH INFORMIERT
+                $cmsItemTitle
             </h2>
-            <div class="info-teaser-block">
-                <a class="info-teaser-box" href="http://zebis.landsh.de/webauswertung/commands.xhtml?Login.Username=hwrm&Login.Password=" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_hwrm.jpg">
-                    <div class="text-box">
-                        <div class="title">
-                            Hochwasserkarten
-                        </div>
-                        <p>
-                            Hochwassergefahren- und Hochwasserrisikokarten mit Darstellung von Gebieten mit einem potenziell
-                            wahrscheinlichen Hochwasserrisiko.
-                        </p>
-                    </div>
-                </a>
-                <a class="info-teaser-box" href="http://zebis.landsh.de/webauswertung/commands.xhtml?Login.Username=wrrl&Login.Password=" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_wrrl.jpg">
-                    <div class="text-box">
-                        <div class="title">
-                            Wasserk&ouml;rper- und N&auml;hrstoffinformationen
-                        </div>
-                        <p>
-                            Wasserk&ouml;rpersteckbriefe gem&auml;&szlig; Wasserrahmenrichtlinie (WRRL) sowie Monitoringergebnisse f&uuml;r
-                            N&auml;hrstoffe.
-                        </p>
-                    </div>
-                </a>
-                <a class="info-teaser-box" href="http://zebis.landsh.de/webauswertung/commands.xhtml?Login.Username=biotopkartierung&Login.Password=" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_bki.jpg">
-                    <div class="text-box">
-                        <div class="title">
-                            Biotopkartierung
-                        </div>
-                        <p>
-                            In Schleswig-Holstein werden bis 2019 aus &ouml;kologischer Sicht wertvolle und gef&auml;hrdete Biotope im
-                            Gel&auml;nde kartiert und anhand von Karten und Sachdaten dokumentiert.
-                        </p>
-                    </div>
-                </a>
-                <a class="info-teaser-box" href="http://zebis.landsh.de/webauswertung/commands.xhtml?Login.Username=anlagenkataster&Login.Password=" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_anlagenkataster.jpg">
-                    <div class="text-box">
-                        <div class="title">
-                            Anlagenkataster
-                        </div>
-                        <p>
-                            Das Anlagenkataster bietet einen &Uuml;berblick &uuml;ber die Unternehmen der Abfallentsorgung in
-                            Schleswig-Holstein.
-                        </p>
-                    </div>
-                </a>
-                <a class="info-teaser-box" href="http://zebis.landsh.de/webauswertung/?login=true&portale=bodis" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_bodis.jpg">
-                    <div class="text-box">
-                        <div class="title">Bodendauer-beobachtung</div>
-                        <p>Recherche und Bearbeitung von Untersuchungsdaten zu BDF (Bodendauerbeobachtungsfl&auml;chen).</p>
-                        <p>Der Zugang zu dieser Anwendung ist passwortgesch&uuml;tzt.</p>
-                    </div>
-                </a>
-                <a class="info-teaser-box" href="http://umweltdaten.schleswig-holstein.de/fachauswertungweb?login=true&portale=vorkauf" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_kulisse.jpg">
-                    <div class="text-box">
-                        <div class="title">Vorkaufsrecht</div>
-                        <p>Der "Kulissenfinder" gibt Notaren vor der Beurkundung eines Kaufvertrages die Gewissheit, ob das zu
-                            verkaufende Grundst&uuml;ck vom Vorkaufsrecht gem. § 50 LNatSchG betroffen ist.</p>
-                        <p>Der Zugang zu dieser Anwendung ist passwortgesch&uuml;tzt.</p>
-                    </div>
-                </a>
-                <a class="info-teaser-box" href="http://zebis.landsh.de/webauswertung/commands.xhtml?Login.Username=dwh&Login.Password=dwh" target="_blank">
-                    <img src="http://zebis.landsh.de/webauswertung/themes/default/images/custom/logo/login_dwh_sm_scaled.jpg">
-                    <div class="text-box">
-                        <div class="title">Data Warehouse (DWH)</div>
-                        <p>In der Data Warehouse Strategie des MELUND ist dieses eine erste fach&uuml;bergreifende Auswertung, die sich
-                            verschiedenster Datenquellen bedient.</p>
-                    </div>
-                </a>
-            </div>
+            $cmsItemValue
         </div>
     </div>
 </div>
