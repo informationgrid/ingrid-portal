@@ -439,7 +439,7 @@ header a.icon.is-selected {
   background-position: top right;
 }
 .about {
-  background-image: linear-gradient(to right, #b52744, #003064);
+  background-image: linear-gradient(to top, #d4004b, #011e4a);
 }
 .about .about-wrapper .button.outline:hover {
   background-color: #003064;
@@ -1296,7 +1296,7 @@ header .logo a:hover{
   box-shadow: 0 0 40px rgba(0, 0, 0, .1);
 }
 .teaser:hover {
-  transform: scale(1.05);
+  transform: scale(1.02);
 }
 .teaser .blue-border {
   border-radius: 100px;
@@ -1348,9 +1348,6 @@ header .logo a:hover{
 
 /* footer */
 footer .footer {
-  background-image: url('/decorations/layout/sh/images/template/footer-wappen.svg');
-  background-repeat: no-repeat;
-  background-position: center;
   background-color: #d4004b;
   padding: 0;
 }
@@ -1592,4 +1589,73 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
   src: url('../../ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.eot?#iefix') format("embedded-opentype"),
   url('../../ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.woff') format("woff"),
   url('../../ingrid/fonts/AvenirNextLTPro/AvenirNextLTPro-Demi.ttf')  format('truetype');
+}
+
+/* homepage info teaser */
+@media print, screen and (max-width: 35em){
+  .info-teaser-box {
+    flex: 0 0 calc(100% - 20px);
+  }
+}
+@media print, screen and (min-width: 35em){
+  .info-teaser-box {
+    flex: 0 0 calc(50% - 20px);
+  }
+}
+@media print, screen and (min-width: 49em){
+  .info-teaser-box {
+    flex: 0 0 calc(33.3333% - 20px);
+  }
+}
+@media print, screen and (min-width: 64.125em){
+  .info-teaser-box {
+    flex: 0 0 calc(25% - 20px);
+  }
+}
+.info-teaser-block {
+  display: flex;
+  flex-wrap: wrap;
+}
+.info-teaser-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0 0 20px 20px;
+  border-top: 6px solid #d4004b;
+  margin: 0 20px 20px 0;
+  background: #003064;
+  color: #fff !important;
+  text-decoration: none !important;
+  transition: 0.2s ease-in-out;
+}
+.info-teaser-box:hover {
+  transform: scale(1.02);
+}
+.info-teaser-box:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  bottom: -120px;
+  left: -65px;
+  width: 538px;
+  height: 386px;
+  transform: scale(0.3);
+  opacity: .1;
+  background: url(https://www.schleswig-holstein.de/SiteGlobals/Frontend/Images/icons/sprite.svg?__blob=normal&v=4) no-repeat -50px -50px;
+}
+.info-teaser-box .text-box {
+  padding: 20px 30px 10px;
+}
+.info-teaser-box img {
+  float: none;
+  margin-right: unset;
+  width: 100%;
+  height: 125px;
+}
+.text-box .title {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+.text-box p {
+  font-size: 15px;
+  margin-bottom: 25px;
 }
