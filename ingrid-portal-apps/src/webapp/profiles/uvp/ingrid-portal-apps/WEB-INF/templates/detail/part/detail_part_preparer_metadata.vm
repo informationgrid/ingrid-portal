@@ -12,7 +12,7 @@
           <div class="columns">
             <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
                 <span class="ic-ic-arrow-left"></span>
-                <span class="text">Alle Suchergebnisse</span>
+                <span class="text">$MESSAGES.getString("search.detail.back.to.results")</span>
             </a>
             <br>
             <br>

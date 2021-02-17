@@ -1367,6 +1367,10 @@ a[class*="js-expander"] span.text {
 }
 
 .search-filtered .data {
+    margin-bottom: 24px;
+}
+
+.detail .search-filtered .data {
     margin-bottom: 48px;
 }
 
@@ -1574,7 +1578,6 @@ a[class*="js-expander"] span.text {
     background: #FFFFFF;
     margin-left: 0;
     margin-right: 0;
-    margin-bottom: 48px;
 }
 
 .search-filtered .teaser-data.is-active h2.header,

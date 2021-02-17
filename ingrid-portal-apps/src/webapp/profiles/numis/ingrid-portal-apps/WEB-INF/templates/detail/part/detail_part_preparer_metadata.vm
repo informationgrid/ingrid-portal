@@ -8,7 +8,7 @@
                 <div class="xsmall-24 large-6 xlarge-6 columns">
                     <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
                         <span class="ic-ic-arrow-left"></span>
-                        <span class="text">Alle Suchergebnisse</span>
+                        <span class="text text-normal">$MESSAGES.getString("search.detail.back.to.results")</span>
                     </a>
                 </div>
                 <div class="xsmall-24 large-18 xlarge-18 columns">
