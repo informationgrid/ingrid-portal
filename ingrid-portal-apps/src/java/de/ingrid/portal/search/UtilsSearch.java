@@ -888,7 +888,8 @@ public class UtilsSearch {
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
-                if (basicDataTypes.contains(dt)) {
+                Boolean prohibited = (Boolean) dtFields[i].get("prohibited");
+                if (basicDataTypes.contains(dt) && !prohibited) {
                     // return the first basic type discovered !
                 	ret = dt;
                 	break;
@@ -908,7 +909,8 @@ public class UtilsSearch {
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
-                if (addressDataTypes.contains(dt)) {
+                Boolean prohibited = (Boolean) dtFields[i].get("prohibited");
+                if (addressDataTypes.contains(dt) && !prohibited) {
                 	return true;
                 }
             }    		
