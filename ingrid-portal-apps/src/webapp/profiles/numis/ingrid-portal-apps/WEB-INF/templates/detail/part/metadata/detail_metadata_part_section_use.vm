@@ -14,7 +14,6 @@
     ## Addressen
         #renderMultiLineAddresses("" $TOOL.getNodeListFromXPath($xPathUsePointOfContact) false)
     ## Ansprechpartner (Metadatum)
-        #set($tmpXPath = $TOOL.getValueFromXPath("${xPathUseContact}/*/gmd:role/gmd:CI_RoleCode/@codeListValue", "505"))
-        #renderMultiLineAddresses("${tmpXPath} ($MESSAGES.getString('pointofcontact_metadata'))" $TOOL.getNodeListFromXPath($xPathUseContact) true)
+        #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_metadatum.vm")
     </div>
 #end
