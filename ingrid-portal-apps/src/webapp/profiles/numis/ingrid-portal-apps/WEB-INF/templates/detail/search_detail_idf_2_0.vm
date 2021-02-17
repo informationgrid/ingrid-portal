@@ -744,7 +744,7 @@
     #renderLinkListImage ($title $linkList $titleAsSection $hasImage "")
 #end
 
-#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId $linkListInclude $displayPreview)
+#macro (renderLinkListImageLimit $title $linkList $titleAsSection $hasImage $listLimit $expandId $titleTag $linkListInclude $displayPreview)
     #if($tool.hasContent($linkList) || $tool.hasContent($linkListInclude))
         #if($titleAsSection == "true")
             #if($tool.hasContent($title))
@@ -753,7 +753,11 @@
         #end
         #if($titleAsSection == "false")
             #if($tool.hasContent($title))
-                <h4>$title</h4>
+                #if($titleTag)
+                    <$titleTag class="padding-list">$title</$titleTag>
+                #else
+                    <h5>$title</h5>
+                #end 
             #end
         #end
         <div class="document-list">
@@ -973,7 +977,7 @@
     #if($tool.hasContent($linkList))
         <div class="row">
             <div class="xsmall-24 small-24 large-5 columns">
-                <b>$title</b>
+                <span>$title</span>
             </div>
             <div class="xsmall-24 small-24 large-19 columns">
                 #foreach($link in $sorter.sort($linkList,"title"))

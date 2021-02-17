@@ -2,12 +2,8 @@
 ################################
 <div class="border-line-info">
 ## Objekt-ID 
-    <div class="row">
-        <div class="columns">
-            <b>$MESSAGES.getString("t01_object.obj_id"): </b>
-            &nbsp
-            <b>$TOOL.getValueFromXPath("./gmd:fileIdentifier")</b>
-        </div>
+    <div>
+        <span>$MESSAGES.getString("t01_object.obj_id"): $TOOL.getValueFromXPath("./gmd:fileIdentifier")</span>
     </div>
 ## Untergeordnete Objekte
     #renderTableLinkList($MESSAGES.getString("subordinated_references") $TOOL.getReference("./idf:subordinatedReference"))

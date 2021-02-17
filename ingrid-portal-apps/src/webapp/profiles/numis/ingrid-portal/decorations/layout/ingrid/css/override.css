@@ -1234,11 +1234,14 @@ header .menu-tab-row .menu-tab {
 
 .teaser-data.search .header {
     margin-bottom: 16px;
+    font-weight: normal;
 }
 .teaser-data.search .helper.date {
     margin-bottom: 16px;
     padding: 0;
     font-family: "Roboto-Regular";
+    font-size: 14px;
+    line-height: 18px;
 }
 .teaser-data.search .data-text {
     height: 32px;
@@ -1249,7 +1252,7 @@ header .menu-tab-row .menu-tab {
 }
 .teaser-data.search .arrow {
     position: relative;
-    bottom: 0;
+    bottom: 12px;
     right: 0;
     font-size: 40px;
 }
@@ -1323,15 +1326,19 @@ a[class*="js-expander"] [class*="ic-"] {
 a[class*="js-expander"] span.text {
     font-size: 16px;
     font-family: "Roboto-Bold";
-    font-weight: 700;
     line-height: 24px;
 }
 .teaser-data.search .js-expander-content {
     padding: 24px 0 0;
 }
 
-.teaser-data.search .js-expander-content h5 {
+.teaser-data.search h4, .teaser-data.search h5 {
     font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 8px;
+}
+
+.teaser-data.search .js-expander-content h5 {
     margin-bottom: 16px;
 }
 
@@ -1351,6 +1358,7 @@ a[class*="js-expander"] span.text {
     font-size: 14px !important;
     margin-left: 24px;
     font-family: "Roboto-Regular";
+    line-height: 18px;
 }
 /* detail */
 
@@ -1382,6 +1390,9 @@ a[class*="js-expander"] span.text {
 .search-filtered .table:not(.table--lined) table tr th{
     border-bottom: 1px solid #FFFFFF;
     vertical-align: top;
+    font-weight: normal;
+    font-family: "Roboto-Bold";
+    line-height: 24px;
 }
 
 .search-filtered .table.list table {
@@ -1403,7 +1414,7 @@ a[class*="js-expander"] span.text {
 
 .search-filtered .table.list table tr td:first-child {
     width: 175px;
-    font-weight: bold;
+    font-family: "Roboto-Bold";
 }
 .search-filtered .table.list .list_entry {
     color: #3a566d;
@@ -1412,7 +1423,7 @@ a[class*="js-expander"] span.text {
     padding: 8px 16px;
     line-height: 42px;
     font-size: 14px;
-    font-weight: bold;
+    font-family: "Roboto-Bold";
     white-space: nowrap;
 }
 .search-filtered .table, .search-filtered .table--lined {
@@ -1431,9 +1442,10 @@ a[class*="js-expander"] span.text {
 .search-filtered .table table th:first-child {
     width: 210px;
     font-size: 16px;
-    font-weight: 700;
     line-height: 24px;
     vertical-align: top;
+    font-weight: normal;
+    font-family: "Roboto-Bold";
 }
 
 .search-filtered .table.no-background {
@@ -1502,6 +1514,10 @@ a[class*="js-expander"] span.text {
 
 .search-filtered div.document-list .list-item div {
     display: block;
+}
+
+.search-filtered div.document-list .list-item div.helper {
+    font-family: "Roboto-Regular";
 }
 
 .search-filtered div.document-list .list-item div.helper.icon {
@@ -1611,10 +1627,13 @@ a[class*="js-expander"] span.text {
     margin-top: 16px;
 }
 
+.search-filtered .border-line-info span {
+    font-family: "Roboto-Bold";
+}
+
 .search-filtered .border-line-info > span {
     border-right: 1px solid #69788C;
     padding: 0 16px;
-    font-weight: bold;
 }
 
 .search-filtered .border-line-info > span:first-of-type {
@@ -1635,6 +1654,10 @@ a[class*="js-expander"] span.text {
 }
 .search-filtered .border-line-info .columns:last-child {
     padding-left: 0.66667rem;
+}
+
+.search-filtered .border-line-info > div {
+    margin-bottom: 8px;
 }
 
 .search-filtered .anchor {
@@ -1918,9 +1941,13 @@ h4 span, h5 span {
     margin-left: auto;
 }
 
-.results-index .result-text  {
+.results-index .result-text {
     margin-right:16px;
     color: #3a566d;
+}
+
+.results-index .result-text b, .helper.date b {
+    font-weight: normal;
 }
 
 .results-index .result-text ~ div.sort {
@@ -1976,4 +2003,12 @@ h4 span, h5 span {
 
 span.icon span {
     margin-right: 8px;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
+    font-weight: normal;
+}
+
+.padding-list {
+    padding-top: 16px;
 }

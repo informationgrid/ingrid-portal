@@ -11,7 +11,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
-            #renderLinkListImageLimit($tmpTitle $getDownloads false false $getDownloads.size() "downloads_more")
+            #renderLinkListImageLimit($tmpTitle $getDownloads false false $getDownloads.size() "downloads_more" "h3")
         #end
     ## Links
         #if($getLinks.size() > 0)
@@ -20,7 +20,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
-            #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" [] true)
+            #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h3" [] true)
         #end
     ## Weitere Verweise
         #if($getOtherLinks.size() > 0)
@@ -29,7 +29,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
-            #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more")
+            #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more" "h3")
         #end
     </div>
 #end
