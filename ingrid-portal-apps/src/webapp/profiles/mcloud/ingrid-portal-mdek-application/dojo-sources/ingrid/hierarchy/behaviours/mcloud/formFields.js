@@ -144,7 +144,7 @@ define(["dojo/_base/declare",
 
             // hide all rubrics not needed
             query(".rubric", "contentFrameBodyObject").forEach(function (item) {
-                if (item.id !== "general" && item.id !== "thesaurus" && item.id !== "spatialRef" && item.id !== "timeRef") {
+                if (item.id !== "general" && item.id !== "spatialRef" && item.id !== "timeRef") {
                     domClass.add(item, "hide");
                 }
             });
