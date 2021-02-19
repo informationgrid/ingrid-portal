@@ -357,8 +357,8 @@
         #end
     #end
     </div>
-    <div class="menu-sub-links">
     #if($jetspeed.getLoggedOn())
+    <div class="menu-sub-links">
         <h6 class="login_user">$salutation</h6>
         #if($_menu)
             #foreach($element in $_menu.elements.iterator())
@@ -397,7 +397,7 @@
             #end
         #end
         <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
-    #end
     </div>
+    #end
 </div> 
 #end

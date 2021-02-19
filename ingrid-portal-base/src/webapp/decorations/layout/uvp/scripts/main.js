@@ -51,7 +51,7 @@ $(function() {
 
   //toggle social media links
   $('button.social.share').click(function() {
-    $('footer .footer-buttons-bar .social-buttons a.social').fadeToggle( "slow", "linear" ).css("display","inline-block");
+    $('footer .footer-buttons-bar .social-buttons a.social').fadeToggle( "fast", "linear" ).css("display","inline-block");
   });
 
 });
