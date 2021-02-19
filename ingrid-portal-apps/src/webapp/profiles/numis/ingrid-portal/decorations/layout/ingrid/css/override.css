@@ -366,6 +366,7 @@ header a.icon.is-selected {
 }
 .header-menu {
   background-color: #1D4B7B;
+  z-index: 1060;
 }
 .header-menu a.is-active {
   background-color: #256394;
@@ -406,7 +407,7 @@ header a.icon.is-selected {
   background-position: top right;
 }
 .banner.search + div + .search-filtered {
-  margin-top: 1em;
+  margin-top: 0;
 }
 .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
   background-position: top right;
@@ -517,6 +518,10 @@ header a.icon.is-selected {
   width: 35px;
   height: 35px;
 }
+.accordion-content .input-search {
+  margin-top: 16px;
+}
+
 .accordion-content button.button.round  span[class^="ic-"] {
   top: 7px;
   left: 1px;
@@ -575,8 +580,15 @@ header a.icon.is-selected {
 .filter-group .accordion-item .accordion-title {
   color: #006ec5;
 }
+.accordion-item .accordion-title::after {
+  color: #006ec5;
+  font-size: 32px;
+  margin-top: -1rem;
+}
 .filter-group .accordion-item .accordion-title::after {
   color: #006ec5;
+  font-size: 24px;
+  margin-top: -0.5rem;
 }
 .filter-group .accordion-item .accordion-title:hover {
   color: #1D4B7B;
@@ -584,6 +596,9 @@ header a.icon.is-selected {
 }
 .filter-group .accordion-item .accordion-title:hover::after {
   color: #1D4B7B;
+}
+.nav-group .accordion-item .accordion-title.is-active {
+    background-color: #006EC5;
 }
 .control--checkbox .control__indicator::after {
   border: solid #012D47;
@@ -750,6 +765,14 @@ footer hr {
   background: #F6F6F6;
   border-radius: 32px 32px;
 }
+
+.nested-group {
+  background: #F6F6F6;
+  border-radius: 32px 32px;
+  margin-top: 72px;
+}
+
+
 .nested-group .accordion-title {
   font-size: 18px;
   padding: 24px 24px 24px 24px;
@@ -1025,7 +1048,6 @@ header .row .columns:last-of-type {
 #frmSimilar .accordion-content label {
   display: inline-block;
   margin-right: 24px;
-  padding-left: 34px;
 }
 header .menu-tab-row .menu-tab {
   display: none;
@@ -1449,6 +1471,7 @@ a[class*="js-expander"] span.text {
 
 .search-filtered .table table th:first-child {
     width: 210px;
+    min-width: 210px;
     font-size: 16px;
     line-height: 24px;
     vertical-align: top;
