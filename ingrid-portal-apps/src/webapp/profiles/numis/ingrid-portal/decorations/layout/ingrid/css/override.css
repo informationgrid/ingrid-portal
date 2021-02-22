@@ -1662,6 +1662,10 @@ a[class*="js-expander"] span.text {
     margin-right: 0;
 }
 
+.detail .search-filtered .teaser-data.is-active {
+    box-shadow: 2px 2px 10px rgb(0 0 0 / 20%);
+}
+
 .search-filtered .teaser-data.is-active h2.header,
 .search-filtered .teaser-data.is-active .arrow {
     color: #1d4b7b;
@@ -1847,7 +1851,13 @@ a[class*="js-expander"] span.text {
 }
 
 .shrink .header-menu-close {
-    padding: 18px 14px 0 0 !important;
+    padding: 18px 0px 0 0 !important;
+}
+
+@media print, screen and (min-width: 64em) {
+    .shrink .header-menu-close {
+        padding: 18px 14px 0 0 !important;
+    }
 }
 
 .shrink .menu-tab .link-menu-tab span.text {
