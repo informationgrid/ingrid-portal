@@ -466,8 +466,8 @@ header a.icon.is-selected {
   display: block;
 }
 
-.detail.nav-content {
-  margin-top: -54px;
+.detail .nav-content {
+  margin-top: -72px;
 }
 .detail div.row div.columns {
     margin-bottom: 24px;
@@ -770,9 +770,7 @@ footer hr {
 .nested-group {
   background: #F6F6F6;
   border-radius: 32px 32px;
-  margin-top: 72px;
 }
-
 
 .nested-group .accordion-title {
   font-size: 18px;
@@ -1106,7 +1104,11 @@ header .menu-tab-row .menu-tab {
     padding: 24px 0 16px;
   }
   .data ~ h2 {
-    padding-top: 32px;
+    margin-top: 128px;
+  }
+  
+  .data ~ h2:first-of-type {
+      margin-top: 80px;
   }
   .data ~ .row.columns {
     margin-bottom: 48px !important;
@@ -1466,6 +1468,9 @@ a[class*="js-expander"] span.text {
 
 .search-filtered .table table tr {
     border-bottom: 0;
+}
+.search-filtered .table.row table {
+    display: block;
 }
 
 .search-filtered .table:not(.table--lined) table tr th{
