@@ -661,6 +661,7 @@ footer .footer .copyright span {
   line-height: 1.25;
   margin-left: auto;
   margin-right: auto;
+  display: inline;
 }
 footer .footer .logo {
   width: 2.25em;
@@ -1745,10 +1746,8 @@ a[class*="js-expander"] span.text {
 }
 
 .search-filtered .anchor {
-    margin-top: -5rem;
-    display: unset;
+    margin-top: -128px;
 }
-
 
 .search-filtered .expand-text {
     max-height: 185px;
@@ -1757,13 +1756,15 @@ a[class*="js-expander"] span.text {
     text-overflow: ellipsis;
 }
 
-.detail .search-filtered .teaser-data.row .columns {
+.detail .search-filtered .teaser-data.row .columns:last-child {
     padding: 0;
     margin-bottom: 0;
 } 
 
-.detail .search-filtered .teaser-data.row .columns + .columns{
-    padding-left: 24px;
+@media print, screen and (min-width: 48em) {
+  .detail .search-filtered .teaser-data.row .columns + .columns{
+      padding-left: 24px;
+  }
 }
 
 .detail .search-filtered .teaser-data .swiper-slide p {
@@ -1830,7 +1831,7 @@ a[class*="js-expander"] span.text {
 }
 
 .shrink .body {
-    margin-top: 10rem;
+    margin-top: 4rem;
 }
 
 .shrink .menu-tab-row .menu-tab {
@@ -1980,7 +1981,7 @@ h4, h5 {
     color: #3a566d	;
 }
 
-h4 span, h5 span {
+h3 span, h4 span, h5 span {
     font-family: "Roboto-Regular", sans-serif;
     font-weight: normal;
 }
@@ -2019,10 +2020,15 @@ h4 span, h5 span {
 
 .results-index .row {
     margin-left: 0;
+    margin-right: 0;
 }
 
 .results-index .row .row {
     margin-left: auto;
+}
+
+.results-index .row .row div:last-child {
+    margin-right: 0;
 }
 
 .results-index .result-text {
@@ -2086,8 +2092,7 @@ h4 span, h5 span {
 }
 
 div > span.icon {
-    width: 100%;
-    display: inline-block;
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
