@@ -39,7 +39,9 @@
             var locationHash = window.location.hash.substr(1);
             var elemHash = $(this).context.hash.substr(1);
 
-            deactivate($(this));
+            if(locationHash) {
+              deactivate($(this));
+            }
             if (locationHash === elemHash) {
               activate($(this));
               $('a[name=' + elemHash + ']').addClass('is-active');

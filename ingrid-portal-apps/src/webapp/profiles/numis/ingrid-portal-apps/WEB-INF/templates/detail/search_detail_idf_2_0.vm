@@ -66,7 +66,6 @@
                         </a>
                     </p>
                 #end
-                    <br>
                 </div>
             #else
                 <svg class="icon"><use xlink:href="#internal-link"/></svg>

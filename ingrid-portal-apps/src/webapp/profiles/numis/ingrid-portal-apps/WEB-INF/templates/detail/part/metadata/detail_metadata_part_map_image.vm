@@ -1,5 +1,5 @@
 #if($mapImage && $mapImage.size() > 0)
-    <div class="xsmall-24 small-10 columns">
+    <div class="xsmall-24 small-24 medium-10 columns">
         <h5 class="text-center">$MESSAGES.getString("preview")</h5>
         #renderMultiLineImage($mapImage)
         #set($mapImage = "")

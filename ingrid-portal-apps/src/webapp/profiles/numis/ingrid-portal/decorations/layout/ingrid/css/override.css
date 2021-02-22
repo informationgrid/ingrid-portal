@@ -1136,6 +1136,56 @@ header .menu-tab-row .menu-tab {
   .search-filtered .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group {
     background-color: #006ec5;
   }
+
+   .shrink  .hide-for-large.filter {
+    position: fixed !important;
+    z-index: 1050;
+    top: 80px !important;
+    width: 100%;
+  }
+  .hide-for-large.filter .teaser-data.search {
+    padding: 0;
+    border: 0;
+    box-shadow: unset;
+    margin:0;
+  }
+  .hide-for-large.filter .accordion.accordion-filter-group {
+    background-color: #006ec5;
+  }
+  
+  .hide-for-large.filter .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group {
+    background-color: #006ec5;
+  }
+  .hide-for-large.filter .accordion .accordion-item {
+    padding: 0;
+    margin: 0;
+  }
+  
+  
+  .hide-for-large.filter .accordion .accordion-item .accordion-title {
+    text-transform: unset;
+  }
+  
+  .hide-for-large.filter .accordion .accordion-item.is-active > .accordion-title::after {
+        content: '\e925';
+  }
+
+  .hide-for-large.filter .accordion .accordion-item,
+  .hide-for-large.filter .accordion .accordion-item a,
+  .hide-for-large.filter .accordion .accordion-item div {
+      border-radius: 0;
+  }
+
+  .hide-for-large.filter .accordion.accordion-filter-group > .accordion-item.accordion-item-filter-group > .accordion-title,
+  .hide-for-large.filter .accordion.accordion-filter-group > .accordion-item.accordion-item-filter-group > .accordion-title::after {
+    color: #FFF;
+  }
+  
+  .hide-for-large.filter .accordion.accordion-filter-group > .accordion-item.accordion-item-filter-group > .accordion-title {
+    font-size: 18px;
+    padding: 16px 24px 16px 24px;
+  }
+
   /*
   .nav-content div.columns:first-child {
     padding: 0;
@@ -1423,6 +1473,7 @@ a[class*="js-expander"] span.text {
     font-weight: normal;
     font-family: "Roboto-Bold";
     line-height: 24px;
+    color: #1D4B7B;
 }
 
 .search-filtered .table.list table {
@@ -1445,6 +1496,7 @@ a[class*="js-expander"] span.text {
 .search-filtered .table.list table tr td:first-child {
     width: 175px;
     font-family: "Roboto-Bold";
+    padding-top: 8px;
 }
 .search-filtered .table.list .list_entry {
     color: #3a566d;
@@ -1455,6 +1507,7 @@ a[class*="js-expander"] span.text {
     font-size: 14px;
     font-family: "Roboto-Bold";
     white-space: nowrap;
+    margin-right: 6px; 
 }
 .search-filtered .table, .search-filtered .table--lined {
     text-align: left;
@@ -1463,6 +1516,7 @@ a[class*="js-expander"] span.text {
 .search-filtered .table table a {
     display: block;
     font-size: 16px;
+    font-family: "Roboto-Regular";
 }
 
 .search-filtered .table.table--lined table {
@@ -2031,8 +2085,17 @@ h4 span, h5 span {
     line-height: 24px;
 }
 
+div > span.icon {
+    width: 100%;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 span.icon span {
     margin-right: 8px;
+    color: #006ec5;
 }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
