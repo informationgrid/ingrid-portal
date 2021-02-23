@@ -301,6 +301,16 @@ a.icon [class^='ic-'] {
 a.icon:hover {
   color: #1D4B7B;
 }
+
+.paging a.icon.small-button {
+    width: 40px;
+    font-size: 18px;
+}
+
+.paging a.icon.small-button [class^='ic-'] {
+    font-size: 20px;
+}
+
 .button {
   background-color: #006ec5;
 }
@@ -1103,16 +1113,18 @@ header .menu-tab-row .menu-tab {
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     padding: 24px 0 16px;
   }
-  .data ~ h2 {
-    margin-top: 128px;
+  .detail .search-filtered > .columns > .row.columns {
+    margin-bottom: 128px !important;
   }
   
-  .data ~ h2:first-of-type {
-      margin-top: 80px;
+  .detail .search-filtered > .columns > .row.columns ~ .border-line-info {
+    margin-top: -80px;
   }
-  .data ~ .row.columns {
+  
+  .detail .row.columns .row-sub {
     margin-bottom: 48px !important;
   }
+
   .detail .banner-noimage .helper.icon {
     font-size: 18px;
   }

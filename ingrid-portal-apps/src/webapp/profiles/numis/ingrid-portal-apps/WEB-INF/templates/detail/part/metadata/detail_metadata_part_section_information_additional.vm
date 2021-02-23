@@ -1,7 +1,7 @@
 ## Zusatzinformationen
 ################################
 #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML)
-    <div class="row columns">
+    <div class="row-sub">
         #renderSectionTitle($MESSAGES.getString("additional_information"))
     ## Sprache des Metadatensatzes
         #renderTextTable($MESSAGES.getString("t01_object.metadata_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath($xPathAdditionalInfoLanguageCode)))
@@ -34,7 +34,7 @@
 
 ## Schlagworte
 #if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
-    <div class="row columns">
+    <div class="row-sub">
         #renderSectionTitle("Schlagworte")
         ## Verschlagwortung
         #renderTableList($MESSAGES.getString("search_terms") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "search"))
@@ -50,9 +50,11 @@
 
 ## DOI
 #if($TOOL.aNodeOfListExist($xPathListDoi))
-    #renderSectionTitle($MESSAGES.getString("doi"))
-    <div class="search-result--nested">
-        #renderTextTable($MESSAGES.getString("doi.id") $doi.id)
-        #renderTextTable($MESSAGES.getString("doi.type") $doi.type)
+    <div class="row-sub">
+        #renderSectionTitle($MESSAGES.getString("doi"))
+        <div class="search-result--nested">
+            #renderTextTable($MESSAGES.getString("doi.id") $doi.id)
+            #renderTextTable($MESSAGES.getString("doi.type") $doi.type)
+        </div>
     </div>
 #end

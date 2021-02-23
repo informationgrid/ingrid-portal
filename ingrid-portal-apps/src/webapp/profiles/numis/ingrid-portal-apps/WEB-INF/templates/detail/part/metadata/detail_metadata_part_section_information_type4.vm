@@ -1,6 +1,6 @@
 ## Projekt
 ################################
-<div class="row columns">
+<div class="row-sub">
     #set($nodelist = $TOOL.getNodeListFromXPath($xPathInfo4CICitationCitedResponsibleParty))
 ## Projektleiter
     #renderTextTable($MESSAGES.getString("t011_obj_project.leader") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo4IndividualName, "./gmd:role/gmd:CI_RoleCode/@codeListValue", "projectManager"))

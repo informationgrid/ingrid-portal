@@ -154,7 +154,7 @@ $actionForm.getInputHTMLEscaped($field)#end
 ## Administration macros
 ## ------------------------------
 #macro (renderPaginationAndHint $browser $hint)
-    <div class="caption">
+    <div class="paging caption">
         #set ($action = $renderResponse.createActionURL())
         $action.setParameter('doFirst', 'first')
         <a class="icon" class="pagination__left" #if($browser.hasPreviousPage())href="$action"#end>

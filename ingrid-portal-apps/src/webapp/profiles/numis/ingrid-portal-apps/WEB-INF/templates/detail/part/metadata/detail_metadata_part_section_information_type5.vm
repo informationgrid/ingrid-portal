@@ -1,6 +1,6 @@
 ## Datensammlung
 ################################
-<div class="row columns">
+<div class="row-sub">
     ## Schlüsselkatalog: im Datensatz vorhanden
         #renderTextTable($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath($xPathInfo5MDFeatureCatalogueDescriptionIncludedWithDataset))
     ## Schlüsselkatalog

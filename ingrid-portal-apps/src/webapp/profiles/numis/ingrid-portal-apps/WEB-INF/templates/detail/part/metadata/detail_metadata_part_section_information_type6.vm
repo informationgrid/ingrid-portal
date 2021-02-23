@@ -1,6 +1,6 @@
 ## Informationsystem
 ################################
-<div class="row columns">
+<div class="row-sub">
 ## Klassifikation des Dienstes
     #renderTextList($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
 ## Art des Dienstes

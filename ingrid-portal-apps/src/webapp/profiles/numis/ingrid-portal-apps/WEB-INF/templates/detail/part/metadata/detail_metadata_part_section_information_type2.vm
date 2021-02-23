@@ -1,6 +1,6 @@
 ## Literatur
 ################################
-<div class="row columns">
+<div class="row-sub">
     #set($nodelist = $TOOL.getNodeListFromXPath($xPathInfo2CICitationCitedResponsibleParty))
 ## Autor
     #renderTextTable($MESSAGES.getString("t011_obj_literatur.autor") $TOOL.getValueFromNodeListDependOnValue($nodelist, $xPathInfo2IndividualName, "./gmd:CI_ResponsibleParty/gmd:role/gmd:CI_RoleCode/@codeListValue", "originator"))

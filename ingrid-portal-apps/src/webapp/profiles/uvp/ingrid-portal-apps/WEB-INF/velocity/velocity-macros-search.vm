@@ -65,7 +65,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderRankedPageNavigation $pageSelector $isBottom)
-<div class="caption">
+<div class="paging caption">
     #if($isBottom)
         #renderRankedResultCounter($pageSelector)
     #end
@@ -156,7 +156,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 ## this navigation is used when "grouping by domain"
 ## -> renders pages just like with NO GROUPING and estimates starthits of oncoming pages
 #macro (renderRankedPageNavigationGroupingWithPages $pageSelector $isBottom)
-<div class="caption">
+<div class="paging caption">
     #if($isBottom)
         <p>#renderRankedResultCounterGrouping($pageSelector)</p>
     #end
