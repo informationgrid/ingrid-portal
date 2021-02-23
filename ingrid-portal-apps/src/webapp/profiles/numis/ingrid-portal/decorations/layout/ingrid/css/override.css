@@ -703,11 +703,18 @@ footer hr {
 .switch-popup {
   left: 0;
   margin-left: 0;
-  width: 35em;
+  width: 100%;
+  box-shadow: unset;
+}
+
+.switch-popup .row .popup__content {
+    box-shadow: 0px 0px 17px 1px rgba(0, 0, 0, 0.3);
+    width: 35em;
 }
 .switch-popup .js-popup-close {
-  right: 0;
-  position: absolute;
+  float: right;
+  margin-top: -16px;
+  margin-right: -16px;
   background: transparent !important;
 }
 .switch-popup .text-box {
@@ -1393,6 +1400,7 @@ header .menu-tab-row .menu-tab {
     border-bottom: 1px dashed #5e788d;
     margin-left: 10px;
     display: inline-block;
+    float: right;
     margin-bottom: 8px;
     font-weight: 400;
     line-height: 18px;

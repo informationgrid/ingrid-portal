@@ -97,7 +97,7 @@
             #set($refCount = $refCount + 1)
 
             ## Add service type to list 
-            #if($serviceTypes.indexOf($link.serviceType) == -1)
+            #if($link.serviceType != "" && $serviceTypes.indexOf($link.serviceType) == -1)
                 #set($add = $serviceTypes.add($link.serviceType))
             #end
         #end
@@ -117,13 +117,11 @@
             #if($tmpSpecialRef && $tmpSpecialRef == "9990")
                 #set($add = $linksUrlRefDownload.add($link))
                 ## Add service type to list
-                #if($serviceTypes.indexOf($link.serviceType) == -1)
-                    #renderServiceTypeUrl($link.href $serviceTypes true)
-                #end
+                #renderServiceTypeUrl($link.href $serviceTypes true)
             #else
                 #set($add = $linksUrlRefOthers.add($link))
                 ## Add service type to list
-                #if($referenceAllUUID.size() == 0 && $serviceTypes.indexOf($link.serviceType) == -1)
+                #if($referenceAllUUID.size() == 0)
                     #renderServiceTypeUrl($link.href $serviceTypes true)
                 #end
             #end
