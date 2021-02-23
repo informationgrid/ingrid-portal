@@ -1393,12 +1393,15 @@ header .menu-tab-row .menu-tab {
     border-bottom: 1px dashed #5e788d;
     margin-left: 10px;
     display: inline-block;
-    float: right;
     margin-bottom: 8px;
     font-weight: 400;
     line-height: 18px;
     text-align: center;
     color: #3a566d;
+}
+
+.list-item .info--right span {
+    margin-bottom: 0px;
 }
 
 #searchResult .teaser-data > .info--right {
