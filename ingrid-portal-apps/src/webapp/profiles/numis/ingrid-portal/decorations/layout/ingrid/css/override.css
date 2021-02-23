@@ -302,7 +302,11 @@ a.icon:hover {
   color: #1D4B7B;
 }
 
-.paging a.icon.small-button {
+.paging .show-for-xsmall-only a.icon {
+    display: inline-block;
+}
+
+.paging a.icon {
     width: 40px;
     font-size: 18px;
 }
@@ -1325,6 +1329,13 @@ header .menu-tab-row .menu-tab {
 .teaser-data.search .header {
     margin-bottom: 16px;
     font-weight: normal;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+@media print, screen and (min-width: 48em) {
+    font-size: 24px;
+    line-height: 30px;
 }
 .teaser-data.search .helper.date {
     margin-bottom: 16px;
@@ -1685,14 +1696,18 @@ a[class*="js-expander"] span.text {
     padding: 24px 16px;
 }
 
+.search-filtered .teaser-data {
+    padding: 24px 16px;
+}
+
 @media print, screen and (min-width: 48em) {
-    .detail .search-filtered .teaser-data.is-active {
+    .search-filtered .teaser-data {
         padding: 24px 24px;
     }
 }
 
 @media print, screen and (min-width: 64em) {
-    .detail .search-filtered .teaser-data.is-active {
+    .search-filtered .teaser-data {
         padding: 32px 24px;
     }
 }
@@ -2165,4 +2180,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
 .column, .columns {
   padding-right: 16px;
   padding-left: 16px;
+}
+
+@media print, screen and (min-width: 48em) {
+    .column, .columns {
+       padding-right: 24px;
+       padding-left: 24px;
+    }
 }
