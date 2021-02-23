@@ -675,7 +675,6 @@ footer .footer .copyright span {
 }
 footer .footer .logo {
   width: 2.25em;
-  display: none;
 }
 footer hr {
   margin: 0 0 16px;
@@ -1131,7 +1130,7 @@ header .menu-tab-row .menu-tab {
 }
 @media print, screen and (max-width: 63.9375em) {
   header .menu-tab-row .menu-tab {
-    width: 95px;
+    width: 90px;
     font-size: 12px;
   }
   header .menu-tab-row .menu-tab .link-menu-tab [class^="ic-"], header .menu-tab-row .menu-tab .link-menu-tab [class*=" ic-"] {
@@ -1393,6 +1392,7 @@ header .menu-tab-row .menu-tab {
     display: block;
     width: 100%;
     margin-bottom: 16px;
+    margin-top: -8px;
 }
 
 @media print, screen and (min-width: 35em) {
@@ -1401,6 +1401,7 @@ header .menu-tab-row .menu-tab {
     top: 24px;
     right: 32px;
     width: 100px;
+    margin-top: 0;
   }
 }
 a[class*="js-expander"] {
@@ -1681,6 +1682,19 @@ a[class*="js-expander"] span.text {
 
 .detail .search-filtered .teaser-data.is-active {
     box-shadow: 2px 2px 10px rgb(0 0 0 / 20%);
+    padding: 24px 16px;
+}
+
+@media print, screen and (min-width: 48em) {
+    .detail .search-filtered .teaser-data.is-active {
+        padding: 24px 24px;
+    }
+}
+
+@media print, screen and (min-width: 64em) {
+    .detail .search-filtered .teaser-data.is-active {
+        padding: 32px 24px;
+    }
 }
 
 .search-filtered .teaser-data.is-active h2.header,
@@ -1808,12 +1822,22 @@ a[class*="js-expander"] span.text {
 /* fact sheet */
 
 .teaser-data .helper.icon .text {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 18px;
 }
 
 .teaser-data .helper.icon span:first-child {
+    font-size: 16px;
+}
+
+@media print, screen and (min-width: 48em) {
+  .teaser-data .helper.icon .text {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .teaser-data .helper.icon span:first-child {
     font-size: 20px;
+  }
 }
 
 .teaser-data .swiper-container {
@@ -2136,4 +2160,9 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
 
 .padding-list {
     padding-top: 16px;
+}
+
+.column, .columns {
+  padding-right: 16px;
+  padding-left: 16px;
 }
