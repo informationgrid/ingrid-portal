@@ -1334,8 +1334,10 @@ header .menu-tab-row .menu-tab {
 }
 
 @media print, screen and (min-width: 48em) {
+  .teaser-data.search .header {
     font-size: 24px;
     line-height: 30px;
+  }
 }
 .teaser-data.search .helper.date {
     margin-bottom: 16px;
