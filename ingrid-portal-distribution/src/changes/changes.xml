@@ -37,6 +37,9 @@
           <action type="fix" dev="wemove" issue="2354">
             IGE: Remove conflicting library which could prevent showing help
           </action>
+          <action type="fix" dev="wemove" issue="2334">
+            IGE: Extract correct coupled resource identifier of external coupled resource
+          </action>
         </release>
 
         <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
