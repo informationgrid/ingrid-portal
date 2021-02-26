@@ -1,8 +1,8 @@
 <div class="columns">
     <h3>$MESSAGES.getString('news.archive.header')</h3>
     #foreach($rssEntry in $rssEntries)
-        <div class="teaser-data">
-            <div class="text-wrapper">
+        <div class="teaser-data search">
+            <div>
                 <small class="bx-bot-0">
                     <span class="tx-darker"><strong>$date.format('dd.MM.yyyy',$rssEntry.publishedDate)</strong></span>
                     <span class="tx-light">$date.format('HH:mm',$rssEntry.publishedDate)</span>
@@ -12,7 +12,7 @@
                         $!rssEntry.title
                     </h2>
                 </a>
-                <p class="data-text">
+                <p>
                     #if ($rssEntry && $rssEntry.description)
                         $strutils.cutString($rssEntry.description, 350)
                     #end  

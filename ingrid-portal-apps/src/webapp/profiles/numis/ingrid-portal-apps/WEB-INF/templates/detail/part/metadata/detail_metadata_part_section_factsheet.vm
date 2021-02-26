@@ -23,7 +23,7 @@
             #set($tmpTitle = $MESSAGES.getString("downloads"))
             #set($tmpCount = $getDownloads.size())
             #if($tmpCount)
-                #set($tmpTitle = $tmpTitle + " (${tmpCount})")
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             #renderLinkListImageLimit($tmpTitle $getDownloads false false 2 "")
         #end

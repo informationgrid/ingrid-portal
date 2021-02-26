@@ -2,7 +2,7 @@
 
 <div class="detail" id="detail">
 #if($title)
-    <div class="data filter hide-for-large">
+    <div class="filter hide-for-large">
         <div class="teaser-data search">
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_navigation.vm")
         </div>
@@ -29,7 +29,7 @@
     <div class="row nav-content search-filtered">
         ## Navigation
         <div class="xsmall-24 large-6 xlarge-6 columns show-for-large">
-            <div class="data filter">
+            <div class="filter">
                 <div class="teaser-data search">
                     #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_navigation.vm")
                 </div>

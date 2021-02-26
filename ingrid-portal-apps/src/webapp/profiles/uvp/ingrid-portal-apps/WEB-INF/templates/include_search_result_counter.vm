@@ -1,18 +1,25 @@
-<div class="xsmall-24 medium-12 xlarge-15 columns">
+<div>
     ## RANKED (left column stuff)
     #renderRankedResultCounterGrouping($rankedPageSelector)
 </div>
-<div class="xsmall-10 medium-5 xlarge-4 columns text-right">
-    <p class="result-text no-margin"><b>Sortieren nach</b></p>
+<div class="row">
+#if($enableFacete)
+    #renderSelectRanking($facetConfig)
+#end
 </div>
-<div class="xsmall-14 medium-7 xlarge-5 columns">
-    <div class="form-element">
-        #set ($action = $renderResponse.createActionURL())
-        <form action="$action" method="get" name="sortForm" id="sortForm" style="display:inline; ">
-            <select class="select2" id="ranking" name="ranking" aria-hidden="true" onchange="this.form.submit();">
-                <option value="score" #if($ranking == "score")selected#end>Relevanz</option>
-                <option value="date"  #if($ranking == "date")selected#end>Aktualit&auml;t</option>
-            </select>
-        </form>
+#macro(renderSelectRanking $nodes)
+    <span class="result-text no-margin">
+        <b>$MESSAGES.getString('searchResult.hit.sort')</b>
+    </span>
+    <div class="sort">
+        <div class="form-element" style="display:inline;">
+            #set ($action = $renderResponse.createActionURL())
+            <form action="$action" method="get" name="sortForm" id="sortForm" style="display:inline;">
+                <select class="select2" id="ranking" name="ranking" aria-hidden="true" onchange="this.form.submit();">
+                    <option value="score" #if($ranking == "score")selected#end>$MESSAGES.getString('searchResult.hit.sort.score')</option>
+                    <option value="date"  #if($ranking == "date")selected#end>$MESSAGES.getString('searchResult.hit.sort.time')</option>
+                </select>
+            </form>
+        </div>
     </div>
-</div>
+#end

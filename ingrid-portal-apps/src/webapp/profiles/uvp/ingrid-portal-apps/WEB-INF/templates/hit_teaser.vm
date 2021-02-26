@@ -28,7 +28,7 @@
                 #if($hits)
                     #parse("/WEB-INF/templates/global/include_leaflet_header.vm")
                     #foreach($hit in $hits)
-                        <div class="teaser-data">
+                        <div class="teaser-data no-padding">
                             <div class="data" >
                                 <div class="row">
                                     <div class="xsmall-24 large-13 columns">
