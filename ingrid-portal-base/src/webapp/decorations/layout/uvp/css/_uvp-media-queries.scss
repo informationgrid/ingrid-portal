@@ -167,15 +167,13 @@
     padding: 24px 24px;
 
     .text-wrapper { padding: 40px; }
+    .map-wrapper { margin: 0 0; }
     .header {
       font-size: 24px !important;
       line-height: 30px !important;
     }
     .data-text { max-height: 82px; }
 
-    .columns + .columns{
-      padding-left: 24px;
-    }
   }
   .teaser-data-projects {
     margin: 64px 0;
@@ -267,6 +265,10 @@
     }
     .teaser-data {
       padding: 24px 32px;
+
+        .columns + .columns{
+          padding-left: 24px;
+        }
 
       .columns:first-child {
         margin-bottom: 0;
