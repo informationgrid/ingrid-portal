@@ -242,13 +242,28 @@ public class ContactZammadPortlet extends GenericVelocityPortlet {
 
                 HashMap mailData = new HashMap();
                 String technical = cf.getInput(ContactZammadForm.FIELD_CHK_TECHNICAL);
+                String contactPortal = PortalConfig.getInstance().getString(PortalConfig.PORTAL_CONTACT_PORTAL, "");
+                
+                String filter = "";
+                if(!contactPortal.isEmpty()) {
+                    filter += contactPortal;
+                }
                 if(technical.isEmpty()) {
                     String partner = cf.getInput(ContactZammadForm.FIELD_COMPANY);
                     if(!partner.isEmpty()) {
-                        mailData.put("message.filter", "[" + partner.toUpperCase() + "]");
+                        if(!filter.isEmpty()) {
+                            filter += " ";
+                        }
+                        filter += partner.toUpperCase();
                     }
                 } else {
-                    mailData.put("message.filter", "[" + messages.getString("contact.report.email.technical") + "]");
+                    if(!filter.isEmpty()) {
+                        filter += " ";
+                    }
+                    filter += messages.getString("contact.report.email.technical");
+                }
+                if(!contactPortal.isEmpty()) {
+                    mailData.put("message.filter", "[" + filter + "]");
                 }
                 mailData.put("message.body", cf.getInput(ContactZammadForm.FIELD_MESSAGE));
 
