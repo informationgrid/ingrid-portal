@@ -1,6 +1,6 @@
 <div class="columns">
     <div>$contactIntroPostEmail</div>
-    <div class="search-filtered">
+    <div>
         <h2>$MESSAGES.getString('contact.form')</h2>
         #set ($action = $renderResponse.createActionURL())
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
@@ -70,7 +70,6 @@
                 <input type="file" id="upload" name="upload">
             </div>
         #end
-        <hr>
         <div class="subtext-submit">
             <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
         </div>
