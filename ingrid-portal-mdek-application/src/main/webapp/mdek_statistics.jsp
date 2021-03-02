@@ -157,7 +157,7 @@
                 }, {
                     field: 'returned',
                     name: "<fmt:message key='dialog.statistics.header.returned' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.returned' />",
+                    toolTip: message.get("dialog.statistics.tooltip.returned"),
                     width: 'auto'
                 }];
                 var def1 = layoutCreator.createDataGrid("statsObjectsTable", null, statsObjectsTableStructure, null, undefined, "js/data/statisticTableObject.json");
@@ -182,7 +182,7 @@
                 }, {
                     field: 'published',
                     name: "<fmt:message key='dialog.statistics.header.published' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.published' />",
+                    toolTip: message.get("dialog.statistics.tooltip.published"),
                     width: '50px'
                 }, {
                     field: 'modified',
@@ -192,12 +192,12 @@
                 }, {
                     field: 'qa',
                     name: "<fmt:message key='dialog.statistics.header.qa' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.qa' />",
+                    toolTip: message.get("dialog.statistics.tooltip.qa"),
                     width: '50px'
                 }, {
                     field: 'returned',
                     name: "<fmt:message key='dialog.statistics.header.returned' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.returned' />",
+                    toolTip: message.get("dialog.statistics.tooltip.returned"),
                     width: 'auto'
                 }];
                 var def2 = layoutCreator.createDataGrid("statsAdrTable", null, statsAdrTableStructure, null, undefined, "js/data/statisticTableAddress.json");
