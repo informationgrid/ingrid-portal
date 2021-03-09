@@ -123,7 +123,7 @@
 #end
 
 #* include service navigation component *#
-#macro (includeFooterNavigation $_menu)
+#macro (includeFooterNavigation $_menu $rssURL)
 <div class="footer-menu-entries">
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
@@ -145,6 +145,9 @@
           <a href="$linkUrl" title="$linkTitle" class="entry"><span class="text">$linkName</span></a>
         #end
       #end
+    #end
+    #if($rssURL)
+        <a href="$rssURL" title="Zum RSS-Feed" class="entry"><span class="text">RSS-Feed</span></a>
     #end
 </div>
 #end
