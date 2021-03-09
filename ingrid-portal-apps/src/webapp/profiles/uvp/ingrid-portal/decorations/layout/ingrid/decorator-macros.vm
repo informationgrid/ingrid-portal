@@ -147,7 +147,7 @@
       #end
     #end
     #if($rssURL)
-        <a href="$rssURL" title="Zum RSS-Feed" class="entry"><span class="text">RSS-Feed</span></a>
+        <a href="$rssURL" target="_blank" title="Zum RSS-Feed" class="entry"><span class="text">RSS-Feed</span></a>
     #end
 </div>
 #end
