@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -50,15 +50,15 @@ require(["dojo/dom",
 
         var customParams = _container_.customParams;
         var dlgContainer = _container_;
-        
+
         var SEPARATOR = "#**#";
-        
+
         // buttons and fields
         var btnAnalyze, btnAssign, recordUrl;
-        
+
         // store the fetched record
         var record = currentUrl = null;
-        
+
         var config = {
             ignoreDownloadData: true
         };
@@ -67,12 +67,12 @@ require(["dojo/dom",
             btnAnalyze = registry.byId("btn_analyze");
             btnAssign  = registry.byId("btn_assign");
             recordUrl  = registry.byId("recordUrl");
-            
+
             init();
 
             console.log("Publishing event: '/afterInitDialog/SelectObject'");
             topic.publish("/afterInitDialog/SelectObject", config);
-            
+
             registry.byId("tabContainerLinkDlg").watch("selectedChildWidget", function(name, oldVal, newVal) {
                 if (newVal.id === "tabRemote") {
                     domClass.remove(btnAnalyze.domNode, "hide");
@@ -104,7 +104,7 @@ require(["dojo/dom",
                     ignoreDirtyFlag: true
                 });
             }
-            
+
             if (!customParams.showExternalRef) {
                 var tabCont = registry.byId("tabContainerLinkDlg");
                 tabCont.removeChild( tabCont.getChildren()[1] );
@@ -113,7 +113,7 @@ require(["dojo/dom",
             if (customParams.additionalText) {
                 dom.byId("additionalText").innerHTML = customParams.additionalText;
             }
-            
+
             on(recordUrl, "keyup", function(key) {
                 if (recordUrl.validate()) {
                     var url = recordUrl.get("value");
@@ -129,7 +129,7 @@ require(["dojo/dom",
                     btnAnalyze.set("disabled", true);
                 }
             });
-            
+
             on(btnAnalyze, "Click", function() { analyzeUrl(recordUrl.get("value")); });
         }
 
@@ -172,10 +172,10 @@ require(["dojo/dom",
                     retVal.uuid = node.item.id;
                     retVal.title = node.item.title;
                     retVal.objectClass = node.item.nodeDocType.substr(5, 1);
-    
+
                     customParams.resultHandler.resolve(retVal);
                 }
-                
+
             } else {
                 var currentLink = {
                     url: recordUrl.get("value"),
@@ -192,7 +192,7 @@ require(["dojo/dom",
 
             dlgContainer.hide();
         }
-        
+
         function updateAssignButton() {
             if (record === null) {
                 btnAssign.set("disabled", true);
@@ -200,14 +200,14 @@ require(["dojo/dom",
                 btnAssign.set("disabled", false);
             }
         }
-        
+
         function analyzeUrl(url) {
             console.log("Analyzing URL ...");
             // hide all error messages
             query(".errors .error").addClass("hide");
             btnAssign.set("disabled", true);
             domClass.remove("coupledLoadingZone", "hide");
-            
+
             GetCapabilitiesService.getRecordById(url, function(result) {
                 domClass.add("coupledLoadingZone", "hide");
                 console.log("received record:", result);
@@ -216,13 +216,17 @@ require(["dojo/dom",
                     return;
                 }
                 if (!result.identifier) domClass.remove("errorNoId", "hide");
-                if (!config.ignoreDownloadData && !result.hasDownloadData) domClass.remove("errorNoData", "hide");
-                
-                if (result.identifier && (config.ignoreDownloadData || result.hasDownloadData)) {
+
+                // only check for download data if behaviour is active and checkbox
+                // "Als ATOM-Download Dienst bereitstellen" is ticked
+                var checkForDownloadData = !config.ignoreDownloadData && registry.byId("ref3IsAtomDownload").checked;
+                if (checkForDownloadData && !result.hasDownloadData) domClass.remove("errorNoData", "hide");
+
+                if (result.identifier && (!checkForDownloadData || result.hasDownloadData)) {
                     btnAssign.set("disabled", false);
-                    
+
                     record = result;
-                    
+
                     dom.byId("recordId").innerHTML = result.identifier;
                     dom.byId("recordTitle").innerHTML = result.title;
                     var downloads = "";
@@ -302,7 +306,7 @@ require(["dojo/dom",
                         <div id="errorNoId" class="hide error"><fmt:message key="dialog.links.error.noIdentifier" /></div>
                         <div id="errorNoData" class="hide error"><fmt:message key="dialog.links.error.noDownloadData" /></div>
                     </div>
-                    
+
                     <div id="recordResults" class="hide" style="padding-top: 15px;">
                         <label class="inActive definition"><fmt:message key="dialog.links.label.id" />:</label>
                         <div class="spaceBelow" id="recordId"></div>

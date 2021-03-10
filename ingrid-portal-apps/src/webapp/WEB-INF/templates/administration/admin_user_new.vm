@@ -70,10 +70,10 @@
                 <div class="media__body">
                     <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
                     <b><small class="media__obj--right" id="password-strength-text"></small></b>
-                    <meter max="4" id="password-strength-meter">
-                      <div class="meter-gauge">
+                    <meter max="4" id="password-strength-meter" value="0">
+                      <span class="meter-gauge">
                           <span style="width: 0.0%;">Meterfallback</span>
-                      </div>
+                      </span>
                     </meter>
                     #addErrorFormMessage('password_new')
                 </div>
@@ -92,13 +92,13 @@
                 </div>
                 <div class="media__body">
                     <div class="field-toggle field-toggle--check bx-bot-xs">
-                        <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
+                        <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') >
                         <label class="field-toggle__label field-toggle__label--boxed #addErrorFormClassText('send_info')" for="send_info">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
-                            </div>
+                            </span>
                             $MESSAGES.getString('account.edit.send.information')
                         </label>
                         #addErrorFormMessage('send_info')
@@ -110,13 +110,13 @@
                 </div>
                 <div class="media__body">
                     <div class="field-toggle field-toggle--check bx-bot-xs">
-                        <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
+                        <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') >
                         <label class="field-toggle__label field-toggle__label--boxed" for="password_update_required">
-                            <div class="field-toggle__icon field-toggle__icon-alt">
+                            <span class="field-toggle__icon field-toggle__icon-alt">
                                 <svg class="icon">
-                                    <use xlink:href="#tick">
+                                    <use xlink:href="#tick"/>
                                 </svg>
-                            </div>
+                            </span>
                             $MESSAGES.getString('account.edit.password.update.required')
                         </label>
                     </div>
@@ -154,7 +154,7 @@
     </div>
     #renderDBEditFooter($mode)
 </form>
-<script >
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmCreateUser');

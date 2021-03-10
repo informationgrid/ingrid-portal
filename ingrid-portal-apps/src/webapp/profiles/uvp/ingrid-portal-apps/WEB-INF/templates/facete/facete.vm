@@ -4,7 +4,7 @@
 #if($rankedHitslenght > 0)
     <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
         <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
-            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="facet-accordion" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
+            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
             <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
                 <div class="boxes">
                     #renderFacetCategory($facetConfig)
@@ -240,8 +240,8 @@
                     #if($facet.getMobileName())
                       #set ($hasMobileName = true)
                     #end
-                    <input id="facet-$facet.getId()" name="" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
-                    <div class="control__indicator"></div>
+                    <input id="facet-$facet.getId()" type="checkbox" #if($isDelete)checked#end onclick="location.href='$doAction'">
+                    <span class="control__indicator"></span>
                     $MESSAGES.getString("$facet.getName()")
                     <span class="nr-results">
                     #if($number)
@@ -308,7 +308,7 @@
 
 #macro(renderDeleteIcon $doAction $title)
     <a href="$doAction" class="facete_link_line">
-        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title"></img>
+        <img class="facete_delete_img" src="/ingrid-portal-apps/images/facete/facete_delete.png" title="$title" alt="$title"/>
     </a>
 #end
 
@@ -350,7 +350,7 @@
         <div class="search-form ob-clear ob-flex">
             <input class="field" type="text" name="termWildcard_$node.getId()" id="termWildcard_$node.getId()" #if($wildcard_item_term)value="$wildcard_item_term"#end />
             <button type="submit" name="doSearchWildcard_$node.getId()" value="$MESSAGES.getString("searchResult.facete.wildcard.name.search.button")" class="btn btn--primary btn--icon-transition" style="min-width:0;">
-                <svg class="icon"><use xlink:href="#magnifier"></use></svg>
+                <svg class="icon"><use xlink:href="#magnifier"/></svg>
             </button>
         </div>
         #if($wildcard_item_term)

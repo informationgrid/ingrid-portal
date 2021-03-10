@@ -1,0 +1,20 @@
+#parse("/decorations/layout/ingrid/templates/header/header_body_local.vm")
+
+<script>
+    var breadCrump = 'HTTP Status 404';
+    if ('$currentPage' == '/main-maps.psml') {
+        breadCrump = 'Karte';
+    } else if ('$currentPage' == '/main-measures.psml') {
+        breadCrump = 'Zeitreihen';
+    } else if ('$currentPage' == '/search-detail.psml') {
+        breadCrump = 'Trefferanzeige';
+    }
+$('#navBreadcrumbs li strong' ).text(breadCrump);
+</script>
+
+#if($isMap)
+<script>
+    $('#wrapperDivisions').addClass('maps smaller');
+    $('#header').addClass('maps smaller');
+</script>
+#end

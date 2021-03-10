@@ -5,7 +5,7 @@
 <ul class="link-list">
     <li>
         <a href="$link">
-            <svg class="icon"><use xlink:href="#internal-link"></svg>
+            <svg class="icon"><use xlink:href="#internal-link"/></svg>
             $MESSAGES.getString('account.confirmed.link')
         </a>
     </li>

@@ -39,6 +39,9 @@ UPDATE folder_menu SET element_order = 1 WHERE parent_id = (SELECT temp_value FR
 UPDATE folder_menu SET element_order = 2 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/main-measures.psml';
 UPDATE folder_menu SET element_order = 3 WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'main_menu_id') AND options = '/search-catalog/search-catalog-hierarchy.psml';
 
+-- Delete all '/_user/<USER>/default-page.psml'
+DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';
+
 -- Delete temporary table
 DROP TABLE ingrid_temp;
 

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -85,7 +85,7 @@ define([
 
             // when registering the event handler then the change might already has happened
             // so that we have to set here manually
-            this.handleInspireChange(inspireRelevantWidget.checked);
+            this.handleInspireChange(inspireRelevantWidget.checked, true);
 
             this.events.push(
                 // show/hide radio boxes when inspire relevant was checked
@@ -174,8 +174,7 @@ define([
             );
         },
 
-        handleInspireChange: function (isChecked) {
-
+        handleInspireChange: function (isChecked, soft) {
             // set access constraints if opendata
             var accessConstraints = [];
 
@@ -209,7 +208,10 @@ define([
                 utils.removeEvents(this.eventsNotConform);
             }
             if(registry.byId("isOpenData").get("checked")){
-                UtilGrid.setTableData('availabilityAccessConstraints', accessConstraints);
+                // only set table data when actual change happened (!soft)
+                if(!soft){
+                    UtilGrid.setTableData('availabilityAccessConstraints', accessConstraints);
+                }
             }
         },
 

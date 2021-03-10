@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -136,8 +136,10 @@
                     name: "<fmt:message key='dialog.operation.direction' />",
                     width: '100px',
                     type: GridEditors.SelectboxEditor,
-                    options: ["Eingabe", "Ausgabe", "Ein- und Ausgabe"],
-                    values: ["Eingabe", "Ausgabe", "Ein- und Ausgabe"],
+                    options: [],
+                    values: [1, 2, 3],
+                    listId: 601,
+                    formatter: dojo.partial(GridFormatters.SyslistCellFormatter, 601),
                     editable: true
                 }, {
                     field: 'description',
@@ -149,19 +151,21 @@
                     name: "<fmt:message key='dialog.operation.optional' />",
                     width: '65px',
                     type: GridEditors.SelectboxEditor,
-                    options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
+                    options: [],
                     values: [0, 1],
                     editable: true,
-                    formatter: GridFormatters.ListCellFormatter
+                    listId: 600,
+                    formatter: dojo.partial(GridFormatters.SyslistCellFormatter, 600)
                 }, {
                     field: 'multiple',
                     name: "<fmt:message key='dialog.operation.multiplicity' />",
                     width: "213px",
                     type: GridEditors.SelectboxEditor,
-                    options: ["Nein", "Ja"], // will be filled later, when syslists are loaded
+                    options: [],
                     values: [0, 1],
                     editable: true,
-                    formatter: GridFormatters.ListCellFormatter
+                    listId: 600,
+                    formatter: dojo.partial(GridFormatters.SyslistCellFormatter, 600)
                 }];
                 layoutCreator.createDataGrid("operationsParameter", null, operationsParameterStructure, null);
 
@@ -276,7 +280,7 @@
                     var selectWidget = registry.byId("operationsNameSelect");
                     selectWidget.set('value', UtilSyslist.getSyslistEntryKey(getSysListIdForServiceType(registry.byId("ref3ServiceType").get("value")), op.name));
                 }
-
+                encodeOperationDirections(op)
                 registry.byId("operationsDescription").set("value", op.description);
                 UtilStore.updateWriteStore("operationsPlatform", op.platform);
                 registry.byId("operationsCall").set("value", op.methodCall);
@@ -362,12 +366,26 @@
 
                 operation.methodCall = registry.byId("operationsCall").get("value");
                 operation.paramList = UtilGrid.getTableData("operationsParameter");
+                decodeOperationDirections(operation)
 
                 operation.addressList = UtilGrid.getTableData("operationsAddress");
 
                 operation.dependencies = UtilGrid.getTableData("operationsDependencies");
-
                 return operation;
+            }
+
+            const OPERATION_DIRECTIONS = ["Eingabe", "Ausgabe", "Ein- und Ausgabe"];
+
+            function encodeOperationDirections(operation) {
+                array.forEach(operation.paramList, function(param) {
+                    if(param.direction) param.direction =  OPERATION_DIRECTIONS.indexOf(param.direction)
+                });
+            }
+
+            function decodeOperationDirections(operation) {
+                array.forEach(operation.paramList, function(param) {
+                    if(param.direction) param.direction =  OPERATION_DIRECTIONS[param.direction];
+                });
             }
 
             function isValidOperation(op) {

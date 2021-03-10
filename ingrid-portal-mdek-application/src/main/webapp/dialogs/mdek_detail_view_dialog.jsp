@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -616,7 +616,7 @@ require([
                     renderTable(nodeData.ref1SymbolsText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.symbolCatTable.header.title' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.date' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.symbolCatTable.title' />", [null, formatDate, null]);
                     renderTable(nodeData.ref1KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.keyCatTable.title' />", [null, formatDate, null]);
                     renderList(nodeData.ref1Data, "<fmt:message key='ui.obj.type1.attributes' />");
-                    renderTextWithTitle(nodeData.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
+                    renderList(nodeData.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
                     renderTextWithTitle(nodeData.ref1ProcessText, "<fmt:message key='ui.obj.type1.processTable.title' />");
 
                     renderAdditionalFieldsForRubric("refClass1", additionalFields);
@@ -712,6 +712,7 @@ require([
                 renderTable(nodeData.spatialRefAdminUnitTable, ["label", "nativeKey", "longitude1", "latitude1", "longitude2", "latitude2"], ["<fmt:message key='ui.obj.spatial.geoThesTable.header.name' />", "<fmt:message key='ui.obj.spatial.geoThesTable.header.nativeKey' />", "<fmt:message key='ui.obj.spatial.geoThesTable.header.longitude1' />", "<fmt:message key='ui.obj.spatial.geoThesTable.header.latitude1' />", "<fmt:message key='ui.obj.spatial.geoThesTable.header.longitude2' />", "<fmt:message key='ui.obj.spatial.geoThesTable.header.latitude2' />"], "<fmt:message key='dialog.compare.object.spatialTable.title' />");
                 renderTable(nodeData.spatialRefLocationTable, ["name", "longitude1", "latitude1", "longitude2", "latitude2"], ["<fmt:message key='ui.obj.spatial.geoTable.header.name' />", "<fmt:message key='ui.obj.spatial.geoTable.header.longitude1' />", "<fmt:message key='ui.obj.spatial.geoTable.header.latitude1' />", "<fmt:message key='ui.obj.spatial.geoTable.header.longitude2' />", "<fmt:message key='ui.obj.spatial.geoTable.header.latitude2' />"], "<fmt:message key='ui.obj.spatial.geoTable.title' />");
 
+                renderTextWithTitle(nodeData.boundingPolygon, "<fmt:message key='ui.obj.bounding_polygon.label' />");
                 // NOTICE: moved from class 1 to general "Raumbezug"
                 //renderTextWithTitle(nodeData.ref1SpatialSystem, "<fmt:message key='ui.obj.type1.spatialSystem' />");
                 renderLinkList(prepareSpatialSystemLinks(nodeData.ref1SpatialSystemTable), "<fmt:message key='ui.obj.type1.spatialSystem' />", true);

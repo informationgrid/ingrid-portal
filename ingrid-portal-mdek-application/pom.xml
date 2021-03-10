@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-        <version>5.6.0-SNAPSHOT</version>
+        <version>5.8.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-mdek-application</artifactId>
@@ -153,7 +153,7 @@
       <dependency>
         <groupId>xerces</groupId>
         <artifactId>xercesImpl</artifactId>
-        <version>2.10.0</version>
+        <version>2.12.0</version>
       </dependency>
       <dependency>
         <groupId>xml-apis</groupId>
@@ -183,7 +183,7 @@
       <dependency>
         <groupId>commons-collections</groupId>
         <artifactId>commons-collections</artifactId>
-        <version>3.2.1</version>
+        <version>3.2.2</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
@@ -193,7 +193,7 @@
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
-        <version>2.8.11.3</version>
+        <version>2.9.10.5</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -262,7 +262,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-external-service-sns</artifactId>
-      <version>5.6.0-SNAPSHOT</version>
+      <version>5.8.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <artifactId>log4j</artifactId>
@@ -282,6 +282,10 @@
         <exclusion>
           <artifactId>log4j</artifactId>
           <groupId>log4j</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jaxen-limited</artifactId>
+          <groupId>jaxen</groupId>
         </exclusion>
       </exclusions>
     </dependency>
@@ -412,7 +416,7 @@
     <dependency>
       <groupId>org.quartz-scheduler</groupId>
       <artifactId>quartz</artifactId>
-      <version>2.3.0</version>
+      <version>2.3.2</version>
     </dependency>
     <dependency>
       <groupId>javax.mail</groupId>
@@ -433,22 +437,27 @@
     <dependency>
       <groupId>org.glassfish.jersey.containers</groupId>
       <artifactId>jersey-container-servlet</artifactId>
-      <version>2.25.1</version>
+      <version>2.32</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-multipart</artifactId>
-      <version>2.25.1</version>
+      <version>2.32</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jersey.inject</groupId>
+      <artifactId>jersey-hk2</artifactId>
+      <version>2.32</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.media</groupId>
       <artifactId>jersey-media-json-jackson</artifactId>
-      <version>2.25.1</version>
+      <version>2.32</version>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jersey.ext</groupId>
-      <artifactId>jersey-spring3</artifactId>
-      <version>2.25</version>
+      <artifactId>jersey-spring4</artifactId>
+      <version>2.32</version>
       <exclusions>
         <exclusion>
           <groupId>org.springframework</groupId>
@@ -546,7 +555,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <version>4.13.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -569,7 +578,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils-geo</artifactId>
-      <version>5.6.0-SNAPSHOT</version>
+      <version>5.5.0</version>
     </dependency>
     <!-- this lib might be needed(?) for utils-geo when transforming coordinates -->
     <!-- <dependency> <groupId>javax.media</groupId> <artifactId>jai-core</artifactId>
@@ -626,6 +635,8 @@
                 <argument>load=build</argument>
                 <argument>--profile</argument>
                 <argument>profiles/ingrid.profile.js</argument>
+                <argument>-Xms64m</argument>
+                <argument>-Xmx512m</argument>
               </arguments>
               <!-- optional -->
               <workingDirectory>src/main/webapp/dojo-sources/util/buildscripts</workingDirectory>
@@ -716,115 +727,6 @@
                 <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                   <resourcesAsCSV>
                     ../ingrid-portal-apps/src/webapp/profiles/uvp/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-baw</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>baw</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/baw_mis/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-bkg</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>bkg</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <!--<scanTargets>
-                  <scanTarget>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</scanTarget>
-              </scanTargets>-->
-              <webApp>
-                <!--<extraClasspath>${basedir}/../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application/WEB-INF/classes</extraClasspath>-->
-                <!-- use resources from profile first, before using the default webapp dir -->
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/bkg/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-lgv</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>lgv</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/lgv_hamburg/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-mcloud</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>mcloud</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/mcloud/ingrid-portal-mdek-application,src/main/webapp
                   </resourcesAsCSV>
                 </baseResource>
               </webApp>
@@ -953,6 +855,8 @@
                 <argument>load=build</argument>
                 <argument>--profile</argument>
                 <argument>profiles/ingrid.profile.js</argument>
+                <argument>-Xms64m</argument>
+                <argument>-Xmx512m</argument>
               </arguments>
               <!-- optional -->
               <workingDirectory>src/main/webapp/dojo-sources/util/buildscripts</workingDirectory>
@@ -1017,11 +921,10 @@
       </build>
     </profile>
     <profile>
-      <id>profile-metaver_md</id>
+      <id>profile-general</id>
       <activation>
         <property>
           <name>profile</name>
-          <value>metaver_md</value>
         </property>
       </activation>
       <build>
@@ -1033,33 +936,7 @@
               <webApp>
                 <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
                   <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/metaver_md/ingrid-portal-mdek-application,src/main/webapp
-                  </resourcesAsCSV>
-                </baseResource>
-              </webApp>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>profile-nokis</id>
-      <activation>
-        <property>
-          <name>profile</name>
-          <value>nokis</value>
-        </property>
-      </activation>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-maven-plugin</artifactId>
-            <configuration>
-              <webApp>
-                <baseResource implementation="org.eclipse.jetty.util.resource.ResourceCollection">
-                  <resourcesAsCSV>
-                    ../ingrid-portal-apps/src/webapp/profiles/nokis/ingrid-portal-mdek-application,src/main/webapp
+                    ../ingrid-portal-apps/src/webapp/profiles/${profile}/ingrid-portal-mdek-application,src/main/webapp
                   </resourcesAsCSV>
                 </baseResource>
               </webApp>

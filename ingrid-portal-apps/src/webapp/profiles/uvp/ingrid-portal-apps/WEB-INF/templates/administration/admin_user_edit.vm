@@ -80,8 +80,8 @@
                         <div class="form-element boxed">
                             <div class="control-group">
                                 <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="enabled">
-                                    <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <input id="enabled" type="checkbox" name="enabled" value="1" #getChecked('enabled' '1') >
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.enable')
                                 </label>
                             </div>
@@ -95,10 +95,10 @@
                 <div class="form-element">
                     <input type="password" id="password_new" name="password_new" value="#getFieldValue('password_new')" #addErrorFormClass('password_new') #addErrorFormMessagePlaceholder('password_new') onchange="checkPassword(document.getElementById('password_new').value, 'password-strength-meter', 'password-strength-text'); return true;" onkeypress="this.onchange();" oninput="this.onkeypress();"/>
                     <b><small class="media__obj--right" id="password-strength-text"></small></b>
-                    <meter max="4" id="password-strength-meter">
-                      <div class="meter-gauge">
+                    <meter max="4" id="password-strength-meter" value="0">
+                      <span class="meter-gauge">
                           <p style="width: 0.0%;">Meterfallback</p>
-                      </div>
+                      </span>
                     </meter>
                     #addErrorFormMessagePlaceholderWithInputCheck('password_new')
                 </div>
@@ -115,8 +115,8 @@
                             <div class="control-group">
                                 #addErrorFormMessage('send_info')
                                 <label class="control control--checkbox field-toggle__label field-toggle__label--boxed #addErrorFormClassLabelText('send_info')" for="send_info">
-                                    <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <input id="send_info" type="checkbox" name="send_info" value="1" #getChecked('send_info' '1') >
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.send.information')
                                 </label>
                             </div>
@@ -126,8 +126,8 @@
                         <div class="form-element boxed">
                             <div class="control-group">
                                 <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="password_update_required">
-                                    <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <input id="password_update_required" type="checkbox" name="password_update_required" value="1" #getChecked('password_update_required' '1') >
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.password.update.required')
                                 </label>
                             </div>
@@ -164,8 +164,8 @@
                         <div class="form-element boxed">
                             <div class="control-group">
                                 <label class="field-toggle__label field-toggle__label--boxed" for="admin_portal">
-                                    <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') onchange="adapt()">
-                                    <div class="control__indicator"></div>
+                                    <input id="admin_portal" type="checkbox" name="admin_portal" value="1" #getChecked('admin_portal' '1') >
+                                    <span class="control__indicator"></span>
                                     $MESSAGES.getString('account.edit.admin.portal')
                                 </label>
                             </div>
@@ -181,7 +181,7 @@
         </div>
     </form>
 </div>
-<script >
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('frmEditUser');

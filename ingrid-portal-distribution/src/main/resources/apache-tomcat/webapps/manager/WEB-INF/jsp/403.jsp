@@ -1,26 +1,4 @@
 <%--
-  **************************************************-
-  InGrid Portal Distribution
-  ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  --%>
-<%--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
   this work for additional information regarding copyright ownership.
@@ -54,6 +32,11 @@
    <h1>403 Access Denied</h1>
    <p>
     You are not authorized to view this page.
+   </p>
+   <p>
+    By default the Manager is only accessible from a browser running on the
+    same machine as Tomcat. If you wish to modify this restriction, you'll need
+    to edit the Manager's <tt>context.xml</tt> file.
    </p>
    <p>
     If you have already configured the Manager application to allow access and

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -141,14 +141,15 @@ public class IngridPowerToolImpl extends JetspeedPowerToolImpl {
         GenericMetadata metadata = getPage().getMetadata();
         if (metadata == null)
             return "";
-        
-        Collection<LocalizedField> c = metadata.getFields(field);
+        Collection<LocalizedField> c = metadata.getFields();
         
         if (c != null) {
             for (LocalizedField entry : c) {
-                value = entry.getValue();
-                if(value != null) {
-                    break;
+                if(entry.getName() != null && entry.getName().equals(field)) {
+                    value = entry.getValue();
+                    if(value != null) {
+                        break;
+                    }
                 }
             }
         }

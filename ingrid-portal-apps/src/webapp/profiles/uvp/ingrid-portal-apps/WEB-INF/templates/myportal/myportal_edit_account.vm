@@ -8,9 +8,10 @@
         #renderInputButtonClass("$MESSAGES.getString('account.edit.submit')" "" "" "" "")
     </div>
 </form>
+#parse ('/WEB-INF/templates/global/include_passwort_meter.vm')
 <br/>
 <br/>
-<script >
+<script>
     var error = $actionForm.hasErrors();
     if(error){
         goToByScroll('edit_account');

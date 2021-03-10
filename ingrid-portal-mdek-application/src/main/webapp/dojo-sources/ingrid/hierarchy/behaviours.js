@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,24 +26,24 @@
 var igeOptions = {};
 
 define(["dojo/_base/declare",
-        "dojo/_base/array", 
-        "dojo/Deferred", 
-        "dojo/_base/lang", 
-        "dojo/dom-style", 
-        "dojo/topic", 
+        "dojo/_base/array",
+        "dojo/Deferred",
+        "dojo/_base/lang",
+        "dojo/dom-style",
+        "dojo/topic",
         "dojo/query",
         "dojo/string",
-        "dojo/on", 
-        "dojo/aspect", 
-        "dojo/dom", 
+        "dojo/on",
+        "dojo/aspect",
+        "dojo/dom",
         "dojo/dom-class",
-        "dijit/registry", 
+        "dijit/registry",
         "dojo/cookie",
-        "ingrid/message", 
+        "ingrid/message",
         "ingrid/dialog",
-        "ingrid/utils/Grid", 
-        "ingrid/utils/UI", 
-        "ingrid/utils/List", 
+        "ingrid/utils/Grid",
+        "ingrid/utils/UI",
+        "ingrid/utils/List",
         "ingrid/utils/Syslist",
         "ingrid/hierarchy/behaviours/addresses",
         "ingrid/hierarchy/behaviours/opendata",
@@ -64,6 +64,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/ref1Representation",
         "ingrid/hierarchy/behaviours/ref1SymbolsText",
         "ingrid/hierarchy/behaviours/ref1KeysText",
+        "ingrid/hierarchy/behaviours/ref1VFormatDetails",
         "ingrid/hierarchy/behaviours/dataQualitySection",
         "ingrid/hierarchy/behaviours/ref3BaseDataLink",
         "ingrid/hierarchy/behaviours/ref3Operations",
@@ -90,7 +91,7 @@ define(["dojo/_base/declare",
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
             advCompatible, adminitrativeArea, advProductGroup, optionalGetCapability, inspireRelevant, thesaurusInspire, thesaurusTopics,
-            thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, dataQualitySection,
+            thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, ref1VFormatDetails, dataQualitySection,
             ref3BaseDataLink, ref3Operations, ref3CouplingType, ref5KeysText,
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
@@ -98,7 +99,7 @@ define(["dojo/_base/declare",
             spatialRepresentationInfo, parentIdentifier, deleteNonEmptyFolders, accessConstraints, priorityDataset, spatialScope, axisDim, doi) {
 
     return declare(null, {
-        
+
         addresses : addresses,
 
         advCompatible : advCompatible,
@@ -120,6 +121,8 @@ define(["dojo/_base/declare",
         ref1SymbolsText: ref1SymbolsText,
 
         ref1KeysText: ref1KeysText,
+
+        ref1VFormatDetails: ref1VFormatDetails,
 
         dataQualitySection: dataQualitySection,
 
@@ -150,7 +153,7 @@ define(["dojo/_base/declare",
         extraInfoCharSetData: extraInfoCharSetData,
 
         administrativeArea: adminitrativeArea,
-        
+
         conformityFields: conformityFields,
 
         dataformat: dataformat,
@@ -158,7 +161,7 @@ define(["dojo/_base/declare",
         spatialSystems: spatialSystems,
 
         inspireGeoservice: inspireGeoservice,
-        
+
         inspireIsoConnection: inspireIsoConnection,
 
         // Not needed anymore since specifications have been removed and cannot be mapped
@@ -183,12 +186,10 @@ define(["dojo/_base/declare",
 
         // REMOVED: see https://redmine.informationgrid.eu/issues/364#note-11
         // parentIdentifier: parentIdentifier,
-        
+
         coupledResourceDownloadDataCheck: {
-            title: "Gekoppelte Daten - Überprüfung auf Download-Daten",
-            title_en: "Coupled Resources - Check for download data",
-            description: "Wenn eine externe gekoppelte Ressource hinzugefügt wird, dann überprüfe, dass diese Download-Daten enthält.",
-            description_en: "When an external coupled resource is being added then also check if the resource contains download data.",
+            title: "Gekoppelte Daten - Überprüfung auf Download-Daten, wenn Dienst als ATOM-Download bereitgestellt wird",
+            description: "Ist die Checkbox 'Als ATOM-Download Dienst bereitstellen' aktiv, dann wird beim Hinzufügen einer externen gekoppelten Ressource geprüft, dass diese Download-Daten enthält.",
             issue: "https://dev.informationgrid.eu/redmine/issues/153",
             defaultActive: false,
             run: function() {
@@ -200,7 +201,7 @@ define(["dojo/_base/declare",
 
         requireUseConstraints: {
             title: "Nutzungsbedingungen - Pflichtfeld für Geodatensatz und -dienst",
-            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die die Objektklasse 1 oder 3 ausgewählt wurde.",
+            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints) wird verpflichtend, wenn Geodatensatz oder Geodatendienst ausgewählt wurde.",
             issue: "https://dev.informationgrid.eu/redmine/issues/223,1362",
             defaultActive: true,
         	run: function() {
@@ -215,7 +216,7 @@ define(["dojo/_base/declare",
         },
 
         validateGraphicPreviewTableEntries: {
-            title: "Vorschaugrafik - Überprüfung der Tebelleneinträge",
+            title: "Vorschaugrafik - Überprüfung der Tabelleneinträge",
             description: "Für Vorschaugrafiken muss ein Dateiname immer vorhanden sein.",
             defaultActive: true,
             run: function() {
@@ -237,7 +238,7 @@ define(["dojo/_base/declare",
                 });
             }
         },
-        
+
         dqGriddedDataPositionalAccuracy: {
             title: "Verhalten für die Rasterpositionsgenauigkeit",
             description: "Das Element ist optional und wird nicht per default eingeblendet. Es wird nur aktiviert, wenn \"Digitale Repräsentation\" den Wert \"Raster\" hat.",
@@ -247,9 +248,9 @@ define(["dojo/_base/declare",
                     // console.log("data: ", this.getData());
                     var hasGridType = array.some(this.getData(), function(row) {
                         // 2 === Raster, Gitter
-                        return row.title === 2 || row.title === "2"; 
+                        return row.title === 2 || row.title === "2";
                     });
-                    
+
                     // show field if grid type was found in table, otherwise hide it
                     if (hasGridType) {
                         domClass.remove("uiElement5071", "hide");
@@ -259,7 +260,7 @@ define(["dojo/_base/declare",
                 });
             }
         },
-        
+
         dataFormat: {
             title : "Name von Datenformat verpflichtend",
             description : "Wenn aktiviert, muss jeder Eintrag in der Tabelle \"Datenformat\" mind. einen Namen enthalten.",
@@ -275,13 +276,13 @@ define(["dojo/_base/declare",
                         }
                     });
             }
-        	
+
         },
-        
+
         foldersInHierarchy: foldersInHierarchy,
 
         openData: openData
-        
+
         /*
          * ABORTED: The ATOM URL has to be maintained when automatically inserted into document. It's better to adapt the context help
          * to let the user know that the URL is added to the IDF.
@@ -310,6 +311,6 @@ define(["dojo/_base/declare",
                 });
             }
         }*/
-        
+
     } )();
 });

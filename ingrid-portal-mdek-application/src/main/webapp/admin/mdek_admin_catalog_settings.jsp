@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -111,7 +111,14 @@
 
                             if (item.params) {
                                 array.forEach(item.params, function(param) {
-                                    query("input[data-field='" + param.id + "']")[0].value = param.value;
+                                    var input = query("input[data-field='" + param.id + "']");
+                                    // if it's an input field
+                                    if (input.length > 0) {
+                                        input[0].value = param.value;
+                                    } else { // otherwise it should be a checkbox
+                                        registry.byId("behaviour_" + param.id).set("value", param.value);
+                                        console.log("Checkbox parameter value is: " + param.value);
+                                    }
                                 });
                             }
                         }
@@ -130,6 +137,14 @@
                             var checkChild = registry.byId("behaviour_" + child);
                             if (checkChild) checkChild.destroy();
                         }
+                    }
+                    if (entry.params) {
+                        array.forEach(entry.params, function(param) {
+                            if (param.isCheckbox) {
+                                var paramCheck = registry.byId("behaviour_" + param.id);
+                                if (paramCheck) paramCheck.destroy();
+                            }
+                        });
                     }
                 }
                 domConstruct.empty("behaviourContent");
@@ -259,13 +274,18 @@
                             var params = behaviour[behave].params;
                             if (params) {
                                 beh.params = [];
-                                array.forEach(params, function(p) {
-                                    var value = query("input[data-field='" + p.id + "']")[0].value;
+                                array.forEach(params, function(param) {
+                                    var value;
+                                    if (param.isCheckbox) {
+                                        value = registry.byId("behaviour_" + param.id).get("value");
+                                    } else {
+                                        value = query("input[data-field='" + param.id + "']")[0].value;
+                                    }
                                     // only add params that differ from default value
-                                    if (p.default != value) {
-                                        p.value = value;
+                                    if (param.default != value) {
+                                        param.value = value;
                                         beh.params.push( {
-                                            id: p.id,
+                                            id: param.id,
                                             value: value
                                         });
                                     }
@@ -381,14 +401,36 @@
                 if (data.run) {
                     var cb = new CheckBox({id: "behaviour_" + id, checked: data.defaultActive});
                     label.appendChild(cb.domNode);
+                    // enable/disable parameter depending on behaviour
+                    if (data.params) {
+                        on(cb, "change", function() {
+                            var thisCheckbox = this;
+                            array.forEach(data.params, function(param) {
+                                if (param.isCheckbox) {
+                                    registry.byId("behaviour_" + param.id).set("disabled", !thisCheckbox.checked);
+                                } else {
+                                    query("input[data-field='" + param.id + "']")[0].disabled = !thisCheckbox.checked;
+                                }
+                            });
+                        });
+                    }
                 }
                 label.appendChild(domConstruct.toDom(data.title));
                 
                 row.appendChild(label);
                 if (data.params) {
                     array.forEach(data.params, function(param) {
-                        //var value = param.value ? param.value : param.default;
-                        var paramInput = domConstruct.toDom("<div class='checkbox-indent'>" + param.label + " <input type='text' data-field='" + param.id + "' value='" + param.default + "'></div>");
+                        var paramInput;
+                        if (param.isCheckbox) {
+                            paramInput = domConstruct.toDom("<div class='checkbox-indent'></div>");
+                            var label = domConstruct.toDom("<label class='inActive'></label>");
+                            var cb = new CheckBox({id: "behaviour_" + param.id, checked: param.default, disabled: !data.defaultActive});
+                            label.appendChild(cb.domNode);
+                            label.appendChild(domConstruct.toDom(param.label))
+                            paramInput.appendChild(label);
+                        } else {
+                            paramInput = domConstruct.toDom("<div class='checkbox-indent'>" + param.label + " <input type='text' data-field='" + param.id + "' value='" + param.default + "'></div>");
+                        }
                         row.appendChild(paramInput);
                     });
                 }

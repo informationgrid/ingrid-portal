@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -212,6 +212,10 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_CONTACT_UPLOAD_ENABLE = "email.contact.upload.enable";
     public static final String PORTAL_CONTACT_UPLOAD_SIZE = "email.contact.upload.size";
     
+    public static final String PORTAL_CONTACT_PORTAL = "email.contact.portal";
+    
+    public static final String PORTAL_CONTACT_REMOVE_PARTNERS = "email.contact.remove.partners";
+    
     public static final String PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS = "portal.detail.view.hidden.keywords";
     
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
@@ -268,6 +272,9 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_FORM_STRENGTH_CHECK_PW = "portal.form.strength.check.passsword";
 
     public static final String PORTAL_DETAIL_UPLOAD_PATH_INDEX= "portal.detail.upload.path.index";
+
+    public static final String PORTAL_FORM_VALID_FILLOUT_DURATION_MIN = "portal.form.valid.fillout.duration.min";
+
 
     // private stuff
     private static PortalConfig instance = null;

@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -222,7 +222,7 @@ require([
 	    var languageCode = UtilCatalog.getCatalogLanguage();
 	    console.debug("LanguageShort is: " + languageCode);
 
-	    var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
+	    var lstIds = [100, 101, 102, 502, 505, 510, 515, 518, 520, 523, 525, 526, 527, 528, 600, 601, 1100, 1230, 1320, 1350, 1370, 1400, 1410, 2000,
 	        3535, 3555, 3385, 3571, 4300, 4305, 4430, 5100, 5105, 5110, 5120, 5130, 5180, 5200, 5300, 6000, 6005, 6010, 6100, 6200, 6300,
 	        6400, 6500, 7109, 7112, 7113, 7114, 7115, 7120, 7125, 7126, 7127, 7128, 8000, 99999999];
 

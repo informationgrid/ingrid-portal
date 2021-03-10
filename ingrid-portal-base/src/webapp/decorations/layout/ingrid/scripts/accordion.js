@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -39,6 +39,19 @@
             var content = $(this).children('.js-accordion-content');
             var ui = $(this).find('.js-accordion-ui'); // <-- Not full proof when nesting accordions
 
+            if(accordion.tagName === 'DIV') {
+                if(toggle.hasClass("is-active")) {
+                  content.attr('aria-expanded', 'true');
+                  content.attr('aria-hidden', 'false');
+                } else {
+                  content.attr('aria-expanded', 'false');
+                  content.attr('aria-hidden', 'true');
+                }
+            }
+            if(toggle.attr('id')) {
+              content.attr('aria-labelledby', toggle.attr('id'));
+            }
+
             toggle.on('click', function (event) {
 
                 event.preventDefault();
@@ -59,8 +72,20 @@
                     }
 
                 }
-
-                toggle.toggleClass('is-active');
+                if(toggle.hasClass("is-active")) {
+                  toggle.removeClass('is-active');
+                  if(accordion.tagName === 'DIV') {
+                    content.attr('aria-expanded', 'false');
+                    content.attr('aria-hidden', 'true');
+                  }
+                } else {
+                  toggle.addClass('is-active');
+                  if(accordion.tagName === 'DIV') {
+                    content.attr('aria-expanded', 'true');
+                    content.attr('aria-hidden', 'false');
+                  }
+                }
+                
                 content.toggleClass('is-hidden');
                 ui.toggleClass('is-hidden');
 

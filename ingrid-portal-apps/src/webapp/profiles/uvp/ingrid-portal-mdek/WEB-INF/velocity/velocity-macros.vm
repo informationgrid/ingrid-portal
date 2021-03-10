@@ -15,5 +15,8 @@
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    #if($buttonname == "")
+        #set($buttonname = $buttonvalue)
+    #end
     <input type="submit" class="button $buttonclass #if($buttondisable == "true")sg_nine#end" style="$buttonstyle" value="$buttonvalue" name="$buttonname" title="$buttontitle" onclick="$buttononclick" #if($buttondisable == "true")disabled#end />
 #end

@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid.portal</groupId>
     <artifactId>ingrid-portal-project</artifactId>
-    <version>5.6.0-SNAPSHOT</version>
+    <version>5.8.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-portal-apps</artifactId>
@@ -19,7 +19,7 @@
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
-    <measurement.client.version>1.0.19</measurement.client.version>
+    <measurement.client.version>1.0.21</measurement.client.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -190,7 +190,7 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-communication</artifactId>
-      <version>3.5.0</version>
+      <version>5.6.1</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
@@ -246,7 +246,7 @@
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.7</version>
+      <version>1.4.13</version>
     </dependency>
     <dependency>
       <groupId>commons-fileupload</groupId>
@@ -323,29 +323,6 @@
     <dependency>
       <groupId>rome</groupId>
       <artifactId>rome</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.octo.captcha</groupId>
-      <artifactId>jcaptcha-noSunPackage</artifactId>
-      <version>1.0</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.octo.captcha</groupId>
-          <artifactId>jcaptcha-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>com.jhlabs</groupId>
-          <artifactId>imaging</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>javax.servlet</groupId>
-          <artifactId>servlet-api</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <!-- backward compatible -->
     <dependency>

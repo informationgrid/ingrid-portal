@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -404,7 +404,7 @@ public class SNSLocationUpdateJob extends QuartzJobBean implements MdekJob, Inte
 	}
 
 	private static boolean isEqual(String s1, String s2) {
-		return s1.equals(s2);
+		return s1 != null ? s1.equals(s2) : s1 == s2;
 	}
 
 	private static boolean isEqual(float[] bb1, float[] bb2) {

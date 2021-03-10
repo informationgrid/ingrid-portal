@@ -2,10 +2,10 @@
 # ID des GUI Elements
 guid: 5030
 # title, used as window title
-title: Durch die Ressource abgedeckte Zeitspanne
+title: Zeitbezug für die Ressource
 ---
 
-# Durch die Ressource abgedeckte Zeitspanne
+# Zeitbezug des Dateninhalts
 
 Angabe, wann der Datensatz erstellt, revidiert und/oder publiziert wurde.
 

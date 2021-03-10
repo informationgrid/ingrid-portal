@@ -8,12 +8,12 @@
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
 # EUPL (the "Licence");
-# 
+#
 # You may not use this work except in compliance with the Licence.
 # You may obtain a copy of the Licence at:
-# 
+#
 # http://ec.europa.eu/idabc/eupl5
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the Licence is distributed on an "AS IS" basis,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,15 +26,16 @@ HIERARCHY_DIR="webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierar
 
 cd /opt/ingrid/ingrid-portal/apache-tomcat
 
-if [ -e /initialized ]
+if [ -e ./initialized ]
 then
     echo "Container already initialized"
 else
+    echo "Mapped files will throw an error (sed resource busy)"
     # Perform some substitutions if environment variables are set
     if [ ! -z "${DB_DRIVERCLASS}" ]; then
         # common substution scripts for sed
         substitution_catalina_db_user="s@username=\"root\"@username=\"${DB_USER}\"@"
-        substitution_catalina_db_pass='s@password=""@password="${DB_PASSWORD}"@' # No variable substitution in shell/sed. Database password will be set in the JAVA_OPTS environment variable.
+        substitution_catalina_db_pass='s@password=""@password="'${DB_PASSWORD}'"@'
         substitution_catalina_db_driver="s@driverClassName=\"com.mysql.jdbc.Driver\"@driverClassName=\"${DB_DRIVERCLASS}\"@"
         substitution_catalina_db_url_portal="s@url=\"jdbc:mysql://localhost/ingrid-portal[^\"]*\"@url=\"${DB_URL_PORTAL}\"@"
         substitution_catalina_db_url_mdek="s@url=\"jdbc:mysql://localhost/mdek[^\"]*\"@url=\"${DB_URL_MDEK}\"@"
@@ -128,6 +129,19 @@ else
             fi
         fi
 
+        # PortalU-RLP extends UVP layout
+        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ]; then
+            echo "Copying profile files from parent (uvp) into portal directories ..."
+            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
+
+            echo "Copying profile files from parent (numis) into portal directories ..."
+            cp -R $PROFILES_DIR/numis/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/numis/ingrid-portal-apps/* webapps/ingrid-portal-apps
+       fi
+
+
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
@@ -164,7 +178,7 @@ else
     else
         echo "No specific portal profile used."
     fi
-    
+
     # IGE standalone configuration
     if [ "$STANDALONE_IGE" == "true" ]; then
         # remove all contexts except ingrid-portal-mdek-application
@@ -216,7 +230,7 @@ else
     # Change admin password for mapclient admin GUI if MAPCLIENT_ADMIN_PW is define
     if [ "$MAPCLIENT_ADMIN_PW" ]; then
         echo "Update mapclient admin password"
-        sed -i 's|password="admin" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
+        sed -i 's|password="21232f297a57a5a743894a0e4a801fc3" roles="admin-gui|password="'${MAPCLIENT_ADMIN_PW}'" roles="admin-gui|' conf/tomcat-users.xml
     fi
 
     # Change server.xml
@@ -228,9 +242,34 @@ else
         echo "Update connector attributes"
         sed -i -e "s@redirectPort=\"8443\" />@redirectPort=\"8443\" ${PORTAL_SERVER_CONNECTOR_ATTR} />@" conf/server.xml
     fi
-    
 
-    touch /initialized
+    if [ "$PORTAL_COPYRIGHT" ]; then
+        echo "Update copyright"
+        sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_de.properties
+        if [ "$PORTAL_COPYRIGHT_EN" ]; then
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT_EN}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT_EN}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_en.properties
+        else
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources.properties
+            sed -i "s@ingrid.page.copyright=.*@ingrid.page.copyright=${PORTAL_COPYRIGHT}@" webapps/ROOT/WEB-INF/classes/de/ingrid/portal/resources/PortalLayoutResources_en.properties
+        fi
+
+        # HTML
+        sed -i "s@<meta name=\"author\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ROOT/error*.html
+        sed -i "s@<meta name=\"author\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/error*.html
+        sed -i "s@<meta name=\"author\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+
+        sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ROOT/error*.html
+        sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/error*.html
+        sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+
+        sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ROOT/error*.html
+        sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/error*.html
+        sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/session_expired.jsp
+
+    fi
+
+    touch ./initialized
 fi
 
 if [ "$DEBUG" = 'true' ]; then

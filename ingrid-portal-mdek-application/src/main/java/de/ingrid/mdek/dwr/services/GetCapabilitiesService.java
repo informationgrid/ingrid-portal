@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -115,7 +115,7 @@ public class GetCapabilitiesService {
             XPathUtils xpath = new XPathUtils();
             String id = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//identifier/MD_Identifier/code/CharacterString" );
             String title = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//citation/CI_Citation/title/CharacterString" );
-            String uuid = xpath.getString( doc, "//MD_Metadata/fileIdentifier/CharacterString" );
+            String uuid = xpath.getString( doc, "//identificationInfo/MD_DataIdentification//identifier/MD_Identifier/@uuid" );
 
             NodeList resources = xpath.getNodeList( doc, "//MD_DigitalTransferOptions/onLine/CI_OnlineResource/function/CI_OnLineFunctionCode");
             for (int j = 0; j < resources.getLength(); j++) {

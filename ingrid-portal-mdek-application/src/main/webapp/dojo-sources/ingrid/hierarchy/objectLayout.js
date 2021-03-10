@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,6 +24,7 @@ define([
     "dojo/_base/declare",
     "dojo/_base/lang",
     "dojo/_base/array",
+    "dojo/cookie",
     "dojo/has",
     "dojo/on",
     "dojo/aspect",
@@ -65,7 +66,7 @@ define([
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
     "ingrid/hierarchy/validation"
-], function(declare, lang, array, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
+], function(declare, lang, array, cookie, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
             UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog, UtilDOM,
@@ -138,7 +139,7 @@ define([
                 console.debug("initAdditionalFields");
                 var defAddFields = this.initAdditionalFields()
                     .then(this.connectDirtyFlagsEvents);
-                
+
                 console.debug("init CTS");
                 // apply atomatic transformation of bounding box if selected in table
                 this.initCTS();
@@ -150,12 +151,12 @@ define([
                 .then(setVisibilityOfFields)
                 .then(igeEvents.selectUDKClass) // update view according to initial chosen class
                 .then(function() {
-                    // add a '*' to all labels and display them if an element is required 
+                    // add a '*' to all labels and display them if an element is required
                     query(".outer label:not(.forceOptional)", "contentFrameBodyObject").forEach(function(item) {
                         item.innerHTML = lang.trim(item.innerHTML) + '<span class=\"requiredSign\">*</span>';
                     });
-                    
-                    // mark all the content of a special marked container 
+
+                    // mark all the content of a special marked container
                     query(".oneClickMark", "dataFormContainer").on("click", function() {
                         UtilUI.selectTextInContainer( this );
                     });
@@ -204,12 +205,12 @@ define([
 
                 layoutCreator.createFilteringSelect("objectOwner", null, storeProps, null);
                 var owner = registry.byId("objectOwner");
-                
+
                 // show a busy state when lazy loading data
                 var standby = new Standby({target: "objectOwner"});
                 document.body.appendChild(standby.domNode);
             	standby.startup();
-                
+
                 /* make select box lazy loading */
                 owner.isLoaded = function() {
 	            	return this._isLoaded;
@@ -232,7 +233,7 @@ define([
                 	UtilCatalog.updateResponsibleUserObjectList(currentUdk).then( lang.hitch( this, function() {
                 		standby.hide();
 	            		this._isLoaded = true;
-	            		this._startSearchAll(); 
+	            		this._startSearchAll();
 	            	} ) );
 	    		};
 
@@ -240,7 +241,7 @@ define([
                     maxLength: 255,
                     style: "width:100%;"
                 }, "parentIdentifier");
-                
+
             },
 
             createGeneralInfo: function() {
@@ -295,7 +296,7 @@ define([
                     maxLength: 1024,
                     style: "width:100%;"
                 }, "generalPreviewImage");
-                
+
                 new ValidationTextBox({
                     maxLength: 255,
                     style: "width:100%;"
@@ -422,7 +423,7 @@ define([
                     value: "false",
                     name: "isInspireConform"
                 }, "notInspireConform").startup();
-                
+
                 new CheckBox({}, "isOpenData");
                 new CheckBox({}, "isAdvCompatible");
 
@@ -543,7 +544,7 @@ define([
 
                 var ref1VFormatDetailsStructure = [{
                     field: 'topologyLevel',
-                    name: message.get("ui.obj.type1.vectorFormat.detailsTable.header.geoType"),
+                    name: message.get("ui.obj.type1.vectorFormat.topology"),
                     width: '260px',
                     type: gridEditors.SelectboxEditor,
                     options: [], // will be filled later, when syslists are loaded
@@ -588,7 +589,7 @@ define([
                 }];
                 layoutCreator.createDataGrid("ref1SpatialSystem", null, ref1SpatialSystemStructure, null);
 
-                
+
                 /* Add spatialRepresentationInfo (REDMINE-381) */
                 new CheckBox({}, "ref1TransfParamAvail");
                 new NumberTextBox({style: "width:100%;"}, "ref1NumDimensions");
@@ -641,7 +642,7 @@ define([
                     name: "isGeoRectified"
                 }, "isGeoReferenced");
                 geoReferenced.startup();
-                
+
                 new CheckBox({}, "ref1GridFormatRectCheckpoint");
                 new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectDescription");
                 new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRectCornerPoint");
@@ -649,7 +650,7 @@ define([
                 layoutCreator.createSelectBox("ref1GridFormatRectPointInPixel", null, storeProps, function() {
                     return UtilSyslist.getSyslistEntry(2100);
                 });
-                
+
                 new CheckBox({}, "ref1GridFormatRefControlpoint");
                 new CheckBox({}, "ref1GridFormatRefOrientationParam");
                 new ValidationTextBox({style: "width:100%;"}, "ref1GridFormatRefGeoreferencedParam");
@@ -674,7 +675,7 @@ define([
                         domClass.add("geoReferencedWrapper", "hide");
                     }
                 });
-                
+
                 var ref1ScaleStructure = [{
                     field: 'scale',
                     name: message.get("ui.obj.type1.scaleTable.header.scale"),
@@ -1343,7 +1344,27 @@ define([
                 rules.applyRuleServiceType();
 
                 rules.applyRuleDownloadService();
-                new CheckBox({}, "ref3IsAtomDownload");
+                var isAtomDownload = new CheckBox({}, "ref3IsAtomDownload");
+                on(isAtomDownload, "click", function() {
+                    if (this.checked) {
+                        if (cookie("ingrid.atom.download.hint") !== "true") {
+                            dialog.show(message.get("dialog.general.info"), message.get("hint.atomDownload"), dialog.INFO,
+                                [
+                                    {
+                                        caption: message.get("general.ok.hide.next.time"), type: "checkbox",
+                                        action: function (newValue) {
+                                            cookie("ingrid.atom.download.hint", newValue, {expires: 730});
+                                        }
+                                    },
+                                    {
+                                        caption: message.get("general.ok"),
+                                        action: function () {
+                                        }
+                                    }
+                                ]);
+                        }
+                    }
+                });
 
                 var couplingTypes = function() {
                     var def = new Deferred();
@@ -1920,13 +1941,13 @@ define([
                             // replace "," with "." for correct data format
                             data = data.replace(/,/g, ".");
                             var splittedData = data.split(" ");
-                            updateRow(msg.row, 
-                                parseFloat(splittedData[0]), 
-                                parseFloat(splittedData[1]), 
-                                parseFloat(splittedData[2]), 
+                            updateRow(msg.row,
+                                parseFloat(splittedData[0]),
+                                parseFloat(splittedData[1]),
+                                parseFloat(splittedData[2]),
                                 parseFloat(splittedData[3])
                             );
-                            
+
                         } else if (UtilSyslist.getSyslistEntryKey(1100, msg.item.name) !== msg.item.name) {
                             updateRow(msg.row, null, null, null, null);
 
@@ -2221,7 +2242,7 @@ define([
                     formatter: gridFormatters.EscapeFormatter
                 }];
                 layoutCreator.createDataGrid("availabilityUseAccessConstraints", null, availabilityUseAccessConstraintsStructure, null);
-                
+
                 new SimpleTextarea({
                     "class": "textAreaFull",
                     rows: 5
@@ -2405,7 +2426,7 @@ define([
                 }];
                 layoutCreator.createDataGrid("linksFrom", null, linksFromStructure, null);
             },
-            
+
             // called now via context menue
             // openOperationDialog: function(dialogData) {
             //     dialog.showPage(message.get("dialog.operations.title"), 'dialogs/mdek_operation_dialog.jsp?c=' + userLocale, 735, 745, true, dialogData);
@@ -2606,7 +2627,7 @@ define([
                 aspect.after(UtilGrid.getTable("ref5KeysLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 aspect.after(UtilGrid.getTable("ref5MethodLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
                 aspect.after(UtilGrid.getTable("ref6BaseDataLink"), "onDeleteItems", lang.hitch(UtilGrid, lang.partial(UtilGrid.synchedDelete, ["linksTo"])));
-                
+
                 // activate default behaviour
                 return UtilCatalog.getOverrideBehavioursDef().then(function(data) {
                     var behaviourDefs = [];
@@ -2625,8 +2646,8 @@ define([
                     for (var behave in behaviour) {
                         // ignore invalid or address behaviours
                         if (!behaviour[behave] || !behaviour[behave].title || behaviour[behave].forAddress) continue;
-                        
-                        // run behaviour if 
+
+                        // run behaviour if
                         // 1) activated by default and not overridden
                         // 2) activate if explicitly overridden
                         // 3) ignore system behaviours, which were already executed

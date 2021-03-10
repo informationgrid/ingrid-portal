@@ -44,7 +44,7 @@
                 </div>
                 <div class="copyright">
                     <span class="icon"></span>
-                    <span class="text">$MESSAGES.getString("ingrid.page.copyright")</span>
+                    <span class="text copyright_text">$MESSAGES.getString("ingrid.page.copyright")</span>
                 </div>
             </div>
             <div class="xsmall-24 small-24 large-24 xlarge-15 columns button-up">

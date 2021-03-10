@@ -1,10 +1,3 @@
-<style>
-    @media print, screen and (min-width: 48em) {
-        .teaser-data .header {
-            max-height: none;
-        }
-    }
-</style>
 <div class="columns">
     <div class="teaser-data-projects" id="rss_news_teaser">
         <div class="row">

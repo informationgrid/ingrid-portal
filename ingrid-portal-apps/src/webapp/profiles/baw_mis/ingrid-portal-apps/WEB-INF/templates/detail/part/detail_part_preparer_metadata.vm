@@ -12,12 +12,12 @@
 ##                           #renderUdkClass($type)
 ##                        </h3>
                     </div>
-                    <hr class="hr-thick bx-top-0 bx-bot-0">
+                    <hr class="hr-thick bx-top-0 bx-bot-0"/>
                     <div class="tabs tabs--wide js-tabs bx-top-0 bx-bot-0">
                         <div class="tab__select mq-show-l">
                             <span class="tab__select__text">$MESSAGES.getString("general_tab")</span>
-                            <svg class="tab__select__icon icon"><use xlink:href="#burger"></svg>
-                            <svg class="tab__select__icon icon"><use xlink:href="#cross"></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#burger"/></svg>
+                            <svg class="tab__select__icon icon"><use xlink:href="#cross"/></svg>
                         </div>
                         <nav class="tab__toggles ob-clear mq-hide-l">
                             ## Allgemeines
@@ -62,13 +62,13 @@
                 ## Allgemeines
                 <div class="tab__content box--medium bx-bot-xl" data-tabid="tab-1">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">$MESSAGES.getString("general_tab")<h2>
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("general_tab")</h2>
                         ## Beschreibung
                         #renderSectionTitle($MESSAGES.getString("general_tab"))
                         <div class="media ob-clear">
                             ## Beschreibung
                             <div class="media__body ob-container ob-container">
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString"))
                                 #if(!$tmp || $tmp.length() == 0)
                                     #set($tmp = $MESSAGES.getString("detail_description"))
                                 #end
@@ -77,12 +77,10 @@
                                 #set($tmp = "")
                                 #set($tmp2 = "")
                             </div>
-                            #if($enableMapLink)
-                                ## Zeige in Karte
-                                #set($tmp = $TOOL.getMapImage())
-                                #renderMultiLineImage($tmp)
-                                #set($tmp = "")
-                            #end
+                            ## Zeige in Karte
+                            #set($tmp = $TOOL.getMapImage())
+                            #renderMultiLineImage($tmp)
+                            #set($tmp = "")
                             ## Untergeordnete Objekte
                             #set($tmp = $TOOL.getReference("./idf:subordinatedReference"))
                             #renderLinkList($MESSAGES.getString("subordinated_references") $tmp "false")
@@ -175,14 +173,14 @@
                             </div>
                             <hr>
                         #end
-                        <h2 class="print-title is-hidden">$MESSAGES.getString("spacial_reference_tab")<h2>
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("spacial_reference_tab")</h2>
                         ## Raumbezugssystem
                         #set($xpathList = ["./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code","./gmd:identificationInfo/*/*/gmd:EX_Extent","./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description","./gmd:referenceSystemInfo"])
                         #if($TOOL.aNodeOfListExist($xpathList))
                             #renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
                             <div class="search-result--nested">
                                 ## Administrative Einheit (Gemeindenummer)
-                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code"))
+                                #set($tmp = $TOOL.getListOfValuesFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent", "./gmd:geographicElement/gmd:EX_GeographicDescription/gmd:geographicIdentifier/gmd:MD_Identifier/gmd:code/gco:CharacterString"))
                                 #renderTextList("Bundeswasserstra&szlig;en ID" $tmp)
                                 #set($tmp = "")
                                 ## Geothesaurus-Raumbezug
@@ -201,7 +199,7 @@
                                         <link rel="stylesheet" href="/decorations/layout/ingrid/scripts/leaflet/leaflet.css" />
                                         <script src="/decorations/layout/ingrid/scripts/leaflet/leaflet.js"></script>
                                         <div id="map" style="height: 400px; width:100%;"></div>
-                                        <script language="JavaScript" type="text/javascript">
+                                        <script>
                                             var map = new L.Map('map');
                                             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                                             var osmAttrib='';
@@ -264,7 +262,7 @@
                                 #renderTable($tmp)
                                 #set($tmp = "")
                                 ## Erläuterung zum Raumbezug
-                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description"))
+                                #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:description/gco:CharacterString"))
                                 #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $tmp)
                                 #set($tmp = "")
                                 ## Raumbezugssystem
@@ -309,7 +307,7 @@
             ## Fachdaten
                     <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-4">
                         <div class="box__content ob-container">
-                            <h2 class="print-title is-hidden">Fachdaten<h2>
+                            <h2 class="print-title is-hidden">Fachdaten</h2>
                             ## Beschreibung
                             #renderSectionTitle("Fachdaten")
                             <div class="search-result--nested">
@@ -340,11 +338,11 @@
                         </div>
                     </div>
             ## Datenqualität
-            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"])
+            #set($xpathList = ["./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessOmission","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_AbsoluteExternalPositionalAccuracy","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_CompletenessCommission/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ConceptualConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_DomainConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_FormatConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_NonQuantitativeAttributeAccuracy/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_ThematicClassificationCorrectness/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TemporalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure","./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy/gmd:nameOfMeasure"])
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-5">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">$MESSAGES.getString("data_quality")<h2>
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("data_quality")</h2>
                         #renderSectionTitle($MESSAGES.getString("data_quality"))
                         <div class="search-result--nested">
                             ## Datendefizit
@@ -422,6 +420,13 @@
                             #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table127.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_QuantitativeAttributeAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
                             #renderTable($tmp)
                             #set($tmp = "")
+                            ## Relative Positionsgenauigkeit
+                            #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
+                            #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
+                            #set($headCodeList = ["7128"])
+                            #set($tmp = $TOOL.getNodeListTable($MESSAGES.getString("data_quality.table128.title"), "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report/gmd:DQ_RelativeInternalPositionalAccuracy", $headTitles, $headXpathExpressions, $headCodeList))
+                            #renderTable($tmp)
+                            #set($tmp = "")
                         </div>
                     </div>
                 </div>
@@ -431,7 +436,7 @@
             #if($TOOL.aNodeOfListExist($xpathList))
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-6">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">$MESSAGES.getString("availability_tab")<h2>
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("availability_tab")</h2>
                         ## Verfügbarkeit
                         #renderSectionTitle("Zugriff")
                         <div class="search-result--nested">
@@ -444,7 +449,7 @@
                             #renderTable($tmp)
                             #set($tmp = "")
                             ## Bestellinformationen
-                            #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions"))
+                            #set($tmp = $TOOL.getValueFromXPath("./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString"))
                             #renderTextLabelAbove($MESSAGES.getString("t01_object.ordering_instructions") $tmp)
                             #set($tmp = "")
                             ## Zugangsbeschränkungen (accessConstraints)
@@ -472,7 +477,7 @@
             ## Zusätzliche Info
             <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-7">
                 <div class="box__content ob-container">
-                    <h2 class="print-title is-hidden">$MESSAGES.getString("additional_information_tab")<h2>
+                    <h2 class="print-title is-hidden">$MESSAGES.getString("additional_information_tab")</h2>
                     #renderSectionTitle($MESSAGES.getString("additional_information"))
                     <div class="search-result--nested">
                         ## Sprache des Metadatensatzes
@@ -488,11 +493,11 @@
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.publish_id") $tmp)
                         #set($tmp = "")
                         ## Eignung/Nutzung
-                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage"))
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:resourceSpecificUsage/gmd:MD_Usage/gmd:specificUsage/gco:CharacterString"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.dataset_usage") $tmp)
                         #set($tmp = "")
                         ## Herstellungszweck
-                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose"))
+                        #set($tmp = $TOOL.getValueFromXPath("./gmd:identificationInfo/*/gmd:purpose/gco:CharacterString"))
                         #renderTextLabelAbove($MESSAGES.getString("t01_object.info_note") $tmp)
                         #set($tmp = "")
                         ## Rechtliche Grundlagen
@@ -530,7 +535,7 @@
             #if($tabtitle)
                 <div class="tab__content box--medium bx-bot-xl is-hidden" data-tabid="tab-8">
                     <div class="box__content ob-container">
-                        <h2 class="print-title is-hidden">$MESSAGES.getString("$tabtitle")<h2>
+                        <h2 class="print-title is-hidden">$MESSAGES.getString("$tabtitle")</h2>
                         #renderSectionTitle($MESSAGES.getString("additional_information"))
                         <div class="search-result--nested">
                             #set($nodelist = $TOOL.getNodeListFromXPath("./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField"))

@@ -24,6 +24,10 @@
             <hidden>true</hidden>
         </page>
         <page>
+            <name>accessibility.psml</name>
+            <hidden>false</hidden>
+        </page>
+        <page>
             <name>search-catalog/search-catalog-hierarchy.psml</name>
             <hidden>true</hidden>
         </page>
@@ -86,6 +90,10 @@
         </file>
     </files>
     <sql>
+        <!-- Change 'ingrid-portal-apps::SearchSimpleResult' decorator -->
+        <execute>
+            <![CDATA[UPDATE fragment SET decorator='ingrid-clear' WHERE name='ingrid-portal-apps::SearchSimpleResult';]]>
+        </execute>
         <!-- Disable language switcher -->
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path = '/language.link';]]>

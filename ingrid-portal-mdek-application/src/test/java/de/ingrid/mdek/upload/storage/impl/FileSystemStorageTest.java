@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -154,7 +154,7 @@ public class FileSystemStorageTest {
         FileSystemItem[] results;
         final File zipFile = this.createZipFile(file);
         try (final InputStream data = new FileInputStream(zipFile)) {
-            results = storage.write(path, file, data, (int)zipFile.length(), true, false);
+            results = storage.write(path, file, data, zipFile.length(), true, false);
         }
 
         // test
@@ -180,7 +180,7 @@ public class FileSystemStorageTest {
         FileSystemItem[] results;
         final File zipFile = this.createZipFile(file);
         try (final InputStream data = new FileInputStream(zipFile)) {
-            results = storage.write(path, file, data, (int)zipFile.length(), true, true);
+            results = storage.write(path, file, data, zipFile.length(), true, true);
         }
 
         // test
@@ -281,7 +281,7 @@ public class FileSystemStorageTest {
             fail("Expected an ValidationException to be thrown");
         }
         catch (final ValidationException ex) {
-            assertEquals("The file name is invalid.", ex.getMessage());
+            assertEquals("The file name containes the reserved name '_trash_'.", ex.getMessage());
         }
 
         try {
@@ -290,7 +290,7 @@ public class FileSystemStorageTest {
             fail("Expected an ValidationException to be thrown");
         }
         catch (final ValidationException ex) {
-            assertEquals("The file name is invalid.", ex.getMessage());
+            assertEquals("The file name containes the reserved name '_archive_'.", ex.getMessage());
         }
     }
 
@@ -336,7 +336,7 @@ public class FileSystemStorageTest {
      */
     private FileSystemItem storageWriteTestFile(final String path, final String file, final String content) throws Exception {
         try (final InputStream data = new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8))) {
-            final FileSystemItem result = storage.write(path, file, data, content.length(), true, false)[0];
+            final FileSystemItem result = storage.write(path, file, data, (long)content.length(), true, false)[0];
             assertTrue(content.equals(new String(Files.readAllBytes(result.getRealPath()), StandardCharsets.UTF_8)));
             return result;
         }

@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Apps
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -886,7 +886,8 @@ public class UtilsSearch {
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
-                if (basicDataTypes.contains(dt)) {
+                Boolean prohibited = (Boolean) dtFields[i].get("prohibited");
+                if (basicDataTypes.contains(dt) && !prohibited) {
                     // return the first basic type discovered !
                 	ret = dt;
                 	break;
@@ -906,7 +907,8 @@ public class UtilsSearch {
             FieldQuery[] dtFields = q.getDataTypes();
             for (int i = 0; i < dtFields.length; i++) {
                 String dt = dtFields[i].getFieldValue();
-                if (addressDataTypes.contains(dt)) {
+                Boolean prohibited = (Boolean) dtFields[i].get("prohibited");
+                if (addressDataTypes.contains(dt) && !prohibited) {
                 	return true;
                 }
             }    		

@@ -202,7 +202,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                                 <div class="form-element boxed">
                                     <div class="control-group">
                                         <label class="control control--checkbox" for="chk_all">
-                                            <div class="control__indicator"></div>
+                                            <span class="control__indicator"></span>
                                             <input id="chk_all" name="$colCheckbox" type="checkbox" onclick="ingrid_checkAll(document.getElementsByName('$colCheckbox'));">
                                             <a href="$colLink">$colTitle</a>
                                         </label>
@@ -244,7 +244,7 @@ $actionForm.getInputHTMLEscaped($field)#end
                 <div class="control-group">
                     <label class="control control--checkbox" for="chk_$velocityCount">
                         <input id="chk_$velocityCount" type="checkbox" name="id" value="$rowId">
-                        <div class="control__indicator"></div>
+                        <span class="control__indicator"></span>
                         <a href="$action">$rowId</a>
                     </label>
                 </div>
@@ -416,6 +416,9 @@ $actionForm.getInputHTMLEscaped($field)#end
 #end
 
 #macro (renderInputButtonDisable $buttonvalue $buttonstyle $buttonname $buttontitle $buttonclass $buttononclick $buttondisable)
+    #if($buttonname == "")
+        #set($buttonname = $buttonvalue)
+    #end
     <button type="submit" class="button $buttonclass" style="$buttonstyle" name="$buttonname" onclick="$buttononclick" #if($buttondisable == "true")disabled#end>$buttonvalue</button>
 #end
 
@@ -499,4 +502,8 @@ $actionForm.getInputHTMLEscaped($field)#end
         <span class="ic-ic-mailto"></span>
     #end
     <span class="text">$title</span>
+#end
+
+#macro(removeLocalisation $locString)
+    $stringTool.split($locString, "#locale-").get(0)
 #end

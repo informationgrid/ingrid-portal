@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal Apps
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -20,246 +20,182 @@
   limitations under the Licence.
   **************************************************#
   -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- Decorator  ingrid  ${decoTop} - ${decoBottom}-->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
     <head>
         <title>PortalU - Umweltportal Rheinland-Pfalz</title>
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
-        <meta http-equiv="Content-style-type" content="text/css" />
-        <meta http-equiv="content-language" content="de" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <meta name="description" content="PortalU bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
-        <meta name="author" content="wemove digital solutions" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="PortalU, das Umweltportal Rheinland-Pfalz, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="author" content="&copy; Ministerium für Umwelt, Energie, Ernährung und Forsten" />
         <meta name="keywords" lang="de" content="PortalU, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
-        <meta name="copyright" content="wemove digital solutions GmbH" />
+        <meta name="copyright" content="&copy; Ministerium für Umwelt, Energie, Ernährung und Forsten" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"></link>
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.css"></link>
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/datepicker/classic.date.css"></link>
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
-        <script language="JavaScript" src="/decorations/layout/ingrid/scripts/ingrid.js" type="text/javascript"></script>
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+        <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/uvp/scripts/main.js"></script>
     </head>
     <body>
-        <div class="nav-overlay">
-            <a title="Freitextsuche nach Informationen" class="nav-overlay__item nav-overlay__item--level1" href="/freitextsuche">Suche</a>
-            <a title="Eingebundene Datenkataloge und Metadaten" class="nav-overlay__item nav-overlay__item--level1" href="/datenkataloge">Kataloge</a>
-            <a class="nav-overlay__item nav-overlay__item--level1" href="/kartendienste" title="Interaktive thematische Karten">Karten</a>
-            <a title="Suche nach Ereignissen " class="nav-overlay__item nav-overlay__item--level1" href="/umweltchronik">Chronik</a>
-            <div class="js-accordion-multi">
-                <div title="Hintergrundinformationen zu PortalU" class="nav-overlay__item nav-overlay__item--level1 js-accordion-toggle">
-                    <svg class="nav-overlay__icon icon"><use xlink:href="#plus"/></svg>
-                    <svg class="nav-overlay__icon icon"><use xlink:href="#minus"/></svg>
-                    Über PortalU
+        <div class="container">
+            <div class="header-menu" style="display: none; overflow: hidden; outline: none;" tabindex="1">
+                <div class="header-menu-close">
+                    <button type="button" class="button ">Menü<span class="ic-ic-cross"></span></button>
                 </div>
-                <div class="nav-overlay__level2 js-accordion-content is-hidden">
-                    <div class="nav-overlay__level2__content">
-                        <a title="Kurzbeschreibung und Hintergrund" class="nav-overlay__item nav-overlay__item--level2" href="/hintergrundinformationen">Porträt</a>
-                        <a title="Kooperationspartner und Informationsanbieter" class="nav-overlay__item nav-overlay__item--level2" href="/informationsanbieter">Informationsanbieter</a>
+                <div class="menu-main-links">
+                    <div class="highlighted">
+                        <a href="/freitextsuche" class="header-menu-entry " title="Freitextsuche nach Umweltinformationen"><span class="text">Suche</span></a>
+                        <a href="/kartendienste" class="header-menu-entry " title="Interaktive thematische Karten"><span class="text">Karten</span></a>
+                        <a href="/messwertsuche" class="header-menu-entry " title="Umweltmessdaten"><span class="text">Messwerte</span></a>
+                        <a href="/datenkataloge" class="header-menu-entry " title="Datenkataloge"><span class="text">Kataloge</span></a>
+                        <a href="/hintergrundinformationen" class="header-menu-entry " title="Hintergrundinformationen zu PortalU"><span class="text">Über PortalU</span></a>
+                        <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Anbieter</span></a>
+                        <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
                     </div>
+                    <a href="/hilfe" title="Erläuterungen zur Nutzung von PortalU - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
+                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an PortalU"><span class="text">Kontakt</span></a>
+                    <a href="/inhaltsverzeichnis" title="Alle Inhalte von PortalU auf einen Blick"><span class="text">Inhalt</span></a>
+                    <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss"><span class="text">Impressum</span></a>
+                    <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen"><span class="text">Datenschutz</span></a>
+                    <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit"><span class="text">Barrierefreiheit</span></a>
+                </div>
+                <div class="menu-sub-links">
+                    <a class="button logout" href="/log-in"><span class="text">Mein PortalU</span><span class="ic-ic-arrow"></span></a>
                 </div>
             </div>
-            <ul class="nav__mobile nav__foot">
-                <li>
-                    <a title="Erläuterungen zur Nutzung von PortalU" href="/hilfe">Hilfe</a>
-                </li>
-                <li>
-                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an PortalU" href="/kontakt">Kontakt</a>
-                </li>
-                <li>
-                    <a title="Alle Inhalte von PortalU auf einen Blick" href="/inhaltsverzeichnis">Inhalt</a>
-                </li>
-                <li>
-                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                </li>
-                <li>
-                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                </li>
-                <li>
-                    <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit">Barrierefreiheit</a>
-                </li>
-            </ul>
-        </div>
-        <div class="page">
-            <header class="header">
-                <div class="ob-box-padded-more ob-box-center">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                            <svg class="icon">
-                                <use xlink:href="#burger"></use>
-                            </svg>
-                            <svg class="icon ob-fade">
-                                <use xlink:href="#cross"></use>
-                            </svg>
+            <header>
+                <div class="row">
+                    <div class="columns xsmall-7 small-7 medium-8 large-8 xlarge-9">
+                        <div class="logo">
+                            <a href="/startseite" class="show-for-large hide-for-xsmall-only">
+                                <img src="/decorations/layout/rlp/images/template/logo.png" alt="RLP"/>
+                                <div class="vertical-line"></div>
+                                <span>PortalU</span>
+                                <p>Umweltportal<br>Rheinland-Pfalz</p>
+                            </a>
+                            <a href="/startseite" class="hide-for-xlarge hide-for-large hide-for-xsmall-only hide-for-small-only">
+                                <img src="/decorations/layout/rlp/images/template/logo.png" alt="RLP"/>
+                                <div class="vertical-line"></div>
+                                <span>PortalU</span>
+                                <p>Umweltportal<br>Rheinland-Pfalz</p>
+                            </a>
+                            <a href="/startseite" class="hide-for-medium">
+                                <img src="/decorations/layout/rlp/images/template/logo.png" alt="RLP"/>
+                                <div class="vertical-line"></div>
+                                <p>Umweltportal<br>Rheinland-Pfalz</p>
+                            </a>
                         </div>
                     </div>
-                    <div class="header__widgets__section">
-                        <a class="header__widget header__logo" href="/startseite" title="Startseite von PortalU aufrufen">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.png" alt="logo.png"></img>
-                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png" alt="mobile-logo.png"></img>
-                        </a>
-                    </div>
-                    <div class="header__widgets__section">
-                        <a class="mq-hide-xxl desktop__title" href="/startseite" title="Startseite von PortalU aufrufen">
-                            <p class="main__title">PortalU - Umweltportal Rheinland-Pfalz</p>
-                            <p class="sub__title"></p>
-                        </a>
-                        <a class="mq-show-xxl mobile__title" href="/startseite" title="Startseite von PortalU aufrufen">PortalU <span class="mq-hide-xl">- Umweltportal Rheinland-Pfalz</span></a>
-                    </div>
-                </div> 
-                <nav class="nav-desktop mq-hide-xxl">
-                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/freitextsuche" title="Freitextsuche nach Informationen">Suche</a>
-                        </li>
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/datenkataloge" title="Eingebundene Datenkataloge und Metadaten">Kataloge</a>
-                        </li>
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/kartendienste" title="Interaktive thematische Karten">Karten</a>
-                        </li>
-                        <li class="nav-desktop__item">
-                          <a class="nav-desktop__title" href="/umweltchronik" title="Suche nach Ereignissen ">Chronik</a>
-                        </li>
-                        <li class="nav-desktop__item dropmenu__box">
-                            <a class="nav-desktop__title js-nav-desktop-toggle" href="#" title="Hintergrundinformationen zu PortalU">
-                                Über PortalU
-                                <svg class="icon"><use xlink:href="#arrow-thick"/></svg>
+                    <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
+                        <div class="menu-tab-row">
+                            <a class="menu-tab is-selected" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-daten"></span>
+                                    <span class="text">Suche</span>
+                                </div>
                             </a>
-                            <ul class="nav-desktop__dropdown nav-desktop__dropdown-left dropmenu">
-                                <li>
-                                    <a href="/hintergrundinformationen" title="Kurzbeschreibung und Hintergrund">Porträt</a>
-                                </li>
-                                <li>
-                                    <a href="/informationsanbieter" title="Kooperationspartner und Informationsanbieter">Informationsanbieter</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-            </header>
-            <!-- CONTENT BLOCK -->
-            <section class="block block--padded">
-                <div class="ob-box-wide ob-box-padded ob-box-center">
-                    <article class="content ob-container">
-                        <h1 id="errorTitle">FEHLER 403: ZUGRIFF VERWEIGERT</h1>
-                        <p>
-                            Die gew&uuml;nschte Seite kann nicht aufgerufen werden. M&ouml;glicherweise fehlt Ihnen für diese Seite die Berechtigung oder Ihre Portal-Session ist abgelaufen.
-                        </p>
-                        <ul class="list list--bullets">
-                            <li>
-                                Versuchen Sie sich &uuml;ber die <a href="/startseite">Startseite</a> 
-                                wieder am Portal anzumelden und rufen Sie die gew&uuml;nschte URL 
-                                erneut auf. 
-                            </li>
-                            <li>
-                                Oder st&ouml;bern Sie in den verschiedenen Such-Kategorien von PortalU:
-                            </li>
-                        </ul>
-                        <ul class="link-list">
-                            <li>
-                                <a href="/freitextsuche">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Suche
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/datenkataloge">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Kataloge
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/kartendienste">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Karten
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/umweltchronik">
-                                    <svg class="icon"><use xlink:href="#internal-link"></use></svg>
-                                    Chronik
-                                </a>
-                            </li>
-                        </ul>
-                        <br />
-                    </article>
-                </div>
-            </section>
-            <footer class="footer">
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__top">
-                        <a href="/startseite">
-                            <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.png" alt="footer-logo.png"></img>
-                        </a>
-                        <p class="copyright">© Ministerium für Umwelt, Energie, Ernährung und Forsten</p>
+                            <a class="menu-tab " href="/kartendienste" title="Interaktive thematische Karten">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-karten"></span>
+                                    <span class="text">Karten</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="/messwertsuche" title="Umweltmessdaten">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-chemie"></span>
+                                    <span class="text">Messwerte</span>
+                                </div>
+                            </a>
+                            <a class="menu-tab " href="/datenkataloge" title="Datenkataloge">
+                                <div class="link-menu-tab">
+                                    <span class="ic-ic-datenkataloge"></span>
+                                    <span class="text">Kataloge</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="header-menu-open">
+                            <button type="button" class="button xsmall-button"><span class="ic-ic-hamburger"></span></button>
+                            <button type="button" class="button small-button">Menü<span class="ic-ic-hamburger"></span></button>
+                        </div>
                     </div>
                 </div>
-                <hr class="bx-top-0 bx-bot-0"></hr>
-                <div class="grid">
-                    <div class="column column--3-4-xl">
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <nav class="footer__middle mq-hide-l">
-                                    <a href="/hilfe" title="Erläuterungen zur Nutzung von NUMIS">Hilfe</a>
-                                    <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an NUMIS">Kontakt</a>
-                                    <a href="/inhaltsverzeichnis" title="Alle Inhalte von NUMIS auf einen Blick">Inhalt</a>
-                                    <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss">Impressum</a>
-                                    <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen">Datenschutz</a>
-                                    <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit">Barrierefreiheit</a>
-                                </nav>
+            </header>
+            <div class="body">
+                <div class="banner subpage">
+                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+                        <div class="row align-center">
+                            <div class="large-20 columns dark">
+                                <h1>FEHLER 403: ZUGRIFF VERWEIGERT</h1>
                             </div>
                         </div>
                     </div>
-                    <div class="column column--1-4-xl">
-                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"></hr>
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <div class="footer__bottom"> </div>
+                </div>
+                <div class="row content-small">
+                    <div class="columns">
+                        <div class="form">
+                            <p>
+                                Die gew&uuml;nschte Seite kann nicht aufgerufen werden. M&ouml;glicherweise fehlt Ihnen für diese Seite die Berechtigung oder Ihre Portal-Session ist abgelaufen.
+                            </p>
+                            <ul>
+                                <li>
+                                    Versuchen Sie sich &uuml;ber die <a href="/startseite">Startseite</a> 
+                                    wieder am Portal anzumelden und rufen Sie die gew&uuml;nschte URL 
+                                    erneut auf. 
+                                </li>
+                                <li>
+                                    Oder st&ouml;bern Sie in den verschiedenen Such-Kategorien von PortalU:
+                                </li>
+                            </ul>
+                            <div class="link-list">
+                                <a class="icon" href="/freitextsuche">
+                                    <span class="ic-ic-arrow"></span>
+                                    <span class="text">Suche</span>
+                                </a> 
+                                <a class="icon" href="/kartendienste">
+                                    <span class="ic-ic-arrow"></span>
+                                    <span class="text">Karten</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="footer">
+                    <hr>
+                    <div class="row">
+                        <div class="xsmall-24 medium-24 large-24 xlarge-9 columns">
+                            <div class="logo">
+                                <a href="/startseite"><img src="/decorations/layout/rlp/images/template/footer-logo.png" alt="PortalU"/></a>
+                            </div>
+                            <div class="copyright">
+                                <span class="icon"></span>
+                                <span class="text copyright_text">Ministerium für Umwelt, Energie, <br>Ernährung und Forsten</span>
+                            </div>
+                        </div>
+                        <div class="xsmall-24 small-24 large-24 xlarge-15 columns button-up">
+                            <div class="footer-menu-entries">
+                                <a href="/hilfe" title="Erläuterungen zur Nutzung von PortalU - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
+                                <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an PortalU" class="icon"><span class="text">Kontakt</span></a>
+                                <a href="/inhaltsverzeichnis" title="Alle Inhalte von PortalU auf einen Blick" class="icon"><span class="text">Inhalt</span></a>
+                                <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon"><span class="text">Impressum</span></a>
+                                <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon"><span class="text">Datenschutz</span></a>
+                                <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit" class="icon"><span class="text">Barrierefreiheit</span></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
         </div>
-        <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
-        
-        <!-- Popup -->
-        <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
-        
-        <!-- Accordion -->
-        <script src="/decorations/layout/ingrid/scripts/accordion.js"></script>
-        <script>
-          $('.js-accordion').accordion();
-        
-          $('.js-accordion-multi').accordion({
-              multi: true
-          });
-        </script>
-        
-        <!-- Tabs -->
-        <script src="/decorations/layout/ingrid/scripts/tabs.js"></script>
-        <script>
-          $('.js-tabs').tabs();
-        </script>
-        
-        <!-- Selection -->
-        <script src="/decorations/layout/ingrid/scripts/selection.js"></script>
-        <script>
-          $('.js-selection').selection();
-        </script>
-        
-        <!-- Table Sort -->
-        <script src="/decorations/layout/ingrid/scripts/table.sortable.js"></script>
-        <script>
-          $('.js-table-sortable').sortable();
-        </script>
     </body>
+    <script src="/decorations/layout/ingrid/scripts/all.js"></script>
+    <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
 </html>

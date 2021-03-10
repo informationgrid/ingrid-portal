@@ -37,6 +37,7 @@
     	 ============================================= -->
     <property name="tomcat-artifact"               value="apache-tomcat"/>
     <property name="installedTomcatContextDir"     value="${installDir}/${tomcat-artifact}/conf/Catalina/localhost"/>
+    <property name="installedTomcatConfDir"        value="${installDir}/${tomcat-artifact}/conf"/>
     
     <property name="mysqlDbDriverInApache"         location="${basedir}/distribution/${tomcat-artifact}/shared/lib/mysql-connector-java-5.1.49.jar"/>
     <property name="oracleDbDriverInApache"        location="./distribution/${tomcat-artifact}/shared/lib/ojdbc8.jar"/>
@@ -190,7 +191,7 @@
         <unzip src="${antinstaller.jar}" dest=".">
             <patternset>
                 <include name="**/*.*"/>
-                <exclude name="distribution/${tomcat-artifact}/conf/*.xml" />
+                <exclude name="distribution/${tomcat-artifact}/conf/tomcat-users.xml" />
                 <exclude name="distribution/${tomcat-artifact}/conf/Catalina/localhost/*.xml" />
             </patternset>
         </unzip>
@@ -323,6 +324,12 @@
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-apps"/>
         <unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek.war" dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek"/>
         
+        <if>
+            <equals arg1="${executeTomcatSSLUpdate}" arg2="true" />
+            <then>
+                <runtarget target="writeTomcatSSLProps"/>
+            </then>
+        </if>
         <runtarget target="writeMapClientProps"/>
     </target>
 
@@ -355,13 +362,24 @@
             </patternset>
         </unwar>
         <if>
+            <equals arg1="${executeTomcatSSLUpdate}" arg2="true" />
+            <then>
+                <runtarget target="writeTomcatSSLProps"/>
+            </then>
+        </if>
+        <if>
             <equals arg1="${executeMapClientUpdate}" arg2="true" />
             <then>
                 <runtarget target="writeMapClientProps"/>
             </then>
         </if>
     </target>
-    
+
+    <target name="writeTomcatSSLProps" description="">
+        <echo>Bearbeitung von Tomcat Konfigurationen für SSL.</echo>
+        <replace      file="${installedTomcatConfDir}/server.xml" token='redirectPort="8443" />' value='redirectPort="8443" proxyPort="443" scheme="https" secure="true" />'/>
+    </target>
+
     <target name="ExtractIge">
     	<unwar src="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application.war"  dest="${installDir}/${tomcat-artifact}/webapps/ingrid-portal-mdek-application"/>
     </target>

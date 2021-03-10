@@ -141,7 +141,7 @@ define({
     "tree.forwardToQAHint": "Es m&uuml;ssen alle Pflichtfelder korrekt gef&uuml;llt sein bevor Sie das Objekt an die Qualit&auml;tssicherung &uuml;berweisen! Bitte &uuml;berpr&uuml;fen Sie die rot markierten Felder.",
     "tree.selectNodeHint": "Bitte wählen Sie einen Elternknoten.",
     "tree.selectNodeCopyHint": "Die Knoten Objekte, Adressen und Freie Adressen k&ouml;nnen nicht kopiert werden! Mit Strg+Click auf Knoten k&ouml;nnen diese aus- und abgew&auml;hlt werden.",
-    "tree.selectNodeCopyUuidHint": "Wenn Sie die Kopie dieses Metadatensatzes an anderer Stelle einfügen, dann erhält das Objekt eine neue UUID!<br/><br/>Bitte beachten Sie, dass damit ein neues Objekt angelegt wird, welches nicht mehr identisch ist mit dem Original und auch unter der alten UUID nicht mehr gefunden werden kann! Wenn Sie ein Objekt unter Beibehaltung seiner Identität verschieben wollen, müssen sie die Operationen \"Objekte/Adressen/Teilbäume Ausschneiden\" und \"Einfügen\" verwenden.",
+    "tree.selectNodeCopyUuidHint": "Wenn Sie die Kopie dieses Metadatensatzes an anderer Stelle einfügen, dann erhält das Objekt eine neue UUID!<br/><br/>Handelt es sich um einen Geodatensatz, dann wird der 'Identifikator der Datenquelle' zurückgesetzt und muss manuell hinzugefügt werden.<br/><br/>Bitte beachten Sie, dass damit ein neues Objekt angelegt wird, welches nicht mehr identisch ist mit dem Original und auch unter der alten UUID nicht mehr gefunden werden kann! Wenn Sie ein Objekt unter Beibehaltung seiner Identität verschieben wollen, müssen sie die Operationen \"Objekte/Adressen/Teilbäume Ausschneiden\" und \"Einfügen\" verwenden.",
     "tree.selectNodeCutHint": "Bitte wählen Sie einen Knoten zum Ausschneiden.",
     "tree.selectNodeDeleteHint": "Die Knoten Objekte, Adressen und Freie Adressen d&uuml;rfen nicht gel&ouml;scht werden! Mit Strg+Click auf Knoten k&ouml;nnen diese aus- und abgew&auml;hlt werden.",
     "tree.nodePasteNoCutCopyHint": "Der Knoten konnte nicht kopiert werden!",
@@ -382,8 +382,13 @@ define({
     "dialog.spatialAssist.title": "Raumbezug hinzuf&uuml;gen",
     "dialog.spatialNavigator.title": "Geothesaurus-Navigator",
     "dialog.thesaurusAssist.title": "Verschlagwortungsassistent",
-    "dialog.statistics.numTotal": "Gesamt",
     "dialog.thesaurusNavigator.title": "Thesaurus-Navigator",
+    "dialog.statistics.numTotal": "Gesamt",
+    "dialog.statistics.tooltip.published": "Veröffentlicht",
+    "dialog.statistics.tooltip.qa": "in Qualitätssicherung",
+    "dialog.statistics.tooltip.returned": "von Qualitätssicherung an Bearbeiter rücküberwiesen",
+    "dialog.statistics.objTerms": "Suchbegriffe für Objekte",
+    "dialog.statistics.adrTerms": "Suchbegriffe für Adressen",
 
     "dialog.waitForJob.opName": "Laufende Operation:",
     "dialog.waitForJob.objCount": "Bearbeitete Objekte:",
@@ -616,7 +621,7 @@ define({
     "ui.obj.availability.dataFormatTable.header.name": "Name",
     "ui.obj.availability.dataFormatTable.header.version": "Version",
     "ui.obj.availability.dataFormatTable.header.compression": "Kompressionstechnik",
-    "ui.obj.availability.dataFormatTable.header.depth": "Bildpunkttiefe",
+    "ui.obj.availability.dataFormatTable.header.depth": "Spezifikation",
     "ui.obj.availability.mediaOptionTable.title": "Medienoption",
     "ui.obj.availability.mediaOptionTable.header.type": "Medium",
     "ui.obj.availability.mediaOptionTable.header.amount": "Datenvolumen [MB]",
@@ -786,7 +791,7 @@ define({
     "ui.obj.type6.urlList.header.url": "Url*",
     "ui.obj.type6.urlList.header.urlDescription": "Erl&auml;uterung",
 
-    "ui.obj.previewImage.table.fileName": "Dateiname",
+    "ui.obj.previewImage.table.fileName": "Dateiname/URL",
     "ui.obj.previewImage.table.fileDescription": "Dateibeschreibung",
 
     "ui.adr.header.addressTitle": "Adresstitel",
@@ -1098,6 +1103,7 @@ define({
     "validation.error.missing.download.link": "Bei der Auswahl von 'Open Data' muss ein Verweis vom Typ 'Datendownload' angelegt werden.",
     "validation.error.date.without.title": "Ohne Titel darf kein Datum gesetzt sein.",
     "validation.error.axisdim.required.columns": "Die Spalten 'Achsenbezeichnung' und 'Elementanzahl' sind verpflichtend.",
+    "validation.error.geometry.type": "Wenn die 'Elementanzahl' angegeben ist, dann muss auch ein 'Geometrietyp' angegeben werden.",
 
     "validation.levelOfSpecification.notConform":"Bei nicht konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'nicht evaluiert' oder 'nicht konform' sein.",
     "validation.levelOfSpecification.conform":"Bei konformen INSPIRE-relevanten Datensätzen darf diese Spezifikation nur 'konform' sein.",
@@ -1124,6 +1130,7 @@ define({
     "hint.inspireConformity.deleted": "ACHTUNG: Der Eintrag in Konformität zur INSPIRE-Spezifikation im Bereich 'Zusatzinformationen' wird gelöscht.",
     "hint.advProductGroupCleared": "Die AdV-Produktgruppe wurde automatisch geleert.",
     "hint.invalidChoice": "Dieser Eintrag kann nicht gewählt werden.",
+    "hint.atomDownload": "Bitte stellen Sie sicher, dass in den extern verkoppelten dargestellten Daten ein Downloadlink vorhanden ist.",
 
     "warning.address.inherit": "Möchten Sie wirklich ihre Daten mit denen der übergeordneten Adresse überschreiben? Die folgenden Felder werden ersetzt: <ul><li>Straße/Hausnummer</li><li>PLZ</li><li>Ort</li><li>Postfach</li><li>PLZ (Postfach)</li><li>Verwaltungsgebiet</li><li>Land</li></ul>",
     "warning.address.inherit.to.children": "Sollen wirklich allen Unteradressen die Adressdaten von '${0}' übergeben werden?",

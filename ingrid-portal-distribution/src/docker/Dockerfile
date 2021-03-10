@@ -29,7 +29,7 @@ RUN unzip ingrid-portal-*-installer.jar -d /tmp \
     && chmod 755 $INSTALL_DIR/apache-tomcat/bin/*.sh
 
 
-FROM docker-registry.wemove.com/ingrid-java:jdk-8
+FROM docker-registry.wemove.com/ingrid-java:jre-8-alpine
 ENV INGRID_USER=root
 ENV PORTAL_CACHE_ENABLE=true
 ENV IBUS_IP=ibus
@@ -45,6 +45,7 @@ ENV IGE_DIRECT_LINK=http://localhost:8080/ingrid-portal-mdek-application/index.j
 ENV UPLOAD_DOCS_DIR=/tmp/ingrid/upload/documents/
 ENV UPLOAD_PARTS_DIR=/tmp/ingrid/upload/parts/
 ENV TOYBOX_SRC=https\\:\\/\\/d16ahjtmf9d1au\\.cloudfront\\.net\\/inject\\.bundle\\.js
+ENV JAVA_OPTS='-Dfile.encoding=UTF8'
 
 # user, group ingrid (1000:1000) is created in base image
 COPY --chown=1000:1000 --from=builder /tmp/distribution/ /opt/ingrid/ingrid-portal/

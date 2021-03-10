@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -264,6 +264,11 @@ define(["dojo/_base/declare",
       tree.refreshChildren(parentNode)
         .then(function() {
           return tree._expandNode(parentNode);
+        })
+        .then(function() {
+          // we need to refresh children again to have correct parent information of new child nodes
+          // cannot really explain why
+          return tree.refreshChildren(parentNode);
         })
         .then(function() {
           TreeUtils.selectNode("dataTree", folderNode.uuid, true);

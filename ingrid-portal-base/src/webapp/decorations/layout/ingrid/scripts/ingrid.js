@@ -2,7 +2,7 @@
  * **************************************************-
  * Ingrid Portal Base
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -65,6 +65,19 @@ function ingrid_enableButtonByCheckbox(id, buttonName){
             document.getElementsByName(buttonName)[0].disabled = !isCheckboxSelect;
         };
     }
+}
+
+function ingrid_disableElementByCheckbox(checkBoxName, elementName){
+  var checkboxes = document.getElementsByName(checkBoxName);
+  for (var i=0; i<checkboxes.length; i++){
+        var isCheckboxSelect = false;
+        for (var j=0; j<checkboxes.length; j++){
+            if(checkboxes[j].checked){
+                isCheckboxSelect = true;
+            }
+        }
+        document.getElementsByName(elementName)[0].disabled = isCheckboxSelect;
+  }
 }
 
 // Select all or nothing in group1 and force group2 to same selection state.

@@ -1,0 +1,137 @@
+<div id="wrapperOuter" >
+  <div id="wrapperInner">
+    <a id="Start"></a>
+    <h1 class="aural">Generaldirektion Wasserstraßen und Schifffahrt</h1>
+    <!-- Auskommentierung Anzeige M.Otto 02.10.2020
+    <p class="navSkip">
+      <em>Springe direkt zu:</em>
+    </p>
+    <ul class="navSkip">
+      <li><a href="https://www.kuestendaten.de/DE/_seitenrahmen/header.html?processids=#content">Inhalt</a></li>
+      <li><a href="https://www.kuestendaten.de/DE/_seitenrahmen/header.html?processids=#navPrimary">Hauptmenü</a></li>
+      <li><a href="https://www.kuestendaten.de/DE/_seitenrahmen/header.html?processids=#search">Suche</a></li>
+    </ul>    -->
+    <div id="wrapperDivisions" class="l-fixed-wrapperDivision-dynamic-site">
+      <div id="header" class="smaller">
+        <div class="wrapperBranding row mod">
+          <div id="navServiceMeta" class="large-9 columns">
+             <h2 class="aural">Servicemenü</h2>
+
+<ul><li ><a href="https://www.kuestendaten.de/DE/Startseite/Startseite_Kuestendaten_node.html">Küs­ten­da­ten</a></li><li  id="Bar"><a href="https://www.kuestendaten.de/NSK/DE/Startseite/Startseite_Portal_Nordseekueste_node.html" title="Nordseek&#252;ste">Nord­see­küs­te</a></li><li ><a href="https://www.kuestendaten.de/Tideems/DE/Startseite/Startseite-Portal-Tideems-node.html">Ti­de­ems</a></li><li  id="Bar"><a href="https://www.kuestendaten.de/Tideweser/DE/Startseite/Startseite-Portal-Tideweser-node.html" title="Tideweser">Ti­de­we­ser</a></li><li  id="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Startseite/Startseite_Portal_Tideelbe_node.html" title="Tideelbe">Ti­de­el­be</a></li><li  id="Bar"><a href="https://www.kuestendaten.de/NOK/DE/Startseite/Startseite-Portal-Nord-Ostsee-Kanal-node.html" title="Nord-Ostsee-Kanal">Nord-Ost­see-Ka­nal</a></li><li  id="Bar"><a href="https://www.kuestendaten.de/OSK/DE/Startseite/Startseite_Portal_Ostseekueste_node.html" title="Ostseek&#252;ste">Ost­see­küs­te</a></li><li ><a href="https://www.kuestendaten.de/DE/Leichte-Sprache/Leichte_Sprache_node.html"><img src="https://www.kuestendaten.de/SiteGlobals/Frontend/Images/icons/icon_leichtesprache.svg?__blob=normal&amp;v=2" title="Leichte Sprache" alt="Leichte Sprache" /></a></li><li  id="navServiceGS"><a href="https://www.kuestendaten.de/DE/Gebaerdensprache/Gebaerdensprache_node.html"><img src="https://www.kuestendaten.de/SiteGlobals/Frontend/Images/icons/icon_gebaerdensprache.svg?__blob=normal&amp;v=2" title="Gebärdensprache" alt="Gebärdensprache" /></a></li></ul>
+          </div>          <div id="search" class="large-3 columns">
+            <h2 class="aural">Suche</h2>
+            
+<form name="searchService" action="https://www.kuestendaten.de/SiteGlobals/Forms/Suche/Servicesuche_Formular.html" method="get" enctype="application/x-www-form-urlencoded">
+  
+  <input type="hidden" name="nn" value="105266"/>
+  <input type="hidden" name="resourceId" value="10950" />
+  <input type="hidden" name="input_" value="105266" />
+  <input type="hidden" name="pageLocale" value="https://www.kuestendaten.de/DE" />
+  <fieldset>
+    <p>
+            
+<span class="formLabel aural">
+  <label for="f10950d16094">Suchtext </label></span>
+<span class="formField">
+  <input id="f10950d16094" name="templateQueryString" value="" title="Suchtext" type="text" placeholder="Suchbegriff" size="26" maxlength="100"/></span>
+            
+  <input class="image" type="image" src="https://www.kuestendaten.de/SiteGlobals/Forms/_components/Buttons/Servicesuche_Submit.png?__blob=image&amp;v=1" id="f10950d18056" name="submit" alt="Suchen" title="Suchen" />
+    </p>
+</fieldset>
+</form>
+          </div>        </div>
+        <div id="navPrimary">
+          <div class="small-6 columns large-2 addShrinkLogo">
+              <p><a href="https://www.wsv.de" title="Wasserstraßen- und Schifffahrtsverwaltung des Bundes" target="_blank" rel="noopener noreferrer"><img src="https://www.kuestendaten.de/SiteGlobals/Frontend/Images/additionalLogoShrinkheader.jpg?__blob=normal&amp;v=2" alt="Weitere Informationen unter Wasserstraßen- und Schifffahrtsverwaltung des Bundes"></a></p>
+          </div>
+          <h2 class="aural">Hauptmenü</h2>
+
+<ul>
+  <li >
+    <div class="" id="n-1">
+      <h3><a href="https://www.kuestendaten.de/DE/Wir-ueber-uns/Wir-ueber-uns-node.html" title="Wir &#252;ber uns">Wir über uns</a></h3>
+      <h4 class="aural">Unternavigationspunkte</h4>
+      <div class="menu fl-1">
+        <div class="menu-box">
+          <ul>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/Wir-ueber-uns/Beteiligte-Institutionen/Beteiligte-Institutionen-node.html" title="Beteiligte Institutionen">Be­tei­lig­te In­sti­tu­tio­nen</a></li>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/Wir-ueber-uns/Leitfaden-fuer-Projekte-und-Daten/Leitfaden-fuer-Projekte-und-Daten-node.html" title="Leitfaden f&#252;r Projekte und Daten">Leit­fa­den für Pro­jek­te und Da­ten</a></li>
+                                  
+
+                <li class="last "><a href="https://www.kuestendaten.de/DE/Wir-ueber-uns/ZDM-Faltblatt/ZDM-Faltblatt-node.html" title="ZDM-Faltblatt">ZDM-Falt­blatt</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </li>
+  <li >
+    <div class="" id="n-2">
+      <h3><a href="https://www.kuestendaten.de/DE/Portalsystem/Portalsystem_node.html" title="Portalsystem">Por­tal­sys­tem</a></h3>
+      <h4 class="aural">Unternavigationspunkte</h4>
+    </div>
+  </li>
+  <li >
+    <div class="" id="n-3">
+      <h3><a href="https://www.kuestendaten.de/DE/Aktuelle_Massnahmen/Aktuelle_Massnahmen_node.html" title="Aktuelle Ma&#223;nahmen">Ak­tu­el­le Maß­nah­men</a></h3>
+      <h4 class="aural">Unternavigationspunkte</h4>
+    </div>
+  </li>
+  <li >
+    <div class="" id="n-4">
+      <h3><a href="https://www.kuestendaten.de/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portal&#252;bergreifend">Pu­bli­ka­tio­nen</a></h3>
+      <h4 class="aural">Unternavigationspunkte</h4>
+    </div>
+  </li>
+  <li >
+    <div class="mod" id="n-5">
+      <h3><a href="https://www.kuestendaten.de/DE/Services/services-node.html" title="Portal&#252;bergreifende Services">Ser­vice</a></h3>
+      <h4 class="aural">Unternavigationspunkte</h4>
+      <div class="menu fl-1">
+        <div class="menu-box">
+          <ul>
+                                  
+
+                <li class="Bar"><a href="https://www.kuestendaten.de/Tideelbe/DE/Service/Kartenthemen/Kartenthemen_node.html" title="Download von Geodaten">Dow­n­load Geo­da­ten</a></li>
+                                  
+
+                <li class="Bar"><a href="https://www.kuestendaten.de/DE/dynamisch/Funktionen/Liste_der_vorhandenen_Daten/index.php.html" title="Download von Zeitreihen - portal&#252;bergreifend">Dow­n­load Zeitrei­hen</a></li>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/Services/Hilfe/hilfe_node.html" title="Hilfe">Hil­fe</a></li>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/Services/Infobrief/infobrief_node.html">In­fo­brief-ZDM</a></li>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/Services/Kartentool/Kartentool_node.html" title="Kartentool">Kar­ten­tool</a></li>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/dynamisch/publikationen/index.php.html" title="Publikationen - portal&#252;bergreifend">Pu­bli­ka­tio­nen</a></li>
+                                  
+
+                <li class=""><a href="https://www.kuestendaten.de/DE/Services/Webcams/Webcams-node.html" title="Webcams">Web­cams</a></li>
+                                  
+
+                <li class="last "><a href="https://www.kuestendaten.de/DE/Services/WMS/WMS_node.html" title="Web Services">Web Ser­vices</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </li>
+</ul>
+        </div>
+      <div id="navBreadcrumbs">
+        <p class="aural">Sie sind hier:</p>
+        <ol>
+            <li class="first">
+                <a href="https://www.kuestendaten.de/DE/Startseite/Startseite_Kuestendaten_node.html">Küstendaten</a>
+            </li>
+            <li>
+                <strong></strong>
+            </li>
+        </ol>
+      </div>      </div>

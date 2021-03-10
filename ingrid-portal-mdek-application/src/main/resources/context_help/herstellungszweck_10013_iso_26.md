@@ -9,6 +9,7 @@ title: Herstellungszweck
 
 Grund für die Datenerhebung
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
 
 # ISO Abbildung
 

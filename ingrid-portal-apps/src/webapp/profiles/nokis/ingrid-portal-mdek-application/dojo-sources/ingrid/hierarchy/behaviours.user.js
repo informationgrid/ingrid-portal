@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -24,8 +24,9 @@ define([
     "dojo/_base/lang",
     "ingrid/hierarchy/behaviours",
     "ingrid/hierarchy/behaviours/nokis/docTypes",
-    "ingrid/hierarchy/behaviours/nokis/geometryContext"
-], function(lang, behaviours, docTypes, geometryContext) {
+    "ingrid/hierarchy/behaviours/nokis/geometryContext",
+    "ingrid/hierarchy/behaviours/nokis/thesaurus"
+], function(lang, behaviours, docTypes, geometryContext, thesaurus) {
 
     return lang.mixin(behaviours, {
 
@@ -36,22 +37,7 @@ define([
          */
         nokisDocumentTypes: docTypes,
         geometryContext: geometryContext,
-
-        advCompatible : undefined,
-        advProductGroup : undefined,
-        administrativeArea: undefined,
-        conformityFields: undefined,
-        inspireGeoservice: undefined,
-        inspireIsoConnection: undefined,
-        inspireEncodingConnection: undefined,
-        inspireConformityConnection: undefined,
-        spatialRepresentationInfo: undefined,
-        coupledResourceDownloadDataCheck: undefined,
-        requireUseConstraints: undefined,
-        showFileDescription: undefined,
-        encodingSchemeForGeodatasets: undefined,
-        dqGriddedDataPositionalAccuracy: undefined,
-        openData: undefined
+        thesaurus: thesaurus
 
     });
 });

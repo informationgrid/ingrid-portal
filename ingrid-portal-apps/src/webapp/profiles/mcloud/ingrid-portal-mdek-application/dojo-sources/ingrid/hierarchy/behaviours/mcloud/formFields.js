@@ -2,7 +2,7 @@
  * **************************************************-
  * InGrid Portal MDEK Application
  * ==================================================
- * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -122,6 +122,10 @@ define(["dojo/_base/declare",
             domClass.add("uiElement5100", "hide");
             domClass.add("uiElement6005", "hide");
             domClass.add("uiElement6010", "hide");
+
+            // thesaurus
+            domClass.add("uiElement5064", "hide");
+            domClass.add("uiElementN014", "hide");
 
             // spatial
             domClass.add("uiElement3500", "hide");
@@ -297,8 +301,8 @@ define(["dojo/_base/declare",
                     type: Editors.SelectboxEditor,
                     editable: true,
                     // listId: codelist,
-                    options: ["API", "AtomFeed", "Dateidownload", "FTP", "Portal", "SOS", "WCS", "WFS", "WMS", "WMTS"],
-                    values:  ["api", "atomFeed", "download", "ftp", "portal", "sos", "wcs", "wfs", "wms", "wmts"],
+                    options: ["API", "AtomFeed", "Dateidownload", "FTP", "Portal", "Software", "SOS", "WCS", "WFS", "WMS", "WMTS"],
+                    values:  ["api", "atomFeed", "download", "ftp", "portal", "software", "sos", "wcs", "wfs", "wms", "wmts"],
                     formatter: Formatters.ListCellFormatter,
                     partialSearch: true,
                     width: '70px'

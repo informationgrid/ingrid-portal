@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -44,9 +44,10 @@
         "ingrid/utils/Grid",
         /*needed for json file!*/ "ingrid/utils/Syslist",
         "ingrid/utils/Store",
-        "ingrid/utils/General"
+        "ingrid/utils/General",
+        "ingrid/message"
     ], function(on, aspect, dom, array, registry, DeferredList, Deferred, navigation, LoadingZone,
-            layoutCreator, GridFormatters, MetadataTree, UtilGrid, UtilSyslist, UtilStore, UtilGeneral) {
+            layoutCreator, GridFormatters, MetadataTree, UtilGrid, UtilSyslist, UtilStore, UtilGeneral, message) {
 
             var resultsPerPage = 10;
             var statsFreeTermsObjPageNav = new navigation.PageNavigation({
@@ -141,7 +142,7 @@
                 }, {
                     field: 'published',
                     name: "<fmt:message key='dialog.statistics.header.published' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.published' />",
+                    toolTip: message.get("dialog.statistics.tooltip.published"),
                     width: '50px'
                 }, {
                     field: 'modified',
@@ -151,12 +152,12 @@
                 }, {
                     field: 'qa',
                     name: "<fmt:message key='dialog.statistics.header.qa' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.qa' />",
+                    toolTip: message.get("dialog.statistics.tooltip.qa"),
                     width: '50px'
                 }, {
                     field: 'returned',
                     name: "<fmt:message key='dialog.statistics.header.returned' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.returned' />",
+                    toolTip: message.get("dialog.statistics.tooltip.returned"),
                     width: 'auto'
                 }];
                 var def1 = layoutCreator.createDataGrid("statsObjectsTable", null, statsObjectsTableStructure, null, undefined, "js/data/statisticTableObject.json");
@@ -181,7 +182,7 @@
                 }, {
                     field: 'published',
                     name: "<fmt:message key='dialog.statistics.header.published' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.published' />",
+                    toolTip: message.get("dialog.statistics.tooltip.published"),
                     width: '50px'
                 }, {
                     field: 'modified',
@@ -191,19 +192,19 @@
                 }, {
                     field: 'qa',
                     name: "<fmt:message key='dialog.statistics.header.qa' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.qa' />",
+                    toolTip: message.get("dialog.statistics.tooltip.qa"),
                     width: '50px'
                 }, {
                     field: 'returned',
                     name: "<fmt:message key='dialog.statistics.header.returned' />",
-                    toolTip: "<fmt:message key='dialog.statistics.tooltip.returned' />",
+                    toolTip: message.get("dialog.statistics.tooltip.returned"),
                     width: 'auto'
                 }];
                 var def2 = layoutCreator.createDataGrid("statsAdrTable", null, statsAdrTableStructure, null, undefined, "js/data/statisticTableAddress.json");
 
                 var statsFreeTermsObjTableStructure = [{
                     field: 'term',
-                    name: "<fmt:message key='dialog.statistics.objTerms' />",
+                    name: message.get("dialog.statistics.objTerms"),
                     width: '524px'
                 }, {
                     field: 'numOccurences',
@@ -218,7 +219,7 @@
 
                 var statsFreeTermsAdrTableStructure = [{
                     field: 'term',
-                    name: "<fmt:message key='dialog.statistics.adrTerms' />",
+                    name: message.get("dialog.statistics.adrTerms"),
                     width: '524px'
                 }, {
                     field: 'numOccurences',
@@ -233,7 +234,7 @@
 
                 var statsThesTermsObjTableStructure = [{
                     field: 'term',
-                    name: "<fmt:message key='dialog.statistics.objTerms' />",
+                    name: message.get("dialog.statistics.objTerms"),
                     width: '524px'
                 }, {
                     field: 'numOccurences',
@@ -248,7 +249,7 @@
 
                 var statsThesTermsAdrTableStructure = [{
                     field: 'term',
-                    name: "<fmt:message key='dialog.statistics.adrTerms' />",
+                    name: message.get("dialog.statistics.adrTerms"),
                     width: '524px'
                 }, {
                     field: 'numOccurences',

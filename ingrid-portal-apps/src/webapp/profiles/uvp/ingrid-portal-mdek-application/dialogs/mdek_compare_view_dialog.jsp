@@ -2,7 +2,7 @@
   **************************************************-
   Ingrid Portal MDEK Application
   ==================================================
-  Copyright (C) 2014 - 2020 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -25,7 +25,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-	<script type="text/javascript">
+	<script>
 // var pageCompareViewObjects = _container_;
 
 require([
@@ -137,7 +137,7 @@ require([
                 renderTable(nodeDataOld.ref1SymbolsText, nodeDataNew.ref1SymbolsText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.symbolCatTable.header.title' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.date' />", "<fmt:message key='ui.obj.type1.symbolCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.symbolCatTable.title' />", [null, formatDate, null]);
                 renderTable(nodeDataOld.ref1KeysText, nodeDataNew.ref1KeysText, ["title", "date", "version"], ["<fmt:message key='ui.obj.type1.keyCatTable.header.title' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.date' />", "<fmt:message key='ui.obj.type1.keyCatTable.header.version' />"], "<fmt:message key='ui.obj.type1.keyCatTable.title' />", [null, formatDate, null]);
                 renderList(nodeDataOld.ref1Data, nodeDataNew.ref1Data, "<fmt:message key='ui.obj.type1.attributes' />");
-                renderTextWithTitle(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
+                renderList(nodeDataOld.ref1DataBasisText, nodeDataNew.ref1DataBasisText, "<fmt:message key='ui.obj.type1.dataBasisTable.title' />");
                 renderTextWithTitle(nodeDataOld.ref1ProcessText, nodeDataNew.ref1ProcessText, "<fmt:message key='ui.obj.type1.processTable.title' />");
 
                 renderAdditionalFieldsForRubric("refClass1", oldAdditionalFields, newAdditionalFields);

@@ -9,6 +9,8 @@ title: Kurzbezeichnung
 
 Angabe einer Kurzbezeichnung für ein Objekt. (Wird insbes. von GeoMIS.Bund unterstützt)
 
+Bei gewünschter Mehrsprachigkeit muss dieses Feld nach dem Schema "Deutscher Text#locale-eng:English text" gefüllt werden. Beispiel: Apfelbaum#locale-eng:apple tree
+
 ## Beispiel:
 
 DTK25 digitale topographische Karte GK25 - Grundkarte
