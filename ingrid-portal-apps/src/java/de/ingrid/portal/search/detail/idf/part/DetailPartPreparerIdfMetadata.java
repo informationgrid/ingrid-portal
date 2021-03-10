@@ -420,9 +420,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String name = "";
                 String description = "";
                 String attachedToField = "";
+                String applicationProfile = "";
                 String size = "";
                 float roundSize = 0;
-                
+
                 NodeList onLineList = xPathUtils.getNodeList(nodeList.item(i), "./gmd:MD_DigitalTransferOptions/gmd:onLine");
                 
                 for (int j=0; j<onLineList.getLength();j++){
@@ -446,6 +447,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         attachedToField = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
+                    
+                    xpathExpression = "./*/gmd:applicationProfile";
+                    if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+                        applicationProfile = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
+                    }
 
                     // also mapped by T0112_media_option !!!
                     xpathExpression = "./gmd:MD_DigitalTransferOptions/gmd:transferSize";
@@ -460,11 +466,15 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         link.put("hasLinkIcon", true);
                       if (isDownload) {
                           link.put("isDownload", isDownload);
-                          link.put("serviceType", url);
+                          
                       } else {
                           link.put("isExtern", true);
-                          link.put("serviceType", url);
                       }
+
+                      if(!applicationProfile.isEmpty()) {
+                          link.put("serviceType", applicationProfile);
+                      }
+
                       link.put("href", url);
 
                       if(name.length() > 0){

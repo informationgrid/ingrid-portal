@@ -464,7 +464,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderServiceTypeUrl $url $types $isNotDisplay)
-    #set($serviceType = "HTML")
+    #set($serviceType = "")
     #if($url.toLowerCase().indexOf('service=csw') > -1)
         #set($serviceType = "CSW")
     #elseif($url.toLowerCase().indexOf('service=wms') > -1)
@@ -475,10 +475,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         #set($serviceType = "ZIP")
     #elseif($url.toLowerCase().indexOf('.pdf') > -1)
         #set($serviceType = "PDF")
-     #elseif($url.toLowerCase().indexOf('.xml') > -1)
+    #elseif($url.toLowerCase().indexOf('.xml') > -1)
         #set($serviceType = "XML")
+    #elseif($url.toLowerCase().indexOf('.json') > -1)
+        #set($serviceType = "JSON")
     #end
-    #if(!$serviceType.isEmpty && $types && $types.indexOf($serviceType) == -1)
+    #if(!$serviceType.isEmpty() && $types && $types.indexOf($serviceType) == -1)
         #set($add = $types.add($serviceType))
     #end
     #if(!$isNotDisplay)

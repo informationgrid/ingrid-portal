@@ -28,7 +28,11 @@
                                 #end
                                 <div class="list-item">
                                     <div>
-                                        #renderServiceTypeUrl($link.href)
+                                        #if($link.serviceType && !$link.serviceType.isEmpty())
+                                            #renderServiceType($link.serviceType)
+                                        #else
+                                            #renderServiceTypeUrl($link.href)
+                                        #end
                                         <a href="$link.href" class="icon" title="$link.title">
                                             #if($link.special_ref == "9990")
                                                 <span class="ic-ic-download"></span>

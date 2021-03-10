@@ -74,7 +74,11 @@
         #if($entry.isExtern)
             <div>
                 #if($tool.hasContent($entry.serviceType))
-                    #renderServiceTypeUrl($entry.serviceType)
+                    #if($entry.serviceType)
+                        #renderServiceType($entry.serviceType)
+                    #else
+                        #renderServiceTypeUrl($entry.href)
+                    #end
                 #end
                 <a href="$entry.href" title="$entry.title">
                   <span class="text">$entry.title</span>
@@ -91,8 +95,12 @@
             </div>
         #elseif($entry.objectClass)
             #if($tool.hasContent($entry.serviceType))
+                #if($entry.serviceType)
                     #renderServiceType($entry.serviceType)
+                #else
+                    #renderServiceTypeUrl($entry.href)
                 #end
+            #end
             #if(!$hasImage)
             <div class="no-image">
                 <a href="$entry.href" class="icon" title="$entry.title">
@@ -133,8 +141,10 @@
             </div>
         #elseif($entry.isDownload)
             <div class="download">
-                #if($tool.hasContent($entry.serviceType))
-                    #renderServiceTypeUrl($entry.serviceType)
+                #if($entry.serviceType)
+                    #renderServiceType($entry.serviceType)
+                #else
+                    #renderServiceTypeUrl($entry.href)
                 #end
                 <a href="$entry.href" class="icon" title="$entry.title">
                   <span class="ic-ic-download"></span>
@@ -946,9 +956,6 @@
                 $entry.title
             </a>
             #end
-        </td>
-        <td>
-            <span>HTML</html>
         </td>
     </tr>
 #end
