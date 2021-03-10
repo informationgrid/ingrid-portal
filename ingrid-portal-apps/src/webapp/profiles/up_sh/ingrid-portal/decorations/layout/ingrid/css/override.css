@@ -1405,6 +1405,11 @@ h6 {
   border: 2px solid #a4adb6;
   background-color: #f2f2f2;
 }
+@media print, screen and (min-width: 64em) {
+  .teaser-data {
+    min-height: 330px;
+  }
+}
 .teaser-data:hover {
   box-shadow: 0 0 15px rgba(0, 0, 0, .1);
 }

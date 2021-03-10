@@ -16,6 +16,9 @@
           <action type="add" dev="wemove" issue="1358">
             Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
           </action>
+          <action type="fix" dev="wemove" issue="2373">
+            Portal: Facetten überlagen Footer
+          </action>
         </release>
 
         <release version="5.7.1" date="2021-02-08" description="Release 5.7.1">
