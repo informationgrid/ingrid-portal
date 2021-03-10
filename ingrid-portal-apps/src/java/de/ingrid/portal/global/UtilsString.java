@@ -279,6 +279,10 @@ public class UtilsString {
         return cutString(str, maxLength, Settings.SEARCH_RANKED_MAX_ROW_LENGTH);
     }
 
+    public static String cutString(String str, int maxLength, int maxLengthFirstRow) {
+        return cutString(str, maxLength, maxLengthFirstRow, true);
+    }
+
     /**
      * Cut a string at a given position. Also takes the maximumLength of the
      * first Row into Account, which may differ from the Length of the second
@@ -289,7 +293,7 @@ public class UtilsString {
      * @param maxLength
      * @return
      */
-    public static String cutString(String str, int maxLength, int maxLengthFirstRow) {
+    public static String cutString(String str, int maxLength, int maxLengthFirstRow, boolean useMaxRowLength) {
         if (str == null || str.length() == 0) {
             return str;
         }
@@ -307,8 +311,12 @@ public class UtilsString {
                 str = str.substring(0, str.length() - 3).concat("...");
                 break;
             }
-            startIndex = endIndex + 1;
-            endIndex = startIndex + Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 1;
+            if(useMaxRowLength) {
+                startIndex = endIndex + 1;
+                endIndex = startIndex + Settings.SEARCH_RANKED_MAX_ROW_LENGTH - 1;
+            } else {
+                endIndex = str.length();
+            }
         }
 
         if (str.length() <= maxLength) {

@@ -1325,10 +1325,7 @@ a.data:hover {
   }
 
   .data-text {
-    height: 32px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    height: unset;
     margin-bottom: 24px;
   }
 

@@ -247,11 +247,25 @@ public class UtilsSearch {
             result.put(Settings.RESULT_KEY_TITLE, title);
             // strip all HTML tags from summary
             String summary = detail.getSummary();
-            if (summary == null) {
-            	summary = "".intern();
+            
+            if(!PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD, true)) {
+                String[] summaries = (String[]) detail.getArray("summary");
+                if(summaries != null) {
+                    if(summaries.length > 0) {
+                        summary = summaries[0];
+                    }
+                }
             }
-            result.put(Settings.RESULT_KEY_ABSTRACT, UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
-                    ""), 400));
+            if (summary == null) {
+                summary = "".intern();
+            }
+            
+            boolean isCutSummary = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY, true);
+            if(isCutSummary) {
+                summary = UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
+                    ""), 200, 200, false);
+            }
+            result.put(Settings.RESULT_KEY_ABSTRACT, summary);
             String documentId = result.getHit().getDocumentId();
             if (documentId != null && !"null".equals( documentId )) {
                 result.put(Settings.RESULT_KEY_DOC_ID, documentId);
