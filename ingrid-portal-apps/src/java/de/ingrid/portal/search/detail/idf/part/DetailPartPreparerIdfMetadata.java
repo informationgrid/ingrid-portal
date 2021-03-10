@@ -764,8 +764,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             
             ArrayList head = new ArrayList();
             head.add(messages.getString("object_conformity.specification"));
-            head.add(messages.getString("object_conformity.degree_value"));
             head.add(messages.getString("object_conformity.publication_date"));
+            head.add(messages.getString("object_conformity.degree_value"));
             head.add(messages.getString("object_conformity.explanation"));
             element.put("head", head);
             ArrayList body = new ArrayList();
@@ -783,25 +783,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     } else {
                         row.add("");
                     }
-                    
-                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
-                    if (xPathUtils.nodeExists(node, xpathExpression)) {
-                        String value = xPathUtils.getString(node, xpathExpression).trim();
-                        if(xPathUtils.nodeExists(node, xpathExpression + "/@gco:nilReason")){
-                            row.add(notNull(sysCodeList.getName("6000", "3")));    
-                        }else{
-                            if(value.equals("true")){
-                                row.add(notNull(sysCodeList.getName("6000", "1")));    
-                            }else if(value.equals("false")){
-                                row.add(notNull(sysCodeList.getName("6000", "2")));    
-                            }else{
-                                row.add("");
-                            }
-                        }
-                    } else {
-                        row.add("");    
-                    }
-                    
+
                     xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation/gmd:date/gmd:CI_Date/gmd:date";
                     if (xPathUtils.nodeExists(node, xpathExpression)) {
                         if(xPathUtils.nodeExists(node, xpathExpression + "/@gco:nilReason")){
@@ -809,6 +791,24 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }else {
                             String value = xPathUtils.getString(node, xpathExpression).trim();
                             row.add(notNull(getDateFormatValue(value)));
+                        }
+                    } else {
+                        row.add("");
+                    }
+
+                    xpathExpression = "./gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:pass";
+                    if (xPathUtils.nodeExists(node, xpathExpression)) {
+                        String value = xPathUtils.getString(node, xpathExpression).trim();
+                        if(xPathUtils.nodeExists(node, xpathExpression + "/@gco:nilReason")){
+                            row.add(notNull(sysCodeList.getName("6000", "3")));
+                        }else{
+                            if(value.equals("true")){
+                                row.add(notNull(sysCodeList.getName("6000", "1")));
+                            }else if(value.equals("false")){
+                                row.add(notNull(sysCodeList.getName("6000", "2")));
+                            }else{
+                                row.add("");
+                            }
                         }
                     } else {
                         row.add("");
