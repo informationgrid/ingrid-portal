@@ -222,6 +222,8 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         context.put("escTool", new EscapeTool());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
 
+        context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
+
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
         
         context.put( "leafletBgLayerWMTS", PortalConfig.getInstance().getString(PortalConfig.PORTAL_MAPCLIENT_LEAFLET_BG_LAYER_WMTS));

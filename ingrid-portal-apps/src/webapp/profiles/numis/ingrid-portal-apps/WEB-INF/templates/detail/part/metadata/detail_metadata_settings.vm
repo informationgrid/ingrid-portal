@@ -89,21 +89,24 @@
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))
-#set($tmpGetOtherLinks = [])
 
-#foreach($getOtherLink in $getOtherLinks)
-    #if($getOtherLink.serviceType == "coupled")
-        #set($add = $getOtherLink.put("objectClass", "1"))
-        #set($add = $getOtherLink.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cswURL=$escTool.url($getOtherLink.href)"))
-        #set($add = $getOtherLink.put("isExtern", false))
-        #set($add = $getLinks.add($getOtherLink))
-    #else
-        #set($add = $tmpGetOtherLinks.add($getOtherLink))
+#if($transformCoupledCSWUrl)
+    #set($tmpGetOtherLinks = [])
+
+    #foreach($getOtherLink in $getOtherLinks)
+        #if($getOtherLink.serviceType == "coupled")
+            #set($add = $getOtherLink.put("objectClass", "1"))
+            #set($add = $getOtherLink.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cswURL=$escTool.url($getOtherLink.href)"))
+            #set($add = $getOtherLink.put("isExtern", false))
+            #set($add = $getLinks.add($getOtherLink))
+        #else
+            #set($add = $tmpGetOtherLinks.add($getOtherLink))
+        #end
     #end
-#end
 
-#if($tmpGetOtherLinks.size() > 0)
-    #set($getOtherLinks = $tmpGetOtherLinks)
+    #if($tmpGetOtherLinks.size() > 0)
+        #set($getOtherLinks = $tmpGetOtherLinks)
+    #end
 #end
 
 ## Nutzung

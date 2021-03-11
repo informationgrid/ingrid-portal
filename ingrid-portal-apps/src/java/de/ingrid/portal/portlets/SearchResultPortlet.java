@@ -162,6 +162,8 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
         context.put("escTool", new EscapeTool());
 
+        context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
+
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
