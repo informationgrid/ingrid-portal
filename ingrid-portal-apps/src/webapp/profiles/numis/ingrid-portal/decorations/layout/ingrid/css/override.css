@@ -1135,12 +1135,20 @@ header .menu-tab-row .menu-tab {
     background-color: #EAF6FF;
 }
 
+.search-filtered .table table th:first-child {
+    color: #1D4B7B;
+}
+
 .search-filtered .table:not(.table--lined) table tr th{
     color: #1D4B7B;
 }
 
 .search-filtered .table.list table {
-    color: #012D47;
+    color: #3a566d;
+}
+
+.search-filtered .table.list table tr td:first-child {
+    color: #1D4B7B;
 }
 
 .search-filtered .table.list .list_entry {
