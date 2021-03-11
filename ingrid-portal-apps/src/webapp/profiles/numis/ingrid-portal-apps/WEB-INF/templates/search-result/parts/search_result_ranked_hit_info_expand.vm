@@ -18,6 +18,7 @@
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
                             #set($listLimit = 5)
+## Downloads
                             #foreach($link in $sorter.sort($linksUrlRefDownload,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
@@ -43,6 +44,7 @@
                                 </div>
                                 #set($countRefsAll = $countRefsAll + 1)
                             #end
+## Links
                             #foreach($link in $sorter.sort($linksRef,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
@@ -72,6 +74,7 @@
                             #end
                         </div>
                     #elseif($linksUrlRefOthers.size() > 0)
+## Weitere Verweise
                         #set($countRefs = $linksUrlRefOthers.size())
                         <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
                         <div class="document-list">

@@ -51,6 +51,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.StringUtils;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -159,6 +160,7 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("checkedCategory1314", PortalConfig.getInstance().getBoolean( PortalConfig.PORTAL_MAPCLIENT_UVP_CATEGORY_1314_CHECKED, false ));
         context.put("ranking", request.getParameter(Settings.PARAM_RANKING));
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
+        context.put("escTool", new EscapeTool());
 
         ResourceURL restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );

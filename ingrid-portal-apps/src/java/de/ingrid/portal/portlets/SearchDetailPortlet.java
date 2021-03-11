@@ -22,10 +22,12 @@
  */
 package de.ingrid.portal.portlets;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -48,6 +50,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
@@ -251,12 +254,12 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
     			(IngridSessionPreferences) request.getPortletSession().getAttribute(
     				IngridSessionPreferences.SESSION_KEY, PortletSession.APPLICATION_SCOPE);
     		if (ingridPrefs == null) {
-            	noIngridSession = true;    			
+            	noIngridSession = true;
     		}
             context.put("noIngridSession", noIngridSession);
             	
             String testIDF = request.getParameter("testIDF");
-            
+            String cswURL = request.getParameter("cswURL");
             String docUuid = request.getParameter("docuuid");
             String altDocumentId = request.getParameter("altdocid");
             String iplugId = request.getParameter("plugid");
@@ -439,10 +442,13 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            record = ibus.getRecord(hit);
             // TODO: remove code after the iplugs deliver IDF records
             } else if (testIDF != null) {
-            	// create IDF record, see below how the record will be filled
-            	record = new Record();
-            	iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;	
-           	}
+                // create IDF record, see below how the record will be filled
+                record = new Record();
+                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;	
+            } else if (cswURL != null) {
+                record = new Record();
+                iPlugVersion = IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT;  
+            }
             
             if (record == null) {
                	log.error("No record found for document id:" + (hit != null ? hit.getDocumentId() : null) + " using iplug: " + iplugId + " for request: " + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getRequestURL() + "?" + ((RequestContext) request.getAttribute(PortalReservedParameters.REQUEST_CONTEXT_ATTRIBUTE)).getRequest().getQueryString());
@@ -498,7 +504,18 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     
                     DetailDataPreparer detailPreparer; 
                     detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
-                	detailPreparer.prepare(record);
+                    detailPreparer.prepare(record);
+                } else if (cswURL != null) {
+                    URL url = new URL(cswURL);
+                    java.net.HttpURLConnection conn = (java.net.HttpURLConnection) url.openConnection();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    if(br != null) {
+                        record.put("data", IOUtils.toString(br));
+                        record.put("compressed", "false");
+                    }
+                    DetailDataPreparer detailPreparer; 
+                    detailPreparer = ddpf.getDetailDataPreparer(IPlugVersionInspector.VERSION_IDF_2_0_0_OBJECT);
+                    detailPreparer.prepare(record);
                 } else {
                     long startTimer2 = 0;
                     if (log.isDebugEnabled()) {
