@@ -146,11 +146,8 @@
                 #end
                 #if($tmpSpecialRef == "3600")
                     #set($tmpHref = $link.href)
-                    #if($tmpHref.indexOf("GetRecordById") > -1)
-	                    #set($add = $link.put("type", "1"))
-	                    #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cswURL=$tmpHref"))
-                    #end
-                    
+                    #set($add = $link.put("type", "1"))
+                    #set($add = $link.put("href", "$renderResponse.encodeURL('/portal/search-detail.psml')?cswURL=$escTool.url($tmpHref)"))
                     #set($add = $linksRef.add($link))
                 #else
                     #set($add = $linksUrlRefOthers.add($link))
