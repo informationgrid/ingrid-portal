@@ -529,10 +529,12 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #if($textSplits.size() > 1)
         #foreach($split in $textSplits)
             #set($split = $split.replaceAll("[^a-zA-Z0-9]+",""))
-            #set($initials = $initials + $split.charAt(0))
-            #set($count = $count + 1)
-            #if($length == $count)
-                #break
+            #if($split.length() > 0)
+                #set($initials = $initials + $split.charAt(0))
+                #set($count = $count + 1)
+                #if($length == $count)
+                    #break
+                #end
             #end
         #end
     #else

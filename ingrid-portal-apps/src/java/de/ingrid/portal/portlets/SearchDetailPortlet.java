@@ -55,6 +55,7 @@ import org.apache.jetspeed.PortalReservedParameters;
 import org.apache.jetspeed.request.RequestContext;
 import org.apache.portals.bridges.velocity.GenericVelocityPortlet;
 import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.generic.EscapeTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -218,6 +219,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         // add velocity utils class
         context.put("tool", new UtilsVelocity());
         context.put("stringTool", new UtilsString());
+        context.put("escTool", new EscapeTool());
         context.put("sorter", new UniversalSorter(Locale.GERMAN) );
 
         context.put("enableMapLink", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)); 
