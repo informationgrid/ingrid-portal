@@ -449,14 +449,10 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #if($type && !$type.isEmpty())
         <div class="info--right">
             <span>
-            #if($type == "view" || $type == "wms")
-                WMS
-            #elseif($type == "download")
-                WFS
-            #elseif($type == "discovery")
-                XML
-            #else
+            #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
                 $type
+            #else
+                $MESSAGES.getString("common.service.type.$type")
             #end
             </span>
         </div>
@@ -466,19 +462,19 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #macro(renderServiceTypeUrl $url $types $isNotDisplay)
     #set($serviceType = "")
     #if($url.toLowerCase().indexOf('service=csw') > -1)
-        #set($serviceType = "CSW")
+        #set($serviceType = "csw")
     #elseif($url.toLowerCase().indexOf('service=wms') > -1)
         #set($serviceType = "view")
     #elseif($url.toLowerCase().indexOf('service=wfs') > -1)
         #set($serviceType = "download")
     #elseif($url.toLowerCase().indexOf('.zip') > -1)
-        #set($serviceType = "ZIP")
+        #set($serviceType = "zip")
     #elseif($url.toLowerCase().indexOf('.pdf') > -1)
-        #set($serviceType = "PDF")
+        #set($serviceType = "pdf")
     #elseif($url.toLowerCase().indexOf('.xml') > -1)
-        #set($serviceType = "XML")
+        #set($serviceType = "xml")
     #elseif($url.toLowerCase().indexOf('.json') > -1)
-        #set($serviceType = "JSON")
+        #set($serviceType = "json")
     #end
     #if(!$serviceType.isEmpty() && $types && $types.indexOf($serviceType) == -1)
         #set($add = $types.add($serviceType))
@@ -493,15 +489,11 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         <div class="info--right">
         #foreach($type in $types)
             <span>
-            #if($type == "view" || $type == "wms")
-                WMS
-            #elseif($type == "download")
-                WFS
-            #elseif($type == "discovery")
-                XML
-            #else
-                $type
-            #end
+                #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
+                    $type
+                #else
+                    $MESSAGES.getString("common.service.type.$type")
+                #end
             </span>
         #end
         </div>

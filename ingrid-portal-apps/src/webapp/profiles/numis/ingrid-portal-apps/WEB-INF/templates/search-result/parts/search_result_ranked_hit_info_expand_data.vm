@@ -31,6 +31,7 @@
         #else
             #set($add = $link.put("title", "$objUuid"))
         #end
+        #set($add = $link.put("serviceType", $referingObjRefType.get($countObjRef)))
         #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
@@ -64,6 +65,7 @@
         #else
             #set($add = $link.put("title", "$objUuid"))
         #end
+        #set($add = $link.put("serviceType", $objRefType.get($countObjRef)))
         #set($add = $linksUrlRefOthers.add($link))
     #else
         #if(!$referenceAllUUID.contains($objUuid))
@@ -116,22 +118,32 @@
             #set($tmpSpecialRef = $urlReferenceSpecialRef.get($refCount))
             #set($add = $link.put("special_ref", $tmpSpecialRef))
             #if($tmpSpecialRef && $tmpSpecialRef == "9990")
-                #set($add = $linksUrlRefDownload.add($link))
                 #if($urlReferenceDatatype)
-                    #if($urlReferenceDatatype.get($refCount) && $urlReferenceDatatype.get($refCount) != "" && $serviceTypes.indexOf($urlReferenceDatatype.get($refCount)) == -1)
+                    #if($urlReferenceDatatype.get($refCount) && $urlReferenceDatatype.get($refCount) != "")
                         #set($add = $link.put("serviceType", "$urlReferenceDatatype.get($refCount)"))
-                        #set($add = $serviceTypes.add($urlReferenceDatatype.get($refCount)))
+                        #if($serviceTypes.indexOf($urlReferenceDatatype.get($refCount)) == -1)
+                            #set($add = $serviceTypes.add($urlReferenceDatatype.get($refCount)))
+                        #end
                     #end
                 #else
                     ## Add service type to list
                     #renderServiceTypeUrl($link.href $serviceTypes true)
                 #end
+                #set($add = $linksUrlRefDownload.add($link))
             #else
-                #set($add = $linksUrlRefOthers.add($link))
                 ## Add service type to list
-                #if($referenceAllUUID.size() == 0)
+                #if($urlReferenceDatatype)
+                    #if($urlReferenceDatatype.get($refCount) && $urlReferenceDatatype.get($refCount) != "")
+                        #set($add = $link.put("serviceType", "$urlReferenceDatatype.get($refCount)"))
+                        #if($serviceTypes.indexOf($urlReferenceDatatype.get($refCount)) == -1)
+                            #set($add = $serviceTypes.add($urlReferenceDatatype.get($refCount)))
+                        #end
+                    #end
+                #else
+                    ## Add service type to list
                     #renderServiceTypeUrl($link.href $serviceTypes true)
                 #end
+                #set($add = $linksUrlRefOthers.add($link))
             #end
             #set($refCount = $refCount + 1)
         #end
