@@ -1714,6 +1714,10 @@ footer {
       td {
         padding-bottom: 0;
       }
+      
+      .download .info--right {
+        display: none;
+      }
     }
   }
 
@@ -2151,7 +2155,7 @@ footer {
   }
 }
 .anchor {
-  display: none;
+
   span {
     position: relative;
     left: -35px;

@@ -28,7 +28,7 @@ var expander = (function () {
     var expander_close = null;
     var expander_content = null;
     
-    function expand(ident) {
+    function expand(ident, isAll) {
         if(ident){
             expander_content = $('.js-expander-content.' + ident);
             expander_content.removeClass('is-hidden');
@@ -36,23 +36,23 @@ var expander = (function () {
             expander_close.removeClass('is-hidden');
             expander_open = $('#' + ident +'.js-expander');
             expander_open.addClass('is-hidden');
-            updateParams("more", ident, true);
+            updateParams("more", ident, true, isAll);
         }
     }
 
-    function close(ident) {
+    function close(ident, isAll) {
         if(ident){
           expander_content = $('.js-expander-content.' + ident);
           expander_close = $('.js-expander-close.' + ident);
           expander_open = $('#' + ident +'.js-expander');
-          updateParams("more", ident, false);
+          updateParams("more", ident, false, isAll);
         }
         expander_content.addClass('is-hidden');
         expander_close.addClass('is-hidden');
         expander_open.removeClass('is-hidden');
     }
 
-    function updateParams(key, id , isAdd) {
+    function updateParams(key, id , isAdd, isAll) {
       var queryParams = new URLSearchParams(window.location.search);
       var paramKey = queryParams.get(key);
       if(paramKey) {
@@ -80,7 +80,15 @@ var expander = (function () {
       if(paramKey === '') {
         queryParams.delete(key);
       } else {
-        queryParams.set(key, paramKey);
+        if(isAll && isAdd) {
+          queryParams.set(key, paramKey);
+        } else if(!isAll) {
+          if(queryParams.get(key) !== paramKey) {
+            queryParams.set(key, paramKey);
+          }
+        } else {
+          queryParams.delete(key);
+        }
       }
       history.replaceState(null, null, "?"+queryParams.toString());
     }
@@ -95,14 +103,14 @@ var expander = (function () {
 
 $('.js-expander').on('click', function (event) {
     event.preventDefault();
-    expander.open(this.id);
+    expander.open(this.id, false);
     $(this).parent().addClass("is-active");
 });
 
 $('.js-expander-close').on('click', function (event) {
     event.preventDefault();
     var id = $(event.currentTarget).prevUntil(event.currentTarget,".js-expander")[0].id;
-    expander.close(id);
+    expander.close(id, false);
     $(this).parent().removeClass("is-active");
 });
 
@@ -112,7 +120,7 @@ $('.js-toggle-all-expander-collapse').on('click', function (event) {
   var jsExpanders = $('.data .teaser-data .js-expander');
   for (var i = 0; i < jsExpanders.length; i++) {
     var jsExpander = jsExpanders.get(i);
-    expander.close(jsExpander.id);
+    expander.close(jsExpander.id, true);
  }
 });
 
@@ -122,7 +130,7 @@ $('.js-toggle-all-expander-expand').on('click', function (event) {
    var jsExpanders = $('.data .teaser-data .js-expander');
    for (var i = 0; i < jsExpanders.length; i++) {
      var jsExpander = jsExpanders.get(i);
-     expander.open(jsExpander.id);
+     expander.open(jsExpander.id, true);
   }
 });
 
