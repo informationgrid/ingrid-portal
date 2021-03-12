@@ -395,7 +395,7 @@
                             ## Name
                             #set($xPath = "$xParentPath/gmd:individualName")
                             #if($TOOL.nodeExist($xPath, $node))
-                                <b>$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</b>
+                                <strong>$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</strong>
                                 <br>
                             #end
                             ## Organisation
@@ -412,7 +412,7 @@
                         ## Name
                         #set($xPath = "$xParentPath/gmd:individualName")
                         #if($TOOL.nodeExist($xPath, $node))
-                            <b>$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</b>
+                            <strong>$TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $node))</strong>
                             <br>
                         #end
                         ## Organisation
