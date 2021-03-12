@@ -17,7 +17,7 @@
             #if($displayPreview)
                 <div class="info--left">
                 #if($tool.hasContent($entry.graphicOverview))
-                    <img class="preview_image " srcset="$entry.graphicOverview" title="$entry.title" alt="img">
+                    <img class="preview_image " srcset="$entry.graphicOverview" title="$entry.title" alt="img" >
                     <noscript>
                         <img class="preview_image" src="$entry.graphicOverview" alt="$imgAlt" title="$imgTitle"/>
                     </noscript>
@@ -43,7 +43,7 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle"/>
+                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle" onerror="loadDefaultMapImage(this);">
                         <noscript>
                             <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>
