@@ -780,7 +780,7 @@
                         </button>
                         <div class="js-expander-content ${expandId} is-hidden ">
                     #else
-                        <a type="button" class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-2">
+                        <a type="button" class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-3">
                             $MESSAGES.getString('search.detail.info.links.more')
                         </a>
                         #break
@@ -801,7 +801,7 @@
                             </button>
                             <div class="js-expander-content ${expandId} is-hidden ">
                         #else
-                            <a class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-2">
+                            <a class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-3">
                                 $MESSAGES.getString('search.detail.info.links.more')
                             </a>
                             #break
