@@ -108,7 +108,9 @@
             #set($entryLink = "$entry.get('link')")
         #end
         #if($entryLink && $entryLink.length() > 0)
-            <a target="_blank" class="link download" href="$entry.get('link')" title="$entryLabel">$entryLabel</a>
+            <a class="link download" href="$entry.get('link')" title="$entryLabel" target="_blank" rel="noopener noreferrer">
+                $entryLabel
+            </a>
             <span class="text">
             (
             #set ($entryLinkSplit = $TOOL.getDecodeValue($entryLink).split("/"))
@@ -146,7 +148,7 @@
             #if($entryLabel && $entryLabel.length() > 0 || $entryLink && $entryLink.length() > 0)
                 <p>
                 #if($entryLink && $entryLink.length() > 0)
-                    <a class="link download" href="$entryLink">
+                    <a class="link download" href="$entryLink" target="_blank" rel="noopener noreferrer">
                         <svg class="icon">
                             <use xlink:href="#internal-link"/>
                         </svg>

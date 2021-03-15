@@ -34,7 +34,7 @@
                                         #else
                                             #renderServiceTypeUrl($link.href)
                                         #end
-                                        <a href="$link.href" class="icon" title="$link.title">
+                                        <a href="$link.href" class="icon" title="$link.title" target="_blank" rel="noopener noreferrer">
                                             #if($link.special_ref == "9990")
                                                 <span class="ic-ic-download"></span>
                                             #end
@@ -96,7 +96,7 @@
                                         #else
                                             #renderServiceTypeUrl($link.href)
                                         #end
-                                        <a href="$link.href" class="icon" title="$link.title">
+                                        <a href="$link.href" class="icon" title="$link.title" target="_blank" rel="noopener noreferrer">
                                             #renderUDKIcon($link.type $link.title)
                                         </a>
                                     </div>
