@@ -816,20 +816,20 @@
         <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
         <portlet-preferences>
             <preference>
-                <name>titleTag</name>
-                <value>h1</value>
-            </preference>
-            <preference>
                 <name>cmsKey</name>
                 <value>portal.rsspage</value>
             </preference>
             <preference>
-                <name>sectionStyle</name>
-                <value>block--padded</value>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
             </preference>
             <preference>
-                <name>articleStyle</name>
-                <value>content ob-container ob-box-narrow ob-box-center</value>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
             </preference>
         </portlet-preferences>
     </portlet>
