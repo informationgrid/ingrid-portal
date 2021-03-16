@@ -181,6 +181,8 @@ img { width: 100%; }
 }
 
 .detail {
+  font-size: 16px;
+
   div.row div.columns {
     margin-bottom: 24px;
     padding-bottom: 0;
@@ -337,7 +339,6 @@ img { width: 100%; }
 
 /* links */
 a.icon {
-  font-family: 'Roboto-Bold';
   margin-right: 24px;
 
   [class^="ic-"] {
@@ -1338,6 +1339,15 @@ a.data:hover {
     h5 {
       margin-bottom: 16px;
     }
+    
+    a.icon .text {
+      font-family: "Roboto-Regular";
+    }
+    
+    .button {
+      border: 1px solid #006ec5;
+      font-family: "Roboto-Regular";
+    }
   }
 
   h4, h5 {
@@ -1530,6 +1540,8 @@ footer {
       .entry { font-family: 'Roboto-Medium'; }
       .entry { margin-right: 40px; }
       .entry:last-child { margin-right: 0px; }
+      
+      a { font-family: 'Roboto-Bold'; }
     }
     .copyright {
       text-align: center;
@@ -1601,7 +1613,6 @@ footer {
 
 /* search filtered */
 .search-filtered {
-  font-size: 16px;
   margin-top: 48px;
 
   button.filter_submit {
@@ -2426,40 +2437,44 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   max-height: 70px;
 }
 
-#searchResult .teaser-data {
-  .swiper-container {
-    .swiper-pagination-bullet {
-      width: unset !important;
-      height: unset !important;
-      padding: 4px 12px;;
-      border: 1px solid $green-jelly;
-      color: $green-jelly;
-      text-decoration: none;
-      border-radius: 32px !important;
-      background-color: transparent !important;
-      opacity: 1 !important;
-    }
+#searchResult {
+  font-size: 16px;
 
-    .swiper-pagination-bullet-active {
-      background-color: $blue-sky !important;
-    }
-
-    .swiper-pagination {
-      top: 0 !important;
-      font-size: 14px;
-    }
-
-    .swiper-wrapper {
-      padding-top: 40px !important;
-      padding-bottom: 0 !important;
-    }
-  }
-
-  > .info--right {
-    display: block;
-    width: 100%;
-    margin-bottom: 16px;
-    margin-top: -8px;
+  .teaser-data {
+      .swiper-container {
+        .swiper-pagination-bullet {
+          width: unset !important;
+          height: unset !important;
+          padding: 4px 12px;;
+          border: 1px solid $green-jelly;
+          color: $green-jelly;
+          text-decoration: none;
+          border-radius: 32px !important;
+          background-color: transparent !important;
+          opacity: 1 !important;
+        }
+    
+        .swiper-pagination-bullet-active {
+          background-color: $blue-sky !important;
+        }
+    
+        .swiper-pagination {
+          top: 0 !important;
+          font-size: 14px;
+        }
+    
+        .swiper-wrapper {
+          padding-top: 40px !important;
+          padding-bottom: 0 !important;
+        }
+      }
+    
+      > .info--right {
+        display: block;
+        width: 100%;
+        margin-bottom: 16px;
+        margin-top: -8px;
+      }
   }
 }
 

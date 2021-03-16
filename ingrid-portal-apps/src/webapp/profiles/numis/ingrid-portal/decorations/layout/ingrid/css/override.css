@@ -762,7 +762,6 @@ header .row .columns:last-of-type {
 .catalog a.icon {
   display: block;
   padding: 10px 0;
-  font-family: 'Roboto-Bold';
   margin: 0 24px 0 10px;
 }
 .catalog span.icon {
@@ -815,9 +814,6 @@ header .row .columns:last-of-type {
 }
 .catalog :not(.accordion-item-sub) + .accordion-item-sub, .catalog :not(.accordion-item-sub) + .accordion {
   border-top: 1px solid #C6CFE2;
-}
-.catalog a.icon span.text {
-  font-family: 'Roboto-Regular';
 }
 .dropmenu__box {
   position: relative;
