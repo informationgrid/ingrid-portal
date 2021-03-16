@@ -137,6 +137,12 @@
                 <span class="ic-ic-arrow-right"></span>
                 <span class="text">$MESSAGES.getString("sitemap.area.footer.accessibility")</span>
             </a>
+            #set ($link = $renderResponse.encodeURL("/portal/rsspage.psml"))
+            <a class="icon" href="$link" title="$MESSAGES.getString("sitemap.area.footer.rsspage.tooltip")">
+                <span class="ic-ic-arrow-right"></span>
+                <span class="text">$MESSAGES.getString("sitemap.area.footer.rsspage")</span>
+            </a>
+
         </div>
     </div>
 </div>
