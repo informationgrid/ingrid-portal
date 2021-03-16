@@ -50,7 +50,7 @@
               <div class="xsmall-24 small-24 large-12 xlarge-12 columns">
                   #set($footerMenu = $site.getMenu("footer-menu"))
                   #if(!$footerMenu.empty)
-                      #includeFooterNavigation($footerMenu "/interface-opensearch/query?q=datatype:default+ranking:date&uvp=1")
+                      #includeFooterNavigation($footerMenu)
                   #end
               </div>
           </div>

@@ -286,6 +286,16 @@
         <to>/barrierefreiheit</to>
     </outbound-rule>
 
+    <!-- RSS Page  -->
+    <rule>
+        <from>/rss</from>
+        <to type="forward">/portal/rsspage.psml</to>
+    </rule>
+    <outbound-rule>
+        <from>/portal/rsspage.psml</from>
+        <to>/rss</to>
+    </outbound-rule>
+
     <!-- SearchDetail -->
     <rule>
         <from>/trefferanzeige</from>

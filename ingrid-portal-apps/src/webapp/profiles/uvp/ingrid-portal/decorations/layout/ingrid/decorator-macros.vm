@@ -123,7 +123,7 @@
 #end
 
 #* include service navigation component *#
-#macro (includeFooterNavigation $_menu $rssURL)
+#macro (includeFooterNavigation $_menu)
 <div class="footer-menu-entries">
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
@@ -141,13 +141,11 @@
         #end
         #if($element.url == "/disclaimer.psml" ||
             $element.url == "/privacy.psml" ||
+            $element.url == "/rsspage.psml" ||
             $element.url == "/accessibility.psml")
           <a href="$linkUrl" title="$linkTitle" class="entry"><span class="text">$linkName</span></a>
         #end
       #end
-    #end
-    #if($rssURL)
-        <a href="$rssURL" target="_blank" title="Zum RSS-Feed" class="entry"><span class="text">RSS-Feed</span></a>
     #end
 </div>
 #end

@@ -140,6 +140,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_ENABLE_PRIVACY = "portal.enable.privacy";
     
     public static final String PORTAL_ENABLE_ACCESSIBILITY = "portal.enable.accessibility";
+
+    public static final String PORTAL_ENABLE_RSS_PAGE = "portal.enable.rsspage";
     
     public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
     
