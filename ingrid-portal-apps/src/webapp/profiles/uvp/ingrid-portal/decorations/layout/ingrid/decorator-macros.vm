@@ -328,7 +328,11 @@
             ## read localized title from resource with title from psml as key !
             #if($linkTitle.startsWith('ingrid'))
                 #set($linkTitle = $MESSAGES.getString($linkTitle))
-                #set($linkName = $MESSAGES.getString($linkName))
+                #if($MESSAGES.getString("${linkName}.menu") == "${linkName}.menu")
+                    #set($linkName = $MESSAGES.getString($linkName))
+                #else
+                    #set($linkName = $MESSAGES.getString("${linkName}.menu"))
+                #end
             #end
             #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
             #set($linkPage = $element.url)
