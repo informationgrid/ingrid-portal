@@ -20,7 +20,7 @@
                             #set($hasDetail2 = true)
                             <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("spacial_reference_tab")</span></a>
                         #end
-                    ## Links und Downloads
+                    ## Verweise und Downloads
                         #if($TOOL.aNodeOfListExist($xPathListReferences))
                             #set($hasDetail3 = true)
                             <a href="#detail-3" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>

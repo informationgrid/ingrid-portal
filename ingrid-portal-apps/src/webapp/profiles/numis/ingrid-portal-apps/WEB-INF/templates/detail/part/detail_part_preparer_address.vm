@@ -37,7 +37,7 @@
                                         <li class="accordion-item">
                                         ## Übersicht
                                             <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("general_tab")</span></a>
-                                        ## Links und Downloads
+                                        ## Verweise und Downloads
                                             #set($xpathList = ["./idf:objectReference"])
                                             #if($TOOL.aNodeOfListExist($xpathList))
                                                 <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>

@@ -44,7 +44,7 @@
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_description.vm")
         ## Darstellung
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_presentation.vm")
-        ## Links und Downloads
+        ## Verweise und Downloads
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_links.vm")
         ## Nutzung
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_use.vm")
