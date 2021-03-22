@@ -126,6 +126,11 @@ define(["dojo/_base/declare",
             // thesaurus
             domClass.add("uiElement5064", "hide");
             domClass.add("uiElementN014", "hide");
+            //Hide Thesaurus-Navigator
+            query("#thesaurusTermsNavigatorLink", "contentFrameBodyObject").forEach(function (item) {
+                domClass.add(item.previousSibling, "hide");
+                domClass.add(item, "hide");
+            });
 
             // spatial
             domClass.add("uiElement3500", "hide");
@@ -144,7 +149,7 @@ define(["dojo/_base/declare",
 
             // hide all rubrics not needed
             query(".rubric", "contentFrameBodyObject").forEach(function (item) {
-                if (item.id !== "general" && item.id !== "spatialRef" && item.id !== "timeRef") {
+                if (item.id !== "general" && item.id !== "thesaurus"  && item.id !== "spatialRef" && item.id !== "timeRef") {
                     domClass.add(item, "hide");
                 }
             });
