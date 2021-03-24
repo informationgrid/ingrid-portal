@@ -124,6 +124,7 @@ define(["dojo/_base/declare",
             domClass.add("uiElement6010", "hide");
 
             // thesaurus
+            domClass.add("uiElement1410", "hide");
             domClass.add("uiElement5064", "hide");
             domClass.add("uiElementN014", "hide");
             //Hide Thesaurus-Navigator
@@ -131,6 +132,33 @@ define(["dojo/_base/declare",
                 domClass.add(item.previousSibling, "hide");
                 domClass.add(item, "hide");
             });
+
+            var thesaurusTermsTable = UtilGrid.getTable("thesaurusTerms");
+            thesaurusTermsTable.hideColumn("sourceString");
+            thesaurusTermsTable.columns[thesaurusTermsTable.getColumnIndex('label')].cannotTriggerInsert = false;
+            thesaurusTermsTable.setOptions({
+                defaultHideScrollbar: true,
+                forceGridHeight: false,
+                autoHeight: true,
+                editable: true,
+                enableAddRow: true,
+                forceFitColumns: true
+            });
+            UtilGrid.getTable("thesaurusTerms").viewport.style.overflow = "auto"
+            aspect.after(thesaurusTermsTable, "onDataChanged", function(result, params) {
+                UtilGrid.getTable("thesaurusTerms").data.forEach(row => {
+                    row.expired = false;
+                    row.source = "FREE";
+                    row.sourceString = "FREE";
+                    row.title = row.label;
+                });
+            });
+            var hideThesaurusSourceColumn = function() {
+                UtilGrid.getTable("keywordsList").hideColumn("sourceString");
+                UtilGrid.getTable("resultList").hideColumn("sourceString");
+            };
+            topic.subscribe("/afterInitDialog/ThesaurusAssistant", hideThesaurusSourceColumn);
+
 
             // spatial
             domClass.add("uiElement3500", "hide");
