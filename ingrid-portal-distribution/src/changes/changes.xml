@@ -19,6 +19,9 @@
           <action type="fix" dev="wemove" issue="2373">
             Portal: Facetten überlagen Footer
           </action>
+          <action type="fix" dev="wemove" issue="2399">
+            Mapclient: Keine Legende beim Ausdruck eines Kartenausschnitts
+          </action>
         </release>
 
         <release version="5.7.1" date="2021-02-08" description="Release 5.7.1">
