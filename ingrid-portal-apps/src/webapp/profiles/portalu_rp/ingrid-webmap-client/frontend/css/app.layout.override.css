@@ -125,6 +125,9 @@ body:not(.webkit) .ga-checkbox input[type="checkbox"]:checked + span::before {
 [ga-draw] .ga-more li a{
   color: #871d33;
 }
+[ga-draw] .ga-draw-disclaimer a {
+  color: #871d33;
+}
 [ga-search] form {
 }
 [ga-search] .fa-remove-sign {

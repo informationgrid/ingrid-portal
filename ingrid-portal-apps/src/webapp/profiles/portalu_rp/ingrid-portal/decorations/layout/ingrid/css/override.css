@@ -287,7 +287,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 }
 
 /* RLP */
-h1, h2, h3 {
+h1, h2, h3, h4 {
   color: #000;
 }
 a {
@@ -1181,7 +1181,7 @@ header .menu-tab-row .menu-tab {
 
 /* general */
 ul li::before, .ic-ic-arrow, .link-list a span.ic-ic-arrow {
-  color: #871D33;
+  color: #8E8E8E;
 }
 
 /* header */
@@ -1492,7 +1492,7 @@ footer .footer .logo a img{
   background-color: #871D33;
 }
 .ic-ic-check-circle, .ic-ic-bullet {
-  color: #871D33;
+  color: #8E8E8E;
 }
 
 /* login success */
