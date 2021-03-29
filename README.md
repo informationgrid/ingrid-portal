@@ -108,6 +108,9 @@ In the tab Deployment add the following artifacts with the respective Applicatio
 |ingrid-portal-mdek:war exploded|/ingrid-portal-mdek|
 |ingrid-portal-mdek-application:war exploded|/ingrid-portal-mdek-application|
 
+Please note that IntelliJ switches per default the minus (-) for underscores (_) in the application context, 
+double check your entries in the field.
+
 Next deploy the database, ibus and elasticsearch with docker:
 ```
 docker-compose -f docker-compose.portal.yml up -d
