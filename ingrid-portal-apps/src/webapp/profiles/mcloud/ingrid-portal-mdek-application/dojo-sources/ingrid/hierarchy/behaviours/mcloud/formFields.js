@@ -642,6 +642,12 @@ define(["dojo/_base/declare",
                         uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
                             handleUploads(uploads, basePath);
                         }));
+
+                        query(".qq-uploader-checkbox").forEach(function (item) {
+                            construct.create("span", {
+                                innerHTML: message.get("mcloud.form.downloads.uploadQuota.info")
+                            }, item, "before");
+                        });
                     })
                 }, linkContainer);
 
