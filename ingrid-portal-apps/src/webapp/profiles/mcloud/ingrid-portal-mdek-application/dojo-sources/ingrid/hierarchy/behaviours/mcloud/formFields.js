@@ -40,9 +40,10 @@ define(["dojo/_base/declare",
     "ingrid/hierarchy/dirty",
     "ingrid/hierarchy/validation",
     "ingrid/utils/Catalog",
+    "ingrid/utils/General",
     "ingrid/widgets/upload/UploadWidget",
     "ingrid/utils/Store"
-], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, dialog, message, creator, IgeEvents, Editors, Formatters, dirty, validation, Catalog, UploadWidget, UtilStore) {
+], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, dialog, message, creator, IgeEvents, Editors, Formatters, dirty, validation, Catalog, UtilGeneral, UploadWidget, UtilStore) {
     return declare(null, {
         title: "Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
@@ -392,6 +393,42 @@ define(["dojo/_base/declare",
             this.addUploadLink(id);
             additionalFields.push(downloadsTable);
             downloadsTable.reinitLastColumn(true);
+
+            aspect.around(UtilGrid, "removeTableDataRow", function(originalDeleteItems){
+                return function(grid, itemIndexes){
+                if(grid == 'mcloudDownloads'){
+                    var data = UtilGrid.getTableData(grid);
+                    if(itemIndexes.some(function(itemIndex){
+                            return data[itemIndex].link && !UtilGeneral.isUrlAbsolute(data[itemIndex].link)})
+                        ){
+                            var dialogMsg = message.get("mcloud.form.downloads.delete.info");
+                            dialogMsg += '<ul>'
+                            itemIndexes.map(idx => data[idx].link)
+                                    .filter(link => link && !UtilGeneral.isUrlAbsolute(link))
+                                    .map(link => decodeURI(link.substring( link.lastIndexOf("/") + 1 )))
+                                    .forEach(file => dialogMsg += '<li>'+file+'</li>');
+                            dialogMsg += '</ul>'
+                            dialog.show(message.get("dialog.general.warning"), dialogMsg, dialog.WARNING,
+                                [
+                                    {
+                                        caption: message.get("mcloud.dialog.resume"),
+                                        action: function () {
+                                            originalDeleteItems.call(UtilGrid, grid, itemIndexes);
+                                        }
+                                    },
+                                    {
+                                        caption: message.get("general.cancel"),
+                                        action: function () {
+                                        }
+                                    }
+                                ]);
+                        } else {
+                            originalDeleteItems.call(UtilGrid, grid, itemIndexes);
+                        }
+                } else {
+                    originalDeleteItems.call(UtilGrid, grid, itemIndexes);
+                }
+            }});
 
             /*
              * License --> Codelist 6500 in Selectbox
