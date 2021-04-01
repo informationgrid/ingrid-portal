@@ -987,7 +987,7 @@ public class AdminUserPortlet extends ContentPortlet {
             f.setInput(AdminUserForm.FIELD_STREET, replaceNull(userAttributes.get("user.business-info.postal.street")));
             f.setInput(AdminUserForm.FIELD_POSTALCODE, replaceNull(userAttributes.get("user.business-info.postal.postalcode")));
             f.setInput(AdminUserForm.FIELD_CITY, replaceNull(userAttributes.get("user.business-info.postal.city")));
-            f.setInput(AdminUserForm.FIELD_CHK_ENABLED, user.isEnabled() ? "1": "0");
+            f.setInput(AdminUserForm.FIELD_CHK_ENABLED, userManager.getPasswordCredential(user).isEnabled() ? "1": "0");
 
             // set admin-portal role
             Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());
