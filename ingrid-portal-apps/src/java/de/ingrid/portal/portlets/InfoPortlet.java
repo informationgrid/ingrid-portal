@@ -98,6 +98,7 @@ public class InfoPortlet extends GenericVelocityPortlet {
             context.put("enableSearchCatalog", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_SEARCH_CATALOG, Boolean.FALSE));
             context.put("enablePrivacy", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_PRIVACY, Boolean.FALSE));
             context.put("enableAccessibility", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_ACCESSIBILITY, Boolean.FALSE));
+            context.put("enableRSSPage", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_RSS_PAGE, Boolean.FALSE));
             context.put("enableDisclaimer", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_DISCLAIMER, Boolean.FALSE));
         }
         

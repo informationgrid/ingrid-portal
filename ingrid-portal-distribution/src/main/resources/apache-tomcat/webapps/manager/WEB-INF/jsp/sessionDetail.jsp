@@ -1,26 +1,4 @@
-<%--
-  **************************************************-
-  InGrid Portal Distribution
-  ==================================================
-  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  --%>
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <%--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -141,7 +119,7 @@
 
    <table style="text-align: left;" border="1" cellpadding="2" cellspacing="2">
    <% int nAttributes = 0;
-      Enumeration attributeNamesEnumeration = currentHttpSession.getAttributeNames();
+      Enumeration<String> attributeNamesEnumeration = currentHttpSession.getAttributeNames();
       while (attributeNamesEnumeration.hasMoreElements()) {
           attributeNamesEnumeration.nextElement();
           ++nAttributes;
@@ -165,7 +143,7 @@
        <tbody>
    <% attributeNamesEnumeration = currentHttpSession.getAttributeNames();
       while (attributeNamesEnumeration.hasMoreElements()) {
-          String attributeName = (String) attributeNamesEnumeration.nextElement();
+          String attributeName = attributeNamesEnumeration.nextElement();
    %>
            <tr>
                <td align="center">

@@ -1002,7 +1002,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                         if (!hasAccessConstraints()) {
                             element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && (serviceType != null && serviceType.equals("view"))){
+                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) 
+                                    && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
                                 HashMap elementMapLink = new HashMap();
                                 elementMapLink.put("type", "linkLine");
                                 elementMapLink.put("hasLinkIcon", true);
@@ -1585,7 +1586,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if(xPathUtils.nodeExists(this.rootNode, xpathExpression)){
             serviceType = xPathUtils.getString(this.rootNode, xpathExpression);
         }
-        if (serviceType != null && serviceType.trim().equals("view")) {
+        if (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms"))) {
             Node capNode = xPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
             if(capNode != null && capNode.getTextContent() != null){
                 url = capNode.getTextContent().trim();

@@ -2,12 +2,12 @@
 # ID des GUI Elements
 guid: 10011
 # title, used as window title
-title: Zeitbezug des Dateninhalts
+title: Durch die Ressource abgedeckte Zeitspanne
 ---
 
 # Durch die Ressource abgedeckte Zeitspanne
 
-Hier soll das Zeitspanne der Entstehung der eigentlichen Umwelt-Daten (z.B. Messdaten) eingetragen werden.
+Hier soll die Zeitspanne der Entstehung der eigentlichen Umwelt-Daten (z.B. Messdaten) eingetragen werden.
 
 # ISO Abbildung
 

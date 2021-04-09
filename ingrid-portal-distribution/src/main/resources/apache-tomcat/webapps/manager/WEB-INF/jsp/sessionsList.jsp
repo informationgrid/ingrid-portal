@@ -1,26 +1,4 @@
-<%--
-  **************************************************-
-  InGrid Portal Distribution
-  ==================================================
-  Copyright (C) 2014 - 2021 wemove digital solutions GmbH
-  ==================================================
-  Licensed under the EUPL, Version 1.1 or – as soon they will be
-  approved by the European Commission - subsequent versions of the
-  EUPL (the "Licence");
-  
-  You may not use this work except in compliance with the Licence.
-  You may obtain a copy of the Licence at:
-  
-  http://ec.europa.eu/idabc/eupl5
-  
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the Licence is distributed on an "AS IS" basis,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the Licence for the specific language governing permissions and
-  limitations under the Licence.
-  **************************************************#
-  --%>
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <%--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -39,7 +17,6 @@
 --%>
 <%@page session="false" contentType="text/html; charset=ISO-8859-1" %>
 <%@page import="java.util.Collection" %>
-<%@page import="java.util.Iterator" %>
 <%@page import="org.apache.catalina.manager.JspHelper" %>
 <%@page import="org.apache.catalina.Session" %>
 <%@page import="org.apache.catalina.ha.session.DeltaSession" %>
@@ -56,7 +33,7 @@
    String submitUrl = JspHelper.escapeXml(response.encodeURL(
            ((HttpServletRequest) pageContext.getRequest()).getRequestURI() +
            "?path=" + path + "&version=" + version));
-   Collection activeSessions = (Collection) request.getAttribute("activeSessions");
+   Collection<Session> activeSessions = (Collection<Session>) request.getAttribute("activeSessions");
 %>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
@@ -123,9 +100,8 @@
             </tfoot>
             <% } // end if %>
             <tbody>
-<% Iterator iter = activeSessions.iterator();
-   while (iter.hasNext()) {
-       Session currentSession = (Session) iter.next();
+<%
+    for (Session currentSession : activeSessions) {
        String currentSessionId = JspHelper.escapeXml(currentSession.getId());
        String type;
        if (currentSession instanceof DeltaSession) {

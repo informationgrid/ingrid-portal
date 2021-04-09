@@ -47,7 +47,7 @@ define([
             });
 
         },
-
+        
         hasNoValue: function(value) {
             return typeof (value) == "undefined" ||
                 value === null ||

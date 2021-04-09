@@ -270,7 +270,7 @@ public class ImportServiceImpl {
         try {
             result = catalogRequestHandler.analyzeImportData( MdekSecurityUtils.getCurrentPortalUserData(), compress( inputFileStream ).toByteArray(), targetObjectUuid, targetAddressUuid, frontendProtocol, publishImmediately, doSeparateImport, copyNodeIfPresent, startNewAnalysis );
             
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Error on analyzeXMLData.", e);
         }
         

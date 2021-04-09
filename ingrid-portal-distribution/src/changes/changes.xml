@@ -6,27 +6,33 @@
     </properties>
 
     <body>
-        <release version="5.7.2-SNAPSHOT" date="2021-xx-xx" description="Release 5.7.2">
-          <action type="add" dev="wemove" issue="2345">
-            Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
-          </action>
-          <action type="fix" dev="wemove" issue="2315">
-            Portal: Anpassung Darstellung Teaser Boxen
-          </action>
+        <release version="5.8.0" date="2021-xx-xx" description="Release 5.8.0">
           <action type="add" dev="wemove" issue="1358">
             Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
           </action>
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.22.
+          </action>
+          <action type="add" dev="wemove" issue="2345">
+            Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
+          </action>
+          <action type="add" dev="wemove" issue="582">
+            Portal: Add RSS Page to UVP-NI profile
+         </action>
           <action type="fix" dev="wemove" issue="2373">
             Portal: Facetten überlagen Footer
           </action>
           <action type="fix" dev="wemove" issue="2399">
             Mapclient: Keine Legende beim Ausdruck eines Kartenausschnitts
           </action>
-        </release>
-
-        <release version="5.7.1" date="2021-02-08" description="Release 5.7.1">
           <action type="add" dev="wemove" issue="2290">
             Portal: Anzeige von Kurzbezeichnung ist in der Portal Detaildarstellung falsch, wenn eine AdV Produktgruppe angegeben wurden.
+          </action>
+          <action type="add" dev="wemove" issue="2256">
+            Portal: Erstellung Portal-Profil Sachsen-Anhalt Umweltportal
+          </action>
+          <action type="add" dev="wemove" issue="2185">
+            Portal: PortalU RLP - Umstellung auf neues Design
           </action>
           <action type="fix" dev="wemove" issue="2303">
             Portal: In Katalogdarstellung sollen nur Katalog mit Suchergebnissen dargestellt werden
@@ -37,14 +43,23 @@
           <action type="fix" dev="wemove" issue="2336">
             IGE: Fix vector format table column name and add validation
           </action>
+          <action type="update" dev="wemove" issue="2294">
+            Portal: Aktualisierung TOMCAT auf aktuellere Version 9.0.41
+          </action>
           <action type="update" dev="wemove" issue="2346">
             IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
           </action>
-          <action type="update" dev="wemove" issue="2321">
-            IGE: Handle %-character in thesaurus
+          <action type="fix" dev="wemove" issue="2354">
+            IGE: Remove conflicting library which could prevent showing help
+          </action>
+          <action type="fix" dev="wemove" issue="2334">
+            IGE: Extract correct coupled resource identifier of external coupled resource
+          </action>
+          <action type="fix" dev="wemove">
+            Catch all errors in Communication
           </action>
         </release>
-    
+
         <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
           <action type="fix" dev="wemove" issue="2305">
             IGE: Fix "Lagegenauigkeit" Helptext

@@ -722,11 +722,11 @@ public class Utils {
 	public static String getServiceTypeParameter(String url, String serviceType){
 		String serviceParam = "";
 		
-		if(serviceType.equals("view")){
+		if(serviceType.equalsIgnoreCase("view") && serviceType.equalsIgnoreCase("wms")){
 			serviceParam = "&SERVICE=WMS";
-		}else if(serviceType.equals("download")){
+		}else if(serviceType.equalsIgnoreCase("download")){
 			serviceParam = "&SERVICE=WFS";
-		}else if(serviceType.equals("discovery")){
+		}else if(serviceType.equalsIgnoreCase("discovery")){
 			serviceParam = "&SERVICE=CSW";
 		}
 		
