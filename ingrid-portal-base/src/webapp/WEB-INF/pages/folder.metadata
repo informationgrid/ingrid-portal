@@ -17,6 +17,7 @@
     <options>/disclaimer.psml</options>
     <options>/privacy.psml</options>
     <options>/accessibility.psml</options>
+    <options>/rsspage.psml</options>
   </menu>
 
   <menu name="main-menu">

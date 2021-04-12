@@ -1,0 +1,22 @@
+<page>
+  <defaults
+     skin="orange"
+     layout-decorator="ingrid"
+     portlet-decorator="ingrid-teaser"
+  />
+  <title>ingrid.page.rsspage.tooltip</title>
+  <short-title>ingrid.page.rsspage</short-title>
+  <metadata name="meta_title">ingrid.page.rsspage.meta.title</metadata>
+  <metadata name="meta_descr">ingrid.page.rsspage.meta.description</metadata>
+  <metadata name="meta_keywords">ingrid.page.rsspage.meta.keywords</metadata>
+
+  <fragment id="rsspage" type="layout" name="jetspeed-layouts::IngridClearLayout">
+    <fragment id="rsspage-1" type="portlet" name="ingrid-portal-apps::RSSPagePortlet">
+      <property layout="OneColumn" name="row" value="0" />
+    </fragment>
+  </fragment>
+
+  <security-constraints>
+    <security-constraints-ref>public-view</security-constraints-ref>
+  </security-constraints>
+</page>

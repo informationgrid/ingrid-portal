@@ -2,7 +2,7 @@
 # ID des GUI Elements
 guid: 5030
 # title, used as window title
-title: Durch die Ressource abgedeckte Zeitspanne
+title: Zeitbezug für die Ressource
 ---
 
 # Zeitbezug des Dateninhalts

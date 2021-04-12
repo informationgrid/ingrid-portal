@@ -122,7 +122,38 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         }
         return value;
     }
-    
+
+    public List<String> getAlternateTitle(){
+        List<String> listSearch = new ArrayList<>();
+        String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString";
+        NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+        for (int i=0; i< nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            String content = node.getTextContent();
+            String codelistAdvGroup = "8010";
+            String codelistValue = sysCodeList.getNameByCodeListValue(codelistAdvGroup, content);
+            if(codelistValue.isEmpty()) {
+                listSearch.add(content);
+            }
+        }
+        return listSearch;
+    }
+
+    public List<String> getAlternateTitleListFromCodelist(String codelist){
+        List<String> listSearch = new ArrayList<>();
+        String xpathExpression = "./gmd:identificationInfo/*/gmd:citation/gmd:CI_Citation/gmd:alternateTitle/gco:CharacterString";
+        NodeList nodeList = xPathUtils.getNodeList(rootNode, xpathExpression);
+        for (int i=0; i< nodeList.getLength(); i++) {
+            Node node = nodeList.item(i);
+            String content = node.getTextContent();
+            String codelistValue = sysCodeList.getNameByCodeListValue(codelist, content);
+            if(!codelistValue.isEmpty()) {
+                listSearch.add(codelistValue);
+            }
+        }
+        return listSearch;
+    }
+
     public String getDescription(){
         String value = null;
         
@@ -1042,8 +1073,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                         if (!hasAccessConstraints()) {
                             element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
-                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) && (serviceType != null && serviceType.equals("view"))){
-                                  HashMap elementMapLink = new HashMap();
+                            if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) 
+                                    && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
+                                HashMap elementMapLink = new HashMap();
                                 elementMapLink.put("type", "linkLine");
                                 elementMapLink.put("hasLinkIcon", true);
                                 elementMapLink.put("isExtern", false);
@@ -1606,7 +1638,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         if(xPathUtils.nodeExists(this.rootNode, xpathExpression)){
             serviceType = xPathUtils.getString(this.rootNode, xpathExpression);
         }
-        if (serviceType != null && serviceType.trim().equals("view")) {
+        if (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms"))) {
             Node capNode = xPathUtils.getNode( this.rootNode, "./gmd:identificationInfo/*/srv:containsOperations/srv:SV_OperationMetadata/srv:operationName/gco:CharacterString[text() = 'GetCapabilities']/../../srv:connectPoint//gmd:URL");
             if(capNode != null && capNode.getTextContent() != null){
                 url = capNode.getTextContent().trim();

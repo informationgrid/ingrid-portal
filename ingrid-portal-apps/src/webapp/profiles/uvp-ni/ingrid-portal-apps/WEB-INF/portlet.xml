@@ -890,6 +890,42 @@
         </portlet-preferences>
     </portlet>
 
+    <portlet id="RSSPagePortlet">
+        <init-param>
+            <description>This parameter sets the template used in view mode.</description>
+            <name>ViewPage</name>
+            <value>/WEB-INF/templates/default_cms.vm</value>
+        </init-param>
+        <portlet-name>RSSPagePortlet</portlet-name>
+        <display-name>CMS portlet</display-name>
+        <description>This portlet displays a content entry from the cms, specified by the preference 'cmsKey'.</description>
+        <portlet-class>de.ingrid.portal.portlets.CMSPortlet</portlet-class>
+        <expiration-cache>0</expiration-cache>
+        <supports>
+            <mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+        </supports>
+        <resource-bundle>de.ingrid.portal.resources.InfoPortletResources</resource-bundle>
+        <portlet-preferences>
+            <preference>
+                <name>cmsKey</name>
+                <value>portal.rsspage</value>
+            </preference>
+            <preference>
+                <name>bannerStyle</name>
+                <value>row align-center</value>
+            </preference>
+            <preference>
+                <name>bannerHeaderStyle</name>
+                <value>large-20 columns dark</value>
+            </preference>
+            <preference>
+                <name>sectionStyle</name>
+                <value>search-filtered row content-small</value>
+            </preference>
+        </portlet-preferences>
+    </portlet>
+
     <portlet id="SitemapPortlet">
         <init-param>
             <description>This parameter sets the template used in view mode.</description>

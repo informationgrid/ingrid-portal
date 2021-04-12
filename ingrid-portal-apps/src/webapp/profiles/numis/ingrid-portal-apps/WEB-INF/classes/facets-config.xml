@@ -237,7 +237,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
-                <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
+                <query>capabilities_url:http* datatype:metadata</query>
                 <id>map</id>
             </facet>
         </facets>
@@ -372,7 +372,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Karten -->
             <facet>
                 <name>searchResult.facete.datatype.map</name>
-                <query>(capabilities_url:http* OR t011_obj_serv_op_connpoint.connect_point:http*) datatype:metadata</query>
+                <query>capabilities_url:http* datatype:metadata</query>
                 <id>map</id>
                 <parentId>type</parentId>
                 <icon>ic-map</icon>

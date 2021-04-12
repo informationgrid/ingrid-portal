@@ -1,6 +1,6 @@
 <div class="columns">
     <div>$contactIntroPostEmail</div>
-    <div class="search-filtered">
+    <div>
         <h2>$MESSAGES.getString('contact.form')</h2>
         #set ($action = $renderResponse.createActionURL())
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
@@ -14,41 +14,53 @@
             <!-- real fields -->
             #displayFormError()
             <div class="form-element">
-                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
+                <label for="user_subject">$MESSAGES.getString('contact.form.subject')</label>
+            </div>
+            <div class="form-element">
+                <input type="text" id="user_subject" name="user_subject" value="#getFieldValue('user_subject')" #addErrorFormClass('user_subject') #addErrorFormMessagePlaceholder('user_subject') />
+            </div>
+            <div class="form-element">
+                <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
             </div>
             <div class="form-element">
                 <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('user_message')">#getFieldValue('user_message')</textarea>
             </div>
+            <div class="form-element ">
+                <div class="control-group">
+                    <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="user_technical">
+                        <input id="user_technical" type="checkbox" name="user_technical" value="1" #getChecked('user_technical' '1') onchange="ingrid_disableElementByCheckbox('user_technical', 'user_company')">
+                        <span class="control__indicator"></span>
+                        $MESSAGES.getString('contact.form.technical')
+                    </label>
+                </div>
+            </div>
+            <br>
             <div class="form-element">
-                <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
+                <label for="user_company">$MESSAGES.getString('contact.form.company')</label>
             </div>
             <div class="form-element">
-                <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') #addErrorFormMessagePlaceholder('user_firstname')" />
+                <p>
+                    <select class="select2" name="user_company" id="user_company" size="1">
+                        <option value="" #getSelectedFlag('user_company' '')>---</option>
+                        #foreach($partner in $partners)
+                        <option value="$partner.getIdent()" #getSelectedFlag('user_company' '$partner.getIdent()')>$partner.getName()</option>
+                        #end
+                    </select>
+                </p>
+                <br>
             </div>
         <div class="form-element">
-            <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
+            <label for="user_email">$MESSAGES.getString('contact.form.email')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') #addErrorFormMessagePlaceholder('user_lastname')" />
-        </div>
-        <div class="form-element">
-            <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
-        </div>
-        <div class="form-element">
-            <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')"/>
-        </div>
-        <div class="form-element">
-            <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
-        </div>
-        <div class="form-element">
-            <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')"/>
-        </div>
-        <div class="form-element">
-            <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
-        </div>
-        <div class="form-element">
-            <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email')" />
+            <input type="text" id="user_email" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') />
             #addErrorFormMessagePlaceholderWithInputCheck('user_email')
+        </div>
+        <div class="form-element">
+            <label for="user_name">$MESSAGES.getString('contact.form.name')</label>
+        </div>
+        <div class="form-element">
+            <input type="text" id="user_name" name="user_name" value="#getFieldValue('user_name')" />
         </div>
         #if ($uploadEnable)
             <div class="form-element">
@@ -58,9 +70,7 @@
                 <input type="file" id="upload" name="upload">
             </div>
         #end
-        <hr>
         <div class="subtext-submit">
-            <h6>$MESSAGES.getString('contact.form.required')</h6>
             <button type="submit" class="button">$MESSAGES.getString('common.form.button.submit')</button>
         </div>
         </form>

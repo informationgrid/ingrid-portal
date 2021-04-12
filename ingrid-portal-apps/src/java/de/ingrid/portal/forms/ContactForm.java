@@ -22,13 +22,14 @@
  */
 package de.ingrid.portal.forms;
 
-import de.ingrid.portal.config.PortalConfig;
-import de.ingrid.portal.global.Utils;
-import org.apache.commons.fileupload.FileItem;
-
-import javax.portlet.PortletRequest;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.portlet.PortletRequest;
+
+import org.apache.commons.fileupload.FileItem;
+
+import de.ingrid.portal.global.Utils;
 
 /**
  * Form Handler for Contact page. Stores and validates form input.
@@ -166,8 +167,8 @@ public class ContactForm extends ActionForm {
                         setInput(FIELD_EMAIL_HONEYPOT, item.getString("UTF-8"));
                         break;
                 }
-	        }
-    	}
+            }
+        }
     }
     
 }

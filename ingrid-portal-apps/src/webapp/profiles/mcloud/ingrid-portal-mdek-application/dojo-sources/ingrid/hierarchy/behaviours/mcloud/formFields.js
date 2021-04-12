@@ -40,9 +40,10 @@ define(["dojo/_base/declare",
     "ingrid/hierarchy/dirty",
     "ingrid/hierarchy/validation",
     "ingrid/utils/Catalog",
+    "ingrid/utils/General",
     "ingrid/widgets/upload/UploadWidget",
     "ingrid/utils/Store"
-], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, dialog, message, creator, IgeEvents, Editors, Formatters, dirty, validation, Catalog, UploadWidget, UtilStore) {
+], function(declare, array, lang, aspect, dom, domClass, domStyle, construct, query, topic, registry, dialog, message, creator, IgeEvents, Editors, Formatters, dirty, validation, Catalog, UtilGeneral, UploadWidget, UtilStore) {
     return declare(null, {
         title: "Formularfelder",
         description: "Hier werden die zusätzlichen Felder im Formular erzeugt sowie überflüssige ausgeblendet.",
@@ -124,8 +125,41 @@ define(["dojo/_base/declare",
             domClass.add("uiElement6010", "hide");
 
             // thesaurus
+            domClass.add("uiElement1410", "hide");
             domClass.add("uiElement5064", "hide");
             domClass.add("uiElementN014", "hide");
+            //Hide Thesaurus-Navigator
+            query("#thesaurusTermsNavigatorLink", "contentFrameBodyObject").forEach(function (item) {
+                domClass.add(item.previousSibling, "hide");
+                domClass.add(item, "hide");
+            });
+
+            var thesaurusTermsTable = UtilGrid.getTable("thesaurusTerms");
+            thesaurusTermsTable.hideColumn("sourceString");
+            thesaurusTermsTable.columns[thesaurusTermsTable.getColumnIndex('label')].cannotTriggerInsert = false;
+            thesaurusTermsTable.setOptions({
+                defaultHideScrollbar: true,
+                forceGridHeight: false,
+                autoHeight: true,
+                editable: true,
+                enableAddRow: true,
+                forceFitColumns: true
+            });
+            UtilGrid.getTable("thesaurusTerms").viewport.style.overflow = "auto"
+            aspect.after(thesaurusTermsTable, "onDataChanged", function(result, params) {
+                UtilGrid.getTable("thesaurusTerms").data.forEach(row => {
+                    row.expired = false;
+                    row.source = "FREE";
+                    row.sourceString = "FREE";
+                    row.title = row.label;
+                });
+            });
+            var hideThesaurusSourceColumn = function() {
+                UtilGrid.getTable("keywordsList").hideColumn("sourceString");
+                UtilGrid.getTable("resultList").hideColumn("sourceString");
+            };
+            topic.subscribe("/afterInitDialog/ThesaurusAssistant", hideThesaurusSourceColumn);
+
 
             // spatial
             domClass.add("uiElement3500", "hide");
@@ -144,7 +178,7 @@ define(["dojo/_base/declare",
 
             // hide all rubrics not needed
             query(".rubric", "contentFrameBodyObject").forEach(function (item) {
-                if (item.id !== "general" && item.id !== "thesaurus" && item.id !== "spatialRef" && item.id !== "timeRef") {
+                if (item.id !== "general" && item.id !== "thesaurus"  && item.id !== "spatialRef" && item.id !== "timeRef") {
                     domClass.add(item, "hide");
                 }
             });
@@ -301,8 +335,8 @@ define(["dojo/_base/declare",
                     type: Editors.SelectboxEditor,
                     editable: true,
                     // listId: codelist,
-                    options: ["API", "AtomFeed", "Dateidownload", "FTP", "Portal", "SOS", "WCS", "WFS", "WMS", "WMTS"],
-                    values:  ["api", "atomFeed", "download", "ftp", "portal", "sos", "wcs", "wfs", "wms", "wmts"],
+                    options: ["API", "AtomFeed", "Dateidownload", "FTP", "Portal", "Software", "SOS", "WCS", "WFS", "WMS", "WMTS"],
+                    values:  ["api", "atomFeed", "download", "ftp", "portal", "software", "sos", "wcs", "wfs", "wms", "wmts"],
                     formatter: Formatters.ListCellFormatter,
                     partialSearch: true,
                     width: '70px'
@@ -359,6 +393,42 @@ define(["dojo/_base/declare",
             this.addUploadLink(id);
             additionalFields.push(downloadsTable);
             downloadsTable.reinitLastColumn(true);
+
+            aspect.around(UtilGrid, "removeTableDataRow", function(originalDeleteItems){
+                return function(grid, itemIndexes){
+                if(grid == 'mcloudDownloads'){
+                    var data = UtilGrid.getTableData(grid);
+                    if(itemIndexes.some(function(itemIndex){
+                            return data[itemIndex].link && !UtilGeneral.isUrlAbsolute(data[itemIndex].link)})
+                        ){
+                            var dialogMsg = message.get("mcloud.form.downloads.delete.info");
+                            dialogMsg += '<ul>'
+                            itemIndexes.map(idx => data[idx].link)
+                                    .filter(link => link && !UtilGeneral.isUrlAbsolute(link))
+                                    .map(link => decodeURI(link.substring( link.lastIndexOf("/") + 1 )))
+                                    .forEach(file => dialogMsg += '<li>'+file+'</li>');
+                            dialogMsg += '</ul>'
+                            dialog.show(message.get("dialog.general.warning"), dialogMsg, dialog.WARNING,
+                                [
+                                    {
+                                        caption: message.get("mcloud.dialog.resume"),
+                                        action: function () {
+                                            originalDeleteItems.call(UtilGrid, grid, itemIndexes);
+                                        }
+                                    },
+                                    {
+                                        caption: message.get("general.cancel"),
+                                        action: function () {
+                                        }
+                                    }
+                                ]);
+                        } else {
+                            originalDeleteItems.call(UtilGrid, grid, itemIndexes);
+                        }
+                } else {
+                    originalDeleteItems.call(UtilGrid, grid, itemIndexes);
+                }
+            }});
 
             /*
              * License --> Codelist 6500 in Selectbox
@@ -609,6 +679,12 @@ define(["dojo/_base/declare",
                         uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
                             handleUploads(uploads, basePath);
                         }));
+
+                        query(".qq-uploader-checkbox").forEach(function (item) {
+                            construct.create("span", {
+                                innerHTML: message.get("mcloud.form.downloads.uploadQuota.info")
+                            }, item, "before");
+                        });
                     })
                 }, linkContainer);
 

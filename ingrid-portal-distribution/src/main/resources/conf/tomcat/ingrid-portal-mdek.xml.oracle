@@ -13,9 +13,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<Context path="/ingrid-portal-mdek" 
-         docBase="ingrid-portal-mdek" 
-         crossContext="true">
+<Context crossContext="true">
 
   <Resource name="jdbc/mdek" auth="Container"
           factory="org.apache.commons.dbcp.BasicDataSourceFactory"

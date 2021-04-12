@@ -668,13 +668,13 @@ public class AdminUserPortlet extends ContentPortlet {
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.street", true).setStringValue(f.getInput(AdminUserForm.FIELD_STREET));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.postalcode", true).setStringValue(f.getInput(AdminUserForm.FIELD_POSTALCODE));
                 user.getSecurityAttributes().getAttribute("user.business-info.postal.city", true).setStringValue(f.getInput(AdminUserForm.FIELD_CITY));
-                if(!user.getName().equals("admin")) {
-                    user.setEnabled(isUserEnabled);
-                }
                 userManager.updateUser(user);
 
                 PasswordCredential credential = userManager.getPasswordCredential(user);
                 credential.setUpdateRequired(isUserPwUpdateRequired);
+                if(!user.getName().equals("admin")) {
+                    credential.setEnabled(isUserEnabled);
+                }
                 userManager.storePasswordCredential(credential);
 
                 try {
@@ -987,7 +987,7 @@ public class AdminUserPortlet extends ContentPortlet {
             f.setInput(AdminUserForm.FIELD_STREET, replaceNull(userAttributes.get("user.business-info.postal.street")));
             f.setInput(AdminUserForm.FIELD_POSTALCODE, replaceNull(userAttributes.get("user.business-info.postal.postalcode")));
             f.setInput(AdminUserForm.FIELD_CITY, replaceNull(userAttributes.get("user.business-info.postal.city")));
-            f.setInput(AdminUserForm.FIELD_CHK_ENABLED, user.isEnabled() ? "1": "0");
+            f.setInput(AdminUserForm.FIELD_CHK_ENABLED, userManager.getPasswordCredential(user).isEnabled() ? "1": "0");
 
             // set admin-portal role
             Collection<Role> userRoles = roleManager.getRolesForUser(user.getName());

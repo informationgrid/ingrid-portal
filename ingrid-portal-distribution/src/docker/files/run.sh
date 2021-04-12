@@ -8,12 +8,12 @@
 # Licensed under the EUPL, Version 1.1 or – as soon they will be
 # approved by the European Commission - subsequent versions of the
 # EUPL (the "Licence");
-# 
+#
 # You may not use this work except in compliance with the Licence.
 # You may obtain a copy of the Licence at:
-# 
+#
 # http://ec.europa.eu/idabc/eupl5
-# 
+#
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the Licence is distributed on an "AS IS" basis,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@ HIERARCHY_DIR="webapps/ingrid-portal-mdek-application/dojo-sources/ingrid/hierar
 
 cd /opt/ingrid/ingrid-portal/apache-tomcat
 
-if [ -e /initialized ]
+if [ -e ./initialized ]
 then
     echo "Container already initialized"
 else
@@ -137,6 +137,19 @@ else
             cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
         fi
 
+        # PortalU-RLP extends UVP layout
+        if [ "$PORTAL_PROFILE" == "portalu_rp" ] || [ "$PORTAL_PROFILE" == "up_sh" ]; then
+            echo "Copying profile files from parent (uvp) into portal directories ..."
+            cp -R $PROFILES_DIR/uvp/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-apps/* webapps/ingrid-portal-apps
+            cp -R $PROFILES_DIR/uvp/ingrid-portal-mdek/* webapps/ingrid-portal-mdek
+
+            echo "Copying profile files from parent (numis) into portal directories ..."
+            cp -R $PROFILES_DIR/numis/ingrid-portal/* webapps/ROOT
+            cp -R $PROFILES_DIR/numis/ingrid-portal-apps/* webapps/ingrid-portal-apps
+       fi
+
+
         echo "Copying profile files into portal directories ..."
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal/* webapps/ROOT
         cp -R $PROFILES_DIR/$PORTAL_PROFILE/ingrid-portal-apps/* webapps/ingrid-portal-apps
@@ -173,7 +186,7 @@ else
     else
         echo "No specific portal profile used."
     fi
-    
+
     # IGE standalone configuration
     if [ "$STANDALONE_IGE" == "true" ]; then
         # remove all contexts except ingrid-portal-mdek-application
@@ -257,14 +270,14 @@ else
         sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ROOT/error*.html
         sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/error*.html
         sed -i "s@<meta name=\"copyright\" content=\".*\".*/>@<meta name=\"author\" content=\"${PORTAL_COPYRIGHT}\" />@" webapps/ingrid-portal-mdek-application/session_expired.jsp
-        
+
         sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ROOT/error*.html
         sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/error*.html
         sed -i "s@copyright_text\">.*<@copyright_text\">${PORTAL_COPYRIGHT}<@" webapps/ingrid-portal-mdek-application/session_expired.jsp
 
     fi
 
-    touch /initialized
+    touch ./initialized
 fi
 
 if [ "$DEBUG" = 'true' ]; then

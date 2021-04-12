@@ -106,6 +106,14 @@ public class DetailPartPreparer {
         this.context.put( key, value );
     }
 
+    public void setTitleElementValueToContext(String key, String value) {
+        if(this.rootNode.getNodeName().equalsIgnoreCase(value)) {
+            if(this.context.get(key) == null) {
+                this.context.put( key, this.rootNode.getTextContent() );
+            }
+        }
+    }
+
     
     public String getValueFromXPath(String xpathExpression) {
         return getValueFromXPath(xpathExpression, null);

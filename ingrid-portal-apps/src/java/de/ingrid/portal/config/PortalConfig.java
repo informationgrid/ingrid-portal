@@ -140,6 +140,8 @@ public class PortalConfig extends PropertiesConfiguration {
     public static final String PORTAL_ENABLE_PRIVACY = "portal.enable.privacy";
     
     public static final String PORTAL_ENABLE_ACCESSIBILITY = "portal.enable.accessibility";
+
+    public static final String PORTAL_ENABLE_RSS_PAGE = "portal.enable.rsspage";
     
     public static final String PORTAL_ENABLE_DEFAULT_GROUPING_DOMAIN = "portal.enable.default.grouping.domain";
     
@@ -211,6 +213,10 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_CONTACT_UPLOAD_ENABLE = "email.contact.upload.enable";
     public static final String PORTAL_CONTACT_UPLOAD_SIZE = "email.contact.upload.size";
+    
+    public static final String PORTAL_CONTACT_PORTAL = "email.contact.portal";
+    
+    public static final String PORTAL_CONTACT_REMOVE_PARTNERS = "email.contact.remove.partners";
     
     public static final String PORTAL_DETAIL_VIEW_HIDDEN_KEYWORDS = "portal.detail.view.hidden.keywords";
     

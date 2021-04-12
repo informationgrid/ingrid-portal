@@ -141,6 +141,7 @@
         #end
         #if($element.url == "/disclaimer.psml" ||
             $element.url == "/privacy.psml" ||
+            $element.url == "/rsspage.psml" ||
             $element.url == "/accessibility.psml")
           <a href="$linkUrl" title="$linkTitle" class="entry"><span class="text">$linkName</span></a>
         #end
@@ -327,7 +328,11 @@
             ## read localized title from resource with title from psml as key !
             #if($linkTitle.startsWith('ingrid'))
                 #set($linkTitle = $MESSAGES.getString($linkTitle))
-                #set($linkName = $MESSAGES.getString($linkName))
+                #if($MESSAGES.getString("${linkName}.menu") == "${linkName}.menu")
+                    #set($linkName = $MESSAGES.getString($linkName))
+                #else
+                    #set($linkName = $MESSAGES.getString("${linkName}.menu"))
+                #end
             #end
             #set($linkUrl = $jetspeed.getAbsoluteUrl($element.url))
             #set($linkPage = $element.url)
