@@ -35,9 +35,9 @@
     ## Höhe
         #renderTable($TOOL.getAreaHeight($xPathPresentEXExtent))
     ## Erläuterung zum Raumbezug
-        #renderTextLabelAbove($MESSAGES.getString("t01_object.loc_descr") $TOOL.getValueFromXPath($xPathPresentEXExtentDescription))
+        #renderTextTable($MESSAGES.getString("t01_object.loc_descr") $TOOL.getValueFromXPath($xPathPresentEXExtentDescription))
     ## Begrenzungspolygon als WKT
-        #renderTextListSpaceList($MESSAGES.getString("t01_object.polygon_wkt") $TOOL.getPolygon($$xPathPresentPolygon) "" false)
+        #renderTextListTable($MESSAGES.getString("t01_object.polygon_wkt") $TOOL.getPolygon($xPathPresentPolygon))
     ## Raumbezugssystem
         #renderLinkListTable($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem($xPathPresentReferenceSystemInfo))
     </div>
