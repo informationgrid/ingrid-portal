@@ -15,6 +15,7 @@
 #set($hasDetail5 = false)
 #set($hasDetail6 = false)
 #set($hasDetail7 = false)
+#set($hasDetail8 = false)
 
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
 #set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
@@ -115,13 +116,10 @@
 
 #### Zugriffsbeschränkungen (accessConstraints)
 #set($xPathUseAccessConstraints = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
-#### Addressen
-#set($xPathUsePointOfContact = "./gmd:identificationInfo/*/gmd:pointOfContact")
 #### Ansprechpartner (Metadatum)
 #set($xPathUseContact = "./gmd:contact")
 
 #set($xPathListUse = [
-    $xPathUsePointOfContact,
     $xPathUseContact,
     "${accessConstraintsXPath}/gmd:MD_RestrictionCode/@codeListValue"
 ])
@@ -428,6 +426,15 @@
     "${xPathDataQualityNonQuantitativeAttributeAccuracy}/gmd:nameOfMeasure",
     "${xPathDataQualityQuantitativeAttributeAccuracy}/gmd:nameOfMeasure",
     "${xPathDataQualityRelativeInternalPositionalAccuracy}/gmd:nameOfMeasure"
+])
+
+
+## Kontakt
+#### Addressen
+#set($xPathUsePointOfContact = "./gmd:identificationInfo/*/gmd:pointOfContact")
+
+#set($xPathListContact = [
+    $xPathUsePointOfContact
 ])
 
 ## Zusatzfelder

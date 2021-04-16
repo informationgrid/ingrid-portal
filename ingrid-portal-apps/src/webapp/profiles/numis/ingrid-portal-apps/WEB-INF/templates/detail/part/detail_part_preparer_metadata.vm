@@ -48,9 +48,11 @@
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_links.vm")
         ## Nutzung
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_use.vm")
+        ## Kontakt
+            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_contact.vm")
         ## Fachinformationen
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information.vm")
-       ## Datenqualität
+        ## Datenqualität
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_dataquality.vm")
         ## Extras
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_extras.vm")
