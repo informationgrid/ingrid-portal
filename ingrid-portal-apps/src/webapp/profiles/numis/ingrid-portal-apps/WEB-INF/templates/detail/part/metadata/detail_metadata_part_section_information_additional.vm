@@ -28,7 +28,7 @@
     ## Bestellinformationen
         #renderTextTable($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions))
     ## XML Darstellung 
-        #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML "no-background")
+        #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML)
     </div>
 #end
 

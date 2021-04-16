@@ -28,12 +28,12 @@
                     ## Nutzung
                         #if($TOOL.aNodeOfListExist($xPathListUse) || $useConstraints.size() > 0 || $useLimitations.size() > 0)
                             #set($hasDetail4 = true)
-                            <a href="#detail-4" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("availability_tab")</span></a>
+                            <a href="#detail-4" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("search.detail.usage")</span></a>
                         #end
                     ## Kontakt
                         #if($TOOL.aNodeOfListExist($xPathListContact))
                             #set($hasDetail8 = true)
-                            <a href="#detail-8" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("Kontakt")</span></a>
+                            <a href="#detail-8" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("search.detail.contact")</span></a>
                         #end
                     ## Fachinformationen
                         #if(($type == "1" && $TOOL.aNodeOfListExist($xPathListInformationType1)) ||
