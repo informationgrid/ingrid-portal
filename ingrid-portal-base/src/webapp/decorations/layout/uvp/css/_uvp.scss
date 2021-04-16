@@ -340,6 +340,7 @@ img { width: 100%; }
 /* links */
 a.icon {
   margin-right: 24px;
+  display: block;
 
   [class^="ic-"] {
     font-size: 20px;
@@ -1541,7 +1542,10 @@ footer {
       .entry { margin-right: 40px; }
       .entry:last-child { margin-right: 0px; }
       
-      a { font-family: 'Roboto-Bold'; }
+      a { 
+        font-family: 'Roboto-Bold';
+        display: inline-block;
+      }
     }
     .copyright {
       text-align: center;
