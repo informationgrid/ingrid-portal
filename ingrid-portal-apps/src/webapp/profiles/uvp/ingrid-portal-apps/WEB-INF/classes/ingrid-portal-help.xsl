@@ -33,8 +33,12 @@
            <xsl:for-each select="section">
                <xsl:if test="header/@display != 'false' or not(header/@display)">
                    <h3>
-                       <a class="anchor"><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><span class="ic-ic-check-circle"></span><a/></a>
-                       <span><xsl:value-of select="header"/></span>
+                        <a class="anchor">
+                            <xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute>
+                            <xsl:attribute name="id"><xsl:value-of select="@help-key" /></xsl:attribute>
+                            <span/>
+                        </a>
+                        <span><xsl:value-of select="header"/></span>
                    </h3>
                </xsl:if>
                <xsl:apply-templates select="content"/>

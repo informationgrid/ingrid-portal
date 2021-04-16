@@ -37,6 +37,11 @@
         return this.each(function () {
 
             var locationHash = window.location.hash.substr(1);
+            var url = new URL(window.location.href);
+            var key = $(this).context.dataset.key;
+            if(key) {
+              locationHash = url.searchParams.get(key);
+            }
             var elemHash = $(this).context.hash.substr(1);
 
             deactivate($(this));
