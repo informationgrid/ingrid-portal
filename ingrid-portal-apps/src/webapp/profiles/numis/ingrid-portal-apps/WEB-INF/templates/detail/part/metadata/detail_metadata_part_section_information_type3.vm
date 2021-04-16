@@ -26,5 +26,5 @@
     #set($headXpathExpressions = ["./srv:operationName","./srv:operationDescription","./srv:invocationName"])
     #renderTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_serv_operation"), $$xPathInfo3SVOperationMetadata, $headTitles, $headXpathExpressions))
 ## Operation -> Zugriffsadresse
-    #renderTextLabelLeftLink($TOOL.getConnectionPoints($xPathInfo3SVOperationMetadataConnectPoint))
+    #renderTextLabelLeftLinkTable($TOOL.getConnectionPoints($xPathInfo3SVOperationMetadataConnectPoint))
 </div>

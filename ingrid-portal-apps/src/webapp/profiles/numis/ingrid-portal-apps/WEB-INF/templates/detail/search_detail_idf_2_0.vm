@@ -138,10 +138,12 @@
             </div>
         #elseif($entry.isDownload)
             <div class="download">
-                #if($tool.hasContent($entry.serviceType))
-                    #renderServiceType($entry.serviceType)
-                #else
-                    #renderServiceTypeUrl($entry.href)
+                #if($entry.title != $MESSAGES.getString('xml_link'))
+                    #if($tool.hasContent($entry.serviceType))
+                        #renderServiceType($entry.serviceType)
+                    #else
+                        #renderServiceTypeUrl($entry.href)
+                    #end
                 #end
                 <a href="$entry.href" class="icon" title="$entry.title" target="_blank" rel="noopener noreferrer">
                   <span class="ic-ic-download"></span>
@@ -1077,9 +1079,9 @@
     #end
 #end
 
-#macro (renderTextLabelLeftLink $entry)
+#macro (renderTextLabelLeftLinkTable $entry)
     #if($tool.hasContent($entry))
-    <div class="table table--lined no-background">
+    <div class="table table--lined">
         <table>
             <tbody>
                 <tr>
