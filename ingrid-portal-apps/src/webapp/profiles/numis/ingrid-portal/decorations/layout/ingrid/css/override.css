@@ -1123,9 +1123,12 @@ header .menu-tab-row .menu-tab {
 }
 
 /* detail */
+.search-filtered .table {
+    margin-bottom: 4px;
+}
 
 .search-filtered .table table {
-    background-color: #EAF6FF;
+    background-color: #ECECEC;
 }
 
 .search-filtered .table table th:first-child {

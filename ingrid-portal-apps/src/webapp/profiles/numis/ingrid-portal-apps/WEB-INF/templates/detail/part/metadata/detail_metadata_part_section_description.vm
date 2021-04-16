@@ -32,26 +32,26 @@
             #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
             #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
                 #if($beginTime == $endTime)
-                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime" "no-background")
+                    #renderTextTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime" "no-background")
                 #elseif($beginTime && !$endTime)
-                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime" "no-background")
+                    #renderTextTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime" "no-background")
                 #elseif(!$beginTime && $endTime)
-                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
+                    #renderTextTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
                 #elseif($beginTime != $endTime)
-                    #renderLinkTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
+                    #renderTextTable($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
                 #end
             #end
         ## Status
-            #renderLinkTable($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath($xPathListTimeMDProgressCode, "523") "no-background")
+            #renderTextTable($MESSAGES.getString("t01_object.time_status") $TOOL.getValueFromXPath($xPathListTimeMDProgressCode, "523") "no-background")
         ## Periodizität
-            #renderLinkTable($MESSAGES.getString("t01_object.time_period") $TOOL.getValueFromXPath($xPathListTimeMDMaintenanceFrequencyCode, "518") "no-background")
+            #renderTextTable($MESSAGES.getString("t01_object.time_period") $TOOL.getValueFromXPath($xPathListTimeMDMaintenanceFrequencyCode, "518") "no-background")
         ## Intervall der Erhebung
             #set($value = $TOOL.getValueFromXPath($xPathListTimeUserDefinedMaintenanceFrequency))
             #if($value)
-                #renderLinkTable($MESSAGES.getString("t01_object.time_interval") "$TOOL.timePeriodDurationToTimeAlle($value) $TOOL.timePeriodDurationToTimeInterval($value)" "no-background")
+                #renderTextTable($MESSAGES.getString("t01_object.time_interval") "$TOOL.timePeriodDurationToTimeAlle($value) $TOOL.timePeriodDurationToTimeInterval($value)" "no-background")
             #end
         ## Erläuterung zum Zeitbezug
-            #renderLinkTable($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath($xPathListTimeMaintenanceNote) "no-background")
+            #renderTextTable($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath($xPathListTimeMaintenanceNote) "no-background")
         ## Zeitbezug der Ressource
             #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
             #if($nodelist)

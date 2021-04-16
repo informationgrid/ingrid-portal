@@ -27,9 +27,9 @@
     #set($headXpathExpressions = ["./gmd:title","./gmd:date/gmd:CI_Date/gmd:date","./gmd:edition"])
     #renderTextTable($TOOL.getNodeListTable($MESSAGES.getString("t011_obj_geo_keyc"), $xPathInfo1MDFeatureCatalogueDescriptionFeatureCatalogueCitation, $headTitles, $headXpathExpressions))
 ## Datengrundlage
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getValueFromXPath($xPathInfo1LISourceDescription))
+    #renderTextListTable($MESSAGES.getString("t011_obj_geo.data_base") $TOOL.getListOfValuesFromXPath($xPathInfo1LISourceDescription, "."))
 ## Sachdaten/Attributinformation
-    #renderTextList($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
+    #renderTextListTable($MESSAGES.getString("t011_obj_geo_supplinfo.feature_type") $TOOL.getListOfValuesFromXPath($xPathInfo1MDFeatureCatalogueDescriptionFeatureTypes, "."))
 ## Herstellungsprozess
     #renderTextTable($MESSAGES.getString("t011_obj_geo.method") $TOOL.getValueFromXPath($xPathInfo1LIProcessStep))
 ## Identifikator der Datenquelle

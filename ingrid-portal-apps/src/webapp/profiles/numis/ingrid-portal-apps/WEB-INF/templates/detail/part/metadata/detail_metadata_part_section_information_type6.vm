@@ -2,7 +2,7 @@
 ################################
 <div class="row-sub">
 ## Klassifikation des Dienstes
-    #renderTextList($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
+    #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
 ## Art des Dienstes
     #renderTextTable($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath($xPathInfo6ServiceType, "5300"))
 ## Version

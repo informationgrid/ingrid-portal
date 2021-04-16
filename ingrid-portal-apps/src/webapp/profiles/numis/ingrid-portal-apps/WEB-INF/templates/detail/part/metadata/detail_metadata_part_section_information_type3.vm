@@ -4,7 +4,7 @@
 ## Fachliche Grundlage
     #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement))
 ## Klassifikation des Dienstes
-    #renderTextList($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
+    #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
 ## Typ des Dienstes
     #renderTextTable($MESSAGES.getString("t011_obj_serv.type") $TOOL.getValueFromXPath($xPathInfo3ServiceType, "5100"))
 ## Version des Services
