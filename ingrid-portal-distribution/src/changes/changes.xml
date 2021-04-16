@@ -6,6 +6,81 @@
     </properties>
 
     <body>
+        <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
+          <action type="update" dev="wemove">
+            Portal: Update measurement client to version 1.0.22.
+          </action>
+          <action type="update" dev="wemove" issue="2422">
+            Portal: Fix wording for forgotten password function
+          </action>
+          <action type="update" dev="wemove" issue="2287">
+            Portal: Change facet map query
+          </action>
+          <action type="update" dev="wemove" issue="3157">
+            Portal (mCLOUD): New way for entering keywords
+          </action>
+          <action type="update" dev="wemove" issue="3235">
+            Portal (mCLOUD): show warning before delete uploads
+          </action>
+          <action type="update" dev="wemove" issue="3179">
+            Portal (mCLOUD): show info about uploadquota
+          </action>
+          <action type="update" dev="wemove" issue="2401">
+            Portal: Remove entry from uvp-nrw
+          </action>
+          <action type="update" dev="wemove" issue="2185">
+            Portal: Adjust rp layout
+          </action>
+          <action type="add" dev="wemove" issue="2345">
+            Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
+          </action>
+          <action type="add" dev="wemove" issue="582">
+            Portal: Add RSS Page to UVP-NI profile
+          </action>
+          <action type="fix" dev="wemove" issue="2373">
+            Portal: Facetten überlagen Footer
+          </action>
+          <action type="fix" dev="wemove" issue="2399">
+            Mapclient: Keine Legende beim Ausdruck eines Kartenausschnitts
+          </action>
+          <action type="add" dev="wemove" issue="2290">
+            Portal: Anzeige von Kurzbezeichnung ist in der Portal Detaildarstellung falsch, wenn eine AdV Produktgruppe angegeben wurden.
+          </action>
+          <action type="add" dev="wemove" issue="2256">
+            Portal: Erstellung Portal-Profil Sachsen-Anhalt Umweltportal
+          </action>
+          <action type="add" dev="wemove" issue="2185">
+            Portal: PortalU RLP - Umstellung auf neues Design
+          </action>
+          <action type="fix" dev="wemove" issue="2303">
+            Portal: In Katalogdarstellung sollen nur Katalog mit Suchergebnissen dargestellt werden
+          </action>
+          <action type="fix" dev="wemove" issue="2338">
+            IGE: Udpate behaviour label and tooltip
+          </action>
+          <action type="fix" dev="wemove" issue="2336">
+            IGE: Fix vector format table column name and add validation
+          </action>
+          <action type="update" dev="wemove" issue="2294">
+            Portal: Aktualisierung TOMCAT auf aktuellere Version 9.0.41
+          </action>
+          <action type="update" dev="wemove" issue="2346">
+            IGE (UVP): Support checkbox parameter for behaviours to control indexing of negative preliminary examination
+          </action>
+          <action type="fix" dev="wemove" issue="2354">
+            IGE: Remove conflicting library which could prevent showing help
+          </action>
+          <action type="fix" dev="wemove" issue="2334">
+            IGE: Extract correct coupled resource identifier of external coupled resource
+          </action>
+          <action type="fix" dev="wemove" issue="2184">
+            IGE: Fix title of context help of temporal fields
+          </action>
+          <action type="fix" dev="wemove">
+            Catch all errors in Communication
+          </action>
+        </release>
+
         <release version="5.7.0" date="2021-01-19" description="Release 5.7.0">
           <action type="fix" dev="wemove" issue="2305">
             IGE: Fix "Lagegenauigkeit" Helptext
@@ -81,10 +156,10 @@
             Fix upload cleanup job indexing issue.
           </action>
           <action type="fix" dev="wemove" issue="2262">
-            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled. 
+            IGE: Show mandatory fields (cell geometry and number of dimensions) only after any field of the section was filled.
           </action>
           <action type="fix" dev="wemove" issue="2265">
-            IGE: Add context help for grid format fields. 
+            IGE: Add context help for grid format fields.
           </action>
           <action type="fix" dev="wemove" issue="2261">
             IGE: Fix jump to tree function on duplicate check page.
@@ -97,6 +172,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2283">
             Set DB_PASSWORD only with environment variable
+          </action>
+          <action type="fix" dev="wemove" issue="2331">
+            ÎGE: Change umlauts in statistic mouseover
           </action>
         </release>
 

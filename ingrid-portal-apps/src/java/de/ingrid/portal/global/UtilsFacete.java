@@ -462,7 +462,7 @@ public class UtilsFacete {
                                     log.debug("Facet facetSubkey: '" + facetSubkey + "' from '" + facetKey + "'.");
                                 }
                                 IngridFacet ingridFacet = getFacetById(config, facetKey);
-                                if(ingridFacet != null) {
+                                if(ingridFacet != null && facetSubkey != null && !facetSubkey.isEmpty()) {
                                     if(ingridFacet.getFacets() != null && ingridFacet.getField() == null){
                                         if(log.isDebugEnabled()) {
                                             log.debug("Facet facetSubkey: '" + facetSubkey + "' from '" + facetKey + "'.");

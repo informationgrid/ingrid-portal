@@ -385,4 +385,16 @@
         <p>$MESSAGES.getString("sitemap.area.footer.accessibility.description")</p>
     </li>
     #end
+    #if($enableRSSPage)
+    <li>
+        #set ($link = $renderResponse.encodeURL("/portal/rsspage.psml"))
+        <a href="$link" title="$MESSAGES.getString("sitemap.area.footer.rsspage.tooltip")">
+            <svg class="icon">
+                <use xlink:href="#internal-link"/>
+            </svg>
+            $MESSAGES.getString("sitemap.area.footer.rsspage")
+        </a>
+        <p>$MESSAGES.getString("sitemap.area.footer.rsspage.description")</p>
+    </li>
+    #end
 </ul>

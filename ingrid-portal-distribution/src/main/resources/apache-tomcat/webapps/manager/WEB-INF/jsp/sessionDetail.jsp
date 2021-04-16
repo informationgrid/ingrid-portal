@@ -20,7 +20,7 @@
   limitations under the Licence.
   **************************************************#
   --%>
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <%--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -141,7 +141,7 @@
 
    <table style="text-align: left;" border="1" cellpadding="2" cellspacing="2">
    <% int nAttributes = 0;
-      Enumeration attributeNamesEnumeration = currentHttpSession.getAttributeNames();
+      Enumeration<String> attributeNamesEnumeration = currentHttpSession.getAttributeNames();
       while (attributeNamesEnumeration.hasMoreElements()) {
           attributeNamesEnumeration.nextElement();
           ++nAttributes;
@@ -165,7 +165,7 @@
        <tbody>
    <% attributeNamesEnumeration = currentHttpSession.getAttributeNames();
       while (attributeNamesEnumeration.hasMoreElements()) {
-          String attributeName = (String) attributeNamesEnumeration.nextElement();
+          String attributeName = attributeNamesEnumeration.nextElement();
    %>
            <tr>
                <td align="center">

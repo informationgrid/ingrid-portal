@@ -56,6 +56,11 @@
     You are not authorized to view this page.
    </p>
    <p>
+    By default the Manager is only accessible from a browser running on the
+    same machine as Tomcat. If you wish to modify this restriction, you'll need
+    to edit the Manager's <tt>context.xml</tt> file.
+   </p>
+   <p>
     If you have already configured the Manager application to allow access and
     you have used your browsers back button, used a saved book-mark or similar
     then you may have triggered the cross-site request forgery (CSRF) protection

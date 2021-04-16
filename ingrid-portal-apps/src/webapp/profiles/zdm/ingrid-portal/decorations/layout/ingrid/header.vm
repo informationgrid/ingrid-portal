@@ -2,7 +2,7 @@
 #defineLayoutObjects()
 
 #* Loads our custom macros *#
-#parse($layoutDecoration.getResource("decorator-macros.vm"))
+#parse("/decorations/layout/ingrid/decorator-macros.vm")
 
 #* Add all template constants to the current context *#
 ##defineNavigationConstants()
@@ -21,6 +21,7 @@
     <head>
         <base href="/" />
         <title>$MESSAGES.getStringOrDefault($jetspeed.getPageMetadata("meta_title"), "ZDM-Küstendaten")</title>
+        #includeHeaderResource()
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 

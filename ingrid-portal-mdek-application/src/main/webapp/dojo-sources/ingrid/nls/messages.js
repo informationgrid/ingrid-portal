@@ -383,8 +383,13 @@ define({
         "dialog.spatialAssist.title": "Add Custom Location",
         "dialog.spatialNavigator.title": "Geothesaurus-Navigator",
         "dialog.thesaurusAssist.title": "Thesaurus assistant",
-        "dialog.statistics.numTotal": "Total",
         "dialog.thesaurusNavigator.title": "Thesaurus-Navigator",
+        "dialog.statistics.numTotal": "Total",
+        "dialog.statistics.tooltip.published": "Published",
+        "dialog.statistics.tooltip.qa": "Assigned to QA",
+        "dialog.statistics.tooltip.returned": "Reassigned from QA",
+        "dialog.statistics.objTerms": "Object searchterms",
+        "dialog.statistics.adrTerms": "Address searchterms",
 
         "dialog.waitForJob.opName": "Current operation:",
         "dialog.waitForJob.objCount": "Objects processed:",
@@ -1094,6 +1099,7 @@ define({
         "validation.error.missing.download.link": "When 'Open Data' is selected then there must be a link of the type 'Download' created.",
         "validation.error.date.without.title": "No date allowed without title.",
         "validation.error.axisdim.required.columns": "The columns 'Description of axis' and 'Number of elements' are required.",
+        "validation.error.geometry.type": "When 'Number of elements' are set, then the 'Geometrytype' also must be set.",
 
         "validation.levelOfSpecification.notConform":"For non conform INSPIRE-relevant datasets this specification must be 'not evaluated' or 'not conform'.",
         "validation.levelOfSpecification.conform":"For conform INSPIRE-relevant datasets this specification must be 'conform'.",

@@ -40,7 +40,7 @@
                <xsl:apply-templates select="content"/>
                <xsl:for-each select="section">
                    <a><xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute><a/></a>
-                   <h3><xsl:value-of select="header"/></h3>
+                   <h4><xsl:value-of select="header"/></h4>
                    <xsl:apply-templates select="content"/>
                </xsl:for-each>
            </xsl:for-each>

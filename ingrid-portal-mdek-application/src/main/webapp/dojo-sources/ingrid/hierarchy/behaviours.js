@@ -64,6 +64,7 @@ define(["dojo/_base/declare",
         "ingrid/hierarchy/behaviours/ref1Representation",
         "ingrid/hierarchy/behaviours/ref1SymbolsText",
         "ingrid/hierarchy/behaviours/ref1KeysText",
+        "ingrid/hierarchy/behaviours/ref1VFormatDetails",
         "ingrid/hierarchy/behaviours/dataQualitySection",
         "ingrid/hierarchy/behaviours/ref3BaseDataLink",
         "ingrid/hierarchy/behaviours/ref3Operations",
@@ -90,7 +91,7 @@ define(["dojo/_base/declare",
             dialog, UtilGrid, UtilUI, UtilList, UtilSyslist,
             addresses, openData, foldersInHierarchy, conformityFields, dataformat, spatialSystems, inspireGeoservice, inspireIsoConnection,
             advCompatible, adminitrativeArea, advProductGroup, optionalGetCapability, inspireRelevant, thesaurusInspire, thesaurusTopics,
-            thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, dataQualitySection,
+            thesaurusEnvironment, ref1Representation, ref1SymbolsText, ref1KeysText, ref1VFormatDetails, dataQualitySection,
             ref3BaseDataLink, ref3Operations, ref3CouplingType, ref5KeysText,
             serviceUrls, spatialRefAdminUnit, spatialRefLocation, spatialRefHeight,
             timeRefTable, timeRefDate, timeRefIntervalUnit,
@@ -120,6 +121,8 @@ define(["dojo/_base/declare",
         ref1SymbolsText: ref1SymbolsText,
 
         ref1KeysText: ref1KeysText,
+
+        ref1VFormatDetails: ref1VFormatDetails,
 
         dataQualitySection: dataQualitySection,
 
@@ -198,7 +201,7 @@ define(["dojo/_base/declare",
 
         requireUseConstraints: {
             title: "Nutzungsbedingungen - Pflichtfeld für Geodatensatz und -dienst",
-            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints + useLimitation) wird verpflichtend, wenn die die Objektklasse 1 oder 3 ausgewählt wurde.",
+            description: "Das Feld \"Nutzungsbedingungen\" (ISO: useConstraints) wird verpflichtend, wenn Geodatensatz oder Geodatendienst ausgewählt wurde.",
             issue: "https://dev.informationgrid.eu/redmine/issues/223,1362",
             defaultActive: true,
         	run: function() {
@@ -213,7 +216,7 @@ define(["dojo/_base/declare",
         },
 
         validateGraphicPreviewTableEntries: {
-            title: "Vorschaugrafik - Überprüfung der Tebelleneinträge",
+            title: "Vorschaugrafik - Überprüfung der Tabelleneinträge",
             description: "Für Vorschaugrafiken muss ein Dateiname immer vorhanden sein.",
             defaultActive: true,
             run: function() {

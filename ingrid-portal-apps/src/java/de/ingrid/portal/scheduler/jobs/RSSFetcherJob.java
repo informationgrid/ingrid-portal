@@ -169,23 +169,23 @@ public class RSSFetcherJob extends IngridMonitorAbstractJob {
                             }
                         }
 
+                        cal = Calendar.getInstance();
+
                         publishedDate = entry.getPublishedDate();
                         // check for published date in the entry
                         if (publishedDate == null) {
-                            includeEntry = false;
+                            // if no published date, take the current date instead
+                            publishedDate = cal.getTime();
                             if (log.isDebugEnabled()) {
-                                log.debug("Ignore item, because a publishing date could not be retrieved: " + entry);
+                                log.debug("The publishing date could not be retrieved, thus use the current date instead: " + entry);
                             }
                         }
-
-                        cal = Calendar.getInstance();
 
                         // filter entries with dates in future
                         if (includeEntry && publishedDate != null && publishedDate.after(cal.getTime())) {
                             includeEntry = false;
                             if (log.isDebugEnabled()) {
-                                log
-                                        .debug("Ignore item, because the publishing date is in the future: "
+                                log.debug("Ignore item, because the publishing date is in the future: "
                                                 + publishedDate);
                             }
                         }
