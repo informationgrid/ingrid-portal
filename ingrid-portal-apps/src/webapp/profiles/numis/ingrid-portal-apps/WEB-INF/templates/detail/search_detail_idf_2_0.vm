@@ -75,7 +75,7 @@
             <div>
                 #if($tool.hasContent($entry.serviceType))
                     #renderServiceType($entry.serviceType)
-                #else
+                #elseif($tool.hasContent($entry.href))
                     #renderServiceTypeUrl($entry.href)
                 #end
                 <a class="icon" href="$entry.href" title="$entry.title" target="_blank" rel="noopener noreferrer">
