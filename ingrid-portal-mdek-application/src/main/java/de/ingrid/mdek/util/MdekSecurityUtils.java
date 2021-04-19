@@ -120,41 +120,9 @@ public class MdekSecurityUtils {
 
 				// Handle requests from users using Shibboleth SSO
 				if ("/dwr".equals(req.getServletPath()) && globalConfig.useShibboleth) {
-					String header = globalConfig.shibbolethUsernameHeader.trim();
-					String uid = req.getHeader(header);
-					if (uid != null) {
-						uid = uid.trim();
-						if (log.isDebugEnabled()) {
-							log.debug("User is logged in via Shibboleth. User-ID: " + uid);
-						}
-					}
-
-					String shibUserNameKey = "shibUserName";
-					String existingShibUserName = (String) ses.getAttribute(shibUserNameKey);
-
-					if (existingShibUserName != null && (forcedIgeUser == null || existingShibUserName.equals(forcedIgeUser))) {
-						// new request from same user
-						return getUserData(existingShibUserName);
-
-					} else if (uid != null) {
-
-						boolean isPortalSuperUser = false;
-						String[] superUsers = globalConfig.shibbolethPortalSuperusers.split(";");
-						for (int i = 0; i < superUsers.length && !isPortalSuperUser; i++) {
-							isPortalSuperUser = isPortalSuperUser || uid.equals(superUsers[i].trim());
-						}
-						if (isPortalSuperUser && log.isDebugEnabled()) {
-							log.debug("Shibboleth user is also portal SuperUser. User-ID: " + uid);
-						}
-
-						if (isPortalSuperUser && forcedIgeUser != null) {
-							// Portal superuser logging in as different user
-							ses.setAttribute(shibUserNameKey, forcedIgeUser);
-							return getUserData(forcedIgeUser);
-						} else {
-							ses.setAttribute(shibUserNameKey, uid);
-							return getUserData(uid);
-						}
+					String shibUsername = getShibbolethUsername(req, ses, forcedIgeUser);
+					if (shibUsername != null) {
+						return getUserData(shibUsername);
 					}
 				}
 
@@ -162,6 +130,45 @@ public class MdekSecurityUtils {
 				throw new RuntimeException("USER_LOGIN_ERROR");
 			}
 		}
+	}
+
+	private static String getShibbolethUsername(HttpServletRequest req, HttpSession ses, String forcedIgeUser) {
+		String shibUserNameKey = "shibUserName";
+		String previousShibUserName = (String) ses.getAttribute(shibUserNameKey);
+
+		if (previousShibUserName != null && (forcedIgeUser == null || previousShibUserName.equals(forcedIgeUser))) {
+			// new request from same user
+			return previousShibUserName;
+		}
+
+		String header = globalConfig.shibbolethUsernameHeader.trim();
+		String uid = req.getHeader(header);
+		if (uid != null) {
+			uid = uid.trim();
+
+			if (log.isDebugEnabled()) {
+				log.debug("User is logged in via Shibboleth. User-ID: " + uid);
+			}
+
+			boolean isPortalSuperUser = false;
+			String[] superUsers = globalConfig.shibbolethPortalSuperusers.split(";");
+			for (int i = 0; i < superUsers.length && !isPortalSuperUser; i++) {
+				isPortalSuperUser = isPortalSuperUser || uid.equals(superUsers[i].trim());
+			}
+			if (isPortalSuperUser && log.isDebugEnabled()) {
+				log.debug("Shibboleth user is also portal SuperUser. User-ID: " + uid);
+			}
+
+			if (isPortalSuperUser && forcedIgeUser != null) {
+				// Portal superuser logging in as different user
+				ses.setAttribute(shibUserNameKey, forcedIgeUser);
+				return forcedIgeUser;
+			} else {
+				ses.setAttribute(shibUserNameKey, uid);
+				return uid;
+			}
+		}
+		return null;
 	}
 
 
