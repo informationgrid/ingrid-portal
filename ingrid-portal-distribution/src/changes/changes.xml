@@ -76,6 +76,9 @@
           <action type="fix" dev="wemove" issue="2184">
             IGE: Fix title of context help of temporal fields
           </action>
+          <action type="fix" dev="wemove" issue="2331">
+            IGE: Change umlauts in statistic mouseover
+          </action>
           <action type="fix" dev="wemove">
             Catch all errors in Communication
           </action>
@@ -172,9 +175,6 @@
           </action>
           <action type="fix" dev="wemove" issue="2283">
             Set DB_PASSWORD only with environment variable
-          </action>
-          <action type="fix" dev="wemove" issue="2331">
-            ÎGE: Change umlauts in statistic mouseover
           </action>
         </release>
 
