@@ -3,6 +3,7 @@
     <h2>$MESSAGES.getString("subject_reference_tab")</h2>
 
     <div class="row columns">
+        #renderSectionTitle($MESSAGES.getString("technical_information"))
         #if($type == "1" && $TOOL.aNodeOfListExist($xPathListInformationType1))
         ## Geodatensatz
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type1.vm")

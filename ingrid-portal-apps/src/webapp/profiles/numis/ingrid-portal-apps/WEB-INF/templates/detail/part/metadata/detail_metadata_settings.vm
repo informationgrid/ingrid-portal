@@ -437,7 +437,7 @@
     $xPathUsePointOfContact
 ])
 #set($xPathUsePointOfContactNodes = $TOOL.getNodeListFromXPath("${xPathUsePointOfContact}"))
-#set($xPathUsePointOfContactSort = ["pointOfContact","custodian","resourceProvider","processor","publisher","author"])
+#set($xPathUsePointOfContactSort = ["pointOfContact","distributor","publisher","owner","processor","author"])
 #set($xPathUsePointOfContactSortNodes = [])
 #foreach($tmpXPathSort in $xPathUsePointOfContactSort)
     #foreach($tmpXPathNodeNumber in [0..$xPathUsePointOfContactNodes.getLength()])
