@@ -109,6 +109,13 @@ public class MdekSecurityUtils {
 				return getUserData(userName);
 
 			} else {
+				// TODO >>> See comments in ticket #2430
+				String uid = req.getHeader("uid");
+				if ("/dwr".equals(req.getServletPath()) && uid != null) {
+					return getUserData(uid.trim());
+				}
+				// <<< Ticket #2430
+
 				// UserPrincipal and userName not found. Throw an error since we can't determine the user
 				throw new RuntimeException("USER_LOGIN_ERROR");
 			}
