@@ -1,0 +1,30 @@
+#if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
+<div id="menu_login" class="metamenu metamenu--wide">
+    #parse ('/WEB-INF/templates/myportal/login_form.vm')
+</div>
+#else
+    #if($urlNotExists)
+        #renderMessageError($MESSAGES.getString('login.error.url.not.exists'))
+    #end
+    #if($isPasswordUpdate)
+        #parse ('/WEB-INF/templates/myportal/myportal_password_update_required.vm')
+    #else
+    <div>
+        #parse ('/WEB-INF/templates/myportal/login_form.vm')
+    </div>
+    #end
+#end
+#if($renderRequest.getWindowID() == "MyPortalLoginPortlet" && $jetspeed.getLoggedOn())
+    <script>
+    if($actionForm.hasErrorInField('org.apache.jetspeed.login.username') || $actionForm.hasErrorInField('org.apache.jetspeed.login.password')){
+        $('#logged_on_link').addClass('is-active');
+    }
+
+    // Focus login input
+    $("#logged_on_link").on("click", function(){
+        $("#menu_login").fadeToggle("fast", function(){
+            $('#login').focus();
+        });
+    });
+    </script>
+#end
