@@ -58,7 +58,6 @@
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_extras.vm")
         ## Additional Fields Example
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_additional_fields.vm")
-            </div>
         </div>
     </div>
 #end

@@ -293,7 +293,7 @@
 ## New Detail macros
 ## *************************
 
-#macro (renderMultiLineAddresses $title $entries $isMeta $isFactSheet)
+#macro (renderMultiLineAddresses $title $entries $isMeta $isFactSheet $isAddress)
     #if($isMeta == true)
         <div class="table table--lined">
             <table>
@@ -452,7 +452,7 @@
                             #end
                         #end
                         </p>
-                        #if(!$isFactSheet)
+                        #if(!$isFactSheet || $isAddress)
                         <p>
                             ## "Street"
                             #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:deliveryPoint")

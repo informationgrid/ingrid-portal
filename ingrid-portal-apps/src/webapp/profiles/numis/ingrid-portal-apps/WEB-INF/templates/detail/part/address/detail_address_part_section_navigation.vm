@@ -1,0 +1,28 @@
+<div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
+    <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+        <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="detail-accordion-label" aria-expanded="false" aria-selected="false">Inhalt</a>
+        <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
+            <div class="boxes">
+                <ul class="accordion filter-group nav-group">
+                    <li class="accordion-item">
+                    ## Übersicht
+                        #if($TOOL.aNodeOfListExist($xPathListFactSheet))
+                            #set($hasDetail0 = true)
+                            <a href="#detail-0" class="accordion-title js-anchor-target is-active"><span class="text">$MESSAGES.getString("general_tab")</span></a>
+                        #end
+                    ## Beschreibung
+                        #if($getAlternateTitle || $getDescription)
+                            #set($hasDetail1 = true)
+                            <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("detail_description")</span></a>
+                        #end
+                    ## Verweise und Downloads
+                        #if($TOOL.aNodeOfListExist($xPathListReferences))
+                            #set($hasDetail2 = true)
+                            <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>
+                        #end
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+#set($type = $TOOL.getAddressClassType())
+#set($title = $TOOL.getAddressClassTitle($type))
+#set($lang = $TOOL.getLanguage())
+#set($modTime = $TOOL.getDateValueFromXPath("./idf:last-modified"))
+
+#set($hasDetail0 = false)
+#set($hasDetail1 = false)
+#set($hasDetail2 = false)
+
+## Beschreibung
+#set($getAlternateTitle = $TOOL.getValueFromXPath("./gmd:alternateTitle"))
+#set($getDescription = $TOOL.valueHTMLEscape($TOOL.getValueFromXPath("./gmd:positionName/gco:CharacterString")))
+
+## Verweise und Downloads
+#### Links/Querweise
+#set($xPathRefLinks = "./idf:objectReference")
+#set($xPathListReferences = [
+    $xPathRefLinks
+])
+
+#set($getLinks = $TOOL.getReference($xPathRefLinks, true))
+
+## Kontakt
+#### Addressen
+#set($xPathUsePointOfContact = ".")
+
+#set($xPathListContact = [
+    $xPathUsePointOfContact
+])
+#set($xPathUsePointOfContactNodes = $TOOL.getNodeListFromXPath("${xPathUsePointOfContact}"))
+#set($xPathUsePointOfContactSortNodes = [])
+
+#foreach($tmpXPathNodeNumber in [0..$xPathUsePointOfContactNodes.getLength()])
+            #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}"))
+        #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
+#end
+
+## Zusatzfelder
+#set($xPathAdditionalFields = "./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']")
+#set($xPathAdditionalFieldsData = "./idf:additionalDataSection[@id='additionalFields']/idf:additionalDataField")
+
+
+##FactSheet
+#set($xPathListFactSheet = [
+    $xPathUsePointOfContact
+])

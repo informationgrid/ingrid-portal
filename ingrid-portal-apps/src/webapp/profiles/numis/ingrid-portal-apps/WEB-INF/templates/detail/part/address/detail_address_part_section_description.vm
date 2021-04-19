@@ -1,0 +1,28 @@
+## Beschreibung
+################################
+#if($hasDetail1)
+    <a class="anchor" id="detail-1" name="detail-1"></a>
+    <h2>$MESSAGES.getString("detail_description")</h2>
+    <div class="row columns">
+        #if($getAlternateTitle)
+            #foreach($t in $getAlternateTitle)
+                <h4>$t</h4>
+            #end
+        #end
+        #if($getDescription)
+        <div class="js-expand-box js-expand-text js-non-expand-text">
+            ## Beschreibung
+            <div class="js-expand-text-content">
+            #renderTextLabelAbove("" $getDescription)
+            </div>
+            <div class="desc-fade"></div>
+        </div>
+        <button type="button" class="js-open-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.more')" href="#">
+            $MESSAGES.getString('search.detail.info.more')
+        </button>
+        <button type="button" class="js-close-expand-text button outline is-hidden" title="$MESSAGES.getString('search.detail.info.less')" href="#">
+            $MESSAGES.getString('search.detail.info.less')
+        </button>
+        #end
+    </div>
+#end

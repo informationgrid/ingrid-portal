@@ -1,0 +1,17 @@
+## Verweise und Downloads
+################################
+#if($hasDetail2)
+    <a class="anchor" id="detail-2" name="detail-2"></a>
+    <h2>$MESSAGES.getString("references_tab")</h2>
+    <div class="row columns">
+    ## Links
+        #if($getLinks.size() > 0)
+            #set($tmpTitle = $MESSAGES.getString('search.detail.dataRelations'))
+            #set($tmpCount = $getLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h3" [] true)
+        #end
+    </div>
+#end
