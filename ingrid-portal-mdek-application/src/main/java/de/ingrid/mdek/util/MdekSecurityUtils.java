@@ -32,6 +32,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import de.ingrid.mdek.Config;
+import de.ingrid.mdek.SpringConfiguration;
 import org.apache.log4j.Logger;
 import org.directwebremoting.WebContext;
 import org.directwebremoting.WebContextFactory;
@@ -55,11 +57,17 @@ public class MdekSecurityUtils {
 
 	// Injected by Spring
 	private static AuthenticationProvider authProvider;
-	
+
+	// Injected by Spring
+	private static SpringConfiguration springConfig;
+	private static Config globalConfig;
+
 	@Autowired
-	public MdekSecurityUtils(@Value("#{daoFactory}") IDaoFactory dao, AuthenticationProvider authProvider) {
+	public MdekSecurityUtils(@Value("#{daoFactory}") IDaoFactory dao, AuthenticationProvider authProvider, SpringConfiguration springConfig) {
 	    MdekSecurityUtils.daoFactory = dao;
 	    MdekSecurityUtils.authProvider = authProvider;
+	    MdekSecurityUtils.springConfig = springConfig;
+		MdekSecurityUtils.globalConfig = springConfig.globalConfig();
 	}
 
 	public static UserData getCurrentPortalUserData() {
@@ -109,12 +117,46 @@ public class MdekSecurityUtils {
 				return getUserData(userName);
 
 			} else {
-				// TODO >>> See comments in ticket #2430
-				String uid = req.getHeader("uid");
-				if ("/dwr".equals(req.getServletPath()) && uid != null) {
-					return getUserData(uid.trim());
+
+				// Handle requests from users using Shibboleth SSO
+				if ("/dwr".equals(req.getServletPath()) && globalConfig.useShibboleth) {
+					String header = globalConfig.shibbolethUsernameHeader.trim();
+					String uid = req.getHeader(header);
+					if (uid != null) {
+						uid = uid.trim();
+						if (log.isDebugEnabled()) {
+							log.debug("User is logged in via Shibboleth. User-ID: " + uid);
+						}
+					}
+
+					String shibUserNameKey = "shibUserName";
+					String existingShibUserName = (String) ses.getAttribute(shibUserNameKey);
+
+					if (existingShibUserName != null && (forcedIgeUser == null || existingShibUserName.equals(forcedIgeUser))) {
+						// new request from same user
+						return getUserData(existingShibUserName);
+
+					} else if (uid != null) {
+
+						boolean isPortalSuperUser = false;
+						String[] superUsers = globalConfig.shibbolethPortalSuperusers.split(";");
+						for (int i = 0; i < superUsers.length && !isPortalSuperUser; i++) {
+							isPortalSuperUser = isPortalSuperUser || uid.equals(superUsers[i].trim());
+						}
+						if (isPortalSuperUser && log.isDebugEnabled()) {
+							log.debug("Shibboleth user is also portal SuperUser. User-ID: " + uid);
+						}
+
+						if (isPortalSuperUser && forcedIgeUser != null) {
+							// Portal superuser logging in as different user
+							ses.setAttribute(shibUserNameKey, forcedIgeUser);
+							return getUserData(forcedIgeUser);
+						} else {
+							ses.setAttribute(shibUserNameKey, uid);
+							return getUserData(uid);
+						}
+					}
 				}
-				// <<< Ticket #2430
 
 				// UserPrincipal and userName not found. Throw an error since we can't determine the user
 				throw new RuntimeException("USER_LOGIN_ERROR");
