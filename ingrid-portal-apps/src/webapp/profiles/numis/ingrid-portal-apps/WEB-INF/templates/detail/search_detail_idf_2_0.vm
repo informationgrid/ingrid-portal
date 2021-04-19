@@ -293,7 +293,7 @@
 ## New Detail macros
 ## *************************
 
-#macro (renderMultiLineAddresses $title $entry $isMeta $isFactSheet)
+#macro (renderMultiLineAddresses $title $entries $isMeta $isFactSheet)
     #if($isMeta == true)
         <div class="table table--lined">
             <table>
@@ -303,9 +303,9 @@
                 #end
                     <td>
                         #set($count = 0)
-                        #set($entryLength = $entry.getLength() - 1)
+                        #set($entryLength = $entries.getLength() - 1)
                         #foreach($number in [0..$entryLength])
-                            #set($node = $entry.item($number))
+                            #set($node = $entries.item($number))
                             #set($xPath = "./idf:idfResponsibleParty")
                             #if($TOOL.nodeExist($xPath, $node))
                                 #set($xParentPath = "./idf:idfResponsibleParty")
@@ -324,10 +324,15 @@
             </table>
         </div>
     #else
-        #if($entry)
+        #if($entries)
             #set($count = 0)
-            #set($entryLength = $entry.getLength() - 1)
-            #foreach($number in [0..$entryLength])
+            #foreach($entry in $entries)
+            #if($isFactSheet)
+                #if($count == 1)
+                    #break
+                #end
+            #end
+            #set($count = $count + 1)
             #if(!$isFactSheet)
             <div class="table">
             #end
@@ -339,7 +344,7 @@
                 #if(!$isFactSheet)
                 <table>
                 #end
-                    #set($node = $entry.item($number))
+                    #set($node = $entry)
                     #set($xPath = "")
                     #if($TOOL.nodeExist("./idf:idfResponsibleParty", $node))
                         #set($xParentPath = "./idf:idfResponsibleParty")
@@ -350,7 +355,6 @@
                     #end
                     
                     #set($uuid = "")
-                    #set($count = $count + 1)
                     #set($xPath = "$xParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
                     #if(!$isFactSheet)
                     <head>

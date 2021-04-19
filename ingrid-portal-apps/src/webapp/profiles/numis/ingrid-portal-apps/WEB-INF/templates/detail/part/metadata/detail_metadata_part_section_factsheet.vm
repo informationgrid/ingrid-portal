@@ -42,7 +42,9 @@
             #renderTextList($MESSAGES.getString("object_access.license") $useConstraints)
         #end
     ## Kontakt
-        #renderMultiLineAddresses("" $TOOL.getNodeListFromXPath("${xPathUsePointOfContact}[1]") false true)
+        #if($xPathUsePointOfContactSortNodes.size() > 0)
+            #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false true)
+        #end
     </div>
     ## Zeige in Karte
     #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_map_image.vm")

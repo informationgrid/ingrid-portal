@@ -436,6 +436,26 @@
 #set($xPathListContact = [
     $xPathUsePointOfContact
 ])
+#set($xPathUsePointOfContactNodes = $TOOL.getNodeListFromXPath("${xPathUsePointOfContact}"))
+#set($xPathUsePointOfContactSort = ["pointOfContact","custodian","resourceProvider","processor","publisher","author"])
+#set($xPathUsePointOfContactSortNodes = [])
+#foreach($tmpXPathSort in $xPathUsePointOfContactSort)
+    #foreach($tmpXPathNodeNumber in [0..$xPathUsePointOfContactNodes.getLength()])
+        #set($tmpXPathNodeValue = $TOOL.getValueFromXPath("./*/gmd:role/gmd:CI_RoleCode/@codeListValue", "", $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[$tmpXPathNodeNumber]")))
+        #if($tmpXPathNodeValue == $tmpXPathSort)
+            #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[./*/gmd:role/gmd:CI_RoleCode/@codeListValue='$tmpXPathSort']"))
+            #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
+        #end
+    #end
+#end
+
+#foreach($tmpXPathNodeNumber in [0..$xPathUsePointOfContactNodes.getLength()])
+    #set($tmpXPathNodeValue = $TOOL.getValueFromXPath("./*/gmd:role/gmd:CI_RoleCode/@codeListValue", "", $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[$tmpXPathNodeNumber]")))
+    #if(!$xPathUsePointOfContactSort.contains($tmpXPathNodeValue))
+        #set($tmpAddresses = $TOOL.getNodeFromXPath("${xPathUsePointOfContact}[./*/gmd:role/gmd:CI_RoleCode/@codeListValue='$tmpXPathNodeValue']"))
+        #set($add = $xPathUsePointOfContactSortNodes.add($tmpAddresses))
+    #end
+#end
 
 ## Zusatzfelder
 #set($xPathAdditionalFields = "./idf:additionalDataSection[@id='additionalFields']/idf:title[@lang='$lang']")

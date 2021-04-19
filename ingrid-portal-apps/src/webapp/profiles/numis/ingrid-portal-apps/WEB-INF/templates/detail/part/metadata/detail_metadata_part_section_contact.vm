@@ -5,6 +5,6 @@
     <h2>$MESSAGES.getString("search.detail.contact")</h2>
     <div class="row columns">
     ## Addressen
-        #renderMultiLineAddresses("" $TOOL.getNodeListFromXPath($xPathUsePointOfContact) false)
+        #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false)
     </div>
 #end
