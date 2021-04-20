@@ -44,8 +44,6 @@
             #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_description.vm")
         ## Verweise und Downloads
             #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_links.vm")
-        ## Extras
-            #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_extras.vm")
         </div>
     </div>
 #end

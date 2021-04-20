@@ -208,6 +208,7 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                             }
                             link.put("href", "?cmd=doShowObjectDetail&docuuid="+uuid+"&plugid="+this.iPlugId);
                         }else{
+                            link.put("addressClass", type);
                             link.put("href", "?cmd=doShowDocument&docuuid="+uuid+"&plugid="+this.iPlugId);
                         }
                     }else{

@@ -13,5 +13,23 @@
             #end
             #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h3" [] true)
         #end
+    ## Übergeordnete Adressen
+        #if($getSuperiorLinks.size() > 0)
+            #set($tmpTitle = $MESSAGES.getString('superior_address'))
+            #set($tmpCount = $getSuperiorLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h3" [] true)
+        #end
+    ## Untergeordnete Adressen
+        #if($getSubordinatedLinks.size() > 0)
+            #set($tmpTitle = $MESSAGES.getString('subordinated_addresses'))
+            #set($tmpCount = $getSubordinatedLinks.size())
+            #if($tmpCount)
+                #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
+            #end
+            #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h3" [] true)
+        #end
     </div>
 #end

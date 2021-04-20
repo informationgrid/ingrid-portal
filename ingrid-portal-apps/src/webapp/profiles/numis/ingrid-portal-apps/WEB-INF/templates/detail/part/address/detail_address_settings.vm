@@ -14,11 +14,20 @@
 ## Verweise und Downloads
 #### Links/Querweise
 #set($xPathRefLinks = "./idf:objectReference")
+## Untergeordnete Objekte
+#set($xPathRefSubordinated = "./idf:subordinatedParty")
+## Übergeordnetet Objekte
+#set($xPathRefSuperior = "./idf:superiorParty")
+
 #set($xPathListReferences = [
-    $xPathRefLinks
+    $xPathRefLinks,
+    $xPathRefSubordinated,
+    $xPathRefSuperior
 ])
 
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
+#set($getSubordinatedLinks = $TOOL.getReference($xPathRefSubordinated, false))
+#set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior, false))
 
 ## Kontakt
 #### Addressen

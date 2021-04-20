@@ -80,6 +80,16 @@
                     <small>${myDescription}</small>
                 #end
             </div>
+        #elseif($entry.addressClass)
+            <div class="no-image">
+                <div class="helper icon">
+                    #set($udkAddrClassName = $MESSAGES.getString("udk_adr_class_name_${entry.addressClass}"))
+                    #renderUDKIcon($entry.addressClass $udkAddrClassName)
+                </div>
+                <a href="$entry.href" class="icon" title="$entry.title">
+                    <span class="text">$entry.title</span>
+                </a>
+            </div>
         #elseif($entry.objectClass)
             #if($tool.hasContent($entry.serviceType))
                 #renderServiceType($entry.serviceType)
