@@ -341,6 +341,21 @@
 #set($xPathAdditionalInfoExportCriteria = "./idf:exportCriteria")
 #### Konformität
 #set($xPathAdditionalInfoDQDataQualityReport = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report")
+
+#set($tmpConformityDataSymbols = [])
+#set($tmpConformityDataSymbol = {})
+#set($put = $tmpConformityDataSymbol.put("value", $TOOL.getNameFromCodeList("6000", "1")))
+#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-check'></span>"))
+#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
+#set($tmpConformityDataSymbol = {})
+#set($put = $tmpConformityDataSymbol.put("value", $TOOL.getNameFromCodeList("6000", "2")))
+#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-cross'></span>"))
+#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
+#set($tmpConformityDataSymbol = {})
+#set($put = $tmpConformityDataSymbol.put("value", $TOOL.getNameFromCodeList("6000", "3")))
+#set($put = $tmpConformityDataSymbol.put("symbol", "<span class='ic-ic-minus'></span>"))
+#set($add = $tmpConformityDataSymbols.add($tmpConformityDataSymbol))
+
 #### Identifikator des übergeordneten Metadatensatzes
 #set($xPathAdditionalInfoParentIdentifier = "./gmd:parentIdentifier")
 #### Datenformat

@@ -18,7 +18,7 @@
     ## XML-Export-Kriterium
         #renderTextListTable($MESSAGES.getString("t014_info_impart.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoExportCriteria, "."))
     ## Konformität
-        #renderTable($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport))
+        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) 2 $tmpConformityDataSymbols)
     ## Identifikator des übergeordneten Metadatensatzes
         #renderTextTable($MESSAGES.getString("t01_object.parent_identifier") $TOOL.getValueFromXPath($xPathAdditionalInfoParentIdentifier))
     ## Datenformat

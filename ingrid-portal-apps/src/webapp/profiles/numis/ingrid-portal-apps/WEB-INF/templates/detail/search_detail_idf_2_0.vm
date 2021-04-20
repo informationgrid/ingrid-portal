@@ -642,7 +642,12 @@
     #renderTableTitle("" $entry "")
 #end
 
-#macro (renderTableTitle $title $entry $space)
+#macro (renderTableSymbols $entry $symbolColumn $symbolList)
+    #renderTableTitle("" $entry "" $symbolColumn $symbolList)
+#end
+
+
+#macro (renderTableTitle $title $entry $space $symbolColumn $symbolList)
     #if($tool.hasContent($entry.get("body")))
         #if($title)
             #renderGroupTitle($title)
@@ -680,7 +685,19 @@
                             <td>$td</td>
                         #end
                     #else
-                        <td>$td</td>
+                        #if($symbolColumn == $num)
+                        <td class="symbol">
+                            #foreach($symbolEntry in $symbolList)
+                                #if($symbolEntry.value == $td)
+                                    $symbolEntry.symbol
+                                #end
+                            #end
+                        </td>
+                        #else
+                        <td>
+                            $td
+                        </td>
+                        #end
                     #end
                     
                     #set($num = $num + 1)

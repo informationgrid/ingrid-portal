@@ -1638,6 +1638,25 @@ footer {
         font-weight: normal;
         font-family: $button-font-family;
       }
+
+      td.symbol {
+        text-align: center;
+
+        .ic-ic-cross {
+            font-size: 18px;
+            color: $red;
+        }
+        
+        .ic-ic-minus {
+            font-size: 18px;
+            color: $dark-midnight;
+        }
+        
+        .ic-ic-check {
+            font-size: 34px;
+            color: $green;
+        }
+      }
     }
   }
 
