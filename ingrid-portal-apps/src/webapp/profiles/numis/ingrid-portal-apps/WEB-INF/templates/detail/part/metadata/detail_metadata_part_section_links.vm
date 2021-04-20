@@ -31,5 +31,16 @@
             #end
             #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more" "h3")
         #end
+        
+    ## Untergeordnete Objekte
+        #if($getSubordinatedLinks.size() > 0)
+            #set($tmpTitle = $MESSAGES.getString("subordinated_references"))
+            #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h3" [] true)
+        #end
+    ## Übergeordnetet Objekte
+        #if($getSuperiorLinks.size() > 0)
+            #set($tmpTitle = $MESSAGES.getString("superior_references"))
+            #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h3" [] true)
+        #end
     </div>
 #end

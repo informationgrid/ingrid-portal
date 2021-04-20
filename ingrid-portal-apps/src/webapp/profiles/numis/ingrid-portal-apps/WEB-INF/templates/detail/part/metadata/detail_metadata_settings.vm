@@ -80,16 +80,25 @@
 #set($xPathRefLinks = "./idf:crossReference[not(@uuid=preceding::idf:crossReference/@uuid)]")
 #### Weitere Verweise
 #set($xPathRefOthers = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:transferOptions[not(./gmd:MD_DigitalTransferOptions/gmd:onLine/*/idf:attachedToField[@entry-id='9990'])]")
+## Untergeordnete Objekte
+#set($xPathRefSubordinated = "./idf:subordinatedReference")
+## Übergeordnetet Objekte
+#set($xPathRefSuperior = "./idf:superiorReference")
+
 
 #set($xPathListReferences = [
     $xPathRefDownloads,
     $xPathRefLinks,
-    $xPathRefOthers
+    $xPathRefOthers,
+    $xPathRefSubordinated,
+    $xPathRefSuperior
 ])
 
 #set($getDownloads = $TOOL.getExternLinks($xPathRefDownloads, true))
 #set($getLinks = $TOOL.getReference($xPathRefLinks, true))
 #set($getOtherLinks = $TOOL.getExternLinks($xPathRefOthers))
+#set($getSubordinatedLinks = $TOOL.getReference($xPathRefSubordinated))
+#set($getSuperiorLinks = $TOOL.getReference($xPathRefSuperior))
 
 #if($transformCoupledCSWUrl)
     #set($tmpGetOtherLinks = [])
