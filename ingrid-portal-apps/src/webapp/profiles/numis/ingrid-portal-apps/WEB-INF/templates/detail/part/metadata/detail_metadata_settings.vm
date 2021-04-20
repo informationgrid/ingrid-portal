@@ -41,14 +41,12 @@
 #set($xPathListTimeDate = "./*/*/gmd:citation/gmd:CI_Citation/gmd:date/gmd:CI_Date")
 
 #set($xPathListTime = [
-    "${xPathListTimeDate}/gmd:date",
     $xPathListTimeTimePeriodBeginPosition,
     $xPathListTimeTimePeriodEndPosition,
     $xPathListTimeMDProgressCode,
     $xPathListTimeMDMaintenanceFrequencyCode,
     $xPathListTimeUserDefinedMaintenanceFrequency,
-    $xPathListTimeMaintenanceNote,
-    "${xPathListTimeDate}/gmd:dateType/gmd:CI_DateTypeCode/@codeListValue"
+    $xPathListTimeMaintenanceNote
 ])
 
 ## Darstellung

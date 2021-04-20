@@ -11,7 +11,7 @@
                             <a href="#detail-0" class="accordion-title js-anchor-target is-active"><span class="text">$MESSAGES.getString("general_tab")</span></a>
                         #end
                     ## Beschreibung
-                        #if($TOOL.aNodeOfListExist($xPathListTime) || $getAlternateTitle || $getDescription)
+                        #if($TOOL.aNodeOfListExist($xPathListTime) || $TOOL.aNodeOfListExist($xPathListTimeDate) || $getAlternateTitle || $getDescription)
                             #set($hasDetail1 = true)
                             <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("detail_description")</span></a>
                         #end
