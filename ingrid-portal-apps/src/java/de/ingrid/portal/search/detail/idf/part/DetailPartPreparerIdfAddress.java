@@ -109,9 +109,10 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                 String description = "";
                 String serviceUrl = null;
                 String objServiceType = null;
-                String graphicOverview = null;
+                String[] graphicOverview = null;
                 String tmp = null;
-                
+                String[] tmpList = null;
+
                 xpathExpression = "./@uuid";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
@@ -162,9 +163,9 @@ public class DetailPartPreparerIdfAddress extends DetailPartPreparer{
                     }
                     
                     xpathExpression = "./idf:graphicOverview";
-                    tmp = xPathUtils.getString(node, xpathExpression);
-                    if(tmp != null){
-                        graphicOverview = tmp.trim();
+                    tmpList = xPathUtils.getStringArray(node, xpathExpression);
+                    if(tmpList != null){
+                        graphicOverview = tmpList;
                     }
 
                 }else{
