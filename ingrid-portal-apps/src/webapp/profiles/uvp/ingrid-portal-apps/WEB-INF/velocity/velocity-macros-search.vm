@@ -460,27 +460,29 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro(renderServiceTypeUrl $url $types $isNotDisplay)
-    #set($serviceType = "")
-    #if($url.toLowerCase().indexOf('service=csw') > -1)
-        #set($serviceType = "csw")
-    #elseif($url.toLowerCase().indexOf('service=wms') > -1)
-        #set($serviceType = "view")
-    #elseif($url.toLowerCase().indexOf('service=wfs') > -1)
-        #set($serviceType = "download")
-    #elseif($url.toLowerCase().indexOf('.zip') > -1)
-        #set($serviceType = "zip")
-    #elseif($url.toLowerCase().indexOf('.pdf') > -1)
-        #set($serviceType = "pdf")
-    #elseif($url.toLowerCase().indexOf('.xml') > -1)
-        #set($serviceType = "xml")
-    #elseif($url.toLowerCase().indexOf('.json') > -1)
-        #set($serviceType = "json")
-    #end
-    #if(!$serviceType.isEmpty() && $types && $types.indexOf($serviceType) == -1)
-        #set($add = $types.add($serviceType))
-    #end
-    #if(!$isNotDisplay)
-        #renderServiceType($serviceType)
+    #if($url && $url.length() > 0)
+        #set($serviceType = "")
+        #if($url.toLowerCase().indexOf('service=csw') > -1)
+            #set($serviceType = "csw")
+        #elseif($url.toLowerCase().indexOf('service=wms') > -1)
+            #set($serviceType = "view")
+        #elseif($url.toLowerCase().indexOf('service=wfs') > -1)
+            #set($serviceType = "download")
+        #elseif($url.toLowerCase().indexOf('.zip') > -1)
+            #set($serviceType = "zip")
+        #elseif($url.toLowerCase().indexOf('.pdf') > -1)
+            #set($serviceType = "pdf")
+        #elseif($url.toLowerCase().indexOf('.xml') > -1)
+            #set($serviceType = "xml")
+        #elseif($url.toLowerCase().indexOf('.json') > -1)
+            #set($serviceType = "json")
+        #end
+        #if(!$serviceType.isEmpty() && $types && $types.indexOf($serviceType) == -1)
+            #set($add = $types.add($serviceType))
+        #end
+        #if(!$isNotDisplay)
+            #renderServiceType($serviceType)
+        #end
     #end
 #end
 
@@ -517,31 +519,4 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         #end
         </div>
     #end
-#end
-
-#macro(renderInitials $text $length)
-    #if(!$length)
-        #set($length = 2)
-    #end
-    #set($textSplits = $text.split(" "))
-    #set($initials = "")
-    #set($count = 0)
-    #if($textSplits.size() > 1)
-        #foreach($split in $textSplits)
-            #set($split = $split.replaceAll("[^a-zA-Z0-9]+",""))
-            #if($split.length() > 0)
-                #set($initials = $initials + $split.charAt(0))
-                #set($count = $count + 1)
-                #if($length == $count)
-                    #break
-                #end
-            #end
-        #end
-    #else
-        #set($tmptext = $text.replaceAll("[^a-zA-Z0-9]+",""))
-        #if($tmptext.length() >= $length)
-            #set($initials = $tmptext.substring(0,$length))
-        #end
-    #end
-    $initials
 #end

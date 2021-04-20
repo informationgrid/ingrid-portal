@@ -1273,7 +1273,7 @@ header {
     border-bottom-right-radius: 8px;
   }
   .header:hover, .arrow:hover { color: $green-blue; }
-  a.icon { display: block; }
+  a.icon, p a.link-line { display: block; }
 }
 .teaser-data:hover {
   box-shadow: 0px 2px 24px rgba(0,0,0,0.4);
@@ -1359,24 +1359,6 @@ a.data:hover {
 
 .info--left {
   float: left;
-
-  img, .empty--preview {
-    width: 112px !important;
-    max-height: unset !important;
-    margin: 0 16px 0 0 !important;
-  }
-
-  .empty--preview {
-    height: 64px;
-    background-color: #eaf6ff;
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    text-transform: uppercase;
-    color: #adc2d2;
-    line-height: 42px;
-  }
 }
 
 .info--right {
@@ -1760,10 +1742,6 @@ footer {
         padding: 6px 12px 6px 12px;
       }
 
-      .image a.button {
-        margin-left: 128px;
-      }
-
       div {
         display: block;
 
@@ -1806,6 +1784,17 @@ footer {
 
       .info--right span {
         margin-bottom: 0px;
+      }
+      
+      .preview {
+        position: relative;
+
+        .preview_image {
+          float: left;
+          margin-right: 16px;
+          margin-top: 4px;
+          width: inherit;
+        }
       }
     }
 
@@ -2414,7 +2403,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 }
 
 .image div.description:before {
-  background: linear-gradient(rgba(255, 255, 255, 0) 50px, $white);
+  background: linear-gradient(rgba(255, 255, 255, 0) 100px, $white);
 }
 
 .no-image div.description:before {
@@ -2429,7 +2418,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   overflow: hidden;
 }
 .image div.description small.description {
-  max-height: 110px;
+  max-height: 145px;
 }
 
 .no-image div.description small.description {
