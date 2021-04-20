@@ -109,10 +109,29 @@
             #if($displayPreview)
                 <div class="preview">
                     #if($tool.hasContent($entry.graphicOverview))
-                        <img class="preview_image " srcset="$entry.graphicOverview" title="$entry.title" alt="img" >
+                        #set($canSwipe = false)
+                        #if($entry.graphicOverview.size() > 1)
+                            #set($canSwipe = true)
+                        #end
+                        #if($canSwipe)
+                        <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                            #foreach($graphic in $entry.graphicOverview)
+                                <div class="swiper-slide">
+                                    <p class="caption">
+                                        <img class="preview_image" srcset="$graphic" title="$entry.title" alt="img" >
+                                    </p>
+                                </div>
+                            #end
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                        #else
+                        <img class="preview_image" srcset="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" >
                         <noscript>
-                            <img class="preview_image" src="$entry.graphicOverview" alt="$imgAlt" title="$imgTitle"/>
+                            <img class="preview_image" src="$entry.graphicOverview.get(0)" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>
+                        #end
                     #end
                 </div>
             #end

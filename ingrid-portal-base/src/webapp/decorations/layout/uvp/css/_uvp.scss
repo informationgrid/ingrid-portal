@@ -1805,14 +1805,27 @@ footer {
         margin-bottom: 0px;
       }
       
-      .preview {
+      .preview  {
         position: relative;
-
         .preview_image {
           float: right;
           margin-left: 16px;
           margin-top: 4px;
           width: 112px;
+        }
+        .swiper-container {
+          width: 112px;
+          float: right;
+          margin-left: 16px;
+
+          .swiper-wrapper {
+            display: flex;
+          }
+          
+          .swiper-pagination {
+            position: relative;
+            bottom: 0;
+          }
         }
       }
     }

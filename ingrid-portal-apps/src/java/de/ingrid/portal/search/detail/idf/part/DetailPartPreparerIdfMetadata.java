@@ -262,9 +262,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 String description = "";
                 String serviceUrl = null;
                 String objServiceType = null;
-                String graphicOverview = null;
+                String[] graphicOverview = null;
                 String tmp = null;
-                
+                String[] tmpList = null;
+
                 xpathExpression = "./@uuid";
                 tmp = xPathUtils.getString(node, xpathExpression);
                 if(tmp != null){
@@ -314,9 +315,9 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 
                 xpathExpression = "./idf:graphicOverview";
-                tmp = xPathUtils.getString(node, xpathExpression);
-                if(tmp != null){
-                    graphicOverview = tmp.trim();
+                tmpList = xPathUtils.getStringArray(node, xpathExpression);
+                if(tmpList != null){
+                    graphicOverview = tmpList;
                 }
 
                 HashMap<String, Object> link = new HashMap<>();
@@ -1534,14 +1535,14 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
         if (imageUrls.isEmpty()) {
             if(elementMapLink.get("href") != null) {
-                elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+                HashMap tmpMap = new HashMap();
+                tmpMap.put("name", "/ingrid-portal-apps/images/show_map.png");
+                ArrayList tmpList = new ArrayList();
+                tmpList.add(tmpMap);
+                elementMapLink.put("src", tmpList);
             }
         } else {
-            elementMapLink.put("src", imageUrls.get(0).get("name"));
-            if(elementMapLink.get("href") == null) {
-                elementMapLink.put("href", imageUrls.get(0).get("name"));
-            } 
-            elementMapLink.put("description", imageUrls.get(0).get("description"));
+            elementMapLink.put("src", imageUrls);
         }
         // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
         if(elementMapLink.get("href") != null && elementMapLink.get("src") != null) {
