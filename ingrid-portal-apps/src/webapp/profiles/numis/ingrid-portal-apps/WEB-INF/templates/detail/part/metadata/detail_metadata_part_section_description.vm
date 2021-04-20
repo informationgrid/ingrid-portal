@@ -26,6 +26,7 @@
         #end
     ## Zeitbezug
         #if($TOOL.aNodeOfListExist($xPathListTime))
+            <div class="row-sub">
             #renderSectionTitle($MESSAGES.getString("time_reference"))
         ## Durch die Ressource abgedeckte Zeitspanne
             #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
@@ -52,26 +53,28 @@
             #end
         ## Erläuterung zum Zeitbezug
             #renderTextTable($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath($xPathListTimeMaintenanceNote) "no-background")
+            </div>
         ## Zeitbezug der Ressource
             #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
             #if($nodelist)
-                <div class="border-line-info">
+            <div class="row-sub">
+                #renderSectionTitle($MESSAGES.getString("time_reference_record"))
             ## Erstellung 
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                 #if(!$title.isEmpty())
-                    <span>$title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation"))</span>
+                    #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                 #end
             ## Publikation
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                 #if(!$title.isEmpty())
-                    <span>$title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication"))</span>
+                    #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "publication")))
                 #end
             ## letzte Änderung 
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                 #if(!$title.isEmpty())
-                    <span>$title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision"))</span>
+                    #renderTextTable($title $TOOL.getDateFormatValue($TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:date", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "revision")))
                 #end
-                </div>
+            </div>
             #end
         #end
     </div>
