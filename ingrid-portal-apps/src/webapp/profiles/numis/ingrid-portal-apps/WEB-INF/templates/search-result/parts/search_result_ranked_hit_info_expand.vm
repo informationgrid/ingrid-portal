@@ -221,6 +221,7 @@
                         #set($tmpValues = $!rs.additional_html_1.split(", "))
                         #foreach($tmpValue in $tmpValues)
                             <div class="swiper-slide">
+                            <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
                             #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
                                 #set($tmpImgValue = $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden'))
                                 $tmpImgValue.replace('>', 'onerror="loadDefaultMapImage(this);">')
