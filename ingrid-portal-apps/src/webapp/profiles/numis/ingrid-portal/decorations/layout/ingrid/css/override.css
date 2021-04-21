@@ -1156,15 +1156,6 @@ header .menu-tab-row .menu-tab {
     color: #1d4b7b;
 }
 
-#searchResult .teaser-data .swiper-container .swiper-pagination-bullet {
-    border: 1px solid #006ec5;
-    color: #006ec5;
-}
-
-#searchResult .teaser-data .swiper-container .swiper-pagination-bullet-active {
-    background-color: #eaf6ff !important;
-}
-
 .teaser-data .helper, .teaser-data p {
     color: #3a566d;
 }

@@ -49,7 +49,7 @@
                     </p>
                 #else
                     <p class="caption">
-                        <a class="button small" href="${entry.get("href")}" title="$entry.title">
+                        <a class="button small" href="${entry.get("href")}" title="$entry.title" target="_blank" rel="noopener noreferrer">
                             $entry.title
                         </a>
                     </p>
@@ -270,6 +270,8 @@
         #if($canSwipe)
         <div class="swiper-container">
             <div class="swiper-wrapper">
+        #else
+        <div class="swiper-container">
         #end
                 #foreach($e in $entry.elements)
                     #if($e.type=="multiLine")
@@ -286,7 +288,16 @@
             <div class="swiper-pagination"></div>
             #end
         </div>
+        #else
+        </div>
         #end
+    #end
+    #if($entry.href)
+    <p class="caption">
+        <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$MESSAGES.getString("common.result.showMap.tooltip.short")">
+            $MESSAGES.getString("common.result.showMap.tooltip.short")
+        </a>
+    </p>
     #end
 #end
 
@@ -385,11 +396,16 @@
                     <head>
                     <tr>
                     <th>
-                    #else
-                    <h4>
                     #end
                     #if($TOOL.nodeExist($xPath, $node))
+                        #if($isFactSheet)
+                        <h4>
+                        #end
                         $TOOL.getValueFromXPath($xPath, "505", $node)
+                        #if($isFactSheet)
+                        </h4>
+                        #end
+                        
                     #end
                     #if(!$isFactSheet)
                     </th>
@@ -397,8 +413,6 @@
                     </head>
                     <tr>
                     <td>
-                    #else
-                    </h4>
                     #end
                         <p>
                         #if($xParentPath == "./idf:idfResponsibleParty" || $xParentPath == ".")

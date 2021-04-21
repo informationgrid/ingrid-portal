@@ -1513,46 +1513,63 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
-        HashMap<String, Object> elementCapabilities = null;
-        HashMap<String, Object> elementMapLink = new HashMap<>();
-        elementMapLink.put("type", "linkLine");
-        elementMapLink.put("isMapLink", true);
-        elementMapLink.put("isExtern", false);
-
-        if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
-            // do not render "show in map" link if the map has access constraints (no href added).
-            elementMapLink.put("title", messages.getString("preview"));
-        } else {
-            elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
-            if(urlEncodeHref){
-                elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
-            }else{
-                elementMapLink.put("href", urlValue);
-            }
-        }
+        HashMap<String, Object> elementCapabilities = new HashMap<>();
+        ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 
         // use preview image if provided otherwise static image
         ArrayList<HashMap<String, String>> imageUrls = getPreviewImageUrl(null);
         if (imageUrls.isEmpty()) {
-            if(elementMapLink.get("href") != null) {
-                HashMap tmpMap = new HashMap();
-                tmpMap.put("name", "/ingrid-portal-apps/images/show_map.png");
-                ArrayList tmpList = new ArrayList();
-                tmpList.add(tmpMap);
-                elementMapLink.put("src", tmpList);
+            HashMap<String, Object> elementMapLink = new HashMap<>();
+            elementMapLink.put("type", "linkLine");
+            elementMapLink.put("isMapLink", true);
+            elementMapLink.put("isExtern", false);
+
+            if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+                // do not render "show in map" link if the map has access constraints (no href added).
+                elementMapLink.put("title", messages.getString("preview"));
+            } else {
+                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                if(urlEncodeHref){
+                    elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
+                }else{
+                    elementMapLink.put("href", urlValue);
+                }
             }
-        } else {
-            elementMapLink.put("src", imageUrls);
-        }
-        // put link in a list so that it is aligned correctly in detail view (<div class="width_two_thirds">)
-        if(elementMapLink.get("href") != null && elementMapLink.get("src") != null) {
-            elementCapabilities = new HashMap<>();
-            elementCapabilities.put("type", "multiLineImage");
-            ArrayList<HashMap<String, Object>> list = new ArrayList<>();
+
+            if(elementMapLink.get("href") != null) {
+                elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+            }
             list.add(elementMapLink);
-            elementCapabilities.put("elements", list);
-            elementCapabilities.put("width", "full");
+        } else {
+            for (HashMap<String, String> imageUrl : imageUrls) {
+                HashMap<String, Object> elementMapLink = new HashMap<>();
+                elementMapLink.put("type", "linkLine");
+                elementMapLink.put("isMapLink", true);
+                elementMapLink.put("isExtern", false);
+
+                if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
+                    // do not render "show in map" link if the map has access constraints (no href added).
+                    elementMapLink.put("title", messages.getString("preview"));
+                } else {
+                    elementMapLink.put("title", messages.getString("preview"));
+                    if(urlEncodeHref){
+                        elementCapabilities.put("href", UtilsVelocity.urlencode(urlValue));
+                    }else{
+                        elementCapabilities.put("href", urlValue);
+                    }
+                }
+                elementMapLink.put("src", imageUrl.get("name"));
+                if(elementMapLink.get("href") == null) {
+                    elementMapLink.put("href", imageUrl.get("name"));
+                } 
+                elementMapLink.put("description", imageUrl.get("description"));
+                list.add(elementMapLink);
+            }
         }
+        
+        elementCapabilities.put("type", "multiLineImage");
+        elementCapabilities.put("elements", list);
+        elementCapabilities.put("width", "full");
         return elementCapabilities;
     }
     

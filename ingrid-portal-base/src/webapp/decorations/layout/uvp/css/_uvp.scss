@@ -2168,7 +2168,7 @@ footer {
     }
   }
   .accordion-content {
-    background-color: #F6F6F6;
+    background-color: $white-cascade;
     padding: 16px 0 !important;
     border-radius: 0 !important;
     margin: 0 !important;
@@ -2218,18 +2218,24 @@ h2 .anchor:target {
  *______________________*/
  
 .detail {
-  .preview_image {
-    margin: auto;
-    max-height: 360px;
+  .teaser-data .swiper-container {
+
+    .preview_image {
+      margin: auto;
+    }
   }
 }
 .teaser-data {
   .swiper-container {
-    
+    background: $white-cascade;
+    margin: 0 0 24px 0;
+
     .preview_image {
       margin: auto;
-      max-width: none;
-      float: none;
+      padding: 24px 24px 0px;
+    }
+    .map-ingrid {
+      margin: 24px 24px 0;
     }
     .swiper-wrapper {
       padding-bottom: 30px;
@@ -2461,40 +2467,20 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   font-size: 16px;
 
   .teaser-data {
-      .swiper-container {
-        .swiper-pagination-bullet {
-          width: unset !important;
-          height: unset !important;
-          padding: 4px 12px;;
-          border: 1px solid $green-jelly;
-          color: $green-jelly;
-          text-decoration: none;
-          border-radius: 32px !important;
-          background-color: transparent !important;
-          opacity: 1 !important;
-        }
-    
-        .swiper-pagination-bullet-active {
-          background-color: $blue-sky !important;
-        }
-    
-        .swiper-pagination {
-          top: 0 !important;
-          font-size: 14px;
-        }
-    
-        .swiper-wrapper {
-          padding-top: 40px !important;
-          padding-bottom: 0 !important;
-        }
+    .swiper-container {
+      h5 {
+        background: #FFF;
+        padding-bottom: 16px;
+        margin: 0;
       }
-    
-      > .info--right {
-        display: block;
-        width: 100%;
-        margin-bottom: 16px;
-        margin-top: -8px;
-      }
+    }
+
+    > .info--right {
+      display: block;
+      width: 100%;
+      margin-bottom: 16px;
+      margin-top: -8px;
+    }
   }
 }
 
@@ -2503,7 +2489,7 @@ a[class*="js-expander"] {
 
   [class*="ic-"] {
     font-size: 14px;
-    background: #F6F6F6;
+    background: $white-cascade;
     margin-right: 8px;
     border-radius: 25px;
     padding: 6px;

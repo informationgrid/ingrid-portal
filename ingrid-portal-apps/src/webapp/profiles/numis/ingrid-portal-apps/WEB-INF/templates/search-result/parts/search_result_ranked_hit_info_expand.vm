@@ -92,7 +92,7 @@
                                 <div class="list-item">
                                     <div>
                                         #if($link.serviceType && !$link.serviceType.isEmpty())
-	                                        #renderServiceType($link.serviceType)
+                                            #renderServiceType($link.serviceType)
                                         #else
                                             #renderServiceTypeUrl($link.href)
                                         #end
@@ -113,6 +113,7 @@
                             #end
                         </div>
                     #end
+## Lizenz
                     #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
                     #set($licenseValue = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_value" , 1 ))
                     #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
@@ -160,21 +161,19 @@
                         </p>
                     #end
                     -->
-                    ## do not show wms urls when they already have been displayed (above)
-                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_wms_url.vm")
-        
+
                     ## render "Get XML"-link displayed next to the title
                     ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
-        
+
                     #if($rs.wms_coord)
                         <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
                     #end
                 #end
             </div>
             #if(($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false ) 
-                || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty()))
+                || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
+                || $rs.wms_url)
             <div class="columns">
-                #set($swipeSlides = [])
                 #set($hasArea = false)
                 #set($hasPreview = false)
                 #set($hasSwipe = false)
@@ -196,11 +195,14 @@
                 #if($hasSwipe)
                     <div class="swiper-container_${moreId} swiper-container">
                         <div class="swiper-wrapper">
+                #else
+                    <div class="swiper-container">
                 #end
                 #if($hasPreview)
                     #if($!rs.additional_html_1.indexOf(">, <") == -1)
                         #if($hasSwipe)
                         <div class="swiper-slide">
+                        <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
                         #end
                         #set ($tmpValue = $!rs.additional_html_1)
                         #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
@@ -215,7 +217,6 @@
                         #if($hasSwipe)
                         </div>
                         #end
-                        #set($add = $swipeSlides.add("'$MESSAGES.getString('searchResult.info.preview')'"))
                     #else
                         #set($tmpValues = $!rs.additional_html_1.split(", "))
                         #foreach($tmpValue in $tmpValues)
@@ -230,19 +231,20 @@
                                 $tmpValue.replace('>', 'onerror="loadDefaultMapImage(this);">')
                             #end
                             </div>
-                            #set($add = $swipeSlides.add("'$MESSAGES.getString('searchResult.info.preview')'"))
                         #end
                     #end
                 #end
                 #if($hasSwipe)
                             <div class="swiper-slide">
+                #else
+                    
                 #end
+                <h5 class="text-center">$MESSAGES.getString("searchResult.info.area")</h5>
                 #if($hasArea)
                     #set($coords = [])
                     #set($mapId = $moreId)
                     #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
-                    #set($add = $swipeSlides.add("'$MESSAGES.getString('searchResult.info.area')'"))
                 #end
                 #if($hasSwipe)
                             </div>
@@ -257,16 +259,15 @@
                         observer: true,
                         observeParents: true,
                         pagination: {
-                          el: '.swiper-pagination',
-                          clickable: true,
-                          renderBullet: function (index, className) {
-                            var swiperSlides = $swipeSlides;
-                            return '<span class="' + className + '">' + swiperSlides[index] + '</span>';
-                          }
+                          el: '.swiper-pagination'
                         }
                       });
                     </script>
+                #else
+                    </div>
                 #end
+            ## do not show wms urls when they already have been displayed (above)
+            #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_wms_url.vm")
             </div>
             #end
         </div>
