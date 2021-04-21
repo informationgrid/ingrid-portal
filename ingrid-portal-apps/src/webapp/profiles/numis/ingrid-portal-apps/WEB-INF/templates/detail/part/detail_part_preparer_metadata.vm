@@ -20,7 +20,7 @@
                     <div class="helper icon">
                         #renderUDKIcon($type $Codelists.getCodeListValue('8000', ${type}, $lang))
                     </div>
-                    #renderSearchTerm($searchTerm $hasAccessContraints)
+                    #renderSearchTerm($searchTerm $hasAccessConstraints)
                     <h2>$title</h2>
                 </div>
             </div>
