@@ -88,7 +88,7 @@
                                 #renderUDKIcon($rs.udk_class $udkObjClassName)
                             </div>
                             #set($searchTerm = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t04_search.searchterm" ))
-                            #renderSearchTerm($searchTerm)
+                            #renderSearchTerm($searchTerm $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.has_access_constraint" ))
                             <a href="$detailLink" title="$rs.title">
                                 <h2 class="header">$rs.title</h2>
                             </a>

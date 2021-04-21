@@ -1613,11 +1613,11 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
         return url;
     }
 
-    private boolean hasAccessConstraints() {
+    public boolean hasAccessConstraints() {
         return hasAccessConstraints(rootNode);
     }
 
-    private boolean hasAccessConstraints(Node node) {
+    public boolean hasAccessConstraints(Node node) {
         boolean hasAccessConstraints = false;
         String xpathExpression = "./idf:hasAccessConstraint";
         if (xPathUtils.nodeExists(node, xpathExpression)) {
