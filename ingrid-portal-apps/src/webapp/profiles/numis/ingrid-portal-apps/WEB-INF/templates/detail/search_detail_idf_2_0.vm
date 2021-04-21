@@ -372,9 +372,11 @@
             #if(!$isFactSheet)
             <div class="table">
             #end
-                #if($tool.hasContent($title) && !$isFactSheet)
-                    #if($tool.hasContent($title))
+                #if($tool.hasContent($title))
+                    #if(!$isFactSheet)
                         <h3>$title</h3>
+                    #elseif($isAddress)
+                        <h4>$title</h4>
                     #end
                 #end
                 #if(!$isFactSheet)

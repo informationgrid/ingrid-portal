@@ -5,7 +5,7 @@
 <div class="teaser-data search row is-active">
     <div class="xsmall-24 small-24 columns">
 ## Adressen
-    #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false true true)
+    #renderMultiLineAddresses($MESSAGES.getString("search.detail.contact") $xPathUsePointOfContactSortNodes false true true)
     </div>
 </div>
 #end

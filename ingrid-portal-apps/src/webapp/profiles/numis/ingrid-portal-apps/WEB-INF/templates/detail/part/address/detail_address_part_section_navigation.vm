@@ -15,10 +15,10 @@
                             #set($hasDetail1 = true)
                             <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("detail_description")</span></a>
                         #end
-                    ## Verweise und Downloads
+                    ## Verweise
                         #if($TOOL.aNodeOfListExist($xPathListReferences))
                             #set($hasDetail2 = true)
-                            <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>
+                            <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references")</span></a>
                         #end
                     </li>
                 </ul>

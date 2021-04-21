@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail2)
     <a class="anchor" id="detail-2" name="detail-2"></a>
-    <h2>$MESSAGES.getString("references_tab")</h2>
+    <h2>$MESSAGES.getString("references")</h2>
     <div class="row columns">
     ## Links
         #if($getLinks.size() > 0)
