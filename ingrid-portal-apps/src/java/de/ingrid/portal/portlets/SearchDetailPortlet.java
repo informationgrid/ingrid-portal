@@ -66,6 +66,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
+import de.ingrid.portal.global.UtilsMimeType;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.global.UtilsVelocity;
@@ -115,6 +116,38 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                     }
                     response.getWriter().write( s.toString() );
                     response.getWriter().write( "}" );
+                }
+
+                if (resourceID.equals( "httpURLDataType" )) {
+                    String extension = null;
+                    if(paramURL != null) {
+                        if(paramURL.toLowerCase().indexOf("service=csw") > 0) {
+                            extension = "csw";
+                        } else if(paramURL.toLowerCase().indexOf("service=wms") > 0) {
+                            extension = "wms";
+                        } else if(paramURL.toLowerCase().indexOf("service=wfs") > 0) {
+                            extension = "wfs";
+                        } else if(paramURL.toLowerCase().indexOf("service=wmts") > 0) {
+                            extension = "WMTS";
+                        }
+                        if(extension == null) {
+                            URL url = new URL(paramURL);
+                            java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                            con.setRequestMethod("HEAD");
+                            
+                            String contentType = con.getContentType();
+        
+                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                                url = new URL(paramURL.replace("http://", "https://"));
+                                con = (java.net.HttpURLConnection) url.openConnection();
+                                con.setRequestMethod("HEAD");
+                            }
+                            
+                            extension = UtilsMimeType.getFileExtensionOfMimeType(con.getContentType().split(";")[0]);
+                        }
+                        response.setContentType( "text/plain" );
+                        response.getWriter().write( extension );
+                    }
                 }
 
                 if (resourceID.equals( "httpURLImage" )) {
@@ -250,6 +283,10 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDataType" );
+        request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );
 
         try {
         	// check whether we come from google (no IngridSessionPreferences)

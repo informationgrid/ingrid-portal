@@ -459,33 +459,6 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderServiceTypeUrl $url $types $isNotDisplay)
-    #if($url && $url.length() > 0)
-        #set($serviceType = "")
-        #if($url.toLowerCase().indexOf('service=csw') > -1)
-            #set($serviceType = "csw")
-        #elseif($url.toLowerCase().indexOf('service=wms') > -1)
-            #set($serviceType = "view")
-        #elseif($url.toLowerCase().indexOf('service=wfs') > -1)
-            #set($serviceType = "download")
-        #elseif($url.toLowerCase().indexOf('.zip') > -1)
-            #set($serviceType = "zip")
-        #elseif($url.toLowerCase().indexOf('.pdf') > -1)
-            #set($serviceType = "pdf")
-        #elseif($url.toLowerCase().indexOf('.xml') > -1)
-            #set($serviceType = "xml")
-        #elseif($url.toLowerCase().indexOf('.json') > -1)
-            #set($serviceType = "json")
-        #end
-        #if(!$serviceType.isEmpty() && $types && $types.indexOf($serviceType) == -1)
-            #set($add = $types.add($serviceType))
-        #end
-        #if(!$isNotDisplay)
-            #renderServiceType($serviceType)
-        #end
-    #end
-#end
-
 #macro(renderServiceTypeList $types)
     #if($types && $types.size() > 0)
         <div class="info--right">

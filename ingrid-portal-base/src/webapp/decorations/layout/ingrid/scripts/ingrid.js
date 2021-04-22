@@ -357,6 +357,30 @@ function getLinkFileSize(url, element)
     return ('');
 }
 
+function getLinkFileDataType(url, element, elementParent)
+{
+    var respJson;
+    var http = new XMLHttpRequest();
+    http.open('GET', url, true);
+    http.onreadystatechange = function() {
+        if (this.readyState == this.DONE) {
+            if (this.status === 200) {
+                if(this.response){
+                  var text = this.response.toUpperCase();
+                  var list = element.parent().find('span:contains("' + text + '")');
+                  if(list.length == 0) {
+                    element.text(text);
+                  } else {
+                    element.remove();
+                  }
+                }
+            }
+        }
+    };
+    http.send();
+    return ('');
+}
+
 function convertFileSize(bytes, si) {
     var thresh = si ? 1000 : 1024;
     if(Math.abs(bytes) < thresh) {

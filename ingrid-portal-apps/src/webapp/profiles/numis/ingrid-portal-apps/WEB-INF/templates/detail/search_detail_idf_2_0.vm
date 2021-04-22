@@ -63,8 +63,6 @@
             <div>
                 #if($tool.hasContent($entry.serviceType))
                     #renderServiceType($entry.serviceType)
-                #elseif($tool.hasContent($entry.href))
-                    #renderServiceTypeUrl($entry.href)
                 #end
                 <a class="icon" href="$entry.href" title="$entry.title" target="_blank" rel="noopener noreferrer">
                   <span class="ic-ic-external"></span>
@@ -96,8 +94,6 @@
         #elseif($entry.objectClass)
             #if($tool.hasContent($entry.serviceType))
                 #renderServiceType($entry.serviceType)
-            #else
-                #renderServiceTypeUrl($entry.href)
             #end
             #if(!$hasImage)
             <div class="no-image">
@@ -169,8 +165,6 @@
                 #if($entry.title != $MESSAGES.getString('xml_link'))
                     #if($tool.hasContent($entry.serviceType))
                         #renderServiceType($entry.serviceType)
-                    #else
-                        #renderServiceTypeUrl($entry.href)
                     #end
                 #end
                 <a href="$entry.href" class="icon" title="$entry.title" target="_blank" rel="noopener noreferrer">

@@ -126,9 +126,6 @@
                             #set($add = $serviceTypes.add($urlReferenceDatatype.get($refCount)))
                         #end
                     #end
-                #else
-                    ## Add service type to list
-                    #renderServiceTypeUrl($link.href $serviceTypes true)
                 #end
                 #set($add = $linksUrlRefDownload.add($link))
             #else
@@ -140,9 +137,6 @@
                             #set($add = $serviceTypes.add($urlReferenceDatatype.get($refCount)))
                         #end
                     #end
-                #else
-                    ## Add service type to list
-                    #renderServiceTypeUrl($link.href $serviceTypes true)
                 #end
                 #if($tmpSpecialRef == "3600" && $transformCoupledCSWUrl)
                     #set($add = $link.put("type", "1"))
