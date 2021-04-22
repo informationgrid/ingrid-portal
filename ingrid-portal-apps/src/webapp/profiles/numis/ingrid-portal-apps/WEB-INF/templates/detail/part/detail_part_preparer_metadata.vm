@@ -196,8 +196,8 @@
         </svg>
     </h3>
 #end
-#parse ('/WEB-INF/templates/global/include_reference_list_file_size.vm')
-#parse ('/WEB-INF/templates/global/include_reference_list_datatype.vm')
+#parse("/WEB-INF/templates/global/include_reference_list_file_size.vm")
+#parse("/WEB-INF/templates/global/include_reference_list_datatype.vm")
 <script>
     var lastId;
     var header = $('header');
