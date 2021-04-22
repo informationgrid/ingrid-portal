@@ -75,6 +75,9 @@
                         <small class="text">$entry.linkInfo</small>
                     #end
                 #end
+                #if($tool.hasContent($entry.attachedToField))
+                    <small>$entry.attachedToField</small>
+                #end
                 #if($tool.hasContent($entry.description))
                     #set($myDescription = $stringTool.replaceAll($entry.description, '\n', "<br/>"))
                     <small>${myDescription}</small>

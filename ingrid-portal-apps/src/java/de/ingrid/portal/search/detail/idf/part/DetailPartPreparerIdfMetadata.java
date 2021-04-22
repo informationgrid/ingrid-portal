@@ -449,6 +449,16 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         attachedToField = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
                     }
                     
+                    if(attachedToField.isEmpty()) {
+                        xpathExpression = "./*/gmd:function/gmd:CI_OnLineFunctionCode/@codeListValue";
+                        if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
+                            attachedToField = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
+                            if(!attachedToField.isEmpty()) {
+                                attachedToField = sysCodeList.getNameByCodeListValue("2000", attachedToField);
+                            }
+                        }
+                    }
+                    
                     xpathExpression = "./*/gmd:applicationProfile";
                     if(xPathUtils.nodeExists(onLineList.item(j), xpathExpression)){
                         applicationProfile = xPathUtils.getString(onLineList.item(j), xpathExpression).trim();
