@@ -62,6 +62,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
 import de.ingrid.portal.global.UtilsFacete;
+import de.ingrid.portal.global.UtilsMimeType;
 import de.ingrid.portal.global.UtilsString;
 import de.ingrid.portal.search.QueryPreProcessor;
 import de.ingrid.portal.search.QueryResultPostProcessor;
@@ -95,6 +96,42 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
     public void serveResource(ResourceRequest request, ResourceResponse response) throws IOException {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
+
+        if (resourceID.equals( "httpURLDataType" )) {
+            String extension = null;
+            if(paramURL != null) {
+                if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
+                    extension = "csw";
+                } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
+                    extension = "wms";
+                } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
+                    extension = "wfs";
+                } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+                    extension = "wmts";
+                }
+                if(extension == null) {
+                    URL url = new URL(paramURL);
+                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                    con.setRequestMethod("HEAD");
+
+                    String contentType = con.getContentType();
+
+                    if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                        url = new URL(paramURL.replace("http://", "https://"));
+                        con = (java.net.HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("HEAD");
+                    }
+                    if(contentType != null) {
+                        extension = UtilsMimeType.getFileExtensionOfMimeType(contentType.split(";")[0]);
+                    }
+                }
+                response.setContentType( "text/plain" );
+                if(extension != null) {
+                    response.getWriter().write( extension );
+                }
+            }
+        }
+
         if(paramURL != null) {
             if (resourceID.equals( "httpURLImage" )) {
                 try {
@@ -165,6 +202,10 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         context.put("transformCoupledCSWUrl", PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL, false)); 
 
         ResourceURL restUrl = response.createResourceURL();
+        restUrl.setResourceID( "httpURLDataType" );
+        request.setAttribute( "restUrlHttpGetDataType", restUrl.toString() );
+
+        restUrl = response.createResourceURL();
         restUrl.setResourceID( "httpURLImage" );
         request.setAttribute( "restUrlHttpGetImage", restUrl.toString() );
 

@@ -1,0 +1,23 @@
+<script>
+    $( document ).ready(function() {
+        $('.document-list a.icon').has('span.ic-ic-external, span.ic-ic-download').each(function(index) {
+            var a = $(this);
+            var aParent = a.parent(); 
+            if(a){
+                if(a.length > 0){
+                    var href = a[0].href;
+                    var spanParent = aParent.find('.info--right');
+                    if(spanParent.length == 0) {
+                        aParent.prepend('<div class="info--right"></div>');
+                        spanParent = aParent.find('.info--right');
+                    }
+                    if(href){
+                        spanParent.append('<span></span>');
+                        var span = spanParent.find('span:empty');
+                        getLinkFileDataType('$restUrlHttpGetDataType?url=' + encodeURIComponent(href), span);
+                    }
+                }
+            }
+        });
+    });
+</script>

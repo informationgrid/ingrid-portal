@@ -121,28 +121,28 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
                 if (resourceID.equals( "httpURLDataType" )) {
                     String extension = null;
                     if(paramURL != null) {
-                        if(paramURL.toLowerCase().indexOf("service=csw") > 0) {
+                        if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
                             extension = "csw";
-                        } else if(paramURL.toLowerCase().indexOf("service=wms") > 0) {
+                        } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
                             extension = "wms";
-                        } else if(paramURL.toLowerCase().indexOf("service=wfs") > 0) {
+                        } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
                             extension = "wfs";
-                        } else if(paramURL.toLowerCase().indexOf("service=wmts") > 0) {
-                            extension = "WMTS";
+                        } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+                            extension = "wmts";
                         }
                         if(extension == null) {
                             URL url = new URL(paramURL);
                             java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
-                            
+
                             String contentType = con.getContentType();
-        
+
                             if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
                                 url = new URL(paramURL.replace("http://", "https://"));
                                 con = (java.net.HttpURLConnection) url.openConnection();
                                 con.setRequestMethod("HEAD");
                             }
-                            
+
                             extension = UtilsMimeType.getFileExtensionOfMimeType(con.getContentType().split(";")[0]);
                         }
                         response.setContentType( "text/plain" );
