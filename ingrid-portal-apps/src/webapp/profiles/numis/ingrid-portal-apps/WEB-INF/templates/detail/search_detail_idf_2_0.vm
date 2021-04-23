@@ -29,9 +29,10 @@
                     #set($imgAlt = "")
                     #set($imgTitle = "")
                 #end
+                #set($loadDefaultMapImage = "loadDefaultMapImage(this,'${plugPartner}');")
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle" onerror="loadDefaultMapImage(this);">
+                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle" onerror="$loadDefaultMapImage">
                         <noscript>
                             <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
                         </noscript>

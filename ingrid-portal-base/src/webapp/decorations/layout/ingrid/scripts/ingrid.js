@@ -425,10 +425,3 @@ function checkPassword(pwd, idMeter, idText) {
         meter.style.display = 'none';
     }
 }
-
-
-function loadDefaultMapImage(elem) {
-  elem.onerror = null;
-  elem.src = '/ingrid-portal-apps/images/show_map.png';
-  elem.srcset = '/ingrid-portal-apps/images/show_map.png';
-}

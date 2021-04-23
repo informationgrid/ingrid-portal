@@ -322,6 +322,11 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            plugDescription = ibus.getIPlug(iplugId);
 	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
 	            
+	            String[] partners = plugDescription.getPartners();
+	            if(partners != null && partners.length > 0) {
+	                context.put("plugPartner", partners[0]);
+	            }
+	            
 	            // try to get the result for a objects UUID
 	            if (docUuid != null && docUuid.length() > 0) {
 	            	// remove possible invalid characters

@@ -1,3 +1,4 @@
+#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
 #macro (renderHit $hit)
     #if($hit.is_address)
         #parse ('/WEB-INF/templates/include_search_result_address_hit.vm')

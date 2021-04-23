@@ -1547,7 +1547,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
             }
 
             if(elementMapLink.get("href") != null) {
-                elementMapLink.put("src", "/ingrid-portal-apps/images/show_map.png");
+                elementMapLink.put("src", "/ingrid-portal-apps/images/maps/image_map.png");
             }
             list.add(elementMapLink);
         } else {

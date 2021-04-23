@@ -1,0 +1,11 @@
+<script>
+    function loadDefaultMapImage(elem, partner) {
+      elem.onerror = null;
+      var image = 'image_map';
+      if(partner && partner != 'bund') {
+        image += '_' + partner; 
+      }
+      elem.src = '/ingrid-portal-apps/images/maps/' + image + '.png';
+      elem.srcset = '/ingrid-portal-apps/images/maps/' + image + '.png';
+    }
+</script>
