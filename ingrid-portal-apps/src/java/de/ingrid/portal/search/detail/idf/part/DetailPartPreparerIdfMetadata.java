@@ -1548,8 +1548,8 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
             if(elementMapLink.get("href") != null) {
                 elementMapLink.put("src", "/ingrid-portal-apps/images/maps/image_map.png");
+                list.add(elementMapLink);
             }
-            list.add(elementMapLink);
         } else {
             for (HashMap<String, String> imageUrl : imageUrls) {
                 HashMap<String, Object> elementMapLink = new HashMap<>();
