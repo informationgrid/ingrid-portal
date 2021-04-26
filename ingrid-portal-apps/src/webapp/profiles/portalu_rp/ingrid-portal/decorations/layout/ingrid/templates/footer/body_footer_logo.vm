@@ -1,3 +1,5 @@
-<a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
-    <img class="footer__logo" src="/decorations/layout/ingrid/images/template/footer-logo.png" alt="footer-logo.png"/>
-</a>
+<div class="logo">
+    <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
+        <img class="footer__logo" src="/decorations/layout/uvp/images/template/logo.png" alt="PortalU RLP"/>
+    </a>
+</div>
