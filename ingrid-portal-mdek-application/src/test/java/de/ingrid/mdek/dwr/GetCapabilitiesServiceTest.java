@@ -41,12 +41,16 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.dwr.services.CatalogService;
+import de.ingrid.mdek.services.persistence.db.DaoFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -70,6 +74,7 @@ public class GetCapabilitiesServiceTest {
     @Mock private ConnectionFacade connFacade;
     @Mock private IMdekCallerQuery callerQuery;
     @Mock private SysListCache sysListMapper;
+    @Mock private CatalogService catalogService;
     @InjectMocks GetCapabilitiesService service = new GetCapabilitiesService();
 
     /**
@@ -79,6 +84,10 @@ public class GetCapabilitiesServiceTest {
     public void setUp() throws Exception {
         //service = new GetCapabilitiesService();
         MockitoAnnotations.initMocks(this);
+        ReflectionTestUtils.setField(service, "catalogService", catalogService);
+        CatalogBean testKat = new CatalogBean();
+        testKat.setLanguageShort("de");
+        when(catalogService.getCatalogData()).thenReturn(testKat);
         
         //when(sysListMapper.getValueFromListId(100, 84, false)).thenReturn("This is a known SRS");
         when(sysListMapper.getValueFromListId(100, 3068, false)).thenReturn("EPSG 3068: DHDN / Soldner Berlin");
