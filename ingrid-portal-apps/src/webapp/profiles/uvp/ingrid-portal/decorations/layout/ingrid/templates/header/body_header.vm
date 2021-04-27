@@ -1,13 +1,7 @@
 <header>
     <div class="row">
-        <div class="columns small-7 medium-9 large-7 xlarge-6">
-            #parse("/decorations/layout/ingrid/templates/header/body_header_logo.vm")
-        </div>
-        <div class="columns xsmall-16 small-15 medium-9 large-7 xlarge-6 nav-tabs hide-for-print">
-        #if(!$mainMenu.empty)
-            #includeMainNavigation($mainMenu)
-        #end
-        </div>
+        #parse("/decorations/layout/ingrid/templates/header/body_header_logo.vm")
+        #parse("/decorations/layout/ingrid/templates/header/body_header_main_menu.vm")
         <div class="columns">
             <div class="header-menu-open">
                 #if($jetspeed.getLoggedOn())
@@ -21,7 +15,7 @@
                     #if($userNameFamily)
                         #set ($salutation = "$!{salutation} $userNameFamily")
                     #end
-                    <div class="login show-for-medium">
+                    <div class="login show-for-large">
                         <span class="ic-ic-user"></span>
                         <a href="/portal/service-myportal.psml" title="$salutation">$salutation</a>
                     </div>

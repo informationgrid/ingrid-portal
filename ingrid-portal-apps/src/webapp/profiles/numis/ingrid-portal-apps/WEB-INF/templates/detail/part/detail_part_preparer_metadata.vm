@@ -148,9 +148,6 @@
                 <p>
                 #if($entryLink && $entryLink.length() > 0)
                     <a class="link download" href="$entryLink" target="_blank" rel="noopener noreferrer">
-                        <svg class="icon">
-                            <use xlink:href="#internal-link"/>
-                        </svg>
                         #if($entryLabel && $entryLabel.length() > 0)
                             $entryLabel
                         #else
