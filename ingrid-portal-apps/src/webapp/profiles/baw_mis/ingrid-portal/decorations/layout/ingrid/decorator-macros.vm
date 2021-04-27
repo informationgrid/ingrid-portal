@@ -170,27 +170,31 @@
             #end
         #end
         #set($externalLogin = $renderRequest.getAttribute('de.ingrid.user.auth.info'))
-        #if($jetspeed.getLoggedOn() && !$externalLogin)
-            #set($linkClass = "header__widget__toggle js-header-toggle")
-        #else
-            #set($linkClass = "header__widget")
-        #end
-        #if($jetspeed.getLoggedOn()) ## Jetspeed or Shibboleth (account exists)
-            #set($loginHref = '#')
-            #set($loginText = $salutation)
-        #elseif($externalLogin) ## Shibboleth but account doesn't exist
-            #set($loginHref = '#')
-            #set($loginText = $MESSAGES.getString('ingrid.page.myportal.register'))
-        #else
-            #set($loginHref = "/Shibboleth.sso/Login")
-            #set($loginText = $linkName)
-        #end
-        <a id="logged_on_link" class="$linkClass" href="$loginHref" title="$!linkTitle">
-            <svg class="header__widget__icon icon #if($jetspeed.getLoggedOn())is-active#end">
+        #if($jetspeed.getLoggedOn() && $externalLogin) ## Shibboleth login
+            <svg class="header__widget__icon icon is-active">
                 <use xlink:href="#user"/>
             </svg>
-            <span class="header__widget__text mq-hide-l">$loginText</span>
-        </a>
+            <span class="header__widget__text mq-hide-l tx-darker">$salutation</span>
+        #elseif($jetspeed.getLoggedOn() && !$externalLogin) ## Portal login
+            <a id="logged_on_link" class="header__widget__toggle js-header-toggle" href="#" title="$!linkTitle">
+                <svg class="header__widget__icon icon is-active">
+                    <use xlink:href="#user"/>
+                </svg>
+                <span class="header__widget__text mq-hide-l">$salutation</span>
+            </a>
+        #elseif($externalLogin) ## User logged in through Shibboleth but not registered in Portal
+            <svg class="header__widget__icon icon is-active">
+                <use xlink:href="#user"/>
+            </svg>
+            <span class="header__widget__text mq-hide-l tx-light">$MESSAGES.getString('ingrid.page.myportal.register')</span>
+        #else ## Not logged in
+            <a id="logged_on_link" class="header__widget" href="/Shibboleth.sso/Login" title="$!linkTitle">
+                <svg class="header__widget__icon icon">
+                    <use xlink:href="#user"/>
+                </svg>
+                <span class="header__widget__text mq-hide-l">${linkName}</span>
+            </a>
+        #end
         #if($jetspeed.getLoggedOn())
             #if(!$externalLogin)
                 <div class="metamenu metamenu--wide">
