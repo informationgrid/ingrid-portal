@@ -1,0 +1,9 @@
+#renderMessageSuccess($MESSAGES.getString('contact.success'))
+<ul class="link-list">
+    <li>
+        <a href="$renderResponse.encodeURL('/portal/default-page.psml')">
+            <svg class="icon"><use xlink:href="#internal-link"/></svg>
+            $MESSAGES.getString('contact.success.link')
+        </a>
+    </li>
+</ul>

@@ -1,0 +1,104 @@
+<article class="content ob-container ob-box-narrow ob-box-center">
+    $contactIntroPostEmail
+</article>
+<section class="block block--padded">
+    <div class="ob-box-wide ob-box-center">
+        <article class="content ob-container ob-box-narrow ob-box-center">
+            <h2>$MESSAGES.getString('contact.form')</h2>
+            #set ($action = $renderResponse.createActionURL())
+            <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
+                <!-- yummy fields -->
+                <label class="yummy" for="message">message</label>
+                <input type="text" class="yummy" id="message" name="message" autocomplete="off"  />
+                <label class="yummy" for="name">name</label>
+                <input type="text" class="yummy" id="name" name="name" autocomplete="off"  />
+                <label class="yummy" for="email">email</label>
+                <input type="text" class="yummy" id="email" name="email" autocomplete="off"  />
+                <!-- real fields -->
+                #displayFormError()
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="user_subject">$MESSAGES.getString('contact.form.subject')</label>
+                    </div>
+                    <div class="media__body">
+                        <input type="text" id="user_subject" name="user_subject" value="#getFieldValue('user_subject')" #addErrorFormClass('user_subject') #addErrorFormMessagePlaceholder('user_subject') />
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
+                    </div>
+                    <div class="media__body">
+                        <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('user_message')">#getFieldValue('user_message')</textarea>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                       <label for="user_technical">$MESSAGES.getString('contact.form.technical')</label>
+                    </div>
+                    <div class="media__body">
+                        <div class="field-toggle field-toggle--check bx-bot-xs">
+                            <input id="user_technical" type="checkbox" name="user_technical" value="1" #getChecked('user_technical' '1') onchange="ingrid_disableElementByCheckbox('user_technical', 'user_company')">
+                            <label class="field-toggle__label field-toggle__label--highlight" for="user_technical">
+                                <span class="field-toggle__icon field-toggle__icon-alt">
+                                    <svg class="icon">
+                                        <use xlink:href="#tick"/>
+                                    </svg>
+                                </span>
+                                &nbsp;
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="user_company">$MESSAGES.getString('contact.form.company')</label>
+                    </div>
+                    <div class="media__body">
+                        <select class="select2" name="user_company" id="user_company" size="1">
+                            <option value="" #getSelectedFlag('user_company' '')>---</option>
+                            #foreach($partner in $partners)
+                            <option value="$partner.getIdent()" #getSelectedFlag('user_company' '$partner.getIdent()')>$partner.getName()</option>
+                            #end
+                        </select>
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="user_email">$MESSAGES.getString('contact.form.email')</label>
+                    </div>
+                    <div class="media__body">
+                        <input type="text" id="user_email" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') />
+                    </div>
+                </div>
+                <div class="media">
+                    <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                        <label for="user_name">$MESSAGES.getString('contact.form.name')</label>
+                    </div>
+                    <div class="media__body">
+                        <input type="text" id="user_name" name="user_name" value="#getFieldValue('user_name')" />
+                    </div>
+                </div>
+                #if ($uploadEnable)
+                    <div class="media">
+                        <div class="media__obj media__obj--large media__obj--left bx-bot-xs">
+                            <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
+                        </div>
+                        <div class="media__body">
+                            <input type="file" id="upload" name="upload">
+                        </div>
+                    </div>
+                #end
+                <div class="media__obj media__obj--right" style="margin-bottom: 0;">
+                    #renderInputButtonClass($MESSAGES.getString('common.form.button.submit') "" "" $MESSAGES.getString('common.form.button.submit.tooltip') "btn btn--primary btn--small")
+                </div>
+            </form>
+        </article>
+    </div>
+</section>
+<script>
+    var error = $actionForm.hasErrors();
+    if(error){
+        goToByScroll('contact');
+    }
+</script>
