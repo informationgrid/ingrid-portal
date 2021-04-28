@@ -25,6 +25,7 @@
  */
 package de.ingrid.mdek.dwr.services.capabilities;
 
+import de.ingrid.mdek.dwr.services.CatalogService;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
@@ -63,7 +64,7 @@ public class CapabilitiesParserFactory {
     
     private static final String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
 
-    public static ICapabilitiesParser getDocument(Document doc, SysListCache syslistCache) {
+    public static ICapabilitiesParser getDocument(Document doc, SysListCache syslistCache, CatalogService catalogService) {
         if (xPathUtils == null) {
             ConfigurableNamespaceContext ns = new ConfigurableNamespaceContext();
             ns.addNamespaceContext(new Csw202NamespaceContext());
@@ -80,8 +81,8 @@ public class CapabilitiesParserFactory {
         ServiceType serviceType = getServiceType(doc);
         
         switch (serviceType) {
-            case WMS: return new Wms130CapabilitiesParser(syslistCache);
-            case WMS111: return new Wms111CapabilitiesParser(syslistCache);
+            case WMS: return new Wms130CapabilitiesParser(syslistCache, catalogService);
+            case WMS111: return new Wms111CapabilitiesParser(syslistCache, catalogService);
             case WFS110: return new Wfs110CapabilitiesParser(syslistCache);
             case WFS200: return new Wfs200CapabilitiesParser(syslistCache);
             case WCS: return new WcsCapabilitiesParser(syslistCache);

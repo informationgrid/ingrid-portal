@@ -22,21 +22,12 @@
  */
 package de.ingrid.mdek.dwr.services;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PushbackInputStream;
-import java.io.Reader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.xpath.XPathExpressionException;
-
+import de.ingrid.mdek.SysListCache;
+import de.ingrid.mdek.beans.CapabilitiesBean;
+import de.ingrid.mdek.beans.Record;
+import de.ingrid.mdek.dwr.services.capabilities.CapabilitiesParserFactory;
+import de.ingrid.mdek.dwr.services.capabilities.ICapabilitiesParser;
+import de.ingrid.utils.xpath.XPathUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.w3c.dom.Document;
@@ -44,12 +35,14 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import de.ingrid.mdek.SysListCache;
-import de.ingrid.mdek.beans.CapabilitiesBean;
-import de.ingrid.mdek.beans.Record;
-import de.ingrid.mdek.dwr.services.capabilities.CapabilitiesParserFactory;
-import de.ingrid.mdek.dwr.services.capabilities.ICapabilitiesParser;
-import de.ingrid.utils.xpath.XPathUtils;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class GetCapabilitiesService {
 
@@ -60,6 +53,8 @@ public class GetCapabilitiesService {
 
     @Autowired
     private SysListCache sysListMapper;
+
+    @Autowired CatalogService catalogService;
 
     // Init Method is called by the Spring Framework on initialization
     public void init() throws Exception {}
@@ -102,7 +97,7 @@ public class GetCapabilitiesService {
     }
 
     public CapabilitiesBean getCapabilitiesData(Document doc) throws XPathExpressionException {
-        ICapabilitiesParser capDoc = CapabilitiesParserFactory.getDocument( doc, sysListMapper );
+        ICapabilitiesParser capDoc = CapabilitiesParserFactory.getDocument( doc, sysListMapper, catalogService );
         return capDoc.getCapabilitiesData( doc );
     }
     

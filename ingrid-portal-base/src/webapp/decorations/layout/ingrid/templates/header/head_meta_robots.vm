@@ -1,0 +1,5 @@
+#if ($currentPage.startsWith('/search-catalog/search-catalog-hierarchy'))
+    <meta name="robots" content="noindex,follow" />
+#else
+    <meta name="robots" content="index,follow" />
+#end

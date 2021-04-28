@@ -36,11 +36,10 @@ define([
 
     return declare(null, {
         title: "Datenformat",
-        description: "Wenn aktiviert dann wird die Tabelle Datenformat für Geodatensätze abhängig von INSPIRE relevant + konform zum Pflichtfeld und benötigt ein Format mit dem Namen \"GML\"",
+        description: "Wenn aktiviert dann wird die Tabelle Datenformat für Geodatensätze abhängig von INSPIRE relevant + konform zum Pflichtfeld",
         defaultActive: true,
         category: "INSPIRE relevant",
         events: [],
-        publishEvent: null,
         validationIsOn: false,
 
         run: function () {
@@ -99,19 +98,6 @@ define([
             if (!this.validationIsOn) {
                 console.log("Activate dataformat validation");
                 this.validationIsOn = true;
-                this.publishEvent = topic.subscribe("/onBeforeObjectPublish", function (/*Array*/ notPublishableIDs) {
-                    var requiredSpecification = UtilGrid.getTableData("availabilityDataFormat")
-                        .filter(function (item) {
-                            return item.name === "GML" && item.version && item.version.trim().length > 0;
-                        });
-
-                    if (requiredSpecification.length === 0) {
-                        notPublishableIDs.push([
-                            "availabilityDataFormat", message.get("validation.dataformat.missing.gml")
-                        ]);
-                    }
-
-                });
                 domClass.add("uiElement1320", "required");
                 domClass.remove("uiElement1320", "show");
             }
@@ -121,8 +107,6 @@ define([
             if (this.validationIsOn) {
                 this.validationIsOn = false;
                 console.log("Deactivate dataformat validation");
-                utils.removeEvents([this.publishEvent]);
-                this.publishEvent = null;
                 domClass.remove("uiElement1320", "required");
                 domClass.remove("uiElement1320", "show");
             }
@@ -130,9 +114,7 @@ define([
 
         unregister: function () {
             utils.removeEvents(this.events);
-            utils.removeEvents([this.publishEvent]);
             this.validationIsOn = false;
-            this.publishEvent = null;
             domClass.remove("uiElement1320", "required");
             domClass.remove("uiElement1320", "show");
         }

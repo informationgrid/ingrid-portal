@@ -6,9 +6,42 @@
     </properties>
 
     <body>
-        <release version="5.8.0" date="2021-xx-xx" description="Release 5.8.0">
+        <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
+          <action type="update" dev="wemove" issue="2300">
+            Portal (BKG): Add facet for application. 
+          </action>
+          <action type="update" dev="wemove" issue="2281">
+            Remove gml entry requirement from inspire dataformat
+          </action>
+          <action type="fix" dev="wemove" issue="2462">
+            Portal: Anmeldeseite wird von Suchmaschinen indexiert
+          </action>
+        </release>
+      
+        <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
           <action type="update" dev="wemove">
             Portal: Update measurement client to version 1.0.22.
+          </action>
+          <action type="update" dev="wemove" issue="2422">
+            Portal: Fix wording for forgotten password function
+          </action>
+          <action type="update" dev="wemove" issue="2287">
+            Portal: Change facet map query
+          </action>
+          <action type="update" dev="wemove" issue="3157">
+            Portal (mCLOUD): New way for entering keywords
+          </action>
+          <action type="update" dev="wemove" issue="3235">
+            Portal (mCLOUD): show warning before delete uploads
+          </action>
+          <action type="update" dev="wemove" issue="3179">
+            Portal (mCLOUD): show info about uploadquota
+          </action>
+          <action type="update" dev="wemove" issue="2401">
+            Portal: Remove entry from uvp-nrw
+          </action>
+          <action type="update" dev="wemove" issue="2185">
+            Portal: Adjust rp layout
           </action>
           <action type="add" dev="wemove" issue="2345">
             Portal: Anpassung Kontakt-Formular UVP Test für Zammad (UVP)
@@ -51,6 +84,12 @@
           </action>
           <action type="fix" dev="wemove" issue="2334">
             IGE: Extract correct coupled resource identifier of external coupled resource
+          </action>
+          <action type="fix" dev="wemove" issue="2184">
+            IGE: Fix title of context help of temporal fields
+          </action>
+          <action type="fix" dev="wemove" issue="2331">
+            IGE: Change umlauts in statistic mouseover
           </action>
           <action type="fix" dev="wemove">
             Catch all errors in Communication
