@@ -16,6 +16,9 @@
            <action type="update" dev="wemove" issue="2461">
             Portal: Anpassung Kontakt-Formular MetaVer Test für Zammad
           </action>
+          <action type="fix" dev="wemove" issue="2462">
+            Portal: Anmeldeseite wird von Suchmaschinen indexiert (neues Layout)
+          </action>
         </release>
 
         <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
