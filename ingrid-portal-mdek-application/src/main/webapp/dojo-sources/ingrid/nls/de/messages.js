@@ -1116,7 +1116,6 @@ define({
     "validation.specification.added": "Die Spezifikation '${0}' wurde ebenfalls hinzugefügt.",
     "validation.spatial.system.inspire.missing": "Es muss mindestens ein INSPIRE-Raumbezug ausgewählt sein.",
     "validation.previewImage.table.missingUrl": "Ein Dateiname muss für jeden Eintrag vorhanden sein",
-    "validation.dataformat.missing.gml": "Es muss mindestens ein 'GML' Eintrag mit einer Version eingetragen sein",
 
     "init.error.userNotFound": "Der Benutzer konnte nicht im Katalog gefunden werden. Bitte &uuml;berprüfen Sie die mdek-Datenbank und den dazugeh&ouml;rigen Katalog.",
 
