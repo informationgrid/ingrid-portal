@@ -11,7 +11,7 @@
             Portal (BKG): Add facet for application. 
           </action>
           <action type="fix" dev="wemove" issue="2462">
-            Portal: Anmeldeseite wird von Suchmaschinen indexiert (neues Layout)
+            Portal: Anmeldeseite wird von Suchmaschinen indexiert
           </action>
         </release>
       
