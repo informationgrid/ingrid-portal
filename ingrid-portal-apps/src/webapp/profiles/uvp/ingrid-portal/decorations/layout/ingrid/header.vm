@@ -12,6 +12,7 @@
         #parse("/decorations/layout/ingrid/templates/header/head_title.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_favicon.vm")
         #parse("/decorations/layout/ingrid/templates/header/head.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_meta_robots.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_script.vm")
         #parse("/decorations/layout/ingrid/templates/header/head_style.vm")
     </head>
