@@ -20,7 +20,6 @@
   limitations under the Licence.
   **************************************************#
   --%>
-  
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!-- Set the locale to the value of parameter 'lang' and init the message bundle messages.properties -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -33,116 +32,78 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="InGrid-Portal bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="description" content="MetaVer bietet kostenlosen und werbefreien Zugang zu Informationen &ouml;ffentlicher Institutionen und Organisationen. " />
         <meta name="author" content="wemove digital solutions" />
-        <meta name="keywords" lang="de" content="InGrid-Portal, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
+        <meta name="keywords" lang="de" content="MetaVer, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
         <meta name="copyright" content="wemove digital solutions GmbH" />
         <meta name="robots" content="index,follow" />
-        <link rel="stylesheet" href="/decorations/layout/ingrid/css/google/robotocondensed/v13/css/fonts.css"/>
-        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico " />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/style.css" />
-        <link rel="stylesheet" type="text/css" media="screen, projection" href="/decorations/layout/ingrid/css/override.css" />
-        <script src="/decorations/layout/ingrid/scripts/ingrid.js"></script>
+        <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
+        <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
+        <link rel="stylesheet" href="/decorations/layout/ingrid/css/override.css" />
+        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
+        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/jquery.nicescroll.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/foundation.min.js"></script>
+        <script src="/decorations/layout/uvp/scripts/vendor/select2.full.js"></script>
+        <script src="/decorations/layout/uvp/scripts/main.js"></script>
     </head>
     <body>
-        <div class="nav-overlay">
-            <ul class="nav__mobile nav__foot">
-                <li>
-                    <a title="Erläuterungen zur Nutzung von MetaVer" href="/hilfe">Hilfe</a>
-                </li>
-                <li>
-                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an MetaVer" href="/kontakt">Kontakt</a>
-                </li>
-                <li>
-                    <a title="Alle Inhalte von MetaVer auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
-                </li>
-                <li>
-                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                </li>
-                <li>
-                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                </li>
-            </ul>
-        </div>
-
-        <div class="page">
-            <header class="header">
-                <div class="ob-box-padded-more ob-box-center">
-                    <div class="header__widgets__section">
-                        <div class="header__widget nav-toggle mq-show-xxl js-nav-mobile-toggle">
-                            <svg class="icon">
-                                <use xlink:href="#burger"/>
-                            </svg>
-                            <svg class="icon ob-fade">
-                                <use xlink:href="#cross"/>
-                            </svg>
+        <div class="container">
+            <header>
+                <div class="row">
+                    <div class="columns xsmall-7 small-7 medium-5 large-5 xlarge-5">
+                        <div class="logo">
+                            <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.svg" alt="MetaVer"/></a>
                         </div>
                     </div>
-                    <div class="header__widgets__section">
-                        <a class="header__widget header__logo" href="/startseite" title="Startseite von MetaVer">
-                            <img class="mq-hide-xxl desktop-logo" src="/decorations/layout/ingrid/images/template/logo.svg" alt="logo.svg"/>
-                            <img class="mq-show-xxl mobile__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.svg" alt="mobile-logo.svg"/>
-                        </a>
-                    </div>
-                </div> 
-                <nav class="nav-desktop mq-hide-xxl">
-                    <ul class="nav-desktop__list ob-box-wide ob-box-padded ob-box-center">
-                        <li class="nav-desktop__item">
-                          &nbsp;
-                        </li>
-                    </ul>
-                </nav>
+                </div>
             </header>
-            <!-- CONTENT BLOCK -->
-            <section class="block block--padded">
-                <div class="ob-box-wide ob-box-padded ob-box-center">
-                    <article class="content ob-container">
-                        <h1><fmt:message key="ui.entry.not.supported.browser" /></h1>
-                        <p><fmt:message key="ui.entry.not.supported.browser.text" /></p>
-                        <br />
-                    </article>
-                </div>
-            </section>
-            <footer class="footer">
-                <div class="ob-box-padded ob-box-center ob-clear">
-                    <div class="footer__top">
-                        <a href="/startseite">
-                            <!--<img class="footer__logo" src="/decorations/layout/ingrid/images/template/mobile-logo.png" alt="mobile-logo.png"/>-->
-                        </a>
-                        <p class="copyright copyright_text">Copyright &copy; Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</p>
-                    </div>
-                </div>
-                <hr class="bx-top-0 bx-bot-0"/>
-                <div class="grid">
-                    <div class="column column--3-4-xl">
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <nav class="footer__middle mq-hide-l">
-                                    <a title="Erläuterungen zur Nutzung von MetaVer" href="/hilfe">Hilfe</a>
-                                    <a title="Ihre Nachricht, Fragen oder Anregungen direkt an MetaVer" href="/kontakt">Kontakt</a>
-                                    <a title="Alle Inhalte von MetaVer auf einen Blick" href="/inhaltsverzeichnis">Sitemap</a>
-                                    <a title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" href="/impressum">Impressum</a>
-                                    <a title="Unsere Verpflichtung zum Umgang mit pers&ouml;nlichen Informationen" href="/datenschutzbestimmung">Datenschutz</a>
-                                   </nav>
+            <div class="body">
+                <div class="banner subpage">
+                    <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
+                        <div class="row align-center">
+                            <div class="large-20 columns dark">
+                                <h1><fmt:message key="ui.entry.not.supported.browser" /></h1>
                             </div>
                         </div>
                     </div>
-                    <div class="column column--1-4-xl">
-                        <hr class="hr-big mq-hide-l mq-show-xxl bx-top-0 bx-bot-0"/>
-                        <div class="ob-box-padded ob-box-center ob-clear">
-                            <div class="footer__section">
-                                <div class="footer__bottom"> </div>
+                </div>
+                <div class="row content-small">
+                    <div class="columns">
+                        <div class="form">
+                            <p>
+                                <fmt:message key="ui.entry.not.supported.browser.text" /></p>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <div class="footer">
+                    <hr>
+                    <div class="row">
+                        <div class="xsmall-24 small-24 medium-24 large-24 xlarge-11 columns">
+                            <div class="logo">
+                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/uvp/images/template/footer-logo.svg" alt="MetaVer"></a>
+                            </div>
+                            <div class="copyright">
+                                <span class="icon"></span>
+                                <span class="text copyright_text">Landesbetrieb Geoinformation und Vermessung. Alle Rechte vorbehalten.</span>
+                            </div>
+                        </div>
+                        <div class="xsmall-24 small-24 medium-24 large-24 xlarge-13 columns">
+                            <div class="footer-menu-entries">
+                                <a href="/hilfe" title="Erläuterungen zur Nutzung von MetaVer - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
+                                <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an MetaVer" class="icon"><span class="text">Kontakt</span></a>
+                                <a href="/inhaltsverzeichnis" title="Alle Inhalte von MetaVer auf einen Blick" class="icon"><span class="text">Sitemap</span></a>
+                                <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon"><span class="text">Impressum</span></a>
+                                <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon"><span class="text">Datenschutz</span></a>
+                                <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit" class="icon"><span class="text">Barrierefreiheit</span></a>
                             </div>
                         </div>
                     </div>
                 </div>
             </footer>
         </div>
-        <!-- Global scripts -->
-        <script src="/decorations/layout/ingrid/scripts/modernizr.custom.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/jquery-2.1.4.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/fastclick.min.js"></script>
-        <script src="/decorations/layout/ingrid/scripts/all.js"></script>
-        
     </body>
 </html>
