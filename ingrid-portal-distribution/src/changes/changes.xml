@@ -10,6 +10,9 @@
           <action type="update" dev="wemove" issue="2300">
             Portal (BKG): Add facet for application. 
           </action>
+          <action type="update" dev="wemove" issue="2281">
+            Remove gml entry requirement from inspire dataformat
+          </action>
           <action type="fix" dev="wemove" issue="2462">
             Portal: Anmeldeseite wird von Suchmaschinen indexiert
           </action>
