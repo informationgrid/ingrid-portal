@@ -2466,6 +2466,16 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   font-size: 16px;
 
   .teaser-data {
+    .arrow {
+      position: relative;
+      bottom: 12px;
+      right: 0;
+    }
+
+    a:last-child .arrow {
+      bottom: 38px;
+    }
+
     .swiper-container {
       h5 {
         background: #FFF;
