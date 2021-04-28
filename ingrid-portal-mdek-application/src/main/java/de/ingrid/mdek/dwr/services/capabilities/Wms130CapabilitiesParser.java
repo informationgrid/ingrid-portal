@@ -140,7 +140,7 @@ public class Wms130CapabilitiesParser extends GeneralCapabilitiesParser implemen
             if ( catalogService.getCatalogData().getLanguageShort().equals("de") ){
                 unionOfBoundingBoxes.setName("Raumbezug von: " + result.getTitle());
             } else {
-                unionOfBoundingBoxes.setName("Spatialrelation from: " + result.getTitle());
+                unionOfBoundingBoxes.setName("spatial extent from: " + result.getTitle());
             }
             List<LocationBean> union = new ArrayList<>();
             union.add(unionOfBoundingBoxes);
