@@ -629,7 +629,6 @@ footer .footer .copyright span {
 }
 footer .footer .logo {
   width: 2.25em;
-  display: none;
 }
 footer hr {
   margin: 0 0 16px;
@@ -1187,11 +1186,6 @@ header .logo a .vertical-line {
     left: 5px;
     top: 10px;
   }
-  a img {
-    float: left;
-    margin-right: 10px;
-    width: 46px;
-  }
   header .logo a p {
     font-size: 22px;
     font-family: 'RobotoSlab-Bold', sans-serif;
@@ -1226,11 +1220,6 @@ header .logo a .vertical-line {
   header .logo a {
     width: 100%;
     top: 22px;
-  }
-  a img {
-    float: left;
-    margin-right: 15px;
-    width: 60px;
   }
   header .logo a span {
     top: -3px;
