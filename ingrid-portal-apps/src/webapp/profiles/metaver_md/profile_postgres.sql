@@ -5,7 +5,6 @@ CREATE TABLE ingrid_temp (
   temp_value int
 );
 
-
 -- Change '/default-page.psml'
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('default_page_fragment_id',(SELECT fragment_id FROM fragment WHERE page_id = (SELECT page_id FROM page WHERE path = '/default-page.psml')));
 DELETE FROM fragment WHERE parent_id = (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'default_page_fragment_id');
@@ -30,6 +29,18 @@ INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+10 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::IngridInformPortlet', 'portlet', 2, 0, -1, -1, -1, -1, -1);
 INSERT INTO fragment (fragment_id, class_name, parent_id, name, type, layout_row, layout_column, layout_x, layout_y, layout_z, layout_width, layout_height) VALUES ((SELECT max_key+11 FROM ojb_hl_seq where tablename='SEQ_FRAGMENT'), 'org.apache.jetspeed.om.page.impl.FragmentImpl', (SELECT temp_value FROM ingrid_temp WHERE temp_key = 'user_template_default_page_fragment_id'), 'ingrid-portal-apps::RssNewsTeaser',       'portlet', 3, 0, -1, -1, -1, -1, -1);
 
+-- Show '/main-about-data-source.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/main-about-data-source.psml';
+
+-- Show '/help.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/help.psml';
+
+-- Show '/service-sitemap.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/service-sitemap.psml';
+
+-- Show '/search-catalog/search-catalog-hierarchy.psml'
+UPDATE page SET is_hidden = 0 WHERE path = '/search-catalog/search-catalog-hierarchy.psml';
+
 -- Hide '/main-measures.psml'
 UPDATE page SET is_hidden = 1 WHERE path = '/main-measures.psml';
 
@@ -38,6 +49,9 @@ UPDATE page SET is_hidden = 1 WHERE path = '/main-chronicle.psml';
 
 -- Hide '/language.link'
 UPDATE link SET is_hidden = 1 WHERE path = '/language.link';
+
+-- Hide '/rsspage.psml'
+UPDATE page SET is_hidden = 1 WHERE path = '/rsspage.psml';
 
 -- Change main menu order
 INSERT INTO ingrid_temp (temp_key, temp_value) VALUES ('main_menu_id',(SELECT menu_id FROM folder_menu WHERE name = 'main-menu'));
