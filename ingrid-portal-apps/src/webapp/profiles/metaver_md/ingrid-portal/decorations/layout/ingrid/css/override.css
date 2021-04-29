@@ -681,7 +681,7 @@ footer .footer .columns div {
 }
 footer .footer .copyright span {
   color: #5E788D;
-  max-width: 275px;
+  max-width: 275px !important;
 }
 footer hr {
   margin: 0 0 16px;
