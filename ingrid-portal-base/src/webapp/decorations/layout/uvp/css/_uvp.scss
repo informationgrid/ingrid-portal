@@ -1534,6 +1534,17 @@ footer {
         color: $white;
         margin: 0;
       }
+      
+      span.text {
+        text-transform: none;
+        max-width: 350px;
+        line-height: 1.25;
+      }
+
+      span.text:before {
+        content: '\00a9';
+        margin-right: 4px;
+      }
     }
   }
 }

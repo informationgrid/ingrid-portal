@@ -620,12 +620,6 @@ footer .footer .columns div {
 }
 footer .footer .copyright span {
   color: #5E788D;
-  text-transform: none;
-  max-width: 350px;
-  line-height: 1.25;
-  margin-left: auto;
-  margin-right: auto;
-  display: inline;
 }
 footer .footer .logo {
   width: 2.25em;
@@ -963,17 +957,6 @@ header .menu-tab-row .menu-tab {
     width: 17.125em;
   }
   .header-menu-close { padding: 28px 0px 0 0; }
-  footer .footer .copyright span.icon:before {
-    content: '\00a9';
-    float: left;
-    margin-left: 8px;
-  }
-  footer .footer .copyright span.text {
-    margin-right: 0;
-    text-align: left;
-    float: left;
-    margin-left: 4px;
-  }
   footer .footer .logo {
     float: left;
     display: block;

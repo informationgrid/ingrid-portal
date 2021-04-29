@@ -282,6 +282,30 @@
       box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
     }
   }
+  
+  .footer {
+    .copyright {
+      display: flex;
+
+      span.text {
+        margin-right: 0;
+        text-align: left;
+        float: left;
+        margin-left: 4px;
+      }
+
+      span.text:before {
+        display: none;
+      }
+      
+      span.icon:before {
+        content: '\00a9';
+        float: left;
+        margin-left: 8px;
+        margin-top: -3px;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 63.9375em) {
