@@ -1186,6 +1186,11 @@ header .logo a .vertical-line {
     left: 5px;
     top: 10px;
   }
+  header .logo a img {
+    float: left;
+    margin-right: 10px;
+    width: 46px;
+  }
   header .logo a p {
     font-size: 22px;
     font-family: 'RobotoSlab-Bold', sans-serif;
@@ -1200,6 +1205,11 @@ header .logo a .vertical-line {
 @media print, screen and (min-width: 48em) {
   header .logo a {
     top: 25px;
+  }
+  header .logo a img {
+    float: left;
+    margin-right: 10px;
+    width: 20%;
   }
   header .logo a span {
     font-size: 16px;
@@ -1220,6 +1230,11 @@ header .logo a .vertical-line {
   header .logo a {
     width: 100%;
     top: 22px;
+  }
+  header .logo a img {
+    float: left;
+    margin-right: 15px;
+    width: 60px;
   }
   header .logo a span {
     top: -3px;
