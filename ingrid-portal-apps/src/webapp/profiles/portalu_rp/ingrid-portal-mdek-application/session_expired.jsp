@@ -35,10 +35,10 @@
         <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="PortalU, das nieders&auml;chsische Umweltportal, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
-        <meta name="author" content="© Ministerium für Umwelt, Energie, Ernährung und Forsten" />
+        <meta name="description" content="PortalU, das Umweltportal Rheinland-Pfalz, bietet kostenlosen und werbefreien Zugang zu Umweltinformationen &ouml;ffentlicher Institutionen und Organisationen. " />
+        <meta name="author" content="&copy; Ministerium für Umwelt, Energie, Ernährung und Forsten" />
         <meta name="keywords" lang="de" content="PortalU, Umweltportal, Umweltinformationen, Deutschland, Bund, Bundesl&auml;nder, L&auml;nder, &ouml;ffentliche Institutionen, &ouml;ffentliche Organisationen, Suche, Recherche, werbefrei, kostenlos, Umweltdatenkataloge, Umwelt, UDK, Datenkataloge, Datenbanken" />
-        <meta name="copyright" content="© Ministerium für Umwelt, Energie, Ernährung und Forsten" />
+        <meta name="copyright" content="&copy; Ministerium für Umwelt, Energie, Ernährung und Forsten" />
         <meta name="robots" content="index,follow" />
         <link rel="shortcut icon" href="/decorations/layout/ingrid/images/favicon.ico" />
         <link rel="stylesheet" href="/decorations/layout/uvp/css/main.css" />
@@ -66,14 +66,13 @@
                         <a href="/informationsanbieter" class="header-menu-entry " title="Kooperationspartner und Informationsanbieter"><span class="text">Anbieter</span></a>
                         <a href="/datenquellen" class="header-menu-entry " title="Angeschlossene Datenbanken"><span class="text">Datenquellen</span></a>
                     </div>
-                    <a href="/hilfe" title="Erläuterungen zur Nutzung von RLP - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
+                    <a href="/hilfe" title="Erläuterungen zur Nutzung von PortalU - Neues Fenster öffnet sich"><span class="text">Hilfe</span></a>
                     <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an PortalU"><span class="text">Kontakt</span></a>
                     <a href="/inhaltsverzeichnis" title="Alle Inhalte von PortalU auf einen Blick"><span class="text">Inhalt</span></a>
                     <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss"><span class="text">Impressum</span></a>
                     <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen"><span class="text">Datenschutz</span></a>
-                </div>
-                <div class="menu-sub-links">
-                    <a class="button logout" href="/log-in"><span class="text">Mein PortalU</span><span class="ic-ic-arrow"></span></a>
+                    <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit"><span class="text">Barrierefreiheit</span></a>
+                    <a href="/log-in"><span class="text">Intern</span></a>
                 </div>
             </div>
             <header>
@@ -101,9 +100,9 @@
                     </div>
                     <div class="columns xsmall-14 small-15 medium-14 large-13 xlarge-10 nav-tabs">
                         <div class="menu-tab-row">
-                            <a class="menu-tab is-selected" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
+                            <a class="menu-tab" href="/freitextsuche" title="Freitextsuche nach Umweltinformationen">
                                 <div class="link-menu-tab">
-                                    <span class="ic-ic-daten"></span>
+                                    <span class="ic-ic-lupe"></span>
                                     <span class="text">Suche</span>
                                 </div>
                             </a>
@@ -145,7 +144,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="76__763" class="row content-small">
+                <div class="row content-small">
                     <div class="columns">
                         <div class="form">
                            <p>
@@ -165,22 +164,23 @@
                 <div class="footer">
                     <hr>
                     <div class="row">
-                        <div class="xsmall-24 medium-24 large-11 xlarge-12 columns">
+                        <div class="xsmall-24 medium-24 large-24 xlarge-9 columns">
                             <div class="logo">
-                                <a href="/startseite"><img src="/decorations/layout/uvp/images/template/logo.png" alt="PortalU"/></a>
+                                <a href="/startseite"><img class="footer__logo" src="/decorations/layout/uvp/images/template/logo.png" alt="PortalU"/></a>
                             </div>
                             <div class="copyright">
                                 <span class="icon"></span>
                                 <span class="text copyright_text">Ministerium für Umwelt, Energie, <br>Ernährung und Forsten</span>
                             </div>
                         </div>
-                        <div class="xsmall-24 small-24 large-13 xlarge-12 columns button-up">
+                        <div class="xsmall-24 small-24 large-24 xlarge-15 columns">
                             <div class="footer-menu-entries">
                                 <a href="/hilfe" title="Erläuterungen zur Nutzung von PortalU - Neues Fenster öffnet sich" class="icon"><span class="text">Hilfe</span></a>
                                 <a href="/kontakt" title="Ihre Nachricht, Fragen oder Anregungen direkt an PortalU" class="icon"><span class="text">Kontakt</span></a>
                                 <a href="/inhaltsverzeichnis" title="Alle Inhalte von PortalU auf einen Blick" class="icon"><span class="text">Inhalt</span></a>
                                 <a href="/impressum" title="Inhaltlich und technisch Verantwortliche, Nutzungsbedingungen, Haftungsausschluss" class="icon"><span class="text">Impressum</span></a>
                                 <a href="/datenschutzbestimmung" title="Unsere Verpflichtung zum Umgang mit persönlichen Informationen" class="icon"><span class="text">Datenschutz</span></a>
+                                <a href="/barrierefreiheit" title="Er&auml;uterung zur Barrierefreiheit" class="icon"><span class="text">Barrierefreiheit</span></a>
                             </div>
                         </div>
                     </div>

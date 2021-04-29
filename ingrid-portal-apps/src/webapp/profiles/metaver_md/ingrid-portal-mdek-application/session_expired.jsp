@@ -74,6 +74,12 @@
                             <p>
                                 <fmt:message key="ui.entry.session.expired.text" />
                             </p>
+                           <div class="link-list">
+                                <a class="icon" href="/log-in">
+                                    <span class="ic-ic-arrow"></span>
+                                    <span class="text">Login</span>
+                                </a> 
+                           </div>
                         </div>
                     </div>
                 </div>

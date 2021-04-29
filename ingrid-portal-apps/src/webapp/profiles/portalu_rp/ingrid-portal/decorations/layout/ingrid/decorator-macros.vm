@@ -75,7 +75,7 @@
         #elseif($element.url == "/main-search.psml")
             <a class="menu-tab #if($elemSelected)is-selected#end" href="$tabUrl" title="$tabTitle">
                 <div class="link-menu-tab">
-                    <span class="ic-ic-daten"></span>
+                    <span class="ic-ic-lupe"></span>
                     <span class="text">$tabName</span>
                 </div>
             </a>
@@ -357,11 +357,11 @@
         #end
     #end
     #if(!$jetspeed.getLoggedOn())
-        <a href="/log-in"><span class="text">Intern</span></a>
+        <a href="$jetspeed.getAbsoluteUrl('/service-myportal.psml')"><span class="text">Intern</span></a>
     #end
     </div>
-    <div class="menu-sub-links">
     #if($jetspeed.getLoggedOn())
+    <div class="menu-sub-links">
         <h6 class="login_user">$salutation</h6>
         #if($_menu)
             #foreach($element in $_menu.elements.iterator())
@@ -400,7 +400,7 @@
             #end
         #end
         <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
-    #end
     </div>
+    #end
 </div> 
 #end

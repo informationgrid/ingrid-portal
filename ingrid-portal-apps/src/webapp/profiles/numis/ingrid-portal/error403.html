@@ -209,4 +209,19 @@
     </body>
     <script src="/decorations/layout/ingrid/scripts/all.js"></script>
     <script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+    <script>
+      // Add shrink class
+      var body = $("body");
+
+      if(window.scrollY > 100) {
+          body.addClass("shrink");
+      }
+      window.onscroll = function(e) {
+        if (this.scrollY > 100) {
+          body.addClass("shrink");
+        } else {
+          body.removeClass("shrink");
+        }
+      };
+    </script>
 </html>
