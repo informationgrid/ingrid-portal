@@ -34,10 +34,7 @@
       <div class="legal-links small-12 medium-10 columns">
         <div class="row">
           <div class="columns hide-for-small-only">
-            #set($footerMenu = $site.getMenu("footer-menu"))
-            #if(!$footerMenu.empty)
-              #includeFooterNavigation($footerMenu)
-            #end
+              #parse("/decorations/layout/ingrid/templates/footer/body_footer_menu.vm")
           </div>
         </div>
         <div class="row">

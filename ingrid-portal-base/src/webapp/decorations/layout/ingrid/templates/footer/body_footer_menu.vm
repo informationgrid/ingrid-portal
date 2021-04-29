@@ -1,0 +1,4 @@
+#set($footerMenu = $site.getMenu("footer-menu"))
+#if(!$footerMenu.empty)
+    #includeFooterNavigation($footerMenu)
+#end
