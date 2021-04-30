@@ -475,14 +475,17 @@ public class DetailPartPreparer {
 
         for (Node sibling : siblingList) {
             // get gco:CharacterString child to strip localisation REDMINE-1882
-            sibling = sibling.getFirstChild().getNextSibling();
+            Node nextSibling = xPathUtils.getNode(sibling, "./gco:CharacterString");
+            if(nextSibling != null) {
+                sibling = nextSibling;
+            }
             String value = sibling.getTextContent().trim();
             if(value == null ||  value.length() == 0) {
                 continue;
             }
             // exclude JSON values
             if (value.startsWith( "{" ) && value.endsWith( "}" )) {
-                continue;                            
+                continue;
             }
             // exclude considered values
             if (consideredValues != null && consideredValues.contains( value )) {
