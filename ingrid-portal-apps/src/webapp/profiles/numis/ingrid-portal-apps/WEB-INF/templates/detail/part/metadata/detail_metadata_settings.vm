@@ -19,7 +19,7 @@
 
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
 #set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
-#set($mapImage = $TOOL.getMapImage())
+#set($mapImage = $TOOL.getMapImage(${plugPartner}, true))
 
 #if($TOOL.hasAccessConstraints())
     #set($hasAccessConstraints = "Y")

@@ -176,6 +176,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
     
     public Map<String, Object> getMapImage(){
+        return getMapImage(null, false);
+    }
+
+    public Map<String, Object> getMapImage(String partner, boolean isNewLayout){
         HashMap<String, Object> map = new HashMap<>();
         // showMap/Preview-Link
         if ( getUdkObjectClassType().equals("1") && PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false)) {
@@ -197,7 +201,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         }
                         
                         if(!getCapUrl.isEmpty()) {
-                            map = addBigMapLink(crossReferenceNode.getParentNode(), getCapUrl, false);
+                            map = addBigMapLink(crossReferenceNode.getParentNode(), getCapUrl, false, partner, isNewLayout);
                             if(!hasAccessConstraints(crossReferenceNode.getParentNode())) {
                                 break;
                             }
@@ -217,7 +221,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 capabilitiesUrl += CapabilitiesUtils.getMissingCapabilitiesParameter( capabilitiesUrl, ServiceType.WMS ) + "||";
             }
             // get it directly from the operation
-            map = addBigMapLink(capabilitiesUrl, true);
+            map = addBigMapLink(rootNode, capabilitiesUrl, true, partner, isNewLayout);
         } else {
             // show preview image (with map link information if provided)
             map = getPreviewImage("./gmd:identificationInfo/*/gmd:graphicOverview/gmd:MD_BrowseGraphic/gmd:fileName/gco:CharacterString");
@@ -1523,6 +1527,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
     }
 
     private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref) {
+        return addBigMapLink(node, urlValue, urlEncodeHref, null, false);
+    }
+
+    private HashMap<String, Object> addBigMapLink(Node node, String urlValue, boolean urlEncodeHref, String partner, boolean isNewLayout) {
         HashMap<String, Object> elementCapabilities = new HashMap<>();
         ArrayList<HashMap<String, Object>> list = new ArrayList<>();
 
@@ -1536,18 +1544,29 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
             if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                 // do not render "show in map" link if the map has access constraints (no href added).
-                elementMapLink.put("title", messages.getString("preview"));
+                if(!isNewLayout) {
+                    elementMapLink.put("title", messages.getString("preview"));
+                }
             } else {
-                elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                String href = urlValue;
                 if(urlEncodeHref){
-                    elementMapLink.put("href", UtilsVelocity.urlencode(urlValue));
-                }else{
-                    elementMapLink.put("href", urlValue);
+                    href = UtilsVelocity.urlencode(urlValue);
+                }
+                if(!isNewLayout) {
+                    elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                    elementMapLink.put("href", href);
+                } else {
+                   elementCapabilities.put("href", href);
                 }
             }
 
-            if(elementMapLink.get("href") != null) {
-                elementMapLink.put("src", "/ingrid-portal-apps/images/maps/image_map.png");
+            if(elementCapabilities.get("href") != null || elementMapLink.get("href") != null) {
+                String mapImage = "image_map";
+                if(partner != null) {
+                    mapImage += "_" + partner;
+                }
+                mapImage += ".png";
+                elementMapLink.put("src", "/ingrid-portal-apps/images/maps/" + mapImage);
                 list.add(elementMapLink);
             }
         } else {
@@ -1559,13 +1578,19 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
 
                 if (hasAccessConstraints(node) || !PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) || urlValue == null) {
                     // do not render "show in map" link if the map has access constraints (no href added).
-                    elementMapLink.put("title", messages.getString("preview"));
+                    if(!isNewLayout) {
+                        elementMapLink.put("title", messages.getString("preview"));
+                    }
                 } else {
-                    elementMapLink.put("title", messages.getString("preview"));
+                    String href = urlValue;
                     if(urlEncodeHref){
-                        elementCapabilities.put("href", UtilsVelocity.urlencode(urlValue));
-                    }else{
-                        elementCapabilities.put("href", urlValue);
+                        href = UtilsVelocity.urlencode(urlValue);
+                    }
+                    if(!isNewLayout) {
+                        elementMapLink.put("title", messages.getString("common.result.showMap.tooltip.short"));
+                        elementMapLink.put("href", href);
+                    } else {
+                       elementCapabilities.put("href", href);
                     }
                 }
                 elementMapLink.put("src", imageUrl.get("name"));

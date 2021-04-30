@@ -7,5 +7,6 @@
       }
       elem.src = '/ingrid-portal-apps/images/maps/' + image + '.png';
       elem.removeAttribute("srcset");
+      elem.classList.remove('is-hidden');
     }
 </script>

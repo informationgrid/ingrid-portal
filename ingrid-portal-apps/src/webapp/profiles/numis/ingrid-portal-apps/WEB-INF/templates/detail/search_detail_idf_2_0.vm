@@ -1,3 +1,5 @@
+#set($loadDefaultMapImage = "loadDefaultMapImage(this,'${plugPartner}');")
+
 #macro (renderTitleLine $entry)
     #if($tool.hasContent($entry.title))
         <strong>$entry.title</strong>
@@ -29,31 +31,32 @@
                     #set($imgAlt = "")
                     #set($imgTitle = "")
                 #end
-                #set($loadDefaultMapImage = "loadDefaultMapImage(this,'${plugPartner}');")
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" alt="$imgAlt" title="$imgTitle" onerror="$loadDefaultMapImage">
+                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
                         <noscript>
-                            <img class="preview_image" src="$entry.src" alt="$imgAlt" title="$imgTitle"/>
+                            <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
                         </noscript>
                     </p>
                     #if($entry.description)
-                    <p class="caption">$entry.description</p>
+                        <p class="caption">$entry.description</p>
                     #end
-                #if(!$entry.get("href"))
-                    <p class="caption">$entry.title</p>
-                #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1)
-                    <p class="caption">
-                        <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
-                            $entry.title
-                        </a>
-                    </p>
-                #else
-                    <p class="caption">
-                        <a class="button small" href="${entry.get("href")}" title="$entry.title" target="_blank" rel="noopener noreferrer">
-                            $entry.title
-                        </a>
-                    </p>
+                #if($entry.title)
+                    #if(!$entry.get("href"))
+                        <p class="caption">$entry.title</p>
+                    #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1 )
+                        <p class="caption">
+                            <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
+                                $entry.title
+                            </a>
+                        </p>
+                    #else
+                        <p class="caption">
+                            <a class="button small" href="${entry.get("href")}" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                                $entry.title
+                            </a>
+                        </p>
+                    #end
                 #end
                 </div>
             #end
@@ -116,33 +119,38 @@
                 #end
             #end
             #if($displayPreview)
-                <div class="preview">
-                    #if($tool.hasContent($entry.graphicOverview))
-                        #set($canSwipe = false)
-                        #if($entry.graphicOverview.size() > 1)
-                            #set($canSwipe = true)
-                        #end
-                        #if($canSwipe)
-                        <div class="swiper-container">
+                #if($tool.hasContent($entry.graphicOverview))
+                    #set($canSwipe = false)
+                    #if($entry.graphicOverview.size() > 1)
+                        #set($canSwipe = true)
+                    #end
+                    #if($canSwipe)
+                    <div class="preview">
+                        <div class="swiper-container swiper-container-background">
                             <div class="swiper-wrapper">
                             #foreach($graphic in $entry.graphicOverview)
                                 <div class="swiper-slide">
                                     <p class="caption">
-                                        <img class="preview_image" srcset="$graphic" title="$entry.title" alt="img" >
+                                        <img class="preview_image" srcset="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                        <noscript>
+                                            <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
+                                        </noscript>
                                     </p>
                                 </div>
                             #end
                             </div>
                             <div class="swiper-pagination"></div>
                         </div>
-                        #else
-                        <img class="preview_image" srcset="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" >
+                    </div>
+                    #elseif($tool.hasContent($entry.graphicOverview.get(0)))
+                    <div class="preview">
+                        <img class="preview_image" srcset="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
                         <noscript>
-                            <img class="preview_image" src="$entry.graphicOverview.get(0)" alt="$imgAlt" title="$imgTitle"/>
+                            <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
                         </noscript>
-                        #end
+                    </div>
                     #end
-                </div>
+                #end
             #end
             #if($tool.hasContent($entry.description))
                 #set($myDescription = $stringTool.replaceAll($entry.description, '\n', ""))
@@ -265,10 +273,10 @@
             #set($canSwipe = true)
         #end
         #if($canSwipe)
-        <div class="swiper-container">
+        <div class="swiper-container swiper-container-background">
             <div class="swiper-wrapper">
         #else
-        <div class="swiper-container">
+        <div class="swiper-container-background">
         #end
         #foreach($e in $entry.elements)
             #if($e.type=="multiLine")
