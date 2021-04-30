@@ -18,7 +18,7 @@
                 </div>
                 <div class="xsmall-24 large-18 xlarge-18 columns">
                     <div class="helper icon">
-                        #renderUDKAddressIcon($type $MESSAGES.getString("udk_adr_class_name_$type"))
+                        #renderUDKAddressIcon($type $MESSAGES.getString("udk_adr_class_name_$type") $MESSAGES.getString("udk_adr_class_name_$type"))
                     </div>
 
                     <h2>$title</h2>

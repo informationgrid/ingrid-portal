@@ -84,7 +84,7 @@
             <div class="no-image">
                 <div class="helper icon">
                     #set($udkAddrClassName = $MESSAGES.getString("udk_adr_class_name_${entry.addressClass}"))
-                    #renderUDKIcon($entry.addressClass $udkAddrClassName)
+                    #renderUDKAddressIcon($entry.addressClass $udkAddrClassName $udkAddrClassName)
                 </div>
                 <a href="$entry.href" class="icon" title="$entry.title">
                     <span class="text">$entry.title</span>
@@ -97,13 +97,14 @@
             #if(!$hasImage)
             <div class="no-image">
                 <a href="$entry.href" class="icon" title="$entry.title">
-                    #renderUDKIcon($entry.objectClass $entry.title)
+                    #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
+                    #renderUDKIcon($entry.objectClass $entry.title $udkObjClassName)
                 </a>
             #else
             <div class="image">
                 <div class="helper icon">
                     #set($udkObjClassName = $Codelists.getCodeListValue('8000', $entry.objectClass, $request.getLocale().getLanguage()))
-                    #renderUDKIcon($entry.objectClass $udkObjClassName)
+                    #renderUDKIcon($entry.objectClass $udkObjClassName $udkObjClassName)
                 </div>
                 <a href="$entry.href" class="icon" title="$entry.title">
                     <span class="text">$entry.title</span>

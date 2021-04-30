@@ -480,19 +480,19 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         <div class="icon--info">
         #if($hasAccessConstraints == "Y")
             <div class="helper icon info">
-                <span class="ic-ic-lock-closed"></span>
+                <span class="ic-ic-lock-closed" title="$MESSAGES.getString("common.result.hasAccessContraints")"></span>
                 <span class="text">$MESSAGES.getString("common.result.hasAccessContraints")</span>
             </div>
         #end
         #if($searchterms.contains("inspireidentifiziert"))
             <div class="helper icon info">
-                <span class="ic-ic-inspire"></span>
+                <span class="ic-ic-inspire" title="INSPIRE"></span>
                 <span class="text">INSPIRE</span>
             </div>
         #end
         #if($searchterms.contains("opendata"))
             <div class="helper icon info">
-                <span class="ic-ic-opendata"></span>
+                <span class="ic-ic-opendata" title="Opendata"></span>
                 <span class="text">Opendata</span>
             </div>
         #end

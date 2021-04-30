@@ -461,46 +461,54 @@ $actionForm.getInputHTMLEscaped($field)#end
     </div>
 #end
 
-#macro(renderUDKIcon $class $title)
+#macro(renderUDKIcon $class $title $altTitle)
     #if($class == "0")
         ## Fachaufgabe
-        <span class="ic-ic-zulassungsverfahren" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-zulassungsverfahren" 
     #elseif($class == "1")
         ## Geodatensatz
-        <span class="ic-ic-karte" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-karte" 
     #elseif($class == "2")
         ## Literatur
-        <span class="ic-ic-katalog" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-katalog" 
     #elseif($class == "3")
         ## Geodatendienst
-        <span class="ic-ic-dienste" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-dienste" 
     #elseif($class == "4")
         ## Projekt
-        <span class="ic-ic-projekt" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-projekt" 
     #elseif($class == "5")
         ## Datensammlung
-        <span class="ic-ic-metadaten" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-metadaten" 
     #elseif($class == "6")
         ## Informationssystem
-        <span class="ic-ic-chemie" title="$Codelists.getCodeListValue('8000', $class, $languageCode)"></span>
+        <span class="ic-ic-chemie" 
     #end
+    #if($altTitle)
+        title="$altTitle"
+    #end
+    ></span>
     <span class="text">$title</span>
 #end
 
-#macro(renderUDKAddressIcon $class $title)
+#macro(renderUDKAddressIcon $class $title $altTitle)
     #if($class == "0")
         ## Institution
-        <span class="ic-ic-intituition" title="$MESSAGES.getString("udk_adr_class_name_$class")"></span>
+        <span class="ic-ic-intituition" 
     #elseif($class == "1")
         ## Einheit
-        <span class="ic-ic-einheit" title="$MESSAGES.getString("udk_adr_class_name_$class")"></span>
+        <span class="ic-ic-einheit" 
     #elseif($class == "2")
         ## Person
-        <span class="ic-ic-people" title="$MESSAGES.getString("udk_adr_class_name_$class")"></span>
+        <span class="ic-ic-people" 
     #elseif($class == "3")
         ## Freie Adresse
-        <span class="ic-ic-mailto" title="$MESSAGES.getString("udk_adr_class_name_$class")"></span>
+        <span class="ic-ic-mailto" 
     #end
+    #if($altTitle)
+        title="$altTitle"
+    #end
+    ></span>
     <span class="text">$title</span>
 #end
 

@@ -4,13 +4,6 @@
     ## UDK Object/Address render params
     #set($nodeTitle = $MESSAGES.getString($node.getName()))
     #if($tool.hasContent(${node.udk_class}))
-        #if ($node.plugType == 'dsc_ecs')
-            ## objects
-            #set($nodeAlt = $Codelists.getCodeListValue('8000', $node.udk_class, $languageCode))
-        #else
-            ## addresses
-            #set($nodeAlt = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
-        #end
         #if($node.origDocId && !$node.origDocId.isEmpty())
             #set($nodeUrl = "$renderResponse.encodeURL('/portal/search-detail.psml')?plugid=${node.plugId}&docuuid=${node.origDocId}#if(${node.docId})&docid=${node.docId}#end")
         #else
@@ -21,7 +14,6 @@
             #end
         #end
     #else
-        #set($nodeAlt = "$MESSAGES.getString('common.alt.icon.folder')")
         #set($nodeUrl = '')
     #end
     #if($node.isOpen())
@@ -80,9 +72,11 @@
             #if($nodeUrl != '')
                 <a href="$nodeUrl" class="icon">
                     #if ($node.plugType == 'dsc_ecs')
-                        #renderUDKIcon(${node.udk_class} $nodeTitle)
+                        #set($udkObjClassName = $Codelists.getCodeListValue('8000', $node.udk_class, $request.getLocale().getLanguage()))
+                        #renderUDKIcon(${node.udk_class} $nodeTitle $udkObjClassName)
                     #else
-                        #renderUDKAddressIcon(${node.udk_class} $nodeTitle)
+                        #set($udkAddrClassName = $MESSAGES.getString("udk_adr_class_name_${node.udk_class}"))
+                        #renderUDKAddressIcon(${node.udk_class} $nodeTitle $udkAddrClassName)
                     #end
                 </a>
             #end

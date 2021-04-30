@@ -28,7 +28,7 @@
                 #set($udkAdrClassNameKey = "udk_adr_class_name_$rs.udk_class")
                 #set($udkAdrClassName = $MESSAGES.getString($udkAdrClassNameKey))
                 <div class="helper icon">
-                    #renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
+                    #renderUDKAddressIcon($rs.udk_class $udkAdrClassName $udkAdrClassName)
                 </div>
                 #if($rs.docuuid)
                     #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
@@ -40,7 +40,7 @@
                 </a>
                 ##renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))
             #else
-                ##renderUDKAddressIcon($rs.udk_class $udkAdrClassName)
+                ##renderUDKAddressIcon($rs.udk_class $udkAdrClassName $udkAdrClassName)
                 #if($rs.docuuid)
                     #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docuuid=$rs.docuuid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                 #else

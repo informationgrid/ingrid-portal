@@ -56,8 +56,9 @@
                                         #renderServiceType($link.serviceType)
                                     #end
                                     <div>
+                                        #set($udkObjClassName = $Codelists.getCodeListValue('8000', ${type}, $request.getLocale().getLanguage()))
                                         <a href="$link.href" class="icon" title="$link.title">
-                                            #renderUDKIcon($link.type $link.title)
+                                            #renderUDKIcon($link.type $link.title $udkObjClassName)
                                         </a>
                                     </div>
                                 </div>
