@@ -6,5 +6,6 @@
         image += '_' + partner; 
       }
       elem.src = '/ingrid-portal-apps/images/maps/' + image + '.png';
+      elem.removeAttribute("srcset");
     }
 </script>
