@@ -189,10 +189,10 @@
                     #set($hasSwipe = true)
                 #end
                 #if($hasSwipe)
-                    <div class="swiper-container_${moreId} swiper-container">
+                    <div class="swiper-container_${moreId} swiper-container swiper-container-background">
                         <div class="swiper-wrapper">
                 #else
-                    <div class="swiper-container">
+                    <div class="swiper-container-background">
                 #end
                 #if($hasPreview)
                     #set($loadDefaultMapImage = "loadDefaultMapImage(this,'${rs.partnerKey}');")
