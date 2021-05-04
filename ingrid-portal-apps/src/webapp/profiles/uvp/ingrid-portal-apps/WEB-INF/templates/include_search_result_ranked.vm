@@ -5,12 +5,47 @@
         #parse ('/WEB-INF/templates/include_search_result_ranked_hit.vm')
     #end
 #end
+
 #macro (renderHitDate $date)
     #if($date)
     <div class="helper text date">
         <span class="">$date</span>
     </div>
     #end
+#end
+
+#macro(renderTimeType $timeTypeTitle $timeType $t0 $t1 $t2)
+    #if($timeType && !$timeType.isEmpty())
+    <div class="helper date">
+        #if($timeTypeTitle)
+            <b>$timeTypeTitle</b>:
+        #end
+        #if($timeType == "seit")
+        <span>$MESSAGES.getString('searchResult.hit.time.since') $t1</span>
+        #elseif ($timeType == "von")
+        <span>$t1 $MESSAGES.getString('searchResult.hit.time.to') $t2</span>
+        #elseif ($timeType == "am")
+        <span>$MESSAGES.getString('searchResult.hit.time.at') $t0</span>
+        #elseif ($timeType == "bis")
+        <span>$MESSAGES.getString('searchResult.hit.time.until') $t2</span>
+        #end
+    </div>
+    #end
+#end
+
+#macro (renderTableEntry $title $text $href)
+    <tr>
+        <td>
+            $title
+        </td>
+        <td>
+            #if($href)
+                <a href="$href" title="$text">$text</a>
+            #else
+                $text
+            #end
+        </td>
+    </tr>
 #end
 
 <div class="results-index">
@@ -29,13 +64,14 @@
         #renderSearchResultFacetSelectionInfoResult($facetConfig $MESSAGES)
     </div>
 #end
-
-#if($rankedSearchFinished && $rankedResultList && "$rankedResultList.length()" != "0")
+#if($rankedSearchFinished && $rankedResultList && $rankedResultList.length() != 0)
+    #set($hitCount = 0)
     #foreach($rs in $rankedResultList.getWrapperHits())
         #if($grouping)
             #parse ('/WEB-INF/templates/include_search_result_group_header.vm')
         #end
         #set ($topHit = true)
+        #set($hitCount = $hitCount + 1)
         #renderHit($rs)
         #if($rs.subhit)
             #set ($rs = $rs.subhit)

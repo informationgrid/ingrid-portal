@@ -28,6 +28,10 @@
   .header-menu-close {
     padding: 15px 0px 0 0;
   }
+  
+  .filter {
+    top: 80px;
+  }
 }
 
 /* SMALL 560px  */
@@ -78,6 +82,10 @@
     right: 32px;
     width: 125px;
     margin-top: 0;
+  }
+  
+  .filter {
+    top: 80px;
   }
 }
 
@@ -306,6 +314,11 @@
       }
     }
   }
+  
+  .filter {
+    top: 120px;
+  }
+  
 }
 
 @media screen and (max-width: 63.9375em) {
@@ -314,7 +327,6 @@
       background-color: $green-jelly;
       border-radius: 25px;
       padding: 0 24px 14px;
-      margin-bottom: 48px;
     
       .accordion-item.accordion-item-filter-group {
         margin: 0;
@@ -329,15 +341,32 @@
       }
       .accordion-title.accordion-title-filter-group:hover { box-shadow: none; }
       .accordion-title-filter-group::after {
-        content: '\e934';
-        top: 23px;
-        right: 0;
+        content: '\e922';
+        top: 27px;
+      }
+      .is-active .accordion-title-filter-group::after {
+        content: '\e925';
       }
       .accordion-content.filter-wrapper {
         border-radius: 18px;
         padding: 0 16px 16px;
         margin-top: 24px;
         margin-bottom: 10px;
+        
+        .is-active .accordion-title-filter-group::after {
+          content: '';
+        }
+      }
+      .accordion-content.filter-wrapper.js-anchor-navigation {
+        padding: 16px;
+      }
+    }
+    
+    .accordion.accordion-filter-group.filter {
+      padding: 0;
+
+      .accordion-content.filter-wrapper {
+        margin: 0 16px;
       }
     }
   }
@@ -348,57 +377,65 @@
     }
   }
 
-  .shrink .hide-for-large.filter {
-    position: fixed !important;
-    z-index: 1050;
-    top: 80px !important;
-    width: 100%;
-  }
-  .hide-for-large.filter {
-
+  .filter {
     .teaser-data.search {
       padding: 0;
       border: 0;
       box-shadow: unset;
       margin:0;
     }
-    .accordion {
-      .accordion-item {
-        padding: 0;
-        margin: 0;
-        border-radius: 0;
-
-        .accordion-title {
-          text-transform: unset;
-        }
-
-        a, div {
-          border-radius: 0;
-        }
-      }
-
-      .accordion-item.is-active > .accordion-title::after {
-        content: '\e925';
+  }
+  .filter.accordion {
+    > .accordion-item {
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+      
+      .accordion-title {
+        text-transform: unset !important;
       }
     }
-    .accordion.accordion-filter-group > .accordion-item.accordion-item-filter-group {
-      > .accordion-title, > .accordion-title:after {
-        color: $white;
-      }
-
-      > .accordion-title {
-        font-size: 18px;
-        padding: 16px 24px 16px 24px;
-      }
+    > .accordion-item.is-active {
+      padding: 0 0 16px;
     }
   }
+  .filter.accordion.accordion-filter-group > .accordion-item.accordion-item-filter-group {
+    > .accordion-title, > .accordion-title:after {
+      color: $white;
+    }
+
+    > .accordion-title {
+      font-size: 18px;
+      padding: 16px 0 16px 24px;
+      border-radius: 25px;
+    }
+  }
+    .filter {
+      position: absolute !important;
+      z-index: 1050;
+      left: 0;
+      width: 100%;
+      border-radius: 0 !important;
+      overflow-y: auto;
+      max-height: 100%;
+    }
+    
+    .shrink {
+      .filter {
+        position: fixed !important;
+        top: 80px !important;
+      }
+    }
   .nav-content .accordion.accordion-filter-group {
-    border-radius: 0;
     margin-bottom: 0;
 
     .accordion-content.filter-wrapper {
       padding: 16px;
     }
+  }
+  
+  .m-filter {
+    margin-top: 51px;
   }
 }
 

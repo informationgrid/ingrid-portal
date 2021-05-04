@@ -46,7 +46,6 @@ blockquote {
   }
   .author { font-family: 'RobotoSlab-Bold'; }
 }
-img { width: 100%; }
 .no-margin { margin: 0; }
 .dont-break-out {
   overflow-wrap: break-word;
@@ -511,8 +510,8 @@ ul ol, ol ol { margin-left: 2.25rem; }
     right: 24px;
     content: '\e922';
     font-family: 'icomoon';
-    font-size: 32px;
-    margin-top: -1rem;
+    font-size: 24px;
+    margin-top: -0.75rem;
   }
 }
 li.accordion-item.is-active .accordion-title::after { content: '\e925'; }
@@ -840,6 +839,7 @@ header {
       left: 8px;
       right: 0px;
     }
+    img { width: 100%; }
   }
   .nav-tabs { text-align: right; }
   .header-menu-wrapper {
@@ -2379,6 +2379,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
     height: 76px;
 
     .link-menu-tab {
+      padding: 0;
 
       [class^="ic-"] {
         top: -43px;

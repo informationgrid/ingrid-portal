@@ -5,6 +5,7 @@
 #set($sectionStyle = "row")
 #set($bannerStyle = "row")
 #set($bannerHeaderStyle = "columns dark")
+#set($pageWithNav = "")
 
 ## Jetspeed style values
 #set($titleStyleJetspeed = $jetspeed.getPreferenceFirstValue($f, 'titleStyle'))
@@ -27,8 +28,13 @@
     #set($bannerHeaderStyle = $bannerHeaderStyleJetspeed)
 #end
 
+#set($pageWithNavJetspeed = $jetspeed.getPreferenceFirstValue($f, 'pageWithNav'))
+#if($pageWithNavJetspeed && $pageWithNavJetspeed.length() > 0)
+    #set($pageWithNav = $pageWithNavJetspeed)
+#end
+
 #if($disableTitle != 1 && $!jetspeed.getTitle($f) && $!jetspeed.getTitle($f).trim().length() > 0)
-<div class="banner subpage">
+<div class="banner subpage $pageWithNav">
   <div class="subpage-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
     <div class="$bannerStyle">
       <div class="$bannerHeaderStyle">

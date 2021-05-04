@@ -76,6 +76,10 @@
                 <name>default</name>
                 <value>about-1</value>
             </preference>
+            <preference>
+                <name>pageWithNav</name>
+                <value>m-filter</value>
+            </preference>
         </portlet-preferences>
         <resource-bundle>de.ingrid.portal.resources.HelpPortletResources</resource-bundle>
     </portlet>

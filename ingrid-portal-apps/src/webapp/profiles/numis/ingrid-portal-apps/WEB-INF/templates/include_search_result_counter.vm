@@ -2,6 +2,7 @@
     ## RANKED (left column stuff)
     #renderRankedResultCounterGrouping($rankedPageSelector)
 </div>
+#if($rankedResultList.length() != 0)
 <div class="row">
     <span  class="result-text no-margin">
         <b>$MESSAGES.getString('searchResult.hit.view')</b>
@@ -14,10 +15,11 @@
             <span class="ic-ic-view-expanded"></span>
         </a>
     </div>
-#if($enableFacete)
-    #renderSelectRanking($facetConfig)
-#end
+    #if($enableFacete)
+        #renderSelectRanking($facetConfig)
+    #end
 </div>
+#end
 #macro(renderSelectRanking $nodes)
     #foreach($facet in $nodes)
         #if($facet.getId() == "modtime" && ($facet.isDependencySelect() || $facet.isSelect()))

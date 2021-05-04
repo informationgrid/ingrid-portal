@@ -96,6 +96,11 @@
     vertical-align: middle;
 }
 
+.footer__logo {
+    width: 11.75rem;
+}
+
+
 /*
     Leaflet
 */
@@ -605,9 +610,6 @@ header a.icon.is-selected {
 .filter-group .accordion-item .accordion-title {
   color: #067B9B;
 }
-.accordion-item .accordion-title::after {
-  color: #FFFFFF;
-}
 .filter-group .accordion-item .accordion-title::after {
   color: #067B9B;
 }
@@ -985,10 +987,10 @@ header .menu-tab-row .menu-tab {
     display: none;
   }
   .search-filtered .accordion.accordion-filter-group {
-    background-color: #085468;
+    background-color: #067B9B;
   }
   .search-filtered .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group {
-    background-color: #085468;
+    background-color: #067B9B;
   }
 
   .hide-for-large.filter .accordion.accordion-filter-group {
@@ -997,12 +999,6 @@ header .menu-tab-row .menu-tab {
   
   .hide-for-large.filter .accordion.accordion-filter-group .accordion-title.accordion-title-filter-group {
     background-color: #085468;
-  }
-  .nav-content .accordion.accordion-filter-group .accordion-title-filter-group::after {
-    content: '\e922';
-  }
-  .nav-content .accordion.accordion-filter-group .is-active .accordion-title-filter-group::after {
-    content: '\e925';
   }
 }
 @media screen and (max-width: 47.9375em) {

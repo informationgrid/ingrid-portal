@@ -1,0 +1,10 @@
+<script>
+  $('.filter').niceScroll({
+    cursorcolor:"#1D4B7B",
+    cursorwidth:"8px",
+    cursorborderradius: "6px",
+  });
+  $(window).bind('scroll',function(){
+    $(".filter").getNiceScroll().resize();
+  });
+</script>

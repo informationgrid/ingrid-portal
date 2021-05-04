@@ -1,17 +1,13 @@
 #set ($action = $renderResponse.createActionURL())
-#set ($rankedHitslenght = $rankedResultList.get("length"))
+#set ($rankedHitslenght = $rankedResultList.length())
 
+<div class="accordion accordion-filter-group filter" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
+    <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+        <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
+        <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
+            <div class="boxes">
 #if($rankedHitslenght > 0)
-    <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
-        <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
-            <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
-            <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
-                <div class="boxes">
                     #renderFacetCategory($facetConfig)
-                </div>
-            </div>
-        </div>
-    </div>
 #else
     <p>
         #if($isSelection)
@@ -20,18 +16,22 @@
             $MESSAGES.getString("searchResult.facete.category.no.hits") 
         #end
     </p>
-        #if($enableFacetSelection && $isSelection)
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter("doRemoveLast", "true")
-            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
-        #end
-        #if($enableFacetSelection || $isSelection)
-            #set ($action = $renderResponse.createActionURL())
-            $action.setParameter("doRemoveAll", "true")
-            #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
-        #end
-    <br>
+    #if($enableFacetSelection && $isSelection)
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("doRemoveLast", "true")
+        #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.last'))
+    #end
+    #if($enableFacetSelection || $isSelection)
+        #set ($action = $renderResponse.createActionURL())
+        $action.setParameter("doRemoveAll", "true")
+        #renderResetLink($action $MESSAGES.getString('searchResult.facete.category.delete.all'))
+    #end
 #end
+            </div>
+        </div>
+    </div>
+</div>
+#parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
 
 #macro(renderFacetCategory $nodes)
     #foreach($node in $nodes)
