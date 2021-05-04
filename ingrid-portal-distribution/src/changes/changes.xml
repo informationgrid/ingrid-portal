@@ -10,6 +10,9 @@
           <action type="update" dev="wemove" issue="2300">
             Portal (BKG): Add facet for application. 
           </action>
+          <action type="fix" dev="wemove" issue="2463">
+            IGE: Fix wrong locale for thesaurus analysis.
+          </action>
           <action type="update" dev="wemove" issue="2281">
             Remove gml entry requirement from inspire dataformat
           </action>

@@ -28,10 +28,11 @@ define([
     "dojo/Deferred",
     "ingrid/message",
     "ingrid/dialog",
+    "ingrid/utils/Catalog",
     "ingrid/utils/List",
     "ingrid/utils/UI",
     "ingrid/utils/Grid"
-], function(declare, lang, array, string, Deferred, message, dialog, UtilList, UtilUI, UtilGrid) {
+], function(declare, lang, array, string, Deferred, message, dialog, catalog, UtilList, UtilUI, UtilGrid) {
 
         return declare(null, {
 
@@ -90,7 +91,9 @@ define([
             // Callback to find sns topics for a given topic (SNSService.findTopcis)
             findTopicsDef: function(term) {
                 var def = new Deferred();
-                SNSService.findTopics(term, userLocale, {
+                var catLocale = catalog.getCatalogLanguage();
+                
+                SNSService.findTopics(term, catLocale, {
                     callback: function(res) {
                         UtilList.addSNSTopicLabels(res);
                         UtilUI.updateBlockerDivInfo("keywords");
@@ -311,7 +314,9 @@ define([
             //Callback to find an sns descriptor for a synonym (nonDescriptor)
             getTopicsForTopicDef: function(topicId) {
                 var def = new Deferred();
-                SNSService.getTopicsForTopic(topicId, userLocale, {
+                var catLocale = catalog.getCatalogLanguage();
+                
+                SNSService.getTopicsForTopic(topicId, catLocale, {
                     preHook: UtilUI.enterLoadingState,
                     postHook: UtilUI.exitLoadingState,
                     callback: function(res) {
