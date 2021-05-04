@@ -46,12 +46,13 @@ require([
     "dojo/keys",
     "dijit/registry",
     "dojox/layout/ContentPane",
+    "ingrid/utils/Catalog",
     "ingrid/utils/Grid",
     "ingrid/utils/Thesaurus",
     "ingrid/utils/Store",
     "ingrid/utils/List",
     "ingrid/dialog"
-], function(lang, array, on, dom, domClass, style, Deferred, DeferredList, topic, keys, registry, ContentPane, UtilGrid, UtilThesaurus, UtilStore, UtilList, dialog) {
+], function(lang, array, on, dom, domClass, style, Deferred, DeferredList, topic, keys, registry, ContentPane, catalog, UtilGrid, UtilThesaurus, UtilStore, UtilList, dialog) {
 
     var thisDialog = _container_;
 
@@ -221,8 +222,9 @@ require([
 
     function autoClassifyUrl(url, numWords) {
         var def = new Deferred();
-
-        SNSService.autoClassifyURL(url, numWords, null, false, 100, userLocale, {
+        var catLocale = catalog.getCatalogLanguage();
+        
+        SNSService.autoClassifyURL(url, numWords, null, false, 100, catLocale, {
             callback: function(topicMap) {
                 def.resolve(topicMap);
             },

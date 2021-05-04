@@ -48,6 +48,7 @@ a.resultText.selected { color:#C21100; }
         "dojo/Deferred",
         "ingrid/dialog",
         "ingrid/message",
+        "ingrid/utils/Catalog",
         "ingrid/utils/PageNavigation",
         "ingrid/utils/List",
         "ingrid/utils/Grid",
@@ -55,7 +56,7 @@ a.resultText.selected { color:#C21100; }
         "ingrid/tree/ThesaurusTree",
         "ingrid/layoutCreator"
     ], function(on, aspect, lang, array, dom, keys, domClass, registry, style, Deferred,
-            dialog, message, navigation, UtilList, UtilGrid, UtilAddress, ThesaurusTree, layoutCreator) {
+            dialog, message, catalog, navigation, UtilList, UtilGrid, UtilAddress, ThesaurusTree, layoutCreator) {
                 
                 
             // The currently selected textNode. Used for colorization
@@ -272,6 +273,7 @@ a.resultText.selected { color:#C21100; }
             // to the corresponding node
             function findTopic() {
                 var queryTerm = lang.trim(registry.byId("thesaurusSearch").getValue());
+                var catLocale = catalog.getCatalogLanguage();
 
                 if (queryTerm.length === 0) {
                     return;
@@ -279,7 +281,7 @@ a.resultText.selected { color:#C21100; }
 
                 registry.byId("researchThesaurusTabContainer").selectChild("thesaurusResultPane");
 
-                SNSService.findTopicsContains(queryTerm, userLocale, {
+                SNSService.findTopicsContains(queryTerm, catLocale, {
                     preHook: showLoadingZone,
                     postHook: hideLoadingZone,
                     callback:function(result) {
