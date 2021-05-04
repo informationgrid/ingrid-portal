@@ -258,12 +258,14 @@
 
 #macro (renderFaceteSelectedAttributeHashMapNumber $doAction $title $numbers $key $isDelete)
     <p>
-        <a class="btn btn--delete btn--small btn--block" href="$doAction">
-        <svg class="icon link__icon"><use xlink:href="#cross"/></svg>
-        $title
-        #if($numbers && $key)
-            #renderLinkEntryNumberInArrayHashMap($numbers $key)
-        #end
+        <a class="icon" href="$doAction" title="$title">
+            <span class="ic-ic-cross"></span>
+            <span class="text">
+                $title
+                #if($numbers && $key)
+                    #renderLinkEntryNumberInArrayHashMap($numbers $key)
+                #end
+            </span>
         </a>
     </p>
 #end
