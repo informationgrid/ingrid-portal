@@ -36,13 +36,19 @@
 
         return this.each(function () {
 
+            var hasActiveItem = false;
             var children = $(this).find("div.accordion-content a");
 
             for ( var i = 0; i < children.length; i++) {
               var child = children.get(i);
               if ($(child).hasClass("is-active")) {
+                hasActiveItem = true;
                 activate($(child).closest("li.accordion-item"));
               }
+            }
+            
+            if(!hasActiveItem && children.length > 0){
+              activate($(children.get(0)).closest("li.accordion-item"));
             }
         });
     }

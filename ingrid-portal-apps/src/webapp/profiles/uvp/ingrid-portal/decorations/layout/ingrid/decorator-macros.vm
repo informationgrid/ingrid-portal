@@ -398,6 +398,8 @@
         #end
         <a class="button logout" href="/login/logout"><span class="text">$MESSAGES.getString('ingrid.page.login.logout')</span><span class="ic-ic-arrow"></span></a>
     </div>
+    #else
+        #parse("/decorations/layout/ingrid/templates/header/body_header_login.vm")
     #end
 </div> 
 #end

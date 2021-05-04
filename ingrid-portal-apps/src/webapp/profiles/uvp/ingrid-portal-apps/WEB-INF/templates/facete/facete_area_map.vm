@@ -4,7 +4,7 @@
         <a href="" class="accordion-title" aria-controls="facet-map-accordion" role="tab" id="facet-map-accordion-label" #if($selectedMap.doMapCoords && $selectedMap.doMapCoords.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.area.map.search")</span>
         </a>
-        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" style="display:block;">
+        <div class="accordion-content map" data-tab-content="" role="tabpanel" aria-labelledby="facet-map-accordion-label" id="facet-map-accordion" #if(!$selectedMap.doMapCoords || $selectedMap.doMapCoords.size() == 0)aria-hidden="true"#else style="display:block;"#end>
             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <div id="map" class="map-ingrid" style="height:320px;">
             </div>

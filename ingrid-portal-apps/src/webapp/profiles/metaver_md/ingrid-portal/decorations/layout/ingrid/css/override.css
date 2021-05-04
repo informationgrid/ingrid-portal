@@ -288,7 +288,7 @@
 /* METAVER */
 
 h1, h2, h3 {
-  color: #085468;
+  color: #1C5868;
 }
 
 .dark h1, .dark h2, .dark p, .dark a, .dark abbr {
@@ -621,7 +621,7 @@ header a.icon.is-selected {
   color: #085468;
 }
 .nav-group .accordion-item .accordion-title.is-active {
-    background-color: #085468;
+    background-color: #067B9B;
 }
 .nav-group .accordion-item.is-active .accordion-title {
     background-color: #067B9B;
@@ -684,6 +684,9 @@ footer .footer .columns div {
 footer .footer .copyright span {
   color: #5E788D;
   max-width: 275px !important;
+}
+footer .footer .logo {
+  width: 11.75rem;
 }
 footer hr {
   margin: 0 0 16px;
@@ -1009,7 +1012,7 @@ header .menu-tab-row .menu-tab {
     height: 80px;
   }
   header .logo a {
-    top: -5px;
+    top: -5px !important;
   }
   header .menu-tab-row .menu-tab {
     width: 55px;

@@ -15,12 +15,4 @@
         $help_content
     </div>
 </div>
-
-#if($helpKey)
-<script>
-  if (window.location.hash === '' && window.location.search == '') {
-    window.location.href = '/hilfe?hkey=$helpKey';
-  }
-</script>
-#end
 #parse ('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
