@@ -384,6 +384,9 @@
       box-shadow: unset;
       margin:0;
     }
+    > .accordion-item.is-active {
+      margin-bottom: 80px !important;
+    }
   }
   .filter.accordion {
     > .accordion-item {
@@ -541,6 +544,10 @@
         padding: 32px 24px;
       }
     }
+  }
+  
+  .filter {
+    overflow: initial !important;
   }
 }
 

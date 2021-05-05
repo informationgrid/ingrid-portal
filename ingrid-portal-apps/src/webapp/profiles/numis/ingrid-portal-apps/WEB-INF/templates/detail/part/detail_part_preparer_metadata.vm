@@ -53,6 +53,7 @@
 #end
 </div>
 #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_script_table_scroll.vm")
+#parse("/WEB-INF/templates/scripts/include_script_filter_scroll.vm")
 
 #macro (renderDate $dateTitle $dateFrom $dateTo $info)
     #if($dateFrom || $dateTo)

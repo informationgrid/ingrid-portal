@@ -459,9 +459,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
     #end
 #end
 
-#macro(renderServiceTypeList $types)
+#macro(renderServiceTypeList $types $isTeaser)
     #if($types && $types.size() > 0)
-        <div class="info--right">
+        <div class="info--right #if($isTeaser)teaser-info#end">
         #foreach($type in $types)
             <span>
                 #if($MESSAGES.getString("common.service.type.$type") == "common.service.type.$type")
@@ -471,6 +471,9 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
                 #end
             </span>
         #end
+        </div>
+    #elseif($isTeaser)
+        <div class="info--right teaser-info">
         </div>
     #end
 #end

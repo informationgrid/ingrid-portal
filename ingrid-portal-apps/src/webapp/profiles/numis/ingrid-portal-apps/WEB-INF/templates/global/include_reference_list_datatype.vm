@@ -20,4 +20,43 @@
             }
         });
     });
+    
+    function getLinkFileDataType(url, element, elementParent) {
+        var respJson;
+        var http = new XMLHttpRequest();
+        http.open('GET', url, true);
+        http.onreadystatechange = function() {
+            if (this.readyState == this.DONE) {
+                if (this.status === 200) {
+                    if(this.response){
+                      var text = this.response.toUpperCase();
+                      var list = element.parent().find('span:contains("' + text + '")');
+                      if(list.length == 0) {
+                        element.text(text);
+                        
+                        var parentTeaser = $(element).closest('.teaser-data.search');
+                        if(parentTeaser.length > 0) {
+                            var teaserInfo = $(parentTeaser).find('.teaser-info');
+                            if(teaserInfo.length > 0) {
+                               var teaserInfoEntries = $(teaserInfo).find('span');
+                               var teaserInfoEntryList = [];
+                               teaserInfoEntries.each(function(){
+                                   var teaserInfoEntry = $(this).text().trim();
+                                   teaserInfoEntryList.push(teaserInfoEntry);
+                               });
+                               if(!teaserInfoEntryList.includes(text)){
+                                 teaserInfo.append('<span>' + text + '</span>');
+                               }
+                            }
+                        }
+                      } else {
+                        element.remove();
+                      }
+                    }
+                }
+            }
+        };
+        http.send();
+        return ('');
+    }
 </script>

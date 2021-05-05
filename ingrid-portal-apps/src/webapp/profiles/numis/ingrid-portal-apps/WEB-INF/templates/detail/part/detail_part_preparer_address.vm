@@ -15,7 +15,6 @@
                     <div class="helper icon">
                         #renderUDKAddressIcon($type $MESSAGES.getString("udk_adr_class_name_$type") $MESSAGES.getString("udk_adr_class_name_$type"))
                     </div>
-
                     <h2>$title</h2>
                 </div>
             </div>
@@ -39,3 +38,4 @@
     </div>
 #end
 </div>
+#parse("/WEB-INF/templates/scripts/include_script_filter_scroll.vm")
