@@ -1,10 +1,16 @@
 <script>
-  $('.filter').niceScroll({
-    cursorcolor:"#1D4B7B",
+  $('.filter .filter-wrapper').niceScroll({
+    cursorcolor:"#085467",
     cursorwidth:"8px",
     cursorborderradius: "6px",
   });
   $(window).bind('scroll',function(){
-    $(".filter").getNiceScroll().resize();
+    $('.filter .filter-wrapper').getNiceScroll().resize();
+  });
+  
+  $('.filter .accordion-title').bind('click',function(){
+    setTimeout(function(){
+      $(".filter .filter-wrapper").getNiceScroll().resize();
+    }, 500);
   });
 </script>

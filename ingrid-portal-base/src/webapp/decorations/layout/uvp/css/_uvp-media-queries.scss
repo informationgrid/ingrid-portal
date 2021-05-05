@@ -364,9 +364,12 @@
     
     .accordion.accordion-filter-group.filter {
       padding: 0;
+      max-height: 75vh;
+      overflow: hidden;
 
       .accordion-content.filter-wrapper {
         margin: 0 16px;
+        max-height: 66vh;
       }
     }
   }
@@ -383,9 +386,6 @@
       border: 0;
       box-shadow: unset;
       margin:0;
-    }
-    > .accordion-item.is-active {
-      margin-bottom: 80px !important;
     }
   }
   .filter.accordion {
@@ -419,8 +419,6 @@
       left: 0;
       width: 100%;
       border-radius: 0 !important;
-      overflow-y: auto;
-      max-height: 100%;
     }
     
     .shrink {
@@ -473,9 +471,22 @@
   .search-filtered {
     margin-top: 4rem; 
    
-    .accordion.accordion-filter-group .accordion-content.filter-wrapper {
-      display: block !important;
-      padding: 0px;
+    .accordion.accordion-filter-group  {
+      .accordion-content.filter-wrapper {
+        display: block !important;
+        padding: 0px;
+        max-height: 75vh;
+        padding: 8px;
+        border: 2px solid #FFFFFF;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        border-radius: 8px;
+      }
+      .accordion-content.filter-wrapper-shadowless {
+        padding: 0;
+        border: 0;
+        box-shadow: unset;
+        border-radius: 0;
+      }
     }
   }
 

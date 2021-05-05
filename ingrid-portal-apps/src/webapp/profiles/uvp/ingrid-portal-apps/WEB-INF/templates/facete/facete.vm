@@ -4,7 +4,7 @@
 <div class="accordion accordion-filter-group filter" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
     <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
         <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
-        <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
+        <div class="accordion-content filter-wrapper filter-wrapper-shadowless" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
             <div class="boxes">
 #if($rankedHitslenght > 0)
                     #renderFacetCategory($facetConfig)

@@ -2,67 +2,65 @@
     <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
         <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="detail-accordion-label" aria-expanded="false" aria-selected="false">Inhalt</a>
         <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
-            <div class="teaser-data search">
-                <ul class="accordion filter-group nav-group">
-                    <li class="accordion-item">
-                    ## Übersicht
-                        #if($TOOL.aNodeOfListExist($xPathListFactSheet) || $getDownloads.size() > 0 || $getLinks.size() > 0 || $useConstraints.size() > 0 || $mapImage)
-                            #set($hasDetail0 = true)
-                            <a href="#detail-0" class="accordion-title js-anchor-target is-active"><span class="text">$MESSAGES.getString("general_tab")</span></a>
-                        #end
-                    ## Beschreibung
-                        #if($TOOL.aNodeOfListExist($xPathListTime) || $TOOL.aNodeOfListExist($xPathListTimeDate) || $getAlternateTitle || $getDescription)
-                            #set($hasDetail1 = true)
-                            <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("detail_description")</span></a>
-                        #end
-                    ## Darstellung
-                        #if($TOOL.aNodeOfListExist($xPathListPresentation))
-                            #set($hasDetail2 = true)
-                            <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("spacial_reference_tab")</span></a>
-                        #end
-                    ## Verweise und Downloads
-                        #if($TOOL.aNodeOfListExist($xPathListReferences))
-                            #set($hasDetail3 = true)
-                            <a href="#detail-3" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>
-                        #end
-                    ## Nutzung
-                        #if($TOOL.aNodeOfListExist($xPathListUse) || $useConstraints.size() > 0 || $useLimitations.size() > 0)
-                            #set($hasDetail4 = true)
-                            <a href="#detail-4" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("search.detail.usage")</span></a>
-                        #end
-                    ## Kontakt
-                        #if($TOOL.aNodeOfListExist($xPathListContact))
-                            #set($hasDetail8 = true)
-                            <a href="#detail-8" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("search.detail.contact")</span></a>
-                        #end
-                    ## Fachinformationen
-                        #if(($type == "1" && $TOOL.aNodeOfListExist($xPathListInformationType1)) ||
-                            ($type == "2" && $TOOL.aNodeOfListExist($xPathListInformationType2)) ||
-                            ($type == "3" && ($TOOL.aNodeOfListExist($xPathListInformationType3) || $serviceClassification.size() > 0)) ||
-                            ($type == "4" && $TOOL.aNodeOfListExist($xPathListInformationType4)) ||
-                            ($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5)) ||
-                            ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)) ||
-                            $TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML ||
-                            $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0 ||
-                            $TOOL.aNodeOfListExist($xPathListDoi)
-                        )
-                            #set($hasDetail5 = true)
-                            <a href="#detail-5" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("subject_reference_tab")</span></a>
-                        #end
-                    ## Datenqualität
-                        #if($TOOL.aNodeOfListExist($xPathListDataQuality))
-                            #set($hasDetail6 = true)
-                            <a href="#detail-6" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("data_quality")</span></a>
-                        #end
-                    ## Zusatzfelder
-                        #set($tabtitle = $TOOL.getValueFromXPath($xPathAdditionalFields))
-                        #if($tabtitle)
-                            #set($hasDetail7 = true)
-                            <a href="#detail-7" class="accordion-title js-anchor-target"><span class="text">$tabtitle</span></a>
-                        #end
-                    </li>
-                </ul>
-            </div>
+            <ul class="accordion filter-group nav-group">
+                <li class="accordion-item">
+                ## Übersicht
+                    #if($TOOL.aNodeOfListExist($xPathListFactSheet) || $getDownloads.size() > 0 || $getLinks.size() > 0 || $useConstraints.size() > 0 || $mapImage)
+                        #set($hasDetail0 = true)
+                        <a href="#detail-0" class="accordion-title js-anchor-target is-active"><span class="text">$MESSAGES.getString("general_tab")</span></a>
+                    #end
+                ## Beschreibung
+                    #if($TOOL.aNodeOfListExist($xPathListTime) || $TOOL.aNodeOfListExist($xPathListTimeDate) || $getAlternateTitle || $getDescription)
+                        #set($hasDetail1 = true)
+                        <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("detail_description")</span></a>
+                    #end
+                ## Darstellung
+                    #if($TOOL.aNodeOfListExist($xPathListPresentation))
+                        #set($hasDetail2 = true)
+                        <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("spacial_reference_tab")</span></a>
+                    #end
+                ## Verweise und Downloads
+                    #if($TOOL.aNodeOfListExist($xPathListReferences))
+                        #set($hasDetail3 = true)
+                        <a href="#detail-3" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references_tab")</span></a>
+                    #end
+                ## Nutzung
+                    #if($TOOL.aNodeOfListExist($xPathListUse) || $useConstraints.size() > 0 || $useLimitations.size() > 0)
+                        #set($hasDetail4 = true)
+                        <a href="#detail-4" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("search.detail.usage")</span></a>
+                    #end
+                ## Kontakt
+                    #if($TOOL.aNodeOfListExist($xPathListContact))
+                        #set($hasDetail8 = true)
+                        <a href="#detail-8" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("search.detail.contact")</span></a>
+                    #end
+                ## Fachinformationen
+                    #if(($type == "1" && $TOOL.aNodeOfListExist($xPathListInformationType1)) ||
+                        ($type == "2" && $TOOL.aNodeOfListExist($xPathListInformationType2)) ||
+                        ($type == "3" && ($TOOL.aNodeOfListExist($xPathListInformationType3) || $serviceClassification.size() > 0)) ||
+                        ($type == "4" && $TOOL.aNodeOfListExist($xPathListInformationType4)) ||
+                        ($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5)) ||
+                        ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)) ||
+                        $TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML ||
+                        $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0 ||
+                        $TOOL.aNodeOfListExist($xPathListDoi)
+                    )
+                        #set($hasDetail5 = true)
+                        <a href="#detail-5" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("subject_reference_tab")</span></a>
+                    #end
+                ## Datenqualität
+                    #if($TOOL.aNodeOfListExist($xPathListDataQuality))
+                        #set($hasDetail6 = true)
+                        <a href="#detail-6" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("data_quality")</span></a>
+                    #end
+                ## Zusatzfelder
+                    #set($tabtitle = $TOOL.getValueFromXPath($xPathAdditionalFields))
+                    #if($tabtitle)
+                        #set($hasDetail7 = true)
+                        <a href="#detail-7" class="accordion-title js-anchor-target"><span class="text">$tabtitle</span></a>
+                    #end
+                </li>
+            </ul>
         </div>
     </div>
 </div>
