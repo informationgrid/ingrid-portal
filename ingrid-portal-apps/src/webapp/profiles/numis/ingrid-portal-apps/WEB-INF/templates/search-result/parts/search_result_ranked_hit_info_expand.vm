@@ -195,22 +195,21 @@
                     <div class="swiper-container-background">
                 #end
                 #if($hasPreview)
-                    #set($loadDefaultMapImage = "loadDefaultMapImage(this,'${rs.partnerKey}');")
+                    #set($partner = "bund")
+                    #if($rs.partnerKey)
+                        #set($partner =  $rs.partnerKey.split(",").get(0))
+                    #end
+                    #set($loadDefaultMapImage = "loadDefaultMapImage(this,'$partner');")
                     #if($!rs.additional_html_1.indexOf(">, <") == -1)
                         #if($hasSwipe)
                         <div class="swiper-slide">
-                        <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
-                        #end
-                        #set ($tmpValue = $!rs.additional_html_1)
-                        #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
-                            #set($tmpImgValue = $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden'))
-                            $tmpImgValue.replace(">", "onerror=$loadDefaultMapImage>")
+                            <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
+                            #end
+                            #set ($tmpValue = $!rs.additional_html_1)
+                            $tmpValue.replace(">", "onerror=$loadDefaultMapImage>")
                             <noscript>
                                 $tmpValue
                             </noscript>
-                        #else
-                            $tmpValue.replace(">", "onerror=$loadDefaultMapImage>")
-                        #end
                         #if($hasSwipe)
                         </div>
                         #end
@@ -219,15 +218,10 @@
                         #foreach($tmpValue in $tmpValues)
                             <div class="swiper-slide">
                             <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
-                            #if($tmpValue.indexOf("src='http") > -1 && $tmpValue.indexOf("preview_image") > -1)
-                                #set($tmpImgValue = $tmpValue.replace('src', 'src="./" srcset').replace('preview_image', 'preview_image is-hidden'))
-                                $tmpImgValue.replace(">", "onerror=$loadDefaultMapImage>")
+                                $tmpValue.replace(">", "onerror=$loadDefaultMapImage>")
                                 <noscript>
                                     $tmpValue
                                 </noscript>
-                            #else
-                                $tmpValue.replace(">", "onerror=$loadDefaultMapImage>")
-                            #end
                             </div>
                         #end
                     #end

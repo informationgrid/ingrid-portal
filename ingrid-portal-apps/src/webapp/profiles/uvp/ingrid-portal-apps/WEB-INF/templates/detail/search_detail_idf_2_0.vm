@@ -878,4 +878,3 @@
         </div>
     </section>
 #end
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')

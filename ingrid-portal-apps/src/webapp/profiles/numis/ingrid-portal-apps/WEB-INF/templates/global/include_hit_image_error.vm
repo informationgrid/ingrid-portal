@@ -1,3 +1,5 @@
+# Variable 'restUrlHttpGetImage' must be define in portlet
+
 <script>
     function loadDefaultMapImage(elem, partner) {
       elem.onerror = null;
@@ -5,8 +7,28 @@
       if(partner && partner != 'bund') {
         image += '_' + partner; 
       }
-      elem.src = '/ingrid-portal-apps/images/maps/' + image + '.png';
-      elem.removeAttribute("srcset");
-      elem.classList.remove('is-hidden');
+      if(elem) {
+        var src = elem.src;
+        if(src.indexOf('http') > -1 && src.indexOf('https://') === -1 && location.protocol === 'https:') {
+            var respJson;
+            var http = new XMLHttpRequest();
+            http.open('GET', '$restUrlHttpGetImage?url=' + encodeURIComponent(src), true);
+            http.onreadystatechange = function() {
+                if (this.readyState == this.DONE) {
+                    if (this.status === 200) {
+                        if(this.response){
+                            elem.src = this.response;
+                            elem.removeAttribute("srcset");
+                            elem.classList.remove('is-hidden');
+                        }
+                    }
+                }
+            };
+            http.send();
+            return ('');
+        } else {
+            elem.src = '/ingrid-portal-apps/images/maps/' + image + '.png';
+        }
+      }
     }
 </script>

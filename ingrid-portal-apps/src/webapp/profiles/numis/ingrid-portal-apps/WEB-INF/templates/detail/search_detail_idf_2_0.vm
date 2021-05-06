@@ -40,7 +40,7 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image is-hidden" src="./" srcset="$entry.src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
+                        <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
                         <noscript>
                             <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
                         </noscript>
@@ -138,7 +138,7 @@
                             #foreach($graphic in $entry.graphicOverview)
                                 <div class="swiper-slide">
                                     <p class="caption">
-                                        <img class="preview_image" srcset="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                        <img class="preview_image" src="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
                                         <noscript>
                                             <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
                                         </noscript>
@@ -151,7 +151,7 @@
                     </div>
                     #elseif($tool.hasContent($entry.graphicOverview.get(0)))
                     <div class="preview">
-                        <img class="preview_image" srcset="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                        <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
                         <noscript>
                             <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
                         </noscript>
@@ -392,7 +392,6 @@
                 #end
                 #if(!$isFactSheet)
                 <a class="anchor" id="${hashDetail8}_contact-${count}" name="${hashDetail8}_contact-${count}"></a>
-                <table>
                 #end
                 #set($count = $count + 1)
                     #set($node = $entry)
@@ -1278,5 +1277,3 @@
         </div>
     </section>
 #end
-
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')
