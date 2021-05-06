@@ -27,13 +27,13 @@
                                 <div class="boxes">
                                     #if($TOOL.aNodeOfListExist($xPathListTime))
                                         #set($tmpHash = "${hashDetail1}_time_reference")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("time_reference"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
                                     #if($nodelist)
                                         #set($tmpHash = "${hashDetail1}_time_reference_record")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("time_reference_record"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                 </div>
@@ -64,7 +64,7 @@
                                 <div class="boxes">
                                     #if($getDownloads.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_downloads")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("downloads"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getLinks.size() > 0)
@@ -74,17 +74,17 @@
                                     #end
                                     #if($getOtherLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_www_references")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("www_references"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getSubordinatedLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_subordinated_references")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("subordinated_references"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getSuperiorLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail3}_superior_references")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("superior_references"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                 </div>
@@ -160,17 +160,17 @@
                                     ($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5)) ||
                                     ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)))
                                     #set($tmpHash = "${hashDetail5}_technical_information")
-                                    #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                    #set($tmpTitle = $MESSAGES.getString("technical_information"))
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                 #end
                                 #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML)
                                     #set($tmpHash = "${hashDetail5}_additional_information")
-                                    #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                    #set($tmpTitle = $MESSAGES.getString("additional_information"))
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                 #end
                                 #if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
-                                    #set($tmpHash = "${hashDetail5}_Schlagworte")
-                                    #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                    #set($tmpHash = "${hashDetail5}_fs_keywords")
+                                    #set($tmpTitle = $MESSAGES.getString("fs_keywords"))
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                 #end
                             </div>

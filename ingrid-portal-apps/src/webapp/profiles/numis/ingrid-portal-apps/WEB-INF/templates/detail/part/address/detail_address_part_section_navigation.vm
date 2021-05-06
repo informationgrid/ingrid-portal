@@ -45,17 +45,17 @@
                                     #end
                                     #if($getOtherLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_www_references")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("www_references"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getSuperiorLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_superior_address")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("superior_address"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #if($getSubordinatedLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_subordinated_addresses")
-                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #set($tmpTitle = $MESSAGES.getString("subordinated_addresses"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                 </div>
