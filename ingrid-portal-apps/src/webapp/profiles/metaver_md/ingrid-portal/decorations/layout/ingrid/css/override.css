@@ -1088,24 +1088,12 @@ header .menu-tab-row .menu-tab {
     background-color: #F6F6F6;
 }
 
-.search-filtered .table table th:first-child {
+.search-filtered .table.table--lined table th:first-child, .search-filtered .table.list table tr td:first-child {
     color: #085468;
 }
 
-.search-filtered .table:not(.table--lined) table tr th{
+.search-filtered .table h4, .search-filtered .table h5 {
     color: #085468;
-}
-
-.search-filtered .table.list table {
-    color: #3a566d;
-}
-
-.search-filtered .table.list table tr td:first-child {
-    color: #085468;
-}
-
-.search-filtered .table.list .list_entry {
-    color: #3a566d;
 }
 
 .search-filtered .teaser-data.is-active h2.header,

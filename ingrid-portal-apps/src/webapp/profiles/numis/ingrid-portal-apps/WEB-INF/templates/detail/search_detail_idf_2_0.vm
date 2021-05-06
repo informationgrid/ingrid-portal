@@ -7,6 +7,12 @@
     #end
 #end
 
+#macro (renderSubNavigation $title $hash)
+<a class="js-anchor-target-entry" href="#${hash}">
+    <span class="ic-ic-bullet"></span><span class="text">$title</span>
+</a>
+#end
+
 #macro (renderLinkLine $entry $hasImage $displayPreview)
     #if($entry.type == "html")
         $entry.body
@@ -717,19 +723,14 @@
 
 #macro (renderTableTitle $title $entry $space $symbolColumn $symbolList)
     #if($tool.hasContent($entry.get("body")))
-        #if($title)
-            #renderGroupTitle($title)
-        #end
         <div class="table">
+            #if($entry.title)
+                <h5>$entry.title</h5>
+            #end
             <table>
             #if($tool.hasContent($entry.get("head")))
                 <thead>
                     <tr>
-                    #if($tool.hasContent($entry.title))
-                        #if(!$entry.head.contains(${entry.title}))
-                        <th>$entry.title</th>
-                        #end
-                    #end
                     #foreach($th in $entry.head)
                         <th>$th</th>
                     #end
@@ -738,11 +739,6 @@
             #end
             #foreach($tr in $entry.body)
                 <tr>
-                #if($tool.hasContent($entry.title))
-                    #if(!$entry.head.contains(${entry.title}))
-                    <td></td>
-                    #end
-                #end
                 #set($num = 0)
                 #foreach($td in $tr)
                     #if($entry.types)
@@ -1281,13 +1277,6 @@
             </article>
         </div>
     </section>
-#end
-
-#macro (renderSubNavigation $title $hash)
-    <a class="js-anchor-target-entry" href="#${hash}">
-        <span class="ic-ic-bullet"><br></span>
-        <span class="text">$title</span>
-    </a>
 #end
 
 #parse ('/WEB-INF/templates/global/include_preview_image.vm')

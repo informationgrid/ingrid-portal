@@ -1622,6 +1622,15 @@ footer {
   }
 
   .table {
+    background-color: #F6F6F6;
+
+    h4, h5 {
+      border-bottom: 2px solid #FFF;
+      padding: 10px;
+      margin: 0;
+      color: $dark-midnight;
+    }
+
     text-align: left;
 
     table {
@@ -1702,6 +1711,7 @@ footer {
           width: 175px;
           font-family: $button-font-family;
           padding-top: 8px;
+          color: $dark-midnight;
         }
       }
     }
@@ -1721,6 +1731,10 @@ footer {
   .table.table--lined {
     table {
       margin-bottom: 0;
+
+      th:first-child {
+        color: $dark-midnight;
+      }
     }
 
     ~ .table:not(.table--lined) {
