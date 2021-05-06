@@ -204,9 +204,13 @@
                         #if($hasSwipe)
                         <div class="swiper-slide">
                             <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
-                            #end
+                        #end
                             #set ($tmpValue = $!rs.additional_html_1)
-                            $tmpValue.replace(">", "onerror=$loadDefaultMapImage>")
+                            #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
+                            #if($tmpImgValue.indexOf("src='http") > -1)
+                                #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" srcset'))
+                            #end
+                            $tmpImgValue
                             <noscript>
                                 $tmpValue
                             </noscript>
@@ -218,7 +222,11 @@
                         #foreach($tmpValue in $tmpValues)
                             <div class="swiper-slide">
                             <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
-                                $tmpValue.replace(">", "onerror=$loadDefaultMapImage>")
+                                #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
+                                #if($tmpImgValue.indexOf("src='http") > -1)
+                                    #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" srcset'))
+                                #end
+                                $tmpImgValue
                                 <noscript>
                                     $tmpValue
                                 </noscript>

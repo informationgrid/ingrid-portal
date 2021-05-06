@@ -40,9 +40,17 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
+                        #set($src = "")
+                        #if($entry.src)
+                            #set($src = $entry.src)
+                        #end
+                        #if($src.indexOf("http:") > -1)
+                            <img class="preview_image" src="." srcset="$src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
+                        #else
+                            <img class="preview_image" src="$src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
+                        #end
                         <noscript>
-                            <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
+                            <img class="preview_image" src="$src" title="$imgTitle" alt="img">
                         </noscript>
                     </p>
                     #if($entry.description)
@@ -138,7 +146,11 @@
                             #foreach($graphic in $entry.graphicOverview)
                                 <div class="swiper-slide">
                                     <p class="caption">
-                                        <img class="preview_image" src="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                        #if($graphic.indexOf("http:") > -1)
+                                            <img class="preview_image" src="." srcset="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                        #else
+                                            <img class="preview_image" src="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                        #end
                                         <noscript>
                                             <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
                                         </noscript>
@@ -151,7 +163,11 @@
                     </div>
                     #elseif($tool.hasContent($entry.graphicOverview.get(0)))
                     <div class="preview">
-                        <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                        #if($entry.graphicOverview.get(0).indexOf("http:") > -1)
+                            <img class="preview_image" src="." srcset="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                        #else
+                            <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                        #end
                         <noscript>
                             <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
                         </noscript>
