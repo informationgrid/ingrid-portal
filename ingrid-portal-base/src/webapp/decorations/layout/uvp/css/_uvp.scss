@@ -1647,6 +1647,11 @@ footer {
         font-family: $button-font-family;
       }
 
+      td {
+        p {
+          margin-bottom: 0;
+        }
+      }
       td.symbol {
         text-align: center;
 
@@ -2735,5 +2740,5 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
 
 .nicescroll-rails-vr {
   margin-left: 16px;
-  z-index: 1200 !important;
+  z-index: 1040 !important;
 }

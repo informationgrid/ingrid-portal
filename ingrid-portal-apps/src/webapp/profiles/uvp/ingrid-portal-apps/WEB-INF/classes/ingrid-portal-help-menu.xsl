@@ -29,7 +29,7 @@
 <xsl:template match="/">
     <xsl:for-each select="chapter">
         <xsl:if test="header/@display != 'false' or not(header/@display)">
-            <ul class="accordion filter-group nav-group" data-accordion="" data-multi-expand="false" data-allow-all-closed="true" role="tablist" data-e="">
+            <ul class="accordion filter-group nav-group" data-accordion="" data-multi-expand="false" data-allow-all-closed="true" role="tablist">
                 <li class="accordion-item">
                     <a class="accordion-title" role="tab" id="help-accordion-label" aria-expanded="false" aria-selected="false">
                         <xsl:attribute name="href">?hkey=<xsl:value-of select="section/@help-key" /></xsl:attribute>
@@ -38,8 +38,8 @@
                     <div class="accordion-content" data-tab-content="" role="tabpanel">
                         <div class="boxes">
                             <xsl:for-each select="section">
-                                <a class="js-anchor-target" data-key="hkey">
-                                    <xsl:attribute name="href">?hkey=<xsl:value-of select="@help-key" />#<xsl:value-of select="@help-key" /></xsl:attribute>
+                                <a class="js-anchor-target js-anchor-target-entry" data-key="hkey">
+                                    <xsl:attribute name="href">#<xsl:value-of select="@help-key" /></xsl:attribute>
                                     <span class="ic-ic-bullet"><br/></span>
                                     <span class="text"><xsl:value-of select="header"/></span>
                                 </a>

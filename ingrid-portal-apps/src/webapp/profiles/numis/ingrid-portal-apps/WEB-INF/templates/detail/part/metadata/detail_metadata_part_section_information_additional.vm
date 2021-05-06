@@ -2,6 +2,7 @@
 ################################
 #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML)
     <div class="row-sub">
+        <a class="anchor" id="${hashDetail5}_additional_information" name="${hashDetail5}_additional_information"></a>
         #renderSectionTitle($MESSAGES.getString("additional_information"))
     ## Objekt-ID
         #renderTextTable($MESSAGES.getString("t01_object.obj_id") $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
@@ -37,6 +38,7 @@
 ## Schlagworte
 #if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
     <div class="row-sub">
+        <a class="anchor" id="${hashDetail5}_terms" name="${hashDetail5}_terms"></a>
         #renderSectionTitle("Schlagworte")
         ## Verschlagwortung
         #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire"))

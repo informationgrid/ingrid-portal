@@ -52,8 +52,11 @@
     </div>
 #end
 </div>
-#parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_script_table_scroll.vm")
-#parse("/WEB-INF/templates/scripts/include_script_filter_scroll.vm")
+#parse('/WEB-INF/templates/detail/part/metadata/detail_metadata_part_script_table_scroll.vm')
+#parse('/WEB-INF/templates/scripts/include_script_filter_scroll.vm')
+#parse('/WEB-INF/templates/scripts/include_script_filter_scroll_activate.vm')
+#parse('/WEB-INF/templates/global/include_reference_list_file_size.vm')
+#parse('/WEB-INF/templates/global/include_reference_list_datatype.vm')
 
 #macro (renderDate $dateTitle $dateFrom $dateTo $info)
     #if($dateFrom || $dateTo)
@@ -186,37 +189,3 @@
         </svg>
     </h3>
 #end
-#parse ('/WEB-INF/templates/global/include_reference_list_file_size.vm')
-#parse ('/WEB-INF/templates/global/include_reference_list_datatype.vm')
-#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
-<script>
-    var lastId;
-    var header = $('header');
-    var topMenu = $(".nav-group");
-    
-    var menuItems = topMenu.find("a");
-
-    var scrollItems = menuItems.map(function(){
-        var item = $($(this).attr("href"));
-        if (item.length) { return item; }
-    });
-    
-    $(window).scroll(function(){
-        var topMenuHeight = header.outerHeight() + 180;
-        var fromTop = $(this).scrollTop() + topMenuHeight;
-        var cur = scrollItems.map(function(){
-            if ($(this).offset().top < fromTop)
-                return this;
-        });
- 
-        cur = cur[cur.length-1];
-        var id = cur && cur.length ? cur[0].id : "";
-        if (lastId !== id) {
-            if(id !== "") {
-                lastId = id;
-                menuItems.removeClass("is-active");
-                menuItems.filter("[href='#"+id+"']").addClass("is-active");
-            }
-        }
-    });
-</script>

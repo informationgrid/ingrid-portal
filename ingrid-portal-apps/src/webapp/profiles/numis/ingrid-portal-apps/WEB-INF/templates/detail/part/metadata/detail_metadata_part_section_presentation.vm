@@ -1,7 +1,7 @@
 ## Darstellung
 ################################
 #if($hasDetail2)
-    <a class="anchor" id="detail-2" name="detail-2"></a>
+    <a class="anchor" id="${hashDetail2}" name="${hashDetail2}"></a>
     <h2>$MESSAGES.getString("spacial_reference_tab")</h2>
     <div class="row columns">
     ## Raumbezugssystem

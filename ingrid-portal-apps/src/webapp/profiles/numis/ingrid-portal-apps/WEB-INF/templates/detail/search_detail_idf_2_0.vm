@@ -1,3 +1,4 @@
+#parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
 #set($loadDefaultMapImage = "loadDefaultMapImage(this,'${plugPartner}');")
 
 #macro (renderTitleLine $entry)
@@ -373,7 +374,6 @@
                     #break
                 #end
             #end
-            #set($count = $count + 1)
             #if(!$isFactSheet)
             <div class="table">
             #end
@@ -385,8 +385,10 @@
                     #end
                 #end
                 #if(!$isFactSheet)
+                <a class="anchor" id="${hashDetail8}_contact-${count}" name="${hashDetail8}_contact-${count}"></a>
                 <table>
                 #end
+                #set($count = $count + 1)
                     #set($node = $entry)
                     #set($xPath = "")
                     #if($TOOL.nodeExist("./idf:idfResponsibleParty", $node))
@@ -399,6 +401,16 @@
                     
                     #set($uuid = "")
                     #set($xPath = "$xParentPath/gmd:role/gmd:CI_RoleCode/@codeListValue")
+                    
+                    #set($addressRole = "")
+                    #if($TOOL.nodeExist($xPath, $node))
+                        #set($addressRole = $TOOL.getValueFromXPath($xPath, "505", $node))
+                    #end
+                    
+                    #if(!$isFactSheet)
+                    <table>
+                    #end
+                    
                     #if(!$isFactSheet)
                     <head>
                     <tr>
@@ -408,7 +420,7 @@
                         #if($isFactSheet)
                         <h4>
                         #end
-                        $TOOL.getValueFromXPath($xPath, "505", $node)
+                        $addressRole
                         #if($isFactSheet)
                         </h4>
                         #end
@@ -1270,4 +1282,12 @@
         </div>
     </section>
 #end
+
+#macro (renderSubNavigation $title $hash)
+    <a class="js-anchor-target-entry" href="#${hash}">
+        <span class="ic-ic-bullet"><br></span>
+        <span class="text">$title</span>
+    </a>
+#end
+
 #parse ('/WEB-INF/templates/global/include_preview_image.vm')

@@ -1,7 +1,7 @@
 ## Verweise und Downloads
 ################################
 #if($hasDetail2)
-    <a class="anchor" id="detail-2" name="detail-2"></a>
+    <a class="anchor" id="${hashDetail2}" name="${hashDetail2}"></a>
     <h2>$MESSAGES.getString("references")</h2>
     <div class="row columns">
     ## Links
@@ -11,6 +11,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail2}_info_links" name="${hashDetail2}_info_links"></a>
             #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h3" [] true)
         #end
     ## Übergeordnete Adressen
@@ -20,6 +21,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail2}_superior_address" name="${hashDetail2}_superior_address"></a>
             #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h3" [] true)
         #end
     ## Untergeordnete Adressen
@@ -29,6 +31,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail2}_subordinated_addresses" name="${hashDetail2}_subordinated_addresses"></a>
             #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h3" [] true)
         #end
     </div>

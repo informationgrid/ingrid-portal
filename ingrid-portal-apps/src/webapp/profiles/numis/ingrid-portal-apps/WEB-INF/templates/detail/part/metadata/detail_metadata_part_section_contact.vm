@@ -1,7 +1,7 @@
 ## Nutzung
 ################################
 #if($hasDetail8)
-    <a class="anchor" id="detail-8" name="detail-8"></a>
+    <a class="anchor" id="${hashDetail8}" name="${hashDetail8}"></a>
     <h2>$MESSAGES.getString("search.detail.contact")</h2>
     <div class="row columns">
     ## Addressen

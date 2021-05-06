@@ -1,7 +1,7 @@
 ## Verweise und Downloads
 ################################
 #if($hasDetail3)
-    <a class="anchor" id="detail-3" name="detail-3"></a>
+    <a class="anchor" id="${hashDetail3}" name="${hashDetail3}"></a>
     <h2>$MESSAGES.getString("references_tab")</h2>
     <div class="row columns">
     ## Downloads
@@ -11,6 +11,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail3}_downloads" name="${hashDetail3}_downloads"></a>
             #renderLinkListImageLimit($tmpTitle $getDownloads false false $getDownloads.size() "downloads_more" "h3")
         #end
     ## Links
@@ -20,6 +21,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail3}_info_links" name="${hashDetail3}_info_links"></a>
             #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h3" [] true)
         #end
     ## Weitere Verweise
@@ -29,6 +31,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail3}_www_references" name="${hashDetail3}_www_references"></a>
             #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more" "h3")
         #end
         
@@ -39,6 +42,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail3}_subordinated_references" name="${hashDetail3}_subordinated_references"></a>
             #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h3" [] true)
         #end
     ## Übergeordnetet Objekte
@@ -48,6 +52,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
+            <a class="anchor" id="${hashDetail3}_superior_references" name="${hashDetail3}_superior_references"></a>
             #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h3" [] true)
         #end
     </div>

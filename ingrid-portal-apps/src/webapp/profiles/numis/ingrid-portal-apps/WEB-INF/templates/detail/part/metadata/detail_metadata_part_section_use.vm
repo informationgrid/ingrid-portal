@@ -1,7 +1,7 @@
 ## Nutzung
 ################################
 #if($hasDetail4)
-    <a class="anchor" id="detail-4" name="detail-4"></a>
+    <a class="anchor" id="${hashDetail4}" name="${hashDetail4}"></a>
     <h2>$MESSAGES.getString("search.detail.usage")</h2>
     <div class="row columns">
     ## Zugriffsbeschränkungen (accessConstraints)

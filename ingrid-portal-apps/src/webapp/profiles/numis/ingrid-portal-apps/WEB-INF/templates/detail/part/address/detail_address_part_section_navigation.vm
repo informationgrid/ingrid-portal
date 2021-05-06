@@ -1,25 +1,67 @@
-<div class="accordion accordion-filter-group filter" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
-    <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+<div class="accordion accordion-filter-group filter" data-accordion data-allow-all-closed="true" role="tablist">
+    <div class="accordion-item accordion-item-filter-group" data-accordion-item>
         <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="detail-accordion-label" aria-expanded="false" aria-selected="false">Inhalt</a>
-        <div class="accordion-content filter-wrapper" data-tab-content="" role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
-            <ul class="accordion filter-group nav-group">
-                <li class="accordion-item">
+        <div class="accordion-content filter-wrapper" data-tab-content role="tabpanel" aria-labelledby="detail-accordion-label" aria-hidden="true" id="detail-content-accordion">
+            <ul class="accordion filter-group nav-group" data-accordion data-allow-all-closed="true" role="tablist">
                 ## Übersicht
                     #if($TOOL.aNodeOfListExist($xPathListFactSheet))
                         #set($hasDetail0 = true)
-                        <a href="#detail-0" class="accordion-title js-anchor-target is-active"><span class="text">$MESSAGES.getString("general_tab")</span></a>
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#${hashDetail0}" class="accordion-title js-anchor-target" aria-controls="${hashDetail0}-accordion" role="tab" id="${hashDetail0}-accordion-label">
+                                <span class="text">$MESSAGES.getString("general_tab")</span>
+                            </a>
+                            <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-labelledby="${hashDetail0}-accordion-label" aria-hidden="true" id="${hashDetail0}-accordion">
+                                <div class="boxes">
+                                </div>
+                             </div>
+                        </li>
                     #end
                 ## Beschreibung
                     #if($getAlternateTitle || $getDescription)
                         #set($hasDetail1 = true)
-                        <a href="#detail-1" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("detail_description")</span></a>
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#${hashDetail1}" class="accordion-title js-anchor-target">
+                                <span class="text">$MESSAGES.getString("detail_description")</span>
+                            </a>
+                            <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-labelledby="${hashDetail1}-accordion-label" aria-hidden="true" id="${hashDetail1}-accordion">
+                                <div class="boxes">
+                                </div>
+                            </div>
+                        </li>
                     #end
                 ## Verweise
                     #if($TOOL.aNodeOfListExist($xPathListReferences))
                         #set($hasDetail2 = true)
-                        <a href="#detail-2" class="accordion-title js-anchor-target"><span class="text">$MESSAGES.getString("references")</span></a>
+                        <li class="accordion-item" data-accordion-item>
+                            <a href="#${hashDetail2}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">
+                                <span class="text">$MESSAGES.getString("references")</span>
+                            </a>
+                            <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">
+                                <div class="boxes">
+                                    #if($getLinks.size() > 0)
+                                        #set($tmpHash = "${hashDetail2}_info_links")
+                                        #set($tmpTitle = $MESSAGES.getString("search.detail.dataRelations"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
+                                    #if($getOtherLinks.size() > 0)
+                                        #set($tmpHash = "${hashDetail2}_www_references")
+                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
+                                    #if($getSuperiorLinks.size() > 0)
+                                        #set($tmpHash = "${hashDetail2}_superior_address")
+                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
+                                    #if($getSubordinatedLinks.size() > 0)
+                                        #set($tmpHash = "${hashDetail2}_subordinated_addresses")
+                                        #set($tmpTitle = $MESSAGES.getString("$tmpHash"))
+                                        #renderSubNavigation($tmpTitle $tmpHash)
+                                    #end
+                                </div>
+                            </div>
+                        </li>
                     #end
-                </li>
             </ul>
         </div>
     </div>
