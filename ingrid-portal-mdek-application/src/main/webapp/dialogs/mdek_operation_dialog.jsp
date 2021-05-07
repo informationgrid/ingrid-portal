@@ -111,7 +111,7 @@
                         label: '0'
                     }
                 };
-                var def = layoutCreator.createSelectBox("operationsNameSelect", null, storeProps, initOperationNameInput);
+                var def = layoutCreator.createComboBox("operationsNameSelect", null, storeProps, initOperationNameInput);
 
                 var operationsPlatformStructure = [{
                     field: 'title',

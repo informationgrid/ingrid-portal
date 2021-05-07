@@ -26,19 +26,11 @@
 package de.ingrid.mdek.dwr.services.capabilities;
 
 import de.ingrid.mdek.dwr.services.CatalogService;
+import de.ingrid.utils.xml.*;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 import de.ingrid.mdek.SysListCache;
-import de.ingrid.utils.xml.ConfigurableNamespaceContext;
-import de.ingrid.utils.xml.Csw202NamespaceContext;
-import de.ingrid.utils.xml.Wcs11NamespaceContext;
-import de.ingrid.utils.xml.WcsNamespaceContext;
-import de.ingrid.utils.xml.WctsNamespaceContext;
-import de.ingrid.utils.xml.Wfs110NamespaceContext;
-import de.ingrid.utils.xml.Wfs200NamespaceContext;
-import de.ingrid.utils.xml.Wms130NamespaceContext;
-import de.ingrid.utils.xml.WmtsNamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 
 /**
@@ -46,12 +38,12 @@ import de.ingrid.utils.xpath.XPathUtils;
  *
  */
 public class CapabilitiesParserFactory {
-    
+
     private static final Logger log = Logger.getLogger(CapabilitiesParserFactory.class);
-    
+
     // Definition of all supported types
-    private enum ServiceType { WMS, WMS111, WFS110, WFS200, WCS, WCS11, CSW, WCTS, WMTS }
-    
+    private enum ServiceType { WMS, WMS111, WFS110, WFS200, WCS, WCS11, WCS201, CSW, WCTS, WMTS }
+
     // identifier for each service type
     private static final String SERVICE_TYPE_WMS = "WMS";
     private static final String SERVICE_TYPE_WFS = "WFS";
@@ -61,7 +53,7 @@ public class CapabilitiesParserFactory {
     private static final String SERVICE_TYPE_WMTS = "WMTS";
 
     private static XPathUtils xPathUtils = null;
-    
+
     private static final String ERROR_GETCAP_XPATH = "ERROR_GETCAP_XPATH";
 
     public static ICapabilitiesParser getDocument(Document doc, SysListCache syslistCache, CatalogService catalogService) {
@@ -73,13 +65,14 @@ public class CapabilitiesParserFactory {
             ns.addNamespaceContext(new Wfs200NamespaceContext());
             ns.addNamespaceContext(new WcsNamespaceContext());
             ns.addNamespaceContext(new Wcs11NamespaceContext());
+            ns.addNamespaceContext(new Wcs201NamespaceContext());
             ns.addNamespaceContext(new WctsNamespaceContext());
             ns.addNamespaceContext(new WmtsNamespaceContext());
             xPathUtils = new XPathUtils(ns);
         }
-        
+
         ServiceType serviceType = getServiceType(doc);
-        
+
         switch (serviceType) {
             case WMS: return new Wms130CapabilitiesParser(syslistCache, catalogService);
             case WMS111: return new Wms111CapabilitiesParser(syslistCache, catalogService);
@@ -87,6 +80,7 @@ public class CapabilitiesParserFactory {
             case WFS200: return new Wfs200CapabilitiesParser(syslistCache);
             case WCS: return new WcsCapabilitiesParser(syslistCache);
             case WCS11: return new Wcs11CapabilitiesParser(syslistCache);
+            case WCS201: return new Wcs201CapabilitiesParser(syslistCache);
             case CSW: return new CswCapabilitiesParser(syslistCache);
             case WCTS: return new WctsCapabilitiesParser(syslistCache);
             case WMTS: return new WmtsCapabilitiesParser(syslistCache);
@@ -94,7 +88,7 @@ public class CapabilitiesParserFactory {
                 throw new RuntimeException("Unknown Service Type.");
         }
     }
-    
+
     private static ServiceType getServiceType(Document doc) {
         // WMS Version 1.3.0
         String serviceType = xPathUtils.getString(doc, "/wms:WMS_Capabilities/wms:Service/wms:Name[1]");
@@ -111,25 +105,31 @@ public class CapabilitiesParserFactory {
         if (serviceType != null && serviceType.length() != 0) {
             return ServiceType.WCS;
         }
-        
+
         // WCS 1.1.0
         serviceType = xPathUtils.getString(doc, "/wcs11:Capabilities/ows11:ServiceIdentification/ows11:ServiceType[1]");
         if (serviceType != null && serviceType.contains(SERVICE_TYPE_WCS)) {
             return ServiceType.WCS11;
         }
-        
+
+        // WCS 2.0.1
+        serviceType = xPathUtils.getString(doc, "/wcs201:Capabilities/ows20:ServiceIdentification/ows20:ServiceType[1]");
+        if (serviceType != null && serviceType.toLowerCase().contains(SERVICE_TYPE_WCS.toLowerCase())) {
+            return ServiceType.WCS201;
+        }
+
         // WCTS
         serviceType = xPathUtils.getString(doc, "/wcts:Capabilities/owsgeo:ServiceIdentification/owsgeo:ServiceType[1]");
         if (serviceType != null && serviceType.contains(SERVICE_TYPE_WCTS)) {
             return ServiceType.WCTS;
         }
-        
+
         // WFS 1.1.0
         serviceType = xPathUtils.getString(doc, "/wfs:WFS_Capabilities/ows:ServiceIdentification/ows:ServiceType[1]");
         if (serviceType != null && serviceType.length() != 0) {
             return ServiceType.WFS110;
         }
-        
+
         // WFS 2.0
         serviceType = xPathUtils.getString(doc, "/wfs20:WFS_Capabilities/ows11:ServiceIdentification/ows11:ServiceType[1]");
         if (serviceType != null && serviceType.length() != 0) {

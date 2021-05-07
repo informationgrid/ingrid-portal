@@ -42,8 +42,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.dwr.services.CatalogService;
-import de.ingrid.mdek.services.persistence.db.DaoFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -559,7 +559,7 @@ public class GetCapabilitiesServiceTest {
         
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
-        assertThat(result.getDataServiceType(), is(6));
+        assertThat(result.getDataServiceType(), is(3));
         assertThat(result.getVersions().get(0), is("1.0.0"));
         assertThat(result.getTitle(), is("deegree WCS"));
         assertThat(result.getDescription(), is("deegree WCS being OGC WCS 1.0.0 reference implementation"));
@@ -601,7 +601,7 @@ public class GetCapabilitiesServiceTest {
         
         assertThat(result, notNullValue());
         assertThat(result.getServiceType(), is("WCS"));
-        assertThat(result.getDataServiceType(), is(6));
+        assertThat(result.getDataServiceType(), is(3));
         assertThat(result.getVersions().get(0), is("1.0.0"));
         assertThat(result.getVersions().get(1), is("1.1.2"));
         assertThat(result.getTitle(), is("CubeWerx Demonstation WCS"));
@@ -634,6 +634,58 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("DescribeCoverage"));
         assertThat(result.getOperations().get(2).getName(), is("GetCoverage"));
+    }
+    
+    @Test
+    public void testGetCapabilitiesWCS201() throws Exception {
+        Document doc = getDocumentFromFile(capDir + "capabilities_WCS_201.xml");
+        
+        CapabilitiesBean result = service.getCapabilitiesData(doc);
+        
+        assertThat(result, notNullValue());
+        assertThat(result.getServiceType(), is("WCS"));
+        assertThat(result.getDataServiceType(), is(3));
+        assertThat(result.getVersions().get(0), is("2.0.1"));
+        assertThat(result.getVersions().get(1), is("1.1.1"));
+        assertThat(result.getVersions().get(2), is("1.1.0"));
+        assertThat(result.getTitle(), is("INSPIRE-WCS Digitales Geländemodell Gitterweite 200 m"));
+        assertThat(result.getDescription(), is("INSPIRE Downloaddienst des Digitalen Geländemodell Gitterweite 200 m für dasGebiet der Bundesrepublik Deutschland.Zur einheitlichen Beschreibung des Reliefs des Gebietes der BundesrepublikDeutschland werden im Rahmen des ATKIS®-Projektes durch die deutscheLandesvermessung Digitale Geländemodelle (DGM) unterschiedlicher Qualitätsstufenaufgebaut.Das Digitale Geländemodell DGM200 beschreibt die Geländeformen der Erdoberflächedurch eine in einem regelmäßigen Gitter angeordnete, in Lage und Höhegeoreferenzierte Punktmenge. Die Gitterweite beträgt 200 m.Die Visualisierung des Reliefs erfolgt nach den Stilvorgaben von INSPIRE für dasThema Elevetaion."));
+        
+        assertThat(result.getFees(), is("Diese Daten können geldleistungsfrei gemäß der Verordnung zur Festlegung der Nutzungsbestimmungen für die Bereitstellung von Geodaten des Bundes (GeoNutzV) vom 19. März 2013 (Bundesgesetzblatt Jahrgang 2013 Teil I Nr. 14) genutzt werden, siehe https://sg.geodatenzentrum.de/web_public/gdz/lizenz/geonutzv.pdf. Der Quellenvermerk ist zu beachten. | Quellenvermerk: © GeoBasis-DE / BKG <Jahr>"));
+        assertThat(result.getAccessConstraints().get(0), is("Es gelten keine Zugriffsbeschränkungen."));
+        //TODO: assertThat(result.getAccessConstraints(), is("SOME"));
+        
+        // Online Resource
+//        assertThat(result.getOnlineResources().get(0).getUrl(), is("http://www.cubewerx.com/~pvretano"));
+        
+        // Keywords
+        String[] expected = { "WCS", "INSPIRE:DownloadService", "INSPIRE", "infoCoverageAccessService", "BKG", "Bundesamt für Kartographie und Geodäsie", "Deutschland", "Germany", "Geobasisdaten", "AdV", "DGM", "DGM200", "Digitales Gelände Modell 200 m", "Digital Terrain Model Grid Width 200 m", "DEM"};
+        assertThat(result.getKeywords(), hasItems(expected));
+        
+        // check address
+//        assertThat(result.getAddress().getFirstname(), isNull());
+//        assertThat(result.getAddress().getLastname(), isNull());
+        assertThat(result.getAddress().getStreet(), is("Musterstr. 23"));
+        assertThat(result.getAddress().getCity(), is("Berlin"));
+        assertThat(result.getAddress().getPostcode(), is("12345"));
+        assertThat(result.getAddress().getCountry(), is("Deutschland"));
+        assertThat(result.getAddress().getState(), is("xxx"));
+        assertThat(result.getAddress().getPhone(), is("+49 (0) 123 456 789"));
+        assertThat(result.getAddress().getEmail(), is("dlz[at]my-domain.net"));
+        
+        assertThat(result.getOperations().size(), is(3));
+        assertThat(result.getOperations().get(0).getAddressList().get(0), is("https://sgx.geodatenzentrum.de/wcs_dgm200_inspire?"));
+        assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
+        assertThat(result.getOperations().get(1).getName(), is("DescribeCoverage"));
+        assertThat(result.getOperations().get(2).getName(), is("GetCoverage"));
+        
+        assertThat(result.getSpatialReferenceSystems().size(), is(20));
+        assertThat(result.getBoundingBoxes().size(), is(1));
+        LocationBean bbox = result.getBoundingBoxes().get(0);
+        assertThat(bbox.getLatitude1(), is(5.5493554862369905));
+        assertThat(bbox.getLongitude1(), is(47.140652918628305));
+        assertThat(bbox.getLatitude2(), is(15.57402035157314));
+        assertThat(bbox.getLongitude2(), is(55.0611433089022));
     }
 
     @Test
