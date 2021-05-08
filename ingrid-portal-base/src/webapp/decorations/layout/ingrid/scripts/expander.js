@@ -52,15 +52,35 @@ var expander = (function () {
         expander_open.removeClass('is-hidden');
     }
 
+    $.urlParam = function(name){
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+      if (results == null){
+         return null;
+      }
+      else {
+         return decodeURI(results[1]) || 0;
+      }
+    }
+
+    function updateQueryStringParameter(uri, key, value) {
+      var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+      var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+      if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+      }
+      else {
+        return uri + separator + key + "=" + value;
+      }
+    }
+
     function updateParams(key, id , isAdd, isAll) {
-      var queryParams = new URLSearchParams(window.location.search);
-      var paramKey = queryParams.get(key);
+      var paramKey = $.urlParam(key);
       if(paramKey) {
-        var paramKeys = paramKey.split('|');
-        if(paramKeys.includes(id)){
+        var paramKeys = paramKey.split(',');
+        if(paramKeys.indexOf(id) > -1){
           if(!isAdd) {
-            paramKeys = paramKeys.filter(e => e !== id);
-            paramKeys = paramKeys.filter(e => e !== id + "_links");
+            paramKeys = paramKeys.filter(function(e) { return e !== id; });
+            paramKeys = paramKeys.filter(function(e) { return e !== i + "_links"; });
           }
         } else {
           if(isAdd) {
@@ -70,29 +90,30 @@ var expander = (function () {
         paramKey = ''
         for (var i = 0; i < paramKeys.length; i++) {
           if(i > 0) {
-            paramKey = paramKey + '|';
+            paramKey = paramKey + ',';
           }
           paramKey = paramKey + paramKeys[i];
         }
       } else {
         paramKey = id
       }
+      var url = "";
       if(paramKey === '') {
-        queryParams.delete(key);
+        url = updateQueryStringParameter(window.location.href, key, paramKey);
       } else {
         if(isAll && isAdd) {
-          queryParams.set(key, paramKey);
+          url = updateQueryStringParameter(window.location.href, key, paramKey);
         } else if(!isAll) {
-          if(queryParams.get(key) !== paramKey) {
-            queryParams.set(key, paramKey);
-          }
+          url = updateQueryStringParameter(window.location.href, key, paramKey);
         } else {
-          queryParams.delete(key);
+          url = updateQueryStringParameter(window.location.href, key, "");
         }
       }
-      history.replaceState(null, null, "?"+queryParams.toString());
+      var urlSplit = url.split("?");
+      
+      history.replaceState(null, null, "?"+urlSplit[urlSplit.length - 1]);
     }
-    
+
     return {
         open: expand,
         close: close

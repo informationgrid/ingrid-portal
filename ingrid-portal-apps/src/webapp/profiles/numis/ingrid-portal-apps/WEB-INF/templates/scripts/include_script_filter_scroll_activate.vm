@@ -7,9 +7,11 @@
 
     var scrollItems = menuItems.map(function(){
         var href = $(this).attr('href');
-        if(href.startsWith('#')) {
-            var item = $(href);
-            if (item.length) { return item; }
+        if(href) {
+            if(href[0] == ('#')) {
+                var item = $(href);
+                if (item.length) { return item; }
+            }
         }
     });
     

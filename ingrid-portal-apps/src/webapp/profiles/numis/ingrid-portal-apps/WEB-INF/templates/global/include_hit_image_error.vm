@@ -10,10 +10,10 @@
       var defaultImage = '/ingrid-portal-apps/images/maps/' + image + '.png';
       if(elem) {
         elem.src = defaultImage;
-        var src = elem.srcset;
+        var src = elem.dataset.src;
         if(src) {
           src = src.trim();
-          if(src.startsWith("http:") && location.protocol === 'https:') {
+          if(src.indexOf("http:") > -1 && location.protocol === 'https:') {
             var http = new XMLHttpRequest();
             http.open('GET', '$restUrlHttpGetImage?url=' + encodeURIComponent(src), true);
             http.onreadystatechange = function() {
@@ -22,12 +22,14 @@
                   if(this.response){
                     elem.src = this.response;
                   }
-                  elem.removeAttribute("srcset");
+                  elem.removeAttribute("data-src");
                 }
               }
             };
             http.send();
             return ('');
+          } else {
+            elem.removeAttribute("data-src");
           }
         }
       }

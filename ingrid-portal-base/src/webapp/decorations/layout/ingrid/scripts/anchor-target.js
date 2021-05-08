@@ -34,13 +34,22 @@
           elem.removeClass('is-active')
         }
 
+        $.urlParam = function(name){
+          var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+          if (results == null){
+             return null;
+          }
+          else {
+             return decodeURI(results[1]) || 0;
+          }
+        }
+
         return this.each(function () {
 
             var locationHash = window.location.hash.substr(1);
-            var url = new URL(window.location.href);
             var key = $(this).context.dataset.key;
             if(key) {
-              locationHash = url.searchParams.get(key);
+              locationHash = $.urlParam(key);
             }
             var elemHash = $(this).context.hash.substr(1);
 

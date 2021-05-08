@@ -44,7 +44,7 @@
                                    var teaserInfoEntry = $(this).text().trim();
                                    teaserInfoEntryList.push(teaserInfoEntry);
                                });
-                               if(!teaserInfoEntryList.includes(text)){
+                               if(teaserInfoEntryList.indexOf(text) == -1){
                                  teaserInfo.append('<span>' + text + '</span>');
                                }
                             }

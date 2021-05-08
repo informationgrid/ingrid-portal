@@ -2,11 +2,11 @@
   // Add shrink class
   var body = $("body");
 
-  if(window.scrollY > 100) {
+  if(window.pageYOffset > 100) {
       body.addClass("shrink");
   }
   window.onscroll = function(e) {
-    if (this.scrollY > 100) {
+    if (this.pageYOffset > 100) {
       body.addClass("shrink");
     } else {
       body.removeClass("shrink");
