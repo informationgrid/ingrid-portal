@@ -13,7 +13,8 @@
                 #if($referenceAllUUID || $urlReferenceLink)
                     #if($linksUrlRefDownload.size() > 0 || $linksRef.size() > 0)
                         #set($countRefs = $linksUrlRefDownload.size() + $linksRef.size())
-                        <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
+                        <div class="sub-section">
+                        #renderFactTitle("$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span>")
                         <div class="document-list">
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
@@ -72,10 +73,12 @@
                                 </button>
                             #end
                         </div>
+                        </div>
                     #elseif($linksUrlRefOthers.size() > 0)
 ## Weitere Verweise
                         #set($countRefs = $linksUrlRefOthers.size())
-                        <h5>$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span></h5>
+                        <div class="sub-section">
+                        #renderFactTitle("$MESSAGES.getString('searchResult.info.links') <span>($countRefs)</span>")
                         <div class="document-list">
                             #set($countRefsAll = 0)
                             #set($addRefsExpand = false)
@@ -109,6 +112,7 @@
                                 </button>
                             #end
                         </div>
+                        </div>
                     #end
 ## Lizenz
                     #set($licenseKey = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "object_use_constraint.license_key" , 1 ))
@@ -116,7 +120,7 @@
                     #if(($licenseKey && !$licenseKey.isEmpty()) || ($licenseValue && !$licenseValue.isEmpty()))
                         #set($licenseName = $Codelists.getCodeListValue('6500', $licenseKey, $languageCode))
                         #set($licenseUrl = $UTIL_SEARCH.getCodeListDataValue('6500', $licenseKey, "url", $request.getLocale()))
-                        <h5>$MESSAGES.getString('searchResult.info.license')</h5>
+                        #renderFactTitle($MESSAGES.getString('searchResult.info.license'))
                         #if($licenseUrl)
                                     <p>
                                         <a class="icon" href="$licenseUrl" title="$licenseName" target="_blank" rel="noopener noreferrer">
@@ -203,11 +207,11 @@
                     #if($!rs.additional_html_1.indexOf(">, <") == -1)
                         #if($hasSwipe)
                         <div class="swiper-slide">
-                            <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
+                            #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
                         #end
                             #set ($tmpValue = $!rs.additional_html_1)
                             #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
-                            #if($tmpImgValue.indexOf("src='http") > -1)
+                            #if($tmpImgValue.indexOf("src='http:") > -1)
                                 #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" srcset'))
                             #end
                             $tmpImgValue
@@ -221,9 +225,9 @@
                         #set($tmpValues = $!rs.additional_html_1.split(", "))
                         #foreach($tmpValue in $tmpValues)
                             <div class="swiper-slide">
-                            <h5 class="text-center">$MESSAGES.getString("searchResult.info.preview")</h5>
+                            #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
                                 #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
-                                #if($tmpImgValue.indexOf("src='http") > -1)
+                                #if($tmpImgValue.indexOf("src='http:") > -1)
                                     #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" srcset'))
                                 #end
                                 $tmpImgValue
@@ -239,7 +243,7 @@
                 #else
                     
                 #end
-                <h5 class="text-center">$MESSAGES.getString("searchResult.info.area")</h5>
+                #renderFactTitle($MESSAGES.getString("searchResult.info.area") "text-center")
                 #if($hasArea)
                     #set($coords = [])
                     #set($mapId = $moreId)

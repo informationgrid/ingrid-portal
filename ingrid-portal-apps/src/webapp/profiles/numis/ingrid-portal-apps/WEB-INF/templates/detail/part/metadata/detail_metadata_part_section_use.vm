@@ -1,8 +1,9 @@
 ## Nutzung
 ################################
 #if($hasDetail4)
+<div class="section">
     <a class="anchor" id="${hashDetail4}" name="${hashDetail4}"></a>
-    <h2>$MESSAGES.getString("search.detail.usage")</h2>
+    #renderSectionTitle($MESSAGES.getString("search.detail.usage"))
     <div class="row columns">
     ## Zugriffsbeschränkungen (accessConstraints)
         #set($consideredValues = ["otherRestrictions"])
@@ -14,4 +15,5 @@
     ## Ansprechpartner (Metadatum)
         #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_metadatum.vm")
     </div>
+</div>
 #end

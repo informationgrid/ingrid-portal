@@ -1,42 +1,50 @@
 ## Verweise und Downloads
 ################################
 #if($hasDetail3)
+<div class="section">
     <a class="anchor" id="${hashDetail3}" name="${hashDetail3}"></a>
-    <h2>$MESSAGES.getString("references_tab")</h2>
+    #renderSectionTitle($MESSAGES.getString("references_tab"))
     <div class="row columns">
     ## Downloads
         #if($getDownloads.size() > 0)
+        <div class="sub-section">
             #set($tmpTitle = $MESSAGES.getString("downloads"))
             #set($tmpCount = $getDownloads.size())
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             <a class="anchor" id="${hashDetail3}_downloads" name="${hashDetail3}_downloads"></a>
-            #renderLinkListImageLimit($tmpTitle $getDownloads false false $getDownloads.size() "downloads_more" "h3")
+            #renderLinkListImageLimit($tmpTitle $getDownloads false false $getDownloads.size() "downloads_more" "h4")
+        </div>
         #end
     ## Links
         #if($getLinks.size() > 0)
+        <div class="sub-section">
             #set($tmpTitle = $MESSAGES.getString("search.detail.info.links"))
             #set($tmpCount = $getLinks.size())
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             <a class="anchor" id="${hashDetail3}_info_links" name="${hashDetail3}_info_links"></a>
-            #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h3" [] true)
+            #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h4" [] true)
+        </div>
         #end
     ## Weitere Verweise
         #if($getOtherLinks.size() > 0)
+        <div class="sub-section">
             #set($tmpTitle = $MESSAGES.getString("www_references"))
             #set($tmpCount = $getOtherLinks.size())
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             <a class="anchor" id="${hashDetail3}_www_references" name="${hashDetail3}_www_references"></a>
-            #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more" "h3")
+            #renderLinkListImageLimit($tmpTitle $getOtherLinks false false $getOtherLinks.size() "others_more" "h4")
+        </div>
         #end
         
     ## Untergeordnete Objekte
         #if($getSubordinatedLinks.size() > 0)
+        <div class="sub-section">
             #set($tmpTitle = $MESSAGES.getString("subordinated_references"))
             #set($tmpCount = $getSubordinatedLinks.size())
             #if($tmpCount)
@@ -44,9 +52,11 @@
             #end
             <a class="anchor" id="${hashDetail3}_subordinated_references" name="${hashDetail3}_subordinated_references"></a>
             #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h3" [] true)
+        </div>
         #end
     ## Übergeordnetet Objekte
         #if($getSuperiorLinks.size() > 0)
+        <div class="sub-section">
             #set($tmpTitle = $MESSAGES.getString("superior_references"))
             #set($tmpCount = $getSuperiorLinks.size())
             #if($tmpCount)
@@ -54,6 +64,8 @@
             #end
             <a class="anchor" id="${hashDetail3}_superior_references" name="${hashDetail3}_superior_references"></a>
             #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h3" [] true)
+        </div>
         #end
     </div>
+</div>
 #end

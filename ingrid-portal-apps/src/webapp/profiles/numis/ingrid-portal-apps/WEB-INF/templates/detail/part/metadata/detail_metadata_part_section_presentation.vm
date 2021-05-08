@@ -1,8 +1,9 @@
 ## Darstellung
 ################################
 #if($hasDetail2)
+<div class="section">
     <a class="anchor" id="${hashDetail2}" name="${hashDetail2}"></a>
-    <h2>$MESSAGES.getString("spacial_reference_tab")</h2>
+    #renderSectionTitle($MESSAGES.getString("spacial_reference_tab"))
     <div class="row columns">
     ## Raumbezugssystem
         ##renderSectionTitle($MESSAGES.getString("t011_obj_geo.coord"))
@@ -47,4 +48,5 @@
     ## Raumbezugssystem
         #renderLinkListTable($MESSAGES.getString("t011_obj_geo.referencesystem_id") $TOOL.getNodeListValueReferenceSystem($xPathPresentReferenceSystemInfo))
     </div>
+</div>
 #end

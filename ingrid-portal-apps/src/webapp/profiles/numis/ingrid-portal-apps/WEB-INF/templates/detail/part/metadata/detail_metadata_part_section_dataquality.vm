@@ -1,8 +1,9 @@
 ## Datenqualität
 ################################
 #if($hasDetail6)
+<div class="section">
     <a class="anchor" id="${hashDetail6}" name="${hashDetail6}"></a>
-    <h2>$MESSAGES.getString("data_quality")</h2>
+    #renderSectionTitle($MESSAGES.getString("data_quality"))
     #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
     #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])
     <div class="row columns">
@@ -43,4 +44,5 @@
         #set($headCodeList = ["7128"])
         #renderTable($TOOL.getNodeListTable($MESSAGES.getString("data_quality.table128.title"), $xPathDataQualityRelativeInternalPositionalAccuracy, $headTitles, $headXpathExpressions, $headCodeList))
     </div>
+</div>
 #end

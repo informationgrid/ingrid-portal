@@ -40,17 +40,9 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        #set($src = "")
-                        #if($entry.src)
-                            #set($src = $entry.src)
-                        #end
-                        #if($src.indexOf("http:") > -1)
-                            <img class="preview_image" src="." srcset="$src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
-                        #else
-                            <img class="preview_image" src="$src" title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
-                        #end
+                        <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
                         <noscript>
-                            <img class="preview_image" src="$src" title="$imgTitle" alt="img">
+                            <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
                         </noscript>
                     </p>
                     #if($entry.description)
@@ -146,11 +138,7 @@
                             #foreach($graphic in $entry.graphicOverview)
                                 <div class="swiper-slide">
                                     <p class="caption">
-                                        #if($graphic.indexOf("http:") > -1)
-                                            <img class="preview_image" src="." srcset="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
-                                        #else
-                                            <img class="preview_image" src="$graphic" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
-                                        #end
+                                        <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
                                         <noscript>
                                             <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
                                         </noscript>
@@ -163,11 +151,7 @@
                     </div>
                     #elseif($tool.hasContent($entry.graphicOverview.get(0)))
                     <div class="preview">
-                        #if($entry.graphicOverview.get(0).indexOf("http:") > -1)
-                            <img class="preview_image" src="." srcset="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
-                        #else
-                            <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
-                        #end
+                        <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
                         <noscript>
                             <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
                         </noscript>
@@ -401,13 +385,13 @@
             #end
                 #if($tool.hasContent($title))
                     #if(!$isFactSheet)
-                        <h3>$title</h3>
+                        #renderGroupTitle($title)
                     #elseif($isAddress)
-                        <h4>$title</h4>
+                        #renderGroupTitle($title)
                     #end
                 #end
                 #if(!$isFactSheet)
-                <a class="anchor" id="${hashDetail8}_contact-${count}" name="${hashDetail8}_contact-${count}"></a>
+                    <a class="anchor" id="${hashDetail8}_contact-${count}" name="${hashDetail8}_contact-${count}"></a>
                 #end
                 #set($count = $count + 1)
                     #set($node = $entry)
@@ -429,28 +413,18 @@
                     #end
                     
                     #if(!$isFactSheet)
+                        #if($TOOL.nodeExist($xPath, $node))
+                            <h5>$addressRole</h5>
+                        #end
                     <table>
                     #end
                     
-                    #if(!$isFactSheet)
-                    <head>
-                    <tr>
-                    <th>
-                    #end
-                    #if($TOOL.nodeExist($xPath, $node))
-                        #if($isFactSheet)
-                        <h4>
+                    #if($isFactSheet)
+                        #if($TOOL.nodeExist($xPath, $node))
+                        #renderFactTitle($addressRole)
                         #end
-                        $addressRole
-                        #if($isFactSheet)
-                        </h4>
-                        #end
-                        
                     #end
                     #if(!$isFactSheet)
-                    </th>
-                    </tr>
-                    </head>
                     <tr>
                     <td>
                     #end
@@ -876,9 +850,9 @@
         #if($titleAsSection == "false")
             #if($tool.hasContent($title))
                 #if($titleTag)
-                    <$titleTag class="padding-list">$title</$titleTag>
+                    <$titleTag>$title</$titleTag>
                 #else
-                    <h5>$title</h5>
+                    <h4>$title</h4>
                 #end 
             #end
         #end
@@ -1293,3 +1267,5 @@
         </div>
     </section>
 #end
+
+#parse ('/WEB-INF/templates/global/include_preview_image.vm')

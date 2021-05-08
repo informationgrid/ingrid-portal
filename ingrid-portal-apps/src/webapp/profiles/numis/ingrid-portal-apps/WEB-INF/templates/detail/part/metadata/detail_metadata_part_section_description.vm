@@ -1,12 +1,13 @@
 ## Beschreibung
 ################################
 #if($hasDetail1)
+<div class="section">
     <a class="anchor" id="${hashDetail1}" name="${hashDetail1}"></a>
-    <h2>$MESSAGES.getString("detail_description")</h2>
+    #renderSectionTitle($MESSAGES.getString("detail_description"))
     <div class="row columns">
         #if($getAlternateTitle)
             #foreach($t in $getAlternateTitle)
-                <h4>$t</h4>
+                <p class="slab-bold">$t</p>
             #end
         #end
         #if($getDescription)
@@ -26,9 +27,9 @@
         #end
     ## Zeitbezug
         #if($TOOL.aNodeOfListExist($xPathListTime))
-            <div class="row-sub">
+            <div class="sub-section">
                 <a class="anchor" id="${hashDetail1}_time_reference" name="${hashDetail1}_time_reference"></a>
-                #renderSectionTitle($MESSAGES.getString("time_reference"))
+                #renderGroupTitle($MESSAGES.getString("time_reference"))
             ## Durch die Ressource abgedeckte Zeitspanne
                 #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
                 #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
@@ -59,9 +60,9 @@
     ## Zeitbezug der Ressource
         #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
         #if($nodelist)
-            <div class="row-sub">
+            <div class="sub-section">
                 <a class="anchor" id="${hashDetail1}_time_reference_record" name="${hashDetail1}_time_reference_record"></a>
-                #renderSectionTitle($MESSAGES.getString("time_reference_record"))
+                #renderGroupTitle($MESSAGES.getString("time_reference_record"))
         ## Erstellung 
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
                 #if(!$title.isEmpty())
@@ -80,4 +81,5 @@
             </div>
         #end
     </div>
+</div>
 #end

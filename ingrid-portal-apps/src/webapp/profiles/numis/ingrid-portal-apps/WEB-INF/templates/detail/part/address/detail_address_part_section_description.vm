@@ -1,12 +1,13 @@
 ## Beschreibung
 ################################
 #if($hasDetail1)
+<div class="section">
     <a class="anchor" id="${hashDetail1}" name="${hashDetail1}"></a>
-    <h2>$MESSAGES.getString("detail_description")</h2>
+    #renderSectionTitle($MESSAGES.getString("detail_description"))
     <div class="row columns">
         #if($getAlternateTitle)
             #foreach($t in $getAlternateTitle)
-                <h4>$t</h4>
+                <p class="slab-bold">$t</p>
             #end
         #end
         #if($getDescription)
@@ -25,4 +26,5 @@
         </button>
         #end
     </div>
+</div>
 #end

@@ -1,6 +1,6 @@
 ## Geodatensatz
 ################################
-<div class="row-sub">
+<div class="sub-section">
 ## Fachliche Grundlage
     #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
 ## Datensatz/Datenserie

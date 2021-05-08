@@ -1,10 +1,12 @@
 ## Nutzung
 ################################
 #if($hasDetail8)
+<div class="section">
     <a class="anchor" id="${hashDetail8}" name="${hashDetail8}"></a>
-    <h2>$MESSAGES.getString("search.detail.contact")</h2>
+    #renderSectionTitle($MESSAGES.getString("search.detail.contact"))
     <div class="row columns">
     ## Addressen
         #renderMultiLineAddresses("" $xPathUsePointOfContactSortNodes false)
     </div>
+</div>
 #end

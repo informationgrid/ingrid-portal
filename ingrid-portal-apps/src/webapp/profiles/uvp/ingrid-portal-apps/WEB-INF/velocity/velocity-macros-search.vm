@@ -502,3 +502,7 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
         </div>
     #end
 #end
+
+#macro (renderFactTitle $title $class)
+    <h4 class="$class">$title</h4>
+#end
