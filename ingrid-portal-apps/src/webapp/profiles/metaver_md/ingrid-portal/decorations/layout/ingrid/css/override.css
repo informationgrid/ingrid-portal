@@ -221,7 +221,7 @@
 #map-legend .leaflet-control-layers {
   float: none;
   background: transparent !important;
-  box-shadow: unset;
+  box-shadow: none;
   font-size: 12px;
 }
 
@@ -424,38 +424,21 @@ header a.icon.is-selected {
 }
 
 .banner.home .dark h1, .banner.home .dark h2, .banner.home .dark p, .banner.home .dark a, .banner.home .dark abbr{
-  color: #FFFFFF;}
-
-.banner.home .home-wrapper {
-  background-position: right bottom;
+  color: #FFFFFF;
 }
+
 .banner.home .home-wrapper .dark {
   padding-top: 3.5rem;
 }
 .banner.search {
   background: linear-gradient(315deg, #E8EFF0 0%, #F0F7FC 100%);
 }
-.banner.search .search-wrapper {
-  background-position: top right;
-}
 .banner.search + div + .search-filtered {
   margin-top: 0;
-}
-.banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-  background-position: top right;
-  background-size: contain;
-}
-@media print, screen and (min-width: 48em) {
-  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    background-size: unset;
-  }
 }
 .about {
   margin-bottom: 0;
   background: linear-gradient(225deg, #F0F7FC 0%, #E8EFF0 100%);
-}
-.about .about-wrapper {
-  background-image: none;
 }
 .about .about-wrapper .button.outline:hover {
   background-color: #085468;
@@ -626,7 +609,6 @@ header a.icon.is-selected {
 .nav-group .accordion-item.is-active .accordion-title {
     background-color: #067B9B;
 }
-
 .control--checkbox .control__indicator::after {
   border: solid #012D47;
   border-width: 0 3px 3px 0;
@@ -901,24 +883,10 @@ header .row .columns:last-of-type {
 .nav__desktop-icon {
   left: 1.125rem;
 }
-.document-list {
-  margin-bottom: 24px;
-}
-.text-list {
-  margin-bottom: 24px;
-}
-.text-list p.list-item {
-  margin-bottom: 2px;
-}
 
 .table table tr {
   border-bottom: 1px solid #c6cfe2;
 }
-.table table tr th, .table table tr td{
-  padding: 10px;
-  max-width: 300px;
-}
-
 .similar-accordion {
   padding: 0px 24px 24px;
 }
@@ -968,9 +936,6 @@ header .menu-tab-row .menu-tab {
   h4, .h4 {
     font-size: 1.1rem;
     margin-bottom: 0.75rem;
-  }
-  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    padding: 24px 0 16px;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
@@ -1049,10 +1014,6 @@ header .menu-tab-row .menu-tab {
   }
   .nav-content .columns:last-of-type {
     padding-left: 0;
-  }
-
-  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    padding: 48px 0 16px;
   }
 }
 @media print, screen and (min-width: 78em) {

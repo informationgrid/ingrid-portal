@@ -32,6 +32,18 @@
   .filter {
     top: 80px;
   }
+
+  .search-filtered .table table {
+    hyphens: auto;
+    -ms-hyphens: auto;
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    
+    th:first-child {
+      width: 150px;
+      min-width: 150px;
+    }
+  }
 }
 
 /* SMALL 560px  */
@@ -146,8 +158,8 @@
     }
   }
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    background-position: -140px -135px;
-    padding: 64px 0 16px;
+    background-position: top right;
+    padding: 24px 0 16px;
   }
   .banner.search .search-wrapper { padding: 64px 0; }
 
@@ -238,15 +250,13 @@
 
   .detail {
     .search-filtered {
-      > .columns > .row.columns {
-        margin-bottom: 80px !important;
-
-        ~ .border-line-info {
-          margin-top: -80px;
+      .section {
+        margin-bottom: 64px;
+      
+        .sub-section {
+            margin-bottom: 48px;
         }
-      }
-      .row.columns .row-sub {
-        margin-bottom: 48px !important;
+      
       }
       .banner-noimage .helper.icon {
         font-size: 18px;
@@ -376,7 +386,7 @@
   
   .teaser-data {
     .header {
-      height: unset !important;
+      height: auto !important;
     }
   }
 
@@ -384,7 +394,7 @@
     .teaser-data.search {
       padding: 0;
       border: 0;
-      box-shadow: unset;
+      box-shadow: none;
       margin:0;
     }
   }
@@ -395,7 +405,7 @@
       border-radius: 0;
       
       .accordion-title {
-        text-transform: unset !important;
+        text-transform: none !important;
       }
     }
     > .accordion-item.is-active {
@@ -437,6 +447,15 @@
   
   .m-filter {
     margin-top: 51px;
+  }
+  
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
+    background-position: 74px 0px;
+    background-size: cover;
+    
+    div.row div.columns {
+      margin-bottom: 0;
+    }
   }
 }
 
@@ -484,7 +503,7 @@
       .accordion-content.filter-wrapper-shadowless {
         padding: 0;
         border: 0;
-        box-shadow: unset;
+        box-shadow: none;
         border-radius: 0;
       }
     }
@@ -559,6 +578,10 @@
   
   .filter {
     overflow: initial !important;
+  }
+  
+  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
+    padding: 48px 0 16px;
   }
 }
 

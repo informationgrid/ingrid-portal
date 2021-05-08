@@ -175,11 +175,32 @@ blockquote {
   max-width: 480px;
 }
 
-.list-item div {
-  padding: 0 0 24px;
+.list-item {
+
+  hyphens: auto;
+  -ms-hyphens: auto;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+
+  div {
+    padding: 0 0 24px;
+  }
 }
 
 .detail {
+
+  .section {
+    margin-bottom: 48px;
+
+    .sub-section {
+      margin-bottom: 32px;
+    }
+
+    h2, h3 {
+      border-bottom: 1px solid #c6cfe2;
+      padding-bottom: 4px;
+    }
+  }
   font-size: 16px;
 
   div.row div.columns {
@@ -1219,6 +1240,10 @@ header {
   transition: box-shadow .5s;
   background: $bg-color;
 
+  .sub-section {
+    margin-bottom: 24px;
+  }
+
   .text-wrapper {
     padding: 24px 24px 40px;
     position: relative;
@@ -1323,7 +1348,7 @@ a.data:hover {
   }
 
   .data-text {
-    height: unset;
+    height: auto;
     margin-bottom: 24px;
   }
 
@@ -1345,12 +1370,6 @@ a.data:hover {
       border: 1px solid #006ec5;
       font-family: "Roboto-Regular";
     }
-  }
-
-  h4, h5 {
-    font-size: 18px;
-    font-weight: normal;
-    margin-bottom: 8px;
   }
 }
 
@@ -1430,8 +1449,7 @@ a.data:hover {
 
   .home-wrapper {
     padding: 0 0 32px;
-    background-position: center bottom;
-    background-size: cover;
+    background-position: right bottom;
 
     .dark { padding-top: 2.5rem; }
     h1 .ic-ic-asterisc {
@@ -1459,7 +1477,7 @@ a.data:hover {
   background: $blue-sky;
 
   .search-wrapper {
-    background-position: -160px -130px;
+    background-position: top right;
     padding: 40px 0 48px;
 
     .input-search-field { margin: 0; }
@@ -1638,6 +1656,13 @@ footer {
 
       tr {
         border-bottom: 0;
+        
+        th, td {
+          padding: 10px;
+          max-width: 300px;
+          vertical-align: top;
+          text-align: left;
+        }
       }
 
       a {
@@ -1690,7 +1715,7 @@ footer {
     border-bottom: 1px solid #FFFFFF;
     vertical-align: top;
     font-weight: normal;
-    font-family: $button-font-family;
+    font-family: 'Roboto-Medium';
     line-height: 24px;
   }
 
@@ -2256,10 +2281,10 @@ h2 .anchor:target {
 
     .preview_image {
       margin: auto;
-      padding: 24px 24px 0px;
+      padding: 24px 24px;
     }
     .map-ingrid {
-      margin: 24px 24px 0;
+      margin: 24px 24px;
     }
     .swiper-wrapper {
       padding-bottom: 30px;
@@ -2414,7 +2439,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 }
 
 .js-expand-text.is-active {
-  max-height: unset;
+  max-height: none;
 
   .js-expand-text-content:before {
     background: transparent;
@@ -2422,7 +2447,7 @@ meter[value="5"]::-moz-meter-bar { background: green; }
 }
 
 .js-non-expand-text {
-  height: unset;
+  height: auto;
 }
 
 .js-expand-text.open {
@@ -2502,11 +2527,10 @@ meter[value="5"]::-moz-meter-bar { background: green; }
       bottom: 38px;
     }
 
-    .swiper-container {
-      h5 {
+    .swiper-container, .swiper-container-background {
+      h4, h5 {
         background: #FFF;
         padding-bottom: 16px;
-        margin: 0;
         margin: 0 -5px;
       }
     }
@@ -2552,7 +2576,7 @@ h3 span, h4 span, h5 span {
 }
 
 .input-check-no-hover {
-  background-color: unset !important;
+  background-color: transparent !important;
 }
 
 .results-index {
@@ -2695,7 +2719,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
     border-radius: 12px 12px 12px 12px !important;
   }
   .accordion-item .accordion-title:hover {
-    box-shadow: unset;
+    box-shadow: none;
   }
   .accordion-content {
     background: $neutral-white

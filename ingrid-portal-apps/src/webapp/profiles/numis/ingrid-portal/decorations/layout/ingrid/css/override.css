@@ -221,7 +221,7 @@
 #map-legend .leaflet-control-layers {
   float: none;
   background: transparent !important;
-  box-shadow: unset;
+  box-shadow: none;
   font-size: 12px;
 }
 
@@ -394,29 +394,14 @@ header a.icon.is-selected {
 .banner.home {
   padding-top: 0;
 }
-.banner.home .home-wrapper {
-  background-position: left bottom;
-}
 .banner.home .home-wrapper .dark {
   padding-top: 3.5rem;
 }
 .banner.search {
   background-image: linear-gradient(to right, #006ec5, #246293);
 }
-.banner.search .search-wrapper {
-  background-position: top right;
-}
 .banner.search + div + .search-filtered {
   margin-top: 0;
-}
-.banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-  background-position: top right;
-  background-size: contain;
-}
-@media print, screen and (min-width: 48em) {
-  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    background-size: unset;
-  }
 }
 .about {
   background-image: linear-gradient(to right, #246293, #006ec5);
@@ -645,7 +630,7 @@ footer hr {
   left: 0;
   margin-left: 0;
   width: 100%;
-  box-shadow: unset;
+  box-shadow: none;
 }
 
 .switch-popup .row .popup__content {
@@ -902,24 +887,10 @@ header .row .columns:last-of-type {
 .nav__desktop-icon {
   left: 1.125rem;
 }
-.document-list {
-  margin-bottom: 24px;
-}
-.text-list {
-  margin-bottom: 24px;
-}
-.text-list p.list-item {
-  margin-bottom: 2px;
-}
 
 .table table tr {
   border-bottom: 1px solid #c6cfe2;
 }
-.table table tr th, .table table tr td{
-  padding: 10px;
-  max-width: 300px;
-}
-
 .similar-accordion {
   padding: 0px 24px 24px;
 }
@@ -970,9 +941,6 @@ header .menu-tab-row .menu-tab {
   h4, .h4 {
     font-size: 1.1rem;
     margin-bottom: 0.75rem;
-  }
-  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    padding: 24px 0 16px;
   }
 }
 @media print, screen and (max-width: 63.9375em) {
@@ -1063,10 +1031,6 @@ header .menu-tab-row .menu-tab {
   }
   .switch-popup a.switch-link.numis img {
      width: 24em;
-  }
-
-  .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
-    padding: 48px 0 16px;
   }
 }
 @media print, screen and (min-width: 78em) {
