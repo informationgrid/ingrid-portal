@@ -212,7 +212,7 @@
                             #set ($tmpValue = $!rs.additional_html_1)
                             #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
                             #if($tmpImgValue.indexOf("src='http:") > -1)
-                                #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" srcset'))
+                                #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))
                             #end
                             $tmpImgValue
                             <noscript>
@@ -228,7 +228,7 @@
                             #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
                                 #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
                                 #if($tmpImgValue.indexOf("src='http:") > -1)
-                                    #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" srcset'))
+                                    #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))
                                 #end
                                 $tmpImgValue
                                 <noscript>

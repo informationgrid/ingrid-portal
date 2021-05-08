@@ -394,6 +394,9 @@ header a.icon.is-selected {
 .banner.home {
   padding-top: 0;
 }
+.banner.home .home-wrapper {
+  background-position: left bottom;
+}
 .banner.home .home-wrapper .dark {
   padding-top: 3.5rem;
 }
