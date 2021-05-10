@@ -1066,8 +1066,10 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                     
                     ArrayList head = new ArrayList();
                     head.add(messages.getString("geothesaurus_spacial_reference"));
-                    head.add(messages.getString("spatial_ref_value_x1") + ", " + messages.getString("spatial_ref_value_y1") + " (\u00B0)");
-                    head.add(messages.getString("spatial_ref_value_x2") + ", " + messages.getString("spatial_ref_value_y2") + " (\u00B0)");
+                    head.add(messages.getString("spatial_ref_value_x1"));
+                    head.add(messages.getString("spatial_ref_value_y1"));
+                    head.add(messages.getString("spatial_ref_value_x2"));
+                    head.add(messages.getString("spatial_ref_value_y2"));
                     element.put("head", head);
                     ArrayList body = new ArrayList();
                     element.put("body", body);
@@ -1091,33 +1093,38 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             row.add("");
                         }
                         
-                        String rowValue = "";
                         xpathExpression = "./gmd:westBoundLongitude";
                         if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                             String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            rowValue = value;
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
                         }
                         
                         xpathExpression = "./gmd:southBoundLatitude";
                         if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                             String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            rowValue += ", " + value;
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
                         }
-                        row.add(rowValue);
                         
                         xpathExpression = "./gmd:eastBoundLongitude";
                         if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                             String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            rowValue = value;
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
                         }
                         
                         xpathExpression = "./gmd:northBoundLatitude";
                         if (xPathUtils.nodeExists(childNode, xpathExpression)) {
                             String value = xPathUtils.getString(childNode, xpathExpression).trim();
-                            rowValue += ", " + value;
+                            row.add(notNull(value + "\u00B0"));
+                        } else {
+                            row.add("");
                         }
-                        row.add(rowValue);
-
+                        
                         if (!isEmptyRow(row)) {
                             body.add(row);
                         }
