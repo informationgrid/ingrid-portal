@@ -381,7 +381,7 @@
                 #end
             #end
             #if(!$isFactSheet)
-            <div class="table">
+            <div class="table table--lined">
             #end
                 #if($tool.hasContent($title))
                     #if(!$isFactSheet)
@@ -872,7 +872,7 @@
                         </button>
                         <div class="js-expander-content ${expandId} is-hidden ">
                     #else
-                        <a type="button" class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-3">
+                        <a type="button" class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
                             $MESSAGES.getString('search.detail.info.links.more')
                         </a>
                         #break
@@ -893,7 +893,7 @@
                             </button>
                             <div class="js-expander-content ${expandId} is-hidden ">
                         #else
-                            <a class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#detail-3">
+                            <a class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
                                 $MESSAGES.getString('search.detail.info.links.more')
                             </a>
                             #break

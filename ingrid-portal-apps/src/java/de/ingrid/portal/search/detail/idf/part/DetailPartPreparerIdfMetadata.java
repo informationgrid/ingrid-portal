@@ -1011,12 +1011,12 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                         elementCapabilitiesLink.put("type", "linkLine");
                         elementCapabilitiesLink.put("hasLinkIcon", true);
                         elementCapabilitiesLink.put("isExtern", true);
-                        elementCapabilitiesLink.put("title", urlValue);
+                        elementCapabilitiesLink.put("title", messages.getString("search.detail.showGetCapabilityUrl.title"));
                         elementCapabilitiesLink.put("href", urlValue);
                           element.put("body", elementCapabilitiesLink);
 
                         if (!hasAccessConstraints()) {
-                            element.put("title", messages.getString("common.result.showGetCapabilityUrl"));
+                            element.put("title", messages.getString("search.detail.showGetCapabilityUrl"));
                             if(PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_ENABLE_MAPS, false) 
                                     && (serviceType != null && (serviceType.trim().equalsIgnoreCase("view") || serviceType.trim().equalsIgnoreCase("wms")))){
                                 HashMap elementMapLink = new HashMap();
@@ -1030,7 +1030,7 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                             }
                         } else {
                             // do not display "show in map" link if the map has access constraints
-                            element.put("title", messages.getString("common.result.showGetCapabilityUrlRestricted"));
+                            element.put("title", messages.getString("search.detail.showGetCapabilityUrlRestricted"));
                         }
                         // ADD FIRST ONE FOUND !!!
                         break;

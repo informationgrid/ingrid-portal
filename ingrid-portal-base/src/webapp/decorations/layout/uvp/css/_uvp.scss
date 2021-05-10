@@ -180,7 +180,8 @@ blockquote {
   hyphens: auto;
   -ms-hyphens: auto;
   -webkit-hyphens: auto;
-  -moz-hyphens: auto;
+  -moz-hyphens: auto;  
+  word-break: break-word;
 
   div {
     padding: 0 0 24px;
@@ -1672,8 +1673,8 @@ footer {
       }
 
       th:first-child {
-        width: 210px;
-        min-width: 210px;
+        width: $table-column-first;
+        min-width: $table-column-first;
         font-size: 16px;
         line-height: 24px;
         vertical-align: top;
@@ -1710,13 +1711,20 @@ footer {
   .table.row table {
     display: block;
   }
-
-  .table:not(.table--lined) table tr th {
-    border-bottom: 1px solid #FFFFFF;
-    vertical-align: top;
-    font-weight: normal;
-    font-family: 'Roboto-Medium';
-    line-height: 24px;
+  .table:not(.table--lined) {
+    table {
+      table-layout: fixed;
+      display: block;
+      overflow-x: auto;
+    
+      tr th {
+        border-bottom: 1px solid #FFFFFF;
+        vertical-align: top;
+        font-weight: normal;
+        font-family: 'Roboto-Medium';
+        line-height: 24px;
+      }
+    }
   }
 
   .table.list {
@@ -1733,7 +1741,8 @@ footer {
         vertical-align: top;
 
         td:first-child {
-          width: 175px;
+          width: $table-column-first;
+          min-width: $table-column-first;
           font-family: $button-font-family;
           padding-top: 8px;
           color: $dark-midnight;
