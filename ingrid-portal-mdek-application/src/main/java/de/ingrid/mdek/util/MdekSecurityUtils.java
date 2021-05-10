@@ -119,7 +119,7 @@ public class MdekSecurityUtils {
 			} else {
 
 				// Handle requests from users using Shibboleth SSO
-				if ("/dwr".equals(req.getServletPath()) && globalConfig.useShibboleth) {
+				if (globalConfig.useShibboleth) {
 					String shibUsername = getShibbolethUsername(req, ses, forcedIgeUser);
 					if (shibUsername != null) {
 						return getUserData(shibUsername);
