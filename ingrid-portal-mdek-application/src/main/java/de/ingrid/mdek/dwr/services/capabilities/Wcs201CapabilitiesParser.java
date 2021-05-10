@@ -25,17 +25,19 @@
  */
 package de.ingrid.mdek.dwr.services.capabilities;
 
+import de.ingrid.mdek.MdekUtils;
 import de.ingrid.mdek.SysListCache;
 import de.ingrid.mdek.beans.CapabilitiesBean;
-import de.ingrid.mdek.beans.object.AddressBean;
-import de.ingrid.mdek.beans.object.OperationBean;
-import de.ingrid.mdek.beans.object.OperationParameterBean;
+import de.ingrid.mdek.beans.object.*;
 import de.ingrid.utils.xml.Wcs201NamespaceContext;
 import de.ingrid.utils.xpath.XPathUtils;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.xpath.XPathExpressionException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -175,6 +177,13 @@ public class Wcs201CapabilitiesParser extends GeneralCapabilitiesParser implemen
         }
 
         result.setOperations(operations);
+
+        List<LocationBean> union = getBoundingBoxes(doc);
+        result.setBoundingBoxes( union );
+
+        List<SpatialReferenceSystemBean> spatialReferenceSystems = getSpatialReferenceSystems( doc );
+        result.setSpatialReferenceSystems( spatialReferenceSystems );
+        
         return result;
 
     }
@@ -199,6 +208,70 @@ public class Wcs201CapabilitiesParser extends GeneralCapabilitiesParser implemen
         address.setPhone(xPathUtils.getString(doc, XPATH_EXT_WCS_SERVICECONTACT + "/ows20:ContactInfo/ows20:Phone/ows20:Voice"));
 
         return address;
+    }
+
+    private List<LocationBean> getBoundingBoxes(Document doc) {
+        List<LocationBean> bboxes = new ArrayList<>();
+        String title = xPathUtils.getString(doc, "/wcs201:Capabilities/wcs201:Contents/wcs201:CoverageSummary/ows20:Title");
+        NodeList layers = xPathUtils.getNodeList(doc, "/wcs201:Capabilities/wcs201:Contents/wcs201:CoverageSummary/ows20:WGS84BoundingBox");
+        
+        for (int i = 0; i < layers.getLength(); i++) {
+            Node layer = layers.item(i);
+
+            String[] lower = xPathUtils.getString( layer, "ows20:LowerCorner" ).split( " " );
+            String[] upper = xPathUtils.getString( layer, "ows20:UpperCorner" ).split( " " );
+
+            LocationBean box = new LocationBean();
+            box.setLatitude1(Double.valueOf( lower[0] ));
+            box.setLongitude1(Double.valueOf( lower[1] ));
+            box.setLatitude2(Double.valueOf( upper[0] ));
+            box.setLongitude2(Double.valueOf( upper[1] ));
+
+            // add a fallback for the name, since it's mandatory
+
+            box.setName(title);
+            // shall be a free spatial reference, but needs an ID to check for duplications!
+            box.setTopicId(box.getName());
+            box.setType( MdekUtils.SpatialReferenceType.FREI.getDbValue() );
+
+            bboxes.add(box);
+        }
+        return bboxes;
+    }
+    
+    private List<SpatialReferenceSystemBean> getSpatialReferenceSystems(Document doc) {
+        List<SpatialReferenceSystemBean> result = new ArrayList<>();
+        String[] crs = xPathUtils.getStringArray(doc, "/wcs201:Capabilities/wcs201:ServiceMetadata/wcs201:Extension/crs:CrsMetadata/crs:crsSupported");
+        List<String> uniqueCrs = new ArrayList<>();
+        
+        for (String item : crs) {
+            SpatialReferenceSystemBean srsBean = new SpatialReferenceSystemBean();
+
+            Integer itemId;
+            try{
+                String[] splittedItem = item.split(":");
+                itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+            } catch (NumberFormatException e) {
+                // also detect crs like: http://www.opengis.net/def/crs/[epsg|ogc]/0/{code} (REDMINE-2108)
+                String[] splittedItem = item.split("/");
+                itemId = Integer.valueOf(splittedItem[splittedItem.length-1]);
+            }
+
+            String value = syslistCache.getValueFromListId(100, itemId, false);
+            if (value == null || value.isEmpty()) {
+                srsBean.setId(-1);
+                srsBean.setName(item);
+            } else {
+                srsBean.setId(itemId);
+                srsBean.setName(value);
+            }
+            if (!uniqueCrs.contains( srsBean.getName() )) {
+                result.add(srsBean);
+                uniqueCrs.add( srsBean.getName() );
+            }
+        }
+        
+        return result;
     }
 
 }

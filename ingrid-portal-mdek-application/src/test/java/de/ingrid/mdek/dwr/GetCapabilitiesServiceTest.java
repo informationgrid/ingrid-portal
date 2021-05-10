@@ -42,6 +42,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import de.ingrid.mdek.beans.CatalogBean;
+import de.ingrid.mdek.beans.object.LocationBean;
 import de.ingrid.mdek.dwr.services.CatalogService;
 import org.junit.Before;
 import org.junit.Test;
@@ -677,6 +678,14 @@ public class GetCapabilitiesServiceTest {
         assertThat(result.getOperations().get(0).getName(), is("GetCapabilities"));
         assertThat(result.getOperations().get(1).getName(), is("DescribeCoverage"));
         assertThat(result.getOperations().get(2).getName(), is("GetCoverage"));
+        
+        assertThat(result.getSpatialReferenceSystems().size(), is(20));
+        assertThat(result.getBoundingBoxes().size(), is(1));
+        LocationBean bbox = result.getBoundingBoxes().get(0);
+        assertThat(bbox.getLatitude1(), is(5.5493554862369905));
+        assertThat(bbox.getLongitude1(), is(47.140652918628305));
+        assertThat(bbox.getLatitude2(), is(15.57402035157314));
+        assertThat(bbox.getLongitude2(), is(55.0611433089022));
     }
 
     @Test
