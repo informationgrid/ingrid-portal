@@ -25,6 +25,8 @@
 #set($hashDetail7 = "detail_additional")
 #set($hasDetail8 = false)
 #set($hashDetail8 = "detail_contact")
+#set($hasDetail9 = false)
+#set($hashDetail9 = "metadata_info")
 
 #set($advGroup = $TOOL.getAlternateTitleListFromCodelist("8010"))
 #set($searchTerm = $TOOL.getIndexInformationKeywords("./gmd:identificationInfo/*/gmd:descriptiveKeywords", "search"))
@@ -138,11 +140,8 @@
 
 #### Zugriffsbeschränkungen (accessConstraints)
 #set($xPathUseAccessConstraints = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_LegalConstraints/gmd:accessConstraints")
-#### Ansprechpartner (Metadatum)
-#set($xPathUseContact = "./gmd:contact")
 
 #set($xPathListUse = [
-    $xPathUseContact,
     "${accessConstraintsXPath}/gmd:MD_RestrictionCode/@codeListValue"
 ])
 
@@ -347,10 +346,6 @@
 ])
 
 #### Zusatzinformationen
-#### Sprache des Metadatensatzes
-#set($xPathAdditionalInfoLanguageCode = "./gmd:language/gmd:LanguageCode/@codeListValue")
-#### Sprache des Datensatzes
-#set($xPathAdditionalInfoIdentificationInfoLanguageCode = "./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")
 #### Veröffentlichung
 #set($xPathAdditionalInfoMDClassificationCode = "./gmd:identificationInfo/*/gmd:resourceConstraints/gmd:MD_SecurityConstraints/gmd:classification/gmd:MD_ClassificationCode/@codeListValue")
 #### Eignung/Nutzung
@@ -389,16 +384,9 @@
 #set($xPathAdditionalInfoMDDistribution = "./gmd:distributionInfo/gmd:MD_Distribution")
 #### Bestellinformationen
 #set($xPathAdditionalInfoOrderingInstructions = "./gmd:distributionInfo/gmd:MD_Distribution/gmd:distributor/gmd:MD_Distributor/gmd:distributionOrderProcess/gmd:MD_StandardOrderProcess/gmd:orderingInstructions/gco:CharacterString")
-#### XML Darstellung
-#set($getXML = $TOOL.addLinkElementToGetXML())
-#set($cswURL = $renderRequest.getParameter("cswURL"))
-#if($cswURL)
-    #set($add = $getXML.put("href", $cswURL))
-#end
+
 
 #set($xPathListAdditionalInfo = [
-    $xPathAdditionalInfoLanguageCode,
-    $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathAdditionalInfoMDClassificationCode,
     $xPathAdditionalInfoSpecificUsage,
     $xPathAdditionalInfoPurpose,
@@ -423,6 +411,28 @@
 #### DOI
 #set($doi = $TOOL.getDOI())
 #set($xPathListDoi = ["./idf:doi"])
+
+## Infos zur Datensatzbeschreibung
+#### Sprache des Metadatensatzes
+#set($xPathAdditionalInfoLanguageCode = "./gmd:language/gmd:LanguageCode/@codeListValue")
+#### Sprache des Datensatzes
+#set($xPathAdditionalInfoIdentificationInfoLanguageCode = "./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")
+
+#### XML Darstellung
+#set($getXML = $TOOL.addLinkElementToGetXML())
+#set($cswURL = $renderRequest.getParameter("cswURL"))
+#if($cswURL)
+    #set($add = $getXML.put("href", $cswURL))
+#end
+
+#### Ansprechpartner (Metadatum)
+#set($xPathUseContact = "./gmd:contact")
+
+#set($xPathListMetadataInfo = [
+    $xPathAdditionalInfoLanguageCode,
+    $xPathAdditionalInfoIdentificationInfoLanguageCode,
+    $xPathUseContact
+])
 
 ## Datenqualität
 #### Datendefizit

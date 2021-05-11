@@ -142,7 +142,7 @@
                     ($type == "4" && $TOOL.aNodeOfListExist($xPathListInformationType4)) ||
                     ($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5)) ||
                     ($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0)) ||
-                    $TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML ||
+                    $TOOL.aNodeOfListExist($xPathListAdditionalInfo) ||
                     $TOOL.aNodeOfListExist($xPathListKeywords) || $advGroup.size() > 0 ||
                     $TOOL.aNodeOfListExist($xPathListDoi)
                 )
@@ -163,7 +163,7 @@
                                     #set($tmpTitle = $MESSAGES.getString("technical_information"))
                                     #renderSubNavigation($tmpTitle $tmpHash)
                                 #end
-                                #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML)
+                                #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo))
                                     #set($tmpHash = "${hashDetail5}_additional_information")
                                     #set($tmpTitle = $MESSAGES.getString("additional_information"))
                                     #renderSubNavigation($tmpTitle $tmpHash)
@@ -196,6 +196,19 @@
                     #set($hasDetail7 = true)
                     <li class="accordion-item" data-accordion-item>
                         <a href="#${hashDetail7}" class="accordion-title js-anchor-target"><span class="text">$tabtitle</span></a>
+                    </li>
+                #end
+            ## Datensatzbeschreibung
+                #if($TOOL.aNodeOfListExist($xPathListMetadataInfo) || $getXML)
+                    #set($hasDetail9 = true)
+                    <li class="accordion-item" data-accordion-item>
+                        <a href="#${hashDetail9}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail9}-accordion-label" id="${hashDetail9}-accordion">
+                            <span class="text">$MESSAGES.getString("subject_metadata_info_tab")</span>
+                        </a>
+                        <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail9}-accordion-label" id="${hashDetail9}-accordion">
+                            <div class="boxes">
+                            </div>
+                        </div>
                     </li>
                 #end
             </ul>

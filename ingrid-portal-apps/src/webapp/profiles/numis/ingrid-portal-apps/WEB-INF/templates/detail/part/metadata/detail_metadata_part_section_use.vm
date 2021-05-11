@@ -5,15 +5,13 @@
     <a class="anchor" id="${hashDetail4}" name="${hashDetail4}"></a>
     #renderSectionTitle($MESSAGES.getString("search.detail.usage"))
     <div class="row columns">
+    ## Nutzungsbedingungen (useConstraints)
+        #renderTextListTable($MESSAGES.getString("object_access.license") $useConstraints)
     ## Zugriffsbeschränkungen (accessConstraints)
         #set($consideredValues = ["otherRestrictions"])
         #renderTextListTable($MESSAGES.getString("object_access.restriction_value") $TOOL.mergeList($TOOL.getListOfValuesFromXPath($xPathUseAccessConstraints, "./gmd:MD_RestrictionCode/@codeListValue", "6010", $consideredValues), $TOOL.getSiblingsValuesFromXPath($xPathUseAccessConstraints, "gmd:otherConstraints", false, "6010", $consideredValues)))
-    ## Lizenz (useConstraints)
-        #renderTextListTable($MESSAGES.getString("object_access.license") $useConstraints)
-    ## Nutzungsbedingungen (useLimitation)
+    ## Anwendungseinschränkungen (useLimitation)
         #renderTextListTable($MESSAGES.getString("object_access.terms_of_use") $useLimitations)
-    ## Ansprechpartner (Metadatum)
-        #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_metadatum.vm")
     </div>
 </div>
 #end

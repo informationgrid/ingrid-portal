@@ -1,15 +1,9 @@
 ## Zusatzinformationen
 ################################
-#if($TOOL.aNodeOfListExist($xPathListAdditionalInfo) || $getXML)
+#if($TOOL.aNodeOfListExist($xPathListAdditionalInfo))
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_additional_information" name="${hashDetail5}_additional_information"></a>
         #renderSectionTitle($MESSAGES.getString("additional_information"))
-    ## Objekt-ID
-        #renderTextTable($MESSAGES.getString("t01_object.obj_id") $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
-    ## Sprache des Metadatensatzes
-        #renderTextTable($MESSAGES.getString("t01_object.metadata_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath($xPathAdditionalInfoLanguageCode)))
-    ## Sprache des Datensatzes
-        #renderTextListTable($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath($xPathAdditionalInfoIdentificationInfoLanguageCode,".")))
     ## Veröffentlichung
         #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))
     ## Eignung/Nutzung
@@ -30,16 +24,14 @@
         #renderTable($TOOL.getMediumOptions($xPathAdditionalInfoMDDistribution))
     ## Bestellinformationen
         #renderTextTable($MESSAGES.getString("t01_object.ordering_instructions") $TOOL.getValueFromXPath($xPathAdditionalInfoOrderingInstructions))
-    ## XML Darstellung 
-        #renderLinkTable($MESSAGES.getString("xml_link_label") $getXML)
     </div>
 #end
 
 ## Schlagworte
 #if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
     <div class="sub-section">
-        <a class="anchor" id="${hashDetail5}_terms" name="${hashDetail5}_terms"></a>
-        #renderSectionTitle("Schlagworte")
+        <a class="anchor" id="${hashDetail5}_fs_keywords" name="${hashDetail5}_fs_keywords"></a>
+        #renderSectionTitle($MESSAGES.getString("fs_keywords"))
         ## Verschlagwortung
         #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire"))
         #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "priority"))

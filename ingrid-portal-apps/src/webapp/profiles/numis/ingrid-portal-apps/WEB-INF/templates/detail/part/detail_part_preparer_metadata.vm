@@ -48,6 +48,8 @@
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_dataquality.vm")
         ## Additional Fields Example
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_additional_fields.vm")
+        ## Infos zur Datensatzbeschreibung
+            #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_metadata_info.vm")
         </div>
     </div>
 #end
