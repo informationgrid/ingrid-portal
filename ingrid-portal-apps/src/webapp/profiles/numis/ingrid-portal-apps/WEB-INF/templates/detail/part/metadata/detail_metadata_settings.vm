@@ -151,8 +151,6 @@
 #### Type 1
 #### Fachliche Grundlage
 #set($xPathInfo1LILineageStatement = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:lineage/gmd:LI_Lineage/gmd:statement/gco:CharacterString")
-#### Datensatz/Datenserie
-#set($xPathInfo1MDScopeCode = "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue")
 #### Digitale Repräsentation
 #set($xPathInfo1SpatialRepresentationType = "./gmd:identificationInfo/*/gmd:spatialRepresentationType")
 #set($xPathInfo1MDSpatialRepresentationTypeCode = "gmd:MD_SpatialRepresentationTypeCode/@codeListValue")
@@ -181,7 +179,6 @@
 
 #set($xPathListInformationType1 = [
     $xPathInfo1LILineageStatement,
-    $xPathInfo1MDScopeCode,
     $xPathInfo1SpatialRepresentationType,
     $xPathInfo1MDSpatialRepresentationTypeCode,
     $xPathInfo1MD_VectorSpatialRepresentationTopologyLevel,
@@ -424,14 +421,16 @@
 #if($cswURL)
     #set($add = $getXML.put("href", $cswURL))
 #end
-
 #### Ansprechpartner (Metadatum)
 #set($xPathUseContact = "./gmd:contact")
+#### Datensatz/Datenserie
+#set($xPathInfo1MDScopeCode = "./gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue")
 
 #set($xPathListMetadataInfo = [
     $xPathAdditionalInfoLanguageCode,
     $xPathAdditionalInfoIdentificationInfoLanguageCode,
-    $xPathUseContact
+    $xPathUseContact,
+    xPathInfo1MDScopeCode
 ])
 
 ## Datenqualität

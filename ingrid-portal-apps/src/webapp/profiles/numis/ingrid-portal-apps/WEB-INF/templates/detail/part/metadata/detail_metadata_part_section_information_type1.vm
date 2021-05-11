@@ -3,8 +3,6 @@
 <div class="sub-section">
 ## Fachliche Grundlage
     #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo1LILineageStatement))
-## Datensatz/Datenserie
-    #renderTextTable($MESSAGES.getString("t011_obj_geo.hierarchy_level") $TOOL.getValueFromXPath($xPathInfo1MDScopeCode, "525"))
 ## Digitale Repräsentation
     #renderTextListTable($MESSAGES.getString("t011_obj_geo_spatial_rep.type") $TOOL.getListOfValuesFromXPath($xPathInfo1SpatialRepresentationType, $xPathInfo1MDSpatialRepresentationTypeCode, "526"))
 ## Topologieinformation
