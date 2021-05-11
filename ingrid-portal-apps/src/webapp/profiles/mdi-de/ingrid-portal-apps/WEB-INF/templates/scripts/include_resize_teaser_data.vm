@@ -1,0 +1,47 @@
+<script>
+    function resizeTeaserData() {
+      var parent = $('$teaserDataId');
+      var teaserDatas = parent.find( ".teaser-data" );
+      var teaserHeaders = parent.find( ".teaser-data .header" );
+      var height = 0;
+      var headerHeight = 0;
+
+      if(teaserHeaders) {
+          for (var i = 0; i < teaserHeaders.length; i++) {
+            var teaserHeader = $(teaserHeaders[i]);
+            teaserHeader.removeAttr("style");
+          }
+          for (var i = 0; i < teaserHeaders.length; i++) {
+            var teaserHeader = $(teaserHeaders[i]);
+            var tmpHeaderHeight = teaserHeader.height();
+            if(headerHeight < tmpHeaderHeight) {
+              headerHeight = tmpHeaderHeight;
+            }
+          }
+      }
+      if(headerHeight !== 0){
+          for (var i = 0; i < teaserHeaders.length; i++) {
+            $(teaserHeaders[i]).height(headerHeight);
+          }
+      }
+
+      if(teaserDatas) {
+          for (var i = 0; i < teaserDatas.length; i++) {
+            var teaserData = $(teaserDatas[i]);
+            teaserData.removeAttr("style");
+            var tmpHeight = teaserData.height();
+            if(height < tmpHeight) {
+              height = tmpHeight;
+            }
+          }
+      }
+      if(height !== 0){
+          for (var i = 0; i < teaserDatas.length; i++) {
+            $(teaserDatas[i]).height(height);
+          }
+      }
+    }
+    
+    window.onresize = resizeTeaserData;
+    window.onload = resizeTeaserData
+</script>

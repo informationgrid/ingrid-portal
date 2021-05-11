@@ -1,0 +1,20 @@
+<div class="columns">
+    <h4>$MESSAGES.getString("show.data.source.connected.databases"):</h4>
+    <div class="link-list">
+    #foreach($plug in $plugs)
+        #set($hideId = "false")
+        #foreach($hideIPlugId in $hideIPlugIdList)
+            #if($hideId != "true")
+                #if($plug.getPlugId() == $hideIPlugId)
+                    #set($hideId = "true")
+                #else
+                    #set($hideId  = "false")
+                #end
+            #end
+        #end
+        #if($hideId == "false")
+            <p>$plug.getDataSourceName()</p>
+        #end
+    #end
+    </div>
+</div>

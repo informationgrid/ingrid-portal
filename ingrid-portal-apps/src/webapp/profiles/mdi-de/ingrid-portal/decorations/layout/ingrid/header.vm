@@ -1,0 +1,29 @@
+#* Add the current layouts configuration values to the context *#
+#defineLayoutObjects()
+
+#* Loads our custom macros *#
+#parse("/decorations/layout/ingrid/decorator-macros.vm")
+
+#* Add all template constants to the current context *#
+##defineNavigationConstants()
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
+    <head>
+        #parse("/decorations/layout/ingrid/templates/header/head_title.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_favicon.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head.vm")
+        #parse("/decorations/layout/ingrid/templates/header/head_script.vm")
+    </head>
+    <body>
+    #if($currentPage != "/main-measures.psml")
+        <div class="container">
+    #end
+        #set($mainMenu = $site.getMenu("main-menu"))
+        #set($serviceMenu = $site.getMenu("service-menu"))
+        #set($aboutSubMenu = $site.getMenu("sub-menu-about"))
+        #set($footerMenu = $site.getMenu("footer-menu"))
+        #if($serviceMenu && !$serviceMenu.empty)
+            #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
+        #end
+        #parse("/decorations/layout/ingrid/templates/header/body_header.vm")
+            <div class="body">

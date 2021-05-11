@@ -1,0 +1,4 @@
+$action.setParameter('action','doOriginalSettings')
+<div class="subtext-submit">
+    #renderInputButtonClass("$MESSAGES.getString('common.form.button.save')" "" "submitReload" "" "")
+</div>

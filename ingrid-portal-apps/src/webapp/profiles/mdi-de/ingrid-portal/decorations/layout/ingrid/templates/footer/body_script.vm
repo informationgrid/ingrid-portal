@@ -1,0 +1,39 @@
+<!-- Global scripts -->
+<script src="/decorations/layout/ingrid/scripts/all.js"></script>
+
+<!-- Popup -->
+<script src="/decorations/layout/ingrid/scripts/popup.js"></script>
+
+<!-- Expand -->
+<script src="/decorations/layout/ingrid/scripts/expander.js"></script>
+
+<!-- Anchor target -->
+<script src="/decorations/layout/ingrid/scripts/anchor-target.js"></script>
+<script>
+    $('.js-anchor-target').anchorTarget();
+</script>
+
+<!-- Anchor navigation -->
+<script src="/decorations/layout/ingrid/scripts/anchor-navigation.js"></script>
+<script>
+    $('.js-anchor-navigation').anchorNavigation();
+</script>
+<!-- swiper -->
+<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
+<script>
+  var mySwiper = new Swiper ('.swiper-container', {
+    grabCursor: true,
+    updateOnWindowResize: true,
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    scrollbar: {
+      el: '.swiper-scrollbar',
+    },
+  })
+  </script>

@@ -1,0 +1,26 @@
+<div class="row nav-content search-filtered">
+    <div class="xsmall-24 large-6 xlarge-6 columns">
+        <div class="accordion accordion-filter-group" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
+            <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+                <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" aria-controls="help-accordion" role="tab" aria-expanded="false" aria-selected="false">Navigation</a>
+                <div class="accordion-content filter-wrapper js-anchor-navigation" data-tab-content="" role="tabpanel">
+                    <div class="boxes">
+                        $menu_content
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="large-2 xlarge-2">
+        <span></span>
+    </div>
+    $help_content
+</div>
+
+#if($helpKey)
+<script>
+  if (window.location.hash !== '$helpKey') {
+    window.location.hash = '$helpKey';
+  }
+</script>
+#end

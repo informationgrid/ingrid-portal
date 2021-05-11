@@ -1,0 +1,9 @@
+<div class="columns">
+    <a href="$renderResponse.encodeURL('/portal/service-contact.psml')">
+        <span class="ic-ic-arrow-left"></span>
+        <span class="text">$MESSAGES.getString('contact.success.link')</span>
+    </a>
+    <br>
+    <br>
+    #renderMessageSuccess($MESSAGES.getString('contact.success'))
+</div>

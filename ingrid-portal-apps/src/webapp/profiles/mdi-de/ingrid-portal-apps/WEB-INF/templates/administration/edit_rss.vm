@@ -1,0 +1,44 @@
+#set ($action = $renderResponse.createActionURL())
+<form class="form" action="$action" method="post" name="frmEditRSS" id="frmEditRSS">
+    #if ($mode == 'edit')
+        <h4>$MESSAGES.getString('component.forms.rss.text.update.feed')</h4>
+    #elseif ($mode == 'new')
+        <h4>$MESSAGES.getString('component.forms.rss.text.new.feed')</h4>
+    #end
+    #displayFormErrors()
+    #renderMessageInfo($MESSAGES.getString('component.forms.rss.text.tip'))
+    #set ($colNames = ["provider", "description", "url", "language", "categories"])
+    #set ($colLabels = ["$MESSAGES.getString('component.forms.rss.text.provider')*", $MESSAGES.getString('component.forms.rss.text.description'), "$MESSAGES.getString('component.forms.rss.text.url')*", "$MESSAGES.getString('component.forms.rss.text.lang')*", $MESSAGES.getString('component.forms.rss.text.category')])
+    #foreach ($dbEntity in $dbEntities)
+        <hr />
+        #set ($entityIndex = $velocityCount - 1)
+        #set ($colValues = ["$!{dbEntity.Provider}", "$!{dbEntity.Description}", "$!{dbEntity.Url}", "$!{dbEntity.Language}", "$!{dbEntity.Categories}"])
+        #renderDBEditId($mode $dbEntity.Id)
+        #foreach ($colName in $colNames)
+            #set ($colIndex = $velocityCount - 1)
+            #if ($colName == 'description')
+                #renderDBEditTextArea($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+            #elseif($colName == 'language')
+                #renderDBEditSelectField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex) $languages)
+            #elseif($colName == 'categories')
+                #set($value = $colValues.get($colIndex))
+                #if($value == "")
+                    #set($value = "all")
+                #end
+                #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $value $MESSAGES.getString('component.forms.rss.categories.info'))
+            #else
+                #renderDBEditTextField($entityIndex $colName $colLabels.get($colIndex) $colValues.get($colIndex))
+            #end
+        #end
+        #if ($dbEntity.Error && $dbEntity.Error != "" && $dbEntity.Error != "component.monitor.general.error.none" )
+            <p style="color:#ff0000;">
+                <label>$MESSAGES.getString('component.forms.text.error.messages')</label><span>$!{id}</span>
+                <span>$MESSAGES.getString($dbEntity.Error)</span>
+            </p>
+        #end
+    #end
+    <hr>
+    <div class="subtext-submit">
+        #renderDBEditFooter($mode)
+    </div>
+</form>
