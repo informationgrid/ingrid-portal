@@ -701,16 +701,20 @@
 #end
 
 ## Render Table
-#macro (renderTable $entry)
-    #renderTableTitle("" $entry "")
+#macro (renderTable $entry $increaseColumns)
+    #if($tool.hasContent($increaseColumns))
+        #renderTableTitle("" $entry "" "" "" $increaseColumns)
+    #else
+      #renderTableTitle("" $entry "")
+    #end
 #end
 
-#macro (renderTableSymbols $entry $symbolColumn $symbolList)
-    #renderTableTitle("" $entry "" $symbolColumn $symbolList)
+#macro (renderTableSymbols $entry $symbolColumn $symbolList $increaseColumns)
+    #renderTableTitle("" $entry "" $symbolColumn $symbolList $increaseColumns)
 #end
 
 
-#macro (renderTableTitle $title $entry $space $symbolColumn $symbolList)
+#macro (renderTableTitle $title $entry $space $symbolColumn $symbolList $increaseColumns)
     #if($tool.hasContent($entry.get("body")))
         <div class="table">
             #if($entry.title)
@@ -720,8 +724,16 @@
             #if($tool.hasContent($entry.get("head")))
                 <thead>
                     <tr>
+                    #set($num = 0)
                     #foreach($th in $entry.head)
-                        <th>$th</th>
+                        #set($isIncreaseColumn = false)
+                        #if($increaseColumns)
+                            #if($increaseColumns.indexOf($num) > -1)
+                                #set($isIncreaseColumn = true)
+                            #end
+                        #end
+                        <th #if($isIncreaseColumn)class="column--increase"#end>$th</th>
+                        #set($num = $num + 1)
                     #end
                     </tr>
                 </thead>
@@ -740,10 +752,14 @@
                     #else
                         #if($symbolColumn == $num)
                         <td class="symbol">
-                            #foreach($symbolEntry in $symbolList)
-                                #if($symbolEntry.value == $td)
-                                    $symbolEntry.symbol
+                            #if($symbolList)
+                                #foreach($symbolEntry in $symbolList)
+                                    #if($symbolEntry.value == $td)
+                                        $symbolEntry.symbol
+                                    #end
                                 #end
+                            #else
+                                $td
                             #end
                         </td>
                         #else
@@ -752,7 +768,6 @@
                         </td>
                         #end
                     #end
-                    
                     #set($num = $num + 1)
                 #end
                 </tr>

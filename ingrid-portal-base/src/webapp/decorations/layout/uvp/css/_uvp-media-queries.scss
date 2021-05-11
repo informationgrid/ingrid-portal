@@ -34,9 +34,14 @@
   }
 
   .search-filtered .table table {
-     th:first-child {
-      width: $table-column-first-m !important;
-      min-width: $table-column-first-m !important;
+    th:first-child {
+      width: $table-column-first-m;
+      min-width: $table-column-first-m;
+    }
+    
+    th.column--increase {
+      width: $table-column-first-max-m;
+      min-width: $table-column-first-max-m;
     }
   }
   

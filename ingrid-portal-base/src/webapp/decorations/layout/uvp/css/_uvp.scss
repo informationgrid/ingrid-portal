@@ -1685,6 +1685,11 @@ footer {
         font-family: $button-font-family;
       }
 
+      th.column--increase {
+        width: $table-column-first-max;
+        min-width: $table-column-first-max;
+      }
+
       td {
         p {
           margin-bottom: 0;
@@ -1708,6 +1713,15 @@ footer {
             color: $green;
         }
       }
+      
+      .text-list .list-item {
+        margin-bottom: 4px;
+      }
+      
+      .text-list .list-item:last-child {
+        margin-bottom: 4px;
+      }
+      
     }
   }
 
@@ -2247,10 +2261,8 @@ footer {
   }
 }
 .anchor {
-    
   position: absolute;
   top: -128px;
-  bottom: 0;
   width: 100%;
 }
 h2 .anchor:target {

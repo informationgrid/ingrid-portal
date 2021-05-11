@@ -3,7 +3,7 @@
 #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo))
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_additional_information" name="${hashDetail5}_additional_information"></a>
-        #renderSectionTitle($MESSAGES.getString("additional_information"))
+        #renderGroupTitle($MESSAGES.getString("additional_information"))
     ## Veröffentlichung
         #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))
     ## Eignung/Nutzung
@@ -15,7 +15,7 @@
     ## XML-Export-Kriterium
         #renderTextListTable($MESSAGES.getString("t014_info_impart.name") $TOOL.getListOfValuesFromXPath($xPathAdditionalInfoExportCriteria, "."))
     ## Konformität
-        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) 2 $tmpConformityDataSymbols)
+        #renderTableSymbols ($TOOL.getConformityData($xPathAdditionalInfoDQDataQualityReport) 2 $tmpConformityDataSymbols [0])
     ## Identifikator des übergeordneten Metadatensatzes
         #renderTextTable($MESSAGES.getString("t01_object.parent_identifier") $TOOL.getValueFromXPath($xPathAdditionalInfoParentIdentifier))
     ## Datenformat
@@ -31,7 +31,7 @@
 #if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
     <div class="sub-section">
         <a class="anchor" id="${hashDetail5}_fs_keywords" name="${hashDetail5}_fs_keywords"></a>
-        #renderSectionTitle($MESSAGES.getString("fs_keywords"))
+        #renderGroupTitle($MESSAGES.getString("fs_keywords"))
         ## Verschlagwortung
         #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire"))
         #renderTableList($MESSAGES.getString("priority_dataset") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "priority"))
@@ -48,7 +48,7 @@
 ## DOI
 #if($TOOL.aNodeOfListExist($xPathListDoi))
     <div class="sub-section">
-        #renderSectionTitle($MESSAGES.getString("doi"))
+        #renderGroupTitle($MESSAGES.getString("doi"))
         <div class="search-result--nested">
             #renderTextTable($MESSAGES.getString("doi.id") $doi.id)
             #renderTextTable($MESSAGES.getString("doi.type") $doi.type)
