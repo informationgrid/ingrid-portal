@@ -206,6 +206,8 @@ public class PortalConfig extends PropertiesConfiguration {
 
     public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY = "portal.search.hit.cut.summary";
 
+    public static final String PORTAL_SEARCH_HIT_CUT_SUMMARY_LENGTH = "portal.search.hit.cut.summary.length";
+
     public static final String PORTAL_SEARCH_HIT_TRANSFORM_COUPLED_CSW_URL = "portal.search.hit.transform.coupled.csw.url";
 
     public static final String PORTAL_SEARCH_HIT_SUMMARY_ABSTRACT_FIELD = "portal.search.hit.summary.abstract.field";

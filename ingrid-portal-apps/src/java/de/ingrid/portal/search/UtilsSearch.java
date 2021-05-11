@@ -262,8 +262,9 @@ public class UtilsSearch {
             
             boolean isCutSummary = PortalConfig.getInstance().getBoolean(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY, true);
             if(isCutSummary) {
+                int cutSummaryLength = PortalConfig.getInstance().getInt(PortalConfig.PORTAL_SEARCH_HIT_CUT_SUMMARY_LENGTH, 200);
                 summary = UtilsString.cutString(summary.replaceAll("\\<.*?\\>",
-                    ""), 200, 200, false);
+                    ""), cutSummaryLength, cutSummaryLength, false);
             }
             result.put(Settings.RESULT_KEY_ABSTRACT, summary);
             String documentId = result.getHit().getDocumentId();
