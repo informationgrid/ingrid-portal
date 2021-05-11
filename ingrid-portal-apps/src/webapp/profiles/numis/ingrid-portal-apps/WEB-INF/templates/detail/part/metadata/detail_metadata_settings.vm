@@ -430,7 +430,7 @@
     $xPathAdditionalInfoLanguageCode,
     $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathUseContact,
-    xPathInfo1MDScopeCode
+    $xPathInfo1MDScopeCode
 ])
 
 ## Datenqualität
