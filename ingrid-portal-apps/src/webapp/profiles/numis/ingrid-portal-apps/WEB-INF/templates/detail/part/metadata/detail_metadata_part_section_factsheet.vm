@@ -1,9 +1,9 @@
 ## FactSheet
 ################################
 #if($hasDetail0)
-<a class="anchor" id="${hashDetail0}" name="${hashDetail0}"></a>
 <div class="teaser-data search row is-active">
     <div class="xsmall-24 small-24 #if($tool.hasContent($mapImage) && $tool.hasContent($mapImage.elements))medium-14 large-14 xlarge-14#end columns">
+        <a class="anchor" id="${hashDetail0}" name="${hashDetail0}"></a>
     ## Durch die Ressource abgedeckte Zeitspanne
         #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
         #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))

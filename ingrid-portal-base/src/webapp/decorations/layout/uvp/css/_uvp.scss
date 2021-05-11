@@ -192,9 +192,11 @@ blockquote {
 
   .section {
     margin-bottom: 48px;
+    position: relative;
 
     .sub-section {
       margin-bottom: 32px;
+      position: relative;
     }
 
     h2, h3 {
@@ -221,6 +223,7 @@ blockquote {
   .search-filtered {
     .data {
       margin-bottom: 48px;
+      position: relative;
     }
     .teaser-data.is-active {
       box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
@@ -1977,10 +1980,6 @@ footer {
     }
   }
 
-  .anchor {
-    margin-top: -128px;
-  }
-
   .expand-text {
     max-height: 185px;
     white-space: nowrap;
@@ -2248,24 +2247,11 @@ footer {
   }
 }
 .anchor {
-
-  span {
-    position: relative;
-    left: -35px;
-    top: 4px;
-    font-size: 24px;
-  }
-}
-.anchor:hover {
-  text-decoration: none;
-  color: #0089C6;
-  cursor: default;
-}
-.anchor.is-active {
-  display: block;
-  float: left;
-  left: -6px;
-  position: relative;
+    
+  position: absolute;
+  top: -128px;
+  bottom: 0;
+  width: 100%;
 }
 h2 .anchor:target {
   left: 0;
