@@ -67,25 +67,16 @@ define([
         register: function () {
             var self = this;
             var inspireRelevantWidget = registry.byId("isInspireRelevant");
-            var isConformWidget = registry.byId("isInspireConform");
 
-            if (inspireRelevantWidget.checked && isConformWidget.checked) {
+            if (inspireRelevantWidget.checked) {
                 this.activateValidation();
             } else {
                 this.deactivateValidation();
             }
 
             this.events.push(
-                // if conform was changed
-                on(isConformWidget, "Change", function(isChecked) {
-                    if (inspireRelevantWidget.checked && isChecked) {
-                        self.activateValidation();
-                    } else {
-                        self.deactivateValidation();
-                    }
-                }),
                 on(inspireRelevantWidget, "Change", function (isChecked) {
-                    if (isChecked && isConformWidget.checked) {
+                    if (isChecked) {
                         self.activateValidation();
                     } else {
                         self.deactivateValidation();
