@@ -1,6 +1,6 @@
 <script>
   $('.filter .filter-wrapper').niceScroll({
-    cursorcolor:"#085467",
+    cursorcolor:"#F6F6F6",
     cursorwidth:"8px",
     cursorborderradius: "6px",
   });
