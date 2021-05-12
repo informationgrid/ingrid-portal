@@ -198,6 +198,16 @@ blockquote {
       padding-bottom: 4px;
     }
   }
+  
+  .sub-section {
+    margin-bottom: 24px;
+  }
+  .sub-section:not(.sub-section-unlined) {
+    h4 {
+      border-bottom: 1px dashed #c6cfe2;
+      padding-bottom: 4px;
+    }
+  }
   font-size: 16px;
 
   div.row div.columns {
@@ -1894,11 +1904,12 @@ footer {
           margin-top: 4px;
           width: 112px;
         }
-        .swiper-container {
+        > :first-child {
           width: 112px;
           float: right;
           margin-left: 16px;
-
+        }
+        .swiper-container {
           .swiper-wrapper {
             display: flex;
           }
@@ -2787,4 +2798,32 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
 
 .nicescroll-rails-vr {
   z-index: 1040 !important;
+}
+
+.detail {
+  .list-item div, .search .list-item div {
+    padding: 0;
+
+    small {
+      display:block;
+    }
+  }
+  
+  .nav-content {
+    margin-top: -72px;
+  }
+  
+  p + h4, div.table + h4 {
+    margin-top: 24px;
+  }
+}
+
+.nav-content {
+  margin-top: 0;
+  h2 {
+    margin-bottom: 24px;
+  }
+  .accordion-title span {
+    text-transform: none;
+  }
 }

@@ -6,33 +6,21 @@
     <div class="row columns">
         #if($type == "1" && $TOOL.aNodeOfListExist($xPathListInformationType1))
         ## Geodatensatz
-            <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
-            #renderGroupTitle($MESSAGES.getString("technical_information"))
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type1.vm")
         #elseif($type == "2" && $TOOL.aNodeOfListExist($xPathListInformationType2))
         ## Literatur
-            <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
-            #renderGroupTitle($MESSAGES.getString("technical_information"))
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type2.vm")
         #elseif($type == "3" && ($TOOL.aNodeOfListExist($xPathListInformationType3) || $serviceClassification.size() > 0))
         ## Geodatendienst
-            <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
-            #renderGroupTitle($MESSAGES.getString("technical_information"))
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type3.vm")
         #elseif($type == "4" && $TOOL.aNodeOfListExist($xPathListInformationType4))
         ## Projekt
-            <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
-            #renderGroupTitle($MESSAGES.getString("technical_information"))
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type4.vm")
         #elseif($type == "5" && $TOOL.aNodeOfListExist($xPathListInformationType5))
         ## Datensammlung
-            <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
-            #renderGroupTitle($MESSAGES.getString("technical_information"))
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type5.vm")
         #elseif($type == "6" && ($TOOL.aNodeOfListExist($xPathListInformationType6) || $serviceClassification.size() > 0))
         ## Informationsystem
-            <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
-            #renderGroupTitle($MESSAGES.getString("technical_information"))
             #parse("/WEB-INF/templates/detail/part/metadata/detail_metadata_part_section_information_type6.vm")
         #end
         ## Zusatzinformationen

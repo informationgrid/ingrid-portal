@@ -603,6 +603,17 @@
   .banner.subpage .subpage-wrapper, .banner-noimage .page-wrapper {
     padding: 48px 0 16px;
   }
+  
+  .nav-content {
+    margin-top: 54px !important;
+    
+    .columns:last-of-type {
+      padding-left: 0;
+    }
+  }
+  .detail .nav-content {
+    margin-top: -94px !important;
+  }
 }
 
 

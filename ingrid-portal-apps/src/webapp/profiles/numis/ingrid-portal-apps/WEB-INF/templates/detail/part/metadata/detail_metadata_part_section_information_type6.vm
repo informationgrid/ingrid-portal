@@ -1,6 +1,8 @@
 ## Informationsystem
 ################################
 <div class="sub-section">
+    <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
+    #renderGroupTitle($MESSAGES.getString("technical_information"))
 ## Klassifikation des Dienstes
     #renderTextListTable($MESSAGES.getString("t011_obj_serv_type") $serviceClassification)
 ## Art des Dienstes

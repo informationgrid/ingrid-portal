@@ -419,33 +419,10 @@ header a.icon.is-selected {
   color: #40B9EC;
 }
 
-.detail p + h4, .detail div.table + h4 {
-  margin-top: 24px;
-}
-
 .detail .banner-noimage .page-wrapper {
   background-color: #F6F6F6;
 }
-.detail .list-item div, .search .list-item div {
-  padding: 0;
-}
 
-.detail .list-item div small {
-  display:block;
-}
-
-.detail .nav-content {
-  margin-top: -72px;
-}
-.nav-content {
-  margin-top: 0;
-}
-.nav-content h2 {
-  margin-bottom: 24px;
-}
-.nav-content .accordion-title span {
-  text-transform: none;
-}
 .accordion-title {
   color: #006ec5;
   background-color: #F6F6F6;
@@ -1020,15 +997,6 @@ header .menu-tab-row .menu-tab {
   }
 }
 @media print, screen and (min-width: 64em) {
-  .nav-content {
-    margin-top: 54px !important;
-  }
-  .detail .nav-content {
-    margin-top: -94px !important;
-  }
-  .nav-content .columns:last-of-type {
-    padding-left: 0;
-  }
   .switch-popup a.switch-link.uvp img {
     width: 20em;
   }
