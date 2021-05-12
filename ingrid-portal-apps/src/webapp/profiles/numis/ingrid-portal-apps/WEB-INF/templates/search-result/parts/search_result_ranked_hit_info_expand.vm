@@ -210,22 +210,8 @@
                             #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
                         #end
                             #set ($tmpValue = $!rs.additional_html_1)
-                            #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
-                            #if($tmpImgValue.indexOf("src='http:") > -1)
-                                #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))
-                            #end
-                            $tmpImgValue
-                            <noscript>
-                                $tmpValue
-                            </noscript>
-                        #if($hasSwipe)
-                        </div>
-                        #end
-                    #else
-                        #set($tmpValues = $!rs.additional_html_1.split(", "))
-                        #foreach($tmpValue in $tmpValues)
-                            <div class="swiper-slide">
-                            #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
+                            #set ($tmpValueSrc = $tmpValue.replaceAll(".* src='", "").replaceAll("'.*", ""))
+                            <a href="$tmpValueSrc" title="$MESSAGES.getString("searchResult.info.preview")" target="_blank" rel="noopener noreferrer">
                                 #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
                                 #if($tmpImgValue.indexOf("src='http:") > -1)
                                     #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))
@@ -234,6 +220,26 @@
                                 <noscript>
                                     $tmpValue
                                 </noscript>
+                            </a>
+                        #if($hasSwipe)
+                        </div>
+                        #end
+                    #else
+                        #set($tmpValues = $!rs.additional_html_1.split(", "))
+                        #foreach($tmpValue in $tmpValues)
+                            <div class="swiper-slide">
+                                #renderFactTitle($MESSAGES.getString("searchResult.info.preview") "text-center")
+                                #set ($tmpValueSrc = $tmpValue.replaceAll(".* src='", "").replaceAll("'.*", ""))
+                                <a href="$tmpValueSrc" title="$MESSAGES.getString("searchResult.info.preview")" target="_blank" rel="noopener noreferrer">
+                                    #set($tmpImgValue = $tmpValue.replace(">", "onerror=$loadDefaultMapImage>"))
+                                    #if($tmpImgValue.indexOf("src='http:") > -1)
+                                        #set($tmpImgValue = $tmpImgValue.replace('src', 'src="./" data-src'))
+                                    #end
+                                    $tmpImgValue
+                                    <noscript>
+                                        $tmpValue
+                                    </noscript>
+                                </a>
                             </div>
                         #end
                     #end

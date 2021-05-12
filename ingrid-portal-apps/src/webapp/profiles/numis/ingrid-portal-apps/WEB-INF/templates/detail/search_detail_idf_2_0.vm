@@ -40,10 +40,12 @@
                 #end
                 <div class="swiper-slide">
                     <p class="caption">
-                        <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
-                        <noscript>
-                            <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
-                        </noscript>
+                        <a href="$entry.src" title="$imgTitle" target="_blank" rel="noopener noreferrer">
+                            <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
+                            <noscript>
+                                <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
+                            </noscript>
+                        </a>
                     </p>
                     #if($entry.description)
                         <p class="caption">$entry.description</p>
@@ -54,12 +56,6 @@
                     #elseif($entry.get("href").toLowerCase().indexOf("getcapabilities") > -1 )
                         <p class="caption">
                             <a class="button small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C${entry.get("href")}" title="$entry.title">
-                                $entry.title
-                            </a>
-                        </p>
-                    #else
-                        <p class="caption">
-                            <a class="button small" href="${entry.get("href")}" title="$entry.title" target="_blank" rel="noopener noreferrer">
                                 $entry.title
                             </a>
                         </p>
@@ -138,10 +134,12 @@
                             #foreach($graphic in $entry.graphicOverview)
                                 <div class="swiper-slide">
                                     <p class="caption">
-                                        <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
-                                        <noscript>
-                                            <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
-                                        </noscript>
+                                        <a href="$graphic" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                                            <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                            <noscript>
+                                                <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
+                                            </noscript>
+                                        </a>
                                     </p>
                                 </div>
                             #end
@@ -151,10 +149,12 @@
                     </div>
                     #elseif($tool.hasContent($entry.graphicOverview.get(0)))
                     <div class="preview">
-                        <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
-                        <noscript>
-                            <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
-                        </noscript>
+                        <a href="$entry.graphicOverview.get(0)" title="$entry.title" target="_blank" rel="noopener noreferrer">
+                            <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                            <noscript>
+                                <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
+                            </noscript>
+                        </a>
                     </div>
                     #end
                 #end
@@ -1282,5 +1282,3 @@
         </div>
     </section>
 #end
-
-#parse ('/WEB-INF/templates/global/include_preview_image.vm')
