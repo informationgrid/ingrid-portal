@@ -5,12 +5,13 @@
   if(window.pageYOffset > 100) {
       body.addClass("shrink");
   }
+
   window.onscroll = function(e) {
+    var filter = $('.filter');
     if (this.pageYOffset > 100) {
       body.addClass("shrink");
-      var filter = $('.filter');
       if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
-        if(filter.closest('.shrink').length > 0) {
+        if(filter.length > 0) {
           var headerHeight = $('header').height();
           var scrollTop = $(this).scrollTop();
           var content = $('.search-filtered.row, .search-filtered > .row');
@@ -30,13 +31,16 @@
             filter.css('top', scrollTop - contentTop + diffTop - contentMargin + 'px');
           }
           filter.css('position','relative');
-        } else {
-          filter.css('top','');
-          filter.css('position','');
         }
       }
     } else {
       body.removeClass("shrink");
+      if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        if(filter.length > 0) {
+          filter.css('top','');
+          filter.css('position','');
+        }
+      }
     }
   };
 </script>
