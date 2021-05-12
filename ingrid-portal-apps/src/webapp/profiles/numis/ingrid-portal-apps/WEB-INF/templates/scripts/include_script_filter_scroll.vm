@@ -1,11 +1,24 @@
 <script>
   $('.filter .filter-wrapper').niceScroll({
-    cursorcolor:"#F6F6F6",
+    cursorcolor:"#5e788d",
     cursorwidth:"8px",
     cursorborderradius: "6px",
   });
   $(window).bind('scroll',function(){
-    $('.filter .filter-wrapper').getNiceScroll().resize();
+    var filter = $('.filter');
+    filter.find('.filter-wrapper').getNiceScroll().resize();
+    // 'Sticky' Fix for IE11
+    if(/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+        if(filter.closest('.shrink').length > 0) {
+            var headerHeight = 248;
+            var scrollTop = $(this).scrollTop() ;
+            filter.css('top',(scrollTop - headerHeight) + 'px');
+            filter.css('position','relative');
+        } else {
+            filter.css('top','');
+            filter.css('position','');
+        }
+    }
   });
   
   $('.filter .accordion-title').bind('click',function(){
