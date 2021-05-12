@@ -192,12 +192,6 @@ blockquote {
 
   .section {
     margin-bottom: 48px;
-    position: relative;
-
-    .sub-section {
-      margin-bottom: 32px;
-      position: relative;
-    }
 
     h2, h3 {
       border-bottom: 1px solid #c6cfe2;
@@ -1630,6 +1624,15 @@ footer {
 .search-filtered {
   margin-top: 48px;
 
+  .section {
+    margin-bottom: 48px;
+    position: relative;
+
+    .sub-section {
+      margin-bottom: 32px;
+      position: relative;
+    }
+  }
   button.filter_submit {
     width: 100%;
     margin-top: 16px;
@@ -2263,7 +2266,6 @@ footer {
 .anchor {
   position: absolute;
   top: -128px;
-  width: 100%;
 }
 h2 .anchor:target {
   left: 0;
