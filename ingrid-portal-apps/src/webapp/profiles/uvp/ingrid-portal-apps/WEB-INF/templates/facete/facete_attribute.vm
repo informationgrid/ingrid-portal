@@ -1,10 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
-<ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-    <li class="accordion-item #if($doAddAttribute && $doAddAttribute.size() > 0)is-active#end" data-accordion-item="">
+<ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+    <li class="accordion-item #if($doAddAttribute && $doAddAttribute.size() > 0)is-active#end" data-accordion-item>
         <a href="" class="accordion-title" aria-controls="facet_attribute--accordion" role="tab" id="facet_attribute-label" #if($doAddAttribute && $doAddAttribute.size() > 0)aria-expanded="true" aria-selected="true"#end>
             <span class="text">$MESSAGES.getString("searchResult.facete.title.attribute")</span>
         </a>
-        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="facet_attribute-label" id="facet_attribute-accordion" #if(!$doAddAttribute || $doAddAttribute.size() == 0)aria-hidden="true"#end>
+        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="facet_attribute-label" id="facet_attribute-accordion" #if(!$doAddAttribute || $doAddAttribute.size() == 0)aria-hidden="true"#end>
             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
             <form action="$action" method="post">
                 <p>

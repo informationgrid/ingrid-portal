@@ -1,10 +1,10 @@
 #set ($action = $renderResponse.createActionURL())
 #set ($rankedHitslenght = $rankedResultList.length())
 
-<div class="accordion accordion-filter-group filter" data-accordion="" data-allow-all-closed="true" role="tablist" data-e="">
-    <div class="accordion-item accordion-item-filter-group" data-accordion-item="">
+<div class="accordion accordion-filter-group filter" data-accordion data-allow-all-closed="true" role="tablist" >
+    <div class="accordion-item accordion-item-filter-group" data-accordion-item>
         <a href="#" class="accordion-title accordion-title-filter-group hide-for-large" role="tab" id="facet-accordion-label" aria-expanded="false" aria-selected="false">Filter</a>
-        <div class="accordion-content filter-wrapper filter-wrapper-shadowless" data-tab-content="" role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
+        <div class="accordion-content filter-wrapper filter-wrapper-shadowless" data-tab-content role="tabpanel" aria-labelledby="facet-accordion-label" aria-hidden="true" id="facet-content-accordion">
             <div class="boxes">
 #if($rankedHitslenght > 0)
                     #renderFacetCategory($facetConfig)
@@ -165,12 +165,12 @@
                         #set($isSelected = true)
                     #end
                 #end
-                <ul class="accordion filter-group" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
-                    <li class="accordion-item #if($isSelected)is-active#end" data-accordion-item="">
+                <ul class="accordion filter-group" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
+                    <li class="accordion-item #if($isSelected)is-active#end" data-accordion-item>
                         <a href="" class="accordion-title" aria-controls="$facet.getId()-accordion" role="tab" id="$facet.getId()-accordion-label" #if($facet.isSelect() || $facet.isOpen())aria-expanded="true" aria-selected="true"#end>
                             <span class="text">$MESSAGES.getString("$facet.getName()")</span>
                         </a>
-                        <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
+                        <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="$facet.getId()-accordion-label" id="$facet.getId()-accordion" #if($facet.isSelect() || $facet.isOpen())aria-hidden="false" style="display: block;"#end>
                             <div class="boxes">
                             #renderSearchResultFacetSelectionInfo($facet $MESSAGES)
                             #foreach($subFacet in $facet.getFacets())

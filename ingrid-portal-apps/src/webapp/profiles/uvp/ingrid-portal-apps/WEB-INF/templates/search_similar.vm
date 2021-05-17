@@ -3,7 +3,7 @@
         <div class="row">
             <div class="columns">
                 <ul class="accordion nested-group teaser-data-projects">
-                    <li class="accordion-item #if($ps.isSimilarOpen)is-active#end" data-accordion-item="">
+                    <li class="accordion-item #if($ps.isSimilarOpen)is-active#end" data-accordion-item>
                         #set ($action = $renderResponse.createActionURL())
                         #if($ps.isSimilarOpen)
                             $action.setParameter('action','doCloseSimilar')

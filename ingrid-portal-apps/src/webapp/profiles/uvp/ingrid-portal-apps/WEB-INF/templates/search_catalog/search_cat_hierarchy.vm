@@ -17,10 +17,10 @@
         #set($nodeUrl = '')
     #end
     #if($node.isOpen())
-        <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+        <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
             #set ($renderSubNodes = true)
             $action.setParameter('action','doCloseNode')
-            <li class="accordion-item is-active" data-accordion-item="">
+            <li class="accordion-item is-active" data-accordion-item>
                 #if($nodeUrl != '')
                     <div class="accordion-item-sub">
                         <span class="icon">
@@ -38,7 +38,7 @@
                 
                 ## render sub nodes
                 #if ($renderSubNodes)
-                    <div class="accordion-content" data-tab-content="" role="tabpanel" aria-labelledby="${node.id}-accordion-label" aria-hidden="false" id="${node.id}-accordion">
+                    <div class="accordion-content" data-tab-content role="tabpanel" aria-labelledby="${node.id}-accordion-label" aria-hidden="false" id="${node.id}-accordion">
                     #foreach($childNode in $node.getChildren())
                         #renderNode($childNode)
                     #end
@@ -62,7 +62,7 @@
                     </span>
                 </div>
             #else
-                <ul class="accordion" data-accordion="" data-multi-expand="true" data-allow-all-closed="true" role="tablist" data-e="">
+                <ul class="accordion" data-accordion data-multi-expand="true" data-allow-all-closed="true" role="tablist" >
                     <li class="accordion-item">
                         <a class="accordion-title" id="${node.id}-accordion-label" href="$action" onclick="makeScrollTopLink(this)">$nodeTitle</a>
                     </li>
