@@ -1894,6 +1894,8 @@ footer {
       
       .preview  {
         position: relative;
+        z-index: 1;
+
         .preview_image {
           float: right;
           margin-left: 16px;
