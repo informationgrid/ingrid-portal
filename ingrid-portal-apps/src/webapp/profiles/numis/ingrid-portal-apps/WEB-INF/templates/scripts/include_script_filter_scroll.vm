@@ -5,6 +5,10 @@
     cursorborderradius: "6px",
   });
 
+  $(window).scroll(function(){
+    $(".filter .filter-wrapper").getNiceScroll().resize();
+  });
+
   $('.filter .accordion-title').bind('click',function(){
     setTimeout(function(){
       $(".filter .filter-wrapper").getNiceScroll().resize();
