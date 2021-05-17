@@ -381,6 +381,7 @@
                 #end
             #end
             #if(!$isFactSheet)
+            <div class="sub-section">
             <div class="table table--lined">
             #end
                 #if($tool.hasContent($title))
@@ -617,6 +618,7 @@
                         </td>
                     </tr>
                 </table>
+            </div>
             </div>
                         #end
             #end
