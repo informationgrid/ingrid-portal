@@ -504,5 +504,5 @@ $MESSAGES.getStringWithMsgParams('common.result.counter.ranked')
 #end
 
 #macro (renderFactTitle $title $class)
-    <h4 class="$class">$title</h4>
+    <h4 #if($class)class="$class"#end>$title</h4>
 #end
