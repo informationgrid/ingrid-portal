@@ -6,48 +6,48 @@
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
             <!-- yummy fields -->
             <label class="yummy" for="message">message</label>
-            <input type="text" class="yummy" id="message" name="message" autocomplete="off"  />
+            <input type="text" class="yummy" id="message" name="message" autocomplete="off" tabindex="-1"/>
             <label class="yummy" for="name">name</label>
-            <input type="text" class="yummy" id="name" name="name" autocomplete="off"  />
+            <input type="text" class="yummy" id="name" name="name" autocomplete="off" tabindex="-1"/>
             <label class="yummy" for="email">email</label>
-            <input type="text" class="yummy" id="email" name="email" autocomplete="off"  />
+            <input type="text" class="yummy" id="email" name="email" autocomplete="off" tabindex="-1"/>
             <!-- real fields -->
             #displayFormError()
             <div class="form-element">
                 <label for="bemerkungen">$MESSAGES.getString('contact.form.message')*</label>
             </div>
             <div class="form-element">
-                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('user_message')">#getFieldValue('user_message')</textarea>
+                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('user_message')" tabindex="0">#getFieldValue('user_message')</textarea>
             </div>
             <div class="form-element">
                 <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
             </div>
             <div class="form-element">
-                <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') #addErrorFormMessagePlaceholder('user_firstname')" />
+                <input type="text" id="xx2" name="user_firstname" value="#getFieldValue('user_firstname')" #addErrorFormClass('user_firstname') #addErrorFormMessagePlaceholder('user_firstname')" tabindex="0"/>
             </div>
         <div class="form-element">
             <label for="xx3">$MESSAGES.getString('contact.form.lastname')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') #addErrorFormMessagePlaceholder('user_lastname')" />
+            <input type="text" id="xx3" name="user_lastname" value="#getFieldValue('user_lastname')" #addErrorFormClass('user_lastname') #addErrorFormMessagePlaceholder('user_lastname')" tabindex="0"/>
         </div>
         <div class="form-element">
             <label for="xx4">$MESSAGES.getString('contact.form.company')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')"/>
+            <input type="text" id="xx4" name="user_company" value="#getFieldValue('user_company')" tabindex="0"/>
         </div>
         <div class="form-element">
             <label for="xx5">$MESSAGES.getString('contact.form.phone')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')"/>
+            <input type="text" id="xx5" name="user_phone" value="#getFieldValue('user_phone')" tabindex="0"/>
         </div>
         <div class="form-element">
             <label for="xx6">$MESSAGES.getString('contact.form.email')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email')" />
+            <input type="text" id="xx6" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email')" tabindex="0"/>
             #addErrorFormMessagePlaceholderWithInputCheck('user_email')
         </div>
         #if ($uploadEnable)
@@ -55,7 +55,7 @@
                 <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
             </div>
             <div class="form-element">
-                <input type="file" id="upload" name="upload">
+                <input type="file" id="upload" name="upload" tabindex="0">
             </div>
         #end
         <hr>

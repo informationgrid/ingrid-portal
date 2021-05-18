@@ -374,6 +374,11 @@ $abbr-underline: 1px dotted $black !default;
         text-decoration: $anchor-text-decoration-hover;
       }
     }
+    &:focus {
+      img {
+        outline: 1px dotted;
+      }
+    }
 
     img {
       border: 0;

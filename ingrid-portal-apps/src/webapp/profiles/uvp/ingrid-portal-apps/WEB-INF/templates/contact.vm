@@ -6,29 +6,29 @@
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
             <!-- yummy fields -->
             <label class="yummy" for="message">message</label>
-            <input type="text" class="yummy" id="message" name="message" autocomplete="off"  />
+            <input type="text" class="yummy" id="message" name="message" autocomplete="off" tabindex="-1"/>
             <label class="yummy" for="name">name</label>
-            <input type="text" class="yummy" id="name" name="name" autocomplete="off"  />
+            <input type="text" class="yummy" id="name" name="name" autocomplete="off" tabindex="-1"/>
             <label class="yummy" for="email">email</label>
-            <input type="text" class="yummy" id="email" name="email" autocomplete="off"  />
+            <input type="text" class="yummy" id="email" name="email" autocomplete="off" tabindex="-1"/>
             <!-- real fields -->
             #displayFormError()
             <div class="form-element">
                 <label for="user_subject">$MESSAGES.getString('contact.form.subject')</label>
             </div>
             <div class="form-element">
-                <input type="text" id="user_subject" name="user_subject" value="#getFieldValue('user_subject')" #addErrorFormClass('user_subject') #addErrorFormMessagePlaceholder('user_subject') />
+                <input type="text" id="user_subject" name="user_subject" value="#getFieldValue('user_subject')" #addErrorFormClass('user_subject') #addErrorFormMessagePlaceholder('user_subject') tabindex="0"/>
             </div>
             <div class="form-element">
                 <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
             </div>
             <div class="form-element">
-                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen"  rows="10" #addErrorFormMessagePlaceholder('user_message')">#getFieldValue('user_message')</textarea>
+                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen" rows="10" #addErrorFormMessagePlaceholder('user_message')" tabindex="0">#getFieldValue('user_message')</textarea>
             </div>
             <div class="form-element ">
                 <div class="control-group">
                     <label class="control control--checkbox field-toggle__label field-toggle__label--boxed" for="user_technical">
-                        <input id="user_technical" type="checkbox" name="user_technical" value="1" #getChecked('user_technical' '1') onchange="ingrid_disableElementByCheckbox('user_technical', 'user_company')">
+                        <input id="user_technical" type="checkbox" name="user_technical" value="1" #getChecked('user_technical' '1') onchange="ingrid_disableElementByCheckbox('user_technical', 'user_company')" tabindex="0">
                         <span class="control__indicator"></span>
                         $MESSAGES.getString('contact.form.technical')
                     </label>
@@ -53,21 +53,21 @@
             <label for="user_email">$MESSAGES.getString('contact.form.email')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="user_email" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') />
+            <input type="text" id="user_email" name="user_email" value="#getFieldValue('user_email')" #addErrorFormClass('user_email') #addErrorFormMessagePlaceholder('user_email') tabindex="0"/>
             #addErrorFormMessagePlaceholderWithInputCheck('user_email')
         </div>
         <div class="form-element">
             <label for="user_name">$MESSAGES.getString('contact.form.name')</label>
         </div>
         <div class="form-element">
-            <input type="text" id="user_name" name="user_name" value="#getFieldValue('user_name')" />
+            <input type="text" id="user_name" name="user_name" value="#getFieldValue('user_name')" tabindex="0"/>
         </div>
         #if ($uploadEnable)
             <div class="form-element">
                 <label >$MESSAGES.getString('contact.form.upload') $uploadSize MB)</label>
             </div>
             <div class="form-element">
-                <input type="file" id="upload" name="upload">
+                <input type="file" id="upload" name="upload" tabindex="0">
             </div>
         #end
         <div class="subtext-submit">
