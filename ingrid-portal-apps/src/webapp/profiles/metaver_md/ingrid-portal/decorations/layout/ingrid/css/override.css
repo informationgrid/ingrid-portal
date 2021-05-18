@@ -304,9 +304,6 @@ a {
 a:hover, a:focus {
   color: #085468;
 }
-a:focus {
-  text-decoration: none;
-}
 a.icon [class^='ic-'] {
   font-size: 16px;
 }
@@ -500,9 +497,6 @@ header a.icon.is-selected {
   box-shadow: 0 2px 6px 0 rgb(0 0 0 / 20%);
 }
 .teaser-data .header {
-  color: #067B9B;
-}
-.teaser-data .arrow {
   color: #067B9B;
 }
 .teaser-data .header:hover, .teaser-data .arrow:hover,

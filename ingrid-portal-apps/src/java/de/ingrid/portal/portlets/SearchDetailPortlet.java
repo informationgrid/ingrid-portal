@@ -324,8 +324,15 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            iPlugVersion = IPlugVersionInspector.getIPlugVersion(plugDescription);
 	            
 	            String[] partners = plugDescription.getPartners();
+	            String plugPartner = PortalConfig.getInstance().getString(PortalConfig.PORTAL_SEARCH_RESTRICT_PARTNER, "bund");
 	            if(partners != null && partners.length > 0) {
-	                context.put("plugPartner", partners[0]);
+	                if(partners.length > 1) {
+	                    List<String> tmpPartners = new ArrayList<String>(Arrays.asList(partners));
+	                    tmpPartners.remove("bund");
+	                    partners = tmpPartners.toArray(new String[0]);
+	                }
+	                plugPartner = partners[0];
+	                context.put("plugPartner", plugPartner);
 	            }
 	            
 	            // try to get the result for a objects UUID

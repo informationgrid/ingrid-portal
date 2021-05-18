@@ -201,7 +201,13 @@
                 #if($hasPreview)
                     #set($partner = "bund")
                     #if($rs.partnerKey)
-                        #set($partner =  $rs.partnerKey.split(",").get(0))
+                        #set($partners =  $rs.partnerKey.split(","))
+                        #foreach($tmpPartner in $partners)
+                            #if($tmpPartner.trim() != $partner)
+                              #set($partner = $tmpPartner.trim())
+                              #break
+                            #end
+                        #end
                     #end
                     #set($loadDefaultMapImage = "loadDefaultMapImage(this,'$partner');")
                     #if($!rs.additional_html_1.indexOf(">, <") == -1)
