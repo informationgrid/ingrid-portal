@@ -353,6 +353,8 @@
 #set($xPathAdditionalInfoFurtherLegalBasis = "./gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[gmd:thesaurusName/gmd:CI_Citation/gmd:title/gco:CharacterString='Further legal basis']/gmd:keyword/gco:CharacterString")
 #### XML-Export-Kriterium
 #set($xPathAdditionalInfoExportCriteria = "./idf:exportCriteria")
+#### Sprache des Datensatzes
+#set($xPathAdditionalInfoIdentificationInfoLanguageCode = "./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")
 #### Konformität
 #set($xPathAdditionalInfoDQDataQualityReport = "./gmd:dataQualityInfo/gmd:DQ_DataQuality/gmd:report")
 
@@ -389,6 +391,7 @@
     $xPathAdditionalInfoPurpose,
     $xPathAdditionalInfoFurtherLegalBasis,
     $xPathAdditionalInfoExportCriteria,
+    $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathAdditionalInfoDQDataQualityReport,
     $xPathAdditionalInfoParentIdentifier,
     "${xPathAdditionalInfoMDDistribution}/gmd:distributionFormat/gmd:MD_Format",
@@ -412,8 +415,6 @@
 ## Infos zur Datensatzbeschreibung
 #### Sprache des Metadatensatzes
 #set($xPathAdditionalInfoLanguageCode = "./gmd:language/gmd:LanguageCode/@codeListValue")
-#### Sprache des Datensatzes
-#set($xPathAdditionalInfoIdentificationInfoLanguageCode = "./gmd:identificationInfo/*/gmd:language/gmd:LanguageCode/@codeListValue")
 
 #### XML Darstellung
 #set($getXML = $TOOL.addLinkElementToGetXML())
@@ -428,7 +429,6 @@
 
 #set($xPathListMetadataInfo = [
     $xPathAdditionalInfoLanguageCode,
-    $xPathAdditionalInfoIdentificationInfoLanguageCode,
     $xPathUseContact,
     $xPathInfo1MDScopeCode
 ])

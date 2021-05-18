@@ -7,14 +7,19 @@
         #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
         #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
         #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
+            #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
+                #set($tmpTitle = "time_reference_content")
+            #else
+                #set($tmpTitle = "time_reference")
+            #end
             #if($beginTime == $endTime)
-                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.at'): $beginTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
             #elseif($beginTime && !$endTime)
-                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.since'): $beginTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")
             #elseif(!$beginTime && $endTime)
-                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.to'): $endTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to'): $endTime")
             #elseif($beginTime != $endTime)
-                #renderTextLabelAbove($MESSAGES.getString("time_reference_content") "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
+                #renderTextLabelAbove($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
             #end
         #end
     ## Downloads

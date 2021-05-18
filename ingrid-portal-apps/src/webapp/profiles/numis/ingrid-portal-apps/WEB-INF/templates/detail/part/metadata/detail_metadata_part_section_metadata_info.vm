@@ -6,8 +6,6 @@
         #renderSectionTitle($MESSAGES.getString("subject_metadata_info"))
     ## Objekt-ID
         #renderTextTable($MESSAGES.getString("t01_object.obj_id") $TOOL.getValueFromXPath("./gmd:fileIdentifier"))
-    ## Sprache des Datensatzes
-        #renderTextListTable($MESSAGES.getString("t01_object.data_language") $TOOL.getLanguageValues($TOOL.getListOfValuesFromXPath($xPathAdditionalInfoIdentificationInfoLanguageCode,".")))
     ## Sprache Metadatensatz
         #renderTextTable($MESSAGES.getString("t01_object.metadata_language") $TOOL.getLanguageValue($TOOL.getValueFromXPath($xPathAdditionalInfoLanguageCode)))
     ## Datensatz/Datenserie
