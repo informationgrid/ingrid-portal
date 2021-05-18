@@ -1,5 +1,5 @@
 <div class="columns small-7 medium-9 large-7 xlarge-6">
-    <div class="logo">
+    <div class="logo" role="banner">
         <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')" class="hide-for-medium hide-for-xsmall-only">
             <img src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"/>
         </a>

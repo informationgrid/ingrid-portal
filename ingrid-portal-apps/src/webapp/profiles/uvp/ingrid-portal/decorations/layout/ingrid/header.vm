@@ -28,4 +28,4 @@
             #includeServiceNavigation($serviceMenu $mainMenu $footerMenu $aboutSubMenu)
         #end
         #parse("/decorations/layout/ingrid/templates/header/body_header.vm")
-            <div class="body">
+            <div class="body" role="main">

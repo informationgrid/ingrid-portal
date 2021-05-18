@@ -34,7 +34,7 @@
 
 #* include main navigation component *#
 #macro (includeMainNavigation $_menu)
-<div class="menu-tab-row">
+<div class="menu-tab-row" role="navigation" aria-label="Navigation Header">
     #set($currentPage = $site.getPageOrTemplate().url)
     #foreach($element in $_menu.elements.iterator())
       #set($elemSelected = false)
@@ -144,7 +144,7 @@
 
 #* include service navigation component *#
 #macro (includeFooterNavigation $_menu)
-<div class="footer-menu-entries">
+<div class="footer-menu-entries" role="navigation" aria-label="Navigation Footer">
     #foreach($element in $_menu.elements.iterator())
       #if($element.elementType == "option")
         #set($linkTitle = $element.getTitle($preferedLocale))
@@ -284,9 +284,9 @@
         #set ($salutation = "$!{salutation} $userNameFamily")
     #end
 #end
-<div class="header-menu" style="display: none;">
+<div class="header-menu" style="display: none;" role="navigation" aria-label="Navigation Menu">
     <div class="header-menu-close">
-        <button type="button" class="button ">Menü<span class="ic-ic-cross"></span></button>
+        <button type="button" class="button">Menü<span class="ic-ic-cross"></span></button>
     </div>
     <div class="menu-main-links">
     #if($_menuMain)
@@ -401,5 +401,5 @@
     #else
         #parse("/decorations/layout/ingrid/templates/header/body_header_login.vm")
     #end
-</div> 
+</div>
 #end

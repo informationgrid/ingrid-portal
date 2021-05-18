@@ -594,6 +594,9 @@ li.accordion-item.is-active .accordion-title::after { content: '\e925'; }
         color: $green-blue;
       }
     }
+    &:focus {
+      text-decoration: underline;
+    }
   }
 }
 
