@@ -9,7 +9,7 @@
 
 #macro (renderSubNavigation $title $hash)
 <a class="js-anchor-target-entry" href="#${hash}">
-    <span class="ic-ic-bullet"></span><span class="text">$title</span>
+    <span class="text">$title</span>
 </a>
 #end
 
@@ -969,7 +969,7 @@
     #end
 #end
 
-#macro (renderTextTable $title $entry)
+#macro (renderTextTable $title $entry $cssClass)
     #if($tool.hasContent($entry))
     <div class="table table--lined">
         <table>
@@ -978,7 +978,7 @@
                 <th>$title</th>
             #end
                 <td>
-                    <p>$entry</p>
+                    <p #if($cssClass)class="$cssClass"#end>$entry</p>
                 </td>
             </tr>
         </table>
