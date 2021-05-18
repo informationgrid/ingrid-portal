@@ -27,7 +27,7 @@
                                 <div class="boxes">
                                     #if($TOOL.aNodeOfListExist($xPathListTime))
                                         #set($tmpHash = "${hashDetail1}_time_reference")
-                                        #set($tmpTitle = $MESSAGES.getString("time_reference"))
+                                        #set($tmpTitle = $MESSAGES.getString("time_reference_content"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
                                     #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))

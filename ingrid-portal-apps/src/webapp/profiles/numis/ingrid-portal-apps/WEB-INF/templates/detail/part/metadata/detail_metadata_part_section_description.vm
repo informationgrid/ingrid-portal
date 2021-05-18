@@ -29,7 +29,7 @@
         #if($TOOL.aNodeOfListExist($xPathListTime))
             <div class="sub-section">
                 <a class="anchor" id="${hashDetail1}_time_reference" name="${hashDetail1}_time_reference"></a>
-                #renderGroupTitle($MESSAGES.getString("time_reference"))
+                #renderGroupTitle($MESSAGES.getString("time_reference_content"))
             ## Durch die Ressource abgedeckte Zeitspanne
                 #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
                 #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
