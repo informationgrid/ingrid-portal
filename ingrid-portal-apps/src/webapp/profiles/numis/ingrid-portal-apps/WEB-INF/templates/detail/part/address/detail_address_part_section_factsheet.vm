@@ -1,7 +1,6 @@
 ## FactSheet
 ################################
 #if($hasDetail0)
-<a class="anchor" id="${hashDetail0}" name="${hashDetail0}"></a>
 <div class="teaser-data search row is-active">
     <div class="xsmall-24 small-24 columns">
 ## Adressen
