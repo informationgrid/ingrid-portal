@@ -3,7 +3,7 @@ define([
 	"dojo/dom-style", // domStyle.set
 	"dojo/_base/lang",
 	"dojo/query", // query
-	"./pop-up",
+	"./popup",
 	"./registry",	// registry.byNode
 	"./MenuItem",
 	"./hccss"

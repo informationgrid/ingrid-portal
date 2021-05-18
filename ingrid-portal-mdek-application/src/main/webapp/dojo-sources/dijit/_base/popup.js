@@ -1,7 +1,7 @@
 define([
 	"dojo/dom-class", // domClass.contains
 	"dojo/_base/window",
-	"../pop-up",
+	"../popup",
 	"../BackgroundIframe"	// just loading for back-compat, in case client code is referencing it
 ], function(domClass, win, popup){
 

@@ -4,7 +4,7 @@ define([
 	"dojo/_base/lang", // hitch
 	"dojo/query", // query
 	"../registry", // registry.byNode
-	"../pop-up", // dijit.popup2.hide
+	"../popup", // dijit.popup2.hide
 	"./Button",
 	"../_Container",
 	"../_HasDropDown",

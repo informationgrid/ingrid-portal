@@ -13,7 +13,7 @@ define([
 	"dojo/touch",
 	"./registry", // registry.byNode()
 	"./focus",
-	"./pop-up",
+	"./popup",
 	"./_FocusMixin"
 ], function(declare, Deferred, dom, domAttr, domClass, domGeometry, domStyle, has, keys, lang, on, touch,
 			registry, focus, popup, _FocusMixin){
