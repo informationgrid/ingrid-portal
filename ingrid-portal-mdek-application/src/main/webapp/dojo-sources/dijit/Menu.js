@@ -12,7 +12,7 @@ define([
 	"dojo/sniff", // has("ie"), has("quirks")
 	"dojo/_base/window", // win.body
 	"dojo/window", // winUtils.get
-	"./popup",
+	"./pop-up",
 	"./DropDownMenu",
 	"dojo/ready"
 ], function(require, array, declare, dom, domAttr, domGeometry, domStyle, keys, lang, on, has, win, winUtils, pm, DropDownMenu, ready){
