@@ -17,7 +17,7 @@
     
     $(window).scroll(function(){
         var topMenuHeight = header.outerHeight();
-        var fromTop = $(this).scrollTop() + topMenuHeight;
+        var fromTop = $(this).scrollTop() + topMenuHeight + 300;
         var cur = scrollItems.map(function(){
             if ($(this).offset().top < fromTop)
                 return this;
