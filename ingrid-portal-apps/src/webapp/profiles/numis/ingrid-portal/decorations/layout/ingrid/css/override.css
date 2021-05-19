@@ -602,6 +602,15 @@ footer .footer .logo {
 footer hr {
   margin: 0 0 16px;
 }
+footer .footer-top-link {
+  background-color: #006ec5;
+}
+
+footer .footer-top-link:hover,
+footer .footer-top-link:focus {
+  background-color: #1D4B7B;
+}
+
 .switch {
   position: absolute;
   bottom: 0;

@@ -1590,6 +1590,20 @@ footer {
       }
     }
   }
+  .footer-top-link {
+    background: $green-jelly;
+    color: #fff;
+    cursor: pointer;
+    padding: 1em;
+    text-align: center;
+    text-transform: uppercase;
+    display: inherit;
+    
+    &:hover {
+        background: $green-blue;
+        color: #fff;
+    }
+  }
 }
 
 /* timeline */
@@ -2288,7 +2302,7 @@ footer {
     margin: 0 !important;
     a {
       display: block;
-      margin: 0 16px 16px;
+      margin: 0 16px 16px 24px;
       font-size: 15px;
       [class^="ic-"] {
         display: none;
@@ -2296,6 +2310,9 @@ footer {
     }
     a.is-active {
       text-decoration: underline;
+    }
+    a:last-child {
+      margin-bottom: 0;
     }
   }
 }
@@ -2858,9 +2875,11 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
   }
 }
 
-#detail, #searchResult {
-  a.icon [class^='ic-'] {
-    font-size: 16px;
+#detail , #searchResult {
+  .search-filtered {
+    a.icon [class^='ic-'] {
+      font-size: 16px;
+    }
   }
 }
 

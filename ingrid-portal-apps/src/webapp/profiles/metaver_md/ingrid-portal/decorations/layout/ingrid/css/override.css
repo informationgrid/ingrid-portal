@@ -347,9 +347,9 @@ a.icon:hover {
   border: 2px solid #0098B6;
 }
 header {
-  -webkit-border-image: -webkit-linear-gradient(to left, #246293, #085468) 0 1 100%;
-  -moz-border-image: -moz-linear-gradient(to left, #246293, #085468) 0 1 100%;
-  border-image: linear-gradient(to left, #246293, #085468) 0 1 100%;
+  -webkit-border-image: -webkit-linear-gradient(to right, #33CC99, #129589) 0 1 100%;
+  -moz-border-image: -moz-linear-gradient(to right, #33CC99, #129589) 0 1 100%;
+  border-image: linear-gradient(to right, #33CC99, #129589) 0 1 100%;
 }
 header a.icon {
   padding: 16px 16px;
@@ -655,6 +655,14 @@ footer .footer .logo {
 }
 footer hr {
   margin: 0 0 16px;
+}
+footer .footer-top-link {
+  background-color: #067B9B;
+}
+
+footer .footer-top-link:hover,
+footer .footer-top-link:focus {
+  background-color: #085468;
 }
 
 .select2-container--default .select2-selection--single::after {
