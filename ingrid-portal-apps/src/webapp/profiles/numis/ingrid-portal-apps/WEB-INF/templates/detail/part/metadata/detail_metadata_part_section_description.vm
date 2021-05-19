@@ -29,24 +29,24 @@
         #if($TOOL.aNodeOfListExist($xPathListTime))
             <div class="sub-section">
                 <a class="anchor" id="${hashDetail1}_time_reference" name="${hashDetail1}_time_reference"></a>
-                #renderGroupTitle($MESSAGES.getString("time_reference_content"))
+                #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
+                    #set($tmpTitle = "time_reference_content")
+                #else
+                    #set($tmpTitle = "time_reference")
+                #end
+                #renderGroupTitle($MESSAGES.getString($tmpTitle))
             ## Durch die Ressource abgedeckte Zeitspanne
                 #set($beginTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodBeginPosition))
                 #set($endTime = $TOOL.getDateValueFromXPath($xPathListTimeTimePeriodEndPosition))
                 #if($tool.hasContent($beginTime) || $tool.hasContent($endTime))
-                    #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
-                        #set($tmpTitle = "time_reference_content")
-                    #else
-                        #set($tmpTitle = "time_reference")
-                    #end
                     #if($beginTime == $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime" "no-background")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.at'): $beginTime")
                     #elseif($beginTime && !$endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime" "no-background")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.since'): $beginTime")
                     #elseif(!$beginTime && $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.to'): $endTime")
                     #elseif($beginTime != $endTime)
-                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime" "no-background")
+                        #renderTextTable($MESSAGES.getString($tmpTitle) "$MESSAGES.getString('search.detail.time.from'): $beginTime $MESSAGES.getString('search.detail.time.to'): $endTime")
                     #end
                 #end
             ## Status
@@ -56,10 +56,10 @@
             ## Intervall der Erhebung
                 #set($value = $TOOL.getValueFromXPath($xPathListTimeUserDefinedMaintenanceFrequency))
                 #if($value)
-                    #renderTextTable($MESSAGES.getString("t01_object.time_interval") "$TOOL.timePeriodDurationToTimeAlle($value) $TOOL.timePeriodDurationToTimeInterval($value)" "no-background")
+                    #renderTextTable($MESSAGES.getString("t01_object.time_interval") "$TOOL.timePeriodDurationToTimeAlle($value) $TOOL.timePeriodDurationToTimeInterval($value)")
                 #end
             ## Erläuterung zum Zeitbezug
-                #renderTextTable($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath($xPathListTimeMaintenanceNote) "no-background")
+                #renderTextTable($MESSAGES.getString("t01_object.time_descr") $TOOL.getValueFromXPath($xPathListTimeMaintenanceNote))
             </div>
         #end
     ## Zeitbezug der Ressource
