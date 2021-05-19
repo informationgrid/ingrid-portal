@@ -1,3 +1,16 @@
+#set($moreId = $hitCount)
+#set($paramMore = $request.getParameter("more"))
+#set($moreId = "${moreId}_more")
+#set($isMoreId = false)
+#if($paramMore && $paramMore.indexOf($moreId) > -1)
+    #set($isMoreId = true)
+#end
+#set($isMoreIdLinks = false)
+#set($moreIdLinks = "${moreId}_links")
+#if($paramMore && $paramMore.indexOf($moreIdLinks) > -1)
+    #set($isMoreIdLinks = true)
+#end
+
 ## Area details
 #set($x1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x1" , 1))
 #set($y1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y1" , 1))

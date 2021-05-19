@@ -1,36 +1,31 @@
 ## Renders Single Hit
     #set ($contextPath = $renderRequest.getAttribute('org.apache.jetspeed.request.RequestContext').getRequest().getContextPath())
     
-    ############
-    ## Need to set for "search_result_ranked_hit_info_expand.vm"
-    #set($moreId = $hitCount)
-    #set($paramMore = $request.getParameter("more"))
-    #set($moreId = "${moreId}_more")
-    #set($isMoreId = false)
-    #if($paramMore && $paramMore.indexOf($moreId) > -1)
-        #set($isMoreId = true)
+    ## Set partner
+    #set($partner = "bund")
+    #if($rs.partnerKey)
+        #set($partners =  $rs.partnerKey.split(","))
+        #foreach($tmpPartner in $partners)
+            #if($tmpPartner.trim() != $partner)
+              #set($partner = $tmpPartner.trim())
+              #break
+            #end
+        #end
     #end
-    #set($isMoreIdLinks = false)
-    #set($moreIdLinks = "${moreId}_links")
-    #if($paramMore && $paramMore.indexOf($moreIdLinks) > -1)
-        #set($isMoreIdLinks = true)
+
+    ## Set service types
+    #set($serviceTypes = [])
+    #set($serviceType = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
+    #if($serviceType && !$serviceType.isEmpty())
+        #set($add = $serviceTypes.add($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" )))
     #end
-    ##
-    ############
+
+    ## Set hit info expand data
+    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand_data.vm")
 
     #if ($rs.title)
         <div class="data">
             <div class="teaser-data search #if($isMoreId)is-active#end">
-                #set($partner = "bund")
-                #if($rs.partnerKey)
-                    #set($partners =  $rs.partnerKey.split(","))
-                    #foreach($tmpPartner in $partners)
-                        #if($tmpPartner.trim() != $partner)
-                          #set($partner = $tmpPartner.trim())
-                          #break
-                        #end
-                    #end
-                #end
                 #renderServiceTypeList($serviceTypes true)
                 #if(!$rs.is_address)
                     #if($showHitPartnerLogo)
@@ -150,12 +145,6 @@
                     #removeLocalisation($rs.abstract)
                 </p>
                 #end
-                #set($serviceTypes = [])
-                #set($serviceType = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" ))
-                #if($serviceType && !$serviceType.isEmpty())
-                    #set($add = $serviceTypes.add($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t011_obj_serv.type" )))
-                #end
-                #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand_data.vm")
                 #renderServiceTypeList($serviceTypes true true)
                 <a href="$detailLink" title="$rs.title">
                     <span class="ic-ic-arrow arrow"></span>
