@@ -1407,7 +1407,6 @@ a.data:hover {
     font-size: 14px;
     border-bottom: 1px dashed #5e788d;
     margin-left: 10px;
-    display: inline-block;
     float: right;
     margin-bottom: 8px;
     font-weight: 400;
@@ -1416,6 +1415,13 @@ a.data:hover {
     color: #3a566d;
   }
 }
+.teaser-logo-partner {
+  float: right;
+  display: block;
+  position: relative;
+  clear: right;
+}
+
 /* teaser-data Vorhaben */
 .teaser-data-projects {
   margin: 48px 0;

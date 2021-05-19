@@ -199,16 +199,6 @@
                     <div class="swiper-container-background">
                 #end
                 #if($hasPreview)
-                    #set($partner = "bund")
-                    #if($rs.partnerKey)
-                        #set($partners =  $rs.partnerKey.split(","))
-                        #foreach($tmpPartner in $partners)
-                            #if($tmpPartner.trim() != $partner)
-                              #set($partner = $tmpPartner.trim())
-                              #break
-                            #end
-                        #end
-                    #end
                     #set($loadDefaultMapImage = "loadDefaultMapImage(this,'$partner');")
                     #if($!rs.additional_html_1.indexOf(">, <") == -1)
                         #if($hasSwipe)
