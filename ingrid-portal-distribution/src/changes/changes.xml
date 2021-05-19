@@ -6,7 +6,10 @@
     </properties>
 
     <body>
-        <release version="5.9.0" date="2021-xx-xx" description="Release 5.8.0">
+        <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
+          <action type="add" dev="wemove" issue="2407">
+            Portal: QS Umsetzung und Anmerkungen der Verbundpartner
+          </action>
           <action type="add" dev="wemove" issue="1358">
             Portal: Umsetzung der Konzeption der Darstellung von Detaildaten im Portal
           </action>
