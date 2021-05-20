@@ -97,9 +97,9 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
         String resourceID = request.getResourceID();
         String paramURL = request.getParameter( "url" );
 
-        if (resourceID.equals( "httpURLDataType" )) {
-            String extension = null;
-            if(paramURL != null) {
+        if(paramURL != null) {
+            if (resourceID.equals( "httpURLDataType" )) {
+                String extension = null;
                 if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
                     extension = "csw";
                 } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
@@ -130,19 +130,19 @@ public class SearchResultPortlet extends GenericVelocityPortlet {
                     response.getWriter().write( extension );
                 }
             }
-        }
 
-        if(paramURL != null) {
             if (resourceID.equals( "httpURLImage" )) {
                 try {
                     getURLResponse(paramURL, response);
                 } catch (Exception e) {
                     log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
-                    log.error( "Try https URL: " + paramURL.replace("http", "https"));
+                    String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
+                    log.error( "Try https URL: " + httpsUrl);
                     try {
-                        getURLResponse(paramURL.replace("http", "https"), response);
-                    } catch (URISyntaxException e1) {
+                        getURLResponse(httpsUrl, response);
+                    } catch (Exception e1) {
                         log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+                        response.getWriter().write(paramURL);
                     }
                 }
             }

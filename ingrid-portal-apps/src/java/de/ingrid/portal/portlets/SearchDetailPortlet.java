@@ -102,80 +102,69 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
         String paramURL = request.getParameter( "url" );
         
         if(paramURL != null){
-            try {
-                if (resourceID.equals( "httpURL" )) {
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    con.setRequestMethod("HEAD");
-                    response.setContentType( "application/javascript" );
-                    StringBuilder s = new StringBuilder();
-                    response.getWriter().write( "{" );
-                    if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
-                        s.append( "\"contentLength\":");
-                        s.append( "\"" + con.getContentLength() + "\"" );
-                    }
-                    response.getWriter().write( s.toString() );
-                    response.getWriter().write( "}" );
+            if (resourceID.equals( "httpURL" )) {
+                URL url = new URL(paramURL);
+                java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                con.setRequestMethod("HEAD");
+                response.setContentType( "application/javascript" );
+                StringBuilder s = new StringBuilder();
+                response.getWriter().write( "{" );
+                if(con.getContentLength() > 0 && con.getContentType().indexOf( "text" ) < 0){
+                    s.append( "\"contentLength\":");
+                    s.append( "\"" + con.getContentLength() + "\"" );
                 }
+                response.getWriter().write( s.toString() );
+                response.getWriter().write( "}" );
+            }
 
-                if (resourceID.equals( "httpURLDataType" )) {
-                    String extension = null;
-                    if(paramURL != null) {
-                        if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
-                            extension = "csw";
-                        } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
-                            extension = "wms";
-                        } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
-                            extension = "wfs";
-                        } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
-                            extension = "wmts";
-                        }
-                        if(extension == null) {
-                            URL url = new URL(paramURL);
-                            java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+            if (resourceID.equals( "httpURLDataType" )) {
+                String extension = null;
+                if(paramURL != null) {
+                    if(paramURL.toLowerCase().indexOf("service=csw") > -1) {
+                        extension = "csw";
+                    } else if(paramURL.toLowerCase().indexOf("service=wms") > -1) {
+                        extension = "wms";
+                    } else if(paramURL.toLowerCase().indexOf("service=wfs") > -1) {
+                        extension = "wfs";
+                    } else if(paramURL.toLowerCase().indexOf("service=wmts") > -1) {
+                        extension = "wmts";
+                    }
+                    if(extension == null) {
+                        URL url = new URL(paramURL);
+                        java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
+                        con.setRequestMethod("HEAD");
+
+                        String contentType = con.getContentType();
+
+                        if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
+                            url = new URL(paramURL.replace("http://", "https://"));
+                            con = (java.net.HttpURLConnection) url.openConnection();
                             con.setRequestMethod("HEAD");
-
-                            String contentType = con.getContentType();
-
-                            if((contentType == null || contentType.equals("text/html")) && paramURL.startsWith("http://")) {
-                                url = new URL(paramURL.replace("http://", "https://"));
-                                con = (java.net.HttpURLConnection) url.openConnection();
-                                con.setRequestMethod("HEAD");
-                            }
-
-                            extension = UtilsMimeType.getFileExtensionOfMimeType(con.getContentType().split(";")[0]);
                         }
-                        response.setContentType( "text/plain" );
-                        response.getWriter().write( extension );
-                    }
-                }
 
-                if (resourceID.equals( "httpURLImage" )) {
-                    URL url = new URL(paramURL);
-                    java.net.HttpURLConnection con = (java.net.HttpURLConnection) url.openConnection();
-                    InputStream inStreamConvert = con.getInputStream();
-                    ByteArrayOutputStream os = new ByteArrayOutputStream();
-                    if (null != con.getContentType()) {
-                        byte[] chunk = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = inStreamConvert.read(chunk)) > 0) {
-                            os.write(chunk, 0, bytesRead);
-                        }
-                        os.flush();
-                        URI dataUri = new URI("data:" + con.getContentType() + ";base64," +
-                                Base64.getEncoder().encodeToString(os.toByteArray()));
-                        response.getWriter().write(dataUri.toString());
+                        extension = UtilsMimeType.getFileExtensionOfMimeType(con.getContentType().split(";")[0]);
                     }
+                    response.setContentType( "text/plain" );
+                    response.getWriter().write( extension );
                 }
-            } catch (Exception e) {
-                log.error( "Error creating resource for resource ID: " + resourceID, e );
-                if (resourceID.equals( "httpURLImage" )) {
-                    String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
-                    log.error( "Try https URL: " + httpsUrl);
-                    try {
-                        getURLResponse(httpsUrl, response);
-                    } catch (URISyntaxException e1) {
-                        log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+            }
+
+            if (resourceID.equals( "httpURLImage" )) {
+                try {
+                    getURLResponse(paramURL, response);
+                } catch (Exception e) {
+                    log.error( "Error creating resource for resource ID: " + resourceID, e );
+                    if (resourceID.equals( "httpURLImage" )) {
+                        log.error( "Error creating HTTP resource for resource ID: " + resourceID, e );
+                        String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
+                        log.error( "Try https URL: " + httpsUrl);
+                        try {
+                            getURLResponse(httpsUrl, response);
+                            log.error( "Try https URL: " + httpsUrl);
+                        } catch (Exception e1) {
+                            log.error( "Error creating HTTPS resource for resource ID: " + resourceID, e );
+                            response.getWriter().write(paramURL);
+                        }
                     }
                 }
             }
