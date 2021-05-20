@@ -1,0 +1,10 @@
+#set ($showProvider = true)
+#if($grouping && $grouping == 'provider')
+    #set ($showProvider = false)
+#end
+#if($showProvider)
+    <h4>$MESSAGES.getString('common.result.provider')</h4>
+    <p>
+        $!rs.provider
+    </p>
+#end
