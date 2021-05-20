@@ -1014,13 +1014,21 @@ header .menu-tab-row .menu-tab {
 
 /* search */
 .teaser-data .arrow {
-    position: relative;
-    bottom: 12px;
-    right: 0;
     font-size: 40px;
 }
 
 /* detail */
+.page-wrapper .ic-ic-arrow-left {
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+.page-wrapper .ic-ic-arrow-left::before {
+    content: "\e929";
+}
+
 .search-filtered .table {
     margin-bottom: 4px;
 }

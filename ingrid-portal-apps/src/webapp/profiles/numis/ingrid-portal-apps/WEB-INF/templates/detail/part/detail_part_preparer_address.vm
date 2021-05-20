@@ -6,7 +6,7 @@
         <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
             <div class="row">
                 <div class="xsmall-24 large-6 xlarge-6 columns">
-                    <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')">
+                    <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')" title="$MESSAGES.getString("search.detail.back.to.results")" rel="noopener noreferrer">
                         <span class="ic-ic-arrow-left"></span>
                         <span class="text text-normal">$MESSAGES.getString("search.detail.back.to.results")</span>
                     </a>

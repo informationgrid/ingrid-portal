@@ -1047,9 +1047,6 @@ header .menu-tab-row .menu-tab {
 
 /* search */
 .teaser-data .arrow {
-    position: relative;
-    bottom: 12px;
-    right: 0;
     font-size: 40px;
 }
 
