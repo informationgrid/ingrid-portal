@@ -170,7 +170,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
             } catch (Exception e) {
                 log.error( "Error creating resource for resource ID: " + resourceID, e );
                 if (resourceID.equals( "httpURLImage" )) {
-                    String httpsUrl = paramURL.replace("http", "https").replace(":80/", "");
+                    String httpsUrl = paramURL.replace("http", "https").replace(":80/", "/");
                     log.error( "Try https URL: " + httpsUrl);
                     try {
                         getURLResponse(httpsUrl, response);
