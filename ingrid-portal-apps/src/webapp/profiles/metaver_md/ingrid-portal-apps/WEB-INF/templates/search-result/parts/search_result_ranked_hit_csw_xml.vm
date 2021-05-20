@@ -1,0 +1,10 @@
+## render "Get XML"-link displayed next to the title
+#if ($rs.csw_link)
+    <h4>$MESSAGES.getString("xml_link_label")</h4>
+    <p>
+        <a class="icon" href="$rs.csw_link" title="$MESSAGES.getString('xml_link')">
+            <span class="ic-ic-download"></span>
+          <span class="text">$MESSAGES.getString('xml_link')</span>
+        </a>
+    </p>
+#end

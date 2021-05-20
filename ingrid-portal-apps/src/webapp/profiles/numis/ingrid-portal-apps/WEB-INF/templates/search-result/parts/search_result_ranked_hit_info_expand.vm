@@ -154,6 +154,7 @@
                     #end
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
+                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
                     <!--
                     #if($adminContent)
                         <h6 class="no-margin">Score</h6>
@@ -162,9 +163,6 @@
                         </p>
                     #end
                     -->
-
-                    ## render "Get XML"-link displayed next to the title
-                    ##parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
 
                     #if($rs.wms_coord)
                         <a class="button" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
