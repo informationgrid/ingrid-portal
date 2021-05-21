@@ -4,14 +4,9 @@
         <h2>$MESSAGES.getString('contact.form')</h2>
         #set ($action = $renderResponse.createActionURL())
         <form class="form" action="$action" method="post" name="contact-form" id="contact" enctype="multipart/form-data">
-            <!-- yummy fields -->
-            <label class="yummy" for="message">message</label>
-            <input type="text" class="yummy" id="message" name="message" autocomplete="off" tabindex="-1"/>
-            <label class="yummy" for="name">name</label>
-            <input type="text" class="yummy" id="name" name="name" autocomplete="off" tabindex="-1"/>
-            <label class="yummy" for="email">email</label>
-            <input type="text" class="yummy" id="email" name="email" autocomplete="off" tabindex="-1"/>
-            <!-- real fields -->
+            ## yummy fields
+            #parse ("/WEB-INF/templates/contact/contact_yummy.vm")
+            ## real fields
             #displayFormError()
             <div class="form-element">
                 <label for="user_subject">$MESSAGES.getString('contact.form.subject')</label>
