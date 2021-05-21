@@ -31,6 +31,9 @@
           <action type="update" dev="wemove" issue="2185">
             Portal: Adjust rp layout (completed)
           </action>
+          <action type="fix" dev="wemove" issue="2409">
+            IGE: Fix helplanguage detection when no session is set
+          </action>
         </release>
 
         <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
