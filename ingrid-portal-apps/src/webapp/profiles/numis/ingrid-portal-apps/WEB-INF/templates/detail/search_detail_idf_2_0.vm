@@ -362,10 +362,12 @@
                             #end
                             #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
-                            <a class="icon" href="mailto:${tmpTitle}" title="$tmpTitle">
-                                <span class="ic-ic-mailto"></span>
-                                <span class="text">$tmpTitle</span>
-                            </a>
+                            <div>
+                                <a class="icon" href="mailto:${tmpTitle}" title="$tmpTitle">
+                                    <span class="ic-ic-mailto"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                     </td>
                 </tr>
@@ -566,30 +568,36 @@
                         #if($TOOL.nodeExist($xPath, $node))
                             ## $TOOL.getNameFromCodeList("4430", "3")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
-                            <a class="icon" href="mailto:${tmpTitle}" title="$tmpTitle">
-                                <span class="ic-ic-mailto"></span>
-                                <span class="text">$tmpTitle</span>
-                            </a>
+                            <div>
+                                <a class="icon" href="mailto:${tmpTitle}" title="$tmpTitle">
+                                    <span class="ic-ic-mailto"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                         ## Telefon
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:voice")
                         #if($TOOL.nodeExist($xPath, $node))
                             ## $TOOL.getNameFromCodeList("4430", "1")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
-                            <a class="icon" href="tel:${tmpTitle}" title="$tmpTitle">
-                                <span class="ic-ic-phone"></span>
-                                <span class="text">$tmpTitle</span>
-                            </a>
+                            <div>
+                                <a class="icon" href="tel:${tmpTitle}" title="$tmpTitle">
+                                    <span class="ic-ic-phone"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                         ## Fax
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:phone/gmd:CI_Telephone/gmd:facsimile")
                         #if($TOOL.nodeExist($xPath, $node))
                             ## $TOOL.getNameFromCodeList("4430", "2")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
-                            <a class="icon" href="fax:${tmpTitle}" title="$tmpTitle">
-                                <span class="ic-ic-fax"></span>
-                                <span class="text">$tmpTitle</span>
-                            </a>
+                            <div>
+                                <a class="icon" href="fax:${tmpTitle}" title="$tmpTitle">
+                                    <span class="ic-ic-fax"></span>
+                                    <span class="text">$tmpTitle</span>
+                                </a>
+                            </div>
                         #end
                         ## URL
                         #set($xPath = "$xParentPath//gmd:contactInfo/gmd:CI_Contact/gmd:onlineResource/gmd:CI_OnlineResource/gmd:linkage/gmd:URL")
@@ -601,10 +609,12 @@
                             #else 
                                 #set($url = "http://$url")
                             #end
-                            <a class="icon" href="$url" title="$url">
-                                <span class="ic-ic-external"></span>
-                                <span class="text">$url</span>
-                            </a>
+                            <div>
+                                <a class="icon" href="$url" title="$url">
+                                    <span class="ic-ic-external"></span>
+                                    <span class="text">$url</span>
+                                </a>
+                            </div>
                         #end
                         ## Servicezeiten
                         #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:hoursOfService/gco:CharacterString")
