@@ -230,6 +230,9 @@ public class PortalConfig extends PropertiesConfiguration {
     
     public static final String PORTAL_DETAIL_VIEW_LIMIT_REFERENCES = "portal.detail.view.limit.references";
     
+    public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK = "portal.detail.reference.system.link";
+    public static final String PORTAL_DETAIL_REFERENCE_SYSTEM_LINK_REPLACE = "portal.detail.reference.system.link.replace";
+    
     public static final String PORTAL_SEARCH_EMPTY_QUERY = "portal.search.empty.query";
 
     public static final String PORTAL_SEARCH_EXTEND_QUERY = "portal.search.extend.query";

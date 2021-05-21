@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -1310,29 +1312,40 @@ public class DetailPartPreparerIdfMetadata extends DetailPartPreparer{
                 }
                 
                 String value = "";
-                if(code.length() > 0 && codeSpace.length() > 0){
+                if(!code.isEmpty() && !codeSpace.isEmpty()){
                     if(code.contains("EPSG")){
                         value = code;
                     }else{
                         value = codeSpace.concat(":" + code);
                     }
-                }else if(codeSpace.length() > 0){
+                }else if(!codeSpace.isEmpty()){
                     value = codeSpace;
-                }else if(code.length() > 0){
+                }else if(!code.isEmpty()){
                     value = code;
                 }
-                
-                if (value.length() > 0) {
+                if (!value.isEmpty()) {
+                    String[] startsWithReplaces = PortalConfig.getInstance().getStringArray(PortalConfig.PORTAL_DETAIL_REFERENCE_SYSTEM_LINK_REPLACE);
+                    for (String startsWithReplace : startsWithReplaces) {
+                        if(value.startsWith(startsWithReplace)) {
+                            value = value.replace(startsWithReplace, "");
+                        }
+                    }
                     Map link = new HashMap();
                     link.put("title", value);
                     link.put("hasLinkIcon", true);
+
+                    Pattern p = Pattern.compile("EPSG( |:)[0-9]*");  // insert your pattern here
+                    Matcher m = p.matcher(value);
+                    if (m.find()) {
+                       value = value.substring(m.start(), m.end());
+                    }
 
                     if (value.startsWith("EPSG")) {
                         int endIndex = value.indexOf(':', 5);
                         String epsgCode = value.substring(5, endIndex == -1 ? value.length() : endIndex);
 
                         link.put("isExtern", true);
-                        link.put("href", "https://epsg.io/" + epsgCode);
+                        link.put("href", PortalConfig.getInstance().getString(PortalConfig.PORTAL_DETAIL_REFERENCE_SYSTEM_LINK, "https://epsg.io/") + epsgCode);
                     } else {
                         link.put("noLink", true);
                     }
