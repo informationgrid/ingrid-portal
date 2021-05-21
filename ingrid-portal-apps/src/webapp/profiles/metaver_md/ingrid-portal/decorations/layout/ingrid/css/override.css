@@ -337,7 +337,7 @@ a.icon:hover {
 .input-search .button {
   background-color: #F21F30;
 }
-.input-search .button:hover {
+.input-search .button:hover, .input-search .button:focus {
   background-color: #CA526A;
 }
 .input-search .button.round {
