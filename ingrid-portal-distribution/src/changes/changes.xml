@@ -25,6 +25,9 @@
           <action type="update" dev="wemove" issue="1876">
             IGE/Portal: Update gml namespace to version 3.2
           </action>
+          <action type="fix" dev="wemove" issue="2409">
+            IGE: Fix helplanguage detection when no session is set
+          </action>
         </release>
       
         <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
