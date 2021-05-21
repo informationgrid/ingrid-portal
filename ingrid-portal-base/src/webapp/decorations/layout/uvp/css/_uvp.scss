@@ -1715,7 +1715,7 @@ footer {
         }
       }
 
-      a {
+      a:not(.button) {
         display: block;
         font-size: 16px;
         font-family: $input-font-family;

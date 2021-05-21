@@ -1209,9 +1209,9 @@
                             </div>
                         #end
                         #if($tool.hasContent($entry.link))
-                            <button type="button" class="button outline pill" href="$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
+                            <a type="button" class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
                                 $MESSAGES.getString('common.result.showMap')
-                            </button>
+                            </a>
                         #end
                     </td>
                 </tr>
@@ -1232,7 +1232,7 @@
            #end
            #if($tool.hasContent($entry.title) && $tool.hasContent($entry.plugId) && $tool.hasContent($entry.docId))
                 <div>
-                    <a href="portal/main-maps.psml?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
+                    <a href="$renderResponse.encodeURL('/portal/main-maps.psml')?action=doTmpService&plugid=$entry.plugId&docid=$entry.docId" title="$MESSAGES.getString('common.alt.icon.intern')">$entry.title ($MESSAGES.getString('common.result.showCoord'))</a>
                 </div>  
            #end
         </div>
