@@ -31,7 +31,7 @@
         <xsl:if test="header/@display != 'false' or not(header/@display)">
             <ul class="accordion filter-group nav-group" data-accordion="" data-multi-expand="false" data-allow-all-closed="true" role="tablist">
                 <li class="accordion-item">
-                    <a class="accordion-title" role="tab" id="help-accordion-label" aria-expanded="false" aria-selected="false">
+                    <a class="accordion-title" role="tab" aria-expanded="false" aria-selected="false">
                         <xsl:attribute name="href">?hkey=<xsl:value-of select="section/@help-key" /></xsl:attribute>
                         <span class="text"><xsl:value-of select="header"/></span>
                     </a>
