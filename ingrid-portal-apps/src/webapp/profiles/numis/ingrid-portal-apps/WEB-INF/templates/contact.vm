@@ -12,7 +12,7 @@
                 <label for="bemerkungen">$MESSAGES.getString('contact.form.message')</label>
             </div>
             <div class="form-element">
-                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen" rows="10" #addErrorFormMessagePlaceholder('user_message')" tabindex="0" required="required">#getFieldValue('user_message')</textarea>
+                <textarea class="custom-scrollbar #addErrorFormClassText('user_message')" name="user_message" id="bemerkungen" rows="10" #addErrorFormMessagePlaceholder('user_message') tabindex="0" required="required">#getFieldValue('user_message')</textarea>
             </div>
             <div class="form-element">
                 <label for="xx2">$MESSAGES.getString('contact.form.firstname')</label>
