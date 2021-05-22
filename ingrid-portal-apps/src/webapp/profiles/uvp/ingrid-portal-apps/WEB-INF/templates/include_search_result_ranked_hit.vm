@@ -21,7 +21,7 @@
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_categories.vm")
                     <div>
                         #set($detailLink ="$!rs.url")
-                        <a href="$detailLink" title="$rs.title">
+                        <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
                             <h2 class="header">$rs.title</h2>
                         </a>
                         #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
@@ -52,7 +52,7 @@
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                             #end
                             
-                            <a href="$detailLink" title="$rs.title">
+                            <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
                                 <h2 class="header">$rs.title</h2>
                             </a>
                             #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
@@ -66,7 +66,7 @@
                                 #else
                                     #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                                 #end
-                                <a href="$detailLink" title="$rs.title">
+                                <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
                                     <h2 class="header">$rs.title</h2>
                                 </a>
                                 #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
@@ -80,7 +80,7 @@
                             #else
                                 #set($detailLink ="$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                             #end
-                            <a href="$detailLink" title="$rs.title">
+                            <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
                                 <h2 class="header">$rs.title</h2>
                             </a>
                             #renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t01_object.mod_time" )))
@@ -125,7 +125,7 @@
                 <a class="tag tag--small" href="$renderResponse.encodeURL('/portal/main-maps.psml')?$rs.wms_coord" title="$MESSAGES.getString('common.tooltip.link.extern.result')">$MESSAGES.getString('common.result.showCoord')</a>
             #end
             #if(!$rs.is_blp)
-              <a href="$detailLink" title="$rs.title">
+              <a href="$detailLink" title="$stringTool.htmlescape($rs.title)">
                 <span class="ic-ic-arrow arrow"></span>
               </a>
             #end

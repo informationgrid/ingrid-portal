@@ -1,7 +1,7 @@
 ## Geodatendienst
 ################################
 <div class="sub-section">
-    <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
+    <a class="anchor" id="${hashDetail5}_technical_information"></a>
     #renderGroupTitle($MESSAGES.getString("technical_information"))
 ## Fachliche Grundlage
     #renderTextTable($MESSAGES.getString("t011_obj_geo.special_base") $TOOL.getValueFromXPath($xPathInfo3LILineageStatement))

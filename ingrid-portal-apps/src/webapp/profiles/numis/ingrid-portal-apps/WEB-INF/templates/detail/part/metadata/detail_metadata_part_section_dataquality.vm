@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail6)
 <div class="section">
-    <a class="anchor" id="${hashDetail6}" name="${hashDetail6}"></a>
+    <a class="anchor" id="${hashDetail6}"></a>
     #renderSectionTitle($MESSAGES.getString("data_quality"))
     #set($headTitles = [$MESSAGES.getString("data_quality.table.header1"),$MESSAGES.getString("data_quality.table.header2"),$MESSAGES.getString("data_quality.table.header3")])
     #set($headXpathExpressions = ["./gmd:nameOfMeasure","./gmd:result/gmd:DQ_QuantitativeResult/gmd:value","./gmd:measureDescription"])

@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail1)
 <div class="section">
-    <a class="anchor" id="${hashDetail1}" name="${hashDetail1}"></a>
+    <a class="anchor" id="${hashDetail1}"></a>
     #renderSectionTitle($MESSAGES.getString("detail_description"))
     <div class="row columns">
         #if($getAlternateTitle)

@@ -41,9 +41,9 @@
                 <div class="swiper-slide">
                     <p class="caption">
                         <a href="$entry.src" title="$imgTitle" target="_blank" rel="noopener noreferrer">
-                            <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$imgTitle" alt="img" onerror="$loadDefaultMapImage">
+                            <img class="preview_image" #if($entry.src.indexOf("https") == -1) src="./" data-src="$entry.src" #else src="$entry.src" #end title="$stringTool.htmlescape($imgTitle)" alt="img" onerror="$loadDefaultMapImage">
                             <noscript>
-                                <img class="preview_image" src="$entry.src" title="$imgTitle" alt="img">
+                                <img class="preview_image" src="$entry.src" title="$stringTool.htmlescape($imgTitle)" alt="img">
                             </noscript>
                         </a>
                     </p>
@@ -135,9 +135,9 @@
                                 <div class="swiper-slide">
                                     <p class="caption">
                                         <a href="$graphic" title="$entry.title" target="_blank" rel="noopener noreferrer">
-                                            <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                                            <img class="preview_image" #if($graphic.indexOf("https") == -1) src="./" data-src="$graphic" #else src="$graphic" #end title="$stringTool.htmlescape($entry.title)" alt="img" onerror="$loadDefaultMapImage">
                                             <noscript>
-                                                <img class="preview_image" src="$graphic" title="$entry.title" alt="img">
+                                                <img class="preview_image" src="$graphic" title="$stringTool.htmlescape($entry.title)" alt="img">
                                             </noscript>
                                         </a>
                                     </p>
@@ -150,9 +150,9 @@
                     #elseif($tool.hasContent($entry.graphicOverview.get(0)))
                     <div class="preview">
                         <a href="$entry.graphicOverview.get(0)" title="$entry.title" target="_blank" rel="noopener noreferrer">
-                            <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end" title="$entry.title" alt="img" onerror="$loadDefaultMapImage">
+                            <img class="preview_image" #if($entry.graphicOverview.get(0).indexOf("https") == -1) src="./" data-src="$entry.graphicOverview.get(0)" #else src="$entry.graphicOverview.get(0)" #end title="$stringTool.htmlescape($entry.title)" alt="img" onerror="$loadDefaultMapImage">
                             <noscript>
-                                <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$imgTitle" alt="img">
+                                <img class="preview_image" src="$entry.graphicOverview.get(0)" title="$stringTool.htmlescape($imgTitle)" alt="img">
                             </noscript>
                         </a>
                     </div>
@@ -394,7 +394,7 @@
                     #end
                 #end
                 #if(!$isFactSheet)
-                    <a class="anchor" id="${hashDetail8}_contact-${count}" name="${hashDetail8}_contact-${count}"></a>
+                    <a class="anchor" id="${hashDetail8}_contact-${count}"></a>
                 #end
                 #set($count = $count + 1)
                     #set($node = $entry)
@@ -451,26 +451,26 @@
                                         ## Person -> Name
                                         #if($TOOL.nodeExist($xPath, $hierarchyPartyNode))
                                             #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
-                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
+                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                                         #end
                                     #elseif($t == "3")
                                         ## Free Address -> Name or Organisation
                                         #if($TOOL.nodeExist("./idf:addressIndividualName", $hierarchyPartyNode))
                                             #set($tmpTitle = $TOOL.getIndividualName($TOOL.getValueFromXPath("./idf:addressIndividualName", null, $hierarchyPartyNode)))
-                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
+                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                                             #if($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                                 <br>
                                                 $TOOL.removeLocalisation("./idf:addressOrganisationName", null, $hierarchyPartyNode)
                                             #end
                                         #elseif($TOOL.nodeExist("./idf:addressOrganisationName", $hierarchyPartyNode))
                                             #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath("./idf:addressOrganisationName", null, $hierarchyPartyNode)))
-                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
+                                            <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                                         #end
                                     #else
                                         ## Organisation
                                         #set($xPath = "./idf:addressOrganisationName")
                                         #set($tmpTitle = $TOOL.removeLocalisation($TOOL.getValueFromXPath($xPath, null, $hierarchyPartyNode)))
-                                        <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$tmpTitle">$tmpTitle</a>
+                                        <a class="link-line" href="?cmd=doShowAddressDetail&docuuid=$uuid&plugid=$TOOL.getiPlugId()" title="$stringTool.htmlescape($tmpTitle)">$tmpTitle</a>
                                     #end
                                 #end
                             #else
@@ -569,7 +569,7 @@
                             ## $TOOL.getNameFromCodeList("4430", "3")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="mailto:${tmpTitle}" title="$tmpTitle">
+                                <a class="icon" href="mailto:${tmpTitle}" title="$stringTool.htmlescape($tmpTitle)">
                                     <span class="ic-ic-mailto"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
@@ -581,7 +581,7 @@
                             ## $TOOL.getNameFromCodeList("4430", "1")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="tel:${tmpTitle}" title="$tmpTitle">
+                                <a class="icon" href="tel:${tmpTitle}" title="$stringTool.htmlescape($tmpTitle)">
                                     <span class="ic-ic-phone"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
@@ -593,7 +593,7 @@
                             ## $TOOL.getNameFromCodeList("4430", "2")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="fax:${tmpTitle}" title="$tmpTitle">
+                                <a class="icon" href="fax:${tmpTitle}" title="$stringTool.htmlescape($tmpTitle)">
                                     <span class="ic-ic-fax"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
@@ -757,7 +757,7 @@
                     #if($entry.types)
                         #set($bodyType = $entry.types.get($num))
                         #if($bodyType == "link")
-                            <td><a href="$td" title="$td">$td</a></td>
+                            <td><a href="$td" title="$stringTool.htmlescape($td)">$td</a></td>
                         #else
                             <td>$td</td>
                         #end
@@ -894,12 +894,12 @@
                 #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
                     #if($expandId != "")
                         #set($addLinksExpand = true)
-                        <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')">
+                        <button type="button" id="${expandId}" class="js-expander button outline" title="$MESSAGES.getString('search.detail.info.links.more')">
                             $MESSAGES.getString('search.detail.info.links.more')
                         </button>
                         <div class="js-expander-content ${expandId} is-hidden ">
                     #else
-                        <a type="button" class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
+                        <a class="button outline" title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
                             $MESSAGES.getString('search.detail.info.links.more')
                         </a>
                         #break
@@ -915,12 +915,12 @@
                     #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
                         #if($expandId != "")
                             #set($addLinksExpand = true)
-                            <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')">
+                            <button type="button" id="${expandId}" class="js-expander button outline" title="$MESSAGES.getString('search.detail.info.links.more')">
                                 $MESSAGES.getString('search.detail.info.links.more')
                             </button>
                             <div class="js-expander-content ${expandId} is-hidden ">
                         #else
-                            <a class="button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
+                            <a class="button outline" title="$MESSAGES.getString('search.detail.info.links.more')" href="#${hashDetail3}">
                                 $MESSAGES.getString('search.detail.info.links.more')
                             </a>
                             #break
@@ -1219,7 +1219,7 @@
                             </div>
                         #end
                         #if($tool.hasContent($entry.link))
-                            <a type="button" class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
+                            <a class="button outline pill" href="$renderResponse.encodeURL('/portal/main-maps.psml')?layers=WMS%7C%7C$entry.link.href" title="$MESSAGES.getString('common.result.showMap')">
                                 $MESSAGES.getString('common.result.showMap')
                             </a>
                         #end

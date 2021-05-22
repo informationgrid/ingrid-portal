@@ -2,7 +2,7 @@
 ################################
 #if($TOOL.aNodeOfListExist($xPathListAdditionalInfo))
     <div class="sub-section">
-        <a class="anchor" id="${hashDetail5}_additional_information" name="${hashDetail5}_additional_information"></a>
+        <a class="anchor" id="${hashDetail5}_additional_information"></a>
         #renderGroupTitle($MESSAGES.getString("additional_information"))
     ## Veröffentlichung
         #renderTextTable($MESSAGES.getString("t01_object.publish_id") $TOOL.getPublishId($TOOL.getValueFromXPath($xPathAdditionalInfoMDClassificationCode)))
@@ -32,7 +32,7 @@
 ## Schlagworte
 #if($TOOL.aNodeOfListExist($xPathListKeywords)  || $advGroup.size() > 0)
     <div class="sub-section">
-        <a class="anchor" id="${hashDetail5}_fs_keywords" name="${hashDetail5}_fs_keywords"></a>
+        <a class="anchor" id="${hashDetail5}_fs_keywords"></a>
         #renderGroupTitle($MESSAGES.getString("fs_keywords"))
         ## Verschlagwortung
         #renderTableList($MESSAGES.getString("inspire_themes") $TOOL.getIndexInformationKeywords($xPathKeywordsDescriptiveKeywords, "inspire"))

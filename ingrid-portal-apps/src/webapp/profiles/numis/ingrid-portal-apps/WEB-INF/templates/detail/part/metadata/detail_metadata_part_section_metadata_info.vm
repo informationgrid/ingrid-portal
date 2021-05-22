@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail9)
     <div class="section">
-        <a class="anchor" id="${hashDetail9}" name="${hashDetail9}"></a>
+        <a class="anchor" id="${hashDetail9}"></a>
         #renderSectionTitle($MESSAGES.getString("subject_metadata_info"))
     ## Objekt-ID
         #renderTextTable($MESSAGES.getString("t01_object.obj_id") $TOOL.getValueFromXPath("./gmd:fileIdentifier"))

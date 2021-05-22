@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail2)
 <div class="section">
-    <a class="anchor" id="${hashDetail2}" name="${hashDetail2}"></a>
+    <a class="anchor" id="${hashDetail2}"></a>
     #renderSectionTitle($MESSAGES.getString("references"))
     ## Links
         #if($getLinks.size() > 0)
@@ -12,7 +12,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
-            <a class="anchor" id="${hashDetail2}_info_links" name="${hashDetail2}_info_links"></a>
+            <a class="anchor" id="${hashDetail2}_info_links"></a>
             #renderLinkListImageLimit($tmpTitle $getLinks false true $getLinks.size() "links_more" "h4" [] true)
         </div>
         #end
@@ -24,7 +24,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
-            <a class="anchor" id="${hashDetail2}_superior_address" name="${hashDetail2}_superior_address"></a>
+            <a class="anchor" id="${hashDetail2}_superior_address"></a>
             #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h4" [] true)
         </div>
         #end
@@ -36,7 +36,7 @@
             #if($tmpCount)
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
-            <a class="anchor" id="${hashDetail2}_subordinated_addresses" name="${hashDetail2}_subordinated_addresses"></a>
+            <a class="anchor" id="${hashDetail2}_subordinated_addresses"></a>
             #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h4" [] true)
         </div>
         #end

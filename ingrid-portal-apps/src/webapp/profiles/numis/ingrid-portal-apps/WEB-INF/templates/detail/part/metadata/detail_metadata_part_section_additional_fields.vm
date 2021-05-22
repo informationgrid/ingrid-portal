@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail7)
     #set($tabtitle = $TOOL.getValueFromXPath($xPathAdditionalFields))
-    <a class="anchor" id="${hashDetail7}" name="${hashDetail7}"></a>
+    <a class="anchor" id="${hashDetail7}"></a>
     #renderSectionTitle($MESSAGES.getString("$tabtitle"))
     #renderSectionTitle($MESSAGES.getString("additional_information"))
     #set($nodelist = $TOOL.getNodeListFromXPath($xPathAdditionalFieldsData))

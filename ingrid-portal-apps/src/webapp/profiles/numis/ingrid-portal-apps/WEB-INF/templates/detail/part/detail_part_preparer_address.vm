@@ -25,7 +25,7 @@
         <div class="xsmall-24 large-6 xlarge-6 columns">
             #parse("/WEB-INF/templates/detail/part/address/detail_address_part_section_navigation.vm")
         </div>
-        <a class="anchor" id="detail_overview" name="detail_overview"></a>
+        <a class="anchor" id="detail_overview"></a>
         <div class="xsmall-24 large-18 xlarge-18 columns">
             <div class="data">
         ## FactSheet

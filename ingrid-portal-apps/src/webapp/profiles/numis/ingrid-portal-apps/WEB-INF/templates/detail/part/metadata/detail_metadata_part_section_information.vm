@@ -1,6 +1,6 @@
 #if($hasDetail5)
 <div class="section">
-    <a class="anchor" id="${hashDetail5}" name="${hashDetail5}"></a>
+    <a class="anchor" id="${hashDetail5}"></a>
     #renderSectionTitle($MESSAGES.getString("subject_reference_tab"))
 
     <div class="row columns">

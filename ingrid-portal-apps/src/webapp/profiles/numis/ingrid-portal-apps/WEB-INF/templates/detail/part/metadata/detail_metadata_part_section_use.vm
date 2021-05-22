@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail4)
 <div class="section">
-    <a class="anchor" id="${hashDetail4}" name="${hashDetail4}"></a>
+    <a class="anchor" id="${hashDetail4}"></a>
     #renderSectionTitle($MESSAGES.getString("search.detail.usage"))
     <div class="row columns">
     ## Nutzungsbedingungen (useConstraints)

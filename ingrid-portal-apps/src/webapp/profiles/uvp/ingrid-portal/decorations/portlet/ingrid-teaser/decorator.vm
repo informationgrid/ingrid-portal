@@ -47,7 +47,7 @@
 <div id="${f.id}" class="$sectionStyle">
     #set($akey = $jetspeed.getPreferenceFirstValue($f, "titleKey")) 
     #if($akey && $akey.length() > 0)
-        <a id="$akey" name="$akey"></a>
+        <a id="$akey"></a>
     #end
     #if (!$jetspeed.isHidden($f) || $jetspeed.WindowState != "minimized")
         $f.renderedContent

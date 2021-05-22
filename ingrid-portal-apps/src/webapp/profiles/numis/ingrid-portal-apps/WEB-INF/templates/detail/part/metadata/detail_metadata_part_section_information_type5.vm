@@ -1,7 +1,7 @@
 ## Datensammlung
 ################################
 <div class="sub-section">
-    <a class="anchor" id="${hashDetail5}_technical_information" name="${hashDetail5}_technical_information"></a>
+    <a class="anchor" id="${hashDetail5}_technical_information"></a>
     #renderGroupTitle($MESSAGES.getString("technical_information"))
     ## Schlüsselkatalog: im Datensatz vorhanden
         #renderTextTable($MESSAGES.getString("t011_obj_geo.keyc_incl_w_dataset") $TOOL.getValueFromXPath($xPathInfo5MDFeatureCatalogueDescriptionIncludedWithDataset))

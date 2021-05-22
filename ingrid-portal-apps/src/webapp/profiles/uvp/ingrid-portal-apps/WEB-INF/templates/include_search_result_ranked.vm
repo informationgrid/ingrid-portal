@@ -40,7 +40,7 @@
         </td>
         <td>
             #if($href)
-                <a href="$href" title="$text">$text</a>
+                <a href="$href" title="$stringTool.htmlescape($text)">$text</a>
             #else
                 $text
             #end

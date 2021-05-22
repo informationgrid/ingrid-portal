@@ -95,7 +95,7 @@
         </div>
         <div class="row">
             <div class="columns text-center">
-                <a type="button" class="button outline" href="$renderResponse.encodeURL("/portal/main-search.psml")?rank=date" >Mehr anzeigen<span class="ic-ic-angle-down"></span></a>
+                <a class="button outline" href="$renderResponse.encodeURL("/portal/main-search.psml")?rank=date" >Mehr anzeigen<span class="ic-ic-angle-down"></span></a>
             </div>
         </div>
     </div>

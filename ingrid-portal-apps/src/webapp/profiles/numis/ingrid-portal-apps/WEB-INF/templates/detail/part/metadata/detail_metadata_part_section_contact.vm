@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail8)
 <div class="section">
-    <a class="anchor" id="${hashDetail8}" name="${hashDetail8}"></a>
+    <a class="anchor" id="${hashDetail8}"></a>
     #renderSectionTitle($MESSAGES.getString("search.detail.contact"))
     <div class="row columns">
     ## Addressen

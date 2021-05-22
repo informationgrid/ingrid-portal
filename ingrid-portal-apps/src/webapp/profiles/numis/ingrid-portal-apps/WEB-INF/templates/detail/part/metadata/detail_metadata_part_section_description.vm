@@ -2,7 +2,7 @@
 ################################
 #if($hasDetail1)
 <div class="section">
-    <a class="anchor" id="${hashDetail1}" name="${hashDetail1}"></a>
+    <a class="anchor" id="${hashDetail1}"></a>
     #renderSectionTitle($MESSAGES.getString("detail_description"))
     <div class="row columns">
         #if($getAlternateTitle)
@@ -28,7 +28,7 @@
     ## Zeitbezug
         #if($TOOL.aNodeOfListExist($xPathListTime))
             <div class="sub-section">
-                <a class="anchor" id="${hashDetail1}_time_reference" name="${hashDetail1}_time_reference"></a>
+                <a class="anchor" id="${hashDetail1}_time_reference"></a>
                 #if($type == 1 || $type == 3 || $type == 5 || $type == 6)
                     #set($tmpTitle = "time_reference_content")
                 #else
@@ -66,7 +66,7 @@
         #set($nodelist = $TOOL.getNodeListFromXPath($xPathListTimeDate))
         #if($nodelist)
             <div class="sub-section">
-                <a class="anchor" id="${hashDetail1}_time_reference_record" name="${hashDetail1}_time_reference_record"></a>
+                <a class="anchor" id="${hashDetail1}_time_reference_record"></a>
                 #renderGroupTitle($MESSAGES.getString("time_reference_record"))
         ## Erstellung 
                 #set($title = $TOOL.getValueFromCodeList("502", $TOOL.getValueFromNodeListDependOnValue($nodelist, "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "./gmd:dateType/gmd:CI_DateTypeCode/@codeListValue", "creation")))
