@@ -49,7 +49,7 @@
                     #if($TOOL.aNodeOfListExist($xPathListPresentation))
                         #set($hasDetail2 = true)
                         <li class="accordion-item" data-accordion-item>
-                            <a href="#${hashDetail2}"  class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">
+                            <a href="#${hashDetail2}"  class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail2}-accordion-label">
                                 <span class="text">$MESSAGES.getString("spacial_reference_tab")</span>
                             </a>
                             <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">
@@ -62,7 +62,7 @@
                     #if($TOOL.aNodeOfListExist($xPathListReferences))
                         #set($hasDetail3 = true)
                         <li class="accordion-item" data-accordion-item>
-                            <a href="#${hashDetail3}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail3}-accordion-label" id="${hashDetail3}-accordion">
+                            <a href="#${hashDetail3}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail3}-accordion-label">
                                 <span class="text">$MESSAGES.getString("references_tab")</span>
                             </a>
                             <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail3}-accordion-label" id="${hashDetail3}-accordion">
@@ -100,7 +100,7 @@
                 #if($TOOL.aNodeOfListExist($xPathListUse) || $useConstraints.size() > 0 || $useLimitations.size() > 0)
                     #set($hasDetail4 = true)
                     <li class="accordion-item" data-accordion-item>
-                        <a href="#${hashDetail4}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail4}-accordion-label" id="${hashDetail4}-accordion">
+                        <a href="#${hashDetail4}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail4}-accordion-label">
                             <span class="text">$MESSAGES.getString("search.detail.usage")</span>
                         </a>
                         <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail4}-accordion-label" id="${hashDetail4}-accordion">
@@ -113,7 +113,7 @@
                 #if($TOOL.aNodeOfListExist($xPathListContact))
                     #set($hasDetail8 = true)
                     <li class="accordion-item" data-accordion-item>
-                        <a href="#${hashDetail8}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail8}-accordion-label" id="${hashDetail8}-accordion">
+                        <a href="#${hashDetail8}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail8}-accordion-label">
                             <span class="text">$MESSAGES.getString("search.detail.contact")</span>
                         </a>
                         <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail8}-accordion-label" id="${hashDetail8}-accordion">
@@ -153,7 +153,7 @@
                 )
                     #set($hasDetail5 = true)
                     <li class="accordion-item" data-accordion-item>
-                        <a href="#${hashDetail5}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail5}-accordion-label" id="${hashDetail5}-accordion">
+                        <a href="#${hashDetail5}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail5}-accordion-label">
                             <span class="text">$MESSAGES.getString("subject_reference_tab")</span>
                         </a>
                         <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail5}-accordion-label" id="${hashDetail5}-accordion">
@@ -186,7 +186,7 @@
                 #if($TOOL.aNodeOfListExist($xPathListDataQuality))
                     #set($hasDetail6 = true)
                     <li class="accordion-item" data-accordion-item>
-                        <a href="#${hashDetail6}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail6}-accordion-label" id="${hashDetail6}-accordion">
+                        <a href="#${hashDetail6}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail6}-accordion-label">
                             <span class="text">$MESSAGES.getString("data_quality")</span>
                         </a>
                         <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail6}-accordion-label" id="${hashDetail6}-accordion">
@@ -207,7 +207,7 @@
                 #if($TOOL.aNodeOfListExist($xPathListMetadataInfo) || $getXML)
                     #set($hasDetail9 = true)
                     <li class="accordion-item" data-accordion-item>
-                        <a href="#${hashDetail9}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail9}-accordion-label" id="${hashDetail9}-accordion">
+                        <a href="#${hashDetail9}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail9}-accordion-label">
                             <span class="text">$MESSAGES.getString("subject_metadata_info_tab")</span>
                         </a>
                         <div class="accordion-content is-hidden" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail9}-accordion-label" id="${hashDetail9}-accordion">

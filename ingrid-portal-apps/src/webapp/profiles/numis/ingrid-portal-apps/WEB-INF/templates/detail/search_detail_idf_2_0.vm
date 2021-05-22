@@ -1,5 +1,5 @@
 #parse ('/WEB-INF/templates/global/include_hit_image_error.vm')
-#set($loadDefaultMapImage = "loadDefaultMapImage(this,'${plugPartner}');")
+#set($loadDefaultMapImage = "loadDefaultMapImage(this,&apos;${plugPartner}&apos;);")
 
 #macro (renderTitleLine $entry)
     #if($tool.hasContent($entry.title))
@@ -894,7 +894,7 @@
                 #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
                     #if($expandId != "")
                         #set($addLinksExpand = true)
-                        <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
+                        <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')">
                             $MESSAGES.getString('search.detail.info.links.more')
                         </button>
                         <div class="js-expander-content ${expandId} is-hidden ">
@@ -915,7 +915,7 @@
                     #if($countLinksAll >= $listLimit && $numberLinksAll > $listLimit && $addLinksExpand == false)
                         #if($expandId != "")
                             #set($addLinksExpand = true)
-                            <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')" href="#">
+                            <button type="button" id="${expandId}" class="js-expander button outline " title="$MESSAGES.getString('search.detail.info.links.more')">
                                 $MESSAGES.getString('search.detail.info.links.more')
                             </button>
                             <div class="js-expander-content ${expandId} is-hidden ">
@@ -935,7 +935,7 @@
             #if($addLinksExpand)
                 #set($addLinksExpand = false)
                 </div>
-                <button type="button" class="button outline js-expander-close ${expandId} is-hidden" title="$MESSAGES.getString('search.detail.info.links.less')" href="#">
+                <button type="button" class="button outline js-expander-close ${expandId} is-hidden" title="$MESSAGES.getString('search.detail.info.links.less')">
                     $MESSAGES.getString('search.detail.info.links.less')
                 </button>
             #end

@@ -36,7 +36,7 @@
                 <a class="anchor">
                     <xsl:attribute name="name"><xsl:value-of select="@help-key" /></xsl:attribute>
                     <xsl:attribute name="id"><xsl:value-of select="@help-key" /></xsl:attribute>
-                    <span/>
+                    <span></span>
                 </a>
                 <h3>
                     <span><xsl:value-of select="header"/></span>

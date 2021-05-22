@@ -35,7 +35,7 @@
                 #else
                     #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                 #end
-                <a href="$detailLink" title="$title">
+                <a href="$detailLink" title="$stringTool.htmlescape($title)">
                     <h2 class="header">#renderTitle($title)</h2>
                 </a>
                 ##renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))
@@ -46,7 +46,7 @@
                 #else
                     #set($detailLink = "$renderResponse.encodeURL('/portal/search-detail.psml')?docid=$rs.docid&type=address&plugid=$rs.plugid#if($rs.alt_document_id)&altdocid=$rs.alt_document_id#end")
                 #end
-                <a href="$detailLink" title="$title">
+                <a href="$detailLink" title="$stringTool.htmlescape($title)">
                     <h2 class="header">#renderTitle($title)</h2>
                 </a>
                 ##renderHitDate($UTIL_SEARCH.getDateFormatValue($UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "t02_address.mod_time" )))
@@ -69,7 +69,7 @@
         #if($rs.url)
             <a href="$rs.url" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
         #end
-            <a href="$detailLink" title="$MESSAGES.getString('common.detail.arrow.prefix') $rs.title" rel="noopener noreferrer">
+            <a href="$detailLink" title="$MESSAGES.getString('common.detail.arrow.prefix') $rs.title">
                 <span class="ic-ic-arrow arrow"></span>
             </a>
         </div>

@@ -23,7 +23,7 @@
                             #foreach($link in $sorter.sort($linksUrlRefDownload,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
-                                    <button type="button" id="$moreIdLinks" class="js-expander button outline #if($isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
+                                    <button type="button" id="$moreIdLinks" class="js-expander button outline #if($isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.more')">
                                         $MESSAGES.getString('searchResult.info.downloads.more')
                                     </button>
                                     <div class="js-expander-content $moreIdLinks #if(!$isMoreIdLinks)is-hidden#end">
@@ -33,7 +33,7 @@
                                         #if($link.serviceType && !$link.serviceType.isEmpty())
                                             #renderServiceType($link.serviceType)
                                         #end
-                                        <a href="$link.href" class="icon" title="$link.title" target="_blank" rel="noopener noreferrer">
+                                        <a href="$link.href" class="icon" title="$stringTool.htmlescape($link.title)" target="_blank" rel="noopener noreferrer">
                                             #if($link.special_ref == "9990")
                                                 <span class="ic-ic-download"></span>
                                             #end
@@ -47,7 +47,7 @@
                             #foreach($link in $sorter.sort($linksRef,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
-                                    <button type="button" id="$moreIdLinks" class="js-expander button outline #if($isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
+                                    <button type="button" id="$moreIdLinks" class="js-expander button outline #if($isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.more')">
                                         $MESSAGES.getString('searchResult.info.links.more')
                                     </button>
                                     <div class="js-expander-content $moreIdLinks #if(!$isMoreIdLinks)is-hidden#end">
@@ -58,7 +58,7 @@
                                     #end
                                     <div>
                                         #set($udkObjClassName = $Codelists.getCodeListValue('8000', ${type}, $request.getLocale().getLanguage()))
-                                        <a href="$link.href" class="icon" title="$link.title">
+                                        <a href="$link.href" class="icon" title="$stringTool.htmlescape($link.title)">
                                             #renderUDKIcon($link.type $link.title $udkObjClassName)
                                         </a>
                                     </div>
@@ -68,7 +68,7 @@
                             #if($addRefsExpand)
                                 #set($addRefsExpand = false)
                                 </div>
-                                <button type="button" class="button outline js-expander-close $moreIdLinks #if(!$isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.less')" href="#">
+                                <button type="button" class="button outline js-expander-close $moreIdLinks #if(!$isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.less')">
                                     $MESSAGES.getString('searchResult.info.links.less')
                                 </button>
                             #end
@@ -86,7 +86,7 @@
                             #foreach($link in $sorter.sort($linksUrlRefOthers,"title"))
                                 #if($countRefsAll >= $listLimit && $countRefs > $listLimit && $addRefsExpand == false)
                                     #set($addRefsExpand = true)
-                                    <button type="button" id="$moreIdLinks" class="js-expander button outline #if($isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.more')" href="#">
+                                    <button type="button" id="$moreIdLinks" class="js-expander button outline #if($isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.more')">
                                         $MESSAGES.getString('searchResult.info.links.more')
                                     </button>
                                     <div class="js-expander-content $moreIdLinks is-hidden #if(!$isMoreIdLinks)is-hidden#end">
@@ -96,7 +96,7 @@
                                         #if($link.serviceType && !$link.serviceType.isEmpty())
                                             #renderServiceType($link.serviceType)
                                         #end
-                                        <a class="icon" href="$link.href" class="icon" title="$link.title" target="_blank" rel="noopener noreferrer">
+                                        <a class="icon" href="$link.href" title="$stringTool.htmlescape($link.title)" target="_blank" rel="noopener noreferrer">
                                             <span class="ic-ic-external"></span>
                                             <span class="text">$stringTool.cutString($link.title, 100, 100).replace("/", "/<wbr>")</span>
                                         </a>
@@ -107,7 +107,7 @@
                             #if($addRefsExpand)
                                 #set($addRefsExpand = false)
                                 </div>
-                                <button type="button" class="button outline js-expander-close $moreIdLinks #if(!$isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.less')" href="#">
+                                <button type="button" class="button outline js-expander-close $moreIdLinks #if(!$isMoreIdLinks)is-hidden#end" title="$MESSAGES.getString('searchResult.info.links.less')">
                                     $MESSAGES.getString('searchResult.info.links.less')
                                 </button>
                             #end
@@ -123,7 +123,7 @@
                         #renderFactTitle($MESSAGES.getString('searchResult.info.license'))
                         #if($licenseUrl)
                                     <p>
-                                        <a class="icon" href="$licenseUrl" title="$licenseName" target="_blank" rel="noopener noreferrer">
+                                        <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
                                             <span class="ic-ic-external"></span>
                                             <span class="text">$licenseName</span>
                                         </a>
@@ -136,7 +136,7 @@
                                 #set($licenseUrl = $UTIL_SEARCH.getCodeListDataStringValue($licenseValue, "url"))
                                 #if($licenseUrl && $licenseName)
                                     <p>
-                                        <a class="icon" href="$licenseUrl" title="$licenseName" target="_blank" rel="noopener noreferrer">
+                                        <a class="icon" href="$licenseUrl" title="$stringTool.htmlescape($licenseName)" target="_blank" rel="noopener noreferrer">
                                             <span class="ic-ic-external"></span>
                                             <span class="text">$licenseName</span>
                                         </a>
@@ -197,7 +197,7 @@
                     <div class="swiper-container-background">
                 #end
                 #if($hasPreview)
-                    #set($loadDefaultMapImage = "loadDefaultMapImage(this,'$partner');")
+                    #set($loadDefaultMapImage = "loadDefaultMapImage(this,&apos;$partner&apos;);")
                     #if($!rs.additional_html_1.indexOf(">, <") == -1)
                         #if($hasSwipe)
                         <div class="swiper-slide">

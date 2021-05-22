@@ -33,7 +33,7 @@
                     #if($TOOL.aNodeOfListExist($xPathListReferences))
                         #set($hasDetail2 = true)
                         <li class="accordion-item" data-accordion-item>
-                            <a href="#${hashDetail2}" class="accordion-title js-anchor-target" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">
+                            <a href="#${hashDetail2}" class="accordion-title js-anchor-target" aria-hidden="true" id="${hashDetail2}-accordion-label">
                                 <span class="text">$MESSAGES.getString("references")</span>
                             </a>
                             <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">

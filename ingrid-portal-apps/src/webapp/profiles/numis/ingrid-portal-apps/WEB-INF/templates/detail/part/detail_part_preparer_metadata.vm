@@ -6,7 +6,7 @@
         <div class="page-wrapper" style="background-image: url('/decorations/layout/uvp/images/template/drops-subpage.svg');">
             <div class="row">
                 <div class="xsmall-24 large-6 xlarge-6 columns">
-                    <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')" title="$MESSAGES.getString("search.detail.back.to.results")" rel="noopener noreferrer">
+                    <a class="helper icon" href="$renderResponse.encodeURL('/portal/main-search.psml')" title="$MESSAGES.getString("search.detail.back.to.results")">
                         <span class="ic-ic-arrow-left"></span>
                         <span class="text text-normal">$MESSAGES.getString("search.detail.back.to.results")</span>
                     </a>
@@ -106,7 +106,7 @@
             #set($entryLink = "$entry.get('link')")
         #end
         #if($entryLink && $entryLink.length() > 0)
-            <a class="link download" href="$entry.get('link')" title="$entryLabel" target="_blank" rel="noopener noreferrer">
+            <a class="link download" href="$entry.get('link')" title="$stringTool.htmlescape($entryLabel)" target="_blank" rel="noopener noreferrer">
                 $entryLabel
             </a>
             <span class="text">
