@@ -68,10 +68,16 @@ public class HelpServlet extends HttpServlet {
 			String parameter = request.getParameter(parameterName);
 			log.debug("parameter name: "+parameterName);
 			log.debug("parameter value: "+parameter);
+
 		}
+		// First try to get the language from the sesseion, then from the url lang parameter.
+		String helpLanguage = request.getSession().getAttribute("currLang") != null ? request.getSession().getAttribute("currLang").toString() : "";
+		if ( helpLanguage.isEmpty() ) {
+            helpLanguage = request.getParameter("lang") != null ? request.getParameter("lang") : "";
+        }
 
 		String fileName = baseHelpFileName.substring(0, baseHelpFileName.lastIndexOf(".xml"))
-						+ "_" + request.getSession().getAttribute("currLang") + ".xml";
+						+ "_" + helpLanguage + ".xml";
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF8");

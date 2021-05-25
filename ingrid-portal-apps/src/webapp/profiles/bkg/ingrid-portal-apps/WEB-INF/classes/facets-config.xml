@@ -140,6 +140,14 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <id>type</id>
         <isOpen>true</isOpen>
         <facets>
+        <!-- Anwendung -->
+            <facet>
+                <name>searchResult.facete.metaclass.application</name>
+                <query>t01_object.obj_class:6</query>
+                <id>application</id>
+                <codelist-id>8000</codelist-id>
+                <codelist-entry-id>6</codelist-entry-id>
+            </facet>
         <!-- Geo-Information / Karte -->
             <facet>
                 <name>searchResult.facete.metaclass.map</name>
@@ -159,7 +167,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
         <!-- Sonstige -->
              <facet>
                 <name>Sonstige</name>
-                <query>-t01_object.obj_class:1 -t01_object.obj_class:3</query>
+                <query>-t01_object.obj_class:1 -t01_object.obj_class:3 -t01_object.obj_class:6</query>
                 <id>others</id>
             </facet>
         </facets>

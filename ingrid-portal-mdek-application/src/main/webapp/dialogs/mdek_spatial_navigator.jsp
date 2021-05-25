@@ -58,9 +58,10 @@ html> /**/ body .bottomRight {
         "dojo/topic",
         "dijit/registry",
         "dijit/form/CheckBox",
+        "ingrid/utils/Catalog",
         "ingrid/utils/Grid",
         "ingrid/utils/Events"
-    ], function(array, lang, on, keys, dom, topic, registry, CheckBox, UtilGrid, UtilEvents) {
+    ], function(array, lang, on, keys, dom, topic, registry, CheckBox, catalog, UtilGrid, UtilEvents) {
 
             var checkboxArray = [];
             on(_container_, "Load", function() {
@@ -184,8 +185,9 @@ html> /**/ body .bottomRight {
                 resetResultDiv();
                 deleteComboboxWidgets();
                 showLoading();
+                var catLocale = catalog.getCatalogLanguage();
 
-                SNSService.getLocationTopicsById(topicId, userLocale, {
+                SNSService.getLocationTopicsById(topicId, catLocale, {
                     preHook: function() {
                         showLoadingZone();
                         disableUiElements();
@@ -204,6 +206,7 @@ html> /**/ body .bottomRight {
             // This function queries the SNSService for location topics
             function findLocationTopics() {
                 var queryTerm = registry.byId("locationTextBox").getValue();
+                var catLocale = catalog.getCatalogLanguage();
 
                 // If input is blank, do nothing
                 queryTerm = lang.trim(queryTerm);
@@ -214,7 +217,7 @@ html> /**/ body .bottomRight {
                 deleteComboboxWidgets();
                 showLoading();
 
-                SNSService.getLocationTopics(queryTerm, "exact", null, userLocale, {
+                SNSService.getLocationTopics(queryTerm, "exact", null, catLocale, {
                     preHook: function() {
                         showLoadingZone();
                         disableUiElements();

@@ -16,11 +16,29 @@
           <action type="update" dev="wemove" issue="1564">
             Portal: ReDesign MetaVer
           </action>
-           <action type="update" dev="wemove" issue="2461">
+          <action type="update" dev="wemove" issue="2461">
             Portal: Anpassung Kontakt-Formular MetaVer Test für Zammad
+          </action>
+          <action type="update" dev="wemove" issue="2300">
+            Portal (BKG): Add facet for application. 
+          </action>
+          <action type="fix" dev="wemove" issue="2463">
+            IGE: Fix wrong locale for thesaurus analysis.
+          </action>
+          <action type="update" dev="wemove" issue="2281">
+            Remove gml entry requirement from inspire dataformat
           </action>
           <action type="fix" dev="wemove" issue="2462">
             Portal: Anmeldeseite wird von Suchmaschinen indexiert
+          </action>
+          <action type="add" dev="wemove" issue="2381">
+            IGE: Support WCS 2.0.1 GetCapabilities
+          </action>
+          <action type="update" dev="wemove" issue="1876">
+            IGE/Portal: Update gml namespace to version 3.2
+          </action>
+          <action type="fix" dev="wemove" issue="2409">
+            IGE: Fix helplanguage detection when no session is set
           </action>
         </release>
 
@@ -93,6 +111,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2184">
             IGE: Fix title of context help of temporal fields
+          </action>
+          <action type="fix" dev="wemove" issue="2331">
+            IGE: Change umlauts in statistic mouseover
           </action>
           <action type="fix" dev="wemove">
             Catch all errors in Communication
@@ -190,9 +211,6 @@
           </action>
           <action type="fix" dev="wemove" issue="2283">
             Set DB_PASSWORD only with environment variable
-          </action>
-          <action type="fix" dev="wemove" issue="2331">
-            ÎGE: Change umlauts in statistic mouseover
           </action>
         </release>
 

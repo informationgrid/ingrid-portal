@@ -1244,6 +1244,13 @@ header .logo a:hover{
   }
 }
 
+a img[title='SNS'] {
+  float: left;
+  margin-right: 15px;
+  margin-top: 4px;
+  width: 60px;
+}
+
 /* menu */
 .menu-main-links a, .header-menu a {
   font-family: AvenirNextLTPro-Regular, Arial, Times, sans-serif !important;
@@ -1351,6 +1358,8 @@ footer .footer .logo a img{
 }
 .columns.button-up {
   margin-top: 0.8rem;
+  display: flex;
+  align-items: center;
 }
 .footer-menu-entries .icon span {
   font-size: 15px;
@@ -1655,4 +1664,14 @@ table .dark h1, table .dark h2, table .dark p, table .dark a, table .dark abbr, 
 .text-box p {
   font-size: 15px;
   margin-bottom: 25px;
+}
+
+/* pagination */
+.icon.small-button:not([href]){
+  margin-right: 18px;
+}
+.icon.small-button:not([href]) span:not([class]){
+  background: #003064;
+  padding: 5px 8px;
+  color: white;
 }

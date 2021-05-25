@@ -50,13 +50,14 @@ div.dojoTabPaneWrapper { overflow:visible; }
         "dijit/form/CheckBox",
         "ingrid/layoutCreator",
         "ingrid/dialog",
+        "ingrid/utils/Catalog",
         "ingrid/utils/Syslist",
         "ingrid/utils/List",
         "ingrid/utils/Store",
         "ingrid/utils/Grid",
         "ingrid/utils/LoadingZone",
         "ingrid/utils/PageNavigation"
-    ], function(on, dom, lang, array, Deferred, aspect, keys, style, query, string, registry, CheckBox, layoutCreator, dialog, UtilSyslist, UtilList, UtilStore, UtilGrid, LoadingZone, navigation) {
+    ], function(on, dom, lang, array, Deferred, aspect, keys, style, query, string, registry, CheckBox, layoutCreator, dialog, catalog, UtilSyslist, UtilList, UtilStore, UtilGrid, LoadingZone, navigation) {
         
         var resultsPerPage = 10;
         //var pageNav = new PageNavigation({ resultsPerPage: resultsPerPage, infoSpan:dom.byId("objSearchExtResultsInfo"), pagingSpan:dom.byId("objSearchExtResultsPaging") });
@@ -331,6 +332,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         // A list of checkboxes/labels is created and put into the div with id: 'objExtSearchThesaurusResults'
         function findTopics() {
             var term = dojo.string.trim(registry.byId("objTopicThesaurus").getValue());
+            var catLocale = catalog.getCatalogLanguage();
         
             // Exit if we search for an empty string
             if (term.length == 0) {
@@ -339,8 +341,7 @@ div.dojoTabPaneWrapper { overflow:visible; }
         
             clearThesaurusResults();
         
-            // SNSService.findTopics(term, userLocale, {
-            SNSService.getSimilarTerms(term.split(" "), userLocale, {
+            SNSService.getSimilarTerms(term.split(" "), catLocale, {
                 preHook: LoadingZone.show,
                 postHook: LoadingZone.hide,
                 callback:function(topics) {
@@ -440,10 +441,11 @@ div.dojoTabPaneWrapper { overflow:visible; }
         
         function findAssociatedTopics(descriptor) {
         //  console.debug("findAssociatedTopics: "+descriptor.topicId);
+            var catLocale = catalog.getCatalogLanguage();
         
             clearThesaurusResults();
         
-            SNSService.getTopicsForTopic(descriptor.topicId, userLocale, {
+            SNSService.getTopicsForTopic(descriptor.topicId, catLocale, {
                 preHook: LoadingZone.show,
                 postHook: LoadingZone.hide,
                 callback:function(topic) {
@@ -526,13 +528,14 @@ div.dojoTabPaneWrapper { overflow:visible; }
         // ************************** Thesaurus location Search functions (Raum/Geothesaurus-Raumbezug) **************************
         function findLocationTopics() {
             var queryTerm = dojo.string.trim(registry.byId("objLocationTopic").getValue());
+            var catLocale = catalog.getCatalogLanguage();
         
             if (queryTerm.length === 0)
                 return;
         
             clearLocationResults();
         
-            SNSService.getLocationTopics(queryTerm, "exact", null, userLocale, {
+            SNSService.getLocationTopics(queryTerm, "exact", null, catLocale, {
                 preHook: LoadingZone.show,
                 postHook: LoadingZone.hide,
                 callback: setLocationResultList,
@@ -588,8 +591,9 @@ div.dojoTabPaneWrapper { overflow:visible; }
         
         function findAssociatedLocations(topicId) {
             clearLocationResults();
+            var catLocale = catalog.getCatalogLanguage();
         
-            SNSService.getLocationTopicsById(topicId, userLocale, {
+            SNSService.getLocationTopicsById(topicId, catLocale, {
                 preHook: LoadingZone.show,
                 postHook: LoadingZone.hide,
                 callback: setLocationResultList,
