@@ -14,10 +14,16 @@
             }
         }
     });
-    
+
+    var preHash = window.location.hash;
+
     $(window).scroll(function(){
+        if(preHash != window.location.hash) {
+            preHash = window.location.hash;
+            return;
+        }
         var topMenuHeight = header.outerHeight();
-        var fromTop = $(this).scrollTop() + topMenuHeight + 300;
+        var fromTop = $(this).scrollTop() + topMenuHeight;
         var cur = scrollItems.map(function(){
             if ($(this).offset().top < fromTop)
                 return this;
@@ -25,6 +31,11 @@
  
         cur = cur[cur.length-1];
         var id = cur && cur.length ? cur[0].id : '';
+        if($(window).scrollTop() + $(window).height() == $(document).height()) {
+            if(scrollItems && scrollItems.length > 0) {
+                id = scrollItems[scrollItems.length - 1][0].id;
+            }
+        }
         if (lastId !== id) {
             if(id !== '') {
                 topMenu.find('li.accordion-item').removeClass('is-active');
