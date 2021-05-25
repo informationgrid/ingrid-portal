@@ -557,8 +557,8 @@ li.accordion-item.is-active .accordion-title::after { content: '\e925'; }
     font-size: 16px;
     text-transform: uppercase;
     text-align: center;
-    border-left: 1px solid $white-cascade;
-    border-right: 1px solid $white-cascade;
+    border-left: 1px solid #C6CFE2;
+    border-right: 1px solid #C6CFE2;
     background-color: $white;
     -webkit-transition: background-color .5s; /* Safari */
     transition: background-color .5s;
@@ -2698,6 +2698,7 @@ h3 span, h4 span, h5 span {
 
     [class^="ic-"] {
       margin-right: 0;
+      font-size: 16px;
     }
   }
 

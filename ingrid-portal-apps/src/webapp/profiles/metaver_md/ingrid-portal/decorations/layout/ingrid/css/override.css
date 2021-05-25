@@ -304,9 +304,6 @@ a {
 a:hover, a:focus {
   color: #085468;
 }
-a.icon [class^='ic-'] {
-  font-size: 16px;
-}
 a.icon:hover {
   color: #085468;
 }
@@ -365,11 +362,6 @@ header a.icon:hover {
 }
 header a.icon.is-selected {
   background: #EFEFEF;
-}
-
-.menu-tab-row .menu-tab {
-  border-left: 1px solid #C6CFE2;
-  border-right: 1px solid #C6CFE2;
 }
 .menu-tab-row .menu-tab.is-selected {
   background-color: #f6f6f6;
