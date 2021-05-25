@@ -1,5 +1,5 @@
 <div class="logo">
     <a href="$jetspeed.getAbsoluteUrl('/default-page.psml')">
-        <img class="footer__logo" src="/decorations/layout/uvp/images/template/logo.svg" alt="UVP"/>
+        <img class="footer__logo" src="/decorations/layout/uvp/images/template/logo.svg" alt="$MESSAGES.getString('ingrid.page.logo.alt.footer')"/>
     </a>
 </div>
