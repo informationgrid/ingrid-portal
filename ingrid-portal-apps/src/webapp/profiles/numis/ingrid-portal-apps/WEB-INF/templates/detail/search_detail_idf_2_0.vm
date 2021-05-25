@@ -363,7 +363,7 @@
                             #set($xPath = "$xParentPath/gmd:contactInfo/gmd:CI_Contact/gmd:address/gmd:CI_Address/gmd:electronicMailAddress")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="mailto:${tmpTitle}" title="$tmpTitle">
+                                <a class="icon" href="mailto:${tmpTitle.replace(" ","")}" title="$tmpTitle">
                                     <span class="ic-ic-mailto"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
@@ -569,7 +569,7 @@
                             ## $TOOL.getNameFromCodeList("4430", "3")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="mailto:${tmpTitle}" title="$stringTool.htmlescape($tmpTitle)">
+                                <a class="icon" href="mailto:${tmpTitle.replace(" ","")}" title="$stringTool.htmlescape($tmpTitle)">
                                     <span class="ic-ic-mailto"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
@@ -581,7 +581,7 @@
                             ## $TOOL.getNameFromCodeList("4430", "1")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="tel:${tmpTitle}" title="$stringTool.htmlescape($tmpTitle)">
+                                <a class="icon" href="tel:${tmpTitle.replace(" ","")}" title="$stringTool.htmlescape($tmpTitle)">
                                     <span class="ic-ic-phone"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
@@ -593,7 +593,7 @@
                             ## $TOOL.getNameFromCodeList("4430", "2")
                             #set($tmpTitle = $TOOL.getValueFromXPath($xPath, null, $node))
                             <div>
-                                <a class="icon" href="fax:${tmpTitle}" title="$stringTool.htmlescape($tmpTitle)">
+                                <a class="icon" href="fax:${tmpTitle.replace(" ","")}" title="$stringTool.htmlescape($tmpTitle)">
                                     <span class="ic-ic-fax"></span>
                                     <span class="text">$tmpTitle</span>
                                 </a>
