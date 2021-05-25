@@ -146,7 +146,7 @@
                 </p>
                 #end
                 #renderServiceTypeList($serviceTypes true true)
-                <a href="$detailLink" title="$stringTool.htmlescape($MESSAGES.getString('common.detail.arrow.prefix') $rs.title)">
+                <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $rs.title")">
                     <span class="ic-ic-arrow arrow"></span>
                 </a>
                 #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_info_expand.vm")

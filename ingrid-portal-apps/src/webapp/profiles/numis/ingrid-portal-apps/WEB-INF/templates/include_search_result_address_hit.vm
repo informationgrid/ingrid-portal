@@ -69,7 +69,7 @@
         #if($rs.url)
             <a href="$rs.url" title="$MESSAGES.getString('common.tooltip.link.extern')">$!rs.url_str</a>
         #end
-            <a href="$detailLink" title="$stringTool.htmlescape($MESSAGES.getString('common.detail.arrow.prefix') stringTool.htmlescape($rs.title)">
+            <a href="$detailLink" title="$stringTool.htmlescape("$MESSAGES.getString('common.detail.arrow.prefix') $rs.title")">
                 <span class="ic-ic-arrow arrow"></span>
             </a>
         </div>
