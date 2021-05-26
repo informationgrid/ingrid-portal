@@ -263,7 +263,8 @@
                         observer: true,
                         observeParents: true,
                         pagination: {
-                          el: '.swiper-pagination'
+                          el: '.swiper-pagination',
+                          clickable: true
                         }
                       });
                     </script>
