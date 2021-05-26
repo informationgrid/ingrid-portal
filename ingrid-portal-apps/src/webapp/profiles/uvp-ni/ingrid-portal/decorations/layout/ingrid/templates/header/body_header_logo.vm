@@ -1,5 +1,5 @@
 <div class="columns small-7 medium-13 large-9 xlarge-8">
-    <div class="logo">
+    <div class="logo" role="banner">
         <div class="switch">
             <span class="ic-ic-angle-down js-popup" data-title="Hinweis" data-content="" data-box=".switch-popup"></span>
         </div>
