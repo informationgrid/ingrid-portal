@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
+          <action type="fix" dev="wemove" issue="2460">
+            Mapclient: Identifier der Datenquelle in Verbindung mit Anzeige des Kartenlayers
+          </action>
           <action type="update" dev="wemove" issue="2300">
             Portal (BKG): Add facet for application. 
           </action>
