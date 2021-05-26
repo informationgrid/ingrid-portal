@@ -93,15 +93,15 @@
 }
 
 /* Checked state */
-.control input:focus, .control input:hover {
-  ~ .control__indicator {
-    background: $white;
-    border: 1px solid $dark-midnight;
-  }
-}
 .control input:checked ~ .control__indicator {
   background: $white;
   border: 1px solid $green-jelly;
+}
+.control input:focus {
+  ~ .control__indicator {
+    background: $white;
+    border: $input-border-focus !important;
+  }
 }
 .map .control input:checked ~ .control__indicator {
   background: $blue-prov;
@@ -210,7 +210,7 @@
 }
 .select2-container--default.select2-container--focus {
   .select2-selection--single, .select2-selection--multiple {
-    border: 1px solid $dark-midnight;
+    border: $input-border-focus;
   }
 }
 .select2-container--default .select2-selection--single .select2-selection__rendered, 
@@ -251,7 +251,7 @@
 
 /* select2 dropdown */
 ul.select2-results__options {
-  border: 1px solid $dark-midnight;
+  border: $input-border-focus;
   border-radius: 25px;
   border-top: none;
   border-top-right-radius: 0;
