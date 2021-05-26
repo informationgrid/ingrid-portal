@@ -547,7 +547,7 @@ header a.icon.is-selected {
 .select2-container--default .select2-selection--single::after {
   color: #006ec5;
 }
-.control__indicator {
+.control input:checked ~ .control__indicator {
   border: 1px solid #006ec5;
 }
 .button.pill {
