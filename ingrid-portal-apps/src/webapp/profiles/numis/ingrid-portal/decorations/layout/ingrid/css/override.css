@@ -467,6 +467,10 @@ header a.icon.is-selected {
 .teaser-data a:focus .header, .teaser-data:focus .arrow {
   color: #1D4B7B;
 }
+.teaser-data a:hover .header, .teaser-data a:hover .arrow,
+.teaser-data a:focus .header, .teaser-data a:focus .arrow {
+  color: #1D4B7B;
+}
 .teaser-data .helper.icon {
   margin-bottom: 24px;
 }
