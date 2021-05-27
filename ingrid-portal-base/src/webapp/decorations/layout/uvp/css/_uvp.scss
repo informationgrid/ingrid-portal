@@ -1286,7 +1286,7 @@ header {
   .helper.text.date {
     font-size: 14px;
     font-weight: normal;
-    margin-top: -20px;
+    margin-top: -14px;
   }
   .header {
     color: $green-jelly;
@@ -1313,7 +1313,13 @@ header {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
-  .header:hover, .arrow:hover { color: $green-blue; }
+  a {
+    &:hover, &:focus { 
+      .header, .arrow { 
+        color: $green-blue;
+      }
+    }
+  }
   a.icon, p a.link-line { display: block; }
 }
 .teaser-data {
