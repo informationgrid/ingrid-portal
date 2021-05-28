@@ -352,6 +352,12 @@
       display: table !important;
     }
   }
+  .teaser-links {
+    .teaser-links-content {
+      position: absolute;
+      bottom: 0;
+    }
+  }
 }
 
 @media screen and (max-width: 63.9375em) {

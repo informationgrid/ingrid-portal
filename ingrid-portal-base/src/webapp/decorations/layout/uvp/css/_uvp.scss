@@ -371,7 +371,7 @@ a.icon {
   margin-right: 24px;
 
   [class^="ic-"] {
-    font-size: 20px;
+    font-size: 16px;
     margin-right: 8px;
   }
 }
@@ -2899,4 +2899,19 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
 
 .text-capitalize {
   text-transform: capitalize;
+}
+
+.teaser-links {
+  margin: 1.75rem 0 0;
+
+  .teaser-links-content {
+    position: relative;
+    font-size: 14px;
+    text-align: right;
+
+    a.icon [class^='ic-'] {
+      font-size: 14px;
+      margin-right: 4px;
+    }
+  }
 }
