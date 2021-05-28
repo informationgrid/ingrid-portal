@@ -1050,7 +1050,7 @@ header {
     -webkit-transition: color .5s; /* Safari */
     transition: color .5s;
 
-    [class^="ic-"], [class*=" ic-"] {
+    [class^="ic-"], [class*=" ic-"], img {
       position: absolute;
       top: 25px;
       left: calc(50% - 36px);
