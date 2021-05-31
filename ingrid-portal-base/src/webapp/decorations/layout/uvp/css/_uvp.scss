@@ -347,6 +347,7 @@ blockquote {
   height: 49px;
   font-size: 22px;
   margin: 12px;
+  border: 1px solid;
 }
 .button-up {
   text-align: right;
@@ -1575,16 +1576,27 @@ footer {
       .login-form {
         display: none;
         padding: 8px;
-        border: 2px solid #FFFFFF;
+        border: 2px solid $green-jelly;
         box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
         border-radius: 8px;
         background: #f6f6f6;
         position:fixed;
-        bottom: 125px;
+        bottom: 45px;
         right: 125px;
         
-        &:after {
-          background: red;
+        &:before {
+          content: '';
+          border-color: transparent transparent transparent $green-jelly;
+          border-width: 24px 0px 24px 24px;
+          border-style: solid;
+          content: '';
+          height: 0;
+          right: -24px;
+          margin-left: -0.75rem;
+          position: absolute;
+          bottom: 80px;
+          width: 0;
+          z-index: 3;
         }
         label {
           display:none;

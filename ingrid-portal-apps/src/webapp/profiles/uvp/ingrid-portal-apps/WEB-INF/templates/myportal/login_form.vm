@@ -43,3 +43,10 @@
     </div>
     #end
 </div>
+#if($renderRequest.getWindowID() == "MyPortalLoginPortlet")
+    <script>
+    if($actionForm.hasErrorInField('org.apache.jetspeed.login.username') || $actionForm.hasErrorInField('org.apache.jetspeed.login.password')){
+        $('.login-buttons .login-form').css('display', 'inline-block');
+    }
+    </script>
+#end

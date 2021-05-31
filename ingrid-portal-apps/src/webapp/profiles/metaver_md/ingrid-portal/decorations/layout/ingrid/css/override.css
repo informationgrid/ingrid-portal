@@ -323,8 +323,8 @@ a.icon:hover {
   color: #085468;
 }
 .button.round:hover, .button.round:focus {
-  color: #085468;
-  background-color: #eaf6ff;
+  background-color: #085468;
+  color: #eaf6ff;
 }
 .button.outline {
   color: #00829B;
@@ -1071,6 +1071,13 @@ span.icon span {
 }
 
 footer .footer-buttons-bar .login-buttons .button.is-active {
+  border: 1px solid #085468;
   background: #085468;
   color: #eaf6ff;
+}
+footer .footer-buttons-bar .login-buttons .login-form {
+  border-color: #085468;
+}
+.login-form:before {
+  border-color: transparent transparent transparent #085468 !important;
 }
