@@ -30,7 +30,6 @@
 
 @media print, screen and (min-width: 35em) {
   header .logo a {
-    top: 14px;
   }
 }
 
@@ -307,8 +306,11 @@ a:hover, a:focus {
 a.icon:hover {
   color: #085468;
 }
+.shrink header .logo {
+    width: 14.5em;
+}
 .shrink header .logo a {
-    top: -15px;
+    top: 5px;
 }
 .button {
   background-color: #067B9B;
@@ -486,7 +488,7 @@ header a.icon.is-selected {
   left: 1px;
 }
 .teaser {
-  box-shadow: 0 2px 6px 0 rgb(0 0 0 / 20%);
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
 }
 .teaser-data .header {
   color: #067B9B;
@@ -957,11 +959,8 @@ header .menu-tab-row .menu-tab {
   header {
     height: 80px;
   }
-  header .logo {
-    height: 80px;
-  }
   header .logo a {
-    top: -5px !important;
+    top: 5px !important;
   }
   header .menu-tab-row .menu-tab {
     width: 55px;
