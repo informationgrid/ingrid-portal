@@ -560,6 +560,7 @@ public class UtilsFacete {
                     }
                 }
             }
+            ingridFacet.setFacetValue(null);
         }
         return config;
     }
