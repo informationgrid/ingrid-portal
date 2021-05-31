@@ -3,6 +3,7 @@
 <footer>
     <div class="footer-buttons-bar show-for-medium hide-for-print">
         #parse("/decorations/layout/ingrid/templates/footer/body_footer_socials.vm")
+        #parse("/decorations/layout/ingrid/templates/footer/body_footer_login.vm")
         <div class="button-up">
             <button type="button" class="button round social js-top" title="$MESSAGES.getString("ingrid.page.top")">
                 <span class="ic-ic-angle-up"></span>

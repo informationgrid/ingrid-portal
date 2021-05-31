@@ -1069,3 +1069,8 @@ h4, h5 {
 span.icon span {
     color: #085468;
 }
+
+footer .footer-buttons-bar .login-buttons .button.is-active {
+  background: #085468;
+  color: #eaf6ff;
+}

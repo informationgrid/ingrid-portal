@@ -100,7 +100,8 @@
 .control input:focus {
   ~ .control__indicator {
     background: $white;
-    border: $input-border-focus !important;
+    border: 1px solid $dark-midnight !important;
+    box-shadow: 0 0 0 1px $dark-midnight;
   }
 }
 .map .control input:checked ~ .control__indicator {

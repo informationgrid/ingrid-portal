@@ -1,0 +1,11 @@
+<div class="login-buttons">
+    #defineUrlParams()
+    <div class="login-form">
+        <h3>$MESSAGES.getString('ingrid.page.myportal')</h3>
+        $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
+    </div>
+    <a id="login-button" class="button round social login" title="$MESSAGES.getString('ingrid.page.myportal')">
+        <span class="ic-ic-user"></span>
+        <span class="text"></span>
+    </a>
+</div>

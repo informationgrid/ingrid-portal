@@ -903,6 +903,10 @@ header {
     min-width: 150px;
     font-size: 12px;
     margin: 1rem 0 -1rem;
+
+    ~ .small-button .ic-ic-hamburger:before {
+      content: "\e960";
+    }
   }
 }
 
@@ -1049,6 +1053,11 @@ header {
     padding: 108px 8px 0;
     -webkit-transition: color .5s; /* Safari */
     transition: color .5s;
+
+    &:hover {
+      box-shadow: 0px 2px 24px rgba(0,0,0,0.4);
+      border-radius: 8px;
+    }
 
     [class^="ic-"], [class*=" ic-"], img {
       position: absolute;
@@ -1556,6 +1565,52 @@ footer {
 
     .social-buttons {
       a.social { display: none; }
+    }
+    .login-buttons {
+      .button.is-active {
+         background-color: $green-jelly;
+         color: $blue-sky;
+      }
+
+      .login-form {
+        display: none;
+        padding: 8px;
+        border: 2px solid #FFFFFF;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        border-radius: 8px;
+        background: #f6f6f6;
+        position:fixed;
+        bottom: 125px;
+        right: 125px;
+        
+        &:after {
+          background: red;
+        }
+        label {
+          display:none;
+        }
+        input {
+          margin-bottom: 16px;
+          padding: 8px 16px;
+          height: unset;
+        }
+        
+        .button {
+          margin-bottom: 16px;
+          padding: 8px 16px 8px 16px;
+          font-size: 14px;
+          width: 100%;
+        }
+        
+        p {
+            font-size: 14px;
+        }
+
+        h1, h2, h3, h4 {
+          margin-left: 12px;
+          margin-right: 12px;
+        }
+      }
     }
   }
   .footer {
@@ -2456,10 +2511,6 @@ meter[value="5"]::-moz-meter-bar { background: green; }
   .header-menu-open {
     .login {
       display: none;
-
-      ~ .small-button .ic-ic-hamburger:before {
-        content: "\e960";
-      }
 
       ~ .button {
         margin: 18px 0 0 0;
