@@ -18,10 +18,10 @@
 <script>
     $('.js-anchor-navigation').anchorNavigation();
 </script>
-<!-- swiper -->
-<script src="/decorations/layout/ingrid/scripts/swiper/js/swiper.min.js"></script>
+#if($currentPage == "/search-detail.psml")
 <script>
   var mySwiper = new Swiper ('.swiper-container', {
+    spaceBetween: 10,
     grabCursor: true,
     updateOnWindowResize: true,
     pagination: {
@@ -36,4 +36,17 @@
       el: '.swiper-scrollbar'
     },
   });
+</script>
+#end
+<script>
+    $(document).ready(function() { 
+    $( "a" ).each(function( i ) {
+        var attr = $(this).attr('href');
+        if (typeof attr !== 'undefined' && attr !== false) {
+            if ( $(this).children().length == 0 ) {
+                $(this).html('<span>' + $(this).text() + '</span>');
+            }
+        }
+    });
+});
 </script>
