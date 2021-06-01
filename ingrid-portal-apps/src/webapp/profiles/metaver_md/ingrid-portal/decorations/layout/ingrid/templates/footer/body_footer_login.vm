@@ -13,8 +13,8 @@
         $jetspeed.renderPortletWindow("MyPortalLoginPortlet", "ingrid-portal-apps::MyPortalLoginPortlet")
     #end
     </div>
-    <a id="login-button" class="button round social login #if($jetspeed.getLoggedOn())is-active#end" title="$MESSAGES.getString('ingrid.page.myportal')">
+    <button id="login-button" class="button round social login #if($jetspeed.getLoggedOn())is-active#end" title="$MESSAGES.getString('ingrid.page.myportal')">
         <span class="ic-ic-user"></span>
         <span class="text"></span>
-    </a>
+    </button>
 </div>

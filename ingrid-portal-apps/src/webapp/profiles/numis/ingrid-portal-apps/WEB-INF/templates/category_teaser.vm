@@ -47,7 +47,10 @@
 
 #macro (getTabs $facetName $facetList $parentFacet $isActive)
     <li class="tabs-title #if($isActive)is-active#end" role="presentation">
-        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" id="panel-${parentFacet}-label" tabindex="0">$MESSAGES.getString($facetName)</a><span class="pointer"></span>
+        <a href="#panel-${parentFacet}" aria-selected="$isActive" role="tab" id="panel-${parentFacet}-label" tabindex="0">
+            <span class="text">$MESSAGES.getString($facetName)</span>
+        </a>
+        <span class="pointer"></span>
     </li>
 #end
 
@@ -119,11 +122,11 @@
                         $Codelists.getCodeListValue($facet.getCodelistId(), $facet.getCodelistEntryId(), $languageCode)
                     #else
                         #if($hasMobileName)
-                            $MESSAGES.getString($facet.getMobileName())
+                            <span class="text">$MESSAGES.getString($facet.getMobileName())</span>
                         #elseif($hasShortName)
-                            $MESSAGES.getString($facet.getShortName())
+                            <span class="text">$MESSAGES.getString($facet.getShortName())</span>
                         #else
-                            $MESSAGES.getString($facet.getName())
+                            <span class="text">$MESSAGES.getString($facet.getName())</span>
                         #end
                     #end
                         #if($facet.getQuery())

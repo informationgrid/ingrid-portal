@@ -595,9 +595,6 @@ li.accordion-item.is-active .accordion-title::after { content: '\e925'; }
         color: $green-blue;
       }
     }
-    &:focus {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -2140,7 +2137,7 @@ footer {
       background-color: $white;
       border-radius: 0 !important;
       border-bottom: 1px solid $blue-light !important;
-      padding: 16px 0;
+      padding: 16px 8px;
     }
     .accordion-title::after {
       top: 24px;
@@ -2156,9 +2153,6 @@ footer {
         box-shadow: none;
         
         &::after { color: $green-blue; }
-      }
-      &:focus {
-        text-decoration: underline;
       }
     }
     .accordion-content {
@@ -2693,11 +2687,6 @@ a[class*="js-expander"] {
     font-family: "Roboto-Bold";
     line-height: 24px;
   }
-  &:focus {
-    span.text {
-      text-decoration: underline;
-    }
-  }
 }
 
 h3 span, h4 span, h5 span {
@@ -2977,4 +2966,41 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
       margin-right: 4px;
     }
   }
+}
+
+.logo :focus img,
+a:focus > span,
+a:focus > h2,
+button:focus,
+input:focus,
+textarea:focus,
+.tabs-title a:focus,
+.tabs-content a.teaser-link:focus,
+a.menu-tab:focus span,
+a.accordion-title:focus span {
+  outline: 2px solid #000 !important;
+}
+
+:focus:not(:focus-visible) {
+  outline: 0 !important;
+}
+
+.logo :focus-visible img,
+a:focus-visible > span,
+a:focus-visible > h2,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+.tabs-title a:focus-visible,
+.tabs-content a.teaser-link:focus-visible,
+a.menu-tab:focus-visible span,
+a.accordion-title:focus-visible span {
+  outline: 2px solid #000 !important;
+}
+
+.tabs-content a.teaser-link:focus span,
+.tabs-content a.teaser-link:focus-visible span,
+.tabs-title a:focus span,
+.tabs-title a:focus-visible span {
+  outline: 0 !important;
 }

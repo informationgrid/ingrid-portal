@@ -6,7 +6,7 @@
     position: relative;
     font-family: 'Roboto-Regular';
     font-size: 16px;
-    line-height: 22px;
+    line-height: 23px;
     font-weight: 400;
     color: $blue-midnight;
     cursor: pointer;
@@ -26,8 +26,8 @@
 }
 .control__indicator {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 1px;
+  left: 1px;
   width: 23px;
   height: 23px;
   background: $white;
@@ -35,7 +35,7 @@
   border-radius: 3px;
 }
 .form-element.boxed .control__indicator {
-  top: 0;
+  top: 1px;
 }
 .control--radio .control__indicator {
   border-radius: 50%;
