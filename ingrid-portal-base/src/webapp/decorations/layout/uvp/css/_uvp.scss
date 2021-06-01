@@ -3012,8 +3012,11 @@ a.accordion-title:focus-visible span,
 }
 
 .tabs-content a.teaser-link:focus span,
+.tabs-title a:focus span {
+  outline: 0 !important;
+}
+
 .tabs-content a.teaser-link:focus-visible span,
-.tabs-title a:focus span,
 .tabs-title a:focus-visible span {
   outline: 0 !important;
 }
