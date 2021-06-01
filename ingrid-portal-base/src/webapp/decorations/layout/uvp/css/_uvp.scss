@@ -2977,10 +2977,22 @@ textarea:focus,
 .tabs-title a:focus,
 .tabs-content a.teaser-link:focus,
 a.menu-tab:focus span,
-a.accordion-title:focus span {
+a.accordion-title:focus span,
+.select2-container--focus {
   outline: 2px solid #000 !important;
 }
 
+.logo :focus:not(:focus-visible) img,
+a:focus:not(:focus-visible) > span,
+a:focus:not(:focus-visible) > h2,
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible),
+.tabs-title a:focus:not(:focus-visible),
+.tabs-content a.teaser-link:focus:not(:focus-visible),
+a.menu-tab:focus:not(:focus-visible) span,
+a.accordion-title:focus:not(:focus-visible) span,
+.select2-container--focus:not(:focus-visible),
 :focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -2994,7 +3006,8 @@ textarea:focus-visible,
 .tabs-title a:focus-visible,
 .tabs-content a.teaser-link:focus-visible,
 a.menu-tab:focus-visible span,
-a.accordion-title:focus-visible span {
+a.accordion-title:focus-visible span,
+.select2-container--focus {
   outline: 2px solid #000 !important;
 }
 

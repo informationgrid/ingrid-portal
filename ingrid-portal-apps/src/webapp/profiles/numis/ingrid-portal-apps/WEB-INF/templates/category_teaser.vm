@@ -55,7 +55,7 @@
 #end
 
 #macro (getTabsContent $facetName $facetList $parentFacet $colNum $isActive)
-    <div class="tabs-panel midnight #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel">
+    <div class="tabs-panel midnight #if($isActive)is-active#end" id="panel-${parentFacet}" role="tabpanel" aria-labelledby="panel-${parentFacet}-label">
         <div class="row align-center text-center">
             #if($parentFacet == "provider")
                 #set($facetId = "partner")
@@ -182,6 +182,12 @@ $( ".tab__content" ).each(function( i ) {
       if(height != 0){
         elem.height(height);
       }
+    });
+});
+$(document).ready(function() { 
+    $( ".tabs-title" ).each(function( i ) {
+        var tabsTitle = $( this );
+        $( this ).find('a').attr("tabindex", "0");
     });
 });
 </script>
