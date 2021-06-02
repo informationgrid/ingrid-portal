@@ -1,5 +1,0 @@
-<div class="menu-sub-links">
-    <a class="button logout" href="/log-in">
-        <span class="text">$MESSAGES.getString('ingrid.page.myportal')</span>
-    </a>
-</div>
