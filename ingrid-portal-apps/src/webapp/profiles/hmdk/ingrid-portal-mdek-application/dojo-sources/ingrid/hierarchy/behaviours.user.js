@@ -234,6 +234,9 @@ define(["dojo/_base/declare",
                         var isPublicationHmbTG = registry.byId("publicationHmbTG").get("checked");
                         if (isPublicationHmbTG) {
                             domClass.add("uiElementN025", "required");
+                            // automatically replace access constraint with "keine"
+                            var data = [{title: UtilSyslist.getSyslistEntryName(6010, 1)}];
+                            UtilGrid.setTableData('availabilityAccessConstraints', data);
                         }
                     } else {
                         domClass.remove("uiElementN025", "required");
