@@ -1,5 +1,6 @@
 #if($currentPage != "/main-maps.psml" && $currentPage != "/main-measures.psml")
 #parse("/decorations/layout/ingrid/templates/footer/body_footer_settings.vm")
+#parse("/decorations/layout/ingrid/templates/footer/body_footer_test.vm")
 <footer>
     <div class="footer-buttons-bar show-for-medium hide-for-print">
         #parse("/decorations/layout/ingrid/templates/footer/body_footer_socials.vm")
