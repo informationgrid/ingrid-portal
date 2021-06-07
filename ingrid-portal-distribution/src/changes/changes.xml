@@ -6,6 +6,15 @@
     </properties>
 
     <body>
+        <release version="5.8.2" date="2021-xx-xx" description="Release 5.8.2">
+          <action type="add" dev="wemove" issue="2519">
+            Mapclient: GPX import - Beschreibung fehlt
+          </action>
+          <action type="fix" dev="wemove" issue="2460">
+            Mapclient: Identifier der Datenquelle in Verbindung mit Anzeige des Kartenlayers
+          </action>
+        </release>
+
         <release version="5.8.1" date="2021-05-25" description="Release 5.8.1">
           <action type="update" dev="wemove" issue="2461">
             Portal: Anpassung Kontakt-Formular MetaVer Test für Zammad
