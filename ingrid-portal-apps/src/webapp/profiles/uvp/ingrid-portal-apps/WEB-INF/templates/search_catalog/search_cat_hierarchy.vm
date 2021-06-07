@@ -86,24 +86,10 @@
     #end
 #end
 
-<div class="columns catalog">
-    #foreach($plugNode in $ps.plugsRoot.getChildren())
-        #renderNode($plugNode)
-    #end
-    #set ($action = $renderResponse.createActionURL())
-    <form action="$action" method="post" name="extsearch" id="extsearch">
-        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
-    </form>
-</div>
-
-
 <script>
     $(document).ready(function() {
         setTimeout(function () {
-            window.scrollTo({
-                top: $scrollTop,
-                behavior: "smooth"
-            }); 
+            window.scrollTo(0, $scrollTop); 
         }, 600);
     });
 
@@ -115,3 +101,15 @@
         
     }
 </script>
+
+<div class="columns catalog">
+    #foreach($plugNode in $ps.plugsRoot.getChildren())
+        #renderNode($plugNode)
+    #end
+    #set ($action = $renderResponse.createActionURL())
+    <form action="$action" method="post" name="extsearch" id="extsearch">
+        #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
+    </form>
+</div>
+
+
