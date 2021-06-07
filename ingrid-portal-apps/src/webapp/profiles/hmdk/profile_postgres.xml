@@ -85,5 +85,9 @@
         <execute>
             <![CDATA[UPDATE link SET is_hidden = 1 WHERE path='/language.link';]]>
         </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml';]]>
+        </execute>
     </sql>
 </profile>

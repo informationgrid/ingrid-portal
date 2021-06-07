@@ -280,5 +280,9 @@
         <execute>
             <![CDATA[UPDATE link SET IS_HIDDEN='1' WHERE PATH='/home.link']]>
         </execute>
+        <!-- Delete user default-page.psml -->
+        <execute>
+            <![CDATA[DELETE FROM page WHERE PATH LIKE '/_user/%/default-page.psml' AND NOT PATH = '/_user/template/default-page.psml']]>
+        </execute>
     </sql>
 </profile>
