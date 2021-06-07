@@ -70,6 +70,7 @@
             #end
         #else
             #if($nodeUrl != '')
+            <div class="accordion-item-sub">
                 <a href="$nodeUrl" class="icon">
                     #if ($node.plugType == 'dsc_ecs')
                         #set($udkObjClassName = $Codelists.getCodeListValue('8000', $node.udk_class, $request.getLocale().getLanguage()))
@@ -79,6 +80,7 @@
                         #renderUDKAddressIcon(${node.udk_class} $nodeTitle $udkAddrClassName)
                     #end
                 </a>
+            </div>
             #end
         #end
     #end

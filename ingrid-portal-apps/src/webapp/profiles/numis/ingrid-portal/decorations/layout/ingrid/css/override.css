@@ -794,7 +794,7 @@ header .row .columns:last-of-type {
 .catalog .accordion .accordion .accordion-title:hover {
   box-shadow: none;
 }
-.catalog :not(.accordion-item-sub) + .accordion-item-sub, .catalog :not(.accordion-item-sub) + .accordion {
+.catalog .accordion .accordion-content .accordion + .accordion {
   border-top: 1px solid #C6CFE2;
 }
 .dropmenu__box {

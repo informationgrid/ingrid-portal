@@ -2978,6 +2978,7 @@ textarea:focus,
 .tabs-content a.teaser-link:focus,
 a.menu-tab:focus span,
 a.accordion-title:focus span,
+a:empty:focus,
 .select2-container--focus {
   outline: 2px solid #000 !important;
 }
@@ -2992,6 +2993,7 @@ textarea:focus:not(:focus-visible),
 .tabs-content a.teaser-link:focus:not(:focus-visible),
 a.menu-tab:focus:not(:focus-visible) span,
 a.accordion-title:focus:not(:focus-visible) span,
+a:empty:focus:not(:focus-visible),
 .select2-container--focus:not(:focus-visible),
 :focus:not(:focus-visible) {
   outline: 0 !important;
@@ -3007,6 +3009,7 @@ textarea:focus-visible,
 .tabs-content a.teaser-link:focus-visible,
 a.menu-tab:focus-visible span,
 a.accordion-title:focus-visible span,
+a:empty:focus-visible,
 .select2-container--focus {
   outline: 2px solid #000 !important;
 }

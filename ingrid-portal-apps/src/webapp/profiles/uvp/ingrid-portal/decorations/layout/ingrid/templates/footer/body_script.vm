@@ -40,7 +40,7 @@
 #end
 <script>
     $(document).ready(function() { 
-    $( "a" ).each(function( i ) {
+    $( "a:not(:empty)" ).each(function( i ) {
         var attr = $(this).attr('href');
         if (typeof attr !== 'undefined' && attr !== false) {
             if ( $(this).children().length == 0 ) {
