@@ -95,34 +95,23 @@
         #renderInputButtonClass("$MESSAGES.getString('searchCatHierarchy.submit.reload')" "width:100%" "submitReload" "$MESSAGES.getString('searchCatHierarchy.submit.reload.tooltip')" "btn btn--secondary btn--small")
     </form>
 </div>
+
+
 <script>
-    document.onreadystatechange = function () {
-        if (document.readyState == "complete") {
-                var browser = whichBrowser();
-                if(browser.indexOf("Chrome") != -1)
-                    document.body.scrollTop = $scrollTop;
-                else
-                    document.documentElement.scrollTop = $scrollTop;
-        }
-    }
+    $(document).ready(function() {
+        setTimeout(function () {
+            window.scrollTo({
+                top: $scrollTop,
+                behavior: "smooth"
+            }); 
+        }, 600);
+    });
+
     function makeScrollTopLink(element){
-        var browser = whichBrowser();
-        
-        if(browser.indexOf("Chrome") != -1)
-            var top = document.body.scrollTop;
-        else
-            var top = document.documentElement.scrollTop;
         var url = element.href;
         url = url.replace(/\s/g, "%20")
-        urlNew = url + "?scrollTop="+top;
+        urlNew = url + "?scrollTop="+window.pageYOffset;
         element.href = urlNew;
+        
     }
-    
-    whichBrowser = function(){
-        var N= navigator.appName, ua= navigator.userAgent, tem;
-        var M= ua.match(/(opera|chrome|safari|firefox|msie)\/?\s*(\.?\d+(\.\d+)*)/i);
-        if(M && (tem= ua.match(/version\/([\.\d]+)/i))!= null) M[2]= tem[1];
-        M= M? [M[1], M[2]]: [N, navigator.appVersion,'-?'];
-        return M;
-    };
 </script>

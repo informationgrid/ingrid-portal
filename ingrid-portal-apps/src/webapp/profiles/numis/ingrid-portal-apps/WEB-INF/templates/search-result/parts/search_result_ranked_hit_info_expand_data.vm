@@ -132,7 +132,7 @@
             #set($tmpSpecialRef = $urlReferenceSpecialRef.get($refCount))
             #set($add = $link.put("special_ref", $tmpSpecialRef))
             #if($tmpSpecialRef && $tmpSpecialRef == "9990")
-                #if($urlReferenceDatatype)
+                #if($urlReferenceDatatype && $urlReferenceDatatype.size() && $urlReferenceDatatype.size() > $refCount)
                     #if($urlReferenceDatatype.get($refCount) && $urlReferenceDatatype.get($refCount) != "")
                         #set($add = $link.put("serviceType", "$urlReferenceDatatype.get($refCount)"))
                         #if($serviceTypes.indexOf($urlReferenceDatatype.get($refCount)) == -1)
@@ -143,9 +143,8 @@
                 #set($add = $linksUrlRefDownload.add($link))
             #else
                 ## Add service type to list
-                #if($urlReferenceDatatype)
+                #if($urlReferenceDatatype && $urlReferenceDatatype.size() && $urlReferenceDatatype.size() > $refCount)
                     #if($urlReferenceDatatype.get($refCount) && $urlReferenceDatatype.get($refCount) != "")
-                        #set($add = $link.put("serviceType", "$urlReferenceDatatype.get($refCount)"))
                         #if($serviceTypes.indexOf($urlReferenceDatatype.get($refCount)) == -1)
                             #set($add = $serviceTypes.add($urlReferenceDatatype.get($refCount)))
                         #end
