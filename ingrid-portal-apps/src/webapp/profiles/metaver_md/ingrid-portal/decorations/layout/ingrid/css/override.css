@@ -722,7 +722,7 @@ header .row .columns:last-of-type {
 .catalog a.icon {
   display: block;
   padding: 10px 0;
-  margin: 0 24px 0 10px;
+  margin: 0 24px 0 14px;
 }
 .catalog span.icon {
   display: block;
@@ -738,6 +738,11 @@ header .row .columns:last-of-type {
   padding: 6px;
   border: 1px solid #C6CFE2;
 }
+
+.catalog .icon [class^="ic-"] {
+  margin-left: 4px;
+}
+  
 .catalog .accordion {
   margin-top: 0;
 }
