@@ -3094,14 +3094,6 @@ header {
     .accordion .accordion-title:hover {
       box-shadow: none;
     }
-    .accordion-content {
-      .accordion + .accordion {
-        border-top: 1px solid $blue-light;
-      }
-      .accordion-item-sub:last-child {
-        border-bottom: 0;
-      }
-    }
   }
   .accordion-item {
     margin-bottom: 0;
