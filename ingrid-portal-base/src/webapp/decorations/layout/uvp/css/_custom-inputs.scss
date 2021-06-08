@@ -245,6 +245,10 @@
   border-bottom-left-radius: 0;
 }
 
+.select2-container--focus .select2-selection {
+  border: $input-border-focus;
+}
+
 /* select2 dropdown */
 ul.select2-results__options {
   border: $input-border-focus;
@@ -278,7 +282,7 @@ ul.select2-selection__rendered li::before { content: ""; }
 }
 .select2-container--open .select2-dropdown--above {
   ul.select2-results__options {
-    border: 1px solid $blue-light;
+    border: $input-border-focus;
     border-radius: 25px;
     border-bottom: none;
     border-bottom-right-radius: 0;

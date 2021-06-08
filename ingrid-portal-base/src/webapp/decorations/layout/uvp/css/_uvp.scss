@@ -154,6 +154,9 @@ blockquote {
     color: $green-inch;
     margin-bottom: 24px;
   }
+  .home-wrapper .dark {
+    padding-top: 3.5rem;
+  }
 }
 .intro {
   font-size: 20px;
@@ -881,6 +884,23 @@ header {
   .header-menu-wrapper {
     position: relative;
   }
+  
+  a.icon {
+    padding: 16px 16px;
+    border-radius: 5px;
+    margin: 0;
+    font-size: 16px;
+  
+    [class^="ic-"] {
+      font-size: 12px;
+    }
+    &:hover {
+      background: $neutral-white
+    }
+    &.is-selected {
+      background: #EFEFEF;
+    }
+  }
 }
 
 .small-button { display: none; }
@@ -1446,6 +1466,10 @@ a.data:hover {
     margin-bottom: 16px;
   }
   .form-element { margin-bottom: 48px; }
+  
+  .text-center h2 {
+    text-transform: uppercase;
+  }
 }
 
 .portlet-margin-bottom {
@@ -1521,6 +1545,10 @@ a.data:hover {
     padding: 40px 0 48px;
 
     .input-search-field { margin: 0; }
+  }
+ 
+  + div + .search-filtered {
+    margin-top: 0;
   }
 }
 
@@ -2556,6 +2584,10 @@ meter[value="5"]::-moz-meter-bar { background: green; }
         display: none;
       }
     }
+    &.is-selected {
+      background-color: $neutral-white;
+      text-decoration: none;
+    }
   }
 }
 
@@ -2968,18 +3000,136 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6  {
   }
 }
 
+
+.sitemap {
+  h4 {
+    border-bottom: 2px solid #C6CFE2;
+    padding: 0 0 24px;
+  }
+
+  .link-list {
+    margin: 24px 0 48px;
+
+    a {
+      font-weight: bold;
+    }
+
+    .search-result--nested {
+      padding-left: 24px;
+    }
+
+    .search-result--nested a {
+      font-weight: normal;
+      font-family: 'Roboto-Regular';
+    }
+  }
+}
+
+.category {
+  margin: 72px 0 0;
+  .text-center h2 {
+    text-transform: uppercase;
+  }
+}
+
+#iframe_map {
+  width: 100%;
+  position: fixed;
+  border: 0;
+}
+header {
+  .button-up {
+    margin-top: 4em
+  }
+  .row .columns:last-of-type {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.catalog {
+  a.icon {
+    display: block;
+    padding: 10px 0;
+    margin: 0 24px 0 14px;
+  }
+
+  span.icon {
+    display: block;
+    padding: 10px 0;
+    font-family: 'Roboto-Bold';
+    margin: 0 24px 0 6px;
+  
+    [class^="ic-"] {
+      font-size: 12px;
+      background: $neutral-white;
+      margin-right: 8px;
+      border-radius: 32px;
+      padding: 6px;
+      border: 1px solid $blue-light;
+    }
+  }
+
+  .icon [class^="ic-"] {
+    margin-left: 4px;
+  }
+  
+  .accordion {
+    margin-top: 0;
+
+    .accordion-content {
+      padding: 0;
+    }
+    .accordion-title {
+      font-size: 20px;
+    }
+    .accordion .accordion-content {
+      padding: 0 0 0 32px;
+    }
+    .accordion .accordion-title {
+      background: transparent;
+      border-radius: 0;
+      border-bottom: 1px solid $blue-light;
+    }
+    .accordion .accordion-title:hover {
+      box-shadow: none;
+    }
+    .accordion-content {
+      .accordion + .accordion {
+        border-top: 1px solid $blue-light;
+      }
+      .accordion-item-sub:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+  .accordion-item {
+    margin-bottom: 0;
+  }
+  .accordion-item-sub {
+    border-bottom: 1px solid $blue-light;
+    padding: 5px 0;
+    border-radius: 0 !important;
+  
+    span.icon > span {
+      color: #5E788D;
+    }
+  }
+  
+  ul + .accordion-item-sub {
+    border-top: 1px solid #C6CFE2;
+  }
+}
+
 .logo :focus img,
 a:focus > span,
 a:focus > h2,
 button:focus,
-input:focus,
-textarea:focus,
 .tabs-title a:focus,
 .tabs-content a.teaser-link:focus,
 a.menu-tab:focus span,
 a.accordion-title:focus span,
-a:empty:focus,
-.select2-container--focus {
+a:empty:focus {
   outline: 2px solid #000 !important;
 }
 
@@ -2987,14 +3137,11 @@ a:empty:focus,
 a:focus:not(:focus-visible) > span,
 a:focus:not(:focus-visible) > h2,
 button:focus:not(:focus-visible),
-input:focus:not(:focus-visible),
-textarea:focus:not(:focus-visible),
 .tabs-title a:focus:not(:focus-visible),
 .tabs-content a.teaser-link:focus:not(:focus-visible),
 a.menu-tab:focus:not(:focus-visible) span,
 a.accordion-title:focus:not(:focus-visible) span,
 a:empty:focus:not(:focus-visible),
-.select2-container--focus:not(:focus-visible),
 :focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -3003,14 +3150,11 @@ a:empty:focus:not(:focus-visible),
 a:focus-visible > span,
 a:focus-visible > h2,
 button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
 .tabs-title a:focus-visible,
 .tabs-content a.teaser-link:focus-visible,
 a.menu-tab:focus-visible span,
 a.accordion-title:focus-visible span,
-a:empty:focus-visible,
-.select2-container--focus {
+a:empty:focus-visible {
   outline: 2px solid #000 !important;
 }
 
