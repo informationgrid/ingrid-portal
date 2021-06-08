@@ -546,7 +546,7 @@ ul ol, ol ol { margin-left: 2.25rem; }
     margin-top: -0.75rem;
   }
 }
-li.accordion-item.is-active .accordion-title::after { content: '\e925'; }
+li.accordion-item.is-active > .accordion-title::after { content: '\e925'; }
 .accordion-item::before { content:""; }
 
 /* menu tabs */ 
