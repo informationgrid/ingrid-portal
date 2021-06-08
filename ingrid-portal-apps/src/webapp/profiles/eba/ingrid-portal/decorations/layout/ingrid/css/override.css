@@ -102,7 +102,7 @@
 }
 
 .header__widget__icon.is-active {
-  fill: #28225B;
+  fill: #FFF;
 }
 
 .service_in_main {
@@ -318,7 +318,7 @@ input:checked + .field-toggle__label--highlight .field-toggle__icon {
     color: #485f88;
   }
   .header__widget__icon.is-active {
-    fill: #485f88;
+    fill: #FFF;
   }
 }
 
