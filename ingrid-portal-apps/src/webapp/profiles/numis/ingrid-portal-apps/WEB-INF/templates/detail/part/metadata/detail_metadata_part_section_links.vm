@@ -6,7 +6,7 @@
     #renderSectionTitle($MESSAGES.getString("references_tab"))
     <div class="row columns">
     ## Downloads
-        #if($getDownloads.size() > 0)
+        #if($getDownloads && $getDownloads.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("downloads"))
             #set($tmpCount = $getDownloads.size())
@@ -18,7 +18,7 @@
         </div>
         #end
     ## Links
-        #if($getLinks.size() > 0)
+        #if($getLinks && $getLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("search.detail.info.links"))
             #set($tmpCount = $getLinks.size())
@@ -30,7 +30,7 @@
         </div>
         #end
     ## Weitere Verweise
-        #if($getOtherLinks.size() > 0)
+        #if($getOtherLinks && $getOtherLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("www_references"))
             #set($tmpCount = $getOtherLinks.size())
@@ -43,7 +43,7 @@
         #end
         
     ## Untergeordnete Objekte
-        #if($getSubordinatedLinks.size() > 0)
+        #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("subordinated_references"))
             #set($tmpCount = $getSubordinatedLinks.size())
@@ -55,7 +55,7 @@
         </div>
         #end
     ## Übergeordnetet Objekte
-        #if($getSuperiorLinks.size() > 0)
+        #if($getSuperiorLinks && $getSuperiorLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("superior_references"))
             #set($tmpCount = $getSuperiorLinks.size())

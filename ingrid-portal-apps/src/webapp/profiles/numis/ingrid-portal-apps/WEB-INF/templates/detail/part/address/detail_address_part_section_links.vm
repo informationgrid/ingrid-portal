@@ -5,7 +5,7 @@
     <a class="anchor" id="${hashDetail2}"></a>
     #renderSectionTitle($MESSAGES.getString("references"))
     ## Links
-        #if($getLinks.size() > 0)
+        #if($getLinks && $getLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("search.detail.dataRelations"))
             #set($tmpCount = $getLinks.size())
@@ -17,7 +17,7 @@
         </div>
         #end
     ## Übergeordnete Adressen
-        #if($getSuperiorLinks.size() > 0)
+        #if($getSuperiorLinks && $getSuperiorLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("superior_address"))
             #set($tmpCount = $getSuperiorLinks.size())
@@ -29,7 +29,7 @@
         </div>
         #end
     ## Untergeordnete Adressen
-        #if($getSubordinatedLinks.size() > 0)
+        #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)
         <div class="sub-section sub-section-unlined">
             #set($tmpTitle = $MESSAGES.getString("subordinated_addresses"))
             #set($tmpCount = $getSubordinatedLinks.size())

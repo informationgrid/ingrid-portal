@@ -38,22 +38,22 @@
                             </a>
                             <div class="accordion-content" data-tab-content role="tabpanel" aria-hidden="true" aria-labelledby="${hashDetail2}-accordion-label" id="${hashDetail2}-accordion">
                                 <div class="boxes">
-                                    #if($getLinks.size() > 0)
+                                    #if($getLinks && $getLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_info_links")
                                         #set($tmpTitle = $MESSAGES.getString("search.detail.dataRelations"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
-                                    #if($getOtherLinks.size() > 0)
+                                    #if($getOtherLinks && $getOtherLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_www_references")
                                         #set($tmpTitle = $MESSAGES.getString("www_references"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
-                                    #if($getSuperiorLinks.size() > 0)
+                                    #if($getSuperiorLinks && $getSuperiorLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_superior_address")
                                         #set($tmpTitle = $MESSAGES.getString("superior_address"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
                                     #end
-                                    #if($getSubordinatedLinks.size() > 0)
+                                    #if($getSubordinatedLinks && $getSubordinatedLinks.size() > 0)
                                         #set($tmpHash = "${hashDetail2}_subordinated_addresses")
                                         #set($tmpTitle = $MESSAGES.getString("subordinated_addresses"))
                                         #renderSubNavigation($tmpTitle $tmpHash)
