@@ -32,12 +32,12 @@ import org.junit.Test;
 public class MarkdownContextHelpUtilsTest {
 
     @Test
-    public void testBuildAvailableMarkdownHelp() throws Exception {
+    public void testBuildAvailableMarkdownHelp() {
         MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils("context_help_test");
         
         Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
-        
-        Assert.assertEquals( false, m.isEmpty() );
+
+        Assert.assertFalse(m.isEmpty());
         // invalid mark down files must be ignored
         Assert.assertEquals( 1, m.size() );
 
@@ -45,115 +45,115 @@ public class MarkdownContextHelpUtilsTest {
         key.setOid( "1" );
         key.setLang( "de" );
 
-        Assert.assertEquals( true, m.get( key ) != null );
+        Assert.assertNotNull(m.get(key));
         
         MarkdownContextHelpItem val = m.get( key );
         
         Assert.assertEquals( "Objektname", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test","object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test", "object_name.md").toString()));
     }
 
     @Test
-    public void testBuildAvailableLocalizedMarkdownHelp() throws Exception {
+    public void testBuildAvailableLocalizedMarkdownHelp() {
         MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils("context_help_test_loc");
         
         Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
-        
-        Assert.assertEquals( false, m.isEmpty() );
+
+        Assert.assertFalse(m.isEmpty());
         
         MarkdownContextHelpItemKey key = new MarkdownContextHelpItemKey("3000");
         key.setOid( "1" );
         key.setLang( "de" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         MarkdownContextHelpItem val = m.get( key );
         
         Assert.assertEquals( "Objektname", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_loc","object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_loc", "object_name.md").toString()));
         
         key.setLang( "en" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         val = m.get( key );
         
         Assert.assertEquals( "Objektname (en)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_loc", "en", "object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_loc", "en", "object_name.md").toString()));
 
         key.setGuid( "3001" );
         key.setOid( "2" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         val = m.get( key );
         
         Assert.assertEquals( "Objektname2 (en)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_loc", "en", "object_name2.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_loc", "en", "object_name2.md").toString()));
     
     }
     
 
     @Test
-    public void testBuildAvailableProfiledMarkdownHelp() throws Exception {
+    public void testBuildAvailableProfiledMarkdownHelp() {
         MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils("context_help_test_profile");
         
         Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
-        
-        Assert.assertEquals( false, m.isEmpty() );
+
+        Assert.assertFalse(m.isEmpty());
         
         MarkdownContextHelpItemKey key = new MarkdownContextHelpItemKey("3000");
         key.setOid( "1" );
         key.setLang( "de" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         MarkdownContextHelpItem val = m.get( key );
         
         Assert.assertEquals( "Objektname", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", "object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_profile", "object_name.md").toString()));
         
         key.setLang( "en" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         val = m.get( key );
         
         Assert.assertEquals( "Objektname (en)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", "en", "object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_profile", "en", "object_name.md").toString()));
         
 
         key.setLang( "de" );
         key.setProfile( "myprofile" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         val = m.get( key );
         
         Assert.assertEquals( "Objektname (myprofile)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", MarkdownContextHelpUtils.PROFILE_DIR, "myprofile", "object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_profile", MarkdownContextHelpUtils.PROFILE_DIR, "myprofile", "object_name.md").toString()));
     
         key.setLang( "en" );
         key.setProfile( "myprofile" );
-        
-        Assert.assertEquals( true, m.get( key ) != null );
+
+        Assert.assertNotNull(m.get(key));
         
         val = m.get( key );
         
         Assert.assertEquals( "Objektname (en) (myprofile)", val.getTitle() );
-        Assert.assertEquals( true, val.getMarkDownFilename().toString().endsWith( Paths.get( "context_help_test_profile", MarkdownContextHelpUtils.PROFILE_DIR, "myprofile", "en", "object_name.md" ).toString() ));
+        Assert.assertTrue(val.getMarkDownFilename().toString().endsWith(Paths.get("context_help_test_profile", MarkdownContextHelpUtils.PROFILE_DIR, "myprofile", "en", "object_name.md").toString()));
     }
     
     
     
     
     @Test
-    public void testRenderMarkdownFile() throws Exception {
+    public void testRenderMarkdownFile() {
         MarkdownContextHelpUtils mchu = new MarkdownContextHelpUtils("context_help_test");
         
         Map<MarkdownContextHelpItemKey, MarkdownContextHelpItem> m = mchu.getAvailableMarkdownHelpFiles();
-        
-        Assert.assertEquals( false, m.isEmpty() );
+
+        Assert.assertFalse(m.isEmpty());
 
         MarkdownContextHelpItemKey mchik = new MarkdownContextHelpItemKey("3000");
         mchik.setOid( "1" );
@@ -162,8 +162,8 @@ public class MarkdownContextHelpUtilsTest {
         MarkdownContextHelpItem val = m.get( mchik );
         
         String html = mchu.renderMarkdownFile( val.getMarkDownFilename() );
-        Assert.assertEquals( true, html.contains( "h1" ) );
-        Assert.assertEquals( true, html.contains( "table" ) );
+        Assert.assertTrue(html.contains("h1"));
+        Assert.assertTrue(html.contains("table"));
     }
     
 }
