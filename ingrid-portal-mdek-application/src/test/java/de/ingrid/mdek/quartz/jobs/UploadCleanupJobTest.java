@@ -436,6 +436,69 @@ public class UploadCleanupJobTest extends BaseJobTest {
 
     /**
      * Test:
+     * - Archive a published file with expiry date in the past but another later reference with no expiry date
+     * @throws Exception
+     */
+    @Test
+    public void testKeepPublishedExpiredWhenLaterReferenceStillValid() throws Exception {
+        // set up files
+        final String referencedFile = "Referenced File Ä";
+        this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
+
+        // setup file references
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
+        ));
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
+        this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
+     * Test:
+     * - Archive a published file with expiry date in the past but another reference before with no expiry date
+     * @see "https://redmine.informationgrid.eu/issues/2526"
+     * @throws Exception on error
+     */
+    @Test
+    public void testKeepPublishedExpiredWhenBeforeReferenceStillValid() throws Exception {
+        // set up files
+        final String referencedFile = "Referenced File Ä";
+        this.createFile(this.getFilePath(PLUG_ID), referencedFile, DEFAULT_FILE_AGE);
+
+        // setup file references
+        final List<FileReference> publishedRefs = new ArrayList<>();
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", null
+        ));
+        publishedRefs.add(this.job.new FileReference(
+                this.getFilePath(PLUG_ID)+PATH_SEPARATOR+this.encodeFilename(referencedFile), "", JOB_REFERENCE_TIME.toLocalDate().minusDays(1)
+        ));
+        final List<FileReference> unpublishedRefs = new ArrayList<>();
+        this.setupFileReferences(PLUG_ID, publishedRefs, unpublishedRefs);
+
+        // run job
+        this.job.executeInternal(this.context);
+
+        // test
+        assertFalse(this.archivedFileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertTrue(this.fileExists(this.getFilePath(PLUG_ID), referencedFile));
+        assertFalse(this.getTestAppender().hasIssues());
+    }
+
+    /**
+     * Test:
      * - Keep a published file with expiry date today
      * @throws Exception
      */

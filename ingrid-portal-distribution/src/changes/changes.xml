@@ -13,6 +13,9 @@
           <action type="fix" dev="wemove" issue="2460">
             Mapclient: Identifier der Datenquelle in Verbindung mit Anzeige des Kartenlayers
           </action>
+          <action type="fix" dev="wemove" issue="2526">
+            IGE: Fix archiving of wrong files
+          </action>
         </release>
 
         <release version="5.8.1" date="2021-05-25" description="Release 5.8.1">
