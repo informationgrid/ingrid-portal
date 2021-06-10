@@ -210,8 +210,13 @@ public class UploadCleanupJob extends QuartzJobBean {
                                 if (expiryDate == null ||
                                         (reference.expiryDate == null || reference.expiryDate.isAfter(expiryDate))) {
                                     expiryDate = reference.expiryDate;
+                                    
+                                    // leave loop if any reference has a indefinite date, in order to keep this file
+                                    // see also issue: https://redmine.informationgrid.eu/issues/2526
+                                    if (expiryDate == null) break;
                                 }
                             }
+                            
                             // handle expired files
                             // NOTE: a file might be expired in one catalog, but not in another,
                             // so if a file is added/removed by one catalog, it might be removed/added by another
