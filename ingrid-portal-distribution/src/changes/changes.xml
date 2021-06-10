@@ -6,7 +6,7 @@
     </properties>
 
     <body>
-        <release version="5.8.2" date="2021-xx-xx" description="Release 5.8.2">
+        <release version="5.8.2" date="2021-06-10" description="Release 5.8.2">
           <action type="add" dev="wemove" issue="2519">
             Mapclient: GPX import - Beschreibung fehlt
           </action>
