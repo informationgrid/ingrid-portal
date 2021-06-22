@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,12 +29,12 @@ define([
 ], function (array, declare, lang, topic, message) {
     return declare(null, {
 
-        title: "Schlüsselkatalog",
-        description: "Titel und Datum müssen gesetzt sein. Es wird zum Pflichtfeld, wenn Sachdaten/Attributinformation mindestens einen Eintrag hat.",
+        title: "Vektorformat",
+        description: "Validierung, dass beim Ausfüllen der Spalte Elementenanzahl auch die Spalte Geometrietyp ausgefüllt ist",
         category: "Felder",
         defaultActive: true,
         run: function () {
-            
+
             var self = this;
             this.publishEvent = topic.subscribe("/onBeforeObjectPublish", function (/*Array*/ notPublishableIDs) {
 
@@ -47,7 +47,7 @@ define([
             });
 
         },
-        
+
         hasNoValue: function(value) {
             return typeof (value) == "undefined" ||
                 value === null ||

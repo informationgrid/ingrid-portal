@@ -26,7 +26,7 @@
             Mapclient: Identifier der Datenquelle in Verbindung mit Anzeige des Kartenlayers
           </action>
           <action type="update" dev="wemove" issue="2300">
-            Portal (BKG): Add facet for application. 
+            Portal (BKG): Add facet for application.
           </action>
           <action type="fix" dev="wemove" issue="2463">
             IGE: Fix wrong locale for thesaurus analysis.
@@ -54,6 +54,9 @@
           </action>
           <action type="fix" dev="wemove" issue="2526">
             IGE: Fix archiving of wrong files
+          </action>
+          <action type="fix" dev="wemove" issue="2543">
+            IGE: Fix name and description of a behaviour
           </action>
         </release>
 
