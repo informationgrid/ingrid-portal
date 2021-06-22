@@ -58,6 +58,9 @@
           <action type="fix" dev="wemove" issue="2543">
             IGE: Fix name and description of a behaviour
           </action>
+          <action type="fix" dev="wemove" issue="2521">
+            IGE: Make digital representation mandatory for not conform INSPIRE datasets
+          </action>
         </release>
 
         <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
