@@ -51,7 +51,7 @@
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             <a class="anchor" id="${hashDetail3}_subordinated_references"></a>
-            #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h3" [] true)
+            #renderLinkListImageLimit($tmpTitle $getSubordinatedLinks false true $getSubordinatedLinks.size() "subordinated_more" "h4" [] true)
         </div>
         #end
     ## Übergeordnetet Objekte
@@ -63,7 +63,7 @@
                 #set($tmpTitle = $tmpTitle + " <span>(${tmpCount})</span>")
             #end
             <a class="anchor" id="${hashDetail3}_superior_references"></a>
-            #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h3" [] true)
+            #renderLinkListImageLimit($tmpTitle $getSuperiorLinks false true $getSuperiorLinks.size() "superior_more" "h4" [] true)
         </div>
         #end
     </div>
