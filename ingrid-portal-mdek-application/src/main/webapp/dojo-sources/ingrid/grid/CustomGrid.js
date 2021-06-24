@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -96,7 +96,7 @@ define([
         cellHeightDiff: null,
         viewport: null,
         canvas: null,
-        // row filter filters data for display, pass field and values to match ! 
+        // row filter filters data for display, pass field and values to match !
         // e.g. { dataField:dataValue, dataField2:dataValue2 }
         rowFilter: null,
         data: [],
@@ -318,17 +318,17 @@ define([
         },
 
         /**
-         * Do a relayout of the grid adjusting the last column to fill the whole width. Due to 
+         * Do a relayout of the grid adjusting the last column to fill the whole width. Due to
          * optimizations it's only done once and if the grid was rendered in a hidden state where
-         * the viewport's width is null. You can however force a relayout by giving the parameter 
+         * the viewport's width is null. You can however force a relayout by giving the parameter
          * force with true.
          * @param  {boolean} force [does a relayout even if viewport already had a width]
          */
         reinitLastColumn: function(force) {
             if (force || this.viewportW === 0) {
-                // update the viewport width which might have changed 
+                // update the viewport width which might have changed
                 this.viewportW = parseFloat(style.get(this.domNode, "width"));
-                
+
                 // in case the grid is not yet visible, just return instead of modifying columns to a wrong width
                 if (this.viewportW === 0) return;
 
@@ -345,10 +345,10 @@ define([
                     lastColumn = this._getLastVisibleColumn();
                 this.columns.forEach(function(c, i) {
                     if (!c.hidden) {
-                        if (i < lastColumn) totalColWidth += c.width;                        
+                        if (i < lastColumn) totalColWidth += c.width;
                     }
                 });
-                
+
                 // use scrollbar-width in last column only if the height is limited
                 var scrollbarWidth = this.options.forceGridHeight === true ? scrollbarDimensions.width : 0;
                 var newWidth = this.viewportW - totalColWidth - scrollbarWidth;
@@ -566,7 +566,7 @@ define([
         },
 
         // DOES NOT invalidate ! call invalidate() to take effect !
-        // Pass null to remove filter. 
+        // Pass null to remove filter.
         setRowFilter: function(newRowFilter) {
             console.debug("!!! set rowFilter on grid '" + this.id + "' -> ");
             console.debug(newRowFilter);
@@ -858,11 +858,11 @@ define([
              if (d) {
                  content = this.getFormatter(row, m)(row, i, d[m.field], m, d, this);
              }
-             
+
              // check for invalid cells
              if (this.invalidCells[row] && dojo.indexOf(this.invalidCells[row], i) != -1) {
                  cellCss += " importantBackground";
-             } 
+             }
 
                 // TODO:  merge them together in the setter
                 for (var key in this.cellCssClasses) {
@@ -944,7 +944,7 @@ define([
             //     } else {
             //         this.viewportH = this.options.rowHeight * showRows;
             //     }
-                
+
             // } else {
             this.viewportH = this.options.rowHeight * showRows;
             // }
@@ -1290,8 +1290,9 @@ define([
                 var cellContent = this.getDataItem(cell.row) ? this.getDataItem(cell.row).fileName : null;
                 if(!cellContent) return;
                 if (this.columns[cell.cell].formatter) cellContent = this.columns[cell.cell].formatter(cell.row, cell.cell, cellContent);
+                var urlPrefix = cellContent.indexOf("http") === -1 ? "rest/document/" : "";
 
-                Tooltip.show("<img style='width: 300px; height: auto;' src='" + cellContent + "' alt='Bild nicht gefunden: " + cellContent + "' />", thisCell);
+                Tooltip.show("<img style='width: 300px; height: auto;' src='" + urlPrefix + cellContent + "' alt='Bild nicht gefunden: " + cellContent + "' /><hr><div style='width: 300px; word-break: break-word;'>" + urlPrefix + cellContent + "</div>", thisCell);
                 var handle = on(thisCell, "mouseout", function() {
                     var mousePos = {};
                     var handleMove = on(has("ie") ? document : window, "mousemove", function(e) {
@@ -1394,7 +1395,7 @@ define([
                                 self.eventWndClick.remove();
                                 self.eventWndClick = null;
                                 self.lastActiveEditorRow = self.activeRow;
-                                
+
                                 // check if last row was empty and can be removed again
                                 self.handleEmptyRow();
                             }
@@ -1408,7 +1409,7 @@ define([
                 }
             });
         },
-        
+
         handleEmptyRow: function(row) {
             var currentRow = row !== undefined ? row : this.activeRow;
             var lastRowData = this.data[currentRow];
@@ -1418,7 +1419,7 @@ define([
                 });
                 if (!hasContent) {
                     this.data.splice(currentRow, 1);
-                    
+
                     // close current editor if it was in the next row
                     if (this.getEditorLock().isActive() && this.activeRow >= this.data.length) {
                         this.getEditorLock().cancelCurrentEdit();
@@ -2252,7 +2253,7 @@ define([
                 var lastVisibleColumn = this._getLastVisibleColumn();
                 if (i === lastVisibleColumn) {
                     var currentViewportWidth = parseFloat(style.get(this.container, "width"));
-                    
+
                     // use scrollbar-width in last column only if the height is limited
                     var scrollbarWidth = this.options.forceGridHeight === true ? scrollbarDimensions.width : 0;
                     newWidth = currentViewportWidth - x - scrollbarWidth - this.cellWidthDiff;
@@ -2612,21 +2613,21 @@ define([
          delete this.invalidCells[row];
          if (refresh) this.invalidate();
      },
-     
+
         resetInvalidRows: function() {
             this.invalidRows = [];
             this.invalidate();
         },
 
      /**
-      * The invalid cells are defined as follows: 
+      * The invalid cells are defined as follows:
       * { row_m: [column_a,...], row_n: [column_b,...]}
       */
      setInvalidCells: function(/*hash of objects*/cells) {
          this.invalidCells = cells;
          this.invalidate();
      },
-     
+
      addInvalidCell: function(/*object*/cell, /*boolean*/refresh) {
          if (!this.invalidCells[cell.row]) {
              this.invalidCells[cell.row] = [];
@@ -2637,7 +2638,7 @@ define([
              if (refresh) this.invalidate();
          }
      },
-     
+
      removeInvalidCell: function(/*object*/cell, /*boolean*/refresh) {
          var invalidCells = this.invalidCells[cell.row];
          if (invalidCells) {
@@ -2647,12 +2648,12 @@ define([
          }
          if (refresh) this.invalidate();
      },
-     
+
      resetInvalidCells: function() {
          this.invalidCells = {};
          this.invalidate();
      },
-     
+
         addCellCssStyles: function(key, hash) {
             if (this.cellCssClasses[key]) {
                 throw "addCellCssStyles: cell CSS hash with key '" + key + "' already exists.";
@@ -2719,10 +2720,10 @@ define([
             this.sortColumnId = columnId;
             this.sortAsc = ascending;
             /*var columnIndex = getColumnIndex(this.sortColumnId);
-         
+
          $headers.children().removeClass("slick-header-column-sorted");
          $headers.find(".slick-sort-indicator").removeClass("slick-sort-indicator-asc slick-sort-indicator-desc");
-        
+
          if (columnIndex != null) {
              $headers.children().eq(columnIndex)
                 .addClass("slick-header-column-sorted")
@@ -2802,7 +2803,7 @@ define([
 
         /**
          * Marks a cell as error or resets it.
-         * 
+         *
          * @param  {String} type   [when "Error" then the cell be marked red, otherwise normal]
          * @param  {String} gridId [the grid id to mark the cell]
          * @param  {int}    row    [the row number]
