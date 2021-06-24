@@ -288,7 +288,7 @@
 
     <!-- RSS Page  -->
     <rule>
-        <from>/rss</from>
+        <from>^/rss</from>
         <to type="forward">/portal/rsspage.psml</to>
     </rule>
     <outbound-rule>
