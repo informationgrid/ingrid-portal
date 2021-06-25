@@ -326,7 +326,7 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
     </facet>
     <!-- Kategorie -->
     <facet>
-        <name>Kategorie</name>
+        <name>Kategorien</name>
         <id>category</id>
         <categoryOnly>true</categoryOnly>
         <facets>
