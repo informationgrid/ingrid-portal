@@ -7,10 +7,13 @@
 
     <body>
         <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
-           <action type="fix" dev="wemove">
+          <action type="fix" dev="wemove" issue="2563">
+            Mapclient: Fix tooltip
+          </action>
+          <action type="fix" dev="wemove">
             Portal: Fix RSS URL rewrite rule
           </action>
-           <action type="add" dev="wemove" issue="2519">
+          <action type="add" dev="wemove" issue="2519">
             Mapclient: GPX import - Beschreibung fehlt
           </action>
           <action type="add" dev="wemove" issue="2407">
