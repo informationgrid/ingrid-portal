@@ -9,12 +9,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -323,10 +323,13 @@
                             </span>
                             <span id="uiElement5100" class="outer optional">
                                 <div>
-                                    <span class="label">
+                                    <span class="label left">
                                         <label for="generalPreviewImageTable" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 5100)">
                                             <fmt:message key="ui.obj.general.previewImage" />
                                         </label>
+                                    </span>
+                                    <span class="functionalLink"><img src="img/ic_fl_popup.gif" width="10" height="9" alt="Popup" />
+                                        <a id="generalPreviewImageTableLink" href="javascript:void(0);" title="<fmt:message key="dialog.popup.previewTable.link" /> [Popup]"><fmt:message key="dialog.popup.previewTable.link" /></a>
                                     </span>
                                     <div class="input tableContainer clear">
                                         <div id="generalPreviewImageTable" interactive="true"></div>
@@ -716,7 +719,7 @@
                                                 </div>
                                             </span>
                                         </div>
-                                        
+
 <%--                                        <hr>--%>
 
                                         <span id="uiElement5306" class="outer">
@@ -1411,7 +1414,7 @@
                                         <input type="checkbox" id="ref3IsAtomDownload" title=""/><label onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3225)"><fmt:message key="ui.obj.type3.serviceAtomDownload" /></label>
                                     </div>
                                 </span>
-                              </div> 
+                              </div>
                               </span>
                                 <span id="uiElement3230" class="outer halfWidth">
                                    	<div><span class="label">
@@ -1513,15 +1516,15 @@
                                     </span>
                                     <span id="uiElement3221" class="outer halfWidth">
                                         <div>
-                                            <span id="ref3CouplingTypeLabel" class="label"> 
+                                            <span id="ref3CouplingTypeLabel" class="label">
                                                 <label for="ref3CouplingType" onclick="require('ingrid/dialog').showContextHelp(arguments[0], 3221)">
                                                     <fmt:message key="ui.obj.type3.couplingType" />
-                                                </label> 
+                                                </label>
                                             </span>
                                             <span class="input">
                                                 <div autoComplete="false" id="ref3CouplingType" style="width: 100%;"></div>
                                             </span>
-                                        </div> 
+                                        </div>
                                     </span>
                             </div>
                             <div class="inputContainer">

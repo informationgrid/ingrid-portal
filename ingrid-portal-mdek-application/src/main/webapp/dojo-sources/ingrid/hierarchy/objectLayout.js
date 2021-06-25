@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,6 +25,7 @@ define([
     "dojo/_base/lang",
     "dojo/_base/array",
     "dojo/cookie",
+    "dojo/dom-construct",
     "dojo/has",
     "dojo/on",
     "dojo/aspect",
@@ -50,6 +51,7 @@ define([
     "dijit/layout/TabContainer",
     "dijit/layout/ContentPane",
     "ingrid/utils/UI",
+    "ingrid/utils/Store",
     "ingrid/utils/Syslist",
     "ingrid/utils/List",
     "ingrid/utils/Grid",
@@ -65,12 +67,13 @@ define([
     "ingrid/IgeEvents",
     "ingrid/grid/CustomGridEditors",
     "ingrid/grid/CustomGridFormatters",
+    "ingrid/widgets/upload/UploadWidget",
     "ingrid/hierarchy/validation"
-], function(declare, lang, array, cookie, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
+], function(declare, lang, array, cookie, construct, has, on, aspect, query, Deferred, topic, dom, domClass, style, all, Promise, validate, Standby,
             registry, Tooltip, Button, ValidationTextBox, SimpleTextarea, CheckBox, RadioButton, NumberTextBox, DateTextBox,
             TabContainer, ContentPane,
-            UtilUI, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog, UtilDOM,
-            message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, validator) {
+            UtilUI, UtilStore, UtilSyslist, UtilList, UtilGrid, UtilThesaurus, UtilCatalog, UtilDOM,
+            message, dialog, layoutCreator, rules, dirty, behaviour, igeEvents, gridEditors, gridFormatters, UploadWidget, validator) {
 
         return declare(null, {
             objectTemplateCreated: false,
@@ -291,42 +294,13 @@ define([
 
                 layoutCreator.createDataGrid("generalAddress", null, structure, null);
 
-                /*
-                var previewImage = new ValidationTextBox({
-                    maxLength: 1024,
-                    style: "width:100%;"
-                }, "generalPreviewImage");
-
-                new ValidationTextBox({
-                    maxLength: 255,
-                    style: "width:100%;"
-                }, "previewImageDescription");
-
-                // show a tooltip when hovering over image
-                previewImage.tooltip = new Tooltip({
-                    connectId: ["generalPreviewImage"],
-                    label: message.get("general.image.not.found"),
-                    showDelay: 600,
-                    position: ['above']
-                });
-
-                on(previewImage, "Change", function(value) {
-                    //this.tooltip.destroyRecursive();
-                    this.tooltip.label = "<img style='min-width:150px; max-width: 300px; max-height: 300px;' src='" + value + "' alt='" + message.get('general.image.not.found') + ": " + value + "' />";
-                });
-
-                on(previewImage.domNode, "mouseout", function() {
-                    Tooltip.hide(dom.byId("generalPreviewImage"));
-                });
-                */
-
                 var previewImageStructure = [
                     {
                         field: 'fileName',
                         name: message.get("ui.obj.previewImage.table.fileName") + "*",
                         width: '350px',
                         type: gridEditors.TextCellEditor,
-                        editable: true
+                        editable: false
                     },
                     {
                         field: 'fileDescription',
@@ -339,6 +313,9 @@ define([
                 var gridProperties = UtilDOM.getHTMLAttributes("generalPreviewImageTable")
                 gridProperties.imageLinkTooltip = "true";
                 layoutCreator.createDataGrid("generalPreviewImageTable", null, previewImageStructure, null, gridProperties);
+
+                this.addPreviewUploadLink();
+
 
                 var thesaurusInspireStructure = [{
                     field: 'title',
@@ -2690,7 +2667,137 @@ define([
                         };
                     });
                 });
+            },
+
+            addPreviewUploadLink: function() {
+                var self = this;
+
+                // create uploader instance
+                var uploader = new UploadWidget({
+                    uploadUrl: "rest/document",
+                    acceptFiles: "image/gif,image/jpeg,image/png,image/svg+xml,image/tiff,image/webp,image/bmp,image/vnd.microsoft.icon"
+                });
+
+                on(dom.byId("generalPreviewImageTableLink"), "click", lang.hitch(this, function() {
+                    // upload base path, regexp filter must correspond to FileSystemStorage.ILLEGAL_PATH_CHARS in FileSystemStorage.java
+                    var basePath = UtilCatalog.catalogData.plugId.replace(/[<>?\":|\\*]/, "_") + "/" + currentUdk.uuid;
+
+                    var files = self.getFiles(this.phases, true);
+                    uploader.open(basePath, files).then(lang.hitch(this, function(uploads) {
+                        self.handleUploads(uploads, basePath);
+                    }));
+                }));
+            },
+
+            getFiles: function(phases, flat) {
+                var files = flat ? [] : {};
+                for (var phase in phases) {
+                    if (!flat) {
+                        files[phase] = {};
+                    }
+                    var fields = phases[phase].fields;
+                    for (var field in fields) {
+                        var key = fields[field].key;
+                        var data = fields[field].field.data;
+                        if (data) {
+                            if (!flat) {
+                                files[phase][key] = [];
+                            }
+                            for (var row in data) {
+                                var file = decodeURI(data[row].link);
+                                if (flat) {
+                                    if (array.indexOf(files, file) === -1) {
+                                        files.push(file)
+                                    }
+                                }
+                                else {
+                                    files[phase][key].push(file);
+                                }
+                            }
+                        }
+                    }
+                }
+                return files;
+            },
+
+            handleUploads: function(uploads, basePath) {
+                var self = this;
+
+                // get existing table data
+                var rows = registry.byId("generalPreviewImageTable").data;
+
+                // create map from uploads array
+                var uploadMap = {};
+                array.forEach(uploads, function(upload) {
+                    uploadMap[upload.uri] = upload;
+                });
+                // update existing uploads
+                array.forEach(rows, function(row) {
+                    var uri = row.fileName;
+                    if (uri && uploadMap[uri]) {
+                        var upload = uploadMap[uri];
+                        self.getRowData(row, upload, basePath);
+                        delete uploadMap[uri];
+                    }
+                });
+                // map back to list
+                uploads = [];
+                for (var uri in uploadMap) {
+                    uploads.push(uploadMap[uri]);
+                }
+
+                // fill existing rows without link
+                array.forEach(rows, function(row) {
+                    var uri = row.fileName;
+                    if (!uri) {
+                        var upload = uploads.shift();
+                        if (upload) {
+                            self.getRowData(row, upload, basePath);
+                        }
+                    }
+                });
+
+                // add remaining uploads
+                array.forEach(uploads, function(upload) {
+                    rows.push(self.getRowData({}, upload, basePath));
+                });
+
+                // store changes
+                UtilStore.updateWriteStore("generalPreviewImageTable", rows);
+            },
+
+            getRowData: function(row, data, basePath) {
+                if (!row.fileDescription || row.fileDescription.length === 0) {
+                    var file = data.uri;
+
+                    // generate basepath ready for comparison with
+                    var basePathWithoutLeadingSlash = basePath;
+                    // strip leading slash because the file name comes in without trainling slash
+                    if (basePath.indexOf("/") === 0) {
+                        basePathWithoutLeadingSlash = basePath.substring(1, basePath.length);
+                    }
+                    var fileRel;
+                    if (file.indexOf(basePathWithoutLeadingSlash) === 0) {
+                        // uploaded file, cut base path of uploaded file, keep hierarchy structure from extracted ZIPs
+                        // strip slash following base path
+                        fileRel = file.substring(basePathWithoutLeadingSlash.length + 1, file.length);
+                    } else {
+                        // link, get the last path of the link
+                        fileRel = file.substring(file.lastIndexOf('/')+1, file.length);
+                    }
+                    var lastDotPos = fileRel.lastIndexOf(".");
+                    var name = fileRel.substring(0,
+                        lastDotPos === -1 ? file.length : lastDotPos);
+                    row.fileDescription = decodeURI(name);
+                }
+                row.fileName = data.uri;
+                row.type = data.type;
+                row.size = data.size;
+                return row;
             }
+
+
+
         })();
 
         // return public methods
