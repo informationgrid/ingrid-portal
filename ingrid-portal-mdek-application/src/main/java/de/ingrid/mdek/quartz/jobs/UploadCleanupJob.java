@@ -312,7 +312,7 @@ public class UploadCleanupJob extends QuartzJobBean {
         }
 
         final IngridDocument response = mdekCallerQuery.queryHQLToMap(plugId, qString, null, "");
-        if (response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
+        if (response != null && response.getBoolean(IJobRepository.JOB_INVOKE_SUCCESS)) {
             final IngridDocument result = MdekUtils.getResultFromResponse(response);
             if (result != null) {
                 @SuppressWarnings("unchecked") final List<IngridDocument> objs = (List<IngridDocument>) result.get(MdekKeys.OBJ_ENTITIES);
