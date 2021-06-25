@@ -32,7 +32,7 @@
                         <div class="teaser-logo-partner">
                             #if($rs.partnerKey != "all")
                                 #set($partnerTitleKey = "common.result.partner.${partner}")
-                                <img src="/ingrid-portal-apps/images/partner/small/${partner}.png" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
+                                <img src="/ingrid-portal-apps/images/partner/svg/${partner}.svg" alt="$MESSAGES.getString($partnerTitleKey)" title="$MESSAGES.getString($partnerTitleKey)"/>
                             #end
                         </div>
                     #end

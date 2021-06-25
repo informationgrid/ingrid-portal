@@ -390,112 +390,112 @@ Am Ende der Datei sind Test-Beispiel für UND- sowie ODER-Abfragen (ohne/mit Dia
                 <query>partner:bw</query>
                 <id>bw</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/bw.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/bw.svg</icon>
             </facet>
             <facet>
                 <name>Bayern</name>
                 <query>partner:by</query>
                 <id>by</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/by.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/by.svg</icon>
             </facet>
             <facet>
                 <name>Berlin</name>
                 <query>partner:be</query>
                 <id>be</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/be.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/be.svg</icon>
             </facet>
             <facet>
                 <name>Brandenburg</name>
                 <query>partner:bb</query>
                 <id>bb</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/bb.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/bb.svg</icon>
             </facet>
             <facet>
                 <name>Bremen</name>
                 <query>partner:hb</query>
                 <id>hb</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/hb.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/hb.svg</icon>
             </facet>
             <facet>
                 <name>Hamburg</name>
                 <query>partner:hh</query>
                 <id>hh</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/hh.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/hh.svg</icon>
             </facet>
             <facet>
                 <name>Hessen</name>
                 <query>partner:he</query>
                 <id>he</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/he.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/he.svg</icon>
             </facet>
             <facet>
                 <name>Mecklenburg-Vorpommern</name>
                 <query>partner:mv</query>
                 <id>mv</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/mv.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/mv.svg</icon>
             </facet>
             <facet>
                 <name>Niedersachsen</name>
                 <query>partner:ni</query>
                 <id>ni</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/ni.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/ni.svg</icon>
             </facet>
             <facet>
                 <name>Nordrhein-Westfalen</name>
                 <query>partner:nw</query>
                 <id>nw</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/nw.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/nw.svg</icon>
             </facet>
             <facet>
                 <name>Rheinland-Pfalz</name>
                 <query>partner:rp</query>
                 <id>rp</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/rp.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/rp.svg</icon>
             </facet>
             <facet>
                 <name>Saarland</name>
                 <query>partner:sl</query>
                 <id>sl</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/sl.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/sl.svg</icon>
             </facet>
             <facet>
                 <name>Sachsen</name>
                 <query>partner:sn</query>
                 <id>sn</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/sn.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/sn.svg</icon>
             </facet>
             <facet>
                 <name>Sachsen-Anhalt</name>
                 <query>partner:st</query>
                 <id>st</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/st.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/st.svg</icon>
             </facet>
             <facet>
                 <name>Schleswig-Holstein</name>
                 <query>partner:sh</query>
                 <id>sh</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/sh.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/sh.svg</icon>
             </facet>
             <facet>
                 <name>Thüringen</name>
                 <query>partner:th</query>
                 <id>th</id>
                 <parentId>provider</parentId>
-                <icon>/ingrid-portal-apps/images/partner/big/th.png</icon>
+                <icon>/ingrid-portal-apps/images/partner/svg/th.svg</icon>
             </facet>
         </facets>
     </facet>
