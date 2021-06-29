@@ -3,7 +3,7 @@
     <table>
         <tbody>
             <tr>
-                <th>Metadatenquellen</th>
+                <th>$MESSAGES.getString('search.detail.metadata.source')</th>
                 <td>
                     <div>
                         $plugDataSourceName
