@@ -66,6 +66,7 @@ import de.ingrid.portal.global.IngridResourceBundle;
 import de.ingrid.portal.global.IngridSysCodeList;
 import de.ingrid.portal.global.Settings;
 import de.ingrid.portal.global.UniversalSorter;
+import de.ingrid.portal.global.UtilsDB;
 import de.ingrid.portal.global.UtilsMimeType;
 import de.ingrid.portal.global.UtilsQueryString;
 import de.ingrid.portal.global.UtilsString;
@@ -323,6 +324,21 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	                plugPartner = partners[0];
 	                context.put("plugPartner", plugPartner);
 	            }
+	            
+	            if(plugDescription.getProviders() != null) {
+	                ArrayList<String> plugProviders = new ArrayList<>();
+	                for (String provider : plugDescription.getProviders()) {
+	                    String dbProvider = UtilsDB.getPartnerFromKey(provider);
+	                    if(dbProvider != null) {
+	                        plugProviders.add(dbProvider);
+	                    }
+                    }
+	                context.put("plugProviders", plugProviders);
+	            }
+
+	            if(plugDescription.getDataSourceName() != null) {
+                    context.put("plugDataSourceName", plugDescription.getDataSourceName());
+                }
 	            
 	            // try to get the result for a objects UUID
 	            if (docUuid != null && docUuid.length() > 0) {

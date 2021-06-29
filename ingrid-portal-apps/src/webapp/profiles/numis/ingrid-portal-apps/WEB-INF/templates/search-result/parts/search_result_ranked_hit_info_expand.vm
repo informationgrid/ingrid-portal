@@ -152,8 +152,6 @@
                             <a href="$rs.url" title="$rs.url">$!rs.url_str</a>
                         </p>
                     #end
-                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_provider.vm")
-                    #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_source.vm")
                     <div class="teaser-links">
                         #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_csw_xml.vm")
                     </div>

@@ -1,0 +1,25 @@
+## Metadatenquellen
+<div class="table table--lined">
+    <table>
+        <tbody>
+            <tr>
+                <th>Metadatenquellen</th>
+                <td>
+                    <div>
+                        $plugDataSourceName
+                    </div>
+                </td>
+            </tr>
+            #foreach($plugProvider in $plugProviders)
+                <tr>
+                <th></th>
+                <td>
+                    <div>
+                        $plugProvider
+                    </div>
+                </td>
+                </tr>
+            #end
+        </tbody>
+    </table>
+</div>
