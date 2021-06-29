@@ -328,7 +328,7 @@ public class SearchDetailPortlet extends GenericVelocityPortlet {
 	            if(plugDescription.getProviders() != null) {
 	                ArrayList<String> plugProviders = new ArrayList<>();
 	                for (String provider : plugDescription.getProviders()) {
-	                    String dbProvider = UtilsDB.getPartnerFromKey(provider);
+	                    String dbProvider = UtilsDB.getProviderFromKey(provider);
 	                    if(dbProvider != null) {
 	                        plugProviders.add(dbProvider);
 	                    }
