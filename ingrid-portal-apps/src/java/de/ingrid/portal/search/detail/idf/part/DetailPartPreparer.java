@@ -301,29 +301,28 @@ public class DetailPartPreparer {
                 continue;
             }
 
-            String constraints = constraintsNodes.item(0).getTextContent();
-            if(log.isDebugEnabled()) {
-                log.debug(String.format("Discovered use constraints: %s", constraints));
-            }
-
-            // FIXME >>> Change after redmine ticket #848 is resolved >>>
-            // Temporary solution to get rid of prefix in front of the codelist value
-            constraints = removePraefix(constraints);
-            // <<< End of temporary solution <<<
-
-            if (constraints == null || constraints.trim().isEmpty()) {
-                if (!result.contains(restrictionCode )) {
-                    result.add(restrictionCode);
-                }
-                continue;
-            }
-
-            // try to get the license source from other constraints (#1066)
-            String url = null;
-            String name = null;
             // also remember further otherConstraints may be used in BKG profile (#1194)
             List<String> furtherOtherConstraints = new ArrayList<>();
             for (int indexConstraint = 0; indexConstraint < constraintsNodes.getLength(); indexConstraint++) {
+
+                String constraints = constraintsNodes.item(indexConstraint).getTextContent();
+                if(log.isDebugEnabled()) {
+                    log.debug(String.format("Discovered use constraints: %s", constraints));
+                }
+
+                // FIXME >>> Change after redmine ticket #848 is resolved >>>
+                // Temporary solution to get rid of prefix in front of the codelist value
+                constraints = removePraefix(constraints);
+                // <<< End of temporary solution <<<
+
+                if (constraints == null || constraints.trim().isEmpty()) {
+                    if (!result.contains(restrictionCode )) {
+                        result.add(restrictionCode);
+                    }
+                    continue;
+                }
+
+                
                 String constraintSource = constraintsNodes.item(indexConstraint).getTextContent();
                 if (constraintSource == null || constraintSource.trim().isEmpty()) {
                     log.warn("Empty otherConstraints ! We skip this one");
@@ -332,10 +331,15 @@ public class DetailPartPreparer {
                 constraintSource = removePraefix(constraintSource);
                 // parse JSON
                 boolean isJSON = false;
+                // try to get the license source from other constraints (#1066)
+                String url = null;
+                String name = null;
+                String quelle = null;
                 try {
                     IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
                     url = (String) json.get("url");
                     name = (String) json.get("name");
+                    quelle = (String) json.get("quelle");
                     isJSON = true;
                 } catch (ParseException e) {
                     isJSON = false;
@@ -347,46 +351,56 @@ public class DetailPartPreparer {
                 if (!isJSON) {
                     // no JSON but might be further other constraint (BKG), we also render !
                     furtherOtherConstraints.add( constraintSource );
-                }
-            }
-
-            String finalValue = getValueFromCodeList(licenceList, constraints);
-            if (finalValue == null || finalValue.trim().isEmpty()) {
-                if (!constraints.startsWith("{") && !constraints.endsWith("}")) {
-                    finalValue = constraints;
-                }
-            }
-
-            String value;
-            String restrictionInfo = "";
-            if (restrictionCode != null && restrictionCode.trim().length() > 0) {
-                restrictionInfo = restrictionCode + ": ";
-            }
-
-            if (url != null && !url.trim().isEmpty()) {
-                // we have a URL from JSON
-
-                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() ) ) {
-                    // we have a different license name from JSON, render it with link
-                    value = String.format(messages.getString("constraints.use.link"), restrictionInfo, url, name, finalValue);
                 } else {
-                    // no license name, render whole text with link
-                    value = String.format(messages.getString("constraints.use.link.noname"), restrictionInfo, url, finalValue);
-                }
-            } else {
-                // NO URL
-                if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
-                    value = String.format("%s%s<br>%s", restrictionInfo, name, finalValue);
-                } else if (restrictionCode != null){
-                    value = String.format("%s%s", restrictionInfo, finalValue);
-                } else {
-                    value = finalValue;
+                    
+                    String finalValue = getValueFromCodeList(licenceList, constraints);
+                    if (finalValue == null || finalValue.trim().isEmpty()) {
+                        if (!constraints.startsWith("{") && !constraints.endsWith("}")) {
+                            finalValue = constraints;
+                        }
+                    }
+
+                    if(quelle != null && !quelle.isEmpty()) {
+                        String tmpQuelle = "Quellenvermerk: " + quelle;
+                        if(furtherOtherConstraints.contains(tmpQuelle)){
+                            furtherOtherConstraints.remove(tmpQuelle);
+                        }
+                        finalValue += tmpQuelle;
+                    }
+                    
+                    String value;
+                    String restrictionInfo = "";
+                    if (restrictionCode != null && restrictionCode.trim().length() > 0) {
+                        restrictionInfo = restrictionCode + ": ";
+                    }
+
+                    if (url != null && !url.trim().isEmpty()) {
+                        // we have a URL from JSON
+
+                        if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() ) ) {
+                            // we have a different license name from JSON, render it with link
+                            value = String.format(messages.getString("constraints.use.link"), restrictionInfo, url, name, finalValue);
+                        } else {
+                            // no license name, render whole text with link
+                            value = String.format(messages.getString("constraints.use.link.noname"), restrictionInfo, url, finalValue);
+                        }
+                    } else {
+                        // NO URL
+                        if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
+                            value = String.format("%s%s<br>%s", restrictionInfo, name, finalValue);
+                        } else if (restrictionCode != null){
+                            value = String.format("%s%s", restrictionInfo, finalValue);
+                        } else {
+                            value = finalValue;
+                        }
+                    }
+                    
+                    if (!result.contains(value)) {
+                        result.add(value);
+                    }
                 }
             }
 
-            if (!result.contains(value)) {
-                result.add(value);
-            }
             
             // also add other constraints if present !
             for (String furtherConstraint : furtherOtherConstraints) {
