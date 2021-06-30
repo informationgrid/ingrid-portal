@@ -334,12 +334,12 @@ public class DetailPartPreparer {
                 // try to get the license source from other constraints (#1066)
                 String url = null;
                 String name = null;
-                String quelle = null;
+                String source = null;
                 try {
                     IngridDocument json = JsonUtil.parseJsonToIngridDocument(constraintSource);
                     url = (String) json.get("url");
                     name = (String) json.get("name");
-                    quelle = (String) json.get("quelle");
+                    source = (String) json.get("quelle");
                     isJSON = true;
                 } catch (ParseException e) {
                     isJSON = false;
@@ -351,9 +351,28 @@ public class DetailPartPreparer {
                 if (!isJSON) {
                     // no JSON but might be further other constraint (BKG), we also render !
                     if(indexConstraint < constraintsNodes.getLength() - 1) {
-                        String tmpQuelle = constraintsNodes.item(indexConstraint  + 1).getTextContent();
-                        if(tmpQuelle.startsWith("Quellenvermerk: ")) {
-                            String value = String.format("%s%s<br>%s", "", constraintSource, tmpQuelle);
+                        String tmpSource = constraintsNodes.item(indexConstraint  + 1).getTextContent();
+                        if(tmpSource.startsWith("Quellenvermerk: ")) {
+                            boolean isSourceOfJson = false;
+                            if(indexConstraint + 1 < constraintsNodes.getLength() - 1){
+                                String tmpOtherConstraints = constraintsNodes.item(indexConstraint  + 2).getTextContent().trim();
+                                if(tmpOtherConstraints.startsWith( "{" ) && tmpOtherConstraints.endsWith("}" )) {
+                                    String tmpJsonSource = null;
+                                    try {
+                                        IngridDocument json = JsonUtil.parseJsonToIngridDocument(tmpOtherConstraints);
+                                        tmpJsonSource = json.getString("quelle");
+                                        if(tmpSource.indexOf(tmpJsonSource) > -1) {
+                                            isSourceOfJson = true;
+                                        }
+                                    } catch (ParseException e) {
+                                        isSourceOfJson = false;
+                                    }
+                                }
+                            }
+                            String value = constraintSource;
+                            if(!isSourceOfJson) {
+                                value = String.format("%s%s<br>%s", "", constraintSource, tmpSource);
+                            }
                             furtherOtherConstraints.add( value );
                         } else {
                             furtherOtherConstraints.add( constraintSource );
@@ -369,8 +388,8 @@ public class DetailPartPreparer {
                         }
                     }
 
-                    if(quelle != null && !quelle.isEmpty()) {
-                        String tmpQuelle = "Quellenvermerk: " + quelle;
+                    if(source != null && !source.isEmpty()) {
+                        String tmpQuelle = "Quellenvermerk: " + source;
                         if(furtherOtherConstraints.contains(tmpQuelle)){
                             furtherOtherConstraints.remove(tmpQuelle);
                         }
@@ -415,10 +434,19 @@ public class DetailPartPreparer {
             for (String furtherConstraint : furtherOtherConstraints) {
                 boolean exist = false;
                 for (String resultItem : result) {
-                    String[] splitFurtherContraint = furtherConstraint.split("<br>");
-                    if(resultItem.indexOf(splitFurtherContraint[0]) > -1) {
-                        exist = true;
-                        break;
+                    String[] splitFurtherConstraint = furtherConstraint.split("<br>");
+                    if(splitFurtherConstraint.length > 1) {
+                        for (String splitFurtherConstraintEntry : splitFurtherConstraint) {
+                            if(resultItem.indexOf(splitFurtherConstraintEntry) == -1) {
+                              exist = false;
+                              break;
+                            } 
+                        }
+                    } else {
+                        if(resultItem.indexOf(splitFurtherConstraint[0]) > -1) {
+                            exist = true;
+                            break;
+                        }
                     }
                 }
                 if (!exist) {
