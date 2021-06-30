@@ -82,6 +82,9 @@
           <action type="update" dev="wemove" issue="2446">
             IGE: Fix UTF-8 problem in expire dialog
           </action>
+          <action type="fix" dev="wemove" issue="2564">
+            IGE: Fix update searchterms if no inspire topics are found
+          </action>
         </release>
 
         <release version="5.8.0" date="2021-04-16" description="Release 5.8.0">
