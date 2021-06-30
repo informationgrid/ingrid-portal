@@ -1820,6 +1820,7 @@ footer {
       a:not(.button) {
         font-size: 16px;
         font-family: $input-font-family;
+        display: block;
       }
 
       th:first-child {
