@@ -355,6 +355,8 @@ public class DetailPartPreparer {
                         if(tmpQuelle.startsWith("Quellenvermerk: ")) {
                             String value = String.format("%s%s<br>%s", "", constraintSource, tmpQuelle);
                             furtherOtherConstraints.add( value );
+                        } else {
+                            furtherOtherConstraints.add( constraintSource );
                         }
                     } else {
                         furtherOtherConstraints.add( constraintSource );
