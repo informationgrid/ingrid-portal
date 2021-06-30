@@ -350,9 +350,16 @@ public class DetailPartPreparer {
                 
                 if (!isJSON) {
                     // no JSON but might be further other constraint (BKG), we also render !
-                    furtherOtherConstraints.add( constraintSource );
+                    if(indexConstraint < constraintsNodes.getLength() - 1) {
+                        String tmpQuelle = constraintsNodes.item(indexConstraint  + 1).getTextContent();
+                        if(tmpQuelle.startsWith("Quellenvermerk: ")) {
+                            String value = String.format("%s%s<br>%s", "", constraintSource, tmpQuelle);
+                            furtherOtherConstraints.add( value );
+                        }
+                    } else {
+                        furtherOtherConstraints.add( constraintSource );
+                    }
                 } else {
-                    
                     String finalValue = getValueFromCodeList(licenceList, constraints);
                     if (finalValue == null || finalValue.trim().isEmpty()) {
                         if (!constraints.startsWith("{") && !constraints.endsWith("}")) {
@@ -406,7 +413,8 @@ public class DetailPartPreparer {
             for (String furtherConstraint : furtherOtherConstraints) {
                 boolean exist = false;
                 for (String resultItem : result) {
-                    if(resultItem.indexOf(furtherConstraint) > -1) {
+                    String[] splitFurtherContraint = furtherConstraint.split("<br>");
+                    if(resultItem.indexOf(splitFurtherContraint[0]) > -1) {
                         exist = true;
                         break;
                     }
