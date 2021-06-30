@@ -347,7 +347,11 @@ public class DetailPartPreparer {
                         log.error("Error parsing json from use constraints '" + constraintSource + "'", e);
                     }
                 }
-                
+                String restrictionInfo = "";
+                if (restrictionCode != null && restrictionCode.trim().length() > 0) {
+                    restrictionInfo = restrictionCode + ": ";
+                }
+
                 if (!isJSON) {
                     // no JSON but might be further other constraint (BKG), we also render !
                     if(indexConstraint < constraintsNodes.getLength() - 1) {
@@ -371,7 +375,7 @@ public class DetailPartPreparer {
                             }
                             String value = constraintSource;
                             if(!isSourceOfJson) {
-                                value = String.format("%s%s<br>%s", "", constraintSource, tmpSource);
+                                value = String.format("<span>%s%s</span><br><span>%s</span>", restrictionInfo, constraintSource, tmpSource);
                             }
                             furtherOtherConstraints.add( value );
                         } else {
@@ -395,16 +399,10 @@ public class DetailPartPreparer {
                         }
                         finalValue += tmpQuelle;
                     }
-                    
-                    String value;
-                    String restrictionInfo = "";
-                    if (restrictionCode != null && restrictionCode.trim().length() > 0) {
-                        restrictionInfo = restrictionCode + ": ";
-                    }
 
+                    String value;
                     if (url != null && !url.trim().isEmpty()) {
                         // we have a URL from JSON
-
                         if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() ) ) {
                             // we have a different license name from JSON, render it with link
                             value = String.format(messages.getString("constraints.use.link"), restrictionInfo, url, name, finalValue);
@@ -415,9 +413,9 @@ public class DetailPartPreparer {
                     } else {
                         // NO URL
                         if (name != null && !name.trim().isEmpty() && !name.trim().equals( finalValue.trim() )) {
-                            value = String.format("%s%s<br>%s", restrictionInfo, name, finalValue);
+                            value = String.format("<span>%s%s</span><br><span>%s</span>", restrictionInfo, name, finalValue);
                         } else if (restrictionCode != null){
-                            value = String.format("%s%s", restrictionInfo, finalValue);
+                            value = String.format("<span>%s%s</span>", restrictionInfo, finalValue);
                         } else {
                             value = finalValue;
                         }
@@ -429,7 +427,6 @@ public class DetailPartPreparer {
                 }
             }
 
-            
             // also add other constraints if present !
             for (String furtherConstraint : furtherOtherConstraints) {
                 boolean exist = false;
@@ -437,7 +434,7 @@ public class DetailPartPreparer {
                     String[] splitFurtherConstraint = furtherConstraint.split("<br>");
                     if(splitFurtherConstraint.length > 1) {
                         for (String splitFurtherConstraintEntry : splitFurtherConstraint) {
-                            if(resultItem.indexOf(splitFurtherConstraintEntry) == -1) {
+                            if(resultItem.indexOf(splitFurtherConstraintEntry.replaceAll("<span>", "").replaceAll("</span>", "")) == -1) {
                               exist = false;
                               break;
                             } 
@@ -454,7 +451,6 @@ public class DetailPartPreparer {
                 }
             }
         }
-
         return result;
     }
 
