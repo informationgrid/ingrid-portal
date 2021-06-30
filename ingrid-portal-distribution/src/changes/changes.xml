@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
+          <action type="fix" dev="wemove" issue="1290">
+            Portal: Fix use constraints layout
+          </action>
           <action type="add" dev="wemove" issue="2544">
             Ergebnisliste (neues Layout): Anbieter und Quelle nach Detaildarstellung übertragen
           </action>
