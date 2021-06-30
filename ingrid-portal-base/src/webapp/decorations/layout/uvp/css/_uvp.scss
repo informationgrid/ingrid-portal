@@ -1867,13 +1867,22 @@ footer {
       }
       
       .text-list .list-item {
-        margin-bottom: 4px;
+        margin-bottom: 16px;
+        
+        > :first-child {
+          line-height: 18px;
+          display: block;
+        }
+        > br {
+          display: none;
+        }
+        &:first-child {
+          margin-top: 4px;
+        }
+        &:last-child {
+          margin-bottom: 4px;
+        }
       }
-      
-      .text-list .list-item:last-child {
-        margin-bottom: 4px;
-      }
-      
     }
   }
 
