@@ -7,12 +7,12 @@
   Licensed under the EUPL, Version 1.1 or – as soon they will be
   approved by the European Commission - subsequent versions of the
   EUPL (the "Licence");
-  
+
   You may not use this work except in compliance with the Licence.
   You may obtain a copy of the Licence at:
-  
+
   http://ec.europa.eu/idabc/eupl5
-  
+
   Unless required by applicable law or agreed to in writing, software
   distributed under the Licence is distributed on an "AS IS" basis,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -54,22 +54,22 @@
                             tableData[row]["expires"] = dateString;
                         });
                     }
-                    
+
                     UtilGrid.setTableData(params.gridId, tableData);
                     dialog.hide();
                 }
             }, "btnAddExpiryDate").startup();
-            
+
         });
     </script>
 </head>
 <body>
     <div style="padding: 5px; margin-bottom: 10px; border: 1px solid #ccc;">
-        Das hier gesetzte Datum wird in allen ausgew�hlten Zeilen als "G�ltig bis"-Datum gesetzt. Ist kein Datum gesetzt, so werden die Datumsangaben aus den ausgew�hlten Zeilen entfernt.
+        Das hier gesetzte Datum wird in allen ausgewählten Zeilen als "Gültig bis"-Datum gesetzt. Ist kein Datum gesetzt, so werden die Datumsangaben aus den ausgewählten Zeilen entfernt.
     </div>
-    <label for="expiryDate">G�ltig bis:</label>
+    <label for="expiryDate">Gültig bis:</label>
     <input type="text" name="expiryDate" id="expiryDate"
         data-dojo-type="dijit/form/DateTextBox" />
-        <button id="btnAddExpiryDate" type="button">�bernehmen</button>
+        <button id="btnAddExpiryDate" type="button">Übernehmen</button>
 </body>
 </html>
