@@ -20,6 +20,9 @@
           <action type="update" dev="wemove" issue="2521">
             IGE: Make digital representation mandatory for not conform INSPIRE datasets
           </action>
+          <action type="fix" dev="wemove" issue="2564">
+            IGE: Fix update searchterms if no inspire topics are found
+          </action>
         </release>
 
         <release version="5.8.2" date="2021-06-10" description="Release 5.8.2">
