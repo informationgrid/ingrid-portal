@@ -1868,19 +1868,19 @@ footer {
       
       .text-list .list-item {
         margin-bottom: 16px;
-        
-        > :first-child {
+        padding-bottom: 8px;
+
+        > a, > span {
           line-height: 18px;
           display: block;
+          margin-top: 4px;
         }
         > br {
           display: none;
         }
-        &:first-child {
-          margin-top: 4px;
-        }
         &:last-child {
           margin-bottom: 4px;
+          padding-bottom: 0;
         }
       }
     }
