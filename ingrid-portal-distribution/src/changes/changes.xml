@@ -8,6 +8,9 @@
     <body>
 
         <release version="5.8.4" date="2021-xx-xx" description="Release 5.8.4">
+          <action type="fix" dev="wemove">
+            Portal: Fix display use constraints on detail
+          </action>
           <action type="fix" dev="wemove" issue="2543">
             IGE: Fix name and description of a behaviour
           </action>
