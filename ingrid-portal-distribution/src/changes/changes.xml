@@ -7,7 +7,7 @@
 
     <body>
 
-        <release version="5.8.4" date="2021-xx-xx" description="Release 5.8.4">
+        <release version="5.8.4" date="2021-07-01" description="Release 5.8.4">
           <action type="fix" dev="wemove">
             Portal: Fix display use constraints on detail
           </action>
