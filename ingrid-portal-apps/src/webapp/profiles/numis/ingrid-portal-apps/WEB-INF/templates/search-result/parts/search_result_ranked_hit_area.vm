@@ -3,12 +3,24 @@
     
     <script>
         $('#map${mapId}').closest('.js-expander-content').removeClass('is-hidden');
-        var bounds${mapId} = ${coords}[0];
-        var y1${mapId} = bounds${mapId}[2];
-        var x1${mapId} = bounds${mapId}[1];
-        var y2${mapId} = bounds${mapId}[4];
-        var x2${mapId} = bounds${mapId}[3];
-        
+        var coords = ${coords};
+        var bounds${mapId};
+        var y1${mapId};
+        var x1${mapId};
+        var y2${mapId};
+        var x2${mapId};
+
+        for (var coord of coords) {
+            bounds${mapId} = coord;
+            y1${mapId} = bounds${mapId}[2];
+            x1${mapId} = bounds${mapId}[1];
+            y2${mapId} = bounds${mapId}[4];
+            x2${mapId} = bounds${mapId}[3];
+            
+            if(y1${mapId} !== 0 && x1${mapId} !== 0 && y2${mapId} !== 0 && x2${mapId} !== 0) {
+                break;
+            }
+        }
         var southWest${mapId} = null;
         var northEast${mapId} = null;
         
@@ -29,15 +41,17 @@
         if(bounds${mapId}) {
             map${mapId}.fitBounds(bounds${mapId});
         }
-        var coords = ${coords};
+
         coords.forEach(function(coord) {
             var y1Coord = coord[2];
             var x1Coord = coord[1];
             var y2Coord = coord[4];
             var x2Coord = coord[3];
-            var map${mapId}LayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
-            map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
-            map${mapId}.addLayer(map${mapId}LayerBounds);
+            if(y1Coord !== 0 && x1Coord !== 0 && y2Coord !== 0 && x2Coord !== 0) {
+                var map${mapId}LayerBounds = L.rectangle([[y1Coord, x1Coord], [y2Coord, x2Coord]], {color: '#3278B9', weight: 1});
+                map${mapId}LayerBounds.bindTooltip(coord[0], {direction: 'center'});
+                map${mapId}.addLayer(map${mapId}LayerBounds);
+            }
         });
         #if(!$isMoreId)
         $('#map${mapId}').closest('.js-expander-content').addClass('is-hidden');

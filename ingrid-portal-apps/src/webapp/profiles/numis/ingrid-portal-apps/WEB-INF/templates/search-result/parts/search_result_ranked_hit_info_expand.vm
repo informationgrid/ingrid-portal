@@ -1,5 +1,5 @@
-#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink || ($x1 && !$x1.isEmpty()))
-    <a id="${moreId}" class="js-expander #if($isMoreId)is-hidden#end" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )onclick="resizeMap(map${moreId})"#end>
+#if(($referenceAllUUID && $referenceAllUUID.size() > 0) || $urlReferenceLink || $coords.size() > 0)
+    <a id="${moreId}" class="js-expander #if($isMoreId)is-hidden#end" title="$MESSAGES.getString('searchResult.info.more')" href="#" #if($coords.size() > 0)onclick="resizeMap(map${moreId})"#end>
         <span class="icon  ic-ic-plus"></span>
         <span class="text">$MESSAGES.getString('searchResult.info.more')</span>
     </a>
@@ -169,7 +169,7 @@
                     #end
                 #end
             </div>
-            #if(($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false ) 
+            #if(($coords.size() > 0) 
                 || ($rs.additional_html_1 && !$rs.additional_html_1.isEmpty())
                 || $rs.wms_url)
             <div class="columns">
@@ -177,7 +177,7 @@
                 #set($hasPreview = false)
                 #set($hasSwipe = false)
                 
-                #if($x1.isEmpty() == false && $y1.isEmpty() == false  && $x2.isEmpty() == false  && $y2.isEmpty() == false )
+                #if($coords.size() > 0)
                     #set($hasArea = true)
                 #end
                 
@@ -245,9 +245,7 @@
                 #end
                 #renderFactTitle($MESSAGES.getString("searchResult.info.area") "text-center")
                 #if($hasArea)
-                    #set($coords = [])
                     #set($mapId = $moreId)
-                    #set($add = $coords.add(["'$rs.title'", $x1, $y1, $x2, $y2]))
                     #parse("/WEB-INF/templates/search-result/parts/search_result_ranked_hit_area.vm")
                 #end
                 #if($hasSwipe)

@@ -12,11 +12,19 @@
 #end
 
 ## Area details
-#set($x1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x1" , 1))
-#set($y1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y1" , 1))
-#set($x2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x2" , 1))
-#set($y2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" , 1))
-
+#set($coords = [])
+#set($tmpX1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x1" ))
+#set($tmpY1 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y1" ))
+#set($tmpX2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "x2" ))
+#set($tmpY2 = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "y2" ))
+#set($tmpLocation = $UTIL_SEARCH.getDetailValue( $rs.getHitDetail(), "location" ))
+#if($tmpX1)
+    #set($tmpCount = 0)
+    #foreach($tmp in $tmpX1.split(","))
+        #set($add = $coords.add([$tmpLocation.split(",").get($tmpCount), $tmpX1.split(",").get($tmpCount) , $tmpY1.split(",").get($tmpCount), $tmpX2.split(",").get($tmpCount), $tmpY2.split(",").get($tmpCount)]))
+        #set($tmpCount = $tmpCount + 1)
+    #end
+#end
 ## Refering details
 #set($referenceAllUUID = [])
 #set($referenceAllName = [])
