@@ -21,7 +21,16 @@
 #if($tmpX1)
     #set($tmpCount = 0)
     #foreach($tmp in $tmpX1.split(","))
-        #set($add = $coords.add([$tmpLocation.split(",").get($tmpCount), $tmpX1.split(",").get($tmpCount) , $tmpY1.split(",").get($tmpCount), $tmpX2.split(",").get($tmpCount), $tmpY2.split(",").get($tmpCount)]))
+        #if($tmpLocation)
+            #if($tmpCount < $tmpLocation.split(",").size())
+                #set($tmpTitle = $tmpLocation.split(",").get($tmpCount))
+            #else
+                #set($tmpTitle = $rs.title)
+            #end
+        #else
+            #set($tmpTitle = $rs.title)
+        #end
+        #set($add = $coords.add(["'$tmpTitle'", $tmpX1.split(",").get($tmpCount) , $tmpY1.split(",").get($tmpCount), $tmpX2.split(",").get($tmpCount), $tmpY2.split(",").get($tmpCount)]))
         #set($tmpCount = $tmpCount + 1)
     #end
 #end
