@@ -20,6 +20,9 @@
                     #set($tmpX2 = $tmpCoord.get(3).replace("\u00B0", ""))
                     #set($tmpY2 = $tmpCoord.get(4).replace("\u00B0", ""))
                     #if($tool.hasContent($tmpX1) && $tool.hasContent($tmpX2) && $tool.hasContent($tmpY1) && $tool.hasContent($tmpY2))
+                        #if(!$tmpName || $tmpName.isEmpty())
+                            #set($tmpName = $TOOL.getTitle())
+                        #end
                         #set($add = $coords.add(["'$tmpName'", $tmpX1 , $tmpY1, $tmpX2, $tmpY2]))
                     #end
                 #end

@@ -2289,6 +2289,9 @@ footer {
     z-index: 500;
     width: 100%;
   }
+  .leaflet-tooltip {
+    white-space: normal;
+  }
 }
 .map-ingrid.map-full { 
   .leaflet-control-container { 

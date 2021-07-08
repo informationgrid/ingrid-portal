@@ -24,10 +24,9 @@
         #if($tmpLocation)
             #if($tmpCount < $tmpLocation.split(",").size())
                 #set($tmpTitle = $tmpLocation.split(",").get($tmpCount))
-            #else
-                #set($tmpTitle = $rs.title)
             #end
-        #else
+        #end
+        #if(!$tmpTitle || $tmpTitle.isEmpty())
             #set($tmpTitle = $rs.title)
         #end
         #set($add = $coords.add(["'$tmpTitle'", $tmpX1.split(",").get($tmpCount) , $tmpY1.split(",").get($tmpCount), $tmpX2.split(",").get($tmpCount), $tmpY2.split(",").get($tmpCount)]))
