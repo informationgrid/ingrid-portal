@@ -5,31 +5,45 @@
         $('#map${mapId}').closest('.js-expander-content').removeClass('is-hidden');
         var coords = ${coords};
         var bounds${mapId};
+        var boundsX1${mapId};
+        var boundsY1${mapId};
+        var boundsX2${mapId};
+        var boundsY2${mapId};
         var y1${mapId};
         var x1${mapId};
         var y2${mapId};
         var x2${mapId};
 
         for (var coord of coords) {
-            bounds${mapId} = coord;
-            y1${mapId} = bounds${mapId}[2];
-            x1${mapId} = bounds${mapId}[1];
-            y2${mapId} = bounds${mapId}[4];
-            x2${mapId} = bounds${mapId}[3];
-            
-            if(y1${mapId} !== 0 && x1${mapId} !== 0 && y2${mapId} !== 0 && x2${mapId} !== 0) {
-                break;
+            var tmpBounds${mapId} = coord;
+            y1${mapId} = tmpBounds${mapId}[2];
+            x1${mapId} = tmpBounds${mapId}[1];
+            y2${mapId} = tmpBounds${mapId}[4];
+            x2${mapId} = tmpBounds${mapId}[3];
+
+                
+            if (y1${mapId} && x1${mapId} && y2${mapId} && x2${mapId}) {
+                if(y1${mapId} !== 0 && x1${mapId} !== 0 && y2${mapId} !== 0 && x2${mapId} !== 0) {
+                    if(!boundsX1${mapId} || x1${mapId} < boundsX1${mapId}) {
+                        boundsX1${mapId} = x1${mapId};
+                    }
+
+                    if(!boundsY1${mapId} || y1${mapId} < boundsY1${mapId}) {
+                        boundsY1${mapId} = y1${mapId};
+                    }
+
+                    if(!boundsX2${mapId} || x2${mapId} > boundsX2${mapId}) {
+                        boundsX2${mapId} = x2${mapId};
+                    }
+
+                    if(!boundsY2${mapId} || y2${mapId} > boundsY2${mapId}) {
+                        boundsY2${mapId} = y2${mapId};
+                    }
+                    var southWest${mapId} = L.latLng(boundsY1${mapId}, boundsX1${mapId});
+                    var northEast${mapId} = L.latLng(boundsY2${mapId}, boundsX2${mapId});
+                    bounds${mapId} = L.latLngBounds(southWest${mapId}, northEast${mapId});
+                }
             }
-        }
-        var southWest${mapId} = null;
-        var northEast${mapId} = null;
-        
-        if (y1${mapId} && x1${mapId} && y2${mapId} && x2${mapId}) {
-            southWest${mapId} = L.latLng(y1${mapId}, x1${mapId});
-            northEast${mapId} = L.latLng(y2${mapId}, x2${mapId});
-            bounds${mapId} = L.latLngBounds(southWest${mapId}, northEast${mapId});
-        } else {
-            //var coords = $coords;
         }
         var map${mapId} = addLeafletMapWithId('map${mapId}', getOSMLayer(''), bounds${mapId}, null , 10);
         #if($isDetail)
