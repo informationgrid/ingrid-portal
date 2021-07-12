@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
+          <action type="add" dev="wemove" issue="2274">
+            MetaVer-Kartenclient - nach dem Laden eines WMS die Struktur der Layer anzeigen
+          </action>
           <action type="fix" dev="wemove" issue="1290">
             Portal: Fix use constraints layout
           </action>
