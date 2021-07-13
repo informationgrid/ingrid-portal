@@ -7,6 +7,9 @@
 
     <body>
         <release version="5.9.0" date="2021-xx-xx" description="Release 5.9.0">
+          <action type="update" dev="wemove" issue="2594">
+            MapClient: Aktualsierung auf den aktuellsten mf-geoadmin3 (2021-07-29)
+          </action>
           <action type="add" dev="wemove" issue="2274">
             MetaVer-Kartenclient - nach dem Laden eines WMS die Struktur der Layer anzeigen
           </action>
